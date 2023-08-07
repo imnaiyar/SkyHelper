@@ -1,4 +1,4 @@
-// Doesn't work as expected, I've ket it on hold for now until I make it work
+// Doesn't work as expected, I've kept it on hold for now until I make it work
 const moment = require('moment-timezone');
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
