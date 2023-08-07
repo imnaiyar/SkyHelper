@@ -54,7 +54,7 @@ console.log('ephemeral:', ephemeral);
     ephemeral: ephemeral,
     timer: setTimeout(() => {
       clearEphemeralChoice(reply.id);
-    }, 10 * 60 * 1000) // 20 minutes in milliseconds
+    }, 10 * 60 * 1000)
   });
   }
   console.log('ephemeralChoice:', ephemeralChoice)
