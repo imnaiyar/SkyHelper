@@ -29,6 +29,7 @@ This bot wouldn't be possible without these people and the work they do.
 ● Zed (zedlocked_)  
 ● Art (lovecry)  
 **and all others who do the awesome job of creating guides.**  
+  
 **__Special Mentions__**  
 ● Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
 ● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.
