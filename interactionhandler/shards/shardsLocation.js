@@ -337,8 +337,6 @@ async function showShard(interaction, shard, Gale, Clement) {
       const clementIcon = Clement.avatarURL({ format: 'png', size: 2048 });
   const galeIcon = Gale.avatarURL({ format: 'png', size: 2048 });
 
-  // Assuming currentShardIndex and MAX_SHARD_INDEX are defined somewhere in your code
-
 
   const authorName = currentShardIndex === 0 ? `Shard location by Clement  (${Clement.username})` : `Shard data by Gale (${Gale.username})`;
   const authorIcon = currentShardIndex === 0 ? clementIcon : galeIcon;
