@@ -3,14 +3,15 @@ Simple discord bot that has function related to Sky: Children of Lights.
 # Commnads
 `/shards` - Get today's shard information. You can also provide an additional date to look for shard details for that particular date.  
   `/seasonal_guide` - Various guides for each season. Includes Seasonal Quests, Seasonal Spirits Location, And their Previous Visit price tree(Seasonal chart if they have not visited at least once). **Only updated upto Season of Prophecy**  
-  `timestamp`- Convert the time given by user into unix timestamp. Default Timezone is set to California time(America/Los_Angeles), as this bot is primarily focused for Sky. But user can optionally provide a timezone if they want to convert it for that particular area.  
-  `sky-times` - Gives out upcoming times for Various Sky event(Grandma, Geyser, Reset, Eden Reset, Turtle).
+  `/timestamp`- Convert the time given by user into unix timestamp. Default Timezone is set to California time(America/Los_Angeles), as this bot is primarily focused for Sky. But user can optionally provide a timezone if they want to convert it for that particular area.  
+  `/sky-times` - Gives out upcoming times for Various Sky event(Grandma, Geyser, Reset, Eden Reset, Turtle).
 
 ## Bot is coded with nodejs.
 Run the command with 'node index.js'
 
 # Credits.
-This bot wouldn't be possible without these people and the work they do.  
+This bot wouldn't be possible without these people and the work they do.    
+  
 **__Shards Predictions__**  
 ● Zhii (zhiiran4275)  
 ● Christian (christiankingfu)  
@@ -27,7 +28,7 @@ This bot wouldn't be possible without these people and the work they do.
 ● Sam (sam6917)  
 ● Zed (zedlocked_)  
 ● Art (lovecry)  
-**and all others who do the awesome job of creating guides.**  
+**and all others who do the awesome job of creating guides.**    
 **__Special Mentions__**  
 ● Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
 ● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.
