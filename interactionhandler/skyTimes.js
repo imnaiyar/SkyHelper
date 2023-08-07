@@ -3,7 +3,7 @@ const { StimesReply } = require('../eventhandler/StimesReply');
 const { PtimesReply } = require('../eventhandler/prefixListener');
 
 async function skyTimes(interaction, message, args) {
-  const targetTimezone = 'Asia/Kolkata'; // Set the target time zone (example: Eastern Time)
+  const targetTimezone = 'Asia/Kolkata';
   const now = moment().tz(targetTimezone);
 
   // Geyser Calculation
