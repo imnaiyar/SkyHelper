@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Bot for Sky",
   "main": "index.js",
-  "scripts": {
-    "test": "node index.js"
-  },
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
