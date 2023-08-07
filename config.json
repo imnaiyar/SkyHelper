@@ -1,0 +1,7 @@
+{
+  "token": "Your Bot Token",
+  "clientId": "Your Bot Client Id",
+  "prefix": "!",
+  "welcomeChannelId": null
+  
+}
