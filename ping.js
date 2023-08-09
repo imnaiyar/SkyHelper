@@ -1,3 +1,4 @@
+// Only backup, no executable commands
 module.exports = {
     name: 'ping',
     description: 'Get the this bot ping',
