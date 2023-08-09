@@ -32,4 +32,5 @@ This bot wouldn't be possible without these people and the work they do.
   
 **__Special Mentions__**  
 ● Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
-● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.
+● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.  
+● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).
