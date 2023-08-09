@@ -1,3 +1,4 @@
+// Archived, not functional anymore.
 const moment = require('moment');
 
 function isValidEventDay(currentEvent, dayOfWeek) {
