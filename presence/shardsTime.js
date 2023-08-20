@@ -26,7 +26,7 @@ async function shardsTime(){
       (currentEvent === 'B' && [3, 4].includes(dayOfWeek)) ||
       (currentEvent === 'C' && [1, 2].includes(dayOfWeek))
     ) {
-      return 'There is no shard today.';
+      return '🌋 There is no shard today.';
     }
 
     function getOrdinalSuffix(number) {
