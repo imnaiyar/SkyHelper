@@ -23,33 +23,14 @@ const config = require('../config.json');
 
   } else if (interaction.commandName === 'timestamp') {
     timestampInteraction(interaction);
-    const nickname = interaction.member.displayName;
-
-  const userID = interaction.user.id;
-
-  const time = moment.tz('Asia/Kolkata')
-
-console.log(`User ${nickname} (${userID}) used the 'Timestamp' command. at ${time} `);
   } else if (interaction.commandName === 'test1') {
     await interaction.reply({ content: 'Nothing to test at the moment.', ephemeral: true});
   } else if (interaction.commandName === 'sky-times') {
      skyTimes(interaction);
-      const nickname = interaction.member.displayName;
-
-  const userID = interaction.user.id;
-
-  const time = moment.tz('Asia/Kolkata')
-
-console.log(`User ${nickname} (${userID}) used the 'Sky-Times' command. at ${time} `);
   }
     else if (interaction.commandName === 'shards') {
    shardsALt(interaction);
-   const nickname = interaction.member.displayName;
-  const userID = interaction.user.id;
-  const time = moment.tz('Asia/Kolkata')
-console.log(`User ${nickname} (${userID}) used the 'Shards' command. at ${time} `);
-
-  } else if (interaction.commandName === 'red-shards') {
+ } else if (interaction.commandName === 'red-shards') {
     nextRedEvents(interaction)
  }
  };

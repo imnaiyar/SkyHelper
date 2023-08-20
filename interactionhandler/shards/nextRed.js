@@ -1,4 +1,3 @@
-// Doesn't work as expected, I've kept it on hold for now until I make it work
 const moment = require('moment-timezone');
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
@@ -33,7 +32,7 @@ async function nextRedEvents(interaction) {
     return `${date} - Red Event: ${redEvent}, Second Event: ${secondEvent}`;
   });
 
-  await interaction.reply(response.join('\n'));
+  await interaction.reply(response.join('\n')); // Join the array with '\n' for a newline-separated reply
 }
 
 module.exports = { nextRedEvents };

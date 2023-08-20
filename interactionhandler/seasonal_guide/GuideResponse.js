@@ -328,8 +328,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132243992508125224/06_Seasonal_Price_Chart.jpg']
     },
         'cannoneer_tree': {
-      content: "Cackling Cannoneer** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Abyss Seasonal Price Chart by Clement```",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1132243992508125224/06_Seasonal_Price_Chart.jpg']
+      content: "This was **_Cackling Cannoneer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_August 7, 2023 (Special Visi#4)_\n\n```Cackling Cannoneer Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139851158291226686/Screenshot_20230812_152114_Chrome.jpg']
     },
         'boatswain_tree': {
       content: "**Bumbling Boatswain** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Abyss Seasonal Price Chart by Clement```",
@@ -473,7 +473,7 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132403272670523402/Traveling_Spirit_081.png']
     }, 
         'narcissist_tree': {
-      content: "**_Tinkering Chimesmith's_** Friendship Tree is currently available for a very limited time from the Traveling Spirit at Home.\n\n__**No. of Visits**__: 1\n__**Visit Duration**__:  <t:1689836400:F>(<t:1689836400:R>) - <t:1690181999:F>(<t:1690181999:R>)\n\n```Travelling Spirit #92 Friendship Tree by Xander```",
+      content: "This was **_Gloating Narcissist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_July 20, 2023 (#92)_\n\n```Gloating Narcissist Friendship Tree by Xander```",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132403363380731934/Picsart_23-07-20_17-51-40-577.jpg']
     },
         'beckoning_ruler_tree': {
@@ -642,8 +642,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1136000297261608980/Earth_tree.jpg']
     },
         'fireprophet_tree': {
-      content: "This was **_Prophet of Fire's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_December 9, 2021 (#50)_\n\n```Travelling Spirit #50 Summary by Clement```\n***prices are subject to change in future visits.**",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1136000297588768889/Fire_tree.png']
+      content: "This was **_Prophet of Fire's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_August 3, 2023 (#93)\nDecember 9, 2021 (#50)_\n\n```Fire Prophet Friendship Tree by Xander```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139852616906575922/Picsart_23-08-03_13-11-25-607.jpg']
     },
         'waterprophet_tree': {
       content: "This was **_Prophet of Air's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n_November 10, 2022 (#74)\nAugust 8, 2021 (#41)\nMay 15, 2023 (Special Visit #2)_\n\n```Prophet of Water Friendship Tree by Boxier```\n***prices are subject to change in future visits.**",
@@ -652,95 +652,359 @@ module.exports = {
   // sanctuary
     // sanctuary quests
         'sanctuary_q1': {
-      content: "",
-      files: ['']
+      content: "```Season of Sanctuary Quest 1 by Aladdin```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139564383970787429/BellQuest1_20200908_153240817_1.mp4']
     },
-        '': {
-      content: "",
-      files: ['']
+        'sanctuary_q2': {
+      content: "```Season of Sanctuary Quest 2 by Aladdin```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139564380917338142/BellQuest2_20200908_153341995_1.mp4']
     },
-        '': {
-      content: "",
-      files: ['']
+        'sanctuary_q3': {
+      content: "```Season of Sanctuary Quest 3 by Aladdin```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139564381680718005/BellQuest3_20200908_153113449_1.mp4']
     },
-        '': {
-      content: "",
-      files: ['']
-    }, 
-        '': {
-      content: "",
-      files: ['']
+        'sanctuary_q4': {
+      content: "```Season of Sanctuary Quest 4 by Aladdin```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139564383194845234/BellQuest4_20200908_153437991_1.mp4']
     },
-        '': {
-      content: "",
-      files: ['']
+    'sanctuary_q5': {
+      content: "```Season of Sanctuary Quest 5 by Aladdin```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139564382486003743/BellQuest5_20200908_153517182_1.mp4']
+    },
+    'sanctuary_q6': {
+      content: "```Season of Sanctuary Quest 6 by Aladdin```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139644885457182840/BellQuest_6_20200908_152835766_1.mp4']
     },
     // sanctuary location
-        '': {
-      content: "",
-      files: ['']
+        'sunbather_location': {
+      content: "```Chill Sunbather Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139296869126778970/Season_of_Sanctuary_-_Chill_Sunbather.jpg']
     },
-        '': {
-      content: "",
-      files: ['']
+        'shell_collector_location': {
+      content: "```Grateful Shell-Collector Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295702124597348/06_Season_of_Sanctuary_-_Grateful_Shell_Collector.jpg']
     },
-        '': {
-      content: "",
-      files: ['']
+        'grouch_location': {
+      content: "```Hiking Grouch Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295702434992259/06_Season_of_Sanctuary_-_Hiking_Grouch.jpg']
     },
-        '': {
-      content: "",
-      files: ['']
+        'rallying_thrillseeker_location': {
+      content: "```Rallying Thrillseeker Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295698999840871/06_Season_of_Sanctuary_-_Rallying_Thrillseeker.png']
     }, 
-        '': {
-      content: "",
-      files: ['']
+        'jellywhisperer_location': {
+      content: "```Jelly Whisperer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295738787016724/06_Season_of_Sanctuary_-_Jelly_Whisperer.jpg']
     },
-        '': {
-      content: "",
-      files: ['']
+        'bookworm_location': {
+      content: "```Timid Bookworm Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295702711808131/06_Season_of_Sanctuary_-_Timid_Bookworm.jpg']
     },
     // sanctuary ts
-        '': {
-      content: "",
-      files: ['']
+        'sunbather_tree': {
+      content: "This was **_Chill Sunbather's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_August 19, 2021 (#42)_\n\n```Chill Sunbather Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295739047051284/Sunbather_tree.jpg']
     },
-        '': {
-      content: "",
-      files: ['']
+        'shell_collector_tree': {
+      content: "This was **_Grateful Shell-Collector's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_May 25, 2023 (#88)\nSeptember 30, 2021 (#45)_\n\n```Grateful Shell-Collector Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295699507368006/Shell_collector_tree.png']
     },
-        '': {
-      content: "",
-      files: ['']
+        'grouch_tree': {
+      content: "This was **_Hiking Grouch's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_August 7, 2023 (Special Visit #4)\nFebruary 17, 2022 (#55)_\n\n```Hiking Grouch Friendship Tree by Zed```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295699947761685/Grouch_tree.png']
     },
-        '': {
-      content: "",
-      files: ['']
+        'rallying_thrillseeker_tree': {
+      content: "This was **_Rallying Thrillseeker's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_January 19, 2023 (#79)\nApril 29, 2021 (#34)_\n\n```Rallying Thrillseeker Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295739420364861/Thrilseeker_tree.jpg']
     }, 
-        '': {
-      content: "",
-      files: ['']
+        'jellywhisperer_tree': {
+      content: "This was **_Jelly Whisperer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_November 25, 2021 (#49)_\n\n```Jelly Whisperer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295700455264296/Jelly_whispere_tree.png']
     },
-        '': {
-      content: "",
-      files: ['']
+        'bookworm_tree': {
+      content: "This was **_Timid Bookwork's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_July 7, 2022 (#65)\nJune 10, 2021 (#37)_\n\n```Timid Bookworm Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295700929237064/Bookworm_tree.png']
     },
   // enchantment
     // enchantment quests
+    'enchantment_q1': {
+      content: "```Season of Enchanthment Quest 1 (Red Light) by Clement```\n**__Relevent Links__**\nHow to Get to the Forgotten Ark by Clement https://discord.com/channels/575762611111592007/585339436322259003/1006901886206607480",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024469084188793/5_Red_Light_Location.png']
+    },
+        'enchantment_q2': {
+      content: "```Season of Enchanthment Quest 2 (Blue Light) by Clement```\n**__Relevent Links__**\nHow to Get to the Forgotten Ark by Clement https://discord.com/channels/575762611111592007/585339436322259003/1006901886206607480",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024468417298502/4_Blue_Light_Location.png']
+    },
+        'enchantment_q3': {
+      content: "```Season of Enchanthment Quest 3 (Cyan Light) by Clement```\n**__Relevent Links__**\nHow to Get to the Forgotten Ark by Clement https://discord.com/channels/575762611111592007/585339436322259003/1006901886206607480",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024466152357928/1_Cyan_Light.png']
+    },
+        'enchantment_q4': {
+      content: "```Season of Enchanthment Quest 4 (Green Light) by Clement```\n**__Relevent Links__**\nHow to Get to the Forgotten Ark by Clement https://discord.com/channels/575762611111592007/585339436322259003/1006901886206607480",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024466752155718/2_Green_Light_Location.png']
+    },
+    'enchantment_q5': {
+      content: "```Season of Enchanthment Quest 5 (Purple Light) by Clement```\n**__Relevent Links__**\nHow to Get to the Forgotten Ark by Clement https://discord.com/channels/575762611111592007/585339436322259003/1006901886206607480",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024520149848144/6_Purple_Light_Location.jpg']
+    },
+    'enchantment_q6': {
+      content: "```Season of Enchanthment Quest 6 (Orange Light) by Clement```\n**__Relevent Links__**\nHow to Get to the Forgotten Ark by Clement https://discord.com/channels/575762611111592007/585339436322259003/1006901886206607480",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024467435815002/3_Orange_Light_Location.png']
+    },
     // enchantment location
+    'crab_walker_location': {
+      content: "```Crab Walker Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024470736748664/Walker_Location.png']
+    },
+    'alchemist_location': {
+      content: "```Indifferent Alchemist Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024471202312222/Alchemist_location.png']
+    },
+    'muralist_location': {
+      content: "```Nodding Muralist Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024520967737424/05_Season_of_Enchantment_-_Nodding_Muralist.jpg']
+    },
+    'herbalist_location': {
+      content: "```Playfighting Herbalist Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024520716062790/05_Season_of_Enchantment_-_Playfighting_Herbalist.jpg']
+    },
+    'scarecrow_farmer_location': {
+      content: "```Scarecrow Farmer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024521252937859/05_Season_of_Enchantment_-_Scarecrow_Farmer.jpg']
+    },
+    'carpenter_location': {
+      content: "```Snoozing Carpenter Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024520472797215/05_Season_of_Enchantment_-_Snoozing_Carpenter.jpg']
+    },
     // enchantment ts
+    'crab_walker_tree': {
+      content: "This was **_Crab Walker's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_March 16, 2023 (#83)\nFebruary 18, 2021 (#29)_\n\n```Crab Walker Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024471588175954/Crab_walker_tree.jpg']
+    },
+    'alchemist_tree': {
+      content: "This was **_Indifferent Alchemist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_September 1, 2022 (#69)\nOctober 29, 2020 (#21)_\n\n```Indifferent Alchemist Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024471902765067/Alchemist_tree.jpg']
+    },
+    'muralist_tree': {
+      content: "This was **_Nodding Muralist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_October 27, 2022 (#73)\nJanuary 7, 2021 (#26)_\n\n```Nodding Muralist Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024516664365087/Muralist_tree.jpg']
+    },
+    'herbalist_tree': {
+      content: "This was **_Playfighting Herbalist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_October 28, 2021 (#47)_\n\n```Playfighting Herbalist Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024516907651072/Herbalist_tree.jpg']
+    },
+    'scarecrow_farmer_tree': {
+      content: "This was **_Scarecrow Farmer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_March 31, 2022 (#58)_\n\n```Scarecrow Farmer Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024517146714124/Farmer_tree.jpg']
+    },
+    'carpenter_tree': {
+      content: "This was **_Snoozing Carpenter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_April 27, 2023 (#86)\nMay 27, 2021 (#36)_\n\n```Snoozing Carpenter Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1140024519868813312/Carpenter_tree.jpg']
+    },
   // rhythm
     // rhythm location
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
     // rhythm ts
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
   // belonging
     // belonging location
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
     // belonging ts
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
   // lightseekers
     // Lightseekers location
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
     // Lightseekers ts
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
   // gratitude
     // Gratitude  location
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
     // Gratitude  ts
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
+    '': {
+      content: "",
+      files: ['']
+    },
   },
   getResponse(choice) {
     return this.responses[choice] || null;

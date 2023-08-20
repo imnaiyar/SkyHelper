@@ -92,7 +92,7 @@ const dateValue = date || currentDateValue;
     }
   }
 
-  result += `\Timezone - \`${timezone}\`\nUTC Offset - \`${offsetString}\``;
+  result += `UTC Offset - \`${offsetString}\``;
 
   interaction.reply({ content: result });
 }

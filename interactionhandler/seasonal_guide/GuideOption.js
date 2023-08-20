@@ -18,13 +18,9 @@ function clearEphemeralChoice(messageId) {
 const messageChoices = new Map();
 const ephemeralChoice = new Map();
 client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand() || interaction.commandName !== 'seasonal_guides') return;
+  if (!interaction.isCommand() || interaction.commandName !== 'seasonal-guides') return;
   const ephemeralOption = interaction.options.getString('ephemeral');
   const ephemeral = ephemeralOption === 'false' ? false : true;
-
-  console.log('ephemeralOption:', ephemeralOption);
-console.log('ephemeral:', ephemeral);
-
 
   const { firstChoices } = require('./SeasonalChoices.js');
 
@@ -40,8 +36,7 @@ console.log('ephemeral:', ephemeral);
       .setPlaceholder('Choose a Season')
       .addOptions(dropdownOptions)
   );
-  
-  
+   
 
  const reply = await interaction.reply({
     content: 'Please select a season:',
@@ -54,10 +49,9 @@ console.log('ephemeral:', ephemeral);
     ephemeral: ephemeral,
     timer: setTimeout(() => {
       clearEphemeralChoice(reply.id);
-    }, 10 * 60 * 1000)
+    }, 10 * 60 * 1000) // 20 minutes in milliseconds
   });
   }
-  console.log('ephemeralChoice:', ephemeralChoice)
 });
 
 client.on('interactionCreate', async interaction => {
@@ -87,20 +81,6 @@ client.on('interactionCreate', async interaction => {
       value: choice.value,
       emoji: getEmoji(choice.label),
     }));
-    function getEmoji(label) {
-  switch (label) {
-    case 'Seasonal Quests':
-      return '<:quests:1131171487877963886>';
-    case 'Spirit Locations':
-      return '<:location:1131173266883612722>';
-    case 'Spirits Tree':
-      return '<:tree:1131279758907424870>';
-      case 'Seasonal Price Tree':
-      return '<:tree:1131279758907424870>';
-    default:
-      return '';
-  }
-}
 
     secondChoiceOptions.push({
       label: 'Back',
@@ -145,20 +125,20 @@ client.on('interactionCreate', async interaction => {
         if (response) {
           const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
           const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
-          console.log('isEphemeral:', isEphemeral);
+          response.ephemeral = isEphemeral;
 
-          await interaction.deferReply({ ephemeral: isEphemeral });
-      await interaction.editReply(response);
+
+      await interaction.deferReply({ephemeral: isEphemeral});
+      await interaction.followUp(response);
         }
           } else if (selectedChoice === 'dreams_q') { 
       const response = choiceResponses.getResponse(selectedChoice);
         if (response) {
           const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
           const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
-          console.log('isEphemeral:', isEphemeral);
-
-          await interaction.deferReply({ ephemeral: isEphemeral });
-      await interaction.editReply(response);
+          response.ephemeral = isEphemeral;
+          await interaction.deferReply({ephemeral: isEphemeral});
+          await interaction.followUp(response);
         }
           } else {
       const thirdChoiceOptions = thirdChoices[selectedChoice].map(choice => ({
@@ -210,20 +190,6 @@ client.on('interactionCreate', async interaction => {
           value: choice.value,
           emoji: getEmoji(choice.label),
         }));
-          function getEmoji(label) {
-           switch (label) {
-    case 'Seasonal Quests':
-      return '<:quests:1131171487877963886>';
-    case 'Spirit Locations':
-      return '<:location:1131173266883612722>';
-    case 'Spirits Tree':
-      return '<:tree:1131279758907424870>';
-      case 'Seasonal Price Tree':
-      return '<:tree:1131279758907424870>';
-    default:
-      return '';
-  }
-}
         secondChoiceOptions.push({
           label: 'Back',
           value: 'back',
@@ -252,10 +218,9 @@ client.on('interactionCreate', async interaction => {
         if (response) {
           const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
           const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
-          console.log('isEphemeral:', isEphemeral);
 
-          await interaction.deferReply({ ephemeral: isEphemeral });
-      await interaction.editReply(response);
+         await interaction.deferReply({ephemeral: isEphemeral});
+         await interaction.followUp(response);
         } else {
           await interaction.update('*__Under development... Thank you for your patience.__*');
         }
@@ -265,5 +230,19 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+function getEmoji(label) {
+  switch (label) {
+case 'Seasonal Quests':
+return '<:quests:1131171487877963886>';
+case 'Spirit Locations':
+return '<:location:1131173266883612722>';
+case 'Spirits Tree':
+return '<:tree:1131279758907424870>';
+case 'Seasonal Price Tree':
+return '<:tree:1131279758907424870>';
+default:
+return '';
+}
+}
 const token = config.token;
 client.login(token);

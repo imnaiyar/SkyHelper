@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Commands</title>
+
+  <link rel="icon" href="../skybot.png">
+
+  <link rel="stylesheet" href="commands.css">
+
+  <link rel="stylesheet" href="../index.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,800,900&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800,900&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900&display=swap" rel="stylesheet">
+
+</head>
+
+<body onload="loaderFunction()">
+
+  <div id="loader">
+
+    <div class="loading">
+
+      <span></span>
+
+    </div>
+
+  </div>
+
+  <div id="page">
+
+    <nav>
+
+      <div class="logo noselect">
+
+        <img class="noselect" src="../skybot.png"> SkyBot
+
+      </div>
+
+      <div class="openMenu noselect"><i class="fa fa-bars"></i></div>
+
+      <ul class="mainMenu noselect">
+
+        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+
+        <li><a class="active" href="#"><i class="far fa-list-alt"></i> Commands</a></li>
+
+        <li><a href="../pages/about.html"><i class="fas fa-quote-left"></i> About</a></li>
+
+        <li><a href="https://discord.gg/PgZmsARDnW" target="_none"><i class="fas fa-headset"></i> Support</a></li>
+
+        <li><a class="invite noselect" href="https://dsc.gg/skybot-" target="_none"><i
+
+              class="fab fa-discord"></i> Add to server</a></li>
+
+        <div class="closeMenu noselect"><i class="fa fa-times"></i></div>
+
+      </ul>
+
+    </nav>
+
+    <div class="container clear noselect">
+
+      <div class="row wrapper">
+
+        <span class="collapse" onclick="closeSidePanel()"><i class="fas fa-caret-left"></i></span>
+
+        <span class="expand" onclick="openSidePanel()"><i class="fas fa-caret-right"></i></span>
+
+        <div class="sidepanel">
+
+          <div class="divider left"></div>
+
+          <a class="title" href="#introduction">Introduction</a>
+
+          <a class="section" href="#aboutthisbot">About this Bot</a>
+
+          <a class="section" href="#technology">Technology</a>
+
+          <div class="divider left"></div>
+
+          <a class="title" href="#gettingstarted">Getting Started</a>
+
+          <a class="section" href="#inbothelp">In-Bot Help</a>
+
+          <a class="section" href="#addingthebot">Adding the Bot</a>
+
+          <div class="divider left"></div>
+
+          <a class="title" href="#commands">Commands</a>
+
+          <a class="section" href="#slash">Slash Commands</a>
+
+          <a class="sub-section" href="#slash">Shards</a>
+
+          <a class="sub-section" href="#guides">Seasonal Guides</a>
+
+          <a class="sub-section" href="#skytimes">Sky Times</a>
+
+          <a class="sub-section" href="#timestamp">Timestamp</a>
+
+          <a class="section" href="#prefix">Prefix Commands</a>
+
+          <a class="sub-section" href="#gpt">SkyGpt</a>
+
+          <a class="sub-section" href="#credits">Credits</a>
+
+          <a class="sub-section" href="#config">Config</a>
+
+          <div class="divider left"></div>
+
+          <a class="title" href="#premium">Premium</a>
+
+          <div class="space double"></div>
+
+        </div>
+
+        <div class="right-col">
+
+          <h1 id="introduction">Introduction</h1>
+
+          <p id="aboutthisbot">SkyBot is a discord bot made to give useful informations related to Sky: Children of the Light game.</p>
+
+          <h2 id="aboutthisbot">About this Bot</h2>
+
+          <p id="technology">This bot provides informations related to Shards, Seasonal Guides, In-game event times such as Grandma, Turtle, etc.</p>
+
+          <h2>Technology</h2>
+
+          <p id="gettingstarted">The bot is built with nodejs using the discord.js library.<br><br>
+
+           You can check bot's source code<a href="https://github.com/imnaiyar/SkyBot.git">here</a>.</p>
+
+          <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+          <h1>Getting Started</h1>
+
+          <p id="inbothelp">To get started with our bot is fairly easy and we have done our best to make it simpler for
+
+            you.</p>
+
+          <h1>In-bot help</h1>
+
+          <p>You have the option to get help on all the bot commands right through discord with the use of the
+
+            bot's internal <span class="codeBlock">/help</span> command.</p>
+
+          <p><b>Important:</b> You must agree to our <a href="/tos">Terms of Service </a> and matter regarding it will be
+
+            fairly strict.</p>
+
+          <h2 id="addingthebot">Adding the bot</h2>
+
+          <p>To add the bot to your server <a href="https://dsc.gg/skybot-" target="_none">click
+
+              here.</a><br><br>This does needs you to either be the owner of the server or have "manage server"
+
+            permissions.</p>
+
+          <div id="commands" class="divider" style="width:24%; margin:30px 0;"></div>
+
+          <h1>Commands</h1>
+
+          <div>Syntax:
+
+            <ul>
+
+              <li><span class="codeBlock">
+
+                  <>
+
+                </span> : Required Argument</li>
+
+              <li><span class="codeBlock">[ ]</span> : Optional Argument</li>
+
+            </ul>
+
+          </div>
+
+          
+
+          <div id="slash"></div>
+
+          <h2>Slash Commands<span class="codeBlock">/</span></h2>
+
+          <div>
+
+            <ul>
+
+              <li class="collapsible">Shards</li>
+
+              <div class="cmdCollapse" id="shards">
+
+                Description : Let's you search Shards information. It's type, location and time of it's landing.
+
+                <br>
+
+                Usage : <span class="codeBlock">/shards [date] </span>
+
+                <br>
+
+                Example : <span class="codeBlock">/shards</span><br><span class="codeBlock">/shards date:2023-09-16</span>
+
+              </div>
+
+              <div id="guides"></div>
+
+              <li class="collapsible">Seasonal Guides</li>
+
+              <div class="cmdCollapse">
+
+                Description : Let's you search among various Seasonal Guides created by amazing Sky player. This includes, Seasonal Quests, Seasonal Spirits Location and Seasonal Spirits friendship tree(TS or Seasonal Price chart).
+
+                <br>
+
+                Usage : <span class="codeBlock">/seseasonal-guides [ephemeral] </span>
+
+                <br>
+
+                Example : <span class="codeBlock">/seasonal-guides</span>
+
+                <br>
+
+                <span class="codeBlock">/seasonal-guides ephemeral: False</span>
+
+                <br>
+
+                Note : Some guides may become outdated as the game evolves.
+
+              </div>
+
+              <div id="skytimes"></div>
+
+              <li class="collapsible">Sky-Times</li>
+
+              <div class="cmdCollapse">
+
+                Description : Let's you know the upcoming (or currently active) in-game events times such as Grandma, Geyser, Turtle, Daily reset, Eden reset times.
+
+                <br>
+
+                Usage : <span class="codeBlock">/sky-times [times] </span>
+
+                <br>
+
+                Example : <span class="codeBlock">/sky-times</span>
+
+                <br>
+
+                <span class="codeBlock">/sky-times times:Grandma Time</span>
+
+                <br>
+
+                <span class="codeBlock">/sky-times times:Geyser Time</span>
+
+                <br>
+
+                Note : By default it gives all times if none is selected, for more information, choose a time in optional subcommand.
+
+              </div>
+
+              <div id="timestamp"></div>
+
+              <li class="collapsible">Timestamp</li>
+
+              <div class="cmdCollapse">
+
+                Description : Let's you convert time into UNIX timestamp.
+
+                <br>
+
+                Usage : <span class="codeBlock">/timestamp < time > [timezone][date] [month][year][format]</time></span>
+
+                <br>
+
+                Example : <span class="codeBlock">/timestamp 16 47 22</span>
+
+                <br>
+
+                Note : By default it converts to California time as TGC (Game's Dev) is based from there, but user can optionally provide their own timezone should they wish.
+
+              </div>
+
+            
+
+            </ul>
+
+          </div>
+
+          
+
+          <h2 id="prefix">Prefix Commands<span class="codeBlock">!</span></h2>
+
+          <div>
+
+            <ul>
+
+              <li class="collapsible">SkyTimes</li>
+
+              <div class="cmdCollapse">
+
+                Description : Let's you know the upcoming (or currently active) in-game events times such as Grandma, Geyser, Turtle, Daily reset, Eden reset times.
+
+                <br>
+
+                Usage : <span class="codeBlock">!skytimes [times] </span>
+
+                <br>
+
+                Example : <span class="codeBlock">!skytimes</span>
+
+                <br>
+
+                <span class="codeBlock">!skytimes grandma</span>
+
+                <br>
+
+                <span class="codeBlock">!skytimes geyser</span>
+
+                <br>
+
+                Note : By default it gives all times if none is selected, for more information, choose a time in optional subcommand.
+
+              </div>
+
+              <li class="collapsible">Credits</li>
+
+              <div class="cmdCollapse">
+
+                Description : Credits of all the people whose work is included in the bot. Their hardwork and precious contributions made this bot possible.
+
+                <br>
+
+                Usage : <span class="codeBlock"> !credits</span>
+
+                <br>
+
+                Example : <span class="codeBlock">!credits</span>
+
+              </div>
+
+              <li class="collapsible">Ping</li>
+
+              <div class="cmdCollapse">
+
+                Description: Check Bot's ping. 
+
+                <br>
+
+                Usage : <span class="codeBlock">!ping</span>
+
+                <br>
+
+                Example : <span class="codeBlock">!ping</span>
+                
+              </div>
+
+              <li class="collapsible" id="sfw">SkyGPT</li>
+
+              <div class="cmdCollapse">
+
+                Description : SkyGPT is based on OpenAI's ChatGPT, it answers to questions regarding the game Sky: Children of the Light. It has funny and sarcastic personality,  and is trained on some of Sky's data. As, ChatGPT's knowledge is limited upto 2021, it often provides wrong information. It's good to check with other players. It's more for fun than anything. 
+
+                <br>
+
+                Usage : <span class="codeBlock">!skygpt set #channelname </span>(Sets up the bot to listen for user's message in provided channel.)
+                <br>
+                <span class="codeBlock">!skygpt stop</span>(Stops the AI response in any and all channel it has been set for a server.)
+                
+                <br>
+
+                Example : <span class="codeBlock">!skygpt set #skyai-fun</span>
+                <br>
+                <span class="codeBlock">!skygpt stop</span>
+                
+                <br>
+                
+                Note : Bot will listen to any and all messages sent to the channel specified during setup and reply to it with it's response. You can make the bot ignore a message by adding <span class="codeBlock">?</span> before a message.
+
+            </ul>
+
+          </div>
+
+          <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+          
+
+          <ul>
+
+            <li>Status : Online</li>
+
+            <li>About me : No Results </li>
+
+            <li>Prefix : ! </li>
+
+            <!-- <li></li> -->
+
+          </ul>
+
+          <div class="doublespace"></div>
+
+          <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="../index.js"></script>
+
+  <script src="./commands.js"></script>
+
+</body>
+
+</html>

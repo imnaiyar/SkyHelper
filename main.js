@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
 const config = require('./config.json');
+require('./presence/presence');
 const { slashListener, prefixListener} = require('./eventhandler/commandListener');
 const { registerEventHandlers, } = require('./eventhandler/eventHandlers');
 const {shardTimeline} = require('./interactionhandler/shards/shardsTimeline.js')
@@ -24,12 +25,19 @@ process.on('unhandledRejection', (reason, promise) => {
 
 client.on('ready', () => { 
    console.log(`Logged in as ${client.user.tag}`); 
-   client.user.setPresence({ 
-     activities: [{ name: `Shards in ${client.guilds.cache.size} servers.`, type: ActivityType.Watching }], 
-     status: 'online', 
-   }); 
   
  registerEventHandlers(); 
+    let totalMembers = 0;
+
+  // Iterate through all guilds (servers) the bot is a member of
+
+  client.guilds.cache.forEach(guild => {
+
+    totalMembers += guild.memberCount;
+
+  });
+
+  console.log(`Total members across all servers: ${totalMembers}`);
  });
 client.on
    ('interactionCreate', async (interaction) => {
@@ -83,6 +91,12 @@ client.on('messageCreate', async message =>  {
   if (command === 'tests') {
     await message.deferReply()
     message.editReply(`<:vstrophy:760525592419500073>`);
+  } else if (command === 'ping') {
+      const start = Date.now();
+      const ping = client.ws.ping;
+      const end = Date.now();
+      const messageLatency = end - start;
+      await message.reply(`Bot's response time: ${messageLatency}ms\nBot's Ping - ${ping}ms`)
   }
 });
 

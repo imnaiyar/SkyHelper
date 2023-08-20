@@ -3,21 +3,31 @@ const { StimesReply } = require('../eventhandler/StimesReply');
 const { PtimesReply } = require('../eventhandler/prefixListener');
 
 async function skyTimes(interaction, message, args) {
-  const targetTimezone = 'Asia/Kolkata';
+  const targetTimezone = 'Asia/Kolkata'; // Set the target time zone (example: Eastern Time)
   const now = moment().tz(targetTimezone);
 
   // Geyser Calculation
-  let geyserResult;
+  let geyserResultStr;
   const geyserTargetTime = now.clone().startOf('day').add(30, 'minutes');
 
   while (now.isAfter(geyserTargetTime)) {
     geyserTargetTime.add(2, 'hours');
   }
+  const geyserStart = geyserTargetTime.clone().subtract(2, 'hours')
 
-  const geyserUnixTimestamp = Math.floor(geyserTargetTime.valueOf() / 1000);
+ const geyserEnd = geyserTargetTime.clone().subtract(1, 'hours').subtract(45, 'minutes');
+ 
+ const geyserUnixTimestamp = Math.floor(geyserTargetTime.valueOf() / 1000);
+ const geyserEndUnix = Math.floor(geyserEnd.valueOf() / 1000);
+ if (now.isBetween(geyserStart, geyserEnd)) {
+   const geyserDuration = moment.duration(geyserEnd.diff(now));
+   const geyserOnEnd = `${geyserDuration.minutes()} minutes  ${geyserDuration.seconds()} seconds.`;
+    geyserResultStr = `Geyser is currently ongoing and will end at <t:${geyserEndUnix}:t> (in  ${geyserOnEnd})\n\`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t>`;
+    } else {
+
   const durationGeyser = moment.duration(geyserTargetTime.diff(now));
   
-  let geyserResultStr = `<t:${geyserUnixTimestamp}:t> ( in `;
+  geyserResultStr = `\`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t> ( in `;
   if (durationGeyser.hours() > 0) {
     geyserResultStr += `${durationGeyser.hours()} hours`;
   }
@@ -25,19 +35,27 @@ async function skyTimes(interaction, message, args) {
     geyserResultStr += ` ${durationGeyser.minutes()} minutes`;
   }
   geyserResultStr += ` ${durationGeyser.seconds()} seconds)`;
-
+}
 
   // Grandma Calculation
-  let grandmaResult;
+  let grandmaResultStr;
   const grandmaTargetTime = now.clone().startOf('day').add(1, 'hours');
 
   while (now.isAfter(grandmaTargetTime)) {
     grandmaTargetTime.add(2, 'hours');
   }
-
   const grandmaUnixTimestamp = Math.floor(grandmaTargetTime.valueOf() / 1000);
+ const grandmaStart = grandmaTargetTime.clone().subtract(2, 'hours')
+
+ const grandmaEnd = grandmaTargetTime.clone().subtract(1, 'hours').subtract(45, 'minutes');
+ const grandmaEndUnix = Math.floor(grandmaEnd.valueOf() / 1000);
+ if (now.isBetween(grandmaStart, grandmaEnd)) {
+   const grandmaDuration = moment.duration(grandmaEnd.diff(now));
+   const grandmaOnEnd = `${grandmaDuration.minutes()} minutes  ${grandmaDuration.seconds()} seconds.`;
+    grandmaResultStr = `Grandma is currently ongoing and will end at <t:${grandmaEndUnix}:t> (in ${grandmaOnEnd})\n\`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t>`;
+    } else {
   const durationGrandma = moment.duration(grandmaTargetTime.diff(now));
-  let grandmaResultStr = `<t:${grandmaUnixTimestamp}:t> ( in `;
+    grandmaResultStr = `\`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t> ( in `;
   if (durationGrandma.hours() > 0) {
     grandmaResultStr += `${durationGrandma.hours()} hours`;
   }
@@ -45,18 +63,26 @@ async function skyTimes(interaction, message, args) {
     grandmaResultStr += ` ${durationGrandma.minutes()} minutes`;
   }
   grandmaResultStr += ` ${durationGrandma.seconds()} seconds)`;
+    }
 
   // Turtle Calculation
-  let turtleResult;
+  let turtleResultStr;
   const turtleTargetTime = now.clone().startOf('day').add(1, 'hours').add(20, 'minutes');
 
   while (now.isAfter(turtleTargetTime)) {
     turtleTargetTime.add(2, 'hours');
   }
-
   const turtleUnixTimestamp = Math.floor(turtleTargetTime.valueOf() / 1000);
+ const turtleStart = turtleTargetTime.clone().subtract(2, 'hours')
+
+ const turtleEnd = turtleTargetTime.clone().subtract(1, 'hours').subtract(45, 'minutes');
+ const turtleEndUnix = Math.floor(turtleEnd.valueOf() / 1000);
   const durationTurtle = moment.duration(turtleTargetTime.diff(now));
-  let turtleResultStr = `<t:${turtleUnixTimestamp}:t> ( in `;
+  if (now.isBetween(turtleStart, turtleEnd)) {
+   const turtleDuration = moment.duration(turtleEnd.diff(now));
+   const turtleOnEnd = `${turtleDuration.minutes()} minutes  ${turtleDuration.seconds()} seconds.`;
+    turtleResultStr = `Turtle is currently ongoing and will end at <t:${turtleEndUnix}:t>(in ${turtleOnEnd})\n\`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t>`;
+    } else { turtleResultStr = `\`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t> ( in `;
   if (durationTurtle.hours() > 0) {
     turtleResultStr += `${durationTurtle.hours()} hours`;
   }
@@ -64,7 +90,7 @@ async function skyTimes(interaction, message, args) {
     turtleResultStr += ` ${durationTurtle.minutes()} minutes`;
   }
   turtleResultStr += ` ${durationTurtle.seconds()} seconds)`;
-
+}
   // Reset Calculation
   let resetResult;
   const resetTargetTime = now.clone().startOf('day').add(12, 'hours').add(30, 'Minutes');
@@ -117,7 +143,7 @@ edenResultStr += ` ${durationEden.seconds()} seconds)`;
 
   
   if (message || args) {
-    await PtimesReply(message, args, geyserResult, grandmaResult, resetResult, edenResult, turtleResult);}
+    await PtimesReply(message, args, geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr);}
   else
   if (interaction) {
     await StimesReply(interaction, geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr);

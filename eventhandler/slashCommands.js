@@ -17,7 +17,7 @@ async function createSlashCommands() {
           .setRequired(false))
        .toJSON();
    const seasonGuide = new SlashCommandBuilder()
-      .setName('seasonal_guides')
+      .setName('seasonal-guides')
       .setDescription('Seasonal Guides.(Quests/Spirit Locations/TS Price Tree)')
       .addStringOption(option =>
         option
@@ -29,8 +29,8 @@ async function createSlashCommands() {
        .toJSON();
   
   const testCommand = new SlashCommandBuilder()
-      .setName('test')
-      .setDescription('tesy for random stuff')
+      .setName('help')
+      .setDescription('Get the List of Slash and Prefix commands.')
        .toJSON();
        
   
@@ -41,7 +41,7 @@ async function createSlashCommands() {
       .addStringOption(option =>
         option
           .setName('time')
-          .setDescription('The time to convert (format: HH:mm:ss)')
+          .setDescription('The time to convert (format: HH mm ss)')
           .setRequired(true))
       .addStringOption(option =>
         option

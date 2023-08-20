@@ -1,1 +1,443 @@
-[]
+[
+  {
+    "messageId": "1128198589563273306",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:38:24.009000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Sanctuary Island, Daylight Prairie",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "3.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "1st shard will land 1493 hours, 0 minutes, 15 seconds until <t:1694428720:T>",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 11 September 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  },
+  {
+    "messageId": "1128198589563273306",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:38:24.009000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Sanctuary Island, Daylight Prairie",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "3.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "1st shard will land 1493 hours, 0 minutes, 15 seconds until <t:1694428720:T>",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 11 September 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  },
+  {
+    "messageId": "1128199072491261962",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:40:19.066000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Forest End, Hidden Forest",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "2.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "All Shards Ended at <t:1688798400:t> on 07 July 2023 71 hours, 0 minutes, 19 seconds ago.",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 07 July 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  },
+  {
+    "messageId": "1128198589563273306",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:38:24.009000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Sanctuary Island, Daylight Prairie",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "3.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "1st shard will land 1493 hours, 0 minutes, 15 seconds until <t:1694428720:T>",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 11 September 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  },
+  {
+    "messageId": "1128198589563273306",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:38:24.009000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Sanctuary Island, Daylight Prairie",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "3.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "1st shard will land 1493 hours, 0 minutes, 15 seconds until <t:1694428720:T>",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 11 September 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  },
+  {
+    "messageId": "1128199072491261962",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:38:24.009000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Sanctuary Island, Daylight Prairie",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "3.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "1st shard will land 1493 hours, 0 minutes, 15 seconds until <t:1694428720:T>",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 11 September 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  },
+  {
+    "messageId": "1128200887597285478",
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-07-11T05:47:31.999000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Red Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Forest End, Hidden Forest",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "2.5 AC <a:ac5:1125338720183267390>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "All Shards Ended at <t:1688798400:t> on 07 July 2023 71 hours, 7 minutes, 31 seconds ago.",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 16711680,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 07 July 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
+  }
+]

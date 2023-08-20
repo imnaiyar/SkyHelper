@@ -686,29 +686,26 @@ if (!interaction.isButton()) {
 
   if (showButtons) {
       await interaction.deferReply({ephemeral: true});
-    const reply = await interaction.user.send({ embeds: [result], components: [actionRow], fetchReply: true });
-     await interaction.editReply({ content: `Shard information for ${formatDate} sent to DM's.`});
+    const reply = await interaction.editReply({ embeds: [result], components: [actionRow], fetchReply: true });
     const messageId = reply.id;
     
     saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
   } else {
       await interaction.deferReply({ephemeral: true});
-    const reply = await interaction.user.send({ embeds: [result], fetchReply: true });
-     await interaction.editReply({ content: `Shard information for ${formatDate} sent to DM's.`});
+    const reply = await interaction.editReply({ embeds: [result], fetchReply: true });
     const messageId = reply.id;
     
     saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
   }
 } else {
   if (showButtons) {
-    const reply = await interaction.user.send({ embeds: [result], components: [actionRow], fetchReply: true });
+    const reply = await interaction.update({ embeds: [result], components: [actionRow], fetchReply: true });
     const messageId = reply.id;
     
     saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
   } else {
-    const reply = await interaction.user.send({ embeds: [result], fetchReply: true });
+    const reply = await interaction.update({ embeds: [result], fetchReply: true });
     const messageId = reply.id;
-    
     saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
   }
 }
@@ -734,6 +731,5 @@ function saveMessageData(data) {
     });
   });
 }
-
 }
 module.exports = { shardsALt };
