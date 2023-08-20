@@ -85,6 +85,7 @@ const remainingRequestsTime = completion.headers['x-ratelimit-reset-requests'];
             }
 
     } catch (error) {
+      console.error('OpenAI API error:', error);
       const requestsRemaining = error.response.headers['x-ratelimit-remaining-requests'];
       const remainingTime = error.response.headers['x-ratelimit-reset-requests'];
       const errorCode = error.response.status;
