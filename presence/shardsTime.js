@@ -109,7 +109,7 @@ if (currentEvent === 'A') {
             timeRemaining = `${hoursRemaining}h ${minutesRemaining}m`;
             break;
         } else if (i < eventTimings.length - 1 && present.isAfter(eventTiming.end) && present.isBefore(eventTimings[i + 1].start)) {
-          
+                      const duration = moment.duration(eventTimings[i+1].start.diff(present));
             eventStatus = `${i + 2}${getOrdinalSuffix(i + 2)} ${type} shard lands`;
             timeRemaining = ` in ${duration.hours()}h ${duration.minutes()}m`;
             break;
