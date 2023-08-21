@@ -148,6 +148,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = 0;
     originalEmbedData = interaction.message.embeds[0];
     originalActionRow = interaction.message.components?.[0];
+    await saveOriginalData(messageId, originalEmbedData, originalActionRow);
     await showShard(interaction, shardData[currentEvent][currentShardIndex], Zhii, Christian);
   } else if (interaction.customId === 'shard_left') {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
@@ -156,8 +157,10 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(interaction, shardData[currentEvent][currentShardIndex], Zhii, Christian);
   } else if (interaction.customId === 'shard_original') {
-    if (originalEmbedData) {
-      await interaction.update({ embeds: [originalEmbedData], components: [originalActionRow] });
+    const restoredData = restoreOriginalData(interaction.message.id);
+      if (restoredData) {
+          await interaction.update({ embeds: [restoredData.originalEmbedData], components: [restoredData.originalActionRow] });
+      
     }
   }
 }
@@ -255,7 +258,39 @@ if (currentShardIndex === 0) {
     }
     await interaction.update({ embeds: [shardEmbed], components: [actionRow] });
 }
+function saveOriginalData(messageId, originalEmbedData, originalActionRow) {
+  try {
+      const filePath = 'embedData.json';
+      const data = fs.readFileSync(filePath, 'utf8');
+      const embedData = JSON.parse(data);
 
+      if (!embedData[messageId]) {
+          embedData[messageId] = {
+              originalEmbedData,
+              originalActionRow
+          };
+
+          fs.writeFileSync(filePath, JSON.stringify(embedData, null, 2), 'utf8');
+      }
+  } catch (error) {
+      console.error('Error saving original data:', error);
+  }
+}
+function restoreOriginalData(messageId) {
+  try {
+      const filePath = 'embedData.json';
+      const data = fs.readFileSync(filePath, 'utf8');
+      const embedData = JSON.parse(data);
+
+      if (embedData[messageId]) {
+          return embedData[messageId];
+      }
+  } catch (error) {
+      console.error('Error restoring original data:', error);
+  }
+  
+  return null;
+}
 module.exports = {
     shardTimeline,
 };

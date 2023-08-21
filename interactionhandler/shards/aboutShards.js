@@ -1,4 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const fs = require('fs');
 
 const shardInfo = [
     { description: 'What are shards?', image: 'https://media.discordapp.net/attachments/585339436322259003/998518823231688724/I_watch_you_when_u_sleep_20220718171142.png' },
@@ -12,11 +13,12 @@ let currentShardIndex = 0; // Declare currentShardIndex variable.
 
 async function shardInfos(interaction, Art) {
     if (!interaction.isButton()) return;
-
+    const messageId = interaction.message.id;
     if (interaction.customId === 'about_shard') {
         currentShardIndex = 0;
         originalEmbedData = interaction.message.embeds[0];
         originalActionRow = interaction.message.components?.[0];
+        await saveOriginalData(messageId, originalEmbedData, originalActionRow);
         await showShard(interaction, shardInfo[currentShardIndex], Art);
     }else if (interaction.customId === 'left_about') {
         currentShardIndex = Math.max(currentShardIndex - 1, 0);
@@ -25,9 +27,11 @@ async function shardInfos(interaction, Art) {
         currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
         await showShard(interaction, shardInfo[currentShardIndex], Art);
     } else if (interaction.customId === 'original_about') { 
-        if (originalEmbedData) {
-            await interaction.update({ embeds: [originalEmbedData], components: [originalActionRow] });
-        }
+        const restoredData = restoreOriginalData(interaction.message.id);
+      if (restoredData) {
+          await interaction.update({ embeds: [restoredData.originalEmbedData], components: [restoredData.originalActionRow] });
+      
+    }
     }
 }
   
@@ -75,7 +79,39 @@ async function showShard(interaction, shard, Art) {
     }
     await interaction.update({ embeds: [shardEmbed], components: [actionRow] });
 }
-
+function saveOriginalData(messageId, originalEmbedData, originalActionRow) {
+    try {
+        const filePath = 'embedData.json';
+        const data = fs.readFileSync(filePath, 'utf8');
+        const embedData = JSON.parse(data);
+  
+        if (!embedData[messageId]) {
+            embedData[messageId] = {
+                originalEmbedData,
+                originalActionRow
+            };
+  
+            fs.writeFileSync(filePath, JSON.stringify(embedData, null, 2), 'utf8');
+        }
+    } catch (error) {
+        console.error('Error saving original data:', error);
+    }
+  }
+  function restoreOriginalData(messageId) {
+    try {
+        const filePath = 'embedData.json';
+        const data = fs.readFileSync(filePath, 'utf8');
+        const embedData = JSON.parse(data);
+  
+        if (embedData[messageId]) {
+            return embedData[messageId];
+        }
+    } catch (error) {
+        console.error('Error restoring original data:', error);
+    }
+    
+    return null;
+  }
 module.exports = {
     shardInfos,
 };
