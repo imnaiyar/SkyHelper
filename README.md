@@ -1,3 +1,5 @@
+[![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)(https://top.gg/bot/1121541967730450574)
+
 # SkyBot
 Simple discord bot that has function related to Sky: Children of Lights.
 # Commnads
