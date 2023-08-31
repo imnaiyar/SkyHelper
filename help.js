@@ -1,10 +1,6 @@
 const { Client, GatewayIntentBits, EmbedBuilder,  ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} = require('discord.js');
 const config = require('./config.json');
-const client = new Client({
-   intents: [
-     GatewayIntentBits.Guilds,
-     GatewayIntentBits.GuildMessages,
-     ] });
+const  { client } = require ('./main')
      
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
@@ -82,6 +78,3 @@ client.on('interactionCreate', async interaction => {
   })
 
 
-  
-const token = config.token;
-client.login(token);

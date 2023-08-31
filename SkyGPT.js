@@ -1,18 +1,10 @@
 const fs = require('fs');
 const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
 const config = require('./config.json');
-const client = new Client({
-   intents: [
-     GatewayIntentBits.Guilds,
-     GatewayIntentBits.GuildMessages, 
-     GatewayIntentBits.MessageContent,
-     GatewayIntentBits.DirectMessageReactions,
-     GatewayIntentBits.DirectMessages,
-     GatewayIntentBits.GuildMembers,
-    ] });
+const { client } = require('./main')
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
-    apiKey: config.openAIApi,
+    apiKey: process.env.OPENAI_TOKEN,
 });
 const openai = new OpenAIApi(configuration);
 let targetChannels = {};
@@ -99,6 +91,3 @@ const remainingRequestsTime = completion.headers['x-ratelimit-reset-requests'];
     }
   }
 });
-
-const token = config.token;
-client.login(token);

@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
 const config = require('./config.json');
 require('./presence/presence');
+const { setupPresence } = require('./presence/presence');
 const { slashListener, prefixListener} = require('./eventhandler/commandListener');
 const { registerEventHandlers, } = require('./eventhandler/eventHandlers');
 const {shardTimeline} = require('./interactionhandler/shards/shardsTimeline.js')
@@ -52,6 +53,7 @@ client.on
     shardLocation(interaction, Gale, Clement);
     shardInfos(interaction, Art);
   });
+  setupPresence(client);
   client.on('messageCreate', async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(config.prefix)) return;
@@ -106,7 +108,5 @@ client.on('messageCreate', async message =>  {
     prefixListener(message);
   });
 
-
-
-const token = config.token;
-client.login(token);
+module.exports = {client}
+client.login(process.env.TOKEN);

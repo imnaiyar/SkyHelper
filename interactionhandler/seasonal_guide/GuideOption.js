@@ -2,16 +2,7 @@ const { Client, StringSelectMenuBuilder, ActionRowBuilder, GatewayIntentBits } =
 const choiceResponses = require('./GuideResponse.js');
 
 const config = require('../../config.json');
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.DirectMessageReactions,
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.GuildMembers,
-  ],
-});
+const { client } = require ('../../main')
 function clearEphemeralChoice(messageId) {
   ephemeralChoice.delete(messageId);
 }
@@ -244,5 +235,3 @@ default:
 return '';
 }
 }
-const token = config.token;
-client.login(token);

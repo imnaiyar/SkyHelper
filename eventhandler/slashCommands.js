@@ -97,7 +97,7 @@ async function createSlashCommands() {
     .toJSON();
 
 await rest.put(
-  Routes.applicationCommands(clientId),
+  Routes.applicationCommands(process.env.CLIENT_ID),
   { body: [timestampCommandData, timesSlash, shardsALt, seasonGuide, testCommand] }
 );
 

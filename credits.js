@@ -1,15 +1,7 @@
 const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
 const config = require('./config.json');
-const client = new Client({
-   intents: [
-     GatewayIntentBits.Guilds,
-     GatewayIntentBits.GuildMessages, 
-     GatewayIntentBits.MessageContent,
-     GatewayIntentBits.DirectMessageReactions,
-     GatewayIntentBits.DirectMessages,
-     GatewayIntentBits.GuildMembers,
-    ] });
-    
+const { client } = require('./main');
+
  client.on('messageCreate', async message =>  {
   if (!message.content.startsWith('!') || message.author.bot) return;
        
@@ -64,6 +56,3 @@ const client = new Client({
     message.reply({embeds: [result]});
   }
 });
-
-const token = config.token;
-client.login(token);

@@ -1,12 +1,6 @@
 const { Client, GatewayIntentBits, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-});
+const client = require ('./main')
 const config = require('./config.json');
 
 // Specify the ID of the channel you want to track
@@ -127,5 +121,3 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
-const token = config.token;
-client.login(token);
