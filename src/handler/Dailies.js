@@ -1,8 +1,6 @@
 const { Client, GatewayIntentBits, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
-const client = require ('./main')
-const config = require('./config.json');
-
+const client = require ('@src/main')
 // Specify the ID of the channel you want to track
 const channelIdToTrack = '867638574571323425';
 

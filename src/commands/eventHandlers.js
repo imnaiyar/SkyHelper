@@ -1,7 +1,7 @@
 const { createSlashCommands } = require('./slashCommands');
-const { timestampInteraction } = require('../interactionhandler/timestampHandler');
-const {skyTimes} = require ('../interactionhandler/skyTimes');
-const {shardsALt} = require('../interactionhandler/shards/shardsAlt')
+const { timestampInteraction } = require('@handler/timestampHandler');
+const {skyTimes} = require ('@handler/skyTimes');
+const {shardsALt} = require('@shards/shardsAlt')
 
 function registerEventHandlers() {
   createSlashCommands();

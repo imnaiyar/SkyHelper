@@ -1,12 +1,12 @@
 const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
-const config = require('./config.json');
-require('./presence/presence');
-const { setupPresence } = require('./presence/presence');
-const { slashListener, prefixListener} = require('./eventhandler/commandListener');
-const { registerEventHandlers, } = require('./eventhandler/eventHandlers');
-const {shardTimeline} = require('./interactionhandler/shards/shardsTimeline.js')
-const {shardLocation} = require('./interactionhandler/shards/shardsLocation')
-const {shardInfos} = require('./interactionhandler/shards/aboutShards')
+require('@presence/presence.js');
+const { initializeMongoose } = require("@src/database/mongoose");
+const { setupPresence } = require('@presence/presence');
+const { slashListener, prefixListener} = require('@src/commands/commandListener');
+const { registerEventHandlers, } = require('@src/commands/eventHandlers');
+const {shardTimeline} = require('@shards/shardsTimeline.js')
+const {shardLocation} = require('@shards/shardsLocation')
+const {shardInfos} = require('@shards/aboutShards')
 const client = new Client({
    intents: [
      GatewayIntentBits.Guilds,
@@ -22,8 +22,7 @@ const client = new Client({
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
-
-
+initializeMongoose();
 client.on('ready', () => { 
    console.log(`Logged in as ${client.user.tag}`); 
   
@@ -56,10 +55,10 @@ client.on
   setupPresence(client);
   client.on('messageCreate', async message => {
   if (message.author.bot) return;
-  if (!message.content.startsWith(config.prefix)) return;
+  if (!message.content.startsWith(process.env.PREFIX)) return;
   if (message.author.id !== '851588007697580033') return;
 
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/);
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
    if (command === 'maintenance') {
 
@@ -87,7 +86,7 @@ client.on
 client.on('messageCreate', async message =>  {
   if (!message.content.startsWith('!') || message.author.bot) return;
 
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/); // Parse command arguments
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/); // Parse command arguments
   const command = args.shift().toLowerCase(); // Get the command itself
 
   if (command === 'tests') {

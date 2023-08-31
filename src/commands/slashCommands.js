@@ -1,9 +1,8 @@
 const { REST } = require('discord.js');
 const { Routes } = require('discord-api-types/v9');
-const { clientId, token } = require('../config.json');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
 async function createSlashCommands() {
   try {

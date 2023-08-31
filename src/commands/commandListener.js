@@ -1,9 +1,8 @@
 const { timestampInteraction, skyTimes, shardsALt, shardsInteraction} = require('./eventHandlers');
 const moment = require('moment-timezone')
 const {Permissions, PermissionsBitField} = require('discord.js');
-const {nextRedEvents} = require('../interactionhandler/shards/nextRed.js')
-const {nextEvent} = require('../interactionhandler/UpcomingEvents.js')
-const config = require('../config.json');
+const {nextRedEvents} = require('@shards/nextRed.js')
+const {nextEvent} = require('@handler/UpcomingEvents.js')
  async function slashListener(interaction) {
   if (!interaction.isCommand()) return;
   if (interaction.commandName === 'shardsalt') {
@@ -36,9 +35,9 @@ const config = require('../config.json');
  };
 
 function prefixListener(message){
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) return;
 
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/);
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
   if (command === 'skytimes') {

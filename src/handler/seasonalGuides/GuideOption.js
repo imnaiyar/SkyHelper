@@ -1,8 +1,6 @@
 const { Client, StringSelectMenuBuilder, ActionRowBuilder, GatewayIntentBits } = require('discord.js');
 const choiceResponses = require('./GuideResponse.js');
-
-const config = require('../../config.json');
-const { client } = require ('../../main')
+const { client } = require ('@root/main')
 function clearEphemeralChoice(messageId) {
   ephemeralChoice.delete(messageId);
 }

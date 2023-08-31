@@ -1,22 +1,16 @@
 const fs = require('fs');
-const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
-const config = require('./config.json');
-const { client } = require('./main')
+const { PermissionsBitField} = require('discord.js');
+const { client } = require('@root/main')
 const { Configuration, OpenAIApi } = require("openai");
+const { getSettings} = require("@schemas/Guild");
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_TOKEN,
 });
 const openai = new OpenAIApi(configuration);
-let targetChannels = {};
-try {
-  const data = fs.readFileSync('target_channels.json', 'utf-8');
-  targetChannels = JSON.parse(data);
-} catch (err) {
-  console.error('Error reading target channels:', err);
-}
 
 client.on('messageCreate', async (message) => {
   if (message.author.bot) return;
+  const settings = await getSettings(message.guild);
 
   if (message.content.startsWith('!skygpt')) {
     // Check if the user is an admin
@@ -27,9 +21,12 @@ client.on('messageCreate', async (message) => {
       if (args[1] === 'set') {
         if (args.length === 3) {
           const channelID = args[2].replace(/<#|>/g, ''); // Extract channel ID
-          targetChannels[message.guild.id] = channelID;
-          fs.writeFileSync('target_channels.json', JSON.stringify(targetChannels), 'utf-8');
-          const targetChannel = message.guild.channels.cache.get(channelID); // Get the channel object
+      if (settings.skyGPT) {
+        return message.reply('There\'s already an existing channel');
+      };
+      const targetChannel = message.guild.channels.cache.get(channelID);
+      settings.skyGPT = targetChannel.id;
+      await settings.save();
     if (targetChannel) {
       message.channel.send(`I will now provide Sky CoTL AI support in ${targetChannel.toString()}.`);
     } else {
@@ -42,15 +39,16 @@ client.on('messageCreate', async (message) => {
 
       // Stop responding in target channel
       else if (args[1] === 'stop') {
-        delete targetChannels[message.guild.id];
-        fs.writeFileSync('target_channels.json', JSON.stringify(targetChannels), 'utf-8');
-        message.channel.send(`SkyGPT will no longer respond in the specified channel.`);
+        const channel = settings.skyGPT
+        settings.skyGPT = null;
+        await settings.save();
+        message.channel.send(`SkyGPT will no longer respond in the <#${channel}>`);
       }
     } else return;
   }
-
-  const targetChannelID = targetChannels[message.guild.id];
-  if (targetChannelID && message.channel.id === targetChannelID) {
+  if (!settings.skyGPT) return;
+  const channel = message.guild.channels.cache.get(settings.skyGPT);
+  if (message.channel.id === channel.id) {
     if (message.content.startsWith('?')) return;
     message.channel.sendTyping();
     try {
@@ -66,9 +64,9 @@ client.on('messageCreate', async (message) => {
     const botReply = completion.data.choices[0].message;
     
     const botReplyStr1 = botReply.content.toString();
-const remainingRequests = completion.headers['x-ratelimit-remaining-requests'];
-const remainingRequestsTime = completion.headers['x-ratelimit-reset-requests'];
- const botReplyStr = `${botReplyStr1}\n\n**Requests remaining for the day:** ${remainingRequests} (+1 requests every ~7 minutes.)\n**Max request in (200):** ${remainingRequestsTime}`
+    const remainingRequests = completion.headers['x-ratelimit-remaining-requests'];
+    const remainingRequestsTime = completion.headers['x-ratelimit-reset-requests'];
+    const botReplyStr = `${botReplyStr1}\n\n**Requests remaining for the day:** ${remainingRequests} (+1 requests every ~7 minutes.)\n**Max request in (200):** ${remainingRequestsTime}`
   
   const chunkSize = 2000;
             for (let i = 0; i < botReplyStr.length; i += chunkSize) {

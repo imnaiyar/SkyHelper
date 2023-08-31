@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits, EmbedBuilder,  ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} = require('discord.js');
-const config = require('./config.json');
-const  { client } = require ('./main')
+const  { client } = require ('@root/main')
      
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;

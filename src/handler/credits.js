@@ -1,11 +1,10 @@
 const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
-const config = require('./config.json');
-const { client } = require('./main');
+const { client } = require('@root/main');
 
  client.on('messageCreate', async message =>  {
   if (!message.content.startsWith('!') || message.author.bot) return;
        
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/);
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
   const command = args.shift().toLowerCase(); 
 
   if (command === 'credits') {
