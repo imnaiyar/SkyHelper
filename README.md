@@ -1,3 +1,5 @@
+[![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)(https://top.gg/bot/1121541967730450574)
+
 # SkyBot
 Simple discord bot that has function related to Sky: Children of Lights.
 # Commnads
@@ -34,3 +36,5 @@ This bot wouldn't be possible without these people and the work they do.
 ● Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
 ● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.  
 ● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).
+
+# This bot is not affiliated with Sky: Children of the Light or thatgamecompany.

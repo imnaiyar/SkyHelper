@@ -97,24 +97,24 @@ if (currentEvent === 'A') {
         const present = moment().tz(timezone);
 
         if (present.isBetween(eventTiming.start, eventTiming.end)) {
-           eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} ${type} shard`;
+           eventStatus = `🌋 ${i + 1}${getOrdinalSuffix(i + 1)} ${type} shard`;
             const duration = moment.duration(eventTiming.end.diff(present));
-            timeRemaining = `will end in ${duration.hours()}h ${duration.minutes()}m`;
+            timeRemaining = `ends in ${duration.hours()}h ${duration.minutes()}m`;
             break;
         } else if (present.isBefore(eventTiming.start)) {
-            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} ${type} shard lands in`;
+            eventStatus = `🌋 ${i + 1}${getOrdinalSuffix(i + 1)} ${type} shard lands in`;
             const duration = moment.duration(eventTiming.start.diff(present));
-              const hoursRemaining = Math.floor(duration.asHours());
+              const hoursRemaining = Math.floor(durinion.asHours());
               const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
             timeRemaining = `${hoursRemaining}h ${minutesRemaining}m`;
             break;
         } else if (i < eventTimings.length - 1 && present.isAfter(eventTiming.end) && present.isBefore(eventTimings[i + 1].start)) {
-          
-            eventStatus = `${i + 2}${getOrdinalSuffix(i + 2)} ${type} shard lands`;
-            timeRemaining = ` in ${duration.hours()}h ${duration.minutes()}m`;
+                      const duration = moment.duration(eventTimings[i+1].start.diff(present));
+            eventStatus = `🌋 ${i + 2}${getOrdinalSuffix(i + 2)} ${type} shard lands`;
+            timeRemaining = `in ${duration.hours()}h ${duration.minutes()}m`;
             break;
-        } else if (i === eventTimings.length - 1 && present.isAfter(eventTiming.end)) {
-        eventStatus = `All Shards Has Ended For Today.`;
+        } else if (i === eventTimings.length - 1 && p.present.isAfter(eventTiming.end)) {
+        eventStatus = `🌋 All Shards Has Ended For Today.`;
         timeRemaining = '';
         break;
     }
@@ -122,4 +122,4 @@ if (currentEvent === 'A') {
     const status = `${eventStatus} ${timeRemaining}`
 return status;
 }
-module.exports = { shardsTime };
+module.exports = { shardsTime }
