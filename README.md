@@ -1,4 +1,4 @@
-[![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)(https://top.gg/bot/1121541967730450574)]
+[![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)](https://top.gg/bot/1121541967730450574)
 
 # I'm in the process of restructuring the whole code base because it's massively unorganised and it's hard to navigate,  so I'll change most of the paths and some codes, but overall code should be same
 # SkyBot
