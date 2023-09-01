@@ -2,7 +2,7 @@ const fs = require('fs');
 const { PermissionsBitField} = require('discord.js');
 const { client } = require('@root/main')
 const { Configuration, OpenAIApi } = require("openai");
-const { getSettings} = require("@schemas/Guild");
+const { getSettings } = require("@schemas/Guild");
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_TOKEN,
 });

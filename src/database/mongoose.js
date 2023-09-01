@@ -23,6 +23,7 @@ module.exports = {
 
   schemas: {
     Guild: require("./schemas/Guild"),
+    STATS: require("./schemas/botStats"),
     Shards: require("./schemas/Shards"),
     User: require("./schemas/User"),
   },

@@ -1,10 +1,11 @@
 const express = require('express');
+const { DASHBOARD } = require("@root/config");
 
 const app = express();
 
 const path = require('path');
 
-const PORT = 8080;
+const PORT = DASHBOARD.port;
 const tosRoute = require('./tos');
 
 const privacyRoute = require('./privacy');

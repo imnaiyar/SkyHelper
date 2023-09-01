@@ -1,7 +1,6 @@
-const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
-require('@presence/presence.js');
+const { Client, GatewayIntentBits, WebhookClient,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
 const { initializeMongoose } = require("@src/database/mongoose");
-const { setupPresence } = require('@presence/presence');
+const { setupPresence } = require('@events/presence');
 const { slashListener, prefixListener} = require('@src/commands/commandListener');
 const { registerEventHandlers, } = require('@src/commands/eventHandlers');
 const {shardTimeline} = require('@shards/shardsTimeline.js')
@@ -25,22 +24,26 @@ process.on('unhandledRejection', (reason, promise) => {
 initializeMongoose();
 client.on('ready', () => { 
    console.log(`Logged in as ${client.user.tag}`); 
-  
  registerEventHandlers(); 
-    let totalMembers = 0;
-
-  // Iterate through all guilds (servers) the bot is a member of
-
-  client.guilds.cache.forEach(guild => {
-
-    totalMembers += guild.memberCount;
-
-  });
-
-  console.log(`Total members across all servers: ${totalMembers}`);
  });
+ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 client.on
    ('interactionCreate', async (interaction) => {
+    const embed = new EmbedBuilder()
+    .setTitle("New command used")
+    .addFields(
+      { name: `Command`, value: `\`${interaction}\`` },
+      { name: `User`, value: `${interaction.user.username} \`[${interaction.member.id}]\`` },
+      { name: `Server`, value: `${interaction.guild.name} \`[${interaction.guild.id}]\`` },
+      { name: `Channel`, value: `${interaction.channel.name} \`[${interaction.channel.id}]\`` }
+    )
+    .setColor('Blurple')
+    .setTimestamp();
+
+  // Slash Commands
+  if (interaction.isChatInputCommand()) {
+    Logger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
+  }
      const Art = await client.users.fetch('504605855539265537');
      const Zhii = await client.users.fetch('650487047160725508');
      const Gale = await client.users.fetch('473761854175576075');

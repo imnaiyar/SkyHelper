@@ -35,7 +35,6 @@
     "@handler": "src/handler/",
     "@shards": "src/handler/shards/",
     "@guides": "src/handler/seasonalGuides/",
-    "@presence": "src/events/",
     "@src": "src/",
     "@root": ".",
     "@schemas": "src/database/schemas/",
