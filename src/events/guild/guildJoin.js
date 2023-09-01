@@ -15,7 +15,7 @@ client.on('guildCreate', async (guild) => {
   console.log(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
   await registerGuild(guild);
   const settings = await botSettings(client);
-  settings.data.server = client.guilds.cache.size;
+  settings.data.servers = client.guilds.cache.size;
   settings.data.members = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
   await settings.save();
 
