@@ -4,7 +4,7 @@ const { shardsReply } = require('./shardsReply');
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 
-async function shardsALt(interaction){
+async function shardsAlt(interaction){
     const timezone = 'America/Los_Angeles';
     const dateOption = interaction.options.getString('date');
 
@@ -146,4 +146,4 @@ if (currentEvent === 'A') {
     }
    await shardsReply(interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek);
 }
-module.exports = { shardsALt };
+module.exports = { shardsAlt };

@@ -1,5 +1,6 @@
 const { ChannelType, EmbedBuilder, WebhookClient } = require("discord.js");
 const { getSettings: registerGuild } = require("@schemas/Guild");
+const Logger = require('@src/logger')
 const { botSettings } = require("@schemas/botStats");
 const { client } = require('@root/main');
 
@@ -12,7 +13,7 @@ const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.G
 client.on('guildCreate', async (guild) => {
   if (!guild.available) return;
   if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
-  console.log(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
+  Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
   await registerGuild(guild);
   const settings = await botSettings(client);
   settings.data.servers = client.guilds.cache.size;

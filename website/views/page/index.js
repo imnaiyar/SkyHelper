@@ -9,10 +9,11 @@ const rightCol = document.querySelector('.right-col')
 const section = document.getElementsByClassName('section');
 const subSection = document.getElementsByClassName('sub-section');
 const title = document.getElementsByClassName('title');
+const Logger = require('@src/logger')
 
 var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
-console.log("Loaded.")
+Logger.success("Loaded.")
 
 openMenu.addEventListener('click',show);
 closeMenu.addEventListener('click',close);

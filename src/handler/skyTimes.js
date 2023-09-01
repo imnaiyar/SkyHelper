@@ -1,6 +1,6 @@
 const moment = require('moment-timezone');
-const { StimesReply } = require('@src/commands/StimesReply');
-const { PtimesReply } = require('@src/commands/prefixListener');
+const { StimesReply } = require('@handler/subs/StimesReply');
+const { PtimesReply } = require('@handler/subs/prefixListener');
 
 async function skyTimes(interaction, message, args) {
   const targetTimezone = 'Asia/Kolkata'; // Set the target time zone (example: Eastern Time)

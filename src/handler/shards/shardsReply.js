@@ -1,4 +1,5 @@
 const { EmbedBuilder} = require('discord.js');
+const Logger = require('@src/logger')
 const fs = require('fs');
 const moment = require('moment');
 const {actionRow} = require('./Buttons');
@@ -10,7 +11,7 @@ const tenMinutesInMillis = 15 * 60 * 1000;
 
   if (err) {
 
-    console.error(`Error reading ${messageDataFile}:`, err);
+    Logger.error(`Error reading ${messageDataFile}:`, err);
     return;
   }
 
@@ -18,7 +19,7 @@ const tenMinutesInMillis = 15 * 60 * 1000;
   try {
     messages = JSON.parse(data);
   } catch (error) {
-    console.error(`Error parsing JSON data:`, error);
+    Logger.error(`Error parsing JSON data:`, error);
     return;
   }
   
@@ -30,10 +31,10 @@ const tenMinutesInMillis = 15 * 60 * 1000;
 
   fs.writeFile(messageDataFile, JSON.stringify(updatedMessages), 'utf8', (err) => {
     if (err) {
-      console.error(`Error writing ${messageDataFile}:`, err);
+      Logger.error(`Error writing ${messageDataFile}:`, err);
       return;
     }
-    console.log('Data successfully updated.');
+    Logger.success('Data successfully updated.');
   });
 }); 
     let result = '';

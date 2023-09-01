@@ -5,7 +5,15 @@ module.exports = {
         MEMBERS: 200000,
       },
 
-      DASHBOARD: {
+     DASHBOARD: {
         port: "8080",
+      },
+
+    EMBED_COLORS: {
+        BOT_EMBED: "#48d4ca",
+        TRANSPARENT: "#303236",
+        SUCCESS: "#48d4ca",
+        ERROR: "#275457",
+        WARNING: "#275457",
       },
 }

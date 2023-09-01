@@ -1,9 +1,7 @@
 const { Client, GatewayIntentBits, EmbedBuilder,  ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} = require('discord.js');
-const  { client } = require ('@root/main')
      
-client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-  if (interaction.commandName === 'help') {
+async function helpMenu(interaction, client) {
+  if (!interaction.isCommand()) return
    const userAvatar = interaction.user.displayAvatarURL({ format: 'png', dynamic: true });
     const userNickname = interaction.user?.nickname || interaction.user.username;
     const botUser = await client.users.fetch(client.user.id);
@@ -39,8 +37,7 @@ client.on('interactionCreate', async (interaction) => {
 
    
   }
-});
-client.on('interactionCreate', async interaction => {
+async function helpButton(interaction, client) {
   if (!interaction.isStringSelectMenu()) return;
   if (interaction.customId === 'commands-help') {
     const selectedChoice = interaction.values[0];
@@ -74,6 +71,8 @@ client.on('interactionCreate', async interaction => {
              await interaction.update({embeds: [embed]})
     }
     }
-  })
+  }
+
+  module.exports = {helpMenu, helpButton}
 
 

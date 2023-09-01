@@ -1,13 +1,12 @@
 const { Client, StringSelectMenuBuilder, ActionRowBuilder, GatewayIntentBits } = require('discord.js');
 const choiceResponses = require('./GuideResponse.js');
-const { client } = require ('@root/main')
 function clearEphemeralChoice(messageId) {
   ephemeralChoice.delete(messageId);
 }
 const messageChoices = new Map();
 const ephemeralChoice = new Map();
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand() || interaction.commandName !== 'seasonal-guides') return;
+async function Guides(interaction) {
+  if (!interaction.isCommand()) return;
   const ephemeralOption = interaction.options.getString('ephemeral');
   const ephemeral = ephemeralOption === 'false' ? false : true;
 
@@ -41,9 +40,9 @@ client.on('interactionCreate', async interaction => {
     }, 10 * 60 * 1000) // 20 minutes in milliseconds
   });
   }
-});
+};
 
-client.on('interactionCreate', async interaction => {
+async function guideButton(interaction){
   if (!interaction.isStringSelectMenu()) return;
 
   const { firstChoices, secondChoices, thirdChoices } = require('./SeasonalChoices.js');
@@ -217,7 +216,7 @@ client.on('interactionCreate', async interaction => {
       }
     }
   }
-});
+};
 
 function getEmoji(label) {
   switch (label) {
@@ -233,3 +232,4 @@ default:
 return '';
 }
 }
+module.exports = {Guides, guideButton}

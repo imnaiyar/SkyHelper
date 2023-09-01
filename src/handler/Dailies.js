@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
 const client = require ('@src/main')
+const Logger = require('@src/logger')
 // Specify the ID of the channel you want to track
 const channelIdToTrack = '867638574571323425';
 
@@ -25,7 +26,7 @@ client.on('messageCreate', message => {
     attachments: message.attachments.map(attachment => attachment.url),
     timestamp: message.createdTimestamp,
   });
-  console.log('Message:', messagesByDay)
+  Logger.success('Message:', messagesByDay)
 });
 
 client.on('interactionCreate', async interaction => {

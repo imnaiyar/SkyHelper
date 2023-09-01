@@ -3,6 +3,7 @@ const { DASHBOARD } = require('@root/config');
 const { botSettings } = require("@schemas/botStats");
 const path = require('path');
 const { client } = require('@root/main')
+const Logger = require('@src/logger')
 const app = express();
 const PORT = DASHBOARD.port;
 
@@ -38,5 +39,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  Logger.success(`Server is running on port ${PORT}`);
 });

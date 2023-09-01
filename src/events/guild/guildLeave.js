@@ -1,6 +1,7 @@
 const { ChannelType, EmbedBuilder, WebhookClient } = require("discord.js");
 const { botSettings } = require("@schemas/botStats");
 const { getSettings } = require("@schemas/Guild");
+const Logger = require('@src/logger')
 const { client } = require('@root/main');
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
@@ -11,7 +12,7 @@ const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.G
 
 client.on('guildDelete', async (guild) => {
     if (!guild.available) return;
-    console.log(`Guild Left: ${guild.name} Members: ${guild.memberCount}`);
+    Logger.success(`Guild Left: ${guild.name} Members: ${guild.memberCount}`);
     const settings = await getSettings(guild);
     const settings1 = await botSettings(client);
     settings1.data.servers = client.guilds.cache.size;

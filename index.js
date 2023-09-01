@@ -10,6 +10,8 @@ require('@handler/credits')
 require('@handler/help.js')
 require('@handler/SkyGPT')
 
+require('@events/interaction/interactionCreate')
+
 
 
 

@@ -1,9 +1,10 @@
-const { WebhookClient, EmbedBuilder } = require("discord.js");
+const { WebhookClient, EmbedBuilder, Collection, } = require("discord.js");
 const { client } = require('@root/main')
 const { DASHBOARD } = require("@root/config");
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
-client.on('ready', () => { 
+
+client.on('ready', async () => { 
     const readyalertemb = new EmbedBuilder()
       .addFields(
         {
