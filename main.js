@@ -24,11 +24,14 @@ process.on('unhandledRejection', (reason, promise) => {
 initializeMongoose();
 client.on('ready', () => { 
    console.log(`Logged in as ${client.user.tag}`); 
+   
+require('@root/website/mainPage')
  registerEventHandlers(); 
  });
  const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 client.on
    ('interactionCreate', async (interaction) => {
+    
     const embed = new EmbedBuilder()
     .setTitle("New command used")
     .addFields(
@@ -109,6 +112,5 @@ client.on('messageCreate', async message =>  {
   client.on('messageCreate', (message) => {
     prefixListener(message);
   });
-
 module.exports = {client}
 client.login(process.env.TOKEN);

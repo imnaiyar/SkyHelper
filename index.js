@@ -9,7 +9,7 @@ require('@guides/GuideOption')
 require('@handler/credits')
 require('@handler/help.js')
 require('@handler/SkyGPT')
-require('@root/website/mainPage')
+
 
 
 
