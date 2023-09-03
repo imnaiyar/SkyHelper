@@ -1,5 +1,5 @@
 const PtimesReply = async (message, args, geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr) => {
-    const chosenOption = args[0];
+    const chosenOption = args;
   
     switch (chosenOption) {
       case 'geyser':

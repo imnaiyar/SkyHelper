@@ -21,11 +21,11 @@ const commands = [];
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
 
-const commandDirectory = path.join(__dirname, './commands');
+const commandDirectory = path.join(__dirname, './commands/slash');
 const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
+  const command = require(`./commands/slash/${file}`);
   client.commands.set(command.data.name, command);
 }
 
