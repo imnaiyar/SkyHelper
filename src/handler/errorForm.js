@@ -13,13 +13,14 @@ async function ErrorForm (interaction) {
         .setPlaceholder('The command that produced the said error.')
         .setStyle(TextInputStyle.Short);
 
-    const server = new TextInputBuilder()
-        .setCustomId('server')
-        .setLabel("Name of the server where it occured.")
-        .setStyle(TextInputStyle.Paragraph);
+    const whatHappened = new TextInputBuilder()
+        .setCustomId('whatHappened')
+        .setLabel("Explain what happened?")
+        .setStyle(TextInputStyle.Paragraph)
+        .setPlaceholder('Explain in brief what happened. What outcome were you hoping?');
 
     const firstActionRow = new ActionRowBuilder().addComponents(commandUsed);
-    const secondActionRow = new ActionRowBuilder().addComponents(server);
+    const secondActionRow = new ActionRowBuilder().addComponents(whatHappened);
 
     modal.addComponents(firstActionRow, secondActionRow);
 

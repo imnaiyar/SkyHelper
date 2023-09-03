@@ -131,10 +131,9 @@ let buttonDisableTimeout = null;
 
 const timezone = 'America/Los_Angeles';
 
-// Map to store interactions and their corresponding shard embeds
 
 async function shardTimeline(interaction, Zhii, Christian) {
-  if (!interaction.customId === 'shard_timeline') return;
+  if (interaction.customId !== 'shard_timeline') return;
   const messageId = interaction.message.id; // Get the messageId of the current interaction
   const currentDate = getCurrentDate(interaction, messageId); 
   if (!currentDate) return;

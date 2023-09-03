@@ -7,7 +7,8 @@ const {shardTimeline} = require('@shards/shardsTimeline')
 const {guideButton} = require('@guides/GuideOption')
 const {helpButton} = require('@handler/help');
 const Log = require('@src/logger');
-const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
+const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
+const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const {ErrorForm} = require('@handler/errorForm')
 slash = new Collection();
 
@@ -45,7 +46,7 @@ module.exports = async (client, interaction) => {
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
-    Logger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
+    cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
   }
     await command.execute(interaction, client);
   } catch (error) {
@@ -86,10 +87,20 @@ module.exports = async (client, interaction) => {
 // Modals
 if (interaction.isModalSubmit()) {
   if (interaction.customId === 'errorModal') {
-    await interaction.reply({ content: 'Your submission was received successfully!', embeds: [], components: [] });
+    await interaction.reply({ content: 'Your submission was received successfully!', ephemeral: true});
     const commandUsed = interaction.fields.getTextInputValue('commandUsed');
-    const server = interaction.fields.getTextInputValue('server');
-    console.log('command:', commandUsed, "\nSever:", server);
+    const whatHappened = interaction.fields.getTextInputValue('whatHappened');
+    const embed = new EmbedBuilder()
+    .setTitle("BUG REPORT")
+    .addFields(
+      { name: `Command Used`, value: `\`${commandUsed}\`` },
+      { name: `User`, value: `${interaction.user.username} \`[${interaction.member.id}]\`` },
+      { name: `Server`, value: `${interaction.guild.name} \`[${interaction.guild.id}]\`` },
+      { name: `What Happened`, value: `${whatHappened}` }
+    )
+    .setColor('Blurple')
+    .setTimestamp();
+    bLogger.send({ username: "Bug Report", embeds: [embed] }).catch((ex) => {});
   }
 }
 }
