@@ -1,10 +1,12 @@
 const { WebhookClient, EmbedBuilder, Collection, } = require("discord.js");
-const { client } = require('@root/main')
 const { DASHBOARD } = require("@root/config");
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
-
-client.on('ready', async () => { 
+/**
+ * @param {import('@root/main')} client
+ * @param {import('discord.js').Interaction} interaction
+ */
+module.exports = async (client, interaction) =>{
     const readyalertemb = new EmbedBuilder()
       .addFields(
         {
@@ -39,4 +41,4 @@ client.on('ready', async () => {
       });
     }
   
-  });
+  }

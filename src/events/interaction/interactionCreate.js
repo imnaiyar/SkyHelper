@@ -1,12 +1,11 @@
 const { WebhookClient, EmbedBuilder, Collection, } = require("discord.js");
-const {client} = require('@root/main')
 const fs = require('fs');
 const path = require('path');
 const {guideButton} = require('@guides/GuideOption')
 const {helpButton} = require('@handler/help')
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
-client.commands = new Collection();
+slash = new Collection();
 
 
 const commandDirectory = path.join(__dirname, '../../commands/slash');
@@ -14,15 +13,19 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 
 for (const file of commandFiles) {
   const command = require(`../../commands/slash/${file}`);
-  client.commands.set(command.data.name, command);
+  slash.set(command.data.name, command);
 }
-client.on
-   ('interactionCreate', async (interaction) => {
+/**
+ * @param {import('@root/main')} client
+ * @param {import('discord.js').Interaction} interaction
+ */
+module.exports = async (client, interaction) => {
+  if (interaction.isChatInputCommand()){
     if (!interaction.isCommand()) return;
     
     const commandName = interaction.commandName;
     
-    const command = client.commands.get(commandName);
+    const command = slash.get(commandName);
 
   try {
     const embed = new EmbedBuilder()
@@ -44,14 +47,10 @@ client.on
   } catch (error) {
     console.error(error);
     await interaction.reply({ content: 'An error occurred while executing this command.', ephemeral: true });
-  }
-   }
-   )
-
-   client.on
-   ('interactionCreate', async (interaction) => {
+  }}
+   
     if (!interaction.isStringSelectMenu()) return;
     await guideButton(interaction)
     await helpButton(interaction, client)
 
-   })
+   }
