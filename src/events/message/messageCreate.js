@@ -1,5 +1,4 @@
 const { WebhookClient, Collection } = require("discord.js");
-const { client } = require('@root/main');
 const fs = require('fs');
 const path = require('path');
 
@@ -12,7 +11,7 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 
 for (const file of commandFiles) {
   const command = require(`@src/commands/prefix/${file}`);
-  prefix.set(command.name, command); // Assuming each command module has a 'name' property
+  prefix.set(command.name, command); 
 }
 /**
  * @param {import('@root/main')} client
@@ -28,16 +27,13 @@ module.exports = async (client, message) => {
   const command = prefix.get(commandName);
 
   if (!command) {
-    // Handle unknown command
     return message.reply('Unknown command. Use `!help` to see available commands.');
   }
 
   try {
-    // Execute the command
     await command.execute(message, args);
   } catch (error) {
     console.error(error);
-    // Handle any errors that occur during command execution
     message.reply('An error occurred while executing the command.');
   }
 }

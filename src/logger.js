@@ -58,7 +58,7 @@ function sendWebhook(content, err) {
   )
     console.log("Missing Access");
 
-  embed.addFields({ name: "Description", value: content || err?.message || "NA" });
+  embed.addFields({ name: "Description", value: `${content || err?.message || "NA"}` });
   webhookLogger.send({ username: "Logs", embeds: [embed] }).catch((ex) => {});
 }
 

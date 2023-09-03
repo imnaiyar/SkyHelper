@@ -1,5 +1,6 @@
 const { WebhookClient, EmbedBuilder, Collection, } = require("discord.js");
 const { DASHBOARD } = require("@root/config");
+const Logger = require('@src/logger')
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 /**
@@ -7,6 +8,9 @@ const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READ
  * @param {import('discord.js').Interaction} interaction
  */
 module.exports = async (client, interaction) =>{
+  Logger.success(`Logged in as ${client.user.tag}`); 
+   
+  require('@root/website/mainPage')
     const readyalertemb = new EmbedBuilder()
       .addFields(
         {

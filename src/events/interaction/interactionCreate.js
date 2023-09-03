@@ -1,10 +1,14 @@
-const { WebhookClient, EmbedBuilder, Collection, } = require("discord.js");
+const { WebhookClient, EmbedBuilder, Collection, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
 const fs = require('fs');
 const path = require('path');
+const {shardInfos} = require('@shards/aboutShards')
+const {shardLocation} = require('@shards/shardsLocation')
+const {shardTimeline} = require('@shards/shardsTimeline')
 const {guideButton} = require('@guides/GuideOption')
-const {helpButton} = require('@handler/help')
+const {helpButton} = require('@handler/help');
+const Log = require('@src/logger');
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
-
+const {ErrorForm} = require('@handler/errorForm')
 slash = new Collection();
 
 
@@ -45,12 +49,47 @@ module.exports = async (client, interaction) => {
   }
     await command.execute(interaction, client);
   } catch (error) {
-    console.error(error);
-    await interaction.reply({ content: 'An error occurred while executing this command.', ephemeral: true });
+    Log.error(error);
+    const embed = new EmbedBuilder()
+    .setTitle(`ERROR`)
+    .setDescription(`An error occurred while executing this command.`);
+    
+    const actionRow = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setLabel('Report Bug')
+                .setCustomId('error_report')
+                .setStyle(ButtonStyle.Secondary));
+    await interaction.reply({ embeds: [embed], components: [actionRow], ephemeral: true });
   }}
-   
-    if (!interaction.isStringSelectMenu()) return;
+   // Select Menus
+    if (interaction.isStringSelectMenu()) {
     await guideButton(interaction)
     await helpButton(interaction, client)
-
-   }
+    }
+  // Buttons
+  if (interaction.isButton()) {
+    const Art = await client.users.fetch('504605855539265537');
+    const Zhii = await client.users.fetch('650487047160725508');
+    const Gale = await client.users.fetch('473761854175576075');
+    const Clement = await client.users.fetch('693802004018888714');
+    const Christian = await client.users.fetch('594485678625128466');
+     
+    shardTimeline(interaction, Zhii, Christian);
+    shardLocation(interaction, Gale, Clement);
+    shardInfos(interaction, Art);
+    
+  if (interaction.customId === 'error_report') {
+    await ErrorForm(interaction)
+  }
+}
+// Modals
+if (interaction.isModalSubmit()) {
+  if (interaction.customId === 'errorModal') {
+    await interaction.reply({ content: 'Your submission was received successfully!', embeds: [], components: [] });
+    const commandUsed = interaction.fields.getTextInputValue('commandUsed');
+    const server = interaction.fields.getTextInputValue('server');
+    console.log('command:', commandUsed, "\nSever:", server);
+  }
+}
+}
