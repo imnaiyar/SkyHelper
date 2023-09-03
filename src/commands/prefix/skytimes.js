@@ -1,7 +1,7 @@
 const { skyTimes } = require('@handler/skyTimes');
 
 module.exports = {
-  name: 'skyprefix', // Change this to your desired prefix command name
+  name: 'skytimes', // Change this to your desired prefix command name
   description: 'Get various times related to the world of Sky', // Change this to your desired description
 
   async execute(message, args) {
