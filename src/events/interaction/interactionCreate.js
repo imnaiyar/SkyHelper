@@ -13,7 +13,7 @@ const commandDirectory = path.join(__dirname, '../../commands/slash');
 const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-  const command = require(`@src/commands/slash/${file}`);
+  const command = require(`../../commands/slash/${file}`);
   client.commands.set(command.data.name, command);
 }
 client.on

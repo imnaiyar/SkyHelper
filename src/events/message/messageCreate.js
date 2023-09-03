@@ -6,7 +6,7 @@ const path = require('path');
 // Create a WebhookClient for logging commands if process.env.COMMANDS_USED is defined
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
-client.commands = new Collection();
+prefix = new Collection();
 
 const commandDirectory = path.join(__dirname, '../../commands/prefix');
 const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
@@ -14,7 +14,7 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 // Dynamically load and store prefix commands
 for (const file of commandFiles) {
   const command = require(`@src/commands/prefix/${file}`);
-  client.commands.set(command.name, command); // Assuming each command module has a 'name' property
+  prefix.set(command.name, command); // Assuming each command module has a 'name' property
 }
 
 client.on('messageCreate', async (message) => {
@@ -24,7 +24,7 @@ client.on('messageCreate', async (message) => {
 
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
-  const command = client.commands.get(commandName);
+  const command = prefix.get(commandName);
 
   if (!command) {
     // Handle unknown command

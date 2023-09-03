@@ -1,8 +1,5 @@
 const moment = require('moment-timezone');
-const { StimesReply } = require('@handler/subs/StimesReply');
-const { PtimesReply } = require('@handler/subs/prefixListener');
-
-async function skyTimes(interaction, message, args) {
+async function skyTimes() {
   const targetTimezone = 'Asia/Kolkata'; // Set the target time zone (example: Eastern Time)
   const now = moment().tz(targetTimezone);
 
@@ -141,16 +138,9 @@ if (durationEden.minutes() > 0) {
 edenResultStr += ` ${durationEden.seconds()} seconds)`;
 
 
-  
-  if (message || args) {
-    await PtimesReply(message, args, geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr);}
-  else
-  if (interaction) {
-    await StimesReply(interaction, geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr);
+    return { geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr}
   }
   
-}
-
 module.exports = {
 skyTimes
 };
