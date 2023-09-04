@@ -2,3 +2,5 @@ config.json
 node_modules
 .env
 logs/
+embedData.json
+messageData.json
