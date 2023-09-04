@@ -1,7 +1,7 @@
 const { WebhookClient, Collection } = require("discord.js");
 const fs = require('fs');
 const path = require('path');
-
+const {OWNER} = require('@root/config.js')
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 prefix = new Collection();
@@ -28,7 +28,7 @@ module.exports = async (client, message) => {
   if (!command) {
     return message.reply('Unknown command. Use `!help` to see available commands.');
   }
- if (command.category === 'OWNER' && message.author.id !== '851588007697580033') return
+ if (command.category === 'OWNER' && !OWNER.includes(message.author.id)) return
   try {
     await command.execute(message, args);
   } catch (error) {
