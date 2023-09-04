@@ -494,5 +494,67 @@
         }
       ]
     }
+  },
+  "1148388763077189713": {
+    "originalEmbedData": {
+      "type": "rich",
+      "timestamp": "2023-09-04T22:46:57.309000+00:00",
+      "footer": {
+        "text": "Sky Shards Information",
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
+        "icon_url": "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png"
+      },
+      "fields": [
+        {
+          "value": "Black Shard",
+          "name": "Shard Type",
+          "inline": true
+        },
+        {
+          "value": "Broken Temple, Golden Wasteland",
+          "name": "Location",
+          "inline": true
+        },
+        {
+          "value": "200 Wax <:wax:1125091974869946369>",
+          "name": "Rewards",
+          "inline": true
+        },
+        {
+          "value": "2nd shard has ended (at <t:1693860600:t>), 3rd shard will land   in 2 hours, 11 minutes, 42 seconds at <t:1693875520:T>",
+          "name": "Shard Countdown",
+          "inline": false
+        }
+      ],
+      "color": 0,
+      "author": {
+        "proxy_icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg",
+        "name": "Shards Information for 04 September 2023",
+        "icon_url": "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925"
+      }
+    },
+    "originalActionRow": {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Timeline",
+          "custom_id": "shard_timeline"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "Location/Data",
+          "custom_id": "shard_location"
+        },
+        {
+          "type": 2,
+          "style": 3,
+          "label": "About Shard",
+          "custom_id": "about_shard"
+        }
+      ]
+    }
   }
 }

@@ -75,14 +75,15 @@ module.exports = async (client, interaction) => {
     const Gale = await client.users.fetch('473761854175576075');
     const Clement = await client.users.fetch('693802004018888714');
     const Christian = await client.users.fetch('594485678625128466');
-     
-    shardTimeline(interaction, Zhii, Christian);
-    shardLocation(interaction, Gale, Clement);
-    shardInfos(interaction, Art);
+
     
   if (interaction.customId === 'error_report') {
     await ErrorForm(interaction)
   }
+
+  shardTimeline(interaction, Zhii, Christian);
+  shardLocation(interaction, Gale, Clement);
+  shardInfos(interaction, Art);
 }
 // Modals
 if (interaction.isModalSubmit()) {
