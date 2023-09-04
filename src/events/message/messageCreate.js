@@ -28,9 +28,7 @@ module.exports = async (client, message) => {
   if (!command) {
     return message.reply('Unknown command. Use `!help` to see available commands.');
   }
- if (command.category === 'OWNER' && message.author.id !== '851588007697580033') {
-   return message.reply('This command can only be used by my owners.')
- }
+ if (command.category === 'OWNER' && message.author.id !== '851588007697580033') return
   try {
     await command.execute(message, args);
   } catch (error) {
