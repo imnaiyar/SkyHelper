@@ -67,5 +67,5 @@ module.exports = async (client, guild) => {
     avatarURL: client.user.displayAvatarURL(),
     embeds: [embed],
   });
-  await topggAutopost();
+ topggAutopost(client);
 }
