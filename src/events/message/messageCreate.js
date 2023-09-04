@@ -28,7 +28,10 @@ module.exports = async (client, message) => {
   if (!command) {
     return message.reply('Unknown command. Use `!help` to see available commands.');
   }
- if (command.category === 'OWNER' && !OWNER.includes(message.author.id)) return
+ if (command.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+ if (command.userPermissions && !message.member.permissions.has(command.userPermissions)) {
+  return message.reply('You do not have sufficient permission to use this command')
+ }
   try {
     await command.execute(message, args);
   } catch (error) {

@@ -34,9 +34,7 @@ const loadEventHandlers = (dir) => {
     }
   }
 };
-
 loadEventHandlers('./src/events');
-
 
 module.exports = {client}
 client.login(process.env.TOKEN);

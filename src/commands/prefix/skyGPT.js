@@ -3,12 +3,12 @@ const { getSettings } = require("@schemas/Guild");
 
 module.exports = {
   name: 'skygpt', 
-  description: 'configurations for Sky AI support.', 
+  description: 'configurations for Sky AI support.',
+  userPermissions: 'ManageGuild', 
 
   async execute(message, args) {
   if (message.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
      const settings = await getSettings(message.guild);
-      console.log(args)
       if (args[0] === 'set') {
         if (args.length === 2) {
           const channelID = args[1].replace(/<#|>/g, ''); // Extract channel ID

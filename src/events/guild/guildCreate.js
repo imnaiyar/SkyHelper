@@ -1,6 +1,8 @@
 const { ChannelType, EmbedBuilder, WebhookClient } = require("discord.js");
 const { getSettings: registerGuild } = require("@schemas/Guild");
 const Logger = require('@src/logger')
+
+const {topggAutopost} = require('@handler/topgg-autopost')
 const { botSettings } = require("@schemas/botStats");
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
@@ -65,4 +67,5 @@ module.exports = async (client, guild) => {
     avatarURL: client.user.displayAvatarURL(),
     embeds: [embed],
   });
+  await topggAutopost();
 }
