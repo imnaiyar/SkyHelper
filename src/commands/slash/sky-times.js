@@ -21,6 +21,7 @@ module.exports = {
       ],
     },
     async execute(interaction) {
+      const result = await skyTimes()
     const chosenOption = interaction.options.getString('times');
   
     switch (chosenOption) {

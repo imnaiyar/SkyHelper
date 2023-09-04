@@ -1,8 +1,8 @@
 const { skyTimes } = require('@handler/skyTimes');
 
 module.exports = {
-  name: 'skytimes', // Change this to your desired prefix command name
-  description: 'Get various times related to the world of Sky', // Change this to your desired description
+  name: 'skytimes', 
+  description: 'Get various times related to the world of Sky', 
 
   async execute(message, args) {
     const result = await skyTimes()
