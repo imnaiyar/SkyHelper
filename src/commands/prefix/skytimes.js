@@ -7,7 +7,7 @@ module.exports = {
   async execute(message, args) {
     const result = await skyTimes()
     if (args.length === 0) {
-        return message.reply(`\*\*\_\_Geyser(upcoming)\_\_\*\*: ${result.geyserResultStr}\n\n\*\*\_\_Grandma(upcoming)\_\_\*\*:${result.grandmaResultStr}\n\n\*\*\_\_Turtle(upcoming)\_\_\*\*:${result.turtleResultStr}\n\n\*\*\_\_Reset(next)\_\_\*\*:${result.resetResultStr}\n\n\*\*\_\_Eden(reset)\_\_\*\*: ${result.edenResultStr}\n\*\*Check individual commands for more information\*\*`)
+        return message.reply(`\*\*\_\_Geyser(upcoming)\_\_\*\*: ${result.geyserResultStr}\n\n\*\*\_\_Grandma(upcoming)\_\_\*\*:${result.grandmaResultStr}\n\n\*\*\_\_Turtle(upcoming)\_\_\*\*:${result.turtleResultStr}\n\n\*\*\_\_Reset(next)\_\_\*\*:${result.resetResultStr}\n\n\*\*\_\_Eden(reset)\_\_\*\*: ${result.edenResultStr}\n\n_Check individual commands for more information_`)
     }
     const command = args.shift().toLowerCase();
 
@@ -31,7 +31,7 @@ module.exports = {
         message.reply(`Eden Reset time for you: ${result.edenResultStr}`)
         break;
       default:
-        message.reply('Invalid sub-command. Available sub-commands: geyser, grandma, turtle, reset, eden');
+        message.reply("Invalid sub-command.\nSub-commands: ` geyser `, ` grandma `, ` turtle `, ` reset ` , ` eden `");
         break;
     }
   },
