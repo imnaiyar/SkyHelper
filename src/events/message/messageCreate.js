@@ -33,7 +33,7 @@ module.exports = async (client, message) => {
   return message.reply('You do not have sufficient permission to use this command')
  }
   try {
-    await command.execute(message, args);
+    await command.execute(message, args, client);
   } catch (error) {
     console.error(error);
     message.reply('An error occurred while executing the command.');

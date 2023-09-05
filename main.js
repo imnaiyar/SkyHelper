@@ -12,6 +12,7 @@ const client = new Client({
      GatewayIntentBits.DirectMessageReactions,
      GatewayIntentBits.DirectMessages,
      GatewayIntentBits.GuildMembers,
+     GatewayIntentBits.GuildMessageReactions
     ] });
 process.on("uncaughtException", (erorr) => Logger.error(`Unhandled exception`, erorr));
 process.on("unhandledRejection", (error) => Logger.error(`Unhandled exception`, error));
