@@ -16,10 +16,12 @@ module.exports = {
 
     collector.on('collect', async (reaction) => {
       if (reaction.emoji.name === '✅') {
-        await confirmationMessage.edit("Shutdown canceled.");
+        await confirmationMessage.edit("Shutting down...");
         Logger.error("Bot is shutting down...");
-        collector.stop(); 
-        process.exit(0); 
+       collector.stop(); 
+        setTimeout(() => { 
+            process.exit(0); 
+          }, 5000);
       } else if (reaction.emoji.name === '❌') {
         await confirmationMessage.edit("Shutdown canceled.");
         collector.stop(); // Stop the collector
