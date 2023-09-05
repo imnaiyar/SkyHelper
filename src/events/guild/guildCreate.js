@@ -1,16 +1,17 @@
 const { ChannelType, EmbedBuilder, WebhookClient } = require("discord.js");
 const { getSettings: registerGuild } = require("@schemas/Guild");
 const Logger = require('@src/logger')
+
+const {topggAutopost} = require('@handler/topgg-autopost')
 const { botSettings } = require("@schemas/botStats");
-const { client } = require('@root/main');
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
+ * @param {import('@root/main')} client
  * @param {import('discord.js').Guild} guild
  */
-
-client.on('guildCreate', async (guild) => {
+module.exports = async (client, guild) => {
   if (!guild.available) return;
   if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
@@ -66,4 +67,5 @@ client.on('guildCreate', async (guild) => {
     avatarURL: client.user.displayAvatarURL(),
     embeds: [embed],
   });
-});
+ topggAutopost(client);
+}

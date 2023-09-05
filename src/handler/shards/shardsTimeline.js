@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const moment = require('moment-timezone');
+const {getCurrentDate, saveOriginalData, restoreOriginalData} = require('@shards/shardsLocation')
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];; // Remove the repeating part
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 
@@ -130,27 +131,21 @@ let buttonDisableTimeout = null;
 
 const timezone = 'America/Los_Angeles';
 
-// Map to store interactions and their corresponding shard embeds
 
 async function shardTimeline(interaction, Zhii, Christian) {
-  if (!interaction.isButton()) return;
-
   const messageId = interaction.message.id; // Get the messageId of the current interaction
   const currentDate = getCurrentDate(interaction, messageId); 
   if (!currentDate) return;
   const dayOfMonth = currentDate.date();
   const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
   const currentEvent = eventSequence[sequenceIndex];
-
-  clearTimeout(buttonDisableTimeout);
-
   if (interaction.customId === 'shard_timeline') {
     currentShardIndex = 0;
     originalEmbedData = interaction.message.embeds[0];
     originalActionRow = interaction.message.components?.[0];
     await saveOriginalData(messageId, originalEmbedData, originalActionRow);
     await showShard(interaction, shardData[currentEvent][currentShardIndex], Zhii, Christian);
-  } else if (interaction.customId === 'shard_left') {
+   } else if (interaction.customId === 'shard_left') {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(interaction, shardData[currentEvent][currentShardIndex], Zhii, Christian);
   } else if (interaction.customId === 'shard_right') {
@@ -167,37 +162,6 @@ async function shardTimeline(interaction, Zhii, Christian) {
 
 
     
-  function getCurrentDate(interaction, messageId) {
-  const filePath = 'messageData.json';
-
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
-    const messageData = JSON.parse(data);
-    const message = messageData.find((data) => data.messageId === messageId);
-
-    if (!message) {
-      interaction.reply({ content: 'No dates found for this message. The interaction might be expired, please run the command again', ephemeral: true});
-      return false;
-    }
-
-    const dateOption = message.time;
-
-    let currentDate;
-    if (dateOption) {
-      currentDate = moment.tz(dateOption, 'Y-MM-DD', timezone).startOf('day');
-      if (!currentDate.isValid()) {
-        console.log(`${dateOption} does not exist, please provide a valid date.`);
-        return null;
-      }
-    } else {
-      currentDate = moment.tz(timezone).startOf('day');
-    }
-
-    return currentDate;
-  } catch (error) {
-    console.error('Error reading messageData.json:', error);
-  }
-}
 async function showShard(interaction, shard, Zhii, Christian) {
   const avatarURL1 = Zhii.avatarURL({ format: 'png', size: 2048 });
   const avatarURL2 = Christian.avatarURL({ format: 'png', size: 2048 });
@@ -237,15 +201,15 @@ async function showShard(interaction, shard, Zhii, Christian) {
     const actionRow = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()
-                .setLabel('⬅️')
+                .setEmoji('<a:left:1148644073670975640>')
                 .setCustomId('shard_left')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('➡️')
+                .setEmoji('<a:right:1148627450608222278>')
                 .setCustomId('shard_right')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('🔙')
+                .setEmoji('<a:back:1148653107773976576>')
                 .setCustomId('shard_original')
                 .setStyle(3)
                 .setDisabled(false),
@@ -258,39 +222,7 @@ if (currentShardIndex === 0) {
     }
     await interaction.update({ embeds: [shardEmbed], components: [actionRow] });
 }
-function saveOriginalData(messageId, originalEmbedData, originalActionRow) {
-  try {
-      const filePath = 'embedData.json';
-      const data = fs.readFileSync(filePath, 'utf8');
-      const embedData = JSON.parse(data);
 
-      if (!embedData[messageId]) {
-          embedData[messageId] = {
-              originalEmbedData,
-              originalActionRow
-          };
-
-          fs.writeFileSync(filePath, JSON.stringify(embedData, null, 2), 'utf8');
-      }
-  } catch (error) {
-      console.error('Error saving original data:', error);
-  }
-}
-function restoreOriginalData(messageId) {
-  try {
-      const filePath = 'embedData.json';
-      const data = fs.readFileSync(filePath, 'utf8');
-      const embedData = JSON.parse(data);
-
-      if (embedData[messageId]) {
-          return embedData[messageId];
-      }
-  } catch (error) {
-      console.error('Error restoring original data:', error);
-  }
-  
-  return null;
-}
 module.exports = {
     shardTimeline,
 };

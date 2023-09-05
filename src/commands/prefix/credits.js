@@ -1,14 +1,11 @@
-const { Client, GatewayIntentBits, ActivityType,EmbedBuilder,  ActionRowBuilder, ButtonBuilder, PermissionsBitField, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Constants} = require('discord.js');
-const { client } = require('@root/main');
-
- client.on('messageCreate', async message =>  {
-  if (!message.content.startsWith('!') || message.author.bot) return;
-       
-  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
-  const command = args.shift().toLowerCase(); 
-
-  if (command === 'credits') {
-      await message.channel.sendTyping();
+const {EmbedBuilder} = require('discord.js')
+module.exports = {
+    name: 'credits', 
+    description: 'Credits to all thoe people whose work is included in the bot', 
+  
+    async execute(message) {
+        const {client} = message
+     await message.channel.sendTyping();
       const Art = await client.users.fetch('504605855539265537');
 
      const Zhii = await client.users.fetch('650487047160725508');
@@ -52,6 +49,6 @@ const { client } = require('@root/main');
             .addFields({ name: '**__Sky Infographics and Guides__**', value: `● Clement (${Clement.username})\n● Mimi (${Mimi.username})\n● Sam (${Sam.username})\n● Zed (${Zed.username})\n● Art (${Art.username})\n**and all others who do the awesome job of creating guides.**`, inline: true })
              .addFields({ name: '**__Special Mentions__**', value: `● Big thanks to Xander (${Xander.username}) and Christian (${Christian.username}) for testing the early version of this bot.\n● Thanks to Plutoy (${Plutoy.username}) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.\n● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).`, inline: false });
 
-    message.reply({embeds: [result]});
-  }
-});
+    message.reply({embeds: [result]})
+    }
+}

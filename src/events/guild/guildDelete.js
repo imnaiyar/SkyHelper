@@ -2,15 +2,15 @@ const { ChannelType, EmbedBuilder, WebhookClient } = require("discord.js");
 const { botSettings } = require("@schemas/botStats");
 const { getSettings } = require("@schemas/Guild");
 const Logger = require('@src/logger')
-const { client } = require('@root/main');
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
+ * @param {import('@root/main')} client
  * @param {import('discord.js').Guild} guild
  */
 
-client.on('guildDelete', async (guild) => {
+module.exports = async (client, guild) => {
     if (!guild.available) return;
     Logger.success(`Guild Left: ${guild.name} Members: ${guild.memberCount}`);
     const settings = await getSettings(guild);
@@ -65,4 +65,4 @@ client.on('guildDelete', async (guild) => {
       avatarURL: client.user.displayAvatarURL(),
       embeds: [embed],
     });
-});
+}

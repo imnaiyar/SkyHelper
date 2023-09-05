@@ -1,5 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const fs = require('fs');
+const { saveOriginalData, restoreOriginalData} = require('@shards/shardsLocation')
 
 const shardInfo = [
     { description: 'What are shards?', image: 'https://media.discordapp.net/attachments/585339436322259003/998518823231688724/I_watch_you_when_u_sleep_20220718171142.png' },
@@ -12,15 +13,15 @@ let originalActionRow = null;
 let currentShardIndex = 0; // Declare currentShardIndex variable.
 
 async function shardInfos(interaction, Art) {
-    if (!interaction.isButton()) return;
-    const messageId = interaction.message.id;
+    
     if (interaction.customId === 'about_shard') {
+       const messageId = interaction.message.id;
         currentShardIndex = 0;
         originalEmbedData = interaction.message.embeds[0];
         originalActionRow = interaction.message.components?.[0];
         await saveOriginalData(messageId, originalEmbedData, originalActionRow);
         await showShard(interaction, shardInfo[currentShardIndex], Art);
-    }else if (interaction.customId === 'left_about') {
+    } else if (interaction.customId === 'left_about') {
         currentShardIndex = Math.max(currentShardIndex - 1, 0);
         await showShard(interaction, shardInfo[currentShardIndex], Art);
     } else if (interaction.customId === 'right_about') {
@@ -57,15 +58,15 @@ async function showShard(interaction, shard, Art) {
     const actionRow = new ActionRowBuilder()
         .addComponents(
            new ButtonBuilder()
-                .setLabel('⬅️')
+                .setEmoji('<a:left:1148644073670975640>')
                 .setCustomId('left_about')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('➡️')
+                .setEmoji('<a:right:1148627450608222278>')
                 .setCustomId('right_about')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('🔙')
+                .setEmoji('<a:back:1148653107773976576>')
                 .setCustomId('original_about')
                 .setStyle(3) 
                 .setDisabled(false),
@@ -79,39 +80,7 @@ async function showShard(interaction, shard, Art) {
     }
     await interaction.update({ embeds: [shardEmbed], components: [actionRow] });
 }
-function saveOriginalData(messageId, originalEmbedData, originalActionRow) {
-    try {
-        const filePath = 'embedData.json';
-        const data = fs.readFileSync(filePath, 'utf8');
-        const embedData = JSON.parse(data);
-  
-        if (!embedData[messageId]) {
-            embedData[messageId] = {
-                originalEmbedData,
-                originalActionRow
-            };
-  
-            fs.writeFileSync(filePath, JSON.stringify(embedData, null, 2), 'utf8');
-        }
-    } catch (error) {
-        console.error('Error saving original data:', error);
-    }
-  }
-  function restoreOriginalData(messageId) {
-    try {
-        const filePath = 'embedData.json';
-        const data = fs.readFileSync(filePath, 'utf8');
-        const embedData = JSON.parse(data);
-  
-        if (embedData[messageId]) {
-            return embedData[messageId];
-        }
-    } catch (error) {
-        console.error('Error restoring original data:', error);
-    }
-    
-    return null;
-  }
+
 module.exports = {
     shardInfos,
 };

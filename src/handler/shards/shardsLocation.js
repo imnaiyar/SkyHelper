@@ -266,26 +266,21 @@ let originalActionRow = null;
 const timezone = 'America/Los_Angeles';
 
 async function shardLocation(interaction, Gale, Clement) {
-    if (!interaction.isButton()) return;
-
-  const messageId = interaction.message.id; // Get the messageId of the current interaction
-  const currentDate = getCurrentDate(interaction, messageId);
-  if (!currentDate) return;
+  const messageId = interaction.message.id;
+     const currentDate = getCurrentDate(interaction, messageId);
+    if (!currentDate) return;
     const dayOfMonth = currentDate.date();
     const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
     const currentEvent = eventSequence[sequenceIndex];
-
-    // Retrieve the current second event for the day
     const secondSequenceIndex = (dayOfMonth - 1) % secondEventSequence.length;
     const currentSecondEvent = secondEventSequence[secondSequenceIndex];
-
-    if (interaction.customId === 'shard_location') {
+  if (interaction.customId === 'shard_location') { 
         currentShardIndex = 0;
         originalEmbedData = interaction.message.embeds[0];
         originalActionRow = interaction.message.components?.[0];
         await saveOriginalData(messageId, originalEmbedData, originalActionRow);
         await showShard(interaction, shardData[currentSecondEvent][currentEvent][currentShardIndex], Gale, Clement);
-    } else if (interaction.customId === 'shard_leftL') {
+  } else if (interaction.customId === 'shard_leftL') {
         currentShardIndex = Math.max(currentShardIndex - 1, 0);
         await showShard(interaction, shardData[currentSecondEvent][currentEvent][currentShardIndex], Gale, Clement);
     } else if (interaction.customId === 'shard_rightL') {
@@ -297,6 +292,7 @@ async function shardLocation(interaction, Gale, Clement) {
           await interaction.update({ embeds: [restoredData.originalEmbedData], components: [restoredData.originalActionRow] });
       
     }
+}
 }
 
 
@@ -368,7 +364,7 @@ async function showShard(interaction, shard, Gale, Clement) {
                 .setCustomId('shard_rightL')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('🔙')
+                .setEmoji('<a:back:1148653107773976576>')
                 .setCustomId('shard_originalL')
                 .setStyle(3)
         );
@@ -383,7 +379,7 @@ async function showShard(interaction, shard, Gale, Clement) {
 
     await interaction.update({ embeds: [shardEmbed], components: [actionRow] });
 }
-}
+
 function saveOriginalData(messageId, originalEmbedData, originalActionRow) {
   try {
       const filePath = 'embedData.json';
@@ -418,5 +414,5 @@ function restoreOriginalData(messageId) {
   return null;
 }
 module.exports = {
-    shardLocation,
+    shardLocation, saveOriginalData, restoreOriginalData, getCurrentDate
 };
