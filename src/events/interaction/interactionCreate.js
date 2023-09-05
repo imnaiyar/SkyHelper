@@ -80,10 +80,15 @@ module.exports = async (client, interaction) => {
   if (interaction.customId === 'error_report') {
     await ErrorForm(interaction)
   }
-
+if (interaction.customId === 'shard_timeline' || 'shard_left' || 'shard_right' || 'shard_original') {
   shardTimeline(interaction, Zhii, Christian);
+}
+if (interaction.customId === 'shard_location' || 'shard_leftL' || 'shard_rightL' || 'shard_originalL') {
   shardLocation(interaction, Gale, Clement);
+}
+if (interaction.customId === 'about_shard' || 'left_about' || 'right_about' || 'original_about') {
   shardInfos(interaction, Art);
+}
 }
 // Modals
 if (interaction.isModalSubmit()) {
