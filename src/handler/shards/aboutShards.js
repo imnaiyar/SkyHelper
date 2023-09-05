@@ -58,15 +58,15 @@ async function showShard(interaction, shard, Art) {
     const actionRow = new ActionRowBuilder()
         .addComponents(
            new ButtonBuilder()
-                .setLabel('⬅️')
+                .setEmoji('<a:left:1148644073670975640>')
                 .setCustomId('left_about')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('➡️')
+                .setEmoji('<a:right:1148627450608222278>')
                 .setCustomId('right_about')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('🔙')
+                .setEmoji('<a:back:1148653107773976576>')
                 .setCustomId('original_about')
                 .setStyle(3) 
                 .setDisabled(false),

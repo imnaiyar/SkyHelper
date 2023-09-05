@@ -201,15 +201,15 @@ async function showShard(interaction, shard, Zhii, Christian) {
     const actionRow = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()
-                .setLabel('⬅️')
+                .setEmoji('<a:left:1148644073670975640>')
                 .setCustomId('shard_left')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('➡️')
+                .setEmoji('<a:right:1148627450608222278>')
                 .setCustomId('shard_right')
                 .setStyle('1'),
             new ButtonBuilder()
-                .setLabel('🔙')
+                .setEmoji('<a:back:1148653107773976576>')
                 .setCustomId('shard_original')
                 .setStyle(3)
                 .setDisabled(false),
