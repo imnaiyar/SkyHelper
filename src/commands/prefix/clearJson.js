@@ -5,7 +5,6 @@ module.exports = {
     category: "OWNER", 
  
     async execute(message, args) {
-      console.log(args[0])
       if (args[0] !== 'embed' && args[0] !== 'message') {
          return message.reply("**Invalid Comand Usage**\nAvailable Args: `embed`, `message`")
       }
