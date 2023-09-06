@@ -66,7 +66,6 @@ module.exports = async (client, interaction) => {
    // Select Menus
     if (interaction.isStringSelectMenu()) {
     await guideButton(interaction)
-    await helpButton(interaction, client)
     }
   // Buttons
   if (interaction.isButton()) {
