@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits, EmbedBuilder,  ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} = require('discord.js');
-     
+const {getSettings} = require("@schemas/Guild");  
 async function helpMenu(interaction, client) {
   if (!interaction.isCommand()) return
    const userAvatar = interaction.user.displayAvatarURL({ format: 'png', dynamic: true });
@@ -15,7 +15,7 @@ async function helpMenu(interaction, client) {
             .setColor('#000000')
             .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` })
              .addFields({ name: '**__Slash Commands__**', value: `</shards:1121541967730450574>, </seasonal-guides:1121541967730450574>, </sky-times:1121541967730450574>, </timestamp:1121541967730450574>`, inline: true })
-            .addFields({ name: '**__Prefix(!) Commands__**', value: `\`\`\`credits, skygpt, ping, skytimes\`\`\``, inline: false });
+            .addFields({ name: '**__Prefix Commands__**', value: `\`\`\`credits, skygpt, ping, skytimes, setprefix\`\`\``, inline: false });
    const row = new ActionRowBuilder().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId('commands-help')
@@ -55,6 +55,7 @@ async function helpButton(interaction, client) {
             .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` });
              await interaction.update({embeds: [embed]})
         } else if (selectedChoice === 'prefix') {
+          const settings = await getSettings(interaction.guild)
           const userAvatar = interaction.user.displayAvatarURL({ format: 'png', dynamic: true });
     const userNickname = interaction.user?.nickname || interaction.user.username;
     const botUser = await client.users.fetch(client.user.id);
@@ -65,9 +66,10 @@ async function helpButton(interaction, client) {
             .setTimestamp(Date.now())
             .setColor('#000000')
             .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` })
-             .addFields({ name: '<:prefix:1140103340643078144> **Credits**(everyone)', value: `\`\`\`!credits\`\`\`Credits to all the people whose work is included in the bot. If I forgot to mentio  anyone, kindly let me know and I'll add them.`, inline: true })
-             .addFields({ name: '**<:prefix:1140103340643078144> Sky AI Support** (administrator)', value: "\`\`\`!skygpt set #channelname,  !skygpt stop\`\`\`An AI chatbot based on OpenAI\'s ChatGPT that provides informations related to Sky: Children of the Light. Keep in mind that since ChatGPT doesn\'t provide real-time data, it is often incorrect.  So it's more for fun than actual help. To set up, run the command \`!skygpt set #channelname\` and it\`ll listen to all messages in that channel and respond to it (so make sure it\'s a channel dedicated for the bot an not just any text channel). You can stop this anytime by running \`!skygpt stop\`", inline: true})
-             .addFields({ name: "<:prefix:1140103340643078144> **Ping** (everyone)", value: "\`\`\`!ping\`\`\`Gives bot\'s Ping.", inline: true});
+             .addFields({ name: '<:prefix:1140103340643078144> **Credits**(everyone)', value: `\`\`\`${settings?.prefix || process.env.PREFIX}credits\`\`\`Credits to all the people whose work is included in the bot. If I forgot to mentio  anyone, kindly let me know and I'll add them.`, inline: true })
+             .addFields({ name: '**<:prefix:1140103340643078144> Sky AI Support** (administrator)', value: `\`\`\`${settings?.prefix || process.env.PREFIX}skygpt set #channelname,  !skygpt stop\`\`\`An AI chatbot based on OpenAI\'s ChatGPT that provides informations related to Sky: Children of the Light. Keep in mind that since ChatGPT doesn\'t provide real-time data, it is often incorrect.  So it's more for fun than actual help. To set up, run the command \`!skygpt set #channelname\` and it\'ll listen to all messages in that channel and respond to it (so make sure it\'s a channel dedicated for the bot an not just any text channel). You can stop this anytime by running \`!skygpt stop\``, inline: true})
+             .addFields({ name: "<:prefix:1140103340643078144> **Ping** (everyone)", value: `\`\`\`${settings?.prefix || process.env.PREFIX}ping\`\`\`Gives bot\'s Ping.`, inline: true})
+             .addFields({ name: "<:prefix:1140103340643078144> **Set Prefix** (ManageServer)", value: `\`\`\`${settings?.prefix || process.env.PREFIX}setprefix\`\`\`Change the Bot's prefix for this server.`, inline: true});
              await interaction.update({embeds: [embed]})
     }
     }

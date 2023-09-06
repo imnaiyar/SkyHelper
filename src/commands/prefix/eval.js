@@ -3,7 +3,7 @@ const { EMBED_COLORS } = require("@root/config");
 const DUMMY_TOKEN = "MTA1OwMzU4MDgxMDY2NjA2NA.G3j9tJ.fyYBa817sEb1F00uOmJMmQ7T3oesqqYob683";
 
 module.exports = {
-    name: "eval",
+    name: "e",
     description: "Evaluate JavaScript code",
     category: "OWNER",
   

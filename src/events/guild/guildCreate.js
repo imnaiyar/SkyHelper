@@ -15,7 +15,7 @@ module.exports = async (client, guild) => {
   if (!guild.available) return;
   if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
-  await registerGuild(guild);
+  registerGuild(guild);
   const settings = await botSettings(client);
   settings.data.servers = client.guilds.cache.size;
   settings.data.members = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
