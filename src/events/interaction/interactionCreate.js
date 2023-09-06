@@ -37,9 +37,9 @@ module.exports = async (client, interaction) => {
     .setTitle("New command used")
     .addFields(
       { name: `Command`, value: `\`${interaction}\`` },
-      { name: `User`, value: `${interaction.user.username} \`[${interaction.member.id}]\`` },
-      { name: `Server`, value: `${interaction.guild.name} \`[${interaction.guild.id}]\`` },
-      { name: `Channel`, value: `${interaction.channel.name} \`[${interaction.channel.id}]\`` }
+      { name: `User`, value: `${interaction.user.username} \`[${interaction.user.id}]\`` },
+      { name: `Server`, value: `${interaction.guild?.name} \`[${interaction.guild?.id}]\`` },
+      { name: `Channel`, value: `${interaction.channel?.name} \`[${interaction.channel?.id}]\`` }
     )
     .setColor('Blurple')
     .setTimestamp();
