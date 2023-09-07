@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 async function shardsTime(){
@@ -104,7 +104,7 @@ if (currentEvent === 'A') {
         } else if (present.isBefore(eventTiming.start)) {
             eventStatus = `🌋 ${i + 1}${getOrdinalSuffix(i + 1)} ${type} shard lands in`;
             const duration = moment.duration(eventTiming.start.diff(present));
-              const hoursRemaining = Math.floor(durinion.asHours());
+              const hoursRemaining = Math.floor(duration.asHours());
               const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
             timeRemaining = `${hoursRemaining}h ${minutesRemaining}m`;
             break;
@@ -121,5 +121,8 @@ if (currentEvent === 'A') {
     }
     const status = `${eventStatus} ${timeRemaining}`
 return status;
+
 }
+
+
 module.exports = { shardsTime }
