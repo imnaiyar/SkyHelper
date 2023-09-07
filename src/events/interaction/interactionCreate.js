@@ -5,6 +5,7 @@ const {shardInfos} = require('@shards/aboutShards')
 const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
 const {guideButton} = require('@guides/GuideOption')
+const {parsePerm} = require('@handler/functions/parsePerm')
 const Log = require('@src/logger');
 const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
@@ -33,9 +34,15 @@ module.exports = async (client, interaction) => {
     if (!interaction.isCommand()) return;
     
     const commandName = interaction.commandName;
-    
     const command = client.commands.get(commandName);
 
+    // If command is owner only.
+    if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+
+    // Check if the user has permissions to use the command.
+    if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
+     return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true})
+    }
   try {
     await command.execute(interaction, client);
     const embed = new EmbedBuilder()

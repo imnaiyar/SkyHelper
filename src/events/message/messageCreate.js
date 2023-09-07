@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const {OWNER} = require('@root/config.js')
 const { getSettings} = require("@schemas/Guild");
+
+const {parsePerm} = require('@handler/functions/parsePerm')
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 prefix = new Collection();
@@ -19,6 +21,8 @@ for (const file of commandFiles) {
  * @param {import('discord.js').Message} message
  */
 module.exports = async (client, message) => {
+  // Reply if someone pings the bot.
+
   const settings = await getSettings(message.guild)
   const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(mention)) {
@@ -28,20 +32,28 @@ module.exports = async (client, message) => {
     message.channel.send({ embeds: [embed] });
   }
 
-  if (message.author.bot || !message.content.startsWith(settings?.prefix || process.env.PREFIX)) {
-    return;
+  if (message.author.bot || message.content.match(new RegExp(`^${settings?.prefix || process.env.PREFIX} `)) || !message.content.startsWith(settings?.prefix || process.env.PREFIX))
+  {
+     return;
   }
+  
+  
 
   const args = message.content.slice(settings.prefix?.length || process.env.PREFIX.length).trim().split(/ +/);
-  const commandName = args.shift().toLowerCase();
+  const commandName = args.shift()
   const command = prefix.get(commandName);
   if (!command) {
     return message.reply('Unknown command. Use </help:1147244751708491898> to see available commands.');
   }
- if (command.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+  // Check if command is 'OWNER' only.
+ if (command.category && command.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+
+ // Check if the user has permissions to use the command.
  if (command.userPermissions && !message.member.permissions.has(command.userPermissions)) {
-  return message.reply('You do not have sufficient permission to use this command')
+  return message.reply(`You need ${parsePerm(command.userPermissions)} to use this command`)
  }
+
+ // Execute the command.
   try {
     await command.execute(message, args, client);
   } catch (error) {
