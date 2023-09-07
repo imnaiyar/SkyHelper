@@ -15,7 +15,6 @@ const client = new Client({
       GatewayIntentBits.DirectMessages,
       GatewayIntentBits.GuildMembers,
      ] });
-client.commands = new Collection();
 
 const commands = [];
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
@@ -26,13 +25,10 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 
 for (const file of commandFiles) {
   const command = require(`./commands/slash/${file}`);
-  client.commands.set(command.data.name, command);
+  commands.push(command.data);
 }
 
 client.on('ready', async () => { 
-    client.commands.forEach(command => {
-      commands.push(command.data);
-    });
   
     try {
      Logger.success('Started refreshing application (/) commands.');

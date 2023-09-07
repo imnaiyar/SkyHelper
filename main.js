@@ -21,21 +21,28 @@ initializeMongoose();
 setupPresence(client);
 const loadEventHandlers = (dir) => {
   const files = fs.readdirSync(path.join(__dirname, dir));
+  let eventCounter = 0; // Initialize a counter variable
 
   for (const file of files) {
     const filePath = path.join(dir, file);
     const fileStat = fs.statSync(filePath);
 
     if (fileStat.isDirectory()) {
-      loadEventHandlers(filePath);
+      // Recursively load event handlers in nested folders
+      eventCounter += loadEventHandlers(filePath);
     } else if (file.endsWith('.js')) {
       const eventHandler = require(path.join(__dirname, filePath));
-      const eventName = file.split('.')[0]; 
+      const eventName = file.split('.')[0];
       client.on(eventName, (...args) => eventHandler(client, ...args));
+      eventCounter++; // Increment the counter for each loaded event
     }
   }
+
+  return eventCounter; // Return the total count of events in this folder and its subfolders
 };
-loadEventHandlers('./src/events');
+
+const totalEventsLoaded = loadEventHandlers('./src/events');
+Logger.log(`Loaded ${totalEventsLoaded} events.`);
 
 module.exports = {client}
 client.login(process.env.TOKEN);
