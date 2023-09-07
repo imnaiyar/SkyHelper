@@ -5,12 +5,18 @@ const {shardInfos} = require('@shards/aboutShards')
 const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
 const {guideButton} = require('@guides/GuideOption')
-const {helpButton} = require('@handler/help');
 const Log = require('@src/logger');
+const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
-const {ErrorForm} = require('@handler/errorForm')
-slash = new Collection();
+const {ErrorForm} = require('@handler/functions/errorForm')
+
+/**
+ * @param {import('discord.js').Interaction} interaction
+ */
+
+
+client.commands = new Collection();
 
 
 const commandDirectory = path.join(__dirname, '../../commands/slash');
@@ -18,21 +24,20 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 
 for (const file of commandFiles) {
   const command = require(`../../commands/slash/${file}`);
-  slash.set(command.data.name, command);
+  client.commands.set(command.data.name, command);
 }
-/**
- * @param {import('@root/main')} client
- * @param {import('discord.js').Interaction} interaction
- */
+
 module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()){
+    // Chat Input
     if (!interaction.isCommand()) return;
     
     const commandName = interaction.commandName;
     
-    const command = slash.get(commandName);
+    const command = client.commands.get(commandName);
 
   try {
+    await command.execute(interaction, client);
     const embed = new EmbedBuilder()
     .setTitle("New command used")
     .addFields(
@@ -48,7 +53,6 @@ module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()) {
     cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
   }
-    await command.execute(interaction, client);
   } catch (error) {
     Log.error(error);
     const embed = new EmbedBuilder()

@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {convertTime} = require('@handler/timestampHandler');
+const {convertTime} = require('@handler/functions/timestampHandler');
 module.exports = {
     data: {
       name: 'timestamp',

@@ -1,4 +1,4 @@
-const { skyTimes } = require('@handler/skyTimes');
+const { skyTimes } = require('@handler/functions/skyTimes');
 
 module.exports = {
   name: 'skytimes', 

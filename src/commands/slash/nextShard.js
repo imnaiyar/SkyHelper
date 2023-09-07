@@ -12,7 +12,7 @@ const dayToSkip = {
 module.exports = {
     data: {
         name: 'next-red',
-        description: 'Get date and location of next 5 red shards.',
+        description: 'Get date and location of next red shards.',
         options: [
         {
           name: 'number',
