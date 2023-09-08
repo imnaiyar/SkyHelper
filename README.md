@@ -1,3 +1,6 @@
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=SkyBot;A+discord+bot+for+Sky%3A+Children+of+the+Light)](https://top.gg/bot/1121541967730450574)
+
+
 [![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)](https://top.gg/bot/1121541967730450574)
 
 # SkyBot
