@@ -28,18 +28,18 @@ module.exports = async (client, message) => {
   if (message.content.match(mention)) {
     const embed = new EmbedBuilder()
       .setColor('Gold')
-      .setDescription(`Did you just ping me? RUDE. Anyway, my prefix for this server is '**${settings?.prefix || process.env.PREFIX}**'`);
+      .setDescription(`Did you just ping me? RUDE. Anyway, my prefix for this server is '**${settings?.prefix || process.env.BOT_PREFIX}**'`);
     message.channel.send({ embeds: [embed] });
   }
 
-  if (message.author.bot || message.content.match(new RegExp(`^${settings?.prefix || process.env.PREFIX} `)) || !message.content.startsWith(settings?.prefix || process.env.PREFIX))
+  if (message.author.bot || message.content.match(new RegExp(`^${settings?.prefix || process.env.BOT_PREFIX} `)) || !message.content.startsWith(settings?.prefix || process.env.BOT_PREFIX))
   {
      return;
   }
   
   
 
-  const args = message.content.slice(settings.prefix?.length || process.env.PREFIX.length).trim().split(/ +/);
+  const args = message.content.slice(settings.prefix?.length || process.env.BOT_PREFIX.length).trim().split(/ +/);
   const commandName = args.shift()
   const command = prefix.get(commandName);
   if (!command) {

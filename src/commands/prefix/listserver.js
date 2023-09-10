@@ -57,7 +57,7 @@ const {
      let buttonsRow = new ActionRowBuilder().addComponents(components); 
 
      // Embed Builder 
-     const buildEmbed = () => { 
+     const buildEmbed = async () => { 
        const start = (currentPage - 1) * maxPerPage; 
        const end = start + maxPerPage < total ? start + maxPerPage : total; 
 
@@ -68,13 +68,13 @@ const {
 
        const fields = []; 
        for (let i = start; i < end; i++) { 
-         const server = servers[i];
+         const server = servers[i];const owner = await client.users.fetch(server.ownerId);
          
          
  
          fields.push({ 
            name: server.name, 
-           value: `${server.id}\n OwnerID: ${server.ownerId}`, 
+           value: `**ID:** ${server.id}\n **Owner:** ${owner.username} (${server.ownerId})`, 
            inline: true, 
          }); 
        } 
@@ -90,7 +90,7 @@ const {
      }; 
 
      // Send Message 
-     const embed = buildEmbed(); 
+     const embed = await buildEmbed(); 
      const sentMsg = await channel.send({ embeds: [embed], components: [buttonsRow] }); 
 
      // Listeners 
