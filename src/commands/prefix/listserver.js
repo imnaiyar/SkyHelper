@@ -68,13 +68,15 @@ const {
 
        const fields = []; 
        for (let i = start; i < end; i++) { 
-         const server = servers[i];const owner = await client.users.fetch(server.ownerId);
+         const server = servers[i];
+         const owner = await client.users.fetch(server.ownerId);
+         const members = server.memberCount;
          
          
  
          fields.push({ 
-           name: server.name, 
-           value: `**ID:** ${server.id}\n **Owner:** ${owner.username} (${server.ownerId})`, 
+           name: `${server.name} (${members})`, 
+           value: `- **ID:** ${server.id}\n- **Owner:** ${owner.username} (${server.ownerId})`, 
            inline: true, 
          }); 
        } 
