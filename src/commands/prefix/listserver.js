@@ -109,7 +109,7 @@ const {
          case "prevBtn": 
            if (currentPage > 1) { 
              currentPage--; 
-             const embed = buildEmbed(); 
+             const embed = await buildEmbed(); 
              await sentMsg.edit({ embeds: [embed], components: [buttonsRow] }); 
            } 
            break; 
@@ -117,7 +117,7 @@ const {
          case "nxtBtn": 
            if (currentPage < totalPages) { 
              currentPage++; 
-             const embed = buildEmbed(); 
+             const embed = await buildEmbed(); 
              await sentMsg.edit({ embeds: [embed], components: [buttonsRow] }); 
            } 
            break; 
