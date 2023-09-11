@@ -153,4 +153,5 @@ if (currentEvent === 'A') {
     }
    await shardsReply(interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard);
 }
+//test
 module.exports = { shardsAlt };
