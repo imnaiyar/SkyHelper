@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {skyTimes} = require('@handler/skyTimes')
+const {skyTimes} = require('@handler/functions/skyTimes')
 module.exports = {
     data: {
       name: 'sky-times',
@@ -49,7 +49,7 @@ module.exports = {
         break;
   
       default:
-        await interaction.reply(`\*\*\_\_Geyser(upcoming)\_\_\*\*: ${result.geyserResultStr}\n\n\*\*\_\_Grandma(upcoming)\_\_\*\*:${result.grandmaResultStr}\n\n\*\*\_\_Turtle(upcoming)\_\_\*\*:${result.turtleResultStr}\n\n\*\*\_\_Reset(next)\_\_\*\*:${result.resetResultStr}\n\n\*\*\_\_Eden(reset)\_\_\*\*: ${result.edenResultStr}\n\*\*Check individual commands for more information\*\*`);
+        await interaction.reply(`\*\*\_\_Geyser(upcoming)\_\_\*\*: ${result.geyserResultStr}\n\n\*\*\_\_Grandma(upcoming)\_\_\*\*:${result.grandmaResultStr}\n\n\*\*\_\_Turtle(upcoming)\_\_\*\*:${result.turtleResultStr}\n\n\*\*\_\_Reset(next)\_\_\*\*:${result.resetResultStr}\n\n\*\*\_\_Eden(reset)\_\_\*\*: ${result.edenResultStr}\n\n_Check individual commands for more information_`);
         break;
     }
 

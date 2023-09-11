@@ -57,7 +57,7 @@ const {
      let buttonsRow = new ActionRowBuilder().addComponents(components); 
 
      // Embed Builder 
-     const buildEmbed = () => { 
+     const buildEmbed = async () => { 
        const start = (currentPage - 1) * maxPerPage; 
        const end = start + maxPerPage < total ? start + maxPerPage : total; 
 
@@ -69,12 +69,14 @@ const {
        const fields = []; 
        for (let i = start; i < end; i++) { 
          const server = servers[i];
+         const owner = await client.users.fetch(server.ownerId);
+         const members = server.memberCount;
          
          
  
          fields.push({ 
-           name: server.name, 
-           value: `${server.id}\n OwnerID: ${server.ownerId}`, 
+           name: `${server.name} (${members})`, 
+           value: `- **ID:** ${server.id}\n- **Owner:** ${owner.username} (${server.ownerId})`, 
            inline: true, 
          }); 
        } 
@@ -90,13 +92,13 @@ const {
      }; 
 
      // Send Message 
-     const embed = buildEmbed(); 
+     const embed = await buildEmbed(); 
      const sentMsg = await channel.send({ embeds: [embed], components: [buttonsRow] }); 
 
      // Listeners 
      const collector = channel.createMessageComponentCollector({ 
        filter: (response) => response.user.id === member.id && response.message.id === sentMsg.id, 
-       idle: IDLE_TIMEOUT * 1000, 
+       idle: 2 * IDLE_TIMEOUT * 1000, 
        dispose: true, 
        componentType: ComponentType.Button, 
      }); 
@@ -109,7 +111,7 @@ const {
          case "prevBtn": 
            if (currentPage > 1) { 
              currentPage--; 
-             const embed = buildEmbed(); 
+             const embed = await buildEmbed(); 
              await sentMsg.edit({ embeds: [embed], components: [buttonsRow] }); 
            } 
            break; 
@@ -117,7 +119,7 @@ const {
          case "nxtBtn": 
            if (currentPage < totalPages) { 
              currentPage++; 
-             const embed = buildEmbed(); 
+             const embed = await buildEmbed(); 
              await sentMsg.edit({ embeds: [embed], components: [buttonsRow] }); 
            } 
            break; 

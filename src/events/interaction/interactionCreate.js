@@ -5,12 +5,19 @@ const {shardInfos} = require('@shards/aboutShards')
 const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
 const {guideButton} = require('@guides/GuideOption')
-const {helpButton} = require('@handler/help');
+const {parsePerm} = require('@handler/functions/parsePerm')
 const Log = require('@src/logger');
+const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
-const {ErrorForm} = require('@handler/errorForm')
-slash = new Collection();
+const {ErrorForm} = require('@handler/functions/errorForm')
+
+/**
+ * @param {import('discord.js').Interaction} interaction
+ */
+
+
+client.commands = new Collection();
 
 
 const commandDirectory = path.join(__dirname, '../../commands/slash');
@@ -18,28 +25,33 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 
 for (const file of commandFiles) {
   const command = require(`../../commands/slash/${file}`);
-  slash.set(command.data.name, command);
+  client.commands.set(command.data.name, command);
 }
-/**
- * @param {import('@root/main')} client
- * @param {import('discord.js').Interaction} interaction
- */
+
 module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()){
+    // Chat Input
     if (!interaction.isCommand()) return;
     
     const commandName = interaction.commandName;
-    
-    const command = slash.get(commandName);
+    const command = client.commands.get(commandName);
 
+    // If command is owner only.
+    if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+
+    // Check if the user has permissions to use the command.
+    if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
+     return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true})
+    }
   try {
+    await command.execute(interaction, client);
     const embed = new EmbedBuilder()
     .setTitle("New command used")
     .addFields(
       { name: `Command`, value: `\`${interaction}\`` },
-      { name: `User`, value: `${interaction.user.username} \`[${interaction.member.id}]\`` },
-      { name: `Server`, value: `${interaction.guild.name} \`[${interaction.guild.id}]\`` },
-      { name: `Channel`, value: `${interaction.channel.name} \`[${interaction.channel.id}]\`` }
+      { name: `User`, value: `${interaction.user.username} \`[${interaction.user.id}]\`` },
+      { name: `Server`, value: `${interaction.guild?.name} \`[${interaction.guild?.id}]\`` },
+      { name: `Channel`, value: `${interaction.channel?.name} \`[${interaction.channel?.id}]\`` }
     )
     .setColor('Blurple')
     .setTimestamp();
@@ -48,7 +60,6 @@ module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()) {
     cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
   }
-    await command.execute(interaction, client);
   } catch (error) {
     Log.error(error);
     const embed = new EmbedBuilder()
@@ -66,7 +77,6 @@ module.exports = async (client, interaction) => {
    // Select Menus
     if (interaction.isStringSelectMenu()) {
     await guideButton(interaction)
-    await helpButton(interaction, client)
     }
   // Buttons
   if (interaction.isButton()) {
@@ -80,10 +90,15 @@ module.exports = async (client, interaction) => {
   if (interaction.customId === 'error_report') {
     await ErrorForm(interaction)
   }
-
+if (interaction.customId === 'shard_timeline' || 'shard_left' || 'shard_right' || 'shard_original') {
   shardTimeline(interaction, Zhii, Christian);
+}
+if (interaction.customId === 'shard_location' || 'shard_leftL' || 'shard_rightL' || 'shard_originalL') {
   shardLocation(interaction, Gale, Clement);
+}
+if (interaction.customId === 'about_shard' || 'left_about' || 'right_about' || 'original_about') {
   shardInfos(interaction, Art);
+}
 }
 // Modals
 if (interaction.isModalSubmit()) {

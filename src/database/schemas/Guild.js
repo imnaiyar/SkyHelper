@@ -18,6 +18,7 @@ const Schema = new mongoose.Schema({
     leftAt: Date,
     bots: { type: Number, default: 0 },
   },
+  prefix: String,
   
   skyGPT: String,
 });

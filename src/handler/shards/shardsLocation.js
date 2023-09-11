@@ -266,7 +266,8 @@ let originalActionRow = null;
 const timezone = 'America/Los_Angeles';
 
 async function shardLocation(interaction, Gale, Clement) {
-  const messageId = interaction.message.id;
+  if (!interaction.customId.includes('shard')) return
+     const messageId = interaction.message.id;
      const currentDate = getCurrentDate(interaction, messageId);
     if (!currentDate) return;
     const dayOfMonth = currentDate.date();

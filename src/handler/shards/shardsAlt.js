@@ -7,6 +7,13 @@ const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'
 async function shardsAlt(interaction){
     const timezone = 'America/Los_Angeles';
     const dateOption = interaction.options.getString('date');
+    
+    const regex = /^\d{4,6}-\d{2}-\d{2}$/;
+
+if (!regex.test(dateOption)) {
+  interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
+  return; 
+}
 
     let currentDate;
     let dayOfMonth;
@@ -144,6 +151,7 @@ if (currentEvent === 'A') {
         break;
     }
     }
-   await shardsReply(interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek);
+   await shardsReply(interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard);
 }
+//test
 module.exports = { shardsAlt };
