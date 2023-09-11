@@ -7,7 +7,7 @@ module.exports = {
       },
 
      DASHBOARD: {
-        port: "8080",
+        port: "8519",
       },
 
     EMBED_COLORS: {
