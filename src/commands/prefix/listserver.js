@@ -98,7 +98,7 @@ const {
      // Listeners 
      const collector = channel.createMessageComponentCollector({ 
        filter: (response) => response.user.id === member.id && response.message.id === sentMsg.id, 
-       idle: IDLE_TIMEOUT * 1000, 
+       idle: 2 * IDLE_TIMEOUT * 1000, 
        dispose: true, 
        componentType: ComponentType.Button, 
      }); 
