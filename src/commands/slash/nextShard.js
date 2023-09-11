@@ -62,7 +62,7 @@ function getNextRedEvents(currentDay, daysNum) {
      
         if (!dayToSkip[event].includes(dayOfWeek)) {
 
-          const todayDate = today.format('YYYY-MM-DD');
+          const todayDate = today.format('DD-MMM-YYYY');
           redEvents.push({ day: todayDate, event, secondEvent });
         }
       }
