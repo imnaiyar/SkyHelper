@@ -10,7 +10,7 @@ async function shardsAlt(interaction){
     
     const regex = /^\d{4,6}-\d{2}-\d{2}$/;
 
-if (!regex.test(dateOption)) {
+if (dateOption && !regex.test(dateOption)) {
   interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
   return; 
 }

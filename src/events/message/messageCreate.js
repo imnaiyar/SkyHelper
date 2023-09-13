@@ -1,28 +1,26 @@
 const { WebhookClient, Collection, EmbedBuilder } = require("discord.js");
 const fs = require('fs');
 const path = require('path');
+
 const {OWNER} = require('@root/config.js')
 const { getSettings} = require("@schemas/Guild");
 
 const {parsePerm} = require('@handler/functions/parsePerm')
+const { client } = require('@root/main')
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
-prefix = new Collection();
+client.prefix = new Collection();
 
 const commandDirectory = path.join(__dirname, '../../commands/prefix');
 const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
   const command = require(`@src/commands/prefix/${file}`);
-  prefix.set(command.name, command); 
+  client.prefix.set(command.name, command); 
 }
-/**
- * @param {import('@root/main')} client
- * @param {import('discord.js').Message} message
- */
-module.exports = async (client, message) => {
-  // Reply if someone pings the bot.
 
+module.exports = async (client, message) => {
+  
   const settings = await getSettings(message.guild)
   const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(mention)) {
@@ -41,7 +39,7 @@ module.exports = async (client, message) => {
 
   const args = message.content.slice(settings.prefix?.length || process.env.BOT_PREFIX.length).trim().split(/ +/);
   const commandName = args.shift()
-  const command = prefix.get(commandName);
+  const command = client.prefix.get(commandName);
   if (!command) {
     return message.reply('Unknown command. Use </help:1147244751708491898> to see available commands.');
   }

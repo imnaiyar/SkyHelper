@@ -3,7 +3,8 @@ const {Guides} = require('@guides/GuideOption')
 module.exports = {
     data: {
       name: 'seasonal-guides',
-      description: 'Seasonal Guides.(Quests/Spirit Locations/TS Price Tree)',
+      description: 'various seasonal guides',
+      longDesc: 'Search from various seasonal guides. You can look for  seasonal quests, spirits location and spirits firendship tree (seasonal tree is displayed if the spirit has not returned yet).',
       options: [
         {
           name: 'ephemeral',
