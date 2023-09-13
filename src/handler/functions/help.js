@@ -41,7 +41,7 @@ if (input && !slashCommands) {
      
      setTimeout(() => {
   reply.delete().catch(console.error);
-}, 3000);
+}, 30000);
 
      return;
 }
