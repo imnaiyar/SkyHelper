@@ -13,7 +13,14 @@ module.exports = {
     data: {
         name: 'next-red',
         description: 'Get date and location of next red shards.',
-        longDesc: 'Get list of upcoming Red shards, their dates, the time the first shard lands and in which realm they are. Default shards to look for are 5. In a server, you can request upto 10 results, and upto 20 in my DM\`s',
+        longDesc: `Provides information about the date and location of the next 5 upcoming red shards by default. Optionally, you can request more results.
+
+\`Usage:\`
+/next-red [number]
+
+- [number] (optional): Specify the number of results you want (1 to 10 in server channels, 1 to 20 in DMs).
+
+This command offers details on the date and location of the upcoming red shards. Use the optional [--number] flag to adjust the number of results.`,
         options: [
         {
           name: 'number',

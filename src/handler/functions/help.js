@@ -25,24 +25,9 @@ if (input && !slashCommands) {
          value: slashCommands.data.longDesc
        })
      }
-     const { options } = appC
-     if (options && options.length > 0) {
-    const optionNames = options.map(option => {
-
-      const optionLabel = option.required ? `\`<${option.name}>\`` : `\`[${option.name}]\``;
-      return optionLabel;
-    });
-
-    embed.addFields({
-      name: 'Options',
-      value:`${optionNames.join(', ')}\n\n`})
-    }
-   const reply = await interaction.reply({ embeds: [embed]})
      
-     setTimeout(() => {
-  reply.delete().catch(console.error);
-}, 30000);
-
+   const reply = await interaction.reply({ embeds: [embed], ephemeral: true})
+     
      return;
 }
   const embed = new EmbedBuilder()
@@ -50,7 +35,7 @@ if (input && !slashCommands) {
     .setTimestamp(Date.now())
     .setColor('#000000')
     .setFooter({ text: 'SkyBot', iconURL: client.user.displayAvatarURL() })
-    .setDescription(`SkyBot is a discord bot for the game [Sky: Children of the Light](https://www.thatskygame.com/).\n It is designed to provide you easy access to in-game information. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](http://130.61.174.212:8519/) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`);
+    .setDescription(`SkyBot is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](http://130.61.174.212:8519/) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`);
 
   const row = new ActionRowBuilder().addComponents(
     new StringSelectMenuBuilder()

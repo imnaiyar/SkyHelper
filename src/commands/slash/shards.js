@@ -4,7 +4,7 @@ module.exports = {
     data: {
       name: 'shards',
       description: 'Get Sky Shards information',
-      longDesc: 'Get information about daily shards. By default it provides details about today\'s shard, but you can search shards detail for a specific date.',
+      longDesc: 'Provides detailed information about shattering shards in Sky: Children of the Light.\n\n`Usage:`\n/shards [date]\n- `[date]:` (Optional) Specify a date to get shard details for that day (e.g., "2023-09-15").\n\nThis command will give you insights into shard locations, landing times, and essential data for the selected date.',
       options: [
         {
           name: 'date',
