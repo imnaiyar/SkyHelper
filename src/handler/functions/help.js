@@ -44,7 +44,7 @@ if (input && !slashCommands) {
       .addOptions(
         new StringSelectMenuOptionBuilder()
           .setLabel('Slash Commands')
-          .setDescription('Details about all the slash commands available.')
+          .setDescription('Details about all available slash commands.')
           .setValue('slash')
           .setEmoji('<:slash:1140102899750420620>'),
         new StringSelectMenuOptionBuilder()

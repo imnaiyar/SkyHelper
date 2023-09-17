@@ -19,7 +19,7 @@ async function skyTimes() {
  if (now.isBetween(geyserStart, geyserEnd)) {
    const geyserDuration = moment.duration(geyserEnd.diff(now));
    const geyserOnEnd = `${geyserDuration.minutes()} minutes  ${geyserDuration.seconds()} seconds.`;
-    geyserResultStr = `Geyser is currently ongoing and will end at <t:${geyserEndUnix}:t> (in  ${geyserOnEnd})\n\`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t>`;
+    geyserResultStr = `Geyser is currently ongoing and will end at <t:${geyserEndUnix}:t> (in  ${geyserOnEnd})\n - \`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t>`;
     } else {
 
   const durationGeyser = moment.duration(geyserTargetTime.diff(now));
@@ -49,7 +49,7 @@ async function skyTimes() {
  if (now.isBetween(grandmaStart, grandmaEnd)) {
    const grandmaDuration = moment.duration(grandmaEnd.diff(now));
    const grandmaOnEnd = `${grandmaDuration.minutes()} minutes  ${grandmaDuration.seconds()} seconds.`;
-    grandmaResultStr = `Grandma is currently ongoing and will end at <t:${grandmaEndUnix}:t> (in ${grandmaOnEnd})\n\`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t>`;
+    grandmaResultStr = `Grandma is currently ongoing and will end at <t:${grandmaEndUnix}:t> (in ${grandmaOnEnd})\n - \`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t>`;
     } else {
   const durationGrandma = moment.duration(grandmaTargetTime.diff(now));
     grandmaResultStr = `\`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t> ( in `;
@@ -78,7 +78,7 @@ async function skyTimes() {
   if (now.isBetween(turtleStart, turtleEnd)) {
    const turtleDuration = moment.duration(turtleEnd.diff(now));
    const turtleOnEnd = `${turtleDuration.minutes()} minutes  ${turtleDuration.seconds()} seconds.`;
-    turtleResultStr = `Turtle is currently ongoing and will end at <t:${turtleEndUnix}:t>(in ${turtleOnEnd})\n\`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t>`;
+    turtleResultStr = `Turtle is currently ongoing and will end at <t:${turtleEndUnix}:t>(in ${turtleOnEnd})\n - \`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t>`;
     } else { turtleResultStr = `\`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t> ( in `;
   if (durationTurtle.hours() > 0) {
     turtleResultStr += `${durationTurtle.hours()} hours`;
