@@ -803,54 +803,54 @@ module.exports = {
     },
   // rhythm
     // rhythm location
-    '': {
-      content: "",
-      files: ['']
+    'actor_location': {
+      content: "```Admiring Actor Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295724767875092/Admiring_actor_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'spin_dancer_location': {
+      content: "```Festive Spin Dancer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295723576709263/Spin_dancer_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pianist_location': {
+      content: "```Respectful Pianist Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295723970957362/Respectful_pianist_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'director_location': {
+      content: "```Thoughtful Director Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725040500816/Thoughtful_director_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'greeter_location': {
+      content: "```Troupe Greeter Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295772117385277/Troupe_Greeter_Location.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'juggler_location': {
+      content: "```Troupe Juggler Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295724419743896/Troupe_Juggler_location.jpg']
     },
     // rhythm ts
-    '': {
-      content: "",
-      files: ['']
+    'actor_tree': {
+      content: "This was **_Admiring Actor's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- June 8, 2023 (#89)\n- June 24, 2021 (#38)\n- October 15, 2020 (#20)\n\n```Admiring Actor Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725682229320/Admiring_actor_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'spin_dancer_tree': {
+      content: "This was **_Festive Spin Dancer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- October 14, 2021 (#46)\n- September 3, 2020 (#17)\n\n```Festive Spin Dancer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295772767498260/Festive_Spin_dancer_tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pianist_tree': {
+      content: "This was **_Respectful Pianist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- February 4, 2021 (#28)\n- July 3, 2023 (Special Visit #3)\n\n```Respectful Pianist Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726323957842/Respectful_pianist_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'director_tree': {
+      content: "This was **_Thoughtful Director's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_October 28, 2021 (#47)_\n\n```Thoughtful Director Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726034554940/Thoughtful_director_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'greeter_tree': {
+      content: "This was **_Troupe Greeter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- August 7, 2023 (SV#4)\n- March 3, 2022 (#56)\n- December 24, 2020 (#25)\n\n```Troupe Greeter Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725313134632/Troupe_greeter_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'juggler_tree': {
+      content: "This was **_Troupe Juggler's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- September 16, 2021 (#44)\n\n```Troupe Juggler Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726600785930/Troupe_juggler_tree.jpg']
     },
   // belonging
     // belonging location

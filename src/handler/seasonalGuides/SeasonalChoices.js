@@ -580,7 +580,7 @@ const thirdChoices = {
   'rhythm_ts': [
     { label: 'Admiring Actor', value: 'actor_tree',
       emoji: '<:actor:1131649977710555136>' },
-    { label: 'Festival Spin Dancer', value: 'spin_dancer_trre',
+    { label: 'Festival Spin Dancer', value: 'spin_dancer_tree',
       emoji: '<:spindancer:1131650001571946616>' },
     { label: 'Respectful Pianist', value: 'pianist_tree',
       emoji: '<:respectfulpianist:1131650056206942300>' },
