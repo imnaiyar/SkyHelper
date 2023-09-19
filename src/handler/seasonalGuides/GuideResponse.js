@@ -387,7 +387,7 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
     },
         'navigator_tree': {
-      content: "This was **_Lively Navigator's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__\n- August 17, 2023 (#94)\n\n```Lively Navigator Friendship Tree by ```\n***prices are subject to change in future visits.**",
+      content: "This was **_Lively Navigator's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__\n- August 17, 2023 (#94)\n\n```Lively Navigator Friendship Tree by Xander```\n***prices are subject to change in future visits.**",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1153525209748471878/IMG_2821.jpg']
     },
         'talented_builder_tree': {
