@@ -845,7 +845,7 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726034554940/Thoughtful_director_tree.jpg']
     },
     'greeter_tree': {
-      content: "This was **_Troupe Greeter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- August 7, 2023 (SV#4)\n- March 3, 2022 (#56)\n- December 24, 2020 (#25)\n\n```Troupe Greeter Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      content: "This was **_Troupe Greeter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- August 7, 2023 (Special Visit #4)\n- March 3, 2022 (#56)\n- December 24, 2020 (#25)\n\n```Troupe Greeter Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725313134632/Troupe_greeter_tree.jpg']
     },
     'juggler_tree': {
@@ -854,54 +854,54 @@ module.exports = {
     },
   // belonging
     // belonging location
-    '': {
-      content: "",
-      files: ['']
+    'boogie_kid_location': {
+      content: "```Boogie Kid Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932762411119/Boogie_Kid_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'confetti_cousin_location': {
+      content: "```Confetti Cousin Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494962453885049/Confetti_Cousin_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'hairtousle_teen_location': {
+      content: "```Hairtousle Teen Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933894860912/Hairtousle_Teen_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pleaful_parent_location': {
+      content: "```Pleaful Parent Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494934402383932/Pleaful_Parent_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'sparkler_parent_location': {
+      content: "```Sparkler Parent Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494934150729778/Sparkler_Parent_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'wise_grandparent_location': {
+      content: "```Wise Grandparent Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494962730700851/Grandparent_Location.jpg']
     },
     // belonging ts
-    '': {
-      content: "",
-      files: ['']
+    'boogie_kid_tree': {
+      content: "This was **_Boogie Kid's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- March 2, 2023 (#82)\n- July 22, 2021 (#40)\n- November 12, 2020 (#22)\n\n```Boogie Kid Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494931629948968/Boogie_Kid_Tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'confetti_cousin_tree': {
+      content: "This was **_Confetti Cousin's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- January 21, 2021 (#27)\n- July 9, 2020 (#13)\n\n```Confetti Cousin Friendship Tree by Jed```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932154224751/Confetti_Cousin_Tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'hairtousle_teen_tree': {
+      content: "This was **_Hairtousle Teen's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- June 9, 2022 (#63)\n- June 11, 2020 (#11)\n\n```Hairtousle Teen Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933043417119/Hairtousle_Teen_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pleaful_parent_tree': {
+      content: "This was **_Pleaful Parent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- December 22, 2022 (#77)\n- December 10, 2020 (#24)\n- March 26, 2020 (#5)\n\n```Pleaful Parent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933295091793/Pleaful_Parent_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'sparkler_parent_tree': {
+      content: "This was **_Sparkler Parent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 4\n__**Previous Visits Dates**__\n- June 22, 2023 (#90)\n- December 23, 2021 (#51)\n- April 1, 2021 (#32)\n- May 14, 2020 (#9)\n\n```Sparkler Parent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933613854720/Sparkler_Parent_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'wise_grandparent_tree': {
+      content: "This was **_Wise Gradparent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- November 11, 2021 (#48)\n- August 6, 2020 (#15)\n\n```Wise Gradparent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932485591111/Grandparent_Tree.jpg']
     },
   // lightseekers
     // Lightseekers location
