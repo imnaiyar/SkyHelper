@@ -12,6 +12,18 @@ module.exports = {
       content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 2 guide by Mimi and Sam```",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1135953405869826088/IMG_2442.jpg']
     },
+    'moments_q3': {
+      content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 3 guide by Mimi and Sam```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153542173107695718/MomentsQuest3.png']
+    },
+    'moments_q4': {
+      content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 4 guide by Mimi and Sam```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153542173615194142/MomentsQuest4.png']
+    },
+    'moments_q5': {
+      content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 5 guide by Mimi and Sam```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153542174005276722/MomentsQuest5.jpg']
+    },
     // moments location
     'ranger_location': {
       content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments spirits and winged lights location by Mimi and Sam```",

@@ -128,6 +128,12 @@ const thirdChoices = {
     emoji: '<:quests:1131171487877963886>'},
     { label: 'Quest 2', value: 'moments_q2',
     emoji: '<:quests:1131171487877963886>'},
+    { label: 'Quest 3', value: 'moments_q3',
+    emoji: '<:quests:1131171487877963886>'},
+    { label: 'Quest 4', value: 'moments_q4',
+    emoji: '<:quests:1131171487877963886>'},
+    { label: 'Quest 5', value: 'moments_q5',
+    emoji: '<:quests:1131171487877963886>'},
   ],
    'moments_s': [
     { label: 'Reassuring Ranger', value: 'ranger_location',
