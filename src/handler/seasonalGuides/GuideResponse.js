@@ -994,7 +994,7 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1153516465090199643/Provoking_Performer_Tree.jpg']
     },
     'saluting_tree': {
-      content: "This was **_Saluting Protector's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- January 20, 2022 (#53)\n\n```Saluting Protector Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      content: "This was **_Saluting Protector's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- January 20, 2022 (#53)\n\n```Saluting Protector Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1153516464813379664/Saluting_Protector_Tree.jpg']
     },
     'sassy_tree': {
