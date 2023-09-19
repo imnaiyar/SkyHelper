@@ -387,15 +387,15 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
     },
         'navigator_tree': {
-      content: "Lively Navigator** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Flight Seasonal Price Chart by Clement```",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
+      content: "This was **_Lively Navigator's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__\n- August 17, 2023 (#94)\n\n```Lively Navigator Friendship Tree by ```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153525209748471878/IMG_2821.jpg']
     },
         'talented_builder_tree': {
       content: "**Talented Builder** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Flight Seasonal Price Chart by Clement```",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
     },
         'chimesmith_tree': {
-      content: "This was **_Tinkering Chimesmith's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__: May 11, 2023(#87)\n\n```Travelling Spirit #87 Summary by Clement```\n***prices are subject to change in future visits.**",
+      content: "This was **_Tinkering Chimesmith's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__: May 11, 2023(#87)\n\n```Travelling Spirit #87 Summary by Clement```\n***prices are subject to change in future visits.**",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132251290630635571/Traveling_Spirit_087.png']
     },
     
@@ -461,8 +461,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132403272242700379/05_Season_Price_Chart.jpg']
     },
         'star_collector_tree': {
-      content: "**Star Collector** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of the Little Prince Seasonal Price Chart by Clement```",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1132403272242700379/05_Season_Price_Chart.jpg']
+      content: "This was **_Star Collector's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- September 14, 2023 (#96)\n\n```Star Collector Friendship Tree by Kontra```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153526469738365011/Star_Collector_Tree.png']
     },
         'geographer_tree': {
       content: "This was **_Sneezing Geographer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__: April 13, 2023(#85)\n\n```Travelling Spirit ##81 Summary by Clement```\n***prices are subject to change in future visits.**",
@@ -718,8 +718,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1139295739420364861/Thrilseeker_tree.jpg']
     }, 
         'jellywhisperer_tree': {
-      content: "This was **_Jelly Whisperer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_November 25, 2021 (#49)_\n\n```Jelly Whisperer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295700455264296/Jelly_whispere_tree.png']
+      content: "This was **_Jelly Whisperer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- August 31, 2023 (#95)\n- November 25, 2021 (#49)\n\n```Jelly Whisperer Friendship Tree by Kontra```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153526469281206433/Jelly_Whisperer_Tree.png']
     },
         'bookworm_tree': {
       content: "This was **_Timid Bookwork's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_July 7, 2022 (#65)\nJune 10, 2021 (#37)_\n\n```Timid Bookworm Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
