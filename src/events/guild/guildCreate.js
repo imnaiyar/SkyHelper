@@ -23,17 +23,20 @@ module.exports = async (client, guild) => {
 // Check if joined guild is blacklisted
  let data = await Guild.findOne({ Guild: guild.id}).catch((err) => {}); 
    if (data) {
+  if (!guild.me.permissions.has("ViewAuditLog")) {
+  await guild.leave();
+}
    const fetchedLogs = await guild.fetchAuditLogs({
 	type: AuditLogEvent.BotAdd,
 	limit: 1,
 });
-if (fetchedLogs) {
+
 const firstEntry = fetchedLogs.entries.first();
-firstEntry.executor.send(`The server you invited me to is blacklisted for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`) }
+firstEntry.executor.send(`The server you invited me to is blacklisted for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`) 
 await guild.leave();
 const embed = new EmbedBuilder()
        .setAuthor({ name: `Blacklisted Server`})
-       .setDescription(`${firstEntry.executor.username} tried to invite me to a blacklisted server. I have left the server.`)
+       .setDescription(`${firstEntry?.executor.username || 'Unknown'} tried to invite me to a blacklisted server. I have left the server.`)
        .addFields(
          { name: 'Blacklisted Guild Name', value: `${data.Name}`},
          { name: 'Reason', value: `${data.Reason}`},
