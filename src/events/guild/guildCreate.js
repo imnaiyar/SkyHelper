@@ -1,6 +1,5 @@
 const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require("discord.js");
 const { getSettings: registerGuild } = require("@schemas/Guild");
-const Guild = require('@schemas/guildBlackList.js');
 const Logger = require('@src/logger')
 const config = require('@root/config.js')
 const {topggAutopost} = require('@handler/functions/topgg-autopost')
@@ -21,31 +20,7 @@ module.exports = async (client, guild) => {
  registerGuild(guild);
   
 // Check if joined guild is blacklisted
- let data = await Guild.findOne({ Guild: guild.id}).catch((err) => {}); 
-   if (data) {
-   const fetchedLogs = await guild.fetchAuditLogs({
-	type: AuditLogEvent.BotAdd,
-	limit: 1,
-});
-
-const firstEntry = fetchedLogs.entries.first();
-firstEntry.executor.send(`The server you invited me to is blacklisted for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`)
-await guild.leave();
-const embed = new EmbedBuilder()
-       .setAuthor({ name: `Blacklisted Server`})
-       .setDescription(`${firstEntry.executor.username} tried to invite me to a blacklisted server. I have left the server.`)
-       .addFields(
-         { name: 'Blacklisted Guild Name', value: `${data.Name}`},
-         { name: 'Reason', value: `${data.Reason}`},
-         { name: 'Blacklisted Date', value: `${data?.Date || 'Unknown'}`},
-         );
-     webhookLogger.send({
-    username: "Blacklist Server",
-    avatarURL: client.user.displayAvatarURL(),
-    embeds: [embed],
-  });    
-return;
- }
+ 
  
 // Send a guild join Log
 if (!process.env.GUILD) return;
