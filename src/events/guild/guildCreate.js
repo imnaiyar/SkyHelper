@@ -1,6 +1,6 @@
 const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require("discord.js");
 const { getSettings: registerGuild } = require("@schemas/Guild");
-const Guild = require('@schemas/guildBlackList');
+const Guild = require('@schemas/guildBlackList.js');
 const Logger = require('@src/logger')
 const config = require('@root/config.js')
 const {topggAutopost} = require('@handler/functions/topgg-autopost')

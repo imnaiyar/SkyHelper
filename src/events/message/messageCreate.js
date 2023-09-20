@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const {OWNER} = require('@root/config.js')
-const { getSettings} = require("@schemas/Guild");
+const { getSettings} = require("@schemas/Guild.js");
 
 const {parsePerm} = require('@handler/functions/parsePerm')
 const { client } = require('@root/main')

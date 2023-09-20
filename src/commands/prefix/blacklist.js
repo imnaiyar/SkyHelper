@@ -1,5 +1,5 @@
-const Guild = require('@schemas/guildBlackList');
-const { getUser } = require('@schemas/User')
+const Guild = require('@schemas/guildBlackList.js');
+const { getUser } = require('@schemas/User.js')
 module.exports = {
   name: 'blacklist', 
   description: 'blacklist a guild or an user.',
