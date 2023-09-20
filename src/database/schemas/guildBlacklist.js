@@ -1,11 +1,12 @@
-const { model, Schema } = require("mongoose"); 
-  
- module.exports = model( 
-   "blacklist-guild", 
-   new Schema({ 
-     Guild: String,
-     Name: String,
-     Reason: String,
-     Date: Date,
-   }) 
- );
+const { model, Schema } = require("mongoose");
+
+// Define the schema
+const BlacklistedGuildSchema = new Schema({
+  Guild: String,
+  Name: String,
+  Reason: String,
+  Date: Date,
+});
+
+// Create and export the BlacklistedGuild model
+module.exports = model("blacklist-guild", BlacklistedGuildSchema);
