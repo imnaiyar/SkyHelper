@@ -1,9 +1,11 @@
 const Guild = require('@schemas/guildBlackList.js');
 const { getUser } = require('@schemas/User.js')
 module.exports = {
-  name: 'blacklist', 
-  description: 'blacklist a guild or an user.',
-  category: "OWNER", 
+  data: { 
+    name: 'blacklist', 
+   description: 'blacklist a guild or an user.',
+   category: "OWNER", 
+  },
 
   async execute(message, args, client) {
   const sub = args[0]

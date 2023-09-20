@@ -1,8 +1,9 @@
 const {EmbedBuilder} = require('discord.js')
 module.exports = {
+    data: {
     name: 'credits', 
-    description: 'Credits to all thoe people whose work is included in the bot', 
-  
+    description: 'Credits to all the people whose work is included in the bot', 
+    },
     async execute(message) {
         const {client} = message
      await message.channel.sendTyping();

@@ -16,7 +16,7 @@ const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWi
 
 for (const file of commandFiles) {
   const command = require(`@src/commands/prefix/${file}`);
-  client.prefix.set(command.name, command); 
+  client.prefix.set(command.data.name, command); 
 }
 
 module.exports = async (client, message) => {
@@ -44,11 +44,11 @@ module.exports = async (client, message) => {
     return message.reply('Unknown command. Use </help:1147244751708491898> to see available commands.');
   }
   // Check if command is 'OWNER' only.
- if (command.category && command.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+ if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
 
  // Check if the user has permissions to use the command.
- if (command.userPermissions && !message.member.permissions.has(command.userPermissions)) {
-  return message.reply(`You need ${parsePerm(command.userPermissions)} to use this command`)
+ if (command.data.userPermissions && !message.member.permissions.has(command.data.userPermissions)) {
+  return message.reply(`You need ${parsePerm(command.data.userPermissions)} to use this command`)
  }
 
  // Execute the command.

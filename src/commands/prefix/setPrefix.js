@@ -1,9 +1,11 @@
 const {getSettings} = require("@schemas/Guild");
 module.exports = { 
+    data: {
     name: "setprefix", 
     description: "Set a new prefix for this server", 
     userPermissions: "ManageGuild",
- 
+    longDesc: "`Usage:`\n!setprefix <prefix>\n- Requires user to have ` Manage Server ` permission to configure prefix.",
+    },
     async execute(message, args) {
         if (args.length !== 1) {
             return message.reply("Invalid command usage, use '!setprefix `prefix`'")

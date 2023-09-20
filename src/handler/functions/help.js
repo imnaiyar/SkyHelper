@@ -2,27 +2,39 @@ const { GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuild
 const { getSettings } = require("@schemas/Guild");
 
 async function helpMenu(interaction, client) {
-    const slash = client.commands
-    const prefix = client.prefix
-  
+    const slash = client.commands;
+    const prefix = client.prefix;
+    
+    const settings = await getSettings(interaction.guild);
+    const guildPrefix = settings?.prefix || process.env.BOT_PREFIX;
+    
     const input = interaction.options.getString('command');
-    const slashCommands = client.commands.get(input)
+    const Command = slash?.get(input) || prefix?.get(input)
     const appCommands = await client.application.commands.fetch()
-if (input && !slashCommands) {
+if (input && !Command) {
   return interaction.reply({ content: 'No such commands are found', ephemeral: true})
 } else if (input) {
+  if ( Command.data.category && Command.data.category === 'OWNER') {
+    return interaction.reply({ content: `No such commands are found`, ephemeral: true})
+  }
   const appC = await appCommands.find( c => c.name === input)
+  let cName;
+  if (appC) {
+    cName = `</${appC.name}:${appC.id}>`;
+  } else {
+    cName = `${guildPrefix}${Command.data.name}`;
+  }
   const embed = new EmbedBuilder()
    .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
    .setFooter({ text: 'SkyBot', iconURL: client.user.displayAvatarURL()
    })
-     .setDescription(slashCommands.data.description)
-     .setTitle(`</${appC.name}:${appC.id}>`);
+     .setDescription(Command.data.description)
+     .setTitle(cName);
      
-     if (slashCommands.data?.longDesc) {
+     if (Command.data?.longDesc) {
        embed.addFields({
          name: 'Description',
-         value: slashCommands.data.longDesc
+         value: Command.data.longDesc
        })
      }
      
@@ -80,7 +92,6 @@ if (input && !slashCommands) {
   slashEmbed.setDescription(description);
       await selectInteraction.update({ embeds: [slashEmbed] });
     } else if (selectedChoice === 'prefix') {
-      const settings = await getSettings(interaction.guild);
       const prefixEmbed = new EmbedBuilder()
         .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`List of all Prefix commands.`)
@@ -88,8 +99,8 @@ if (input && !slashCommands) {
         .setFooter({ text: 'SkyBot', iconURL: client.user.displayAvatarURL() });
         let description = '';
         prefix.forEach((command) => {
-      if (command.category !== 'OWNER') {
-      description += `${command.name}\n${command.description}\n\n`;
+      if (command.data.category !== 'OWNER') {
+      description += `${guildPrefix}${command.data.name}\n${command.data.description}\n\n`;
       }
      });
      prefixEmbed.setDescription(description);
