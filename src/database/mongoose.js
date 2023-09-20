@@ -26,5 +26,6 @@ module.exports = {
     STATS: require("./schemas/botStats"),
     Shards: require("./schemas/Shards"),
     User: require("./schemas/User"),
+    gBlacklist: require("./schemas/guildBlackList"),
   },
 };
