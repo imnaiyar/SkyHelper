@@ -30,10 +30,20 @@ module.exports = async (client, message) => {
     message.channel.send({ embeds: [embed] });
   }
 
-  if (message.author.bot || message.content.match(new RegExp(`^${settings?.prefix || process.env.BOT_PREFIX} `)) || !message.content.startsWith(settings?.prefix || process.env.BOT_PREFIX))
-  {
-     return;
-  }
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+const prefix = settings?.prefix || process.env.BOT_PREFIX;
+const escapedPrefix = escapeRegExp(prefix);
+
+if (
+  message.author.bot ||
+  !message.content.startsWith(prefix) ||
+  message.content.match(new RegExp(`^${escapedPrefix} `))
+) {
+  return;
+}
   
   
 
