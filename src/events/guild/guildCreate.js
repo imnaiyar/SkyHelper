@@ -24,6 +24,8 @@ module.exports = async (client, guild) => {
  let data = await Guild.findOne({ Guild: guild.id}).catch((err) => {}); 
    if (data) {
   if (!guild.me.permissions.has("ViewAuditLog")) {
+  const owner = guild.members.cache.get(guild.ownerId)
+  owner.user.send(`An attrmpt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`)
   await guild.leave();
 }
    const fetchedLogs = await guild.fetchAuditLogs({
