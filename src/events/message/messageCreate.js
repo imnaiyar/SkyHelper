@@ -20,7 +20,7 @@ for (const file of commandFiles) {
 }
 
 module.exports = async (client, message) => {
-  
+  if (!message.guild) return;
   const settings = await getSettings(message.guild)
   const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(mention)) {

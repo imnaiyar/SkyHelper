@@ -9,7 +9,8 @@ module.exports = {
      DASHBOARD: {
         port: "8519",
       },
-
+    Support: 'https://discord.gg/u9zUjWbbQ4',
+    
     EMBED_COLORS: {
         BOT_EMBED: "#48d4ca",
         TRANSPARENT: "#303236",
