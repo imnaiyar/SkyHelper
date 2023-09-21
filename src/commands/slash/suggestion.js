@@ -43,7 +43,7 @@ interaction.awaitModalSubmit({ filter, time: 2 * 60000 })
       { name: `Title`, value: ti},
       { name: `suggestion`, value: sugg}
       )
-    .setFooter({ text: `SkyBot`, iconURL: client.user.displayAvatarURL()});
+    .setFooter({ text: `SkyHelper`, iconURL: client.user.displayAvatarURL()});
     interaction.reply({content: `Your suggestion is recieved. Here's a preview of your suggestion`, embeds: [embed], ephemeral: true})
     suggWb.send({embeds: [embed]})
   })
