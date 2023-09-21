@@ -39,8 +39,10 @@ interaction.awaitModalSubmit({ filter, time: 2 * 60000 })
     const sugg = interaction.fields.getTextInputValue('suggestion');
     const embed = new EmbedBuilder()
     .setAuthor({ name: `${interaction.user.username} made a suggestion`, iconURL: interaction.user.displayAvatarURL()})
-    .setTitle(ti)
-    .setDescription(sugg)
+    .addFields(
+      { name: `Title`, value: ti},
+      { name: `suggestion`, value: sugg}
+      )
     .setFooter({ text: `SkyBot`, iconURL: client.user.displayAvatarURL()});
     interaction.reply({content: `Your suggestion is recieved. Here's a preview of your suggestion`, embeds: [embed], ephemeral: true})
     suggWb.send({embeds: [embed]})
