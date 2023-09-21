@@ -1,8 +1,9 @@
 const Guild = require('@schemas/guildBlackList.js');
+const { EmbedBuilder } = require('discord.js')
 const { getUser } = require('@schemas/User.js')
 module.exports = {
   data: { 
-    name: 'blacklist', 
+    name: 'bl', 
    description: 'blacklist a guild or an user.',
    category: "OWNER", 
   },
@@ -10,7 +11,7 @@ module.exports = {
   async execute(message, args, client) {
   const sub = args[0]
   
-  if (isNaN(args[1])) {
+  if (args[1] && isNaN(args[1])) {
     return message.reply('ID must only contain Numbers');
   }
  const ID = args[1]
@@ -29,6 +30,9 @@ module.exports = {
     case 'rmU':
       const userR = await client.users.fetch(args[1])
       await removeUserBlacklist(client, userR, message)
+      break;
+    case 'gList':
+      await getBlacklistedGuild(client, message, ID)
       break;
     default:
       message.reply('invalid usage')
@@ -59,7 +63,8 @@ async function blacklistGuild(client, message, ID,) {
    data = new Guild({ 
      Guild: guildId,
      Name: guildName,
-     Reason: reason
+     Reason: reason,
+     Date: Date.now()
    }); 
   
    await data.save();
@@ -113,4 +118,14 @@ async function removeUserBlacklist(client, user, message) {
       await userDbR.save()
      return message.reply(`${user.username} is removed from blacklist.`)
   
+}
+
+async function getBlacklistedGuild(client, message, ID) {
+  const blacklists = await Guild.find()
+  const embed = new EmbedBuilder()
+       .setAuthor({ name: `Blacklisted Servers`})
+  blacklists.forEach((g) => {
+    embed.addFields({ name: `${g.Name}`, value: `- ID: ${g.Guild}\n- Reason: ${g.Reason}\n- On: ${g?.Date}`})
+  })
+message.reply({embeds: [embed]})
 }

@@ -7,7 +7,7 @@ module.exports = {
   longDesc: `Provides times for various in-game events and resets in Sky: Children of the Light.
 
 \`Usage:\`
-!sky-times [times]
+sky-times [times]
 
 - [times]: (Optional) Specify a specific time to receive more detailed information about that event or reset (e.g., "geyser," "grandma," "turtle," "reset," "eden").
 

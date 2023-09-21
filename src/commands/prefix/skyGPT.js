@@ -13,10 +13,7 @@ module.exports = {
 - skygpt stop: Stop the bot's responses in all channels it's been configured for in a server.
  - Requires user to have \` Manage Server \` permission to configure this command.
 
-The bot will respond to all messages in the
-designated channel as configured during
-setup. To make the bot ignore a message,
-simply prepend it with a '?'.`,
+The bot will respond to all messages in the designated channel as configured during setup. To make the bot ignore a message, simply prepend it with a '?'.`,
   },
   async execute(message, args) {
      const settings = await getSettings(message.guild);
