@@ -3,7 +3,9 @@ const Logger = require('@src/logger')
 const fs = require('fs');
 const moment = require('moment');
 const {actionRow} = require('./Buttons');
-async function shardsReply (interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard){
+
+
+async function shardsReply (interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard) {
 const timezone = 'America/Los_Angeles';
 const messageDataFile = 'messageData.json';
 const tenMinutesInMillis = 15 * 60 * 1000; 
