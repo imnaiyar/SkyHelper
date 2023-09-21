@@ -1,16 +1,16 @@
 const moment = require('moment');
-const { shardsReply } = require('./shardsReply');
-
+const { shardsReply } = require('./sub/shardsReply');
+const shardsTime = require('./sub/eventTimings')
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 
-async function shardsAlt(interaction){
+async function shardsAlt(interaction) {
     const timezone = 'America/Los_Angeles';
     const dateOption = interaction.options.getString('date');
     
     const regex = /^\d{4,6}-\d{2}-\d{2}$/;
 
-if (!regex.test(dateOption)) {
+if (dateOption && !regex.test(dateOption)) {
   interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
   return; 
 }
@@ -63,48 +63,22 @@ if (!regex.test(dateOption)) {
            (remainder10 === 3 && remainder100 !== 13) ? 3 : 0];
 }
     // Define the event timings
-    const eventTimingsC = [
-      { start: currentDate.clone().startOf('day').add(7, 'hours').add(48, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(11, 'hours').add(40, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(13, 'hours').add(48, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(17, 'hours').add(40, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(19, 'hours').add(48, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(23, 'hours').add(40, "minutes") }
-  ];
-  
-  const eventTimingsA = [
-      { start: currentDate.clone().startOf('day').add(2, 'hours').add(28, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(6, 'hours').add(20, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(8, 'hours').add(28, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(12, 'hours').add(20, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(14, 'hours').add(28, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(18, 'hours').add(20, "minutes") }
-  ];
-  
-  const eventTimingsa = [
-      { start: currentDate.clone().startOf('day').add(1, 'hours').add(58, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(5, 'hours').add(50, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(9, 'hours').add(58, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(13, 'hours').add(50, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(17, 'hours').add(58, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(21, 'hours').add(50, "minutes") }
-  ];
-  
-  const eventTimingsB = [
-      { start: currentDate.clone().startOf('day').add(3, 'hours').add(38, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(7, 'hours').add(30, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(9, 'hours').add(38, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(13, 'hours').add(30, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(15, 'hours').add(38, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(19, 'hours').add(30, "minutes") }
-  ];
-  
-  const eventTimingsb = [
-      { start: currentDate.clone().startOf('day').add(2, 'hours').add(18, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(6, 'hours').add(10, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(10, 'hours').add(18, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(14, 'hours').add(10, 'minutes') },
-      { start: currentDate.clone().startOf('day').add(18, 'hours').add(18, 'minutes').add(40, 'seconds'), end: currentDate.clone().startOf('day').add(22, 'hours').add(10, "minutes") }
-  ];
+const timings = shardsTime(currentDate)
     let eventTimings;
 if (currentEvent === 'A') {
-    eventTimings = eventTimingsA;
+    eventTimings = timings.A;
 } else if (currentEvent === 'B') {
-   eventTimings = eventTimingsB;}
+   eventTimings = timings.B;
+}
   else if (currentEvent === 'C') {
-    eventTimings = eventTimingsC;}
-  else if (currentEvent === 'B') {
-    eventTimings = eventTimingsB;}
+    eventTimings = timings.C;
+  }
   else if (currentEvent === 'a') {
-    eventTimings = eventTimingsa;}
+    eventTimings = timings.a;
+  }
   else if (currentEvent === 'b') {
-    eventTimings = eventTimingsb;}
+    eventTimings = timings.b;
+  }
 
     let eventStatus = '';
     let timeRemaining = '';
@@ -118,7 +92,7 @@ if (currentEvent === 'A') {
              const endUnix = Math.floor(eventTiming.end.valueOf() / 1000);
            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard has landed `;
             const duration = moment.duration(eventTiming.end.diff(present));
-            timeRemaining = `and will end in ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds at <t:${endUnix}:t>`;
+            timeRemaining = `and will end in ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds (at <t:${endUnix}:t>)`;
             break;
         } else if (present.isBefore(eventTiming.start)) {
           const startUnix = Math.floor(eventTiming.start.valueOf() / 1000);
@@ -127,7 +101,7 @@ if (currentEvent === 'A') {
               const hoursRemaining = Math.floor(duration.asHours());
               const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
               const secondsRemaining = Math.floor(duration.asSeconds()) % 60;
-            timeRemaining = `${hoursRemaining} hours, ${minutesRemaining} minutes, ${secondsRemaining} seconds until <t:${startUnix}:T>`;
+            timeRemaining = `in ${hoursRemaining} hours, ${minutesRemaining} minutes, ${secondsRemaining} seconds (at <t:${startUnix}:T>)`;
             break;
         } else if (i < eventTimings.length - 1 && present.isAfter(eventTiming.end) && present.isBefore(eventTimings[i + 1].start)) {
           
@@ -153,5 +127,5 @@ if (currentEvent === 'A') {
     }
    await shardsReply(interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard);
 }
-//test
+
 module.exports = { shardsAlt };

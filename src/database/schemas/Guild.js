@@ -19,7 +19,6 @@ const Schema = new mongoose.Schema({
     bots: { type: Number, default: 0 },
   },
   prefix: String,
-  
   skyGPT: String,
 });
 
@@ -39,13 +38,6 @@ module.exports = {
     let guildData = await Model.findById(guild.id);
     if (!guildData) {
       // save owner details
-      guild
-        .fetchOwner()
-        .then(async (owner) => {
-          const userDb = await getUser(owner);
-          await userDb.save();
-        })
-        .catch((ex) => {});
 
       // create a new guild model
       guildData = new Model({

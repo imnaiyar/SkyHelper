@@ -72,7 +72,7 @@ client.on('ready', async () =>{
         },
         {
           name: "Success",
-          value: `SkyBOT is now online`,
+          value: `SkyHelper is now online`,
         }
       )
       .setColor('Gold')

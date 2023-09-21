@@ -1,10 +1,11 @@
 const Logger = require('@src/logger');
 
 module.exports = {
+  data: {
   name: "destroy",
   description: "Destroy client instance",
   category: "OWNER",
-  
+  },
   async execute(message, args, client) {
     const confirmationMessage = await message.channel.send("Are you sure you want to shut down the bot?");
 

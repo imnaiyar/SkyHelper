@@ -1,13 +1,13 @@
 {
   "name": "skybot",
-  "version": "2.4.0",
-  "description": "Bot for Sky",
+  "version": "4.2.0",
+  "description": "A Bot for Sky: Children of the Light",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "commands": "node src/commandsRegister.js"
   },
-  "author": "Naiyar Imam",
+  "author": "NyR",
   "license": "MIT",
   "dependencies": {
     "@discordjs/builders": "^1.6.3",

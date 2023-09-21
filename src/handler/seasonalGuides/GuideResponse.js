@@ -12,6 +12,18 @@ module.exports = {
       content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 2 guide by Mimi and Sam```",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1135953405869826088/IMG_2442.jpg']
     },
+    'moments_q3': {
+      content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 3 guide by Mimi and Sam```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153542173107695718/MomentsQuest3.png']
+    },
+    'moments_q4': {
+      content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 4 guide by Mimi and Sam```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153542173615194142/MomentsQuest4.png']
+    },
+    'moments_q5': {
+      content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments Quest 5 guide by Mimi and Sam```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153542174005276722/MomentsQuest5.jpg']
+    },
     // moments location
     'ranger_location': {
       content: "Season is currently in progress.\n**Season start date**: <t:1689577200:F> (<t:1689577200:R>)\n**Season end date:** <t:1696229940> (<t:1696143600:R>).\n**Season duration:** 76 days\n**__Relevent Links__**\n<:moments:1130958731211985019> __Season of Moments Details by Mimi and Sam__: https://discord.com/channels/575762611111592007/575827924343848960/1130395767115366411\n<:moments:1130958731211985019> __Season of Moments price calculations by emme__: https://discord.com/channels/575762611111592007/575827924343848960/1130549534381047838\n```Season of Moments spirits and winged lights location by Mimi and Sam```",
@@ -387,15 +399,15 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
     },
         'navigator_tree': {
-      content: "Lively Navigator** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Flight Seasonal Price Chart by Clement```",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
+      content: "This was **_Lively Navigator's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__\n- August 17, 2023 (#94)\n\n```Lively Navigator Friendship Tree by Xander```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153525209748471878/IMG_2821.jpg']
     },
         'talented_builder_tree': {
       content: "**Talented Builder** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Flight Seasonal Price Chart by Clement```",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg']
     },
         'chimesmith_tree': {
-      content: "This was **_Tinkering Chimesmith's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__: May 11, 2023(#87)\n\n```Travelling Spirit #87 Summary by Clement```\n***prices are subject to change in future visits.**",
+      content: "This was **_Tinkering Chimesmith's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__: May 11, 2023(#87)\n\n```Travelling Spirit #87 Summary by Clement```\n***prices are subject to change in future visits.**",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132251290630635571/Traveling_Spirit_087.png']
     },
     
@@ -461,8 +473,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1132403272242700379/05_Season_Price_Chart.jpg']
     },
         'star_collector_tree': {
-      content: "**Star Collector** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of the Little Prince Seasonal Price Chart by Clement```",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1132403272242700379/05_Season_Price_Chart.jpg']
+      content: "This was **_Star Collector's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- September 14, 2023 (#96)\n\n```Star Collector Friendship Tree by Kontra```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153526469738365011/Star_Collector_Tree.png']
     },
         'geographer_tree': {
       content: "This was **_Sneezing Geographer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Date**__: April 13, 2023(#85)\n\n```Travelling Spirit ##81 Summary by Clement```\n***prices are subject to change in future visits.**",
@@ -718,8 +730,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1139295739420364861/Thrilseeker_tree.jpg']
     }, 
         'jellywhisperer_tree': {
-      content: "This was **_Jelly Whisperer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_November 25, 2021 (#49)_\n\n```Jelly Whisperer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1139295700455264296/Jelly_whispere_tree.png']
+      content: "This was **_Jelly Whisperer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- August 31, 2023 (#95)\n- November 25, 2021 (#49)\n\n```Jelly Whisperer Friendship Tree by Kontra```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153526469281206433/Jelly_Whisperer_Tree.png']
     },
         'bookworm_tree': {
       content: "This was **_Timid Bookwork's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_July 7, 2022 (#65)\nJune 10, 2021 (#37)_\n\n```Timid Bookworm Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
@@ -803,207 +815,207 @@ module.exports = {
     },
   // rhythm
     // rhythm location
-    '': {
-      content: "",
-      files: ['']
+    'actor_location': {
+      content: "```Admiring Actor Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295724767875092/Admiring_actor_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'spin_dancer_location': {
+      content: "```Festive Spin Dancer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295723576709263/Spin_dancer_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pianist_location': {
+      content: "```Respectful Pianist Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295723970957362/Respectful_pianist_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'director_location': {
+      content: "```Thoughtful Director Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725040500816/Thoughtful_director_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'greeter_location': {
+      content: "```Troupe Greeter Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295772117385277/Troupe_Greeter_Location.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'juggler_location': {
+      content: "```Troupe Juggler Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295724419743896/Troupe_Juggler_location.jpg']
     },
     // rhythm ts
-    '': {
-      content: "",
-      files: ['']
+    'actor_tree': {
+      content: "This was **_Admiring Actor's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- June 8, 2023 (#89)\n- June 24, 2021 (#38)\n- October 15, 2020 (#20)\n\n```Admiring Actor Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725682229320/Admiring_actor_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'spin_dancer_tree': {
+      content: "This was **_Festive Spin Dancer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- October 14, 2021 (#46)\n- September 3, 2020 (#17)\n\n```Festive Spin Dancer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295772767498260/Festive_Spin_dancer_tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pianist_tree': {
+      content: "This was **_Respectful Pianist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- February 4, 2021 (#28)\n- July 3, 2023 (Special Visit #3)\n\n```Respectful Pianist Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726323957842/Respectful_pianist_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'director_tree': {
+      content: "This was **_Thoughtful Director's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_October 28, 2021 (#47)_\n\n```Thoughtful Director Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726034554940/Thoughtful_director_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'greeter_tree': {
+      content: "This was **_Troupe Greeter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- August 7, 2023 (Special Visit #4)\n- March 3, 2022 (#56)\n- December 24, 2020 (#25)\n\n```Troupe Greeter Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295725313134632/Troupe_greeter_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'juggler_tree': {
+      content: "This was **_Troupe Juggler's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- September 16, 2021 (#44)\n\n```Troupe Juggler Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153295726600785930/Troupe_juggler_tree.jpg']
     },
   // belonging
     // belonging location
-    '': {
-      content: "",
-      files: ['']
+    'boogie_kid_location': {
+      content: "```Boogie Kid Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932762411119/Boogie_Kid_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'confetti_cousin_location': {
+      content: "```Confetti Cousin Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494962453885049/Confetti_Cousin_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'hairtousle_teen_location': {
+      content: "```Hairtousle Teen Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933894860912/Hairtousle_Teen_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pleaful_parent_location': {
+      content: "```Pleaful Parent Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494934402383932/Pleaful_Parent_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'sparkler_parent_location': {
+      content: "```Sparkler Parent Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494934150729778/Sparkler_Parent_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'wise_grandparent_location': {
+      content: "```Wise Grandparent Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494962730700851/Grandparent_Location.jpg']
     },
     // belonging ts
-    '': {
-      content: "",
-      files: ['']
+    'boogie_kid_tree': {
+      content: "This was **_Boogie Kid's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- March 2, 2023 (#82)\n- July 22, 2021 (#40)\n- November 12, 2020 (#22)\n\n```Boogie Kid Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494931629948968/Boogie_Kid_Tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'confetti_cousin_tree': {
+      content: "This was **_Confetti Cousin's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- January 21, 2021 (#27)\n- July 9, 2020 (#13)\n\n```Confetti Cousin Friendship Tree by Jed```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932154224751/Confetti_Cousin_Tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'hairtousle_teen_tree': {
+      content: "This was **_Hairtousle Teen's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- June 9, 2022 (#63)\n- June 11, 2020 (#11)\n\n```Hairtousle Teen Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933043417119/Hairtousle_Teen_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'pleaful_parent_tree': {
+      content: "This was **_Pleaful Parent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- December 22, 2022 (#77)\n- December 10, 2020 (#24)\n- March 26, 2020 (#5)\n\n```Pleaful Parent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933295091793/Pleaful_Parent_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'sparkler_parent_tree': {
+      content: "This was **_Sparkler Parent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 4\n__**Previous Visits Dates**__\n- June 22, 2023 (#90)\n- December 23, 2021 (#51)\n- April 1, 2021 (#32)\n- May 14, 2020 (#9)\n\n```Sparkler Parent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494933613854720/Sparkler_Parent_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'wise_grandparent_tree': {
+      content: "This was **_Wise Gradparent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- November 11, 2021 (#48)\n- August 6, 2020 (#15)\n\n```Wise Gradparent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932485591111/Grandparent_Tree.jpg']
     },
   // lightseekers
     // Lightseekers location
-    '': {
-      content: "",
-      files: ['']
+    'crab_whisperer_location': {
+      content: "```Crab Whisperer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504799858380870/Crab_Whisperer_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'light_catcher_location': {
+      content: "```Doublefive Light Catcher Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504769537736845/Doublefive_location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'laidback_location': {
+      content: "```Laidback Pioneer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504765834166272/Laidback_location.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'piggyback_location': {
+      content: "```Piggyback Lightseeker Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504765477658664/Piggyback_Location..jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'light_scholar_location': {
+      content: "```Shushing Light Scholar Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504768979902514/Shushing_Scholar_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'twirling_champion_location': {
+      content: "```Twirling Champion Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504768703090758/Twirling_Champion_Location.jpg']
     },
     // Lightseekers ts
-    '': {
-      content: "",
-      files: ['']
+    'crab_whisperer_tree': {
+      content: "This was **_Crab Whisperer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- August 7, 2023 (Special Visit #4)\n- September 2, 2021 (#43)\n- April 9, 2020 (#6)\n\n```Crab Whisperer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504768422051931/Crab_Whisperer_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'light_catcher_tree': {
+      content: "This was **_Doublefive Light Catcher's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- July 21, 2022 (#66)\n- April 15, 2021 (#33)\n- February 14, 2020 (#2)\n\n```Doublefive Light Catcher Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504766282977300/Doublefive_tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'laidback_tree': {
+      content: "This was **_Laidback Pioneer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- October 13, 2022 (#72)\n- November 26, 2020 (#23)\n- February 27, 2020 (#3)\n\n```Laidback Pioneer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504767126011988/Laidback_tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'piggyback_tree': {
+      content: "This was **_Piggyback Lightseeker's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- February 2, 2023 (#80)\n- March 4, 2021 (#30)\n- April 16, 2020 (#7)\n\n```Piggyback Lightseeker Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504800101630152/Piggyback_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'light_scholar_tree': {
+      content: "This was **_Shushing Light Scholar's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- September 15, 2022 (#70)\nAugust 20, 2020 (#16)\n\n```Shushing Light Scholar Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504768086515782/Shushing_Scholar_tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'twirling_champion_tree': {
+      content: "This was **_Twirling Champion's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- January 6, 2022 (#52)\n- September 17, 2020 (#18)\n\n```Twirling Champion Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153504767809703956/Twirling_Champion_tree.jpg']
     },
   // gratitude
     // Gratitude  location
-    '': {
-      content: "",
-      files: ['']
+    'shaman_location': {
+      content: "```Greeting Shaman Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516494286757989/Greeting_Shaman_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'leaping_location': {
+      content: "```Leaping Dancer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516466361073694/Leaping_Dancer_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'provoking_location': {
+      content: "```Provoking Performer Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516466029727764/Provoking_Performer_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'saluting_location': {
+      content: "```Saluting Protector Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516465782272000/Saluting_Protector_Location.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'sassy_location': {
+      content: "```Sassy Drifter Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516462737195008/Sassy_drifter_location.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'stretching_location': {
+      content: "```Stretching Guru Location by Clement```",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516493967994960/Stretching_Guru_Location.jpg']
     },
     // Gratitude  ts
-    '': {
-      content: "",
-      files: ['']
+    'shaman_tree': {
+      content: "This was **_Greeting Shaman's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- July 3, 2023 (Special Visit #3)\n- May 26, 2022 (#62)\n- July 23, 2020 (#14)\n\n```Greeting Shaman Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516465484468325/Greeting_Shaman_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'leaping_tree': {
+      content: "This was **_Leaping Dancer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- July 3, 2023 (Special Visit #3)\n- March 18, 2021 (#31)\n- June 25, 2020 (#12)\n\n```Leaping Dancer Friendship Tree by Jed```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516463190192209/Leaping_Dancer_TreeZed.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'provoking_tree': {
+      content: "This was **_Provoking Performer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- March 30, 2023 (#84)\n- October 1, 2020 (#19)\n- March 12, 2020 (#4)\n\n```Provoking Performer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516465090199643/Provoking_Performer_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'saluting_tree': {
+      content: "This was **_Saluting Protector's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- January 20, 2022 (#53)\n\n```Saluting Protector Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516464813379664/Saluting_Protector_Tree.jpg']
     },
-    '': {
-      content: "",
-      files: ['']
+    'sassy_tree': {
+      content: "This was **_Sassy Drifter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 4\n__**Previous Visits Dates**__\n- December 8, 2022 (#76)\n- July 8, 2021 (#39)\n- May 28, 2020 (#10)\n- January 31, 2020 (#1)\n\n```Sassy Drifter Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516463743832145/Sassy_Drifter_Tree.png']
     },
-    '': {
-      content: "",
-      files: ['']
+    'stretching_tree': {
+      content: "This was **_Stretching Guru's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- March 17, 2022 (#57)\n- April 30, 2020 (#8)\n\n```Stretching Guru Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1153516464364584980/Stretching_Guru_Tree.png']
     },
   },
   getResponse(choice) {

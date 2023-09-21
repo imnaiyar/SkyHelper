@@ -3,7 +3,16 @@ const {helpMenu} = require('@handler/functions/help')
 module.exports = {
     data: {
       name: 'help',
-      description: 'Get the List of Slash and Prefix commands.',
+      description: 'help menu',
+      longDesc: 'List of all Slahs and Prefix commands and their usage.',
+      options: [
+        { 
+          name: 'command',
+          description: 'get help for a specific command',
+          type: ApplicationCommandOptionType.String,
+          require: false
+        },
+        ],
     },
     async execute(interaction, client) {
       await helpMenu(interaction,client);

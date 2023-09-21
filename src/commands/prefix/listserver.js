@@ -12,10 +12,11 @@ const {
  const MAX_PER_PAGE = 10; // max number of embed fields per page 
 
  module.exports = { 
+   data: {
    name: "listservers", 
    description: "lists all/matching servers", 
    category: "OWNER", 
-
+   },
    async execute(message, args) {
      const { client, channel, member } = message; 
 

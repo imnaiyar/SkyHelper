@@ -1,9 +1,10 @@
 const fs = require('fs')
 module.exports = { 
+   data: { 
     name: "clearjson", 
     description: "clearjson", 
     category: "OWNER", 
- 
+   },
     async execute(message, args) {
       if (args[0] !== 'embed' && args[0] !== 'message') {
          return message.reply("**Invalid Comand Usage**\nAvailable Args: `embed`, `message`")

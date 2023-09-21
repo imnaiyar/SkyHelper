@@ -1,8 +1,9 @@
 const {EmbedBuilder} = require('discord.js')
 module.exports = {
+    data: {
     name: 'credits', 
-    description: 'Credits to all thoe people whose work is included in the bot', 
-  
+    description: 'Credits to all the people whose work is included in the bot', 
+    },
     async execute(message) {
         const {client} = message
      await message.channel.sendTyping();
@@ -44,7 +45,7 @@ module.exports = {
             .setDescription(`This bot wouldn't be possible without these people and the work they do.`)
             .setTimestamp(Date.now())
             .setColor('#000000')
-            .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` })
+            .setFooter({ text: 'SkyHelper', iconURL: `${botAvatar}` })
              .addFields({ name: '**__Shard Pattern Predictions__**', value: `● Zhii (${Zhii.username})\n● Christian (${Christian.username})\n● Hucker (${Hucker.username})\n● Plutoy (${Plutoy.username})\n● Kion (${Kion.username})\n● LN (${LN.username})\n● Gale (${Gale.username})\n● Stoat (${Stoat.username})`, inline: true })
             .addFields({ name: '**__Sky Infographics and Guides__**', value: `● Clement (${Clement.username})\n● Mimi (${Mimi.username})\n● Sam (${Sam.username})\n● Zed (${Zed.username})\n● Art (${Art.username})\n**and all others who do the awesome job of creating guides.**`, inline: true })
              .addFields({ name: '**__Special Mentions__**', value: `● Big thanks to Xander (${Xander.username}) and Christian (${Christian.username}) for testing the early version of this bot.\n● Thanks to Plutoy (${Plutoy.username}) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.\n● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).`, inline: false });

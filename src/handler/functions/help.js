@@ -1,20 +1,53 @@
-const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
+const { GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
 const { getSettings } = require("@schemas/Guild");
 
 async function helpMenu(interaction, client) {
-  const userAvatar = interaction.user.displayAvatarURL({ format: 'png', dynamic: true });
-  const userNickname = interaction.user?.nickname || interaction.user.username;
-  const botUser = await client.users.fetch(client.user.id);
-  const botAvatar = botUser.displayAvatarURL({ format: 'png', dynamic: true });
-
+    const slash = client.commands;
+    const prefix = client.prefix;
+    
+    const settings = await getSettings(interaction.guild);
+    const guildPrefix = settings?.prefix || process.env.BOT_PREFIX;
+    
+    const input = interaction.options.getString('command');
+    const Command = slash?.get(input) || prefix?.get(input)
+    const appCommands = await client.application.commands.fetch()
+if (input && !Command) {
+  return interaction.reply({ content: 'No such commands are found', ephemeral: true})
+} else if (input) {
+  if ( Command.data.category && Command.data.category === 'OWNER') {
+    return interaction.reply({ content: `No such commands are found`, ephemeral: true})
+  }
+  const appC = await appCommands.find( c => c.name === input)
+  let cName;
+  if (appC) {
+    cName = `</${appC.name}:${appC.id}>`;
+  } else {
+    cName = `${guildPrefix}${Command.data.name}`;
+  }
   const embed = new EmbedBuilder()
-    .setAuthor({ name: `Requested by ${userNickname}`, iconURL: `${userAvatar}` })
-    .setDescription(`List of all Slash and Prefix commands.`)
+   .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
+   .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL()
+   })
+     .setDescription(Command.data.description)
+     .setTitle(cName);
+     
+     if (Command.data?.longDesc) {
+       embed.addFields({
+         name: 'Description',
+         value: Command.data.longDesc
+       })
+     }
+     
+   const reply = await interaction.reply({ embeds: [embed], ephemeral: true})
+     
+     return;
+}
+  const embed = new EmbedBuilder()
+    .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
     .setTimestamp(Date.now())
     .setColor('#000000')
-    .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` })
-    .addFields({ name: '**__Slash Commands__**', value: `</shards:1121541967730450574>, </seasonal-guides:1121541967730450574>, </sky-times:1121541967730450574>, </timestamp:1121541967730450574>`, inline: true })
-    .addFields({ name: '**__Prefix Commands__**', value: `\`\`\`credits, skygpt, ping, skytimes, setprefix\`\`\``, inline: false });
+    .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() })
+    .setDescription(`SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](http://130.61.174.212:8519/) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`);
 
   const row = new ActionRowBuilder().addComponents(
     new StringSelectMenuBuilder()
@@ -23,7 +56,7 @@ async function helpMenu(interaction, client) {
       .addOptions(
         new StringSelectMenuOptionBuilder()
           .setLabel('Slash Commands')
-          .setDescription('Details about all the slash commands available.')
+          .setDescription('Details about all available slash commands.')
           .setValue('slash')
           .setEmoji('<:slash:1140102899750420620>'),
         new StringSelectMenuOptionBuilder()
@@ -36,33 +69,41 @@ async function helpMenu(interaction, client) {
 
   const reply = await interaction.reply({ embeds: [embed], components: [row] });
 
-  // Create a collector to listen for interactions on this message
+
   const filter = (i) => i.customId === 'commands-help' && i.isStringSelectMenu();
-  const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 2 * 60 * 1000 }); // Set a timeout of 60 seconds
+  const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 60 * 1000 });
 
   collector.on('collect', async (selectInteraction) => {
     const selectedChoice = selectInteraction.values[0];
     if (selectedChoice === 'slash') {
       const slashEmbed = new EmbedBuilder()
-        .setAuthor({ name: `Requested by ${userNickname}`, iconURL: `${userAvatar}` })
+        .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`List of all Slash commands.`)
-        .setTimestamp(Date.now())
         .setColor('#000000')
-        .setDescription("<:slash:1140102899750420620> **Shards**\n</shards:1121541967730450574>\nGives Information about shards. By default it provides info about today's shard but an additional date can be provided to get shard info for that particular day.\n\n<:slash:1140102899750420620> **Seasonal Guides**\n</seasonal-guides:1121541967730450574>\nVarious guides including Season Quests, Seasonal Spirits Location, Spirits Tree from a particular season. Run the command `!credits` to know whose guides are included in the bot.\n\n<:slash:1140102899750420620> **Sky-Times**\n</sky-times:1121541967730450574>\nProvides upcoming time for Several Sky in-game events such as Grandma, Geyser, Turtle, Daily Reset, Eden Reset. For Social light events, it also tells you if it is currently active, run their individual commands to see more details.\n\n<:slash:1140102899750420620> **Timestamp**\n</timestamp:1121541967730450574>\nConverts time provided by you into Unix timestamp (Format(input): `HH mm ss`). By default, the timezone is set to `America/Los_Angeles` as it is the timezone for TGC. But if you wanna convert for a particular timezone, you can provide one.")
-        .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` });
+        .setFooter({ text: 'run /help <command> for details.', iconURL:client.user.displayAvatarURL()});
+        let description = '';
+
+        appCommands.forEach((command) => {
+    if (!command.name.startsWith('z-')) {
+      description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
+        }
+     });
+
+  slashEmbed.setDescription(description);
       await selectInteraction.update({ embeds: [slashEmbed] });
     } else if (selectedChoice === 'prefix') {
-      const settings = await getSettings(interaction.guild);
       const prefixEmbed = new EmbedBuilder()
-        .setAuthor({ name: `Requested by ${userNickname}`, iconURL: `${userAvatar}` })
+        .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`List of all Prefix commands.`)
-        .setTimestamp(Date.now())
         .setColor('#000000')
-        .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` })
-        .addFields({ name: '<:prefix:1140103340643078144> **Credits**(everyone)', value: `\`\`\`${settings?.prefix || process.env.PREFIX}credits\`\`\`Credits to all the people whose work is included in the bot. If I forgot to mention anyone, kindly let me know and I'll add them.`, inline: true })
-        .addFields({ name: '**<:prefix:1140103340643078144> Sky AI Support** (administrator)', value: `\`\`\`${settings?.prefix || process.env.PREFIX}skygpt set #channelname,  !skygpt stop\`\`\`An AI chatbot based on OpenAI's ChatGPT that provides information related to Sky: Children of the Light. Keep in mind that since ChatGPT doesn't provide real-time data, it is often incorrect. So it's more for fun than actual help. To set up, run the command \`!skygpt set #channelname\` and it'll listen to all messages in that channel and respond to it (so make sure it's a channel dedicated for the bot and not just any text channel). You can stop this anytime by running \`!skygpt stop\``, inline: false })
-        .addFields({ name: "<:prefix:1140103340643078144> **Ping** (everyone)", value: `\`\`\`${settings?.prefix || process.env.PREFIX}ping\`\`\`Gives bot's Ping.`, inline: true })
-        .addFields({ name: "<:prefix:1140103340643078144> **Set Prefix** (ManageServer)", value: `\`\`\`${settings?.prefix || process.env.PREFIX}setprefix\`\`\`Change the Bot's prefix for this server.`, inline: false });
+        .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() });
+        let description = '';
+        prefix.forEach((command) => {
+      if (command.data.category !== 'OWNER') {
+      description += `${guildPrefix}${command.data.name}\n${command.data.description}\n\n`;
+      }
+     });
+     prefixEmbed.setDescription(description);
       await selectInteraction.update({ embeds: [prefixEmbed] });
     }
   });
@@ -71,7 +112,7 @@ async function helpMenu(interaction, client) {
     const embed = new EmbedBuilder()
     .setAuthor({ name:'Idle Timeout.'})
     .setDescription(`Help menu has expired, run the command </help:1147244751708491898> again.`)
-    .setFooter({ text: 'SkyBot', iconURL: `${botAvatar}` })
+    .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() })
     reply.edit({ embeds: [embed], components: []})
   });
 
