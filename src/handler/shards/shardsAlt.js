@@ -92,7 +92,7 @@ if (currentEvent === 'A') {
              const endUnix = Math.floor(eventTiming.end.valueOf() / 1000);
            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard has landed `;
             const duration = moment.duration(eventTiming.end.diff(present));
-            timeRemaining = `and will end in ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds at <t:${endUnix}:t>`;
+            timeRemaining = `and will end in ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds (at <t:${endUnix}:t>)`;
             break;
         } else if (present.isBefore(eventTiming.start)) {
           const startUnix = Math.floor(eventTiming.start.valueOf() / 1000);
@@ -101,7 +101,7 @@ if (currentEvent === 'A') {
               const hoursRemaining = Math.floor(duration.asHours());
               const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
               const secondsRemaining = Math.floor(duration.asSeconds()) % 60;
-            timeRemaining = `${hoursRemaining} hours, ${minutesRemaining} minutes, ${secondsRemaining} seconds until <t:${startUnix}:T>`;
+            timeRemaining = `in ${hoursRemaining} hours, ${minutesRemaining} minutes, ${secondsRemaining} seconds (at <t:${startUnix}:T>)`;
             break;
         } else if (i < eventTimings.length - 1 && present.isAfter(eventTiming.end) && present.isBefore(eventTimings[i + 1].start)) {
           
@@ -127,5 +127,5 @@ if (currentEvent === 'A') {
     }
    await shardsReply(interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard);
 }
-//test
+
 module.exports = { shardsAlt };
