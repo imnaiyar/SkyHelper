@@ -40,14 +40,20 @@ interaction.awaitModalSubmit({ filter, time: 2 * 60000 })
     const ti = interaction.fields.getTextInputValue('title');
     const sugg = interaction.fields.getTextInputValue('suggestion');
     const embed = new EmbedBuilder()
-    .setAuthor({ name: `${interaction.user.username} made a suggestion`, iconURL: interaction.user.displayAvatarURL()})
-    .addFields(
-      { name: `Title`, value: ti},
-      { name: `suggestion`, value: sugg}
-      )
-    .setFooter({ text: `SkyHelper`, iconURL: client.user.displayAvatarURL()});
-    interaction.reply({content: `Your suggestion is recieved. Here's a preview of your suggestion`, embeds: [embed], ephemeral: true})
-    suggWb.send({embeds: [embed]})
+  .setAuthor({ name: `${interaction.user.username} made a suggestion`, iconURL: interaction.user.displayAvatarURL() })
+  .addFields(
+    { name: `Title`, value: ti },
+    { name: `Suggestion`, value: sugg }
+  )
+  .setFooter({ text: `SkyHelper`, iconURL: client.user.displayAvatarURL() });
+
+interaction.reply({ content: `Your suggestion is received. Here's a preview of your suggestion`, embeds: [embed], ephemeral: true }).then(() => {
+  embed.addFields(
+    { name: 'Server', value: `${interaction.guild.name} (${interaction.guild.id})` }
+  );
+  
+  suggWb.send({ embeds: [embed] });
+});
   })
   .catch(console.error);
   }

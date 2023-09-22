@@ -16,11 +16,11 @@ const pinoLogger = pino.default(
         target: "pino-pretty",
         options: {
           colorize: true,
-          translateTime: "yyyy-mm-dd HH:mm:ss",
+          translateTime: "HH:mm:ss",
           ignore: "pid,hostname",
           singleLine: false,
           hideObject: false,
-          customColors: "info:blue,warn:yellow,error:red",
+          customColors: "info:green,warn:yellow,error:red,",
         },
       }),
     },

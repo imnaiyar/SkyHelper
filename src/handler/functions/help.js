@@ -84,10 +84,8 @@ if (input && !Command) {
         let description = '';
 
         appCommands.forEach((command) => {
-    if (!command.name.startsWith('z-')) {
       description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
-        }
-     });
+        });
 
   slashEmbed.setDescription(description);
       await selectInteraction.update({ embeds: [slashEmbed] });

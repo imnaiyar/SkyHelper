@@ -24,35 +24,41 @@ process.on("uncaughtException", (erorr) => Logger.error(`Unhandled exception`, e
 process.on("unhandledRejection", (error) => Logger.error(`Unhandled exception`, error));
 
 client.on('ready', async () =>{
+  // Fetching Application info for eval purposes.
+  await client.application.fetch()
+  
   // Setting up events
     const loadEventHandlers = (dir) => { 
      const files = fs.readdirSync(path.join(__dirname, dir)); 
-     let eventCounter = 0; // Initialize a counter variable 
+     let eventCounter = 0;
   
      for (const file of files) { 
        const filePath = path.join(dir, file); 
        const fileStat = fs.statSync(filePath); 
   
        if (fileStat.isDirectory()) { 
-         // Recursively load event handlers in nested folders 
+
          eventCounter += loadEventHandlers(filePath); 
        } else if (file.endsWith('.js')) { 
          const eventHandler = require(path.join(__dirname, filePath)); 
          const eventName = file.split('.')[0]; 
          client.on(eventName, (...args) => eventHandler(client, ...args)); 
-         eventCounter++; // Increment the counter for each loaded event 
+         eventCounter++; 
        } 
      } 
   
-     return eventCounter; // Return the total count of events in this folder and its subfolders 
+     return eventCounter; 
    }; 
   
    const totalEventsLoaded = loadEventHandlers('./src/events'); 
    Logger.log(`Loaded ${totalEventsLoaded} events.`);
   
   Logger.success(`Logged in as ${client.user.tag}`); 
-   
+  
+   // Load Website
   require('@root/website/mainPage')
+  
+  // Send ready webhook log
     const readyalertemb = new EmbedBuilder()
       .addFields(
         {
@@ -61,8 +67,8 @@ client.on('ready', async () =>{
           inline: false,
         },
         {
-          name: "Dashboard",
-          value: `Dashboard started on port ${DASHBOARD.port}`,
+          name: "Website",
+          value: `Website started on port ${DASHBOARD.port}`,
           inline: false,
         },
         {
