@@ -57,7 +57,7 @@ This command offers a quick overview of the following times:
 - Reset time
 - Eden reset time`,
   
-  suggestion: 'Use this command to suggest any ideas, or if you like to suggest a change to an already existing feature.',
+  suggestion: 'Use this command to suggest any ideas, or if you like to suggest a change to an already existing feature.\n\n**NOTE**: If use this command, you give developers of the bot permission to contact you regarding any matter pertaining to your suggestion.',
   
   skyGPT: `SkyGPT, built upon OpenAI's ChatGPT, is designed to assist with questions related to the game 'Sky: Children of the Light.' It embodies a playful and witty personality, drawing from training on Sky's data. Please note that ChatGPT's knowledge is current up to 2021, and it may occasionally provide incorrect information. For accuracy, consider verifying with other players. This feature is primarily for entertainment.
   

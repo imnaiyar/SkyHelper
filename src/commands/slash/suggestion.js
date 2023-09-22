@@ -7,7 +7,7 @@ module.exports = {
   data: {
     name: 'z-suggestion',
     description: 'suggest a feature or changes',
-    longDesc: desc.description,
+    longDesc: desc.suggestion,
   },
   async execute(interaction, client) {
     const modal = new ModalBuilder()
