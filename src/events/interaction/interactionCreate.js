@@ -11,6 +11,7 @@ const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const {ErrorForm} = require('@handler/functions/errorForm')
+const { nextPrev } = require('@shards/sub/scrollFunc')
 
 /**
  * @param {import('discord.js').Interaction} interaction
@@ -89,6 +90,10 @@ module.exports = async (client, interaction) => {
     
   if (interaction.customId === 'error_report') {
     await ErrorForm(interaction)
+  }
+    if (interaction.customId === 'next' || interaction.customId === 'prev') {
+    const value = interaction.customId
+    await nextPrev(interaction, value)
   }
 if (interaction.customId === 'shard_timeline' || 'shard_left' || 'shard_right' || 'shard_original') {
   shardTimeline(interaction, Zhii, Christian);

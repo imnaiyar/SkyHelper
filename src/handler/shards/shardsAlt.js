@@ -4,45 +4,11 @@ const shardsTime = require('./sub/eventTimings')
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 
-async function shardsAlt(interaction) {
-    const timezone = 'America/Los_Angeles';
-    const dateOption = interaction.options.getString('date');
-    
-    const regex = /^\d{4,6}-\d{2}-\d{2}$/;
-
-if (dateOption && !regex.test(dateOption)) {
-  interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
-  return; 
-}
-
-    let currentDate;
-    let dayOfMonth;
-    let dayOfWeek;
-    let formatDate;
-
-    try {
-        if (dateOption) {
-            // Attempt to parse the provided date
-            currentDate = moment.tz(dateOption, 'Y-MM-DD', timezone).startOf('day');
-
-            // If the provided date is not valid, currentDate will be Invalid Date
-            if (!currentDate.isValid()) {
-                await interaction.reply({content: `${dateOption} does not exist, please provide a valid date.`, ephemeral: true});
-                return;
-            }
-        } else {
-            // If no date is provided, use the current date
-            currentDate = moment().tz(timezone);
-        }
-
-        dayOfMonth = currentDate.date();
-        dayOfWeek = currentDate.day();
-        formatDate = currentDate.format('DD MMMM YYYY');
-    } catch (error) {
-        await interaction.reply('An error occurred while processing the date.');
-        return;
-    }
-    
+async function shardsAlt(interaction, currentDate) {
+  const timezone = 'America/Los_Angeles';
+  const dayOfMonth = currentDate.date();
+  const dayOfWeek = currentDate.day();
+  const formatDate = currentDate.format('DD MMMM YYYY');
     const today = moment().tz(timezone).startOf('day');
     const noShard = currentDate.isSame(today, 'day')
   ? 'today'

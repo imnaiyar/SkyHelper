@@ -1,44 +1,12 @@
-const { EmbedBuilder} = require('discord.js');
+
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');  
 const Logger = require('@src/logger')
 const fs = require('fs');
 const moment = require('moment');
-const {actionRow} = require('./Buttons');
-
 
 async function shardsReply (interaction,currentDate, formatDate, eventStatus,timeRemaining, currentEvent, currentSecondEvent, dayOfWeek, noShard) {
 const timezone = 'America/Los_Angeles';
 const messageDataFile = 'messageData.json';
-const tenMinutesInMillis = 15 * 60 * 1000; 
- fs.readFile(messageDataFile, 'utf8', (err, data) => {
-
-  if (err) {
-
-    Logger.error(`Error reading ${messageDataFile}:`, err);
-    return;
-  }
-
-  let messages = [];
-  try {
-    messages = JSON.parse(data);
-  } catch (error) {
-    Logger.error(`Error parsing JSON data:`, error);
-    return;
-  }
-  
-  const currentTime = moment().tz(timezone);
-  const updatedMessages = messages.filter((message) => {
-    const messageTime = moment.tz(message.timestamp, timezone);
-    return currentTime.diff(messageTime) <= tenMinutesInMillis;
-  });
-
-  fs.writeFile(messageDataFile, JSON.stringify(updatedMessages), 'utf8', (err) => {
-    if (err) {
-      Logger.error(`Error writing ${messageDataFile}:`, err);
-      return;
-    }
-    Logger.success('Data successfully updated.');
-  });
-}); 
     let result = '';
     let showButtons = true;
 
@@ -530,33 +498,48 @@ const tenMinutesInMillis = 15 * 60 * 1000;
             showButtons = false;
         }
     } 
-
-if (!interaction.isButton()) {
-
-  if (showButtons) {
-      await interaction.deferReply({ephemeral: true});
-    const reply = await interaction.editReply({ embeds: [result], components: [actionRow], fetchReply: true });
-    const messageId = reply.id;
-    
-    saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
-  } else {
-      await interaction.deferReply({ephemeral: true});
-    const reply = await interaction.editReply({ embeds: [result], fetchReply: true });
-    const messageId = reply.id;
-    
-    saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
-  }
+let disabled;
+if (showButtons) {
+  disabled = false;
 } else {
-  if (showButtons) {
-    const reply = await interaction.update({ embeds: [result], components: [actionRow], fetchReply: true });
+  result.setImage('https://media.discordapp.net/attachments/867638574571323424/1154806135749103648/noShard.gif')
+  disabled = true;
+}
+const actionRow = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setEmoji('<a:left:1148644073670975640>')
+                .setCustomId('prev')
+                .setStyle('1'),
+            new ButtonBuilder()
+                .setEmoji('<a:right:1148627450608222278>')
+                .setCustomId('next')
+                .setStyle('1'),
+            new ButtonBuilder()
+                .setLabel('Timeline')
+                .setCustomId('shard_timeline')
+                .setDisabled(disabled)
+                .setStyle('3'),
+            new ButtonBuilder()
+                .setLabel('Location/Data')
+                .setCustomId('shard_location')
+                .setDisabled(disabled )
+                .setStyle('3'),
+            new ButtonBuilder()
+                .setLabel('About Shard')
+                .setCustomId('about_shard')
+                .setStyle('3')
+        );
+if (!interaction.isButton()) {
+  await interaction.deferReply({ephemeral: true});
+  const reply = await interaction.editReply({ embeds: [result], components: [actionRow], fetchReply: true });
     const messageId = reply.id;
     
     saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
-  } else {
-    const reply = await interaction.update({ embeds: [result], fetchReply: true });
-    const messageId = reply.id;
-    saveMessageData({ time: currentDate.format(), messageId, timestamp: moment().tz(timezone).format() });
-  }
+  
+} else {
+  await interaction.update({ embeds: [result], components: [actionRow] });
+  
 }
 
 function saveMessageData(data) {

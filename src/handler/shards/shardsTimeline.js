@@ -1,10 +1,10 @@
 const fs = require('fs');
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const moment = require('moment-timezone');
-const {getCurrentDate, saveOriginalData, restoreOriginalData} = require('@shards/shardsLocation')
+const {getCurrentDate} = require('@shards/shardsLocation')
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];; // Remove the repeating part
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
-
+const { nextPrev } = require('./sub/scrollFunc')
 const shardData = require('./sub/timelineData')
 
 const MAX_SHARD_INDEX = 2; // 3 results for each event, so the max shard index is 2
@@ -26,9 +26,6 @@ async function shardTimeline(interaction, Zhii, Christian) {
   const currentEvent = eventSequence[sequenceIndex];
   if (interaction.customId === 'shard_timeline') {
     currentShardIndex = 0;
-    originalEmbedData = interaction.message.embeds[0];
-    originalActionRow = interaction.message.components?.[0];
-    await saveOriginalData(messageId, originalEmbedData, originalActionRow);
     await showShard(interaction, shardData[currentEvent][currentShardIndex], Zhii, Christian);
    } else if (interaction.customId === 'shard_left') {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
@@ -37,11 +34,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(interaction, shardData[currentEvent][currentShardIndex], Zhii, Christian);
   } else if (interaction.customId === 'shard_original') {
-    const restoredData = restoreOriginalData(interaction.message.id);
-      if (restoredData) {
-          await interaction.update({ embeds: [restoredData.originalEmbedData], components: [restoredData.originalActionRow] });
-      
-    }
+    await nextPrev(interaction)
   }
 }
 
