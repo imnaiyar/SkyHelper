@@ -22,7 +22,7 @@ This command offers details on the date and location of the upcoming red shards.
 Usage:
 !timestamp <time> [timezone] [date] [month] [year] [format]
 
-- <time> (required): Specify the time you want to convert.
+- <time> (required): Specify the time you want to convert. Format: \`HH mm ss\` (e.g, "12 45 20").
 - [timezone] (optional): Specify a timezone to use for the conversion.
 - [date] (optional): Specify a specific date (e.g., "15").
 - [month] (optional): Specify a specific month (e.g., "09").

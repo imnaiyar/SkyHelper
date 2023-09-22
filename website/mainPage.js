@@ -7,6 +7,18 @@ const Logger = require('@src/logger')
 const app = express();
 const PORT = DASHBOARD.port;
 
+const { Webhook } = require(`@top-gg/sdk`)
+const { WebhookClient } = require('discord.js')
+const voteWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
+const webhook = new Webhook(process.env.TOPGG_TOKEN)
+
+app.post('/topgg', webhook.listener(vote => {
+  if(!vote){ return false }
+  if(!vote.user){ return false }
+    voteWb.send(`${vote.user} just voted.`)
+    console.log(`${vote.user} has voted`)
+  }).catch(console.log)
+})
 
 
 app.set('views', path.join(__dirname, 'views'));
