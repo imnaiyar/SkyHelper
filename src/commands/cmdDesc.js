@@ -13,7 +13,7 @@ module.exports = {
 \`Usage:\`
 /next-red [type] [number]
 - [type] (optional): Specify the type of Shards to look for.
-- [number] (optional): Specify the number of results you want (1 to 10 in server channels, 1 to 20 in DMs).
+- [number] (optional): Specify the number of results you want (1 to 10 in server channels, 1 to 15 in DMs).
 
 This command offers details on the date and location of the upcoming red shards. Use the optional [--number] flag to adjust the number of results.`,
   
@@ -24,8 +24,8 @@ Usage:
 
 - <time> (required): Specify the time you want to convert.
 - [timezone] (optional): Specify a timezone to use for the conversion.
-- [date] (optional): Specify a specific date (e.g., "2023-09-15").
-- [month] (optional): Specify a specific month (e.g., "9").
+- [date] (optional): Specify a specific date (e.g., "15").
+- [month] (optional): Specify a specific month (e.g., "09").
 - [year] (optional): Specify a specific year (e.g., "2023").
 - [format] (optional): Specify the desired output format (e.g., "long-date", "short-date", "long-time-and-date", etc.).
 
