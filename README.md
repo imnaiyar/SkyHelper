@@ -1,6 +1,9 @@
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=SkyHelper;A+discord+bot+for+Sky%3A+Children+of+the+Light)](https://top.gg/bot/1121541967730450574)
+
+
 [![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)](https://top.gg/bot/1121541967730450574)
 
-# SkyBot
+# SkyHelper
 Simple discord bot that has function related to Sky: Children of Lights.
 # Commnads
 `/shards` - Get today's shard information. You can also provide an additional date to look for shard details for that particular date.  
@@ -37,4 +40,4 @@ This bot wouldn't be possible without these people and the work they do.
 ● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.  
 ● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).
 
-# This bot is not affiliated with Sky: Children of the Light or thatgamecompany.
+### This bot is not affiliated with Sky: Children of the Light or thatgamecompany.
