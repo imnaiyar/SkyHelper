@@ -16,7 +16,7 @@ app.post('/topgg', webhook.listener(vote => {
   if(!vote){ return false }
   if(!vote.user){ return false }
     voteWb.send(`${vote.user} just voted.`)
-    console.log(`${vote.user} has voted`)
+    console.log(vote)
 })
 )
 
