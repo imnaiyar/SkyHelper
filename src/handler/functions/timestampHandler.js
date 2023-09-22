@@ -1,4 +1,5 @@
-const {EmbedBuilder, Client} = require('discord.js')
+const {EmbedBuilder, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js')
+const { postToBin } = require('@handler/functions/postToBin')
 const moment = require("moment-timezone");
 function isTimezoneValid(timezone) {
   return moment.tz.zone(timezone) !== null;
@@ -7,7 +8,7 @@ function isTimeStringValid(timeString) {
   const timeRegex = /^(0[0-9]|1[0-9]|2[0-3])\s([0-5][0-9])\s([0-5][0-9])$/;
   return timeRegex.test(timeString);
 }
-function convertTime(interaction) {
+async function convertTime(interaction) {
   const { options } = interaction;
 
   const Time = options.getString("time");
@@ -49,7 +50,6 @@ function convertTime(interaction) {
     .toString()
     .padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")}`;
 
-  let result = "";
   const date1 = `<t:${Math.floor(utcTimestamp / 1000)}:d>`;
   const date2 = `<t:${Math.floor(utcTimestamp / 1000)}:D>`;
   const shortTime = `<t:${Math.floor(utcTimestamp / 1000)}:t>`;
@@ -59,12 +59,14 @@ function convertTime(interaction) {
   const minutes = `<t:${Math.floor(utcTimestamp / 1000)}:R>`;
 
   const format = options.getString("format");
-  if (!format) {
-    result = new EmbedBuilder()
+
+  result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion`})
     .setColor('DarkGold')
-    .setDescription("If you are on mobile, long press on the code blocks to copy.")
-    .addFields(
+    .setDescription("If you are on mobile, long press on the code blocks to copy (android only).")
+    .setFooter({ text: `for ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
+  if (!format) {
+    result.addFields(
       {name: `Date (1) - ${date1}`, value: `\`\`\`${date1}\`\`\``},
       { name: `Date (2) - ${date2}`, value: `\`\`\`${date2}\`\`\``},
       { name: `Short Time - ${shortTime}`, value : `\`\`\`${shortTime}\`\`\``},
@@ -72,87 +74,66 @@ function convertTime(interaction) {
       { name: `Short Date and Time - ${shortDateAndTime}`, value: `\`\`\`${shortDateAndTime}\`\`\``},
       { name: `Long Date and Time - ${longDateAndTime}`, value: `\`\`\`${longDateAndTime}\`\`\``},
       { name: `Relative - ${minutes}`, value: `\`\`\`${minutes}\`\`\``}
-      )
-    .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
+      );
 
   } else {
     switch (format) {
       case "date1":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Date (1) - ${date1}`, value: `\`\`\`${date1}\`\`\``}
-        )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
+        ).
         break;
       case "date2":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Date (1) - ${date2}`, value: `\`\`\`${date2}\`\`\``}
-        )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
+        );
         break;
       case "shortTime":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Short Time - ${shortTime}`, value: `\`\`\`${shortTime}\`\`\``}
-        )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });;
+        );
         break;
       case "longTime":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Long Time - ${longTime}`, value: `\`\`\`${longTime}\`\`\``}
-        )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
+        );
         break;
       case "shortDateAndTime":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Short Date and Time - ${shortDateAndTime}`, value: `\`\`\`${shortDateAndTime}\`\`\``}
-        )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
+        );
         break;
       case "longDateAndTime":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Long Date and Time - ${longDateAndTime}`, value: `\`\`\`${longDateAndTime}\`\`\``}
-        )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
+        );
         break;
       case "minutes":
-        result = new EmbedBuilder()
-        .setAuthor({ name: `Unix Time Conversion`})
-        .setColor('DarkGold')
-        .setDescription("If you are on mobile, long press on the code blocks to copy.")
-        .addFields(
+        result.addFields(
           {name: `Relative - ${minutes}`, value: `\`\`\`${minutes}\`\`\``}
         )
-        .setFooter({ text: `for ${interaction.user.id}`, iconURL: interaction.user.displayAvatarURL() });
         break;
     }
   }
+const fieldsArray = Array.from(result.data.fields);
 
+let content = '';
+
+for (const field of fieldsArray) {
+    content += `${field.name}\n\n-------------------\n\n`;
+}
+
+    const copyUrl = await postToBin(content, `UNIX Conversion.`);
+  let row;
+     if (copyUrl) { 
+       row = new ActionRowBuilder()
+       .addComponents( 
+           new ButtonBuilder().setLabel("Copy").setURL(copyUrl.raw).setStyle(ButtonStyle.Link) 
+         ) 
+     }
   const offset1 = `\nUTC Offset - \`${offsetString}\``;
 
-  interaction.reply({ content: `${offset1}`, embeds: [result] });
+  interaction.reply({ content: `${offset1}`, embeds: [result], components: [row], ephemeral: true});
 }
 
 module.exports = {convertTime}

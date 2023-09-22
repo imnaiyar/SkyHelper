@@ -27,7 +27,9 @@ Usage:
 - [date] (optional): Specify a specific date (e.g., "2023-09-15").
 - [month] (optional): Specify a specific month (e.g., "9").
 - [year] (optional): Specify a specific year (e.g., "2023").
-- [format] (optional): Specify the desired output format (e.g., "long-date", "short-date", "long-time-and-date", etc.).`,
+- [format] (optional): Specify the desired output format (e.g., "long-date", "short-date", "long-time-and-date", etc.).
+
+For the convenience of iOS users, a copy link is available, providing direct access to the raw results for effortless copying.`,
   
   skytimes: `Provides times for various in-game events and resets in Sky: Children of the Light.
 

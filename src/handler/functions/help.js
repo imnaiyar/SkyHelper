@@ -45,7 +45,7 @@ if (input && !Command) {
   const embed = new EmbedBuilder()
     .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
     .setTimestamp(Date.now())
-    .setColor('#000000')
+    .setColor('Gold')
     .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() })
     .setDescription(`SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](http://130.61.174.212:8519/) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`);
 
@@ -79,7 +79,7 @@ if (input && !Command) {
       const slashEmbed = new EmbedBuilder()
         .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`List of all Slash commands.`)
-        .setColor('#000000')
+        .setColor('Gold')
         .setFooter({ text: 'run /help <command> for details.', iconURL:client.user.displayAvatarURL()});
         let description = '';
 
@@ -93,7 +93,7 @@ if (input && !Command) {
       const prefixEmbed = new EmbedBuilder()
         .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`List of all Prefix commands.`)
-        .setColor('#000000')
+        .setColor('Gold')
         .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() });
         let description = '';
         prefix.forEach((command) => {
