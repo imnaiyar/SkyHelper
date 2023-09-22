@@ -1,11 +1,13 @@
 const { ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, WebhookClient } = require("discord.js");
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
 
+const desc = require('../cmdDesc')
+
 module.exports = {
   data: {
     name: 'z-suggestion',
     description: 'suggest a feature or changes',
-    longDesc: 'Use this command to suggest any ideas, or if you like to suggest a change to an already existing feature.'
+    longDesc: desc.description,
   },
   async execute(interaction, client) {
     const modal = new ModalBuilder()

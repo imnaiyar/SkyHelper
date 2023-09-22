@@ -1,23 +1,11 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const {skyTimes} = require('@handler/functions/skyTimes')
+const desc = require('../cmdDesc')
 module.exports = {
     data: {
       name: 'sky-times',
       description: 'Get various times related to the world of Sky',
-      longDesc: `Provides times for various in-game events and resets in Sky: Children of the Light.
-
-\`Usage:\`
-/sky-times [times]
-
-- [times]: (Optional) Specify a specific time to receive more detailed information about that event or reset (e.g., "geyser," "grandma," "turtle," "reset," "eden-reset").
-
-This command offers a quick overview of the following times:
-- Geyser time
-- Grandma time
-- Turtle time
-- Reset time
-- Eden reset time
-`,
+      longDesc: desc.skytimes,
       options: [
         {
           name: 'times',

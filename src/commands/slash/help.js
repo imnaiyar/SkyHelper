@@ -4,7 +4,7 @@ module.exports = {
     data: {
       name: 'help',
       description: 'help menu',
-      longDesc: 'List of all Slahs and Prefix commands and their usage.',
+      longDesc: 'List of all Slash and Prefix commands and their usage.',
       options: [
         { 
           name: 'command',

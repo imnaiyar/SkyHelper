@@ -1,20 +1,11 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const {convertTime} = require('@handler/functions/timestampHandler');
+const desc = require('../cmdDesc')
 module.exports = {
     data: {
       name: 'timestamp',
       description: 'Converts time into UNIX timestamp',
-      longDesc: `Converts a user-provided time into Unix time, using the default timezone (America/Los_Angeles) unless a different timezone is specified.
-
-Usage:
-!timestamp <time> [timezone] [date] [month] [year] [format]
-
-- <time> (required): Specify the time you want to convert.
-- [timezone] (optional): Specify a timezone to use for the conversion.
-- [date] (optional): Specify a specific date (e.g., "2023-09-15").
-- [month] (optional): Specify a specific month (e.g., "9").
-- [year] (optional): Specify a specific year (e.g., "2023").
-- [format] (optional): Specify the desired output format (e.g., "long-date", "short-date", "long-time-and-date", etc.).`,
+      longDesc: desc.timestamp,
       options: [
         {
           name: 'time',
