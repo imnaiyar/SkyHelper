@@ -6,6 +6,7 @@ const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
 const {guideButton} = require('@guides/GuideOption')
 const {parsePerm} = require('@handler/functions/parsePerm')
+const config = require('@root/config')
 const Log = require('@src/logger');
 const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
@@ -58,7 +59,7 @@ module.exports = async (client, interaction) => {
     .setTimestamp();
 
   // Slash Commands
-  if (interaction.isChatInputCommand()) {
+  if (interaction.isChatInputCommand() && !interaction.user.id.includes(config.OWNER)) {
     cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
   }
   } catch (error) {
