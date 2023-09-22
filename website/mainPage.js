@@ -10,7 +10,7 @@ const PORT = DASHBOARD.port;
 const { Webhook } = require(`@top-gg/sdk`)
 const { WebhookClient } = require('discord.js')
 const voteWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
-const webhook = new Webhook(process.env.TOPGG_TOKEN)
+const webhook = new Webhook('M3k_D84QL-UxLEBgePsyBlwj_wtFH6PKF2_Dg3ep_QBSz_FuTQ-53wRfpbgehmxukWtD')
 
 app.post('/topgg', webhook.listener(vote => {
   if(!vote){ return false }
