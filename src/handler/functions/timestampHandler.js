@@ -126,7 +126,7 @@ for (const field of fieldsArray) {
  await unixPage(interaction, fieldsArray);
      const  row = new ActionRowBuilder()
        .addComponents( 
-           new ButtonBuilder().setLabel("Copy").setURL(`http://localhost:8519/${interaction.id}`).setStyle(ButtonStyle.Link) 
+           new ButtonBuilder().setLabel("Copy").setURL(`http://130.61.174.212:8519/${interaction.id}`).setStyle(ButtonStyle.Link) 
          ) 
      
   const offset1 = `\nUTC Offset - \`${offsetString}\``;
