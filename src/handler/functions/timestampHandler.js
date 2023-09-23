@@ -1,5 +1,6 @@
 const {EmbedBuilder, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js')
 const { postToBin } = require('@handler/functions/postToBin')
+const { unixPage } = require('@root/website/mainPage')
 const moment = require("moment-timezone");
 function isTimezoneValid(timezone) {
   return moment.tz.zone(timezone) !== null;
@@ -117,20 +118,17 @@ async function convertTime(interaction) {
   }
 const fieldsArray = Array.from(result.data.fields);
 
-let content = '';
+let fieldsData = '';
 
 for (const field of fieldsArray) {
-    content += `${field.name}\n\n-------------------\n\n`;
+    fieldsData += `${field.name}\n\n-------------------\n\n`;
 }
-
-    const copyUrl = await postToBin(content, `UNIX Conversion.`);
-  let row;
-     if (copyUrl) { 
-       row = new ActionRowBuilder()
+ await unixPage(interaction, fieldsArray);
+     const  row = new ActionRowBuilder()
        .addComponents( 
-           new ButtonBuilder().setLabel("Copy").setURL(copyUrl.raw).setStyle(ButtonStyle.Link) 
+           new ButtonBuilder().setLabel("Copy").setURL(`http://localhost:8519/${interaction.id}`).setStyle(ButtonStyle.Link) 
          ) 
-     }
+     
   const offset1 = `\nUTC Offset - \`${offsetString}\``;
 
   interaction.reply({ content: `${offset1}`, embeds: [result], components: [row], ephemeral: true});

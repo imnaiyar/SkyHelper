@@ -69,3 +69,18 @@ btn.on("click", function (e) {
 
 // copyright year
 document.getElementById("cp-year").innerHTML = new Date().getFullYear()
+
+// footer handling
+window.addEventListener('load', adjustFooterPosition);
+window.addEventListener('resize', adjustFooterPosition);
+
+function adjustFooterPosition() {
+  const bodyHeight = document.body.offsetHeight;
+  const windowHeight = window.innerHeight;
+  const footer = document.querySelector('.footer');
+
+  if (bodyHeight < windowHeight) {
+    footer.style.position = 'fixed';
+    footer.style.bottom = 0;
+  }
+}
