@@ -10,7 +10,7 @@ function sanitizeField(value) {
           // Remove backticks, <, and > characters
           return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
-async function unixPage(interaction, fieldsData) {
+async function unixPage(interaction, fieldsData, unixTime, offset) {
 app.get(`/${interaction.id}`, (req, res) => {
 
 const htmlContent = `
@@ -38,6 +38,15 @@ const htmlContent = `
      <style>
         /* Define CSS styles for the code block */
         .cmd {
+    background-color: #0F0F10;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: lighter;
+    padding: 2px 7px;
+    border-radius: 5px;
+        }
+    
+    .cm {
     background-color: #0F0F10;
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
@@ -344,6 +353,8 @@ const htmlContent = `
      <div class="has-text-centered">
       <h3><b>Unix Timestamp for ${interaction.user.username}</b></h1>
       <div class="line line-center blurple"></div>
+     Provided Time: <span id="formattedTimestamp"></span><br>
+     Offset: <span class="cm">${offset}</span>
       <br>
       ${fieldsData.map((field, index) => `
   <div>
@@ -354,6 +365,19 @@ const htmlContent = `
   <br>
 `).join('')}
 <script>
+var unixTime = ${unixTime} /* Get the Unix timestamp from your source */;
+
+  // Convert Unix timestamp to milliseconds (required by JavaScript Date)
+  var unixTimeMilliseconds = unixTime * 1000;
+
+  // Create a new Date object
+  var date = new Date(unixTimeMilliseconds);
+
+  // Format the date as desired, e.g., 'YYYY-MM-DD HH:MM:SS'
+  var formattedDate = date.toLocaleString(); // You can customize the format here
+
+  // Update the HTML element where you want to display the formatted date
+  document.getElementById('formattedTimestamp').textContent = formattedDate;
   function copyText(index, button) {
     const cmdSpan = document.querySelectorAll('.cmd')[index];
     const text = cmdSpan.textContent;

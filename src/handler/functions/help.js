@@ -1,5 +1,6 @@
 const { GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
 const { getSettings } = require("@schemas/Guild");
+const config = require('@root/config')
 
 async function helpMenu(interaction, client) {
     const slash = client.commands;
@@ -47,7 +48,7 @@ if (input && !Command) {
     .setTimestamp(Date.now())
     .setColor('Gold')
     .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() })
-    .setDescription(`SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](http://130.61.174.212:8519/) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`);
+    .setDescription(`SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](${config.WEB_URL}) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`);
 
   const row = new ActionRowBuilder().addComponents(
     new StringSelectMenuBuilder()

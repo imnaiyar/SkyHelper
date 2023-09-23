@@ -5,6 +5,8 @@ module.exports = {
         USERS: 200000,
         MEMBERS: 200000,
       },
+      
+    WEB_URL: 'https://skyhelper.xyz'
 
      DASHBOARD: {
         port: "8519",
