@@ -1,5 +1,4 @@
 const {EmbedBuilder, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js')
-const { postToBin } = require('@handler/functions/postToBin')
 const { unixPage } = require('@root/website/mainPage')
 const moment = require("moment-timezone");
 function isTimezoneValid(timezone) {
@@ -50,14 +49,14 @@ async function convertTime(interaction) {
   const offsetString = `UTC${offset >= 0 ? "+" : "-" }${offsetHours
     .toString()
     .padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")}`;
-
-  const date1 = `<t:${Math.floor(utcTimestamp / 1000)}:d>`;
-  const date2 = `<t:${Math.floor(utcTimestamp / 1000)}:D>`;
-  const shortTime = `<t:${Math.floor(utcTimestamp / 1000)}:t>`;
-  const longTime = `<t:${Math.floor(utcTimestamp / 1000)}:T>`;
-  const shortDateAndTime = `<t:${Math.floor(utcTimestamp / 1000)}:f>`;
-  const longDateAndTime = `<t:${Math.floor(utcTimestamp / 1000)}:F>`;
-  const minutes = `<t:${Math.floor(utcTimestamp / 1000)}:R>`;
+  const unixTime = Math.floor(utcTimestamp / 1000)
+  const date1 = `<t:${unixTime}:d>`;
+  const date2 = `<t:${unixTime}:D>`;
+  const shortTime = `<t:${unixTime}:t>`;
+  const longTime = `<t:${unixTime}:T>`;
+  const shortDateAndTime = `<t:${unixTime}:f>`;
+  const longDateAndTime = `<t:${unixTime}:F>`;
+  const minutes = `<t:${unixTime}:R>`;
 
   const format = options.getString("format");
 
@@ -123,14 +122,14 @@ let fieldsData = '';
 for (const field of fieldsArray) {
     fieldsData += `${field.name}\n\n-------------------\n\n`;
 }
- await unixPage(interaction, fieldsArray);
+ const offset1 = `\nUTC Offset - \`${offsetString}\``;
+ await unixPage(interaction, fieldsArray, unixTime, offsetString);
      const  row = new ActionRowBuilder()
        .addComponents( 
-           new ButtonBuilder().setLabel("Copy").setURL(`http://130.61.174.212:8519/${interaction.id}`).setStyle(ButtonStyle.Link) 
+           new ButtonBuilder().setLabel("Copy").setURL(`http://localhost:8519/${interaction.id}`).setStyle(ButtonStyle.Link) 
          ) 
      
-  const offset1 = `\nUTC Offset - \`${offsetString}\``;
-
+  
   interaction.reply({ content: `${offset1}`, embeds: [result], components: [row], ephemeral: true});
 }
 

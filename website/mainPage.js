@@ -10,7 +10,7 @@ function sanitizeField(value) {
           // Remove backticks, <, and > characters
           return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
-async function unixPage(interaction, fieldsData) {
+async function unixPage(interaction, fieldsData, unixTime, offset) {
 app.get(`/${interaction.id}`, (req, res) => {
 
 const htmlContent = `
@@ -344,6 +344,8 @@ const htmlContent = `
      <div class="has-text-centered">
       <h3><b>Unix Timestamp for ${interaction.user.username}</b></h1>
       <div class="line line-center blurple"></div>
+      Your Provided Time - ${unixTime}
+      UTC Offset: <span class ="cmd">${offset}</span>
       <br>
       ${fieldsData.map((field, index) => `
   <div>
@@ -445,9 +447,7 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
   res.render('page/index');
 });
-app.use((req, res) => {
-  res.status(404).redirect('error.html');
-});
+
 app.listen(PORT, () => {
   Logger.success(`Server is running on port ${PORT}`);
 });
