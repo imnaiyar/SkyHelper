@@ -124,7 +124,7 @@ for (const field of fieldsArray) {
     fieldsData += `${field.name}\n\n-------------------\n\n`;
 }
  const offset1 = `\nUTC Offset - \`${offsetString}\``;
- await unixPage(interaction, fieldsArray, unixTime, offsetString);
+ await unixPage(interaction, fieldsArray, unixTime, offsetString, timezone);
      const  row = new ActionRowBuilder()
        .addComponents( 
            new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${interaction.id}`).setStyle(ButtonStyle.Link) 
