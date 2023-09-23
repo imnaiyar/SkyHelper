@@ -445,7 +445,9 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
   res.render('page/index');
 });
-
+app.use((req, res) => {
+  res.status(404).redirect('error.html');
+});
 app.listen(PORT, () => {
   Logger.success(`Server is running on port ${PORT}`);
 });
