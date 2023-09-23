@@ -18,6 +18,11 @@ const htmlContent = `
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:type" content="website">
+<meta property="og:url" content="https://skyhelper.xyz">
+<meta property="og:title" content="SkyHelper | A discord bot.">
+<meta property="og:description" content="A discord bot for the game Sky: Children of the Light">
+<meta property="og:image" content="https://media.discordapp.net/attachments/867638574571323424/1154914225001607178/IMG_3581_cropped_2.png">
     <title>SkyHelper</title>
     <link rel="icon" href="assets/img/skybot.png">
     <link rel="stylesheet" href="assets/css/bulma.min.css" />
