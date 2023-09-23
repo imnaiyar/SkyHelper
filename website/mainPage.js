@@ -10,7 +10,7 @@ function sanitizeField(value) {
           // Remove backticks, <, and > characters
           return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
-async function unixPage(interaction, fieldsData, unixTime, offset) {
+async function unixPage(interaction, fieldsData) {
 app.get(`/${interaction.id}`, (req, res) => {
 
 const htmlContent = `
@@ -344,8 +344,6 @@ const htmlContent = `
      <div class="has-text-centered">
       <h3><b>Unix Timestamp for ${interaction.user.username}</b></h1>
       <div class="line line-center blurple"></div>
-      Your Provided Time - ${unixTime}
-      UTC Offset: <span class ="cmd">${offset}</span>
       <br>
       ${fieldsData.map((field, index) => `
   <div>
