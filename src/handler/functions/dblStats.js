@@ -2,11 +2,11 @@ const fetch = require("node-fetch");
   
 
  async function dblStats(client) { 
-   await fetch(`https://discord.bots.gg/api/v1/bots/${client.user.id}/stats`, { 
+   await fetch(`https://discordbotlist/api/v1/bots/${client.user.id}/stats`, { 
      method: "POST", 
      body: JSON.stringify({ 
-       guildCount: client.guilds.cache.size, 
-       shardCount: 0, 
+       'guilds': client.guilds.cache.size, 
+       'users': client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0), 
      }), 
      headers: { 
        "Content-Type": "application/json", 
