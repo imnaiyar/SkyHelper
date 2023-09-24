@@ -51,7 +51,7 @@ module.exports = {
         break;
   
       default:
-        await interaction.reply(`- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`);
+        await interaction.reply(`In-game events time:\n- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`);
         break;
     }
 
