@@ -1,5 +1,5 @@
 const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require("discord.js");
-const { dblStats } = require('@handler/functions/dblStats')
+
 const { getSettings: registerGuild } = require("@schemas/Guild");
 const Guild = require('@schemas/guildBlackList');
 const Logger = require('@src/logger')
@@ -92,7 +92,7 @@ if (!process.env.GUILD) return;
   });
   
 // Update DBL Stats
- await dblStats(client)
+ 
 // Update TopGG Stats
  topggAutopost(client);
  
