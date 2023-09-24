@@ -42,15 +42,17 @@ async function Guides(interaction) {
   }
 };
 
-async function guideButton(interaction){
+async function guideButton(interaction) {
   if (!interaction.isStringSelectMenu()) return;
 
   const { firstChoices, secondChoices, thirdChoices } = require('./SeasonalChoices.js');
   const messageChoice = messageChoices.get(interaction.message.id);
+
   function getLabelFromValue(choices, value) {
     const selectedChoice = choices.find(choice => choice.value === value);
     return selectedChoice ? selectedChoice.label : 'Unknown';
   }
+
   if (interaction.customId === 'firstChoice') {
     messageChoices.set(interaction.message.id, {
       firstChoice: interaction.values[0],
@@ -89,6 +91,7 @@ async function guideButton(interaction){
     });
   } else if (interaction.customId === 'secondChoice') {
     const selectedChoice = interaction.values[0];
+
     if (selectedChoice === 'back') {
       const dropdownOptions = firstChoices.map(choice => ({
         label: choice.label,
@@ -107,52 +110,46 @@ async function guideButton(interaction){
         content: 'Please select a season:',
         components: [row],
       });
+
       messageChoices.delete(interaction.message.id);
-    } else if (selectedChoice === 'shattering_q') { 
-      const response = choiceResponses.getResponse(selectedChoice);
-        if (response) {
-          const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
-          const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
-          response.ephemeral = isEphemeral;
+    } else if (selectedChoice === 'shattering_q' || selectedChoice === 'dreams_q') {
+      const response = choiceResponses.getResponse(selectedChoice)
 
-
-      await interaction.deferReply({ephemeral: isEphemeral});
-      await interaction.followUp(response);
-        }
-          } else if (selectedChoice === 'dreams_q') { 
-      const response = choiceResponses.getResponse(selectedChoice);
-        if (response) {
-          const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
-          const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
-          response.ephemeral = isEphemeral;
-          await interaction.deferReply({ephemeral: isEphemeral});
-          await interaction.followUp(response);
-        }
-          } else {
+      if (response) {
+        
+        const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
+        const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
+        await interaction.deferReply({ ephemeral: isEphemeral });
+        await interaction.followUp(response);
+      }
+    } else {
       const thirdChoiceOptions = thirdChoices[selectedChoice].map(choice => ({
         label: choice.label,
         value: choice.value,
         emoji: choice.emoji
       }));
-       
+
       thirdChoiceOptions.push({
         label: 'Back',
         value: 'back',
         emoji: '⬅️',
       });
-     if (!messageChoice) {
-          interaction.update({
-            content: 'Interaction has expired, bot may have restarted. Please run the command again.',
-            components: [],
-          });
-          return;
-        }
+
+      if (!messageChoice) {
+        interaction.update({
+          content: 'Interaction has expired, bot may have restarted. Please run the command again.',
+          components: [],
+        });
+        return;
+      }
+
       const row = new ActionRowBuilder().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId('thirdChoice')
           .setPlaceholder(`${getLabelFromValue(firstChoices, messageChoice.firstChoice)} - ${getLabelFromValue(secondChoices[messageChoice.firstChoice], selectedChoice)}`)
           .addOptions(thirdChoiceOptions)
       );
+
       await interaction.update({
         content: `${getLabelFromValue(secondChoices[messageChoice.firstChoice], selectedChoice)} of ___${getLabelFromValue(firstChoices, messageChoice.firstChoice)}___`,
         components: [row],
@@ -207,8 +204,8 @@ async function guideButton(interaction){
           const interactionEphemeral = ephemeralChoice.get(interaction.message.id);
           const isEphemeral = interactionEphemeral ? interactionEphemeral.ephemeral : true;
 
-         await interaction.deferReply({ephemeral: isEphemeral});
-         await interaction.followUp(response);
+          await interaction.deferReply({ ephemeral: isEphemeral });
+          await interaction.followUp(response);
         } else {
           await interaction.update('*__Under development... Thank you for your patience.__*');
         }
@@ -217,7 +214,6 @@ async function guideButton(interaction){
     }
   }
 };
-
 function getEmoji(label) {
   switch (label) {
 case 'Seasonal Quests':

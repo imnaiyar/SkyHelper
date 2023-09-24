@@ -1,4 +1,4 @@
-const { GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
+const { GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder } = require('discord.js');
 const { getSettings } = require("@schemas/Guild");
 const config = require('@root/config')
 
@@ -67,15 +67,27 @@ if (input && !Command) {
           .setEmoji('<:prefix:1140103340643078144>'),
       )
   );
+const hmBtn = new ActionRowBuilder()
+       .addComponents(
+         new ButtonBuilder()
+         .setLabel('🏠')
+         .setCustomId('homeBtn')
+         .setStyle(4)
+         )
 
   const reply = await interaction.reply({ embeds: [embed], components: [row] });
 
 
-  const filter = (i) => i.customId === 'commands-help' && i.isStringSelectMenu();
+  const filter = (i) => i.customId === 'commands-help' || i.customId === 'homeBtn';
   const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 60 * 1000 });
 
   collector.on('collect', async (selectInteraction) => {
-    const selectedChoice = selectInteraction.values[0];
+    let selectedChoice;
+    if (selectInteraction?.values) {
+    selectedChoice = selectInteraction.values[0]
+    } else {
+      selectedChoice = selectInteraction.customId
+    }
     if (selectedChoice === 'slash') {
       const slashEmbed = new EmbedBuilder()
         .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
@@ -89,7 +101,7 @@ if (input && !Command) {
         });
 
   slashEmbed.setDescription(description);
-      await selectInteraction.update({ embeds: [slashEmbed] });
+      await selectInteraction.update({ embeds: [slashEmbed], components: [row, hmBtn] });
     } else if (selectedChoice === 'prefix') {
       const prefixEmbed = new EmbedBuilder()
         .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
@@ -103,8 +115,11 @@ if (input && !Command) {
       }
      });
      prefixEmbed.setDescription(description);
-      await selectInteraction.update({ embeds: [prefixEmbed] });
+      await selectInteraction.update({ embeds: [prefixEmbed], components: [row, hmBtn] });
+    } else if (selectedChoice === 'homeBtn') {
+      await selectInteraction.update({ embeds: [embed], components: [row]})
     }
+
   });
 
   collector.on('end', (collected, reason) => {
