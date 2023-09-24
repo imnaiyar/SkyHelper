@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
   
 
  async function dblStats(client) { 
-   await fetch(`https://discordbotlist/api/v1/bots/${client.user.id}/stats`, { 
+   await fetch(`https://discordbotlist.com/api/v1/bots/${client.user.id}/stats`, { 
      method: "POST", 
      body: JSON.stringify({ 
        'guilds': client.guilds.cache.size, 
