@@ -36,9 +36,19 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
     padding: 2px 7px;
     border-radius: 5px;
         }
-    
+    .cmdCollapse {
+    margin: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    background-color: #525151;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 5px 7px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
     .cm {
-    background-color: #0F0F10;
+    background-color: #141617;
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
     font-weight: lighter;
@@ -344,12 +354,15 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
      <div class="has-text-centered">
       <h3><b>Unix Timestamp for ${interaction.user.username}</b></h1>
       <div class="line line-center blurple"></div>
-     Provided Time: <span id="formattedTimestamp"></span><br>
-     Offset: <span class="cm">${offset}</span>
       <br>
-      ${fieldsData.map((field, index) => `
+     <div class ="cmdCollapse">
+     Provided Time: <span id="formattedTimestamp"></span>
+     Offset: <span class="cm">${offset}</span>
+     </div>
+      <br>
+       ${fieldsData.map((field, index) => `
   <div>
-    <h2>${field.name}</h2>
+    <h2>● ${field.name}</h2>
     <span class="cmd">${sanitizeField(field.value)}</span>
     <button onclick="copyText(${index}, this)">Copy</button>
   </div>

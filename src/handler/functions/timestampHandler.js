@@ -47,9 +47,9 @@ async function convertTime(interaction) {
   const offset = moment.tz(timezone).utcOffset();
   const offsetHours = Math.abs(Math.floor(offset / 60));
   const offsetMinutes = Math.abs(offset % 60);
-  const offsetString = `UTC${offset >= 0 ? "+" : "-" }${offsetHours
+  const offsetString = `${offset >= 0 ? "+" : "-" }${offsetHours
     .toString()
-    .padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")}`;
+    .padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")} UTC`;
   const unixTime = Math.floor(utcTimestamp / 1000)
   const date1 = `<t:${unixTime}:d>`;
   const date2 = `<t:${unixTime}:D>`;
@@ -117,14 +117,49 @@ async function convertTime(interaction) {
     }
   }
 const fieldsArray = Array.from(result.data.fields);
-
-let fieldsData = '';
+let fieldsData = [];
 
 for (const field of fieldsArray) {
-    fieldsData += `${field.name}\n\n-------------------\n\n`;
+  if (field.name.startsWith('Date (1)')) {
+    fieldsData.push({
+      name: 'Date 1 ( e.g, 24/09/2023)',
+      value: field.value,
+    })
+  } else if (field.name.startsWith('Date (2)')) {
+    fieldsData.push({
+      name: 'Date 2 ( e.g, 24 September 2023)',
+      value: field.value,
+    })
+  } else if (field.name.startsWith('Short Time')) {
+    fieldsData.push({
+      name: 'Short Time ( e.g, 13:10)',
+      value: field.value,
+    })
+  } else if (field.name.startsWith('Long Time')) {
+    fieldsData.push({
+      name: 'Long Time ( e.g, 13:10:40)',
+      value: field.value,
+    })
+  } else if (field.name.startsWith('Short Date and Time')) {
+    fieldsData.push({
+      name: 'Short Date and Time ( e.g, 24 September 2023 13:10)',
+      value: field.value,
+    })
+  } else if (field.name.startsWith('Long Date and Time')) {
+    fieldsData.push({
+      name: 'Long Date and Time ( e.g, Sunday, 24 September 2023 13:10)',
+      value: field.value,
+    })
+  } else if (field.name.startsWith('Relative')) {
+    fieldsData.push({
+      name: 'Relative ( e.g, in 45 minutes)',
+      value: field.value,
+    })
+  }
 }
- const offset1 = `\nUTC Offset - \`${offsetString}\``;
- await unixPage(interaction, fieldsArray, unixTime, offsetString, timezone);
+
+ const offset1 = `\nOffset - \` ${offsetString} \``;
+ await unixPage(interaction, fieldsData, unixTime, offsetString, timezone);
      const  row = new ActionRowBuilder()
        .addComponents( 
            new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${interaction.id}`).setStyle(ButtonStyle.Link) 
