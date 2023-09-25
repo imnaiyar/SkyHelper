@@ -3,6 +3,7 @@ const {shardsAlt} = require('@shards/shardsAlt');
 const moment = require('moment-timezone')
 const desc = require('@commands/cmdDesc')
 module.exports = {
+    cooldown: 3,
     data: {
       name: 'shards',
       description: 'Get Sky Shards information',

@@ -21,7 +21,7 @@ async function convertTime(interaction) {
   if (!timezone) {
     timezone = "America/Los_Angeles"; // default timezone to Los Angeles
   } else if (!isTimezoneValid(timezone)) {
-    interaction.reply({ content: "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`\nYou can use this website to get your timezone if you don't know it already -> https://timezonedb.com/time-zones", ephemeral: true});
+    interaction.reply({ content: "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`\nYou can use this website to get your timezone if you don't know -> [TimeZoneDB](https://timezonedb.com/time-zones)", ephemeral: true});
     return;
   }
   const date = options.getInteger("date");
@@ -63,7 +63,7 @@ async function convertTime(interaction) {
   result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion`})
     .setColor('DarkGold')
-    .setDescription("If you are on mobile, long press on the code blocks to copy (android only).")
+    .setDescription("Follow the link attached for easy copying.")
     .setFooter({ text: `for ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
   if (!format) {
     result.addFields(

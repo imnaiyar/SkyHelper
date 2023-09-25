@@ -2,6 +2,7 @@ const { ApplicationCommandOptionType } = require("discord.js");
 const {skyTimes} = require('./sub/skyTimes')
 const desc = require('@commands/cmdDesc')
 module.exports = {
+    cooldown: 5,
     data: {
       name: 'sky-times',
       description: 'Get various times related to the world of Sky',

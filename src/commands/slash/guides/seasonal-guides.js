@@ -2,6 +2,7 @@ const { ApplicationCommandOptionType } = require("discord.js");
 const {Guides} = require('./sub/GuideOption')
 const desc = require('@commands/cmdDesc')
 module.exports = {
+  cooldown: 30,
     data: {
       name: 'seasonal-guides',
       description: 'various seasonal guides',

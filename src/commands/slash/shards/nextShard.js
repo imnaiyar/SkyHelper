@@ -12,6 +12,7 @@ const dayToSkip = {
   'b': [0, 1],
 };
 module.exports = {
+  cooldown: 10,
     data: {
         name: 'next-shards',
         description: 'Get date and location of next shards. (default: 5)',

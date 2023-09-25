@@ -1,4 +1,4 @@
-const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
+const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, Collection } = require("discord.js");
 const {shardInfos} = require('@shards/aboutShards')
 const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
@@ -29,6 +29,30 @@ module.exports = async (client, interaction) => {
     // Check if the user has permissions to use the command.
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
      return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true})
+    }
+    // Check cooldowns
+    if (command?.cooldown){
+              const { cooldowns } = client; 
+  
+         if (!cooldowns.has(command.data.name)) { 
+                 cooldowns.set(command.data.name, new Collection()); 
+         } 
+  
+         const now = Date.now(); 
+         const timestamps = cooldowns.get(command.data.name); 
+         const cooldownAmount = command.cooldown * 1000; 
+  
+         if (timestamps.has(interaction.user.id)) { 
+                 const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount; 
+  
+                 if (now < expirationTime) { 
+                         const expiredTimestamp = Math.round(expirationTime / 1000); 
+                         return interaction.reply({ content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true }); 
+                 } 
+         } 
+  
+         timestamps.set(interaction.user.id, now); 
+         setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
     }
   try {
     await command.execute(interaction, client);

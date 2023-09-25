@@ -67,7 +67,7 @@ const collector = interaction.channel.createMessageComponentCollector({ filter, 
 
 collector.on('end', (collected, reason) => {
   if (reply) {
-    reply.edit({ content: `**Idle Timeout**: Run the command again.`})
+    reply.delete()
     
   }
   });

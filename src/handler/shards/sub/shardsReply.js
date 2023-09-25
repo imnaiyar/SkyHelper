@@ -96,7 +96,7 @@ const messageDataFile = 'messageData.json';
 
               .addFields({ name: 'Shard Info', value: 'Red Shard', inline: true })
 
-             .addFields({ name: 'Location', value: 'Pararie Caves, Daylight Parairies', inline: true })
+             .addFields({ name: 'Location', value: 'Prairie Caves, Daylight Prairies', inline: true })
 
               .addFields({ name: 'Rewards', value: '2 AC <a:ac5:1125338720183267390>', inline: true })
 
@@ -502,7 +502,8 @@ let disabled;
 if (showButtons) {
   disabled = false;
 } else {
-  result.setImage('https://media.discordapp.net/attachments/867638574571323424/1154806135749103648/noShard.gif')
+  result.setImage('https://media.discordapp.net/attachments/867638574571323424/1155727524911923220/5F1548AC-C7DD-4127-AF6F-0BC388-unscreen.gif').setTitle(`No Shard Day`)
+  
   disabled = true;
 }
 const actionRow = new ActionRowBuilder()

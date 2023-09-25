@@ -1,7 +1,7 @@
 module.exports = {
   shards: 'Provides detailed information about shattering shards in Sky: Children of the Light.\n\n`Usage:`\n/shards [date]\n- `[date]:` (Optional) Specify a date to get shard details for that day (e.g., "2023-09-15").\n\nThis command will give you insights into shard locations, landing times, and essential data for the selected date.',
   
-  guides: `Provides guides for seasonal quests, locations of seasonal spirits, and their cosmetic price trees, created by fellow game players and including their credits. Results are ephemeral by default, but you can make them non-ephemeral optionally (only the results, select menu will still be ephemeral).
+  guides: `Provides guides for seasonal quests, locations of seasonal spirits, and their cosmetic price trees, created by fellow game players and including their credits. Results are ephemeral by default, but you can make them non-ephemeral optionally. The select menus are deleted after 1 minute of inactivity to prevent channel clogging.
 
 \`Usage:\`
 /seasonal-guides [ephemeral]

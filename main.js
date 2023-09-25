@@ -54,6 +54,7 @@ client.on('ready', async () =>{
   
   // Setting of Commands
   client.commands = new Collection()
+  client.cooldowns = new Collection();
   const commandDirectory = path.join(__dirname, './src/commands/slash');
   function findCommandFiles(directory) {
   const files = fs.readdirSync(directory);
