@@ -328,7 +328,7 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
         </div>
 
         <div class="navbar-end">
-          <a href="https://discord.gg/PgZmsARDnW" class="navbar-item is-tab" target="_blank">
+          <a href="https://discord.gg/u9zUjWbbQ4" class="navbar-item is-tab" target="_blank">
             <i class="fa-brands fa-discord"></i>
           </a>
 
@@ -338,7 +338,7 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
 
           <div class="navbar-item">
             <div class="buttons">
-              <a href="https://discord.gg/PgZmsARDnW" class="button is-blurple">
+              <a href="https://discord.gg/u9zUjWbbQ4" class="button is-blurple">
                 <strong
                   ><i class="fa-solid fa-right-to-bracket mr-2"></i>
                   Support Server</strong
@@ -406,7 +406,7 @@ var options = { timeZone: '${timezone}' };
     <footer class="footer bg-base">
       <div class="content has-text-centered has-text-white">
         <div class="mb-2">
-          <a href="https://discord.gg/PgZmsARDnW" class="has-text-white" target="_blank">
+          <a href="https://discord.gg/u9zUjWbbQ4" class="has-text-white" target="_blank">
             <i class="fa-brands fa-discord"></i>
           </a>
           &nbsp; &nbsp;
