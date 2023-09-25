@@ -30,6 +30,7 @@ module.exports = async (client, interaction) => {
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
      return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true})
     }
+    
     // Check cooldowns
     if (command?.cooldown){
               const { cooldowns } = client; 

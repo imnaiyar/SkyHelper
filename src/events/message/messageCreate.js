@@ -50,12 +50,16 @@ if (
   const args = message.content.slice(settings.prefix?.length || process.env.BOT_PREFIX.length).trim().split(/ +/);
   const commandName = args.shift()
   const command = client.prefix.get(commandName);
-  if (!command) {
-    return message.reply('Unknown command. Use </help:1147244751708491898> to see available commands.');
-  }
+
   // Check if command is 'OWNER' only.
  if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
-
+ 
+ // Check if the bot has Send Message permission
+  if(!message.guild.members.me.permissionsIn(message.channel).has('SendMessages')) {
+      message.author.send(`Hi, It seems you tried to use my command in a channel/server where I don't have ${parsePerm('SendMessages')}. Please ask a Server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: ${message.guild.name}\n- Channel: ${message.channel}\n- Command Used: \` ${command.data.name} \``)
+      return;
+    }
+ 
  // Check if the user has permissions to use the command.
  if (command.data.userPermissions && !message.member.permissions.has(command.data.userPermissions)) {
   return message.reply(`You need ${parsePerm(command.data.userPermissions)} to use this command`)
