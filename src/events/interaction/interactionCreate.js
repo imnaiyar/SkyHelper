@@ -1,14 +1,10 @@
-const { WebhookClient, EmbedBuilder, Collection, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
-const fs = require('fs');
-const path = require('path');
+const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
 const {shardInfos} = require('@shards/aboutShards')
 const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
-const {guideButton} = require('@guides/GuideOption')
 const {parsePerm} = require('@handler/functions/parsePerm')
 const config = require('@root/config')
 const Log = require('@src/logger');
-const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const {ErrorForm} = require('@handler/functions/errorForm')
@@ -18,17 +14,6 @@ const { nextPrev } = require('@shards/sub/scrollFunc')
  * @param {import('discord.js').Interaction} interaction
  */
 
-
-client.commands = new Collection();
-
-
-const commandDirectory = path.join(__dirname, '../../commands/slash');
-const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-  const command = require(`../../commands/slash/${file}`);
-  client.commands.set(command.data.name, command);
-}
 
 module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()){
@@ -77,9 +62,7 @@ module.exports = async (client, interaction) => {
     await interaction.reply({ embeds: [embed], components: [actionRow], ephemeral: true });
   }}
    // Select Menus
-    if (interaction.isStringSelectMenu()) {
-    await guideButton(interaction)
-    }
+
   // Buttons
   if (interaction.isButton()) {
     const Art = await client.users.fetch('504605855539265537');

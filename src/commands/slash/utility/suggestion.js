@@ -1,7 +1,7 @@
 const { ApplicationCommandOptionType, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, WebhookClient } = require("discord.js");
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
 
-const desc = require('../cmdDesc')
+const desc = require('@commands/cmdDesc')
 
 module.exports = {
   data: {

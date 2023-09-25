@@ -1,5 +1,4 @@
 const {EmbedBuilder, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js')
-const { unixPage } = require('@root/website/mainPage')
 const config = require('@root/config')
 const moment = require("moment-timezone");
 function isTimezoneValid(timezone) {
@@ -159,6 +158,7 @@ for (const field of fieldsArray) {
 }
 
  const offset1 = `\nOffset - \` ${offsetString} \``;
+ const { unixPage } = require('@root/website/mainPage')
  await unixPage(interaction, fieldsData, unixTime, offsetString, timezone);
      const  row = new ActionRowBuilder()
        .addComponents( 

@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const moment = require('moment-timezone');
-const desc = require('../cmdDesc')
+const desc = require('@commands/cmdDesc')
 const shardType = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const shardLocation = ['<:Prairie:1150605405408473179> Daylight Prairie', '<:Forest:1150605383656800317> Hidden Forest', '<:Valley:1150605355777273908> Valley of Triumph', '<:Wasteland:1150605333862027314> Golden Wasteland', '<:Vault:1150605308364861580> Vault of Knowledge'];
 

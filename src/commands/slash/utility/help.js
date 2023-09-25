@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {helpMenu} = require('@handler/functions/help')
+const {helpMenu} = require('./sub/help')
 module.exports = {
     data: {
       name: 'help',

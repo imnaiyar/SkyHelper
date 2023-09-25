@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {skyTimes} = require('@handler/functions/skyTimes')
-const desc = require('../cmdDesc')
+const {skyTimes} = require('./sub/skyTimes')
+const desc = require('@commands/cmdDesc')
 module.exports = {
     data: {
       name: 'sky-times',

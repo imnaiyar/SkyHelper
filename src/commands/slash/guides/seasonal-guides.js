@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {Guides} = require('@guides/GuideOption')
-const desc = require('../cmdDesc')
+const {Guides} = require('./sub/GuideOption')
+const desc = require('@commands/cmdDesc')
 module.exports = {
     data: {
       name: 'seasonal-guides',

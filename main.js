@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, WebhookClient, EmbedBuilder} = require('discord.js');
+const { Client, GatewayIntentBits, WebhookClient, Collection, EmbedBuilder} = require('discord.js');
 
 const { DASHBOARD } = require("@root/config"); 
 const { initializeMongoose } = require("@src/database/mongoose");
@@ -24,9 +24,6 @@ process.on("uncaughtException", (erorr) => Logger.error(`Unhandled exception`, e
 process.on("unhandledRejection", (error) => Logger.error(`Unhandled exception`, error));
 
 client.on('ready', async () =>{
-  // Fetching Application info for eval purposes.
-  await client.application.fetch()
-  
   // Setting up events
     const loadEventHandlers = (dir) => { 
      const files = fs.readdirSync(path.join(__dirname, dir)); 
@@ -55,6 +52,29 @@ client.on('ready', async () =>{
   
   Logger.success(`Logged in as ${client.user.tag}`); 
   
+  // Setting of Commands
+  client.commands = new Collection()
+  const commandDirectory = path.join(__dirname, './src/commands/slash');
+  function findCommandFiles(directory) {
+  const files = fs.readdirSync(directory);
+
+  for (const file of files) {
+    const filePath = path.join(directory, file);
+    const fileStat = fs.statSync(filePath);
+
+    if (fileStat.isDirectory()) {
+      if (file !== 'sub') {
+        findCommandFiles(filePath);
+      }
+    } else if (file.endsWith('.js')) {
+      const command = require(filePath);
+      client.commands.set(command.data.name, command);
+    }
+  }
+}
+
+findCommandFiles(commandDirectory);
+
    // Load Website
   require('@root/website/mainPage')
   
@@ -92,9 +112,16 @@ client.on('ready', async () =>{
         embeds: [readyalertemb],
       });
     }
+    
+     // Fetching Application info for eval purposes.
+  await client.application.fetch()
+  
   
   })
-  initializeMongoose();
+// setup mongoose 
+initializeMongoose();
+
+//bots presence
 setupPresence(client);
 module.exports = {client}
 client.login(process.env.TOKEN);

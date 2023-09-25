@@ -1,4 +1,4 @@
-const { skyTimes } = require('@handler/functions/skyTimes');
+const { skyTimes } = require('@commands/slash/skytimes/sub/skyTimes');
 const desc = require('../cmdDesc')
 module.exports = {
   data: {

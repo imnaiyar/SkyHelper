@@ -16,17 +16,35 @@ const client = new Client({
       GatewayIntentBits.GuildMembers,
      ] });
 
-const commands = [];
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
 
 const commandDirectory = path.join(__dirname, './commands/slash');
-const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
+const commands = [];
 
-for (const file of commandFiles) {
-  const command = require(`./commands/slash/${file}`);
-  commands.push(command.data);
+// Function to recursively search for command files
+function findCommandFiles(directory) {
+  const files = fs.readdirSync(directory);
+
+  for (const file of files) {
+    const filePath = path.join(directory, file);
+    const fileStat = fs.statSync(filePath);
+
+    if (fileStat.isDirectory()) {
+      // If it's a directory and not named "sub," recursively search it
+      if (file !== 'sub') {
+        findCommandFiles(filePath);
+      }
+    } else if (file.endsWith('.js')) {
+      const command = require(filePath);
+      commands.push(command.data);
+    }
+  }
 }
+
+// Start the search from the "commandDirectory"
+findCommandFiles(commandDirectory);
+
 
 client.on('ready', async () => { 
   
