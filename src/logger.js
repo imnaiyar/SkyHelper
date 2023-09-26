@@ -1,4 +1,3 @@
-
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const pino = require("pino");
 
