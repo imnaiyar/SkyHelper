@@ -52,7 +52,7 @@ client.on('ready', async () =>{
   
   Logger.success(`Logged in as ${client.user.tag}`); 
   
-  // Setting of Commands
+  // Setting Up Slash Commands
   client.commands = new Collection()
   client.cooldowns = new Collection();
   const commandDirectory = path.join(__dirname, './src/commands/slash');
@@ -72,15 +72,26 @@ client.on('ready', async () =>{
       client.commands.set(command.data.name, command);
     }
   }
+  
 }
+  findCommandFiles(commandDirectory);
+  
+  // Setting up Prefix commands
+  client.prefix = new Collection();
 
-findCommandFiles(commandDirectory);
+const prefixDirectory = path.join(__dirname, './src/commands/prefix');
+const commandFiles = fs.readdirSync(prefixDirectory).filter(file => file.endsWith('.js'));
+
+  for (const file of commandFiles) {
+  const command = require(`@src/commands/prefix/${file}`);
+  client.prefix.set(command.data.name, command); 
+   }
 
    // Load Website
   require('@root/website/mainPage')
   
   // Send ready webhook log
-    const readyalertemb = new EmbedBuilder()
+  const readyalertemb = new EmbedBuilder()
       .addFields(
         {
           name: "Bot Status",
@@ -118,11 +129,11 @@ findCommandFiles(commandDirectory);
   await client.application.fetch()
   
   
-  })
+  });
 // setup mongoose 
 initializeMongoose();
 
 //bots presence
 setupPresence(client);
-module.exports = {client}
+module.exports = {client};
 client.login(process.env.TOKEN);

@@ -23,10 +23,10 @@ module.exports = {
     
     const regex = /^\d{4,6}-\d{2}-\d{2}$/;
 
-if (dateOption && !regex.test(dateOption)) {
-  interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
-  return; 
-}
+    if (dateOption && !regex.test(dateOption)) {
+      interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
+     return; 
+    }
     let currentDate;
     try {
         if (dateOption) {
@@ -46,7 +46,7 @@ if (dateOption && !regex.test(dateOption)) {
         await interaction.reply('An error occurred while processing the date.');
         return;
     }
-      await shardsAlt(interaction, currentDate);
+     await shardsAlt(interaction, currentDate);
     },
   };
   

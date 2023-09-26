@@ -67,13 +67,13 @@ async function convertTime(interaction) {
     .setFooter({ text: `for ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
   if (!format) {
     result.addFields(
-      {name: `Date (1) - ${date1}`, value: `\`\`\`${date1}\`\`\``},
-      { name: `Date (2) - ${date2}`, value: `\`\`\`${date2}\`\`\``},
-      { name: `Short Time - ${shortTime}`, value : `\`\`\`${shortTime}\`\`\``},
-      { name: `Long Time - ${longTime}`, value: `\`\`\`${longTime}\`\`\``},
-      { name: `Short Date and Time - ${shortDateAndTime}`, value: `\`\`\`${shortDateAndTime}\`\`\``},
-      { name: `Long Date and Time - ${longDateAndTime}`, value: `\`\`\`${longDateAndTime}\`\`\``},
-      { name: `Relative - ${minutes}`, value: `\`\`\`${minutes}\`\`\``}
+      {name: `Date (1) - ${date1}`, value: `\`\`\`${date1}\`\`\``, inline: true},
+      { name: `Date (2) - ${date2}`, value: `\`\`\`${date2}\`\`\``, inline: true},
+      { name: `Short Time - ${shortTime}`, value : `\`\`\`${shortTime}\`\`\``, inline: true},
+      { name: `Long Time - ${longTime}`, value: `\`\`\`${longTime}\`\`\``, inline: true},
+      { name: `Short Date and Time - ${shortDateAndTime}`, value: `\`\`\`${shortDateAndTime}\`\`\``, inline: true},
+      { name: `Long Date and Time - ${longDateAndTime}`, value: `\`\`\`${longDateAndTime}\`\`\``, inline: true},
+      { name: `Relative - ${minutes}`, value: `\`\`\`${minutes}\`\`\``, inline: true}
       );
 
   } else {
@@ -81,7 +81,7 @@ async function convertTime(interaction) {
       case "date1":
         result.addFields(
           {name: `Date (1) - ${date1}`, value: `\`\`\`${date1}\`\`\``}
-        ).
+        )
         break;
       case "date2":
         result.addFields(

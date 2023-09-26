@@ -75,7 +75,7 @@ if (currentEvent === 'A') {
           
        const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);  
        const endUnix3 = Math.floor(eventTiming.end.valueOf() / 1000);
-            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard has ended (at <t:${endUnix3}:t>), ${i + 2}${getOrdinalSuffix(i + 2)} shard has not fallen yet`;
+            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard ended <t:${endUnix3}:t>, ${i + 2}${getOrdinalSuffix(i + 2)} shard has not fallen yet`;
             const duration = moment.duration(eventTimings[i + 1].start.diff(present));
             timeRemaining = `Falls in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${startUnix2}:T>)`;
             break;

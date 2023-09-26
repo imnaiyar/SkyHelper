@@ -37,6 +37,7 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
     border-radius: 5px;
         }
     .cmdCollapse {
+    display: inline-block;
     margin: 5px;
     width: fit-content;
     border-radius: 5px;
@@ -44,7 +45,6 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
     color: rgba(255, 255, 255, 0.8);
     padding: 5px 7px;
     overflow: hidden;
-    transition: max-height 0.3s ease;
 }
 
     .cm {
@@ -355,10 +355,11 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
       <h3><b>Unix Timestamp for ${interaction.user.username}</b></h1>
       <div class="line line-center blurple"></div>
       <br>
-     <div class ="cmdCollapse">
-     Provided Time: <span id="formattedTimestamp"></span>
+     <span class ="cmdCollapse">
+     Provided Time: <span id="formattedTimestamp"></span><br>
      Offset: <span class="cm">${offset}</span>
-     </div>
+     </span>
+      <br>
       <br>
        ${fieldsData.map((field, index) => `
   <div>
