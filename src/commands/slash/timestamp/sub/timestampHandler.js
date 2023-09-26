@@ -121,37 +121,44 @@ let fieldsData = [];
 for (const field of fieldsArray) {
   if (field.name.startsWith('Date (1)')) {
     fieldsData.push({
-      name: 'Date 1 ( e.g, 24/09/2023)',
+      name: 'Date 1',
+      example: '24/09/2023',
       value: field.value,
     })
   } else if (field.name.startsWith('Date (2)')) {
     fieldsData.push({
-      name: 'Date 2 ( e.g, 24 September 2023)',
+      name: 'Date 2',
+      example: '24 September 2023',
       value: field.value,
     })
   } else if (field.name.startsWith('Short Time')) {
     fieldsData.push({
-      name: 'Short Time ( e.g, 13:10)',
+      name: 'Short Time',
+      example: '13:10',
       value: field.value,
     })
   } else if (field.name.startsWith('Long Time')) {
     fieldsData.push({
-      name: 'Long Time ( e.g, 13:10:40)',
+      name: 'Long Time',
+      example: '13:10:40',
       value: field.value,
     })
   } else if (field.name.startsWith('Short Date and Time')) {
     fieldsData.push({
-      name: 'Short Date and Time ( e.g, 24 September 2023 13:10)',
+      name: 'Short Date and Time',
+      example: '24 September 2023 13:10',
       value: field.value,
     })
   } else if (field.name.startsWith('Long Date and Time')) {
     fieldsData.push({
-      name: 'Long Date and Time ( e.g, Sunday, 24 September 2023 13:10)',
+      name: 'Long Date and Time',
+      example: 'Sunday, 24 September 2023 13:10',
       value: field.value,
     })
   } else if (field.name.startsWith('Relative')) {
     fieldsData.push({
-      name: 'Relative ( e.g, in 45 minutes)',
+      name: 'Relative',
+      example: 'in 45 minutes',
       value: field.value,
     })
   }

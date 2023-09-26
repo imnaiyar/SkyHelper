@@ -196,6 +196,29 @@ nav.nav-w {
   border-color: transparent;
   color: #fff;
 }
+.discUnix {
+  background-color: #e1e2e4;
+  color: rgba(66,67,71,255);
+}
+.copyBtn {
+border: 0;
+outline: 0;
+cursor: pointer;
+color: white;
+background-color: rgb(84, 105, 212);
+                    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+border-radius: 4px;
+font-size: 14px;
+font-weight: 500;
+padding: 1px 4px;
+display: inline-block;
+transition: background-color .24s,box-shadow .24s;}
+.copyBtn:hover {
+                        box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+                    background-color: black ;
+                    color: white;
+                    }
+
 
 .btn {
     color: #fff;

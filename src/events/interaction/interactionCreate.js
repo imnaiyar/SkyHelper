@@ -48,9 +48,9 @@ module.exports = async (client, interaction) => {
   
                  if (now < expirationTime) { 
                          const expiredTimestamp = Math.round(expirationTime / 1000); 
-                         return interaction.reply({ content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true }); 
+                         return interaction.reply({ content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true });
                  } 
-         } 
+              } 
   
          timestamps.set(interaction.user.id, now); 
          setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
@@ -69,7 +69,7 @@ module.exports = async (client, interaction) => {
     .setTimestamp();
 
   // Slash Commands
-  if (interaction.isChatInputCommand() && !interaction.user.id.includes(config.OWNER)) {
+ if (!interaction.user.id.includes(config.OWNER)) {
     cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
   }
   } catch (error) {
@@ -85,7 +85,8 @@ module.exports = async (client, interaction) => {
                 .setCustomId('error_report')
                 .setStyle(ButtonStyle.Secondary));
     await interaction.reply({ embeds: [embed], components: [actionRow], ephemeral: true });
-  }}
+   }
+  }
    // Select Menus
 
   // Buttons

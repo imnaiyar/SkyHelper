@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { shardsReply } = require('./sub/shardsReply');
-const shardsTime = require('./sub/eventTimings')
+const shardsTime = require('./sub/eventTimings.js')
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 

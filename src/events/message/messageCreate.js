@@ -4,7 +4,7 @@ const path = require('path');
 
 const {OWNER} = require('@root/config.js');
 const { getSettings} = require("@schemas/Guild.js");
-
+const { Log } = require('@src/logger')
 const {parsePerm} = require('@handler/functions/parsePerm');
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
@@ -40,7 +40,12 @@ if (
   const args = message.content.slice(settings.prefix?.length || process.env.BOT_PREFIX.length).trim().split(/ +/);
   const commandName = args.shift();
   const command = client.prefix.get(commandName);
-
+  
+  // Return if command is not found
+  if (!command) {
+    return;
+  }
+  
   // Check if command is 'OWNER' only.
  if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
  
@@ -59,7 +64,17 @@ if (
   try {
     await command.execute(message, args, client);
   } catch (error) {
-    console.error(error);
-    message.reply('An error occurred while executing the command.');
+    Log.error(error);
+    const embed = new EmbedBuilder()
+    .setTitle(`ERROR`)
+    .setDescription(`An error occurred while executing this command.`);
+    
+    const actionRow = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setLabel('Report Bug')
+                .setCustomId('error_report')
+                .setStyle(ButtonStyle.Secondary));
+    await message.reply({ embeds: [embed], components: [actionRow], ephemeral: true });
   }
 };

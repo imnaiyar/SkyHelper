@@ -363,9 +363,9 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
       <br>
        ${fieldsData.map((field, index) => `
   <div>
-    <h2>● ${field.name}</h2>
+    <h2>● ${field.name} (e.g, <span class ="discUnix">${field.example}</span>)</h2>
     <span class="cmd">${sanitizeField(field.value)}</span>
-    <button onclick="copyText(${index}, this)">Copy</button>
+    <button class="copyBtn" onclick="copyText(${index}, this)">Copy</button>
   </div>
   <br>
 `).join('')}
@@ -411,7 +411,7 @@ var options = { timeZone: '${timezone}' };
             <i class="fa-brands fa-discord"></i>
           </a>
           &nbsp; &nbsp;
-          <a href="https://github.com/imnaiyar/SkyBot.git" class="has-text-white" target="_blank">
+          <a href="https://github.com/imnaiyar/SkyHelper.git" class="has-text-white" target="_blank">
             <i class="fa-brands fa-github"></i>
           </a>
         </div>
