@@ -135,5 +135,7 @@ initializeMongoose();
 
 //bots presence
 setupPresence(client);
+
+// Exporting client should I need it somewhere
 module.exports = {client};
 client.login(process.env.TOKEN);
