@@ -1,6 +1,6 @@
 module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
   return {
-    Content: `<html>
+    Content: `<html data-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,6 +11,7 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
 <meta property="og:image" content="https://media.discordapp.net/attachments/867638574571323424/1154914225001607178/IMG_3581_cropped_2.png">
     <title>SkyHelper</title>
     <link rel="icon" href="assets/img/skybot.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="assets/css/bulma.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -92,6 +93,11 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
 
           <!-- or if you want to use image -->
         </a>
+                <button
+    type="button"
+    class= "material-symbols-outlined"
+    data-theme-toggle
+  >dark_mode</button>
 
         <a
           role="button"
@@ -150,7 +156,7 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
     <!-- Navbar End -->
     <section id="unix" class="section mt-6">
      <div class="has-text-centered">
-      <h3><b>Unix Timestamp for ${interaction.user.username}</b></h1>
+      <h2><b>Unix Timestamp for ${interaction.user.username}</b></h2>
       <div class="line line-center blurple"></div>
       <br>
      <span class ="cmdCollapse">

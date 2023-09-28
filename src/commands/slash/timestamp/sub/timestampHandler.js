@@ -163,7 +163,6 @@ for (const field of fieldsArray) {
     })
   }
 }
-
  const offset1 = `\nOffset - \` ${offsetString} \``;
  const { unixPage } = require('@root/website/mainPage')
  await unixPage(interaction, fieldsData, unixTime, offsetString, timezone);

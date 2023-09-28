@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,6 +30,7 @@
 <!-- Meta Tags Generated with https://metatags.io -->
     <title>SkyHelper</title>
     <link rel="icon" href="assets/img/skybot.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="assets/css/bulma.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -82,6 +83,11 @@
 
           <!-- or if you want to use image -->
         </a>
+        <button
+    type="button"
+    class= "material-symbols-outlined"
+    data-theme-toggle
+  >dark_mode</button>
 
         <a
           role="button"
@@ -196,15 +202,15 @@
 
       <!-- single feature start (Left) -->
       <div class="single-feature">
-        <div class="shape-right" data-aos="fade-up-left">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill="#9AAAE3"
-              d="M42.7,-62.9C50.9,-52.8,50.1,-34.4,51.7,-19.2C53.4,-4,57.4,8,56.6,20.8C55.8,33.7,50.1,47.4,39.9,53.8C29.6,60.1,14.8,59.1,0.4,58.5C-14,58,-28,57.9,-38,51.5C-48.1,45,-54.3,32.3,-61.3,18.1C-68.4,4,-76.4,-11.7,-71.9,-22.7C-67.4,-33.6,-50.4,-39.8,-36.3,-47.9C-22.2,-56.1,-11.1,-66.3,3.1,-70.5C17.2,-74.7,34.5,-72.9,42.7,-62.9Z"
-              transform="translate(100 100)"
-            />
-          </svg>
-        </div>
+                <div class="shape-right" data-aos="fade-up-left"> 
+           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"> 
+             <path 
+               fill="#9AAAE3" 
+               d="M42.7,-62.9C50.9,-52.8,50.1,-34.4,51.7,-19.2C53.4,-4,57.4,8,56.6,20.8C55.8,33.7,50.1,47.4,39.9,53.8C29.6,60.1,14.8,59.1,0.4,58.5C-14,58,-28,57.9,-38,51.5C-48.1,45,-54.3,32.3,-61.3,18.1C-68.4,4,-76.4,-11.7,-71.9,-22.7C-67.4,-33.6,-50.4,-39.8,-36.3,-47.9C-22.2,-56.1,-11.1,-66.3,3.1,-70.5C17.2,-74.7,34.5,-72.9,42.7,-62.9Z" 
+               transform="translate(100 100)" 
+             /> 
+           </svg> 
+         </div>
 
         <div class="columns mt-6">
           <div class="column mr-6">
@@ -213,13 +219,20 @@
               Provides Shattering Shard informations. It's type, location, when it falls and ends.
             </p>
           </div>
-          <div class="column" data-aos="fade-left">
-            <img
-              class="image has-image-centered"
-              src="assets/img/ShardsEx.jpg"
-              alt="feature1 img"
-              style="width: 20rem;"
-            />
+          <div data-aos="fade-left">
+<div class="container">
+  <div class="card card0">
+    <div class="border">
+      <h2>Shards</h2>
+      <div class="icons">
+        <span class="fa" aria-hidden="true">Type</span>
+        <span class="fa" aria-hidden="true">Location</span>
+        <span class="fa" aria-hidden="true">Status</span>
+        <span class="fa" aria-hidden="true">Countdown</span>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -227,24 +240,29 @@
 
       <!-- single feature start (Right) -->
       <div class="single-feature">
-        <div class="shape-left" data-aos="fade-up-right">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill="#9AAAE3"
-              d="M54.2,-67.2C69.4,-63.5,80.4,-46.6,84.6,-28.7C88.7,-10.8,86,8.1,76.8,21.4C67.6,34.7,51.9,42.3,38.1,50.3C24.2,58.3,12.1,66.7,-2.8,70.5C-17.7,74.3,-35.3,73.6,-45.6,64.5C-55.9,55.3,-58.8,37.7,-63.3,21.2C-67.7,4.7,-73.7,-10.6,-71.8,-25.4C-69.8,-40.2,-59.9,-54.5,-46.6,-58.9C-33.3,-63.2,-16.7,-57.6,1.4,-59.6C19.5,-61.5,39,-71,54.2,-67.2Z"
-              transform="translate(100 100)"
-            />
-          </svg>
-        </div>
-
+                <div class="shape-left" data-aos="fade-up-right"> 
+           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"> 
+             <path 
+               fill="#9AAAE3" 
+               d="M54.2,-67.2C69.4,-63.5,80.4,-46.6,84.6,-28.7C88.7,-10.8,86,8.1,76.8,21.4C67.6,34.7,51.9,42.3,38.1,50.3C24.2,58.3,12.1,66.7,-2.8,70.5C-17.7,74.3,-35.3,73.6,-45.6,64.5C-55.9,55.3,-58.8,37.7,-63.3,21.2C-67.7,4.7,-73.7,-10.6,-71.8,-25.4C-69.8,-40.2,-59.9,-54.5,-46.6,-58.9C-33.3,-63.2,-16.7,-57.6,1.4,-59.6C19.5,-61.5,39,-71,54.2,-67.2Z" 
+               transform="translate(100 100)" 
+             /> 
+           </svg> 
+         </div>
         <div class="columns mt-6">
           <div class="column" data-aos="fade-right">
-            <img
-              class="image has-image-centered"
-              src="assets/img/QuestEx.jpg"
-              alt="feature1 img"
-              style="width: 20rem;"
-            />
+            <div class="container">
+  <div class="card card1">
+    <div class="border">
+      <h2><b>Seasonal Guides</b></h2>
+      <div class="icons">
+        <span class="fa" aria-hidden="true">Seasonal Quests</span>
+        <span class="fa" aria-hidden="true">Spirits Location</span>
+        <span class="fa" aria-hidden="true">Friendship Tree</span>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
           <div class="column">
             <h4 class="title">
@@ -280,12 +298,19 @@
             </p>
           </div>
           <div class="column" data-aos="fade-left">
-            <img
-              class="image has-image-centered"
-              src="assets/img/TurtleEx.jpg"
-              alt="turtle"
-              style="width: 20rem;"
-            />
+            <div class="container">
+  <div class="card card3">
+    <div class="border">
+      <h2><b>Sky-Times</b></h2>
+      <div class="icons">
+        <span class="fa" aria-hidden="true">Geyser</span>
+        <span class="fa" aria-hidden="true">Grandma</span>
+        <span class="fa" aria-hidden="true">Turtle</span>
+        <span class="fa" aria-hidden="true">Eden Reset</span>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -305,12 +330,17 @@
 
         <div class="columns mt-6">
           <div class="column" data-aos="fade-right">
-            <img
-              class="image has-image-centered"
-              src="assets/img/TimeEx.jpg"
-              alt="feature1 img"
-              style="width: 20rem;"
-            />
+            <div class="container">
+  <div class="card card4">
+    <div class="border">
+      <h2><b>Timestamps</b></h2>
+      <div class="icons">
+        <span class="fa" aria-hidden="true">UNIX</span>
+        <span class="fa" aria-hidden="true">Easy Copy</span>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
           <div class="column">
             <h4 class="title">Timestamp<span class="has-text-info">/timestamp</span></h4>
