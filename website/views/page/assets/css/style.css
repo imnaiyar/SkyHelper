@@ -60,12 +60,14 @@ html {
    --color-bg: #ffffff!important;
    --color-fg: #4a4a4a!important;
    --color-tl: #363636!important;
+   --color-sh: #000!important
 }
 
 [data-theme="dark"] {
    --color-bg: #0f121a!important;
    --color-fg: #e1ebe4!important;
-   --color-tl: #bed4c4!important
+   --color-tl: #bed4c4!important;
+   --color-sh: #bed4c4
 }
 
 body {
@@ -106,22 +108,23 @@ body {
   transition: background 0.8s;
   overflow: hidden;
   background: #000;
-  box-shadow: 0 70px 63px -60px #000;
+  box-shadow: 0 0 10px 0 var(--color-sh);
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 .card0 {
-  background: url("https://media.discordapp.net/attachments/1154255451077226527/1156772286511190076/20230928_075948_0000.png?ex=65162fa4&is=6514de24&hm=c167b9cd348b95565f0f40c0c12635f0e12d25d3621806109a162fb6e10b4d32&") center center no-repeat;
+  background: url("https://media.discordapp.net/attachments/867638574571323424/1157073911721230426/20230929_035722_0000.png?ex=6517488d&is=6515f70d&hm=a3ae9dab6f51d7116d318cf3c891c3a5a078297b913e949f3409ff657a90bd62&") center center no-repeat;
   background-size: 300px;
 }
 .card0:hover {
-  background: url("https://media.discordapp.net/attachments/1154255451077226527/1156773340120371211/Picsart_23-09-28_08-04-03-650.png?ex=651630a0&is=6514df20&hm=9f712473ce5eaf55a0ba699871d5a4b9f10feb140f52fdda9989a10dcd3e82f8&") left center no-repeat;
+  background: url("https://media.discordapp.net/attachments/867638574571323424/1157073911964520580/Picsart_23-09-29_03-57-46-668.png?ex=6517488e&is=6515f70e&hm=61cf920e71980cf345a04be919bb2fd0bd9fe842e2035350243e1da1392f2e52&") left center no-repeat;
   background-size: 600px;
 }
 .card0:hover h3 {
   opacity: 1;
+  color: #7289da;
 }
 .card0:hover .fa {
   opacity: 1;
@@ -137,6 +140,7 @@ body {
 }
 .card1:hover h3 {
   opacity: 1;
+  color: #00d1b2;
 }
 .card1:hover .fa {
   opacity: 1;
@@ -167,6 +171,7 @@ body {
 }
 .card3:hover h3 {
   opacity: 1;
+  color: #ffe08a;
 }
 .card3:hover .fa {
   opacity: 1;
@@ -182,6 +187,7 @@ body {
 }
 .card4:hover h3 {
   opacity: 1;
+  color: #3e8ed0;
 }
 .card4:hover .fa {
   opacity: 1;
@@ -202,13 +208,14 @@ h3 {
   position: absolute;
   fill: #fff;
   color: #fff;
-  height: 130px;
+  height: 110px;
   top: 226px;
-  width: 50px;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
+
 
 
 button {
@@ -220,7 +227,7 @@ button {
   cursor: pointer;
   color: #fff;
   background-color: #1a2634;
-  border: 0.25rem solid var(--color-bg);
+  border: 0.25rem solid #1a2634;
 }
 .material-symbols-outlined {
   font-variation-settings:

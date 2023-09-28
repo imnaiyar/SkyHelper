@@ -31,18 +31,27 @@ $(document).ready(function() {
       $(".navbar-menu").toggleClass("is-active");
   });
 });
-
 // navbar on scroll
 $(function () {
   $(window).on("scroll", function () {
     if ($(window).scrollTop() > 700 && $("html").attr("data-theme") === "light") {
       $("nav").addClass("nav-w");
       $(".navbar-menu").addClass("nav-w");
+      $("button[type='button']").css({
+        "color": "#000",
+        "background-color": "#fff",
+        "border": "0.25rem solid #fff"
+      });
       $(".navbar-item").addClass("nav-dark");
       $(".navbar-link").addClass("nav-dark");
       $(".navbar-burger").removeClass("has-text-white");
       $(".navbar-burger").addClass("has-text-dark");
     } else {
+      $("button[type='button']").css({
+        "color": "#fff",
+        "background-color": "#1a2634",
+        "border": "0.25rem solid #1a2634"
+      });
       $("nav").removeClass("nav-w");
       $(".navbar-menu").removeClass("nav-w");
       $(".navbar-item").removeClass("nav-dark");
