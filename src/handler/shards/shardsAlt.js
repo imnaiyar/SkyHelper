@@ -1,52 +1,18 @@
 const moment = require('moment');
 const { shardsReply } = require('./sub/shardsReply');
-const shardsTime = require('./sub/eventTimings')
+const shardsTime = require('./sub/eventTimings.js')
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 
-async function shardsAlt(interaction) {
-    const timezone = 'America/Los_Angeles';
-    const dateOption = interaction.options.getString('date');
-    
-    const regex = /^\d{4,6}-\d{2}-\d{2}$/;
-
-if (dateOption && !regex.test(dateOption)) {
-  interaction.reply({ content: 'Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**', ephemeral: true});
-  return; 
-}
-
-    let currentDate;
-    let dayOfMonth;
-    let dayOfWeek;
-    let formatDate;
-
-    try {
-        if (dateOption) {
-            // Attempt to parse the provided date
-            currentDate = moment.tz(dateOption, 'Y-MM-DD', timezone).startOf('day');
-
-            // If the provided date is not valid, currentDate will be Invalid Date
-            if (!currentDate.isValid()) {
-                await interaction.reply({content: `${dateOption} does not exist, please provide a valid date.`, ephemeral: true});
-                return;
-            }
-        } else {
-            // If no date is provided, use the current date
-            currentDate = moment().tz(timezone);
-        }
-
-        dayOfMonth = currentDate.date();
-        dayOfWeek = currentDate.day();
-        formatDate = currentDate.format('DD MMMM YYYY');
-    } catch (error) {
-        await interaction.reply('An error occurred while processing the date.');
-        return;
-    }
-    
+async function shardsAlt(interaction, currentDate) {
+  const timezone = 'America/Los_Angeles';
+  const dayOfMonth = currentDate.date();
+  const dayOfWeek = currentDate.day();
+  const formatDate = currentDate.format('DD MMMM YYYY');
     const today = moment().tz(timezone).startOf('day');
     const noShard = currentDate.isSame(today, 'day')
   ? 'today'
-  : `on ${formatDate}`;
+  : `${formatDate}`;
 
     // Calculate the index in the event sequences
     const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
@@ -58,11 +24,12 @@ if (dateOption && !regex.test(dateOption)) {
     const remainder10 = number % 10;
     const remainder100 = number % 100;
 
-    return suffixes[(remainder10 === 1 && remainder100 !== 11) ? 1 :
+// Suffix for shards index
+return suffixes[(remainder10 === 1 && remainder100 !== 11) ? 1 :
            (remainder10 === 2 && remainder100 !== 12) ? 2 :
            (remainder10 === 3 && remainder100 !== 13) ? 3 : 0];
 }
-    // Define the event timings
+// Extracting the shards timings
 const timings = shardsTime(currentDate)
     let eventTimings;
 if (currentEvent === 'A') {
@@ -79,7 +46,8 @@ if (currentEvent === 'A') {
   else if (currentEvent === 'b') {
     eventTimings = timings.b;
   }
-
+  
+  // Defining durations of shards timings
     let eventStatus = '';
     let timeRemaining = '';
     let lastEventEndTime = eventTimings[eventTimings.length - 1].end;
@@ -90,30 +58,30 @@ if (currentEvent === 'A') {
 
         if (present.isBetween(eventTiming.start, eventTiming.end)) {
              const endUnix = Math.floor(eventTiming.end.valueOf() / 1000);
-           eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard has landed `;
+           eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} Shard is active right now`;
             const duration = moment.duration(eventTiming.end.diff(present));
-            timeRemaining = `and will end in ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds (at <t:${endUnix}:t>)`;
+            timeRemaining = `Ends in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${endUnix}:t>)`;
             break;
         } else if (present.isBefore(eventTiming.start)) {
           const startUnix = Math.floor(eventTiming.start.valueOf() / 1000);
-            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard will land`;
+            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} Shard has not fallen yet`;
             const duration = moment.duration(eventTiming.start.diff(present));
               const hoursRemaining = Math.floor(duration.asHours());
               const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
               const secondsRemaining = Math.floor(duration.asSeconds()) % 60;
-            timeRemaining = `in ${hoursRemaining} hours, ${minutesRemaining} minutes, ${secondsRemaining} seconds (at <t:${startUnix}:T>)`;
+            timeRemaining = `Falls in ${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s (at <t:${startUnix}:T>)`;
             break;
         } else if (i < eventTimings.length - 1 && present.isAfter(eventTiming.end) && present.isBefore(eventTimings[i + 1].start)) {
           
        const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);  
        const endUnix3 = Math.floor(eventTiming.end.valueOf() / 1000);
-            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard has ended (at <t:${endUnix3}:t>), ${i + 2}${getOrdinalSuffix(i + 2)} shard will land `;
+            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard ended <t:${endUnix3}:t>, ${i + 2}${getOrdinalSuffix(i + 2)} shard has not fallen yet`;
             const duration = moment.duration(eventTimings[i + 1].start.diff(present));
-            timeRemaining = ` in ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds at <t:${startUnix2}:T>`;
+            timeRemaining = `Falls in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${startUnix2}:T>)`;
             break;
         } else if (i === eventTimings.length - 1 && present.isAfter(eventTiming.end)) {
         const unixEnd2 = Math.floor(lastEventEndTime.valueOf() / 1000);
-        eventStatus = `All Shards Ended at <t:${unixEnd2}:t> ${noShard}`;
+        eventStatus = `All Shards ended for ${noShard}`;
         timeRemaining = '';
         
 
@@ -121,7 +89,7 @@ if (currentEvent === 'A') {
               const hoursRemaining = Math.floor(duration.asHours());
               const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
               const secondsRemaining = Math.floor(duration.asSeconds()) % 60;
-            timeRemaining = `${hoursRemaining} hours, ${minutesRemaining} minutes, ${secondsRemaining} seconds ago.`;
+            timeRemaining = `${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s ago (at <t:${unixEnd2}:t>)`;
         break;
     }
     }

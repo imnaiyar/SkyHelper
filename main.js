@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, WebhookClient, EmbedBuilder} = require('discord.js');
+const { Client, GatewayIntentBits, WebhookClient, Collection, EmbedBuilder} = require('discord.js');
 
 const { DASHBOARD } = require("@root/config"); 
 const { initializeMongoose } = require("@src/database/mongoose");
@@ -27,33 +27,71 @@ client.on('ready', async () =>{
   // Setting up events
     const loadEventHandlers = (dir) => { 
      const files = fs.readdirSync(path.join(__dirname, dir)); 
-     let eventCounter = 0; // Initialize a counter variable 
+     let eventCounter = 0;
   
      for (const file of files) { 
        const filePath = path.join(dir, file); 
        const fileStat = fs.statSync(filePath); 
   
        if (fileStat.isDirectory()) { 
-         // Recursively load event handlers in nested folders 
+
          eventCounter += loadEventHandlers(filePath); 
        } else if (file.endsWith('.js')) { 
          const eventHandler = require(path.join(__dirname, filePath)); 
          const eventName = file.split('.')[0]; 
          client.on(eventName, (...args) => eventHandler(client, ...args)); 
-         eventCounter++; // Increment the counter for each loaded event 
+         eventCounter++; 
        } 
      } 
   
-     return eventCounter; // Return the total count of events in this folder and its subfolders 
+     return eventCounter; 
    }; 
   
    const totalEventsLoaded = loadEventHandlers('./src/events'); 
    Logger.log(`Loaded ${totalEventsLoaded} events.`);
   
   Logger.success(`Logged in as ${client.user.tag}`); 
-   
+  
+  // Setting Up Slash Commands
+  client.commands = new Collection()
+  client.cooldowns = new Collection();
+  const commandDirectory = path.join(__dirname, './src/commands/slash');
+  function findCommandFiles(directory) {
+  const files = fs.readdirSync(directory);
+
+  for (const file of files) {
+    const filePath = path.join(directory, file);
+    const fileStat = fs.statSync(filePath);
+
+    if (fileStat.isDirectory()) {
+      if (file !== 'sub') {
+        findCommandFiles(filePath);
+      }
+    } else if (file.endsWith('.js')) {
+      const command = require(filePath);
+      client.commands.set(command.data.name, command);
+    }
+  }
+  
+}
+  findCommandFiles(commandDirectory);
+  
+  // Setting up Prefix commands
+  client.prefix = new Collection();
+
+const prefixDirectory = path.join(__dirname, './src/commands/prefix');
+const commandFiles = fs.readdirSync(prefixDirectory).filter(file => file.endsWith('.js'));
+
+  for (const file of commandFiles) {
+  const command = require(`@src/commands/prefix/${file}`);
+  client.prefix.set(command.data.name, command); 
+   }
+
+   // Load Website
   require('@root/website/mainPage')
-    const readyalertemb = new EmbedBuilder()
+  
+  // Send ready webhook log
+  const readyalertemb = new EmbedBuilder()
       .addFields(
         {
           name: "Bot Status",
@@ -61,8 +99,8 @@ client.on('ready', async () =>{
           inline: false,
         },
         {
-          name: "Dashboard",
-          value: `Dashboard started on port ${DASHBOARD.port}`,
+          name: "Website",
+          value: `Website started on port ${DASHBOARD.port}`,
           inline: false,
         },
         {
@@ -86,9 +124,18 @@ client.on('ready', async () =>{
         embeds: [readyalertemb],
       });
     }
+    
+     // Fetching Application info for eval purposes.
+  await client.application.fetch()
   
-  })
-  initializeMongoose();
+  
+  });
+// setup mongoose 
+initializeMongoose();
+
+//bots presence
 setupPresence(client);
-module.exports = {client}
+
+// Exporting client should I need it somewhere
+module.exports = {client};
 client.login(process.env.TOKEN);

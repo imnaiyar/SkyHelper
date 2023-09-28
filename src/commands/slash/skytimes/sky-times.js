@@ -1,23 +1,12 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {skyTimes} = require('@handler/functions/skyTimes')
+const {skyTimes} = require('./sub/skyTimes')
+const desc = require('@commands/cmdDesc')
 module.exports = {
+    cooldown: 5,
     data: {
       name: 'sky-times',
       description: 'Get various times related to the world of Sky',
-      longDesc: `Provides times for various in-game events and resets in Sky: Children of the Light.
-
-\`Usage:\`
-/sky-times [times]
-
-- [times]: (Optional) Specify a specific time to receive more detailed information about that event or reset (e.g., "geyser," "grandma," "turtle," "reset," "eden-reset").
-
-This command offers a quick overview of the following times:
-- Geyser time
-- Grandma time
-- Turtle time
-- Reset time
-- Eden reset time
-`,
+      longDesc: desc.skytimes,
       options: [
         {
           name: 'times',
@@ -63,7 +52,7 @@ This command offers a quick overview of the following times:
         break;
   
       default:
-        await interaction.reply(`- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`);
+        await interaction.reply(`In-game events time:\n- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`);
         break;
     }
 

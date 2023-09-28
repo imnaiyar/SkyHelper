@@ -1,6 +1,5 @@
-config.json
+config.js
 node_modules
 .env
 logs/
-embedData.json
 messageData.json 

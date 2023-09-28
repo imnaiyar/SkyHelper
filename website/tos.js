@@ -8,7 +8,7 @@ tos.get('/tos', (req, res) => {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>SkyBot Privacy Policy</title>
+      <title>SkyHelper Privacy Policy</title>
       <link rel="icon" href="/page/skybot.png" type="image/x-icon">
     </head>
     <body>
@@ -22,7 +22,7 @@ tos.get('/tos', (req, res) => {
 <p>For the purposes of these Terms and Conditions:</p>
 <ul>
 <li>
-<p><strong>Application</strong> means the software program provided by the Company downloaded by You on any electronic device, named SkyBot</p>
+<p><strong>Application</strong> means the software program provided by the Company downloaded by You on any electronic device, named SkyHelper</p>
 </li>
 <li>
 <p><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</p>
@@ -31,7 +31,7 @@ tos.get('/tos', (req, res) => {
 <p><strong>Country</strong> refers to: Country where the Bot is based on.</p>
 </li>
 <li>
-<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to SkyBot.</p>
+<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to SkyHelper.</p>
 </li>
 <li>
 <p><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</p>

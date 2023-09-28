@@ -1,19 +1,14 @@
 const {PermissionsBitField} = require('discord.js')
 const { getSettings } = require("@schemas/Guild");
 
+const desc = require('../cmdDesc')
+
 module.exports = {
   data: {
   name: 'skygpt', 
   description: 'configurations for Sky AI support.',
   userPermissions: 'ManageGuild',
-  longDesc: `SkyGPT, built upon OpenAI's ChatGPT, is designed to assist with questions related to the game 'Sky: Children of the Light.' It embodies a playful and witty personality, drawing from training on Sky's data. Please note that ChatGPT's knowledge is current up to 2021, and it may occasionally provide incorrect information. For accuracy, consider verifying with other players. This feature is primarily for entertainment.
-  
-\`Usage:\`
-- skygpt set #channel: Set up the bot to respond to messages in the specified channel.
-- skygpt stop: Stop the bot's responses in all channels it's been configured for in a server.
- - Requires user to have \` Manage Server \` permission to configure this command.
-
-The bot will respond to all messages in the designated channel as configured during setup. To make the bot ignore a message, simply prepend it with a '?'.`,
+  longDesc: desc.skyGPT,
   },
   async execute(message, args) {
      const settings = await getSettings(message.guild);

@@ -1,32 +1,19 @@
-const { WebhookClient, EmbedBuilder, Collection, ActionRowBuilder, ButtonStyle, ButtonBuilder } = require("discord.js");
-const fs = require('fs');
-const path = require('path');
+const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, Collection } = require("discord.js");
 const {shardInfos} = require('@shards/aboutShards')
 const {shardLocation} = require('@shards/shardsLocation')
 const {shardTimeline} = require('@shards/shardsTimeline')
-const {guideButton} = require('@guides/GuideOption')
 const {parsePerm} = require('@handler/functions/parsePerm')
+const config = require('@root/config')
 const Log = require('@src/logger');
-const {client}= require('@root/main')
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const {ErrorForm} = require('@handler/functions/errorForm')
+const { nextPrev } = require('@shards/sub/scrollFunc')
 
 /**
  * @param {import('discord.js').Interaction} interaction
  */
 
-
-client.commands = new Collection();
-
-
-const commandDirectory = path.join(__dirname, '../../commands/slash');
-const commandFiles = fs.readdirSync(commandDirectory).filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-  const command = require(`../../commands/slash/${file}`);
-  client.commands.set(command.data.name, command);
-}
 
 module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()){
@@ -43,6 +30,31 @@ module.exports = async (client, interaction) => {
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
      return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true})
     }
+    
+    // Check cooldowns
+    if (command?.cooldown){
+              const { cooldowns } = client; 
+  
+         if (!cooldowns.has(command.data.name)) { 
+                 cooldowns.set(command.data.name, new Collection()); 
+         } 
+  
+         const now = Date.now(); 
+         const timestamps = cooldowns.get(command.data.name); 
+         const cooldownAmount = command.cooldown * 1000; 
+  
+         if (timestamps.has(interaction.user.id)) { 
+                 const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount; 
+  
+                 if (now < expirationTime) { 
+                         const expiredTimestamp = Math.round(expirationTime / 1000); 
+                         return interaction.reply({ content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true });
+                 } 
+              } 
+  
+         timestamps.set(interaction.user.id, now); 
+         setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+    }
   try {
     await command.execute(interaction, client);
     const embed = new EmbedBuilder()
@@ -57,7 +69,7 @@ module.exports = async (client, interaction) => {
     .setTimestamp();
 
   // Slash Commands
-  if (interaction.isChatInputCommand()) {
+ if (!interaction.user.id.includes(config.OWNER)) {
     cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
   }
   } catch (error) {
@@ -73,11 +85,10 @@ module.exports = async (client, interaction) => {
                 .setCustomId('error_report')
                 .setStyle(ButtonStyle.Secondary));
     await interaction.reply({ embeds: [embed], components: [actionRow], ephemeral: true });
-  }}
+   }
+  }
    // Select Menus
-    if (interaction.isStringSelectMenu()) {
-    await guideButton(interaction)
-    }
+
   // Buttons
   if (interaction.isButton()) {
     const Art = await client.users.fetch('504605855539265537');
@@ -89,6 +100,10 @@ module.exports = async (client, interaction) => {
     
   if (interaction.customId === 'error_report') {
     await ErrorForm(interaction)
+  }
+    if (interaction.customId === 'next' || interaction.customId === 'prev') {
+    const value = interaction.customId
+    await nextPrev(interaction, value)
   }
 if (interaction.customId === 'shard_timeline' || 'shard_left' || 'shard_right' || 'shard_original') {
   shardTimeline(interaction, Zhii, Christian);

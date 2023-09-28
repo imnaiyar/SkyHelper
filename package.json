@@ -30,9 +30,11 @@
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.5.0",
     "node-cron": "^3.0.2",
+    "node-fetch": "^2.6.7",
     "openai": "^3.3.0",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
+    "sourcebin_js": "^0.0.3-ignore",
     "tippy.js": "^6.3.7",
     "topgg-autoposter": "^2.0.1",
     "url": "^0.11.1"

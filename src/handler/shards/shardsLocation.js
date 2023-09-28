@@ -3,14 +3,11 @@ const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const moment = require('moment-timezone');
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
-
+const { nextPrev } = require('./sub/scrollFunc')
 const shardData = require('./sub/LocationData')
 
 const MAX_SHARD_INDEX = 1; // Two results for each event, so the max shard index is 1
 let currentShardIndex = 0;
-let originalEmbedData = null;
-let originalActionRow = null;
-
 const timezone = 'America/Los_Angeles';
 
 async function shardLocation(interaction, Gale, Clement) {
@@ -25,9 +22,6 @@ async function shardLocation(interaction, Gale, Clement) {
     const currentSecondEvent = secondEventSequence[secondSequenceIndex];
   if (interaction.customId === 'shard_location') { 
         currentShardIndex = 0;
-        originalEmbedData = interaction.message.embeds[0];
-        originalActionRow = interaction.message.components?.[0];
-        await saveOriginalData(messageId, originalEmbedData, originalActionRow);
         await showShard(interaction, shardData[currentSecondEvent][currentEvent][currentShardIndex], Gale, Clement);
   } else if (interaction.customId === 'shard_leftL') {
         currentShardIndex = Math.max(currentShardIndex - 1, 0);
@@ -36,11 +30,7 @@ async function shardLocation(interaction, Gale, Clement) {
         currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
         await showShard(interaction, shardData[currentSecondEvent][currentEvent][currentShardIndex], Gale, Clement);
     } else if (interaction.customId === 'shard_originalL') {
-      const restoredData = restoreOriginalData(interaction.message.id);
-      if (restoredData) {
-          await interaction.update({ embeds: [restoredData.originalEmbedData], components: [restoredData.originalActionRow] });
-      
-    }
+      await nextPrev(interaction)
 }
 }
 
@@ -129,39 +119,6 @@ async function showShard(interaction, shard, Gale, Clement) {
     await interaction.update({ embeds: [shardEmbed], components: [actionRow] });
 }
 
-function saveOriginalData(messageId, originalEmbedData, originalActionRow) {
-  try {
-      const filePath = 'embedData.json';
-      const data = fs.readFileSync(filePath, 'utf8');
-      const embedData = JSON.parse(data);
-
-      if (!embedData[messageId]) {
-          embedData[messageId] = {
-              originalEmbedData,
-              originalActionRow
-          };
-
-          fs.writeFileSync(filePath, JSON.stringify(embedData, null, 2), 'utf8');
-      }
-  } catch (error) {
-      console.error('Error saving original data:', error);
-  }
-}
-function restoreOriginalData(messageId) {
-  try {
-      const filePath = 'embedData.json';
-      const data = fs.readFileSync(filePath, 'utf8');
-      const embedData = JSON.parse(data);
-
-      if (embedData[messageId]) {
-          return embedData[messageId];
-      }
-  } catch (error) {
-      console.error('Error restoring original data:', error);
-  }
-  
-  return null;
-}
 module.exports = {
-    shardLocation, saveOriginalData, restoreOriginalData, getCurrentDate
+    shardLocation, getCurrentDate
 };

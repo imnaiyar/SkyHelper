@@ -6,6 +6,21 @@ AOS.init({
   duration: 700,
   once: true
 });
+// Bot's name animation
+const spans = document.querySelectorAll(".word span"); 
+  
+     spans.forEach((span, idx) => { 
+       span.addEventListener("click", (e) => { 
+         e.target.classList.add("active"); 
+       }); 
+       span.addEventListener("animationend", (e) => { 
+         e.target.classList.remove("active"); 
+       }); 
+  
+       setTimeout(() => { 
+         span.classList.add("active"); 
+       }, 750 * (idx + 1)); 
+     }); 
 
 // navbar burger
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,3 +84,19 @@ btn.on("click", function (e) {
 
 // copyright year
 document.getElementById("cp-year").innerHTML = new Date().getFullYear()
+
+// footer handling
+window.addEventListener('load', adjustFooterPosition);
+window.addEventListener('resize', adjustFooterPosition);
+
+function adjustFooterPosition() {
+  const bodyHeight = document.body.offsetHeight;
+  const windowHeight = window.innerHeight;
+  const footer = document.querySelector('.footer');
+
+  if (bodyHeight < windowHeight) {
+    footer.style.position = 'fixed';
+    footer.style.bottom = 0;
+    footer.style.width = "100vw";
+  }
+}

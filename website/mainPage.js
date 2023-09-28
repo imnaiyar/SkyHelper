@@ -5,10 +5,16 @@ const path = require('path');
 const { client } = require('@root/main')
 const Logger = require('@src/logger')
 const app = express();
+const timeHtml = require('./timestampHtml')
 const PORT = DASHBOARD.port;
+async function unixPage(interaction, fieldsData, unixTime, offset, timezone) {
+  const html = await timeHtml(interaction, fieldsData, unixTime, offset, timezone)
+app.get(`/${interaction.id}`, (req, res) => {
 
-
-
+  res.send(html.Content);
+});
+}
+module.exports = { unixPage }
 app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine', 'ejs');
