@@ -75,10 +75,10 @@ const hmBtn = new ActionRowBuilder()
          .setStyle(4)
          )
 
-  const reply = await interaction.reply({ embeds: [embed], components: [row] });
+  const reply = await interaction.reply({ embeds: [embed], components: [row], fetchReply: true });
 
 
-  const filter = (i) => i.customId === 'commands-help' || i.customId === 'homeBtn';
+  const filter = (i) => i.message.id === reply.id;
   const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 60 * 1000 });
 
   collector.on('collect', async (selectInteraction) => {
