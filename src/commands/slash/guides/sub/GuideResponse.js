@@ -896,8 +896,8 @@ module.exports = {
       files: ['https://media.discordapp.net/attachments/867638574571323424/1153494931629948968/Boogie_Kid_Tree.png']
     },
     'confetti_cousin_tree': {
-      content: "This was **_Confetti Cousin's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- January 21, 2021 (#27)\n- July 9, 2020 (#13)\n\n```Confetti Cousin Friendship Tree by Jed```\n***prices are subject to change in future visits.**",
-      files: ['https://media.discordapp.net/attachments/867638574571323424/1153494932154224751/Confetti_Cousin_Tree.png']
+      content: "**Confetti Cousin's** Friendship Tree is currently available from <t:1695884400:F> to <t:1696229999:F> from the Traveling Spirit at Home. Once this visit is over, these collectibles will not be available again until the Spirit's next visit, which will take many months.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- September 28, 2023 (#97)\n- January 21, 2021 (#27)\n- July 9, 2020 (#13)\n\n```Confetti Cousin Friendship Tree by JaydenLake```\n***prices are subject to change in future visits.**",
+      files: ['https://media.discordapp.net/attachments/867638574571323424/1157237239651246090/Traveling_Spirit_097_Confetti_Cousin.png?ex=6517e0aa&is=65168f2a&hm=17fabe0305efbd96f86eec02356ffacecdecda9dc92dee02316f766c23f1a1b6&']
     },
     'hairtousle_teen_tree': {
       content: "This was **_Hairtousle Teen's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- June 9, 2022 (#63)\n- June 11, 2020 (#11)\n\n```Hairtousle Teen Friendship Tree by Clement```\n***prices are subject to change in future visits.**",

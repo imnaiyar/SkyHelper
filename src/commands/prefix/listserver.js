@@ -94,10 +94,10 @@ const {
 
      // Send Message 
      const embed = await buildEmbed(); 
-     const sentMsg = await channel.send({ embeds: [embed], components: [buttonsRow] }); 
+     const sentMsg = await channel.send({ embeds: [embed], components: [buttonsRow], fetchReply: true }); 
 
      // Listeners 
-     const collector = channel.createMessageComponentCollector({ 
+     const collector = sentMsg.createMessageComponentCollector({ 
        filter: (response) => response.user.id === member.id && response.message.id === sentMsg.id, 
        idle: 2 * IDLE_TIMEOUT * 1000, 
        dispose: true, 

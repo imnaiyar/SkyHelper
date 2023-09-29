@@ -60,16 +60,21 @@ html {
    --color-bg: #ffffff!important;
    --color-fg: #4a4a4a!important;
    --color-tl: #363636!important;
-   --color-sh: #000!important
+   --color-sh: #000!important;
+   --color-un: #e1e2e4!important;
 }
 
 [data-theme="dark"] {
    --color-bg: #0f121a!important;
    --color-fg: #e1ebe4!important;
    --color-tl: #bed4c4!important;
-   --color-sh: #bed4c4
+   --color-sh: #bed4c4;
+   --color-un: #3a3d44;!important
 }
-
+.discUnix {
+  background-color: var(--color-un);
+  color: var(--color-fg);
+}
 body {
   background-color: var(--color-bg);
   color: var(--color-fg);
@@ -391,10 +396,6 @@ nav.nav-w {
   background-color: #7289da;
   border-color: transparent;
   color: #fff;
-}
-.discUnix {
-  background-color: #e1e2e4;
-  color: rgba(66,67,71,255);
 }
 .copyBtn {
 border: 0;

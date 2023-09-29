@@ -79,7 +79,7 @@ const hmBtn = new ActionRowBuilder()
 
 
   const filter = (i) => i.message.id === reply.id;
-  const collector = interaction.channel.createMessageComponentCollector({ filter, idle: 60 * 1000 });
+  const collector = reply.createMessageComponentCollector({ filter, idle: 60 * 1000 });
 
   collector.on('collect', async (selectInteraction) => {
     let selectedChoice;
