@@ -34,7 +34,7 @@ module.exports = {
             currentDate = moment.tz(dateOption, 'Y-MM-DD', timezone).startOf('day');
 
             if (!currentDate.isValid()) {
-                await interaction.reply({content: `${dateOption} does not exist, please provide a valid date.`, ephemeral: true});
+                await interaction.reply({content: `\` ${dateOption} \` does not exist, please provide a valid date.`, ephemeral: true});
                 return;
             }
         } else {

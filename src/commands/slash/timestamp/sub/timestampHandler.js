@@ -28,20 +28,21 @@ async function convertTime(interaction) {
   const month = options.getInteger("month");
   const year = options.getInteger("year");
 
-  const currentDate = new Date();
-  
-  const cDate = date || currentDate.getDate();
-  const Year = year || currentDate.getFullYear();
-  const Month = month || currentDate.getMonth() + 1;
-
-    timestamp = moment
+  const currentDate = moment().tz(timezone);
+  const cDate = date || currentDate.date();
+  const Year = year || currentDate.year();
+  const Month = month || currentDate.month() + 1;
+const fDate = `${cDate}-${Month}-${Year}`
+  const timestamp = moment
       .tz(
-        `${cDate} ${Month} ${Year} ${Time}`,
-        "DD MM YYYY HH mm ss",  timezone
+        `${fDate} ${Time}`,
+        "DD-MM-YYYY HH mm ss",  timezone
       )
       .valueOf();
-
-
+if (!moment(timestamp).isValid()) {
+                await interaction.reply({content: `\` ${fDate} \` does not exist, please provide a valid date.`, ephemeral: true});
+                return;
+            }
   const utcTimestamp = moment.utc(timestamp).valueOf();
   const offset = moment.tz(timezone).utcOffset();
   const offsetHours = Math.abs(Math.floor(offset / 60));
