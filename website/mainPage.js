@@ -43,7 +43,9 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
   res.render('page/index');
 });
-
+app.get('/invite', (req, res) => {
+  res.redirect('https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands');
+});
 app.listen(PORT, () => {
   Logger.success(`Server is running on port ${PORT}`);
 });

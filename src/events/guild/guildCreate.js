@@ -24,23 +24,13 @@ module.exports = async (client, guild) => {
 // Check if joined guild is blacklisted
  let data = await Guild.findOne({ Guild: guild.id}).catch((err) => {}); 
    if (data) {
-  if (!guild.me.permissions.has("ViewAuditLog")) {
   const owner = guild.members.cache.get(guild.ownerId)
   owner.user.send(`An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`)
   await guild.leave();
-  return;
-}
-   const fetchedLogs = await guild.fetchAuditLogs({
-	type: AuditLogEvent.BotAdd,
-	limit: 1,
-});
-
-const firstEntry = fetchedLogs.entries.first();
-firstEntry.executor.send(`The server you invited me to is blacklisted for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`) 
-await guild.leave();
+  
 const embed = new EmbedBuilder()
        .setAuthor({ name: `Blacklisted Server`})
-       .setDescription(`${firstEntry?.executor.username || 'Unknown'} tried to invite me to a blacklisted server. I have left the server.`)
+       .setDescription(`Someone tried to invite me to a blacklisted server. I have left the server.`)
        .addFields(
          { name: 'Blacklisted Guild Name', value: `${data.Name}`},
          { name: 'Reason', value: `${data.Reason}`},
@@ -101,4 +91,4 @@ const settings = await botSettings(client);
   settings.data.servers = client.guilds.cache.size;
   settings.data.members = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
   await settings.save();
-}
+};
