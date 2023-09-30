@@ -65,6 +65,8 @@ app.get('/invite', (req, res) => {
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta name="og:site_name" content="Add SkyHelper to your server!"/>
+<meta name="theme-color" content="#FF0000">
 
 
 <!-- Twitter -->
