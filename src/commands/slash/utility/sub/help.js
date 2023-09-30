@@ -111,7 +111,7 @@ const hmBtn = new ActionRowBuilder()
         let description = '';
         prefix.forEach((command) => {
       if (command.data.category !== 'OWNER') {
-      description += `${guildPrefix}${command.data.name}\n${command.data.description}\n\n`;
+      description += `**${guildPrefix}${command.data.name}**\n${command.data.description}\n\n`;
       }
      });
      prefixEmbed.setDescription(description);
