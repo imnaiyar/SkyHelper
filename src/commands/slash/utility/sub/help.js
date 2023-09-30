@@ -1,6 +1,6 @@
 const { GatewayIntentBits, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder } = require('discord.js');
 const { getSettings } = require("@schemas/Guild");
-const config = require('@root/config')
+const config = require('@root/config');
 
 async function helpMenu(interaction, client) {
     const slash = client.commands;
@@ -10,15 +10,15 @@ async function helpMenu(interaction, client) {
     const guildPrefix = settings?.prefix || process.env.BOT_PREFIX;
     
     const input = interaction.options.getString('command');
-    const Command = slash?.get(input) || prefix?.get(input)
-    const appCommands = await client.application.commands.fetch()
+    const Command = slash?.get(input) || prefix?.get(input);
+    const appCommands = await client.application.commands.fetch();
 if (input && !Command) {
-  return interaction.reply({ content: 'No such commands are found', ephemeral: true})
+  return interaction.reply({ content: 'No such commands are found', ephemeral: true});
 } else if (input) {
   if ( Command.data.category && Command.data.category === 'OWNER') {
-    return interaction.reply({ content: `No such commands are found`, ephemeral: true})
+    return interaction.reply({ content: `No such commands are found`, ephemeral: true});
   }
-  const appC = await appCommands.find( c => c.name === input)
+  const appC = await appCommands.find( c => c.name === input);
   let cName;
   if (appC) {
     cName = `</${appC.name}:${appC.id}>`;
@@ -36,10 +36,10 @@ if (input && !Command) {
        embed.addFields({
          name: 'Description',
          value: Command.data.longDesc
-       })
+       });
      }
      
-   const reply = await interaction.reply({ embeds: [embed], ephemeral: true})
+   const reply = await interaction.reply({ embeds: [embed], ephemeral: true});
      
      return;
 }
@@ -73,7 +73,7 @@ const hmBtn = new ActionRowBuilder()
          .setLabel('🏠')
          .setCustomId('homeBtn')
          .setStyle(4)
-         )
+         );
 
   const reply = await interaction.reply({ embeds: [embed], components: [row], fetchReply: true });
 
@@ -84,9 +84,9 @@ const hmBtn = new ActionRowBuilder()
   collector.on('collect', async (selectInteraction) => {
     let selectedChoice;
     if (selectInteraction?.values) {
-    selectedChoice = selectInteraction.values[0]
+    selectedChoice = selectInteraction.values[0];
     } else {
-      selectedChoice = selectInteraction.customId
+      selectedChoice = selectInteraction.customId;
     }
     if (selectedChoice === 'slash') {
       const slashEmbed = new EmbedBuilder()
@@ -107,7 +107,7 @@ const hmBtn = new ActionRowBuilder()
         .setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
         .setDescription(`List of all Prefix commands.`)
         .setColor('Gold')
-        .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() });
+        .setFooter({ text: 'run /help <command> for details.', iconURL: client.user.displayAvatarURL() });
         let description = '';
         prefix.forEach((command) => {
       if (command.data.category !== 'OWNER') {
@@ -117,7 +117,7 @@ const hmBtn = new ActionRowBuilder()
      prefixEmbed.setDescription(description);
       await selectInteraction.update({ embeds: [prefixEmbed], components: [row, hmBtn] });
     } else if (selectedChoice === 'homeBtn') {
-      await selectInteraction.update({ embeds: [embed], components: [row]})
+      await selectInteraction.update({ embeds: [embed], components: [row]});
     }
 
   });
@@ -126,10 +126,10 @@ const hmBtn = new ActionRowBuilder()
     const embed = new EmbedBuilder()
     .setAuthor({ name:'Idle Timeout.'})
     .setDescription(`Help menu has expired, run the command </help:1147244751708491898> again.`)
-    .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() })
-    reply.edit({ embeds: [embed], components: []})
+    .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() });
+    reply.edit({ embeds: [embed], components: []});
   });
 
 }
 
-module.exports = {helpMenu}
+module.exports = {helpMenu};

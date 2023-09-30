@@ -1,14 +1,14 @@
 const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, Collection } = require("discord.js");
-const {shardInfos} = require('@shards/aboutShards')
-const {shardLocation} = require('@shards/shardsLocation')
-const {shardTimeline} = require('@shards/shardsTimeline')
-const {parsePerm} = require('@handler/functions/parsePerm')
-const config = require('@root/config')
+const {shardInfos} = require('@shards/aboutShards');
+const {shardLocation} = require('@shards/shardsLocation');
+const {shardTimeline} = require('@shards/shardsTimeline');
+const {parsePerm} = require('@handler/functions/parsePerm');
+const config = require('@root/config');
 const Log = require('@src/logger');
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
-const {ErrorForm} = require('@handler/functions/errorForm')
-const { nextPrev } = require('@shards/sub/scrollFunc')
+const {ErrorForm} = require('@handler/functions/errorForm');
+const { nextPrev } = require('@shards/sub/scrollFunc');
 
 /**
  * @param {import('discord.js').Interaction} interaction
@@ -28,11 +28,11 @@ module.exports = async (client, interaction) => {
 
     // Check if the user has permissions to use the command.
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
-     return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true})
+     return interaction.reply({content: `You need ${parsePerm(command.data.userPermissions)} to use this command`, ephemeral: true});
     }
     
     // Check cooldowns
-    if (command?.cooldown && !config.OWNER.includes(interaction.user.id)){
+    if (command?.cooldown && !config.OWNER.includes(interaction.user.id)) {
               const { cooldowns } = client; 
   
          if (!cooldowns.has(command.data.name)) { 
@@ -99,11 +99,11 @@ module.exports = async (client, interaction) => {
 
     
   if (interaction.customId === 'error_report') {
-    await ErrorForm(interaction)
+    await ErrorForm(interaction);
   }
     if (interaction.customId === 'next' || interaction.customId === 'prev') {
-    const value = interaction.customId
-    await nextPrev(interaction, value)
+    const value = interaction.customId;
+    await nextPrev(interaction, value);
   }
 if (interaction.customId === 'shard_timeline' || 'shard_left' || 'shard_right' || 'shard_original') {
   shardTimeline(interaction, Zhii, Christian);
@@ -134,4 +134,4 @@ if (interaction.isModalSubmit()) {
     bLogger.send({ username: "Bug Report", embeds: [embed] }).catch((ex) => {});
   }
 }
-}
+};

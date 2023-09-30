@@ -4,7 +4,7 @@ const path = require('path');
 
 const {OWNER} = require('@root/config.js');
 const { getSettings} = require("@schemas/Guild.js");
-const { Log } = require('@src/logger')
+const { Log } = require('@src/logger');
 const {parsePerm} = require('@handler/functions/parsePerm');
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
@@ -63,6 +63,21 @@ if (
  // Execute the command.
   try {
     await command.execute(message, args, client);
+    
+    // Send Logs
+  const embed = new EmbedBuilder()
+    .setTitle("New command used")
+    .addFields(
+      { name: `Command`, value: `\`${command.data.name}\`` },
+      { name: `User`, value: `${message.author.username} \`[${message.author.id}]\`` },
+      { name: `Server`, value: `${message.guild?.name} \`[${message.guild?.id}]\`` },
+      { name: `Channel`, value: `${message.channel?.name} \`[${message.channel?.id}]\`` }
+    )
+    .setColor('Blurple')
+    .setTimestamp();
+  if(!OWNER.includes(message.author.id)) {
+    Logger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
+  }
   } catch (error) {
     Log.error(error);
     const embed = new EmbedBuilder()
