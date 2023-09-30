@@ -52,8 +52,7 @@ app.get('/invite', (req, res) => {
     <!DOCTYPE html>
     <html>
       <head>
-        <meta http-equiv="refresh" content="0;url=${redirectUrl}">
-        <meta name="title" content="Invite SkyHelper" />
+      <meta name="title" content="Invite SkyHelper" />
 <meta name="description" content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky." />
 
 <!-- Open Graph / Facebook -->
@@ -75,6 +74,7 @@ app.get('/invite', (req, res) => {
 <meta property="twitter:title" content="SkyHelper" />
 <meta property="twitter:description" content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky." />
 <meta property="twitter:image" content="https://skyhelper.xyz/assets/img/skybotLong.png" />
+        <meta http-equiv="refresh" content="0;url=${redirectUrl}">
       </head>
       <body>
         Redirecting...
