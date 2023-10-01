@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const {convertTime} = require('./sub/timestampHandler');
-const desc = require('@commands/cmdDesc')
+const desc = require('@commands/cmdDesc');
 module.exports = {
     cooldown: 3,
     data: {

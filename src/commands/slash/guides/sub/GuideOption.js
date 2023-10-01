@@ -233,4 +233,4 @@ default:
 return '';
 }
 }
-module.exports = {Guides}
+module.exports = {Guides};

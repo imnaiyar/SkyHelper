@@ -646,7 +646,6 @@ module.exports = {
     // prophecy ts
         'airprophet_tree': {
       content: "This was **_Prophet of Air's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_May 12, 2022 (#61)\nMay 15, 2023 (Special Visit #2)_\n\n```Prophet of Air Friendship Tree by Boxier```\n***prices are subject to change in future visits.**",
-      content: "This was **_Prophet of Air's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n_May 12, 2022 (#61)\nMay 15, 2023 (Special Visit #2)_\n\n```Prophet of Water Friendship Tree by Boxier```\n***prices are subject to change in future visits.**",
       files: ['https://media.discordapp.net/attachments/867638574571323424/1136000296993181846/Air_tree.jpg']
     },
         'earthprophet_tree': {
