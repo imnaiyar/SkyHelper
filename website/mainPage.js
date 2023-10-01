@@ -80,7 +80,7 @@ app.get('/invite', (req, res) => {
       </head>
       <body>
       <div class="header">
-    <img src="http://localhost:8519/assets/img/tsLogo.png" align="left" style="width: 50px; height: 50px; padding-right:10px;"/>
+    <img src="https://skyhelper.xyz/assets/img/tsLogo.png" align="left" style="width: 50px; height: 50px; padding-right:10px;"/>
     <div class="word text-xl font-bold text">
     <b> <span>S</span> 
      <span>k</span> 
