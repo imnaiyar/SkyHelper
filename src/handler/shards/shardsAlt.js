@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { shardsReply } = require('./sub/shardsReply');
-const shardsTime = require('./sub/eventTimings.js')
+const shardsTime = require('./sub/eventTimings.js');
 const eventSequence = ['C', 'b', 'A', 'a', 'B', 'b', 'C', 'a', 'A', 'b', 'B', 'a'];
 const secondEventSequence = ['prairie', 'forest', 'valley', 'wasteland', 'vault'];
 
@@ -30,7 +30,7 @@ return suffixes[(remainder10 === 1 && remainder100 !== 11) ? 1 :
            (remainder10 === 3 && remainder100 !== 13) ? 3 : 0];
 }
 // Extracting the shards timings
-const timings = shardsTime(currentDate)
+const timings = shardsTime(currentDate);
     let eventTimings;
 if (currentEvent === 'A') {
     eventTimings = timings.A;
@@ -54,7 +54,7 @@ if (currentEvent === 'A') {
 
     for (let i = 0; i < eventTimings.length; i++) {
         const eventTiming = eventTimings[i];
-        const present = moment().tz(timezone)
+        const present = moment().tz(timezone);
 
         if (present.isBetween(eventTiming.start, eventTiming.end)) {
              const endUnix = Math.floor(eventTiming.end.valueOf() / 1000);
@@ -75,7 +75,7 @@ if (currentEvent === 'A') {
           
        const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);  
        const endUnix3 = Math.floor(eventTiming.end.valueOf() / 1000);
-            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard ended <t:${endUnix3}:t>, ${i + 2}${getOrdinalSuffix(i + 2)} shard has not fallen yet`;
+            eventStatus = `${i + 1}${getOrdinalSuffix(i + 1)} shard ended at <t:${endUnix3}:t>, ${i + 2}${getOrdinalSuffix(i + 2)} shard has not fallen yet`;
             const duration = moment.duration(eventTimings[i + 1].start.diff(present));
             timeRemaining = `Falls in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${startUnix2}:T>)`;
             break;
