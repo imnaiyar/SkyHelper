@@ -24,7 +24,7 @@ module.exports = async (client, interaction) => {
     const command = client.commands.get(commandName);
 
     // If command is owner only.
-    if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(message.author.id)) return;
+    if (command.data.category && command.data.category === 'OWNER' && !OWNER.includes(interaction.user.id)) return;
 
     // Check if the user has permissions to use the command.
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {

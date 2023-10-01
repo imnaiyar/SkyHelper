@@ -74,12 +74,28 @@ app.get('/invite', (req, res) => {
 <meta property="twitter:title" content="SkyHelper" />
 <meta property="twitter:description" content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky." />
 <meta property="twitter:image" content="https://skyhelper.xyz/assets/img/skybotLong.png" />
-      <meta name="title" content="Invite SkyHelper" />
       <meta http-equiv="refresh" content="3;url=${redirectUrl}">
+      <meta name="title" content="Invite SkyHelper" />
 
       </head>
       <body>
-        <br><br><br>
+      <div class="header">
+    <img src="http://localhost:8519/assets/img/tsLogo.png" align="left" style="width: 50px; height: 50px; padding-right:10px;"/>
+    <div class="word text-xl font-bold text">
+    <b> <span>S</span> 
+     <span>k</span> 
+     <span>y</span> 
+     <span>H</span> 
+     <span>e</span> 
+     <span>l</span> 
+     <span>p</span> 
+     <span>e</span>
+     <span>r</span>
+     </b>
+   </div> 
+    </div>
+    <br>
+    <br>
 <h1>Redirecting...</h1>
 <div class="slider">
 	<div class="line"></div>
@@ -90,10 +106,37 @@ app.get('/invite', (req, res) => {
 <p>Not working? <a href="https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands">Click here.</a></p>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Raleway:100);
- 
+ @import url("https://fonts.googleapis.com/css?family=Dosis"); 
+  
+     .word { 
+       font-family: "Dosis", sans-serif; 
+       perspective: 1000px; 
+     } 
+  
+     .word span { 
+       cursor: pointer; 
+       display: inline-block; 
+       font-size: 25px;
+       padding-top: 15px;
+       user-select: none; 
+       line-height: 0.8; 
+     } 
+  
+  
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Make it span the full width of the viewport */
+    padding: 10px; /* Add padding for spacing if desired */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
+}
 body{
 background:#222;
 margin: 40px 50px;
+justify-content: center;
+align-items: center;
+height: 100vh;
 color:#4a8df8;
 font-family: 'Raleway', cursive;
 font-weight:100;
@@ -118,7 +161,7 @@ margin-top:-30px;
 .line{
 position:absolute;
 background:#4a8df8;
-width:400px;
+width: 90vw;
 height:2px;
 }
 .break{
@@ -152,23 +195,29 @@ animation: loading 2s 1s infinite;
 
 @keyframes "loading" {
 from { left: 0; }
-to { left: 400px; }
+to { left: 90vw; }
 }
 @-moz-keyframes loading {
 from { left: 0; }
-to { left: 400px; }
+to { left: 90vw; }
 }
 @-webkit-keyframes "loading" {
 from { left: 0; }
-to { left: 400px; }
+to { left: 90vw; }
 }
 @-ms-keyframes "loading" {
 from { left: 0; }
-to { left: 400px; }
+to { left: 90vw; }
 }
 @-o-keyframes "loading" {
 from { left: 0; }
-to { left: 400px; }
+to { left: 90vw; }
+
+@media (max-width: 400px) {
+    @keyframes loading {
+        to { left: 400px; /* Change to 400px if viewport is narrower */ }
+    }
+}
     </style>
       </body>
     </html>`;

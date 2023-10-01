@@ -12,6 +12,8 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 module.exports = async (client, message) => {
   if (!message.guild) return;
   const settings = await getSettings(message.guild);
+  
+  // Reply on bot's mention
   const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   if (message.content.match(mention)) {
     const embed = new EmbedBuilder()
@@ -24,6 +26,7 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+// Check Bot'sprefix
 const prefix = settings?.prefix || process.env.BOT_PREFIX;
 const escapedPrefix = escapeRegExp(prefix);
 
@@ -36,7 +39,7 @@ if (
 }
   
   
-
+  // Initialize the commands
   const args = message.content.slice(settings.prefix?.length || process.env.BOT_PREFIX.length).trim().split(/ +/);
   const commandName = args.shift();
   const command = client.prefix.get(commandName);
@@ -51,7 +54,7 @@ if (
  
  // Check if the bot has Send Message permission
   if(!message.guild.members.me.permissionsIn(message.channel).has('SendMessages')) {
-      message.author.send(`Hi, It seems you tried to use my command in a channel/server where I don't have ${parsePerm('SendMessages')}. Please ask a Server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: ${message.guild.name}\n- Channel: ${message.channel}\n- Command Used: \` ${command.data.name} \``);
+      message.author.send(`Hi, It seems you tried to use my command in a channel/server where I don't have ${parsePerm('SendMessages')}. Please ask a server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: ${message.guild.name}\n- Channel: ${message.channel}\n- Command Used: \` ${command.data.name} \``);
       return;
     }
  

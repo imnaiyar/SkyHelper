@@ -69,7 +69,7 @@ html {
    --color-fg: #e1ebe4!important;
    --color-tl: #bed4c4!important;
    --color-sh: #bed4c4;
-   --color-un: #3a3d44;!important
+   --color-un: #3a3d44!important;
 }
 .discUnix {
   background-color: var(--color-un);
@@ -296,6 +296,7 @@ button {
 nav,
 .navbar-menu {
   background-color: #1a2634 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-item.nav-dark,
