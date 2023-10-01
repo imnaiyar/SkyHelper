@@ -224,6 +224,9 @@ to { left: 90vw; }
   
   res.send(html);
 });
+app.get('/vote', (req, res) => {
+  res.redirect('https://top.gg/bot/1121541967730450574/vote');
+});
 app.listen(PORT, () => {
   Logger.success(`Server is running on port ${PORT}`);
 });
