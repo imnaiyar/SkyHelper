@@ -1,25 +1,12 @@
-const {Client} = require("discord.js");
-require('module-alias/register');
-require('dotenv').config();
 const { REST } = require('@discordjs/rest');
 const fs = require('fs');
 const path = require('path');
 const { Routes } = require('discord-api-types/v9');
-const Logger = require('./logger');
-const client = new Client({
-    intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages, 
-      GatewayIntentBits.MessageContent,
-      GatewayIntentBits.DirectMessageReactions,
-      GatewayIntentBits.DirectMessages,
-      GatewayIntentBits.GuildMembers,
-     ] });
-
+const Logger = require('@src/logger');
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
 
-const commandDirectory = path.join(__dirname, './commands/slash');
+const commandDirectory = path.join(__dirname, '../slash');
 const commands = [];
 
 // Function to recursively search for command files
@@ -46,10 +33,17 @@ function findCommandFiles(directory) {
 findCommandFiles(commandDirectory);
 
 
-client.on('ready', async () => { 
-  
+
+module.exports = {
+  data: { 
+    name: 'register', 
+   description: 'blacklist a guild or an user.',
+   category: "OWNER", 
+  },
+
+  async execute(message, args, client) {
     try {
-     Logger.success('Started refreshing application (/) commands.');
+     const reply = await message.reply('<a:reload:1158269773835141181> Started refreshing application (/) commands.');
   
       await rest.put(
         // Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific
@@ -57,13 +51,11 @@ client.on('ready', async () => {
         { body: commands },
       );
   
-      Logger.success(`Registered ${commands.length} commands`);
+      await reply.edit(`✅️ Started refreshing application (/) commands.\n✅️ Registered ${commands.length} commands`);
   
-      Logger.success('Successfully reloaded application (/) commands.');
-      client.destroy();
+     await reply.edit(`✅️ Started refreshing application (/) commands.\n✅️ Registered ${commands.length} commands\n✅️ Successfully reloaded application (/) commands.`);
     } catch (error) {
       Logger.error(error);
     }
-});
-
-client.login(process.env.TOKEN);
+  }
+};
