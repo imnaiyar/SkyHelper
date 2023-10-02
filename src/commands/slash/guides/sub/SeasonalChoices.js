@@ -683,4 +683,4 @@ const thirdChoices = {
   ],
 };
 
-module.exports = {firstChoices, secondChoices, thirdChoices}
+module.exports = {firstChoices, secondChoices, thirdChoices};

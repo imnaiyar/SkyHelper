@@ -101,12 +101,12 @@ async function handleFirst(interaction, firstChoices, secondChoices) {
   const row = new ActionRowBuilder().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId(CUSTOM_ID.SECOND_CHOICE)
-      .setPlaceholder(`${getLabelFromValue(firstChoices, selectedChoice)}`)
+      .setPlaceholder(`${getLabel(firstChoices, selectedChoice)}`)
       .addOptions(secondChoiceOptions)
   );
 
   await interaction.update({
-    content: `Guides for ___${getLabelFromValue(firstChoices, selectedChoice)}___`,
+    content: `Guides for ___${getLabel(firstChoices, selectedChoice)}___`,
     components: [row],
   });
 }
@@ -131,12 +131,12 @@ async function handleSecond(interaction, firstChoices, secondChoices,thirdChoice
       const row = new ActionRowBuilder().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId('thirdChoice')
-          .setPlaceholder(`${getLabelFromValue(firstChoices, messageChoice.firstChoice)} - ${getLabelFromValue(secondChoices[messageChoice.firstChoice], selectedChoice)}`)
+          .setPlaceholder(`${getLabel(firstChoices, messageChoice.firstChoice)} - ${getLabel(secondChoices[messageChoice.firstChoice], selectedChoice)}`)
           .addOptions(thirdChoiceOptions)
       );
 
       await interaction.update({
-        content: `${getLabelFromValue(secondChoices[messageChoice.firstChoice], selectedChoice)} of ___${getLabelFromValue(firstChoices, messageChoice.firstChoice)}___`,
+        content: `${getLabel(secondChoices[messageChoice.firstChoice], selectedChoice)} of ___${getLabel(firstChoices, messageChoice.firstChoice)}___`,
         components: [row],
       });
     }
@@ -164,12 +164,12 @@ async function handleThird(interaction, firstChoices, secondChoices, messageChoi
         const row = new ActionRowBuilder().addComponents(
           new StringSelectMenuBuilder()
             .setCustomId('secondChoice')
-            .setPlaceholder(`${getLabelFromValue(firstChoices, messageChoice.firstChoice)}`)
+            .setPlaceholder(`${getLabel(firstChoices, messageChoice.firstChoice)}`)
             .addOptions(secondChoiceOptions)
         );
 
         response = {
-          content: `Guides for ___${getLabelFromValue(firstChoices, messageChoice.firstChoice)}___`,
+          content: `Guides for ___${getLabel(firstChoices, messageChoice.firstChoice)}___`,
           components: [row],
           files: [],
         };
@@ -213,7 +213,7 @@ async function respondToInteraction(interaction, response, ephemeral) {
   await interaction.followUp(response);
 }
 
-function getLabelFromValue(choices, value) {
+function getLabel(choices, value) {
     const selectedChoice = choices.find(choice => choice.value === value);
     return selectedChoice ? selectedChoice.label : 'Unknown';
   }
