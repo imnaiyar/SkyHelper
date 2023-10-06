@@ -21,7 +21,7 @@ function findCommandFiles(directory) {
       if (file !== 'sub') {
         findCommandFiles(filePath);
       }
-    } else if (file.endsWith('.js')) {
+    } else if (file.endsWith('.js') && !file.startsWith('skyEvents') ) {
       const command = require(filePath);
       commands.push(command.data);
     }
