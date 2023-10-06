@@ -5,6 +5,5 @@
  */
 
 module.exports = async (client, reaction, user) => {
-    
-return {reaction, user}
-}
+  return { reaction, user };
+};

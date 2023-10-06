@@ -165,14 +165,20 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
      </span>
       <br>
       <br>
-       ${fieldsData.map((field, index) => `
+       ${fieldsData
+         .map(
+           (field, index) => `
   <div>
-    <h2>● ${field.name} (e.g, <span class ="discUnix">${field.example}</span>)</h2>
+    <h2>● ${field.name} (e.g, <span class ="discUnix">${
+      field.example
+    }</span>)</h2>
     <span class="cmd">${sanitizeField(field.value)}</span>
     <button class="copyBtn" onclick="copyText(${index}, this)">Copy</button>
   </div>
   <br>
-`).join('')}
+`,
+         )
+         .join('')}
 <script>
 var unixTime = ${unixTime} /* Get the Unix timestamp from your source */;
 
@@ -243,11 +249,11 @@ var options = { timeZone: '${timezone}' };
     <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="assets/js/script.js"></script>
     </body>
-    </html>`
-  }
-}
+    </html>`,
+  };
+};
 
 function sanitizeField(value) {
-          // Remove backticks, <, and > characters
-          return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
+  // Remove backticks, <, and > characters
+  return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}

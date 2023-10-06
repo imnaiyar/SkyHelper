@@ -1,6 +1,6 @@
 const express = require('express');
 const { DASHBOARD } = require('@root/config');
-const { botSettings } = require("@schemas/botStats");
+const { botSettings } = require('@schemas/botStats');
 const path = require('path');
 const { client } = require('@root/main');
 const Logger = require('@src/logger');
@@ -8,11 +8,16 @@ const app = express();
 const htmlUtils = require('./htmlUtils');
 const PORT = DASHBOARD.port;
 async function unixPage(interaction, fieldsData, unixTime, offset, timezone) {
-  const html = await htmlUtils(interaction, fieldsData, unixTime, offset, timezone);
-app.get(`/${interaction.id}`, (req, res) => {
-
-  res.send(html.Content);
-});
+  const html = await htmlUtils(
+    interaction,
+    fieldsData,
+    unixTime,
+    offset,
+    timezone,
+  );
+  app.get(`/${interaction.id}`, (req, res) => {
+    res.send(html.Content);
+  });
 }
 module.exports = { unixPage };
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +25,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use('/', express.static(path.join(__dirname, 'views', 'page')));
-
 
 const tosRoute = require('./tos');
 const privacyRoute = require('./privacy');
@@ -44,10 +48,10 @@ app.get('/', (req, res) => {
   res.render('page/index');
 });
 
-
 app.get('/invite', (req, res) => {
-  const redirectUrl = 'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands';
-  
+  const redirectUrl =
+    'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands';
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -221,7 +225,7 @@ to { left: 90vw; }
     </style>
       </body>
     </html>`;
-  
+
   res.send(html);
 });
 app.get('/vote', (req, res) => {

@@ -1,11 +1,6 @@
-const {
-  Client,
-  StringSelectMenuBuilder,
-  ActionRowBuilder,
-  GatewayIntentBits,
-} = require('discord.js');
+const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 const choiceResponses = require('./GuideResponse.js');
-const messageChoices = new Map();
+const userChoice = new Map();
 const CUSTOM_ID = {
   FIRST_CHOICE: 'firstChoice',
   SECOND_CHOICE: 'secondChoice',
@@ -61,7 +56,7 @@ async function Guides(interaction) {
       secondChoices,
       thirdChoices,
     } = require('./SeasonalChoices.js');
-    const messageChoice = messageChoices.get(selectInteraction.message.id);
+    const messageChoice = userChoice.get(selectInteraction.message.id);
     switch (selectInteraction.customId) {
       case CUSTOM_ID.FIRST_CHOICE:
         await handleFirst(selectInteraction, firstChoices, secondChoices);
@@ -106,7 +101,7 @@ const backObj = {
 async function handleFirst(interaction, firstChoices, secondChoices) {
   const selectedChoice = interaction.values[0];
 
-  messageChoices.set(interaction.message.id, {
+  userChoice.set(interaction.message.id, {
     firstChoice: interaction.values[0],
     secondChoice: null,
   });
@@ -255,7 +250,7 @@ async function handleBack(interaction, firstChoices) {
     components: [row],
   });
 
-  messageChoices.delete(interaction.message.id);
+  userChoice.delete(interaction.message.id);
 }
 
 async function respondToInteraction(interaction, response, ephemeral) {

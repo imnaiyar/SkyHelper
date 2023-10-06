@@ -125,4 +125,4 @@ word-break: break-word !important;
     </html>
   `);
 });
-module.exports = privacy; 
+module.exports = privacy;

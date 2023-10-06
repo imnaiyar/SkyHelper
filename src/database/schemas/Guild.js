@@ -1,11 +1,10 @@
-const { CACHE_SIZE } = require("@root/config.js");
-const { getUser } = require("./User");
+const { CACHE_SIZE } = require('@root/config.js');
+const { getUser } = require('./User');
 
-const mongoose = require("mongoose");
-const FixedSizeMap = require("fixedsize-map");
+const mongoose = require('mongoose');
+const FixedSizeMap = require('fixedsize-map');
 
 const cache = new FixedSizeMap(CACHE_SIZE.GUILDS);
-
 
 const Schema = new mongoose.Schema({
   _id: String,
@@ -13,7 +12,7 @@ const Schema = new mongoose.Schema({
   data: {
     name: String,
     region: String,
-    owner: { type: String, ref: "users" },
+    owner: { type: String, ref: 'users' },
     joinedAt: Date,
     leftAt: Date,
     bots: { type: Number, default: 0 },
@@ -22,15 +21,15 @@ const Schema = new mongoose.Schema({
   skyGPT: String,
 });
 
-const Model = mongoose.model("guild", Schema);
+const Model = mongoose.model('guild', Schema);
 
 module.exports = {
   /**
    * @param {import('discord.js').Guild} guild
    */
   getSettings: async (guild) => {
-    if (!guild) throw new Error("Guild is undefined");
-    if (!guild.id) throw new Error("Guild Id is undefined");
+    if (!guild) throw new Error('Guild is undefined');
+    if (!guild.id) throw new Error('Guild Id is undefined');
 
     const cached = cache.get(guild.id);
     if (cached) return cached;

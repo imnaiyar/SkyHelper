@@ -1,4 +1,4 @@
-const {Client} = require("discord.js");
+const { Client, GatewayIntentBits } = require('discord.js');
 require('module-alias/register');
 require('dotenv').config();
 const { REST } = require('@discordjs/rest');
@@ -7,17 +7,17 @@ const path = require('path');
 const { Routes } = require('discord-api-types/v9');
 const Logger = require('./logger');
 const client = new Client({
-    intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages, 
-      GatewayIntentBits.MessageContent,
-      GatewayIntentBits.DirectMessageReactions,
-      GatewayIntentBits.DirectMessages,
-      GatewayIntentBits.GuildMembers,
-     ] });
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.GuildMembers,
+  ],
+});
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
-
 
 const commandDirectory = path.join(__dirname, './commands/slash');
 const commands = [];
@@ -35,7 +35,7 @@ function findCommandFiles(directory) {
       if (file !== 'sub') {
         findCommandFiles(filePath);
       }
-    } else if (file.endsWith('.js')) {
+    } else if (file.endsWith('.js') && !file.startsWith('skyEvents') ) {
       const command = require(filePath);
       commands.push(command.data);
     }
@@ -45,25 +45,23 @@ function findCommandFiles(directory) {
 // Start the search from the "commandDirectory"
 findCommandFiles(commandDirectory);
 
+client.on('ready', async () => {
+  try {
+    Logger.success('Started refreshing application (/) commands.');
 
-client.on('ready', async () => { 
-  
-    try {
-     Logger.success('Started refreshing application (/) commands.');
-  
-      await rest.put(
-        // Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific
-        Routes.applicationCommands(client.user.id), 
-        { body: commands },
-      );
-  
-      Logger.success(`Registered ${commands.length} commands`);
-  
-      Logger.success('Successfully reloaded application (/) commands.');
-      client.destroy();
-    } catch (error) {
-      Logger.error(error);
-    }
+    await rest.put(
+      // Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific
+      Routes.applicationCommands(client.user.id),
+      { body: commands },
+    );
+
+    Logger.success(`Registered ${commands.length} commands`);
+
+    Logger.success('Successfully reloaded application (/) commands.');
+    client.destroy();
+  } catch (error) {
+    Logger.error(error);
+  }
 });
 
 client.login(process.env.TOKEN);

@@ -1,13 +1,20 @@
-const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require("discord.js");
-const { dblStats } = require('@handler/functions/dblStats')
-const { getSettings: registerGuild } = require("@schemas/Guild");
+const {
+  ChannelType,
+  EmbedBuilder,
+  WebhookClient,
+  AuditLogEvent,
+} = require('discord.js');
+const { dblStats } = require('@handler/functions/dblStats');
+const { getSettings: registerGuild } = require('@schemas/Guild');
 const Guild = require('@schemas/guildBlackList');
-const Logger = require('@src/logger')
-const config = require('@root/config.js')
-const {topggAutopost} = require('@handler/functions/topgg-autopost')
-const { botSettings } = require("@schemas/botStats");
+const Logger = require('@src/logger');
+const config = require('@root/config.js');
+const { topggAutopost } = require('@handler/functions/topgg-autopost');
+const { botSettings } = require('@schemas/botStats');
 
-const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
+const webhookLogger = process.env.GUILD
+  ? new WebhookClient({ url: process.env.GUILD })
+  : undefined;
 
 /**
  * @param {import('@root/main')} client
@@ -15,60 +22,67 @@ const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.G
  */
 module.exports = async (client, guild) => {
   if (!guild.available) return;
-  if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
+  if (!guild.members.cache.has(guild.ownerId))
+    await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
 
-// Register guild on database
- registerGuild(guild);
-  
-// Check if joined guild is blacklisted
- let data = await Guild.findOne({ Guild: guild.id}).catch((err) => {}); 
-   if (data) {
-  const owner = guild.members.cache.get(guild.ownerId)
-  owner.user.send(`An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`)
-  await guild.leave();
-  
-const embed = new EmbedBuilder()
-       .setAuthor({ name: `Blacklisted Server`})
-       .setDescription(`Someone tried to invite me to a blacklisted server. I have left the server.`)
-       .addFields(
-         { name: 'Blacklisted Guild Name', value: `${data.Name}`},
-         { name: 'Reason', value: `${data.Reason}`},
-         { name: 'Blacklisted Date', value: `${data?.Date || 'Unknown'}`},
-         );
-     webhookLogger.send({
-    username: "Blacklist Server",
-    avatarURL: client.user.displayAvatarURL(),
-    embeds: [embed],
-  });    
-return;
- }
- 
-// Send a guild join Log
-if (!process.env.GUILD) return;
+  // Register guild on database
+  registerGuild(guild);
+
+  // Check if joined guild is blacklisted
+  let data = await Guild.findOne({ Guild: guild.id }).catch((err) => {});
+  if (data) {
+    const owner = guild.members.cache.get(guild.ownerId);
+    owner.user.send(
+      `An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`,
+    );
+    await guild.leave();
+
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: `Blacklisted Server` })
+      .setDescription(
+        `Someone tried to invite me to a blacklisted server. I have left the server.`,
+      )
+      .addFields(
+        { name: 'Blacklisted Guild Name', value: `${data.Name}` },
+        { name: 'Reason', value: `${data.Reason}` },
+        { name: 'Blacklisted Date', value: `${data?.Date || 'Unknown'}` },
+      );
+    webhookLogger.send({
+      username: 'Blacklist Server',
+      avatarURL: client.user.displayAvatarURL(),
+      embeds: [embed],
+    });
+    return;
+  }
+
+  // Send a guild join Log
+  if (!process.env.GUILD) return;
 
   const embed = new EmbedBuilder()
-    .setTitle("Guild Joined")
+    .setTitle('Guild Joined')
     .setThumbnail(guild.iconURL())
     .setColor('DarkAqua')
     .addFields(
       {
-        name: "Guild Name",
+        name: 'Guild Name',
         value: guild.name,
         inline: false,
       },
       {
-        name: "ID",
+        name: 'ID',
         value: guild.id,
         inline: false,
       },
       {
-        name: "Owner",
-        value: `${client.users.cache.get(guild.ownerId).username} [\`${guild.ownerId}\`]`,
+        name: 'Owner',
+        value: `${client.users.cache.get(guild.ownerId).username} [\`${
+          guild.ownerId
+        }\`]`,
         inline: false,
       },
       {
-        name: "Members",
+        name: 'Members',
         value: `\`\`\`yaml\n${guild.memberCount}\`\`\``,
         inline: false,
       },
@@ -76,19 +90,22 @@ if (!process.env.GUILD) return;
     .setFooter({ text: `Guild #${client.guilds.cache.size}` });
 
   webhookLogger.send({
-    username: "Join",
+    username: 'Join',
     avatarURL: client.user.displayAvatarURL(),
     embeds: [embed],
   });
-  
-// Update DBL Stats
- await dblStats(client)
-// Update TopGG Stats
- topggAutopost(client);
- 
-// Update Bot Stats
-const settings = await botSettings(client);
+
+  // Update DBL Stats
+  await dblStats(client);
+  // Update TopGG Stats
+  topggAutopost(client);
+
+  // Update Bot Stats
+  const settings = await botSettings(client);
   settings.data.servers = client.guilds.cache.size;
-  settings.data.members = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
+  settings.data.members = client.guilds.cache.reduce(
+    (total, guild) => total + guild.memberCount,
+    0,
+  );
   await settings.save();
 };

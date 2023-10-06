@@ -10,29 +10,31 @@ async function skyTimes() {
   while (now.isAfter(geyserTargetTime)) {
     geyserTargetTime.add(2, 'hours');
   }
-  const geyserStart = geyserTargetTime.clone().subtract(2, 'hours')
+  const geyserStart = geyserTargetTime.clone().subtract(2, 'hours');
 
- const geyserEnd = geyserTargetTime.clone().subtract(1, 'hours').subtract(45, 'minutes');
- 
- const geyserUnixTimestamp = Math.floor(geyserTargetTime.valueOf() / 1000);
- const geyserEndUnix = Math.floor(geyserEnd.valueOf() / 1000);
- if (now.isBetween(geyserStart, geyserEnd)) {
-   const geyserDuration = moment.duration(geyserEnd.diff(now));
-   const geyserOnEnd = `${geyserDuration.minutes()} minutes  ${geyserDuration.seconds()} seconds.`;
+  const geyserEnd = geyserTargetTime
+    .clone()
+    .subtract(1, 'hours')
+    .subtract(45, 'minutes');
+
+  const geyserUnixTimestamp = Math.floor(geyserTargetTime.valueOf() / 1000);
+  const geyserEndUnix = Math.floor(geyserEnd.valueOf() / 1000);
+  if (now.isBetween(geyserStart, geyserEnd)) {
+    const geyserDuration = moment.duration(geyserEnd.diff(now));
+    const geyserOnEnd = `${geyserDuration.minutes()} minutes  ${geyserDuration.seconds()} seconds.`;
     geyserResultStr = `Geyser is currently ongoing and will end at <t:${geyserEndUnix}:t> (in  ${geyserOnEnd})\n - \`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t>`;
-    } else {
+  } else {
+    const durationGeyser = moment.duration(geyserTargetTime.diff(now));
 
-  const durationGeyser = moment.duration(geyserTargetTime.diff(now));
-  
-  geyserResultStr = `\`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t> ( in `;
-  if (durationGeyser.hours() > 0) {
-    geyserResultStr += `${durationGeyser.hours()} hours`;
+    geyserResultStr = `\`Next Geyser Time:\` <t:${geyserUnixTimestamp}:t> ( in `;
+    if (durationGeyser.hours() > 0) {
+      geyserResultStr += `${durationGeyser.hours()} hours`;
+    }
+    if (durationGeyser.minutes() > 0) {
+      geyserResultStr += ` ${durationGeyser.minutes()} minutes`;
+    }
+    geyserResultStr += ` ${durationGeyser.seconds()} seconds)`;
   }
-  if (durationGeyser.minutes() > 0) {
-    geyserResultStr += ` ${durationGeyser.minutes()} minutes`;
-  }
-  geyserResultStr += ` ${durationGeyser.seconds()} seconds)`;
-}
 
   // Grandma Calculation
   let grandmaResultStr;
@@ -42,55 +44,70 @@ async function skyTimes() {
     grandmaTargetTime.add(2, 'hours');
   }
   const grandmaUnixTimestamp = Math.floor(grandmaTargetTime.valueOf() / 1000);
- const grandmaStart = grandmaTargetTime.clone().subtract(2, 'hours')
+  const grandmaStart = grandmaTargetTime.clone().subtract(2, 'hours');
 
- const grandmaEnd = grandmaTargetTime.clone().subtract(1, 'hours').subtract(45, 'minutes');
- const grandmaEndUnix = Math.floor(grandmaEnd.valueOf() / 1000);
- if (now.isBetween(grandmaStart, grandmaEnd)) {
-   const grandmaDuration = moment.duration(grandmaEnd.diff(now));
-   const grandmaOnEnd = `${grandmaDuration.minutes()} minutes  ${grandmaDuration.seconds()} seconds.`;
+  const grandmaEnd = grandmaTargetTime
+    .clone()
+    .subtract(1, 'hours')
+    .subtract(45, 'minutes');
+  const grandmaEndUnix = Math.floor(grandmaEnd.valueOf() / 1000);
+  if (now.isBetween(grandmaStart, grandmaEnd)) {
+    const grandmaDuration = moment.duration(grandmaEnd.diff(now));
+    const grandmaOnEnd = `${grandmaDuration.minutes()} minutes  ${grandmaDuration.seconds()} seconds.`;
     grandmaResultStr = `Grandma is currently ongoing and will end at <t:${grandmaEndUnix}:t> (in ${grandmaOnEnd})\n - \`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t>`;
-    } else {
-  const durationGrandma = moment.duration(grandmaTargetTime.diff(now));
+  } else {
+    const durationGrandma = moment.duration(grandmaTargetTime.diff(now));
     grandmaResultStr = `\`Next Grandma Time:\` <t:${grandmaUnixTimestamp}:t> ( in `;
-  if (durationGrandma.hours() > 0) {
-    grandmaResultStr += `${durationGrandma.hours()} hours`;
-  }
-  if (durationGrandma.minutes() > 0) {
-    grandmaResultStr += ` ${durationGrandma.minutes()} minutes`;
-  }
-  grandmaResultStr += ` ${durationGrandma.seconds()} seconds)`;
+    if (durationGrandma.hours() > 0) {
+      grandmaResultStr += `${durationGrandma.hours()} hours`;
     }
+    if (durationGrandma.minutes() > 0) {
+      grandmaResultStr += ` ${durationGrandma.minutes()} minutes`;
+    }
+    grandmaResultStr += ` ${durationGrandma.seconds()} seconds)`;
+  }
 
   // Turtle Calculation
   let turtleResultStr;
-  const turtleTargetTime = now.clone().startOf('day').add(1, 'hours').add(20, 'minutes');
+  const turtleTargetTime = now
+    .clone()
+    .startOf('day')
+    .add(1, 'hours')
+    .add(20, 'minutes');
 
   while (now.isAfter(turtleTargetTime)) {
     turtleTargetTime.add(2, 'hours');
   }
   const turtleUnixTimestamp = Math.floor(turtleTargetTime.valueOf() / 1000);
- const turtleStart = turtleTargetTime.clone().subtract(2, 'hours')
+  const turtleStart = turtleTargetTime.clone().subtract(2, 'hours');
 
- const turtleEnd = turtleTargetTime.clone().subtract(1, 'hours').subtract(45, 'minutes');
- const turtleEndUnix = Math.floor(turtleEnd.valueOf() / 1000);
+  const turtleEnd = turtleTargetTime
+    .clone()
+    .subtract(1, 'hours')
+    .subtract(45, 'minutes');
+  const turtleEndUnix = Math.floor(turtleEnd.valueOf() / 1000);
   const durationTurtle = moment.duration(turtleTargetTime.diff(now));
   if (now.isBetween(turtleStart, turtleEnd)) {
-   const turtleDuration = moment.duration(turtleEnd.diff(now));
-   const turtleOnEnd = `${turtleDuration.minutes()} minutes  ${turtleDuration.seconds()} seconds.`;
+    const turtleDuration = moment.duration(turtleEnd.diff(now));
+    const turtleOnEnd = `${turtleDuration.minutes()} minutes  ${turtleDuration.seconds()} seconds.`;
     turtleResultStr = `Turtle is currently ongoing and will end at <t:${turtleEndUnix}:t>(in ${turtleOnEnd})\n - \`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t>`;
-    } else { turtleResultStr = `\`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t> ( in `;
-  if (durationTurtle.hours() > 0) {
-    turtleResultStr += `${durationTurtle.hours()} hours`;
+  } else {
+    turtleResultStr = `\`Next Turtle Time:\` <t:${turtleUnixTimestamp}:t> ( in `;
+    if (durationTurtle.hours() > 0) {
+      turtleResultStr += `${durationTurtle.hours()} hours`;
+    }
+    if (durationTurtle.minutes() > 0) {
+      turtleResultStr += ` ${durationTurtle.minutes()} minutes`;
+    }
+    turtleResultStr += ` ${durationTurtle.seconds()} seconds)`;
   }
-  if (durationTurtle.minutes() > 0) {
-    turtleResultStr += ` ${durationTurtle.minutes()} minutes`;
-  }
-  turtleResultStr += ` ${durationTurtle.seconds()} seconds)`;
-}
   // Reset Calculation
   let resetResult;
-  const resetTargetTime = now.clone().startOf('day').add(12, 'hours').add(30, 'Minutes');
+  const resetTargetTime = now
+    .clone()
+    .startOf('day')
+    .add(12, 'hours')
+    .add(30, 'Minutes');
 
   if (now.isSameOrAfter(resetTargetTime)) {
     resetTargetTime.add(1, 'days');
@@ -107,14 +124,19 @@ async function skyTimes() {
   }
   resetResultStr += ` ${durationReset.seconds()} seconds)`;
 
-
   // Eden Calculation
   let edenResult;
   const targetDayOfWeek = 0; // 0 represents Sunday
   const currentDayOfWeek = now.day();
 
   let daysToAdd = targetDayOfWeek - currentDayOfWeek;
-  const edenTargetTime = now.clone().startOf('day').add(daysToAdd, 'days').hour(12).minute(30).second(0);
+  const edenTargetTime = now
+    .clone()
+    .startOf('day')
+    .add(daysToAdd, 'days')
+    .hour(12)
+    .minute(30)
+    .second(0);
   if (daysToAdd <= 0 || (daysToAdd === 0 && now.isAfter(edenTargetTime))) {
     daysToAdd += 7;
   }
@@ -127,20 +149,25 @@ async function skyTimes() {
   const durationEden = moment.duration(edenTargetTime.diff(now));
   let edenResultStr = `<t:${edenUnixTimestamp}:F> ( in `;
   if (durationEden.days() > 0) {
-  edenResultStr += `${durationEden.days()} days`;
-}
-if (durationEden.hours() > 0) {
-  edenResultStr += ` ${durationEden.hours()} hours`;
-}
-if (durationEden.minutes() > 0) {
-  edenResultStr += ` ${durationEden.minutes()} minutes`;
-}
-edenResultStr += ` ${durationEden.seconds()} seconds)`;
-
-
-    return { geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr}
+    edenResultStr += `${durationEden.days()} days`;
   }
-  
+  if (durationEden.hours() > 0) {
+    edenResultStr += ` ${durationEden.hours()} hours`;
+  }
+  if (durationEden.minutes() > 0) {
+    edenResultStr += ` ${durationEden.minutes()} minutes`;
+  }
+  edenResultStr += ` ${durationEden.seconds()} seconds)`;
+
+  return {
+    geyserResultStr,
+    grandmaResultStr,
+    resetResultStr,
+    edenResultStr,
+    turtleResultStr,
+  };
+}
+
 module.exports = {
-skyTimes
+  skyTimes,
 };

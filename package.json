@@ -48,5 +48,9 @@
     "@root": ".",
     "@schemas": "src/database/schemas/",
     "@events": "src/events/"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "prettier-plugin-ejs": "^0.0.18"
   }
 }
