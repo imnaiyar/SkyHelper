@@ -6,6 +6,7 @@ module.exports = {
     userPermissions: 'ManageGuild',
     longDesc:
       '`Usage:`\nsetprefix <prefix>\n- Requires user to have ` Manage Server ` permission to configure prefix.',
+    category: 'OWNER',
   },
   async execute(message, args) {
     if (args.length !== 1) {

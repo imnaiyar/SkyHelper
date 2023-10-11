@@ -11,13 +11,9 @@ const config = require('@root/config');
 
 async function helpMenu(interaction, client) {
   const slash = client.commands;
-  const prefix = client.prefix;
-
-  const settings = await getSettings(interaction.guild);
-  const guildPrefix = settings?.prefix || process.env.BOT_PREFIX;
 
   const input = interaction.options.getString('command');
-  const Command = slash?.get(input) || prefix?.get(input);
+  const Command = slash?.get(input);
   const appCommands = await client.application.commands.fetch();
   if (input && !Command) {
     return interaction.reply({
@@ -35,8 +31,6 @@ async function helpMenu(interaction, client) {
     let cName;
     if (appC) {
       cName = `</${appC.name}:${appC.id}>`;
-    } else {
-      cName = `${guildPrefix}${Command.data.name}`;
     }
     const embed = new EmbedBuilder()
       .setAuthor({
@@ -80,17 +74,8 @@ async function helpMenu(interaction, client) {
           .setDescription('Details about all available slash commands.')
           .setValue('slash')
           .setEmoji('<:slash:1140102899750420620>'),
-        new StringSelectMenuOptionBuilder()
-          .setLabel('Prefix Commands')
-          .setDescription('Details about all the Prefix commands in the bot.')
-          .setValue('prefix')
-          .setEmoji('<:prefix:1140103340643078144>'),
       ),
   );
-  const hmBtn = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setLabel('🏠').setCustomId('homeBtn').setStyle(4),
-  );
-
   const reply = await interaction.reply({
     embeds: [embed],
     components: [row],
@@ -102,7 +87,9 @@ async function helpMenu(interaction, client) {
     filter,
     idle: 60 * 1000,
   });
-
+  let page = 1;
+  const commandsPerPage = 5;
+  const totalPages = Math.ceil(appCommands.size / commandsPerPage);
   collector.on('collect', async (selectInteraction) => {
     let selectedChoice;
     if (selectInteraction?.values) {
@@ -110,56 +97,68 @@ async function helpMenu(interaction, client) {
     } else {
       selectedChoice = selectInteraction.customId;
     }
+
     if (selectedChoice === 'slash') {
-      const slashEmbed = new EmbedBuilder()
-        .setAuthor({
-          name: `Requested by ${interaction.user.username}`,
-          iconURL: interaction.user.displayAvatarURL(),
-        })
-        .setDescription(`List of all Slash commands.`)
-        .setColor('Gold')
-        .setFooter({
-          text: 'run /help <command> for details.',
-          iconURL: client.user.displayAvatarURL(),
-        });
-      let description = '';
-
-      appCommands.forEach((command) => {
-        description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
-      });
-
-      slashEmbed.setDescription(description);
-      await selectInteraction.update({
-        embeds: [slashEmbed],
-        components: [row, hmBtn],
-      });
-    } else if (selectedChoice === 'prefix') {
-      const prefixEmbed = new EmbedBuilder()
-        .setAuthor({
-          name: `Requested by ${interaction.user.username}`,
-          iconURL: interaction.user.displayAvatarURL(),
-        })
-        .setDescription(`List of all Prefix commands.`)
-        .setColor('Gold')
-        .setFooter({
-          text: 'run /help <command> for details.',
-          iconURL: client.user.displayAvatarURL(),
-        });
-      let description = '';
-      prefix.forEach((command) => {
-        if (command.data.category !== 'OWNER') {
-          description += `**${guildPrefix}${command.data.name}**\n${command.data.description}\n\n`;
-        }
-      });
-      prefixEmbed.setDescription(description);
-      await selectInteraction.update({
-        embeds: [prefixEmbed],
-        components: [row, hmBtn],
-      });
+      page = 1; // Reset to the first page when selecting 'slash'
+      await updateSlashMenu(selectInteraction);
     } else if (selectedChoice === 'homeBtn') {
       await selectInteraction.update({ embeds: [embed], components: [row] });
+    } else if (selectedChoice === 'nextBtn') {
+      if (page < totalPages) {
+        page++;
+        await updateSlashMenu(selectInteraction);
+      }
+    } else if (selectedChoice === 'prevBtn') {
+      if (page > 1) {
+        page--;
+        await updateSlashMenu(selectInteraction);
+      }
     }
   });
+
+  async function updateSlashMenu(interaction) {
+    const slashEmbed = new EmbedBuilder()
+      .setAuthor({
+        name: `Requested by ${interaction.user.username}`,
+        iconURL: interaction.user.displayAvatarURL(),
+      })
+      .setColor('Gold')
+      .setFooter({
+        text: `run /help <command> for details. | Page ${page}/${totalPages}`,
+      });
+
+    let description = '';
+
+    const startIndex = (page - 1) * commandsPerPage;
+    const endIndex = startIndex + commandsPerPage;
+    const pageCommands = Array.from(appCommands.values()).slice(
+      startIndex,
+      endIndex,
+    );
+
+    pageCommands.forEach((command) => {
+      description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
+    });
+
+    slashEmbed.setDescription(description);
+    const hmBtn = new ActionRowBuilder().addComponents(
+    new ButtonBuilder().setLabel('Prev').setCustomId('prevBtn').setStyle(2),
+    new ButtonBuilder().setLabel('🏠').setCustomId('homeBtn').setStyle(4),
+    new ButtonBuilder().setLabel('Next').setCustomId('nextBtn').setStyle(2),
+    );
+    if (page === 1) {
+    hmBtn.components[0].setDisabled(true);
+    }
+    
+    if (page === totalPages) {
+    hmBtn.components[2].setDisabled(true);
+  }
+
+    await interaction.update({
+      embeds: [slashEmbed],
+      components: [hmBtn],
+    });
+  }
 
   collector.on('end', (collected, reason) => {
     const embed = new EmbedBuilder()

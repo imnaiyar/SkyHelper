@@ -122,29 +122,37 @@ module.exports = async (client, interaction) => {
           .setCustomId('error_report')
           .setStyle(ButtonStyle.Secondary),
       );
-      await interaction.reply({
-        embeds: [embed],
-        components: [actionRow],
-        ephemeral: true,
-      });
+      if (interaction.replied || interaction.deferred) {
+        await interaction.editReply({
+          embeds: [embed],
+          components: [actionRow],
+        });
+      } else {
+        await interaction.reply({
+          embeds: [embed],
+          components: [actionRow],
+          ephemeral: true,
+        });
+      }
     }
   }
-  
+
   // Autocomplete interaction
   if (interaction.isAutocomplete()) {
-		const command = client.commands.get(interaction.commandName);
-		
+    const command = client.commands.get(interaction.commandName);
 
-		if (!command) {
-			console.error(`No command matching ${interaction.commandName} was found.`);
-			return;
-		}
+    if (!command) {
+      console.error(
+        `No command matching ${interaction.commandName} was found.`,
+      );
+      return;
+    }
 
-		try {
-			await command.autocomplete(interaction, client);
-		} catch (error) {
-			console.error(error);
-		}
+    try {
+      await command.autocomplete(interaction, client);
+    } catch (error) {
+      console.error(error);
+    }
   }
   // Buttons
   if (interaction.isButton()) {

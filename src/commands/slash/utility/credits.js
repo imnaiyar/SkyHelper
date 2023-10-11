@@ -2,11 +2,11 @@ const { EmbedBuilder } = require('discord.js');
 module.exports = {
   data: {
     name: 'credits',
-    description: 'Credits to all the people whose work is included in the bot',
+    description: 'to works included in this bot',
   },
-  async execute(message) {
-    const { client } = message;
-    await message.channel.sendTyping();
+  async execute(interaction) {
+    const { client } = interaction;
+    await interaction.deferReply();
     const Art = await client.users.fetch('504605855539265537');
 
     const Zhii = await client.users.fetch('650487047160725508');
@@ -34,11 +34,12 @@ module.exports = {
     const Sam = await client.users.fetch('611368649114255380');
 
     const Plutoy = await client.users.fetch('702740689846272002');
-    const userAvatar = message.author.displayAvatarURL({
+    const userAvatar = interaction.user.displayAvatarURL({
       format: 'png',
       dynamic: true,
     });
-    const userNickname = message.member?.nickname || message.author.username;
+    const userNickname =
+      interaction.member?.nickname || interaction.user.username;
     const botUser = await client.users.fetch(client.user.id);
     const botAvatar = botUser.displayAvatarURL({
       format: 'png',
@@ -72,6 +73,6 @@ module.exports = {
         inline: false,
       });
 
-    message.reply({ embeds: [result] });
+    interaction.editReply({ embeds: [result] });
   },
 };

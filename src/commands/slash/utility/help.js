@@ -18,13 +18,27 @@ module.exports = {
   async execute(interaction, client) {
     await helpMenu(interaction, client);
   },
-  
+
   async autocomplete(interaction, client) {
     const focusedValue = interaction.options.getFocused();
-		const choices = ['shards', 'seasonal-guide', 'next-shards', 'timestamp', 'sky-times', 'credits', 'skygpt', 'ping', 'setprefix', 'ping', 'skytimes', 'z-changelog', 'z-suggestion'];
-		const filtered = choices.filter(choice => choice.includes(focusedValue));
-		await interaction.respond(
-			filtered.map(choice => ({ name: choice, value: choice })),
-		);
-  }
+    const choices = [
+      'shards',
+      'seasonal-guide',
+      'next-shards',
+      'timestamp',
+      'sky-times',
+      'credits',
+      'skygpt',
+      'ping',
+      'setprefix',
+      'ping',
+      'skytimes',
+      'z-changelog',
+      'z-suggestion',
+    ];
+    const filtered = choices.filter((choice) => choice.includes(focusedValue));
+    await interaction.respond(
+      filtered.map((choice) => ({ name: choice, value: choice })),
+    );
+  },
 };

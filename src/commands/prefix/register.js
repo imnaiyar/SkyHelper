@@ -21,7 +21,7 @@ function findCommandFiles(directory) {
       if (file !== 'sub') {
         findCommandFiles(filePath);
       }
-    } else if (file.endsWith('.js') && !file.startsWith('skyEvents') ) {
+    } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {
       const command = require(filePath);
       commands.push(command.data);
     }
@@ -45,17 +45,13 @@ module.exports = {
       );
 
       await rest.put(
-        // Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific
+        // Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // For guild commands
         Routes.applicationCommands(client.user.id),
         { body: commands },
       );
 
       await reply.edit(
         `✅️ Started refreshing application (/) commands.\n✅️ Registered ${commands.length} commands`,
-      );
-
-      await reply.edit(
-        `✅️ Started refreshing application (/) commands.\n✅️ Registered ${commands.length} commands\n✅️ Successfully reloaded application (/) commands.`,
       );
     } catch (error) {
       Logger.error(error);

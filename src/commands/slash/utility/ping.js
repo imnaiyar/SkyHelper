@@ -1,13 +1,13 @@
 module.exports = {
   data: {
-    name: 'ping',
+    name: 'z-ping',
     description: "get the bot's ping",
   },
-  async execute(message, args) {
-    const { client } = message;
-    message.reply(
+  async execute(interaction) {
+    const { client } = interaction;
+    interaction.reply(
       `🏓 Message Latency is ${
-        Date.now() - message.createdTimestamp
+        Date.now() - interaction.createdTimestamp
       }ms.\n🏓 Websocket Latency is ${Math.round(client.ws.ping)}ms`,
     );
   },
