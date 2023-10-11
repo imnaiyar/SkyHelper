@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 const { skyTimes } = require('./sub/skyTimes');
-const desc = require('@commands/cmdDesc');
+const desc = require('@src/cmdDesc');
 module.exports = {
   cooldown: 5,
   data: {

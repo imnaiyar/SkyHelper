@@ -66,7 +66,7 @@ client.on('ready', async () => {
   // Setting Up Slash Commands
   client.commands = new Collection();
   client.cooldowns = new Collection();
-  const commandDirectory = path.join(__dirname, './src/commands/slash');
+  const commandDirectory = path.join(__dirname, './src/commands');
   function findCommandFiles(directory) {
     const files = fs.readdirSync(directory);
 
@@ -75,7 +75,7 @@ client.on('ready', async () => {
       const fileStat = fs.statSync(filePath);
 
       if (fileStat.isDirectory()) {
-        if (file !== 'sub') {
+        if (file !== 'sub' && file !== 'prefix') {
           findCommandFiles(filePath);
         }
       } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {

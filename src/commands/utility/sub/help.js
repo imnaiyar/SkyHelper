@@ -65,16 +65,10 @@ async function helpMenu(interaction, client) {
     );
 
   const row = new ActionRowBuilder().addComponents(
-    new StringSelectMenuBuilder()
+    new ButtonBuilder()
       .setCustomId('commands-help')
-      .setPlaceholder('Select for details')
-      .addOptions(
-        new StringSelectMenuOptionBuilder()
-          .setLabel('Slash Commands')
-          .setDescription('Details about all available slash commands.')
-          .setValue('slash')
-          .setEmoji('<:slash:1140102899750420620>'),
-      ),
+      .setLabel('Commands')
+      .setStyle(3)
   );
   const reply = await interaction.reply({
     embeds: [embed],
@@ -91,14 +85,9 @@ async function helpMenu(interaction, client) {
   const commandsPerPage = 5;
   const totalPages = Math.ceil(appCommands.size / commandsPerPage);
   collector.on('collect', async (selectInteraction) => {
-    let selectedChoice;
-    if (selectInteraction?.values) {
-      selectedChoice = selectInteraction.values[0];
-    } else {
-      selectedChoice = selectInteraction.customId;
-    }
+    const selectedChoice = selectInteraction.customId;
 
-    if (selectedChoice === 'slash') {
+    if (selectedChoice === 'commands-help') {
       page = 1; // Reset to the first page when selecting 'slash'
       await updateSlashMenu(selectInteraction);
     } else if (selectedChoice === 'homeBtn') {
@@ -137,7 +126,14 @@ async function helpMenu(interaction, client) {
     );
 
     pageCommands.forEach((command) => {
+      if (command.name === 'util') {
+        description += `</${command.name}:${command.id}>\n${command.description}\n`;
+        command.options.forEach( (o) => {
+          description += `- **${o.name}**\n  ↪${o.description}\n`;
+        });
+      } else {
       description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
+      }
     });
 
     slashEmbed.setDescription(description);

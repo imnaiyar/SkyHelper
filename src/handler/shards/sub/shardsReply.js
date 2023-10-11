@@ -205,9 +205,8 @@ async function shardsReply(
   if (showButtons) {
     result
       .addFields(
-        { name: 'Shard Type', value: `${type}`, inline: true },
+        { name: `Shard Type`, value: `${type} (${rewards})`, inline: true },
         { name: 'Location', value: `${location}`, inline: true },
-        { name: 'Rewards', value: `${rewards}`, inline: true },
         { name: 'Status', value: `${eventStatus}` },
         { name: 'Countdown', value: `${timeRemaining}`, inline: true },
       )

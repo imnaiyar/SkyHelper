@@ -1,10 +1,47 @@
-const { EmbedBuilder } = require('discord.js');
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+const { getChangelog, getSuggestion } = require('./sub/util');
 module.exports = {
   data: {
-    name: 'credits',
-    description: 'to works included in this bot',
+    name: 'util',
+    description: "utility commands",
+    options: [
+      {
+        name: "credits",
+        description: "to works included in this bot",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "changelog",
+        description: "bot's changelog",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "suggestions",
+        description: "suggest a feature or a change",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "ping",
+        description: "get the bot's ping",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      ],
   },
   async execute(interaction) {
+   const sub = interaction.options.getSubcommand();
+   if (sub === 'credits') {
+     getCredits(interaction);
+   } else if (sub === 'suggestions') {
+     getSuggestion(interaction);
+   } else if (sub === 'changelog') {
+     getChangelog(interaction);
+   } else if (sub === 'ping') {
+     getPing(interaction);
+   }
+  },
+};
+
+async function getCredits(interaction) {
     const { client } = interaction;
     await interaction.deferReply();
     const Art = await client.users.fetch('504605855539265537');
@@ -74,5 +111,13 @@ module.exports = {
       });
 
     interaction.editReply({ embeds: [result] });
-  },
-};
+  }
+
+function getPing(interaction) {
+    const { client } = interaction;
+    interaction.reply(
+      `🏓 Message Latency is ${
+        Date.now() - interaction.createdTimestamp
+      }ms.\n🏓 Websocket Latency is ${Math.round(client.ws.ping)}ms`,
+    );
+  }

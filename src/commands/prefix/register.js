@@ -5,7 +5,7 @@ const { Routes } = require('discord-api-types/v9');
 const Logger = require('@src/logger');
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
-const commandDirectory = path.join(__dirname, '../slash');
+const commandDirectory = path.join(__dirname, '../');
 const commands = [];
 
 // Function to recursively search for command files
@@ -18,7 +18,7 @@ function findCommandFiles(directory) {
 
     if (fileStat.isDirectory()) {
       // If it's a directory and not named "sub," recursively search it
-      if (file !== 'sub') {
+      if (file !== 'sub' && file !== 'prefix') {
         findCommandFiles(filePath);
       }
     } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {

@@ -1,25 +1,7 @@
-const {
-  ApplicationCommandOptionType,
-  EmbedBuilder,
-  ModalBuilder,
-  TextInputBuilder,
-  TextInputStyle,
-  ActionRowBuilder,
-  WebhookClient,
-} = require('discord.js');
-const suggWb = process.env.SUGGESTION
-  ? new WebhookClient({ url: process.env.SUGGESTION })
-  : undefined;
-
-const desc = require('@commands/cmdDesc');
-
-module.exports = {
-  data: {
-    name: 'z-suggestion',
-    description: 'suggest a feature or changes',
-    longDesc: desc.suggestion,
-  },
-  async execute(interaction, client) {
+const { EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, WebhookClient } = require('discord.js');
+const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
+async function getSuggestion(interaction) {
+  const { client } = interaction;
     const modal = new ModalBuilder()
       .setCustomId('suggestionModal')
       .setTitle('Suggestion');
@@ -82,5 +64,19 @@ module.exports = {
           });
       })
       .catch(console.error);
-  },
-};
+  }
+  
+async function getChangelog(interaction) {
+    const { client } = interaction;
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: `Changelog`, iconURL: client.user.displayAvatarURL() })
+      .setColor('Gold')
+      .setTitle(`Changelog v4.2.0`)
+      .setDescription(
+        `__**Changes**__\n- Added a new command </next-shards:1154643350184542248>.\n - check </help:1147244751708491898> for more info.\n- added a suggestion command.\n - You can request a feature or give an opinion on already existing one.\n- updated timestamp command results.\n- /seasonal-guides command is fully updated.\n- added /changelog command.\n- added skygpt prefix command\n - skygpt model has been trained a little in Sky: CoTL (still long way to go)\n - check </help:1147244751708491898> for more info`,
+      )
+      .setFooter({ text: `v4.1.2` });
+    interaction.reply({ embeds: [embed], ephemral: true });
+  }
+  
+  module.exports = { getSuggestion, getChangelog };
