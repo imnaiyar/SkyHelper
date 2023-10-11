@@ -68,7 +68,7 @@ async function helpMenu(interaction, client) {
     new ButtonBuilder()
       .setCustomId('commands-help')
       .setLabel('Commands')
-      .setStyle(3)
+      .setStyle(3),
   );
   const reply = await interaction.reply({
     embeds: [embed],
@@ -128,27 +128,27 @@ async function helpMenu(interaction, client) {
     pageCommands.forEach((command) => {
       if (command.name === 'util') {
         description += `</${command.name}:${command.id}>\n${command.description}\n`;
-        command.options.forEach( (o) => {
+        command.options.forEach((o) => {
           description += `- **${o.name}**\n  ↪${o.description}\n`;
         });
       } else {
-      description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
+        description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
       }
     });
 
     slashEmbed.setDescription(description);
     const hmBtn = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setLabel('Prev').setCustomId('prevBtn').setStyle(2),
-    new ButtonBuilder().setLabel('🏠').setCustomId('homeBtn').setStyle(4),
-    new ButtonBuilder().setLabel('Next').setCustomId('nextBtn').setStyle(2),
+      new ButtonBuilder().setLabel('Prev').setCustomId('prevBtn').setStyle(2),
+      new ButtonBuilder().setLabel('🏠').setCustomId('homeBtn').setStyle(4),
+      new ButtonBuilder().setLabel('Next').setCustomId('nextBtn').setStyle(2),
     );
     if (page === 1) {
-    hmBtn.components[0].setDisabled(true);
+      hmBtn.components[0].setDisabled(true);
     }
-    
+
     if (page === totalPages) {
-    hmBtn.components[2].setDisabled(true);
-  }
+      hmBtn.components[2].setDisabled(true);
+    }
 
     await interaction.update({
       embeds: [slashEmbed],

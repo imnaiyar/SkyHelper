@@ -14,19 +14,6 @@ module.exports = async (client, message) => {
   if (!message.guild) return;
   const settings = await getSettings(message.guild);
 
-  // Reply on bot's mention
-  const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
-  if (message.content.match(mention)) {
-    const embed = new EmbedBuilder()
-      .setColor('Gold')
-      .setDescription(
-        `Did you just ping me? RUDE. Anyway, my prefix for this server is '**${
-          settings?.prefix || process.env.BOT_PREFIX
-        }**'`,
-      );
-    message.channel.send({ embeds: [embed] });
-  }
-
   function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
