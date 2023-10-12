@@ -34,7 +34,7 @@ findCommandFiles(commandDirectory);
 module.exports = {
   data: {
     name: 'register',
-    description: 'blacklist a guild or an user.',
+    description: 'deploy commands',
     category: 'OWNER',
   },
 

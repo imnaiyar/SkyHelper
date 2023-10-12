@@ -28,13 +28,7 @@ module.exports = {
       'timestamp',
       'sky-times',
       'credits',
-      'skygpt',
       'ping',
-      'setprefix',
-      'ping',
-      'skytimes',
-      'z-changelog',
-      'z-suggestion',
     ];
     const filtered = choices.filter((choice) => choice.includes(focusedValue));
     await interaction.respond(
