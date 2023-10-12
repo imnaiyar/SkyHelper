@@ -12,6 +12,7 @@ const Logger = process.env.COMMANDS_USED
 
 module.exports = async (client, message) => {
   if (!message.guild) return;
+  if (message.author.bot) return;
   const settings = await getSettings(message.guild);
 
   function escapeRegExp(string) {
@@ -29,7 +30,6 @@ module.exports = async (client, message) => {
   const escapedPrefix = escapeRegExp(prefix);
 
   if (
-    message.author.bot ||
     !message.content.startsWith(prefix) ||
     message.content.match(new RegExp(`^${escapedPrefix} `))
   ) {
