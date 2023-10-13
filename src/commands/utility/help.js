@@ -23,12 +23,10 @@ module.exports = {
     const focusedValue = interaction.options.getFocused();
     const choices = [
       'shards',
-      'seasonal-guide',
+      'seasonal-guides',
       'next-shards',
       'timestamp',
       'sky-times',
-      'credits',
-      'ping',
     ];
     const filtered = choices.filter((choice) => choice.includes(focusedValue));
     await interaction.respond(

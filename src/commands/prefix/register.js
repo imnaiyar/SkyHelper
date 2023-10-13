@@ -8,7 +8,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 const commandDirectory = path.join(__dirname, '../');
 const commands = [];
 
-// Function to recursively search for command files
+// function to recursively search for command files
 function findCommandFiles(directory) {
   const files = fs.readdirSync(directory);
 
@@ -17,7 +17,7 @@ function findCommandFiles(directory) {
     const fileStat = fs.statSync(filePath);
 
     if (fileStat.isDirectory()) {
-      // If it's a directory and not named "sub," recursively search it
+      // If it's a directory and not named "sub, prefix" recursively search it
       if (file !== 'sub' && file !== 'prefix') {
         findCommandFiles(filePath);
       }
@@ -28,7 +28,7 @@ function findCommandFiles(directory) {
   }
 }
 
-// Start the search from the "commandDirectory"
+
 findCommandFiles(commandDirectory);
 
 module.exports = {
