@@ -2,6 +2,7 @@ const firstChoices = [
   {
     label: 'Season of Revival',
     value: 'revival',
+    emoji: '<:revival:1163480957706321950>',
   },
   {
     label: 'Season of Moments',

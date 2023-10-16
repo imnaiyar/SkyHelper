@@ -25,7 +25,7 @@ async function shardsReply(
 
   let result = new EmbedBuilder()
     .setAuthor({
-      name: `Shards Information for ${noShard}`,
+      name: `Shards Info for ${noShard}`,
       iconURL:
         'https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925',
     })
