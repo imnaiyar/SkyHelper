@@ -1,5 +1,9 @@
 const firstChoices = [
   {
+    label: 'Season of Revival',
+    value: 'revival',
+  },
+  {
     label: 'Season of Moments',
     value: 'moments',
     emoji: '<:moments:1130958731211985019>',

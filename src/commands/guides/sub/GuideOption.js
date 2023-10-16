@@ -110,11 +110,17 @@ async function handleFirst(interaction, firstChoices, secondChoices) {
     firstChoice: interaction.values[0],
     secondChoice: null,
   });
+  
+  if (selectedChoice === 'revival') {
+    return interaction.reply({ content: 'Still under development, Thank you for your patience.', ephemeral: true});
+  }
 
   if (!secondChoices[selectedChoice]) {
     interaction.reply('Invalid choice selected.');
     return;
   }
+  
+  
 
   const secondChoiceOptions = secondChoices[selectedChoice].map((choice) => ({
     label: choice.label,
