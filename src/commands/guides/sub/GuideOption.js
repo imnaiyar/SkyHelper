@@ -112,7 +112,7 @@ async function handleFirst(interaction, firstChoices, secondChoices) {
   });
   
   if (selectedChoice === 'revival') {
-    return interaction.reply({ content: 'Still under development, Thank you for your patience.', ephemeral: true});
+    return interaction.reply({ content: '**Season of Revival** guides are still under development, Thank you for your patience.', ephemeral: true});
   }
 
   if (!secondChoices[selectedChoice]) {
