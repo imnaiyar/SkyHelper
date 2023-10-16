@@ -197,22 +197,22 @@ const thirdChoices = {
     {
       label: 'Vestige of a Deserted Oasis',
       value: 'deserted_oasis_tree',
-      emoji: '',
+      emoji: '<:oasis:1163516730899972106>',
     },
     {
       label: 'Memory of a Lost Village',
       value: 'lost_village_tree',
-      emoji: '',
+      emoji: '<:lostVillage:1163516699228774501>',
     },
     {
       label: 'Echo of an Abandoned Refuge',
       value: 'abandoned_refuge_tree',
-      emoji: '',
+      emoji: '<:refuge:1163516307409477744>',
     },
     {
       label: 'Remnant of a Forgotten Haven',
       value: 'forgotten_haven_tree',
-      emoji: '',
+      emoji: '<:haven:1163485717641576559>',
     },
   ],
   moments_q: [
