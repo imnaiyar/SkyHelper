@@ -14,7 +14,7 @@ const eventSequence = [
   'B',
   'a',
 ];
-async function shardsTime() {
+ function shardsTime() {
   const timezone = 'America/Los_Angeles';
 
   let currentDate;
@@ -314,7 +314,7 @@ async function shardsTime() {
       break;
     } else if (
       i === eventTimings.length - 1 &&
-      p.present.isAfter(eventTiming.end)
+      present.isAfter(eventTiming.end)
     ) {
       eventStatus = `🌋 All Shards Has Ended For Today.`;
       timeRemaining = '';
