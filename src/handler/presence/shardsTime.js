@@ -14,7 +14,7 @@ const eventSequence = [
   'B',
   'a',
 ];
- function shardsTime() {
+function shardsTime() {
   const timezone = 'America/Los_Angeles';
 
   let currentDate;

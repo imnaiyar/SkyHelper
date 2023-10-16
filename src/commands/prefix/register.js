@@ -28,7 +28,6 @@ function findCommandFiles(directory) {
   }
 }
 
-
 findCommandFiles(commandDirectory);
 
 module.exports = {

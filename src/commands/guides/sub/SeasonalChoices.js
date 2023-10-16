@@ -96,10 +96,14 @@ const firstChoices = [
   },
 ];
 const secondChoices = {
+  revival: [
+    { label: 'Seasonal Quests', value: 'revival_q' },
+    { label: 'Seasonal Price Tree', value: 'revival_ts' },
+  ],
   moments: [
     { label: 'Seasonal Quests', value: 'moments_q' },
     { label: 'Spirit Locations', value: 'moments_s' },
-    { label: 'Seasonal Price Tree', value: 'moments_ts' },
+    { label: 'Spirits Tree', value: 'moments_ts' },
   ],
   passage: [
     { label: 'Seasonal Quests', value: 'passage_q' },
@@ -182,6 +186,35 @@ const secondChoices = {
   ],
 };
 const thirdChoices = {
+  revival_q: [
+    {
+      label: 'Quest 1',
+      value: 'revival_q1',
+      emoji: '<:quests:1131171487877963886>',
+    },
+  ],
+  revival_ts: [
+    {
+      label: 'Vestige of a Deserted Oasis',
+      value: 'deserted_oasis_tree',
+      emoji: '',
+    },
+    {
+      label: 'Memory of a Lost Village',
+      value: 'lost_village_tree',
+      emoji: '',
+    },
+    {
+      label: 'Echo of an Abandoned Refuge',
+      value: 'abandoned_refuge_tree',
+      emoji: '',
+    },
+    {
+      label: 'Remnant of a Forgotten Haven',
+      value: 'forgotten_haven_tree',
+      emoji: '',
+    },
+  ],
   moments_q: [
     {
       label: 'Quest 1',

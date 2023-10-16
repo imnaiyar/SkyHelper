@@ -110,17 +110,11 @@ async function handleFirst(interaction, firstChoices, secondChoices) {
     firstChoice: interaction.values[0],
     secondChoice: null,
   });
-  
-  if (selectedChoice === 'revival') {
-    return interaction.reply({ content: '**Season of Revival** guides are still under development, Thank you for your patience.', ephemeral: true});
-  }
 
   if (!secondChoices[selectedChoice]) {
     interaction.reply('Invalid choice selected.');
     return;
   }
-  
-  
 
   const secondChoiceOptions = secondChoices[selectedChoice].map((choice) => ({
     label: choice.label,
@@ -267,7 +261,7 @@ async function handleBack(interaction, firstChoices) {
 async function respondToInteraction(interaction, response, ephemeral) {
   if (!response) {
     await interaction.update(
-      '*__Under development... Thank you for your patience.__*',
+      '**Season of Revival** guides are still under development, Thank you for your patience.',
     );
     return;
   }
