@@ -2,6 +2,40 @@ const { AttachmentBuilder } = require('discord.js');
 
 module.exports = {
   responses: {
+    // revival
+    // revival quests
+    revival_q1: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em
+https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Season of Revival Quest 1 by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1163891052185387070/Revival_Q1.jpg',
+      ],
+    },
+    // revival trees
+    deserted_oasis_tree: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
+      ],
+    },
+    lost_village_tree: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
+      ],
+    },
+    abandoned_refuge_tree: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
+      ],
+    },
+    forgotten_haven_tree: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
+      ],
+    },
     // moments
     // moments quest
     moments_q1: {
