@@ -13,7 +13,8 @@ Simple discord bot that has function related to Sky: Children of Lights.
 
 ## Running the bot
 Clone this repository by running
-```git clone https://github.com/imnaiyar/SkyHelper```
+```js
+git clone https://github.com/imnaiyar/SkyHelper```
 
 Rename `.env.example` to `.env` and fill all the required fields.
 
