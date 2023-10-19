@@ -17,7 +17,7 @@ Clone this repository by running
 git clone https://github.com/imnaiyar/SkyHelper
 ```
 
-Rename `.env.example` to `.env` and fill all the required fields.
+Rename `.example.env` to `.env` and fill all the required fields.
 
 Run ```npm run commands``` to register the slash commands.
 If you want to register the slash commands to a specific field, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
