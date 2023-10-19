@@ -1,8 +1,9 @@
 {
   "name": "skybot",
-  "version": "4.2.0",
+  "version": "4.3.2",
   "description": "A Bot for Sky: Children of the Light",
   "main": "index.js",
+  "keywords": ["SkyCoTL", "SkyShards", "SkyDiscordBot", "Sky: Children of the Light"],
   "scripts": {
     "start": "node index.js",
     "commands": "node src/commandsRegister.js"
@@ -48,5 +49,9 @@
     "@root": ".",
     "@schemas": "src/database/schemas/",
     "@events": "src/events/"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "prettier-plugin-ejs": "^0.0.18"
   }
 }

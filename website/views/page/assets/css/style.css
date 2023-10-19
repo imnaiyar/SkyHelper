@@ -1,188 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
- @import url("https://fonts.googleapis.com/css?family=Dosis"); 
-  
-     .word { 
-       font-family: "Dosis", sans-serif; 
-       perspective: 1000px; 
-     } 
-  
-     .word span { 
-       cursor: pointer; 
-       display: inline-block; 
-       font-size: 25px; 
-       user-select: none; 
-       line-height: 0.8; 
-     } 
-  
-     .word span:nth-child(1).active { 
-       animation: balance 1.5s ease-out; 
-       transform-origin: bottom left; 
-     } 
-  
-     @keyframes balance { 
-       0%, 
-       100% { 
-         transform: rotate(0deg); 
-       } 
-  
-       30%, 
-       60% { 
-         transform: rotate(-45deg); 
-       } 
-     } 
-  
-     .word span:nth-child(2).active { 
-       animation: shrinkjump 1s ease-in-out; 
-       transform-origin: bottom center; 
-     } 
-  
-     @keyframes shrinkjump { 
-       10%, 
-       35% { 
-         transform: scale(2, 0.2) translate(0, 0); 
-       } 
-  
-       45%, 
-       50% { 
-         transform: scale(1) translate(0, -150px); 
-       } 
-  
-       80% { 
-         transform: scale(1) translate(0, 0); 
-       } 
-     } 
-  
-     .word span:nth-child(3).active { 
-       animation: falling 2s ease-out; 
-       transform-origin: bottom center; 
-     } 
-  
-     @keyframes falling { 
-       12% { 
-         transform: rotateX(240deg); 
-       } 
-  
-       24% { 
-         transform: rotateX(150deg); 
-       } 
-  
-       36% { 
-         transform: rotateX(200deg); 
-       } 
-  
-       48% { 
-         transform: rotateX(175deg); 
-       } 
-  
-       60%, 
-       85% { 
-         transform: rotateX(180deg); 
-       } 
-  
-       100% { 
-         transform: rotateX(0deg); 
-       } 
-     } 
-  
-     .word span:nth-child(4).active { 
-       animation: rotate 1s ease-out; 
-     } 
-  
-     @keyframes rotate { 
-       20%, 
-       80% { 
-         transform: rotateY(180deg); 
-       } 
-  
-       100% { 
-         transform: rotateY(360deg); 
-       } 
-     } 
-  
-     .word span:nth-child(5).active { 
-       animation: toplong 1.5s linear; 
-     } 
-  
-     @keyframes toplong { 
-       10%, 
-       40% { 
-         transform: translateY(-48vh) scaleY(1); 
-       } 
-  
-       90% { 
-         transform: translateY(-48vh) scaleY(4); 
-       } 
-     } 
-  
-     .word span:nth-child(6).active { 
-       animation: shrinkjump 1s ease-in-out; 
-       transform-origin: bottom center; 
-     } 
-  
-     @keyframes shrinkjump { 
-       10%, 
-       35% { 
-         transform: scale(2, 0.2) translate(0, 0); 
-       } 
-  
-       45%, 
-       50% { 
-         transform: scale(1) translate(0, -150px); 
-       } 
-  
-       80% { 
-         transform: scale(1) translate(0, 0); 
-       } 
-     } 
-  
-     .word span:nth-child(7).active { 
-       animation: balance 1.5s ease-out; 
-       transform-origin: bottom left; 
-     } 
-  
-     @keyframes balance { 
-       0%, 
-       100% { 
-         transform: rotate(0deg); 
-       } 
-  
-       30%, 
-       60% { 
-         transform: rotate(-45deg); 
-       } 
-     }
-     .word span:nth-child(8).active { 
-       animation: rotate 1s ease-out; 
-     } 
-  
-     @keyframes rotate { 
-       20%, 
-       80% { 
-         transform: rotateY(180deg); 
-       } 
-  
-       100% { 
-         transform: rotateY(360deg); 
-       } 
-     } 
-     .word span:nth-child(9).active { 
-       animation: balance 1.5s ease-out; 
-       transform-origin: bottom left; 
-     } 
-  
-     @keyframes balance { 
-       0%, 
-       100% { 
-         transform: rotate(0deg); 
-       } 
-  
-       30%, 
-       60% { 
-         transform: rotate(-45deg); 
-       } 
-     } 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+
+.word {
+  font-family: 'Dosis', sans-serif;
+  perspective: 1000px;
+}
+
+.word span {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 25px;
+  user-select: none;
+  line-height: 0.8;
+}
+
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 html {
@@ -207,7 +40,10 @@ html {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
+  transition:
+    background-color 0.3s,
+    opacity 0.5s,
+    visibility 0.5s;
   opacity: 0;
   visibility: hidden;
   z-index: 1000;
@@ -220,6 +56,200 @@ html {
 
 #backtotop:active {
   background-color: #555;
+}
+
+[data-theme='light'] {
+  --color-bg: #ffffff !important;
+  --color-fg: #4a4a4a !important;
+  --color-tl: #363636 !important;
+  --color-sh: #000 !important;
+  --color-un: #e1e2e4 !important;
+}
+
+[data-theme='dark'] {
+  --color-bg: #0f121a !important;
+  --color-fg: #e1ebe4 !important;
+  --color-tl: #bed4c4 !important;
+  --color-sh: #bed4c4;
+  --color-un: #3a3d44 !important;
+}
+.discUnix {
+  background-color: var(--color-un);
+  color: var(--color-fg);
+}
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+.title {
+  color: var(--color-tl);
+}
+
+/* Image Card */
+.container {
+  max-height: 800px;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+}
+.border {
+  height: 369px;
+  width: 290px;
+  padding: 10px;
+  background: transparent;
+  border-radius: 10px;
+  transition: border 1s;
+  position: relative;
+}
+.border:hover {
+  border: 1px solid #fff;
+}
+.card {
+  height: 379px;
+  width: 300px;
+  background: #808080;
+  border-radius: 10px;
+  transition: background 0.8s;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 10px 0 var(--color-sh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.card0 {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1157073911721230426/20230929_035722_0000.png?ex=6517488d&is=6515f70d&hm=a3ae9dab6f51d7116d318cf3c891c3a5a078297b913e949f3409ff657a90bd62&')
+    center center no-repeat;
+  background-size: 300px;
+}
+.card0:hover {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1157073911964520580/Picsart_23-09-29_03-57-46-668.png?ex=6517488e&is=6515f70e&hm=61cf920e71980cf345a04be919bb2fd0bd9fe842e2035350243e1da1392f2e52&')
+    left center no-repeat;
+  background-size: 600px;
+}
+.card0:hover h3 {
+  opacity: 1;
+  color: #7289da;
+}
+.card0:hover .fa {
+  opacity: 1;
+}
+/* Guide */
+.card1 {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783082712608879/20230928_083435_0000.png?ex=651639b2&is=6514e832&hm=0239aee7a1acacaff22910592316f01469c00bb8d2829abc7cb2258e4d793023&')
+    center center no-repeat;
+  background-size: 300px;
+}
+.card1:hover {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783082964254840/Picsart_23-09-28_08-41-35-785.png?ex=651639b2&is=6514e832&hm=c9cb49f3b0986282c695d1d958d08a2524749114fdf1c19fd9bdba07091d5fcc&')
+    left center no-repeat;
+  background-size: 600px;
+}
+.card1:hover h3 {
+  opacity: 1;
+  color: #00d1b2;
+}
+.card1:hover .fa {
+  opacity: 1;
+}
+/* Next - Shards */
+.card2 {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783188627165244/20230928_083614_0000.png?ex=651639cc&is=6514e84c&hm=217aa5fee25fe9120e072aa1026ff2ca8672375d8bb8f8d1f183d942debeec80&')
+    center center no-repeat;
+  background-size: 300px;
+}
+.card2:hover {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783189034016838/Picsart_23-09-28_08-41-49-261.png?ex=651639cc&is=6514e84c&hm=e510c64ae7757820889cec8be5c3a56a9e0765d49bdb4c37b260039d436a9b40&')
+    left center no-repeat;
+  background-size: 600px;
+}
+.card2:hover h3 {
+  opacity: 1;
+}
+.card2:hover .fa {
+  opacity: 1;
+}
+/* Sky-times */
+.card3 {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783213419704430/20230928_083641_0000.png?ex=651639d2&is=6514e852&hm=c192edc580b8af96342898843db65089010867f3f55205626b2c0d42eaaebcd9&')
+    center center no-repeat;
+  background-size: 300px;
+}
+.card3:hover {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783213683953835/Picsart_23-09-28_08-42-04-916.png?ex=651639d2&is=6514e852&hm=f6b14cbc4335b530ed6e05b2d4e544336e1157cd98b646ba8065cd8ad59524c7&')
+    left center no-repeat;
+  background-size: 600px;
+}
+.card3:hover h3 {
+  opacity: 1;
+  color: #ffe08a;
+}
+.card3:hover .fa {
+  opacity: 1;
+}
+/* Timestamp */
+.card4 {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783230360485938/20230928_083902_0000.png?ex=651639d6&is=6514e856&hm=32d459970c55b9bb73bd9ef313a43e9b162885a84f3f02d113d22d07623bda8f&')
+    center center no-repeat;
+  background-size: 300px;
+}
+.card4:hover {
+  background: url('https://media.discordapp.net/attachments/867638574571323424/1156783230620553316/Picsart_23-09-28_08-42-18-760.png?ex=651639d6&is=6514e856&hm=a8d984cfc6ba79aa5ae440da659625d2fb79985ca3fd1183ffd22d66a71527a2&')
+    left center no-repeat;
+  background-size: 600px;
+}
+.card4:hover h3 {
+  opacity: 1;
+  color: #3e8ed0;
+}
+.card4:hover .fa {
+  opacity: 1;
+}
+
+h3 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #fff;
+  margin: 20px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.fa {
+  opacity: 0;
+  transition: opacity 1s;
+}
+.icons {
+  position: absolute;
+  fill: #fff;
+  color: #fff;
+  height: 110px;
+  top: 226px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+button {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  transition: all var(--global-transition-time) ease-in-out;
+  border-radius: 2rem;
+  cursor: pointer;
+  color: #fff;
+  background-color: #1a2634;
+  border: 0.25rem solid #1a2634;
+}
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }
 
 #backtotop.show {
@@ -276,6 +306,7 @@ html {
 nav,
 .navbar-menu {
   background-color: #1a2634 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-item.nav-dark,
@@ -377,54 +408,66 @@ nav.nav-w {
   border-color: transparent;
   color: #fff;
 }
-.discUnix {
-  background-color: #e1e2e4;
-  color: rgba(66,67,71,255);
-}
 .copyBtn {
-border: 0;
-outline: 0;
-cursor: pointer;
-color: white;
-background-color: rgb(84, 105, 212);
-                    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
-border-radius: 4px;
-font-size: 14px;
-font-weight: 500;
-padding: 1px 4px;
-display: inline-block;
-transition: background-color .24s,box-shadow .24s;}
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(84, 105, 212);
+  box-shadow:
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 1px 0px,
+    rgb(84 105 212) 0px 0px 0px 1px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 1px 4px;
+  display: inline-block;
+  transition:
+    background-color 0.24s,
+    box-shadow 0.24s;
+}
 .copyBtn:hover {
-                        box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
-                    background-color: black ;
-                    color: white;
-                    }
-
+  box-shadow:
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 1px 0px,
+    rgb(84 105 212) 0px 0px 0px 1px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(60 66 87 / 8%) 0px 3px 9px 0px,
+    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  background-color: black;
+  color: white;
+}
 
 .btn {
-    color: #fff;
-    background-color: #1D1E21;
-    text-decoration: none;
-    font-size: 18px;
-    margin: 5px;
-    font-weight: 500;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+  color: #fff;
+  background-color: #1d1e21;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 5px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 
-    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, .2);
-    animation: pageShow .3s ease-in-out;
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.2);
+  animation: pageShow 0.3s ease-in-out;
 }
 
 .btn-primary {
-    background-color: #5865F2;
+  background-color: #5865f2;
 }
 
 .btn-primary:hover {
-    background-color: #5865F2;
-    box-shadow: 0px 0px 8px 2px rgba(88, 101, 242, .5);
-    -webkit-box-shadow: 0px 0px 8px 2px rgba(88, 101, 242, .5);
-    -moz-box-shadow: 0px 0px 8px 2px rgba(88, 101, 242, .5);
+  background-color: #5865f2;
+  box-shadow: 0px 0px 8px 2px rgba(88, 101, 242, 0.5);
+  -webkit-box-shadow: 0px 0px 8px 2px rgba(88, 101, 242, 0.5);
+  -moz-box-shadow: 0px 0px 8px 2px rgba(88, 101, 242, 0.5);
 }
 
 .single-feature {
@@ -447,8 +490,7 @@ transition: background-color .24s,box-shadow .24s;}
 }
 
 @media (max-width: 767px) {
-  .shape-right
- {
+  .shape-right {
     display: none;
   }
 }

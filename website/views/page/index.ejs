@@ -1,35 +1,54 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="SkyHelper | SkyCoTL Shards, Guides, Events" />
+    <meta
+      name="description"
+      content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky."
+    />
 
-<!-- Primary Meta Tags -->
-<meta name="title" content="SkyHelper | SkyCoTL Shards, Guides, Events" />
-<meta name="description" content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky." />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://skyhelper.xyz/" />
+    <meta
+      property="og:title"
+      content="SkyHelper | SkyCoTL Shards, Guides, Events"
+    />
+    <meta
+      property="og:description"
+      content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky."
+    />
+    <meta
+      property="og:image"
+      content="https://skyhelper.xyz/assets/img/skybotLong.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://skyhelper.xyz/" />
-<meta property="og:title" content="SkyHelper | SkyCoTL Shards, Guides, Events" />
-<meta property="og:description" content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky." />
-<meta property="og:image" content="https://skyhelper.xyz/assets/img/skybotLong.png" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://skyhelper.xyz/" />
-<meta property="twitter:title" content="SkyHelper" />
-<meta property="twitter:description" content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky." />
-<meta property="twitter:image" content="https://skyhelper.xyz/assets/img/skybotLong.png" />
-
-<!-- Meta Tags Generated with https://metatags.io -->
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://skyhelper.xyz/" />
+    <meta property="twitter:title" content="SkyHelper" />
+    <meta
+      property="twitter:description"
+      content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky."
+    />
+    <meta
+      property="twitter:image"
+      content="https://skyhelper.xyz/assets/img/skybotLong.png"
+    />
+    <meta name="og:site_name" content="SkyHelper" />
     <title>SkyHelper</title>
-    <link rel="icon" href="assets/img/skybot.png">
+    <link rel="icon" href="assets/img/skybot.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <link rel="stylesheet" href="assets/css/bulma.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -62,26 +81,33 @@
     >
       <div class="navbar-brand mt-2 mb-2">
         <a class="navbar-item" href="#">
-              <img src="assets/img/skybot.png"/> 
-    <style>img {
-  margin-right: 10px;
-}</style>
-<div class="word text-xl font-bold text">
-     <span>S</span> 
-     <span>k</span> 
-     <span>y</span> 
-     <span>H</span> 
-     <span>e</span> 
-     <span>l</span> 
-     <span>p</span> 
-     <span>e</span>
-     <span>r</span>
-   </div> 
-  
-  
+          <img src="assets/img/skybot.png" />
+          <style>
+            img {
+              margin-right: 10px;
+            }
+          </style>
+          <div class="word text-xl font-bold text">
+            <span>S</span>
+            <span>k</span>
+            <span>y</span>
+            <span>H</span>
+            <span>e</span>
+            <span>l</span>
+            <span>p</span>
+            <span>e</span>
+            <span>r</span>
+          </div>
 
           <!-- or if you want to use image -->
         </a>
+        <button
+          type="button"
+          class="material-symbols-outlined"
+          data-theme-toggle
+        >
+          dark_mode
+        </button>
 
         <a
           role="button"
@@ -98,17 +124,11 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a href="#" class="navbar-item is-tab">
-            Home
-          </a>
+          <a href="#" class="navbar-item is-tab"> Home </a>
 
-          <a href="#features" class="navbar-item is-tab">
-            Features
-          </a>
+          <a href="#features" class="navbar-item is-tab"> Features </a>
 
-          <a href="#stats" class="navbar-item is-tab">
-            Stats
-          </a>
+          <a href="#stats" class="navbar-item is-tab"> Stats </a>
 
           <a href="https://docs.skyhelper.xyz" class="navbar-item is-tab">
             Commands
@@ -116,20 +136,28 @@
         </div>
 
         <div class="navbar-end">
-          <a href="https://discord.gg/u9zUjWbbQ4" class="navbar-item is-tab" target="_blank">
+          <a
+            href="https://discord.gg/u9zUjWbbQ4"
+            class="navbar-item is-tab"
+            target="_blank"
+          >
             <i class="fa-brands fa-discord"></i>
           </a>
 
-          <a href="https://github.com/imnaiyar/SkyHelper.git" class="navbar-item is-tab" target="_blank">
+          <a
+            href="https://github.com/imnaiyar/SkyHelper.git"
+            class="navbar-item is-tab"
+            target="_blank"
+          >
             <i class="fa-brands fa-github"></i>
           </a>
 
           <div class="navbar-item">
             <div class="buttons">
-              <a href="https://discord.gg/u9zUjWbbQ4" class="button is-blurple">
+              <a href="/invite" class="button is-blurple">
                 <strong
                   ><i class="fa-solid fa-right-to-bracket mr-2"></i>
-                  Support Server</strong
+                  Invite</strong
                 >
               </a>
             </div>
@@ -146,22 +174,34 @@
           <div class="columns">
             <div class="column mr-6 mt-12" data-aos="fade-up">
               <p class="subtitle has-text-grey-light is-size-6 mt-3">
-                SkyHelper is a versatile Discord bot designed to enhance the <a href= 'https://thatskygame.com'>Sky: Children of the Light</a> gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. 
+                SkyHelper is a versatile Discord bot designed to enhance the
+                <a href="https://thatskygame.com">Sky: Children of the Light</a>
+                gaming experience. It provides a wide range of useful
+                information to help players navigate the enchanting world of
+                Sky.
               </p>
               <div class="buttons">
-              <a class="btn btn-primary" href="https://dsc.gg/skyhelper" target="_none" role="button"><i
-                  class="fab fa-discord"></i> Add to server</a>
-                  <a href="https://discord.gg/u9zUjWbbQ4" class="button is-primary is-outlined">
+                <a
+                  class="btn btn-primary"
+                  href="https://dsc.gg/skyhelper"
+                  target="_none"
+                  role="button"
+                  ><i class="fab fa-discord"></i> Add to server</a
+                >
+                <a
+                  href="https://discord.gg/u9zUjWbbQ4"
+                  class="button is-primary is-outlined"
+                >
                   <strong>Support Server</strong>
                 </a>
-                </div>
+              </div>
             </div>
             <div class="column mt-6" data-aos="fade-left">
               <img
                 class="image has-image-centered vert-move mt-4"
                 src="assets/img/skybot.png"
                 alt="hero image"
-                style="width: 20rem;"
+                style="width: 20rem"
               />
             </div>
           </div>
@@ -210,16 +250,24 @@
           <div class="column mr-6">
             <h4 class="title">Shards <span class="blurple">/shards</span></h4>
             <p class="subtitle mt-3">
-              Provides Shattering Shard informations. It's type, location, when it falls and ends.
+              Provides Shattering Shard informations. It's type, location, when
+              it falls and ends.
             </p>
           </div>
-          <div class="column" data-aos="fade-left">
-            <img
-              class="image has-image-centered"
-              src="assets/img/ShardsEx.jpg"
-              alt="feature1 img"
-              style="width: 20rem;"
-            />
+          <div data-aos="fade-left">
+            <div class="container">
+              <div class="card card0">
+                <div class="border">
+                  <h3><b>/shards</b></h3>
+                  <div class="icons">
+                    <span class="fa" aria-hidden="true">Type</span>
+                    <span class="fa" aria-hidden="true">Location</span>
+                    <span class="fa" aria-hidden="true">Status</span>
+                    <span class="fa" aria-hidden="true">Countdown</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -236,22 +284,31 @@
             />
           </svg>
         </div>
-
         <div class="columns mt-6">
           <div class="column" data-aos="fade-right">
-            <img
-              class="image has-image-centered"
-              src="assets/img/QuestEx.jpg"
-              alt="feature1 img"
-              style="width: 20rem;"
-            />
+            <div class="container">
+              <div class="card card1">
+                <div class="border">
+                  <h3><b>/seasonal-guides</b></h3>
+                  <div class="icons">
+                    <span class="fa" aria-hidden="true">Seasonal Quests</span>
+                    <span class="fa" aria-hidden="true">Spirits Location</span>
+                    <span class="fa" aria-hidden="true">Friendship Tree</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="column">
             <h4 class="title">
-              Seasonal Guides <span class="has-text-primary">/seasonal-guides</span>
+              Seasonal Guides
+              <span class="has-text-primary">/seasonal-guides</span>
             </h4>
             <p class="subtitle mt-3">
-              Provides various Seasonal Guides created by awesome players of Sky (with credits). This includes Seasonal Quests, Seasonal Spirits location and their TS friendship tree (Seasonal tree in case they haven't returned as a  TS yet for reference).
+              Provides various Seasonal Guides created by awesome players of Sky
+              (with credits). This includes Seasonal Quests, Seasonal Spirits
+              location and their TS friendship tree (Seasonal tree in case they
+              haven't returned as a TS yet for reference).
             </p>
           </div>
         </div>
@@ -276,16 +333,26 @@
               Sky Times <span class="has-text-warning">/sky-times</span>
             </h4>
             <p class="subtitle mt-3">
-              Gives information about in-game events time. From Grandma's delecious dinner time to Geyser's pesky urchins, don't forget about our friendly Turlte. Also provides daily Reset and Eden reset time
+              Gives information about in-game events time. From Grandma's
+              delecious dinner time to Geyser's pesky urchins, don't forget
+              about our friendly Turlte. Also provides daily Reset and Eden
+              reset time
             </p>
           </div>
           <div class="column" data-aos="fade-left">
-            <img
-              class="image has-image-centered"
-              src="assets/img/TurtleEx.jpg"
-              alt="turtle"
-              style="width: 20rem;"
-            />
+            <div class="container">
+              <div class="card card3">
+                <div class="border">
+                  <h3><b>/sky-times</b></h3>
+                  <div class="icons">
+                    <span class="fa" aria-hidden="true">Geyser</span>
+                    <span class="fa" aria-hidden="true">Grandma</span>
+                    <span class="fa" aria-hidden="true">Turtle</span>
+                    <span class="fa" aria-hidden="true">Eden Reset</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -305,17 +372,29 @@
 
         <div class="columns mt-6">
           <div class="column" data-aos="fade-right">
-            <img
-              class="image has-image-centered"
-              src="assets/img/TimeEx.jpg"
-              alt="feature1 img"
-              style="width: 20rem;"
-            />
+            <div class="container">
+              <div class="card card4">
+                <div class="border">
+                  <h3><b>/timestamp</b></h3>
+                  <div class="icons">
+                    <span class="fa" aria-hidden="true">UNIX</span>
+                    <span class="fa" aria-hidden="true">Easy Copy</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="column">
-            <h4 class="title">Timestamp<span class="has-text-info">/timestamp</span></h4>
+            <h4 class="title">
+              Timestamp<span class="has-text-info">/timestamp</span>
+            </h4>
             <p class="subtitle mt-3">
-              Built keeping in mind to awesom Sky helpers who regularly need to provide game related times in UNIX. This command converts user given time in UNIX timestamp. By default it convert for California timezone as TGC (game developer) is based there, but optionally, users can provide their timezone should they wish to convert for that particular area.
+              Built keeping in mind to awesom Sky helpers who regularly need to
+              provide game related times in UNIX. This command converts user
+              given time in UNIX timestamp. By default it convert for California
+              timezone as TGC (game developer) is based there, but optionally,
+              users can provide their timezone should they wish to convert for
+              that particular area.
             </p>
           </div>
         </div>
@@ -325,44 +404,48 @@
     <!-- Features Section End -->
 
     <!-- Stats Section Start -->
-<section id="stats" class="section mt-6">
-  <div class="has-text-centered">
-    <h1 class="title lined">Stats</h1>
-    <div class="line line-center blurple"></div>
-  </div>
+    <section id="stats" class="section mt-6">
+      <div class="has-text-centered">
+        <h1 class="title lined">Stats</h1>
+        <div class="line line-center blurple"></div>
+      </div>
 
-  <div class="columns mt-6">
-    <div class="column has-text-centered">
-      <p class="title has-text-weight-bold lined"><%= stats.servers %></p>
-      <span class="subtitle has-text-weight-bold blurple"><i class="fa-solid fa-server"></i> Servers</span>
-    </div>
+      <div class="columns mt-6">
+        <div class="column has-text-centered">
+          <p class="title has-text-weight-bold lined"><%= stats.servers %></p>
+          <span class="subtitle has-text-weight-bold blurple"
+            ><i class="fa-solid fa-server"></i> Servers</span
+          >
+        </div>
 
-    <div class="column has-text-centered">
-      <p class="title has-text-weight-bold lined"><%= stats.slash %></p>
-      <span class="subtitle has-text-weight-bold blurple"><i class="fa-solid fa-terminal"></i> Commands</span>
-    </div>
+        <div class="column has-text-centered">
+          <p class="title has-text-weight-bold lined"><%= stats.slash %></p>
+          <span class="subtitle has-text-weight-bold blurple"
+            ><i class="fa-solid fa-terminal"></i> Commands</span
+          >
+        </div>
 
-    <div class="column has-text-centered">
-      <p class="title has-text-weight-bold lined"><%= stats.members %></p>
-      <span class="subtitle has-text-weight-bold blurple"><i class="fa-solid fa-users"></i> Users</span>
-    </div>
-  </div>
-</section>
+        <div class="column has-text-centered">
+          <p class="title has-text-weight-bold lined"><%= stats.members %></p>
+          <span class="subtitle has-text-weight-bold blurple"
+            ><i class="fa-solid fa-users"></i> Users</span
+          >
+        </div>
+      </div>
+    </section>
 
-
-<section id="topgg" class="section mt-6">
-  <div class="has-text-centered">
-    <h1 class="title lined">TopGG</h1>
-    <div class="line line-center blurple"></div>
-  </div>
-  <br>
+    <section id="topgg" class="section mt-6">
+      <div class="has-text-centered">
+        <h1 class="title lined">TopGG</h1>
+        <div class="line line-center blurple"></div>
+      </div>
+      <br />
       <div class="column has-text-centered">
-  <a href="https://top.gg/bot/1121541967730450574">
-  <img src="https://top.gg/api/widget/1121541967730450574.svg">
-  </div>
-</a>
-    
-</section>
+        <a href="https://top.gg/bot/1121541967730450574">
+          <img src="https://top.gg/api/widget/1121541967730450574.svg" />
+        </a>
+      </div>
+    </section>
 
     <!-- Stats Section End -->
 
@@ -374,7 +457,8 @@
             Ready to try <span class="blurple">SkyHelper</span>?
           </p>
           <p class="subtitle mt-3 has-text-gray">
-            What are you waiting for? Invite the bot and get started with your daily dose of easily available Sky informations.
+            What are you waiting for? Invite the bot and get started with your
+            daily dose of easily available Sky informations.
           </p>
           <a href="#" class="button is-blurple is-medium"
             ><strong><i class="fa-solid fa-book"></i> Get Started</strong></a
@@ -390,11 +474,19 @@
     <footer class="footer bg-base">
       <div class="content has-text-centered has-text-white">
         <div class="mb-2">
-          <a href="https://discord.gg/u9zUjWbbQ4" class="has-text-white" target="_blank">
+          <a
+            href="https://discord.gg/u9zUjWbbQ4"
+            class="has-text-white"
+            target="_blank"
+          >
             <i class="fa-brands fa-discord"></i>
           </a>
           &nbsp; &nbsp;
-          <a href="https://github.com/imnaiyar/SkyHelper.git" class="has-text-white" target="_blank">
+          <a
+            href="https://github.com/imnaiyar/SkyHelper.git"
+            class="has-text-white"
+            target="_blank"
+          >
             <i class="fa-brands fa-github"></i>
           </a>
         </div>
@@ -402,16 +494,15 @@
         <p>
           <span class="has-text-weight-bold">[SkyHelper]</span>
           <br />
-          &copy; <span id="cp-year"></span> Copyright. All Rights
-          Reserved. Our <a
+          &copy; <span id="cp-year"></span> Copyright. All Rights Reserved. Our
+          <a
             href="/privacy"
             class="blurple has-text-weight-bold"
             target="_blank"
             >Privacy Policy</a
-          > and <a
-            href="/tos"
-            class="blurple has-text-weight-bold"
-            target="_blank"
+          >
+          and
+          <a href="/tos" class="blurple has-text-weight-bold" target="_blank"
             >Terms and Conditions</a
           >.
         </p>
