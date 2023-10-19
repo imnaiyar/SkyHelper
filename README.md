@@ -21,7 +21,7 @@ Rename `.env.example` to `.env` and fill all the required fields.
 
 Run ```npm run commands``` to register the slash commands.
 
-After installing all the dependencies, run ```npm start``` to start the bot.
+After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
 
 # Credits.
 This bot wouldn't be possible without these people and the work they do.    
