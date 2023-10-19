@@ -20,7 +20,7 @@ git clone https://github.com/imnaiyar/SkyHelper
 Rename `.env.example` to `.env` and fill all the required fields.
 
 Run ```npm run commands``` to register the slash commands.
-If you want to register the command to a specific field, before running the command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
+If you want to register the slash commands to a specific field, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
 ```js
       await rest.put( 
          // Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific 
