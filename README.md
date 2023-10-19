@@ -23,7 +23,7 @@ Run ```npm run commands``` to register the slash commands.
 If you want to register the slash commands to a specific field, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
 ```js
 await rest.put( 
-//Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific 
+// Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific 
 
 Routes.applicationCommands(client.user.id),  
          { body: commands }, 
