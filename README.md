@@ -11,8 +11,15 @@ Simple discord bot that has function related to Sky: Children of Lights.
   `/timestamp`- Convert the time given by user into unix timestamp. Default Timezone is set to California time(America/Los_Angeles), as this bot is primarily focused for Sky. But user can optionally provide a timezone if they want to convert it for that particular area.  
   `/sky-times` - Gives out upcoming times for Various Sky event(Grandma, Geyser, Reset, Eden Reset, Turtle).
 
-## Bot is coded with nodejs.
-Run the command with 'node index.js'
+## Running the bot
+Clone this repository by running
+```git clone https://github.com/imnaiyar/SkyHelper```
+
+Rename `.env.example` to `.env` and fill all the required fields.
+
+Run ```npm run commands``` to register the slash commands.
+
+After installing all the dependencies, run ```npm start``` to start the bot.
 
 # Credits.
 This bot wouldn't be possible without these people and the work they do.    
