@@ -4,7 +4,6 @@
   <br>
   SkyHelper
   <br>
-   <p style="font-size: 10px;" align="center">A simple discord bot that has functions related to Sky: Children of Lights</p>
 </h1>
 
 <p align="center">Shards, Next Shards, Seasonal Guides, Timestamp, Sky Times and more...</p>
