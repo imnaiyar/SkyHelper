@@ -3,8 +3,7 @@
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/skybot.png" height="200" alt="SkyHelper"></a>
   <br>
   SkyHelper
-  <br>
-  <h6 align="center">A simple discord bot that has function related to Sky: Children of Lights.
+   <h6 align="center">A simple discord bot that has function related to Sky: Children of Lights.
   <h5>
   <br>
 </h1>
