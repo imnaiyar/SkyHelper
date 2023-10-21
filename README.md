@@ -30,14 +30,12 @@
 </div>
 
 ## Running the bot
-Clone this repository by running
+- Clone this repository by running
 ```js
 git clone https://github.com/imnaiyar/SkyHelper
 ```
-
-Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
-
-Run ```npm run commands``` to register the slash commands.
+- Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
+- Run ```npm run commands``` to register the slash commands.
 If you want to register the slash commands to a specific field, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
 ```js
 await rest.put( 
@@ -54,33 +52,33 @@ Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
          { body: commands }, 
        );
 ```
-
-After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
+- Optionally, do the same in [register.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commands/prefix/register.js) if you're using prefix command to register.
+- After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
 
 # Credits
 This bot wouldn't be possible without these people and the work they do.    
   
-**__Shards Predictions__**  
-● Zhii (zhiiran4275)  
-● Christian (christiankingfu)  
-● Hucker (hucker_)  
-● Plutoy (plutoy)  
-● Kion (kion_anzu)  
-● LN (ln.cookie)  
-● Gale (galerowfylery)  
-● Stoat (.stoat.)  
+**__Shards Predictions__**
+- Zhii (zhiiran4275)
+- Christian (christiankingfu)
+- Hucker (hucker_)  
+- Plutoy (plutoy)  
+- Kion (kion_anzu)  
+- LN (ln.cookie)  
+- Gale (galerowfylery)  
+- Stoat (.stoat.)  
   
 **__Seosanal Guides__**  
-● Clement (clement8978)  
-● Mimi (mimi4117)  
-● Sam (sam6917)  
-● Zed (zedlocked_)  
-● Art (lovecry)  
+- Clement (clement8978)  
+- Mimi (mimi4117)  
+- Sam (sam6917)  
+- Zed (zedlocked_)  
+- Art (lovecry)  
 **and all others who do the awesome job of creating guides.**  
   
 **__Special Mentions__**  
-● Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
-● Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.  
-● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).
+- Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
+- Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.  
+- Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).
 
-### This bot is not affiliated with Sky: Children of the Light or thatgamecompany.
+<h6 align="center">This bot is not affiliated with Sky: Children of the Light or thatgamecompany<h6>
