@@ -22,42 +22,12 @@
   <a href="https://discord.com/invite/u9zUjWbbQ4">Support Server</a>
 </p>
 
-<<<<<<< HEAD
 <br>
 <div align="center">
   <a href="https://top.gg/bot/1121541967730450574">
     <img src="https://top.gg/api/widget/1121541967730450574.svg" alt="Discord Bots">
   </a>
 </div>
-=======
-## Running the bot
-Clone this repository by running
-```js
-git clone https://github.com/imnaiyar/SkyHelper
-```
-
-Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
-
-Run ```npm run commands``` to register the slash commands.
-If you want to register the slash commands to a specific field, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
-```js
-await rest.put( 
-// Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific 
-
-Routes.applicationCommands(client.user.id),  
-         { body: commands }, 
-       );
-```
-to 
-```js
-await rest.put( 
-Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-         { body: commands }, 
-       );
-```
-
-After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
->>>>>>> main
 
 ## Running the bot
 - Clone this repository by running
