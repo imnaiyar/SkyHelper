@@ -48,7 +48,7 @@ Routes.applicationCommands(client.user.id),
 to 
 ```js
 await rest.put( 
-Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+Routes.applicationGuildCommands(client.user.id, "Your Guild ID"),
          { body: commands }, 
        );
 ```
