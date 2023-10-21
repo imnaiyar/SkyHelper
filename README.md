@@ -3,9 +3,8 @@
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/skybot.png" height="200" alt="SkyHelper"></a>
   <br>
   SkyHelper
-   <h6 align="center">A simple discord bot that has function related to Sky: Children of Lights.
-  <h5>
   <br>
+   <p style="font-size: 10px;" align="center">A simple discord bot that has functions related to Sky: Children of Lights</p>
 </h1>
 
 <p align="center">Shards, Next Shards, Seasonal Guides, Timestamp, Sky Times and more...</p>
@@ -59,7 +58,7 @@ Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
 
 After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
 
-# Credits.
+# Credits
 This bot wouldn't be possible without these people and the work they do.    
   
 **__Shards Predictions__**  
