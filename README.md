@@ -1,18 +1,64 @@
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=SkyHelper;A+discord+bot+for+Sky%3A+Children+of+the+Light)](https://top.gg/bot/1121541967730450574)
+<h1 align="center">
+  <br>
+  <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/skybot.png" height="200" alt="SkyHelper"></a>
+  <br>
+  SkyHelper
+  <br>
+  <h6 align="center">A simple discord bot that has function related to Sky: Children of Lights.
+  <h5>
+  <br>
+</h1>
 
+<p align="center">Shards, Next Shards, Seasonal Guides, Timestamp, Sky Times and more...</p>
 
-[![Discord Bots](https://top.gg/api/widget/1121541967730450574.svg)](https://top.gg/bot/1121541967730450574)
+<br>
 
-# SkyHelper
-Simple discord bot that has function related to Sky: Children of Lights.
-# Commnads
-`/shards` - Get today's shard information. You can also provide an additional date to look for shard details for that particular date.  
-  `/seasonal_guide` - Various guides for each season. Includes Seasonal Quests, Seasonal Spirits Location, And their Previous Visit price tree(Seasonal chart if they have not visited at least once). **Only updated upto Season of Prophecy**  
-  `/timestamp`- Convert the time given by user into unix timestamp. Default Timezone is set to California time(America/Los_Angeles), as this bot is primarily focused for Sky. But user can optionally provide a timezone if they want to convert it for that particular area.  
-  `/sky-times` - Gives out upcoming times for Various Sky event(Grandma, Geyser, Reset, Eden Reset, Turtle).
+<p align="center">
+  <a href="https://skyhelper.xyz">Website</a>
+  •
+  <a href="https://skyhelper.xyz/invite">Invite</a>
+  •
+  <a href="https://skyhelper.xyz/vote">Vote</a>
+  •
+  <a href="https://docs.skyhelper.xyz">Documentation</a>
+  •
+  <a href="https://discord.com/invite/u9zUjWbbQ4">Support Server</a>
+</p>
 
-## Bot is coded with nodejs.
-Run the command with 'node index.js'
+<br>
+<div align="center">
+  <a href="https://top.gg/bot/1121541967730450574">
+    <img src="https://top.gg/api/widget/1121541967730450574.svg" alt="Discord Bots">
+  </a>
+</div>
+
+## Running the bot
+Clone this repository by running
+```js
+git clone https://github.com/imnaiyar/SkyHelper
+```
+
+Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
+
+Run ```npm run commands``` to register the slash commands.
+If you want to register the slash commands to a specific field, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
+```js
+await rest.put( 
+// Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), // If you want the commands to be guild specific 
+
+Routes.applicationCommands(client.user.id),  
+         { body: commands }, 
+       );
+```
+to 
+```js
+await rest.put( 
+Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+         { body: commands }, 
+       );
+```
+
+After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
 
 # Credits.
 This bot wouldn't be possible without these people and the work they do.    

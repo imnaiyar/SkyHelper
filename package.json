@@ -3,7 +3,12 @@
   "version": "4.3.2",
   "description": "A Bot for Sky: Children of the Light",
   "main": "index.js",
-  "keywords": ["SkyCoTL", "SkyShards", "SkyDiscordBot", "Sky: Children of the Light"],
+  "keywords": [
+    "SkyCoTL",
+    "SkyShards",
+    "SkyDiscordBot",
+    "Sky: Children of the Light"
+  ],
   "scripts": {
     "start": "node index.js",
     "commands": "node src/commandsRegister.js"
@@ -51,6 +56,8 @@
     "@events": "src/events/"
   },
   "devDependencies": {
+    "eslint": "^8.52.0",
+    "eslint-plugin-jsdoc": "^46.8.2",
     "prettier": "^3.0.3",
     "prettier-plugin-ejs": "^0.0.18"
   }
