@@ -1,12 +1,8 @@
 const {
-  GatewayIntentBits,
   EmbedBuilder,
   ActionRowBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
   ButtonBuilder,
 } = require('discord.js');
-const { getSettings } = require('@schemas/Guild');
 const config = require('@root/config');
 
 async function helpMenu(interaction, client) {
@@ -48,7 +44,7 @@ async function helpMenu(interaction, client) {
       });
     }
 
-    const reply = await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], ephemeral: true });
 
     return;
   }

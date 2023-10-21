@@ -6,9 +6,7 @@ const {
   ButtonBuilder,
   Collection,
 } = require('discord.js');
-const { shardInfos } = require('@shards/aboutShards');
-const { shardLocation } = require('@shards/shardsLocation');
-const { shardTimeline } = require('@shards/shardsTimeline');
+const { btnHandler } = require('@handler/functions/btnHandler.js');
 const { parsePerm } = require('@handler/functions/parsePerm');
 const config = require('@root/config');
 const Log = require('@src/logger');
@@ -18,8 +16,7 @@ const cLogger = process.env.COMMANDS_USED
 const bLogger = process.env.BUG_REPORTS
   ? new WebhookClient({ url: process.env.BUG_REPORTS })
   : undefined;
-const { ErrorForm } = require('@handler/functions/errorForm');
-const { nextPrev } = require('@shards/sub/scrollFunc');
+
 
 /**
  * @param {import('discord.js').Interaction} interaction
@@ -37,7 +34,7 @@ module.exports = async (client, interaction) => {
     if (
       command.data.category &&
       command.data.category === 'OWNER' &&
-      !OWNER.includes(interaction.user.id)
+      !config.OWNER.includes(interaction.user.id)
     )
       return;
 
@@ -156,43 +153,7 @@ module.exports = async (client, interaction) => {
   }
   // Buttons
   if (interaction.isButton()) {
-    const Art = await client.users.fetch('504605855539265537');
-    const Zhii = await client.users.fetch('650487047160725508');
-    const Gale = await client.users.fetch('473761854175576075');
-    const Clement = await client.users.fetch('693802004018888714');
-    const Christian = await client.users.fetch('594485678625128466');
-
-    if (interaction.customId === 'error_report') {
-      await ErrorForm(interaction);
-    }
-    if (interaction.customId === 'next' || interaction.customId === 'prev') {
-      const value = interaction.customId;
-      await nextPrev(interaction, value);
-    }
-    if (
-      interaction.customId === 'shard_timeline' ||
-      'shard_left' ||
-      'shard_right' ||
-      'shard_original'
-    ) {
-      shardTimeline(interaction, Zhii, Christian);
-    }
-    if (
-      interaction.customId === 'shard_location' ||
-      'shard_leftL' ||
-      'shard_rightL' ||
-      'shard_originalL'
-    ) {
-      shardLocation(interaction, Gale, Clement);
-    }
-    if (
-      interaction.customId === 'about_shard' ||
-      'left_about' ||
-      'right_about' ||
-      'original_about'
-    ) {
-      shardInfos(interaction, Art);
-    }
+    btnHandler(interaction);
   }
   // Modals
   if (interaction.isModalSubmit()) {

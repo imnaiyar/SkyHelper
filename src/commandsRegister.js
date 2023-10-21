@@ -1,4 +1,4 @@
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 require('module-alias/register');
 require('dotenv').config();
 const { REST } = require('@discordjs/rest');

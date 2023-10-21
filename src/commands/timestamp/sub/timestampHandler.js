@@ -1,6 +1,5 @@
 const {
   EmbedBuilder,
-  Client,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -73,7 +72,7 @@ async function convertTime(interaction) {
   const minutes = `<t:${unixTime}:R>`;
 
   const format = options.getString('format');
-
+  let result;
   result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion` })
     .setColor('DarkGold')

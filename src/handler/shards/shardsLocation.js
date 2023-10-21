@@ -30,7 +30,6 @@ let currentShardIndex = 0;
 const timezone = 'America/Los_Angeles';
 
 async function shardLocation(interaction, Gale, Clement) {
-  if (!interaction.customId.includes('shard')) return;
   const messageId = interaction.message.id;
   const currentDate = getCurrentDate(interaction, messageId);
   if (!currentDate) return;
@@ -39,7 +38,7 @@ async function shardLocation(interaction, Gale, Clement) {
   const currentEvent = eventSequence[sequenceIndex];
   const secondSequenceIndex = (dayOfMonth - 1) % secondEventSequence.length;
   const currentSecondEvent = secondEventSequence[secondSequenceIndex];
-  if (interaction.customId === 'shard_location') {
+  if (interaction.customId === 'location') {
     currentShardIndex = 0;
     await showShard(
       interaction,
@@ -47,7 +46,7 @@ async function shardLocation(interaction, Gale, Clement) {
       Gale,
       Clement,
     );
-  } else if (interaction.customId === 'shard_leftL') {
+  } else if (interaction.customId === 'location_leftL') {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(
       interaction,
@@ -55,7 +54,7 @@ async function shardLocation(interaction, Gale, Clement) {
       Gale,
       Clement,
     );
-  } else if (interaction.customId === 'shard_rightL') {
+  } else if (interaction.customId === 'location_rightL') {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(
       interaction,
@@ -63,7 +62,7 @@ async function shardLocation(interaction, Gale, Clement) {
       Gale,
       Clement,
     );
-  } else if (interaction.customId === 'shard_originalL') {
+  } else if (interaction.customId === 'location_originalL') {
     await nextPrev(interaction);
   }
 }
@@ -141,15 +140,15 @@ async function showShard(interaction, shard, Gale, Clement) {
   const actionRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setLabel('Location')
-      .setCustomId('shard_leftL')
+      .setCustomId('location_leftL')
       .setStyle('1'),
     new ButtonBuilder()
       .setLabel('Data')
-      .setCustomId('shard_rightL')
+      .setCustomId('location_rightL')
       .setStyle('1'),
     new ButtonBuilder()
       .setEmoji('<a:back:1148653107773976576>')
-      .setCustomId('shard_originalL')
+      .setCustomId('location_originalL')
       .setStyle(3),
   );
 

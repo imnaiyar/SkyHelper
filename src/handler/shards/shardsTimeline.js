@@ -1,6 +1,4 @@
-const fs = require('fs');
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const moment = require('moment-timezone');
 const { getCurrentDate } = require('@shards/shardsLocation');
 const eventSequence = [
   'C',
@@ -15,34 +13,22 @@ const eventSequence = [
   'b',
   'B',
   'a',
-]; // Remove the repeating part
-const secondEventSequence = [
-  'prairie',
-  'forest',
-  'valley',
-  'wasteland',
-  'vault',
 ];
+
 const { nextPrev } = require('./sub/scrollFunc');
 const shardData = require('./sub/timelineData');
 
 const MAX_SHARD_INDEX = 2; // 3 results for each event, so the max shard index is 2
 let currentShardIndex = 0;
-let originalEmbedData = null;
-let originalActionRow = null;
-let buttonDisableTimeout = null;
-
-const timezone = 'America/Los_Angeles';
 
 async function shardTimeline(interaction, Zhii, Christian) {
-  if (!interaction.customId.includes('shard')) return;
   const messageId = interaction.message.id; // Get the messageId of the current interaction
   const currentDate = getCurrentDate(interaction, messageId);
   if (!currentDate) return;
   const dayOfMonth = currentDate.date();
   const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
   const currentEvent = eventSequence[sequenceIndex];
-  if (interaction.customId === 'shard_timeline') {
+  if (interaction.customId === 'timeline') {
     currentShardIndex = 0;
     await showShard(
       interaction,
@@ -50,7 +36,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
       Zhii,
       Christian,
     );
-  } else if (interaction.customId === 'shard_left') {
+  } else if (interaction.customId === 'timeline_left') {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(
       interaction,
@@ -58,7 +44,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
       Zhii,
       Christian,
     );
-  } else if (interaction.customId === 'shard_right') {
+  } else if (interaction.customId === 'timeline_right') {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(
       interaction,
@@ -66,7 +52,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
       Zhii,
       Christian,
     );
-  } else if (interaction.customId === 'shard_original') {
+  } else if (interaction.customId === 'timeline_original') {
     await nextPrev(interaction);
   }
 }
@@ -115,15 +101,15 @@ async function showShard(interaction, shard, Zhii, Christian) {
   const actionRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setEmoji('<a:left:1148644073670975640>')
-      .setCustomId('shard_left')
+      .setCustomId('timeline_left')
       .setStyle('1'),
     new ButtonBuilder()
       .setEmoji('<a:right:1148627450608222278>')
-      .setCustomId('shard_right')
+      .setCustomId('timeline_right')
       .setStyle('1'),
     new ButtonBuilder()
       .setEmoji('<a:back:1148653107773976576>')
-      .setCustomId('shard_original')
+      .setCustomId('timeline_original')
       .setStyle(3)
       .setDisabled(false),
   );

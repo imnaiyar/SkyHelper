@@ -1,7 +1,4 @@
-const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js');
-const { EMBED_COLORS } = require('@root/config');
-const DUMMY_TOKEN =
-  'MTA1OwMzU4MDgxMDY2NjA2NA.G3j9tJ.fyYBa817sEb1F00uOmJMmQ7T3oesqqYob683';
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: {
@@ -33,7 +30,7 @@ const buildSuccessResponse = (output, client) => {
   // Token protection
   output = require('util')
     .inspect(output, { depth: 0 })
-    .replaceAll(client.token, 'DUMMY_TOKEN');
+    .replaceAll(client.token, 'LoL');
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: '📤 Output' })

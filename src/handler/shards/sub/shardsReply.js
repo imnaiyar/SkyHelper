@@ -1,5 +1,4 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');
-const Logger = require('@src/logger');
 const fs = require('fs');
 const moment = require('moment');
 
@@ -15,7 +14,6 @@ async function shardsReply(
   noShard,
 ) {
   const timezone = 'America/Los_Angeles';
-  const messageDataFile = 'messageData.json';
   let type = 'Red Shard';
   let location;
   let rewards;
@@ -234,17 +232,17 @@ async function shardsReply(
       .setStyle('1'),
     new ButtonBuilder()
       .setLabel('Timeline')
-      .setCustomId('shard_timeline')
+      .setCustomId('timeline')
       .setDisabled(disabled)
       .setStyle('3'),
     new ButtonBuilder()
       .setLabel('Location/Data')
-      .setCustomId('shard_location')
+      .setCustomId('location')
       .setDisabled(disabled)
       .setStyle('3'),
     new ButtonBuilder()
       .setLabel('About Shard')
-      .setCustomId('about_shard')
+      .setCustomId('about')
       .setStyle('3'),
   );
   if (!interaction.isButton()) {

@@ -4,7 +4,6 @@ const {
   ActionRowBuilder,
   ButtonStyle,
   ComponentType,
-  ApplicationCommandOptionType,
 } = require('discord.js');
 
 const IDLE_TIMEOUT = 60; // in seconds

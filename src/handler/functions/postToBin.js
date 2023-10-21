@@ -20,7 +20,7 @@ async function postToBin(content, title) {
       raw: `https://cdn.sourceb.in/bins/${response.key}/0`,
     };
   } catch (ex) {
-    error(`postToBin`, ex);
+    console.error(`postToBin`, ex);
   }
 }
 

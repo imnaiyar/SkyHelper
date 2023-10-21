@@ -1,5 +1,4 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const fs = require('fs');
 const { nextPrev } = require('./sub/scrollFunc');
 const shardInfo = [
   {
@@ -22,17 +21,16 @@ const MAX_SHARD_INDEX = 2;
 let currentShardIndex = 0; // Declare currentShardIndex variable.
 
 async function shardInfos(interaction, Art) {
-  if (interaction.customId === 'about_shard') {
-    const messageId = interaction.message.id;
+  if (interaction.customId === 'about') {
     currentShardIndex = 0;
     await showShard(interaction, shardInfo[currentShardIndex], Art);
-  } else if (interaction.customId === 'left_about') {
+  } else if (interaction.customId === 'about_left') {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(interaction, shardInfo[currentShardIndex], Art);
-  } else if (interaction.customId === 'right_about') {
+  } else if (interaction.customId === 'about_right') {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(interaction, shardInfo[currentShardIndex], Art);
-  } else if (interaction.customId === 'original_about') {
+  } else if (interaction.customId === 'about_original') {
     await nextPrev(interaction);
   }
 }
@@ -63,15 +61,15 @@ async function showShard(interaction, shard, Art) {
   const actionRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setEmoji('<a:left:1148644073670975640>')
-      .setCustomId('left_about')
+      .setCustomId('about_left')
       .setStyle('1'),
     new ButtonBuilder()
       .setEmoji('<a:right:1148627450608222278>')
-      .setCustomId('right_about')
+      .setCustomId('about_right')
       .setStyle('1'),
     new ButtonBuilder()
       .setEmoji('<a:back:1148653107773976576>')
-      .setCustomId('original_about')
+      .setCustomId('about_original')
       .setStyle(3)
       .setDisabled(false),
   );

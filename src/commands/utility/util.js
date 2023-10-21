@@ -82,7 +82,7 @@ async function getCredits(interaction) {
     format: 'png',
     dynamic: true,
   });
-
+ let result;
   result = new EmbedBuilder()
     .setAuthor({
       name: `Requested by ${userNickname}`,

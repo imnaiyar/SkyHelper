@@ -19,11 +19,12 @@ function shardsTime() {
 
   let currentDate;
   let dayOfMonth;
+  let dayOfWeek;
 
   currentDate = moment().tz(timezone);
   dayOfMonth = currentDate.date();
   dayOfWeek = currentDate.day();
-  formatDate = currentDate.format('DD MMMM YYYY');
+  
 
   // Calculate the index in the event sequences
   const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;

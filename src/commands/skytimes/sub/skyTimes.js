@@ -102,7 +102,6 @@ async function skyTimes() {
     turtleResultStr += ` ${durationTurtle.seconds()} seconds)`;
   }
   // Reset Calculation
-  let resetResult;
   const resetTargetTime = now
     .clone()
     .startOf('day')
@@ -125,7 +124,6 @@ async function skyTimes() {
   resetResultStr += ` ${durationReset.seconds()} seconds)`;
 
   // Eden Calculation
-  let edenResult;
   const targetDayOfWeek = 0; // 0 represents Sunday
   const currentDayOfWeek = now.day();
 

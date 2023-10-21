@@ -1,8 +1,6 @@
 const {
-  ChannelType,
   EmbedBuilder,
   WebhookClient,
-  AuditLogEvent,
 } = require('discord.js');
 const { dblStats } = require('@handler/functions/dblStats');
 const { getSettings: registerGuild } = require('@schemas/Guild');

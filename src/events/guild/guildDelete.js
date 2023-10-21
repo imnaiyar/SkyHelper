@@ -1,4 +1,4 @@
-const { ChannelType, EmbedBuilder, WebhookClient } = require('discord.js');
+const {  EmbedBuilder, WebhookClient } = require('discord.js');
 const { botSettings } = require('@schemas/botStats');
 const { getSettings } = require('@schemas/Guild');
 const Logger = require('@src/logger');

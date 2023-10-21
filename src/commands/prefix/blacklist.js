@@ -81,14 +81,11 @@ __Guild Details__
 async function removeGuildBlacklist(client, message, ID) {
   const guild = client.guilds.cache.get(ID);
 
-  let guildName;
   let guildId;
 
   if (guild) {
-    guildName = guild.name;
     guildId = guild.id;
   } else {
-    guildName = 'Unknown';
     guildId = ID;
   }
 
