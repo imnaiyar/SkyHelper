@@ -29,7 +29,7 @@ async function shardsAlt(interaction, currentDate) {
   const dayOfWeek = currentDate.day();
   const formatDate = currentDate.format('DD MMMM YYYY');
   const today = moment().tz(timezone).startOf('day');
-  const noShard = currentDate.isSame(today, 'day') ? 'today' : `${formatDate}`;
+  const noShard = currentDate.isSame(today, 'day') ? 'Today' : `${formatDate}`;
 
   // Calculate the index in the event sequences
   const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;

@@ -35,7 +35,7 @@ process.on('unhandledRejection', (error) =>
   Logger.error(`Unhandled exception`, error),
 );
 
-client.on('ready', async () => {
+client.once('ready', async () => {
   // Setting up events
   const loadEventHandlers = (dir) => {
     const files = fs.readdirSync(path.join(__dirname, dir));
@@ -145,6 +145,12 @@ client.on('ready', async () => {
   // Fetching Application info for eval purposes.
   await client.application.fetch();
 });
+
+// auto shard updates
+client.on('ready', async() => {
+  
+});
+
 // setup mongoose
 initializeMongoose();
 
