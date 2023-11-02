@@ -1,11 +1,11 @@
 const moment = require('moment-timezone');
 async function skyTimes() {
-  const targetTimezone = 'Asia/Kolkata'; // Set the target time zone (example: Eastern Time)
+  const targetTimezone = 'America/Los_Angeles';
   const now = moment().tz(targetTimezone);
 
   // Geyser Calculation
   let geyserResultStr;
-  const geyserTargetTime = now.clone().startOf('day').add(30, 'minutes');
+  const geyserTargetTime = now.clone().startOf('day');
 
   while (now.isAfter(geyserTargetTime)) {
     geyserTargetTime.add(2, 'hours');
@@ -38,7 +38,7 @@ async function skyTimes() {
 
   // Grandma Calculation
   let grandmaResultStr;
-  const grandmaTargetTime = now.clone().startOf('day').add(1, 'hours');
+  const grandmaTargetTime = now.clone().startOf('day').add(30, 'minutes');
 
   while (now.isAfter(grandmaTargetTime)) {
     grandmaTargetTime.add(2, 'hours');
@@ -71,9 +71,7 @@ async function skyTimes() {
   let turtleResultStr;
   const turtleTargetTime = now
     .clone()
-    .startOf('day')
-    .add(1, 'hours')
-    .add(20, 'minutes');
+    .startOf('day').add(50, 'minutes');
 
   while (now.isAfter(turtleTargetTime)) {
     turtleTargetTime.add(2, 'hours');
@@ -104,9 +102,8 @@ async function skyTimes() {
   // Reset Calculation
   const resetTargetTime = now
     .clone()
-    .startOf('day')
-    .add(12, 'hours')
-    .add(30, 'Minutes');
+    .startOf('day');
+    
 
   if (now.isSameOrAfter(resetTargetTime)) {
     resetTargetTime.add(1, 'days');
@@ -131,10 +128,7 @@ async function skyTimes() {
   const edenTargetTime = now
     .clone()
     .startOf('day')
-    .add(daysToAdd, 'days')
-    .hour(12)
-    .minute(30)
-    .second(0);
+    .add(daysToAdd, 'days');
   if (daysToAdd <= 0 || (daysToAdd === 0 && now.isAfter(edenTargetTime))) {
     daysToAdd += 7;
   }
