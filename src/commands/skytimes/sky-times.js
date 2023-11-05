@@ -30,17 +30,17 @@ module.exports = {
     switch (chosenOption) {
       case 'geyser':
         await interaction.reply(`${result.geyserResultStr}\n**__All Geyser Times:__**
-  > <t:1682838027:t> 》<t:1682845227:t> 》<t:1682852427:t> 》<t:1682859627:t> 》<t:1682866827:t> 》<t:1682874027:t> 》<t:1682881227:t> 》<t:1682888427:t> 》<t:1682895627:t> 》<t:1682902827:t> 》<t:1682910027:t> 》<t:1682917227:t>`);
+> <t:1699257600:t> 》<t:1699178400:t>》<t:1699185600:t> 》<t:1699192800:t> 》<t:1699200000:t> 》 <t:1699207200:t>》<t:1699214400:t> 》<t:1699221600:t> 》<t:1699228800:t> 》<t:1699236000:t> 》<t:1699243200:t> 》<t:1699250400:t>`);
         break;
 
       case 'turtle':
         await interaction.reply(`${result.turtleResultStr}\n**__All Turtle Times:__**
-  > <t:1682841024:t> 》<t:1682848224:t> 》<t:1682855424:t>》<t:1682862624:t>》<t:1682869824:t>》<t:1682877024:t>》<t:1682884224:t>》<t:1682891424:t>》<t:1682898624:t>》<t:1682905824:t>》<t:1682913024:t>》<t:1682920224:t>`);
+        > <t:1699260600:t> 》 <t:1699181400:t> 》<t:1699188600:t> 》<t:1699195800:t> 》<t:1699203000:t> 》 <t:1699210200:t>》<t:1699217400:t> 》<t:1699224600:t> 》<t:1699231800:t>》<t:1699239000:t> 》<t:1699246200:t> 》<t:1699253400:t>`);
         break;
 
       case 'grandma':
         await interaction.reply(`${result.grandmaResultStr}\n**__All Grandma Times:__**
-  > <t:1682839809:t> 》 <t:1682847009:t> 》<t:1682854209:t> 》<t:1682861400:t> 》<t:1682868600:t> 》<t:1682789400:t> 》<t:1682796600:t> 》<t:1682803800:t> 》<t:1682811000:t> 》 <t:1682818200:t> 》<t:1682825400:t> 》<t:1682832600:t> 》`);
+> <t:1699259400:t> 》<t:1699180200:t>》<t:1699187400:t> 》<t:1699194600:t> 》<t:1699201800:t> 》 <t:1699209000:t>》<t:1699216200:t>》<t:1699223400:t> 》<t:1699230600:t> 》<t:1699237800:t> 》<t:1699245000:t> 》<t:1699252200:t>`);
         break;
 
       case 'reset':
@@ -57,7 +57,8 @@ module.exports = {
 
       default:
         await interaction.reply(
-          `In-game events time:\n- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`,
+          `Important Note: For today, there might be discrepancies in the displayed individual upcoming times due to the transition from Daylight Savings Time (DST). Our system is programmed to adjust these times, but it may initially display incorrect times for today. The issue will resolve itself from tomorrow. In the meantime, we kindly request that you cross-check individual times using the 'times' option and compare them with all available times for today to ensure accuracy. Thank you for your understanding.
+          In-game events time:\n- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`,
         );
         break;
     }
