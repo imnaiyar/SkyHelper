@@ -34,8 +34,7 @@ module.exports = {
         break;
 
       case 'turtle':
-        await interaction.reply(`${result.turtleResultStr}\n**__All Turtle Times:__**
-        > <t:1699260600:t> 》 <t:1699181400:t> 》<t:1699188600:t> 》<t:1699195800:t> 》<t:1699203000:t> 》 <t:1699210200:t>》<t:1699217400:t> 》<t:1699224600:t> 》<t:1699231800:t>》<t:1699239000:t> 》<t:1699246200:t> 》<t:1699253400:t>`);
+        await interaction.reply(`${result.turtleResultStr}\n**__All Turtle Times:__**\n> <t:1699260600:t> 》 <t:1699181400:t> 》<t:1699188600:t> 》<t:1699195800:t> 》<t:1699203000:t> 》 <t:1699210200:t>》<t:1699217400:t> 》<t:1699224600:t> 》<t:1699231800:t>》<t:1699239000:t> 》<t:1699246200:t> 》<t:1699253400:t>`);
         break;
 
       case 'grandma':
