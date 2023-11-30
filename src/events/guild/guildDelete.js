@@ -47,10 +47,10 @@ module.exports = async (client, guild) => {
  if (channels) {
    const botInfo = new EmbedBuilder()
    .setAuthor({ name: 'Bot\'s Information', iconURL: client.user.displayAvatarURL()})
-   .setDescription(`**Bot's Name:** ${client.user.displayName}\n**Total Servers**: ${guildCount}\n**Total Users: ${userCount}\n**Total Commands**: ${client.application.commands.cache.size + 3}`)
+   .setDescription(`**Bot's Name:** ${client.user.displayName}\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${client.application.commands.cache.size + 3}`)
    .setColor(2895153)
    .setFooter({ text: `Last Updated: ${new Date().toLocaleString('en-GB')}`});
-  channels.messages.fetch('1179851781992357930')
+  channels.messages.fetch('1179858980923768893')
   .then(m => {
     m.edit({ embeds: [botInfo]});
   });
