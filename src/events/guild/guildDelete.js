@@ -15,6 +15,11 @@ const webhookLogger = process.env.GUILD
 module.exports = async (client, guild) => {
   if (!guild.available) return;
   Logger.success(`Guild Left: ${guild.name} Members: ${guild.memberCount}`);
+  const guildCount = client.guilds.cache.size;
+  const userCount = client.guilds.cache.reduce(
+    (total, guild) => total + guild.memberCount,
+    0,
+  );
   const settings = await getSettings(guild);
   const settings1 = await botSettings(client);
   settings1.data.servers = client.guilds.cache.size;
@@ -36,6 +41,20 @@ module.exports = async (client, guild) => {
   } catch (err) {
     ownerTag = 'Deleted User';
   }
+  
+    // updates bot info stats on support server.
+ const channels = client.channels.cache.get('1158068842040414351');
+ if (channels) {
+   const botInfo = new EmbedBuilder()
+   .setAuthor({ name: 'Bot\'s Information', iconURL: client.user.displayAvatarURL()})
+   .setDescription(`**Bot's Name:** ${client.user.displayName}\n**Total Servers**: ${guildCount}\n**Total Users: ${userCount}\n**Total Commands**: ${client.application.commands.cache.size + 3}`)
+   .setColor(2895153)
+   .setFooter({ text: `Last Updated: ${new Date().toLocaleString('en-GB')}`});
+  channels.messages.fetch('1179851781992357930')
+  .then(m => {
+    m.edit({ embeds: [botInfo]});
+  });
+ }
 
   const embed = new EmbedBuilder()
     .setTitle('Guild Left')
