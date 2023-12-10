@@ -36,6 +36,8 @@ process.on('unhandledRejection', (error) =>
 );
 
 client.once('ready', async () => {
+  // Setting up configs
+  client.config = require('./config.js');
   // Setting up events
   const loadEventHandlers = (dir) => {
     const files = fs.readdirSync(path.join(__dirname, dir));
