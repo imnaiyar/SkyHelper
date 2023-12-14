@@ -192,6 +192,16 @@ const thirdChoices = {
       value: 'revival_q1',
       emoji: '<:quests:1131171487877963886>',
     },
+     {
+      label: 'Quest 2',
+      value: 'revival_q2',
+      emoji: '<:quests:1131171487877963886>',
+    },
+     {
+      label: 'Quest 3',
+      value: 'revival_q3',
+      emoji: '<:quests:1131171487877963886>',
+    },
   ],
   revival_ts: [
     {

@@ -23,6 +23,12 @@ module.exports = async (client, guild) => {
   if (!guild.members.cache.has(guild.ownerId))
     await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
+  
+  const guildCount = client.guilds.cache.size;
+  const userCount = client.guilds.cache.reduce(
+    (total, guild) => total + guild.memberCount,
+    0,
+  );
 
   // Register guild on database
   registerGuild(guild);
@@ -53,7 +59,20 @@ module.exports = async (client, guild) => {
     });
     return;
   }
-
+  
+  // updates bot info stats on support server.
+ const channels = client.channels.cache.get('1158068842040414351');
+ if (channels) {
+   const botInfo = new EmbedBuilder()
+   .setAuthor({ name: 'Bot\'s Information', iconURL: client.user.displayAvatarURL()})
+   .setDescription(`**Bot's Name:** ${client.user.displayName}\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${client.application.commands.cache.size + 3}`)
+   .setColor(2895153)
+   .setFooter({ text: `Last Updated: ${new Date().toLocaleString('en-GB')}`});
+  channels.messages.fetch('1179858980923768893')
+  .then(m => {
+    m.edit({ embeds: [botInfo]});
+  });
+ }
   // Send a guild join Log
   if (!process.env.GUILD) return;
 
@@ -100,10 +119,7 @@ module.exports = async (client, guild) => {
 
   // Update Bot Stats
   const settings = await botSettings(client);
-  settings.data.servers = client.guilds.cache.size;
-  settings.data.members = client.guilds.cache.reduce(
-    (total, guild) => total + guild.memberCount,
-    0,
-  );
+  settings.data.servers = guildCount;
+  settings.data.members = userCount;
   await settings.save();
 };

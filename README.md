@@ -7,7 +7,9 @@
 </h1>
 
 <p align="center">Shards, Next Shards, Seasonal Guides, Timestamp, Sky Times and more...</p>
-
+<p align="center"><img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/github/stars/imnaiyar/SkyHelper"/> <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper"> <img alt="GitHub License" src="https://img.shields.io/github/license/imnaiyar/SkyHelper">
+ <img alt="GitHub package.json dependency version (subfolder of monorepo)" src="https://img.shields.io/github/package-json/dependency-version/imnaiyar/SkyHelper/discord.js">
+ </p>
 <br>
 
 <p align="center">
@@ -35,6 +37,7 @@
 git clone https://github.com/imnaiyar/SkyHelper
 ```
 - Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
+- Create a new folder in the root directory named `logs` (All the terminal and error logs will go here).
 - Run ```npm run commands``` to register the slash commands.
 If you want to register the slash commands to a specific guild, before running the above command, change this part in [commandsRegister.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commandsRegister.js)
 ```js
@@ -54,6 +57,7 @@ Routes.applicationGuildCommands(client.user.id, "Your Guild ID"),
 ```
 - Optionally, do the same in [register.js](https://github.com/imnaiyar/SkyHelper/blob/main/src/commands/prefix/register.js) if you're using prefix command to register.
 - After installing all the dependencies by running ```npm i```, run ```npm start``` to start the bot.
+- [Prefix Commands](https://github.com/imnaiyar/SkyHelper/tree/main/src%2Fcommands%2Fprefix) is for my personal use and you can chose to delete the folder if you wish. Should you delete, `messageCreate.js` event won't be needed either and you can remove that too.
 
 # Credits
 This bot wouldn't be possible without these people and the work they do.    

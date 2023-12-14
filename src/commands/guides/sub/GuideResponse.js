@@ -11,6 +11,20 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
         'https://media.discordapp.net/attachments/867638574571323424/1163891052185387070/Revival_Q1.jpg',
       ],
     },
+    revival_q2: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em
+https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Season of Revival Quest 2 by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1184626447046942730/Revival_Quest_2.jpg',
+      ],
+    },
+    revival_q3: {
+      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em
+https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Season of Revival Quest 3 by Clement\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1184626446094844026/Revival_Quest_3.jpg',
+      ],
+    },
     // revival trees
     deserted_oasis_tree: {
       content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,

@@ -23,10 +23,11 @@ async function shardsReply(
 
   let result = new EmbedBuilder()
     .setAuthor({
-      name: `Shards Info for ${noShard}`,
+      name: `Shards Info`,
       iconURL:
         'https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925',
     })
+    .setTitle(`${noShard}`)
     .setTimestamp(Date.now())
     .setFooter({
       text: 'SkyHelper',

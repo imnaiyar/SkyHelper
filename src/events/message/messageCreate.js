@@ -22,14 +22,6 @@ module.exports = async (client, message) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  if (settings.skyGPT) {
-    const channel = message.guild.channels.cache.get(settings.skyGPT);
-    if (message.channel.id === channel.id) {
-      return channel.send(
-        `The SkyGpt feature has been entirely removed.\n- After careful consideration, it was deemed not to meet the required accuracy standards, therefore misleading and was thus discontinued.\nThis warning message will soon be removed and any channel set for the bot will become non-functional. Please ask an admin to delete this channel.`,
-      );
-    }
-  }
   // Check Bot'sprefix
   const prefix = settings?.prefix || process.env.BOT_PREFIX;
   const escapedPrefix = escapeRegExp(prefix);
