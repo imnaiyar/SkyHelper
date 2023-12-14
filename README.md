@@ -5,7 +5,7 @@
   SkyHelper
   <br>
 </h1>
-![GitHub release (with filter)](https://img.shields.io/github/v/release/imnaiyar/SkyHelper)
+<img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper">
 
 <p align="center">Shards, Next Shards, Seasonal Guides, Timestamp, Sky Times and more...</p>
 <p align="center"><img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/github/stars/imnaiyar/SkyHelper"/> <img src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper
