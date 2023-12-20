@@ -36,14 +36,13 @@ module.exports = {
     }
 
     if (!config.DASHBOARD.enabled) {
-      warn(
-      "Dashboard is disabled, enable it to deploy the bot's website."
-      );
+      warn("Dashboard is disabled, enable it to deploy the bot's website.");
     }
 
     // Webhook Logs validations
     if (!process.env.SUGGESTION) {
-      warn('"SUGGESTION" webhook URL is not provided, suggestion command wont work properly'
+      warn(
+        '"SUGGESTION" webhook URL is not provided, suggestion command wont work properly',
       );
     }
     return true;

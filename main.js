@@ -191,8 +191,12 @@ initializeMongoose();
 setupPresence(client);
 
 // auto shard function
-cron.schedule('*/1 * * * *', async () => {
-  await shardsUpdate(client);
+cron.schedule('*/5 * * * *', async () => {
+  try {
+    await shardsUpdate(client);
+  } catch (err) {
+    Logger.error(err);
+  }
 });
 
 // Exporting client should I need it somewhere

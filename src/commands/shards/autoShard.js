@@ -6,8 +6,8 @@ const { parsePerm } = require('@functions/parsePerm');
 const desc = require('@src/cmdDesc');
 module.exports = {
   data: {
-    name: 'auto-shard',
-    description: 'auto updating message with shards details',
+    name: 'shards-live',
+    description: 'auto updating message with live shards details',
     options: [
       {
         name: 'start',
@@ -41,8 +41,10 @@ module.exports = {
     const config = await autoShard(interaction.guild);
     if (sub === 'start') {
       if (config.channelId && config.messageId) {
+        const ch = client.channels.cache.get(config.channelId);
+        const ms = await ch.messages.fetch(config.messageId);
         return interaction.reply({
-          content: `Auto Shard is already configured for <#${config.channelId}>.`,
+          content: `Live Shard is already configured in <#${config.channelId}> for this message ${ms.url}.`,
           ephemeral: true,
         });
       }
@@ -58,7 +60,54 @@ module.exports = {
       const timezone = 'America/Los_Angeles';
       const currentDate = moment().tz(timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const result = await shardsReply(false, currentDate);
+      const {
+      type,
+      location,
+      rewards,
+      colors,
+      showButtons,
+      thumbUrl,
+      noShard,
+      eventStatus,
+      timeRemaining,
+      currentEvent,
+      currentSecondEvent,
+      dayOfWeek,
+    } = await shardsReply(currentDate);
+    let result = new EmbedBuilder()
+      .setAuthor({
+        name: `Shards Info`,
+        iconURL:
+          'https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925',
+      })
+      .setTitle(`${noShard}`)
+      .setTimestamp(Date.now())
+      .setFooter({
+        text: 'Live Shard',
+        iconURL: client.user.displayAvatarURL(),
+      });
+    let disabled;
+    if (showButtons) {
+      result
+        .addFields(
+          { name: `Shard Type`, value: `${type} (${rewards})`, inline: true },
+          { name: 'Location', value: `${location}`, inline: true },
+          { name: 'Status', value: `${eventStatus}` },
+          { name: 'Countdown', value: `${timeRemaining}`, inline: true },
+        )
+        .setColor(colors)
+        .setThumbnail(thumbUrl);
+      disabled = false;
+    } else {
+      result
+        .setImage(
+          'https://media.discordapp.net/attachments/867638574571323424/1155727524911923220/5F1548AC-C7DD-4127-AF6F-0BC388-unscreen.gif',
+        )
+        .setDescription(`**It's a no shard day.**`)
+        .setColor('#9fb686');
+
+      disabled = true;
+    }
       const msg = await channel.send({
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
@@ -67,13 +116,13 @@ module.exports = {
       config.messageId = msg.id;
       await config.save();
       interaction.reply({
-        content: `Auto Shard configured for <#${channel.id}>`,
+        content: `Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`,
         ephemeral: true,
       });
     } else if (sub === 'stop') {
       if (!config.channelId || !config.messageId) {
         return interaction.reply({
-          content: 'Auto Shard is already disabled for this server',
+          content: 'Live Shard is already disabled for this server',
           ephemeral: true,
         });
       }
@@ -90,7 +139,7 @@ module.exports = {
       await guildData.findOneAndDelete({ _id: interaction.guild.id });
 
       interaction.reply({
-        content: 'Auto Shard is disabled',
+        content: 'Live Shard is disabled',
         ephemeral: true,
       });
     }

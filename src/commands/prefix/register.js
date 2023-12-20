@@ -2,6 +2,7 @@ const { REST } = require('@discordjs/rest');
 const fs = require('fs');
 const path = require('path');
 const { Routes } = require('discord-api-types/v9');
+const { cmdValidation } = require('@handler/cmdValidation');
 const Logger = require('@src/logger');
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
@@ -9,7 +10,7 @@ const commandDirectory = path.join(__dirname, '../');
 const commands = [];
 
 // function to recursively search for command files
-function findCommandFiles(directory) {
+async function findCommandFiles(directory) {
   const files = fs.readdirSync(directory);
 
   for (const file of files) {
@@ -23,6 +24,8 @@ function findCommandFiles(directory) {
       }
     } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {
       const command = require(filePath);
+      const vld = await cmdValidation(command, file);
+      if (!vld) continue;
       commands.push(command.data);
     }
   }

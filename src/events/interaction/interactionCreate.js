@@ -28,7 +28,13 @@ module.exports = async (client, interaction) => {
 
     const commandName = interaction.commandName;
     const command = client.commands.get(commandName);
-
+    
+    if (!command) {
+      return interaction.reply({
+        content: 'This command is Invalid or doesn\`t exist',
+        ephemeral: true
+      });
+    }
     // If command is owner only.
     if (
       command.data.category &&

@@ -2,7 +2,7 @@ const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
 const moment = require('moment');
 const { shardsAlt } = require('@shards/shardsAlt');
-async function shardsReply(interaction, currentDate) {
+async function shardsReply(currentDate) {
   const {
     formatDate,
     eventStatus,
@@ -195,98 +195,21 @@ async function shardsReply(interaction, currentDate) {
       showButtons = false;
     }
   }
-  let disabled;
-  if (showButtons) {
-    result
-      .addFields(
-        { name: `Shard Type`, value: `${type} (${rewards})`, inline: true },
-        { name: 'Location', value: `${location}`, inline: true },
-        { name: 'Status', value: `${eventStatus}` },
-        { name: 'Countdown', value: `${timeRemaining}`, inline: true },
-      )
-      .setColor(colors)
-      .setThumbnail(thumbUrl);
-    disabled = false;
-  } else {
-    result
-      .setImage(
-        'https://media.discordapp.net/attachments/867638574571323424/1155727524911923220/5F1548AC-C7DD-4127-AF6F-0BC388-unscreen.gif',
-      )
-      .setDescription(`**It's a no shard day.**`)
-      .setColor('#9fb686');
 
-    disabled = true;
-  }
-  const actionRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setEmoji('<a:left:1148644073670975640>')
-      .setCustomId('prev')
-      .setStyle('1'),
-    new ButtonBuilder()
-      .setEmoji('<a:right:1148627450608222278>')
-      .setCustomId('next')
-      .setStyle('1'),
-    new ButtonBuilder()
-      .setLabel('Timeline')
-      .setCustomId('timeline')
-      .setDisabled(disabled)
-      .setStyle('3'),
-    new ButtonBuilder()
-      .setLabel('Location/Data')
-      .setCustomId('location')
-      .setDisabled(disabled)
-      .setStyle('3'),
-    new ButtonBuilder()
-      .setLabel('About Shard')
-      .setCustomId('about')
-      .setStyle('3'),
-  );
-  if (!interaction) {
-    return result;
-  }
-  if (!interaction.isButton()) {
-    await interaction.deferReply({ ephemeral: true });
-    const reply = await interaction.editReply({
-      embeds: [result],
-      components: [actionRow],
-      fetchReply: true,
-    });
-    const messageId = reply.id;
-
-    saveMessageData({
-      time: currentDate.format(),
-      messageId,
-      timestamp: moment().tz(timezone).format(),
-    });
-  } else {
-    await interaction.update({ embeds: [result], components: [actionRow] });
-  }
-
-  function saveMessageData(data) {
-    fs.readFile('messageData.json', 'utf8', (err, fileData) => {
-      if (err) {
-        if (err.code === 'ENOENT') {
-          fileData = '[]';
-        } else {
-          console.error('Error reading file:', err);
-          return;
-        }
-      }
-
-      let jsonData = JSON.parse(fileData);
-      jsonData.push(data);
-
-      fs.writeFile(
-        'messageData.json',
-        JSON.stringify(jsonData, null, 2),
-        (err) => {
-          if (err) {
-            console.error('Error writing file:', err);
-          }
-        },
-      );
-    });
-  }
+  return {
+    type,
+    location,
+    rewards,
+    colors,
+    showButtons,
+    thumbUrl,
+    noShard,
+    eventStatus,
+    timeRemaining,
+    currentEvent,
+    currentSecondEvent,
+    dayOfWeek,
+  };
 }
 
 module.exports = {
