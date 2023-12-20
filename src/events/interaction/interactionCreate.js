@@ -17,7 +17,6 @@ const bLogger = process.env.BUG_REPORTS
   ? new WebhookClient({ url: process.env.BUG_REPORTS })
   : undefined;
 
-
 /**
  * @param {import('discord.js').Interaction} interaction
  */
@@ -102,7 +101,10 @@ module.exports = async (client, interaction) => {
         .setTimestamp();
 
       // Slash Commands
-      if (!interaction.user.id.includes(config.OWNER)) {
+      if (
+        !interaction.user.id.includes(config.OWNER) &&
+        process.env.COMMANDS_USED
+      ) {
         cLogger
           .send({ username: 'Command Logs', embeds: [embed] })
           .catch((ex) => {});

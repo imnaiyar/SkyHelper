@@ -5,8 +5,14 @@ const {
   Collection,
   EmbedBuilder,
 } = require('discord.js');
-
+const { table } = require('table');
+const { validations } = require('@handler/validations');
 const { DASHBOARD } = require('@root/config');
+const cron = require('node-cron');
+const { shardsUpdate } = require('@handler/shardsUpdate');
+const {
+  recursiveReadDirSync,
+} = require('@handler/functions/recursiveReadDirSync');
 const { initializeMongoose } = require('@src/database/mongoose');
 const { setupPresence } = require('@handler/presence/presence');
 const fs = require('fs');
@@ -34,34 +40,57 @@ process.on('uncaughtException', (erorr) =>
 process.on('unhandledRejection', (error) =>
   Logger.error(`Unhandled exception`, error),
 );
-
+// Validation
+const vld = validations();
+if (!vld) {
+  process.exit();
+}
 client.once('ready', async () => {
   // Setting up configs
   client.config = require('./config.js');
   // Setting up events
-  const loadEventHandlers = (dir) => {
-    const files = fs.readdirSync(path.join(__dirname, dir));
-    let eventCounter = 0;
+  function loadEvents(directory) {
+    Logger.log(`Loading events...`);
+    let success = 0;
+    let failed = 0;
+    const clientEvents = [];
 
-    for (const file of files) {
-      const filePath = path.join(dir, file);
-      const fileStat = fs.statSync(filePath);
+    recursiveReadDirSync(directory).forEach((filePath) => {
+      const file = path.basename(filePath);
+      try {
+        const eventName = path.basename(file, '.js');
+        const event = require(filePath);
 
-      if (fileStat.isDirectory()) {
-        eventCounter += loadEventHandlers(filePath);
-      } else if (file.endsWith('.js')) {
-        const eventHandler = require(path.join(__dirname, filePath));
-        const eventName = file.split('.')[0];
-        client.on(eventName, (...args) => eventHandler(client, ...args));
-        eventCounter++;
+        client.on(eventName, event.bind(null, client));
+        clientEvents.push([file, '✓']);
+
+        delete require.cache[require.resolve(filePath)];
+        success += 1;
+      } catch (ex) {
+        failed += 1;
+        Logger.error(`loadEvent - ${file}`, ex);
       }
-    }
+    });
 
-    return eventCounter;
-  };
+    console.log(
+      table(clientEvents, {
+        header: {
+          alignment: 'center',
+          content: 'Client Events',
+        },
+        singleLine: true,
+        columns: [{ width: 25 }, { width: 5, alignment: 'center' }],
+      }),
+    );
 
-  const totalEventsLoaded = loadEventHandlers('./src/events');
-  Logger.log(`Loaded ${totalEventsLoaded} events.`);
+    Logger.log(
+      `Loaded ${
+        success + failed
+      } events. Success (${success}) Failed (${failed})`,
+    );
+  }
+
+  loadEvents('./src/events');
 
   Logger.success(`Logged in as ${client.user.tag}`);
 
@@ -102,9 +131,16 @@ client.once('ready', async () => {
   }
 
   // Load Website
-  require('@root/website/mainPage');
-
+  if (DASHBOARD.enabled) {
+    require('@root/website/mainPage');
+  }
   // Send ready webhook log
+  let text;
+  if (client.config.DASHBOARD.enabled) {
+    text = `Website started on port ${DASHBOARD.port}`;
+  } else {
+    text = 'Website is disabled';
+  }
   const readyalertemb = new EmbedBuilder()
     .addFields(
       {
@@ -119,7 +155,7 @@ client.once('ready', async () => {
       },
       {
         name: 'Website',
-        value: `Website started on port ${DASHBOARD.port}`,
+        value: text,
         inline: false,
       },
       {
@@ -148,16 +184,16 @@ client.once('ready', async () => {
   await client.application.fetch();
 });
 
-// auto shard updates
-client.on('ready', async() => {
-  
-});
-
 // setup mongoose
 initializeMongoose();
 
 //bots presence
 setupPresence(client);
+
+// auto shard function
+cron.schedule('*/1 * * * *', async () => {
+  await shardsUpdate(client);
+});
 
 // Exporting client should I need it somewhere
 module.exports = { client };

@@ -69,9 +69,7 @@ async function skyTimes() {
 
   // Turtle Calculation
   let turtleResultStr;
-  const turtleTargetTime = now
-    .clone()
-    .startOf('day').add(50, 'minutes');
+  const turtleTargetTime = now.clone().startOf('day').add(50, 'minutes');
 
   while (now.isAfter(turtleTargetTime)) {
     turtleTargetTime.add(2, 'hours');
@@ -100,10 +98,7 @@ async function skyTimes() {
     turtleResultStr += ` ${durationTurtle.seconds()} seconds)`;
   }
   // Reset Calculation
-  const resetTargetTime = now
-    .clone()
-    .startOf('day');
-    
+  const resetTargetTime = now.clone().startOf('day');
 
   if (now.isSameOrAfter(resetTargetTime)) {
     resetTargetTime.add(1, 'days');
@@ -125,10 +120,7 @@ async function skyTimes() {
   const currentDayOfWeek = now.day();
 
   let daysToAdd = targetDayOfWeek - currentDayOfWeek;
-  const edenTargetTime = now
-    .clone()
-    .startOf('day')
-    .add(daysToAdd, 'days');
+  const edenTargetTime = now.clone().startOf('day').add(daysToAdd, 'days');
   if (daysToAdd <= 0 || (daysToAdd === 0 && now.isAfter(edenTargetTime))) {
     daysToAdd += 7;
   }

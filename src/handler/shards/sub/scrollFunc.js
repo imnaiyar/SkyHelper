@@ -1,6 +1,6 @@
 const moment = require('moment-timezone');
 const fs = require('fs');
-const { shardsAlt } = require('@shards/shardsAlt');
+const { shardsReply } = require('@shards/sub/shardsReply');
 
 async function nextPrev(interaction, value) {
   const filePath = 'messageData.json';
@@ -24,7 +24,7 @@ async function nextPrev(interaction, value) {
   } else {
     shardDate = currentDate;
   }
-  await shardsAlt(interaction, shardDate);
+  await shardsReply(interaction, shardDate);
   message.time = shardDate.format();
 
   fs.writeFileSync(filePath, JSON.stringify(messageData, null, 2), 'utf8');

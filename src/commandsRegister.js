@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 require('module-alias/register');
 require('dotenv').config();
+const { cmdValidation } = require('@handler/cmdValidation');
 const { REST } = require('@discordjs/rest');
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +24,7 @@ const commandDirectory = path.join(__dirname, './commands');
 const commands = [];
 
 // Function to recursively search for command files
-function findCommandFiles(directory) {
+async function findCommandFiles(directory) {
   const files = fs.readdirSync(directory);
 
   for (const file of files) {
@@ -37,6 +38,8 @@ function findCommandFiles(directory) {
       }
     } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {
       const command = require(filePath);
+      const vld = await cmdValidation(command, file);
+      if (!vld) continue;
       commands.push(command.data);
     }
   }

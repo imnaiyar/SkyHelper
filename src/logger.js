@@ -20,7 +20,7 @@ const pinoLogger = pino.default(
           ignore: 'pid,hostname',
           singleLine: false,
           hideObject: false,
-          customColors: 'info:green,warn:yellow,error:red,',
+          customColors: 'info:green,warn:yellow,error:red,message:white,',
         },
       }),
     },

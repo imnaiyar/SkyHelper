@@ -1,9 +1,16 @@
-const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-} = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('@root/config');
+const stringSimilarity = require('string-similarity');
+const cmds = [
+  'shards',
+  'next-shards',
+  'sky-times',
+  'seasonal-guides',
+  'auto-shard',
+  'utils',
+  'timestamps',
+  'help',
+];
 
 async function helpMenu(interaction, client) {
   const slash = client.commands;
@@ -12,10 +19,20 @@ async function helpMenu(interaction, client) {
   const Command = slash?.get(input);
   const appCommands = await client.application.commands.fetch();
   if (input && !Command) {
-    return interaction.reply({
-      content: 'No such commands are found',
-      ephemeral: true,
-    });
+    const matches = stringSimilarity.findBestMatch(input, cmds);
+    const mostSimilarWord = matches.bestMatch.target;
+
+    if (matches.bestMatch.rating < 0.8) {
+      return interaction.reply({
+        content: `\`${input}\` is not a valid commands.\nDid you mean: \`${mostSimilarWord}\`?`,
+        ephemeral: true,
+      });
+    } else {
+      return interaction.reply({
+        content: `\`${input}\` is not a valid commands.`,
+        ephemeral: true,
+      });
+    }
   } else if (input) {
     if (Command.data.category && Command.data.category === 'OWNER') {
       return interaction.reply({
@@ -122,7 +139,7 @@ async function helpMenu(interaction, client) {
     );
 
     pageCommands.forEach((command) => {
-      if (command.name === 'util') {
+      if (command.name === 'util' || command.name === 'auto-shard') {
         description += `</${command.name}:${command.id}>\n${command.description}\n`;
         command.options.forEach((o) => {
           description += `- **${o.name}**\n  ↪${o.description}\n`;

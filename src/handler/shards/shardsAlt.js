@@ -1,5 +1,4 @@
 const moment = require('moment');
-const { shardsReply } = require('./sub/shardsReply');
 const shardsTime = require('./sub/eventTimings.js');
 const eventSequence = [
   'C',
@@ -23,7 +22,7 @@ const secondEventSequence = [
   'vault',
 ];
 
-async function shardsAlt(interaction, currentDate) {
+async function shardsAlt(currentDate) {
   const timezone = 'America/Los_Angeles';
   const dayOfMonth = currentDate.date();
   const dayOfWeek = currentDate.day();
@@ -126,9 +125,7 @@ async function shardsAlt(interaction, currentDate) {
       break;
     }
   }
-  await shardsReply(
-    interaction,
-    currentDate,
+  return {
     formatDate,
     eventStatus,
     timeRemaining,
@@ -136,7 +133,7 @@ async function shardsAlt(interaction, currentDate) {
     currentSecondEvent,
     dayOfWeek,
     noShard,
-  );
+  };
 }
 
 module.exports = { shardsAlt };

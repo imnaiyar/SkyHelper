@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require('discord.js');
-const { shardsAlt } = require('@shards/shardsAlt');
+const { shardsReply } = require('@shards/sub/shardsReply');
 const moment = require('moment-timezone');
 const desc = require('@src/cmdDesc');
 module.exports = {
@@ -51,6 +51,6 @@ module.exports = {
       await interaction.reply('An error occurred while processing the date.');
       return;
     }
-    await shardsAlt(interaction, currentDate);
+    await shardsReply(interaction, currentDate);
   },
 };

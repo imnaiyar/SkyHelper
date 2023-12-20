@@ -1,8 +1,6 @@
 const { AutoPoster } = require('topgg-autoposter');
 const Logger = require('@src/logger');
 
-
-
 async function topggAutopost(client) {
   const poster = AutoPoster(process.env.TOPGG_TOKEN, client);
 

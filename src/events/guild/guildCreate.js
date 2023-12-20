@@ -1,7 +1,4 @@
-const {
-  EmbedBuilder,
-  WebhookClient,
-} = require('discord.js');
+const { EmbedBuilder, WebhookClient } = require('discord.js');
 const { dblStats } = require('@handler/functions/dblStats');
 const { getSettings: registerGuild } = require('@schemas/Guild');
 const Guild = require('@schemas/guildBlackList');
@@ -23,7 +20,7 @@ module.exports = async (client, guild) => {
   if (!guild.members.cache.has(guild.ownerId))
     await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
-  
+
   const guildCount = client.guilds.cache.size;
   const userCount = client.guilds.cache.reduce(
     (total, guild) => total + guild.memberCount,
@@ -44,9 +41,7 @@ module.exports = async (client, guild) => {
 
     const embed = new EmbedBuilder()
       .setAuthor({ name: `Blacklisted Server` })
-      .setDescription(
-        `Someone tried to invite me to a blacklisted server. I have left the server.`,
-      )
+      .setDescription(`Someone tried to invite me to a blacklisted server.`)
       .addFields(
         { name: 'Blacklisted Guild Name', value: `${data.Name}` },
         { name: 'Reason', value: `${data.Reason}` },
@@ -59,20 +54,45 @@ module.exports = async (client, guild) => {
     });
     return;
   }
-  
+
   // updates bot info stats on support server.
- const channels = client.channels.cache.get('1158068842040414351');
- if (channels) {
-   const botInfo = new EmbedBuilder()
-   .setAuthor({ name: 'Bot\'s Information', iconURL: client.user.displayAvatarURL()})
-   .setDescription(`**Bot's Name:** ${client.user.displayName}\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${client.application.commands.cache.size + 3}`)
-   .setColor(2895153)
-   .setFooter({ text: `Last Updated: ${new Date().toLocaleString('en-GB')}`});
-  channels.messages.fetch('1179858980923768893')
-  .then(m => {
-    m.edit({ embeds: [botInfo]});
-  });
- }
+  const channels = client.channels.cache.get('1158068842040414351');
+  if (channels) {
+    const botInfo = new EmbedBuilder()
+      .setAuthor({
+        name: "Bot's Information",
+        iconURL: client.user.displayAvatarURL(),
+      })
+      .setDescription(
+        `**Bot's Name:** ${
+          client.user.displayName
+        }\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${
+          client.application.commands.cache.size + 3
+        }`,
+      )
+      .setColor(2895153)
+      .setFooter({
+        text: `Last Updated: ${new Date().toLocaleString('en-GB')}`,
+      });
+    channels.messages.fetch('1179858980923768893').then((m) => {
+      m.edit({ embeds: [botInfo] });
+    });
+  }
+
+  // Update DBL Stats
+  await dblStats(client);
+
+  // Update TopGG Stats
+  if (process.env.TOPGG_TOKEN) {
+    topggAutopost(client);
+  }
+
+  // Update Bot Stats
+  const settings = await botSettings(client);
+  settings.data.servers = guildCount;
+  settings.data.members = userCount;
+  await settings.save();
+
   // Send a guild join Log
   if (!process.env.GUILD) return;
 
@@ -111,15 +131,4 @@ module.exports = async (client, guild) => {
     avatarURL: client.user.displayAvatarURL(),
     embeds: [embed],
   });
-
-  // Update DBL Stats
-  await dblStats(client);
-  // Update TopGG Stats
-  topggAutopost(client);
-
-  // Update Bot Stats
-  const settings = await botSettings(client);
-  settings.data.servers = guildCount;
-  settings.data.members = userCount;
-  await settings.save();
 };

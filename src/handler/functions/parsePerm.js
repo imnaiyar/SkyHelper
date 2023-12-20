@@ -14,7 +14,7 @@ const permissions = {
   ManageChannels: 'Manage channels',
   ManageEmojisAndStickers: 'Manage emojis and stickers',
   ManageEvents: 'Manage Events',
-  ManageGuild: 'Manage server',
+  ManageGuild: 'Manage Server',
   ManageMessages: 'Manage messages',
   ManageNicknames: 'Manage nicknames',
   ManageRoles: 'Manage roles',

@@ -1,4 +1,4 @@
-const {  EmbedBuilder, WebhookClient } = require('discord.js');
+const { EmbedBuilder, WebhookClient } = require('discord.js');
 const { botSettings } = require('@schemas/botStats');
 const { getSettings } = require('@schemas/Guild');
 const Logger = require('@src/logger');
@@ -41,20 +41,30 @@ module.exports = async (client, guild) => {
   } catch (err) {
     ownerTag = 'Deleted User';
   }
-  
-    // updates bot info stats on support server.
- const channels = client.channels.cache.get('1158068842040414351');
- if (channels) {
-   const botInfo = new EmbedBuilder()
-   .setAuthor({ name: 'Bot\'s Information', iconURL: client.user.displayAvatarURL()})
-   .setDescription(`**Bot's Name:** ${client.user.displayName}\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${client.application.commands.cache.size + 3}`)
-   .setColor(2895153)
-   .setFooter({ text: `Last Updated: ${new Date().toLocaleString('en-GB')}`});
-  channels.messages.fetch('1179858980923768893')
-  .then(m => {
-    m.edit({ embeds: [botInfo]});
-  });
- }
+
+  // updates bot info stats on support server.
+  const channels = client.channels.cache.get('1158068842040414351');
+  if (channels) {
+    const botInfo = new EmbedBuilder()
+      .setAuthor({
+        name: "Bot's Information",
+        iconURL: client.user.displayAvatarURL(),
+      })
+      .setDescription(
+        `**Bot's Name:** ${
+          client.user.displayName
+        }\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${
+          client.application.commands.cache.size + 3
+        }`,
+      )
+      .setColor(2895153)
+      .setFooter({
+        text: `Last Updated: ${new Date().toLocaleString('en-GB')}`,
+      });
+    channels.messages.fetch('1179858980923768893').then((m) => {
+      m.edit({ embeds: [botInfo] });
+    });
+  }
 
   const embed = new EmbedBuilder()
     .setTitle('Guild Left')

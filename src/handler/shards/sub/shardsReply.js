@@ -1,18 +1,17 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
 const moment = require('moment');
-
-async function shardsReply(
-  interaction,
-  currentDate,
-  formatDate,
-  eventStatus,
-  timeRemaining,
-  currentEvent,
-  currentSecondEvent,
-  dayOfWeek,
-  noShard,
-) {
+const { shardsAlt } = require('@shards/shardsAlt');
+async function shardsReply(interaction, currentDate) {
+  const {
+    formatDate,
+    eventStatus,
+    timeRemaining,
+    currentEvent,
+    currentSecondEvent,
+    dayOfWeek,
+    noShard,
+  } = await shardsAlt(currentDate);
   const timezone = 'America/Los_Angeles';
   let type = 'Red Shard';
   let location;
@@ -28,11 +27,7 @@ async function shardsReply(
         'https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925',
     })
     .setTitle(`${noShard}`)
-    .setTimestamp(Date.now())
-    .setFooter({
-      text: 'SkyHelper',
-      iconURL: interaction.client.user.displayAvatarURL(),
-    });
+    .setTimestamp(Date.now());
 
   if (currentSecondEvent === 'prairie') {
     if (currentEvent === 'a' && ![6, 0].includes(dayOfWeek)) {
@@ -246,6 +241,9 @@ async function shardsReply(
       .setCustomId('about')
       .setStyle('3'),
   );
+  if (!interaction) {
+    return result;
+  }
   if (!interaction.isButton()) {
     await interaction.deferReply({ ephemeral: true });
     const reply = await interaction.editReply({

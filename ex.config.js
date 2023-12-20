@@ -10,6 +10,7 @@ module.exports = {
   WEB_URL: 'https://skyhelper.xyz',
 
   DASHBOARD: {
+    enabled: false,
     port: '8519',
   },
   Support: 'https://discord.gg/u9zUjWbbQ4',

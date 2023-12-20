@@ -1,7 +1,4 @@
-const {
-  StringSelectMenuBuilder,
-  ActionRowBuilder,
-} = require('discord.js');
+const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 const choiceResponses = require('./GuideResponse.js');
 const messageChoices = new Map();
 const CUSTOM_ID = {
@@ -219,7 +216,7 @@ async function handleThird(
         .addOptions(secondChoiceOptions),
     );
 
-   const response = {
+    const response = {
       content: `Guides for ___${getLabel(
         firstChoices,
         messageChoice.firstChoice,
