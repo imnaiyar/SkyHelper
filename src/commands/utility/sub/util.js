@@ -82,7 +82,7 @@ async function getChangelog(interaction) {
     .setColor('Gold')
     .setTitle(`Changelog v4.3.2`)
     .setDescription(
-      `Significant Update: All prefix commands have been removed, and the bot now exclusively supports slash commands.\n\nSeveral commands, namely 'credits,' 'suggestions,' 'changelog,' and 'ping,' have been consolidated into a unified '</util:1161676078385995786>' command as a subcommand.\n\nAdditionally, the SkyGpt feature has been entirely removed.\n- After careful consideration, it was deemed not to meet the required accuracy standards, therefore misleading and was thus discontinued.`,
+      `Introducing a new command "shards-live". Once configured to a channel, the bot will send a message at time of using the command in specied channel and will update it every 5 minutes with Live Shards updates. For detailed description of this command use \`\\help command:shards-live\`\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`,
     )
     .setFooter({ text: `v4.3.2` });
   interaction.reply({ embeds: [embed], ephemral: true });
