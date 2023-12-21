@@ -27,7 +27,7 @@ module.exports = {
         const channel = msg.client.channels.cache.get(g.channelId);
         
         console.log("Guilds:", guild.name);
-        description += `**Guild:** ${guild?.name || "Unknown"} (${guild?.id || "Unknown"})\n**Owner:** ${owner?.username || "Unknown"} (${owner?.id || "Unknown"})\n**Channel:** ${channel.name} (${channel.id})\n\n`;
+        description += `**Guild:** ${guild?.name || "Unknown"} (${guild?.id || "Unknown"})\n**Owner:** ${owner?.username || "Unknown"} (${owner?.id || "Unknown"})\n**Channel:** ${channel?.name || "Unknown"} (${channel?.id || "Unknown"})\n\n`;
       }
 
       const embed = new EmbedBuilder()
