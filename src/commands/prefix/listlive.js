@@ -15,13 +15,10 @@ module.exports = {
       }
       data.forEach((g) => {
         const guild = msg.client.guilds.cache.get(g._id);
-        console.log("Guild:", guild);
         const owner = msg.client.users.cache.get(guild.ownerId);
-        console.log("Owner:", owner);
         const channel = msg.client.channels.cache.get(g.channelId);
-        description += `**Guild:** ${guild.name} (${guild.id})\n**Owner:** ${owner.username} (${owner.id})\n**Channel:** ${channel.name} (${channel.id})\n\n`;
+        description += `**Guild:** ${guild.name} (${guild.id})\n**Owner:** ${owner?.username || "Unknown"} (${owner?.id || "Unknown"})\n**Channel:** ${channel.name} (${channel.id})\n\n`;
       });
-      return;
       const embed = new EmbedBuilder()
         .setTitle('Guilds with active Live Shard')
         .setDescription(description);
