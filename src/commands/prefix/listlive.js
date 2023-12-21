@@ -21,7 +21,7 @@ module.exports = {
       for (const g of data) {
         const guild = msg.client.guilds.cache.get(g._id);
 
-        if (!guild) continue;
+        if (!guild || !guild.name) continue;
 
         const owner = msg.client.users.cache.get(guild.ownerId);
         const channel = msg.client.channels.cache.get(g.channelId);
