@@ -7,7 +7,7 @@ module.exports = {
     const currentDate = moment().tz(timezone);
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
     const { result } = await buildTimesEmbed(
-      'Live SkyTimes (updates every 5 min.)',
+      'Live SkyTimes (updates every 2 min.)',
     );
 
     const guildData = mongoose.model('autoTimes');
