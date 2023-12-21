@@ -1,4 +1,4 @@
-const { success, error, warn, log } = require('@src/logger');
+const { error } = require('@src/logger');
 const chalk = require('chalk');
 module.exports = {
   cmdValidation: async (cmd, file) => {

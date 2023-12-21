@@ -1,20 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { getCurrentDate } = require('@shards/shardsLocation');
-const eventSequence = [
-  'C',
-  'b',
-  'A',
-  'a',
-  'B',
-  'b',
-  'C',
-  'a',
-  'A',
-  'b',
-  'B',
-  'a',
-];
-
+const { shardsIndex, getMessageDate } = require('@functions/shardsUtil');
 const { nextPrev } = require('./sub/scrollFunc');
 const shardData = require('./sub/timelineData');
 
@@ -23,16 +8,14 @@ let currentShardIndex = 0;
 
 async function shardTimeline(interaction, Zhii, Christian) {
   const messageId = interaction.message.id; // Get the messageId of the current interaction
-  const currentDate = getCurrentDate(interaction, messageId);
+  const currentDate = getMessageDate(interaction, messageId);
   if (!currentDate) return;
-  const dayOfMonth = currentDate.date();
-  const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
-  const currentEvent = eventSequence[sequenceIndex];
+  const { currentShard } = shardsIndex(currentDate);
   if (interaction.customId === 'timeline') {
     currentShardIndex = 0;
     await showShard(
       interaction,
-      shardData[currentEvent][currentShardIndex],
+      shardData[currentShard][currentShardIndex],
       Zhii,
       Christian,
     );
@@ -40,7 +23,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(
       interaction,
-      shardData[currentEvent][currentShardIndex],
+      shardData[currentShard][currentShardIndex],
       Zhii,
       Christian,
     );
@@ -48,7 +31,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(
       interaction,
-      shardData[currentEvent][currentShardIndex],
+      shardData[currentShard][currentShardIndex],
       Zhii,
       Christian,
     );

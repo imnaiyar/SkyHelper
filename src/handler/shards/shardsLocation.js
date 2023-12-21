@@ -1,48 +1,21 @@
-const fs = require('fs');
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const moment = require('moment-timezone');
-const eventSequence = [
-  'C',
-  'b',
-  'A',
-  'a',
-  'B',
-  'b',
-  'C',
-  'a',
-  'A',
-  'b',
-  'B',
-  'a',
-];
-const secondEventSequence = [
-  'prairie',
-  'forest',
-  'valley',
-  'wasteland',
-  'vault',
-];
+const { shardsIndex, getMessageDate } = require('@functions/shardsUtil');
 const { nextPrev } = require('./sub/scrollFunc');
 const shardData = require('./sub/LocationData');
 
 const MAX_SHARD_INDEX = 1; // Two results for each event, so the max shard index is 1
 let currentShardIndex = 0;
-const timezone = 'America/Los_Angeles';
 
 async function shardLocation(interaction, Gale, Clement) {
   const messageId = interaction.message.id;
-  const currentDate = getCurrentDate(interaction, messageId);
+  const currentDate = getMessageDate(interaction, messageId);
   if (!currentDate) return;
-  const dayOfMonth = currentDate.date();
-  const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
-  const currentEvent = eventSequence[sequenceIndex];
-  const secondSequenceIndex = (dayOfMonth - 1) % secondEventSequence.length;
-  const currentSecondEvent = secondEventSequence[secondSequenceIndex];
+  const { currentShard, currentRealm } = shardsIndex(currentDate);
   if (interaction.customId === 'location') {
     currentShardIndex = 0;
     await showShard(
       interaction,
-      shardData[currentSecondEvent][currentEvent][currentShardIndex],
+      shardData[currentRealm][currentShard][currentShardIndex],
       Gale,
       Clement,
     );
@@ -50,7 +23,7 @@ async function shardLocation(interaction, Gale, Clement) {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(
       interaction,
-      shardData[currentSecondEvent][currentEvent][currentShardIndex],
+      shardData[currentRealm][currentShard][currentShardIndex],
       Gale,
       Clement,
     );
@@ -58,50 +31,12 @@ async function shardLocation(interaction, Gale, Clement) {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(
       interaction,
-      shardData[currentSecondEvent][currentEvent][currentShardIndex],
+      shardData[currentRealm][currentShard][currentShardIndex],
       Gale,
       Clement,
     );
   } else if (interaction.customId === 'location_originalL') {
     await nextPrev(interaction);
-  }
-}
-
-function getCurrentDate(interaction, messageId) {
-  const filePath = 'messageData.json';
-
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
-    const messageData = JSON.parse(data);
-    const message = messageData.find((data) => data.messageId === messageId);
-
-    if (!message) {
-      interaction.reply({
-        content:
-          'No dates found for this message. The interaction might be expired, please run the command again',
-        ephemeral: true,
-      });
-      return false;
-    }
-
-    const dateOption = message.time;
-
-    let currentDate;
-    if (dateOption) {
-      currentDate = moment.tz(dateOption, 'Y-MM-DD', timezone).startOf('day');
-      if (!currentDate.isValid()) {
-        console.log(
-          `${dateOption} does not exist, please provide a valid date.`,
-        );
-        return null;
-      }
-    } else {
-      currentDate = moment.tz(timezone).startOf('day');
-    }
-
-    return currentDate;
-  } catch (error) {
-    console.error('Error reading messageData.json:', error);
   }
 }
 
@@ -165,5 +100,4 @@ async function showShard(interaction, shard, Gale, Clement) {
 
 module.exports = {
   shardLocation,
-  getCurrentDate,
 };

@@ -1,68 +1,28 @@
 const moment = require('moment');
 const shardsTime = require('./sub/eventTimings.js');
-const eventSequence = [
-  'C',
-  'b',
-  'A',
-  'a',
-  'B',
-  'b',
-  'C',
-  'a',
-  'A',
-  'b',
-  'B',
-  'a',
-];
-const secondEventSequence = [
-  'prairie',
-  'forest',
-  'valley',
-  'wasteland',
-  'vault',
-];
-
+const { shardsIndex, getSuffix } = require('@functions/shardsUtil');
 async function shardsAlt(currentDate) {
   const timezone = 'America/Los_Angeles';
-  const dayOfMonth = currentDate.date();
   const dayOfWeek = currentDate.day();
   const formatDate = currentDate.format('DD MMMM YYYY');
   const today = moment().tz(timezone).startOf('day');
   const noShard = currentDate.isSame(today, 'day') ? 'Today' : `${formatDate}`;
 
-  // Calculate the index in the event sequences
-  const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
-  const currentEvent = eventSequence[sequenceIndex];
-  const secondSequenceIndex = (dayOfMonth - 1) % secondEventSequence.length;
-  const currentSecondEvent = secondEventSequence[secondSequenceIndex];
-  function getOrdinalSuffix(number) {
-    const suffixes = ['th', 'st', 'nd', 'rd'];
-    const remainder10 = number % 10;
-    const remainder100 = number % 100;
+  // get the shard and realm index
+  const { currentShard, currentRealm } = await shardsIndex(currentDate);
 
-    // Suffix for shards index
-    return suffixes[
-      remainder10 === 1 && remainder100 !== 11
-        ? 1
-        : remainder10 === 2 && remainder100 !== 12
-        ? 2
-        : remainder10 === 3 && remainder100 !== 13
-        ? 3
-        : 0
-    ];
-  }
   // Extracting the shards timings
   const timings = shardsTime(currentDate);
   let eventTimings;
-  if (currentEvent === 'A') {
+  if (currentShard === 'A') {
     eventTimings = timings.A;
-  } else if (currentEvent === 'B') {
+  } else if (currentShard === 'B') {
     eventTimings = timings.B;
-  } else if (currentEvent === 'C') {
+  } else if (currentShard === 'C') {
     eventTimings = timings.C;
-  } else if (currentEvent === 'a') {
+  } else if (currentShard === 'a') {
     eventTimings = timings.a;
-  } else if (currentEvent === 'b') {
+  } else if (currentShard === 'b') {
     eventTimings = timings.b;
   }
 
@@ -77,17 +37,13 @@ async function shardsAlt(currentDate) {
 
     if (present.isBetween(eventTiming.start, eventTiming.end)) {
       const endUnix = Math.floor(eventTiming.end.valueOf() / 1000);
-      eventStatus = `${i + 1}${getOrdinalSuffix(
-        i + 1,
-      )} Shard is active right now`;
+      eventStatus = `${i + 1}${getSuffix(i + 1)} Shard is active right now`;
       const duration = moment.duration(eventTiming.end.diff(present));
       timeRemaining = `Ends in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${endUnix}:t>)`;
       break;
     } else if (present.isBefore(eventTiming.start)) {
       const startUnix = Math.floor(eventTiming.start.valueOf() / 1000);
-      eventStatus = `${i + 1}${getOrdinalSuffix(
-        i + 1,
-      )} Shard has not fallen yet`;
+      eventStatus = `${i + 1}${getSuffix(i + 1)} Shard has not fallen yet`;
       const duration = moment.duration(eventTiming.start.diff(present));
       const hoursRemaining = Math.floor(duration.asHours());
       const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
@@ -101,9 +57,9 @@ async function shardsAlt(currentDate) {
     ) {
       const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);
       const endUnix3 = Math.floor(eventTiming.end.valueOf() / 1000);
-      eventStatus = `${i + 1}${getOrdinalSuffix(
+      eventStatus = `${i + 1}${getSuffix(
         i + 1,
-      )} shard ended at <t:${endUnix3}:t>, ${i + 2}${getOrdinalSuffix(
+      )} shard ended at <t:${endUnix3}:t>, ${i + 2}${getSuffix(
         i + 2,
       )} shard has not fallen yet`;
       const duration = moment.duration(eventTimings[i + 1].start.diff(present));
@@ -129,8 +85,8 @@ async function shardsAlt(currentDate) {
     formatDate,
     eventStatus,
     timeRemaining,
-    currentEvent,
-    currentSecondEvent,
+    currentShard,
+    currentRealm,
     dayOfWeek,
     noShard,
   };

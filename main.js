@@ -94,9 +94,10 @@ client.once('ready', async () => {
 
   Logger.success(`Logged in as ${client.user.tag}`);
 
-  // Setting Up Slash Commands
   client.commands = new Collection();
   client.cooldowns = new Collection();
+  client.timezone = 'America/Los_Angeles';
+  // slash commands set up
   const commandDirectory = path.join(__dirname, './src/commands');
   function findCommandFiles(directory) {
     const files = fs.readdirSync(directory);

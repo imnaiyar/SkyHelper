@@ -1,19 +1,6 @@
 const moment = require('moment-timezone');
 
-const eventSequence = [
-  'C',
-  'b',
-  'A',
-  'a',
-  'B',
-  'b',
-  'C',
-  'a',
-  'A',
-  'b',
-  'B',
-  'a',
-];
+const config = require('@root/config');
 function shardsTime() {
   const timezone = 'America/Los_Angeles';
 
@@ -26,8 +13,8 @@ function shardsTime() {
   dayOfWeek = currentDate.day();
 
   // Calculate the index in the event sequences
-  const sequenceIndex = (dayOfMonth - 1) % eventSequence.length;
-  const currentEvent = eventSequence[sequenceIndex];
+  const sequenceIndex = (dayOfMonth - 1) % config.shardSequence.length;
+  const currentEvent = config.shardSequence[sequenceIndex];
 
   if (
     (currentEvent === 'a' && [6, 0].includes(dayOfWeek)) ||
