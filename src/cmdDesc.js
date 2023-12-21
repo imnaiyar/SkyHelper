@@ -74,4 +74,7 @@ The bot will respond to all messages in the designated channel as configured dur
 
   autoShard:
     "Facilitate seamless Shard updates with an auto-updating message in your designated channel. It's advisable to create a dedicated channel to ensure the bot's vital updates don't get lost in the chatter (As the bot will be updating the original message sent at the time of configuringthe command). The message dynamically refreshes every 5 minutes for real-time Shard insights.\n\n**Usage:**\n- `/shards-live start <channel>`: Set up the channel for automated updates.\n- `/shards-live stop`: Halt AutoShard updates, including the removal of the original message.",
+
+  autoTimes:
+    "Facilitate seamless in-game (grandma, geyser, turtle, etc.) events times updates/countdown with an auto-updating message in your designated channel. It's advisable to create a dedicated channel to ensure the bot's vital updates don't get lost in the chatter (As the bot will be updating the original message sent at the time of configuringthe command). The message dynamically refreshes every 2 minutes for real-time in-game events insights.\n\n**Usage:**\n- `/sky-times-live start <channel>`: Set up the channel for automated updates.\n- `/sky-times-live stop`: Halt live SkyTimes updates, including the removal of the original message.",
 };

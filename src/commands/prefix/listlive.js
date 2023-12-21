@@ -4,18 +4,32 @@ const { EmbedBuilder } = require('discord.js');
 module.exports = {
   data: {
     name: 'listlive',
-    description: 'list all active live shards',
+    description: 'list all active live shards/skytimes',
     category: 'OWNER',
+    args: ['shards', 'times'],
   },
   async execute(msg, args) {
-    const model = mongoose.model('autoShard');
+    if (!this.data.args.includes(args[0])) {
+      return msg.reply(
+        '**Invalid Comand Usage**\nAvailable Args: `shards`, `times`',
+      );
+    }
+    let model;
+    let type;
+    if (args[0] === 'shards') {
+      model = mongoose.model('autoShard');
+      type = 'Shards';
+    } else if (args[0] === 'times') {
+      model = mongoose.model('autoTimes');
+      type = 'SkyTimes';
+    }
     let description = ``;
 
     try {
       const data = await model.find();
 
       if (data.length === 0) {
-        return msg.reply('No active live shards');
+        return msg.reply(`No active live ${type}`);
       }
 
       for (const g of data) {
@@ -25,12 +39,18 @@ module.exports = {
 
         const owner = msg.client.users.cache.get(guild.ownerId);
         const channel = msg.client.channels.cache.get(g.channelId);
-        
-        description += `**Guild:** ${guild?.name || "Unknown"} (${guild?.id || "Unknown"})\n**Owner:** ${owner?.username || "Unknown"} (${owner?.id || "Unknown"})\n**Channel:** ${channel?.name || "Unknown"} (${channel?.id || "Unknown"})\n\n`;
+
+        description += `**Guild:** ${guild?.name || 'Unknown'} (${
+          guild?.id || 'Unknown'
+        })\n**Owner:** ${owner?.username || 'Unknown'} (${
+          owner?.id || 'Unknown'
+        })\n**Channel:** ${channel?.name || 'Unknown'} (${
+          channel?.id || 'Unknown'
+        })\n\n`;
       }
 
       const embed = new EmbedBuilder()
-        .setTitle('Guilds with active Live Shard')
+        .setTitle(`Guilds with active Live ${type}`)
         .setDescription(description);
 
       msg.reply({
@@ -38,7 +58,7 @@ module.exports = {
       });
     } catch (error) {
       console.error(error);
-      msg.reply('An error occurred while fetching live shards.');
+      msg.reply(`An error occurred while fetching live ${type}.`);
     }
   },
 };

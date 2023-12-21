@@ -1,22 +1,23 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 const moment = require('moment-timezone');
-const { buildShardEmbed } = require('@functions/buildShardEmbed');
-const { autoShard } = require('@schemas/autoShard');
+const { buildTimesEmbed } = require('@functions/buildTimesEmbed');
+const { autoTimes } = require('@schemas/autoTimes');
 const { parsePerm } = require('@functions/parsePerm');
 const desc = require('@src/cmdDesc');
 module.exports = {
   data: {
-    name: 'shards-live',
-    description: 'auto updating message with live shards details',
+    name: 'sky-times-live',
+    description:
+      'auto updating message with live in-game events details/countdown',
     options: [
       {
         name: 'start',
-        description: 'configure auto shard',
+        description: 'configure live SkyTimes',
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: 'channel',
-            description: 'channel where shard details should be updated',
+            description: 'channel where SkyTimes details should be updated',
             type: ApplicationCommandOptionType.Channel,
             required: true,
           },
@@ -24,11 +25,11 @@ module.exports = {
       },
       {
         name: 'stop',
-        description: 'stop auto shard',
+        description: 'stop live SkyTimes',
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
-    longDesc: desc.autoShard,
+    longDesc: desc.autoTimes,
   },
   async execute(interaction, client) {
     const sub = interaction.options.getSubcommand();
@@ -41,13 +42,13 @@ module.exports = {
         ephemeral: true,
       });
     }
-    const config = await autoShard(interaction.guild);
+    const config = await autoTimes(interaction.guild);
     if (sub === 'start') {
       if (config.channelId && config.messageId) {
         const ch = client.channels.cache.get(config.channelId);
         const ms = await ch.messages.fetch(config.messageId);
         return interaction.reply({
-          content: `Live Shard is already configured in <#${config.channelId}> for this message ${ms.url}.`,
+          content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${ms.url}.`,
           ephemeral: true,
         });
       }
@@ -60,10 +61,9 @@ module.exports = {
           ephemeral: true,
         });
       }
-
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const { result } = await buildShardEmbed(currentDate, 'Live Shard');
+      const { result } = await buildTimesEmbed('Live SkyTimes');
       const msg = await channel.send({
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
@@ -72,13 +72,13 @@ module.exports = {
       config.messageId = msg.id;
       await config.save();
       interaction.reply({
-        content: `Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`,
+        content: `Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 2 minutes with live in-game events (grandma, geyser, etc.) details.`,
         ephemeral: true,
       });
     } else if (sub === 'stop') {
       if (!config.channelId || !config.messageId) {
         return interaction.reply({
-          content: 'Live Shard is already disabled for this server',
+          content: 'Live SkyTimes is already disabled for this server',
           ephemeral: true,
         });
       }
@@ -91,11 +91,11 @@ module.exports = {
 
       const mongoose = require('mongoose');
 
-      const guildData = mongoose.model('autoShard');
+      const guildData = mongoose.model('autoTimes');
       await guildData.findOneAndDelete({ _id: interaction.guild.id });
 
       interaction.reply({
-        content: 'Live Shard is disabled',
+        content: 'Live SkyTimes is disabled',
         ephemeral: true,
       });
     }

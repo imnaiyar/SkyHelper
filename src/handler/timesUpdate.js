@@ -1,17 +1,16 @@
-const { buildShardEmbed } = require('@functions/buildShardEmbed');
+const { buildTimesEmbed } = require('@functions/buildTimesEmbed');
 const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 module.exports = {
-  shardsUpdate: async (client) => {
+  timesUpdate: async (client) => {
     const timezone = 'America/Los_Angeles';
     const currentDate = moment().tz(timezone);
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-    const { result } = await buildShardEmbed(
-      currentDate,
-      'Live Shard (updates every 5 min.)',
+    const { result } = await buildTimesEmbed(
+      'Live SkyTimes (updates every 5 min.)',
     );
 
-    const guildData = mongoose.model('autoShard');
+    const guildData = mongoose.model('autoTimes');
     await guildData.find().then((data) => {
       if (!data) return;
 

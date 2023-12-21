@@ -10,6 +10,7 @@ const { validations } = require('@handler/validations');
 const { DASHBOARD } = require('@root/config');
 const cron = require('node-cron');
 const { shardsUpdate } = require('@handler/shardsUpdate');
+const { timesUpdate } = require('@handler/timesUpdate');
 const {
   recursiveReadDirSync,
 } = require('@handler/functions/recursiveReadDirSync');
@@ -200,6 +201,13 @@ cron.schedule('*/5 * * * *', async () => {
   }
 });
 
+cron.schedule('*/2 * * * *', async () => {
+  try {
+    await timesUpdate(client);
+  } catch (err) {
+    Logger.error(err);
+  }
+});
 // Exporting client should I need it somewhere
 module.exports = { client };
 client.login(process.env.TOKEN);
