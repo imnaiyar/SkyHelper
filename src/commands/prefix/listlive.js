@@ -17,7 +17,7 @@ module.exports = {
         const guild = msg.client.guilds.cache.get(g._id);
         const owner = msg.client.users.cache.get(guild.ownerId);
         const channel = msg.client.channels.cache.get(g.channelId);
-        description += `**Guild:** ${guild.name} (${guild.id})\n**Owner:** ${owner?.username || "Unknown"} (${owner?.id || "Unknown"})\n**Channel:** ${channel.name} (${channel.id})\n\n`;
+        description += `**Guild:** ${guild?.name || "Unknown"} (${guild?.id || "Unknown"})\n**Owner:** ${owner?.username || "Unknown"} (${owner?.id || "Unknown"})\n**Channel:** ${channel.name} (${channel.id})\n\n`;
       });
       const embed = new EmbedBuilder()
         .setTitle('Guilds with active Live Shard')
