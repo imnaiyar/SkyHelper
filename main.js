@@ -4,6 +4,7 @@ const {
   WebhookClient,
   Collection,
   EmbedBuilder,
+  Partials,
 } = require('discord.js');
 const { table } = require('table');
 const { validations } = require('@handler/validations');
@@ -23,11 +24,15 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
+    
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.GuildMembers,
+    
     GatewayIntentBits.GuildMessageReactions,
+  ],
+  partials: [
+    Partials.Channel,
+    Partials.Message
   ],
 });
 

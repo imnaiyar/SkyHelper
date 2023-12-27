@@ -6,7 +6,6 @@ const {
   ButtonStyle,
 } = require('discord.js');
 const { OWNER } = require('@root/config.js');
-const { getSettings } = require('@schemas/Guild.js');
 const Log = require('@src/logger');
 const { parsePerm } = require('@handler/functions/parsePerm');
 const Logger = process.env.COMMANDS_USED
@@ -14,33 +13,26 @@ const Logger = process.env.COMMANDS_USED
   : undefined;
 
 module.exports = async (client, message) => {
-  if (!message.guild) return;
   if (message.author.bot) return;
-  const settings = await getSettings(message.guild);
-
-  function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
 
   // Check Bot'sprefix
-  const prefix = settings?.prefix || process.env.BOT_PREFIX;
-  const escapedPrefix = escapeRegExp(prefix);
-
-  if (
-    !message.content.startsWith(prefix) ||
-    message.content.match(new RegExp(`^${escapedPrefix} `))
+  let prefix;
+  if (message.content.startsWith(`<@${client.user.id}>`)
   ) {
+    prefix = `<@${client.user.id}>`;
+  } else if (message.content.startsWith(`.`)) {
+    prefix = '.';
+  } else {
     return;
   }
 
   // Initialize the commands
   const args = message.content
-    .slice(settings.prefix?.length || process.env.BOT_PREFIX.length)
+    .slice(prefix.length)
     .trim()
     .split(/ +/);
   const commandName = args.shift();
   const command = client.prefix.get(commandName);
-
   // Return if command is not found
   if (!command) {
     return;
@@ -55,7 +47,7 @@ module.exports = async (client, message) => {
     return;
 
   // Check if the bot has Send Message permission
-  if (
+  if ( message.guild &&
     !message.guild.members.me.permissionsIn(message.channel).has('SendMessages')
   ) {
     message.author.send(
@@ -71,7 +63,7 @@ module.exports = async (client, message) => {
   }
 
   // Check if the user has permissions to use the command.
-  if (
+  if ( message.guild &&
     command.data.userPermissions &&
     !message.member.permissions.has(command.data.userPermissions)
   ) {
