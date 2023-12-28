@@ -51,6 +51,7 @@ if (!vld) {
 client.once('ready', async () => {
   // Setting up configs
   client.config = require('./config.js');
+  client.logger = Logger;
   // Setting up events
   function loadEvents(directory) {
     Logger.log(`Loading events...`);
