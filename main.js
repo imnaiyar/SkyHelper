@@ -24,16 +24,13 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    
+
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessages,
-    
+
     GatewayIntentBits.GuildMessageReactions,
   ],
-  partials: [
-    Partials.Channel,
-    Partials.Message
-  ],
+  partials: [Partials.Channel, Partials.Message],
 });
 
 const ready = process.env.READY_LOGS

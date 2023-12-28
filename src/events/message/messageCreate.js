@@ -17,8 +17,7 @@ module.exports = async (client, message) => {
 
   // Check Bot'sprefix
   let prefix;
-  if (message.content.startsWith(`<@${client.user.id}>`)
-  ) {
+  if (message.content.startsWith(`<@${client.user.id}>`)) {
     prefix = `<@${client.user.id}>`;
   } else if (message.content.startsWith(`.`)) {
     prefix = '.';
@@ -27,10 +26,7 @@ module.exports = async (client, message) => {
   }
 
   // Initialize the commands
-  const args = message.content
-    .slice(prefix.length)
-    .trim()
-    .split(/ +/);
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift();
   const command = client.prefix.get(commandName);
   // Return if command is not found
@@ -47,7 +43,8 @@ module.exports = async (client, message) => {
     return;
 
   // Check if the bot has Send Message permission
-  if ( message.guild &&
+  if (
+    message.guild &&
     !message.guild.members.me.permissionsIn(message.channel).has('SendMessages')
   ) {
     message.author.send(
@@ -63,7 +60,8 @@ module.exports = async (client, message) => {
   }
 
   // Check if the user has permissions to use the command.
-  if ( message.guild &&
+  if (
+    message.guild &&
     command.data.userPermissions &&
     !message.member.permissions.has(command.data.userPermissions)
   ) {
