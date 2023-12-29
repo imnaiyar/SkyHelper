@@ -38,6 +38,7 @@ module.exports = class SkyHelper extends Client {
     this.timezone = 'America/Los_Angeles';
     this.prefix = new Collection();
     this.database = schemas;
+    // Datas for Events in Sky
     this.skyEvents = {
     eventActive: true,
     eventName: 'Days of Feast',
@@ -45,6 +46,8 @@ module.exports = class SkyHelper extends Client {
     eventEnds: moment.tz('2024-01-07T23:59:59', this.timezone),
     eventDuration: '21 days',
 };
+
+  // Checks for how this class is created so it doesnt mess up the process
     if (process.mainModule.filename !== `${process.cwd()}/src/commandsRegister.js` && this.config.DASHBOARD.enabled) {
       const { loadWebsite } = require('./website/mainPage');
       loadWebsite(this);
@@ -52,7 +55,7 @@ module.exports = class SkyHelper extends Client {
   }
   
   /**
-   * Validaye environment variable
+   * Validate environment variable
    */
    async validate() {
      const vld = await validations();
