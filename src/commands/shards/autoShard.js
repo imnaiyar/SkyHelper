@@ -29,17 +29,12 @@ module.exports = {
       },
     ],
     longDesc: desc.autoShard,
+    userPermissions: ["ManageGuild"],
   },
   async execute(interaction, client) {
     const sub = interaction.options.getSubcommand();
     if (!interaction.guild) {
       return interaction.reply('This command can only be used in a server');
-    }
-    if (!interaction.member.permissions.has('ManageGuild')) {
-      return interaction.reply({
-        content: `You need ${parsePerm('ManageGuild')} to use this command.`,
-        ephemeral: true,
-      });
     }
     const config = await autoShard(interaction.guild);
     if (sub === 'start') {
