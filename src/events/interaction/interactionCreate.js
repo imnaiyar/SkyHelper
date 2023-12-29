@@ -44,7 +44,7 @@ module.exports = async (client, interaction) => {
     // Check if the user has permissions to use the command.
     if (
       command.data?.userPermissions &&
-      !interaction.member.permissions.has(command.data.userPermissions) && !client.config.OWNER.includes(intetaction.user.id)
+      !interaction.member.permissions.has(command.data.userPermissions)
     ) {
       return interaction.reply({
         content: `You need ${parsePerm(
