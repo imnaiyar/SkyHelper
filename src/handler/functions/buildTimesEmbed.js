@@ -2,14 +2,15 @@ const { skyTimes } = require('@commands/skytimes/sub/skyTimes');
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('@root/config');
 module.exports = {
-  buildTimesEmbed: async (footer) => {
+  buildTimesEmbed: async (client, footer) => {
     const {
       geyserResultStr,
       grandmaResultStr,
       resetResultStr,
       edenResultStr,
       turtleResultStr,
-    } = await skyTimes();
+      eventDescription,
+    } = await skyTimes(client);
     let result = new EmbedBuilder()
       .setAuthor({
         name: `SkyTimes`,
@@ -35,6 +36,10 @@ module.exports = {
         {
           name: 'Next Eden Reset',
           value: edenResultStr,
+        },
+        {
+          name: 'Event',
+          value: eventDescription,
         },
       )
       .setTimestamp(Date.now())

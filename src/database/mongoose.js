@@ -23,8 +23,11 @@ module.exports = {
 
   schemas: {
     Guild: require('./schemas/Guild'),
-    STATS: require('./schemas/botStats'),
+    botStats: require('./schemas/botStats'),
     Shards: require('./schemas/Shards'),
     User: require('./schemas/User'),
+    autoShard: require('./schemas/autoShard'),
+    autoTimes: require('./schemas/autoTimes'),
+    guildBlackList: require('./schemas/guildBlackList'),
   },
 };

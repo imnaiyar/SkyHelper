@@ -8,8 +8,6 @@ const {
 } = require('discord.js');
 const { btnHandler } = require('@handler/functions/btnHandler.js');
 const { parsePerm } = require('@handler/functions/parsePerm');
-const config = require('@root/config');
-const Log = require('@src/logger');
 const cLogger = process.env.COMMANDS_USED
   ? new WebhookClient({ url: process.env.COMMANDS_USED })
   : undefined;
@@ -39,7 +37,7 @@ module.exports = async (client, interaction) => {
     if (
       command.data.category &&
       command.data.category === 'OWNER' &&
-      !config.OWNER.includes(interaction.user.id)
+      !client.config.OWNER.includes(interaction.user.id)
     )
       return;
 
@@ -57,7 +55,7 @@ module.exports = async (client, interaction) => {
     }
 
     // Check cooldowns
-    if (command?.cooldown && !config.OWNER.includes(interaction.user.id)) {
+    if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
       const { cooldowns } = client;
 
       if (!cooldowns.has(command.data.name)) {
@@ -108,7 +106,7 @@ module.exports = async (client, interaction) => {
 
       // Slash Commands
       if (
-        !interaction.user.id.includes(config.OWNER) &&
+        !interaction.user.id.includes(client.config.OWNER) &&
         process.env.COMMANDS_USED
       ) {
         cLogger
@@ -116,7 +114,7 @@ module.exports = async (client, interaction) => {
           .catch((ex) => {});
       }
     } catch (error) {
-      Log.error(error);
+      client.logger.error(error);
       const embed = new EmbedBuilder()
         .setTitle(`ERROR`)
         .setDescription(`An error occurred while executing this command.`);

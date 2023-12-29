@@ -7,53 +7,64 @@ const {
   Partials,
 } = require('discord.js');
 const { table } = require('table');
-const { validations } = require('@handler/validations');
-const { DASHBOARD } = require('@root/config');
-const cron = require('node-cron');
-const { shardsUpdate } = require('@handler/shardsUpdate');
-const { timesUpdate } = require('@handler/timesUpdate');
+const moment = require('moment-timezone');
 const {
   recursiveReadDirSync,
 } = require('@handler/functions/recursiveReadDirSync');
-const { initializeMongoose } = require('@src/database/mongoose');
-const { setupPresence } = require('@handler/presence/presence');
+const { validations } = require('@handler/validations');
+const { schemas } = require('@src/database/mongoose');
+const { cmdValidation } = require('@handler/cmdValidation');
 const fs = require('fs');
 const path = require('path');
 const Logger = require('@src/logger');
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
+module.exports = class SkyHelper extends Client {
+  constructor() {
+    super({
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
 
-    GatewayIntentBits.DirectMessageReactions,
-    GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.DirectMessages,
 
-    GatewayIntentBits.GuildMessageReactions,
-  ],
-  partials: [Partials.Channel, Partials.Message],
-});
+        GatewayIntentBits.GuildMessageReactions,
+      ],
+      partials: [Partials.Channel, Partials.Message],
+    });
+    this.config = require('./config.js');
+    this.logger = Logger;
+    this.commands = new Collection();
+    this.cooldowns = new Collection();
+    this.timezone = 'America/Los_Angeles';
+    this.prefix = new Collection();
+    this.database = schemas;
+    this.skyEvents = {
+    eventActive: true,
+    eventName: 'Days of Feast',
+    eventStarts: moment.tz('2023-12-18T00:00:00', this.timezone),
+    eventEnds: moment.tz('2024-01-07T23:59:59', this.timezone),
+    eventDuration: '21 days',
+};
+    if (process.mainModule.filename !== `${process.cwd()}/src/commandsRegister.js` && this.config.DASHBOARD.enabled) {
+      const { loadWebsite } = require('./website/mainPage');
+      loadWebsite(this);
+    }
+  }
+  
+  /**
+   * Validaye environment variable
+   */
+   async validate() {
+     const vld = await validations();
+  if (!vld) {
+    process.exit(1);
+  }
+   }
 
-const ready = process.env.READY_LOGS
-  ? new WebhookClient({ url: process.env.READY_LOGS })
-  : undefined;
-
-process.on('uncaughtException', (erorr) =>
-  Logger.error(`Unhandled exception`, erorr),
-);
-process.on('unhandledRejection', (error) =>
-  Logger.error(`Unhandled exception`, error),
-);
-// Validation
-const vld = validations();
-if (!vld) {
-  process.exit();
-}
-client.once('ready', async () => {
-  // Setting up configs
-  client.config = require('./config.js');
-  client.logger = Logger;
-  // Setting up events
-  function loadEvents(directory) {
+  /**
+   * Load all events from the specified directory
+   */
+  loadEvents(directory) {
     Logger.log(`Loading events...`);
     let success = 0;
     let failed = 0;
@@ -65,7 +76,7 @@ client.once('ready', async () => {
         const eventName = path.basename(file, '.js');
         const event = require(filePath);
 
-        client.on(eventName, event.bind(null, client));
+        this.on(eventName, event.bind(null, this));
         clientEvents.push([file, '✓']);
 
         delete require.cache[require.resolve(filePath)];
@@ -94,123 +105,72 @@ client.once('ready', async () => {
     );
   }
 
-  loadEvents('./src/events');
-
-  Logger.success(`Logged in as ${client.user.tag}`);
-
-  client.commands = new Collection();
-  client.cooldowns = new Collection();
-  client.timezone = 'America/Los_Angeles';
-  // slash commands set up
-  const commandDirectory = path.join(__dirname, './src/commands');
-  function findCommandFiles(directory) {
+  /**
+   * Load slash command to client on startup
+   */
+  loadSlashCmd(dir) {
+    const directory = path.resolve(__dirname, dir);
     const files = fs.readdirSync(directory);
 
     for (const file of files) {
-      const filePath = path.join(directory, file);
+      const filePath = path.resolve(directory, file);
       const fileStat = fs.statSync(filePath);
 
       if (fileStat.isDirectory()) {
         if (file !== 'sub' && file !== 'prefix') {
-          findCommandFiles(filePath);
+          this.loadSlashCmd(filePath);
         }
       } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {
         const command = require(filePath);
-        client.commands.set(command.data.name, command);
+       const vld =  cmdValidation(command, file);
+       if (!vld) continue;
+        this.commands.set(command.data.name, command);
       }
     }
   }
-  findCommandFiles(commandDirectory);
 
-  // Setting up Prefix commands
-  client.prefix = new Collection();
+  /**
+   * Load prefix command on startup
+   */
+  loadPrefix(dir) {
+    const prefixDirectory = path.join(__dirname, dir);
+    const commandFiles = fs
+      .readdirSync(prefixDirectory)
+      .filter((file) => file.endsWith('.js'));
 
-  const prefixDirectory = path.join(__dirname, './src/commands/prefix');
-  const commandFiles = fs
-    .readdirSync(prefixDirectory)
-    .filter((file) => file.endsWith('.js'));
-
-  for (const file of commandFiles) {
-    const command = require(`@src/commands/prefix/${file}`);
-    client.prefix.set(command.data.name, command);
+    for (const file of commandFiles) {
+      const command = require(`@src/commands/prefix/${file}`);
+      this.prefix.set(command.data.name, command);
+    }
   }
+  
+  /**
+   * Register Slash Commands
+   */
+   async registerCommands() {
+    const toRegister = [];
+    
+    this.commands
+        .map((cmd) => ({
+          name: cmd.data.name,
+          description: cmd.data.description,
+          type: 1,
+          options: cmd.data.options,
+        }))
+        .forEach((s) => toRegister.push(s));
 
-  // Load Website
-  if (DASHBOARD.enabled) {
-    require('@root/website/mainPage');
-  }
-  // Send ready webhook log
-  let text;
-  if (client.config.DASHBOARD.enabled) {
-    text = `Website started on port ${DASHBOARD.port}`;
-  } else {
-    text = 'Website is disabled';
-  }
-  const readyalertemb = new EmbedBuilder()
-    .addFields(
-      {
-        name: 'Bot Status',
-        value: `Total guilds: ${
-          client.guilds.cache.size
-        }\nTotal Users: ${client.guilds.cache.reduce(
-          (size, g) => size + g.memberCount,
-          0,
-        )}`,
-        inline: false,
-      },
-      {
-        name: 'Website',
-        value: text,
-        inline: false,
-      },
-      {
-        name: 'Interactions',
-        value: `Loaded Interactions`,
-        inline: false,
-      },
-      {
-        name: 'Success',
-        value: `SkyHelper is now online`,
-      },
-    )
-    .setColor('Gold')
-    .setTimestamp();
+      await this.application.commands.set(toRegister);
+    
 
-  // Ready alert
-  if (ready) {
-    ready.send({
-      username: 'Ready',
-      avatarURL: client.user.displayAvatarURL(),
-      embeds: [readyalertemb],
+    this.logger.success("Successfully registered interactions");
+  }
+  /**
+   * Get bot's invite
+   */
+  getInvite() {
+    return this.generateInvite({
+      scopes: ['bot', 'applications.commands'],
+      permissions: 412317243584n,
     });
   }
-
-  // Fetching Application info for eval purposes.
-  await client.application.fetch();
-});
-
-// setup mongoose
-initializeMongoose();
-
-//bots presence
-setupPresence(client);
-
-// auto shard function
-cron.schedule('*/5 * * * *', async () => {
-  try {
-    await shardsUpdate(client);
-  } catch (err) {
-    Logger.error(err);
-  }
-});
-
-cron.schedule('*/2 * * * *', async () => {
-  try {
-    await timesUpdate(client);
-  } catch (err) {
-    Logger.error(err);
-  }
-});
-// Exporting client should I need it somewhere
-module.exports = { client };
-client.login(process.env.TOKEN);
+};

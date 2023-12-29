@@ -1,8 +1,10 @@
 const { success, error, warn } = require('@src/logger');
+const fs = require('fs');
+const util = require('util');
 const config = require('@root/config');
 const chalk = require('chalk');
 module.exports = {
-  validations: () => {
+  validations: async () => {
     if (!process.env.TOKEN) {
       error(`"TOKEN" cannot be empty.`);
       return false;
@@ -39,12 +41,21 @@ module.exports = {
       warn("Dashboard is disabled, enable it to deploy the bot's website.");
     }
 
-    // Webhook Logs validations
     if (!process.env.SUGGESTION) {
       warn(
         '"SUGGESTION" webhook URL is not provided, suggestion command wont work properly',
       );
     }
+    const access = util.promisify(fs.access);
+    try {
+      await access('messageData.json', fs.constants.F_OK);
+    } catch (err) {
+      error(
+        `"messageData.json" file does not exist in the root directory, "shards" related commands will not work properly`,
+      );
+      return false;
+    }
+
     return true;
   },
 };

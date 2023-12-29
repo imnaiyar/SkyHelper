@@ -63,7 +63,7 @@ module.exports = {
       }
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const { result } = await buildTimesEmbed('Live SkyTimes');
+      const { result } = await buildTimesEmbed(client, 'Live SkyTimes');
       const msg = await channel.send({
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],

@@ -27,6 +27,8 @@ module.exports = {
       'next-shards',
       'timestamp',
       'sky-times',
+      'skytimes-live',
+      'shards-live'
     ];
     const filtered = choices.filter((choice) => choice.includes(focusedValue));
     await interaction.respond(

@@ -7,7 +7,7 @@ module.exports = {
       const files = readdirSync(join(process.cwd(), dir));
       files.forEach((file) => {
         const stat = lstatSync(join(process.cwd(), dir, file));
-        if (stat.isDirectory()) {
+        if (stat.isDirectory() && stat !== 'prefix') {
           readCommands(join(dir, file));
         } else {
           const extension = extname(file);

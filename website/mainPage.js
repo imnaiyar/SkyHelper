@@ -2,8 +2,6 @@ const express = require('express');
 const { DASHBOARD } = require('@root/config');
 const { botSettings } = require('@schemas/botStats');
 const path = require('path');
-const { client } = require('@root/main');
-const Logger = require('@src/logger');
 const app = express();
 const htmlUtils = require('./htmlUtils');
 const PORT = DASHBOARD.port;
@@ -19,40 +17,40 @@ async function unixPage(interaction, fieldsData, unixTime, offset, timezone) {
     res.send(html.Content);
   });
 }
-module.exports = { unixPage };
-app.set('views', path.join(__dirname, 'views'));
+function loadWebsite(client) {
+  app.set('views', path.join(__dirname, 'views'));
 
-app.set('view engine', 'ejs');
+  app.set('view engine', 'ejs');
 
-app.use('/', express.static(path.join(__dirname, 'views', 'page')));
+  app.use('/', express.static(path.join(__dirname, 'views', 'page')));
 
-const tosRoute = require('./tos');
-const privacyRoute = require('./privacy');
-app.use('/', tosRoute);
-app.use('/', privacyRoute);
+  const tosRoute = require('./tos');
+  const privacyRoute = require('./privacy');
+  app.use('/', tosRoute);
+  app.use('/', privacyRoute);
 
-app.use(async (req, res, next) => {
-  try {
-    const settings = await botSettings(client);
-    const stats = settings.data;
-    res.locals.stats = stats;
-    next();
-  } catch (err) {
-    console.error(err);
-    res.locals.stats = null;
-    next();
-  }
-});
+  app.use(async (req, res, next) => {
+    try {
+      const settings = await botSettings(client);
+      const stats = settings.data;
+      res.locals.stats = stats;
+      next();
+    } catch (err) {
+      console.error(err);
+      res.locals.stats = null;
+      next();
+    }
+  });
 
-app.get('/', (req, res) => {
-  res.render('page/index');
-});
+  app.get('/', (req, res) => {
+    res.render('page/index');
+  });
 
-app.get('/invite', (req, res) => {
-  const redirectUrl =
-    'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands';
+  app.get('/invite', (req, res) => {
+    const redirectUrl =
+      'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands';
 
-  const html = `
+    const html = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -226,11 +224,13 @@ to { left: 90vw; }
       </body>
     </html>`;
 
-  res.send(html);
-});
-app.get('/vote', (req, res) => {
-  res.redirect('https://top.gg/bot/1121541967730450574/vote');
-});
-app.listen(PORT, () => {
-  Logger.success(`Server is running on port ${PORT}`);
-});
+    res.send(html);
+  });
+  app.get('/vote', (req, res) => {
+    res.redirect('https://top.gg/bot/1121541967730450574/vote');
+  });
+  app.listen(PORT, () => {
+    client.logger.success(`Server is running on port ${PORT}`);
+  });
+}
+module.exports = { unixPage, loadWebsite };

@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, time } = require('discord.js');
 const { skyTimes } = require('./sub/skyTimes');
 const desc = require('@src/cmdDesc');
 module.exports = {
@@ -19,12 +19,14 @@ module.exports = {
           { name: 'Turtle Time', value: 'turtle' },
           { name: 'Reset Time', value: 'reset' },
           { name: 'Eden Reset Time', value: 'eden' },
+          { name: 'Special Event', value: 'event' },
         ],
       },
     ],
   },
   async execute(interaction) {
-    const result = await skyTimes();
+    const { client } = interaction;
+    const result = await skyTimes(client);
     const chosenOption = interaction.options.getString('times');
 
     switch (chosenOption) {
@@ -55,10 +57,19 @@ module.exports = {
           `\`Next eden reset for you on:\` ${result.edenResultStr}`,
         );
         break;
+        
+      case 'event':
+        if (client.skyEvents.eventActive || result.eventDescription !== 'No active events.') {
+        await interaction.reply(`**Event:** ${client.skyEvents.eventName}\n**Start Date:** ${time(client.skyEvents.eventStarts.toDate(), 'f')}\n**End Date:** ${time(client.skyEvents.eventEnds.toDate(), 'f')}\n**Duration:** ${client.skyEvents.eventDuration}\n\`\`\`Countdown\`\`\`\n${result.eventDescription}`);
+        } else {
+          await interaction.reply('No active events right now.');
+        }
+        
+        break;
 
       default:
         await interaction.reply(
-          `In-game events time:\n- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n_Check individual commands for more information_`,
+          `In-game events time:\n- **Geyser(upcoming):** ${result.geyserResultStr}\n- **Grandma(upcoming):** ${result.grandmaResultStr}\n- **Turtle(upcoming):** ${result.turtleResultStr}\n- **Reset(next):** ${result.resetResultStr}\n- **Eden(reset):** ${result.edenResultStr}\n\n\`\`\`Event\`\`\`\n${result.eventDescription}\n\n_Check individual options (geyser, grandma, etc.) for more information_`,
         );
         break;
     }
