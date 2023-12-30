@@ -29,7 +29,7 @@ module.exports = {
       },
     ],
     longDesc: desc.autoShard,
-    userPermissions: ["ManageGuild"],
+    userPermissions: ['ManageGuild'],
   },
   async execute(interaction, client) {
     const sub = interaction.options.getSubcommand();
@@ -47,11 +47,20 @@ module.exports = {
         });
       }
       const channel = interaction.options.getChannel('channel');
-            if (
-        !interaction.guild.members.me.permissionsIn(channel).has(["ViewChannel", "SendMessages"])
-      ) {
+      const requiredPerms = ['SendMessages', 'ViewChannel'];
+      const missingPerms = [];
+
+      for (const perm of requiredPerms) {
+        if (!interaction.guild.members.me.permissionsIn(channel).has(perm)) {
+          missingPerms.push(perm);
+        }
+      }
+
+      if (missingPerms.length > 0) {
         return interaction.reply({
-          content: `I do not have permissions to send messages/view channnel in <#${channel.id}>`,
+          content: `I do not have the required permissions (${missingPerms
+            .map((prm) => `\`${prm}\``)
+            .join(', ')}) to perform this action in <#${channel.id}>`,
           ephemeral: true,
         });
       }

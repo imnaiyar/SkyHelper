@@ -6,7 +6,8 @@ module.exports = {
     const timezone = 'America/Los_Angeles';
     const currentDate = moment().tz(timezone);
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-    const { result } = await buildTimesEmbed(client, 
+    const { result } = await buildTimesEmbed(
+      client,
       'Live SkyTimes (updates every 2 min.)',
     );
 

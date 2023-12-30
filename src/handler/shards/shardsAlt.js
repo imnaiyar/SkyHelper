@@ -35,18 +35,33 @@ async function shardsAlt(currentDate) {
       eventStatus = `${i + 1}${getSuffix(i + 1)} Shard has not fallen yet`;
       timeRemaining = `Falls in ${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s (at <t:${startUnix}:T>)`;
       break;
-    } else if (i < eventTimings.length - 1 && present.isAfter(eventTiming.end) && present.isBefore(eventTimings[i + 1].start)) {
+    } else if (
+      i < eventTimings.length - 1 &&
+      present.isAfter(eventTiming.end) &&
+      present.isBefore(eventTimings[i + 1].start)
+    ) {
       const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);
-      eventStatus = `${i + 1}${getSuffix(i + 1)} shard ended at <t:${endUnix}:t>, ${i + 2}${getSuffix(i + 2)} Shard has not fallen yet`;
+      eventStatus = `${i + 1}${getSuffix(
+        i + 1,
+      )} shard ended at <t:${endUnix}:t>, ${i + 2}${getSuffix(
+        i + 2,
+      )} Shard has not fallen yet`;
       const duration = moment.duration(eventTimings[i + 1].start.diff(present));
       timeRemaining = `Falls in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${startUnix2}:T>)`;
       break;
-    } else if (i === eventTimings.length - 1 && present.isAfter(eventTiming.end)) {
-      const unixEnd2 = Math.floor(eventTimings[eventTimings.length - 1].end.valueOf() / 1000);
+    } else if (
+      i === eventTimings.length - 1 &&
+      present.isAfter(eventTiming.end)
+    ) {
+      const unixEnd2 = Math.floor(
+        eventTimings[eventTimings.length - 1].end.valueOf() / 1000,
+      );
       eventStatus = `All Shards ended for ${noShard}`;
       timeRemaining = '';
 
-      const duration = moment.duration(present.diff(eventTimings[eventTimings.length - 1].end));
+      const duration = moment.duration(
+        present.diff(eventTimings[eventTimings.length - 1].end),
+      );
       const hoursRemaining = Math.floor(duration.asHours());
       const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
       const secondsRemaining = Math.floor(duration.asSeconds()) % 60;

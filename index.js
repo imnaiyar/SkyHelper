@@ -10,9 +10,14 @@ const client = new SkyHelper();
 
 (async () => {
   await client.validate();
-client.loadEvents('./src/events');
-client.loadSlashCmd('./src/commands');
-client.loadPrefix('./src/commands/prefix');
+  client.loadEvents('./src/events');
+  client.loadSlashCmd('./src/commands');
+  client.loadPrefix('./src/commands/prefix');
+  
+  // unhandled error handling
+  process.on("unhandledRejection", (err) => client.logger.error(`Unhandled rejection`, err));
+  process.on("uncaughtException", (err) => client.logger.error(`Uncaught exception`, err));
+  
   // setup mongoose
   initializeMongoose();
 

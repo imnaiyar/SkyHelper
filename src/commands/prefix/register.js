@@ -1,4 +1,3 @@
-
 module.exports = {
   data: {
     name: 'register',
@@ -7,11 +6,11 @@ module.exports = {
   },
 
   async execute(message, args, client) {
- try {
+    try {
       const reply = await message.reply(
         '<a:reload:1158269773835141181> Started refreshing application (/) commands.',
       );
-      
+
       await client.registerCommands();
       await client.application.commands.fetch();
       await reply.edit(

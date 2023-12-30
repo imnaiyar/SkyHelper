@@ -1,7 +1,7 @@
 const { error } = require('@src/logger');
 const chalk = require('chalk');
 module.exports = {
-  cmdValidation:  (cmd, file) => {
+  cmdValidation: (cmd, file) => {
     if (!cmd.data) {
       error(`
          ${chalk.yellow(

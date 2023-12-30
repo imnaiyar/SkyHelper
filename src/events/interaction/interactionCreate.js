@@ -55,7 +55,10 @@ module.exports = async (client, interaction) => {
     }
 
     // Check cooldowns
-    if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
+    if (
+      command?.cooldown &&
+      !client.config.OWNER.includes(interaction.user.id)
+    ) {
       const { cooldowns } = client;
 
       if (!cooldowns.has(command.data.name)) {

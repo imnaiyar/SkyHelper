@@ -40,29 +40,33 @@ module.exports = class SkyHelper extends Client {
     this.database = schemas;
     // Datas for Events in Sky
     this.skyEvents = {
-    eventActive: true,
-    eventName: 'Days of Feast',
-    eventStarts: moment.tz('2023-12-18T00:00:00', this.timezone),
-    eventEnds: moment.tz('2024-01-07T23:59:59', this.timezone),
-    eventDuration: '21 days',
-};
+      eventActive: true,
+      eventName: 'Days of Feast',
+      eventStarts: moment.tz('2023-12-18T00:00:00', this.timezone),
+      eventEnds: moment.tz('2024-01-07T23:59:59', this.timezone),
+      eventDuration: '21 days',
+    };
 
-  // Checks for how this class is created so it doesnt mess up the process
-    if (process.mainModule.filename !== `${process.cwd()}/src/commandsRegister.js` && this.config.DASHBOARD.enabled) {
+    // Checks for how this class is created so it doesnt mess up the process
+    if (
+      process.mainModule.filename !==
+        `${process.cwd()}/src/commandsRegister.js` &&
+      this.config.DASHBOARD.enabled
+    ) {
       const { loadWebsite } = require('./website/mainPage');
       loadWebsite(this);
     }
   }
-  
+
   /**
    * Validate environment variable
    */
-   async validate() {
-     const vld = await validations();
-  if (!vld) {
-    process.exit(1);
+  async validate() {
+    const vld = await validations();
+    if (!vld) {
+      process.exit(1);
+    }
   }
-   }
 
   /**
    * Load all events from the specified directory
@@ -125,8 +129,8 @@ module.exports = class SkyHelper extends Client {
         }
       } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {
         const command = require(filePath);
-       const vld =  cmdValidation(command, file);
-       if (!vld) continue;
+        const vld = cmdValidation(command, file);
+        if (!vld) continue;
         this.commands.set(command.data.name, command);
       }
     }
@@ -146,26 +150,25 @@ module.exports = class SkyHelper extends Client {
       this.prefix.set(command.data.name, command);
     }
   }
-  
+
   /**
    * Register Slash Commands
    */
-   async registerCommands() {
+  async registerCommands() {
     const toRegister = [];
-    
+
     this.commands
-        .map((cmd) => ({
-          name: cmd.data.name,
-          description: cmd.data.description,
-          type: 1,
-          options: cmd.data.options,
-        }))
-        .forEach((s) => toRegister.push(s));
+      .map((cmd) => ({
+        name: cmd.data.name,
+        description: cmd.data.description,
+        type: 1,
+        options: cmd.data.options,
+      }))
+      .forEach((s) => toRegister.push(s));
 
-      await this.application.commands.set(toRegister);
-    
+    await this.application.commands.set(toRegister);
 
-    this.logger.success("Successfully registered interactions");
+    this.logger.success('Successfully registered interactions');
   }
   /**
    * Get bot's invite
