@@ -47,11 +47,11 @@ module.exports = {
         });
       }
       const channel = interaction.options.getChannel('channel');
-      if (
-        !interaction.guild.members.me.permissionsIn(channel).has('SendMessages')
+            if (
+        !interaction.guild.members.me.permissionsIn(channel).has(["ViewChannel", "SendMessages"])
       ) {
         return interaction.reply({
-          content: `I do not have permissions to send messages in <#${channel}>`,
+          content: `I do not have permissions to send messages/view channnel in <#${channel.id}>`,
           ephemeral: true,
         });
       }
