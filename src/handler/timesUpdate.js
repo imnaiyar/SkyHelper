@@ -1,4 +1,4 @@
-const { buildTimesEmbed } = require('@functions');
+const { buildTimesEmbed, deleteSchema } = require('@functions');
 const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 module.exports = {
@@ -18,9 +18,15 @@ module.exports = {
         if(!d.channelId) continue;
         if(!d.messageId) continue;
         const channel = await client.channels.fetch(d.channelId);
-        if (!channel) continue;
+        if (!channel) {
+          await deleteSchema('autoTimes', d._id);
+      continue;
+        }
         const m = await channel.messages.fetch(d.messageId);
-        if (!m) continue;
+        if (!m) {
+          await deleteSchema('autoTimes', d._id);
+      continue;
+      }
         if (m.editable) {
               m.edit({
                 content: `Last Updated: <t:${updatedAt}:R>`,

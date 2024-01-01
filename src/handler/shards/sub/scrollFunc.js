@@ -1,6 +1,6 @@
 const moment = require('moment-timezone');
 const fs = require('fs');
-const { buildShardEmbed } = require('@functions');
+const buildShardEmbed = require('@functions/buildShardEmbed');
 
 async function nextPrev(interaction, value) {
   const filePath = 'messageData.json';
