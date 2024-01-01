@@ -41,10 +41,12 @@ module.exports = {
     if (sub === 'start') {
       if (config.channelId && config.messageId) {
         const ch = client.channels.cache.get(config.channelId);
-        const ms = await ch.messages.fetch(config.messageId);
+        const ms = await ch.messages.cache.get(config.messageId);
+        if (ms && ch) {
         return interaction.followUp({
           content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${ms.url}.`,
         });
+        }
       }
       const channel = interaction.options.getChannel('channel');
       const requiredPerms = ['SendMessages', 'ViewChannel'];
