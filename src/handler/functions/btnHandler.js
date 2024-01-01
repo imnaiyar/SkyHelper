@@ -1,9 +1,9 @@
 const { shardInfos } = require('@shards/aboutShards');
 const { shardLocation } = require('@shards/shardsLocation');
 const { shardTimeline } = require('@shards/shardsTimeline');
-const { ErrorForm } = require('@handler/functions/errorForm');
+const { errorForm } = require('@functions');
 const { nextPrev } = require('@shards/sub/scrollFunc');
-async function btnHandler(interaction) {
+module.exports = async (interaction) => {
   if (!interaction.isButton()) return;
   const { client } = interaction;
   const Art = await client.users.fetch('504605855539265537');
@@ -13,7 +13,7 @@ async function btnHandler(interaction) {
   const Christian = await client.users.fetch('594485678625128466');
 
   if (interaction.customId === 'error_report') {
-    await ErrorForm(interaction);
+    await errorForm(interaction);
   }
   if (interaction.customId === 'next' || interaction.customId === 'prev') {
     const value = interaction.customId;
@@ -28,6 +28,4 @@ async function btnHandler(interaction) {
   if (interaction.customId.startsWith('about')) {
     shardInfos(interaction, Art);
   }
-}
-
-module.exports = { btnHandler };
+};

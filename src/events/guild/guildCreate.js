@@ -1,5 +1,5 @@
 const { EmbedBuilder, WebhookClient } = require('discord.js');
-const { dblStats } = require('@handler/functions/dblStats');
+const { dblStats } = require('@functions');
 const { getSettings: registerGuild } = require('@schemas/Guild');
 const Guild = require('@schemas/guildBlackList');
 const Logger = require('@src/logger');

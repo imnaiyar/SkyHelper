@@ -7,7 +7,7 @@ const {
 } = require('discord.js');
 const { OWNER } = require('@root/config.js');
 const Log = require('@src/logger');
-const { parsePerm } = require('@handler/functions/parsePerm');
+const { parsePerm } = require('@functions');
 const Logger = process.env.COMMANDS_USED
   ? new WebhookClient({ url: process.env.COMMANDS_USED })
   : undefined;

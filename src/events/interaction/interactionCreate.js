@@ -6,8 +6,7 @@ const {
   ButtonBuilder,
   Collection,
 } = require('discord.js');
-const { btnHandler } = require('@handler/functions/btnHandler.js');
-const { parsePerm } = require('@handler/functions/parsePerm');
+const { parsePerm, btnHandler } = require('@functions');
 const cLogger = process.env.COMMANDS_USED
   ? new WebhookClient({ url: process.env.COMMANDS_USED })
   : undefined;

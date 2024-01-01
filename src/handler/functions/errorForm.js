@@ -7,7 +7,7 @@ const {
 /**
  * @param {import('discord.js').Interaction} interaction
  */
-async function ErrorForm(interaction) {
+module.exports = async (interaction) => {
   const modal = new ModalBuilder()
     .setCustomId('errorModal')
     .setTitle('Bug Report');
@@ -32,6 +32,4 @@ async function ErrorForm(interaction) {
   modal.addComponents(firstActionRow, secondActionRow);
 
   await interaction.showModal(modal);
-}
-
-module.exports = { ErrorForm };
+};

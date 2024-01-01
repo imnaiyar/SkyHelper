@@ -1,4 +1,4 @@
-const { buildTimesEmbed } = require('@functions/buildTimesEmbed');
+const { buildTimesEmbed } = require('@functions');
 const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 module.exports = {

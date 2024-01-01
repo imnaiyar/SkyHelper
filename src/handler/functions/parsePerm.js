@@ -42,7 +42,7 @@ const permissions = {
   ViewGuildInsights: 'View server insights',
 };
 
-function parsePerm(perms) {
+module.exports = (perms) => {
   if (Array.isArray(perms)) {
     const permissionWord = `permission${perms.length > 1 ? 's' : ''}`;
     return (
@@ -52,5 +52,4 @@ function parsePerm(perms) {
   } else {
     return `\`${permissions[perms] || perms}\` permission`;
   }
-}
-module.exports = { parsePerm };
+};

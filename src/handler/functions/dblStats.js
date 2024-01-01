@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-async function dblStats(client) {
+module.exports = async (client) => {
   await fetch(
     `https://discordbotlist.com/api/v1/bots/${client.user.id}/stats`,
     {
@@ -28,8 +28,4 @@ async function dblStats(client) {
       return response.json();
     })
     .catch((error) => console.log(error));
-}
-
-module.exports = {
-  dblStats,
 };

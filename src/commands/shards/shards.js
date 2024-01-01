@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require('discord.js');
-const { buildShardEmbed } = require('@functions/buildShardEmbed');
+const { buildShardEmbed } = require('@functions');
 const { getDate, saveMessageData } = require('@functions/shardsUtil');
 const moment = require('moment-timezone');
 const desc = require('@src/cmdDesc');

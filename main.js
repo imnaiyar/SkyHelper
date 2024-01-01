@@ -8,9 +8,7 @@ const {
 } = require('discord.js');
 const { table } = require('table');
 const moment = require('moment-timezone');
-const {
-  recursiveReadDirSync,
-} = require('@handler/functions/recursiveReadDirSync');
+const { recursiveReadDirSync } = require('@functions');
 const { validations } = require('@handler/validations');
 const { schemas } = require('@src/database/mongoose');
 const { cmdValidation } = require('@handler/cmdValidation');
