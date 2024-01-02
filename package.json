@@ -34,6 +34,7 @@
     "jquery": "^3.7.0",
     "module-alias": "^2.2.3",
     "moment": "^2.29.4",
+    "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.5.0",
     "node-cron": "^3.0.2",

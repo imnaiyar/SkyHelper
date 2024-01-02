@@ -46,8 +46,7 @@ async function convertTime(interaction) {
   const Month = month || currentDate.month() + 1;
   const fDate = `${cDate}-${Month}-${Year}`;
   const timestamp = moment
-    .tz(`${fDate} ${Time}`, 'DD-MM-YYYY HH mm ss', timezone)
-    .valueOf();
+    .tz(`${fDate} ${Time}`, 'DD-MM-YYYY HH mm ss', timezone);
   if (!moment(timestamp).isValid()) {
     await interaction.reply({
       content: `\` ${fDate} \` does not exist, please provide a valid date.`,
@@ -172,43 +171,43 @@ async function convertTime(interaction) {
     if (field.name.startsWith('Date (1)')) {
       fieldsData.push({
         name: 'Date 1',
-        example: '24/09/2023',
+        example: timestamp.format('DD/MM/YYYY'),
         value: field.value,
       });
     } else if (field.name.startsWith('Date (2)')) {
       fieldsData.push({
         name: 'Date 2',
-        example: '24 September 2023',
+        example: timestamp.format('DD MMMM YYYY'),
         value: field.value,
       });
     } else if (field.name.startsWith('Short Time')) {
       fieldsData.push({
         name: 'Short Time',
-        example: '13:10',
+        example: timestamp.format('HH:mm'),
         value: field.value,
       });
     } else if (field.name.startsWith('Long Time')) {
       fieldsData.push({
         name: 'Long Time',
-        example: '13:10:40',
+        example: timestamp.format('HH:mm:ss'),
         value: field.value,
       });
     } else if (field.name.startsWith('Short Date and Time')) {
       fieldsData.push({
         name: 'Short Date and Time',
-        example: '24 September 2023 13:10',
+        example: timestamp.format('DD MMMM YYYY HH:mm'),
         value: field.value,
       });
     } else if (field.name.startsWith('Long Date and Time')) {
       fieldsData.push({
         name: 'Long Date and Time',
-        example: 'Sunday, 24 September 2023 13:10',
+        example: timestamp.format('dddd, DD MMMM YYYY HH:mm'),
         value: field.value,
       });
     } else if (field.name.startsWith('Relative')) {
       fieldsData.push({
         name: 'Relative',
-        example: 'in 45 minutes',
+        example: timestamp.fromNow(),
         value: field.value,
       });
     }
