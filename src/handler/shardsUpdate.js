@@ -13,20 +13,21 @@ module.exports = {
 
     const guildData = mongoose.model('autoShard');
     const data = await guildData.find();
-    if (data.length === 0) return;
-    for (const d of data) {
-      if (!d.channelId) continue;
-      if (!d.messageId) continue;
-      const channel = await client.channels.fetch(d.channelId);
-      if (!channel) continue;
-      const m = await channel.messages.fetch(d.messageId);
-      if (!m) continue;
-      if (m.editable) {
+    if (!data) return;
+    data.forEach((d) => {
+   
+    const channel = client.channels.cache.get(d.channelId);
+    if (channel) {
+    channel.messages.fetch(d.messageId)
+      .then((m) => {
+      if (m && m.editable) {
         m.edit({
           content: `Last Updated: <t:${updatedAt}:R>`,
           embeds: [result],
         });
       }
+      });
     }
+    });
   },
 };
