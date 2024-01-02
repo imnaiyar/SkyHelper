@@ -1,0 +1,524 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <!-- ========= META DATAS ======= -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="SkyHelper | SkyCoTL Shards, Guides, Events" />
+    <meta
+      name="description"
+      content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://skyhelper.xyz/" />
+    <meta
+      property="og:title"
+      content="SkyHelper | SkyCoTL Shards, Guides, Events"
+    />
+    <meta
+      property="og:description"
+      content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky."
+    />
+    <meta
+      property="og:image"
+      content="https://skyhelper.xyz/assets/img/skybotLong.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://skyhelper.xyz/" />
+    <meta property="twitter:title" content="SkyHelper" />
+    <meta
+      property="twitter:description"
+      content="SkyHelper is a versatile Discord bot designed to enhance the Sky: Children of the Light gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky."
+    />
+    <meta
+      property="twitter:image"
+      content="https://skyhelper.xyz/assets/img/skybotLong.png"
+    />
+    <meta name="og:site_name" content="SkyHelper" />
+    <title>SkyHelper</title>
+    <link rel="icon" href="assets/img/boticon.png" />
+
+    <!--=============== FAVICON ===============-->
+    <link
+      rel="shortcut icon"
+      href="assets/img/boticon.png"
+      type="image/x-icon"
+    />
+
+    <!--=============== BOXICONS ===============-->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="#" class="nav__logo">
+          <img
+            src="assets/img/boticon.png"
+            style="top: 50px; left: 50px; widht: 40px; height: 40px"
+          />
+          <p class="nav__logo-text">SkyHelper</p>
+        </a>
+
+        <div class="nav__menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#home" class="nav__link active-link">
+                <i class="bx bx-home-alt-2"></i>
+                <span>Home</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#popular" class="nav__link">
+                <i class="bx bx-award"></i>
+                <span>Features</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#value" class="nav__link">
+                <i class="bx bx-help-circle"></i>
+                <span>FAQs</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#contact" class="nav__link">
+                <i class="bx bx-phone"></i>
+                <span>Contact</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- Theme change button -->
+        <i class="bx bx-moon change-theme" id="theme-button"></i>
+        <a href="/commands.html" class="nav__link">
+          <i class="bx bx-code-alt com-icon"></i>
+          <p class="nav__com">Commands</p>
+        </a>
+        <a
+          href="https://discord.com/invite/u9zUjWbbQ4"
+          class="button nav__button"
+        >
+          Invite Me
+        </a>
+      </nav>
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="main">
+      <!--==================== HOME ====================-->
+      <section class="home section" id="home">
+        <div class="home__container container grid">
+          <div class="home__data">
+            <h1 class="home__title">SkyHelper</h1>
+            <p class="home__description">
+              SkyHelper is a versatile Discord bot designed to enhance the
+              <a href="https://thatskygame.com">Sky: Children of the Light</a>
+              gaming experience. It provides a wide range of useful information
+              to help players navigate the enchanting world of Sky.
+            </p>
+
+            <div class="home__value">
+              <div>
+                <h1 class="home__value-number">
+                  <%= stats.servers %>
+                  <span>+</span>
+                </h1>
+                <span class="home__value-description"> Servers </span>
+              </div>
+              <div>
+                <h1 class="home__value-number">
+                  <%= stats.members %>
+                  <span>+</span>
+                </h1>
+                <span class="home__value-description"> Users </span>
+              </div>
+              <div>
+                <h1 class="home__value-number">
+                  <%= stats.slash %>
+                  <span>+</span>
+                </h1>
+                <span class="home__value-description"> Commands </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="home__images">
+            <div class="home__orbe">
+              <div class="home__img">
+                <img src="assets/img/home.jpg" alt="Source: Tom Zhao (TGC)" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--==================== LOGOS ====================-->
+      <section class="logos section">
+        <div class="logos__container container grid">
+          <div class="logos__img">
+            <img src="assets/img/shards2.png" alt="" />
+          </div>
+          <div class="logos__img">
+            <img src="assets/img/sky-times2.png" alt="" />
+          </div>
+          <div class="logos__img">
+            <img src="assets/img/guides2.png" alt="" />
+          </div>
+          <div class="logos__img">
+            <img src="assets/img/live2.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!--==================== POPULAR ====================-->
+      <section class="popular section" id="popular">
+        <div class="container">
+          <span class="section__subtitle">Best Features</span>
+          <h2 class="section__title">Popular Commands<span>.</span></h2>
+
+          <div class="popular__container swiper">
+            <div class="swiper-wrapper">
+              <article class="popular__card swiper-slide">
+                <img
+                  src="assets/img/shards.jpg"
+                  alt="shards"
+                  class="popular__img"
+                />
+
+                <div class="popular__data">
+                  <h2 class="popular__price"><span>/</span>shards</h2>
+                  <h3 class="popular__title">Shards</h3>
+                  <p class="popular__description">
+                    Shards details, it's type, location, countdown and much
+                    more.
+                  </p>
+                </div>
+              </article>
+              <article class="popular__card swiper-slide">
+                <img
+                  src="assets/img/sky-times.jpg"
+                  alt="sky-times"
+                  class="popular__img"
+                />
+
+                <div class="popular__data">
+                  <h2 class="popular__price"><span>/</span>sky-times</h2>
+                  <h3 class="popular__title">SkyTimes</h3>
+                  <p class="popular__description">
+                    Countdown to various in-game events time (geyser, grandma,
+                    turtle, special events, etc.).
+                  </p>
+                </div>
+              </article>
+              <article class="popular__card swiper-slide">
+                <img
+                  src="assets/img/guides.jpg"
+                  alt="guides"
+                  class="popular__img"
+                />
+
+                <div class="popular__data">
+                  <h2 class="popular__price"><span>/</span>seasonal-guides</h2>
+                  <h3 class="popular__title">Seasonal Guides</h3>
+                  <p class="popular__description">
+                    Various Seasonal guides including guides for Seasonal
+                    Quests, Spirits Location, Spirits Friendship Tree.
+                  </p>
+                </div>
+              </article>
+              <article class="popular__card swiper-slide">
+                <img
+                  src="assets/img/live.jpg"
+                  alt="live"
+                  class="popular__img"
+                />
+
+                <div class="popular__data">
+                  <h2 class="popular__price">
+                    <span>/</span>&lt;type &gt;-live
+                  </h2>
+                  <h3 class="popular__title">Live Countdown</h3>
+                  <p class="popular__description">
+                    Effortlessly track important events with live countdowns
+                    that deliver real-time updates to designated channels, a
+                    feature shared by both Shards and SkyTimes.
+                  </p>
+                </div>
+              </article>
+              <article class="popular__card swiper-slide">
+                <img
+                  src="assets/img/next-shards.jpg"
+                  alt="next-shards"
+                  class="popular__img"
+                />
+
+                <div class="popular__data">
+                  <h2 class="popular__price"><span>/</span>next-shards</h2>
+                  <h3 class="popular__title">Next Shards</h3>
+                  <p class="popular__description">
+                    Search ahead and find put what type of Shards (and where)
+                    will land in the coming days.
+                  </p>
+                </div>
+              </article>
+            </div>
+            <div class="swiper-button-next">
+              <i class="bx bx-chevron-right"></i>
+            </div>
+            <div class="swiper-button-prev">
+              <i class="bx bx-chevron-left"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--==================== VALUE ====================-->
+      <section class="value section" id="value">
+        <div class="value__container container grid">
+          <div class="value__images">
+            <div class="value__orbe"></div>
+
+            <div class="value__img">
+              <img src="assets/img/value1.jpg" alt="Source: thatgamecompany" />
+            </div>
+          </div>
+
+          <div class="value__content">
+            <div class="value__data">
+              <span class="section__subtitle">FAQs</span>
+              <h2 class="section__title">
+                Some Important Questions<span>.</span>
+              </h2>
+              <p class="value__description">
+                Answers to the most commonly asked questions about the bot.
+              </p>
+            </div>
+
+            <div class="value__accordion">
+              <div class="value__accordion-item">
+                <header class="value__accordion-header">
+                  <i class="bx bxs-shield-x value__accordion-icon"></i>
+                  <h3 class="value__accordion-title">
+                    Is this bot affiliated with thatgamecompany?
+                  </h3>
+                  <div class="value__accordion-arrow">
+                    <i class="bx bxs-down-arrow"></i>
+                  </div>
+                </header>
+
+                <div class="value__accordion-content">
+                  <p class="value__accordion-description">
+                    No, the bot is not affiliated with thatgamecompany or Sky:
+                    Children of the Light. This bot is made by your fellow
+                    SkyKid.
+                  </p>
+                </div>
+              </div>
+              <div class="value__accordion-item">
+                <header class="value__accordion-header">
+                  <i class="bx bx-question-mark value__accordion-icon"></i>
+                  <h3 class="value__accordion-title">What does the bot do?</h3>
+                  <div class="value__accordion-arrow">
+                    <i class="bx bxs-down-arrow"></i>
+                  </div>
+                </header>
+
+                <div class="value__accordion-content">
+                  <p class="value__accordion-description">
+                    SkyHelper comes with multiple features that can help you
+                    throughout your journey in Sky. It provides real-time Shards
+                    details and various in-game events times countdowns to
+                    Seasonal Guides and much more...
+                  </p>
+                </div>
+              </div>
+              <div class="value__accordion-item">
+                <header class="value__accordion-header">
+                  <i class="bx bxs-bar-chart-square value__accordion-icon"></i>
+                  <h3 class="value__accordion-title">
+                    How does Live Countdowns work?
+                  </h3>
+                  <div class="value__accordion-arrow">
+                    <i class="bx bxs-down-arrow"></i>
+                  </div>
+                </header>
+
+                <div class="value__accordion-content">
+                  <p class="value__accordion-description">
+                    Live Countdowns is a feature for Shards and SkyTimes in
+                    which bot auto updates message in designated channel at
+                    specific intervals ( 5 min. for Shards and 2 min. for
+                    SkyTimes) with real time informations. You can set up a
+                    channel for this by running <span>/shards-live</span> and
+                    <span>/sky-times-live</span> respectively (It is recommended
+                    to choose a channel where no one else can send messages
+                    (except the bot) as the bot will update the same message
+                    sent during configuring the command, so original message can
+                    get lost in public channels).
+                  </p>
+                </div>
+              </div>
+              <div class="value__accordion-item">
+                <header class="value__accordion-header">
+                  <i class="bx bxs-check-square value__accordion-icon"></i>
+                  <h3 class="value__accordion-title">
+                    How can we report something?
+                  </h3>
+                  <div class="value__accordion-arrow">
+                    <i class="bx bxs-down-arrow"></i>
+                  </div>
+                </header>
+
+                <div class="value__accordion-content">
+                  <p class="value__accordion-description">
+                    Currently there is no direct method for this, the bot does
+                    ask to report a bug when it encounters an error, but you can
+                    also use the <span>/suggestion</span> command to send a
+                    report (for now) or you can open an Issue on the bot's
+                    <a href="https://github.com/imnaiyar/SkyHelper">GitHub</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--==================== CONTACT ====================-->
+      <section class="contact section" id="contact"></section>
+
+      <!--==================== SUBSCRIBE ====================-->
+      <section class="subscribe section">
+        <div class="subscribe__container container">
+          <h1 class="subscribe__title">Get Started with SkyHelper</h1>
+          <p class="subscribe__description">
+            Discover a wealth of easily accessible Sky information with our
+            Discord bot. Invite the bot now to start your daily exploration."
+          </p>
+          <a
+            href="https://skyhelper.xyz/invite"
+            class="button subscribe__button"
+            >Invite Me</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <!--==================== FOOTER ====================-->
+    <footer class="footer section">
+      <div class="footer__container container grid">
+        <div>
+          <a href="#" class="footer__logo">
+            <img
+              src="assets/img/boticon.png"
+              style="top: 50px; left: 50px; widht: 20px; height: 20px"
+            />
+            SkyHelper
+          </a>
+          <p class="footer__description">
+            A discord bot for the game Sky: Children of the Light
+          </p>
+        </div>
+        <div class="footer__content">
+          <div>
+            <h3 class="footer__title">About</h3>
+            <ul class="footer__links">
+              <li>
+                <a href="#" class="footer__link">About Me</a>
+              </li>
+
+              <li>
+                <a href="#popular" class="footer__link">Features</a>
+              </li>
+              <li>
+                <a href="https://docs.skyhelper.xyz" class="footer__link"
+                  >Documentation</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer__title">Support</h3>
+            <ul class="footer__links">
+              <li>
+                <a href="#value" class="footer__link">FAQs</a>
+              </li>
+              <li>
+                <a
+                  href="https://discord.com/invite/u9zUjWbbQ4"
+                  class="footer__link"
+                  >Support Server</a
+                >
+              </li>
+              <li>
+                <a href="#" class="footer__link">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer__title">Socials</h3>
+            <ul class="footer__social">
+              <a
+                href="https://github.com/imnaiyar/SkyHelper"
+                target="_blank"
+                class="footer__social-link"
+              >
+                <i class="bx bxl-github"></i>
+              </a>
+              <a
+                href="https://discord.com/invite/u9zUjWbbQ4"
+                target="_blank"
+                class="footer__social-link"
+              >
+                <i class="bx bxl-discord"></i>
+              </a>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__info container">
+        <span class="footer__copy">
+          &#169; SkyHelper. All rights reserved
+        </span>
+
+        <div class="footer__privacy">
+          <a href="/tos.html">Terms of Service</a>
+          <a href="/privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <!--========== SCROLL UP ==========-->
+    <a href="#" class="scrollup" id="scroll-up">
+      <i class="bx bx-chevrons-up"></i>
+    </a>
+
+    <!--=============== SCROLLREVEAL ===============-->
+    <script src="assets/js/scrollreveal.min.js"></script>
+
+    <!--=============== SWIPER JS ===============-->
+    <script src="assets/js/swiper-bundle.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

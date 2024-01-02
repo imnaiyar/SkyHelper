@@ -1,5 +1,5 @@
 {
-  "name": "skybot",
+  "name": "skyhelper",
   "version": "4.3.2",
   "description": "A Bot for Sky: Children of the Light",
   "main": "index.js",
@@ -11,9 +11,11 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "commands": "node src/commandsRegister.js"
+    "commands": "node src/commandsRegister.js",
+    "format": "npx prettier --write \"**/*.js\"",
+    "format-ejs": "npx prettier --write \"**/*.ejs\""
   },
-  "author": "NyR",
+  "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
     "@discordjs/builders": "^1.6.3",
@@ -21,6 +23,7 @@
     "@fortawesome/fontawesome-free": "^6.4.2",
     "aos": "^2.3.4",
     "axios": "^1.6.0",
+    "body-parser": "^1.20.2",
     "chalk": "^4.1.2",
     "colors": "^1.4.0",
     "discord-api-types": "^0.37.47",

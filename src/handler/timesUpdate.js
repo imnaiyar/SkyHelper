@@ -12,27 +12,27 @@ module.exports = {
 
     const guildData = mongoose.model('autoTimes');
     const data = await guildData.find();
-      if (data.length === 0) return;
-      
-      for (const d of data) {
-        if(!d.channelId) continue;
-        if(!d.messageId) continue;
-        const channel = await client.channels.fetch(d.channelId);
-        if (!channel) {
-          await deleteSchema('autoTimes', d._id);
-      continue;
-        }
-        const m = await channel.messages.fetch(d.messageId);
-        if (!m) {
-          await deleteSchema('autoTimes', d._id);
-      continue;
+    if (data.length === 0) return;
+
+    for (const d of data) {
+      if (!d.channelId) continue;
+      if (!d.messageId) continue;
+      const channel = await client.channels.fetch(d.channelId);
+      if (!channel) {
+        await deleteSchema('autoTimes', d._id);
+        continue;
       }
-        if (m.editable) {
-              m.edit({
-                content: `Last Updated: <t:${updatedAt}:R>`,
-                embeds: [result],
-              });
-            }
+      const m = await channel.messages.fetch(d.messageId);
+      if (!m) {
+        await deleteSchema('autoTimes', d._id);
+        continue;
       }
+      if (m.editable) {
+        m.edit({
+          content: `Last Updated: <t:${updatedAt}:R>`,
+          embeds: [result],
+        });
+      }
+    }
   },
 };

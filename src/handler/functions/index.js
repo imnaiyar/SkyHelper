@@ -7,4 +7,5 @@ module.exports = {
   dblStats: require('./dblStats'),
   errorForm: require('./errorForm'),
   btnHandler: require('./btnHandler'),
+  buildTimeHTML: require('./buildTimeHTML'),
 };

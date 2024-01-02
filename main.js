@@ -51,7 +51,7 @@ module.exports = class SkyHelper extends Client {
         `${process.cwd()}/src/commandsRegister.js` &&
       this.config.DASHBOARD.enabled
     ) {
-      const { loadWebsite } = require('./website/mainPage');
+      const { loadWebsite } = require('./web/server.js');
       loadWebsite(this);
     }
   }

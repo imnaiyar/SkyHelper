@@ -180,19 +180,6 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
          )
          .join('')}
 <script>
-var unixTime = ${unixTime} /* Get the Unix timestamp from your source */;
-
-  // Convert Unix timestamp to milliseconds (required by JavaScript Date)
-  var unixTimeMilliseconds = unixTime * 1000;
-
-  // Create a new Date object
-  var date = new Date(unixTimeMilliseconds);
-var options = { timeZone: '${timezone}' };
-  // Format the date as desired, e.g., 'YYYY-MM-DD HH:MM:SS'
-  var formattedDate = date.toLocaleString('en-US', options); // You can customize the format here
-
-  // Update the HTML element where you want to display the formatted date
-  document.getElementById('formattedTimestamp').textContent = formattedDate;
   function copyText(index, button) {
     const cmdSpan = document.querySelectorAll('.cmd')[index];
     const text = cmdSpan.textContent;
@@ -254,6 +241,5 @@ var options = { timeZone: '${timezone}' };
 };
 
 function sanitizeField(value) {
-  // Remove backticks, <, and > characters
   return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

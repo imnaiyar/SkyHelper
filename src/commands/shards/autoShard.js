@@ -42,9 +42,9 @@ module.exports = {
         const ch = client.channels.cache.get(config.channelId);
         const ms = await ch.messages.cache.get(config.messageId);
         if (ms && ch) {
-        return interaction.followUp({
-          content: `Live Shard is already configured in <#${config.channelId}> for this message ${ms.url}.`,
-        });
+          return interaction.followUp({
+            content: `Live Shard is already configured in <#${config.channelId}> for this message ${ms.url}.`,
+          });
         }
       }
       const channel = interaction.options.getChannel('channel');
