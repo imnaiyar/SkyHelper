@@ -3,13 +3,13 @@ const ready = process.env.READY_LOGS
   ? new WebhookClient({ url: process.env.READY_LOGS })
   : undefined;
 module.exports = async (client) => {
+  await client.guilds.fetch();
   let text;
   if (client.config.DASHBOARD.enabled) {
     text = `Website started on port ${client.config.DASHBOARD.port}`;
   } else {
     text = 'Website is disabled';
   }
-
   const readyalertemb = new EmbedBuilder()
     .addFields(
       {
