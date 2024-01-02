@@ -28,6 +28,12 @@ module.exports = {
       .get('/', (req, res) => {
         res.render('index');
       })
+      .get('/vote', (req, res) => {
+        res.redirect('https://top.gg/bot/1121541967730450574/vote');
+      })
+      .get('/invite', (req, res) => {
+    res.redirect('https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&scope=bot+applications.commands&permissions=412317243584');
+      })
       .use(router)
       .use((req, res) => {
         res.status(404).render('404');
@@ -35,12 +41,6 @@ module.exports = {
       .use((err, req, res, next) => {
         client.logger.error(err.stack);
         res.status(500).render('500');
-      })
-      .get('/vote', (req, res) => {
-        res.redirect('https://top.gg/bot/1121541967730450574/vote');
-      })
-      .get('/invite', (req, res) => {
-    res.redirect('https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&scope=bot+applications.commands&permissions=412317243584');
       })
       .listen(client.config.DASHBOARD.port, () => {
         client.logger.log(
