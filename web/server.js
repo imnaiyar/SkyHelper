@@ -9,12 +9,10 @@ module.exports = {
     app.use(bodyParser.json());
     const botData = mongoose.model('botStats');
 
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'ejs');
-
-    app.use('/', express.static(path.join(__dirname, 'views')));
-
-    app.use(async (req, res, next) => {
+    app.set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    .use('/', express.static(path.join(__dirname, 'views')))
+    .use(async (req, res, next) => {
       try {
         const { botSettings } = require('@schemas/botStats');
         const settings = await botSettings(client);
@@ -26,9 +24,7 @@ module.exports = {
         res.locals.stats = null;
         next();
       }
-    });
-
-    app
+    })
       .get('/', (req, res) => {
         res.render('index');
       })
@@ -42,6 +38,9 @@ module.exports = {
       })
       .get('/vote', (req, res) => {
         res.redirect('https://top.gg/bot/1121541967730450574/vote');
+      })
+      .get('/invite', (req, res) => {
+    res.redirect('https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&scope=bot+applications.commands&permissions=412317243584');
       })
       .listen(client.config.DASHBOARD.port, () => {
         client.logger.log(
