@@ -1,4 +1,5 @@
 const moment = require('moment-timezone');
+require('moment-duration-format');
 const { time } = require('discord.js');
 
 const targetTimezone = 'America/Los_Angeles';

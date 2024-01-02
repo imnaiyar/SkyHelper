@@ -15,19 +15,17 @@ module.exports = {
     const data = await guildData.find();
     if (!data) return;
     data.forEach((d) => {
-   
-    const channel = client.channels.cache.get(d.channelId);
-    if (channel) {
-    channel.messages.fetch(d.messageId)
-      .then((m) => {
-      if (m && m.editable) {
-        m.edit({
-          content: `Last Updated: <t:${updatedAt}:R>`,
-          embeds: [result],
+      const channel = client.channels.cache.get(d.channelId);
+      if (channel) {
+        channel.messages.fetch(d.messageId).then((m) => {
+          if (m && m.editable) {
+            m.edit({
+              content: `Last Updated: <t:${updatedAt}:R>`,
+              embeds: [result],
+            });
+          }
         });
       }
-      });
-    }
     });
   },
 };

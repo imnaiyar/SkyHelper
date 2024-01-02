@@ -130,7 +130,7 @@ async function convertTime(interaction) {
     'Long Time': 'HH:mm:ss',
     'Short Date and Time': 'DD MMMM YYYY HH:mm',
     'Long Date and Time': 'dddd, DD MMMM YYYY HH:mm',
-    'Relative': null, 
+    Relative: null,
   };
 
   for (const field of fieldsArray) {
@@ -141,7 +141,7 @@ async function convertTime(interaction) {
           example: format ? timestamp.format(format) : timestamp.fromNow(),
           value: field.value,
         });
-        break; 
+        break;
       }
     }
   }
