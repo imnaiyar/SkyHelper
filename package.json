@@ -12,8 +12,7 @@
   "scripts": {
     "start": "node index.js",
     "commands": "node src/commandsRegister.js",
-    "format": "npx prettier --write \"**/*.js\"",
-    "format-ejs": "npx prettier --write \"**/*.ejs\""
+    "format": "npx prettier --write \"**/*.{js,css,ejs}\""
   },
   "author": "Naiyar Imam",
   "license": "MIT",

@@ -100,8 +100,8 @@
             </li>
             <li class="nav__item">
               <a href="#contact" class="nav__link">
-                <i class="bx bx-phone"></i>
-                <span>Contact</span>
+                <i class="bx bx-line-chart"></i>
+                <span>TopGG</span>
               </a>
             </li>
           </ul>
@@ -145,7 +145,7 @@
               </div>
               <div>
                 <h1 class="home__value-number">
-                  <%= stats.members %>
+                  <%= Math.floor(stats.members/1000) %>K
                   <span>+</span>
                 </h1>
                 <span class="home__value-description"> Users </span>
@@ -403,7 +403,20 @@
       </section>
 
       <!--==================== CONTACT ====================-->
-      <section class="contact section" id="contact"></section>
+      <section class="section" id="contact">
+        <div class="topgg__container container">
+          <h2 class="section__title">TopGG<span>.</span></h2>
+          <a href="https://top.gg/bot/1121541967730450574">
+            <article class="topgg__card">
+              <img
+                src="https://top.gg/api/widget/1121541967730450574.svg"
+                alt="topgg"
+                class="topgg__img"
+              />
+            </article>
+          </a>
+        </div>
+      </section>
 
       <!--==================== SUBSCRIBE ====================-->
       <section class="subscribe section">

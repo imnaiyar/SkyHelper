@@ -140,7 +140,9 @@ const sr = ScrollReveal({
   delay: 400,
   // reset: true
 });
-sr.reveal(`.home__title, .popular__container, .subscribe__container`);
+sr.reveal(
+  `.home__title, .popular__container, .subscribe__container, .topgg__container`,
+);
 sr.reveal(`.footer__container`, { origin: 'bottom' });
 sr.reveal(`.footer__info`, { origin: 'bottom', delay: 500 });
 sr.reveal(`.home__description`, { delay: 500 });
