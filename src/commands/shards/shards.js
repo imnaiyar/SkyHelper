@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 const { buildShardEmbed } = require('@functions');
-const { getDate, saveMessageData } = require('@functions/shardsUtil');
+const shardsUtil = require('@functions/shardsUtil');
 const moment = require('moment-timezone');
 const desc = require('@src/cmdDesc');
 module.exports = {
@@ -30,7 +30,8 @@ module.exports = {
       });
       return;
     }
-    const currentDate = getDate(dateOption);
+    const util = new shardsUtil();
+    const currentDate = util.getDate(dateOption);
     if (currentDate === 'invalid') {
       return interaction.reply({
         content: `\` ${dateOption} \` does not exist, please provide a valid date.`,
@@ -53,7 +54,7 @@ module.exports = {
     });
     const messageId = reply.id;
 
-    saveMessageData({
+    util.saveMessageData({
       time: currentDate.format(),
       messageId,
       timestamp: moment().tz(interaction.client.timezone).format(),

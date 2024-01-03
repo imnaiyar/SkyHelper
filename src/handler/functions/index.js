@@ -5,7 +5,6 @@ module.exports = {
   parsePerm: require('./parsePerm'),
   recursiveReadDirSync: require('./recursiveReadDirSync'),
   dblStats: require('./dblStats'),
-  errorForm: require('./errorForm'),
   btnHandler: require('./btnHandler'),
   buildTimeHTML: require('./buildTimeHTML'),
 };

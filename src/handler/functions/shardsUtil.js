@@ -2,8 +2,8 @@ const config = require('@root/config');
 const moment = require('moment-timezone');
 const fs = require('fs');
 
-module.exports = {
-  getDate: (date) => {
+module.exports = class shardsUtil {
+  getDate(date) {
     const timezone = 'America/Los_Angeles';
 
     let currentDate;
@@ -22,9 +22,9 @@ module.exports = {
       console.log(error);
       return 'error';
     }
-  },
+  }
 
-  shardsIndex: (date) => {
+  shardsIndex(date) {
     const dayOfMonth = date.date();
     const shardIndex = (dayOfMonth - 1) % config.shardSequence.length;
     const currentShard = config.shardSequence[shardIndex];
@@ -32,9 +32,9 @@ module.exports = {
     const currentRealm = config.realmSequence[realmIndex];
 
     return { currentShard, currentRealm };
-  },
+  }
 
-  getSuffix: (number) => {
+  getSuffix(number) {
     const suffixes = ['th', 'st', 'nd', 'rd'];
     const remainder10 = number % 10;
     const remainder100 = number % 100;
@@ -49,9 +49,9 @@ module.exports = {
         ? 3
         : 0
     ];
-  },
+  }
 
-  saveMessageData: (data) => {
+  saveMessageData(data) {
     fs.readFile('messageData.json', 'utf8', (err, fileData) => {
       if (err) {
         if (err.code === 'ENOENT') {
@@ -75,9 +75,9 @@ module.exports = {
         },
       );
     });
-  },
+  }
 
-  getMessageDate: (interaction, messageId) => {
+  getMessageDate(interaction, messageId) {
     const filePath = 'messageData.json';
 
     try {
@@ -115,5 +115,5 @@ module.exports = {
     } catch (error) {
       console.error('Error reading messageData.json:', error);
     }
-  },
+  }
 };

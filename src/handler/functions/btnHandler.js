@@ -1,7 +1,7 @@
 const { shardInfos } = require('@shards/aboutShards');
+const d = require('discord.js');
 const { shardLocation } = require('@shards/shardsLocation');
 const { shardTimeline } = require('@shards/shardsTimeline');
-const { errorForm } = require('@functions');
 const { nextPrev } = require('@shards/sub/scrollFunc');
 module.exports = async (interaction) => {
   if (!interaction.isButton()) return;
@@ -13,7 +13,32 @@ module.exports = async (interaction) => {
   const Christian = await client.users.fetch('594485678625128466');
 
   if (interaction.customId === 'error_report') {
-    await errorForm(interaction);
+    const modal = new d.ModalBuilder()
+      .setCustomId('errorModal')
+      .setTitle('Bug Report');
+
+    const commandUsed = new d.TextInputBuilder()
+      .setCustomId('commandUsed')
+      .setLabel('Name of the command.')
+      .setPlaceholder('The command that produced the said error.')
+      .setStyle(d.TextInputStyle.Short);
+
+    const whatHappened = new d.TextInputBuilder()
+      .setCustomId('whatHappened')
+      .setLabel('Explain what happened?')
+      .setStyle(d.TextInputStyle.Paragraph)
+      .setPlaceholder(
+        'Explain in brief what happened. What outcome were you hoping?',
+      );
+
+    const firstActionRow = new d.ActionRowBuilder().addComponents(commandUsed);
+    const secondActionRow = new d.ActionRowBuilder().addComponents(
+      whatHappened,
+    );
+
+    modal.addComponents(firstActionRow, secondActionRow);
+
+    await interaction.showModal(modal);
   }
   if (interaction.customId === 'next' || interaction.customId === 'prev') {
     const value = interaction.customId;

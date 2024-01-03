@@ -1,6 +1,6 @@
 const moment = require('moment');
 const shardsTime = require('./sub/eventTimings.js');
-const { shardsIndex, getSuffix } = require('@functions/shardsUtil');
+const util = require('@functions/shardsUtil');
 
 async function shardsAlt(currentDate) {
   const timezone = 'America/Los_Angeles';
@@ -9,7 +9,9 @@ async function shardsAlt(currentDate) {
   const today = moment().tz(timezone).startOf('day');
   const noShard = currentDate.isSame(today, 'day') ? 'Today' : `${formatDate}`;
 
-  const { currentShard, currentRealm } = await shardsIndex(currentDate);
+  const { currentShard, currentRealm } = await new util().shardsIndex(
+    currentDate,
+  );
   const timings = shardsTime(currentDate);
   const eventTimings = timings[currentShard];
 
@@ -24,7 +26,9 @@ async function shardsAlt(currentDate) {
 
     if (present.isBetween(eventTiming.start, eventTiming.end)) {
       const duration = moment.duration(eventTiming.end.diff(present));
-      eventStatus = `${i + 1}${getSuffix(i + 1)} Shard is active right now`;
+      eventStatus = `${i + 1}${new util().getSuffix(
+        i + 1,
+      )} Shard is active right now`;
       timeRemaining = `Ends in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${endUnix}:t>)`;
       break;
     } else if (present.isBefore(eventTiming.start)) {
@@ -32,7 +36,9 @@ async function shardsAlt(currentDate) {
       const hoursRemaining = Math.floor(duration.asHours());
       const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
       const secondsRemaining = Math.floor(duration.asSeconds()) % 60;
-      eventStatus = `${i + 1}${getSuffix(i + 1)} Shard has not fallen yet`;
+      eventStatus = `${i + 1}${new util().getSuffix(
+        i + 1,
+      )} Shard has not fallen yet`;
       timeRemaining = `Falls in ${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s (at <t:${startUnix}:T>)`;
       break;
     } else if (
@@ -41,9 +47,9 @@ async function shardsAlt(currentDate) {
       present.isBefore(eventTimings[i + 1].start)
     ) {
       const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);
-      eventStatus = `${i + 1}${getSuffix(
+      eventStatus = `${i + 1}${new util().getSuffix(
         i + 1,
-      )} shard ended at <t:${endUnix}:t>, ${i + 2}${getSuffix(
+      )} shard ended at <t:${endUnix}:t>, ${i + 2}${new util().getSuffix(
         i + 2,
       )} Shard has not fallen yet`;
       const duration = moment.duration(eventTimings[i + 1].start.diff(present));

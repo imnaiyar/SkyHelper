@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { shardsIndex, getMessageDate } = require('@functions/shardsUtil');
+const shardsUtil = require('@functions/shardsUtil');
 const { nextPrev } = require('./sub/scrollFunc');
 const shardData = require('./sub/LocationData');
 
@@ -8,9 +8,11 @@ let currentShardIndex = 0;
 
 async function shardLocation(interaction, Gale, Clement) {
   const messageId = interaction.message.id;
-  const currentDate = getMessageDate(interaction, messageId);
+  const currentDate = new shardsUtil().getMessageDate(interaction, messageId);
   if (!currentDate) return;
-  const { currentShard, currentRealm } = shardsIndex(currentDate);
+  const { currentShard, currentRealm } = new shardsUtil().shardsIndex(
+    currentDate,
+  );
   if (interaction.customId === 'location') {
     currentShardIndex = 0;
     await showShard(

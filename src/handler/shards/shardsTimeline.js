@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { shardsIndex, getMessageDate } = require('@functions/shardsUtil');
+const util = require('@functions/shardsUtil');
 const { nextPrev } = require('./sub/scrollFunc');
 const shardData = require('./sub/timelineData');
 
@@ -8,9 +8,9 @@ let currentShardIndex = 0;
 
 async function shardTimeline(interaction, Zhii, Christian) {
   const messageId = interaction.message.id; // Get the messageId of the current interaction
-  const currentDate = getMessageDate(interaction, messageId);
+  const currentDate = new util().getMessageDate(interaction, messageId);
   if (!currentDate) return;
-  const { currentShard } = shardsIndex(currentDate);
+  const { currentShard } = new util().shardsIndex(currentDate);
   if (interaction.customId === 'timeline') {
     currentShardIndex = 0;
     await showShard(

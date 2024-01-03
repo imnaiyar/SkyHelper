@@ -1,4 +1,5 @@
 const moment = require('moment-timezone');
+require('moment-duration-format');
 const { time } = require('discord.js');
 
 const targetTimezone = 'America/Los_Angeles';
@@ -12,20 +13,24 @@ async function calculateResult(targetTime, now, offset = 0) {
   const end = target.clone().subtract(1, 'hours').subtract(45, 'minutes');
 
   if (now.isBetween(start, end)) {
-    const duration = moment.duration(end.diff(now));
+    const duration = moment
+      .duration(end.diff(now))
+      .format('d [days] h [hours] mm [minutes] ss [seconds]');
     return `${targetTime} is ongoing and will end at ${time(
       end.toDate(),
       't',
-    )} (in ${duration.minutes()} minutes ${duration.seconds()} seconds)\n - \`Next ${targetTime} Time:\` ${time(
+    )} (in ${duration})\n - \`Next ${targetTime} Time:\` ${time(
       target.toDate(),
       't',
     )}`;
   } else {
-    const duration = moment.duration(target.diff(now));
+    const duration = moment
+      .duration(target.diff(now))
+      .format('d [days] h [hours] mm [minutes] ss [seconds]');
     return `\`Next ${targetTime} Time:\` ${time(
       target.toDate(),
       't',
-    )} ( in ${duration.hours()} hours ${duration.minutes()} minutes ${duration.seconds()} seconds)`;
+    )} ( in ${duration})`;
   }
 }
 
@@ -43,11 +48,13 @@ async function skyTimes(client) {
     .clone()
     .startOf('day')
     .add(now.isSameOrAfter(now.clone().startOf('day')) ? 1 : 0, 'days');
-  const durationReset = moment.duration(resetTargetTime.diff(now));
+  const durationReset = moment
+    .duration(resetTargetTime.diff(now))
+    .format('d [days] h [hours] mm [minutes] ss [seconds]');
   const resetResultStr = `${time(
     resetTargetTime.toDate(),
     'F',
-  )} ( in ${durationReset.hours()} hours ${durationReset.minutes()} minutes ${durationReset.seconds()} seconds)`;
+  )} ( in ${durationReset})`;
 
   // eden
   const targetDayOfWeek = 0;
@@ -60,21 +67,35 @@ async function skyTimes(client) {
   if (now.isSameOrAfter(edenTargetTime)) {
     edenTargetTime.add(7, 'days');
   }
-  const durationEden = moment.duration(edenTargetTime.diff(now));
+  const durationEden = moment
+    .duration(edenTargetTime.diff(now))
+    .format('d [days] h [hours] mm [minutes] ss [seconds]');
   const edenResultStr = `${time(
     edenTargetTime.toDate(),
     'F',
-  )} ( in ${durationEden.days()} days ${durationEden.hours()} hours ${durationEden.minutes()} minutes ${durationEden.seconds()} seconds)`;
+  )} ( in ${durationEden})`;
 
   // event
-  const eventDur = moment.duration(client.skyEvents.eventEnds.diff(now));
+  const eventDurEnd = moment
+    .duration(client.skyEvents.eventEnds.diff(now))
+    .format('d [days] h [hours] mm [minutes] ss [seconds]');
+  const eventDurStart = moment
+    .duration(client.skyEvents.eventStarts.diff(now))
+    .format('d [days] h [hours] mm [minutes] ss [seconds]');
 
   let eventDescription =
-    client.skyEvents.eventActive && !now.isAfter(client.skyEvents.eventEnds)
+    client.skyEvents.eventActive &&
+    !now.isAfter(client.skyEvents.eventEnds) &&
+    now.isAfter(client.skyEvents.eventStarts)
       ? `${client.skyEvents.eventName} is currently active, and ends on ${time(
           client.skyEvents.eventEnds.toDate(),
           'f',
-        )} (in ${eventDur.days()} days ${eventDur.hours()} hours ${eventDur.minutes()} minutes ${eventDur.seconds()} seconds)`
+        )} (in ${eventDurEnd})`
+      : client.skyEvents.eventActive && !now.isAfter(client.skyEvents.eventEnds)
+      ? `${client.skyEvents.eventName} will start on ${time(
+          client.skyEvents.eventStarts.toDate(),
+          'f',
+        )} (in ${eventDurStart})`
       : 'No active events.';
 
   return {
