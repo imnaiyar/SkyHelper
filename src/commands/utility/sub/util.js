@@ -80,11 +80,11 @@ async function getChangelog(interaction) {
   const embed = new EmbedBuilder()
     .setAuthor({ name: `Changelog`, iconURL: client.user.displayAvatarURL() })
     .setColor('Gold')
-    .setTitle(`Changelog v4.3.2`)
+    .setTitle(`Changelog v4.4.0`)
     .setDescription(
-      `Introducing a new command "shards-live". Once configured to a channel, the bot will send a message at time of using the command in specied channel and will update it every 5 minutes with Live Shards updates. For detailed description of this command use \`\\help command:shards-live\`\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`,
+      `Bot's website at ${client.config.WEB_URL} has been completely redesigned, added [commands](${client.config.WEB_URL}/commands.html) page to the website with detailed instructions on how to use them.\n\nCopy feature for 'timestsamp' command on the website has been redesignedt o provide a smooth experience.\n*other minor changes*\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`,
     )
-    .setFooter({ text: `v4.3.2` });
+    .setFooter({ text: `v4.4.0` });
   interaction.reply({ embeds: [embed], ephemral: true });
 }
 
