@@ -1,10 +1,8 @@
 const moment = require('moment-timezone');
-require('moment-duration-format');
 const { time } = require('discord.js');
 
 const targetTimezone = 'America/Los_Angeles';
-const now = moment().tz(targetTimezone);
-async function calculateResult(targetTime, offset = 0) {
+async function calculateResult(targetTime, now, offset = 0) {
   const target = now.clone().startOf('day').add(offset, 'minutes');
   while (now.isAfter(target)) {
     target.add(2, 'hours');
@@ -32,12 +30,13 @@ async function calculateResult(targetTime, offset = 0) {
 }
 
 async function skyTimes(client) {
+  const now = moment().tz(targetTimezone);
   // geyser
-  const geyserResultStr = await calculateResult('Geyser');
+  const geyserResultStr = await calculateResult('Geyser', now);
   // grandma
-  const grandmaResultStr = await calculateResult('Grandma', 30);
+  const grandmaResultStr = await calculateResult('Grandma', now, 30);
   // grandma
-  const turtleResultStr = await calculateResult('Turtle', 50);
+  const turtleResultStr = await calculateResult('Turtle', now, 50);
 
   // reset
   const resetTargetTime = now
