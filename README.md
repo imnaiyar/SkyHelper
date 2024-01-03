@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/skybot.png" height="200" alt="SkyHelper"></a>
+  <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/boticon.png" height="200" alt="SkyHelper"></a>
   <br>
   SkyHelper
   <br>
