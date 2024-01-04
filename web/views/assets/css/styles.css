@@ -226,12 +226,28 @@ body.dark-theme {
 .main {
   overflow: hidden; /* For the animations ScrollReveal*/
 }
+/* ============= Progress Bar ============ */ 
+.progress-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: transparent;
+}
 
+.progress-bar {
+  height: 3px;
+  background-color: var(--second-color); /* Bright blue color */
+  width: 0;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 5px var(--title-color); /* Light blue shadow */
+}
 /*=============== HEADER & NAV ===============*/
 .header {
   position: fixed;
   top: 0;
   left: 0;
+  padding-top: 2px;
   width: 100%;
   background-color: transparent;
   z-index: var(--z-fixed);
@@ -993,7 +1009,6 @@ body.dark-theme {
     margin-left: 1rem;
     margin-right: 1rem;
   }
-
   .section {
     padding: 3.5rem 0 1rem;
   }
@@ -1074,7 +1089,10 @@ body.dark-theme {
   .topgg__card {
     width: 80%;
   }
-
+  
+  .progress-bar {
+    height: 4px;
+  }
   .form {
     width: 80%;
     height: 900px;
@@ -1120,7 +1138,12 @@ body.dark-theme {
   .topgg__card {
     width: 80%;
   }
-
+  
+  
+  .progress-bar {
+    height: 5px;
+  }
+  
   .home__orbe {
     align-self: flex-end;
   }
@@ -1170,6 +1193,9 @@ body.dark-theme {
   }
   .section__subtitle {
     font-size: var(--normal-font-size);
+  }
+  .progress-bar {
+    height: 6px;
   }
   .nav {
     height: calc(var(--header-height) + 1.5rem);
