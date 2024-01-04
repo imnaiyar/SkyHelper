@@ -69,6 +69,15 @@
             placeholder="Your discord username.."
           />
         </p>
+        <p type="Reason">
+          <span style="color: red"> *</span>
+          <select name="reason" id="reason" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Suggestion">Suggestion</option>
+            <option value="Bug Report">Bug Report</option>
+            <option value="Other">Others</option>
+          </select>
+        </p>
         <p type="Message:">
           <span style="color: red"> *</span
           ><textarea
@@ -91,6 +100,9 @@
       <i class="bx bx-chevrons-up"></i>
     </a>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      var authToken = '<%= authToken %>';
+    </script>
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>
 

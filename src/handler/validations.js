@@ -6,44 +6,44 @@ const chalk = require('chalk');
 module.exports = {
   validations: async () => {
     if (!process.env.TOKEN) {
-      error(`"TOKEN" cannot be empty.`);
+      error(`env: "TOKEN" cannot be empty.`);
       return false;
     } else {
-      success(`${chalk.bold.white('✔')} Token validated.`);
+      success(`env: ${chalk.bold.white('✔')} "TOKEN" validated.`);
     }
 
     if (!process.env.MONGO_CONNECTION) {
-      error(`"MONGO_CONNECTION" cannot be empty.`);
+      error(`env: "MONGO_CONNECTION" cannot be empty.`);
       return false;
     } else {
-      success(`${chalk.bold.white('✔')} MongoDB URL validated.`);
+      success(`env: ${chalk.bold.white('✔')} "MONGO_CONNECTION" validated.`);
     }
 
     if (!process.env.CLIENT_ID) {
-      error(`"CLIENT_ID" cannot be empty`);
+      error(`env: "CLIENT_ID" cannot be empty`);
       return false;
     } else {
-      success(`${chalk.bold.white('✔')} Client ID validated.`);
+      success(`env: ${chalk.bold.white('✔')} Client ID validated.`);
     }
 
-    if (!process.env.BOT_PREFIX) {
-      error(`"BOT_PREFIX" cannot be empty.`);
+    if (config.DASHBOARD.enabled && !process.env.AUTH_TOKEN) {
+      error(`env: "AUTH_TOKEN" cannot is empty, contact form on website won't work.`);
       return false;
     } else {
-      success(`${chalk.bold.white('✔')} Bot Prefix validated.`);
+      success(`env: ${chalk.bold.white('✔')} "AUTH_TOKEN" validated.`);
     }
 
     if (!process.env.TOPGG_TOKEN) {
-      warn('TopGG Token is not provided, TopggAutopost will not work');
+      warn('env: TopGG Token is not provided, TopggAutopost will not work');
     }
 
     if (!config.DASHBOARD.enabled) {
-      warn("Dashboard is disabled, enable it to deploy the bot's website.");
+      warn("env: Dashboard is disabled, enable it to deploy the bot's website.");
     }
 
     if (!process.env.SUGGESTION) {
       warn(
-        '"SUGGESTION" webhook URL is not provided, suggestion command wont work properly',
+        'env: "SUGGESTION" webhook URL is not provided, suggestion command wont work properly',
       );
     }
     const access = util.promisify(fs.access);

@@ -158,13 +158,15 @@ $(document).ready(function () {
   $('#contactForm').submit(function (event) {
     event.preventDefault();
     const formData = $(this).serialize();
-
+    const token = window.authToken;
     $.ajax({
       type: 'POST',
       url: '/submit',
       data: formData,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+      },
       success: function (response) {
-        // Show a success message using SweetAlert2
         $('#contactForm')[0].reset();
         Swal.fire({
           icon: 'success',

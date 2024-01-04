@@ -14,6 +14,14 @@ const files = fs.readdirSync(dir);
 module.exports = {
   loadWebsite: (client) => {
     const botData = mongoose.model('botStats');
+    const authenticateToken = (req, res, next) => {
+      const token = req.header('Authorization').split(' ')[1];
+      if (token === process.env.AUTH_TOKEN) {
+        next();
+      } else {
+        res.status(401).send('Unauthorized: Invalid Authorization Token');
+      }
+    };
     app
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({ extended: true }))
@@ -39,6 +47,7 @@ module.exports = {
       // loading file names for dynamic header rules
       .use((req, res, next) => {
         res.locals.filename = req.originalUrl;
+        res.locals.authToken = process.env.AUTH_TOKEN;
         next();
       })
       .get('/', (req, res) => {
@@ -67,9 +76,8 @@ module.exports = {
       .use(router)
 
       // handling 'contact-us' form
-      .post('/submit', (req, res) => {
-        const { name, email, message, discordUsername } = req.body;
-
+      .post('/submit', authenticateToken, (req, res) => {
+        const { name, email, message, discordUsername, reason } = req.body;
         try {
           const icon = discordUsername
             ? client.users.cache
@@ -83,6 +91,7 @@ module.exports = {
             .addFields(
               { name: 'Email', value: email || 'Not Provided' },
               { name: 'Username', value: discordUsername || 'Not Provided' },
+              { name: 'Reason', value: reason || 'Not Provided' },
               { name: 'Message', value: message },
             );
 

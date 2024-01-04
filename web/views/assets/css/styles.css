@@ -545,8 +545,8 @@ body.dark-theme {
 }
 /* ====== Forms ======== */
 .form {
-  width: 340px;
-  height: 550px;
+  width: 100%;
+  height: 650px;
   background: var(--body-color);
   border-radius: 12px;
   box-shadow: 0 0 20px -10px var(--title-color);
@@ -565,6 +565,19 @@ body.dark-theme {
   border-bottom: 3px solid #78788c;
 }
 .form input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: none;
+  outline: none;
+  resize: none;
+  border: 0;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s;
+  border-bottom: 2px solid #bebed2;
+  color: var(--text-color);
+}
+.form select {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -604,9 +617,9 @@ body.dark-theme {
   color: #5a5a5a;
 }
 .form button {
-  float: right;
+  float: none;
   padding: 8px 12px;
-  margin: 8px 0 0;
+  margin: 20px 0 0;
   font-family: 'Montserrat', sans-serif;
   border: 2px solid #78788c;
   background: 0;
@@ -1064,7 +1077,7 @@ body.dark-theme {
 
   .form {
     width: 80%;
-    height: 800px;
+    height: 900px;
   }
   .form p:before {
     font-size: var(--h3-font-size);
