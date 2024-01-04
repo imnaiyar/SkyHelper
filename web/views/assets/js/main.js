@@ -152,3 +152,51 @@ sr.reveal(`.home__images`, { delay: 800, origin: 'bottom' });
 sr.reveal(`.logos__img`, { interval: 100 });
 sr.reveal(`.value__images, .contact__content`, { origin: 'left' });
 sr.reveal(`.value__content`, { origin: 'right' });
+
+/* =========== Handle Contact Form Submission */
+$(document).ready(function () {
+  $('#contactForm').submit(function (event) {
+    event.preventDefault();
+    const formData = $(this).serialize();
+
+    $.ajax({
+      type: 'POST',
+      url: '/submit',
+      data: formData,
+      success: function (response) {
+        // Show a success message using SweetAlert2
+        $('#contactForm')[0].reset();
+        Swal.fire({
+          icon: 'success',
+          title: 'Submission Successful!',
+          text: 'We have received your message. Thank you!',
+          confirmButtonColor: '#4CAF50',
+          confirmButtonText: 'OK',
+        });
+        $('#contactForm')[0].reset();
+      },
+      error: function (error) {
+        // Show an error message using SweetAlert2
+        console.log(error);
+        $('#contactForm')[0].reset();
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: 'There was an issue submitting your message. Please try again.',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'OK',
+          showClass: {
+            popup: 'swal2-show',
+            backdrop: 'swal2-backdrop-show',
+            icon: 'swal2-icon-show',
+          },
+          hideClass: {
+            popup: 'swal2-hide',
+            backdrop: 'swal2-backdrop-hide',
+            icon: 'swal2-icon-hide',
+          },
+        });
+      },
+    });
+  });
+});

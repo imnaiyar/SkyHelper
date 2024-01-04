@@ -178,7 +178,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
                     </li>
                     <li>
 
-                      <a href="#" class="footer__link">Contact Us</a>
+                      <a href="/contact-us.html" class="footer__link">Contact Us</a>
 
                     </li>
                   </ul>

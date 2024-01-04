@@ -23,12 +23,14 @@
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="@sweetalert2/themes/dark/dark.css">
+    <script src="sweetalert2/dist/sweetalert2.min.js"></script>
 
-    <title>Timestamp - SkyHelper</title>
+    <title>Contact Us - SkyHelper</title>
   </head>
   <body>
     <!--==================== HEADER ====================-->
-
     <header class="header" id="header">
       <nav class="nav container">
         <a href="#" class="nav__logo">
@@ -38,7 +40,7 @@
           />
           <p class="nav__logo-text">SkyHelper</p>
         </a>
-        <a href="/" class="nav__link">
+        <a href="/" class="nav__link check">
           <i class="bx bx-home-alt-2"></i>
           <span>Home</span>
         </a>
@@ -62,124 +64,27 @@
     <main class="main">
       <section class="home section" id="home">
         <div class="home__container container grid">
+            
+          
           <div class="home__data">
-            <h1 class="home__title">Timestamp</h1>
+            <h1 class="home__title">Contact Us</h1>
+            <p class="home__description">Only "Message" field is required, the rest are optional. However we suggest you provide us atleast 1 social information so we can reach out to you if need be.</p>
           </div>
         </div>
       </section>
+        
+      <form class="form" id="contactForm">
+  <h2 class="contact-header">CONTACT US</h2>
+  <p type="Name:"><input type="text" name="name" id="name" placeholder="Your name.."></p>
+  <p type="Email:"><input type="email" name="email" id="email" placeholder="Your email.."></p>
+  <p type="Discord Username:"><input type="text" name="discordUsername" id="discordUsername" placeholder="Your discord username.."></p>
+  <p type="Message:"><span style="color: red;"> *</span><textarea type="textarea" name="message" id="message" placeholder="What would you like to tell us.." required></textarea></p>
+  <button type="submit">Send Message</button>
+  
+</form>
+        
+
     </main>
-
-    <!-- timestamp -->
-    <section class="value section" id="value">
-      <div class="value__container container">
-        <h2 class="section__title">
-          Timestamp for
-          <img
-            src="https://cdn.discordapp.com/avatars/851588007697580033/0cc1c3d30534fc9a12f232dae6119863.webp"
-            style="width: 25px; height: 25px; border-radius: 50%"
-          /><span> .nyr.</span>
-        </h2>
-        <div class="alert alert-info">
-          Provided Time: 02/01/2024 07 48 21<br />Offset:
-          <strong>-08:00 UTC</strong>
-        </div>
-        <div class="value__accordion-item2">
-          <div class="time__header">
-            <strong>Date 1 (<span class="discUnix">02/01/2024</span>)</strong>
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:d&gt;</span>
-          <button class="button time" onClick="copyText(0, this)">Copy</button>
-          <br /><br />
-
-          <div class="time__header">
-            <strong
-              >Date 2 (<span class="discUnix">02 January 2024</span>)</strong
-            >
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:D&gt;</span>
-          <button class="button time" onClick="copyText(1, this)">Copy</button>
-          <br /><br />
-
-          <div class="time__header">
-            <strong>Short Time (<span class="discUnix">07:48</span>)</strong>
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:t&gt;</span>
-          <button class="button time" onClick="copyText(2, this)">Copy</button>
-          <br /><br />
-
-          <div class="time__header">
-            <strong>Long Time (<span class="discUnix">07:48:21</span>)</strong>
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:T&gt;</span>
-          <button class="button time" onClick="copyText(3, this)">Copy</button>
-          <br /><br />
-
-          <div class="time__header">
-            <strong
-              >Short Date and Time (<span class="discUnix"
-                >02 January 2024 07:48</span
-              >)</strong
-            >
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:f&gt;</span>
-          <button class="button time" onClick="copyText(4, this)">Copy</button>
-          <br /><br />
-
-          <div class="time__header">
-            <strong
-              >Long Date and Time (<span class="discUnix"
-                >Tuesday, 02 January 2024 07:48</span
-              >)</strong
-            >
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:F&gt;</span>
-          <button class="button time" onClick="copyText(5, this)">Copy</button>
-          <br /><br />
-
-          <div class="time__header">
-            <strong>Relative (<span class="discUnix">in 5 hours</span>)</strong>
-          </div>
-
-          <br />
-          <span class="code-block">&lt;t:1704210501:R&gt;</span>
-          <button class="button time" onClick="copyText(6, this)">Copy</button>
-          <br /><br />
-
-          <script>
-            function copyText(index, button) {
-              const cmdSpan = document.querySelectorAll('.code-block')[index];
-              const text = cmdSpan.textContent;
-              const textArea = document.createElement('textarea');
-              textArea.value = text;
-              document.body.appendChild(textArea);
-              textArea.select();
-              document.execCommand('copy');
-              document.body.removeChild(textArea);
-
-              // Change the button text to 'Copied'
-              button.textContent = 'Copied';
-
-              // Set a timeout to revert the button text after 1 second
-              setTimeout(() => {
-                button.textContent = 'Copy';
-              }, 2000);
-            }
-          </script>
-        </div>
-      </div>
-    </section>
     <!--==================== FOOTER ====================-->
 
     <footer class="footer section">
@@ -228,7 +133,7 @@
                 >
               </li>
               <li>
-                <a href="#" class="footer__link">Contact Us</a>
+                <a href="/contact-us.html" class="footer__link">Contact Us</a>
               </li>
             </ul>
           </div>
@@ -270,7 +175,7 @@
     <a href="#" class="scrollup" id="scroll-up">
       <i class="bx bx-chevrons-up"></i>
     </a>
-
+     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>
 

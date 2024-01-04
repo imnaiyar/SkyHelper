@@ -2,6 +2,7 @@ const {
   Client,
   GatewayIntentBits,
   WebhookClient,
+  createWebhook,
   Collection,
   EmbedBuilder,
   Partials,
@@ -176,5 +177,17 @@ module.exports = class SkyHelper extends Client {
       scopes: ['bot', 'applications.commands'],
       permissions: 412317243584n,
     });
+  }
+
+  /**
+   * To create a webhook on mobile devices
+   */
+
+  async createWebhook(channel, name, avatar) {
+    const webhook = await channel.createWebhook({
+      name: name ? name : 'SkyHelper',
+      avatar: avatar ? avatar : this.user.displayAvatarURL(),
+    });
+    return webhook.url;
   }
 };

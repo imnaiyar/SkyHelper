@@ -1,14 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const { WebhookClient, EmbedBuilder } = require('discord.js');
 const app = express();
 const bodyParser = require('body-parser');
+const webhookLogger = process.env.CONTACT_US
+  ? new WebhookClient({ url: process.env.CONTACT_US })
+  : undefined;
 const router = express.Router();
 module.exports = {
   loadWebsite: (client) => {
     const botData = mongoose.model('botStats');
     app
       .use(bodyParser.json())
+      .use(bodyParser.urlencoded({ extended: true }))
       .set('views', path.join(__dirname, 'views'))
       .set('view engine', 'ejs')
       .use('/', express.static(path.join(__dirname, 'views')))
@@ -37,6 +42,50 @@ module.exports = {
         );
       })
       .use(router)
+      .post('/submit', (req, res) => {
+        const { name, email, message, discordUsername } = req.body;
+        try {
+          let icon;
+          if (discordUsername) {
+            const user = client.users.cache
+              .filter((u) => u.username === discordUsername)
+              .first();
+            icon = user ? user.displayAvatarURL() : undefined;
+          } else {
+            icon = undefined;
+          }
+          const embed = new EmbedBuilder()
+            .setColor('Green')
+            .setAuthor({ name: name || 'Not Provided', iconURL: icon })
+            .addFields(
+              {
+                name: 'Email',
+                value: email ? email : 'Not Provided',
+              },
+              {
+                name: 'Username',
+                value: discordUsername ? discordUsername : 'Not Provided',
+              },
+              {
+                name: 'Message',
+                value: message,
+              },
+            );
+          if (webhookLogger) {
+            webhookLogger
+              .send({
+                username: 'Contact Us Logs',
+                avatarURL: client.user.displayAvatarURL(),
+                embeds: [embed],
+              })
+              .catch((ex) => {});
+          }
+          res.status(200).send('Submission successful');
+        } catch (err) {
+          console.log(err);
+          res.status(500).send('Server Error');
+        }
+      })
       .use((req, res) => {
         res.status(404).render('404');
       })
