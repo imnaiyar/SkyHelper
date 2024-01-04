@@ -1,15 +1,17 @@
-/* ============ Progress Bar =========== */ 
-document.addEventListener('scroll', function() {
+/* ============ Progress Bar =========== */
+document.addEventListener('scroll', function () {
   updateProgressBar();
 });
 
 function updateProgressBar() {
-  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const winScroll =
+    document.body.scrollTop || document.documentElement.scrollTop;
+  const height =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
   const scrolled = (winScroll / height) * 100;
   document.getElementById('myBar').style.width = scrolled + '%';
 }
-
 
 /*=============== CHANGE BACKGROUND HEADER ===============*/
 const scrollHeader = () => {
@@ -17,13 +19,13 @@ const scrollHeader = () => {
   const text = document.querySelector('.nav__logo-text');
   const com = document.querySelector('.com-icon');
   const command = document.querySelector('.nav__com');
-  
+
   const isSmall = window.innerWidth <= 320;
 
   // When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
   if (this.scrollY >= 120) {
     header.classList.add('scroll-header');
-    text.style.display = isSmall? 'none' : 'inline-flex';
+    text.style.display = isSmall ? 'none' : 'inline-flex';
     com.style.display = 'inline-flex';
     command.style.display = 'none';
   } else {

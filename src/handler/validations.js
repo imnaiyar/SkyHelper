@@ -27,7 +27,9 @@ module.exports = {
     }
 
     if (config.DASHBOARD.enabled && !process.env.AUTH_TOKEN) {
-      error(`env: "AUTH_TOKEN" cannot is empty, contact form on website won't work.`);
+      error(
+        `env: "AUTH_TOKEN" cannot is empty, contact form on website won't work.`,
+      );
       return false;
     } else {
       success(`env: ${chalk.bold.white('✔')} "AUTH_TOKEN" validated.`);
@@ -38,7 +40,9 @@ module.exports = {
     }
 
     if (!config.DASHBOARD.enabled) {
-      warn("env: Dashboard is disabled, enable it to deploy the bot's website.");
+      warn(
+        "env: Dashboard is disabled, enable it to deploy the bot's website.",
+      );
     }
 
     if (!process.env.SUGGESTION) {
