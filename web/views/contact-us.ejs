@@ -23,8 +23,11 @@
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="@sweetalert2/themes/dark/dark.css" />
+    <script src="sweetalert2/dist/sweetalert2.min.js"></script>
 
-    <title>Page not found - SkyHelper</title>
+    <title>Contact Us - SkyHelper</title>
   </head>
   <body>
     <!--==================== HEADER ====================-->
@@ -35,20 +38,49 @@
       <section class="home section" id="home">
         <div class="home__container container grid">
           <div class="home__data">
-            <h1 class="home__title">Error: 404</h1>
+            <h1 class="home__title">Contact Us</h1>
+            <p class="home__description">
+              Only "Message" field is required, the rest are optional. However
+              we suggest you provide us atleast 1 social information so we can
+              reach out to you if need be.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="subscribe section">
-        <div class="subscribe__container container">
-          <h1 class="subscribe__title">Page Not Found</h1>
-          <p class="subscribe__description">
-            Looks like the page you tried to access doesn't exist.
-          </p>
-          <a href="/" class="button subscribe__button">Go Home</a>
-        </div>
-      </section>
+      <form class="form" id="contactForm">
+        <h2 class="contact-header">CONTACT US</h2>
+        <p type="Name:">
+          <input type="text" name="name" id="name" placeholder="Your name.." />
+        </p>
+        <p type="Email:">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Your email.."
+          />
+        </p>
+        <p type="Discord Username:">
+          <input
+            type="text"
+            name="discordUsername"
+            id="discordUsername"
+            placeholder="Your discord username.."
+          />
+        </p>
+        <p type="Message:">
+          <span style="color: red"> *</span
+          ><textarea
+            type="textarea"
+            name="message"
+            id="message"
+            placeholder="What would you like to tell us.."
+            required
+          ></textarea>
+        </p>
+        <button type="submit">Send Message</button>
+      </form>
     </main>
     <!--==================== FOOTER ====================-->
 
@@ -58,7 +90,7 @@
     <a href="#" class="scrollup" id="scroll-up">
       <i class="bx bx-chevrons-up"></i>
     </a>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>
 

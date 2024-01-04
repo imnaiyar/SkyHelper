@@ -68,58 +68,7 @@
   </head>
   <body>
     <!--==================== HEADER ====================-->
-    <header class="header" id="header">
-      <nav class="nav container">
-        <a href="#" class="nav__logo">
-          <img
-            src="assets/img/boticon.png"
-            style="top: 50px; left: 50px; widht: 40px; height: 40px"
-          />
-          <p class="nav__logo-text">SkyHelper</p>
-        </a>
-
-        <div class="nav__menu">
-          <ul class="nav__list">
-            <li class="nav__item">
-              <a href="#home" class="nav__link active-link">
-                <i class="bx bx-home-alt-2"></i>
-                <span>Home</span>
-              </a>
-            </li>
-            <li class="nav__item">
-              <a href="#popular" class="nav__link">
-                <i class="bx bx-award"></i>
-                <span>Features</span>
-              </a>
-            </li>
-            <li class="nav__item">
-              <a href="#value" class="nav__link">
-                <i class="bx bx-help-circle"></i>
-                <span>FAQs</span>
-              </a>
-            </li>
-            <li class="nav__item">
-              <a href="#contact" class="nav__link">
-                <i class="bx bx-line-chart"></i>
-                <span>TopGG</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- Theme change button -->
-        <i class="bx bx-moon change-theme" id="theme-button"></i>
-        <a href="/commands.html" class="nav__link">
-          <i class="bx bx-code-alt com-icon"></i>
-          <p class="nav__com">Commands</p>
-        </a>
-        <a
-          href="https://discord.com/invite/u9zUjWbbQ4"
-          class="button nav__button"
-        >
-          Invite Me
-        </a>
-      </nav>
-    </header>
+    <%- include('includes/header') -%>
 
     <!--==================== MAIN ====================-->
     <main class="main">
@@ -436,92 +385,10 @@
     </main>
 
     <!--==================== FOOTER ====================-->
-    <footer class="footer section">
-      <div class="footer__container container grid">
-        <div>
-          <a href="#" class="footer__logo">
-            <img
-              src="assets/img/boticon.png"
-              style="top: 50px; left: 50px; widht: 20px; height: 20px"
-            />
-            SkyHelper
-          </a>
-          <p class="footer__description">
-            A discord bot for the game Sky: Children of the Light
-          </p>
-        </div>
-        <div class="footer__content">
-          <div>
-            <h3 class="footer__title">About</h3>
-            <ul class="footer__links">
-              <li>
-                <a href="#" class="footer__link">About Me</a>
-              </li>
-
-              <li>
-                <a href="#popular" class="footer__link">Features</a>
-              </li>
-              <li>
-                <a href="https://docs.skyhelper.xyz" class="footer__link"
-                  >Documentation</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="footer__title">Support</h3>
-            <ul class="footer__links">
-              <li>
-                <a href="#value" class="footer__link">FAQs</a>
-              </li>
-              <li>
-                <a
-                  href="https://discord.com/invite/u9zUjWbbQ4"
-                  class="footer__link"
-                  >Support Server</a
-                >
-              </li>
-              <li>
-                <a href="/contact-us.html" class="footer__link">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="footer__title">Socials</h3>
-            <ul class="footer__social">
-              <a
-                href="https://github.com/imnaiyar/SkyHelper"
-                target="_blank"
-                class="footer__social-link"
-              >
-                <i class="bx bxl-github"></i>
-              </a>
-              <a
-                href="https://discord.com/invite/u9zUjWbbQ4"
-                target="_blank"
-                class="footer__social-link"
-              >
-                <i class="bx bxl-discord"></i>
-              </a>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer__info container">
-        <span class="footer__copy">
-          &#169; SkyHelper. All rights reserved
-        </span>
-
-        <div class="footer__privacy">
-          <a href="/tos.html">Terms of Service</a>
-          <a href="/privacy.html">Privacy Policy</a>
-        </div>
-      </div>
-    </footer>
+    <%- include('includes/footer') -%>
 
     <!--========== SCROLL UP ==========-->
-    <a href="#" class="scrollup" id="scroll-up">
+    <a href="#" class="scrollup mainPage" id="scroll-up">
       <i class="bx bx-chevrons-up"></i>
     </a>
 

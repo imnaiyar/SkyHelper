@@ -549,7 +549,7 @@ body.dark-theme {
   height: 550px;
   background: var(--body-color);
   border-radius: 12px;
-  box-shadow: 0 0 40px -10px var(--title-color);
+  box-shadow: 0 0 20px -10px var(--title-color);
   margin: calc(5vh) auto;
   padding: 20px 30px;
   max-width: calc(100vw - 40px);
@@ -600,6 +600,7 @@ body.dark-theme {
   display: inline-block;
   margin: 28px 0 0;
   font-size: 14px;
+  font-weight: var(--font-semi-bold);
   color: #5a5a5a;
 }
 .form button {
@@ -967,9 +968,11 @@ body.dark-theme {
 
 /* Show Scroll Up*/
 .show-scroll {
+  bottom: 3rem;
+}
+.show-scroll.mainPage {
   bottom: 8rem;
 }
-
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */
 @media screen and (max-width: 350px) {
@@ -1331,6 +1334,10 @@ body.dark-theme {
   }
 
   .show-scroll {
+    bottom: 3rem;
+    right: 3rem;
+  }
+  .mainPage.show-scroll {
     bottom: 3rem;
     right: 3rem;
   }

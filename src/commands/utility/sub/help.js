@@ -5,6 +5,8 @@ const cmds = [
   'shards',
   'next-shards',
   'sky-times',
+  'shards-live',
+  'sky-times-live',
   'seasonal-guides',
   'auto-shard',
   'utils',
