@@ -151,7 +151,7 @@ sr.reveal(`.home__value`, { delay: 700 });
 sr.reveal(`.home__images`, { delay: 800, origin: 'bottom' });
 sr.reveal(`.logos__img`, { interval: 100 });
 sr.reveal(`.value__images, .contact__content`, { origin: 'left' });
-sr.reveal(`.value__content`, { origin: 'right' });
+sr.reveal(`.value__content, .form`, { origin: 'right' });
 
 /* =========== Handle Contact Form Submission */
 $(document).ready(function () {
