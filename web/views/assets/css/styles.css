@@ -237,10 +237,10 @@ body.dark-theme {
 
 .progress-bar {
   height: 3px;
-  background-color: var(--second-color); /* Bright blue color */
+  background-color: var(--second-color);
   width: 0;
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 0 5px var(--title-color); /* Light blue shadow */
+  border-radius: 10px; 
+  box-shadow: 0 0 5px var(--title-color); 
 }
 /*=============== HEADER & NAV ===============*/
 .header {
