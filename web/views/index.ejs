@@ -46,7 +46,6 @@
     <meta name="og:site_name" content="SkyHelper" />
     <title>SkyHelper</title>
     <link rel="icon" href="assets/img/boticon.png" />
-    <link rel="manifest" href="/public/manifest.json">
 
     <!--=============== FAVICON ===============-->
     <link
@@ -400,17 +399,6 @@
     <script src="assets/js/swiper-bundle.min.js"></script>
 
     <!--=============== MAIN JS ===============-->
-    <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/public/service-worker.js')
-      .then((registration) => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error);
-      });
-  }
-</script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>
