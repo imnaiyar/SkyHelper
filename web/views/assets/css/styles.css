@@ -974,6 +974,59 @@ body.dark-theme {
   margin-bottom: 1rem;
   width: 90%;
 }
+
+/* ============ Table of Contents =========== */
+.toc {
+  margin-bottom: 40px;
+}
+.toc .toc-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003049;
+}
+
+.toc a {
+  text-decoration: none;
+  color: #18445f;
+}
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+.toc .toc-head {
+  font-size: 14px;
+  font-weight: bold;
+  color: #003049;
+  position: relative;
+}
+.dark-theme .toc-head {
+  color: var(--text-color);
+}
+.toc html {
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.toc .toc-head:before {
+  content: '';
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background-color: #219ebc;
+  left: -25px;
+  top: 50%;
+  transform: translateY(-120%);
+}
+.toc ul li {
+  margin: 16px 0;
+}
+.toc .heading-container {
+  padding-left: 20px;
+  border-left: 1px solid #49c1ef;
+  margin-left: 10px;
+}
 /*=============== SCROLL UP ===============*/
 .scrollup {
   position: fixed;

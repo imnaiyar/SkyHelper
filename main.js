@@ -190,4 +190,25 @@ module.exports = class SkyHelper extends Client {
     });
     return webhook.url;
   }
+
+  /**
+   * get commands from client application
+   */
+  async getCommand(value) {
+    await this.application.commands.fetch();
+    const command =
+      typeof value === 'string' && isNaN(value)
+        ? this.application.commands.cache.find(
+            (cmd) => cmd.name === value.toLowerCase(),
+          )
+        : !isNaN(value)
+        ? this.application.commands.cache.get(value)
+        : (() => {
+            throw new Error(
+              'Provided Value Must Either be a String or a Number',
+            );
+          })();
+    if (!command) throw new Error('No matching command found');
+    return command;
+  }
 };
