@@ -30,7 +30,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
         <header class="header" id="header">
 
             <nav class="nav container">
-              <a href="#" class="nav__logo">
+              <a href="/" class="nav__logo">
                 <img src="/assets/img/boticon.png" style="top: 50px; left: 50px; widht: 40px; height: 40px;"> <p class="nav__logo-text">SkyHelper</p>
               </a>
               <a href="/" class="nav__link">
@@ -41,7 +41,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
               
               <!-- Theme change button -->
               <i class='bx bx-moon change-theme' id="theme-button"></i>
-                    <a href="/commands.html" class="nav__link">
+                    <a href="/commands" class="nav__link">
                       <i class='bx bx-code-alt com-icon'></i><p class="nav__com">Commands</p>
                     </a>
               <a href="https://discord.com/invite/u9zUjWbbQ4" class="button nav__button">
@@ -168,7 +168,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
                     </li>
                     <li>
 
-                      <a href="/contact-us.html" class="footer__link">Contact Us</a>
+                      <a href="/contact-us" class="footer__link">Contact Us</a>
 
                     </li>
                   </ul>
@@ -197,8 +197,8 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
               </span>
               
               <div class="footer__privacy">
-                <a href="/tos.html">Terms of Service</a>
-                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/tos">Terms of Service</a>
+                <a href="/privacy">Privacy Policy</a>
               </div>
             </div>
         </footer>
