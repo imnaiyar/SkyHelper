@@ -195,6 +195,7 @@ module.exports = class SkyHelper extends Client {
    * get commands from client application
    */
   async getCommand(value) {
+    if (!value) throw new Error('Command "name" or "id" must be passed as an argument');
     await this.application.commands.fetch();
     const command =
       typeof value === 'string' && isNaN(value)
