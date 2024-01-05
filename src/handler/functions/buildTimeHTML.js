@@ -11,22 +11,16 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!--=============== FAVICON ===============-->
-        <link rel="shortcut icon" href="${
-          interaction.client.config.WEB_URL
-        }/assets/img/boticon.png" type="image/x-icon">
+        <link rel="shortcut icon" href="/assets/img/boticon.png" type="image/x-icon">
 
         <!--=============== BOXICONS ===============-->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         
         <!--=============== SWIPER CSS ===============-->
-        <link rel="stylesheet" href="${
-          interaction.client.config.WEB_URL
-        }/assets/css/swiper-bundle.min.css">
+        <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css">
 
         <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="${
-          interaction.client.config.WEB_URL
-        }/assets/css/styles.css">
+        <link rel="stylesheet" href="/assets/css/styles.css">
 
         <title>Timestamp - SkyHelper</title>
     </head>
@@ -37,9 +31,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
 
             <nav class="nav container">
               <a href="#" class="nav__logo">
-                <img src="${
-                  interaction.client.config.WEB_URL
-                }/assets/img/boticon.png" style="top: 50px; left: 50px; widht: 40px; height: 40px;"> <p class="nav__logo-text">SkyHelper</p>
+                <img src="/assets/img/boticon.png" style="top: 50px; left: 50px; widht: 40px; height: 40px;"> <p class="nav__logo-text">SkyHelper</p>
               </a>
               <a href="/" class="nav__link">
 
@@ -131,9 +123,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
             <div class="footer__container container grid">
               <div>
                 <a href="#" class="footer__logo">
-                  <img src="${
-                    interaction.client.config.WEB_URL
-                  }/assets/img/boticon.png" style="top: 50px; left: 50px; widht: 20px; height: 20px;"> SkyHelper
+                  <img src="/assets/img/boticon.png" style="top: 50px; left: 50px; widht: 20px; height: 20px;"> SkyHelper
                 </a>
                 <p class="footer__description">
                   A discord bot for the game Sky: Children of the Light
@@ -220,19 +210,13 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
         </a>
 
         <!--=============== SCROLLREVEAL ===============-->
-        <script src="${
-          interaction.client.config.WEB_URL
-        }/assets/js/scrollreveal.min.js"></script>
+        <script src="/assets/js/scrollreveal.min.js"></script>
 
         <!--=============== SWIPER JS ===============-->
-        <script src="${
-          interaction.client.config.WEB_URL
-        }/assets/js/swiper-bundle.min.js"></script>
+        <script src="/assets/js/swiper-bundle.min.js"></script>
 
         <!--=============== MAIN JS ===============-->
-        <script src="${
-          interaction.client.config.WEB_URL
-        }/assets/js/main.js"></script>
+        <script src="/assets/js/main.js"></script>
     </body>
 </html>
   `;
