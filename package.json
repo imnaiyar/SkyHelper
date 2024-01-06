@@ -21,7 +21,7 @@
     "@discordjs/rest": "^2.2.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
     "aos": "^2.3.4",
-    "axios": "^1.6.0",
+    "axios": "^1.6.5",
     "body-parser": "^1.20.2",
     "chalk": "^4.1.2",
     "colors": "^1.4.0",

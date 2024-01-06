@@ -220,6 +220,4 @@ $(document).ready(function () {
   });
 });
 
-
-
 /* ========== For App ======== */
