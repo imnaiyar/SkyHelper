@@ -40,7 +40,7 @@ module.exports = async (currentDate, footer) => {
   } else {
     result
       .setImage(
-        'https://media.discordapp.net/attachments/867638574571323424/1155727524911923220/5F1548AC-C7DD-4127-AF6F-0BC388-unscreen.gif',
+        'https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif',
       )
       .setDescription(`**It's a no shard day.**`)
       .setColor('#9fb686');
