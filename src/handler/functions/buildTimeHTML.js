@@ -66,7 +66,7 @@ module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
       
       <!-- timestamp -->
       <section class="value section" id="value">
-            <div class="value__container container">
+            <div class="value__container container times__data">
                      <h2 class="section__title">
                         Timestamp for <img src="${interaction.user.displayAvatarURL()}" style="width:25px;height:25px;border-radius:50%;"><span>  ${
                           interaction.user.username
