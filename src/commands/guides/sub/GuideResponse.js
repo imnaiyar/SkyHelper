@@ -1,5 +1,3 @@
-
-
 module.exports = {
   responses: {
     // revival
@@ -373,7 +371,8 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     mindful_miner_tree: {
       content:
         '**Mindful Miner** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Mindful Miner seasonal tree and cosmetics/emotes preview by Mimi and Sam```\n__**Relevent Links**__\nHow to get to Aurora seasonal area by Clement: https://discord.com/channels/575762611111592007/575827924343848960/1031474080571990026 (Method 1 only worked during the season is now not available)\n\nSeason of Aurora guide compilation by Clement: https://discord.com/channels/575762611111592007/575827924343848960/1031462864894038016',
-      files: ['https://media.discordapp.net/attachments/575827924343848960/1031468234446225458/15_MindfulMiner_Mimi4117.mp4',
+      files: [
+        'https://media.discordapp.net/attachments/575827924343848960/1031468234446225458/15_MindfulMiner_Mimi4117.mp4',
       ],
     },
     wayfarer_tree: {
@@ -718,7 +717,7 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     talented_builder_tree: {
       content:
-        'This was **_Talented Builder\'s_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- November 23, 2023 (#101)\n\n```Talented Builder Friendship Tree by Kontra (notkontra)```\n***prices are subject to change in future visits.**',
+        "This was **_Talented Builder's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- November 23, 2023 (#101)\n\n```Talented Builder Friendship Tree by Kontra (notkontra)```\n***prices are subject to change in future visits.**",
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1193211092919394384/talented_builder.png',
       ],
@@ -827,7 +826,7 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     // prince ts
     lamplighter_tree: {
       content:
-        'This was **Stretching Lamplighter\'s_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- December 7, 2023 (#102)\n\n```Stretching Lamplighter Friendship Tree by em```\n***prices are subject to change in future visits.**',
+        "This was **Stretching Lamplighter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- December 7, 2023 (#102)\n\n```Stretching Lamplighter Friendship Tree by em```\n***prices are subject to change in future visits.**",
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1193211092273483896/Lamplighter_ts.jpg',
       ],

@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 const { Guides } = require('./sub/GuideOption');
-const spirits = require('./sub/spiritsIndex.js')
+const spirits = require('./sub/spiritsIndex.js');
 const desc = require('@src/cmdDesc');
 module.exports = {
   cooldown: 3,
@@ -30,13 +30,15 @@ module.exports = {
     await Guides(interaction);
   },
   async autocomplete(interaction, client) {
-  const focusedValue = interaction.options.getFocused();
-  const spiritNames = Object.keys(spirits);
-  const filtered = spiritNames
-    .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
-    .slice(0, 25);
-  await interaction.respond(
-    filtered.map((choice) => ({ name: choice, value: choice })),
-  );
-}
+    const focusedValue = interaction.options.getFocused();
+    const spiritNames = Object.keys(spirits);
+    const filtered = spiritNames
+      .filter((choice) =>
+        choice.toUpperCase().includes(focusedValue.toUpperCase()),
+      )
+      .slice(0, 25);
+    await interaction.respond(
+      filtered.map((choice) => ({ name: choice, value: choice })),
+    );
+  },
 };
