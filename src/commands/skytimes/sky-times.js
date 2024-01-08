@@ -19,7 +19,7 @@ module.exports = {
           { name: 'Turtle Time', value: 'turtle' },
           { name: 'Reset Time', value: 'reset' },
           { name: 'Eden Reset Time', value: 'eden' },
-          { name: 'Event (Days of ...)', value: 'event' },
+          { name: 'Special Event', value: 'event' },
         ],
       },
     ],
@@ -63,8 +63,14 @@ module.exports = {
           client.skyEvents.eventActive ||
           result.eventDescription !== 'No active events.'
         ) {
-          await interaction.reply(
-            `\`\`\`Countdown\`\`\`\n${result.eventDescription}`,
+          await interaction.reply(    `${client.skyEvents.eventActive ? `**Event:** ${client.skyEvents.eventName}\n**Start Date:** ${time(
+              client.skyEvents.eventStarts.toDate(),
+              'f',
+            )}\n**End Date:** ${time(
+              client.skyEvents.eventEnds.toDate(),
+              'f',
+            )}\n**Duration:** ${
+              client.skyEvents.eventDuration}\n` : ''}\`\`\`Countdown\`\`\`\n${result.eventDescription}`,
           );
         } else {
           await interaction.reply('No active events right now.');
@@ -80,12 +86,3 @@ module.exports = {
     }
   },
 };
- // **Event:** ${client.skyEvents.eventName}\n**Start Date:** ${time(
-//               client.skyEvents.eventStarts.toDate(),
-//               'f',
-//             )}\n**End Date:** ${time(
-//               client.skyEvents.eventEnds.toDate(),
-//               'f',
-//             )}\n**Duration:** ${
-//               client.skyEvents.eventDuration
-//             }\n
