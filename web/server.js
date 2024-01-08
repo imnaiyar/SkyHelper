@@ -76,41 +76,41 @@ module.exports = {
       .use(router)
 
       // handling 'contact-us' form
-      .post('/submit', authenticateToken, (req, res) => {
-        const { name, email, message, discordUsername, reason } = req.body;
-        try {
-          const icon = discordUsername
-            ? client.users.cache
-                .find((u) => u.username === discordUsername)
-                ?.displayAvatarURL()
-            : undefined;
-
-          const embed = new EmbedBuilder()
-            .setColor('Green')
-            .setAuthor({ name: name || 'Not Provided', iconURL: icon })
-            .addFields(
-              { name: 'Email', value: email || 'Not Provided' },
-              { name: 'Username', value: discordUsername || 'Not Provided' },
-              { name: 'Reason', value: reason || 'Not Provided' },
-              { name: 'Message', value: message },
-            );
-
-          if (webhookLogger) {
-            webhookLogger
-              .send({
-                username: 'Contact Us Logs',
-                avatarURL: client.user.displayAvatarURL(),
-                embeds: [embed],
-              })
-              .catch(() => {});
-          }
-
-          res.status(200).send('Submission successful');
-        } catch (err) {
-          console.error(err);
-          res.status(500).send('Server Error');
-        }
-      })
+//       .post('/submit', authenticateToken, (req, res) => {
+//         const { name, email, message, discordUsername, reason } = req.body;
+//         try {
+//           const icon = discordUsername
+//             ? client.users.cache
+//                 .find((u) => u.username === discordUsername)
+//                 ?.displayAvatarURL()
+//             : undefined;
+// 
+//           const embed = new EmbedBuilder()
+//             .setColor('Green')
+//             .setAuthor({ name: name || 'Not Provided', iconURL: icon })
+//             .addFields(
+//               { name: 'Email', value: email || 'Not Provided' },
+//               { name: 'Username', value: discordUsername || 'Not Provided' },
+//               { name: 'Reason', value: reason || 'Not Provided' },
+//               { name: 'Message', value: message },
+//             );
+// 
+//           if (webhookLogger) {
+//             webhookLogger
+//               .send({
+//                 username: 'Contact Us Logs',
+//                 avatarURL: client.user.displayAvatarURL(),
+//                 embeds: [embed],
+//               })
+//               .catch(() => {});
+//           }
+// 
+//           res.status(200).send('Submission successful');
+//         } catch (err) {
+//           console.error(err);
+//           res.status(500).send('Server Error');
+//         }
+//       })
       .use((req, res) => {
         res.status(404).render('404');
       })
