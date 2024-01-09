@@ -17,7 +17,7 @@ module.exports = {
     }
 
     try {
-      const output = await eval(code);
+      const output = await eval(`(async () => { ${code} })()`);
       response = buildSuccessResponse(output, client);
     } catch (ex) {
       response = buildErrorResponse(ex);
