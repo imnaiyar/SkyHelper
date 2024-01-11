@@ -19,7 +19,7 @@ module.exports = {
           { name: 'Turtle Time', value: 'turtle' },
           { name: 'Reset Time', value: 'reset' },
           { name: 'Eden Reset Time', value: 'eden' },
-          { name: 'Special Event', value: 'event' },
+          { name: 'Event (Days of ...)', value: 'event' },
         ],
       },
     ],
