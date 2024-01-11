@@ -39,11 +39,11 @@ module.exports = class SkyHelper extends Client {
     this.database = schemas;
     // Datas for Events in Sky
     this.skyEvents = {
-      eventActive: false,
-      eventName: '',
-      eventStarts: moment.tz('2023-12-18T00:00:00', this.timezone),
-      eventEnds: moment.tz('2024-01-07T23:59:59', this.timezone),
-      eventDuration: '21 days',
+      eventActive: true,
+      eventName: 'Days of Fortune',
+      eventStarts: moment.tz('2024-01-29T00:00:00', this.timezone),
+      eventEnds: moment.tz('2024-02-11T23:59:59', this.timezone),
+      eventDuration: '13 days',
     };
 
     // Checks for how this class is created so it doesnt mess up the process
