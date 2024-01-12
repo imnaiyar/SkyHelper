@@ -336,6 +336,68 @@ body.dark-theme {
   color: var(--title-color);
 }
 
+/* Copy Button */
+
+.copyBtn {
+  background-color: hsla(228, 66%, 45%, 0.25);
+  width: 70px;
+  height: 25px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  overflow: hidden;
+  transition-duration: 700ms;
+}
+.copySvg {
+    fill: var(--text-color)
+  }
+.copyBtn span:first-child {
+  color: var(--text-color);
+  position: relative;
+  transform: translate(-50%, -50%)
+}
+
+.copyBtn span:last-child {
+  position: absolute;
+  color: #B5CCF3;
+  opacity: 0;
+  transform: translateY(100%) translateX(-50%);
+  height: 14px;
+  line-height: 13px;
+}
+
+.copyBtn:focus {
+  background-color: #0E418F;
+  position: relative;
+  width: 96px;
+  height: 40px;
+  transition-delay: 100ms;
+  transition-duration: 500ms;
+}
+
+.copyBtn:focus span:first-child {
+  color: #B5CCF3;
+  position: absolute;
+  transform: translateX(-50%) translateY(-150%);
+  opacity: 0;
+  transition-duration: 500ms;
+}
+
+.copyBtn:focus span:last-child {
+  transform: translateX(-50%) translateY(-50%);
+  opacity: 1;
+  position: absolute;
+  transition-delay: 300ms;
+  transition-duration: 500ms;
+}
+
+copyBtn:focus:end {
+  background-color: #FFFFFF;
+  width: 120px;
+  height: 40px;
+  transition-duration: 900ms;
+}
+
 /* Active link */
 .active-link {
   background: linear-gradient(101deg, hsl(228, 66%, 53%), hsl(228, 66%, 47%));
@@ -458,9 +520,6 @@ body.dark-theme {
   box-shadow: 0 4px 8px hsla(228, 66%, 45%, 0.25);
   transition: 0.3s;
   cursor: pointer;
-}
-.button.time {
-  padding: 0.5px 4px;
 }
 .button:hover {
   box-shadow: 0 4px 12px hsla(228, 66%, 45%, 0.25);
@@ -1225,6 +1284,15 @@ body.dark-theme {
 
 /* For large devices */
 @media screen and (min-width: 1023px) {
+  .copyBtn{
+    width: 100px;
+    height: 50px;
+  }
+  
+  .copyBtn:focus {
+    height: 60px;
+    width: 140px;
+  }
   .com-icon {
     padding-right: 1.5rem;
   }
