@@ -1,5 +1,6 @@
 const Logger = require('@src/logger');
-
+const { EmbedBuilder } = require('discord.js')
+const { spawn } = require('child_process');
 module.exports = {
   data: {
     name: 'destroy',
@@ -7,44 +8,37 @@ module.exports = {
     category: 'OWNER',
   },
   async execute(message, args, client) {
-    const confirmationMessage = await message.channel.send(
-      'Are you sure you want to shut down the bot?',
-    );
-
-    await confirmationMessage.react('✅');
-    await confirmationMessage.react('❌');
-
-    const filter = (reaction, user) =>
-      ['✅', '❌'].includes(reaction.emoji.name) &&
-      user.id === message.author.id;
-    const collector = confirmationMessage.createReactionCollector({
-      filter,
-      time: 30000,
-    });
-
-    collector.on('collect', async (reaction) => {
-      if (reaction.emoji.name === '✅') {
-        await confirmationMessage.edit('Shutting down...');
-        Logger.error('Bot is shutting down...');
-        collector.stop();
-        setTimeout(() => {
+    const option = args[0];
+    const reloading = new EmbedBuilder().setColor(client.config.EMBED_COLORS.WARNING).setAuthor({name: message.client.user.username, iconURL: message.client.user.avatarURL({dynamic: true})}).setTitle("Bot Reload").setDescription(`Reloading ${message.client.user.username}${option != "bot" ? " " + option : ""}...`).setTimestamp(Date.now());
+    const success =  new EmbedBuilder().setColor(client.config.EMBED_COLORS.SUCCESS).setAuthor({name: message.client.user.username, iconURL: message.client.user.avatarURL({dynamic: true})}).setTitle("Bot Reloaded").setDescription(`${message.client.user.username} ${option != "bot" ? option : ""} has been reloaded successfully!`).setTimestamp(Date.now());
+    switch(option) {
+      case "bot": {
+        try {
+          const reply = await message.reply({embeds: [reloading]});
+          spawn(process.argv[0], process.argv.slice(1), {
+            detached: true,
+            stdio: 'ignore',
+          }).unref();
+          reply.edit({embeds: [success]});
           process.exit(0);
-        }, 5000);
-      } else if (reaction.emoji.name === '❌') {
-        await confirmationMessage.edit('Shutdown canceled.');
-        collector.stop(); // Stop the collector
+        } catch (error) {
+          const failed = new EmbedBuilder().setColor(client.config.EMBED_COLORS.ERROR).setAuthor({name: message.client.user.username, iconURL: message.client.user.avatarURL({dynamic: true})}).setTitle("Infinity Reload").setDescription("Failed to reload Bot").addFields({name: "Error Detail:", value: "```js\n" + error + "```"}).setTimestamp(Date.now());
+          message.reply({embeds: [failed]});
+        }
+        break;
       }
-    });
-
-    collector.on('end', (collected, reason) => {
-      if (reason === 'time') {
-        confirmationMessage.edit(
-          'Shutdown confirmation timed out. Shutdown canceled.',
-        );
+      case "cmds":
+      case "commands":{
+        const reply = await message.reply({embeds: [reloading]});
+        message.client.commands.clear();
+        message.client.prefix.clear();
+        message.client.loadSlashCmd("src/commands");
+        reply.edit({embeds: [success]});
+        return;
       }
-      confirmationMessage.reactions
-        .removeAll()
-        .catch((error) => console.error('Failed to clear reactions:', error));
-    });
+      default:
+        await message.reply("Invalid option, availabe options:\n- `bot`: reloads the whole bot.\n- `commands`: reloads commands only (including contexts)");
+        break;
+    }
   },
 };

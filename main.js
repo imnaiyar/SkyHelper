@@ -161,7 +161,8 @@ module.exports = class SkyHelper extends Client {
         name: cmd.data.name,
         description: cmd.data.description,
         type: 1,
-        options: cmd.data.options,
+        options: cmd.data?.options,
+        dm_permission: cmd.data?.dm_permission
       }))
       .forEach((s) => toRegister.push(s));
 
