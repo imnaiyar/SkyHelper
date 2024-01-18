@@ -113,13 +113,12 @@ async function Guides(interaction) {
     value: choice.value,
     emoji: choice.emoji,
   }));
-
-  const row = new ActionRowBuilder().addComponents(
-    new StringSelectMenuBuilder()
+  const selectMenu = new StringSelectMenuBuilder()
       .setCustomId('firstChoice')
       .setPlaceholder('Choose a Season')
-      .addOptions(dropdownOptions),
-  );
+      .addOptions(dropdownOptions);
+      
+  const row = new ActionRowBuilder().addComponents(selectMenu);
 
   const reply = await interaction.reply({
     content: 'Please select a season:',
@@ -168,7 +167,10 @@ async function Guides(interaction) {
   });
 
   collector.on('end', (collected, reason) => {
-    interaction.deleteReply();
+    selectMenu.setPlaceholder('Menu Expired').setDisabled(true);
+    interaction.editReply({
+      components: [row]
+    });
   });
 }
 
