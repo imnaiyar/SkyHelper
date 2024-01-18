@@ -128,7 +128,7 @@ module.exports = async (client, interaction) => {
           .setStyle(ButtonStyle.Secondary),
       );
       if (interaction.replied || interaction.deferred) {
-        await interaction.editReply({
+        await interaction.followUp({
           embeds: [embed],
           components: [actionRow],
         });
