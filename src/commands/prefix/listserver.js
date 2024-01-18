@@ -16,7 +16,7 @@ module.exports = {
     category: 'OWNER',
   },
   async execute(message, args) {
-    const { client, channel, member } = message;
+    const { client, channel, author } = message;
 
     const match = args[0];
     const matched = [];
@@ -111,7 +111,7 @@ module.exports = {
     // Listeners
     const collector = sentMsg.createMessageComponentCollector({
       filter: (response) =>
-        response.user.id === member.id && response.message.id === sentMsg.id,
+        response.user.id === author.id && response.message.id === sentMsg.id,
       idle: 2 * IDLE_TIMEOUT * 1000,
       dispose: true,
       componentType: ComponentType.Button,
