@@ -122,7 +122,7 @@ async function Guides(interaction) {
 
   const collector = reply.createMessageComponentCollector({
     filter,
-    idle: 60 * 1000,
+    idle: 2 * 60 * 1000,
   });
 
   collector.on('collect', async (selectInteraction) => {
@@ -161,9 +161,7 @@ async function Guides(interaction) {
   });
 
   collector.on('end', (collected, reason) => {
-    if (reply) {
-      reply.delete();
-    }
+    interaction.deleteReply();
   });
 }
 
