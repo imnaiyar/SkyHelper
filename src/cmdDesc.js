@@ -5,8 +5,8 @@ module.exports = {
   guides: `Provides guides for seasonal quests, locations of seasonal spirits, and their cosmetic price trees, created by fellow game players and including their credits. Results are ephemeral by default, but you can make them non-ephemeral optionally. The select menus are deleted after 1 minute of inactivity to prevent channel clogging.
 
 \`Usage:\`
-/seasonal-guides [ephemeral]
-
+/seasonal-guides [spirit] [ephemeral]
+- [spirit] (optional): Directly search for a seasonal spirit's tree/locaction.
 - [ephemeral] (optional): Specify this option to receive non-ephemeral results.`,
 
   nextShards: `Provides information about the date and location of the next 5 upcoming shards by default. Optionally, you can request more results.

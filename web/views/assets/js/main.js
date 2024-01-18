@@ -1,3 +1,34 @@
+/* ========== COPY BUTTON ============== */
+document.addEventListener('DOMContentLoaded', function () {
+  const copyButtons = document.querySelectorAll('.copyBtn');
+
+  copyButtons.forEach((button, index) => {
+    button.addEventListener('click', function () {
+      const codeBlock = document.querySelectorAll('.code-block')[index];
+      const codeToCopy = codeBlock.textContent;
+
+      navigator.clipboard.writeText(codeToCopy).catch(function (err) {
+        console.error('Unable to copy text', err);
+      });
+    });
+  });
+});
+
+/* ============ Progress Bar =========== */
+document.addEventListener('scroll', function () {
+  updateProgressBar();
+});
+
+function updateProgressBar() {
+  const winScroll =
+    document.body.scrollTop || document.documentElement.scrollTop;
+  const height =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('myBar').style.width = scrolled + '%';
+}
+
 /*=============== CHANGE BACKGROUND HEADER ===============*/
 const scrollHeader = () => {
   const header = document.getElementById('header');
@@ -5,10 +36,12 @@ const scrollHeader = () => {
   const com = document.querySelector('.com-icon');
   const command = document.querySelector('.nav__com');
 
+  const isSmall = window.innerWidth <= 320;
+
   // When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
   if (this.scrollY >= 120) {
     header.classList.add('scroll-header');
-    text.style.display = 'inline-flex';
+    text.style.display = isSmall ? 'none' : 'inline-flex';
     com.style.display = 'inline-flex';
     command.style.display = 'none';
   } else {
@@ -150,8 +183,10 @@ sr.reveal(`.home__search`, { delay: 600 });
 sr.reveal(`.home__value`, { delay: 700 });
 sr.reveal(`.home__images`, { delay: 800, origin: 'bottom' });
 sr.reveal(`.logos__img`, { interval: 100 });
-sr.reveal(`.value__images, .contact__content`, { origin: 'left' });
-sr.reveal(`.value__content, .form`, { origin: 'right' });
+sr.reveal(`.value__images, .contact__content,`, { origin: 'left' });
+sr.reveal(`.value__content, .form, .toc-content, .times__data`, {
+  origin: 'right',
+});
 
 /* =========== Handle Contact Form Submission */
 $(document).ready(function () {
@@ -202,3 +237,5 @@ $(document).ready(function () {
     });
   });
 });
+
+/* ========== For App ======== */

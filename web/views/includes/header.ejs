@@ -1,10 +1,11 @@
 <% if (filename === '/' || filename === '/index') { %>
 <!-- Header for 'index' route -->
+<div class="progress-container progress-bar" id="myBar"></div>
 <header class="header" id="header">
   <nav class="nav container">
     <a href="#" class="nav__logo">
       <img
-        src="assets/img/boticon.png"
+        src="/assets/img/boticon.png"
         style="top: 50px; left: 50px; widht: 40px; height: 40px"
       />
       <p class="nav__logo-text">SkyHelper</p>
@@ -51,18 +52,15 @@
 </header>
 <% } else { %>
 <!-- Header for other routes -->
+<div class="progress-container progress-bar" id="myBar"></div>
 <header class="header" id="header">
   <nav class="nav container">
-    <a href="#" class="nav__logo">
+    <a href="/" class="nav__logo">
       <img
-        src="assets/img/boticon.png"
+        src="/assets/img/boticon.png"
         style="top: 50px; left: 50px; widht: 40px; height: 40px"
       />
       <p class="nav__logo-text">SkyHelper</p>
-    </a>
-    <a href="/" class="nav__link check">
-      <i class="bx bx-home-alt-2"></i>
-      <span>Home</span>
     </a>
 
     <!-- Theme change button -->

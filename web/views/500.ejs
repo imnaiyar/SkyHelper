@@ -8,7 +8,7 @@
     <!--=============== FAVICON ===============-->
     <link
       rel="shortcut icon"
-      href="assets/img/boticon.png"
+      href="/assets/img/boticon.png"
       type="image/x-icon"
     />
 
@@ -19,43 +19,16 @@
     />
 
     <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
 
     <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
 
     <title>505 Server Error - SkyHelper</title>
   </head>
   <body>
     <!--==================== HEADER ====================-->
-    <header class="header" id="header">
-      <nav class="nav container">
-        <a href="#" class="nav__logo">
-          <img
-            src="assets/img/boticon.png"
-            style="top: 50px; left: 50px; widht: 40px; height: 40px"
-          />
-          <p class="nav__logo-text">SkyHelper</p>
-        </a>
-        <a href="/" class="nav__link check">
-          <i class="bx bx-home-alt-2"></i>
-          <span>Home</span>
-        </a>
-
-        <!-- Theme change button -->
-        <i class="bx bx-moon change-theme" id="theme-button"></i>
-        <a href="/commands" class="nav__link">
-          <i class="bx bx-code-alt com-icon"></i>
-          <p class="nav__com">Commands</p>
-        </a>
-        <a
-          href="https://discord.com/invite/u9zUjWbbQ4"
-          class="button nav__button"
-        >
-          Invite Me
-        </a>
-      </nav>
-    </header>
+    <%- include('includes/header') -%>
 
     <!-- Content -->
     <main class="main">
@@ -88,12 +61,12 @@
     </a>
 
     <!--=============== SCROLLREVEAL ===============-->
-    <script src="assets/js/scrollreveal.min.js"></script>
+    <script src="/assets/js/scrollreveal.min.js"></script>
 
     <!--=============== SWIPER JS ===============-->
-    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="/assets/js/swiper-bundle.min.js"></script>
 
     <!--=============== MAIN JS ===============-->
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>

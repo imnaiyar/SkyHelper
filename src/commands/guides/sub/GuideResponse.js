@@ -1,25 +1,63 @@
-const { AttachmentBuilder } = require('discord.js');
-
 module.exports = {
   responses: {
+    // nine-colored-deer
+    // nine-colored-deer quests
+    nine_colored_q1: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Quest Yet To Be Updated\`\`\``,
+    },
+    // Nine-Colored Locations
+    nine_colored_s: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n- **Season of Nine-Colored Deer - How to get to The Seasonal Area** by Clement 
+https://discord.com/channels/575762611111592007/575827924343848960/1196366016020742175\n\n\`\`\`Season of the Nine-Colored Deer Spirits and WLs Location by em\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197548553158008852/Crescent_Oasis_Map.jpg',
+      ],
+    },
+
+    // Nine-Colored Tree
+    hunter_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Hunter Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549727072387135/Hunter-Tree.jpg',
+      ],
+    },
+    princess_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Princess Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549728263569439/Princess-tree.jpg',
+      ],
+    },
+    herb_gatherer_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Herb Gatherer Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549727437312122/Herb_Gatherer_Tree.jpg',
+      ],
+    },
+    lord_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Feudal Lord Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549727923839116/Feudal_Lord_Tree.jpg',
+      ],
+    },
+
     // revival
     // revival quests
     revival_q1: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em
+      content: `\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em
 https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Season of Revival Quest 1 by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1163891052185387070/Revival_Q1.jpg',
       ],
     },
     revival_q2: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em
+      content: `\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em
 https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Season of Revival Quest 2 by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1184626447046942730/Revival_Quest_2.jpg',
       ],
     },
     revival_q3: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em
+      content: `\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em
 https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Season of Revival Quest 3 by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1184626446094844026/Revival_Quest_3.jpg',
@@ -27,25 +65,25 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     // revival trees
     deserted_oasis_tree: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      content: `\n\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
       ],
     },
     lost_village_tree: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      content: `\n\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
       ],
     },
     abandoned_refuge_tree: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      content: `\n\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
       ],
     },
     forgotten_haven_tree: {
-      content: `**Season of Revival** is currently ongoing.\nStarted At : <t:1697439600:F> (<t:1697439600:R>)\nEnds At: <t:1704095999:F> (<t:1704095999:R>)\nDuration: 77 Days\n\n\`\`\`Relevant Links\`\`\`**Season of Revival Total Price Calculation** by io https://discord.com/channels/575762611111592007/585339436322259003/1163396547996815361\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
+      content: `\n\`\`\`Relevant Links\`\`\`\n**Season of Revival - Aviary Village Map** by em https://discord.com/channels/575762611111592007/585339436322259003/1163470276869242910\n\n\`\`\`Seasonal Price Chart by Clement\`\`\``,
       files: [
         'https://media.discordapp.net/attachments/867638574571323424/1163891053519183902/Revival_Chart.jpg',
       ],
@@ -374,9 +412,7 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
       content:
         '**Mindful Miner** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Mindful Miner seasonal tree and cosmetics/emotes preview by Mimi and Sam```\n__**Relevent Links**__\nHow to get to Aurora seasonal area by Clement: https://discord.com/channels/575762611111592007/575827924343848960/1031474080571990026 (Method 1 only worked during the season is now not available)\n\nSeason of Aurora guide compilation by Clement: https://discord.com/channels/575762611111592007/575827924343848960/1031462864894038016',
       files: [
-        new AttachmentBuilder(
-          'https://media.discordapp.net/attachments/575827924343848960/1031468234446225458/15_MindfulMiner_Mimi4117.mp4',
-        ),
+        'https://media.discordapp.net/attachments/575827924343848960/1031468234446225458/15_MindfulMiner_Mimi4117.mp4',
       ],
     },
     wayfarer_tree: {
@@ -631,9 +667,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     angler_tree: {
       content:
-        '**Anxious Angler** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Abyss Seasonal Price Chart by Clement```',
+        "This was **_Anxious Angler's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- January 18, 2024 (#105)\n\n```Anxious Angler Friendship Tree by em```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1132243992508125224/06_Seasonal_Price_Chart.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1197522517435351040/Anxious_Angler_Tree.png',
       ],
     },
     // flight
@@ -721,9 +757,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     talented_builder_tree: {
       content:
-        '**Talented Builder** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Flight Seasonal Price Chart by Clement```',
+        "This was **_Talented Builder's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- November 23, 2023 (#101)\n\n```Talented Builder Friendship Tree by Kontra (notkontra)```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1132257436527493140/05_Seasonal_Price_Chart.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211092919394384/talented_builder.png',
       ],
     },
     chimesmith_tree: {
@@ -830,9 +866,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     // prince ts
     lamplighter_tree: {
       content:
-        '**Stretching Lamplighter** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of the Little Prince Seasonal Price Chart by Clement```',
+        "This was **Stretching Lamplighter's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- December 7, 2023 (#102)\n\n```Stretching Lamplighter Friendship Tree by em```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1132403272242700379/05_Season_Price_Chart.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211092273483896/Lamplighter_ts.jpg',
       ],
     },
     star_collector_tree: {
@@ -1215,9 +1251,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     // sanctuary ts
     sunbather_tree: {
       content:
-        "This was **_Chill Sunbather's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_August 19, 2021 (#42)_\n\n```Chill Sunbather Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+        "This was **_Chill Sunbather's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\nJanuary 4, 2024 (#104)\n_August 19, 2021 (#42)_\n\n```Chill Sunbather Friendship Tree by June (junedabest)```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1139295739047051284/Sunbather_tree.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211090528649276/104_chill_sunbather_by_june.jpg',
       ],
     },
     shell_collector_tree: {
@@ -1360,9 +1396,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     herbalist_tree: {
       content:
-        "This was **_Playfighting Herbalist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n_October 28, 2021 (#47)_\n\n```Playfighting Herbalist Friendship Tree from Sky Wiki```\n***prices are subject to change in future visits.**",
+        "This was **_Playfighting Herbalist's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\nOctober 12, 2023 (#98)\n_October 28, 2021 (#47)_\n\n```Playfighting Herbalist Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1140024516907651072/Herbalist_tree.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211095696036002/Herbalist_ts.png',
       ],
     },
     scarecrow_farmer_tree: {
@@ -1427,9 +1463,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     spin_dancer_tree: {
       content:
-        "This was **_Festive Spin Dancer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- October 14, 2021 (#46)\n- September 3, 2020 (#17)\n\n```Festive Spin Dancer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+        "This was **_Festive Spin Dancer's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n- December 21, 2023 (#103)\n- October 14, 2021 (#46)\n- September 3, 2020 (#17)\n\n```Festive Spin Dancer Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1153295772767498260/Festive_Spin_dancer_tree.png',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211091526885506/spin_dancer_ts.png',
       ],
     },
     pianist_tree: {
@@ -1455,9 +1491,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     juggler_tree: {
       content:
-        "This was **_Troupe Juggler's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- September 16, 2021 (#44)\n\n```Troupe Juggler Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+        "This was **_Troupe Juggler's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- October 26, 2023 (#99)\n- September 16, 2021 (#44)\n\n```Troupe Juggler Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1153295726600785930/Troupe_juggler_tree.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211094324486224/Troupe_Juggler_ts.png',
       ],
     },
     // belonging
@@ -1536,9 +1572,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     wise_grandparent_tree: {
       content:
-        "This was **_Wise Gradparent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 2\n__**Previous Visits Dates**__\n- November 11, 2021 (#48)\n- August 6, 2020 (#15)\n\n```Wise Gradparent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
+        "This was **_Wise Gradparent's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 3\n__**Previous Visits Dates**__\n-  November 9, 2023 (#100)\n- November 11, 2021 (#48)\n- August 6, 2020 (#15)\n\n```Wise Gradparent Friendship Tree by Clement```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1153494932485591111/Grandparent_Tree.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1193211093519192104/wise_grandparent_ts.jpg',
       ],
     },
     // lightseekers

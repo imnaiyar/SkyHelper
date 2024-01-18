@@ -81,7 +81,7 @@ module.exports = async (client, guild) => {
 
   // Update DBL Stats
   if (process.env.DBL_TOKEN) {
-  await dblStats(client);
+    await dblStats(client);
   }
   // Update TopGG Stats
   if (process.env.TOPGG_TOKEN) {

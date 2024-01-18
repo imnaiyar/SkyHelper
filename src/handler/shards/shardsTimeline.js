@@ -15,7 +15,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = 0;
     await showShard(
       interaction,
-      shardData[currentShard][currentShardIndex],
+      shardData(currentDate)[currentShard][currentShardIndex],
       Zhii,
       Christian,
     );
@@ -23,7 +23,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(
       interaction,
-      shardData[currentShard][currentShardIndex],
+      shardData(currentDate)[currentShard][currentShardIndex],
       Zhii,
       Christian,
     );
@@ -31,7 +31,7 @@ async function shardTimeline(interaction, Zhii, Christian) {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(
       interaction,
-      shardData[currentShard][currentShardIndex],
+      shardData(currentDate)[currentShard][currentShardIndex],
       Zhii,
       Christian,
     );

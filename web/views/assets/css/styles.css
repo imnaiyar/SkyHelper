@@ -226,12 +226,28 @@ body.dark-theme {
 .main {
   overflow: hidden; /* For the animations ScrollReveal*/
 }
+/* ============= Progress Bar ============ */
+.progress-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: transparent;
+}
 
+.progress-bar {
+  height: 3px;
+  background-color: var(--second-color);
+  width: 0;
+  border-radius: 10px;
+  box-shadow: 0 0 5px var(--title-color);
+}
 /*=============== HEADER & NAV ===============*/
 .header {
   position: fixed;
   top: 0;
   left: 0;
+  padding-top: 2px;
   width: 100%;
   background-color: transparent;
   z-index: var(--z-fixed);
@@ -318,6 +334,68 @@ body.dark-theme {
 
 .scroll-header .change-theme {
   color: var(--title-color);
+}
+
+/* Copy Button */
+
+.copyBtn {
+  background-color: hsla(228, 66%, 45%, 0.25);
+  width: 70px;
+  height: 25px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  overflow: hidden;
+  transition-duration: 700ms;
+}
+.copySvg {
+  fill: var(--text-color);
+}
+.copyBtn span:first-child {
+  color: var(--text-color);
+  position: relative;
+  transform: translate(-50%, -50%);
+}
+
+.copyBtn span:last-child {
+  position: absolute;
+  color: #b5ccf3;
+  opacity: 0;
+  transform: translateY(100%) translateX(-50%);
+  height: 14px;
+  line-height: 13px;
+}
+
+.copyBtn:focus {
+  background-color: #0e418f;
+  position: relative;
+  width: 96px;
+  height: 40px;
+  transition-delay: 100ms;
+  transition-duration: 500ms;
+}
+
+.copyBtn:focus span:first-child {
+  color: #b5ccf3;
+  position: absolute;
+  transform: translateX(-50%) translateY(-150%);
+  opacity: 0;
+  transition-duration: 500ms;
+}
+
+.copyBtn:focus span:last-child {
+  transform: translateX(-50%) translateY(-50%);
+  opacity: 1;
+  position: absolute;
+  transition-delay: 300ms;
+  transition-duration: 500ms;
+}
+
+copyBtn:focus:end {
+  background-color: #ffffff;
+  width: 120px;
+  height: 40px;
+  transition-duration: 900ms;
 }
 
 /* Active link */
@@ -442,9 +520,6 @@ body.dark-theme {
   box-shadow: 0 4px 8px hsla(228, 66%, 45%, 0.25);
   transition: 0.3s;
   cursor: pointer;
-}
-.button.time {
-  padding: 0.5px 4px;
 }
 .button:hover {
   box-shadow: 0 4px 12px hsla(228, 66%, 45%, 0.25);
@@ -958,6 +1033,59 @@ body.dark-theme {
   margin-bottom: 1rem;
   width: 90%;
 }
+
+/* ============ Table of Contents =========== */
+.toc {
+  margin-bottom: 40px;
+}
+.toc .toc-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003049;
+}
+
+.toc a {
+  text-decoration: none;
+  color: #18445f;
+}
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+.toc .toc-head {
+  font-size: 14px;
+  font-weight: bold;
+  color: #003049;
+  position: relative;
+}
+.dark-theme .toc-head {
+  color: var(--text-color);
+}
+.toc html {
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.toc .toc-head:before {
+  content: '';
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background-color: #219ebc;
+  left: -25px;
+  top: 50%;
+  transform: translateY(-120%);
+}
+.toc ul li {
+  margin: 16px 0;
+}
+.toc .heading-container {
+  padding-left: 20px;
+  border-left: 1px solid #49c1ef;
+  margin-left: 10px;
+}
 /*=============== SCROLL UP ===============*/
 .scrollup {
   position: fixed;
@@ -993,7 +1121,6 @@ body.dark-theme {
     margin-left: 1rem;
     margin-right: 1rem;
   }
-
   .section {
     padding: 3.5rem 0 1rem;
   }
@@ -1075,6 +1202,9 @@ body.dark-theme {
     width: 80%;
   }
 
+  .progress-bar {
+    height: 4px;
+  }
   .form {
     width: 80%;
     height: 900px;
@@ -1121,6 +1251,10 @@ body.dark-theme {
     width: 80%;
   }
 
+  .progress-bar {
+    height: 5px;
+  }
+
   .home__orbe {
     align-self: flex-end;
   }
@@ -1150,6 +1284,15 @@ body.dark-theme {
 
 /* For large devices */
 @media screen and (min-width: 1023px) {
+  .copyBtn {
+    width: 100px;
+    height: 50px;
+  }
+
+  .copyBtn:focus {
+    height: 60px;
+    width: 140px;
+  }
   .com-icon {
     padding-right: 1.5rem;
   }
@@ -1170,6 +1313,9 @@ body.dark-theme {
   }
   .section__subtitle {
     font-size: var(--normal-font-size);
+  }
+  .progress-bar {
+    height: 6px;
   }
   .nav {
     height: calc(var(--header-height) + 1.5rem);

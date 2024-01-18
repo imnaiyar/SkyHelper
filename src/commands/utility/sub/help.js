@@ -76,7 +76,7 @@ async function helpMenu(interaction, client) {
     .setColor('Gold')
     .setFooter({ text: 'SkyHelper', iconURL: client.user.displayAvatarURL() })
     .setDescription(
-      `SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky. \n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[TopGG](https://top.gg/bot/1121541967730450574) • [Our Website](${config.WEB_URL}) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky official server](http://discord.gg/thatskygame)`,
+      `SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky.\n\n Checkout our updated [ToS](${config.WEB_URL}/tos) and [Privacy Policy](${config.WEB_URL}/privacy)\n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[Website](${config.WEB_URL}) • [TopGG](https://top.gg/bot/1121541967730450574) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky Official Server](http://discord.gg/thatskygame)`,
     );
 
   const row = new ActionRowBuilder().addComponents(
@@ -94,7 +94,7 @@ async function helpMenu(interaction, client) {
   const filter = (i) => i.message.id === reply.id;
   const collector = reply.createMessageComponentCollector({
     filter,
-    idle: 60 * 1000,
+    idle: 2 * 60 * 1000,
   });
   let page = 1;
   const commandsPerPage = 5;
@@ -172,16 +172,7 @@ async function helpMenu(interaction, client) {
   }
 
   collector.on('end', (collected, reason) => {
-    const embed = new EmbedBuilder()
-      .setAuthor({ name: 'Idle Timeout.' })
-      .setDescription(
-        `Help menu has expired, run the command </help:1147244751708491898> again.`,
-      )
-      .setFooter({
-        text: 'SkyHelper',
-        iconURL: client.user.displayAvatarURL(),
-      });
-    reply.edit({ embeds: [embed], components: [] });
+    reply.edit({ components: [] });
   });
 }
 

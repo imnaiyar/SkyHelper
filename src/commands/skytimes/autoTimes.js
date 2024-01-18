@@ -28,15 +28,16 @@ module.exports = {
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
+    dm_permission: false,
     longDesc: desc.autoTimes,
     userPermissions: ['ManageGuild'],
   },
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
-    const sub = interaction.options.getSubcommand();
     if (!interaction.guild) {
       return interaction.followUp('This command can only be used in a server');
     }
+    const sub = interaction.options.getSubcommand();
     const config = await autoTimes(interaction.guild);
     if (sub === 'start') {
       if (config.channelId && config.messageId) {

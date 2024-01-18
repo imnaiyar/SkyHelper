@@ -40,10 +40,10 @@ module.exports = class SkyHelper extends Client {
     // Datas for Events in Sky
     this.skyEvents = {
       eventActive: true,
-      eventName: 'Days of Feast',
-      eventStarts: moment.tz('2023-12-18T00:00:00', this.timezone),
-      eventEnds: moment.tz('2024-01-07T23:59:59', this.timezone),
-      eventDuration: '21 days',
+      eventName: 'Days of Fortune',
+      eventStarts: moment.tz('2024-01-29T00:00:00', this.timezone),
+      eventEnds: moment.tz('2024-02-11T23:59:59', this.timezone),
+      eventDuration: '13 days',
     };
 
     // Checks for how this class is created so it doesnt mess up the process
@@ -161,7 +161,8 @@ module.exports = class SkyHelper extends Client {
         name: cmd.data.name,
         description: cmd.data.description,
         type: 1,
-        options: cmd.data.options,
+        options: cmd.data?.options,
+        dm_permission: cmd.data?.dm_permission
       }))
       .forEach((s) => toRegister.push(s));
 
@@ -189,5 +190,28 @@ module.exports = class SkyHelper extends Client {
       avatar: avatar ? avatar : this.user.displayAvatarURL(),
     });
     return webhook.url;
+  }
+
+  /**
+   * get commands from client application
+   */
+  async getCommand(value) {
+    if (!value)
+      throw new Error('Command "name" or "id" must be passed as an argument');
+    await this.application.commands.fetch();
+    const command =
+      typeof value === 'string' && isNaN(value)
+        ? this.application.commands.cache.find(
+            (cmd) => cmd.name === value.toLowerCase(),
+          )
+        : !isNaN(value)
+        ? this.application.commands.cache.get(value)
+        : (() => {
+            throw new Error(
+              'Provided Value Must Either be a String or a Number',
+            );
+          })();
+    if (!command) throw new Error('No matching command found');
+    return command;
   }
 };
