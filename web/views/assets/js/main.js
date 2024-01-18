@@ -1,21 +1,18 @@
-// ... (Your existing code)
-
+/* ========== COPY BUTTON ============== */
 document.addEventListener('DOMContentLoaded', function () {
-    const copyButtons = document.querySelectorAll('.copyBtn');
+  const copyButtons = document.querySelectorAll('.copyBtn');
 
-    copyButtons.forEach((button, index) => {
-        button.addEventListener('click', function () {
-            const codeBlock = document.querySelectorAll('.code-block')[index];
-            const codeToCopy = codeBlock.textContent;
+  copyButtons.forEach((button, index) => {
+    button.addEventListener('click', function () {
+      const codeBlock = document.querySelectorAll('.code-block')[index];
+      const codeToCopy = codeBlock.textContent;
 
-            navigator.clipboard.writeText(codeToCopy).catch(function (err) {
-                console.error('Unable to copy text', err);
-            });
-        });
+      navigator.clipboard.writeText(codeToCopy).catch(function (err) {
+        console.error('Unable to copy text', err);
+      });
     });
+  });
 });
-
-// ... (Your existing code)
 
 /* ============ Progress Bar =========== */
 document.addEventListener('scroll', function () {

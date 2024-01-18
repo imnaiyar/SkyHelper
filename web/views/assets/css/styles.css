@@ -349,17 +349,17 @@ body.dark-theme {
   transition-duration: 700ms;
 }
 .copySvg {
-    fill: var(--text-color)
-  }
+  fill: var(--text-color);
+}
 .copyBtn span:first-child {
   color: var(--text-color);
   position: relative;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 
 .copyBtn span:last-child {
   position: absolute;
-  color: #B5CCF3;
+  color: #b5ccf3;
   opacity: 0;
   transform: translateY(100%) translateX(-50%);
   height: 14px;
@@ -367,7 +367,7 @@ body.dark-theme {
 }
 
 .copyBtn:focus {
-  background-color: #0E418F;
+  background-color: #0e418f;
   position: relative;
   width: 96px;
   height: 40px;
@@ -376,7 +376,7 @@ body.dark-theme {
 }
 
 .copyBtn:focus span:first-child {
-  color: #B5CCF3;
+  color: #b5ccf3;
   position: absolute;
   transform: translateX(-50%) translateY(-150%);
   opacity: 0;
@@ -392,7 +392,7 @@ body.dark-theme {
 }
 
 copyBtn:focus:end {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 120px;
   height: 40px;
   transition-duration: 900ms;
@@ -1284,11 +1284,11 @@ copyBtn:focus:end {
 
 /* For large devices */
 @media screen and (min-width: 1023px) {
-  .copyBtn{
+  .copyBtn {
     width: 100px;
     height: 50px;
   }
-  
+
   .copyBtn:focus {
     height: 60px;
     width: 140px;
