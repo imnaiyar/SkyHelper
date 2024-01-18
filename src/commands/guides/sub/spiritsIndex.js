@@ -1,4 +1,8 @@
 module.exports = {
+  HUNTER: ['nine_colored_s', 'hunter_tree'],
+  PRINCESS: ['nine_colored_s', 'princess_tree'],
+  'FEUDAL LORD': ['nine_colored_s', 'lord_tree'],
+  'HERB GATHERER': ['nine_colored_s', 'herb_gatherer_tree'],
   'REMENANT OF A FORGOTTEN HAVEN': 'forgotten_haven',
   'ECHO OF AN ABANDONED REFUGE': 'abandoned_refuge',
   'MEMORY OF A LOST VILLAGE': 'lost_village',

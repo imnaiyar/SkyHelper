@@ -38,8 +38,15 @@ async function Guides(interaction) {
         ephemeral: true,
       });
     }
-    const tree = value + '_tree';
-    const location = value + '_location';
+    let tree;
+    let location;
+    if (Array.isArray(value)) {
+      tree = value[1];
+      location = value[0];
+    } else {
+      tree = value + '_tree';
+      location = value + '_location';
+    }
     const response = await choiceResponses.getResponse(tree);
     const respn = await choiceResponses.getResponse(location);
     let disabled;
@@ -217,19 +224,18 @@ async function handleSecond(
 
   if (selectedChoice === CUSTOM_ID.BACK) {
     await handleBack(interaction, firstChoices);
-  } else if (
-    selectedChoice === 'shattering_q' ||
-    selectedChoice === 'dreams_q'
-  ) {
-    const response = choiceResponses.getResponse(selectedChoice);
-    await respondToInteraction(interaction, response, ephemeral);
   } else {
-    const thirdChoiceOptions = thirdChoices[selectedChoice].map((choice) => ({
+    const thirdChoiceOptions = thirdChoices[selectedChoice]?.map((choice) => ({
       label: choice.label,
       value: choice.value,
       emoji: choice.emoji,
     }));
 
+    if (!thirdChoiceOptions) {
+      const response = choiceResponses.getResponse(selectedChoice);
+      await respondToInteraction(interaction, response, ephemeral);
+      return;
+    }
     thirdChoiceOptions.push(backObj);
 
     const row = new ActionRowBuilder().addComponents(

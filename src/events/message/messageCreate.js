@@ -14,9 +14,9 @@ const Logger = process.env.COMMANDS_USED
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;
-  
+
   if (message.mentions.has(client.user) && !OWNER.includes(message.author.id)) {
-    message.channel.send('That\'s me...');
+    message.channel.send("That's me...");
   }
   // Check Bot'sprefix
   let prefix;

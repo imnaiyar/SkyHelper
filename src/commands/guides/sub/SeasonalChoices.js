@@ -1,9 +1,9 @@
 const firstChoices = [
- //  {
-//     label: 'Season of Nine-Colored Deer',
-//     value: 'nine_colored',
-//     emoji: '',
-//   },
+  {
+    label: 'Season of Nine-Colored Deer',
+    value: 'nine_colored',
+    emoji: '<:ninecoloreddeer:1197412132657053746>',
+  },
   {
     label: 'Season of Revival',
     value: 'revival',
@@ -101,11 +101,11 @@ const firstChoices = [
   },
 ];
 const secondChoices = {
-  // nine_colored: [
-//     { label: 'Seasonal Quests', value: 'nine_colored_q' },
-//     { label: 'Spirit Locations', value: 'nine_colored_s' },
-//     { label: 'Spirits Tree', value: 'nine_colored_ts' },
-//   ],
+  nine_colored: [
+    { label: 'Seasonal Quests', value: 'nine_colored_q' },
+    { label: 'Spirit Locations', value: 'nine_colored_s' },
+    { label: 'Spirits Tree', value: 'nine_colored_ts' },
+  ],
   revival: [
     { label: 'Seasonal Quests', value: 'revival_q' },
     { label: 'Seasonal Price Tree', value: 'revival_ts' },
@@ -196,57 +196,35 @@ const secondChoices = {
   ],
 };
 const thirdChoices = {
-  // nine_colored_q: [
-//     {
-//       label: 'Quest 1',
-//       value: 'nine_colored_q1',
-//       emoji: '<:quests:1131171487877963886>',
-//     },
-//   ],
-//   nine_colored_s: [
-//     {
-//       label: 'Feudal Lord',
-//       value: 'lord_location',
-//       emoji: '',
-//     },
-//     {
-//       label: 'Princess',
-//       value: 'princess_location',
-//       emoji: '',
-//     },
-//     {
-//       label: 'Hunter',
-//       value: 'hunter_location',
-//       emoji: '',
-//     },
-//     {
-//       label: 'Herb Gatherer',
-//       value: 'herb_gatherer_location',
-//       emoji: '',
-//     },
-//   ],
-//   nine_colored_ts: [
-//     {
-//       label: 'Feudal Lord',
-//       value: 'lord_tree',
-//       emoji: '',
-//     },
-//     {
-//       label: 'Princess',
-//       value: 'princess_tree',
-//       emoji: '',
-//     },
-//     {
-//       label: 'Hunter',
-//       value: 'hunter_tree',
-//       emoji: '',
-//     },
-//     {
-//       label: 'Herb Gatherer',
-//       value: 'herb_gatherer_tree',
-//       emoji: '',
-//     },
-//   ],
+  nine_colored_q: [
+    {
+      label: 'Quest 1',
+      value: 'nine_colored_q1',
+      emoji: '<:quests:1131171487877963886>',
+    },
+  ],
+  nine_colored_ts: [
+    {
+      label: 'Feudal Lord',
+      value: 'lord_tree',
+      emoji: '<:feudallord:1197413178330578964>',
+    },
+    {
+      label: 'Princess',
+      value: 'princess_tree',
+      emoji: '<:princess:1197413108717731840>',
+    },
+    {
+      label: 'Hunter',
+      value: 'hunter_tree',
+      emoji: '<:hunter:1197413131736064052>',
+    },
+    {
+      label: 'Herb Gatherer',
+      value: 'herb_gatherer_tree',
+      emoji: '<:herbgatherer:1197413154938957885>',
+    },
+  ],
 
   revival_q: [
     {

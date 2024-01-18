@@ -1,5 +1,45 @@
 module.exports = {
   responses: {
+    // nine-colored-deer
+    // nine-colored-deer quests
+    nine_colored_q1: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Quest Yet To Be Updated\`\`\``,
+    },
+    // Nine-Colored Locations
+    nine_colored_s: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n- **Season of Nine-Colored Deer - How to get to The Seasonal Area** by Clement 
+https://discord.com/channels/575762611111592007/575827924343848960/1196366016020742175\n\n\`\`\`Season of the Nine-Colored Deer Spirits and WLs Location by em\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197548553158008852/Crescent_Oasis_Map.jpg',
+      ],
+    },
+
+    // Nine-Colored Tree
+    hunter_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Hunter Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549727072387135/Hunter-Tree.jpg',
+      ],
+    },
+    princess_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Princess Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549728263569439/Princess-tree.jpg',
+      ],
+    },
+    herb_gatherer_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Herb Gatherer Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549727437312122/Herb_Gatherer_Tree.jpg',
+      ],
+    },
+    lord_tree: {
+      content: `Season is currently active.\n- **Start Date**: <t:1705305600:F>\n- **End Date**: <t:1711954740:F>\n- **Duration**: 77 Days\n\n\`\`\`Relevant Links\`\`\`\n- **Season of the Nine-Colored Deer Price Calculations by Stoat** https://discord.com/channels/575762611111592007/585339436322259003/1196801862700109975\n\n\`\`\`Feudal Lord Friendship Tree by Mimi and Sam\`\`\``,
+      files: [
+        'https://media.discordapp.net/attachments/867638574571323424/1197549727923839116/Feudal_Lord_Tree.jpg',
+      ],
+    },
+
     // revival
     // revival quests
     revival_q1: {
@@ -627,9 +667,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     angler_tree: {
       content:
-        '**Anxious Angler** has not yet returned as a Traveling Spirit. When they do return, they will offer the same collectibles as during their Season, but in a restructured Friendship Tree with new non-Seasonal prices for all items. Any items that were SP-exclusive during the Season will become available to all players.\n\n```Season of Abyss Seasonal Price Chart by Clement```',
+        "This was **_Anxious Angler's_**  Friendship Tree the last time they returned as a Traveling Spirit.\n\n__**No. of Visits**__: 1\n__**Previous Visits Dates**__\n- January 18, 2024 (#105)\n\n```Anxious Angler Friendship Tree by em```\n***prices are subject to change in future visits.**",
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1132243992508125224/06_Seasonal_Price_Chart.jpg',
+        'https://media.discordapp.net/attachments/867638574571323424/1197522517435351040/Anxious_Angler_Tree.png',
       ],
     },
     // flight
