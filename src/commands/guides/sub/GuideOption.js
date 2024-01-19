@@ -16,8 +16,9 @@ const CUSTOM_ID = {
 async function Guides(interaction) {
   if (!interaction.isCommand()) return;
   const spirit = interaction.options.getString('spirit');
-  const ephemeralOption = interaction.options.getString('ephemeral');
-  const ephemeral = ephemeralOption === 'false' ? false : true;
+  const ephemeralOption = interaction.options.getBoolean('hide');
+  const ephemeral = ephemeralOption !== null ? ephemeralOption : true;
+
   const filter = (i) => {
     if (i.user.id !== interaction.user.id) {
       i.reply({

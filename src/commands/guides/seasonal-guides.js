@@ -17,12 +17,11 @@ module.exports = {
         autocomplete: true,
       },
       {
-        name: 'ephemeral',
+        name: 'hide',
         description:
-          'Turns Ephemeral false if you want the results to be visible to others',
-        type: ApplicationCommandOptionType.String,
+          'hide the guides from others (default: false)',
+        type: ApplicationCommandOptionType.Boolean,
         required: false,
-        choices: [{ name: 'False', value: 'false' }],
       },
     ],
   },
