@@ -1,5 +1,6 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const { getChangelog, getSuggestion } = require('./sub/util');
+const userCache = new Map();
 module.exports = {
   data: {
     name: 'util',
@@ -44,33 +45,48 @@ module.exports = {
 async function getCredits(interaction) {
   const { client } = interaction;
   await interaction.deferReply();
-  const Art = await client.users.fetch('504605855539265537');
+  if (!userCache.size) {
+  const getUser = async (name, id) => {
+    const user = await client.users.fetch(id);
+    userCache.set(name, user);
+  };
+  await getUser("Art", "504605855539265537");
+  await getUser("Zhii", "650487047160725508");
+  await getUser("Gale", "473761854175576075");
+  await getUser("Clement", "693802004018888714");
+  await getUser("Christian", "594485678625128466");
+  await getUser("Xander", "693767559123697806");
+  await getUser("Zed", "628048706129756171");
+  await getUser("Hucker", "348060059911323659");
+  await getUser("Kion", "706088667801976843");
+  await getUser("Stoat", "221369442511093760");
+  await getUser("LN", "695034514614779955");
+  await getUser("Mimi", "628644574079746048");
+  await getUser("Sam", "611368649114255380");
+  await getUser("Plutoy", "702740689846272002");
+  }
 
-  const Zhii = await client.users.fetch('650487047160725508');
+  const Zhii = userCache.get('Zhii');
+  const Clement = userCache.get('Clement');
+  const Christian = userCache.get('Christian');
+  const Gale = userCache.get('Gale');
+  const Art = userCache.get('Art');
+  const Xander = userCache.get('Xander');
 
-  const Gale = await client.users.fetch('473761854175576075');
+  const Zed = userCache.get('Zed');
 
-  const Clement = await client.users.fetch('693802004018888714');
+  const Hucker = userCache.get('Hucker');
+  const Kion = userCache.get('Kion');
 
-  const Christian = await client.users.fetch('594485678625128466');
+  const Stoat = userCache.get('Stoat');
 
-  const Xander = await client.users.fetch('693767559123697806');
+  const LN = userCache.get('LN');
 
-  const Zed = await client.users.fetch('628048706129756171');
+  const Mimi = userCache.get('Mimi');
 
-  const Hucker = await client.users.fetch('348060059911323659');
+  const Sam = userCache.get('Sam');
 
-  const Kion = await client.users.fetch('706088667801976843');
-
-  const Stoat = await client.users.fetch('221369442511093760');
-
-  const LN = await client.users.fetch('695034514614779955');
-
-  const Mimi = await client.users.fetch('628644574079746048');
-
-  const Sam = await client.users.fetch('611368649114255380');
-
-  const Plutoy = await client.users.fetch('702740689846272002');
+  const Plutoy = userCache.get('Plutoy');
   const userAvatar = interaction.user.displayAvatarURL({
     format: 'png',
     dynamic: true,
@@ -96,17 +112,17 @@ async function getCredits(interaction) {
     .setFooter({ text: 'SkyHelper', iconURL: `${botAvatar}` })
     .addFields({
       name: '**__Shard Pattern Predictions__**',
-      value: `● Zhii (${Zhii.username})\n● Christian (${Christian.username})\n● Hucker (${Hucker.username})\n● Plutoy (${Plutoy.username})\n● Kion (${Kion.username})\n● LN (${LN.username})\n● Gale (${Gale.username})\n● Stoat (${Stoat.username})`,
+      value: `- Zhii (${Zhii.username})\n- Christian (${Christian.username})\n- Hucker (${Hucker.username})\n- Plutoy (${Plutoy.username})\n- Kion (${Kion.username})\n- LN (${LN.username})\n- Gale (${Gale.username})\n- Stoat (${Stoat.username})`,
       inline: true,
     })
     .addFields({
       name: '**__Sky Infographics and Guides__**',
-      value: `● Clement (${Clement.username})\n● Mimi (${Mimi.username})\n● Sam (${Sam.username})\n● Zed (${Zed.username})\n● Art (${Art.username})\n**and all others who do the awesome job of creating guides.**`,
+      value: `- Clement (${Clement.username})\n- Mimi (${Mimi.username})\n- Sam (${Sam.username})\n- Zed (${Zed.username})\n- Art (${Art.username})\n**and all others who do the awesome job of creating guides.**`,
       inline: true,
     })
     .addFields({
       name: '**__Special Mentions__**',
-      value: `● Big thanks to Xander (${Xander.username}) and Christian (${Christian.username}) for testing the early version of this bot.\n● Thanks to Plutoy (${Plutoy.username}) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.\n● Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).`,
+      value: `- Big thanks to Xander (${Xander.username}) and Christian (${Christian.username}) for testing the early version of this bot.\n- Thanks to Plutoy (${Plutoy.username}) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.\n- Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).`,
       inline: false,
     });
 
