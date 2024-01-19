@@ -637,10 +637,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     angler_location: {
       content:
-        '```Anxious Angler location by Zed, How to get to the Treasure Reef by Clement```\n\n**__Relevent Links__**\nMap of Treasure Reef(Surface) by Clement: https://discord.com/channels/575762611111592007/575827924343848960/932547429759328286\nMap of Treasure Reef(Underground) by Clement: https://discord.com/channels/575762611111592007/575827924343848960/932549750757158972\nSea creatures of Abyss by (Al): https://discord.com/channels/575762611111592007/575827924343848960/953550735340097547\nGuide on diving feature by Clement: https://discord.com/channels/575762611111592007/575827924343848960/932551129747841054',
+        '**__Relevent Links__**\n- Map of Treasure Reef(Surface) by Clement: https://discord.com/channels/575762611111592007/575827924343848960/932547429759328286\n- Map of Treasure Reef(Underground) by Clement: https://discord.com/channels/575762611111592007/575827924343848960/932549750757158972\n- Sea creatures of Abyss by (Al): https://discord.com/channels/575762611111592007/575827924343848960/953550735340097547\n- Guide on diving feature by Clement: https://discord.com/channels/575762611111592007/575827924343848960/932551129747841054\n```Anxious Angler location by Clement```\n\n',
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1132237129322336316/01_How_to_get_to_the_Treasure_Reef.jpg',
-        'https://media.discordapp.net/attachments/575827924343848960/932555247258325023/anxious_angler.png',
+        'https://media.discordapp.net/attachments/867638574571323424/1197938663313637477/12_Season_of_Abyss_-_Anxious_Angler-1.jpg'
       ],
     },
     // abyss ts
