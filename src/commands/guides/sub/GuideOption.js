@@ -72,7 +72,7 @@ async function Guides(interaction) {
         .setStyle('1'),
     );
     await interaction.followUp({
-      content: `${response.content}\n\n${response.files
+      content: `${response.content}${response.files
         .map((file, index) => `[File ${index + 1}](${file})`)
         .join('\n')}`,
       components: [lctnBtn],
