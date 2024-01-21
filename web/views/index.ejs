@@ -87,21 +87,21 @@
             <div class="home__value">
               <div>
                 <h1 class="home__value-number">
-                  <%= stats.servers %>
+                  <strong class="count"><%= stats.servers %></strong>
                   <span>+</span>
                 </h1>
                 <span class="home__value-description"> Servers </span>
               </div>
               <div>
                 <h1 class="home__value-number">
-                  <%= Math.floor(stats.members/1000) %>K
+                  <strong class="count"><%= Math.floor(stats.members/1000) %></strong><strong>K</strong>
                   <span>+</span>
                 </h1>
                 <span class="home__value-description"> Users </span>
               </div>
               <div>
                 <h1 class="home__value-number">
-                  <%= stats.slash %>
+                 <strong class="count"> <%= stats.slash %></strong>
                   <span>+</span>
                 </h1>
                 <span class="home__value-description"> Commands </span>
