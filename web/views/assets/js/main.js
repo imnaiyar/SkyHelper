@@ -9,7 +9,7 @@ window.onload = function() {
             if (currentValue >= targetValue) {
                 clearInterval(intervalId);
             }
-        }, 100); // Adjust the interval for desired speed
+        }, 20); // Adjust the interval for desired speed
     });
 };
 
