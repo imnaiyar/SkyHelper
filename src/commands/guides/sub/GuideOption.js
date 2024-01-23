@@ -115,10 +115,10 @@ async function Guides(interaction) {
     emoji: choice.emoji,
   }));
   const selectMenu = new StringSelectMenuBuilder()
-      .setCustomId('firstChoice')
-      .setPlaceholder('Choose a Season')
-      .addOptions(dropdownOptions);
-      
+    .setCustomId('firstChoice')
+    .setPlaceholder('Choose a Season')
+    .addOptions(dropdownOptions);
+
   const row = new ActionRowBuilder().addComponents(selectMenu);
 
   const reply = await interaction.reply({
@@ -170,7 +170,7 @@ async function Guides(interaction) {
   collector.on('end', (collected, reason) => {
     selectMenu.setPlaceholder('Menu Expired').setDisabled(true);
     interaction.editReply({
-      components: [row]
+      components: [row],
     });
   });
 }

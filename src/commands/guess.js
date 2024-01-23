@@ -25,10 +25,18 @@ module.exports = {
     longDesc: 'Guessing Game',
   },
   async execute(interaction, client) {
-    if (!interaction.channel.permissionsFor(interaction.guild.members.me).has('ViewChannel') || !interaction.channel.permissionsFor(interaction.guild.members.me).has('SendMessages')) {
+    if (
+      !['SendMessages', 'ViewChannel'].every((perm) =>
+        interaction.channel
+          .permissionsFor(interaction.guild.members.me)
+          .toArray()
+          .includes(perm),
+      )
+    ) {
       return interaction.reply({
-        content: 'I need `View Channel/Send Message` permissions in this channel for the command to work',
-        ephemeral: true
+        content:
+          'I need `View Channel/Send Message` permissions in this channel for the command to work',
+        ephemeral: true,
       });
     }
     const questions = interaction.options.getString('questions');
@@ -86,12 +94,12 @@ module.exports = {
         interaction.editReply({
           content: 'Starting...',
           components: [],
-          embeds: []
+          embeds: [],
         });
-        if (int.customId === 'start-quiz') {setTimeout(async () => {
-        await askQuestion(interaction, total);
-      }, 2000);
-          
+        if (int.customId === 'start-quiz') {
+          setTimeout(async () => {
+            await askQuestion(interaction, total);
+          }, 2000);
         }
       })
       .catch(async (error) => {

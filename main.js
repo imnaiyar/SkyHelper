@@ -25,6 +25,7 @@ module.exports = class SkyHelper extends Client {
 
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.MessageContent,
 
         GatewayIntentBits.GuildMessageReactions,
       ],
@@ -45,6 +46,9 @@ module.exports = class SkyHelper extends Client {
       eventEnds: moment.tz('2024-02-11T23:59:59', this.timezone),
       eventDuration: '13 days',
     };
+
+    // user object cache for credits
+    this.userCache = new Map();
 
     // Checks for how this class is created so it doesnt mess up the process
     if (
@@ -69,6 +73,7 @@ module.exports = class SkyHelper extends Client {
 
   /**
    * Load all events from the specified directory
+   * @param {string} directory
    */
   loadEvents(directory) {
     Logger.log(`Loading events...`);
@@ -113,6 +118,7 @@ module.exports = class SkyHelper extends Client {
 
   /**
    * Load slash command to client on startup
+   * @param {string} dir
    */
   loadSlashCmd(dir) {
     const directory = path.resolve(__dirname, dir);
@@ -137,6 +143,7 @@ module.exports = class SkyHelper extends Client {
 
   /**
    * Load prefix command on startup
+   * @param {string} dir
    */
   loadPrefix(dir) {
     const prefixDirectory = path.join(__dirname, dir);
@@ -162,7 +169,7 @@ module.exports = class SkyHelper extends Client {
         description: cmd.data.description,
         type: 1,
         options: cmd.data?.options,
-        dm_permission: cmd.data?.dm_permission
+        dm_permission: cmd.data?.dm_permission,
       }))
       .forEach((s) => toRegister.push(s));
 
@@ -213,5 +220,24 @@ module.exports = class SkyHelper extends Client {
           })();
     if (!command) throw new Error('No matching command found');
     return command;
+  }
+
+  /**
+   * Get user from discord
+   * @param {string} name - name of the user
+   * @param {string} id - ID of the user
+   */
+  async getUser(name, id) {
+    if (!name) throw new Error('User name must be provide');
+    if (typeof name !== 'string') throw new Error('User name must be a String');
+    let user = this.userCache.get(name);
+    if (!user) {
+      if (!id)
+        throw new Error('User is not cached, an user ID must be provided');
+      if (isNaN(parseInt(id))) throw new Error('User ID must be a number');
+      user = await this.users.fetch(id);
+      this.userCache.set(name, user);
+    }
+    return user;
   }
 };

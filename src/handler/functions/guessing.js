@@ -1,19 +1,33 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } = require('discord.js');
+const {
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  AttachmentBuilder,
+} = require('discord.js');
 const questions = require('./questions');
-
-
+ const gameData = new Map();
 module.exports = async (interaction, total) => {
-  let currentQuestion = 0;
-  let totalQuestions = 10;
-  let userPoints = {};
-  let randomQuestions = [];
-  if (total) totalQuestions = total;
-  randomQuestions = getRandomQuestions(questions, totalQuestions);
-  await respond(interaction, currentQuestion, totalQuestions, userPoints, randomQuestions);
+  gameData.set(interaction.id, {
+    currentQuestion: 0,
+    totalQuestions: 10,
+    userPoints: {},
+    randomQuestions: [],
+  });
+  const data = gameData.get(interaction.id);
+  if (total) data.totalQuestions = total;
+  data.randomQuestions = getRandomQuestions(questions, data.totalQuestions);
+  
+  await respond(
+    interaction,
+    data,
+  );
 };
 
-async function respond(interaction, currentQuestion, totalQuestions, userPoints, randomQuestions) {
-  const questionData = randomQuestions[currentQuestion];
+async function respond(
+  interaction, data
+) {
+  console.log(gameData)
+  const questionData = data.randomQuestions[data.currentQuestion];
   const filter = (response) => {
     if (!response.author.bot) {
       const answer = response.content.toLowerCase();
@@ -27,7 +41,7 @@ async function respond(interaction, currentQuestion, totalQuestions, userPoints,
   });
 
   const quesEmbed = new EmbedBuilder()
-    .setTitle(`Question ${currentQuestion + 1}`)
+    .setTitle(`Question ${data.currentQuestion + 1}`)
     .setColor('Random')
     .setAuthor({
       name: 'Quiz Game',
@@ -35,23 +49,33 @@ async function respond(interaction, currentQuestion, totalQuestions, userPoints,
     .setFooter({
       text: 'type "**stop**" to stop the game',
     })
-    .setDescription(`${questionData.question}\n\n<a:timer1:1197767726324781157> <a:timer2:1197767745610203218>`);
-    let msg;
+    .setDescription(
+      `${questionData.question}\n\n<a:timer1:1197767726324781157> <a:timer2:1197767745610203218>`,
+    );
+  let msg;
   if (questionData.image) {
-     attachment = new AttachmentBuilder(`src/handler/functions/${questionData.image}`, { name: 'image.jpg'});
-     console.log(attachment);
-    quesEmbed.setImage(`attachment://${attachment.name}`);
- msg =  await interaction.channel.send({ embeds: [quesEmbed], files: [attachment], fetchReply: true });
+    (attachment = new AttachmentBuilder(
+      `src/handler/functions/${questionData.image.url}`,
+      { name: `image.${questionData.image.type}` },
+    )),
+      quesEmbed.setImage(`attachment://${attachment.name}`);
+    msg = await interaction.channel.send({
+      embeds: [quesEmbed],
+      files: [attachment],
+      fetchReply: true,
+    });
   } else {
-    msg =  await interaction.channel.send({ embeds: [quesEmbed], fetchReply: true });
+    msg = await interaction.channel.send({
+      embeds: [quesEmbed],
+      fetchReply: true,
+    });
   }
-
 
   collector.on('collect', (message) => {
     const answer = message.content.toLowerCase();
     if (answer === questionData.answer.toLowerCase()) {
       interaction.channel.send(`${message.author} got it correct!`);
-      updateUserPoints(message.author.id, userPoints);
+      updateUserPoints(message.author.id, data.userPoints);
       setTimeout(async () => {
         collector.stop();
       }, 2000);
@@ -61,7 +85,7 @@ async function respond(interaction, currentQuestion, totalQuestions, userPoints,
           'Only the one who started the game can perform this action.',
         );
       }
-      currentQuestion = totalQuestions;
+      data.currentQuestion = data.totalQuestions;
       collector.stop();
     }
   });
@@ -69,19 +93,22 @@ async function respond(interaction, currentQuestion, totalQuestions, userPoints,
   collector.on('end', (collected) => {
     if (collected.size === 0) {
       interaction.channel.send(
-        `Time is up! Correct answer was **"${randomQuestions[currentQuestion].answer}"**`,
+        `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`,
       );
     }
-    
+
     quesEmbed.setDescription(`${questionData.question}`);
     msg.edit({ embeds: [quesEmbed] });
-    
-    currentQuestion++;
-    if (currentQuestion < totalQuestions) {
-      respond(interaction, currentQuestion, totalQuestions, userPoints, randomQuestions);
+
+    data.currentQuestion++;
+    if (data.currentQuestion < data.totalQuestions) {
+      respond(
+        interaction,
+        data
+      );
     } else {
-      displayResults(interaction, userPoints, totalQuestions);
-      resetQuiz(currentQuestion, userPoints, randomQuestions);
+      displayResults(interaction, data);
+      gameData.delete(interaction.id);
     }
   });
 }
@@ -93,17 +120,17 @@ function updateUserPoints(userId, userPoints) {
   }
 }
 
-function displayResults(interaction, userPoints, totalQuestions) {
+function displayResults(interaction, data) {
   let result = ``;
-  const sortedUserPoints = Object.entries(userPoints)
+  const sortedUserPoints = Object.entries(data.userPoints)
     .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
     .reduce((obj, [userId, points]) => ({ ...obj, [userId]: points }), {});
   const highestScorer = Object.keys(sortedUserPoints)[0];
   const highestScore = sortedUserPoints[highestScorer];
 
   for (const userId in sortedUserPoints) {
-    result += `- <@${userId}> -  ${userPoints[userId]} (Accuracy Rate: ${
-      (userPoints[userId] / totalQuestions) * 100
+    result += `- <@${userId}> -  ${data.userPoints[userId]} (Accuracy Rate: ${
+      (data.userPoints[userId] / data.totalQuestions) * 100
     }%)\n`;
   }
   const resultEmbed = new EmbedBuilder()
@@ -120,22 +147,16 @@ function displayResults(interaction, userPoints, totalQuestions) {
       iconURL: interaction.client.user.displayAvatarURL(),
     })
     .setAuthor({ name: 'End of Quiz' });
-    if (!highestScorer) {
-      resultEmbed.setDescription('No one participated in the game');
-    }
+  if (!highestScorer) {
+    resultEmbed.setDescription('No one participated in the game');
+  }
   const btn = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setCustomId(`play-again_${totalQuestions}`)
+      .setCustomId(`play-again_${data.totalQuestions}`)
       .setLabel('Play Again')
       .setStyle(3),
   );
   interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
-}
-
-function resetQuiz(currentQuestion, userPoints, randomQuestions) {
-  currentQuestion = 0;
-  userPoints = {};
-  randomQuestions = [];
 }
 
 function getRandomQuestions(questions, numberOfQuestions) {
@@ -144,4 +165,3 @@ function getRandomQuestions(questions, numberOfQuestions) {
 
   return selectedQuestions;
 }
-

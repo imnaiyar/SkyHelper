@@ -1,6 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const { getChangelog, getSuggestion } = require('./sub/util');
-const userCache = new Map();
 module.exports = {
   data: {
     name: 'util',
@@ -45,48 +44,21 @@ module.exports = {
 async function getCredits(interaction) {
   const { client } = interaction;
   await interaction.deferReply();
-  if (!userCache.size) {
-  const getUser = async (name, id) => {
-    const user = await client.users.fetch(id);
-    userCache.set(name, user);
-  };
-  await getUser("Art", "504605855539265537");
-  await getUser("Zhii", "650487047160725508");
-  await getUser("Gale", "473761854175576075");
-  await getUser("Clement", "693802004018888714");
-  await getUser("Christian", "594485678625128466");
-  await getUser("Xander", "693767559123697806");
-  await getUser("Zed", "628048706129756171");
-  await getUser("Hucker", "348060059911323659");
-  await getUser("Kion", "706088667801976843");
-  await getUser("Stoat", "221369442511093760");
-  await getUser("LN", "695034514614779955");
-  await getUser("Mimi", "628644574079746048");
-  await getUser("Sam", "611368649114255380");
-  await getUser("Plutoy", "702740689846272002");
-  }
+  const Art = await client.getUser('Art', '504605855539265537');
+  const Zhii = await client.getUser('Zhii', '650487047160725508');
+  const Gale = await client.getUser('Gale', '473761854175576075');
+  const Clement = await client.getUser('Clement', '693802004018888714');
+  const Christian = await client.getUser('Christian', '594485678625128466');
+  const Xander = await client.getUser('Xander', '693767559123697806');
+  const Zed = await client.getUser('Zed', '628048706129756171');
+  const Hucker = await client.getUser('Hucker', '348060059911323659');
+  const Kion = await client.getUser('Kion', '706088667801976843');
+  const Stoat = await client.getUser('Stoat', '221369442511093760');
+  const LN = await client.getUser('LN', '695034514614779955');
+  const Mimi = await client.getUser('Mimi', '628644574079746048');
+  const Sam = await client.getUser('Sam', '611368649114255380');
+  const Plutoy = await client.getUser('Plutoy', '702740689846272002');
 
-  const Zhii = userCache.get('Zhii');
-  const Clement = userCache.get('Clement');
-  const Christian = userCache.get('Christian');
-  const Gale = userCache.get('Gale');
-  const Art = userCache.get('Art');
-  const Xander = userCache.get('Xander');
-
-  const Zed = userCache.get('Zed');
-
-  const Hucker = userCache.get('Hucker');
-  const Kion = userCache.get('Kion');
-
-  const Stoat = userCache.get('Stoat');
-
-  const LN = userCache.get('LN');
-
-  const Mimi = userCache.get('Mimi');
-
-  const Sam = userCache.get('Sam');
-
-  const Plutoy = userCache.get('Plutoy');
   const userAvatar = interaction.user.displayAvatarURL({
     format: 'png',
     dynamic: true,

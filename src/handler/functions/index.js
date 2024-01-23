@@ -7,4 +7,5 @@ module.exports = {
   dblStats: require('./dblStats'),
   btnHandler: require('./btnHandler'),
   buildTimeHTML: require('./buildTimeHTML'),
+  askQuestion: require('./guessing'),
 };

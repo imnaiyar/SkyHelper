@@ -1,16 +1,16 @@
-window.onload = function() {
-    const valueElements = document.querySelectorAll('.count');
-    valueElements.forEach(element => {
-        const targetValue = parseInt(element.textContent);
-        let currentValue = 0;
-        const intervalId = setInterval(() => {
-            currentValue++;
-            element.textContent = currentValue;
-            if (currentValue >= targetValue) {
-                clearInterval(intervalId);
-            }
-        }, 20); // Adjust the interval for desired speed
-    });
+window.onload = function () {
+  const valueElements = document.querySelectorAll('.count');
+  valueElements.forEach((element) => {
+    const targetValue = parseInt(element.textContent);
+    let currentValue = 0;
+    const intervalId = setInterval(() => {
+      currentValue++;
+      element.textContent = currentValue;
+      if (currentValue >= targetValue) {
+        clearInterval(intervalId);
+      }
+    }, 20); // Adjust the interval for desired speed
+  });
 };
 
 /* ========== COPY BUTTON ============== */

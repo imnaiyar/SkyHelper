@@ -18,8 +18,7 @@ module.exports = {
       },
       {
         name: 'hide',
-        description:
-          'hide the guides from others (default: false)',
+        description: 'hide the guides from others (default: false)',
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
