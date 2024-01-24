@@ -199,7 +199,7 @@ async function getWinnerImg(member) {
   // Load avatar image
   const avtr = await request(member.displayAvatarURL({ format: 'jpg', size: 512 }));
   const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
-  const winnerFrame = await Canvas.loadImage('./assets/winner-frame.png');
+  const winnerFrame = await Canvas.loadImage('https://media.discordapp.net/attachments/867638574571323424/1199827121879662702/winner-frame.png');
 
   // Check if member has a banner, and load background accordingly
   if (member.banner) {
