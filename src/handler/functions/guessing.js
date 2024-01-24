@@ -234,7 +234,7 @@ context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   context.drawImage(avatar, 25, 25, 200, 200);
   
   context.beginPath();
-  context.arc(125, 125, 130, 0, Math.PI * 2, true);
+  context.arc(125, 125, 150, 0, Math.PI * 2, true);
   context.closePath();
   context.clip();
   context.drawImage(winnerFrame, 25, 25, 200, 200);
