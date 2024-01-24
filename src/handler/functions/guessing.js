@@ -136,7 +136,7 @@ async function displayResults(interaction, data) {
     }%)\n`;
   }
   const winner = interaction.guild.members.cache.get(highestScorer);
-  const winnerBnr = await getWinnerImg(winner, highestScore);
+  const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore);
   const resultEmbed = new EmbedBuilder()
     .setTitle('Result')
     .setDescription(
@@ -191,7 +191,7 @@ const applyText = (canvas, text) => {
   // Return the font string
   return context.font;
 };
-async function getWinnerImg(member, points) {
+async function getWinnerImg(client, member, points) {
   const canvas = Canvas.createCanvas(700, 250);
   const context = canvas.getContext('2d');
   let background;
@@ -199,6 +199,8 @@ async function getWinnerImg(member, points) {
   // Load avatar image
   const avtr = await request(member.displayAvatarURL({ format: 'jpg', size: 512 }));
   const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
+  const botAvtr = await request(client.user.displayAvatarURL({ format: 'jpg', size: 512 }));
+  const botAvatar = await Canvas.loadImage(await botAvtr.body.arrayBuffer());
   const winnerFrame = await Canvas.loadImage('https://media.discordapp.net/attachments/867638574571323424/1199827121879662702/winner-frame.png');
 
   // Check if member has a banner, and load background accordingly
@@ -225,9 +227,9 @@ context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 // Draw a semi-transparent black box behind the text
 const boxX = canvas.width - 200;
 const boxY = 10;
-const boxWidth = 140; // Decrease the width as needed
+const boxWidth = 150; // Decrease the width as needed
 const boxHeight = 40;
-const borderRadius = 8; // Adjust the border radius for rounded edges
+const borderRadius = 10; // Adjust the border radius for rounded edges
 
 context.fillStyle = 'rgba(0, 0, 0, 0.5)';
 context.beginPath();
@@ -259,17 +261,17 @@ context.closePath();
 context.clip();
 context.drawImage(avatar, 25, 25, 200, 200);
 
-// Reset clip for subsequent drawing
-context.clip();
-
-// Draw the larger circular winnerFrame on top of the avatar
-// Draw the larger circular winnerFrame on top of the avatar
+// Draw the smaller circular bot avatar
 context.beginPath();
-context.arc(135, 135, 150, 0, Math.PI * 2, true);
+context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-context.drawImage(winnerFrame, -50, -50, 300, 300); // Adjust these coordinates for proper positioning
+context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
 
+// Draw 'SkyHelper' text next to the bot avatar
+context.font = '12px sans-serif';
+context.fillStyle = '#4b4b4b';
+context.fillText('SkyHelper', canvas.width - 130, canvas.height - 75);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
