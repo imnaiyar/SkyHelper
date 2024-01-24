@@ -261,7 +261,12 @@ context.closePath();
 context.clip();
 context.drawImage(avatar, 25, 25, 200, 200);
 
-
+// Draw the smaller circular bot avatar
+  context.beginPath();
+  context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
+  context.closePath();
+  context.clip();
+  context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
