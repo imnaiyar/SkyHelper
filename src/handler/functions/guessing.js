@@ -217,7 +217,7 @@ async function getWinnerImg(member) {
   
   // Draw text with black border
 context.font = '28px sans-serif';
-context.fillStyle = '#000000';
+context.fillStyle = '#383838';
 
 context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 
