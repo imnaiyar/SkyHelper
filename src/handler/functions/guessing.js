@@ -212,65 +212,66 @@ async function getWinnerImg(client, member, points) {
   }
 
   // Draw the blurred background
-  context.filter = 'blur(10px)';
+  context.filter = 'blur(10px)'; // Adjust the blur amount as needed
   context.drawImage(background, 0, 0, canvas.width, canvas.height);
-  context.filter = 'none';
+  context.filter = 'none'; // Reset filter for subsequent drawing
 
-
-  // Draw a semi-transparent black box behind the text
-  const boxX = canvas.width - 200;
-  const boxY = 10;
-  const boxWidth = 150;
-  const boxHeight = 40;
-  const borderRadius = 10;
-
-  context.fillStyle = 'rgba(0, 0, 0, 0.5)';
-  context.beginPath();
-  context.moveTo(boxX + borderRadius, boxY);
-  context.lineTo(boxX + boxWidth - borderRadius, boxY);
-  context.quadraticCurveTo(boxX + boxWidth, boxY, boxX + boxWidth, boxY + borderRadius);
-  context.lineTo(boxX + boxWidth, boxY + boxHeight - borderRadius);
-  context.quadraticCurveTo(boxX + boxWidth, boxY + boxHeight, boxX + boxWidth - borderRadius, boxY + boxHeight);
-  context.lineTo(boxX + borderRadius, boxY + boxHeight);
-  context.quadraticCurveTo(boxX, boxY + boxHeight, boxX, boxY + boxHeight - borderRadius);
-  context.lineTo(boxX, boxY + borderRadius);
-  context.quadraticCurveTo(boxX, boxY, boxX + borderRadius, boxY);
-  context.closePath();
-  context.fill();
-
-  // Draw the text on top of the black box
-   
-  context.clip();
-  // Draw 'SkyHelper' text next to the bot avatar
-  context.font = '12px sans-serif';
-  context.fillStyle = '#FFFFFF';
-  context.fillText('SkyHelper', canvas.width - 130, canvas.height - 75);
-
-  context.fillStyle = '#FFFFFF';
-  context.fillText(`${points} points`, boxX + 10, boxY + 28);
-
-  // Draw secondary text
-  context.font = applyText(canvas, member.displayName);
-  context.fillStyle = '#727272';
-  context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
-context.beginPath();
-  context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
-  context.closePath();
-  context.clip();
-  context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
-  // Draw circular member avatar
-  context.beginPath();
-  context.arc(125, 125, 75, 0, Math.PI * 2, true);
-  context.closePath();
-  context.clip();
-  context.drawImage(avatar, 25, 25, 200, 200);
-  context.clip()
+  // Draw the circular avatar
+  
   // Draw text with black border
-  context.font = '28px sans-serif';
-  context.fillStyle = '#4b4b4b';
-  context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
+context.font = '28px sans-serif';
+context.fillStyle = '#4b4b4b';
+
+context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
+
+// Draw a semi-transparent black box behind the text
+const boxX = canvas.width - 200;
+const boxY = 10;
+const boxWidth = 150; // Decrease the width as needed
+const boxHeight = 40;
+const borderRadius = 10; // Adjust the border radius for rounded edges
+
+context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+context.beginPath();
+context.moveTo(boxX + borderRadius, boxY);
+context.lineTo(boxX + boxWidth - borderRadius, boxY);
+context.quadraticCurveTo(boxX + boxWidth, boxY, boxX + boxWidth, boxY + borderRadius);
+context.lineTo(boxX + boxWidth, boxY + boxHeight - borderRadius);
+context.quadraticCurveTo(boxX + boxWidth, boxY + boxHeight, boxX + boxWidth - borderRadius, boxY + boxHeight);
+context.lineTo(boxX + borderRadius, boxY + boxHeight);
+context.quadraticCurveTo(boxX, boxY + boxHeight, boxX, boxY + boxHeight - borderRadius);
+context.lineTo(boxX, boxY + borderRadius);
+context.quadraticCurveTo(boxX, boxY, boxX + borderRadius, boxY);
+context.closePath();
+context.fill();
+
+// Draw the text on top of the black box
+context.fillStyle = '#FFFFFF';
+context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordinates
+
+context.font = applyText(canvas, member.displayName);
+context.fillStyle = '#727272';
+
+context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+  
   // Draw the smaller circular bot avatar
- 
+
+// Draw 'SkyHelper' text next to the bot avatar
+context.font = '12px sans-serif';
+context.fillStyle = '#4b4b4b';
+context.fillText('SkyHelper', canvas.width - 130, canvas.height - 75);
+  // Draw the smaller circular avatar
+context.beginPath();
+context.arc(125, 125, 75, 0, Math.PI * 2, true);
+context.closePath();
+context.clip();
+context.drawImage(avatar, 25, 25, 200, 200);
+
+context.beginPath();
+context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
+context.closePath();
+context.clip();
+context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
