@@ -234,7 +234,14 @@ context.closePath();
 context.clip();
 context.drawImage(avatar, 25, 25, 200, 200);
 
+// Reset clip for subsequent drawing
+context.clip();
 
+// Draw the larger circular winnerFrame on top of the avatar
+context.beginPath();
+context.arc(135, 135, 150, 0, Math.PI * 2, true);
+context.closePath();
+context.clip();
 context.drawImage(winnerFrame, 25, 25, 220, 220);
 
   // Create attachment

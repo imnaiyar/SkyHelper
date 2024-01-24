@@ -6,6 +6,7 @@ const {
   ButtonStyle,
 } = require('discord.js');
 const { OWNER } = require('@root/config.js');
+const { getWinnerImg } = require('@functions/guessing.js')
 const Log = require('@src/logger');
 const { parsePerm } = require('@functions');
 const Logger = process.env.COMMANDS_USED
@@ -17,6 +18,10 @@ module.exports = async (client, message) => {
 
   if (message.mentions.has(client.user) && !OWNER.includes(message.author.id)) {
     message.channel.send("That's me...");
+  }
+  if (message.content === "img") {
+    const atch = await getWinnerImg(message.member);
+    message.channel.send({ files: [attachment]});
   }
   // Check Bot'sprefix
   let prefix;
