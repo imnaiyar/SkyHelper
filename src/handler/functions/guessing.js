@@ -222,7 +222,7 @@ context.fillStyle = '#4b4b4b';
 context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 
 context.font = applyText(canvas, member.displayName);
-context.fillStyle = '#000000';
+context.fillStyle = '#a6a6a6';
 
 context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   
