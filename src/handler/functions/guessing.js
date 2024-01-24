@@ -136,7 +136,7 @@ async function displayResults(interaction, data) {
     }%)\n`;
   }
   const winner = interaction.guild.members.cache.get(highestScorer);
-  const winnerBnr = await getWinnerImg(winner);
+  const winnerBnr = await getWinnerImg(winner, highestScore);
   const resultEmbed = new EmbedBuilder()
     .setTitle('Result')
     .setDescription(
@@ -191,7 +191,7 @@ const applyText = (canvas, text) => {
   // Return the font string
   return context.font;
 };
-async function getWinnerImg(member) {
+async function getWinnerImg(member, points) {
   const canvas = Canvas.createCanvas(700, 250);
   const context = canvas.getContext('2d');
   let background;
@@ -222,6 +222,15 @@ context.fillStyle = '#4b4b4b';
 
 context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 
+context.font = '28px sans-serif';
+// Draw a semi-transparent black box behind the text
+context.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Adjust the alpha value for transparency
+context.fillRect(canvas.width - 200, 10, 180, 40); // Adjust the coordinates and size as needed
+
+// Draw the text on top of the black box
+context.fillStyle = '#FFFFFF'; // Adjust the text color
+context.fillText(`${points} points`, canvas.width - 190, 35); // Adjust the coordinates
+
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
@@ -249,4 +258,3 @@ context.drawImage(winnerFrame, -50, -50, 300, 300); // Adjust these coordinates 
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
 }
-module.exports = { getWinnerImg }
