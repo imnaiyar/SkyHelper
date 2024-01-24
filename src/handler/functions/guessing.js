@@ -214,12 +214,7 @@ async function getWinnerImg(member) {
   context.filter = 'none'; // Reset filter for subsequent drawing
 
   // Draw the circular avatar
-  context.beginPath();
-  context.arc(125, 125, 100, 0, Math.PI * 2, true);
-  context.closePath();
-  context.clip();
-  context.drawImage(avatar, 25, 25, 200, 200);
-
+  
   // Draw text
   context.font = '28px sans-serif';
   context.fillStyle = '#ffffff';
@@ -228,6 +223,13 @@ async function getWinnerImg(member) {
   context.font = applyText(canvas, member.displayName);
   context.fillStyle = '#ffffff';
   context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+  
+  context.beginPath();
+  context.arc(125, 125, 100, 0, Math.PI * 2, true);
+  context.closePath();
+  context.clip();
+  context.drawImage(avatar, 25, 25, 200, 200);
+
 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
