@@ -237,7 +237,7 @@ context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   context.arc(125, 125, 150, 0, Math.PI * 2, true);
   context.closePath();
   context.clip();
-  context.drawImage(winnerFrame, 25, 25, 200, 200);
+  context.drawImage(winnerFrame, 25, 25, 250, 250);
 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
