@@ -727,10 +727,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
     },
     talented_builder_location: {
       content:
-        '```Talented Builder Location by Zed, How to get to the Wind Paths by Clement```',
+        '```Talented Builder Location by Clement```',
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1132259698394017842/01_How_to_get_to_the_Wind_Paths.png',
-        'https://media.discordapp.net/attachments/575827924343848960/894530481767481344/talented_builder_BA853E7.png',
+        'https://media.discordapp.net/attachments/867638574571323424/1199734029814091856/talented-builder-location.jpg'
       ],
     },
     chimesmith_location: {
