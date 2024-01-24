@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { Guides } = require('./sub/GuideOption');
 const choiceResponses = require('./sub/GuideResponse.js');
 const index = require('./sub/spiritsIndex.js');
