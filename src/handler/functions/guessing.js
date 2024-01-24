@@ -199,6 +199,7 @@ async function getWinnerImg(member) {
   // Load avatar image
   const avtr = await request(member.displayAvatarURL({ format: 'jpg', size: 512 }));
   const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
+  const winnerFrame = await Canvas.loadImage('./assets/winner-frame.png');
 
   // Check if member has a banner, and load background accordingly
   if (member.banner) {
@@ -230,6 +231,7 @@ context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   context.arc(125, 125, 100, 0, Math.PI * 2, true);
   context.closePath();
   context.clip();
+  context.drawImage(winnerFrame, 25, 25, 205, 205);
   context.drawImage(avatar, 25, 25, 200, 200);
 
 
