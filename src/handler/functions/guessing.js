@@ -4,6 +4,9 @@ const {
   ButtonBuilder,
   AttachmentBuilder,
 } = require('discord.js');
+const Canvas = require('@napi-rs/canvas');
+const { request } = require('undici');
+
 const questions = require('./questions');
  const gameData = new Map();
 module.exports = async (interaction, total) => {
@@ -89,7 +92,7 @@ async function respond(
     }
   });
 
-  collector.on('end', (collected) => {
+  collector.on('end', async (collected) => {
     if (collected.size === 0) {
       interaction.channel.send(
         `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`,
@@ -106,7 +109,7 @@ async function respond(
         data
       );
     } else {
-      displayResults(interaction, data);
+      await displayResults(interaction, data);
       gameData.delete(interaction.id);
     }
   });
@@ -119,7 +122,7 @@ function updateUserPoints(userId, userPoints) {
   }
 }
 
-function displayResults(interaction, data) {
+async function displayResults(interaction, data) {
   let result = ``;
   const sortedUserPoints = Object.entries(data.userPoints)
     .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
@@ -132,6 +135,8 @@ function displayResults(interaction, data) {
       (data.userPoints[userId] / data.totalQuestions) * 100
     }%)\n`;
   }
+  const winner = interaction.guild.members.cache.get(highestScorer);
+  const winnerBnr = await getWinnerImg(winner);
   const resultEmbed = new EmbedBuilder()
     .setTitle('Result')
     .setDescription(
@@ -148,6 +153,8 @@ function displayResults(interaction, data) {
     .setAuthor({ name: 'End of Quiz' });
   if (!highestScorer) {
     resultEmbed.setDescription('No one participated in the game');
+  } else {
+    resultEmbed.setImage(`attachment://${winnerBnr.name}`);
   }
   const btn = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
@@ -155,7 +162,11 @@ function displayResults(interaction, data) {
       .setLabel('Play Again')
       .setStyle(3),
   );
-  interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
+  if (!highestScorer) {
+  interaction.channel.send({ embeds: [resultEmbed], components: [btn] }); 
+  } else {
+    interaction.channel.send({ embeds: [resultEmbed], components: [btn], files: [winnerBnr] }); 
+  }
 }
 
 function getRandomQuestions(questions, numberOfQuestions) {
@@ -163,4 +174,62 @@ function getRandomQuestions(questions, numberOfQuestions) {
   const selectedQuestions = shuffledQuestions.slice(0, numberOfQuestions);
 
   return selectedQuestions;
+}
+
+const applyText = (canvas, text) => {
+	const context = canvas.getContext('2d');
+
+	// Declare a base size of the font
+	let fontSize = 70;
+
+	do {
+		// Assign the font to the context and decrement it so it can be measured again
+		context.font = `${fontSize -= 10}px sans-serif`;
+		// Compare pixel width of the text to the canvas minus the approximate avatar size
+	} while (context.measureText(text).width > canvas.width - 300);
+
+	// Return the result to use in the actual canvas
+	return context.font;
+};
+async function getWinnerImg(member) {
+  const canvas = Canvas.createCanvas(700, 250);
+	const context = canvas.getContext('2d');
+	let background;
+	const avtr = await request(member.displayAvatarURL({ extension: 'jpg' }));
+	const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
+
+	if (member.banner) {
+	  const bnr = await request(member.bannerURL({ extension: 'jpg' }));
+	 background = await Canvas.loadImage(bnr.body.arrayBuffer());
+	} else {
+	 background = avatar;
+	}
+	
+	context.drawImage(background, 0, 0, canvas.width, canvas.height);
+	
+	context.drawImage(avatar, 25, 25, 200, 200);
+	context.beginPath();
+
+	// Start the arc to form a circle
+	context.arc(125, 125, 100, 0, Math.PI * 2, true);
+
+	// Put the pen down
+	context.closePath();
+
+	// Clip off the region you drew on
+	context.clip();
+	
+	context.strokeRect(0, 0, canvas.width, canvas.height);
+
+	// Slightly smaller text placed above the member's display name
+	context.font = '28px sans-serif';
+	context.fillStyle = '#ffffff';
+	context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3.5);
+
+	// Add an exclamation point here and below
+	context.font = applyText(canvas, member.displayName);
+	context.fillStyle = '#ffffff';
+	context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
+return attachment;
 }
