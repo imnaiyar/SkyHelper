@@ -26,7 +26,6 @@ module.exports = async (interaction, total) => {
 async function respond(
   interaction, data
 ) {
-  console.log(gameData)
   const questionData = data.randomQuestions[data.currentQuestion];
   const filter = (response) => {
     if (!response.author.bot) {
