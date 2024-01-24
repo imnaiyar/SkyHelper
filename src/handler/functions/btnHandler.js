@@ -55,6 +55,7 @@ module.exports = async (interaction) => {
   }
 
   if (interaction.customId.startsWith('play-again')) {
+    await interaction.deferUpdate();
     const total = interaction.customId.split('_')[1];
     if (
       !['SendMessages', 'ViewChannel'].every((perm) =>
