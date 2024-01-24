@@ -227,7 +227,7 @@ const boxX = canvas.width - 200;
 const boxY = 10;
 const boxWidth = 140; // Decrease the width as needed
 const boxHeight = 40;
-const borderRadius = 5; // Adjust the border radius for rounded edges
+const borderRadius = 8; // Adjust the border radius for rounded edges
 
 context.fillStyle = 'rgba(0, 0, 0, 0.5)';
 context.beginPath();
@@ -245,7 +245,7 @@ context.fill();
 
 // Draw the text on top of the black box
 context.fillStyle = '#FFFFFF';
-context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordinates
+context.fillText(`10 points`, boxX + 10, boxY + 28); // Adjust the coordinates
 
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
