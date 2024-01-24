@@ -21,7 +21,7 @@ module.exports = async (client, message) => {
   }
   if (message.content === "img") {
     const atch = await getWinnerImg(message.member);
-    message.channel.send({ files: [attachment]});
+    message.channel.send({ files: [atch]});
   }
   // Check Bot'sprefix
   let prefix;
