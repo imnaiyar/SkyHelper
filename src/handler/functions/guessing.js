@@ -227,22 +227,17 @@ context.fillStyle = '#727272';
 
 context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   
-  // Draw the larger circular winnerFrame first
-context.beginPath();
-context.arc(125, 125, 150, 0, Math.PI * 2, true);
-context.closePath();
-context.clip();
-context.drawImage(winnerFrame, 20, 25, 225, 225);
-
-// Reset clip for subsequent drawing
-context.clip();
-
-// Draw the smaller circular avatar on top of the winnerFrame
-context.beginPath();
-context.arc(125, 125, 75, 0, Math.PI * 2, true);
-context.closePath();
-context.clip();
-context.drawImage(avatar, 25, 25, 200, 200);
+  context.beginPath();
+  context.arc(125, 125, 75, 0, Math.PI * 2, true);
+  context.closePath();
+  context.clip();
+  context.drawImage(avatar, 25, 25, 200, 200);
+  context.clip()
+  context.beginPath();
+  context.arc(125, 125, 150, 0, Math.PI * 2, true);
+  context.closePath();
+  context.clip();
+  context.drawImage(winnerFrame, 25, 25, 225, 225);
 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
