@@ -259,11 +259,6 @@ context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   context.closePath();
   context.clip();
   context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
-  // Draw the smaller circular avatar
-context.beginPath();
-context.arc(125, 125, 75, 0, Math.PI * 2, true);
-context.closePath();
-context.clip();
 context.drawImage(avatar, 25, 25, 200, 200);
 
   // Create attachment
