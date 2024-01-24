@@ -222,7 +222,7 @@ async function getWinnerImg(client, member, points) {
   context.closePath();
   context.clip();
   context.drawImage(avatar, 25, 25, 200, 200);
-
+  context.clip()
   // Draw text with black border
   context.font = '28px sans-serif';
   context.fillStyle = '#4b4b4b';
@@ -264,7 +264,7 @@ async function getWinnerImg(client, member, points) {
   context.closePath();
   context.clip();
   context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
-
+  context.clip();
   // Draw 'SkyHelper' text next to the bot avatar
   context.font = '12px sans-serif';
   context.fillStyle = '#FFFFFF';
