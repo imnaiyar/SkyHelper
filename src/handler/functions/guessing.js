@@ -216,17 +216,6 @@ async function getWinnerImg(client, member, points) {
   context.drawImage(background, 0, 0, canvas.width, canvas.height);
   context.filter = 'none';
 
-  // Draw circular member avatar
-  context.beginPath();
-  context.arc(125, 125, 75, 0, Math.PI * 2, true);
-  context.closePath();
-  context.clip();
-  context.drawImage(avatar, 25, 25, 200, 200);
-  context.clip()
-  // Draw text with black border
-  context.font = '28px sans-serif';
-  context.fillStyle = '#4b4b4b';
-  context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 
   // Draw a semi-transparent black box behind the text
   const boxX = canvas.width - 200;
@@ -250,6 +239,13 @@ async function getWinnerImg(client, member, points) {
   context.fill();
 
   // Draw the text on top of the black box
+   
+  context.clip();
+  // Draw 'SkyHelper' text next to the bot avatar
+  context.font = '12px sans-serif';
+  context.fillStyle = '#FFFFFF';
+  context.fillText('SkyHelper', canvas.width - 130, canvas.height - 75);
+
   context.fillStyle = '#FFFFFF';
   context.fillText(`${points} points`, boxX + 10, boxY + 28);
 
@@ -257,19 +253,24 @@ async function getWinnerImg(client, member, points) {
   context.font = applyText(canvas, member.displayName);
   context.fillStyle = '#727272';
   context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
-
-  // Draw the smaller circular bot avatar
-  context.beginPath();
+context.beginPath();
   context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
   context.closePath();
   context.clip();
   context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
+  // Draw circular member avatar
+  context.beginPath();
+  context.arc(125, 125, 75, 0, Math.PI * 2, true);
+  context.closePath();
   context.clip();
-  // Draw 'SkyHelper' text next to the bot avatar
-  context.font = '12px sans-serif';
-  context.fillStyle = '#FFFFFF';
-  context.fillText('SkyHelper', canvas.width - 130, canvas.height - 75);
-
+  context.drawImage(avatar, 25, 25, 200, 200);
+  context.clip()
+  // Draw text with black border
+  context.font = '28px sans-serif';
+  context.fillStyle = '#4b4b4b';
+  context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
+  // Draw the smaller circular bot avatar
+ 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
