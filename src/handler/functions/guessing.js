@@ -219,7 +219,7 @@ async function getWinnerImg(member) {
 context.font = '28px sans-serif';
 context.fillStyle = '#ffffff';
 context.strokeStyle = '#000000';  // Black border color
-context.lineWidth = 2;  // Adjust the border width as needed
+context.lineWidth = 0.5;  // Adjust the border width as needed
 
 context.strokeText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
@@ -227,7 +227,7 @@ context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#ffffff';
 context.strokeStyle = '#000000';
-context.lineWidth = 2;
+context.lineWidth = 1;
 
 context.strokeText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
 context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
