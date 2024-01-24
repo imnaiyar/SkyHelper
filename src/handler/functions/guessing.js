@@ -177,59 +177,62 @@ function getRandomQuestions(questions, numberOfQuestions) {
 }
 
 const applyText = (canvas, text) => {
-	const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d');
 
-	// Declare a base size of the font
-	let fontSize = 70;
+  // Declare a base size of the font
+  let fontSize = 70;
 
-	do {
-		// Assign the font to the context and decrement it so it can be measured again
-		context.font = `${fontSize -= 10}px sans-serif`;
-		// Compare pixel width of the text to the canvas minus the approximate avatar size
-	} while (context.measureText(text).width > canvas.width - 300);
+  do {
+    // Assign the font to the context and decrement it so it can be measured again
+    context.font = `${fontSize -= 10}px sans-serif`;
+    // Compare pixel width of the text to the canvas minus the approximate avatar size
+  } while (context.measureText(text).width > canvas.width - 300);
 
-	// Return the result to use in the actual canvas
-	return context.font;
+  // Return the font string
+  return context.font;
 };
 async function getWinnerImg(member) {
   const canvas = Canvas.createCanvas(700, 250);
-	const context = canvas.getContext('2d');
-	let background;
-	const avtr = await request(member.displayAvatarURL({ extension: 'jpg' }));
-	const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
+  const context = canvas.getContext('2d');
+  let background;
 
-	if (member.banner) {
-	  const bnr = await request(member.bannerURL({ extension: 'jpg' }));
-	 background = await Canvas.loadImage(bnr.body.arrayBuffer());
-	} else {
-	 background = avatar;
-	}
-	
-	context.drawImage(background, 0, 0, canvas.width, canvas.height);
-	
-	context.drawImage(avatar, 25, 25, 200, 200);
-	context.beginPath();
+  // Load avatar image
+  const avtr = await request(member.displayAvatarURL({ format: 'jpg', size: 512 }));
+  const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
 
-	// Start the arc to form a circle
-	context.arc(125, 125, 100, 0, Math.PI * 2, true);
+  // Check if member has a banner, and load background accordingly
+  if (member.banner) {
+    const bnr = await request(member.bannerURL({ format: 'jpg', size: 700 }));
+    background = await Canvas.loadImage(bnr.body.arrayBuffer());
+  } else {
+    background = avatar;
+  }
 
-	// Put the pen down
-	context.closePath();
+  // Draw the blurred background
+  context.filter = 'blur(30px)'; // Adjust the blur amount as needed
+  context.drawImage(background, 0, 0, canvas.width, canvas.height);
+  context.filter = 'none'; // Reset filter for subsequent drawing
 
-	// Clip off the region you drew on
-	context.clip();
-	
-	context.strokeRect(0, 0, canvas.width, canvas.height);
+  // Draw the avatar
+  context.drawImage(avatar, 25, 25, 200, 200);
 
-	// Slightly smaller text placed above the member's display name
-	context.font = '28px sans-serif';
-	context.fillStyle = '#ffffff';
-	context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3.5);
+  // Draw the circular clip
+  context.beginPath();
+  context.arc(125, 125, 100, 0, Math.PI * 2, true);
+  context.closePath();
+  context.clip();
+  context.strokeRect(0, 0, canvas.width, canvas.height);
 
-	// Add an exclamation point here and below
-	context.font = applyText(canvas, member.displayName);
-	context.fillStyle = '#ffffff';
-	context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
-const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
-return attachment;
+  // Draw text
+  context.font = '28px sans-serif';
+  context.fillStyle = '#ffffff';
+  context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3.5);
+
+  context.font = applyText(canvas, member.displayName);
+  context.fillStyle = '#ffffff';
+  context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+
+  // Create attachment
+  const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
+  return attachment;
 }
