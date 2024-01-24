@@ -238,13 +238,15 @@ context.drawImage(avatar, 25, 25, 200, 200);
 context.clip();
 
 // Draw the larger circular winnerFrame on top of the avatar
+// Draw the larger circular winnerFrame on top of the avatar
 context.beginPath();
 context.arc(135, 135, 150, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-context.drawImage(winnerFrame, 25, 25, 220, 220);
+context.drawImage(winnerFrame, -50, -50, 300, 300); // Adjust these coordinates for proper positioning
 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
 }
+module.exports = { getWinnerImg }
