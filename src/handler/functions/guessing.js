@@ -135,7 +135,7 @@ async function displayResults(interaction, data) {
     }%)\n`;
   }
   const winner = interaction.guild.members.cache.get(highestScorer);
-  const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore);
+  const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore, data.totalQuestions);
   const resultEmbed = new EmbedBuilder()
     .setTitle('Result')
     .setDescription(
@@ -188,7 +188,7 @@ const applyText = (canvas, text) => {
 
   return context.font;
 };
-async function getWinnerImg(client, member, points) {
+async function getWinnerImg(client, member, points, totalQuestions) {
   const canvas = Canvas.createCanvas(700, 250);
   const context = canvas.getContext('2d');
   let background;
@@ -219,7 +219,7 @@ const boxY = 10;
 const boxWidth = 150; 
 const boxHeight = 40;
 const borderRadius = 10; 
-
+context.font = '28px sans-serif';
 context.fillStyle = 'rgba(0, 0, 0, 0.5)';
 context.beginPath();
 context.moveTo(boxX + borderRadius, boxY);
@@ -235,7 +235,7 @@ context.closePath();
 context.fill();
 
 context.fillStyle = '#FFFFFF';
-context.fillText(`${points} points`, boxX + 10, boxY + 28); 
+context.fillText(`${points}/${totalQuestions} points`, boxX + 10, boxY + 28); 
 
 // display name and username
 context.font = '28px sans-serif';
