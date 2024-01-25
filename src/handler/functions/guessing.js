@@ -189,7 +189,7 @@ const applyText = (canvas, text) => {
   return context.font;
 };
 async function getWinnerImg(client, member, points, totalQuestions) {
-  const canvas = Canvas.createCanvas(700, 300);
+  const canvas = Canvas.createCanvas(700, 250);
   const context = canvas.getContext('2d');
   let background;
 
@@ -287,7 +287,7 @@ context.fillText('SkyHelper', canvas.width - 140, canvas.height - 37);
 
  context.font = 'bold 22px sans-serif';
 context.fillStyle = '#860f0f';
-context.fillText('Sky CoTL Quiz Game!', 20, 5);
+context.fillText('Sky CoTL Quiz Game!', 20, 10);
  
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
