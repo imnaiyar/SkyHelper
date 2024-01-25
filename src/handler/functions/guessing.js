@@ -286,9 +286,9 @@ context.closePath();
 context.clip();
 context.drawImage(botAvatar, botX, botY, 50, 50); 
  context.restore();
- context.font = '16px sans-serif';
+ context.font = '20px sans-serif';
 context.fillStyle = '#461c1c';
-context.fillText('SkyHelper', canvas.width - 140, canvas.height - 70);
+context.fillText('SkyHelper', canvas.width - 130, canvas.height - 30);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
