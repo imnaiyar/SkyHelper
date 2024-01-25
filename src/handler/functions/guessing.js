@@ -275,12 +275,12 @@ context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winn
 context.restore();
 
 // Draw the bot avatar
-context.save()
+context.save();
 context.beginPath();
 context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-context.drawImage(botAvatar, canvas.width - 200, canvas.height - 75, 50, 50);
+context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
 context.restore();
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
