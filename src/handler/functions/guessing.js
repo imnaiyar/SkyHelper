@@ -276,12 +276,16 @@ context.restore();
 
 // Draw the bot avatar
 context.save();
+
+// Adjust the coordinates in context.arc() to move the circular clipping path
+const botX = canvas.width - 150; // Adjust the X-coordinate for the center of the circle
+const botY = canvas.height - 50; // Adjust the Y-coordinate for the center of the circle
 context.beginPath();
-context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
+context.arc(botX + 25, botY + 25, 25, 0, Math.PI * 2, true); // Adjust the center of the circle
 context.closePath();
 context.clip();
-context.drawImage(botAvatar, canvas.width - 150, canvas.height - 50, 50, 50);
-context.restore();
+context.drawImage(botAvatar, botX, botY, 50, 50); 
+ context.restore();
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
