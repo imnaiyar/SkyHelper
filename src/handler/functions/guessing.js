@@ -241,21 +241,11 @@ context.fillText(`${points} points`, boxX + 10, boxY + 28);
 context.font = '28px sans-serif';
 context.fillStyle = '#4b4b4b';
 
-// Draw username
-const usernameText = member.user.username;
-const usernameX = canvas.width / 2.7;
-const usernameY = canvas.height / 2.9;
-context.fillText(usernameText, usernameX, usernameY);
-
-
-// Set font and color for displayName
+context.fillText(member.user.username, canvas.width / 2.7, canvas.height / 2.9);
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
-// Draw displayName just below the username
-const displayNameX = canvas.width / 2.7;
-const displayNameY = usernameY + 28 + 5; // Add a small gap
-context.fillText(member.displayName, displayNameX, displayNameY);
+context.fillText(member.displayName, canvas.width / 2.7, canvas.height / 1.7);
   
 // avatar section
 context.save()
