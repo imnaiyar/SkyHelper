@@ -269,7 +269,7 @@ context.beginPath();
 context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-const winnerFrameSize = 240; // Adjust the size as needed
+const winnerFrameSize = 250; // Adjust the size as needed
 const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; // Adjust the X position
 const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; // Adjust the Y position
 context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
@@ -278,15 +278,15 @@ context.restore();
 // Draw the bot avatar
 context.save()
 context.beginPath();
-context.arc(canvas.width - 200, canvas.height - 90, 25, 0, Math.PI * 2, true);
+context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
+context.drawImage(botAvatar, canvas.width - 100, canvas.height - 50, 50, 50);
 context.restore();
 
-context.font = '12px sans-serif';
+context.font = '16px sans-serif';
 context.fillStyle = '#461c1c';
-context.fillText('SkyHelper', canvas.width - 140, canvas.height - 90);
+context.fillText('SkyHelper', canvas.width - 75, canvas.height - 50);
 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
