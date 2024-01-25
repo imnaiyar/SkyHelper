@@ -189,7 +189,7 @@ const applyText = (canvas, text) => {
   return context.font;
 };
 async function getWinnerImg(client, member, points, totalQuestions) {
-  const canvas = Canvas.createCanvas(700, 250);
+  const canvas = Canvas.createCanvas(700, 300);
   const context = canvas.getContext('2d');
   let background;
 
@@ -261,10 +261,10 @@ context.restore();
 
 context.save()
 context.beginPath();
-context.arc(140, 140, 100, 0, Math.PI * 2, true);
+context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-const winnerFrameSize = 280; 
+const winnerFrameSize = 230; 
 const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; 
 const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; 
 context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
@@ -280,9 +280,14 @@ context.closePath();
 context.clip();
 context.drawImage(botAvatar, botX, botY, 50, 50); 
  context.restore();
+ 
  context.font = 'bold 22px sans-serif';
 context.fillStyle = '#860f0f';
 context.fillText('SkyHelper', canvas.width - 140, canvas.height - 37);
+
+ context.font = 'bold 22px sans-serif';
+context.fillStyle = '#860f0f';
+context.fillText('Sky CoTL Quiz Game!', 20, 5);
  
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
