@@ -222,7 +222,7 @@ async function getWinnerImg(client, member, points) {
 context.font = '28px sans-serif';
 context.fillStyle = '#4b4b4b';
 
-context.fillText(member.user.username, canvas.width / 2.5, canvas.height / 3);
+context.fillText(member.user.username, canvas.width / 3, canvas.height / 3);
 
 // Draw a semi-transparent black box behind the text
 const boxX = canvas.width - 200;
@@ -251,7 +251,7 @@ context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordi
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
-context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+context.fillText(member.displayName, canvas.width / 3, canvas.height / 1.8);
   
 // Draw the smaller circular avatar
 context.save()
@@ -268,7 +268,7 @@ context.beginPath();
 context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-const winnerFrameSize = 250; // Adjust the size as needed
+const winnerFrameSize = 260; // Adjust the size as needed
 const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; // Adjust the X position
 const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; // Adjust the Y position
 context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
@@ -288,7 +288,7 @@ context.drawImage(botAvatar, botX, botY, 50, 50);
  context.restore();
  context.font = 'bold 20px sans-serif';
 context.fillStyle = '#860f0f';
-context.fillText('SkyHelper', canvas.width - 130, canvas.height - 50);
+context.fillText('SkyHelper', canvas.width - 130, canvas.height - 40);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
