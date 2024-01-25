@@ -263,21 +263,26 @@ context.clip();
 context.drawImage(avatar, 25, 25, 200, 200);
 context.restore();
 
+// Draw the winnerFrame to perfectly encircle the avatar
 context.save()
 context.beginPath();
 context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-context.drawImage(winnerFrame, 25, 25, 220, 220);
+const winnerFrameSize = 220; // Adjust the size as needed
+const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; // Adjust the X position
+const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; // Adjust the Y position
+context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
 context.restore();
 
+// Draw the bot avatar
 context.save()
-  context.beginPath();
-  context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
-  context.closePath();
-  context.clip();
-  context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
-  context.save();
+context.beginPath();
+context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
+context.closePath();
+context.clip();
+context.drawImage(botAvatar, canvas.width - 100, canvas.height - 100, 50, 50);
+context.restore();
 
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
