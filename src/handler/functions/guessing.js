@@ -282,12 +282,13 @@ context.drawImage(botAvatar, botX, botY, 50, 50);
  context.restore();
  
  context.font = 'bold 22px sans-serif';
-context.fillStyle = '#860f0f';
-context.fillText('SkyHelper', canvas.width - 140, canvas.height - 37);
-
+ context.fillStyle = '#860f0f';
+ context.fillText('SkyHelper', canvas.width - 140, canvas.height - 37);
  context.font = 'bold 22px sans-serif';
-context.fillStyle = '#860f0f';
-context.fillText('Sky CoTL Quiz Game!', 20, 50);
+ context.fillStyle = '#860f0f';
+context.textDecoration = 'underline'; 
+context.fillText('Sky CoTL Quiz Game!', 20, 30);
+context.textDecoration = 'none'; 
  
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
