@@ -212,6 +212,8 @@ async function getWinnerImg(client, member, points, totalQuestions) {
   context.filter = 'blur(10px)';
   context.drawImage(background, 0, 0, canvas.width, canvas.height);
   context.filter = 'none'; 
+  context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+context.fillRect(0, 0, canvas.width, canvas.height);
   
 // display points
 const boxX = canvas.width - 200;
@@ -219,7 +221,7 @@ const boxY = 10;
 const boxWidth = 150; 
 const boxHeight = 40;
 const borderRadius = 10; 
-context.font = '24px sans-serif';
+context.font = '20px sans-serif';
 context.fillStyle = 'rgba(0, 0, 0, 0.5)';
 context.beginPath();
 context.moveTo(boxX + borderRadius, boxY);
