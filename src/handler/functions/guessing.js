@@ -264,6 +264,14 @@ context.drawImage(avatar, 25, 25, 200, 200);
 context.restore();
 
 context.save()
+context.beginPath();
+context.arc(125, 125, 100, 0, Math.PI * 2, true);
+context.closePath();
+context.clip();
+context.drawImage(winnerFrame, 25, 25, 220, 220);
+context.restore();
+
+context.save()
   context.beginPath();
   context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
   context.closePath();
