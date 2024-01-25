@@ -6,7 +6,7 @@ const {
 } = require('discord.js');
 const Canvas = require('@napi-rs/canvas');
 const { request } = require('undici');
-
+const config = require('@root/config')
 const questions = require('./questions');
  const gameData = new Map();
 module.exports = async (interaction, total) => {
@@ -199,7 +199,7 @@ async function getWinnerImg(client, member, points) {
   // Load avatar image
   const avtr = await request(member.displayAvatarURL({ format: 'jpg', size: 512 }));
   const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
-  const botAvtr = await request(client.user.displayAvatarURL({ format: 'jpg', size: 512 }));
+  const botAvtr = await request(config.BOT_ICON);
   const botAvatar = await Canvas.loadImage(await botAvtr.body.arrayBuffer());
   const winnerFrame = await Canvas.loadImage('https://media.discordapp.net/attachments/867638574571323424/1199827121879662702/winner-frame.png');
 
@@ -222,7 +222,7 @@ async function getWinnerImg(client, member, points) {
 context.font = '28px sans-serif';
 context.fillStyle = '#4b4b4b';
 
-context.fillText(member.user.username, canvas.width / 3, canvas.height / 3);
+context.fillText(member.user.username, canvas.width / 2.7, canvas.height / 3.1);
 
 // Draw a semi-transparent black box behind the text
 const boxX = canvas.width - 200;
@@ -251,7 +251,7 @@ context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordi
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
-context.fillText(member.displayName, canvas.width / 3, canvas.height / 1.8);
+context.fillText(member.displayName, canvas.width / 2.7, canvas.height / 1.9);
   
 // Draw the smaller circular avatar
 context.save()
@@ -286,9 +286,9 @@ context.closePath();
 context.clip();
 context.drawImage(botAvatar, botX, botY, 50, 50); 
  context.restore();
- context.font = 'bold 20px sans-serif';
+ context.font = 'bold 22px sans-serif';
 context.fillStyle = '#860f0f';
-context.fillText('SkyHelper', canvas.width - 130, canvas.height - 40);
+context.fillText('SkyHelper', canvas.width - 132, canvas.height - 40);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
