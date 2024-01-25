@@ -248,7 +248,9 @@ context.fill();
 // Draw the text on top of the black box
 context.fillStyle = '#FFFFFF';
 context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordinates
-
+context.font = '16px sans-serif';
+context.fillStyle = '#461c1c';
+context.fillText('SkyHelper', canvas.width - 140, canvas.height - 50);
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
@@ -283,9 +285,6 @@ context.closePath();
 context.clip();
 context.drawImage(botAvatar, canvas.width - 200, canvas.height - 75, 50, 50);
 context.restore();
-context.font = '16px sans-serif';
-context.fillStyle = '#461c1c';
-context.fillText('SkyHelper', canvas.width - 140, canvas.height - 50);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
