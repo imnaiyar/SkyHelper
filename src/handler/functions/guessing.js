@@ -287,7 +287,7 @@ context.fillText('SkyHelper', canvas.width - 140, canvas.height - 37);
 
  context.font = 'bold 22px sans-serif';
 context.fillStyle = '#860f0f';
-context.fillText('Sky CoTL Quiz Game!', 20, 10);
+context.fillText('Sky CoTL Quiz Game!', 20, 50);
  
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
