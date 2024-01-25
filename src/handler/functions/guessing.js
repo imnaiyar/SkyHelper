@@ -255,6 +255,7 @@ context.fillStyle = '#727272';
 context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
   
 // Draw the smaller circular avatar
+context.save()
 context.beginPath();
 context.arc(125, 125, 75, 0, Math.PI * 2, true);
 context.closePath();
