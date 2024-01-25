@@ -281,13 +281,11 @@ context.beginPath();
 context.arc(canvas.width - 75, canvas.height - 75, 25, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-context.drawImage(botAvatar, canvas.width - 150, canvas.height - 50, 50, 50);
+context.drawImage(botAvatar, canvas.width - 200, canvas.height - 75, 50, 50);
 context.restore();
-
 context.font = '16px sans-serif';
 context.fillStyle = '#461c1c';
-context.fillText('SkyHelper', canvas.width - 100, canvas.height - 50);
-
+context.fillText('SkyHelper', canvas.width - 140, canvas.height - 50);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
