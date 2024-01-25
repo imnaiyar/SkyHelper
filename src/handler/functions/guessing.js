@@ -241,11 +241,11 @@ context.fillText(`${points}/${totalQuestions} points`, boxX + 10, boxY + 28);
 
 // display name and username
 context.font = '28px sans-serif';
-context.fillStyle = '#4b4b4b';
+context.fillStyle = '#adadad';
 
 context.fillText(member.user.username, canvas.width / 2.7, canvas.height / 2.9);
 context.font = applyText(canvas, member.displayName);
-context.fillStyle = '#727272';
+context.fillStyle = '#d6d6d6';
 
 context.fillText(member.displayName, canvas.width / 2.7, canvas.height / 1.7);
   
@@ -264,7 +264,7 @@ context.beginPath();
 context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-const winnerFrameSize = 260; 
+const winnerFrameSize = 280; 
 const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; 
 const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; 
 context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
