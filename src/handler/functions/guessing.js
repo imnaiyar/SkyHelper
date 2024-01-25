@@ -278,8 +278,8 @@ context.restore();
 context.save();
 
 // Adjust the coordinates in context.arc() to move the circular clipping path
-const botX = canvas.width - 150; // Adjust the X-coordinate for the center of the circle
-const botY = canvas.height - 50; // Adjust the Y-coordinate for the center of the circle
+const botX = canvas.width - 200; // Adjust the X-coordinate for the center of the circle
+const botY = canvas.height - 70; // Adjust the Y-coordinate for the center of the circle
 context.beginPath();
 context.arc(botX + 25, botY + 25, 25, 0, Math.PI * 2, true); // Adjust the center of the circle
 context.closePath();
