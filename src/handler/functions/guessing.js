@@ -248,9 +248,6 @@ context.fill();
 // Draw the text on top of the black box
 context.fillStyle = '#FFFFFF';
 context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordinates
-context.font = '16px sans-serif';
-context.fillStyle = '#461c1c';
-context.fillText('SkyHelper', canvas.width - 140, canvas.height - 50);
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
