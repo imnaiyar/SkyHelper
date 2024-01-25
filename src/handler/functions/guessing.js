@@ -178,16 +178,14 @@ function getRandomQuestions(questions, numberOfQuestions) {
 const applyText = (canvas, text) => {
   const context = canvas.getContext('2d');
 
-  // Declare a base size of the font
+  
   let fontSize = 70;
 
   do {
-    // Assign the font to the context and decrement it so it can be measured again
     context.font = `bold ${fontSize -= 10}px sans-serif`;
-    // Compare pixel width of the text to the canvas minus the approximate avatar size
+    
   } while (context.measureText(text).width > canvas.width - 300);
 
-  // Return the font string
   return context.font;
 };
 async function getWinnerImg(client, member, points) {
@@ -195,14 +193,14 @@ async function getWinnerImg(client, member, points) {
   const context = canvas.getContext('2d');
   let background;
 
-  // Load avatar image
+  
   const avtr = await request(member.displayAvatarURL({ format: 'jpg', size: 512 }));
   const avatar = await Canvas.loadImage(await avtr.body.arrayBuffer());
   const botAvtr = await request('https://skyhelper.xyz/assets/img/boticon.png');
   const botAvatar = await Canvas.loadImage(await botAvtr.body.arrayBuffer());
   const winnerFrame = await Canvas.loadImage('https://media.discordapp.net/attachments/867638574571323424/1199827121879662702/winner-frame.png');
 
-  // Check if member has a banner, and load background accordingly
+  
   if (member.banner) {
     const bnr = await request(member.bannerURL({ format: 'jpg', size: 700 }));
     background = await Canvas.loadImage(bnr.body.arrayBuffer());
@@ -210,25 +208,17 @@ async function getWinnerImg(client, member, points) {
     background = avatar;
   }
 
-  // Draw the blurred background
-  context.filter = 'blur(10px)'; // Adjust the blur amount as needed
+ 
+  context.filter = 'blur(10px)';
   context.drawImage(background, 0, 0, canvas.width, canvas.height);
-  context.filter = 'none'; // Reset filter for subsequent drawing
-
-  // Draw the circular avatar
+  context.filter = 'none'; 
   
-  // Draw text with black border
-context.font = '28px sans-serif';
-context.fillStyle = '#4b4b4b';
-
-context.fillText(member.user.username, canvas.width / 2.7, canvas.height / 2.9);
-
-// Draw a semi-transparent black box behind the text
+// display points
 const boxX = canvas.width - 200;
 const boxY = 10;
-const boxWidth = 150; // Decrease the width as needed
+const boxWidth = 150; 
 const boxHeight = 40;
-const borderRadius = 10; // Adjust the border radius for rounded edges
+const borderRadius = 10; 
 
 context.fillStyle = 'rgba(0, 0, 0, 0.5)';
 context.beginPath();
@@ -244,15 +234,36 @@ context.quadraticCurveTo(boxX, boxY, boxX + borderRadius, boxY);
 context.closePath();
 context.fill();
 
-// Draw the text on top of the black box
 context.fillStyle = '#FFFFFF';
-context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordinates
+context.fillText(`${points} points`, boxX + 10, boxY + 28); 
+
+// display name and username
+context.font = '28px sans-serif';
+context.fillStyle = '#4b4b4b';
+
+// Set font and color for username
+context.font = '20px sans-serif'; // Set the desired font size for the username
+context.fillStyle = '#4b4b4b';
+
+// Draw username
+const usernameText = member.user.username;
+const usernameX = canvas.width / 2.7;
+const usernameY = canvas.height / 2.9;
+context.fillText(usernameText, usernameX, usernameY);
+
+// Calculate the height of the username text
+const usernameTextHeight = parseInt(context.font);
+
+// Set font and color for displayName
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
-context.fillText(member.displayName, canvas.width / 2.7, canvas.height / 1.7);
+// Draw displayName just below the username
+const displayNameX = canvas.width / 2.7;
+const displayNameY = usernameY + usernameTextHeight + 5; // Add a small gap
+context.fillText(member.displayName, displayNameX, displayNameY);
   
-// Draw the smaller circular avatar
+// avatar section
 context.save()
 context.beginPath();
 context.arc(125, 125, 75, 0, Math.PI * 2, true);
@@ -261,26 +272,24 @@ context.clip();
 context.drawImage(avatar, 25, 25, 200, 200);
 context.restore();
 
-// Draw the winnerFrame to perfectly encircle the avatar
+
 context.save()
 context.beginPath();
 context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-const winnerFrameSize = 260; // Adjust the size as needed
-const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; // Adjust the X position
-const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; // Adjust the Y position
+const winnerFrameSize = 260; 
+const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; 
+const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; 
 context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
 context.restore();
 
-// Draw the bot avatar
 context.save();
 
-// Adjust the coordinates in context.arc() to move the circular clipping path
-const botX = canvas.width - 200; // Adjust the X-coordinate for the center of the circle
-const botY = canvas.height - 70; // Adjust the Y-coordinate for the center of the circle
+const botX = canvas.width - 200; 
+const botY = canvas.height - 70;
 context.beginPath();
-context.arc(botX + 25, botY + 25, 25, 0, Math.PI * 2, true); // Adjust the center of the circle
+context.arc(botX + 25, botY + 25, 25, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
 context.drawImage(botAvatar, botX, botY, 50, 50); 
@@ -288,7 +297,7 @@ context.drawImage(botAvatar, botX, botY, 50, 50);
  context.font = 'bold 22px sans-serif';
 context.fillStyle = '#860f0f';
 context.fillText('SkyHelper', canvas.width - 140, canvas.height - 37);
-  // Create attachment
+ 
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
 }
