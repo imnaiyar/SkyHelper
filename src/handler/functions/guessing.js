@@ -222,7 +222,7 @@ async function getWinnerImg(client, member, points) {
 context.font = '28px sans-serif';
 context.fillStyle = '#4b4b4b';
 
-context.fillText(member.user.username, canvas.width / 2.7, canvas.height / 3.1);
+context.fillText(member.user.username, canvas.width / 2.7, canvas.height / 2.9);
 
 // Draw a semi-transparent black box behind the text
 const boxX = canvas.width - 200;
@@ -251,7 +251,7 @@ context.fillText(`${points} points`, boxX + 10, boxY + 28); // Adjust the coordi
 context.font = applyText(canvas, member.displayName);
 context.fillStyle = '#727272';
 
-context.fillText(member.displayName, canvas.width / 2.7, canvas.height / 1.9);
+context.fillText(member.displayName, canvas.width / 2.7, canvas.height / 1.7);
   
 // Draw the smaller circular avatar
 context.save()
@@ -288,7 +288,7 @@ context.drawImage(botAvatar, botX, botY, 50, 50);
  context.restore();
  context.font = 'bold 22px sans-serif';
 context.fillStyle = '#860f0f';
-context.fillText('SkyHelper', canvas.width - 132, canvas.height - 40);
+context.fillText('SkyHelper', canvas.width - 135, canvas.height - 40);
   // Create attachment
   const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
   return attachment;
