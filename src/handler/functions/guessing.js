@@ -261,7 +261,7 @@ context.restore();
 
 context.save()
 context.beginPath();
-context.arc(125, 125, 100, 0, Math.PI * 2, true);
+context.arc(140, 140, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
 const winnerFrameSize = 280; 
