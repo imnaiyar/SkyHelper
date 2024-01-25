@@ -219,7 +219,7 @@ const boxY = 10;
 const boxWidth = 150; 
 const boxHeight = 40;
 const borderRadius = 10; 
-context.font = '28px sans-serif';
+context.font = '24px sans-serif';
 context.fillStyle = 'rgba(0, 0, 0, 0.5)';
 context.beginPath();
 context.moveTo(boxX + borderRadius, boxY);
