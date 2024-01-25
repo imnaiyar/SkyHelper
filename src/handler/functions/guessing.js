@@ -269,7 +269,7 @@ context.beginPath();
 context.arc(125, 125, 100, 0, Math.PI * 2, true);
 context.closePath();
 context.clip();
-const winnerFrameSize = 220; // Adjust the size as needed
+const winnerFrameSize = 230; // Adjust the size as needed
 const winnerFrameX = 25 - (winnerFrameSize - 200) / 2; // Adjust the X position
 const winnerFrameY = 25 - (winnerFrameSize - 200) / 2; // Adjust the Y position
 context.drawImage(winnerFrame, winnerFrameX, winnerFrameY, winnerFrameSize, winnerFrameSize);
