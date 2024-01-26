@@ -19,7 +19,7 @@ async function calculateResult(targetTime, now, offset = 0) {
     return `${targetTime} is ongoing and will end at ${time(
       end.toDate(),
       't',
-    )} (in ${duration})\n - \`Next ${targetTime} Time:\` ${time(
+    )} (in ${duration})\n> - \`Next ${targetTime} Time:\` ${time(
       target.toDate(),
       't',
     )}`;

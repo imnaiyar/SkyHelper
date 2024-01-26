@@ -228,7 +228,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} id - ID of the user
    */
   async getUser(name, id) {
-    if (!name) throw new Error('User name must be provide');
+    if (!name) throw new Error('User "name" must be provide');
     if (typeof name !== 'string') throw new Error('User name must be a String');
     let user = this.userCache.get(name);
     if (!user) {
@@ -240,4 +240,16 @@ module.exports = class SkyHelper extends Client {
     }
     return user;
   }
+  
+  /**
+   * Leaves a specified guild
+   * @param {string} id - guild id
+   */
+   leaveServer(id) {
+     if (isNaN(parseInt(id))) throw new Error('Guild Id must be a number');
+     const guildToLeave = this.guilds.cache.get(id);
+     if (!guildToLeave) throw new Error('There\'s no guild associated with the given ID that I am in');
+     guildToLeave.leave();
+     return (`Succesfully left ${guildToLeave.name} (${guild.id})`);
+   }
 };
