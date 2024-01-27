@@ -7,15 +7,18 @@ const {
 const Canvas = require('@napi-rs/canvas');
 const { request } = require('undici');
 const questions = require('./questions');
- const gameData = new Map();
+const gameData = new Map();
 module.exports = async (interaction, total) => {
-  gameData.set(interaction.id, {
+  if (gameData.get(interaction.channel.id)) {
+    return interaction.reply({ content: 'There\'s already a game in progress in this channel', ephemeral: true});
+  }
+  gameData.set(interaction.channel.id, {
     currentQuestion: 0,
     totalQuestions: 10,
     userPoints: {},
     randomQuestions: [],
   });
-  const data = gameData.get(interaction.id);
+  const data = gameData.get(interaction.channel.id);
   if (total) data.totalQuestions = total;
   data.randomQuestions = getRandomQuestions(questions, data.totalQuestions);
   
@@ -109,7 +112,7 @@ async function respond(
       );
     } else {
       await displayResults(interaction, data);
-      gameData.delete(interaction.id);
+      gameData.delete(interaction.channel.id);
     }
   });
 }
@@ -134,8 +137,6 @@ async function displayResults(interaction, data) {
       (data.userPoints[userId] / data.totalQuestions) * 100
     }%)\n`;
   }
-  const winner = interaction.guild.members.cache.get(highestScorer);
-  const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore, data.totalQuestions);
   const resultEmbed = new EmbedBuilder()
     .setTitle('Result')
     .setDescription(
@@ -150,11 +151,6 @@ async function displayResults(interaction, data) {
       iconURL: interaction.client.user.displayAvatarURL(),
     })
     .setAuthor({ name: 'End of Quiz' });
-  if (!highestScorer) {
-    resultEmbed.setDescription('No one participated in the game');
-  } else {
-    resultEmbed.setImage(`attachment://${winnerBnr.name}`);
-  }
   const btn = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId(`play-again_${data.totalQuestions}`)
@@ -162,8 +158,12 @@ async function displayResults(interaction, data) {
       .setStyle(3),
   );
   if (!highestScorer) {
+    resultEmbed.setDescription('No one participated in the game');
   interaction.channel.send({ embeds: [resultEmbed], components: [btn] }); 
   } else {
+    const winner = interaction.guild.members.cache.get(highestScorer);
+   const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore, data.totalQuestions);
+    resultEmbed.setImage(`attachment://${winnerBnr.name}`);
     interaction.channel.send({ embeds: [resultEmbed], components: [btn], files: [winnerBnr] }); 
   }
 }
