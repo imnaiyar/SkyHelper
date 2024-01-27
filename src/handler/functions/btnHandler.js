@@ -55,8 +55,6 @@ module.exports = async (interaction) => {
   }
 
   if (interaction.customId.startsWith('play-again')) {
-    await interaction.deferUpdate();
-    const total = interaction.customId.split('_')[1];
     if (!interaction.channel.permissionsFor(interaction.guild.members.me).has(["SendMessages", "ViewChannel"])) {
       return interaction.reply({
         content:
@@ -64,6 +62,8 @@ module.exports = async (interaction) => {
         ephemeral: true,
       });
     }
+    await interaction.deferUpdate();
+    const total = interaction.customId.split('_')[1];
     await askQuestion(interaction, total);
   }
 };
