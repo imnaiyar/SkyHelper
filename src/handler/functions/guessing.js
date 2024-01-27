@@ -109,7 +109,7 @@ async function respond(
       );
     } else {
       await displayResults(interaction, data);
-      gameData.delete(interaction.channel.id);
+      interaction.client.gameData.delete(interaction.channel.id);
     }
   });
 }
