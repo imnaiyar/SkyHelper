@@ -7,11 +7,8 @@ const {
 const Canvas = require('@napi-rs/canvas');
 const { request } = require('undici');
 const questions = require('./questions');
-const gameData = new Map();
 module.exports = async (interaction, total) => {
-  if (gameData.get(interaction.channel.id)) {
-    return interaction.reply({ content: 'There\'s already a game in progress in this channel', ephemeral: true});
-  }
+  const gameData = interaction.client.gameData;
   gameData.set(interaction.channel.id, {
     currentQuestion: 0,
     totalQuestions: 10,
@@ -162,7 +159,7 @@ async function displayResults(interaction, data) {
   interaction.channel.send({ embeds: [resultEmbed], components: [btn] }); 
   } else {
     const winner = interaction.guild.members.cache.get(highestScorer);
-   const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore, data.totalQuestions);
+    const winnerBnr = await getWinnerImg(interaction.client, winner, highestScore, data.totalQuestions);
     resultEmbed.setImage(`attachment://${winnerBnr.name}`);
     interaction.channel.send({ embeds: [resultEmbed], components: [btn], files: [winnerBnr] }); 
   }

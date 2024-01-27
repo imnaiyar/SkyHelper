@@ -49,6 +49,9 @@ module.exports = class SkyHelper extends Client {
 
     // user object cache for credits
     this.userCache = new Map();
+    
+    // game data for quiz game
+    this.gameData = new Map();
 
     // Checks for how this class is created so it doesnt mess up the process
     if (

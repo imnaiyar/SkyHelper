@@ -31,6 +31,10 @@ module.exports = {
         ephemeral: true
       });
     }
+    
+    if (client.gameData.get(interaction.channel.id)) {
+    return interaction.reply({ content: 'There\'s already a game in progress in this channel', ephemeral: true});
+  }
     const questions = interaction.options.getString('questions');
     let total;
     if (questions) {

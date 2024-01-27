@@ -62,6 +62,10 @@ module.exports = async (interaction) => {
         ephemeral: true,
       });
     }
+    
+    if (interaction.client.gameData.get(interaction.channel.id)) {
+    return interaction.reply({ content: 'There\'s already a game in progress in this channel', ephemeral: true});
+  }
     await interaction.deferUpdate();
     const total = interaction.customId.split('_')[1];
     await askQuestion(interaction, total);
