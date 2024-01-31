@@ -15,7 +15,7 @@ const CUSTOM_ID = {
 
 async function Guides(interaction, filter, ephemeral) {
   if (!interaction.isCommand()) return;
-  
+
   const { firstChoices } = require('./SeasonalChoices.js');
 
   const dropdownOptions = firstChoices.map((choice) => ({

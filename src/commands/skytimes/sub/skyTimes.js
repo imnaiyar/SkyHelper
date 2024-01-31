@@ -92,11 +92,11 @@ async function skyTimes(client) {
           'f',
         )} (in ${eventDurEnd})`
       : client.skyEvents.eventActive && !now.isAfter(client.skyEvents.eventEnds)
-      ? `${client.skyEvents.eventName} will start on ${time(
-          client.skyEvents.eventStarts.toDate(),
-          'f',
-        )} (in ${eventDurStart})`
-      : 'No active events.';
+        ? `${client.skyEvents.eventName} will start on ${time(
+            client.skyEvents.eventStarts.toDate(),
+            'f',
+          )} (in ${eventDurStart})`
+        : 'No active events.';
 
   return {
     geyserResultStr,

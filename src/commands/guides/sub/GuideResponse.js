@@ -726,10 +726,9 @@ https://discord.com/channels/575762611111592007/585339436322259003/1163470276869
       ],
     },
     talented_builder_location: {
-      content:
-        '```Talented Builder Location by Clement```',
+      content: '```Talented Builder Location by Clement```',
       files: [
-        'https://media.discordapp.net/attachments/867638574571323424/1199734029814091856/talented-builder-location.jpg'
+        'https://media.discordapp.net/attachments/867638574571323424/1199734029814091856/talented-builder-location.jpg',
       ],
     },
     chimesmith_location: {

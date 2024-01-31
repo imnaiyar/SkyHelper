@@ -55,17 +55,24 @@ module.exports = async (interaction) => {
   }
 
   if (interaction.customId.startsWith('play-again')) {
-    if (!interaction.channel.permissionsFor(interaction.guild.members.me).has(["SendMessages", "ViewChannel"])) {
+    if (
+      !interaction.channel
+        .permissionsFor(interaction.guild.members.me)
+        .has(['SendMessages', 'ViewChannel'])
+    ) {
       return interaction.reply({
         content:
           'I need `View Channel/Send Message` permissions in this channel for the command to work',
         ephemeral: true,
       });
     }
-    
+
     if (interaction.client.gameData.get(interaction.channel.id)) {
-    return interaction.reply({ content: 'There\'s already a game in progress in this channel', ephemeral: true});
-  }
+      return interaction.reply({
+        content: "There's already a game in progress in this channel",
+        ephemeral: true,
+      });
+    }
     await interaction.deferUpdate();
     const total = interaction.customId.split('_')[1];
     await askQuestion(interaction, total);

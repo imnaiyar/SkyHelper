@@ -18,7 +18,7 @@ module.exports = async (client, message) => {
   if (message.mentions.has(client.user) && !OWNER.includes(message.author.id)) {
     message.channel.send("That's me...");
   }
-  
+
   // Check Bot'sprefix
   let prefix;
   if (message.content.startsWith(`<@${client.user.id}>`)) {

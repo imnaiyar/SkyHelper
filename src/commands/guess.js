@@ -25,16 +25,24 @@ module.exports = {
     longDesc: 'Guessing Game',
   },
   async execute(interaction, client) {
-    if (!interaction.channel.permissionsFor(interaction.guild.members.me).has(["SendMessages", "ViewChannel"])) {
+    if (
+      !interaction.channel
+        .permissionsFor(interaction.guild.members.me)
+        .has(['SendMessages', 'ViewChannel'])
+    ) {
       return interaction.reply({
-        content: 'I need `View Channel/Send Message` permissions in this channel for the command to work',
-        ephemeral: true
+        content:
+          'I need `View Channel/Send Message` permissions in this channel for the command to work',
+        ephemeral: true,
       });
     }
-    
+
     if (client.gameData.get(interaction.channel.id)) {
-    return interaction.reply({ content: 'There\'s already a game in progress in this channel', ephemeral: true});
-  }
+      return interaction.reply({
+        content: "There's already a game in progress in this channel",
+        ephemeral: true,
+      });
+    }
     const questions = interaction.options.getString('questions');
     let total;
     if (questions) {
@@ -90,12 +98,12 @@ module.exports = {
         interaction.editReply({
           content: 'Starting...',
           components: [],
-          embeds: []
+          embeds: [],
         });
-        if (int.customId === 'start-quiz') {setTimeout(async () => {
-        await askQuestion(interaction, total);
-      }, 2000);
-          
+        if (int.customId === 'start-quiz') {
+          setTimeout(async () => {
+            await askQuestion(interaction, total);
+          }, 2000);
         }
       })
       .catch(async (error) => {

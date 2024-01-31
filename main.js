@@ -49,7 +49,7 @@ module.exports = class SkyHelper extends Client {
 
     // user object cache for credits
     this.userCache = new Map();
-    
+
     // game data for quiz game
     this.gameData = new Map();
 
@@ -215,12 +215,12 @@ module.exports = class SkyHelper extends Client {
             (cmd) => cmd.name === value.toLowerCase(),
           )
         : !isNaN(value)
-        ? this.application.commands.cache.get(value)
-        : (() => {
-            throw new Error(
-              'Provided Value Must Either be a String or a Number',
-            );
-          })();
+          ? this.application.commands.cache.get(value)
+          : (() => {
+              throw new Error(
+                'Provided Value Must Either be a String or a Number',
+              );
+            })();
     if (!command) throw new Error('No matching command found');
     return command;
   }
@@ -243,16 +243,19 @@ module.exports = class SkyHelper extends Client {
     }
     return user;
   }
-  
+
   /**
    * Leaves a specified guild
    * @param {string} id - guild id
    */
-   leaveServer(id) {
-     if (isNaN(parseInt(id))) throw new Error('Guild Id must be a number');
-     const guildToLeave = this.guilds.cache.get(id);
-     if (!guildToLeave) throw new Error('There\'s no guild associated with the given ID that I am in');
-     guildToLeave.leave();
-     return (`Succesfully left ${guildToLeave.name} (${guild.id})`);
-   }
+  leaveServer(id) {
+    if (isNaN(parseInt(id))) throw new Error('Guild Id must be a number');
+    const guildToLeave = this.guilds.cache.get(id);
+    if (!guildToLeave)
+      throw new Error(
+        "There's no guild associated with the given ID that I am in",
+      );
+    guildToLeave.leave();
+    return `Succesfully left ${guildToLeave.name} (${guild.id})`;
+  }
 };

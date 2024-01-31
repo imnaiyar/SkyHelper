@@ -64,8 +64,8 @@ module.exports = {
       type === 'red'
         ? 'Red Shards'
         : type === 'black'
-        ? 'Black Shards'
-        : 'Shards';
+          ? 'Black Shards'
+          : 'Shards';
     let response = `Next ${daysNum} ${srd}:\n`;
 
     for (const eventInfo of nextRedEvents) {
@@ -142,16 +142,9 @@ function getNextRedEvents(daysNum, type) {
       }
     } else {
       if (!dayToSkip[event].includes(dayOfWeek)) {
-        const sType = {
-          A: 'Red Shard',
-          B: 'Red Shard',
-          C: 'Red Shard',
-          a: 'Black Shard',
-          b: 'Black Shard',
-        };
         const fallTime = eventTimes[event];
         const unix = Math.floor(fallTime.valueOf() / 1000);
-        const shard = sType[event];
+        const shard = event === event.toUpperCase() ? 'Red Shard' : 'Black Shard';
         const todayDate = today.format('YYYY-MM-DD');
         redEvents.push({ day: todayDate, event, secondEvent, unix, shard });
       }

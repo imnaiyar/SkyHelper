@@ -44,10 +44,10 @@ module.exports = class shardsUtil {
       remainder10 === 1 && remainder100 !== 11
         ? 1
         : remainder10 === 2 && remainder100 !== 12
-        ? 2
-        : remainder10 === 3 && remainder100 !== 13
-        ? 3
-        : 0
+          ? 2
+          : remainder10 === 3 && remainder100 !== 13
+            ? 3
+            : 0
     ];
   }
 

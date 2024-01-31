@@ -31,8 +31,6 @@ module.exports = async (client, guild) => {
   await settings.save();
   await settings1.save();
 
-  if (!webhookLogger) return;
-
   let ownerTag;
   const ownerId = guild.ownerId || settings.data.owner;
   try {
@@ -41,7 +39,6 @@ module.exports = async (client, guild) => {
   } catch (err) {
     ownerTag = 'Deleted User';
   }
-
   // updates bot info stats on support server.
   const channels = client.channels.cache.get('1158068842040414351');
   if (channels) {
@@ -65,6 +62,9 @@ module.exports = async (client, guild) => {
       m.edit({ embeds: [botInfo] });
     });
   }
+  
+  // delete any registered live functions
+  
 
   const embed = new EmbedBuilder()
     .setTitle('Guild Left')
@@ -93,7 +93,8 @@ module.exports = async (client, guild) => {
       },
     )
     .setFooter({ text: `Guild #${client.guilds.cache.size}` });
-
+    
+  if (!webhookLogger) return;
   webhookLogger.send({
     username: 'Leave',
     avatarURL: client.user.displayAvatarURL(),
