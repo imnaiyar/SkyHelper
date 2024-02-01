@@ -4,7 +4,7 @@ const {
   ButtonBuilder,
   AttachmentBuilder,
 } = require('discord.js');
-const getWinnerImg = require('./getWinnerImg');
+const {quizWinnerCard} = require('../../functions/canvas/quizWinnerCard');
 const updateUser = require('./updateUser');
 const questions = require('./questions');
 module.exports = async (interaction, total) => {
@@ -154,12 +154,10 @@ async function displayResults(interaction, data) {
     interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
   } else {
     const winner = interaction.guild.members.cache.get(highestScorer);
-    const winnerBnr = await getWinnerImg(
-      interaction.client,
-      winner,
-      highestScore,
-      data.totalQuestions,
-    );
+    const card =  new quizWinnerCard(winner, highestScore, data.totalQuestions);
+       
+    const cardBuffer = await card.build();
+    const winnerBnr = new AttachmentBuilder(cardBuffer, { name: 'winner.png'})
     resultEmbed.setImage(`attachment://${winnerBnr.name}`);
     interaction.channel.send({
       embeds: [resultEmbed],

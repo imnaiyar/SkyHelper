@@ -32,7 +32,7 @@ const client = new SkyHelper();
     try {
       await shardsUpdate(client);
     } catch (err) {
-      Logger.error(err);
+      client.logger.error(err);
     }
   });
 
@@ -40,7 +40,7 @@ const client = new SkyHelper();
     try {
       await timesUpdate(client);
     } catch (err) {
-      Logger.error(err);
+      client.logger.error(err);
     }
   });
 

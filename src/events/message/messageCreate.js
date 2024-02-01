@@ -98,7 +98,7 @@ module.exports = async (client, message) => {
       )
       .setColor('Blurple')
       .setTimestamp();
-    if (!OWNER.includes(message.author.id)) {
+    if (!OWNER.includes(message.author.id) && Logger) {
       Logger.send({ username: 'Command Logs', embeds: [embed] }).catch(
         (ex) => {},
       );

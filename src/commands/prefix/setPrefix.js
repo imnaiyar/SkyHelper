@@ -2,7 +2,7 @@ const { getSettings } = require('@schemas/Guild');
 const { EmbedBuilder } = require('discord.js');
 module.exports = {
   data: {
-    name: 'test',
+    name: 'test2',
     description: 'Set a new prefix for this server',
     userPermissions: 'ManageGuild',
     category: 'OWNER',

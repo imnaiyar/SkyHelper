@@ -7,7 +7,7 @@ const {
   AttachmentBuilder
 } = require('discord.js');
 
-const SkyLeaderboard = require('@handler/leaderboard')
+const SkyLeaderboard = require('../functions/canvas/leaderboard')
 module.exports = {
   data: {
     name: 'quiz',
