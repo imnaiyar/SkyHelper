@@ -41,8 +41,8 @@ module.exports = {
     const config = await autoTimes(interaction.guild);
     if (sub === 'start') {
       if (config.channelId && config.messageId) {
-        const ch = client.channels.cache.get(config.channelId);
-        const ms = await ch.messages.cache.get(config.messageId);
+        const ch = await client.channels.fetch(config.channelId).catch((err) => {});
+        const ms = await ch?.messages.fetch(config.messageId).catch((err) => {});
         if (ms && ch) {
           return interaction.followUp({
             content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${ms.url}.`,
