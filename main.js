@@ -1,10 +1,7 @@
 const {
   Client,
   GatewayIntentBits,
-  WebhookClient,
-  createWebhook,
   Collection,
-  EmbedBuilder,
   Partials,
 } = require('discord.js');
 const { table } = require('table');
@@ -26,7 +23,6 @@ module.exports = class SkyHelper extends Client {
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.DirectMessages,
         GatewayIntentBits.MessageContent,
-
         GatewayIntentBits.GuildMessageReactions,
       ],
       partials: [Partials.Channel, Partials.Message],
@@ -55,13 +51,13 @@ module.exports = class SkyHelper extends Client {
 
     // Checks for how this class is created so it doesnt mess up the process
     if (
-      process.mainModule.filename !==
-        `${process.cwd()}/src/commandsRegister.js` &&
+      require.main.filename !== path.join(process.cwd(), 'src', 'commandsRegister.js') &&
       this.config.DASHBOARD.enabled
     ) {
       const { loadWebsite } = require('./web/server.js');
       loadWebsite(this);
     }
+    
   }
 
   /**
@@ -238,7 +234,7 @@ module.exports = class SkyHelper extends Client {
       if (!id)
         throw new Error('User is not cached, an user ID must be provided');
       if (isNaN(parseInt(id))) throw new Error('User ID must be a number');
-      user = await this.users.fetch(id);
+      user = this.users.cache.get(id) || await this.users.fetch(id);
       this.userCache.set(name, user);
     }
     return user;
@@ -256,6 +252,6 @@ module.exports = class SkyHelper extends Client {
         "There's no guild associated with the given ID that I am in",
       );
     guildToLeave.leave();
-    return `Succesfully left ${guildToLeave.name} (${guild.id})`;
+    return `Succesfully left ${guildToLeave.name} (${guildToLeave.id})`;
   }
 };

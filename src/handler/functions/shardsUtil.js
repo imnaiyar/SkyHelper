@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const fs = require('fs');
 
 module.exports = class shardsUtil {
-  getDate(date) {
+  static getDate(date) {
     const timezone = 'America/Los_Angeles';
 
     let currentDate;
@@ -24,7 +24,7 @@ module.exports = class shardsUtil {
     }
   }
 
-  shardsIndex(date) {
+  static shardsIndex(date) {
     const dayOfMonth = date.date();
     const shardIndex = (dayOfMonth - 1) % config.shardSequence.length;
     const currentShard = config.shardSequence[shardIndex];
@@ -34,7 +34,7 @@ module.exports = class shardsUtil {
     return { currentShard, currentRealm };
   }
 
-  getSuffix(number) {
+  static getSuffix(number) {
     const suffixes = ['th', 'st', 'nd', 'rd'];
     const remainder10 = number % 10;
     const remainder100 = number % 100;
@@ -51,7 +51,7 @@ module.exports = class shardsUtil {
     ];
   }
 
-  saveMessageData(data) {
+  static saveMessageData(data) {
     fs.readFile('messageData.json', 'utf8', (err, fileData) => {
       if (err) {
         if (err.code === 'ENOENT') {
@@ -77,7 +77,7 @@ module.exports = class shardsUtil {
     });
   }
 
-  getMessageDate(interaction, messageId) {
+  static getMessageDate(interaction, messageId) {
     const filePath = 'messageData.json';
 
     try {

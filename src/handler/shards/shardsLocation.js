@@ -8,9 +8,9 @@ let currentShardIndex = 0;
 
 async function shardLocation(interaction, Gale, Clement) {
   const messageId = interaction.message.id;
-  const currentDate = new shardsUtil().getMessageDate(interaction, messageId);
+  const currentDate = shardsUtil.getMessageDate(interaction, messageId);
   if (!currentDate) return;
-  const { currentShard, currentRealm } = new shardsUtil().shardsIndex(
+  const { currentShard, currentRealm } = shardsUtil.shardsIndex(
     currentDate,
   );
   if (interaction.customId === 'location') {

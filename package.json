@@ -17,6 +17,7 @@
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
+    "@canvas-fonts/helveticaneue": "^1.0.4",
     "@discordjs/builders": "^1.6.3",
     "@discordjs/rest": "^2.2.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
@@ -24,6 +25,7 @@
     "aos": "^2.3.4",
     "axios": "^1.6.5",
     "body-parser": "^1.20.2",
+    "canvafy": "^7.0.4",
     "chalk": "^4.1.2",
     "colors": "^1.4.0",
     "discord-api-types": "^0.37.47",

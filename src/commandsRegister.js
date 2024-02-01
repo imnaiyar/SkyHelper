@@ -5,6 +5,7 @@ const client = new SkyHelper();
 client.loadSlashCmd('./src/commands');
 
 client.on('ready', async () => {
+
   try {
     client.logger.success('Started refreshing application (/) commands.');
 

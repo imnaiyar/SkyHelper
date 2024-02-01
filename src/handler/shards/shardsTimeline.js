@@ -8,9 +8,9 @@ let currentShardIndex = 0;
 
 async function shardTimeline(interaction, Zhii, Christian) {
   const messageId = interaction.message.id; // Get the messageId of the current interaction
-  const currentDate = new util().getMessageDate(interaction, messageId);
+  const currentDate = util.getMessageDate(interaction, messageId);
   if (!currentDate) return;
-  const { currentShard } = new util().shardsIndex(currentDate);
+  const { currentShard } = util.shardsIndex(currentDate);
   if (interaction.customId === 'timeline') {
     currentShardIndex = 0;
     await showShard(

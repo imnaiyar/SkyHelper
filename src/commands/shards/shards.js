@@ -30,7 +30,7 @@ module.exports = {
       });
       return;
     }
-    const util = new shardsUtil();
+    const util = shardsUtil;
     const currentDate = util.getDate(dateOption);
     if (currentDate === 'invalid') {
       return interaction.reply({

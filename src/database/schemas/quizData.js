@@ -40,19 +40,17 @@ module.exports = {
     return userData;
   },
   getAll: async (guild) => {
-    try {
+    
       let allUsers;
       if (guild) {
-        const guildMemberIds = guild.members.map((member) => member.user.id);
+        const guildMemberIds = guild.members.cache.map((member) => member.user.id);
+        console.log(guildMemberIds);
         allUsers = await Model.find({ _id: { $in: guildMemberIds } }).sort({
           'quizData.quizWon': -1,
-        });
+        }).catch((err) => {throw new Error(err)});
       } else {
-        allUsers = await Model.find({}).sort({ 'quizData.quizWon': -1 });
+        allUsers = await Model.find({}).sort({ 'quizData.quizWon': -1 }).catch((err) => { throw new Error(err)});
       }
-      return allUsers;
-    } catch (err) {
-      throw err;
-    }
+      return allUsers ? allUsers : null;
   },
 };

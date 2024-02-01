@@ -29,7 +29,6 @@ module.exports = {
     autoShard: require('./schemas/autoShard'),
     autoTimes: require('./schemas/autoTimes'),
     guildBlackList: require('./schemas/guildBlackList'),
-    getUser: require('./schemas/quizData.js'),
-    getAll: require('./schemas/quizData.js')
+    quizData: require('./schemas/quizData.js')
   },
 };

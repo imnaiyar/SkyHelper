@@ -9,7 +9,7 @@ async function shardsAlt(currentDate) {
   const today = moment().tz(timezone).startOf('day');
   const noShard = currentDate.isSame(today, 'day') ? 'Today' : `${formatDate}`;
 
-  const { currentShard, currentRealm } = await new util().shardsIndex(
+  const { currentShard, currentRealm } = await util.shardsIndex(
     currentDate,
   );
   const timings = shardsTime(currentDate);
@@ -26,7 +26,7 @@ async function shardsAlt(currentDate) {
 
     if (present.isBetween(eventTiming.start, eventTiming.end)) {
       const duration = moment.duration(eventTiming.end.diff(present));
-      eventStatus = `${i + 1}${new util().getSuffix(
+      eventStatus = `${i + 1}${util.getSuffix(
         i + 1,
       )} Shard is active right now`;
       timeRemaining = `Ends in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${endUnix}:t>)`;
@@ -36,7 +36,7 @@ async function shardsAlt(currentDate) {
       const hoursRemaining = Math.floor(duration.asHours());
       const minutesRemaining = Math.floor(duration.asMinutes()) % 60;
       const secondsRemaining = Math.floor(duration.asSeconds()) % 60;
-      eventStatus = `${i + 1}${new util().getSuffix(
+      eventStatus = `${i + 1}${util.getSuffix(
         i + 1,
       )} Shard has not fallen yet`;
       timeRemaining = `Falls in ${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s (at <t:${startUnix}:T>)`;
@@ -47,9 +47,9 @@ async function shardsAlt(currentDate) {
       present.isBefore(eventTimings[i + 1].start)
     ) {
       const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);
-      eventStatus = `${i + 1}${new util().getSuffix(
+      eventStatus = `${i + 1}${util.getSuffix(
         i + 1,
-      )} shard ended at <t:${endUnix}:t>, ${i + 2}${new util().getSuffix(
+      )} shard ended at <t:${endUnix}:t>, ${i + 2}${util.getSuffix(
         i + 2,
       )} Shard has not fallen yet`;
       const duration = moment.duration(eventTimings[i + 1].start.diff(present));
