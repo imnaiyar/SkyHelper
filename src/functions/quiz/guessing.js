@@ -4,8 +4,9 @@ const {
   ButtonBuilder,
   AttachmentBuilder,
 } = require('discord.js');
-const {quizWinnerCard} = require('../../functions/canvas/quizWinnerCard');
-const updateUser = require('./updateUser');
+const path = require('path');
+const { QuizWinnerCard } = require('../canvas/quizWinnerCard');
+const {updateUser} = require('@handler');
 const questions = require('./questions');
 module.exports = async (interaction, total) => {
   const gameData = interaction.client.gameData;
@@ -46,7 +47,7 @@ async function respond(interaction, data) {
   let msg;
   if (questionData.image) {
      const attachment = new AttachmentBuilder(
-      `src/handler/functions/${questionData.image.url}`,
+      path.join(__dirname, questionData.image.url),
       { name: `image.${questionData.image.type}` },
     )
       quesEmbed.setImage(`attachment://${attachment.name}`);
@@ -154,7 +155,7 @@ async function displayResults(interaction, data) {
     interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
   } else {
     const winner = interaction.guild.members.cache.get(highestScorer);
-    const card =  new quizWinnerCard(winner, highestScore, data.totalQuestions);
+    const card =  new QuizWinnerCard(winner, highestScore, data.totalQuestions);
        
     const cardBuffer = await card.build();
     const winnerBnr = new AttachmentBuilder(cardBuffer, { name: 'winner.png'})

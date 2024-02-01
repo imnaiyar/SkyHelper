@@ -44,7 +44,6 @@ module.exports = {
       let allUsers;
       if (guild) {
         const guildMemberIds = guild.members.cache.map((member) => member.user.id);
-        console.log(guildMemberIds);
         allUsers = await Model.find({ _id: { $in: guildMemberIds } }).sort({
           'quizData.quizWon': -1,
         }).catch((err) => {throw new Error(err)});

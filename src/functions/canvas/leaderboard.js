@@ -10,7 +10,7 @@ const path = require('path');
  * @typedef {object} SkyLeaderboard
  * @class
  */
-module.exports = class SkyLeaderboard {
+class QuizLeaderboardCard {
   constructor(options) {
     this.usersData = options?.usersData || [{ top: 1, avatar: "https://i.pinimg.com/736x/c6/a8/5f/c6a85f7dbcbf367d5dc1baa2aaa19a73.jpg", tag: "Beş#0005", score: 5, games:5 },{ top: 2, avatar: "https://i.pinimg.com/736x/c6/a8/5f/c6a85f7dbcbf367d5dc1baa2aaa19a73.jpg", tag: "Beş#0005", score: 5, games: 5},{ top: 3, avatar: "https://i.pinimg.com/736x/c6/a8/5f/c6a85f7dbcbf367d5dc1baa2aaa19a73.jpg", tag: "Beş#0005", score: 5, games: 5}];
     this.background = {
@@ -258,4 +258,5 @@ module.exports = class SkyLeaderboard {
   }
 
 
-};
+}
+module.exports = { QuizLeaderboardCard };

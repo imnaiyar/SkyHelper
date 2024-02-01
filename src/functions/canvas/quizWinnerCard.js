@@ -11,7 +11,7 @@ canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-black.t
 canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notoemoji-bold.ttf`), "noto-emoji");
 canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-kr-black.ttf`), "noto-sans-kr");
 
-class quizWinnerCard {
+class QuizWinnerCard {
     constructor(member, wins, total) {
         this.name = member?.displayName || member.user.globalName;
         this.author = member.user.username;
@@ -143,4 +143,4 @@ ctx.drawImage(img, centerX+20, centerY+30, imgWidth, imgHeight);
     }
 }
 
-module.exports = { quizWinnerCard };
+module.exports = { QuizWinnerCard };

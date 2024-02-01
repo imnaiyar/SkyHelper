@@ -5,7 +5,7 @@ const {
 } = require('discord.js');
 const { Guides } = require('./sub/GuideOption');
 const choiceResponses = require('./sub/GuideResponse.js');
-const index = require('./sub/spiritsIndex.js');
+const spirits = require('./sub/spiritsIndex.js');
 const desc = require('@src/cmdDesc');
 module.exports = {
   cooldown: 3,
@@ -47,7 +47,7 @@ module.exports = {
     };
     if (spirit) {
       const msg = await interaction.deferReply({ ephemeral: ephemeral });
-      const value = index[spirit.toUpperCase()];
+      const value = spirits[spirit.toUpperCase()];
       if (!value) {
         return interaction.followUp({
           content: `\`${spirit}\` does not exist.\n\nMake sure the spirit name is valid and you provide the full name, like, \`Talented Builder\` (without any extra spaces)`,

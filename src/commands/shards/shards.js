@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType } = require('discord.js');
-const { buildShardEmbed } = require('@functions');
-const shardsUtil = require('@functions/shardsUtil');
+const { buildShardEmbed } = require('@handler');
+const shardsUtil = require('@handler/shardsUtil');
 const moment = require('moment-timezone');
 const desc = require('@src/cmdDesc');
 module.exports = {

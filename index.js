@@ -1,10 +1,9 @@
 require('dotenv').config();
 require('module-alias/register');
 const cron = require('node-cron');
-const { shardsUpdate } = require('@handler/shardsUpdate');
-const { timesUpdate } = require('@handler/timesUpdate');
+const { shardsUpdate, timesUpdate} = require('@functions');
 const { initializeMongoose } = require('@src/database/mongoose');
-const { setupPresence } = require('@handler/presence/presence');
+const { setupPresence } = require('@handler');
 const SkyHelper = require('./main');
 const client = new SkyHelper();
 

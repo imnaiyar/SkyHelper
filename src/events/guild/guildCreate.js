@@ -4,7 +4,7 @@ const { getSettings: registerGuild } = require('@schemas/Guild');
 const Guild = require('@schemas/guildBlackList');
 const Logger = require('@src/logger');
 const config = require('@root/config.js');
-const { topggAutopost } = require('@handler/functions/topgg-autopost');
+const { topggAutopost } = require('@functions');
 const { botSettings } = require('@schemas/botStats');
 
 const webhookLogger = process.env.GUILD

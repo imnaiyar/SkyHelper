@@ -1,13 +1,13 @@
 
 const {  AttachmentBuilder } = require('discord.js');
-const {quizWinnerCard} = require('../../functions/canvas/quizWinnerCard')
+const {QuizWinnerCard} = require('@functions')
 module.exports = {
   data: {
     name: 'test',
     description: 'Set a new prefix for this server',
   },
   async execute(message, args) {
-    const card =  new quizWinnerCard(message.member, '5', '10')
+    const card =  new QuizWinnerCard(message.member, '5', '10')
 
        
     const cardBuffer = await card.build();

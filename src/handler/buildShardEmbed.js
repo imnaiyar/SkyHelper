@@ -1,4 +1,4 @@
-const { shardsReply } = require('@shards/sub/shardsReply');
+const { shardsReply } = require('@functions/shards/sub/shardsReply');
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('@root/config');
 module.exports = async (currentDate, footer) => {

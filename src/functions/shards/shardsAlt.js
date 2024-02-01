@@ -1,6 +1,6 @@
 const moment = require('moment');
 const shardsTime = require('./sub/eventTimings.js');
-const util = require('@functions/shardsUtil');
+const util = require('@handler/shardsUtil');
 
 async function shardsAlt(currentDate) {
   const timezone = 'America/Los_Angeles';

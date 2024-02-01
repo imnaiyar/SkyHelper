@@ -65,7 +65,7 @@
     "@root": ".",
     "@schemas": "src/database/schemas/",
     "@events": "src/events/",
-    "@functions": "src/handler/functions"
+    "@functions": "src/functions"
   },
   "devDependencies": {
     "eslint": "^8.52.0",

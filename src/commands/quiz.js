@@ -7,7 +7,7 @@ const {
   AttachmentBuilder
 } = require('discord.js');
 
-const SkyLeaderboard = require('../functions/canvas/leaderboard')
+const {QuizLeaderboardCard} = require('@functions')
 module.exports = {
   data: {
     name: 'quiz',
@@ -202,7 +202,7 @@ async function getAllUser(data, client) {
   })
 }
 
-const top = await new SkyLeaderboard()
+const top = await new QuizLeaderboardCard()
       .setOpacity(0.6)
       .setScoreMessage("Wins:") //(Preferred Option)
       .setabbreviateNumber(false) //(Preferred Option)

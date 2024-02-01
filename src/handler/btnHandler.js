@@ -1,9 +1,7 @@
-const { shardInfos } = require('@shards/aboutShards');
+
 const d = require('discord.js');
-const { shardLocation } = require('@shards/shardsLocation');
-const { shardTimeline } = require('@shards/shardsTimeline');
-const { nextPrev } = require('@shards/sub/scrollFunc');
-const askQuestion = require('./guessing.js');
+const { shardLocation, shardTimeline, shardInfos, nextPrev} = require('@functions/shards');
+const {askQuestion} = require('@functions');
 module.exports = async (interaction) => {
   if (!interaction.isButton()) return;
   const { client } = interaction;

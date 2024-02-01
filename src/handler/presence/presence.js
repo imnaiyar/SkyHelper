@@ -2,9 +2,9 @@
 
 const { ActivityType } = require('discord.js');
 const cron = require('node-cron');
-const { shardsTime } = require('@handler/presence/shardsTime');
+const { shardsTime } = require('./shardsTime');
 
-function setupPresence(client) {
+module.exports = (client) => {
   cron.schedule('*/1 * * * *', async () => {
     const status = await shardsTime();
     client.user.setPresence({
@@ -14,6 +14,3 @@ function setupPresence(client) {
   });
 }
 
-module.exports = {
-  setupPresence,
-};

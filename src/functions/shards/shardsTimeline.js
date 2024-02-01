@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const util = require('@functions/shardsUtil');
+const util = require('@handler/shardsUtil');
 const { nextPrev } = require('./sub/scrollFunc');
 const shardData = require('./sub/timelineData');
 

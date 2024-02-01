@@ -1,4 +1,4 @@
-const { shardsAlt } = require('@shards/shardsAlt');
+const { shardsAlt } = require('../shardsAlt');
 
 async function shardsReply(currentDate) {
   const {
