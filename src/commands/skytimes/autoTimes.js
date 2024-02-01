@@ -1,7 +1,7 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 const moment = require('moment-timezone');
 const { autoTimes } = require('@schemas/autoTimes');
-const { parsePerm, deleteSchema, buildTimesEmbed } = require('@functions');
+const { deleteSchema, buildTimesEmbed } = require('@functions');
 const desc = require('@src/cmdDesc');
 module.exports = {
   data: {
