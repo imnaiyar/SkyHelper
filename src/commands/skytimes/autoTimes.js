@@ -50,6 +50,9 @@ module.exports = {
         }
       }
       const channel = interaction.options.getChannel('channel');
+      if (!channel.isTextBased() || channel.isVoiceBased()) {
+        return interaction.followUp({ content: `${channel} is not a text channel or is a voice channel. Please provide a valid text channel`})
+      }
       const requiredPerms = ['SendMessages', 'ViewChannel'];
       const missingPerms = [];
 
