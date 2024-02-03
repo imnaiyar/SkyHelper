@@ -1,20 +1,16 @@
-const { error } = require('@src/logger');
-const chalk = require('chalk');
+const { error } = require("@src/logger");
+const chalk = require("chalk");
 module.exports = {
   cmdValidation: (cmd, file) => {
     if (!cmd.data) {
       error(`
-         ${chalk.yellow(
-           `[${file}]:`,
-         )} This command doesn't contain a valid "data" object. Skipping..`);
+         ${chalk.yellow(`[${file}]:`)} This command doesn't contain a valid "data" object. Skipping..`);
       return false;
     }
 
     if (!cmd.execute) {
       error(`
-         ${chalk.yellow(
-           `[${file}]:`,
-         )} Command missing an "execute" function. Skipping...`);
+         ${chalk.yellow(`[${file}]:`)} Command missing an "execute" function. Skipping...`);
       return false;
     }
 

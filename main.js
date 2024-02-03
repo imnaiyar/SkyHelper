@@ -1,16 +1,11 @@
-const {
-  Client,
-  GatewayIntentBits,
-  Collection,
-  Partials,
-} = require('discord.js');
-const { table } = require('table');
-const moment = require('moment-timezone');
-const { recursiveReadDirSync, validations, cmdValidation } = require('@handler');
-const { schemas } = require('@src/database/mongoose');
-const fs = require('fs');
-const path = require('path');
-const Logger = require('@src/logger');
+const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
+const { table } = require("table");
+const moment = require("moment-timezone");
+const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
+const { schemas } = require("@src/database/mongoose");
+const fs = require("fs");
+const path = require("path");
+const Logger = require("@src/logger");
 module.exports = class SkyHelper extends Client {
   constructor() {
     super({
@@ -25,20 +20,20 @@ module.exports = class SkyHelper extends Client {
       ],
       partials: [Partials.Channel, Partials.Message],
     });
-    this.config = require('./config.js');
+    this.config = require("./config.js");
     this.logger = Logger;
     this.commands = new Collection();
     this.cooldowns = new Collection();
-    this.timezone = 'America/Los_Angeles';
+    this.timezone = "America/Los_Angeles";
     this.prefix = new Collection();
     this.database = schemas;
     // Datas for Events in Sky
     this.skyEvents = {
       eventActive: true,
-      eventName: 'Days of Fortune',
-      eventStarts: moment.tz('2024-01-29T00:00:00', this.timezone),
-      eventEnds: moment.tz('2024-02-11T23:59:59', this.timezone),
-      eventDuration: '13 days',
+      eventName: "Days of Fortune",
+      eventStarts: moment.tz("2024-01-29T00:00:00", this.timezone),
+      eventEnds: moment.tz("2024-02-11T23:59:59", this.timezone),
+      eventDuration: "13 days",
     };
 
     // user object cache for credits
@@ -49,13 +44,12 @@ module.exports = class SkyHelper extends Client {
 
     // Checks for how this class is created so it doesnt mess up the process
     if (
-      require.main.filename !== path.join(process.cwd(), 'src', 'commandsRegister.js') &&
+      require.main.filename !== path.join(process.cwd(), "src", "commandsRegister.js") &&
       this.config.DASHBOARD.enabled
     ) {
-      const { loadWebsite } = require('./web/server.js');
+      const { loadWebsite } = require("./web/server.js");
       loadWebsite(this);
     }
-    
   }
 
   /**
@@ -81,11 +75,11 @@ module.exports = class SkyHelper extends Client {
     recursiveReadDirSync(directory).forEach((filePath) => {
       const file = path.basename(filePath);
       try {
-        const eventName = path.basename(file, '.js');
+        const eventName = path.basename(file, ".js");
         const event = require(filePath);
 
         this.on(eventName, event.bind(null, this));
-        clientEvents.push([file, '✓']);
+        clientEvents.push([file, "✓"]);
 
         delete require.cache[require.resolve(filePath)];
         success += 1;
@@ -98,19 +92,15 @@ module.exports = class SkyHelper extends Client {
     console.log(
       table(clientEvents, {
         header: {
-          alignment: 'center',
-          content: 'Client Events',
+          alignment: "center",
+          content: "Client Events",
         },
         singleLine: true,
-        columns: [{ width: 25 }, { width: 5, alignment: 'center' }],
-      }),
+        columns: [{ width: 25 }, { width: 5, alignment: "center" }],
+      })
     );
 
-    Logger.log(
-      `Loaded ${
-        success + failed
-      } events. Success (${success}) Failed (${failed})`,
-    );
+    Logger.log(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`);
   }
 
   /**
@@ -126,10 +116,10 @@ module.exports = class SkyHelper extends Client {
       const fileStat = fs.statSync(filePath);
 
       if (fileStat.isDirectory()) {
-        if (file !== 'sub' && file !== 'prefix') {
+        if (file !== "sub" && file !== "prefix") {
           this.loadSlashCmd(filePath);
         }
-      } else if (file.endsWith('.js') && !file.startsWith('skyEvents')) {
+      } else if (file.endsWith(".js") && !file.startsWith("skyEvents")) {
         const command = require(filePath);
         const vld = cmdValidation(command, file);
         if (!vld) continue;
@@ -144,9 +134,7 @@ module.exports = class SkyHelper extends Client {
    */
   loadPrefix(dir) {
     const prefixDirectory = path.join(__dirname, dir);
-    const commandFiles = fs
-      .readdirSync(prefixDirectory)
-      .filter((file) => file.endsWith('.js'));
+    const commandFiles = fs.readdirSync(prefixDirectory).filter((file) => file.endsWith(".js"));
 
     for (const file of commandFiles) {
       const command = require(`@src/commands/prefix/${file}`);
@@ -172,14 +160,14 @@ module.exports = class SkyHelper extends Client {
 
     await this.application.commands.set(toRegister);
 
-    this.logger.success('Successfully registered interactions');
+    this.logger.success("Successfully registered interactions");
   }
   /**
    * Get bot's invite
    */
   getInvite() {
     return this.generateInvite({
-      scopes: ['bot', 'applications.commands'],
+      scopes: ["bot", "applications.commands"],
       permissions: 412317243584n,
     });
   }
@@ -190,7 +178,7 @@ module.exports = class SkyHelper extends Client {
 
   async createWebhook(channel, name, avatar) {
     const webhook = await channel.createWebhook({
-      name: name ? name : 'SkyHelper',
+      name: name ? name : "SkyHelper",
       avatar: avatar ? avatar : this.user.displayAvatarURL(),
     });
     return webhook.url;
@@ -200,22 +188,17 @@ module.exports = class SkyHelper extends Client {
    * get commands from client application
    */
   async getCommand(value) {
-    if (!value)
-      throw new Error('Command "name" or "id" must be passed as an argument');
+    if (!value) throw new Error('Command "name" or "id" must be passed as an argument');
     await this.application.commands.fetch();
     const command =
-      typeof value === 'string' && isNaN(value)
-        ? this.application.commands.cache.find(
-            (cmd) => cmd.name === value.toLowerCase(),
-          )
+      typeof value === "string" && isNaN(value)
+        ? this.application.commands.cache.find((cmd) => cmd.name === value.toLowerCase())
         : !isNaN(value)
-          ? this.application.commands.cache.get(value)
-          : (() => {
-              throw new Error(
-                'Provided Value Must Either be a String or a Number',
-              );
-            })();
-    if (!command) throw new Error('No matching command found');
+        ? this.application.commands.cache.get(value)
+        : (() => {
+            throw new Error("Provided Value Must Either be a String or a Number");
+          })();
+    if (!command) throw new Error("No matching command found");
     return command;
   }
 
@@ -226,13 +209,12 @@ module.exports = class SkyHelper extends Client {
    */
   async getUser(name, id) {
     if (!name) throw new Error('User "name" must be provide');
-    if (typeof name !== 'string') throw new Error('User name must be a String');
+    if (typeof name !== "string") throw new Error("User name must be a String");
     let user = this.userCache.get(name);
     if (!user) {
-      if (!id)
-        throw new Error('User is not cached, an user ID must be provided');
-      if (isNaN(parseInt(id))) throw new Error('User ID must be a number');
-      user = this.users.cache.get(id) || await this.users.fetch(id);
+      if (!id) throw new Error("User is not cached, an user ID must be provided");
+      if (isNaN(parseInt(id))) throw new Error("User ID must be a number");
+      user = this.users.cache.get(id) || (await this.users.fetch(id));
       this.userCache.set(name, user);
     }
     return user;
@@ -243,12 +225,9 @@ module.exports = class SkyHelper extends Client {
    * @param {string} id - guild id
    */
   leaveServer(id) {
-    if (isNaN(parseInt(id))) throw new Error('Guild Id must be a number');
+    if (isNaN(parseInt(id))) throw new Error("Guild Id must be a number");
     const guildToLeave = this.guilds.cache.get(id);
-    if (!guildToLeave)
-      throw new Error(
-        "There's no guild associated with the given ID that I am in",
-      );
+    if (!guildToLeave) throw new Error("There's no guild associated with the given ID that I am in");
     guildToLeave.leave();
     return `Succesfully left ${guildToLeave.name} (${guildToLeave.id})`;
   }

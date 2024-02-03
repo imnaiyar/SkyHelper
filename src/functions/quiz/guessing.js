@@ -1,13 +1,8 @@
-const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  AttachmentBuilder,
-} = require('discord.js');
-const path = require('path');
-const { QuizWinnerCard } = require('../canvas/quizWinnerCard');
-const {updateUser} = require('@handler');
-const questions = require('./questions');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } = require("discord.js");
+const path = require("path");
+const { QuizWinnerCard } = require("../canvas/quizWinnerCard");
+const { updateUser } = require("@handler");
+const questions = require("./questions");
 module.exports = async (interaction, total) => {
   const gameData = interaction.client.gameData;
   gameData.set(interaction.channel.id, {
@@ -34,23 +29,20 @@ async function respond(interaction, data) {
 
   const quesEmbed = new EmbedBuilder()
     .setTitle(`Question ${data.currentQuestion + 1}`)
-    .setColor('Random')
+    .setColor("Random")
     .setAuthor({
-      name: 'Quiz Game',
+      name: "Quiz Game",
     })
     .setFooter({
       text: 'type "**stop**" to stop the game',
     })
-    .setDescription(
-      `${questionData.question}\n\n<a:timer1:1197767726324781157> <a:timer2:1197767745610203218>`,
-    );
+    .setDescription(`${questionData.question}\n\n<a:timer1:1197767726324781157> <a:timer2:1197767745610203218>`);
   let msg;
   if (questionData.image) {
-     const attachment = new AttachmentBuilder(
-      path.join(__dirname, questionData.image.url),
-      { name: `image.${questionData.image.type}` },
-    )
-      quesEmbed.setImage(`attachment://${attachment.name}`);
+    const attachment = new AttachmentBuilder(path.join(__dirname, questionData.image.url), {
+      name: `image.${questionData.image.type}`,
+    });
+    quesEmbed.setImage(`attachment://${attachment.name}`);
     msg = await interaction.channel.send({
       embeds: [quesEmbed],
       files: [attachment],
@@ -63,13 +55,11 @@ async function respond(interaction, data) {
     });
   }
 
-  collector.on('collect', (message) => {
+  collector.on("collect", (message) => {
     const answer = message.content.toLowerCase();
-    if (answer === 'stop') {
+    if (answer === "stop") {
       if (message.author.id !== interaction.user.id) {
-        return message.reply(
-          'Only the one who started the game can perform this action.',
-        );
+        return message.reply("Only the one who started the game can perform this action.");
       }
       data.currentQuestion = data.totalQuestions;
       collector.stop();
@@ -82,13 +72,13 @@ async function respond(interaction, data) {
       setTimeout(async () => {
         collector.stop();
       }, 2000);
-    } 
+    }
   });
 
-  collector.on('end', async (collected) => {
+  collector.on("end", async (collected) => {
     if (collected.size === 0) {
       interaction.channel.send(
-        `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`,
+        `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`
       );
     }
 
@@ -107,7 +97,7 @@ async function respond(interaction, data) {
 function updateUserPoints(userId, userPoints, won) {
   if (!userPoints[userId]) {
     userPoints[userId] = 0;
-  } 
+  }
   if (won) {
     userPoints[userId]++;
   }
@@ -120,7 +110,7 @@ async function displayResults(interaction, data) {
     .reduce((obj, [userId, points]) => ({ ...obj, [userId]: points }), {});
   const highestScorer = Object.keys(sortedUserPoints)[0];
   const highestScore = sortedUserPoints[highestScorer];
-  
+
   await updateUser(interaction.client, sortedUserPoints, highestScore > 0 ? highestScorer : null);
   for (const userId in sortedUserPoints) {
     result += `- <@${userId}> -  ${data.userPoints[userId]} (Accuracy Rate: ${
@@ -128,37 +118,32 @@ async function displayResults(interaction, data) {
     }%)\n`;
   }
   const resultEmbed = new EmbedBuilder()
-    .setTitle('Result')
+    .setTitle("Result")
     .setDescription(
-      `<@${highestScorer}> (${highestScore} points) is the winner <:confettiCousin:1131650251216920656>\n\n**Scoreboard**\n${result}`,
+      `<@${highestScorer}> (${highestScore} points) is the winner <:confettiCousin:1131650251216920656>\n\n**Scoreboard**\n${result}`
     )
-    .setColor('Random')
-    .setThumbnail(
-      'https://media.discordapp.net/attachments/867638574571323424/1196578824784191488/1705349785289.png',
-    )
+    .setColor("Random")
+    .setThumbnail("https://media.discordapp.net/attachments/867638574571323424/1196578824784191488/1705349785289.png")
     .setFooter({
-      text: 'SkyHelper',
+      text: "SkyHelper",
       iconURL: interaction.client.user.displayAvatarURL(),
     })
-    .setAuthor({ name: 'End of Quiz' });
+    .setAuthor({ name: "End of Quiz" });
   const btn = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId(`play-again_${data.totalQuestions}`)
-      .setLabel('Play Again')
-      .setStyle(3),
+    new ButtonBuilder().setCustomId(`play-again_${data.totalQuestions}`).setLabel("Play Again").setStyle(3)
   );
   if (!highestScorer) {
-    resultEmbed.setDescription('No one participated in the game');
+    resultEmbed.setDescription("No one participated in the game");
     interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
   } else if (highestScore === 0) {
-    resultEmbed.setDescription('No one got a correct answer');
+    resultEmbed.setDescription("No one got a correct answer");
     interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
   } else {
     const winner = interaction.guild.members.cache.get(highestScorer);
-    const card =  new QuizWinnerCard(winner, highestScore, data.totalQuestions);
-       
+    const card = new QuizWinnerCard(winner, highestScore, data.totalQuestions);
+
     const cardBuffer = await card.build();
-    const winnerBnr = new AttachmentBuilder(cardBuffer, { name: 'winner.png'})
+    const winnerBnr = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
     resultEmbed.setImage(`attachment://${winnerBnr.name}`);
     interaction.channel.send({
       embeds: [resultEmbed],
@@ -174,5 +159,3 @@ function getRandomQuestions(questions, numberOfQuestions) {
 
   return selectedQuestions;
 }
-
-

@@ -1,4 +1,4 @@
-const { model, Schema } = require('mongoose');
+const { model, Schema } = require("mongoose");
 
 // Define the schema
 const BlacklistedGuildSchema = new Schema({
@@ -9,4 +9,4 @@ const BlacklistedGuildSchema = new Schema({
 });
 
 // Create and export the BlacklistedGuild model
-module.exports = model('blacklist-guild', BlacklistedGuildSchema);
+module.exports = model("blacklist-guild", BlacklistedGuildSchema);

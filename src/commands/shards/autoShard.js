@@ -1,44 +1,44 @@
-const { ApplicationCommandOptionType } = require('discord.js');
-const moment = require('moment-timezone');
-const { buildShardEmbed, deleteSchema } = require('@handler');
-const { autoShard } = require('@schemas/autoShard');
-const desc = require('@src/cmdDesc');
+const { ApplicationCommandOptionType } = require("discord.js");
+const moment = require("moment-timezone");
+const { buildShardEmbed, deleteSchema } = require("@handler");
+const { autoShard } = require("@schemas/autoShard");
+const desc = require("@src/cmdDesc");
 module.exports = {
   data: {
-    name: 'shards-live',
-    description: 'auto updating message with live shards details',
+    name: "shards-live",
+    description: "auto updating message with live shards details",
     options: [
       {
-        name: 'start',
-        description: 'configure auto shard',
+        name: "start",
+        description: "configure auto shard",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
-            name: 'channel',
-            description: 'channel where shard details should be updated',
+            name: "channel",
+            description: "channel where shard details should be updated",
             type: ApplicationCommandOptionType.Channel,
             required: true,
           },
         ],
       },
       {
-        name: 'stop',
-        description: 'stop auto shard',
+        name: "stop",
+        description: "stop auto shard",
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
     dm_permission: false,
     longDesc: desc.autoShard,
-    userPermissions: ['ManageGuild'],
+    userPermissions: ["ManageGuild"],
   },
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.guild) {
-      return interaction.followUp('This command can only be used in a server');
+      return interaction.followUp("This command can only be used in a server");
     }
     const sub = interaction.options.getSubcommand();
     const config = await autoShard(interaction.guild);
-    if (sub === 'start') {
+    if (sub === "start") {
       if (config.channelId && config.messageId) {
         const ch = client.channels.cache.get(config.channelId);
         const ms = await ch.messages.cache.get(config.messageId);
@@ -48,11 +48,13 @@ module.exports = {
           });
         }
       }
-      const channel = interaction.options.getChannel('channel');
+      const channel = interaction.options.getChannel("channel");
       if (!channel.isTextBased() || channel.isVoiceBased()) {
-        return interaction.followUp({ content: `${channel} is not a text channel or is a voice channel. Please provide a valid text channel`})
+        return interaction.followUp({
+          content: `${channel} is not a text channel or is a voice channel. Please provide a valid text channel`,
+        });
       }
-      const requiredPerms = ['SendMessages', 'ViewChannel'];
+      const requiredPerms = ["SendMessages", "ViewChannel"];
       const missingPerms = [];
 
       for (const perm of requiredPerms) {
@@ -65,14 +67,14 @@ module.exports = {
         return interaction.followUp({
           content: `I do not have the required permissions (${missingPerms
             .map((prm) => `\`${prm}\``)
-            .join(', ')}) to perform this action in <#${channel.id}>`,
+            .join(", ")}) to perform this action in <#${channel.id}>`,
           ephemeral: true,
         });
       }
 
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const { result } = await buildShardEmbed(currentDate, 'Live Shard');
+      const { result } = await buildShardEmbed(currentDate, "Live Shard");
       const msg = await channel.send({
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
@@ -83,10 +85,10 @@ module.exports = {
       interaction.followUp({
         content: `Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`,
       });
-    } else if (sub === 'stop') {
+    } else if (sub === "stop") {
       if (!config.channelId || !config.messageId) {
         return interaction.followUp({
-          content: 'Live Shard is already disabled for this server',
+          content: "Live Shard is already disabled for this server",
         });
       }
       const ch = client.channels.cache.get(config.channelId);
@@ -96,10 +98,10 @@ module.exports = {
         }
       });
 
-      await deleteSchema('autoShard', interaction.guild.id);
+      await deleteSchema("autoShard", interaction.guild.id);
 
       interaction.followUp({
-        content: 'Live Shard is disabled',
+        content: "Live Shard is disabled",
       });
     }
   },

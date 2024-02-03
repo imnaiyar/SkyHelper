@@ -5,53 +5,44 @@ const {
   TextInputStyle,
   ActionRowBuilder,
   WebhookClient,
-} = require('discord.js');
-const suggWb = process.env.SUGGESTION
-  ? new WebhookClient({ url: process.env.SUGGESTION })
-  : undefined;
+} = require("discord.js");
+const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
 async function getSuggestion(interaction) {
   const { client } = interaction;
-  const modal = new ModalBuilder()
-    .setCustomId('suggestionModal')
-    .setTitle('Suggestion');
+  const modal = new ModalBuilder().setCustomId("suggestionModal").setTitle("Suggestion");
 
   const fields = {
     title: new TextInputBuilder()
-      .setCustomId('title')
-      .setLabel('Title')
-      .setPlaceholder('Title for the suggestion')
+      .setCustomId("title")
+      .setLabel("Title")
+      .setPlaceholder("Title for the suggestion")
       .setStyle(TextInputStyle.Short),
     suggestion: new TextInputBuilder()
-      .setCustomId('suggestion')
-      .setLabel('Suggestion')
+      .setCustomId("suggestion")
+      .setLabel("Suggestion")
       .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder('Explain in brief about your suggestions.'),
+      .setPlaceholder("Explain in brief about your suggestions."),
   };
 
   const firstActionRow = new ActionRowBuilder().addComponents(fields.title);
-  const secondActionRow = new ActionRowBuilder().addComponents(
-    fields.suggestion,
-  );
+  const secondActionRow = new ActionRowBuilder().addComponents(fields.suggestion);
 
   modal.addComponents(firstActionRow, secondActionRow);
 
   await interaction.showModal(modal);
 
-  const filter = (interaction) => interaction.customId === 'suggestionModal';
+  const filter = (interaction) => interaction.customId === "suggestionModal";
   interaction
     .awaitModalSubmit({ filter, time: 2 * 60000 })
     .then((interaction) => {
-      const ti = interaction.fields.getTextInputValue('title');
-      const sugg = interaction.fields.getTextInputValue('suggestion');
+      const ti = interaction.fields.getTextInputValue("title");
+      const sugg = interaction.fields.getTextInputValue("suggestion");
       const embed = new EmbedBuilder()
         .setAuthor({
           name: `${interaction.user.username} made a suggestion`,
           iconURL: interaction.user.displayAvatarURL(),
         })
-        .addFields(
-          { name: `Title`, value: ti },
-          { name: `Suggestion`, value: sugg },
-        )
+        .addFields({ name: `Title`, value: ti }, { name: `Suggestion`, value: sugg })
         .setFooter({
           text: `SkyHelper`,
           iconURL: client.user.displayAvatarURL(),
@@ -65,7 +56,7 @@ async function getSuggestion(interaction) {
         })
         .then(() => {
           embed.addFields({
-            name: 'Server',
+            name: "Server",
             value: `${interaction.guild.name} (${interaction.guild.id})`,
           });
 
@@ -79,10 +70,10 @@ async function getChangelog(interaction) {
   const { client } = interaction;
   const embed = new EmbedBuilder()
     .setAuthor({ name: `Changelog`, iconURL: client.user.displayAvatarURL() })
-    .setColor('Gold')
+    .setColor("Gold")
     .setTitle(`Changelog v4.4.0`)
     .setDescription(
-      `Bot's website at ${client.config.WEB_URL} has been completely redesigned, added [commands](${client.config.WEB_URL}/commands) page to the website with detailed instructions on how to use them.\n\nCopy feature for 'timestsamp' command on the website has been redesignedt to provide a smooth experience.\n\nAdded a new option [spirit] to </seasonal-guides:1147244751708491897> command\n- you can search directly for a seasonal spirit's tree/location\n*other minor changes*\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`,
+      `Bot's website at ${client.config.WEB_URL} has been completely redesigned, added [commands](${client.config.WEB_URL}/commands) page to the website with detailed instructions on how to use them.\n\nCopy feature for 'timestsamp' command on the website has been redesignedt to provide a smooth experience.\n\nAdded a new option [spirit] to </seasonal-guides:1147244751708491897> command\n- you can search directly for a seasonal spirit's tree/location\n*other minor changes*\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`
     )
     .setFooter({ text: `v4.4.0` });
   interaction.reply({ embeds: [embed], ephemral: true });

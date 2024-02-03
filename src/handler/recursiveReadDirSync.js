@@ -1,12 +1,12 @@
-const { readdirSync, lstatSync } = require('fs');
-const { join, extname } = require('path');
-module.exports = (dir, allowedExtensions = ['.js']) => {
+const { readdirSync, lstatSync } = require("fs");
+const { join, extname } = require("path");
+module.exports = (dir, allowedExtensions = [".js"]) => {
   const filePaths = [];
   const readCommands = (dir) => {
     const files = readdirSync(join(process.cwd(), dir));
     files.forEach((file) => {
       const stat = lstatSync(join(process.cwd(), dir, file));
-      if (stat.isDirectory() && stat !== 'prefix') {
+      if (stat.isDirectory() && stat !== "prefix") {
         readCommands(join(dir, file));
       } else {
         const extension = extname(file);

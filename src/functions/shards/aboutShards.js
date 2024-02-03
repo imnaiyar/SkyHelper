@@ -1,53 +1,50 @@
-const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { nextPrev } = require('./sub/scrollFunc');
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { nextPrev } = require("./sub/scrollFunc");
 const shardInfo = [
   {
-    description: 'What are shards?',
+    description: "What are shards?",
     image:
-      'https://media.discordapp.net/attachments/585339436322259003/998518823231688724/I_watch_you_when_u_sleep_20220718171142.png',
+      "https://media.discordapp.net/attachments/585339436322259003/998518823231688724/I_watch_you_when_u_sleep_20220718171142.png",
   },
   {
-    description: 'How do I know when a shard comes?',
+    description: "How do I know when a shard comes?",
     image:
-      'https://media.discordapp.net/attachments/585339436322259003/998518823869231164/I_watch_you_when_u_sleep_20220718171208.png',
+      "https://media.discordapp.net/attachments/585339436322259003/998518823869231164/I_watch_you_when_u_sleep_20220718171208.png",
   },
   {
-    description: 'What are the rewards?',
+    description: "What are the rewards?",
     image:
-      'https://media.discordapp.net/attachments/585339436322259003/998518824443846696/I_watch_you_when_u_sleep_20220718171215.png',
+      "https://media.discordapp.net/attachments/585339436322259003/998518824443846696/I_watch_you_when_u_sleep_20220718171215.png",
   },
 ];
 const MAX_SHARD_INDEX = 2;
 let currentShardIndex = 0; // Declare currentShardIndex variable.
 
 async function shardInfos(interaction, Art) {
-  if (interaction.customId === 'about') {
+  if (interaction.customId === "about") {
     currentShardIndex = 0;
     await showShard(interaction, shardInfo[currentShardIndex], Art);
-  } else if (interaction.customId === 'about_left') {
+  } else if (interaction.customId === "about_left") {
     currentShardIndex = Math.max(currentShardIndex - 1, 0);
     await showShard(interaction, shardInfo[currentShardIndex], Art);
-  } else if (interaction.customId === 'about_right') {
+  } else if (interaction.customId === "about_right") {
     currentShardIndex = Math.min(currentShardIndex + 1, MAX_SHARD_INDEX);
     await showShard(interaction, shardInfo[currentShardIndex], Art);
-  } else if (interaction.customId === 'about_original') {
+  } else if (interaction.customId === "about_original") {
     await nextPrev(interaction);
   }
 }
 
 async function showShard(interaction, shard, Art) {
-  const avatarURL = Art.avatarURL({ format: 'png', size: 2048 });
+  const avatarURL = Art.avatarURL({ format: "png", size: 2048 });
 
   const shardEmbed = {
     title: shard.title,
     description: shard.description,
     color: 0x00ff00,
     footer: {
-      text: `Page ${currentShardIndex + 1} of ${
-        MAX_SHARD_INDEX + 1
-      } | Sky Shards Information`,
-      icon_url:
-        'https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png',
+      text: `Page ${currentShardIndex + 1} of ${MAX_SHARD_INDEX + 1} | Sky Shards Information`,
+      icon_url: "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
     },
     author: {
       name: `All about shards by Art(${Art.username})`,
@@ -59,19 +56,13 @@ async function showShard(interaction, shard, Art) {
   };
 
   const actionRow = new ActionRowBuilder().addComponents(
+    new ButtonBuilder().setEmoji("<a:left:1148644073670975640>").setCustomId("about_left").setStyle("1"),
+    new ButtonBuilder().setEmoji("<a:right:1148627450608222278>").setCustomId("about_right").setStyle("1"),
     new ButtonBuilder()
-      .setEmoji('<a:left:1148644073670975640>')
-      .setCustomId('about_left')
-      .setStyle('1'),
-    new ButtonBuilder()
-      .setEmoji('<a:right:1148627450608222278>')
-      .setCustomId('about_right')
-      .setStyle('1'),
-    new ButtonBuilder()
-      .setEmoji('<a:back:1148653107773976576>')
-      .setCustomId('about_original')
+      .setEmoji("<a:back:1148653107773976576>")
+      .setCustomId("about_original")
       .setStyle(3)
-      .setDisabled(false),
+      .setDisabled(false)
   );
 
   if (currentShardIndex === 0) {

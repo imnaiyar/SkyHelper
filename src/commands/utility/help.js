@@ -1,14 +1,14 @@
-const { ApplicationCommandOptionType } = require('discord.js');
-const { helpMenu } = require('./sub/help');
+const { ApplicationCommandOptionType } = require("discord.js");
+const { helpMenu } = require("./sub/help");
 module.exports = {
   data: {
-    name: 'help',
-    description: 'help menu',
-    longDesc: 'List of all Slash and Prefix commands and their usage.',
+    name: "help",
+    description: "help menu",
+    longDesc: "List of all Slash and Prefix commands and their usage.",
     options: [
       {
-        name: 'command',
-        description: 'get help for a specific command',
+        name: "command",
+        description: "get help for a specific command",
         type: ApplicationCommandOptionType.String,
         require: false,
         autocomplete: true,
@@ -22,17 +22,15 @@ module.exports = {
   async autocomplete(interaction, client) {
     const focusedValue = interaction.options.getFocused();
     const choices = [
-      'shards',
-      'seasonal-guides',
-      'next-shards',
-      'timestamp',
-      'sky-times',
-      'skytimes-live',
-      'shards-live',
+      "shards",
+      "seasonal-guides",
+      "next-shards",
+      "timestamp",
+      "sky-times",
+      "skytimes-live",
+      "shards-live",
     ];
     const filtered = choices.filter((choice) => choice.includes(focusedValue));
-    await interaction.respond(
-      filtered.map((choice) => ({ name: choice, value: choice })),
-    );
+    await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
   },
 };

@@ -1,19 +1,17 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   data: {
-    name: 'e',
-    description: 'Evaluate JavaScript code',
-    category: 'OWNER',
+    name: "e",
+    description: "Evaluate JavaScript code",
+    category: "OWNER",
   },
   async execute(message, args, client) {
-    const code = args.join(' ');
+    const code = args.join(" ");
     let response;
 
-    if (code.includes('process.env')) {
-      return message.channel.send(
-        'You cannot evaluate code containing process.env.',
-      );
+    if (code.includes("process.env")) {
+      return message.channel.send("You cannot evaluate code containing process.env.");
     }
 
     try {
@@ -28,18 +26,12 @@ module.exports = {
 
 const buildSuccessResponse = (output, client) => {
   // Token protection
-  output = require('util')
-    .inspect(output, { depth: 0 })
-    .replaceAll(client.token, 'LoL');
+  output = require("util").inspect(output, { depth: 0 }).replaceAll(client.token, "LoL");
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: '📤 Output' })
-    .setDescription(
-      '```js\n' +
-        (output.length > 4096 ? `${output.substr(0, 4000)}...` : output) +
-        '\n```',
-    )
-    .setColor('Green')
+    .setAuthor({ name: "📤 Output" })
+    .setDescription("```js\n" + (output.length > 4096 ? `${output.substr(0, 4000)}...` : output) + "\n```")
+    .setColor("Green")
     .setTimestamp();
 
   return { embeds: [embed] };
@@ -47,13 +39,9 @@ const buildSuccessResponse = (output, client) => {
 
 const buildErrorResponse = (err) => {
   const embed = new EmbedBuilder()
-    .setAuthor({ name: '📤 Error' })
-    .setDescription(
-      '```js\n' +
-        (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) +
-        '\n```',
-    )
-    .setColor('Red')
+    .setAuthor({ name: "📤 Error" })
+    .setDescription("```js\n" + (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) + "\n```")
+    .setColor("Red")
     .setTimestamp();
 
   return { embeds: [embed] };

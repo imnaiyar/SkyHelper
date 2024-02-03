@@ -169,16 +169,14 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
          .map(
            (field, index) => `
   <div>
-    <h2>● ${field.name} (e.g, <span class ="discUnix">${
-      field.example
-    }</span>)</h2>
+    <h2>● ${field.name} (e.g, <span class ="discUnix">${field.example}</span>)</h2>
     <span class="cmd">${sanitizeField(field.value)}</span>
     <button class="copyBtn" onclick="copyText(${index}, this)">Copy</button>
   </div>
   <br>
-`,
+`
          )
-         .join('')}
+         .join("")}
 <script>
   function copyText(index, button) {
     const cmdSpan = document.querySelectorAll('.cmd')[index];
@@ -241,5 +239,5 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
 };
 
 function sanitizeField(value) {
-  return value.replace(/`/g, '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return value.replace(/`/g, "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

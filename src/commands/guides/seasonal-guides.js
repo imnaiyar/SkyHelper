@@ -1,37 +1,33 @@
-const {
-  ApplicationCommandOptionType,
-  ActionRowBuilder,
-  ButtonBuilder,
-} = require('discord.js');
-const { Guides } = require('./sub/GuideOption');
-const choiceResponses = require('./sub/GuideResponse.js');
-const spirits = require('./sub/spiritsIndex.js');
-const desc = require('@src/cmdDesc');
+const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { Guides } = require("./sub/GuideOption");
+const choiceResponses = require("./sub/GuideResponse.js");
+const spirits = require("./sub/spiritsIndex.js");
+const desc = require("@src/cmdDesc");
 module.exports = {
   cooldown: 3,
   data: {
-    name: 'seasonal-guides',
-    description: 'various seasonal guides',
+    name: "seasonal-guides",
+    description: "various seasonal guides",
     longDesc: desc.guides,
     options: [
       {
-        name: 'spirit',
-        description: 'directly search for a spirit`s tree/location',
+        name: "spirit",
+        description: "directly search for a spirit`s tree/location",
         type: ApplicationCommandOptionType.String,
         required: false,
         autocomplete: true,
       },
       {
-        name: 'hide',
-        description: 'hide the guides from others (default: false)',
+        name: "hide",
+        description: "hide the guides from others (default: false)",
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
     ],
   },
   async execute(interaction) {
-    const spirit = interaction.options.getString('spirit');
-    const ephemeralOption = interaction.options.getBoolean('hide');
+    const spirit = interaction.options.getString("spirit");
+    const ephemeralOption = interaction.options.getBoolean("hide");
     const ephemeral = ephemeralOption !== null ? ephemeralOption : true;
 
     const filter = (i) => {
@@ -60,8 +56,8 @@ module.exports = {
         tree = value[1];
         location = value[0];
       } else {
-        tree = value + '_tree';
-        location = value + '_location';
+        tree = value + "_tree";
+        location = value + "_location";
       }
       const response = await choiceResponses.getResponse(tree);
       const respn = await choiceResponses.getResponse(location);
@@ -73,49 +69,47 @@ module.exports = {
       }
       const lctnBtn = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setEmoji('<:location:1131173266883612722>')
-          .setLabel('Location')
-          .setCustomId('sprtLctn')
+          .setEmoji("<:location:1131173266883612722>")
+          .setLabel("Location")
+          .setCustomId("sprtLctn")
           .setDisabled(disabled)
-          .setStyle('1'),
+          .setStyle("1")
       );
       const treeBtn = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setEmoji('<:tree:1131279758907424870>')
-          .setLabel('Friendship Tree')
-          .setCustomId('sprtTree')
-          .setStyle('1'),
+          .setEmoji("<:tree:1131279758907424870>")
+          .setLabel("Friendship Tree")
+          .setCustomId("sprtTree")
+          .setStyle("1")
       );
       await interaction.followUp({
-        content: `${response.content}${response.files
-          .map((file, index) => `[File ${index + 1}](${file})`)
-          .join('\n')}`,
+        content: `${response.content}${response.files.map((file, index) => `[File ${index + 1}](${file})`).join("\n")}`,
         components: [lctnBtn],
       });
       const collector = msg.createMessageComponentCollector({
         filter,
         idle: 3 * 60 * 1000,
       });
-      collector.on('collect', async (interaction) => {
+      collector.on("collect", async (interaction) => {
         const id = interaction.customId;
-        if (id === 'sprtTree') {
+        if (id === "sprtTree") {
           await interaction.update({
             content: `${response.content}\n\n${response.files
               .map((file, index) => `[File ${index + 1}](${file})`)
-              .join('\n')}`,
+              .join("\n")}`,
             components: [lctnBtn],
           });
-        } else if (id === 'sprtLctn') {
+        } else if (id === "sprtLctn") {
           await interaction.update({
             content: `${respn.content}\n\n${respn.files
               .map((file, index) => `[File ${index + 1}](${file})`)
-              .join('\n')}`,
+              .join("\n")}`,
             components: [treeBtn],
           });
         }
       });
 
-      collector.on('end', async () => {
+      collector.on("end", async () => {
         await msg.edit({
           components: [],
         });
@@ -128,12 +122,8 @@ module.exports = {
     const focusedValue = interaction.options.getFocused();
     const spiritNames = Object.keys(spirits);
     const filtered = spiritNames
-      .filter((choice) =>
-        choice.toUpperCase().includes(focusedValue.toUpperCase()),
-      )
+      .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
       .slice(0, 25);
-    await interaction.respond(
-      filtered.map((choice) => ({ name: choice, value: choice })),
-    );
+    await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
   },
 };

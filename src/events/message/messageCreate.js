@@ -1,16 +1,8 @@
-const {
-  WebhookClient,
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-} = require('discord.js');
-const { OWNER } = require('@root/config.js');
-const Log = require('@src/logger');
-const { parsePerm } = require('@functions');
-const Logger = process.env.COMMANDS_USED
-  ? new WebhookClient({ url: process.env.COMMANDS_USED })
-  : undefined;
+const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { OWNER } = require("@root/config.js");
+const Log = require("@src/logger");
+const { parsePerm } = require("@functions");
+const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;
@@ -24,7 +16,7 @@ module.exports = async (client, message) => {
   if (message.content.startsWith(`<@${client.user.id}>`)) {
     prefix = `<@${client.user.id}>`;
   } else if (message.content.startsWith(`.`)) {
-    prefix = '.';
+    prefix = ".";
   } else {
     return;
   }
@@ -39,39 +31,23 @@ module.exports = async (client, message) => {
   }
 
   // Check if command is 'OWNER' only.
-  if (
-    command.data.category &&
-    command.data.category === 'OWNER' &&
-    !OWNER.includes(message.author.id)
-  )
-    return;
+  if (command.data.category && command.data.category === "OWNER" && !OWNER.includes(message.author.id)) return;
 
   // Check if the bot has Send Message permission
-  if (
-    message.guild &&
-    !message.guild.members.me.permissionsIn(message.channel).has('SendMessages')
-  ) {
+  if (message.guild && !message.guild.members.me.permissionsIn(message.channel).has("SendMessages")) {
     message.author.send(
       `Hi, It seems you tried to use my command in a channel/server where I don't have ${parsePerm(
-        'SendMessages',
+        "SendMessages"
       )}. Please ask a server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: ${
         message.guild.name
-      }\n- Channel: ${message.channel}\n- Command Used: \` ${
-        command.data.name
-      } \``,
+      }\n- Channel: ${message.channel}\n- Command Used: \` ${command.data.name} \``
     );
     return;
   }
 
   // Check if the user has permissions to use the command.
-  if (
-    message.guild &&
-    command.data.userPermissions &&
-    !message.member.permissions.has(command.data.userPermissions)
-  ) {
-    return message.reply(
-      `You need ${parsePerm(command.data.userPermissions)} to use this command`,
-    );
+  if (message.guild && command.data.userPermissions && !message.member.permissions.has(command.data.userPermissions)) {
+    return message.reply(`You need ${parsePerm(command.data.userPermissions)} to use this command`);
   }
 
   // Execute the command.
@@ -80,7 +56,7 @@ module.exports = async (client, message) => {
 
     // Send Logs
     const embed = new EmbedBuilder()
-      .setTitle('New command used')
+      .setTitle("New command used")
       .addFields(
         { name: `Command`, value: `\`${command.data.name}\`` },
         {
@@ -94,14 +70,12 @@ module.exports = async (client, message) => {
         {
           name: `Channel`,
           value: `${message.channel?.name} \`[${message.channel?.id}]\``,
-        },
+        }
       )
-      .setColor('Blurple')
+      .setColor("Blurple")
       .setTimestamp();
     if (!OWNER.includes(message.author.id) && Logger) {
-      Logger.send({ username: 'Command Logs', embeds: [embed] }).catch(
-        (ex) => {},
-      );
+      Logger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
     }
   } catch (error) {
     Log.error(error);
@@ -110,10 +84,7 @@ module.exports = async (client, message) => {
       .setDescription(`An error occurred while executing this command.`);
 
     const actionRow = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setLabel('Report Bug')
-        .setCustomId('error_report')
-        .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setLabel("Report Bug").setCustomId("error_report").setStyle(ButtonStyle.Secondary)
     );
     await message.reply({
       embeds: [embed],

@@ -1,49 +1,45 @@
-const { WebhookClient, EmbedBuilder } = require('discord.js');
-const ready = process.env.READY_LOGS
-  ? new WebhookClient({ url: process.env.READY_LOGS })
-  : undefined;
+const { WebhookClient, EmbedBuilder } = require("discord.js");
+const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 module.exports = async (client) => {
   await client.guilds.fetch();
   let text;
   if (client.config.DASHBOARD.enabled) {
     text = `Website started on port ${client.config.DASHBOARD.port}`;
   } else {
-    text = 'Website is disabled';
+    text = "Website is disabled";
   }
   const readyalertemb = new EmbedBuilder()
     .addFields(
       {
-        name: 'Bot Status',
-        value: `Total guilds: ${
-          client.guilds.cache.size
-        }\nTotal Users: ${client.guilds.cache.reduce(
+        name: "Bot Status",
+        value: `Total guilds: ${client.guilds.cache.size}\nTotal Users: ${client.guilds.cache.reduce(
           (size, g) => size + g.memberCount,
-          0,
+          0
         )}`,
         inline: false,
       },
       {
-        name: 'Website',
+        name: "Website",
         value: text,
         inline: false,
       },
       {
-        name: 'Interactions',
+        name: "Interactions",
         value: `Loaded Interactions`,
         inline: false,
       },
       {
-        name: 'Success',
+        name: "Success",
         value: `SkyHelper is now online`,
-      },
+      }
     )
-    .setColor('Gold')
+    .setColor("Gold")
     .setTimestamp();
 
   // Ready alert
   if (ready) {
     ready.send({
-      username: 'Ready',
+      username: "Ready",
       avatarURL: client.user.displayAvatarURL(),
       embeds: [readyalertemb],
     });

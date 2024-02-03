@@ -1,12 +1,6 @@
-const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  time,
-} = require('discord.js');
-const config = require('@root/config');
-const moment = require('moment-timezone');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time } = require("discord.js");
+const config = require("@root/config");
+const moment = require("moment-timezone");
 
 function isTimezoneValid(timezone) {
   return moment.tz.zone(timezone) !== null;
@@ -20,33 +14,28 @@ function isTimeStringValid(timeString) {
 async function convertTime(interaction) {
   const { options } = interaction;
 
-  const Time = options.getString('time');
+  const Time = options.getString("time");
   if (!isTimeStringValid(Time)) {
     return interaction.reply({
-      content: 'Invalid time format. Please provide time in `HH mm ss` format.',
+      content: "Invalid time format. Please provide time in `HH mm ss` format.",
       ephemeral: true,
     });
   }
 
-  let timezone = options.getString('timezone') || 'America/Los_Angeles';
+  let timezone = options.getString("timezone") || "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
     return interaction.reply({
-      content:
-        'Invalid timezone. Please provide a correct one. Use the format: `Continent/City`',
+      content: "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`",
       ephemeral: true,
     });
   }
 
   const currentDate = moment().tz(timezone);
-  const date = options.getInteger('date') || currentDate.date();
-  const month = options.getInteger('month') || currentDate.month() + 1;
-  const year = options.getInteger('year') || currentDate.year();
+  const date = options.getInteger("date") || currentDate.date();
+  const month = options.getInteger("month") || currentDate.month() + 1;
+  const year = options.getInteger("year") || currentDate.year();
   const fDate = `${date}-${month}-${year}`;
-  const timestamp = moment.tz(
-    `${fDate} ${Time}`,
-    'DD-MM-YYYY HH mm ss',
-    timezone,
-  );
+  const timestamp = moment.tz(`${fDate} ${Time}`, "DD-MM-YYYY HH mm ss", timezone);
 
   if (!moment(timestamp).isValid()) {
     return interaction.reply({
@@ -56,37 +45,27 @@ async function convertTime(interaction) {
   }
 
   const offset = moment.tz(timezone).utcOffset();
-  const offsetString = `${offset >= 0 ? '+' : '-'}${Math.abs(
-    Math.floor(offset / 60),
-  )
+  const offsetString = `${offset >= 0 ? "+" : "-"}${Math.abs(Math.floor(offset / 60))
     .toString()
-    .padStart(2, '0')}:${Math.abs(offset % 60)
+    .padStart(2, "0")}:${Math.abs(offset % 60)
     .toString()
-    .padStart(2, '0')} UTC`;
+    .padStart(2, "0")} UTC`;
 
-  const formats = [
-    'date1',
-    'date2',
-    'shortTime',
-    'longTime',
-    'shortDateAndTime',
-    'longDateAndTime',
-    'minutes',
-  ];
+  const formats = ["date1", "date2", "shortTime", "longTime", "shortDateAndTime", "longDateAndTime", "minutes"];
   const formatted = {
-    date1: 'Date 1',
-    date2: 'Date 2',
-    shortTime: 'Short Time',
-    longTime: 'Long Time',
-    shortDateAndTime: 'Short Date and Time',
-    longDateAndTime: 'Long Date and Time',
-    minutes: 'Relative',
+    date1: "Date 1",
+    date2: "Date 2",
+    shortTime: "Short Time",
+    longTime: "Long Time",
+    shortDateAndTime: "Short Date and Time",
+    longDateAndTime: "Long Date and Time",
+    minutes: "Relative",
   };
-  const selectedFormat = options.getString('format');
+  const selectedFormat = options.getString("format");
   const result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion` })
-    .setColor('DarkGold')
-    .setDescription('Follow the link attached for easy copying.')
+    .setColor("DarkGold")
+    .setDescription("Follow the link attached for easy copying.")
     .setFooter({
       text: `for ${interaction.user.username}`,
       iconURL: interaction.user.displayAvatarURL(),
@@ -97,19 +76,19 @@ async function convertTime(interaction) {
       const formatKey = formatted[format];
       const timeValue = time(
         timestamp.toDate(),
-        format === 'minutes'
-          ? 'R'
-          : format === 'date1'
-            ? 'd'
-            : format === 'date2'
-              ? 'D'
-              : format === 'shortDateAndTime'
-                ? 'f'
-                : format === 'longDateAndTime'
-                  ? 'F'
-                  : format === 'shortTime'
-                    ? 't'
-                    : 'T',
+        format === "minutes"
+          ? "R"
+          : format === "date1"
+          ? "d"
+          : format === "date2"
+          ? "D"
+          : format === "shortDateAndTime"
+          ? "f"
+          : format === "longDateAndTime"
+          ? "F"
+          : format === "shortTime"
+          ? "t"
+          : "T"
       );
 
       result.addFields({
@@ -124,12 +103,12 @@ async function convertTime(interaction) {
   let fieldsData = [];
 
   const formatMap = {
-    'Date 1': 'DD/MM/YYYY',
-    'Date 2': 'DD MMMM YYYY',
-    'Short Time': 'HH:mm',
-    'Long Time': 'HH:mm:ss',
-    'Short Date and Time': 'DD MMMM YYYY HH:mm',
-    'Long Date and Time': 'dddd, DD MMMM YYYY HH:mm',
+    "Date 1": "DD/MM/YYYY",
+    "Date 2": "DD MMMM YYYY",
+    "Short Time": "HH:mm",
+    "Long Time": "HH:mm:ss",
+    "Short Date and Time": "DD MMMM YYYY HH:mm",
+    "Long Date and Time": "dddd, DD MMMM YYYY HH:mm",
     Relative: null,
   };
 
@@ -145,25 +124,16 @@ async function convertTime(interaction) {
       }
     }
   }
-  const providedTime = timestamp.format('DD/MM/YYYY HH:mm:ss');
+  const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
   const offset1 = `\nOffset - \` ${offsetString} \``;
-  const { buildTimeHTML } = require('@functions');
-  const { timeRoute } = require('@root/web/server');
+  const { buildTimeHTML } = require("@functions");
+  const { timeRoute } = require("@root/web/server");
   const webPath = `timestamp/${interaction.id}`;
-  const content = buildTimeHTML(
-    interaction,
-    fieldsData,
-    offsetString,
-    timezone,
-    providedTime,
-  );
+  const content = buildTimeHTML(interaction, fieldsData, offsetString, timezone, providedTime);
 
   timeRoute(webPath, content);
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setLabel('Copy')
-      .setURL(`${config.WEB_URL}/${webPath}`)
-      .setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${webPath}`).setStyle(ButtonStyle.Link)
   );
 
   return interaction.reply({

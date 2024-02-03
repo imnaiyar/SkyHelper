@@ -1,18 +1,7 @@
-const {
-  WebhookClient,
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonStyle,
-  ButtonBuilder,
-  Collection,
-} = require('discord.js');
-const { parsePerm, btnHandler } = require('@handler');
-const cLogger = process.env.COMMANDS_USED
-  ? new WebhookClient({ url: process.env.COMMANDS_USED })
-  : undefined;
-const bLogger = process.env.BUG_REPORTS
-  ? new WebhookClient({ url: process.env.BUG_REPORTS })
-  : undefined;
+const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, Collection } = require("discord.js");
+const { parsePerm, btnHandler } = require("@handler");
+const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
+const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 
 /**
  * @param {import('discord.js').Interaction} interaction
@@ -28,36 +17,28 @@ module.exports = async (client, interaction) => {
 
     if (!command) {
       return interaction.reply({
-        content: 'This command is Invalid or doesn`t exist',
+        content: "This command is Invalid or doesn`t exist",
         ephemeral: true,
       });
     }
     // If command is owner only.
     if (
       command.data.category &&
-      command.data.category === 'OWNER' &&
+      command.data.category === "OWNER" &&
       !client.config.OWNER.includes(interaction.user.id)
     )
       return;
 
     // Check if the user has permissions to use the command.
-    if (
-      command.data?.userPermissions &&
-      !interaction.member.permissions.has(command.data.userPermissions)
-    ) {
+    if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
       return interaction.reply({
-        content: `You need ${parsePerm(
-          command.data.userPermissions,
-        )} to use this command`,
+        content: `You need ${parsePerm(command.data.userPermissions)} to use this command`,
         ephemeral: true,
       });
     }
 
     // Check cooldowns
-    if (
-      command?.cooldown &&
-      !client.config.OWNER.includes(interaction.user.id)
-    ) {
+    if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
       const { cooldowns } = client;
 
       if (!cooldowns.has(command.data.name)) {
@@ -69,8 +50,7 @@ module.exports = async (client, interaction) => {
       const cooldownAmount = command.cooldown * 1000;
 
       if (timestamps.has(interaction.user.id)) {
-        const expirationTime =
-          timestamps.get(interaction.user.id) + cooldownAmount;
+        const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
 
         if (now < expirationTime) {
           const expiredTimestamp = Math.round(expirationTime / 1000);
@@ -87,7 +67,7 @@ module.exports = async (client, interaction) => {
     try {
       await command.execute(interaction, client);
       const embed = new EmbedBuilder()
-        .setTitle('New command used')
+        .setTitle("New command used")
         .addFields(
           { name: `Command`, value: `\`${interaction}\`` },
           {
@@ -101,19 +81,14 @@ module.exports = async (client, interaction) => {
           {
             name: `Channel`,
             value: `${interaction.channel?.name} \`[${interaction.channel?.id}]\``,
-          },
+          }
         )
-        .setColor('Blurple')
+        .setColor("Blurple")
         .setTimestamp();
 
       // Slash Commands
-      if (
-        !interaction.user.id.includes(client.config.OWNER) &&
-        process.env.COMMANDS_USED
-      ) {
-        cLogger
-          .send({ username: 'Command Logs', embeds: [embed] })
-          .catch((ex) => {});
+      if (!interaction.user.id.includes(client.config.OWNER) && process.env.COMMANDS_USED) {
+        cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
       }
     } catch (error) {
       client.logger.error(error);
@@ -122,10 +97,7 @@ module.exports = async (client, interaction) => {
         .setDescription(`An error occurred while executing this command.`);
 
       const actionRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setLabel('Report Bug')
-          .setCustomId('error_report')
-          .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder().setLabel("Report Bug").setCustomId("error_report").setStyle(ButtonStyle.Secondary)
       );
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
@@ -147,9 +119,7 @@ module.exports = async (client, interaction) => {
     const command = client.commands.get(interaction.commandName);
 
     if (!command) {
-      console.error(
-        `No command matching ${interaction.commandName} was found.`,
-      );
+      console.error(`No command matching ${interaction.commandName} was found.`);
       return;
     }
 
@@ -165,15 +135,15 @@ module.exports = async (client, interaction) => {
   }
   // Modals
   if (interaction.isModalSubmit()) {
-    if (interaction.customId === 'errorModal') {
+    if (interaction.customId === "errorModal") {
       await interaction.reply({
-        content: 'Your submission was received successfully!',
+        content: "Your submission was received successfully!",
         ephemeral: true,
       });
-      const commandUsed = interaction.fields.getTextInputValue('commandUsed');
-      const whatHappened = interaction.fields.getTextInputValue('whatHappened');
+      const commandUsed = interaction.fields.getTextInputValue("commandUsed");
+      const whatHappened = interaction.fields.getTextInputValue("whatHappened");
       const embed = new EmbedBuilder()
-        .setTitle('BUG REPORT')
+        .setTitle("BUG REPORT")
         .addFields(
           { name: `Command Used`, value: `\`${commandUsed}\`` },
           {
@@ -184,13 +154,11 @@ module.exports = async (client, interaction) => {
             name: `Server`,
             value: `${interaction.guild.name} \`[${interaction.guild.id}]\``,
           },
-          { name: `What Happened`, value: `${whatHappened}` },
+          { name: `What Happened`, value: `${whatHappened}` }
         )
-        .setColor('Blurple')
+        .setColor("Blurple")
         .setTimestamp();
-      bLogger
-        .send({ username: 'Bug Report', embeds: [embed] })
-        .catch((ex) => {});
+      bLogger.send({ username: "Bug Report", embeds: [embed] }).catch((ex) => {});
     }
   }
 };

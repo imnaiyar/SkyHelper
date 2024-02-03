@@ -1,18 +1,18 @@
-const sourcebin = require('sourcebin_js');
+const sourcebin = require("sourcebin_js");
 async function postToBin(content, title) {
   try {
     const response = await sourcebin.create(
       [
         {
-          name: ' ',
+          name: " ",
           content,
-          languageId: 'text',
+          languageId: "text",
         },
       ],
       {
         title,
-        description: ' ',
-      },
+        description: " ",
+      }
     );
     return {
       url: response.url,

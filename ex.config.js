@@ -1,5 +1,5 @@
 module.exports = {
-  OWNER: ['851588007697580033'],
+  OWNER: ["851588007697580033"],
   CACHE_SIZE: {
     GUILDS: 500,
     USERS: 200000,
@@ -7,19 +7,19 @@ module.exports = {
   },
 
   // WEB_URL: 'http://localhost:8519',
-  WEB_URL: 'https://skyhelper.xyz',
+  WEB_URL: "https://skyhelper.xyz",
 
   DASHBOARD: {
     enabled: false,
-    port: '8519',
+    port: "8519",
   },
-  Support: 'https://discord.gg/u9zUjWbbQ4',
+  Support: "https://discord.gg/u9zUjWbbQ4",
 
   EMBED_COLORS: {
-    BOT_EMBED: '#48d4ca',
-    TRANSPARENT: '#303236',
-    SUCCESS: '#48d4ca',
-    ERROR: '#275457',
-    WARNING: '#275457',
+    BOT_EMBED: "#48d4ca",
+    TRANSPARENT: "#303236",
+    SUCCESS: "#48d4ca",
+    ERROR: "#275457",
+    WARNING: "#275457",
   },
 };

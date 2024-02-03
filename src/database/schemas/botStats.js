@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = new mongoose.Schema({
   _id: String,
   data: {
@@ -8,7 +8,7 @@ const Schema = new mongoose.Schema({
   },
 });
 
-const Model = mongoose.model('botStats', Schema);
+const Model = mongoose.model("botStats", Schema);
 
 module.exports = {
   botSettings: async (client) => {
@@ -20,10 +20,7 @@ module.exports = {
         data: {
           servers: client.guilds.cache.size,
           slash: commands.size,
-          members: client.guilds.cache.reduce(
-            (total, guild) => total + guild.memberCount,
-            0,
-          ),
+          members: client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0),
         },
       });
 
