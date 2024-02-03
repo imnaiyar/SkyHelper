@@ -180,7 +180,7 @@ async function handleThird(interaction, firstChoices, secondChoices, messageChoi
         .addOptions(secondChoiceOptions)
     );
 
-    response = {
+    const response = {
       content: `Guides for ___${getLabel(firstChoices, messageChoice.firstChoice)}___`,
       components: [row],
       files: [],
