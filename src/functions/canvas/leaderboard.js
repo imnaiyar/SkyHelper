@@ -7,9 +7,14 @@ const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
 const path = require("path");
 
 /**
- * @typedef {object} SkyLeaderboard
+ * Represents a Quiz Leaderboard Card.
+ *
  * @class
+ * @classdesc A class for generating a leaderboard card for a quiz or game.
+ * @method build - Asynchronously builds the leaderboard card and returns the generated image buffer.
+ * @returns {Buffer} - The generated image buffer.
  */
+
 class QuizLeaderboardCard {
   constructor(options) {
     this.usersData = options?.usersData || [
@@ -55,7 +60,7 @@ class QuizLeaderboardCard {
   /**
    * .setUsersData
    * @param {Array||object} usersData [{ top: int, avatar: "string", tag: "string", score: int}]
-   * @returns {SkyLeaderboard}
+   * @returns {QuizLeaderboardCard}
    * @example setUsersData([{top:1,avatar:"https://someone-image.png",tag:"fivesobes",score:5}])
    */
   setUsersData(usersData) {
@@ -69,7 +74,7 @@ class QuizLeaderboardCard {
   /**
    * .setScoreMessage
    * @param {string} message Set Custom Score Message
-   * @returns {SkyLeaderboard}
+   * @returns {QuizLeaderboardCard}
    * @example setScoreMessage("Message")
    */
   setScoreMessage(message) {
@@ -80,7 +85,7 @@ class QuizLeaderboardCard {
   /**
    * .setColors
    * @param {object} colors {box: "hexcolor", username: "hexcolor", score: "hexcolor", firstRank: "hexcolor", secondRank: "hexcolor", thirdRank: "hexcolor"}
-   * @returns {SkyLeaderboard}
+   * @returns {QuizLeaderboardCard}
    * @example setColors({ box: '#212121', username: '#ffffff', score: '#ffffff', firstRank: '#f7c716', secondRank: '#9e9e9e', thirdRank: '#94610f' })
    */
   setColors(colors) {
@@ -91,7 +96,7 @@ class QuizLeaderboardCard {
   /**
    * .setabbreviateNumber
    * @param {boolean} bool must be "true" or "false"
-   * @returns {SkyLeaderboard}
+   * @returns {QuizLeaderboardCard}
    * @example setabbreviateNumber(true)
    */
   setabbreviateNumber(bool) {
@@ -105,7 +110,7 @@ class QuizLeaderboardCard {
   /**
    * .setOpacity
    * @param {number} opacity must be between 0 and 1
-   * @returns {SkyLeaderboard}
+   * @returns {QuizLeaderboardCard}
    * @example setOpacity(0.6)
    */
   setOpacity(opacity = 0) {
@@ -123,7 +128,7 @@ class QuizLeaderboardCard {
    * .setBackground
    * @param {string} type "image" or "color"
    * @param {string} value "url" or "hexcolor"
-   * @returns {SkyLeaderboard}
+   * @returns {QuizLeaderboardCard}
    * @example setBackground("image","https://someone-image.png")
    * @example setBackground("color","#000")
    */

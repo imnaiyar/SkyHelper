@@ -1,5 +1,9 @@
 const { time } = require("discord.js");
 
+/**
+ * @param {Date} currentDate 
+ * @returns 
+ */
 module.exports = (currentDate) => {
   const getTime = (hours, minutes, seconds) => {
     return time(

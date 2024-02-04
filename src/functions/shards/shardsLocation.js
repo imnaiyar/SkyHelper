@@ -6,6 +6,12 @@ const shardData = require("./sub/LocationData");
 const MAX_SHARD_INDEX = 1; // Two results for each event, so the max shard index is 1
 let currentShardIndex = 0;
 
+/**
+ * return location and data for a given shard, with appropriate user credits
+ * @param {import('discord.js').ButtonInteraction} interaction 
+ * @param {import('discord.js').User} Gale - user object for Clement (for shard location infographic)
+ * @param {import('discord.js').User} Clement - user object for Gale (for shard data infographic) 
+ */
 async function shardLocation(interaction, Gale, Clement) {
   const messageId = interaction.message.id;
   const currentDate = shardsUtil.getMessageDate(interaction, messageId);
@@ -25,6 +31,14 @@ async function shardLocation(interaction, Gale, Clement) {
   }
 }
 
+
+/**
+ * return location and data for a given shard, with appropriate user credits
+ * @param {import('discord.js').ButtonInteraction} interaction 
+ * @param {import('./sub/LocationData')} shard 
+ * @param {import('discord.js').User} Gale - user object for Clement (for shard location infographic)
+ * @param {import('discord.js').User} Clement - user object for Gale (for shard data infographic) 
+ */
 async function showShard(interaction, shard, Gale, Clement) {
   const clementIcon = Clement.avatarURL({ format: "png", size: 2048 });
   const galeIcon = Gale.avatarURL({ format: "png", size: 2048 });

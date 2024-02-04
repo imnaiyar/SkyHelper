@@ -1,8 +1,13 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } = require("discord.js");
 const path = require("path");
 const { QuizWinnerCard } = require("../canvas/quizWinnerCard");
-const { updateUser } = require("@handler");
+const updateUser  = require("../../handler/updateUser");
 const questions = require("./questions");
+
+/**
+ * @param {import('discord.js').Interaction} interaction 
+ * @param {number} total 
+ */
 module.exports = async (interaction, total) => {
   const gameData = interaction.client.gameData;
   gameData.set(interaction.channel.id, {
@@ -108,10 +113,12 @@ async function displayResults(interaction, data) {
   const sortedUserPoints = Object.entries(data.userPoints)
     .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
     .reduce((obj, [userId, points]) => ({ ...obj, [userId]: points }), {});
-  const highestScorer = Object.keys(sortedUserPoints)[0];
+    const keys = Object.keys(sortedUserPoints)
+  const highestScorer = keys[0];
   const highestScore = sortedUserPoints[highestScorer];
-
+  if (highestScorer && keys.length !== 1) { 
   await updateUser(interaction.client, sortedUserPoints, highestScore > 0 ? highestScorer : null);
+  }
   for (const userId in sortedUserPoints) {
     result += `- <@${userId}> -  ${data.userPoints[userId]} (Accuracy Rate: ${
       (data.userPoints[userId] / data.totalQuestions) * 100
@@ -120,7 +127,7 @@ async function displayResults(interaction, data) {
   const resultEmbed = new EmbedBuilder()
     .setTitle("Result")
     .setDescription(
-      `<@${highestScorer}> (${highestScore} points) is the winner <:confettiCousin:1131650251216920656>\n\n**Scoreboard**\n${result}`
+      `<@${highestScorer}> (${highestScore} points) is the winner <:confettiCousin:1131650251216920656>\n\n**Scoreboard**\n${result}\n\n${keys.length === 1 ? '_Note: Score won\'t be updated on the leaderboard for single player game._' : ''}`
     )
     .setColor("Random")
     .setThumbnail("https://media.discordapp.net/attachments/867638574571323424/1196578824784191488/1705349785289.png")

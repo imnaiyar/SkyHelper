@@ -2,6 +2,11 @@ const moment = require("moment-timezone");
 const fs = require("fs");
 const buildShardEmbed = require("@handler/buildShardEmbed");
 
+/**
+ * Function for the next or previous shard buttons
+ * @param {import('discord.js').ButtonInteraction} interaction - the button interaction
+ * @param {string} value - value of the button (next or prev)
+ */
 async function nextPrev(interaction, value) {
   const filePath = "messageData.json";
   // Read the data from the JSON file

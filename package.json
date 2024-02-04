@@ -58,13 +58,11 @@
   },
   "_moduleAliases": {
     "@handler": "src/handler/",
-    "@shards": "src/handler/shards/",
-    "@guides": "src/handler/seasonalGuides/",
     "@src": "src/",
     "@commands": "src/commands",
     "@root": ".",
     "@schemas": "src/database/schemas/",
-    "@events": "src/events/",
+    "@structures": "src/structures/",
     "@functions": "src/functions"
   },
   "devDependencies": {

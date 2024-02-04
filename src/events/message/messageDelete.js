@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
+
+/**
+ * messageDelete event handler
+ * @param {import('@src/structures').SkyHelper} client 
+ * @param {import('discord.js').Message | import('discord.js').PartialMessage} message 
+ */
 module.exports = async (client, message) => {
   /**
    * Message Content Intent is disabled, so we won't get content of the deleted messages, we are only grabing deleted message for the purpose of getting bot's message id and to check if the bot's live updates message is deleted so any associated data can be deleted.
-   */
+   */ 
   const model = mongoose.model("autoShard");
   const model2 = mongoose.model("autoTimes");
   const docs = await model.findOne({ messageId: message.id });
@@ -17,6 +23,6 @@ module.exports = async (client, message) => {
       await model2.deleteOne({ messageId: message.id });
     }
   } catch (err) {
-    client.logger.error(er);
+    client.logger.error(err);
   }
 };

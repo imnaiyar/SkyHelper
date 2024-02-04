@@ -1,5 +1,10 @@
 const { shardsAlt } = require("../shardsAlt");
 
+/**
+ * Returns final info for a shard for a given date 
+ * @param {import('moment').Moment} currentDate 
+ * @returns 
+ */
 async function shardsReply(currentDate) {
   const { eventStatus, timeRemaining, currentShard, currentRealm, dayOfWeek, noShard } = await shardsAlt(currentDate);
 

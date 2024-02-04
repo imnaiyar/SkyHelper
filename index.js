@@ -4,14 +4,18 @@ const cron = require("node-cron");
 const { shardsUpdate, timesUpdate } = require("@functions");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { setupPresence } = require("@handler");
-const SkyHelper = require("./main");
+const chalk = require("chalk"); 
+const { SkyHelper } = require("@structures/index");
 const client = new SkyHelper();
 
 (async () => {
   await client.validate();
-  client.loadEvents("./src/events");
-  client.loadSlashCmd("./src/commands");
-  client.loadPrefix("./src/commands/prefix");
+  console.log(chalk.blueBright('<-------------------------- Loading Events --------------------------->'))
+  await client.loadEvents("./src/events");
+  console.log(chalk.blueBright('<----------------------- Loading Slash Commands ---------------------->'))
+  await client.loadSlashCmd("./src/commands");
+  console.log(chalk.blueBright('<----------------------- Loading Prefix Commands --------------------->'))
+  await client.loadPrefix("./src/commands/prefix");
 
   // unhandled error handling
   process.on("unhandledRejection", (err) => client.logger.error(`Unhandled rejection`, err));

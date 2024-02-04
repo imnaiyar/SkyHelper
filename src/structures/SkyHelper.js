@@ -20,11 +20,11 @@ module.exports = class SkyHelper extends Client {
       ],
       partials: [Partials.Channel, Partials.Message],
     });
-    this.config = require("./config.js");
+    this.config = require("@root/config.js");
     this.logger = Logger;
 
     /**
-     * @type {Collection<string, import('discord.js').SlashCommandBuilder>}
+     * @type {Collection<string, import('./SlashCommands.js')>}
      */
     this.commands = new Collection();
 
@@ -32,6 +32,13 @@ module.exports = class SkyHelper extends Client {
      * @type {Collection<string, Collection<string, Date>>}
      */
     this.cooldowns = new Collection();
+
+    /**
+     * Timezone for various time based calculations.
+     * Timezone is defaultly set to "America/Los_Angeles" ,
+     * as the developer of the game (TGC) is based from California
+     * @type {string} 
+     */
     this.timezone = "America/Los_Angeles";
 
     /**
@@ -41,7 +48,8 @@ module.exports = class SkyHelper extends Client {
     this.database = schemas;
     // Datas for Events in Sky
     /**
-     * @type {Object}
+     * Stores current/upcoming events (in Sky) details
+     * @type {object} 
      */
     this.skyEvents = {
       eventActive: true,
@@ -53,13 +61,15 @@ module.exports = class SkyHelper extends Client {
 
     // user object cache for credits
     /**
-     * @type {Map<string, import('discord.js').User>}
+     * Stores users fetched from API that are not in bot's cache
+     * @type {Map<string, import('discord.js').User>} 
      */
     this.userCache = new Map();
 
     // game data for quiz game
     /**
-     * @type {Map<string, Object>}
+     * Stores active guiz game datas
+     * @type {Map<String, Object>}
      */
     this.gameData = new Map();
 
@@ -68,7 +78,7 @@ module.exports = class SkyHelper extends Client {
       require.main.filename !== path.join(process.cwd(), "src", "commandsRegister.js") &&
       this.config.DASHBOARD.enabled
     ) {
-      const { loadWebsite } = require("./web/server.js");
+      const { loadWebsite } = require("@root/web/server.js");
       loadWebsite(this);
     }
   }
@@ -129,7 +139,8 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadSlashCmd(dir) {
-    const directory = path.resolve(__dirname, dir);
+    
+    const directory = path.resolve(process.cwd(), dir);
     const files = fs.readdirSync(directory);
 
     for (const file of files) {
@@ -154,7 +165,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadPrefix(dir) {
-    const prefixDirectory = path.join(__dirname, dir);
+    const prefixDirectory = path.join(process.cwd(), dir);
     const commandFiles = fs.readdirSync(prefixDirectory).filter((file) => file.endsWith(".js"));
 
     for (const file of commandFiles) {
@@ -195,8 +206,10 @@ module.exports = class SkyHelper extends Client {
 
   /**
    * To create a webhook on mobile devices
+   * @param {import('discord.js').TextChannel} channel - channel where webhook is created in
+   * @param {string} name - name of the webhook
+   * @param {string} avatar - avatar of the webhook
    */
-
   async createWebhook(channel, name, avatar) {
     const webhook = await channel.createWebhook({
       name: name ? name : "SkyHelper",
@@ -207,6 +220,7 @@ module.exports = class SkyHelper extends Client {
 
   /**
    * get commands from client application
+   * @param {string|number} value - command name or id
    */
   async getCommand(value) {
     if (!value) throw new Error('Command "name" or "id" must be passed as an argument');
@@ -224,7 +238,10 @@ module.exports = class SkyHelper extends Client {
   }
 
   /**
-   * Get user from discord
+   * Get user from discord API and cache it for later use.
+   * If user is not cached, an user ID must be provided.
+   * If user is cached, an user name must be provided.
+   * If user is cached and an user ID is provided, it will be ignored.
    * @param {string} name - name of the user
    * @param {string} id - ID of the user
    */

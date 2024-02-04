@@ -1,3 +1,8 @@
+/**
+ * Returns shards fall - end times for a givent date
+ * @param {import('moment').Moment} currentDate 
+ * @returns 
+ */
 module.exports = (currentDate) => {
   return {
     C: [

@@ -4,6 +4,11 @@ const Log = require("@src/logger");
 const { parsePerm } = require("@functions");
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
+/**
+ * messageCreate event handler
+ * @param {import('@src/structures').SkyHelper} client 
+ * @param {import('discord.js').Message} message 
+ */
 module.exports = async (client, message) => {
   if (message.author.bot) return;
 

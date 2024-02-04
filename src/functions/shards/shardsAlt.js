@@ -2,6 +2,11 @@ const moment = require("moment");
 const shardsTime = require("./sub/eventTimings.js");
 const util = require("@handler/shardsUtil");
 
+/**
+ * returns shard info for  a given date
+ * @param {Date} currentDate - date for which shard info is needed
+ * @returns 
+ */
 async function shardsAlt(currentDate) {
   const timezone = "America/Los_Angeles";
   const dayOfWeek = currentDate.day();

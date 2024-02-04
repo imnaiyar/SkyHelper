@@ -2,7 +2,19 @@ const config = require("@root/config");
 const moment = require("moment-timezone");
 const fs = require("fs");
 
+/**
+ * @class
+ * @classdesc A class to handle sharding and realm indexing.
+ * @property {Object}
+ * @returns
+ */
 module.exports = class shardsUtil {
+
+  /**
+   * @method getDate - get provided date in moment
+   * @param {Date} date - date to get in moment
+   * @returns {moment.Moment | 'invalid' | Error}
+   */
   static getDate(date) {
     const timezone = "America/Los_Angeles";
 

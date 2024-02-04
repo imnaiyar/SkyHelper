@@ -1,5 +1,5 @@
 const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
-const choiceResponses = require("./GuideResponse.js");
+
 const userChoice = new Map();
 const CUSTOM_ID = {
   FIRST_CHOICE: "firstChoice",

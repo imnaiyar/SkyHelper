@@ -1,5 +1,10 @@
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
+
+/**
+ * ready event handler
+ * @param {import('@src/structures').SkyHelper} client 
+ */
 module.exports = async (client) => {
   await client.guilds.fetch();
   let text;

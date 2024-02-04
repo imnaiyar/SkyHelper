@@ -1,4 +1,4 @@
-const { askQuestion } = require("@functions");
+const { askQuestion, QuizLeaderboardCard } = require("@functions/index");
 const {
   EmbedBuilder,
   ActionRowBuilder,
@@ -6,8 +6,6 @@ const {
   ApplicationCommandOptionType,
   AttachmentBuilder,
 } = require("discord.js");
-
-const { QuizLeaderboardCard } = require("@functions");
 module.exports = {
   data: {
     name: "quiz",

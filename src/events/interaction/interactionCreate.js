@@ -4,9 +4,10 @@ const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 
 /**
+ * Intraction event handler
+ * @param {import('@src/structures').SkyHelper} client
  * @param {import('discord.js').Interaction} interaction
  */
-
 module.exports = async (client, interaction) => {
   if (interaction.isChatInputCommand()) {
     // Chat Input

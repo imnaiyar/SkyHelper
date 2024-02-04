@@ -6,7 +6,8 @@ const Logger = require("@src/logger");
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
- * @param {import('@root/main')} client
+ * Functions for when bot leaves a server
+ * @param {import('@src/structures').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
 

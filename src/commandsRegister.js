@@ -1,6 +1,6 @@
 require("module-alias/register");
 require("dotenv").config();
-const SkyHelper = require("@root/main");
+const { SkyHelper } = require("@src/structures");
 const client = new SkyHelper();
 client.loadSlashCmd("./src/commands");
 

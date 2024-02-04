@@ -1,6 +1,13 @@
 const { shardsReply } = require("@functions/shards/sub/shardsReply");
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const config = require("@root/config");
+
+/**
+ * 
+ * @param {Date} currentDate 
+ * @param {string} footer 
+ * @returns {object} result, actionRow
+ */
 module.exports = async (currentDate, footer) => {
   const { type, location, rewards, colors, showButtons, thumbUrl, noShard, eventStatus, timeRemaining } =
     await shardsReply(currentDate);
