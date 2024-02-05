@@ -45,14 +45,14 @@ module.exports = {
         const ms = await wbh.fetchMessage(config.messageId).catch(err => {});
         if (ms) {
           return interaction.followUp({
-            content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${ms.url}.`,
+            content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${"https://discord.com/channels/"interaction.guild.id"/"config.channelId"/"ms.id}.`,
           });
         }
       }
       const channel = interaction.options.getChannel("channel");
       if (!channel.isTextBased() || channel.isVoiceBased()) {
         return interaction.followUp({
-          content: `${channel} is not a text channel or is a voice channel. Please provide a valid text channel`,
+          content: `${channel} is not a text channel. Please provide a valid text channel`,
         });
       }
       const requiredPerms = ["SendMessages", "ViewChannel", "ManageWebhooks"];
@@ -72,7 +72,7 @@ module.exports = {
         });
       }
 
-      const wb = await interaction.client.createWebhook(channel, "For SkyTimes Update")
+      const wb = await interaction.client.createWebhook(channel, "For SkyTimes Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildTimesEmbed(client, "Live SkyTimes");
