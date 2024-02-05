@@ -24,6 +24,18 @@ module.exports = {
             type: ApplicationCommandOptionType.Channel,
             required: true,
           },
+          {
+            name: "name",
+            description: "name of the webhook used to send the live updates (default: Shards Update)",
+            type: ApplicationCommandOptionType.String,
+            required: false,
+          },
+          {
+            name: "avatar",
+            description: "avatar to be used for the webhook used to send live updates (default: Bot's Avatar)",
+            type: ApplicationCommandOptionType.Attachment,
+            required: false,
+          },
         ],
       },
       {
@@ -64,8 +76,9 @@ module.exports = {
           content: `${channel} is not a text channel. Please provide a valid text channel`,
         });
       }
-
-      const wb = await interaction.client.createWebhook(channel, "For live Shards Update");
+      const name = interaction.options.getString('name')
+      const avatar = interaction.options.getAttachment('avatar')
+      const wb = await client.createWebhook(channel, "For live Shards Update", name, avatar?.url);
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildShardEmbed(currentDate, "Live Shard");

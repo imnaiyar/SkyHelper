@@ -15,6 +15,7 @@ module.exports = async (client, message) => {
   const docs2 = await model2.findOne({
     messageId: message.id,
   });
+ 
   try {
     if (docs) {
       await model.deleteOne({ messageId: message.id });
