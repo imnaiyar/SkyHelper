@@ -1,31 +1,31 @@
 const permissions = {
   AddReactions: "Add Reactions",
   Administrator: "Administrator",
-  AttachFiles: "Attach files",
-  BanMembers: "Ban members",
-  ChangeNickname: "Change nickname",
+  AttachFiles: "Attach Files",
+  BanMembers: "Ban Members",
+  ChangeNickname: "Change Nickname",
   Connect: "Connect",
-  CreateInstantInvite: "Create instant invite",
-  CreatePrivateThreads: "Create private threads",
-  CreatePublicThreads: "Create public threads",
-  DeafenMembers: "Deafen members",
-  EmbedLinks: "Embed links",
-  KickMembers: "Kick members",
-  ManageChannels: "Manage channels",
-  ManageEmojisAndStickers: "Manage emojis and stickers",
+  CreateInstantInvite: "Create Instant Invite",
+  CreatePrivateThreads: "Create Private Threads",
+  CreatePublicThreads: "Create Public Threads",
+  DeafenMembers: "Deafen Members",
+  EmbedLinks: "Embed Links",
+  KickMembers: "Kick Members",
+  ManageChannels: "Manage Channels",
+  ManageEmojisAndStickers: "Manage Emojis and Stickers",
   ManageEvents: "Manage Events",
   ManageGuild: "Manage Server",
-  ManageMessages: "Manage messages",
-  ManageNicknames: "Manage nicknames",
-  ManageRoles: "Manage roles",
+  ManageMessages: "Manage Message",
+  ManageNicknames: "Manage Nicknames",
+  ManageRoles: "Manage Roles",
   ManageThreads: "Manage Threads",
-  ManageWebhooks: "Manage webhooks",
-  MentionEveryone: "Mention everyone",
+  ManageWebhooks: "Manage Webhooks",
+  MentionEveryone: "Mention Everyone",
   ModerateMembers: "Moderate Members",
-  MoveMembers: "Move members",
-  MuteMembers: "Mute members",
-  PrioritySpeaker: "Priority speaker",
-  ReadMessageHistory: "Read message history",
+  MoveMembers: "Move Members",
+  MuteMembers: "Mute Members",
+  PrioritySpeaker: "Priority Speaker",
+  ReadMessageHistory: "Read Message History",
   RequestToSpeak: "Request to Speak",
   SendMessages: "Send messages",
   SendMessagesInThreads: "Send Messages In Threads",
@@ -36,17 +36,16 @@ const permissions = {
   UseEmbeddedActivities: "Use Embedded Activities",
   UseExternalEmojis: "Use External Emojis",
   UseExternalStickers: "Use External Stickers",
-  UseVAD: "Use voice activity",
-  ViewAuditLog: "View audit log",
-  ViewChannel: "View channel",
-  ViewGuildInsights: "View server insights",
+  UseVAD: "Use Voice Activity",
+  ViewAuditLog: "View Audit Log",
+  ViewChannel: "View Channel",
+  ViewGuildInsights: "View Server Insights",
 };
 
 module.exports = (perms) => {
   if (Array.isArray(perms)) {
-    const permissionWord = `permission${perms.length > 1 ? "s" : ""}`;
-    return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ") + permissionWord;
+    return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ");
   } else {
-    return `\`${permissions[perms] || perms}\` permission`;
+    return `\`${permissions[perms] || perms}\``;
   }
 };

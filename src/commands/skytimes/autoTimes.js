@@ -30,6 +30,7 @@ module.exports = {
     ],
     dm_permission: false,
     longDesc: desc.autoTimes,
+    botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
   async execute(interaction, client) {
@@ -45,7 +46,7 @@ module.exports = {
         const ms = await wbh.fetchMessage(config.messageId).catch(err => {});
         if (ms) {
           return interaction.followUp({
-            content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${"https://discord.com/channels/"interaction.guild.id"/"config.channelId"/"ms.id}.`,
+            content: `Live SkyTimes is already configured in <#${config.channelId}> for this message https://discord.com/channels/${interaction.guild.id}/${config.channelId}/${ms.id}.`,
           });
         }
       }
@@ -55,24 +56,8 @@ module.exports = {
           content: `${channel} is not a text channel. Please provide a valid text channel`,
         });
       }
-      const requiredPerms = ["SendMessages", "ViewChannel", "ManageWebhooks"];
-      const missingPerms = [];
 
-      for (const perm of requiredPerms) {
-        if (!interaction.guild.members.me.permissionsIn(channel).has(perm)) {
-          missingPerms.push(perm);
-        }
-      }
-
-      if (missingPerms.length > 0) {
-        return interaction.followUp({
-          content: `I do not have the required permissions (${missingPerms
-            .map((prm) => `\`${prm}\``)
-            .join(", ")}) to perform this action.`,
-        });
-      }
-
-      const wb = await interaction.client.createWebhook(channel, "For SkyTimes Update");
+      const wb = await interaction.client.createWebhook(channel, "For live SkyTimes Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildTimesEmbed(client, "Live SkyTimes");

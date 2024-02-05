@@ -1,5 +1,5 @@
 const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, Collection } = require("discord.js");
-const { parsePerm, btnHandler } = require("@handler");
+const { parsePerm, btnHandler } = require("@src/handler");
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 
@@ -33,7 +33,15 @@ module.exports = async (client, interaction) => {
     // Check if the user has permissions to use the command.
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
       return interaction.reply({
-        content: `You need ${parsePerm(command.data.userPermissions)} to use this command`,
+        content: `You don't have necessary permission(s) (${parsePerm(command.data.userPermissions)}) to use this command`,
+        ephemeral: true,
+      });
+    }
+
+    // Check if bot has necessary permissions to execute the command functions
+    if (command.data?.botPermissions && !interaction.guild.members.me.permissions.has(command.data.botPermissions)) {
+      return interaction.reply({
+        content: `I do not have the required permission(s) (${parsePerm(command.data.botPermissions)}) to perform this action. Please run the command again after granting me the necessary permission(s).`,
         ephemeral: true,
       });
     }

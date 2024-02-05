@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = new mongoose.Schema({
   _id: String,
+  name: String,
   channelId: String,
   messageId: String,
   webhookURL: String,
@@ -18,6 +19,7 @@ module.exports = {
     if (!guildData) {
       guildData = new Model({
         _id: guild.id,
+        name: guild.name,
       });
 
       await guildData.save();

@@ -27,19 +27,19 @@ const client = new SkyHelper();
   //bots presence
   setupPresence(client);
   // auto shard function
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     try {
       await shardsUpdate(client);
     } catch (err) {
-      client.logger.error(err);
+      client.logger.error("AutoShard Error:", err);
     }
   });
 
-  cron.schedule("*/2 * * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     try {
       await timesUpdate(client);
     } catch (err) {
-      client.logger.error(err);
+      client.logger.error("AutoTimes Error:", err);
     }
   });
 

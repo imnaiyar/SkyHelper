@@ -1,6 +1,7 @@
-const { buildShardEmbed } = require("@handler");
+const { buildShardEmbed } = require("@src/handler");
 const mongoose = require("mongoose");
 const moment = require("moment-timezone");
+const { WebhookClient } = require("discord.js");
 
 /**
  * Updates shards details in all the registered guilds
@@ -11,21 +12,14 @@ module.exports = async (client) => {
   const currentDate = moment().tz(timezone);
   const updatedAt = Math.floor(currentDate.valueOf() / 1000);
   const { result } = await buildShardEmbed(currentDate, "Live Shard (updates every 5 min.)");
-
+  
   const guildData = mongoose.model("autoShard");
   const data = await guildData.find();
   if (!data) return;
-  data.forEach((d) => {
-    const channel = client.channels.cache.get(d.channelId);
-    if (channel) {
-      channel.messages.fetch(d.messageId).then((m) => {
-        if (m && m.editable) {
-          m.edit({
-            content: `Last Updated: <t:${updatedAt}:R>`,
-            embeds: [result],
-          });
-        }
-      });
-    }
-  });
+  for (const guild of data) {
+    if (!guild.webhookURL) continue;
+    const webhook = new WebhookClient({ url: guild.webhookURL });
+    if (!webhook) continue;
+    await webhook.editMessage(guild.messageId, {content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
+  }
 };
