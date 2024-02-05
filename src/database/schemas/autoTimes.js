@@ -4,6 +4,7 @@ const Schema = new mongoose.Schema({
   _id: String,
   channelId: String,
   messageId: String,
+  webhookURL: String,
 });
 
 const Model = mongoose.model("autoTimes", Schema);

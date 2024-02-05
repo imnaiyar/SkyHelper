@@ -1,6 +1,6 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } = require("discord.js");
+const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const { updateUserPoints, displayResults, getRandomQuestions } = require('./quizUtils.js');
-const updateUser  = require("../../handler/updateUser");
+const path = require("path");
 const questions = require("./questions");
 
 /**

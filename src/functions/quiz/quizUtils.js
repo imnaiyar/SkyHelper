@@ -1,4 +1,5 @@
-const path = require("path");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } = require("discord.js");
+const updateUser  = require("../../handler/updateUser");
 const { QuizWinnerCard } = require("../canvas/quizWinnerCard");
 /**
  * Utilities for quiz function
@@ -7,7 +8,7 @@ module.exports = class quizUtils {
   
   /**
    * Updates user points of those participating in the game
-   * @param {string} userId - the user to update
+   * @param {string} userId - Id of the user to update
    * @param {object} userPoints - object containing all the user points during a game instance
    * @param {boolean} correct - the answer by user was correct or not
    */
@@ -15,7 +16,7 @@ static updateUserPoints(userId, userPoints, correct) {
   if (!userPoints[userId]) {
     userPoints[userId] = 0;
   }
-  if (won) {
+  if (correct) {
     userPoints[userId]++;
   }
 }
@@ -23,7 +24,7 @@ static updateUserPoints(userId, userPoints, correct) {
 /**
  * Sends the result in the interaction channel on game end
  * @param {import('discord.js').Interaction} interaction - The interaction that initiated the game
- * @param {object} data - object containing a game data
+ * @param {import('@src/structures').SkyHelper.} data - object containing a game data
  */
 static async displayResults(interaction, data) {
   let result = ``;
@@ -81,7 +82,7 @@ static async displayResults(interaction, data) {
  * Gets the questions to be asked during the game and arrange them randomly
  * @param {import('./questions.js')} questions - The questions to sort
  * @param {number} numberOfQuestions - total number of questions to return
- * @returns {questions}
+ * @returns {Array} An array containing a random selection of questions
  */
 static getRandomQuestions(questions, numberOfQuestions) {
   const shuffledQuestions = questions.sort(() => Math.random() - 0.5);

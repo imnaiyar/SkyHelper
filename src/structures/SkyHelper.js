@@ -205,17 +205,17 @@ module.exports = class SkyHelper extends Client {
   }
 
   /**
-   * To create a webhook on mobile devices
    * @param {import('discord.js').TextChannel} channel - channel where webhook is created in
    * @param {string} name - name of the webhook
    * @param {string} avatar - avatar of the webhook
    */
-  async createWebhook(channel, name, avatar) {
+  async createWebhook(channel,reason, name, avatar) {
     const webhook = await channel.createWebhook({
       name: name ? name : "SkyHelper",
       avatar: avatar ? avatar : this.user.displayAvatarURL(),
+      reason: reason ? reason : "SkyHelper Webhook",
     });
-    return webhook.url;
+    return webhook;
   }
 
   /**

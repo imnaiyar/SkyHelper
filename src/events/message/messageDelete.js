@@ -18,11 +18,15 @@ module.exports = async (client, message) => {
   try {
     if (docs) {
       await model.deleteOne({ messageId: message.id });
+      client.logger.error(
+        `AutoShard deleted for message id: ${message.id} in guild ${client.guilds.cache.get(docs._id)}`)
     }
     if (docs2) {
       await model2.deleteOne({ messageId: message.id });
+      client.logger.error(
+        `AutoTimes deleted for message id: ${message.id} in guild ${client.guilds.cache.get(docs2._id)}`)
     }
   } catch (err) {
-    client.logger.error(err);
+    client.logger.error("", err);
   }
 };
