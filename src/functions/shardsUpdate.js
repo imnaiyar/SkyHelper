@@ -1,6 +1,11 @@
 const { buildShardEmbed } = require("@handler");
 const mongoose = require("mongoose");
 const moment = require("moment-timezone");
+
+/**
+ * Updates shards details in all the registered guilds
+ * @param {import('@src/structures').SkyHelper} client
+ */
 module.exports = async (client) => {
   const timezone = "America/Los_Angeles";
   const currentDate = moment().tz(timezone);

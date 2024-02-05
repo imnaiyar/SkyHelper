@@ -1,6 +1,11 @@
 const { buildTimesEmbed } = require("@handler");
 const mongoose = require("mongoose");
 const moment = require("moment-timezone");
+
+/**
+ * Updates SkyTimes details in all the registered guilds
+ * @param {import('@src/structures').SkyHelper} client
+ */
 module.exports = async (client) => {
   const currentDate = moment().tz(client.timezone);
   const updatedAt = Math.floor(currentDate.valueOf() / 1000);

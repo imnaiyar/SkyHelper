@@ -1,5 +1,9 @@
 const fetch = require("node-fetch");
 
+/**
+ * Posts bot's stat on DBL
+ * @param {import('@src/structures').SkyHelper} client
+ */
 module.exports = async (client) => {
   await fetch(`https://discordbotlist.com/api/v1/bots/${client.user.id}/stats`, {
     method: "POST",
