@@ -12,7 +12,7 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 module.exports = async (client, message) => {
   if (message.author.bot) return;
 
-  if (message.mentions.has(client.user) && !OWNER.includes(message.author.id)) {
+  if (message.mentions.has(client.user) && !OWNER.includes(message.author.id) && message.channel.permissionsFor(client.user.id).has("SendMessages")) {
     message.channel.send("That's me...");
   }
 
