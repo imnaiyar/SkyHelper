@@ -1,8 +1,7 @@
 const { ApplicationCommandOptionType, WebhookClient } = require("discord.js");
 const moment = require("moment-timezone");
 const { autoTimes } = require("@schemas/autoTimes");
-const { deleteSchema } = require("@src/functions");
-const {  buildTimesEmbed } = require('@src/handler')
+const {  buildTimesEmbed, deleteSchema } = require('@src/handler')
 const desc = require("@src/cmdDesc");
 module.exports = {
   data: {
@@ -93,13 +92,17 @@ module.exports = {
         });
       }
       const wbh = new WebhookClient({ url: config.webhookURL })
-      await wbh.deleteMessage(config.messageId);
-      await wbh.delete();
-      await deleteSchema("autoTimes", interaction.guild.id);
+      try {
+        await wbh.deleteMessage(config.messageId);
+        await wbh.delete();
+        await deleteSchema("autoTimes", interaction.guild.id);
 
       interaction.followUp({
         content: "Live SkyTimes is disabled",
       });
+      } catch (err) {
+        client.logger.error("Failed to stop SkyTImes Updates in " + interaction.guild.name, err);
+      }
     }
   },
 };

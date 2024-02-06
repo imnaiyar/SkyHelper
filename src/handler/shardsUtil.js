@@ -36,6 +36,10 @@ module.exports = class shardsUtil {
     }
   }
 
+  /**
+   * Returns shards index for a given date
+   * @param {moment.Moment} date 
+   */
   static shardsIndex(date) {
     const dayOfMonth = date.date();
     const shardIndex = (dayOfMonth - 1) % config.shardSequence.length;
@@ -46,6 +50,10 @@ module.exports = class shardsUtil {
     return { currentShard, currentRealm };
   }
 
+  /**
+   * returns suffix for a given number
+   * @param {number} number  
+   */
   static getSuffix(number) {
     const suffixes = ["th", "st", "nd", "rd"];
     const remainder10 = number % 10;
@@ -63,6 +71,9 @@ module.exports = class shardsUtil {
     ];
   }
 
+  /**
+   * @param {JSON} data 
+   */
   static saveMessageData(data) {
     fs.readFile("messageData.json", "utf8", (err, fileData) => {
       if (err) {
@@ -85,6 +96,11 @@ module.exports = class shardsUtil {
     });
   }
 
+  /**
+   * 
+   * @param {import('discord.js').Interaction} interaction 
+   * @param {string} messageId 
+   */
   static getMessageDate(interaction, messageId) {
     const filePath = "messageData.json";
 

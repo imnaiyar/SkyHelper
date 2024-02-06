@@ -27,7 +27,7 @@ const client = new SkyHelper();
   //bots presence
   setupPresence(client);
   // auto shard function
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     try {
       await shardsUpdate(client);
     } catch (err) {
@@ -35,7 +35,7 @@ const client = new SkyHelper();
     }
   });
 
-  cron.schedule("*/2 * * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     try {
       await timesUpdate(client);
     } catch (err) {

@@ -126,7 +126,7 @@ async function convertTime(interaction) {
   }
   const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
   const offset1 = `\nOffset - \` ${offsetString} \``;
-  const { buildTimeHTML } = require("@functions");
+  const { buildTimeHTML } = require("@src/handler");
   const { timeRoute } = require("@root/web/server");
   const webPath = `timestamp/${interaction.id}`;
   const content = buildTimeHTML(interaction, fieldsData, offsetString, timezone, providedTime);

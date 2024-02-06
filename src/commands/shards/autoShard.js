@@ -1,8 +1,7 @@
 const { ApplicationCommandOptionType, WebhookClient } = require("discord.js");
 const moment = require("moment-timezone");
 const { autoShard } = require('@schemas/autoShard');
-const { buildShardEmbed } = require("@src/handler");
-const { deleteSchema } = require('@src/functions')
+const { buildShardEmbed, deleteSchema} = require("@src/handler");
 const desc = require("@src/cmdDesc");
 
 /**
@@ -101,13 +100,18 @@ module.exports = {
       }
       
       const wbh = new WebhookClient({ url: config.webhookURL })
-      await wbh.deleteMessage(config.messageId);
-      await wbh.delete();
-      await deleteSchema("autoShard", interaction.guild.id);
+      try {
+        await wbh.deleteMessage(config.messageId);
+        await wbh.delete();
+        await deleteSchema("autoShard", interaction.guild.id);
 
       interaction.followUp({
         content: "Live Shard is disabled",
       });
+      } catch (err) {
+        client.logger.error("Failed to stop Shards Updates in " + interaction.guild.name, err);
+      }
+      
     }
   },
 };

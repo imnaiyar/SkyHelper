@@ -4,7 +4,6 @@ const { QuizLeaderboardCard } = require("./canvas/leaderboard");
 module.exports = {
   shardsUpdate: require("./shardsUpdate"),
   timesUpdate: require("./timesUpdate"),
-  deleteSchema: require("./deleteSchema"),
   askQuestion: require("./quiz/guessing"),
   QuizLeaderboardCard,
   QuizWinnerCard,

@@ -1,4 +1,4 @@
-const { buildTimesEmbed } = require("@src/handler");
+const { buildTimesEmbed, deleteSchema } = require("@src/handler");
 const mongoose = require("mongoose");
 const moment = require("moment-timezone");
 const { WebhookClient } = require("discord.js");
@@ -16,10 +16,23 @@ module.exports = async (client) => {
   const data = await guildData.find();
   if (!data) return;
 
+  const dltSChm = (id) => {
+    deleteSchema("autoTimes", id)
+ }
   for (const guild of data) {
     if (!guild.webhookURL) continue;
     const webhook = new WebhookClient({ url: guild.webhookURL });
-    if (!webhook) continue;
-    await webhook.editMessage(guild.messageId, {content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
+    if (!webhook)  {
+      dltSChm(guild._id) 
+      continue;
+    }
+     webhook.editMessage(guild.messageId, {content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
+     .catch((e) =>{   
+      if (e.message === 'Unknown Message') {
+        dltSChm(guild._id)
+        webhook.delete()
+        return;
+      }
+    })
   }
 };

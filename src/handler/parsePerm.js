@@ -42,6 +42,10 @@ const permissions = {
   ViewGuildInsights: "View Server Insights",
 };
 
+/**
+ * @param {Array|String} perms 
+ * @returns 
+ */
 module.exports = (perms) => {
   if (Array.isArray(perms)) {
     return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ");

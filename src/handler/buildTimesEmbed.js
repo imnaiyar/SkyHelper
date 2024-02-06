@@ -1,6 +1,13 @@
 const { skyTimes } = require("@commands/skytimes/sub/skyTimes");
 const { EmbedBuilder } = require("discord.js");
 const config = require("@root/config");
+
+/**
+ * Returns an embed with SkyTimes data
+ * @param {import('@src/structures').SkyHelper} client 
+ * @param {string} footer 
+ * @returns 
+ */
 module.exports = async (client, footer) => {
   const { geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr, eventDescription } =
     await skyTimes(client);
