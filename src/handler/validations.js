@@ -4,6 +4,11 @@ const util = require("util");
 const config = require("@root/config");
 const chalk = require("chalk");
 module.exports = {
+
+  /**
+   * Validates environment variables
+   * @returns {Boolean}
+   */
   validations: async () => {
     if (!process.env.TOKEN) {
       error(`env: "TOKEN" cannot be empty.`);

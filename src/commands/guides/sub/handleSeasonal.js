@@ -1,31 +1,16 @@
-const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const { Guides } = require("./sub/GuideOption");
-const choiceResponses = require("./sub/GuideResponse.js");
-const spirits = require("./sub/spiritsIndex.js");
-const desc = require("@src/cmdDesc");
-module.exports = {
-  cooldown: 3,
-  data: {
-    name: "seasonal-guides",
-    description: "various seasonal guides",
-    longDesc: desc.guides,
-    options: [
-      {
-        name: "spirit",
-        description: "directly search for a spirit`s tree/location",
-        type: ApplicationCommandOptionType.String,
-        required: false,
-        autocomplete: true,
-      },
-      {
-        name: "hide",
-        description: "hide the guides from others (default: false)",
-        type: ApplicationCommandOptionType.Boolean,
-        required: false,
-      },
-    ],
-  },
-  async execute(interaction) {
+const spirits = require("./extends/spiritsIndex");
+const {  ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { firstChoices, secondChoices, thirdChoices } = require("./extends/SeasonalChoices.js");
+const choiceResponses = require("./extends/GuideResponse");
+const handleChoice = require("./shared/respond.js")
+const CUSTOM_ID = {
+  FIRST_CHOICE: "firstChoice",
+  SECOND_CHOICE: "secondChoice",
+  THIRD_CHOICE: "thirdChoice",
+  BACK: "back",
+};
+const messageChoices = new Map()
+module.exports = async (interaction) => {
     const spirit = interaction.options.getString("spirit");
     const ephemeralOption = interaction.options.getBoolean("hide");
     const ephemeral = ephemeralOption !== null ? ephemeralOption : true;
@@ -116,14 +101,65 @@ module.exports = {
       });
       return;
     }
-    await Guides(interaction, filter, ephemeral);
-  },
-  async autocomplete(interaction, client) {
-    const focusedValue = interaction.options.getFocused();
-    const spiritNames = Object.keys(spirits);
-    const filtered = spiritNames
-      .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
-      .slice(0, 25);
-    await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
-  },
-};
+
+    const dropdownOptions = firstChoices.map((choice) => ({
+      label: choice.label,
+      value: choice.value,
+      emoji: choice.emoji,
+    }));
+    const selectMenu = new StringSelectMenuBuilder()
+      .setCustomId("firstChoice")
+      .setPlaceholder("Choose a Season")
+      .addOptions(dropdownOptions);
+  
+    const row = new ActionRowBuilder().addComponents(selectMenu);
+  
+    const reply = await interaction.reply({
+      content: "Please select a season:",
+      components: [row],
+      fetchReply: true,
+    });
+  
+    const collector = reply.createMessageComponentCollector({
+      filter,
+      idle: 2 * 60 * 1000,
+    });
+  
+    collector.on("collect", async (selectInteraction) => {
+    const selectedChoice = selectInteraction.values[0];
+    messageChoices.set(selectInteraction.message.id, {
+      index: 0,
+      label: []
+    })
+    const choiceMap = messageChoices.get(selectInteraction.message.id)
+    switch (selectInteraction.customId) {
+      case CUSTOM_ID.FIRST_CHOICE:
+        choiceMap.label.push(firstChoices.find(ch => ch.value === selectedChoice).label)
+        choiceMap.firstChoice= selectedChoice
+        messageChoices.set(selectInteraction.message.id, choiceMap);
+        await handleChoice(selectInteraction, selectedChoice, firstChoices, secondChoices, messageChoices, CUSTOM_ID);
+        break;
+      case CUSTOM_ID.SECOND_CHOICE:
+        choiceMap.index = 1
+        choiceMap.secondChoices = selectedChoice
+        console.log(choiceMap)
+        console.log(secondChoices[choiceMap.firstChoice])
+        choiceMap.label.push(secondChoices[choiceMap.firstChoice].find(ch => ch.value === selectedChoice).label)
+        messageChoices.set(selectInteraction.message.id, choiceMap);
+        await handleChoice(selectInteraction, selectedChoice, secondChoices, thirdChoices, messageChoices, CUSTOM_ID, ephemeral);
+        break;
+      case CUSTOM_ID.THIRD_CHOICE:
+        await handleChoice(selectInteraction, selectedChoice, thirdChoices, null, messageChoices, ephemeral);
+        break;
+      default:
+        selectInteraction.reply("Invalid choice selected.");
+    }
+  });
+
+  collector.on("end", (collected, reason) => {
+    selectMenu.setPlaceholder("Menu Expired").setDisabled(true);
+    interaction.editReply({
+      components: [row],
+    });
+  });
+}
