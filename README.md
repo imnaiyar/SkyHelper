@@ -36,7 +36,7 @@
 ```js
 git clone https://github.com/imnaiyar/SkyHelper
 ```
-- Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
+- Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js`.
 - Create a new folder in the root directory named `logs` (All the terminal and error logs will go here).
 - Run ```npm run commands``` to register the slash commands.
 - [Prefix Commands](https://github.com/imnaiyar/SkyHelper/tree/main/src%2Fcommands%2Fprefix) is for my personal use and you can chose to delete the folder if you wish. Should you delete, `messageCreate.js` event won't be needed either and you can remove that too.

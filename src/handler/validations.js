@@ -49,15 +49,6 @@ module.exports = {
     if (!process.env.SUGGESTION) {
       warn('env: "SUGGESTION" webhook URL is not provided, suggestion command wont work properly');
     }
-    const access = util.promisify(fs.access);
-    try {
-      await access("messageData.json", fs.constants.F_OK);
-    } catch (err) {
-      error(
-        `"messageData.json" file does not exist in the root directory, "shards" related commands will not work properly`
-      );
-      return false;
-    }
 
     return true;
   },
