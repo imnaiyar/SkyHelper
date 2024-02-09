@@ -20,6 +20,11 @@ const Schema = new mongoose.Schema({
 const Model = mongoose.model("quizData", Schema);
 
 module.exports = {
+  /**
+   * Gets or creates a quiz document for user on MongoDb
+   * @param {import('discord.js').User} user - User for which to get or create a quiz document
+   * @returns {Promise<Model>}
+   */
   getUser: async (user) => {
     if (!user) throw new Error("User is undefined");
     if (!user.id) throw new Error("User Id is undefined");
@@ -39,9 +44,16 @@ module.exports = {
     }
     return userData;
   },
+
+  /**
+   * Returns all the document in quizData model or only for guild members if guild is provided as a parameter
+   * @param {import('discord.js').Guild} guild - Guild for which members result to be returned
+   * @returns {Promise<Model>}
+   */
   getAll: async (guild) => {
     let allUsers;
     if (guild) {
+      await guild.members.fetch()
       const guildMemberIds = guild.members.cache.map((member) => member.user.id);
       allUsers = await Model.find({ _id: { $in: guildMemberIds } })
         .sort({

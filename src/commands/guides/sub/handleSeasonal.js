@@ -1,17 +1,17 @@
-const spirits = require("./extends/spiritsIndex");
-const {  ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
-const { firstChoices, secondChoices, thirdChoices } = require("./extends/SeasonalChoices.js");
-const choiceResponses = require("./extends/GuideResponse");
-const handleChoice = require("./shared/respond.js")
+
+const {  ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { firstChoices, secondChoices, thirdChoices } = require("./extends/seasonal/SeasonalChoices.js");
+const responses = require('./extends/seasonal/GuideResponse.js')
+const {rowBuilder, respond} = require('./shared/helpers.js')
 const CUSTOM_ID = {
   FIRST_CHOICE: "firstChoice",
   SECOND_CHOICE: "secondChoice",
   THIRD_CHOICE: "thirdChoice",
   BACK: "back",
 };
+
 const messageChoices = new Map()
 module.exports = async (interaction) => {
-    const spirit = interaction.options.getString("spirit");
     const ephemeralOption = interaction.options.getBoolean("hide");
     const ephemeral = ephemeralOption !== null ? ephemeralOption : true;
 
@@ -26,93 +26,8 @@ module.exports = async (interaction) => {
       }
       return i.isStringSelectMenu() || i.isButton();
     };
-    if (spirit) {
-      const msg = await interaction.deferReply({ ephemeral: ephemeral });
-      const value = spirits[spirit.toUpperCase()];
-      if (!value) {
-        return interaction.followUp({
-          content: `\`${spirit}\` does not exist.\n\nMake sure the spirit name is valid and you provide the full name, like, \`Talented Builder\` (without any extra spaces)`,
-          ephemeral: true,
-        });
-      }
-      let tree;
-      let location;
-      if (Array.isArray(value)) {
-        tree = value[1];
-        location = value[0];
-      } else {
-        tree = value + "_tree";
-        location = value + "_location";
-      }
-      const response = await choiceResponses.getResponse(tree);
-      const respn = await choiceResponses.getResponse(location);
-      let disabled;
-      if (respn) {
-        disabled = false;
-      } else {
-        disabled = true;
-      }
-      const lctnBtn = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setEmoji("<:location:1131173266883612722>")
-          .setLabel("Location")
-          .setCustomId("sprtLctn")
-          .setDisabled(disabled)
-          .setStyle("1")
-      );
-      const treeBtn = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setEmoji("<:tree:1131279758907424870>")
-          .setLabel("Friendship Tree")
-          .setCustomId("sprtTree")
-          .setStyle("1")
-      );
-      await interaction.followUp({
-        content: `${response.content}${response.files.map((file, index) => `[File ${index + 1}](${file})`).join("\n")}`,
-        components: [lctnBtn],
-      });
-      const collector = msg.createMessageComponentCollector({
-        filter,
-        idle: 3 * 60 * 1000,
-      });
-      collector.on("collect", async (interaction) => {
-        const id = interaction.customId;
-        if (id === "sprtTree") {
-          await interaction.update({
-            content: `${response.content}\n\n${response.files
-              .map((file, index) => `[File ${index + 1}](${file})`)
-              .join("\n")}`,
-            components: [lctnBtn],
-          });
-        } else if (id === "sprtLctn") {
-          await interaction.update({
-            content: `${respn.content}\n\n${respn.files
-              .map((file, index) => `[File ${index + 1}](${file})`)
-              .join("\n")}`,
-            components: [treeBtn],
-          });
-        }
-      });
-
-      collector.on("end", async () => {
-        await msg.edit({
-          components: [],
-        });
-      });
-      return;
-    }
-
-    const dropdownOptions = firstChoices.map((choice) => ({
-      label: choice.label,
-      value: choice.value,
-      emoji: choice.emoji,
-    }));
-    const selectMenu = new StringSelectMenuBuilder()
-      .setCustomId("firstChoice")
-      .setPlaceholder("Choose a Season")
-      .addOptions(dropdownOptions);
   
-    const row = new ActionRowBuilder().addComponents(selectMenu);
+   const row = rowBuilder(CUSTOM_ID.FIRST_CHOICE, firstChoices, "Choose a Season", false)
   
     const reply = await interaction.reply({
       content: "Please select a season:",
@@ -127,29 +42,19 @@ module.exports = async (interaction) => {
   
     collector.on("collect", async (selectInteraction) => {
     const selectedChoice = selectInteraction.values[0];
-    messageChoices.set(selectInteraction.message.id, {
-      index: 0,
-      label: []
-    })
-    const choiceMap = messageChoices.get(selectInteraction.message.id)
+    if (selectedChoice === "back") {
+     await handleBack(selectInteraction)
+     return;
+    }
     switch (selectInteraction.customId) {
       case CUSTOM_ID.FIRST_CHOICE:
-        choiceMap.label.push(firstChoices.find(ch => ch.value === selectedChoice).label)
-        choiceMap.firstChoice= selectedChoice
-        messageChoices.set(selectInteraction.message.id, choiceMap);
-        await handleChoice(selectInteraction, selectedChoice, firstChoices, secondChoices, messageChoices, CUSTOM_ID);
+        await handleFirst(selectInteraction, selectedChoice, ephemeral);
         break;
       case CUSTOM_ID.SECOND_CHOICE:
-        choiceMap.index = 1
-        choiceMap.secondChoices = selectedChoice
-        console.log(choiceMap)
-        console.log(secondChoices[choiceMap.firstChoice])
-        choiceMap.label.push(secondChoices[choiceMap.firstChoice].find(ch => ch.value === selectedChoice).label)
-        messageChoices.set(selectInteraction.message.id, choiceMap);
-        await handleChoice(selectInteraction, selectedChoice, secondChoices, thirdChoices, messageChoices, CUSTOM_ID, ephemeral);
+        await handleSecond(selectInteraction, selectedChoice, ephemeral);
         break;
       case CUSTOM_ID.THIRD_CHOICE:
-        await handleChoice(selectInteraction, selectedChoice, thirdChoices, null, messageChoices, ephemeral);
+        await respond(selectInteraction, responses, selectedChoice, ephemeral);
         break;
       default:
         selectInteraction.reply("Invalid choice selected.");
@@ -157,9 +62,97 @@ module.exports = async (interaction) => {
   });
 
   collector.on("end", (collected, reason) => {
-    selectMenu.setPlaceholder("Menu Expired").setDisabled(true);
+    const disabledRow = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder().setCustomId('expired').addOptions(firstChoices).setPlaceholder("Menu Expired").setDisabled(true))
     interaction.editReply({
-      components: [row],
+      components: [disabledRow],
     });
   });
 }
+const getEmoji = (label) => {
+  switch (label) {
+    case 'Seasonal Quests':
+      return '<:quests:1131171487877963886>';
+    case 'Spirit Locations':
+      return '<:location:1131173266883612722>';
+    case 'Spirits Tree':
+      return '<:tree:1131279758907424870>';
+    case 'Seasonal Price Tree':
+      return '<:tree:1131279758907424870>';
+    default:
+      return '';
+  }
+ }
+async function handleFirst(int, value, ephemeral) {
+ messageChoices.set(int.message.id, {
+  firstChoice: {
+    value: value,
+    label: firstChoices.find((choice) => choice.value === value).label,
+  }
+ })
+
+ const choices = secondChoices[value]?.map((choice) => ({
+  ...choice,
+  emoji: getEmoji(choice.label),
+ }))
+
+ if (!choices) {
+  await respond(int, responses, value, ephemeral)
+  return;
+ }
+ 
+ const map = messageChoices.get(int.message.id)
+ const placeholder = map.firstChoice.label
+ const row = rowBuilder(CUSTOM_ID.SECOND_CHOICE, choices, placeholder, true)
+ await int.update({
+  content: `Guides for ${placeholder}`,
+  components: [row]
+ })
+}
+
+async function handleSecond(int, value, ephemeral) {
+  messageChoices.set(int.message.id, {
+    ...messageChoices.get(int.message.id),
+    secondChoice: {
+      value: value,
+      label: secondChoices[messageChoices.get(int.message.id).firstChoice.value].find((choice) => choice.value === value).label,
+    }
+  });
+  
+  const map = messageChoices.get(int.message.id)
+  const choices = thirdChoices[value];
+
+  if (!choices) {
+    await respond(int, responses, value, ephemeral)
+    return;
+  }
+
+  const placeholder = `${map.firstChoice.label} - ${map.secondChoice.label}`
+  const row = rowBuilder(CUSTOM_ID.THIRD_CHOICE, choices, placeholder, true)
+ await int.update({
+  content: `${map.secondChoice.label} of __${map.firstChoice.label}__`,
+  components: [row]
+ })
+}
+
+async function handleBack(int) {
+  const map = messageChoices.get(int.message.id)
+ if (int.customId === CUSTOM_ID.SECOND_CHOICE) {
+  const row = rowBuilder(CUSTOM_ID.FIRST_CHOICE, firstChoices, "Choose a Season", false)
+  await int.update({
+    content: "Please select a season:",
+    components: [row]
+  })
+  messageChoices.delete(int.message.id)
+} else if (int.customId === CUSTOM_ID.THIRD_CHOICE) {
+  
+    const row = rowBuilder(CUSTOM_ID.SECOND_CHOICE, secondChoices[map.firstChoice.value].map((choice) => ({
+      ...choice,
+      emoji: getEmoji(choice.label),
+     })), map.firstChoice.label, true)
+    await int.update({
+      content: `Guides for ${map.firstChoice.label}`,
+      components: [row]
+    })
+    delete map.secondChoice;
+  }
+ }
