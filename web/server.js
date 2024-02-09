@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 const { WebhookClient, EmbedBuilder } = require('discord.js');
@@ -13,7 +12,6 @@ const dir = path.join(__dirname, 'views');
 const files = fs.readdirSync(dir);
 module.exports = {
   loadWebsite: (client) => {
-    const botData = mongoose.model('botStats');
     const authenticateToken = (req, res, next) => {
       const token = req.header('Authorization').split(' ')[1];
       if (token === process.env.AUTH_TOKEN) {
@@ -61,7 +59,7 @@ module.exports = {
       })
       .get('/invite', (req, res) => {
         res.redirect(
-          'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&scope=bot+applications.commands&permissions=412317243584',
+          'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412854114496&scope=bot+applications.commands',
         );
       });
     // creating a route for every files in 'views' dir
