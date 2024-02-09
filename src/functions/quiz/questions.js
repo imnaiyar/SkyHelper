@@ -31,7 +31,7 @@ module.exports = [
     answer: "Pleaful Parent",
     image: { url: "assets/instrument-parent.jpg", type: "jpg" },
   },
-  { question: "ranger", answer: "moments" },
-  { question: "work", answer: "no" },
-  { question: "yes", answer: "ok" },
+  { question: "Which season 'Reassuring Ranger' was introduced in?", answer: "moments" },
+  { question: "What is the name of the dog that you can find in Daylight Prairie??", answer: "oreo" },
+  { question: "How many realms are there?", answer: "7" },
 ];
