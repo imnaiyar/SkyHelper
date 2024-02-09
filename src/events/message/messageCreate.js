@@ -17,14 +17,8 @@ module.exports = async (client, message) => {
   }
 
   // Check Bot'sprefix
-  let prefix;
-  if (message.content.startsWith(`<@${client.user.id}>`)) {
-    prefix = `<@${client.user.id}>`;
-  } else if (message.content.startsWith(`.`)) {
-    prefix = ".";
-  } else {
-    return;
-  }
+  const prefix = '.'
+  if (!message.content.startsWith(prefix)) return;
 
   // Initialize the commands
   const args = message.content.slice(prefix.length).trim().split(/ +/);

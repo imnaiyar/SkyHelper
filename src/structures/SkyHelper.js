@@ -12,13 +12,13 @@ module.exports = class SkyHelper extends Client {
       intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.DirectMessages,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMessageReactions,
       ],
-      partials: [Partials.Channel, Partials.Message],
+      partials: [Partials.Channel, Partials.Message, Partials.GuildMember],
     });
     this.config = require("@root/config.js");
     this.logger = Logger;
