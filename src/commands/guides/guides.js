@@ -70,7 +70,7 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const spiritValue = interaction.options.getString("spirit");
     if (spiritValue) {
-      await handleSpirit(interaction, sub, spiritValue)
+      await handleSpirits(interaction, sub, spiritValue)
       return
     }
     switch (sub) {
@@ -105,7 +105,7 @@ module.exports = {
 };
 
 
-async function handleSpirit(interaction, sub, spiritValue) {
+async function handleSpirits(interaction, sub, spiritValue) {
   const ephemeral = interaction.options.getBoolean("hide") || false;
   const msg = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true})
  let index;
