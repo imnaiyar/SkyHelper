@@ -4,8 +4,8 @@ module.exports = {
   /**
    * Returns StringSelect Menu ActionRow for guides
    * @param {string} customId - The custom Id for the select menu
-   * @param {object} choices - The options to include in swlect menu
-   * @param {string} placeholder - Placeholder for the select
+   * @param {object} choices - The options to include in select menu
+   * @param {string} placeholder - Placeholder for the select menu
    * @param {Boolean} back - Whether to include back option or not
    */
   rowBuilder: (customId, choices, placeholder, back) => {

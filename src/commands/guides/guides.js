@@ -67,19 +67,21 @@ module.exports = {
   async execute(interaction) {
     const sub = interaction.options.getSubcommand();
     const spiritValue = interaction.options.getString("spirit");
+
+    const ephemeral = interaction.options.getBoolean("hide") || false;
     if (spiritValue) {
-      await handleSpirits(interaction, sub, spiritValue);
+      await handleSpirits(interaction, sub, spiritValue, ephemeral);
       return;
     }
     switch (sub) {
       case "seasonal":
-        await handleSeasonal(interaction);
+        await handleSeasonal(interaction, ephemeral);
         break;
       case "realms":
-        await handleRealms(interaction);
+        await handleRealms(interaction, ephemeral);
         break;
       case "events":
-        await handleEvents(interaction);
+        await handleEvents(interaction, ephemeral);
         break;
     }
   },
@@ -102,8 +104,7 @@ module.exports = {
   },
 };
 
-async function handleSpirits(interaction, sub, spiritValue) {
-  const ephemeral = interaction.options.getBoolean("hide") || false;
+async function handleSpirits(interaction, sub, spiritValue, ephemeral) {
   const msg = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
   let index;
   let responses;

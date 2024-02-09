@@ -10,10 +10,7 @@ const CUSTOM_ID = {
 };
 
 const messageChoices = new Map();
-module.exports = async (interaction) => {
-  const ephemeralOption = interaction.options.getBoolean("hide");
-  const ephemeral = ephemeralOption !== null ? ephemeralOption : true;
-
+module.exports = async (interaction, ephemeral) => {
   const filter = (i) => {
     if (i.user.id !== interaction.user.id) {
       i.reply({
@@ -23,7 +20,7 @@ module.exports = async (interaction) => {
       });
       return false;
     }
-    return i.isStringSelectMenu() || i.isButton();
+    return true;
   };
 
   const row = rowBuilder(CUSTOM_ID.FIRST_CHOICE, firstChoices, "Choose a Season", false);
