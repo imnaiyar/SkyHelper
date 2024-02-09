@@ -1,10 +1,10 @@
 const d = require("discord.js");
 const { shardLocation, shardTimeline, shardInfos, nextPrev } = require("@functions/shards");
-const askQuestion  = require("../functions/quiz/guessing");
+const askQuestion = require("../functions/quiz/guessing");
 
 /**
  * Handler for button interactions.
- * @param {import('discord.js').ButtonInteraction} interaction 
+ * @param {import('discord.js').ButtonInteraction} interaction
  */
 module.exports = async (interaction) => {
   if (!interaction.isButton()) return;

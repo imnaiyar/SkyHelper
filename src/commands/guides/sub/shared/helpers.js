@@ -1,6 +1,6 @@
 const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 
-module.exports =  {
+module.exports = {
   /**
    * Returns StringSelect Menu ActionRow for guides
    * @param {string} customId - The custom Id for the select menu
@@ -9,17 +9,17 @@ module.exports =  {
    * @param {Boolean} back - Whether to include back option or not
    */
   rowBuilder: (customId, choices, placeholder, back) => {
-    if (back) choices.push({
-      label: "Back",
-      value: "back",
-      emoji: "⬅️",
-    });
-    return new ActionRowBuilder().addComponents(new StringSelectMenuBuilder()
-    .setCustomId(customId)
-    .setPlaceholder(placeholder)
-    .addOptions(choices));
+    if (back)
+      choices.push({
+        label: "Back",
+        value: "back",
+        emoji: "⬅️",
+      });
+    return new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder().setCustomId(customId).setPlaceholder(placeholder).addOptions(choices)
+    );
   },
-  
+
   /**
    * Responds with the chosen guide
    * @param {import('discord.js').Interaction} int - The SelectMenu Interaction
@@ -35,6 +35,5 @@ module.exports =  {
     }
     await int.followUp(response);
     return;
-  }
+  },
 };
-  

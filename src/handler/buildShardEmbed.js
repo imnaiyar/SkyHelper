@@ -3,9 +3,9 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const config = require("@root/config");
 
 /**
- * 
- * @param {Date} currentDate 
- * @param {string} footer 
+ *
+ * @param {Date} currentDate
+ * @param {string} footer
  * @returns {object} result, actionRow
  */
 module.exports = async (currentDate, footer) => {

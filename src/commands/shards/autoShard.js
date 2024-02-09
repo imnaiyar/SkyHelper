@@ -1,7 +1,7 @@
 const { ApplicationCommandOptionType, WebhookClient } = require("discord.js");
 const moment = require("moment-timezone");
-const { autoShard } = require('@schemas/autoShard');
-const { buildShardEmbed, deleteSchema} = require("@src/handler");
+const { autoShard } = require("@schemas/autoShard");
+const { buildShardEmbed, deleteSchema } = require("@src/handler");
 const desc = require("@src/cmdDesc");
 
 /**
@@ -49,8 +49,8 @@ module.exports = {
     userPermissions: ["ManageGuild"],
   },
   /**
-   * @param {import('discord.js').Interaction} interaction 
-   * @param {import('@src/structures').SkyHelper} client 
+   * @param {import('discord.js').Interaction} interaction
+   * @param {import('@src/structures').SkyHelper} client
    */
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
@@ -61,8 +61,8 @@ module.exports = {
     const config = await autoShard(interaction.guild);
     if (sub === "start") {
       if (config.messageId && config.webhookURL) {
-        const wbh = new WebhookClient({ url: config.webhookURL })
-        const ms = await wbh.fetchMessage(config.messageId).catch(err => {});
+        const wbh = new WebhookClient({ url: config.webhookURL });
+        const ms = await wbh.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
             content: `Live Shards is already configured in <#${config.channelId}> for this message https://discord.com/channels/${interaction.guild.id}/${config.channelId}/${ms.id}.`,
@@ -75,8 +75,8 @@ module.exports = {
           content: `${channel} is not a text channel. Please provide a valid text channel`,
         });
       }
-      const name = interaction.options.getString('name')
-      const avatar = interaction.options.getAttachment('avatar')
+      const name = interaction.options.getString("name");
+      const avatar = interaction.options.getAttachment("avatar");
       const wb = await client.createWebhook(channel, "For live Shards Update", name, avatar?.url);
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
@@ -87,7 +87,7 @@ module.exports = {
       });
       config.channelId = channel.id;
       config.messageId = msg.id;
-      config.webhookURL = wb.url
+      config.webhookURL = wb.url;
       await config.save();
       interaction.followUp({
         content: `Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`,
@@ -98,20 +98,19 @@ module.exports = {
           content: "Live Shard is already disabled for this server",
         });
       }
-      
-      const wbh = new WebhookClient({ url: config.webhookURL })
+
+      const wbh = new WebhookClient({ url: config.webhookURL });
       try {
         await wbh.deleteMessage(config.messageId);
         await wbh.delete();
         await deleteSchema("autoShard", interaction.guild.id);
 
-      interaction.followUp({
-        content: "Live Shard is disabled",
-      });
+        interaction.followUp({
+          content: "Live Shard is disabled",
+        });
       } catch (err) {
         client.logger.error("Failed to stop Shards Updates in " + interaction.guild.name, err);
       }
-      
     }
   },
 };

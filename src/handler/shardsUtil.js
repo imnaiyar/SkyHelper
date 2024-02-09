@@ -9,7 +9,6 @@ const fs = require("fs");
  * @returns
  */
 module.exports = class shardsUtil {
-
   /**
    * @method getDate - get provided date in moment
    * @param {Date} date - date to get in moment
@@ -38,7 +37,7 @@ module.exports = class shardsUtil {
 
   /**
    * Returns shards index for a given date
-   * @param {moment.Moment} date 
+   * @param {moment.Moment} date
    */
   static shardsIndex(date) {
     const dayOfMonth = date.date();
@@ -52,7 +51,7 @@ module.exports = class shardsUtil {
 
   /**
    * returns suffix for a given number
-   * @param {number} number  
+   * @param {number} number
    */
   static getSuffix(number) {
     const suffixes = ["th", "st", "nd", "rd"];
@@ -72,7 +71,7 @@ module.exports = class shardsUtil {
   }
 
   /**
-   * @param {JSON} data 
+   * @param {JSON} data
    */
   static saveMessageData(data) {
     fs.readFile("messageData.json", "utf8", (err, fileData) => {
@@ -97,26 +96,25 @@ module.exports = class shardsUtil {
   }
 
   /**
-   * 
-   * @param {import('discord.js').Interaction} interaction 
-   * @param {string} messageId 
+   *
+   * @param {import('discord.js').Interaction} interaction
+   * @param {string} messageId
    */
   static getMessageDate(interaction, messageId) {
-    
-     const data = interaction.client.shardsData.get(messageId);
+    const data = interaction.client.shardsData.get(messageId);
 
-      const dateOption = data.time;
+    const dateOption = data.time;
 
-      let currentDate;
-      if (dateOption) {
-        currentDate = moment.tz(dateOption, "Y-MM-DD", interaction.client.timezone).startOf("day");
-        if (!currentDate.isValid()) {
-          throw new Error(`currentDate is not valid. Date fetched:- ${currentDate}`);
-        }
-      } else {
-        currentDate = moment.tz(interaction.client.timezone).startOf("day");
+    let currentDate;
+    if (dateOption) {
+      currentDate = moment.tz(dateOption, "Y-MM-DD", interaction.client.timezone).startOf("day");
+      if (!currentDate.isValid()) {
+        throw new Error(`currentDate is not valid. Date fetched:- ${currentDate}`);
       }
+    } else {
+      currentDate = moment.tz(interaction.client.timezone).startOf("day");
+    }
 
-      return currentDate;
-    } 
-  };
+    return currentDate;
+  }
+};

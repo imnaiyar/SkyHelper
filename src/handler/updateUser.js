@@ -1,6 +1,6 @@
 /**
  * Update user's Quiz stats on database
- * @param {import('@src/structures').SkyHelper} client 
+ * @param {import('@src/structures').SkyHelper} client
  * @param {Object} userPoints - Object containing ID's of participant of the Quiz game'
  * @param {string} winnerId - The ID of the winner of the quiz.
  */

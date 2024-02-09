@@ -53,7 +53,7 @@ module.exports = {
   getAll: async (guild) => {
     let allUsers;
     if (guild) {
-      await guild.members.fetch()
+      await guild.members.fetch();
       const guildMemberIds = guild.members.cache.map((member) => member.user.id);
       allUsers = await Model.find({ _id: { $in: guildMemberIds } })
         .sort({

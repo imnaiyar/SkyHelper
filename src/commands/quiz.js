@@ -146,7 +146,7 @@ module.exports = {
       const { getAll } = client.database.quizData;
       const embed = new EmbedBuilder()
         .setAuthor({ name: "Sky CoTL Quiz Leaderboard" })
-        .setTitle(opt === "global" ? "Global Leaderboard" : `${interaction.guild.name} Leaderboard`)
+        .setTitle(opt === "global" ? "Global Leaderboard" : `${interaction.guild.name} Leaderboard`);
       if (opt === "global") {
         const globUser = await getAll();
         if (globUser) {
@@ -166,7 +166,7 @@ module.exports = {
           const top = await getAllUser(serverUser, client);
           const attachment = new AttachmentBuilder(top, { name: "quiz.png" });
           embed.setImage(`attachment://quiz.png`);
-          embed.setFooter({ text: 'Game stats here displayed are over all the servers, and not just this one.'})
+          embed.setFooter({ text: "Game stats here displayed are over all the servers, and not just this one." });
           interaction.editReply({ embeds: [embed], files: [attachment] });
         } else {
           interaction.editReply({

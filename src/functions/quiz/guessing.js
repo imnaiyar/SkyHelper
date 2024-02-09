@@ -1,12 +1,12 @@
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
-const { updateUserPoints, displayResults, getRandomQuestions } = require('./quizUtils.js');
+const { updateUserPoints, displayResults, getRandomQuestions } = require("./quizUtils.js");
 const path = require("path");
 const questions = require("./questions");
 
 /**
  * Initiate a quiz game
- * @param {import('discord.js').Interaction} interaction 
- * @param {number} total 
+ * @param {import('discord.js').Interaction} interaction
+ * @param {number} total
  */
 module.exports = async (interaction, total) => {
   const gameData = interaction.client.gameData;
@@ -104,5 +104,3 @@ async function respond(interaction, data) {
     }
   });
 }
-
-

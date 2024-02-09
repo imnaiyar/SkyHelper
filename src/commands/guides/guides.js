@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder } = require("discord.js");
 const { handleSeasonal, handleRealms, handleEvents } = require("./sub/index");
-const {seasonalSpirits, realmsSpirits} = require("./sub/extends/spiritsIndex.js");
+const { seasonalSpirits, realmsSpirits } = require("./sub/extends/spiritsIndex.js");
 const desc = require("@src/cmdDesc");
 module.exports = {
   cooldown: 3,
@@ -28,7 +28,6 @@ module.exports = {
             required: false,
           },
         ],
-
       },
       {
         name: "realms",
@@ -49,7 +48,6 @@ module.exports = {
             required: false,
           },
         ],
-
       },
       {
         name: "events",
@@ -70,8 +68,8 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const spiritValue = interaction.options.getString("spirit");
     if (spiritValue) {
-      await handleSpirits(interaction, sub, spiritValue)
-      return
+      await handleSpirits(interaction, sub, spiritValue);
+      return;
     }
     switch (sub) {
       case "seasonal":
@@ -88,44 +86,43 @@ module.exports = {
   async autocomplete(interaction, client) {
     const focusedValue = interaction.options.getFocused();
     const sub = interaction.options.getSubcommand();
-    if (sub === 'seasonal') {
-    const spiritNames = Object.keys(seasonalSpirits);
-    const filtered = spiritNames
-      .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
-      .slice(0, 25);
-    await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
-    } else if (sub === 'realms') {
+    if (sub === "seasonal") {
+      const spiritNames = Object.keys(seasonalSpirits);
+      const filtered = spiritNames
+        .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
+        .slice(0, 25);
+      await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
+    } else if (sub === "realms") {
       const spiritNames = Object.keys(realmsSpirits);
       const filtered = spiritNames
-      .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
-      .slice(0, 25);
-    await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
+        .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
+        .slice(0, 25);
+      await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
     }
   },
 };
 
-
 async function handleSpirits(interaction, sub, spiritValue) {
   const ephemeral = interaction.options.getBoolean("hide") || false;
-  const msg = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true})
- let index;
- let responses;
- if (sub === 'seasonal') {
-  responses = require('./sub/extends/seasonal/GuideResponse')
-  index = seasonalSpirits;
- } else if (sub === 'realms') {
-  responses = require('./sub/extends/realms/responses')
-  index = realmsSpirits;
- }
-
- const getSpirit = (value) => {
-  for (const key in index) {
-    if (key.toUpperCase() === value.toUpperCase()) {
-      return index[key];
-    }
+  const msg = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
+  let index;
+  let responses;
+  if (sub === "seasonal") {
+    responses = require("./sub/extends/seasonal/GuideResponse");
+    index = seasonalSpirits;
+  } else if (sub === "realms") {
+    responses = require("./sub/extends/realms/responses");
+    index = realmsSpirits;
   }
- }
- const spirit = getSpirit(spiritValue);
+
+  const getSpirit = (value) => {
+    for (const key in index) {
+      if (key.toUpperCase() === value.toUpperCase()) {
+        return index[key];
+      }
+    }
+  };
+  const spirit = getSpirit(spiritValue);
   if (!spirit) {
     return interaction.followUp({
       content: `\`${spiritValue}\` does not exist.\n\nMake sure the spirit name is valid and you provide the full name, like, \`Talented Builder\` (without any extra spaces)`,
@@ -139,8 +136,8 @@ async function handleSpirits(interaction, sub, spiritValue) {
     tree = spirit[1];
     location = spirit[0];
   } else {
-    tree = spirit + '_tree';
-    location = spirit + '_location';
+    tree = spirit + "_tree";
+    location = spirit + "_location";
   }
 
   const response = await responses.getResponse(tree);
@@ -153,18 +150,18 @@ async function handleSpirits(interaction, sub, spiritValue) {
   }
   const lctnBtn = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setEmoji('<:location:1131173266883612722>')
-      .setLabel('Location')
-      .setCustomId('sprtLctn')
+      .setEmoji("<:location:1131173266883612722>")
+      .setLabel("Location")
+      .setCustomId("sprtLctn")
       .setDisabled(disabled)
-      .setStyle('1'),
+      .setStyle("1")
   );
   const treeBtn = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setEmoji('<:tree:1131279758907424870>')
-      .setLabel('Friendship Tree')
-      .setCustomId('sprtTree')
-      .setStyle('1'),
+      .setEmoji("<:tree:1131279758907424870>")
+      .setLabel("Friendship Tree")
+      .setCustomId("sprtTree")
+      .setStyle("1")
   );
   await interaction.followUp({
     ...response,
@@ -187,16 +184,23 @@ async function handleSpirits(interaction, sub, spiritValue) {
     filter,
     idle: 3 * 60 * 1000,
   });
-  collector.on('collect', async (int) => {
+  collector.on("collect", async (int) => {
     const id = int.customId;
-    const btn = new ActionRowBuilder().addComponents(new ButtonBuilder().setDisabled(true).setCustomId('search').setStyle('1').setEmoji('1205464032182665239').setLabel('Searching'));
-    await int.update({ components: [btn]});
-    if (id === 'sprtTree') {
+    const btn = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setDisabled(true)
+        .setCustomId("search")
+        .setStyle("1")
+        .setEmoji("1205464032182665239")
+        .setLabel("Searching")
+    );
+    await int.update({ components: [btn] });
+    if (id === "sprtTree") {
       await int.editReply({
         ...response,
         components: [lctnBtn],
       });
-    } else if (id === 'sprtLctn') {
+    } else if (id === "sprtLctn") {
       await int.editReply({
         ...respn,
         components: [treeBtn],
@@ -204,7 +208,7 @@ async function handleSpirits(interaction, sub, spiritValue) {
     }
   });
 
-  collector.on('end', async () => {
+  collector.on("end", async () => {
     await msg.edit({
       components: [],
     });

@@ -1,6 +1,6 @@
 const seasonalSpirits = {
-  "Hunter": ["nine_colored_s", "hunter_tree"],
-  "Princess": ["nine_colored_s", "princess_tree"],
+  Hunter: ["nine_colored_s", "hunter_tree"],
+  Princess: ["nine_colored_s", "princess_tree"],
   "Feudal Lord": ["nine_colored_s", "lord_tree"],
   "Herb Gatherer": ["nine_colored_s", "herb_gatherer_tree"],
   "Remenant Of A Forgotten Haven": "forgotten_haven",
@@ -135,6 +135,6 @@ const realmsSpirits = {
   "Memory Whisperer": "memory_whisperer",
   "Polite Scholar": "polite_scholar",
   "Praying Acolyte": "praying acolyte",
-}
+};
 
-module.exports = {seasonalSpirits, realmsSpirits};
+module.exports = { seasonalSpirits, realmsSpirits };

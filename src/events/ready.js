@@ -3,7 +3,7 @@ const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READ
 
 /**
  * ready event handler
- * @param {import('@src/structures').SkyHelper} client 
+ * @param {import('@src/structures').SkyHelper} client
  */
 module.exports = async (client) => {
   await client.guilds.fetch();

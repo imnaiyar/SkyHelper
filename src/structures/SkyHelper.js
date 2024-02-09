@@ -37,7 +37,7 @@ module.exports = class SkyHelper extends Client {
      * Timezone for various time based calculations.
      * Timezone is defaultly set to "America/Los_Angeles" ,
      * as the developer of the game (TGC) is based from California
-     * @type {string} 
+     * @type {string}
      */
     this.timezone = "America/Los_Angeles";
 
@@ -47,7 +47,6 @@ module.exports = class SkyHelper extends Client {
     this.prefix = new Collection();
     this.database = schemas;
 
-    
     // Shards data
     /**
      * Stores shards commands datas
@@ -55,11 +54,10 @@ module.exports = class SkyHelper extends Client {
      */
     this.shardsData = new Map();
 
-    
     // Datas for Events in Sky
     /**
      * Stores current/upcoming events (in Sky) details
-     * @type {object} 
+     * @type {object}
      */
     this.skyEvents = {
       eventActive: true,
@@ -72,7 +70,7 @@ module.exports = class SkyHelper extends Client {
     // user object cache for credits
     /**
      * Stores users fetched from API that are not in bot's cache
-     * @type {Map<string, import('discord.js').User>} 
+     * @type {Map<string, import('discord.js').User>}
      */
     this.userCache = new Map();
 
@@ -149,7 +147,6 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadSlashCmd(dir) {
-    
     const directory = path.resolve(process.cwd(), dir);
     const files = fs.readdirSync(directory);
 
@@ -219,7 +216,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} name - name of the webhook
    * @param {string} avatar - avatar of the webhook
    */
-  async createWebhook(channel,reason, name, avatar) {
+  async createWebhook(channel, reason, name, avatar) {
     const webhook = await channel.createWebhook({
       name: name ? name : "SkyHelper",
       avatar: avatar ? avatar : this.user.displayAvatarURL(),

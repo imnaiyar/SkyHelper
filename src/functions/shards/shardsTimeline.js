@@ -8,9 +8,9 @@ let currentShardIndex = 0;
 
 /**
  * return shards timeline, with appropriate user credits
- * @param {import('discord.js').ButtonInteraction} interaction 
+ * @param {import('discord.js').ButtonInteraction} interaction
  * @param {import('discord.js').User} Zhii - user object for Zhii (for shard timiline)
- * @param {import('discord.js').User} Christian - user object for Christian (for shard music) 
+ * @param {import('discord.js').User} Christian - user object for Christian (for shard music)
  */
 async function shardTimeline(interaction, Zhii, Christian) {
   const messageId = interaction.message.id; // Get the messageId of the current interaction
@@ -33,10 +33,10 @@ async function shardTimeline(interaction, Zhii, Christian) {
 
 /**
  * return shards timeline, with appropriate user credits
- * @param {import('discord.js').ButtonInteraction} interaction 
- * @param {import('./sub/timelineData')} shard 
+ * @param {import('discord.js').ButtonInteraction} interaction
+ * @param {import('./sub/timelineData')} shard
  * @param {import('discord.js').User} Zhii - user object for Zhii (for shard timiline)
- * @param {import('discord.js').User} Christian - user object for Christian (for shard music) 
+ * @param {import('discord.js').User} Christian - user object for Christian (for shard music)
  */
 async function showShard(interaction, shard, Zhii, Christian) {
   const avatarURL1 = Zhii.avatarURL({ format: "png", size: 2048 });

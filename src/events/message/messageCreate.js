@@ -6,18 +6,22 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 
 /**
  * messageCreate event handler
- * @param {import('@src/structures').SkyHelper} client 
- * @param {import('discord.js').Message} message 
+ * @param {import('@src/structures').SkyHelper} client
+ * @param {import('discord.js').Message} message
  */
 module.exports = async (client, message) => {
   if (message.author.bot) return;
 
-  if (message.mentions.has(client.user) && !OWNER.includes(message.author.id) && message.channel.permissionsFor(client.user.id).has("SendMessages")) {
+  if (
+    message.mentions.has(client.user) &&
+    !OWNER.includes(message.author.id) &&
+    message.channel.permissionsFor(client.user.id).has("SendMessages")
+  ) {
     message.channel.send("That's me...");
   }
 
   // Check Bot'sprefix
-  const prefix = '.'
+  const prefix = ".";
   if (!message.content.startsWith(prefix)) return;
 
   // Initialize the commands

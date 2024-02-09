@@ -1,11 +1,10 @@
-
 /**
  * Dynamically builds a timestamp sweb page html with the given data
- * @param {import('discord.js').Interaction} interaction 
+ * @param {import('discord.js').Interaction} interaction
  * @param {Array} fieldsData - the data about times
  * @param {String} offset - offset of the timezone
  * @param {String} timezone - the timezone
- * @param {String} providedTime 
+ * @param {String} providedTime
  * @returns {String}
  */
 module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {

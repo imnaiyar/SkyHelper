@@ -1,7 +1,7 @@
 const { ApplicationCommandOptionType, WebhookClient } = require("discord.js");
 const moment = require("moment-timezone");
 const { autoTimes } = require("@schemas/autoTimes");
-const {  buildTimesEmbed, deleteSchema } = require('@src/handler')
+const { buildTimesEmbed, deleteSchema } = require("@src/handler");
 const desc = require("@src/cmdDesc");
 module.exports = {
   data: {
@@ -53,8 +53,8 @@ module.exports = {
     const config = await autoTimes(interaction.guild);
     if (sub === "start") {
       if (config.messageId && config.webhookURL) {
-        const wbh = new WebhookClient({ url: config.webhookURL })
-        const ms = await wbh.fetchMessage(config.messageId).catch(err => {});
+        const wbh = new WebhookClient({ url: config.webhookURL });
+        const ms = await wbh.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
             content: `Live SkyTimes is already configured in <#${config.channelId}> for this message https://discord.com/channels/${interaction.guild.id}/${config.channelId}/${ms.id}.`,
@@ -68,8 +68,8 @@ module.exports = {
         });
       }
 
-      const name = interaction.options.getString('name')
-      const avatar = interaction.options.getAttachment('avatar')
+      const name = interaction.options.getString("name");
+      const avatar = interaction.options.getAttachment("avatar");
       const wb = await client.createWebhook(channel, "For live SkyTimes Update", name, avatar?.url);
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
@@ -91,15 +91,15 @@ module.exports = {
           content: "Live SkyTimes is already disabled for this server",
         });
       }
-      const wbh = new WebhookClient({ url: config.webhookURL })
+      const wbh = new WebhookClient({ url: config.webhookURL });
       try {
         await wbh.deleteMessage(config.messageId);
         await wbh.delete();
         await deleteSchema("autoTimes", interaction.guild.id);
 
-      interaction.followUp({
-        content: "Live SkyTimes is disabled",
-      });
+        interaction.followUp({
+          content: "Live SkyTimes is disabled",
+        });
       } catch (err) {
         client.logger.error("Failed to stop SkyTImes Updates in " + interaction.guild.name, err);
       }

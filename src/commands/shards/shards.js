@@ -47,11 +47,10 @@ module.exports = {
       components: [actionRow],
       fetchReply: true,
     });
-    
-    
+
     client.shardsData.set(reply.id, {
       time: currentDate.format(),
-      timestamp: moment().tz(client.timezone)
+      timestamp: moment().tz(client.timezone),
     });
   },
 };

@@ -1,5 +1,5 @@
 module.exports = {
-    SkyHelper: require('./SkyHelper'),
-    SlashCommands: require('./SlashCommands'),
-    PrefixCommands: require('./PrefixCommands')
-}
+  SkyHelper: require("./SkyHelper"),
+  SlashCommands: require("./SlashCommands"),
+  PrefixCommands: require("./PrefixCommands"),
+};

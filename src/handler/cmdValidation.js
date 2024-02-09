@@ -2,8 +2,8 @@ const { error } = require("@src/logger");
 const chalk = require("chalk");
 module.exports = {
   /**
-   * @param {import('@src/structures').SlashCommands} cmd 
-   * @param {string} file 
+   * @param {import('@src/structures').SlashCommands} cmd
+   * @param {string} file
    * @returns {Boolean}
    */
   cmdValidation: (cmd, file) => {

@@ -22,8 +22,8 @@ let currentShardIndex = 0; // Declare currentShardIndex variable.
 
 /**
  * Returns explanation on shards! Shard guide by Art
- * @param {import('discord.js').ButtonInteraction} interaction 
- * @param {import('discord.js').User} Art 
+ * @param {import('discord.js').ButtonInteraction} interaction
+ * @param {import('discord.js').User} Art
  */
 async function shardInfos(interaction, Art) {
   if (interaction.customId === "about") {

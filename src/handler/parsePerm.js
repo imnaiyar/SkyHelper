@@ -43,8 +43,8 @@ const permissions = {
 };
 
 /**
- * @param {Array|String} perms 
- * @returns 
+ * @param {Array|String} perms
+ * @returns
  */
 module.exports = (perms) => {
   if (Array.isArray(perms)) {

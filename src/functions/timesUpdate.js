@@ -17,22 +17,23 @@ module.exports = async (client) => {
   if (!data) return;
 
   const dltSChm = (id) => {
-    deleteSchema("autoTimes", id)
- }
+    deleteSchema("autoTimes", id);
+  };
   for (const guild of data) {
     if (!guild.webhookURL) continue;
     const webhook = new WebhookClient({ url: guild.webhookURL });
-    if (!webhook)  {
-      dltSChm(guild._id) 
+    if (!webhook) {
+      dltSChm(guild._id);
       continue;
     }
-     webhook.editMessage(guild.messageId, {content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
-     .catch((e) =>{   
-      if (e.message === 'Unknown Message') {
-        dltSChm(guild._id)
-        webhook.delete()
-        return;
-      }
-    })
+    webhook
+      .editMessage(guild.messageId, { content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
+      .catch((e) => {
+        if (e.message === "Unknown Message") {
+          dltSChm(guild._id);
+          webhook.delete();
+          return;
+        }
+      });
   }
 };

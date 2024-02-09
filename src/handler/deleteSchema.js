@@ -1,4 +1,3 @@
-
 /**
  * Deletes a schema based on guild id provided
  * @param {string} model - the model name
