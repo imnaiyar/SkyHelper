@@ -102,37 +102,21 @@ module.exports = class shardsUtil {
    * @param {string} messageId 
    */
   static getMessageDate(interaction, messageId) {
-    const filePath = "messageData.json";
+    
+     const data = interaction.client.shardsData.get(messageId);
 
-    try {
-      const data = fs.readFileSync(filePath, "utf8");
-      const messageData = JSON.parse(data);
-      const message = messageData.find((data) => data.messageId === messageId);
-
-      if (!message) {
-        interaction.reply({
-          content: "No dates found for this message. The interaction might be expired, please run the command again",
-          ephemeral: true,
-        });
-        return false;
-      }
-
-      const dateOption = message.time;
+      const dateOption = data.time;
 
       let currentDate;
       if (dateOption) {
         currentDate = moment.tz(dateOption, "Y-MM-DD", interaction.client.timezone).startOf("day");
         if (!currentDate.isValid()) {
-          console.log(`${dateOption} does not exist, please provide a valid date.`);
-          return null;
+          throw new Error(`currentDate is not valid. Date fetched:- ${currentDate}`);
         }
       } else {
         currentDate = moment.tz(interaction.client.timezone).startOf("day");
       }
 
       return currentDate;
-    } catch (error) {
-      console.error("Error reading messageData.json:", error);
-    }
-  }
-};
+    } 
+  };

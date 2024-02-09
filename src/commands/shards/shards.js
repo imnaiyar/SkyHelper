@@ -18,7 +18,7 @@ module.exports = {
       },
     ],
   },
-  async execute(interaction) {
+  async execute(interaction, client) {
     const dateOption = interaction.options.getString("date");
     const regex = /^\d{4,6}-\d{2}-\d{2}$/;
     if (dateOption && !regex.test(dateOption)) {
@@ -47,12 +47,11 @@ module.exports = {
       components: [actionRow],
       fetchReply: true,
     });
-    const messageId = reply.id;
-
-    util.saveMessageData({
+    
+    
+    client.shardsData.set(reply.id, {
       time: currentDate.format(),
-      messageId,
-      timestamp: moment().tz(interaction.client.timezone).format(),
+      timestamp: moment().tz(client.timezone)
     });
   },
 };

@@ -8,16 +8,11 @@ const buildShardEmbed = require("@handler/buildShardEmbed");
  * @param {string} value - value of the button (next or prev)
  */
 async function nextPrev(interaction, value) {
-  const filePath = "messageData.json";
-  // Read the data from the JSON file
-  const data = fs.readFileSync(filePath, "utf8");
-  const messageData = JSON.parse(data);
-  const messageId = interaction.message.id;
-  // Find the message by messageId
-  const message = messageData.find((data) => data.messageId === messageId);
+  const { client } = interaction;
+  const data = client.shardsData.get(interaction.message.id);
 
   // Increment currentDate by one day
-  const currentDate = moment.tz(message.time, "Y-MM-DD", interaction.client.timezone).startOf("day");
+  const currentDate = moment.tz(data.time, "Y-MM-DD", client.timezone).startOf("day");
   let shardDate;
   if (value === "next") {
     shardDate = currentDate.add(1, "day");
@@ -29,9 +24,8 @@ async function nextPrev(interaction, value) {
   const { result, actionRow } = await buildShardEmbed(shardDate, "SkyHelper");
 
   await interaction.update({ embeds: [result], components: [actionRow] });
-  message.time = shardDate.format();
-
-  fs.writeFileSync(filePath, JSON.stringify(messageData, null, 2), "utf8");
+  data.time = shardDate.format();
+  client.shardsData.set(interaction.message.id, data);
 }
 
 module.exports = { nextPrev };

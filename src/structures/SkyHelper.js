@@ -53,7 +53,7 @@ module.exports = class SkyHelper extends Client {
      * Stores shards commands datas
      * @type {Map<String, Object>}
      */
-    this.shardsData = new Map()
+    this.shardsData = new Map();
 
     
     // Datas for Events in Sky
