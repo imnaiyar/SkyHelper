@@ -1,7 +1,7 @@
 const { firstChoices } = require("./extends/realms/choices");
 const { rowBuilder } = require("./shared/helpers");
-const {EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder} = require("discord.js");
-const result = require('./extends/realms/responses')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
+const result = require("./extends/realms/responses");
 const CUSTOM_ID = {
   FIRST_CHOICE: "firstChoice",
   SECOND_CHOICE: "secondChoice",
@@ -48,7 +48,7 @@ module.exports = async (interaction, ephemeral) => {
   });
 
   collector.on("end", async () => {
-    row.components.forEach((component) => component.setDisabled(true).setPlaceholder('Menu Expired'));
+    row.components.forEach((component) => component.setDisabled(true).setPlaceholder("Menu Expired"));
     await reply.edit({
       components: [row],
     });
@@ -69,8 +69,8 @@ async function handleFirst(interaction, value) {
       value: "summary_" + value,
     },
     {
-      label: 'Maps',
-      value: 'maps_' + value,
+      label: "Maps",
+      value: "maps_" + value,
     },
     {
       label: "Spirits",
@@ -99,62 +99,61 @@ async function respondSummary(int, value, ephemeral) {
   let page = 1;
   const total = data.areas.length - 1;
   const getData = () => {
-    const embed = data.areas[page - 1 ];
-     const emb = new EmbedBuilder()
-    .setTitle(embed.title)
-    .setDescription(embed.description)
-    .setImage(embed.image)
-    .setAuthor({ name: `Different Areas of ${userChoices.get(int.message.id).firstChoice.label}`})
-    .setFooter({text: `Page ${page}/${total + 1}`});
-   const row = [];
+    const embed = data.areas[page - 1];
+    const emb = new EmbedBuilder()
+      .setTitle(embed.title)
+      .setDescription(embed.description)
+      .setImage(embed?.image)
+      .setAuthor({ name: `Different Areas of ${userChoices.get(int.message.id).firstChoice.label}` })
+      .setFooter({ text: `Page ${page}/${total + 1}` });
+    const row = [];
     const btns = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+      new ButtonBuilder()
         .setCustomId("back")
-        .setLabel(`⬅️ ${data.areas[page -2]?.title || 'Prev'}`)
+        .setLabel(`⬅️ ${data.areas[page - 2]?.title || "Prev"}`)
         .setDisabled(page - 1 === 0)
-        .setStyle('2'),
-        new ButtonBuilder()
+        .setStyle("2"),
+      new ButtonBuilder()
         .setCustomId("realm")
         .setEmoji(userChoices.get(int.message.id).firstChoice.emoji)
-        .setStyle('3'),
-        new ButtonBuilder()
+        .setStyle("3"),
+      new ButtonBuilder()
         .setCustomId("forward")
-        .setLabel(`${data.areas[page]?.title || 'Next'} ➡️`)
+        .setLabel(`${data.areas[page]?.title || "Next"} ➡️`)
         .setDisabled(page - 1 === total)
-        .setStyle('2')
-    )
-   const menu = new ActionRowBuilder()
-   .addComponents(
-     new StringSelectMenuBuilder()
-        .setPlaceholder('Choose an area.')
-        .setCustomId('area-menu')
-        .addOptions(data.areas.map((area, index) => ({
-          label: area.title,
-          default: area.title === embed.title,
-          value: "area_" + index.toString()
-        })))
+        .setStyle("2")
+    );
+    const menu = new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder()
+        .setPlaceholder("Choose an area.")
+        .setCustomId("area-menu")
+        .addOptions(
+          data.areas.map((area, index) => ({
+            label: area.title,
+            default: area.title === embed.title,
+            value: "area_" + index.toString(),
+          }))
         )
+    );
     row.push(menu, btns);
-    return {emb, row}
-  }
+    return { emb, row };
+  };
 
   const embed = new EmbedBuilder()
-  .setTitle(data.main.title)
-  .setDescription(data.main.description)
-  .setAuthor({ name: `Summary of ${data.main.title}`});
+    .setTitle(data.main.title)
+    .setDescription(data.main.description)
+    .setAuthor({ name: `Summary of ${data.main.title}` })
+    .setImage(data.main?.image);
 
   const rowFirst = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-    .setLabel('Different Areas')
-    .setCustomId('areas')
-    .setStyle('1')
-  )
+    new ButtonBuilder().setLabel("Different Areas").setCustomId("areas").setStyle("1")
+  );
   const reply = await int.reply({
-    content: data.content,
+    content: `***Note:** This is only a short summary, please follow the sourced link for detailed informations.*`,
     embeds: [embed],
     components: [rowFirst],
     fetchReply: true,
-  })
+  });
 
   const collector = reply.createMessageComponentCollector({
     filter: (i) => i.user.id === int.user.id,
@@ -162,39 +161,42 @@ async function respondSummary(int, value, ephemeral) {
   });
 
   collector.on("collect", async (inter) => {
-    if (inter.customId === "areas") {
-      const get = getData();
-      await inter.update({
-        embeds: [get.emb],
-        components: get.row
-      });
-    } else if (inter.customId === "back") {
-      page--;
-      const get = getData()
-      await inter.update({
-        embeds: [get.emb],
-        components: get.row
-      })
-    } else if (inter.customId === "forward") {
-      page++;     
-      const get = getData()
-      await inter.update({
-        embeds: [get.emb],
-        components: get.row
-      })
-    } else if (inter.customId === "realm") {
-      page = 1;
-      await inter.update({
-        embeds: [embed],
-        components: [rowFirst]
-      })
-    } else if (inter.customId === 'area-menu') {
-        page = parseInt(inter.values[0].split('_')[1]) + 1 ;
-        const get = getData()
-      await inter.update({
-        embeds: [get.emb],
-        components: get.row
-      })
-      }
-  })
+    const componentID = inter.customId;
+    switch (componentID) {
+      case "areas":
+        await updateEmbed(inter);
+        break;
+      case "back":
+        page--;
+        await updateEmbed(inter);
+        break;
+      case "forward":
+        page++;
+        await updateEmbed(inter);
+        break;
+      case "realm":
+        page = 1;
+        await inter.update({
+          embeds: [embed],
+          components: [rowFirst],
+        });
+        break;
+      case "area-menu":
+        page = parseInt(inter.values[0].split("_")[1]) + 1;
+        await updateEmbed(inter);
+        break;
+      default:
+        inter.reply({ content: "Invalid choice or Guide yet to be updated", ephemeral: true });
+    }
+  });
+}
+
+async function updateEmbed(inter) {
+  const get = getData();
+  await inter
+    .update({
+      embeds: [get.emb],
+      components: get.row,
+    })
+    .catch((err) => inter.client.logger.error("Error while Fetching Realm Guides:", err));
 }
