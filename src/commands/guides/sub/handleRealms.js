@@ -130,7 +130,7 @@ async function respondSummary(int, value, ephemeral) {
         .setCustomId('area-menu')
         .addOptions(data.areas.map((area, index) => ({
           label: area.title,
-          value: "area_" + index
+          value: "area_" + index.toString()
         })))
         )
     row.push(menu, btns);
@@ -187,7 +187,7 @@ async function respondSummary(int, value, ephemeral) {
         components: [rowFirst]
       })
     } else if (inter.customId === 'area-menu') {
-        page = inter.values[0].split('_')[1] + 1;
+        page = parseInt(inter.values[0].split('_')[1]) + 1 ;
         const get = getData()
       await inter.update({
         embeds: [get.emb],
