@@ -130,7 +130,7 @@ async function respondSummary(int, value, ephemeral) {
         .setCustomId('area-menu')
         .addOptions(data.areas.map((area, index) => ({
           label: area.title,
-          value: "area_" + index
+          value: "area_" + index + 1
         })))
         )
     row.push(menu, btns);
@@ -178,7 +178,7 @@ async function respondSummary(int, value, ephemeral) {
       page++;     
       const get = getData()
       await inter.update({
-        embeds: get.emb,
+        embeds: [get.emb],
         components: get.row
       })
     } else if (inter.customId === "realm") {
