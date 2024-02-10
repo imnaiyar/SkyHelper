@@ -1,3 +1,8 @@
+<h3 align="center">
+<b> This is development branch, for production branches, see <code>dev</code> (IK name doesn't make sense lol, I am just too lazy to change it) and <code>main</code>
+</b>
+</h3>
+
 <h1 align="center">
   <br>
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/boticon.png" height="200" alt="SkyHelper"></a>
