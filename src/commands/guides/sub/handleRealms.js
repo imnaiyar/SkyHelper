@@ -188,6 +188,7 @@ async function respondSummary(int, value, ephemeral) {
       })
     } else if (inter.customId === 'area-menu') {
         page = inter.values[0].split('_')[1];
+        console.log(page)
         const get = getData()
       await inter.update({
         embeds: [get.emb],
