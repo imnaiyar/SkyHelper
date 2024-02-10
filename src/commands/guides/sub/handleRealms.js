@@ -6,7 +6,6 @@ const CUSTOM_ID = {
   FIRST_CHOICE: "firstChoice",
   SECOND_CHOICE: "secondChoice",
   THIRD_CHOICE: "thirdChoice",
-  BACK: "back",
 };
 
 const userChoices = new Map();
@@ -37,10 +36,10 @@ module.exports = async (interaction, ephemeral) => {
     const id = int.customId;
     switch (id) {
       case CUSTOM_ID.FIRST_CHOICE:
-        handleFirst(int, value);
+        await handleFirst(int, value);
         break;
       case CUSTOM_ID.SECOND_CHOICE:
-        handleSecond(int, value, ephemeral);
+        await handleSecond(int, value, ephemeral);
         break;
       default:
         int.reply("Invalid choice selected.");
@@ -87,7 +86,13 @@ async function handleFirst(interaction, value) {
 }
 
 async function handleSecond(interaction, value, ephemeral) {
-  if (value.startsWith("summary_")) {
+  if (value === "back") {
+    const row = rowBuilder(CUSTOM_ID.FIRST_CHOICE, firstChoices, "Choose a Realm", false);
+    await interaction.update({
+      content: 'Please Select a Realm',
+      components: [row]
+    });
+  } else if (value.startsWith("summary_")) {
     await respondSummary(interaction, value, ephemeral);
   } else if (value.startsWith("spirits_")) {
     await respondSpirits(interaction, value, ephemeral);
@@ -149,9 +154,10 @@ async function respondSummary(int, value, ephemeral) {
     new ButtonBuilder().setLabel("Different Areas").setCustomId("areas").setStyle("1")
   );
   const reply = await int.reply({
-    content: `***Note:** This is only a short summary, please follow the sourced link for detailed informations.*`,
+    content: `*This is only a short summary, please follow the sourced link for detailed informations.*`,
     embeds: [embed],
     components: [rowFirst],
+    ephemeral: ephemeral,
     fetchReply: true,
   });
 
@@ -164,15 +170,15 @@ async function respondSummary(int, value, ephemeral) {
     const componentID = inter.customId;
     switch (componentID) {
       case "areas":
-        await updateEmbed(inter);
+        await updateEmbed(inter, getData);
         break;
       case "back":
         page--;
-        await updateEmbed(inter);
+        await updateEmbed(inter, getData);
         break;
       case "forward":
         page++;
-        await updateEmbed(inter);
+        await updateEmbed(inter, getData);
         break;
       case "realm":
         page = 1;
@@ -183,7 +189,7 @@ async function respondSummary(int, value, ephemeral) {
         break;
       case "area-menu":
         page = parseInt(inter.values[0].split("_")[1]) + 1;
-        await updateEmbed(inter);
+        await updateEmbed(inter, getData);
         break;
       default:
         inter.reply({ content: "Invalid choice or Guide yet to be updated", ephemeral: true });
@@ -191,7 +197,7 @@ async function respondSummary(int, value, ephemeral) {
   });
 }
 
-async function updateEmbed(inter) {
+async function updateEmbed(inter, getData) {
   const get = getData();
   await inter
     .update({
