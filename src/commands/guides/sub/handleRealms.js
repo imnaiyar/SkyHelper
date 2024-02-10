@@ -106,15 +106,8 @@ async function respondSummary(int, value, ephemeral) {
     .setImage(embed.image)
     .setAuthor({ name: `Different Areas of ${userChoices.get(int.message.id).firstChoice.label}`})
     .setFooter({text: `Page ${page}/${total + 1}`});
-
-    const row = new ActionRowBuilder().addComponents(
-        new StringSelectMenuBuilder()
-        .setPlaceholder('Choose an area.')
-        .setCustomId('area-menu')
-        .addOptions(data.areas.map((area, index) => ({
-          label: area.title,
-          value: "area_" + index
-        }))),
+   const row = [];
+    const btns = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
         .setCustomId("back")
         .setLabel(`⬅️ ${data.areas[page -2]?.title || 'Prev'}`)
@@ -130,7 +123,17 @@ async function respondSummary(int, value, ephemeral) {
         .setDisabled(page - 1 === total)
         .setStyle('2')
     )
-
+   const menu = new ActionRowBuilder()
+   .addComponents(
+     new StringSelectMenuBuilder()
+        .setPlaceholder('Choose an area.')
+        .setCustomId('area-menu')
+        .addOptions(data.areas.map((area, index) => ({
+          label: area.title,
+          value: "area_" + index
+        })))
+        )
+    row.push(menu, btns);
     return {emb, row}
   }
 
@@ -139,7 +142,7 @@ async function respondSummary(int, value, ephemeral) {
   .setDescription(data.main.description)
   .setAuthor({ name: `Summary of ${data.main.title}`});
 
-  const row = new ActionRowBuilder().addComponents(
+  const rowFirst = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
     .setLabel('Different Areas')
     .setCustomId('areas')
@@ -148,7 +151,7 @@ async function respondSummary(int, value, ephemeral) {
   const reply = await int.reply({
     content: data.content,
     embeds: [embed],
-    components: [row],
+    components: [rowFirst],
     fetchReply: true,
   })
 
@@ -162,33 +165,33 @@ async function respondSummary(int, value, ephemeral) {
       const get = getData();
       await inter.update({
         embeds: [get.emb],
-        components: [get.row]
+        components: get.row
       });
     } else if (inter.customId === "back") {
       page--;
       const get = getData()
       await inter.update({
         embeds: [get.emb],
-        components: [get.row]
+        components: get.row
       })
     } else if (inter.customId === "forward") {
       page++;     
       const get = getData()
       await inter.update({
-        embeds: [get.emb],
-        components: [get.row]
+        embeds: get.emb,
+        components: get.row
       })
     } else if (inter.customId === "realm") {
       await inter.update({
         embeds: [embed],
-        components: [row]
+        components: [rowFirst]
       })
     } else if (inter.customId === 'area-menu') {
         page = inter.values[0].split('_')[1];
         const get = getData()
       await inter.update({
         embeds: [get.emb],
-        components: [get.row]
+        components: get.row
       })
       }
   })
