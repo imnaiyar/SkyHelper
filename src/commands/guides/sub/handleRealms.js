@@ -1,6 +1,6 @@
 const { firstChoices } = require("./extends/realms/choices");
 const { rowBuilder } = require("./shared/helpers");
-const {EmbedBuilder, ActionRowBuilder, ButtonBuilder} = require("discord.js");
+const {EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder} = require("discord.js");
 const result = require('./extends/realms/responses')
 const CUSTOM_ID = {
   FIRST_CHOICE: "firstChoice",
@@ -105,9 +105,16 @@ async function respondSummary(int, value, ephemeral) {
     .setDescription(embed.description)
     .setImage(embed.image)
     .setAuthor({ name: `Different Areas of ${userChoices.get(int.message.id).firstChoice.label}`})
-    .setFooter({text: `Page ${page}/${total + 1}`})
+    .setFooter({text: `Page ${page}/${total + 1}`});
 
     const row = new ActionRowBuilder().addComponents(
+        new StringSelectMenuBuilder()
+        .setPlaceholder('Choose an area.')
+        .setCustomId('area-menu')
+        .addOptions(data.areas.map((area, index) => ({
+          label: area.title,
+          value: "area_" + index
+        }))),
         new ButtonBuilder()
         .setCustomId("back")
         .setLabel(`⬅️ ${data.areas[page -2]?.title || 'Prev'}`)
@@ -151,12 +158,12 @@ async function respondSummary(int, value, ephemeral) {
   });
 
   collector.on("collect", async (inter) => {
-    if (inter.customId === "areas") {   
-      const get = getData()
+    if (inter.customId === "areas") {
+      const get = getData();
       await inter.update({
         embeds: [get.emb],
         components: [get.row]
-      })
+      });
     } else if (inter.customId === "back") {
       page--;
       const get = getData()
@@ -176,6 +183,13 @@ async function respondSummary(int, value, ephemeral) {
         embeds: [embed],
         components: [row]
       })
-    }
+    } else if (inter.customId === 'area-menu') {
+        page = inter.values[0].split('_')[1];
+        const get = getData()
+      await inter.update({
+        embeds: [get.emb],
+        components: [get.row]
+      })
+      }
   })
 }

@@ -41,7 +41,7 @@ module.exports = {
     summary_prairie: {
       main: {
        title: 'Daylight Prairie', 
-       description: `Often shortened to Prairie, is a natural prairie field once home to a lost farming civilization. It is the second realm the player visits. Differing from the unique realm layout of Isle of Dawn, Daylight Prairie is separated into eight areas[1], loading screens between them all. While the game does not explicitly mention the names of all the areas, it can be derived from landmarks and developer mentions.\n - Daylight Prairie holds 8 Regular Spirits and 14 Seasonal Spirits.\n\n_Source: [Daylight_Prairie](<https://sky-children-of-the-light.fandom.com/wiki/Daylight_Prairie>)`,
+       description: `Often shortened to Prairie, is a natural prairie field once home to a lost farming civilization. It is the second realm the player visits. Differing from the unique realm layout of Isle of Dawn, Daylight Prairie is separated into eight areas[1], loading screens between them all. While the game does not explicitly mention the names of all the areas, it can be derived from landmarks and developer mentions.\n - Daylight Prairie holds 8 Regular Spirits and 14 Seasonal Spirits.\n\n_Source: [Daylight_Prairie](<https://sky-children-of-the-light.fandom.com/wiki/Daylight_Prairie>)_`,
        image: ''
       },
         areas: [
@@ -218,27 +218,138 @@ module.exports = {
     summary_wasteland: {
       main: {
         title: 'Golden Wasteland',
-        description: ''
+        description: "Often shortened to Wasteland, is a desolate land bathed in the fading glow of a once-mighty civilization. It is the fifth realm the player visits, being the first encounter with draining water. If the player is in contact with the water, their light begins to drain - similiar to Rainfall. The light can be recharged by standing near a light source, or interacting with a friend. Golden Wasteland is separated into eight areas[1], loading screens between them all.\n\nGolden Wasteland holds 6 Regular Spirits and 14 Seasonal Spirits.\n\n_Source: [Golden_Wasteland](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland>)_",
+        image: ''
       },
       areas: [
         {
-          title: '',
-          description: '',
-          image: ''
-        }
+          title: 'Social Space',
+          description: "After leaving the Valley Temple, the player flies through the clouds and eventually lands in this area. As usual, the Social Space has a bonfire surrounded by two benches in the center, a Outfit Shrine to the left aswell as an entrance to the Nintendo Switch Area. While to the right is a port, acting as the entrance to the Treasure Reef. Scattered around the whole space is Regular Spirits that have been relived in the current realm. There is a jump off point onwards, where you are able to dive down to Broken Temple area via the large tornado. There is a Map Shrine on the jump off point.\n\nIn the Social Space, players can find:\n- 1 Map Shrine\n\n_Source: [Golden_Wasteland#Social_Space](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Social_Space>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850769748926516/Wasteland_SocialSpace1.png?ex=65d9df0b&is=65c76a0b&hm=a0d3692dc8056b6c2ce4307a7ba1b519b2eb3ae8f50405646c53b2046c508650&'
+        },
+        {
+          title: 'Treasure Reef',
+          description: "Version 0.16.0 added an area for Season of Abyss to the Golden Wasteland; Treasure Reef. On the right of the social space, there will be a pier with a boat. Take the boat and sail through the dark cloud of Wasteland into a crystal clear water paradise. The Treasure Reef is home to multiple creatures and acts as the tutorial for the Diving Mechanic, where the player unlocks the feature. Note that the boat will display only if a player has progressed at least to Vault of Knowledge. The Treasure Reef lets players seek the mysteries and surprises that await in the sapphire depths of the reef.\n\nIn the Treasure Reef, players can find:\n- 2 Children of Light\n- 1 Map Shrine\n- 4 Seasonal Spirits ( icon Anxious Angler, icon Ceasing Commodore, icon Bumbling Boatswain, icon Cackling Cannoneer)\n\n_Source: [Golden_Wasteland#Treasure_Reef](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Treasure_Reef>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850771069861939/Wasteland_TreasureReef1.png?ex=65d9df0b&is=65c76a0b&hm=101b64d125864da115e0aeae833204fad13c5a2fe2b66f3a63abe094b35a3bd9&'
+        },
+        {
+          title: 'Broken Temple',
+          description: "This is the area you land in after jumping into the tornado in the Social Space. A desolate landscape of crumbling walls and weathered structures. Here the player first encounters draining water; water in which if come in contact with results in the player's light to be drained. This light can be recovered by surrounding braziers or by burning dark plants for their wax. Additionally, the player will have their second encounter with Crabs, and will continually encounter throughout Wasteland. The path to the Graveyard Entrance is available onwards, near the broken temple structure. To the far right of the area is a pier hosting a journey to The Forgotten Ark.\n\nIn the Broken Temple area, players can find:\n- 2 Children of Light\n- 1 Map Shrine\n- 2 Regular Spirits ( icon Frightened Refugee, icon Fainting Warrior)\n\n_Source: [Golden_Wasteland#Broken_Temple](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Broken_Temple>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850772286345276/Wasteland_BrokenTemple1.png?ex=65d9df0b&is=65c76a0b&hm=b605e38457c6310c15be5c718601f4f479e434108c911194ccfc556d4da4a0c3&'
+        },
+        {
+          title: 'The Forgotten Ark',
+          description: "The Forgotten Ark is a seasonal area added to the Golden Wasteland, introduced along with the Season of Enchantment in Patch 0.9.0. All the quests, spirits, and activities can be found in this area. To enter The Forgotten Ark, After landing in the Broken Temple area, explore the right-hand side of the map. There you will find a pier and a boat. Sit and meditate on the boat, and it will take you to the new area. Note that this area is also accessible via a Wind Path tunnel added during Season of Flight after completing Flight Quest #3, within the clouds to the right of the ark. In The Forgotten Ark, find colored lights to revitalize the area and the spirits. For more information, see here.\n\nIn The Forgotten Ark, players can find:\n- 2 Children of Light\n- 1 Map Shrine\n- 6 Seasonal Spirits ( icon Nodding Muralist, icon Indifferent Alchemist, icon Crab Walker, Boo Scarecrow Farmer, icon Snoozing Carpenter, icon Playfighting Herbalist)\n\n_Source: [Golden_Wasteland#The_Forgotten_Ark](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#The_Forgotten_Ark>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850773745958912/Wasteland_ForgottenArk1.png?ex=65d9df0c&is=65c76a0c&hm=b4d4125d18ef91a99a4e7f5ab96d91e52644d0d3b7ec97ce201c92533cf9f27b&'
+        },
+        {
+          title: 'Graveyard Entrance',
+          description: "Graveyard Entrance, referred to 'First Krill Area' by the community, is combined with the next area Graveyard, however for reading simplicity they've been split into two for this article. The area is surrounded by gigantic walls and pillars corroded to time. Familiar structures can be seen alike to the one in the Forest Temple. The Graveyard Entrance serves as the player's first encounter with Dark Dragons, a formidable opponent that players are recommended to avoid. Being seen and hit by one results 1-6 Winged Light and all their light to be lost - which can be regained.\n\nIn the Graveyard Entrance, players can find:\n- 2 Children of Light\n- 1 Regular Spirit ( icon Courageous Soldier)\n- 1 Seasonal Spirit ( icon Saluting Protector)\n\n_Source: [Golden_Wasteland#Graveyard_Entrance](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Graveyard_Entrance>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850774886944778/Wasteland_GraveyardEntrance1.png?ex=65d9df0c&is=65c76a0c&hm=fec450d212081cfe63b223a3e541edf9ded3a55d85479a5f1758d8ceed78ab05&'
+        },
+        {
+          title: 'Graveyard',
+          description: "Once the player has made it past the first Dark Dragon in the #Graveyard Entrance, a slope leads them into the lower swamp, the Graveyard. The area is teeming with Dark Dragons and Crabs, surrounded by gigantic bones emerging from the unnatural landscape. It's recommended to remain vigilant and cautious in this area, as attacks from Dark Dragons can be devastating. In addition to the dark creatures, it's also filled with Dark Plants, with a large one in the centre requiring multiple players to burn. Beware while burning this, as it is in the middle of a dragon's path.\n\nTo continue onwards, follow onwards where streaks of wind can be seen leading to the next area; Battlefield. Alternatively, the player can enter the Crab Fields, via a pipe near beginning slope blocked by a Spirit Gate requiring one Regular Spirit from Wasteland to have been relived, or through an entrance to the far right also blocked by a Spirit Gate with the same requirements.\n\nIn the Graveyard, players can find:\n- 4 Children of Light\n- 1 Map Shrine\n- 1 Regular Spirit ( icon Stealthy Survivor)\n- 2 Seasonal Spirits ( icon Pleaful Parent, icon Respectful Pianist)\n\n_Source: [Golden_Wasteland#Graveyard](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Graveyard>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850775994114079/Wasteland_Graveyard1.png?ex=65d9df0c&is=65c76a0c&hm=febccff02a0a0ba3e826d078797edaae76eab0d1ceef39c016cb67b8c31e7883&'
+        },
+        {
+          title: 'Crab Fields',
+          description: "Crab Fields is a Dark Crab infested area, as per the name, with a patrolling Dark Dragon. The area holds an abandoned ship in the centre which the dragon orbits, with a magnitude of pipes along the walls of the area.\n\nThere are four ways to access the Crab Fields area. For two of them you will need to have found either one or two Regular Spirits from Golden Wasteland.\n- First way: when you exit the Graveyard Entrace, go through the Spirit Gate in the pipe to the right as you slide down the hill. This barrier requires one Ancestor Spirit from Wasteland\n- Second way: above the previously mentioned barrier, there is another pipe which also leads into Crab Fields. Entering this way will recharge your light. However, this pipe may be slightly difficult to reach on your own.\n- Third way: In the Graveyard, go right along the rocks until you find an elevated platform made out of bricks. There should be a round pipe with a Spirit Gate on this platform which needs 1 Regular Spirit from Wasteland\n- Fourth way: in the Battlefield, go to the right along the rocks/wall until you find some some large pipes. It may help to first head towards the Temple, and then take a sharp right. There you will find a Spirit Gate which requires 2 Regular Spirits from Wasteland.\nIn the Crab Fields, players can find:\n- 3 Children of Light\n- 1 Map Shrine\n- 1 Regular Spirit ( icon Saluting Captain)\n- 1 Seasonal Spirit ( icon Crab Whisperer)\n\n_Source: [Golden_Wasteland#Crab_Fields](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Crab_Fields>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850776912797746/Wasteland_CrabFields1.png?ex=65d9df0c&is=65c76a0c&hm=2c59faa1a4ae1926f08e334d655eb270f27b5df7d969750663a69b20118c14bc&'
+        },
+        {
+          title: 'Battlefield',
+          description: "The final open area of Wasteland before entering the Temple. A barren wilderness scattered with buried structures, spears, and shields. This area is connected to both the Graveyard and the Crab Fields areas. The exit to the Crab Fields is hidden in a corner, and blocked by a Spirit Gate that requires 2 Regular Spirits from Wasteland.\n\nIn the center of the area is a scattered large structure, with a large Darkness plant requiring multiple players to burn found in the middle. At the very end of the area just before the temple, there is a closed gate with a button that needs to be activated by using the player's candle to open the gate. Be warned however, that upon activating the gate will open, three dragons will also appear and patrol the area. Thus, it is highly recommended to finish exploring and only activate the switch when you are ready to leave and enter the Temple.\n\nIn the Battlefield, players can find:\n- 2 Children of Light\n- 1 Map Shrine\n- 1 Regular Spirit ( icon Lookout Scout)\n\n_Source: [Golden_Wasteland#Battlefield](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Battlefield>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850777780748309/Wasteland_Battlefield1.png?ex=65d9df0d&is=65c76a0d&hm=d33716a76aa27f8d11f7b7302673ffabdf5fed3cca626858ac9f1750584ab47c&'
+        },
+        {
+          title: 'Wasteland Temple',
+          description: "The Wasteland Temple is a gigantic structure overlooking the entire Battlefield despite the fog. The interior is similarly large, with an octagonal shape each side with a arch. The Elder of the Wasteland's altar sits in the centre, surrounded by red candles and a white candle to summon the meditation circle. Sitting down will trigger the Elder Cutscene, which afterwards opens the gates onwards, leading the player to the next realm, Vault of Knowledge.\n\nIn the Wasteland Temple, players can find:\n- 1 Children of Light\n- 1 Map Shrine\n\n_Source: [Golden_Wasteland#Wasteland_Temple](<https://sky-children-of-the-light.fandom.com/wiki/Golden_Wasteland#Wasteland_Temple>)_",
+          image: 'https://media.discordapp.net/attachments/867638574571323424/1205850778862882876/Wasteland_Temple1.png?ex=65d9df0d&is=65c76a0d&hm=9e2c000ec639b200c5dd9341c4df081b0e124bf17aa0b5464c1b7ee896ca3923&'
+        },
       ]
     },
     summary_vault: {
       main: {
         title: 'Vault of Knowledge',
-        description: ''
+        description: 'The Vault of Knowledge, a cool-toned vertical realm with cosmic architecture and variety of puzzles. It is the sixth realm the player visits, set almost entirely indoors with its difficulty significantly lesser than of Golden Wasteland. The Vault has 8 separated areas, however the realm has physical 7 floors (excluding the side areas) each representing the previous realms.\n- Vault of Knowledge contains 5 Regular Spirits and 14 Seasonal Spirits.\n\n_Source: [Vault_of_Knowledge](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge>)_'
       },
       areas: [
         {
-          title: '',
-          description: '',
+          title: 'Social Space',
+          description: "Similiar to Isle of Dawn, Vault also misses the regular features of a Social Space; a bonfire and a closet. However it does still feature a bench to chat with other players aswell as Spirit Tombstones presenting the Regular Spirits currently relived in the current realm. To the left of where the player spawns is the entrance to the Collaboration Room, blocked by a Spirit Gate requiring 1 Regular Spirit from Vault to have been relived. Additionally, the entrance to the **Secret Area** can be found to the left side. To the right is the entrance to the **Archives**, blocked by a two-player door aswell as a Spirit Gate requiring 1 Regular Spirit from Vault to have been relived again.\n\nIn the Social Space, players can find:\n- 1 Children of Light\n- 1 Map Shrine\n\n_Source: [Vault_of_Knowledge#Social_Space](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Social_Space>)_",
           image: ''
-        }
+        },
+        {
+          title: 'Secret Area',
+          description: "The Secret Area (also known as The Office) was added to the game in Patch 0.6.0. It can be found by players with a sharp eye in the Vault of Knowledge. The Secret Area is set up as a sort of parallel universe or gateway from the world of Sky into a world much more like our real world, featuring an office block based on the office of the staff behind Sky, thatgamecompany.\n\nIf you haven't yet visited the Secret Area, it is advised to try and find it yourself and explore it spoiler-free before reading this page. However, note that players will need a special cosmetic item to actually get inside the area properly. Find out more in the Secret Area page.\n\n_Source: [Vault_of_Knowledge#Secret_Area](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Secret_Area>)_",
+          image: ''
+        },
+        {
+          title: 'Archives',
+          description: "With Season of Belonging in Patch 0.7.0, an area was added to the first level of Vault. To enter, open the two player door to the direct right of spawn. Along the path is a Spirit Gate requiring one Regular Spirit from the Vault of Knowledge to have been relived. The Archives is a small area, surrounded by towering blocks with glyphs and floating crumbled structures. Within the blocks is a 3x3 maze, where a lightable diamond leads the way out.\n\nIn the Archives, players can find:\n- 2 Children of Light\n- 1 Map Shrine\n- 1 Seasonal Spirits ( icon Wise Grandparent)\n\n_Source: [Vault_of_Knowledge#Archives](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Archives>)_",
+          image: ''
+        },
+        {
+          title: 'Collaboration Room',
+          description: "The Collaboration Room is a gateway area to the various areas linked to collaboration Seasons. The area was never officially given a name so many players refer to it as the \"Collaboration Room\" or \"Collab Room\" for short. To enter the Collaboration Room, turn left from where the player spawns once heading into the Vault portal. The doorway is protected by a Spirit Gate, requiring one Regular Spirit from Vault to enter. In the Collab Room, meditation circles in alcoves are available for each area from a collaboration Season: <:ninecoloreddeer:1197412132657053746> Crescent Oasis, <:littleprince:1130958521253502987> Starlight Desert, and <:aurora:1130958641189621771> Valley's Coliseum. Sitting at the Season's respective meditation circle will teleport the player to its corresponding seasonal area.\n\nIn the Collaboration Room, players can find:\n- 1 Map Shrine\n\n_Source: [Vault_of_Knowledge#Collaboration_Room](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Collaboration_Room>)_",
+          image: ''
+        },
+        {
+          title: 'Crescent Oasis',
+          description: "The Crescent Oasis is a Seasonal area added to Vault of Knowledge, introduced with the Season of the Nine-Colored Deer in Update 0.24.0. All the Quests, Spirits, and activities can be found in the area. To enter the Crescent Oasis, head to the Collaboration Room in the Vault of Knowledge - left from where the player spawns once heading into the Vault portal - and sit in the alcove with the  Nine-Colored Deer mural. The doorway is blocked by a Spirit Gate requiring one (1) Regular Spirit from Vault to enter. Once inside, sit at the meditation circle in front of a mural of the Nine-Colored Deer. The Crescent Oasis unfolds like a hidden gem amidst the vast, golden expanse of the desert. Find out more in its page.\n\nIn the Crescent Oasis, players can find:\n- 3 Children of Light\n- 1 Map Shrine\n- 4 Seasonal Spirits (  icon Herb Gatherer, icon Hunter, icon Feudal Lord, ic9n Princess)\n\n_Source: [Vault_of_Knowledge#Crescent_Oasis](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Crescent_Oasis>)_",
+          image: ''
+        },
+        {
+          title: 'Starlight Desert',
+          description: "The Starlight Desert is a Seasonal area added to Vault of Knowledge, introduced along with the Season of The Little Prince in Patch 0.14.0. All the quests, spirits, and activities can be found in this area. To enter the Starlight Desert, head to the Collaboration Room in the Vault of Knowledge - left from where the player spawns once heading into the Vault portal - and sit in the alcove with the  Little Prince mural. A Spirit Gate requiring 1 Regular Spirit from Vault will be required to enter. Note that this area is also accessible via a Wind Path tunnel added during Season of Flight after completing Flight Quest #3, in the clouds behind the rose aviary. Find out more in its page.\n\nIn the Starlight Desert, players can find:\n- 3 Children of Light\n- 1 Map Shrine\n- 6 Seasonal Spirits ( icon Beckoning Ruler, icon Gloating Narcissist, icon Stretching Lamplighter, icon Slouching Soldier,icon Sneezing Geographer, icon Star Collector)\n\n_Source: [Vault_of_Knowledge#Starlight_Desert](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Starlight_Desert>)_",
+          image: ''
+        },
+        {
+          title: 'Sky Memorial',
+          description: "A monument was added to the Windy Dunes area of the Starlight Desert in honor of a late TGC employee in Patch 0.21.0, and others in-team to whom TGC has had to say goodbye to. It also serves as a spot for those to place a message for your lost beloved ones. While in the area, the OST \"Attachments\" from the 3rd Sky OST Volume by Vincent Diamante will play in the background.\n\n_Source: [Vault_of_Knowledge#Sky_Memorial](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Sky_Memorial>)_",
+          image: ''
+        },
+        {
+          title: 'First Floor',
+          description: "The First Floor is just past the social space and represents Isle of Dawn, seen by the scattered dunes of sand around the chamber. In the center is an elevator stucture surrounded by four lanterns. To the right are four diamonds which being near prompts the player to use the  Telekinesis Expression. After four players use the expression on the diamonds at once, the wall ahead opens up to lead to a circular area holding 2 Spirits. To the left is a chat bench with a sapling, aswell as the entrance to the Repository of Refuge, requiring 1 Regular Spirit from Vault.\n\nTo continue upwards to the next floor, light the four lanterns in the center to summon a meditation circle on the elevator. Sitting on it will ascend the player upwards to Floor 2.\n\nOn the First Floor, players can find:\n- 1 Regular Spirit ( icon Praying Acolyte)\n- 1 Seasonal Spirit ( icon Thoughtful Director)\n\n_Source: [Vault_of_Knowledge#First_Floor](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#First_Floor>)_",
+          image: ''
+        },
+        {
+          title: 'Repository of Refuge',
+          description: "The Repository of Refuge is a seasonal area added to Vault, introduced along with the Season of Remembrance in Patch 0.20.0 All the quests, spirits, and activities can be found in this area. To enter the Repository of Refuge, head to the First Floor of Vault and turn left, where a staircase next to a Bloom Sapling can be found. Entry is blocked by a Spirit Gate requiring 1 Vault Regular Spirit to have been relived. In the Repository of Refuge, help the 4 Spirits with their grievances so they may rest peacefully. Find out more in its page.\n- In the Repository of Refuge, players can find:\n- 1 Children of Light\n- 1 Map Shrine\n- 4 Seasonal Spirits ( icon Bereft Veteran, icon Tiptoeing Tea-Brewer, icon Pleading Child, icon Wounded Warrior)\n\n_Source: [Vault_of_Knowledge#Repository_of_Refuge](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Repository_of_Refuge>)_",
+          image: ''
+        },
+        {
+          title: 'Second Floor',
+          description: "The Second Floor represents Daylight Prairie, and where the player first encounters the starry floor. The starry floor allows the player to float, and not fall down to the previous floor, while also recharge the player's light. On this floor, there a chamber blocked by a 4 player gate, requiring four players to simultaneously lift the door open. The chamber holds a single Spirit, various candles scattered around, and a table allowing players to chat with another.\n\nThe floor itself contains floating platforms allowing players to reach and light the four lanterns found around the area, which summon floating diamonds to light in order to power up the elevator again and lead the player to the next floor.\n\nOn the Second Floor, players can find:\n- 1 Regular Spirit ( icon Levitating Adept)\n\n_Source: [Vault_of_Knowledge#Second_Floor](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Second_Floor>)_",
+          image: ''
+        },
+        {
+          title: 'Third Floor',
+          description: "This floor represents the Hidden Forest, seen with the few trees that can be made on far platforms. It transitions away from the constrictions of the vault walls, opening it to the infinite void. The realm features geyser-like platforms, lifting and recharging the player once lit. Similiar to the previous floors, to continue onto the next floor light the four lanterns on the upper platforms to summon 12 diamonds. Once these 12 are lit, the player can sit on the elevator to ascend to the next floor.\n\nOn the Third Floor, players can find:\n- 1 Children of Light\n- 1 Map Shrine\n- 1 Regular Spirit ( icon Polite Scholar)\n\n_Source: [Vault_of_Knowledge#Third_Floor](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Third_Floor>)_",
+          image: ''
+        },
+        {
+          title: 'Fourth Floor',
+          description: "The fourth floor represents the Valley of Triumph. The stone buildings and mini coliseum resemble those found in the races. This floor contains waterfalls of light, stone islands, and a variety of floating platforms. To progress onwards, light the four lanterns on the Spirit Mantas roaming the floor. This serves as the first encounter of Spirit Mantas by the player.\n\nOn the Fourth Floor, players can find:\n- 2 Children of Light\n- 1 Map Shrine\n- 2 Regular Spirits ( icon Memory Whisperer,  Meditating Monastic)\n- 2 Seasonal Spirits ( icon Greeting Shaman,  Shushing Light Scholar)\n\n_Source: [Vault_of_Knowledge#Fourth_Floor](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Fourth_Floor>)_",
+          image: ''
+        },
+        {
+          title: 'Fifth Floor',
+          description: "The fifth floor represents Golden Wasteland, and has a few skeletons floating in the sky. To reach the next floor, players will need to fly to the Elder Spirit Manta which will approach from the Constellation-prairie-icon-Ray Prairie Constellation in the sky. On the back of the Spirit Manta players will find lanterns to light – these activate the elevator at the center.\n\nOn the Fifth Floor, players can find:\n- 1 Children of Light\n\n_Source: [Vault_of_Knowledge#Fifth_Floor](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Fifth_Floor>)_",
+          image: ''
+        },
+        {
+          title: 'The Summit',
+          description: "The Summit, being the Sixth Floor, is where the Elder of the Vault's altar resides. The floor begins with Cosmic Mantas circulating the platform, which players can ride up to reach the Summit, or wait for the elevator to slowly rise up. Differing from all the previous floors, this floor is mostly natural, with a stone island with grass comprising the whole area. Surrounding the Elder's altar is the previous realm's altars: from Isle to Wasteland. After lighting the center altar's white candle and meditating to activate a cutscene, the player is transported to the After-Shrine Area.\n\nAt The Summit, players can find:\n- 1 Children of Light\n- 1 Map Shrine\n\n_Source: [Vault_of_Knowledge#The_Summit](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#The_Summit>)_",
+          image: ''
+        },
+        {
+          title: 'After-Shrine Area',
+          description: "The final area of Vault, however differing from every other area of the game. This area solely acts as a connection between Vault to the Eye of Eden, with portals leading either Home/Aviary Village or into the Eye of Eden (Spoiler Warning). The Spirit Gate blocking the entry to Eden requires 20 Winged Light to pass through. However, it is recommended to acquire significantly more than this before entering Eden.\n\n_Source: [Vault_of_Knowledge#After-Shrine_Area](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#After-Shrine_Area>)_",
+          image: ''
+        },
       ]
     },
     summary_eden: {
