@@ -183,7 +183,7 @@ async function respondSummary(int, value, ephemeral) {
         break;
       case "realm":
         page = 1;
-        await inter.update({
+        await inter.editReply({
           embeds: [embed],
           components: [rowFirst],
         });
