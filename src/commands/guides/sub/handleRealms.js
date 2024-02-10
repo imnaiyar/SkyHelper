@@ -196,7 +196,7 @@ async function respondSummary(int, value, ephemeral) {
         inter.reply({ content: "Invalid choice or Guide yet to be updated", ephemeral: true });
     }
   });
-  collector.on('end', async() => {
+  collector.on("end", async() => {
      reply.edit({
        components: []
      }).catch(err => {});

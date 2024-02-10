@@ -364,7 +364,7 @@ module.exports = {
           title: "Social Space",
           description:
             "Similiar to Isle of Dawn, Vault also misses the regular features of a Social Space; a bonfire and a closet. However it does still feature a bench to chat with other players aswell as Spirit Tombstones presenting the Regular Spirits currently relived in the current realm. To the left of where the player spawns is the entrance to the Collaboration Room, blocked by a Spirit Gate requiring 1 Regular Spirit from Vault to have been relived. Additionally, the entrance to the **Secret Area** can be found to the left side. To the right is the entrance to the **Archives**, blocked by a two-player door aswell as a Spirit Gate requiring 1 Regular Spirit from Vault to have been relived again.\n\nIn the Social Space, players can find:\n- 1 Children of Light\n- 1 Map Shrine\n\n*Source: [Vault_of_Knowledge#Social_Space](<https://sky-children-of-the-light.fandom.com/wiki/Vault_of_Knowledge#Social_Space>)*",
-          image: "",
+          image: "https://media.discordapp.net/attachments/867638574571323424/1205876153919733870/Vault_SocialSpace1.png?ex=65d9f6af&is=65c781af&hm=11ae7abfa293b5ddb4b16eb7caa837d74b10f7002006945ef47cb5392fcaa62b&",
         },
         {
           title: "Secret Area",
