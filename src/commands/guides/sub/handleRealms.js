@@ -197,12 +197,9 @@ async function respondSummary(int, value, ephemeral) {
     }
   });
   collector.on('end', async() => {
-    await reply.fetch();
-    if (reply && reply.editable) {
-      reply.edit({
-        components: []
-      })
-    }
+     reply.edit({
+       components: []
+     }).catch(err => {});
   });
 }
 
