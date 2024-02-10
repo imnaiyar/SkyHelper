@@ -2,56 +2,56 @@ module.exports = {
   prairie: {
     C: [
       {
-        description: "**Shard Location: Prairie Caves, Daylight Prarie**",
+        description: "**Shard Location: Prairie Caves, Daylight Prairie**",
         image:
           "https://media.discordapp.net/attachments/575827924343848960/1124597919178313749/01_Daylight_Prairie_-_Prairie_Caves.png",
       },
       {
-        description: "**Shard Data: Prairie Caves, Daylight Prarie**",
+        description: "**Shard Data: Prairie Caves, Daylight Prairie**",
         image: "https://media.discordapp.net/attachments/1123347180988661902/1126113425286766702/dp-r_Caves.jpg",
       },
     ],
     B: [
       {
-        description: "**Shard Location: Sanctuary Island, Daylight Prarie**",
+        description: "**Shard Location: Sanctuary Island, Daylight Prairie**",
         image: "https://media.discordapp.net/attachments/575827924343848960/1117348946390564934/IMG_4458.png",
       },
       {
-        description: "**Shard Data: Sanctuary Island, Daylight Prarie**",
+        description: "**Shard Data: Sanctuary Island, Daylight Prairie**",
         image:
           "https://media.discordapp.net/attachments/575827924343848960/1051464559065583637/dp-r_Sanctuary_Islands.png",
       },
     ],
     b: [
       {
-        description: "**Shard Location: Village Island/Koi Pond, Daylight Prarie**",
+        description: "**Shard Location: Village Island/Koi Pond, Daylight Prairie**",
         image:
           "https://media.discordapp.net/attachments/575827924343848960/1115536957875945604/01_Daylight_Prairie_-_Village_Islands_and_Koi_Pond.png",
       },
       {
-        description: "**Shard Data: Village Island/Koi Pomd, Daylight Prarie**",
+        description: "**Shard Data: Village Island/Koi Pomd, Daylight Prairie**",
         image: "https://media.discordapp.net/attachments/575827924343848960/1049635543421550652/dp-b_Village-Koi.png",
       },
     ],
     A: [
       {
-        description: "**Shard Location: Bird's Nest, Daylight Prarie**",
+        description: "**Shard Location: Bird's Nest, Daylight Prairie**",
         image:
           "https://media.discordapp.net/attachments/575827924343848960/1109738791268257812/01_Daylight_Prairie_-_Birds_Nest.png",
       },
       {
-        description: "**Shard Data: Bird's Nest, Daylight Prarie**",
+        description: "**Shard Data: Bird's Nest, Daylight Prairie**",
         image: "https://media.discordapp.net/attachments/575827924343848960/1044197796577824839/dp-r_Bird_Nest.png",
       },
     ],
     a: [
       {
-        description: "**Shard Location: Butterfly Fields, Daylight Prarie**",
+        description: "**Shard Location: Butterfly Fields, Daylight Prairie**",
         image:
           "https://media.discordapp.net/attachments/575827924343848960/1119162577126178846/01_Daylight_Prairie_-_Butterfly_Field.png",
       },
       {
-        description: "**Shard Data: Butterfly Fields, Daylight Prarie**",
+        description: "**Shard Data: Butterfly Fields, Daylight Prairie**",
         image:
           "https://media.discordapp.net/attachments/575827924343848960/1053249686422687784/dp-b_Butterfly_Field.png",
       },

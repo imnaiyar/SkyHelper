@@ -60,12 +60,17 @@ async function handleFirst(interaction, value) {
     firstChoice: {
       label: firstChoices.find((choice) => choice.value === value).label,
       value: value,
+      emoji: firstChoices.find((choice) => choice.value === value).emoji,
     },
   });
   const options = [
     {
       label: "Realm Summary",
       value: "summary_" + value,
+    },
+    {
+      label: 'Maps',
+      value: 'maps_' + value,
     },
     {
       label: "Spirits",
@@ -92,9 +97,9 @@ async function handleSecond(interaction, value, ephemeral) {
 async function respondSummary(int, value, ephemeral) {
   const data = result.getSummary(value);
   let page = 1;
-  const total = data.embeds.length - 1;
+  const total = data.areas.length - 1;
   const getData = () => {
-    const embed = data.embeds[page - 1 ];
+    const embed = data.areas[page - 1 ];
      const emb = new EmbedBuilder()
     .setTitle(embed.title)
     .setDescription(embed.description)
@@ -105,22 +110,37 @@ async function respondSummary(int, value, ephemeral) {
     const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
         .setCustomId("back")
-        .setLabel("Previous")
+        .setLabel(`⬅️ ${data.areas[page -2]?.title || 'Prev'}`)
         .setDisabled(page - 1 === 0)
         .setStyle('2'),
         new ButtonBuilder()
+        .setCustomId("realm")
+        .setEmoji(userChoices.get(int.message.id).firstChoice.emoji)
+        .setStyle('3'),
+        new ButtonBuilder()
         .setCustomId("forward")
-        .setLabel("Next")
+        .setLabel(`${data.areas[page]?.title || 'Next'} ➡️`)
         .setDisabled(page - 1 === total)
         .setStyle('2')
     )
 
     return {emb, row}
   }
-  const {emb, row} = getData()
+
+  const embed = new EmbedBuilder()
+  .setTitle(data.main.title)
+  .setDescription(data.main.description)
+  .setAuthor({ name: `Summary of ${data.main.title}`});
+
+  const row = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+    .setLabel('Different Areas')
+    .setCustomId('areas')
+    .setStyle('1')
+  )
   const reply = await int.reply({
     content: data.content,
-    embeds: [emb],
+    embeds: [embed],
     components: [row],
     fetchReply: true,
   })
@@ -131,7 +151,13 @@ async function respondSummary(int, value, ephemeral) {
   });
 
   collector.on("collect", async (inter) => {
-    if (inter.customId === "back") {
+    if (inter.customId === "areas") {   
+      const get = getData()
+      await inter.update({
+        embeds: [get.emb],
+        components: [get.row]
+      })
+    } else if (inter.customId === "back") {
       page--;
       const get = getData()
       await inter.update({
@@ -144,6 +170,11 @@ async function respondSummary(int, value, ephemeral) {
       await inter.update({
         embeds: [get.emb],
         components: [get.row]
+      })
+    } else if (inter.customId === "realm") {
+      await inter.update({
+        embeds: [embed],
+        components: [row]
       })
     }
   })
