@@ -1,7 +1,7 @@
-<h3 align="center">
-<b> This is development branch, for production branches, see <code>dev</code> (IK name doesn't make sense lol, I am just too lazy to change it) and <code>main</code>
+<h6 align="center">
+<b> This is a development branch, for production branches, see "<a href="https://github.com/imnaiyar/SkyHelper/tree/dev">dev</a>" (IK name doesn't make sense lol, I am just too lazy to change it) and "<a href="https://github.com/imnaiyar/SkyHelper/tree/main">main</a>"
 </b>
-</h3>
+</h6>
 
 <h1 align="center">
   <br>
