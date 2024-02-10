@@ -167,6 +167,7 @@ async function respondSummary(int, value, ephemeral) {
   });
 
   collector.on("collect", async (inter) => {
+    await inter.deferUpdate();
     const componentID = inter.customId;
     switch (componentID) {
       case "areas":
@@ -195,12 +196,20 @@ async function respondSummary(int, value, ephemeral) {
         inter.reply({ content: "Invalid choice or Guide yet to be updated", ephemeral: true });
     }
   });
+  collector.on('end', async() => {
+    reply.fetch();
+    if (reply && reply.editable) {
+      reply.edit({
+        components: []
+      })
+    }
+  });
 }
 
 async function updateEmbed(inter, getData) {
   const get = getData();
   await inter
-    .update({
+    .editReply({
       embeds: [get.emb],
       components: get.row,
     })
