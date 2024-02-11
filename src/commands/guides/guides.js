@@ -113,7 +113,7 @@ async function handleSpirits(interaction, sub, spiritValue, ephemeral) {
     responses = require("./sub/extends/seasonal/GuideResponse");
     index = seasonalSpirits;
   } else if (sub === "realms") {
-    responses = require("./sub/extends/realms/responses");
+    responses = require("./sub/extends/realms/summaries");
     index = realmsSpirits;
   }
 

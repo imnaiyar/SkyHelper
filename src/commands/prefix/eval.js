@@ -5,23 +5,27 @@ module.exports = {
     name: "e",
     description: "Evaluate JavaScript code",
     category: "OWNER",
-    flags: ["a"],
+    flags: ["a", "async"],
   },
-  async execute(message, args, client) {
-    const code = args.join(" ");
+  async execute(msg, args, client, flags) {
+    let code = args.join(" ");
+    if (flags.length > 0 && this.data.flags.some(flag => flags.includes(flag))) {
+      code = `(async () => { return ${args.join(" ")} })()`
+    } 
+
     let response;
 
     if (code.includes("process.env")) {
-      return message.channel.send("You cannot evaluate code containing process.env.");
+      return msg.channel.send("You cannot evaluate code containing process.env.");
     }
 
     try {
-      const output = await eval(`(async () => { return ${code} })()`);
+      const output = await eval(code);
       response = buildSuccessResponse(output, client);
     } catch (ex) {
       response = buildErrorResponse(ex);
     }
-    message.channel.send(response);
+    msg.channel.send(response);
   },
 };
 
