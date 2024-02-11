@@ -5,6 +5,7 @@ module.exports = {
     name: "e",
     description: "Evaluate JavaScript code",
     category: "OWNER",
+    flags: ["a"],
   },
   async execute(message, args, client) {
     const code = args.join(" ");
@@ -15,7 +16,7 @@ module.exports = {
     }
 
     try {
-      const output = await eval(code);
+      const output = await eval(`(async () => { return ${code} })()`);
       response = buildSuccessResponse(output, client);
     } catch (ex) {
       response = buildErrorResponse(ex);

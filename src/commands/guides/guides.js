@@ -68,7 +68,8 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const spiritValue = interaction.options.getString("spirit");
 
-    const ephemeral = interaction.options.getBoolean("hide") || true;
+    const ephmrl = interaction.options.getBoolean("hide")
+    const ephemeral = ephmrl !== null ? ephmrl : true;
     if (spiritValue) {
       await handleSpirits(interaction, sub, spiritValue, ephemeral);
       return;

@@ -32,7 +32,7 @@ const firstChoices = [
   {
     label: "Eye of Eden",
     value: "eden",
-    emoji: "<:Vault:1150605308364861580>",
+    emoji: "<:eden:1205960597456293969>",
   },
 ];
 

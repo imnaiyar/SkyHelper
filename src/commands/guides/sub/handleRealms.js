@@ -66,14 +66,17 @@ async function handleFirst(interaction, value) {
     {
       label: "Realm Summary",
       value: "summary_" + value,
+      emoji: "<:realms:1206132657851736094>"
     },
     {
       label: "Maps",
       value: "maps_" + value,
+      emoji: "<:map_shrine:1205944136826617856>"
     },
     {
       label: "Spirits",
       value: "spirits_" + value,
+      emoji: "<:spiritTomb:1206132906527952906>"
     },
   ];
   const map = userChoices.get(interaction.message.id);
@@ -196,10 +199,13 @@ async function respondSummary(int, value, ephemeral) {
         inter.reply({ content: "Invalid choice or Guide yet to be updated", ephemeral: true });
     }
   });
+
   collector.on("end", async() => {
-     reply.edit({
+     reply.fetch().then((m) => {
+      m.edit({
        components: []
-     }).catch(err => {});
+     })
+    }).catch(err => {});  
   });
 }
 
