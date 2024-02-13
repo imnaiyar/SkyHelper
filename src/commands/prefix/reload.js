@@ -30,7 +30,9 @@ module.exports = {
             .setTimestamp()
           if (flags.lenght > 0 && flags.includes('both')) { 
             client.commands.clear();
-            client.loadSlashCmd('./src/commands')
+                client.prefix.clear()
+                client.loadSlashCmd('./src/commands')
+                client.loadPrefix('./src/commands/prefix')
             client.loadEvents('./src/events')
             return message.channel.send({embeds: [success]})
          }
@@ -38,7 +40,9 @@ module.exports = {
         switch (args[0]) {
             case 'commands': {
                 client.commands.clear();
+                client.prefix.clear()
                 client.loadSlashCmd('./src/commands')
+                client.loadPrefix('./src/commands/prefix')
                 message.channel.send({embeds: [success]})
                 break;
             }
