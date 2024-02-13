@@ -1,12 +1,14 @@
-const { firstChoices } = require("./extends/realms/choices");
-const { rowBuilder } = require("./shared/helpers");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { firstChoices, spiritChoices } = require("./extends/realms/choices");
+const { rowBuilder, getRealmsRow } = require("./shared/helpers");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const summary = require("./extends/realms/summaries");
-const maps = require('./extends/realms/maps')
+const maps = require("./extends/realms/maps");
+const handleSpirits = require("./shared/handleSpirits");
 const CUSTOM_ID = {
   FIRST_CHOICE: "firstChoice",
   SECOND_CHOICE: "secondChoice",
   THIRD_CHOICE: "thirdChoice",
+  FOURTH_CHOICE: "fourthChoice",
 };
 
 const userChoices = new Map();
@@ -17,7 +19,7 @@ module.exports = async (interaction, ephemeral) => {
     components: [row],
     fetchReply: true,
   });
-  const collector = createCollector(reply , interaction)
+  const collector = createCollector(reply, interaction);
 
   collector.on("collect", async (int) => {
     const value = int.values[0];
@@ -28,6 +30,12 @@ module.exports = async (interaction, ephemeral) => {
         break;
       case CUSTOM_ID.SECOND_CHOICE:
         await handleSecond(int, value, ephemeral);
+        break;
+      case CUSTOM_ID.THIRD_CHOICE:
+        await handleThird(int, value, ephemeral);
+        break;
+      case CUSTOM_ID.FOURTH_CHOICE:
+        await handleFourth(int, value, ephemeral);
         break;
       default:
         int.reply("Invalid choice selected.");
@@ -50,28 +58,9 @@ async function handleFirst(interaction, value) {
       emoji: firstChoices.find((choice) => choice.value === value).emoji,
     },
   });
-  const options = [
-    {
-      label: "Realm Summary",
-      value: "summary_" + value,
-      emoji: "<:realms:1206132657851736094>"
-    },
-    {
-      label: "Maps",
-      value: "maps_" + value,
-      emoji: "<:map_shrine:1205944136826617856>"
-    },
-    {
-      label: "Spirits",
-      value: "spirits_" + value,
-      emoji: "<:spiritTomb:1206132906527952906>"
-    },
-  ];
-  const map = userChoices.get(interaction.message.id);
-  const placeholder = map.firstChoice.label;
-  const row = rowBuilder(CUSTOM_ID.SECOND_CHOICE, options, placeholder, true);
+  const row = buildSecondRow(value, interaction)
   await interaction.update({
-    content: `Guides for __${placeholder}__`,
+    content: `Guides for __${userChoices.get(interaction.message.id).firstChoice.label}__`,
     components: [row],
   });
 }
@@ -80,20 +69,67 @@ async function handleSecond(interaction, value, ephemeral) {
   if (value === "back") {
     const row = rowBuilder(CUSTOM_ID.FIRST_CHOICE, firstChoices, "Choose a Realm", false);
     await interaction.update({
-      content: 'Please Select a Realm',
-      components: [row]
+      content: "Please Select a Realm",
+      components: [row],
     });
   } else if (value.startsWith("summary_")) {
     await respondSummary(interaction, value, ephemeral);
   } else if (value.startsWith("spirits_")) {
-    await interaction.reply({
-      content: "Coming Soon!",
-      ephemeral: true
+    const realmValue = value.split('_')[1]
+    const row = buildSpiritsRow(realmValue)
+    await interaction.update({
+      content: `Spirits of __${userChoices.get(interaction.message.id).firstChoice.label}__`,
+      components: [row]
     })
-    return
   } else if (value.startsWith("maps_")) {
     await respondMaps(interaction, value, ephemeral);
   }
+}
+
+async function handleThird(interaction, value, ephemeral) {
+  const choices = userChoices.get(interaction.message.id).firstChoice
+  if (value === "back") {
+    const row = buildSecondRow(choices.value, interaction)
+   
+    await interaction.update({
+      content: `Guides for __${choices.label}__`,
+      components: [row],
+    });
+    return;
+  }
+
+  try {
+  const options = spiritChoices[value]
+  if (!options) {
+    return await interaction.reply({
+      content: "Guide is yet to be updated. Coming Soon! Thank you for your patience.",
+      ephemeral: true
+    })
+  }
+  const type = {regular: "Regular", seasonal: "Seasonal"}[value.split('_')[1]]
+  const placeholder = `${type} Spirits - ${choices.label}`
+  const row = rowBuilder(CUSTOM_ID.FOURTH_CHOICE, options, placeholder, true);
+
+  await interaction.update({
+    content: `${type} Spirits of __${choices.label}__`,
+    components: [row],
+  })
+} catch (err) { 
+  interaction.client.logger.error('Third Choice Error [Realm Guide]', err)
+}
+}
+
+async function handleFourth(interaction, value, ephemeral) {
+  const choices = userChoices.get(interaction.message.id).firstChoice;
+  if (value === "back") {
+    const row = buildSpiritsRow(choices.value)
+    return await interaction.update({
+      content: `Spirits of __${choices.label}__`,
+      components: [row],
+    });
+  }
+
+  await handleSpirits(interaction, value, ephemeral, userChoices)
 }
 
 async function respondSummary(int, value, ephemeral) {
@@ -118,42 +154,42 @@ async function respondSummary(int, value, ephemeral) {
     fetchReply: true,
   });
 
-  const collector = createCollector(reply, int)
+  const collector = createCollector(reply, int);
 
-  const author = `Summary of ${userChoices.get(int.message.id).firstChoice.label}`
-  const emoji = userChoices.get(int.message.id).firstChoice.emoji
+  const author = `Summary of ${userChoices.get(int.message.id).firstChoice.label}`;
+  const emoji = userChoices.get(int.message.id).firstChoice.emoji;
   collector.on("collect", async (inter) => {
     await inter.deferUpdate();
     const componentID = inter.customId;
     switch (componentID) {
-      case "areas":{
-        const datas = getRow(data.areas, page, total, author, emoji)
+      case "areas": {
+        const datas = getRealmsRow(data.areas, page, total, author, emoji);
         await updateEmbed(inter, datas);
         break;
-        }
-      case "back":{
+      }
+      case "back": {
         page--;
-        const datas = getRow(data.areas, page, total, author, emoji)
+        const datas = getRealmsRow(data.areas, page, total, author, emoji);
         await updateEmbed(inter, datas);
         break;
-        }
-      case "forward":{
+      }
+      case "forward": {
         page++;
-        const datas = getRow(data.areas, page, total, author, emoji)
+        const datas = getRealmsRow(data.areas, page, total, author, emoji);
         await updateEmbed(inter, datas);
         break;
-        }
-      case "realm":{
+      }
+      case "realm": {
         page = 1;
         await inter.editReply({
           embeds: [embed],
           components: [rowFirst],
         });
         break;
-        }
-      case "area-menu":{
+      }
+      case "area-menu": {
         page = parseInt(inter.values[0].split("_")[1]) + 1;
-        const datas = getRow(data.areas, page, total, author, emoji)
+        const datas = getRealmsRow(data.areas, page, total, author, emoji);
         await updateEmbed(inter, datas);
         break;
       }
@@ -162,29 +198,32 @@ async function respondSummary(int, value, ephemeral) {
     }
   });
 
-  collector.on("end", async() => {
-     reply.fetch().then((m) => {
-      m.edit({
-       components: []
-     })
-    }).catch(err => {});  
+  collector.on("end", async () => {
+    reply
+      .fetch()
+      .then((m) => {
+        m.edit({
+          components: [],
+        });
+      })
+      .catch((err) => {});
   });
 }
 
-
 async function respondMaps(int, value, ephemeral) {
-const data = maps.getMaps(value);
-let page = 1;
-let total = data.maps.length - 1; 
-const author = `Maps of ${userChoices.get(int.message.id).firstChoice.label}`
-const row = getRow(data.maps, page, total, author)
-const reply = await int.reply({ 
-  content: data?.content,
-  ...row,
-  ephemeral: ephemeral, 
-  fetchReply: true });
+  const data = maps.getMaps(value);
+  let page = 1;
+  let total = data.maps.length - 1;
+  const author = `Maps of ${userChoices.get(int.message.id).firstChoice.label}`;
+  const row = getRealmsRow(data.maps, page, total, author);
+  const reply = await int.reply({
+    content: data?.content,
+    ...row,
+    ephemeral: ephemeral,
+    fetchReply: true,
+  });
 
-  const collector = createCollector(reply, int)
+  const collector = createCollector(reply, int);
 
   collector.on("collect", async (inter) => {
     await inter.deferUpdate();
@@ -192,32 +231,28 @@ const reply = await int.reply({
     switch (componentID) {
       case "back": {
         page--;
-        const data = getRow(data.maps, page, total, author)
-        await updateEmbed(inter);
+        const datas = getRealmsRow(data.maps, page, total, author);
+        await updateEmbed(inter, datas);
         break;
       }
       case "forward": {
         page++;
-        const data = getRow(data.maps, page, total, author)
-        await updateEmbed(inter, data);
+        const datas = getRealmsRow(data.maps, page, total, author);
+        await updateEmbed(inter, datas);
         break;
       }
-      case "area-menu":
-        {
+      case "area-menu": {
         page = parseInt(inter.values[0].split("_")[1]) + 1;
-        const data = getRow(data.maps, page, author)
-        await updateEmbed(inter, data);
+        const datas = getRealmsRow(data.maps, page, total, author);
+        await updateEmbed(inter, datas);
         break;
-        }
+      }
     }
-  })
+  });
 }
 
-
 async function updateEmbed(inter, data) {
-   await inter
-    .editReply(data)
-    .catch((err) => inter.client.logger.error("Error while Fetching Realm Guides:", err));
+  await inter.editReply(data).catch((err) => inter.client.logger.error("Error while Fetching Realm Guides:", err));
 }
 
 function createCollector(reply, interaction) {
@@ -237,46 +272,39 @@ function createCollector(reply, interaction) {
   });
 }
 
-  function getRow(data, page, total, author, emoji) {
-      const embed = data[page - 1];
-      const emb = new EmbedBuilder()
-        .setTitle(embed.title)
-        .setImage(embed?.image)
-        .setAuthor({ name: author })
-        .setFooter({ text: `Page ${page}/${total + 1}` });
-        if (embed.description) emb.setDescription(embed.description);
-      const row = [];
-      const btns = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId("back")
-          .setLabel(`⬅️ ${data[page - 2]?.title || data[page-1].title}`)
-          .setDisabled(page - 1 === 0)
-          .setStyle("2"),
-        emoji ?
-        new ButtonBuilder()
-          .setCustomId("realm")
-          .setEmoji(emoji)
-          .setStyle("3") : null,
-        new ButtonBuilder()
-          .setCustomId("forward")
-          .setLabel(`${data[page]?.title || data[page-1].title} ➡️`)
-          .setDisabled(page - 1 === total)
-          .setStyle("2")
-      );
+function buildSecondRow(value, interaction) {
+  const options = [
+    {
+      label: "Realm Summary",
+      value: "summary_" + value,
+      emoji: "<:realms:1206132657851736094>",
+    },
+    {
+      label: "Maps",
+      value: "maps_" + value,
+      emoji: "<:map_shrine:1205944136826617856>",
+    },
+  ];
 
-      const menu = new ActionRowBuilder().addComponents(
-        new StringSelectMenuBuilder()
-          .setPlaceholder("Choose an area.")
-          .setCustomId("area-menu")
-          .addOptions(
-            data.map((area, index) => ({
-              label: area.title,
-              default: area.title === embed.title,
-              value: "area_" + index.toString(),
-            }))
-          )
-      );
-      row.push(menu, btns);
-      return { embeds: [emb], components: row };
-    
-  }
+  if (value !== 'eden') options.push({
+      label: "Spirits",
+      value: "spirits_" + value,
+      emoji: "<:spiritIcon:1206501060303130664>",
+    })
+  const map = userChoices.get(interaction.message.id);
+  const placeholder = map.firstChoice.label;
+ return rowBuilder(CUSTOM_ID.SECOND_CHOICE, options, placeholder, true);
+}
+function buildSpiritsRow(value) {
+  const options = [
+    {
+      label: "Regular Spirits",
+      value: value + "_regular",
+    },
+    {
+      label: "Seasonal Spirits",
+      value: value + "_seasonal",
+    }
+  ]
+  return rowBuilder(CUSTOM_ID.THIRD_CHOICE, options, "Choose a Spirit Type", true)
+}

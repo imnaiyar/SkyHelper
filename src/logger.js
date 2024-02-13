@@ -29,6 +29,7 @@ const pinoLogger = pino.default(
           new Date().getMonth() + 1
         }.${new Date().getDate()}.log`,
         sync: true,
+        mkdir: true
       }),
     },
   ])
