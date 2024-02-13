@@ -217,7 +217,9 @@ module.exports = class SkyHelper extends Client {
     const commandFiles = fs.readdirSync(prefixDirectory).filter((file) => file.endsWith(".js"));
 
     for (const file of commandFiles) {
-      const command = require(`@src/commands/prefix/${file}`);
+      const filePath = path.join(prefixDirectory, file);
+      delete require.cache[require.resolve(filePath)];
+      const command = require(filePath);
       this.prefix.set(command.data.name, command);
     }
   }

@@ -23,7 +23,6 @@ module.exports = {
     async execute(message, args, client, flags) {
         try {
             const output = await consoleRun();
-           if (output === 'Already up to date.') return message.reply('Already up to date.')
         const success = new EmbedBuilder()
             .setColor('Green')
             .setDescription(`Successfully reloaded ${args[0] ? args[0] : 'both commands and events'}.`)
