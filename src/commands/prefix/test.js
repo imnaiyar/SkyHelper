@@ -6,6 +6,6 @@ module.exports = {
     description: "Set a new prefix for this server",
   },
   async execute(message, args) {
-    message.reply('Buffalo')
+    message.reply('How are you my man?')
   },
 };
