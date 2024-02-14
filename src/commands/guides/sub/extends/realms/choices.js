@@ -1,5 +1,4 @@
-
-const spirits = require('../../shared/spiritsData');
+const spirits = require("../../shared/spiritsData");
 const firstChoices = [
   {
     label: "Isle of Dawn",
@@ -38,33 +37,35 @@ const firstChoices = [
   },
 ];
 
-const data = Object.entries(spirits)
+const data = Object.entries(spirits);
 const getSpiritsObj = (realm, type) => {
-  return data.filter(([k, v]) => v.realm === realm && v.type === type ).map(([k, v]) => ({
-    label: v.name,
-    value: k,
-    emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon,
-  }))
-}
+  return data
+    .filter(([k, v]) => v.realm === realm && v.type === type)
+    .map(([k, v]) => ({
+      label: v.name,
+      value: k,
+      emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon,
+    }));
+};
 const spiritChoices = {
-  isle_regular: getSpiritsObj('Isle of Dawn', 'Regular Spirit'),
+  isle_regular: getSpiritsObj("Isle of Dawn", "Regular Spirit"),
 
-  isle_seasonal: getSpiritsObj('Isle of Dawn', 'Seasonal Spirit'),
+  isle_seasonal: getSpiritsObj("Isle of Dawn", "Seasonal Spirit"),
 
-  prairie_regular: getSpiritsObj('Daylight Prairie', 'Regular Spirit'),
-  prairie_seasonal: getSpiritsObj('Daylight Prairie', 'Seasonal Spirit'),
+  prairie_regular: getSpiritsObj("Daylight Prairie", "Regular Spirit"),
+  prairie_seasonal: getSpiritsObj("Daylight Prairie", "Seasonal Spirit"),
 
-  forest_regular: getSpiritsObj('Hidden Forest', 'Regular Spirit'),
-  forest_seasonal: getSpiritsObj('Hidden Forest', 'Seasonal Spirit'),
+  forest_regular: getSpiritsObj("Hidden Forest", "Regular Spirit"),
+  forest_seasonal: getSpiritsObj("Hidden Forest", "Seasonal Spirit"),
 
-  valley_regular: getSpiritsObj('Valley of Triumph', 'Regular Spirit'),
-  valley_seasonal: getSpiritsObj('Valley of Triumph', 'Seasonal Spirit'),
+  valley_regular: getSpiritsObj("Valley of Triumph", "Regular Spirit"),
+  valley_seasonal: getSpiritsObj("Valley of Triumph", "Seasonal Spirit"),
 
-  wasteland_regular: getSpiritsObj('Golden Wasteland', 'Regular Spirit'),
-  wasteland_seasonal: getSpiritsObj('Golden Wasteland', 'Seasonal Spirit'),
+  wasteland_regular: getSpiritsObj("Golden Wasteland", "Regular Spirit"),
+  wasteland_seasonal: getSpiritsObj("Golden Wasteland", "Seasonal Spirit"),
 
-  vault_regular: getSpiritsObj('Vault of Knowledge', 'Regular Spirit'),
-  vault_seasonal: getSpiritsObj('Vault of Knowledge', 'Seasonal Spirit'),
-}
+  vault_regular: getSpiritsObj("Vault of Knowledge", "Regular Spirit"),
+  vault_seasonal: getSpiritsObj("Vault of Knowledge", "Seasonal Spirit"),
+};
 
 module.exports = { firstChoices, spiritChoices };

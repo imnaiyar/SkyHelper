@@ -124,19 +124,23 @@ module.exports = {
       level: [
         {
           title: '"Clap Emote" Level 1',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507076478574632/Applauding-Bellmaker-clap-emote-level-1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507076478574632/Applauding-Bellmaker-clap-emote-level-1.gif",
         },
         {
           title: '"Clap Emote" Level 2',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507076910850048/Applauding-Bellmaker-clap-emote-level-2.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507076910850048/Applauding-Bellmaker-clap-emote-level-2.gif",
         },
         {
           title: '"Clap Emote" Level 3',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507077283876864/Applauding-Bellmaker-clap-emote-level-3.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507077283876864/Applauding-Bellmaker-clap-emote-level-3.gif",
         },
         {
           title: '"Clap Emote" Level 4',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507077640650822/Applauding-Bellmaker-clap-emote-level-4.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507077640650822/Applauding-Bellmaker-clap-emote-level-4.gif",
         },
       ],
     },
@@ -165,19 +169,23 @@ module.exports = {
       level: [
         {
           title: '"Butterfly Emote" Level 1',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507482004856863/Butterfly-Charmer-butterfly-emote-level-1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507482004856863/Butterfly-Charmer-butterfly-emote-level-1.gif",
         },
         {
           title: '"Butterfly Emote" Level 2',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507482449707018/Butterfly-Charmer-butterfly-emote-level-2.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507482449707018/Butterfly-Charmer-butterfly-emote-level-2.gif",
         },
         {
           title: '"Butterfly Emote" Level 3',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507482835587092/Butterfly-Charmer-butterfly-emote-level-3.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507482835587092/Butterfly-Charmer-butterfly-emote-level-3.gif",
         },
         {
           title: '"Butterfly Emote" Level 4',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507483338776606/Butterfly-Charmer-butterfly-emote-level-4.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507483338776606/Butterfly-Charmer-butterfly-emote-level-4.gif",
         },
       ],
     },
@@ -196,9 +204,10 @@ module.exports = {
       level: [
         {
           title: '"Teamwork Emote"\n- There\'s only 1 level of this emote',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206507879960682536/Ceremonial-Worshiper-teamwork-emote-level-1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206507879960682536/Ceremonial-Worshiper-teamwork-emote-level-1.gif",
         },
-      ]
+      ],
     },
   },
   dock_worker: {
@@ -215,19 +224,23 @@ module.exports = {
       level: [
         {
           title: '"Exhasted Emote" Level 1',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508299458191370/Exhausted-Dock-Worker-wipe-brow-emote-level-1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508299458191370/Exhausted-Dock-Worker-wipe-brow-emote-level-1.gif",
         },
         {
           title: '"Exhasted Emote" Level 2',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508299902517258/Exhausted-Dock-Worker-wipe-brow-emote-level-2.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508299902517258/Exhausted-Dock-Worker-wipe-brow-emote-level-2.gif",
         },
         {
           title: '"Exhasted Emote" Level 3',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508300418555934/Exhausted-Dock-Worker-wipe-brow-emote-level-3.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508300418555934/Exhausted-Dock-Worker-wipe-brow-emote-level-3.gif",
         },
         {
           title: '"Exhasted Emote" Level 4',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508300888309833/Exhausted-Dock-Worker-wipe-brow-emote-level-4.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508300888309833/Exhausted-Dock-Worker-wipe-brow-emote-level-4.gif",
         },
       ],
     },
@@ -246,19 +259,23 @@ module.exports = {
       level: [
         {
           title: '"Laugh Emote" Level 1',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508662517141525/Laughing-Light-Catcher-laugh-emote-level-1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508662517141525/Laughing-Light-Catcher-laugh-emote-level-1.gif",
         },
         {
           title: '"Laugh Emote" Level 2',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508663020331038/Laughing-Light-Catcher-laugh-emote-level-2.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508663020331038/Laughing-Light-Catcher-laugh-emote-level-2.gif",
         },
         {
           title: '"Laugh Emote" Level 3',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508663586693170/Laughing-Light-Catcher-laugh-emote-level-3.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508663586693170/Laughing-Light-Catcher-laugh-emote-level-3.gif",
         },
         {
           title: '"Laugh Emote" Level 4',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508664094068756/Laughing-Light-Catcher-laugh-emote-level-4.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508664094068756/Laughing-Light-Catcher-laugh-emote-level-4.gif",
         },
       ],
     },
@@ -273,26 +290,30 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337735300743198/Slumbering-Shipwright-Guide-777-Ed.webp",
     },
     emote: {
-      icons: '<:slumberingshipwright:1205914400901308546>',
+      icons: "<:slumberingshipwright:1205914400901308546>",
       level: [
         {
           title: '"Yawn Emote" Level 1',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508898723438592/Slumbering-Shipwright-yawn-emote-level-1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508898723438592/Slumbering-Shipwright-yawn-emote-level-1.gif",
         },
         {
           title: '"Yawn Emote" Level 2',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508899226882068/Slumbering-Shipwright-yawn-emote-level-2.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508899226882068/Slumbering-Shipwright-yawn-emote-level-2.gif",
         },
         {
           title: '"Yawn Emote" Level 3',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508899591655464/Slumbering-Shipwright-yawn-emote-level-3.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508899591655464/Slumbering-Shipwright-yawn-emote-level-3.gif",
         },
         {
           title: '"Yawn Emote" Level 4',
-          image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206508899973472256/Slumbering-Shipwright-yawn-emote-level-4.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206508899973472256/Slumbering-Shipwright-yawn-emote-level-4.gif",
         },
-    ],
-  }
+      ],
+    },
   },
   waving_bellmaker: {
     name: "Waving Bellmaker",
@@ -304,34 +325,40 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337733522362368/Waving-Bellmaker-Guide-777-Ed.png",
     },
     emote: {
-      icon: '<:wavingbellmaker:1205914441330466889>',
+      icon: "<:wavingbellmaker:1205914441330466889>",
       level: [
-      {
-        title: '"Wave Emote" Level 1',
-        image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206509657179299890/Waving-Bellmaker-wave-emote-level-1.gif",
-      },
-      {
-        title: '"Wave Emote" Level 2',
-        image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206509657531744266/Waving-Bellmaker-wave-emote-level-2.gif",
-      },
-      {
-        title: '"Wave Emote" Level 3',
-        image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206509657926139964/Waving-Bellmaker-wave-emote-level-3.gif",
-      },
-      {
-        title: '"Wave Emote" Level 4',
-        image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206509658274009118/Waving-Bellmaker-wave-emote-level-4.gif",
-      },
-      {
-        title: '"Wave Emote" Level 5',
-        image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206509658907484180/Waving-Bellmaker-wave-emote-level-5.gif",
-      },
-      {
-        title: '"Wave Emote" Level 6',
-        image: "https://cdn.discordapp.com/attachments/1206502396436680744/1206509659327045642/Waving-Bellmaker-wave-emote-level-6.gif",
-      },
-    ],
-  }
+        {
+          title: '"Wave Emote" Level 1',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206509657179299890/Waving-Bellmaker-wave-emote-level-1.gif",
+        },
+        {
+          title: '"Wave Emote" Level 2',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206509657531744266/Waving-Bellmaker-wave-emote-level-2.gif",
+        },
+        {
+          title: '"Wave Emote" Level 3',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206509657926139964/Waving-Bellmaker-wave-emote-level-3.gif",
+        },
+        {
+          title: '"Wave Emote" Level 4',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206509658274009118/Waving-Bellmaker-wave-emote-level-4.gif",
+        },
+        {
+          title: '"Wave Emote" Level 5',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206509658907484180/Waving-Bellmaker-wave-emote-level-5.gif",
+        },
+        {
+          title: '"Wave Emote" Level 6',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502396436680744/1206509659327045642/Waving-Bellmaker-wave-emote-level-6.gif",
+        },
+      ],
+    },
   },
 
   // forest
@@ -349,19 +376,23 @@ module.exports = {
       level: [
         {
           title: '"Apologize Emote" Level 1',
-          image: "https://cdn.discordapp.com/attachments/1206502587810193468/1206953031833362503/Apologetic-Lumberjack-Apologize_Level_1.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953031833362503/Apologetic-Lumberjack-Apologize_Level_1.gif",
         },
         {
           title: '"Apologize Emote" Level 2',
-          image: "https://cdn.discordapp.com/attachments/1206502587810193468/1206953032240070677/Apologetic-Lumberjack-Apologize_Level_2.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953032240070677/Apologetic-Lumberjack-Apologize_Level_2.gif",
         },
         {
           title: '"Apologize Emote" Level 3',
-          image: "https://cdn.discordapp.com/attachments/1206502587810193468/1206953032642732062/Apologetic-Lumberjack-Apologize_Level_3.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953032642732062/Apologetic-Lumberjack-Apologize_Level_3.gif",
         },
         {
           title: '"Apologize Emote" Level 4',
-          image: "https://cdn.discordapp.com/attachments/1206502587810193468/1206953033079066644/Apologetic-Lumberjack-Apologize_Level_4.gif",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953033079066644/Apologetic-Lumberjack-Apologize_Level_4.gif",
         },
       ],
     },
@@ -380,19 +411,23 @@ module.exports = {
       level: [
         {
           label: '"Shy Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206953854344626187/Blushing-Prospector-Shy_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953854344626187/Blushing-Prospector-Shy_Level_1.gif",
         },
         {
           label: '"Shy Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206953853509963806/Blushing-Prospector-Shy_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953853509963806/Blushing-Prospector-Shy_Level_2.gif",
         },
         {
           label: '"Shy Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206953853082411028/Blushing-Prospector-Shy_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953853082411028/Blushing-Prospector-Shy_Level_3.gif",
         },
         {
           label: '"Shy Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206953853984051231/Blushing-Prospector-Shy_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206953853984051231/Blushing-Prospector-Shy_Level_4.gif",
         },
       ],
     },
@@ -411,19 +446,23 @@ module.exports = {
       level: [
         {
           title: '"Shock Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954045630058516/Dismayed-Hunter-Shock_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954045630058516/Dismayed-Hunter-Shock_Level_1.gif",
         },
         {
           title: '"Shock Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954046011736165/Dismayed-Hunter-Shock_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954046011736165/Dismayed-Hunter-Shock_Level_2.gif",
         },
         {
           title: '"Shock Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954046431428608/Dismayed-Hunter-Shock_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954046431428608/Dismayed-Hunter-Shock_Level_3.gif",
         },
         {
           title: '"Shock Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954046922035251/Dismayed-Hunter-Shock_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954046922035251/Dismayed-Hunter-Shock_Level_4.gif",
         },
       ],
     },
@@ -441,10 +480,12 @@ module.exports = {
       icon: "<:hidenseekpioneer:1205914575447527436>",
       level: [
         {
-          title: 'Hide and Seek Emote',
-          description: '<:hidenseekpioneer:1205914575447527436> emote has only one level with no upgrades.\n\nInstead of being a standard animation, this Expression begins a mini game of Hide and Seek. When selected, a Hide and Seek icon (<:hidenseekpioneer:1205914575447527436>) appears over your avatar\'s head, inviting all nearby players to join the game by clicking on the icon. The player who starts the game is always the seeker. Everyone else is told to hide while a timer counts down to the start of the game. The seeker then has a limited amount of time to find the hidden players and tap on them. Honking and Deep Calls do not show any hidden players to the seeker for the duration of the game.',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959259401584650/HidenSeek_Hide_and_Seek.gif'
-        }
+          title: "Hide and Seek Emote",
+          description:
+            "<:hidenseekpioneer:1205914575447527436> emote has only one level with no upgrades.\n\nInstead of being a standard animation, this Expression begins a mini game of Hide and Seek. When selected, a Hide and Seek icon (<:hidenseekpioneer:1205914575447527436>) appears over your avatar's head, inviting all nearby players to join the game by clicking on the icon. The player who starts the game is always the seeker. Everyone else is told to hide while a timer counts down to the start of the game. The seeker then has a limited amount of time to find the hidden players and tap on them. Honking and Deep Calls do not show any hidden players to the seeker for the duration of the game.",
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959259401584650/HidenSeek_Hide_and_Seek.gif",
+        },
       ],
     },
   },
@@ -462,20 +503,24 @@ module.exports = {
       level: [
         {
           title: '"Angry Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954216707592253/Pouty-Porter-Angry_Level_1.gif',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954216707592253/Pouty-Porter-Angry_Level_1.gif",
         },
         {
           title: '"Angry Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954217110114356/Pouty_Porter_Angry_Level_2.gif',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954217110114356/Pouty_Porter_Angry_Level_2.gif",
         },
         {
           title: '"Angry Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954217932202065/Pouty_Porter_Angry_Level_3.gif',
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954217932202065/Pouty_Porter_Angry_Level_3.gif",
         },
         {
           title: '"Angry Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954218762797106/Pouty_Porter_Angry_Level_4.gif',
-        }
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954218762797106/Pouty_Porter_Angry_Level_4.gif",
+        },
       ],
     },
   },
@@ -493,19 +538,23 @@ module.exports = {
       level: [
         {
           title: '"Shiver Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954652537458688/Shivering_Trailblazer_Shiver_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954652537458688/Shivering_Trailblazer_Shiver_Level_1.gif",
         },
         {
           title: '"Shiver Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954653351284767/Shivering_Trailblazer_Shiver_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954653351284767/Shivering_Trailblazer_Shiver_Level_2.gif",
         },
         {
           title: '"Shiver Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954653884096562/Shivering_Trailblazer_Shiver_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954653884096562/Shivering_Trailblazer_Shiver_Level_3.gif",
         },
         {
           title: '"Shiver Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206954654420705350/Shivering_Trailblazer_Shiver_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206954654420705350/Shivering_Trailblazer_Shiver_Level_4.gif",
         },
       ],
     },
@@ -524,27 +573,33 @@ module.exports = {
       level: [
         {
           title: '"Crying Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959207379640360/Tearful_Light_Miner_Crying_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959207379640360/Tearful_Light_Miner_Crying_Level_1.gif",
         },
         {
           title: '"Crying Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959209267331163/Tearful_Light_Miner_Crying_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959209267331163/Tearful_Light_Miner_Crying_Level_2.gif",
         },
         {
           title: '"Crying Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959208164233296/Tearful_Light_Miner_Crying_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959208164233296/Tearful_Light_Miner_Crying_Level_3.gif",
         },
         {
           title: '"Crying Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959207773900861/Tearful_Light_Miner_Crying_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959207773900861/Tearful_Light_Miner_Crying_Level_4.gif",
         },
         {
           title: '"Crying Emote" Level 5',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959209833570346/Tearful_Light_Miner_Crying_Level_5.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959209833570346/Tearful_Light_Miner_Crying_Level_5.gif",
         },
         {
           title: '"Crying Emote" Level 6',
-          image: 'https://cdn.discordapp.com/attachments/1206502587810193468/1206959206918258688/Tearful_Light_Miner_Crying_Level_6.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502587810193468/1206959206918258688/Tearful_Light_Miner_Crying_Level_6.gif",
         },
       ],
     },
@@ -559,9 +614,9 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206489819459624960/Whale-Whisperer-Guide-777-Ed.png",
     },
     call: {
-      icon: '<:whalewhisperer:1205914501241765918>',
-      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057094373679154/Whale_Call.mp4'
-    }
+      icon: "<:whalewhisperer:1205914501241765918>",
+      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057094373679154/Whale_Call.mp4",
+    },
   },
 
   // valley
@@ -579,19 +634,23 @@ module.exports = {
       level: [
         {
           title: '"Backflip Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956329202090045/Backflipping_Champion_Backflip_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956329202090045/Backflipping_Champion_Backflip_Level_1.gif",
         },
         {
           title: '"Backflip Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956330338754560/Backflipping_Champion_Backflip_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956330338754560/Backflipping_Champion_Backflip_Level_2.gif",
         },
         {
           title: '"Backflip Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956330917699644/Backflipping_Champion_Backflip_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956330917699644/Backflipping_Champion_Backflip_Level_3.gif",
         },
         {
           title: '"Backflip Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956331441852416/Backflipping_Champion_Backflip_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956331441852416/Backflipping_Champion_Backflip_Level_4.gif",
         },
       ],
     },
@@ -610,19 +669,23 @@ module.exports = {
       level: [
         {
           title: '"Bow Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956429630513213/Bowing_Medalist_Bow_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956429630513213/Bowing_Medalist_Bow_Level_1.gif",
         },
         {
           title: '"Bow Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956430058455060/Bowing_Medalist_Bow_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956430058455060/Bowing_Medalist_Bow_Level_2.gif",
         },
         {
           title: '"Bow Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956430565969920/Bowing_Medalist_Bow_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956430565969920/Bowing_Medalist_Bow_Level_3.gif",
         },
         {
           title: '"Bow Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956431056834560/Bowing_Medalist_Bow_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956431056834560/Bowing_Medalist_Bow_Level_4.gif",
         },
       ],
     },
@@ -641,19 +704,23 @@ module.exports = {
       level: [
         {
           title: '"Cheer Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956502691086396/Cheerful_Spectator_Cheer_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956502691086396/Cheerful_Spectator_Cheer_Level_1.gif",
         },
         {
           title: '"Cheer Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956503039352912/Cheerful_Spectator_Cheer_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956503039352912/Cheerful_Spectator_Cheer_Level_2.gif",
         },
         {
           title: '"Cheer Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956503517626388/Cheerful_Spectator_Cheer_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956503517626388/Cheerful_Spectator_Cheer_Level_3.gif",
         },
         {
           title: '"Cheer Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956504251498527/Cheerful_Spectator_Cheer_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956504251498527/Cheerful_Spectator_Cheer_Level_4.gif",
         },
       ],
     },
@@ -669,7 +736,7 @@ module.exports = {
     },
     stance: {
       icon: "<:confidentsightseer:1205914692346712194>",
-      image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050208416890971/Confident_Stance.gif'
+      image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050208416890971/Confident_Stance.gif",
     },
   },
   handstanding_thrillseeker: {
@@ -686,19 +753,23 @@ module.exports = {
       level: [
         {
           title: '"Handstand Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956759244087336/Handstanding_Handstand_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956759244087336/Handstanding_Handstand_Level_1.gif",
         },
         {
           title: '"Handstand Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956760179408966/Handstanding_Handstand_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956760179408966/Handstanding_Handstand_Level_2.gif",
         },
         {
           title: '"Handstand Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956759755919420/Handstanding_Handstand_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956759755919420/Handstanding_Handstand_Level_3.gif",
         },
         {
           title: '"Handstand Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502701379100712/1206956760666087495/Handstanding_Handstand_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502701379100712/1206956760666087495/Handstanding_Handstand_Level_4.gif",
         },
       ],
     },
@@ -714,7 +785,7 @@ module.exports = {
     },
     cal: {
       icon: "<:mantawhisperer:1205914655885889647>",
-      image: '',
+      image: "",
     },
   },
   proud_victor: {
@@ -728,7 +799,7 @@ module.exports = {
     },
     stance: {
       icon: "<:proudvictor:1205914638747836538>",
-      image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050205422161930/Proud_Stance.gif',
+      image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050205422161930/Proud_Stance.gif",
     },
   },
 
@@ -744,8 +815,8 @@ module.exports = {
     },
     stance: {
       icon: "<:courageoussoldier:1205914854456696892>",
-      image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050203727659038/Courageous_Stance.gif',
-    },  
+      image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050203727659038/Courageous_Stance.gif",
+    },
   },
   fainting_warrior: {
     name: "Fainting Warrior",
@@ -761,19 +832,23 @@ module.exports = {
       level: [
         {
           title: '"Faint Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959547051151370/Fainting_Warrior_Faint_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959547051151370/Fainting_Warrior_Faint_Level_1.gif",
         },
         {
           title: '"Faint Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959547433091163/Fainting_Warrior_Faint_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959547433091163/Fainting_Warrior_Faint_Level_2.gif",
         },
         {
           title: '"Faint Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959547944534117/Fainting_Warrior_Faint_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959547944534117/Fainting_Warrior_Faint_Level_3.gif",
         },
         {
           title: '"Faint Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959548481413203/Fainting_Warrior_Faint_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959548481413203/Fainting_Warrior_Faint_Level_4.gif",
         },
       ],
     },
@@ -792,19 +867,23 @@ module.exports = {
       level: [
         {
           title: '"Duck Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959642555453460/Frightened_Refugee_Duck_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959642555453460/Frightened_Refugee_Duck_Level_1.gif",
         },
         {
           title: '"Duck Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959643180671038/Frightened_Refugee_Duck_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959643180671038/Frightened_Refugee_Duck_Level_2.gif",
         },
         {
           title: '"Duck Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959643725926400/Frightened_Refugee_Duck_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959643725926400/Frightened_Refugee_Duck_Level_3.gif",
         },
         {
           title: '"Duck Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959644426244167/Frightened_Refugee_Duck_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959644426244167/Frightened_Refugee_Duck_Level_4.gif",
         },
       ],
     },
@@ -823,19 +902,23 @@ module.exports = {
       level: [
         {
           title: '"Lookout Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959851964727297/Looking_Scout_Look_Around_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959851964727297/Looking_Scout_Look_Around_Level_1.gif",
         },
         {
           title: '"Lookout Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959852530827294/Looking_Scout_Look_Around_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959852530827294/Looking_Scout_Look_Around_Level_2.gif",
         },
         {
           title: '"Lookout Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959853029957702/Looking_Scout_Look_Around_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959853029957702/Looking_Scout_Look_Around_Level_3.gif",
         },
         {
           title: '"Lookout Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959853709430804/Looking_Scout_Look_Around_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959853709430804/Looking_Scout_Look_Around_Level_4.gif",
         },
       ],
     },
@@ -854,19 +937,23 @@ module.exports = {
       level: [
         {
           title: '"Salute Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959952288022538/Saluting_Captain_Salute_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959952288022538/Saluting_Captain_Salute_Level_1.gif",
         },
         {
           title: '"Salute Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959952921497652/Saluting_Captain_Salute_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959952921497652/Saluting_Captain_Salute_Level_2.gif",
         },
         {
           title: '"Salute Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959953802297404/Saluting_Captain_Salute_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959953802297404/Saluting_Captain_Salute_Level_3.gif",
         },
         {
           title: '"Salute Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502812222234655/1206959954586767402/Saluting_Captain_Salute_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502812222234655/1206959954586767402/Saluting_Captain_Salute_Level_4.gif",
         },
       ],
     },
@@ -882,7 +969,7 @@ module.exports = {
     },
     stance: {
       icon: "<:stealthysurvivor:1205914765558423552>",
-      image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050204973633576/Sneaky_Stance.gif'
+      image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050204973633576/Sneaky_Stance.gif",
     },
   },
 
@@ -901,19 +988,23 @@ module.exports = {
       level: [
         {
           title: '"Telekinesis Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960214130032700/Levitating_Adept_Telekinesis_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960214130032700/Levitating_Adept_Telekinesis_Level_1.gif",
         },
         {
           title: '"Telekinesis Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960214981615647/Levitating_Adept_Telekinesis_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960214981615647/Levitating_Adept_Telekinesis_Level_2.gif",
         },
         {
           title: '"Telekinesis Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960215766081546/Levitating_Adept_Telekinesis_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960215766081546/Levitating_Adept_Telekinesis_Level_3.gif",
         },
         {
           title: '"Telekinesis Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960216491692052/Levitating_Adept_Telekinesis_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960216491692052/Levitating_Adept_Telekinesis_Level_4.gif",
         },
       ],
     },
@@ -932,19 +1023,23 @@ module.exports = {
       level: [
         {
           title: '"Float Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960289770381362/Meditating_Monastic_Float_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960289770381362/Meditating_Monastic_Float_Level_1.gif",
         },
         {
           title: '"Float Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960290349064253/Meditating_Monastic_Float_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960290349064253/Meditating_Monastic_Float_Level_2.gif",
         },
         {
           title: '"Float Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960290982264905/Meditating_Monastic_Float_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960290982264905/Meditating_Monastic_Float_Level_3.gif",
         },
         {
           title: '"Float Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960291586506844/Meditating_Monastic_Float_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960291586506844/Meditating_Monastic_Float_Level_4.gif",
         },
       ],
     },
@@ -960,7 +1055,7 @@ module.exports = {
     },
     call: {
       icon: "<:memorywhisperer:1205914905275011123>",
-      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057095510331442/Cosmic_Manta_Call.mp4',
+      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057095510331442/Cosmic_Manta_Call.mp4",
     },
   },
   polite_scholar: {
@@ -974,7 +1069,7 @@ module.exports = {
     },
     stance: {
       icon: "<:politescholar:1205914889650970644>",
-      image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050206269669526/Polite_Stance.gif'
+      image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050206269669526/Polite_Stance.gif",
     },
   },
   praying: {
@@ -991,32 +1086,36 @@ module.exports = {
       level: [
         {
           title: '"Pray Emote" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960426831712357/Praying_Acolyte_Pray_Level_1.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960426831712357/Praying_Acolyte_Pray_Level_1.gif",
         },
         {
           title: '"Pray Emote" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960427209326623/Praying_Acolyte_Pray_Level_2.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960427209326623/Praying_Acolyte_Pray_Level_2.gif",
         },
         {
           title: '"Pray Emote" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960426470875176/Praying_Acolyte_Pray_Level_3.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960426470875176/Praying_Acolyte_Pray_Level_3.gif",
         },
         {
           title: '"Pray Emote" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1206502917104861225/1206960426101899274/Praying_Acolyte_Pray_Level_4.gif'
+          image:
+            "https://cdn.discordapp.com/attachments/1206502917104861225/1206960426101899274/Praying_Acolyte_Pray_Level_4.gif",
         },
       ],
     },
   },
 
   // nine colored deer
-   hunter: {
+  hunter: {
     name: "Hunter",
     type: "Seasonal Spirit",
     realm: "Vault of Knowledge",
     season: "Nine-Colored Deer",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1033,14 +1132,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
-   princess: {
+  },
+  princess: {
     name: "Princess",
     type: "Seasonal Spirit",
     realm: "Vault of Knowledge",
     season: "Nine-Colored Deer",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1057,14 +1156,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
-   lord: {
+  },
+  lord: {
     name: "Feudal Lord",
     type: "Seasonal Spirit",
     realm: "Vault of Knowledge",
     season: "Nine-Colored Deer",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1081,14 +1180,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
-   herb_gather: {
+  },
+  herb_gather: {
     name: "Herb Gatherer",
     type: "Seasonal Spirit",
     realm: "Vault of Knowledge",
     season: "Nine-Colored Deer",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1108,13 +1207,13 @@ module.exports = {
   },
 
   // revival
-   forgotten_haven: {
+  forgotten_haven: {
     name: "Remnant Of A Forgotten Haven",
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Revival",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1131,7 +1230,7 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   abandoned_refuge: {
     name: "Echo Of An Abandoned Refuge",
     type: "Seasonal Spirit",
@@ -1155,14 +1254,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   lost_village: {
     name: "Memory Of A Lost Village",
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Revival",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1179,14 +1278,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   deserted_oasis: {
     name: "Vestige Of A Deserted Oasis",
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Revival",
     ts: {
-      eligible:  false,
+      eligible: false,
       returned: true,
       dates: ``,
     },
@@ -1203,7 +1302,7 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
 
   // moments
   nightbird: {
@@ -1212,7 +1311,7 @@ module.exports = {
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1229,14 +1328,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   monk: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1253,14 +1352,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   geologist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1277,14 +1376,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   ranger: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1301,14 +1400,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   outcast: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1325,14 +1424,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   overachiever: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1349,14 +1448,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   mope: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1373,14 +1472,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   troublemaker: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1397,14 +1496,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   wounded_warrior: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1421,14 +1520,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   pleading_child: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1445,14 +1544,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   veteran: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1469,14 +1568,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   tea_brewer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1493,14 +1592,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   warrior_of_love: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1517,14 +1616,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   seed_of_hope: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1541,14 +1640,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   wayfarer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1565,14 +1664,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   mindful_miner: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1589,14 +1688,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   dark_plant: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1613,14 +1712,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   dark_dragon: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1637,14 +1736,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   light_manta: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1661,14 +1760,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   light_jelly: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1685,14 +1784,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   modest_dancer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1709,14 +1808,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   mellow_musician: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1733,14 +1832,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   stagehand: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1757,14 +1856,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   storyteller: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1781,14 +1880,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   commodore: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1805,14 +1904,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   cannoneer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1829,14 +1928,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   boatswain: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1853,14 +1952,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   angler: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1877,14 +1976,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   chimesmith: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1901,14 +2000,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   navigator: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1925,14 +2024,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   light_whisperer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1949,14 +2048,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   talented_builder: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1973,14 +2072,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   lamplighter: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -1997,14 +2096,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   star_collector: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2021,14 +2120,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   geographer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2045,14 +2144,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   slouching_soldier: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2069,14 +2168,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   narcissist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2093,14 +2192,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   beckoning_ruler: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2117,14 +2216,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   scolding_student: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2141,14 +2240,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   cadet: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2165,14 +2264,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
-   talentforesterer: {
+  },
+  talentforesterer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2189,14 +2288,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   adventurer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2213,14 +2312,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   scout: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2237,14 +2336,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   botanist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2261,14 +2360,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   spinning_mentor: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2285,14 +2384,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   postman: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2309,14 +2408,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   dancing_performer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2333,14 +2432,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   hermit: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2357,14 +2456,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   fireprophet: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2381,14 +2480,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   airprophet: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2405,14 +2504,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   earthprophet: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2429,14 +2528,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   waterprophet: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2453,14 +2552,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   bookworm: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2477,14 +2576,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   rallying_thrillseeker: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2501,14 +2600,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   jellywhisperer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2525,14 +2624,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   grouch: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2549,14 +2648,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   shell_collector: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2573,14 +2672,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   sunbather: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2597,14 +2696,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   carpenter: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2621,14 +2720,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   scarecrow_farmer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2645,14 +2744,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   herbalist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2669,14 +2768,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   muralist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2693,14 +2792,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   alchemist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2717,14 +2816,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   crab_walker: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2741,14 +2840,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   juggler: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2765,14 +2864,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   greeter: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2789,14 +2888,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   director: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2813,14 +2912,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   pianist: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2837,14 +2936,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   spin_dancer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2861,14 +2960,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   actor: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2885,14 +2984,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   wise_grandparent: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2909,14 +3008,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   sparkler_parent: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2933,14 +3032,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   pleaful_parent: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2957,14 +3056,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   hairtousle_teen: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -2981,14 +3080,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   confetti_cousin: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3005,14 +3104,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   boogie_kid: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3029,14 +3128,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   twirling_champion: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3053,14 +3152,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   light_scholar: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3077,14 +3176,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   piggyback: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3101,14 +3200,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   laidback: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3125,14 +3224,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   light_catcher: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3149,14 +3248,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   crab_whisperer: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3173,14 +3272,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   stretching: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3197,14 +3296,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   sassy: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3221,14 +3320,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   saluting: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3245,14 +3344,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   provoking: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3269,14 +3368,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   leaping: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3293,14 +3392,14 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
   shaman: {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Season of Flight",
     ts: {
-      eligible:  true,
+      eligible: true,
       returned: true,
       dates: ``,
     },
@@ -3317,5 +3416,5 @@ module.exports = {
       icon: "",
       level: [],
     },
-  }, 
+  },
 };

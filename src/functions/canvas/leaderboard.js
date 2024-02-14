@@ -3,7 +3,7 @@
  * see {@link https://github.com/Bes-js/canvafy|canvafy}
  */
 
-const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
+const { createCanvas, loadImage, registerFont } = require("canvas");
 const path = require("path");
 
 /**
@@ -161,11 +161,11 @@ class QuizLeaderboardCard {
   }
 
   async build() {
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/circularstd-black.otf`), "circular-std");
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-jp-black.ttf`), "noto-sans-jp");
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-black.ttf`), "noto-sans");
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notoemoji-bold.ttf`), "noto-emoji");
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-kr-black.ttf`), "noto-sans-kr");
+    registerFont(path.join(__dirname, `fonts/circularstd-black.otf`), { family: "circular-std"});
+    registerFont(path.join(__dirname, `fonts/notosans-jp-black.ttf`), { family: "noto-sans-jp"});
+    registerFont(path.join(__dirname, `fonts/notosans-black.ttf`), { family: "noto-sans"});
+    registerFont(path.join(__dirname, `fonts/notoemoji-bold.ttf`), { family: "noto-emoji"});
+    registerFont(path.join(__dirname, `fonts/notosans-kr-black.ttf`), { family: "noto-sans-kr"});
 
     const fillRoundRect = (ctx, x, y, w, h, r, f, s) => {
       if (typeof r === "number") r = { tl: r, tr: r, br: r, bl: r };

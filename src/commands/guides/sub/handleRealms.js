@@ -58,7 +58,7 @@ async function handleFirst(interaction, value) {
       emoji: firstChoices.find((choice) => choice.value === value).emoji,
     },
   });
-  const row = buildSecondRow(value, interaction)
+  const row = buildSecondRow(value, interaction);
   await interaction.update({
     content: `Guides for __${userChoices.get(interaction.message.id).firstChoice.label}__`,
     components: [row],
@@ -75,22 +75,22 @@ async function handleSecond(interaction, value, ephemeral) {
   } else if (value.startsWith("summary_")) {
     await respondSummary(interaction, value, ephemeral);
   } else if (value.startsWith("spirits_")) {
-    const realmValue = value.split('_')[1]
-    const row = buildSpiritsRow(realmValue)
+    const realmValue = value.split("_")[1];
+    const row = buildSpiritsRow(realmValue);
     await interaction.update({
       content: `Spirits of __${userChoices.get(interaction.message.id).firstChoice.label}__`,
-      components: [row]
-    })
+      components: [row],
+    });
   } else if (value.startsWith("maps_")) {
     await respondMaps(interaction, value, ephemeral);
   }
 }
 
 async function handleThird(interaction, value, ephemeral) {
-  const choices = userChoices.get(interaction.message.id).firstChoice
+  const choices = userChoices.get(interaction.message.id).firstChoice;
   if (value === "back") {
-    const row = buildSecondRow(choices.value, interaction)
-   
+    const row = buildSecondRow(choices.value, interaction);
+
     await interaction.update({
       content: `Guides for __${choices.label}__`,
       components: [row],
@@ -99,37 +99,37 @@ async function handleThird(interaction, value, ephemeral) {
   }
 
   try {
-  const options = spiritChoices[value]
-  if (!options) {
-    return await interaction.reply({
-      content: "Guide is yet to be updated. Coming Soon! Thank you for your patience.",
-      ephemeral: true
-    })
-  }
-  const type = {regular: "Regular", seasonal: "Seasonal"}[value.split('_')[1]]
-  const placeholder = `${type} Spirits - ${choices.label}`
-  const row = rowBuilder(CUSTOM_ID.FOURTH_CHOICE, options, placeholder, true);
+    const options = spiritChoices[value];
+    if (!options) {
+      return await interaction.reply({
+        content: "Guide is yet to be updated. Coming Soon! Thank you for your patience.",
+        ephemeral: true,
+      });
+    }
+    const type = { regular: "Regular", seasonal: "Seasonal" }[value.split("_")[1]];
+    const placeholder = `${type} Spirits - ${choices.label}`;
+    const row = rowBuilder(CUSTOM_ID.FOURTH_CHOICE, options, placeholder, true);
 
-  await interaction.update({
-    content: `${type} Spirits of __${choices.label}__`,
-    components: [row],
-  })
-} catch (err) { 
-  interaction.client.logger.error('Third Choice Error [Realm Guide]', err)
-}
+    await interaction.update({
+      content: `${type} Spirits of __${choices.label}__`,
+      components: [row],
+    });
+  } catch (err) {
+    interaction.client.logger.error("Third Choice Error [Realm Guide]", err);
+  }
 }
 
 async function handleFourth(interaction, value, ephemeral) {
   const choices = userChoices.get(interaction.message.id).firstChoice;
   if (value === "back") {
-    const row = buildSpiritsRow(choices.value)
+    const row = buildSpiritsRow(choices.value);
     return await interaction.update({
       content: `Spirits of __${choices.label}__`,
       components: [row],
     });
   }
 
-  await handleSpirits(interaction, value, ephemeral, userChoices)
+  await handleSpirits(interaction, value, ephemeral, userChoices);
 }
 
 async function respondSummary(int, value, ephemeral) {
@@ -286,14 +286,15 @@ function buildSecondRow(value, interaction) {
     },
   ];
 
-  if (value !== 'eden') options.push({
+  if (value !== "eden")
+    options.push({
       label: "Spirits",
       value: "spirits_" + value,
       emoji: "<:spiritIcon:1206501060303130664>",
-    })
+    });
   const map = userChoices.get(interaction.message.id);
   const placeholder = map.firstChoice.label;
- return rowBuilder(CUSTOM_ID.SECOND_CHOICE, options, placeholder, true);
+  return rowBuilder(CUSTOM_ID.SECOND_CHOICE, options, placeholder, true);
 }
 function buildSpiritsRow(value) {
   const options = [
@@ -304,7 +305,7 @@ function buildSpiritsRow(value) {
     {
       label: "Seasonal Spirits",
       value: value + "_seasonal",
-    }
-  ]
-  return rowBuilder(CUSTOM_ID.THIRD_CHOICE, options, "Choose a Spirit Type", true)
+    },
+  ];
+  return rowBuilder(CUSTOM_ID.THIRD_CHOICE, options, "Choose a Spirit Type", true);
 }

@@ -9,9 +9,9 @@ module.exports = {
   },
   async execute(msg, args, client, flags) {
     let code = args.join(" ");
-    if (flags.length > 0 && this.data.flags.some(flag => flags.includes(flag))) {
-      code = `(async () => { return ${args.join(" ")} })()`
-    } 
+    if (flags.length > 0 && this.data.flags.some((flag) => flags.includes(flag))) {
+      code = `(async () => { return ${args.join(" ")} })()`;
+    }
 
     let response;
 

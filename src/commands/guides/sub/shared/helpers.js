@@ -15,14 +15,14 @@ module.exports = class GuideUtils {
     let options = choices;
     if (back) {
       options = [
-     ...choices,
-      {
-        label: "Back",
-        value: "back",
-        emoji: "⬅️",
-      }
-    ]
-  }
+        ...choices,
+        {
+          label: "Back",
+          value: "back",
+          emoji: "⬅️",
+        },
+      ];
+    }
     return new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder().setCustomId(customId).setPlaceholder(placeholder).addOptions(options)
     );

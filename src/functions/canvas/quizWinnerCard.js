@@ -1,13 +1,13 @@
-const canvas = require("@napi-rs/canvas");
+const canvas = require("canvas");
 const { colorFetch } = require("./helpers/colorFetch");
 const path = require("path");
 const { readFile } = require("fs/promises");
 
-canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/circularstd-black.otf`), "circular-std");
-canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-jp-black.ttf`), "noto-sans-jp");
-canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-black.ttf`), "noto-sans");
-canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notoemoji-bold.ttf`), "noto-emoji");
-canvas.GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-kr-black.ttf`), "noto-sans-kr");
+canvas.registerFont(path.join(__dirname, `fonts/circularstd-black.otf`), { family: "circular-std"});
+canvas.registerFont(path.join(__dirname, `fonts/notosans-jp-black.ttf`), { family: "noto-sans-jp"});
+canvas.registerFont(path.join(__dirname, `fonts/notosans-black.ttf`), { family: "noto-sans"});
+canvas.registerFont(path.join(__dirname, `fonts/notoemoji-bold.ttf`), { family: "noto-emoji"});
+canvas.registerFont(path.join(__dirname, `fonts/notosans-kr-black.ttf`), { family: "noto-sans-kr"});
 
 class QuizWinnerCard {
   constructor(member, wins, total) {
