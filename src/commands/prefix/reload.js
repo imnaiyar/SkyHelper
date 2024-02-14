@@ -13,10 +13,10 @@ module.exports = {
         require: true,
         args: ["bot"]
     },
-    flags: ["commands", "events"],
+    flags: ["bot", "files"],
   },
   async execute(msg, args, client, flags) {
-    const type = args[0] === 'bot' ? 'Bot' : (this.data.flags.every(flag => flags.includes(flag)) ? 'Commands and Events' : flags[0] === 'commands' ? 'Commands' : flags[0] === 'events' ? 'Events' : 'Commands and Events');
+    const type = this.data.flags.every(flag => flags.includes(flag)) ? 'Bot and Files' : 'Files';
     msg.channel.send({
       embeds: [
         new EmbedBuilder()
@@ -25,14 +25,11 @@ module.exports = {
         .setDescription(`Reloading ${type}`)
         ]
     });
-    if (args[0]) {
-        return msg.channel.send('Done. Now go to sleep')
-    }
 
-    const refresh = this.data.flags.every(flag => flags.includes(flag)) ? 'both' : flags[0]
+    const refresh = this.data.flags.every(flag => flags.includes(flag)) ? 'bot' : flags[0]
 
     const pull = async () => {
-        const embed = await consoleRun(type);
+        const embed = await consoleRun(type, client);
         if (embed === 'Upto date.')  {
             msg.channel.send({ embeds: [
             new EmbedBuilder()
@@ -49,26 +46,23 @@ module.exports = {
     try {
       
       switch (refresh) {
-        case "commands": {
+        case "files": {
           const embed = await pull(type);
           if (!embed) return;
           client.commands.clear();
           client.prefix.clear();
           client.loadSlashCmd("./src/commands");
           client.loadPrefix("./src/commands/prefix");
-          msg.channel.send({ embeds: [embed] });
-          break;
-        }
-        case "events": {
-          const embed = await pull(type);
-          if (!embed) return;
           client.loadEvents("./src/events");
           msg.channel.send({ embeds: [embed] });
           break;
         }
-       case 'both': {
+        case "bot": {
+        msg.channel.send('Done. Now go to sleep')
+          break;
+        }
+         default : {
           const embed = await pull(type);
-          if (!embed) return;
           client.commands.clear();
           client.prefix.clear();
           client.loadSlashCmd("./src/commands");
@@ -85,7 +79,7 @@ module.exports = {
   },
 };
 
-async function consoleRun(type) {
+async function consoleRun(type, client) {
   return new Promise((resolve, reject) => {
     exec("git pull", (error, stdout) => {
       if (error) {
@@ -94,11 +88,11 @@ async function consoleRun(type) {
       }
 
       
-      const regex = /\s+(\S+\s+\|\s+\d+\s[+-]+)\n/g;
-      const matches = stdout.match(regex);
+      const regex = /.*Fast-forward\s+([\s\S]*)/g;
+      const match = regex.exec(stdout)
       let matched = "";
-      if (matches) {
-        matches.forEach((match) => (matched += `${match}\n`));
+      if (match && match[1]) {
+        matched = match[1].trim().replace('deleted mode', 'deleted').replace('created mode', 'created');
       }
       
       if (stdout.includes("Already up to date.")) {
@@ -107,8 +101,9 @@ async function consoleRun(type) {
       resolve(
         new EmbedBuilder()
           .setColor("Green")
-          .setDescription(`Successfully reloaded ${type}.`)
-          .setFields({ name: "Files changed", value: matched.length > 4096 ? matched.substr(0, 4000) : matched })
+          .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})    
+          .setTitle(`Successfully reloaded ${type}.`)
+          .setFields({ name: "Files changed", value: `\`\`\`${matched.length > 4096 ? matched.substr(0, 4000) : matched}\`\`\`` })
           .setTimestamp()
       );
       }
