@@ -15,10 +15,11 @@ class QuizWinnerCard {
     this.author = member.user.username;
     this.color = "auto";
     this.brightness = 50;
-    this.thumbnail = member?.displayAvatarURL() || member.user.displayAvatarURL();
+    this.thumbnail = member?.displayAvatarURL({ extension: "jpg"}) || member.user.displayAvatarURL({ extension: "jpg"});
     this.points = `${wins}/${total} points`;
   }
   async build() {
+    console.log('hi')
     if (!this.name) {
       throw new Error("Missing name parameter");
     }
@@ -26,18 +27,21 @@ class QuizWinnerCard {
       throw new Error("Missing author parameter");
     }
 
+    try {
     let thumbnailURL = this.thumbnail;
 
     const validatedColor = await colorFetch(this.color || "ff0000", parseInt(this.brightness) || 0, thumbnailURL);
     const bg = await readFile(path.join(__dirname, "assets/winnerBg.png"));
+    console.log('hi mif')
     const bgImg = new canvas.Image();
-    bgImg.src = bg;
-    const ogImg = await canvas.loadImage(bgImg);
+    console.log('1')
+    console.log('2')
+    console.log('3')
     const background = await readFile(path.join(__dirname, "assets/background.png"));
+    console.log('hi sec')
     const backgroundImage = new canvas.Image();
-    backgroundImage.src = background;
-    const img = await canvas.loadImage(backgroundImage);
-
+    
+    console.log('hi for')
     const thumbnailCanvas = canvas.createCanvas(564, 564);
     const thumbnailCtx = thumbnailCanvas.getContext("2d");
 
@@ -50,7 +54,7 @@ class QuizWinnerCard {
         },
       },
     });
-
+    console.log('hi3')
     const thumbnailSize = Math.min(thumbnailImage.width, thumbnailImage.height);
     const thumbnailX = (thumbnailImage.width - thumbnailSize) / 2;
     const thumbnailY = (thumbnailImage.height - thumbnailSize) / 2;
@@ -65,6 +69,7 @@ class QuizWinnerCard {
     thumbnailCtx.closePath();
     thumbnailCtx.clip();
 
+    console.log('hi4')
     thumbnailCtx.drawImage(
       thumbnailImage,
       thumbnailX,
@@ -80,7 +85,7 @@ class QuizWinnerCard {
     if (this.name.length > 15) this.name = `${this.name.slice(0, 15)}...`;
     if (this.author.length > 15) this.author = `${this.author.slice(0, 15)}...`;
     if (this.points.length > 15) this.author = `${this.author.slice(0, 15)}...`;
-
+    console.log('hi5')
     const canvasWidth = 1282;
     const canvasHeight = 592;
     const imgWidth = 1270;
@@ -94,11 +99,12 @@ class QuizWinnerCard {
     const ctx = image.getContext("2d");
 
     // Draw the original image (ogImg) as the background
-    ctx.drawImage(ogImg, 0, 0, canvasWidth, canvasHeight);
-
+    bgImg.onload = () => ctx.drawImage(bgImg, 0, 0, canvasWidth, canvasHeight);
+    bgImg.src = bg;
     // Draw the img at the center of the canvas
-    ctx.drawImage(img, centerX + 20, centerY + 30, imgWidth, imgHeight);
-
+    backgroundImage.onload = () => ctx.drawImage(backgroundImage, centerX + 20, centerY + 30, imgWidth, imgHeight);
+    backgroundImage.src = background;
+    console.log('hi6')
     ctx.fillStyle = `#${validatedColor}`;
     ctx.font = `75px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
     ctx.fillText(this.name, 90, 260);
@@ -112,8 +118,11 @@ class QuizWinnerCard {
     ctx.fillText(this.points, 95, 455);
 
     ctx.drawImage(thumbnailCanvas, 850, centerY + 35, 380, centerY + 220);
-
+    console.log('hi7')
     return image.toBuffer("image/png");
+    } catch (err) {
+      throw new Error(err)
+    }
   }
 }
 

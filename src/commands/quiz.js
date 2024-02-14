@@ -185,7 +185,7 @@ async function getAllUser(data, client) {
     const user = await client.getUser(docs.data.username, docs._id);
     lbData.push({
       top: lbData.length + 1,
-      avatar: user.displayAvatarURL(),
+      avatar: user.displayAvatarURL({ extension: "jpg"}),
       tag: user.username,
       score: docs.quizData.quizWon,
       games: docs.quizData.quizPlayed,

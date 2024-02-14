@@ -23,10 +23,11 @@ module.exports = class quizUtils {
   /**
    * Sends the result in the interaction channel on game end
    * @param {import('discord.js').Interaction} interaction - The interaction that initiated the game
-   * @param {import('@src/structures').SkyHelper.} data - object containing a game data
+   * @param {import('@src/structures').SkyHelper.data} data - object containing a game data
    */
   static async displayResults(interaction, data) {
-    let result = ``;
+    try {
+      let result = ``;
     const sortedUserPoints = Object.entries(data.userPoints)
       .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
       .reduce((obj, [userId, points]) => ({ ...obj, [userId]: points }), {});
@@ -66,9 +67,11 @@ module.exports = class quizUtils {
       interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
     } else {
       const winner = interaction.guild.members.cache.get(highestScorer);
+      console.log('hi')
       const card = new QuizWinnerCard(winner, highestScore, data.totalQuestions);
 
       const cardBuffer = await card.build();
+      console.log('hi2')
       const winnerBnr = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
       resultEmbed.setImage(`attachment://${winnerBnr.name}`);
       interaction.channel.send({
@@ -77,6 +80,9 @@ module.exports = class quizUtils {
         files: [winnerBnr],
       });
     }
+  } catch (err) {
+    interaction.client.logger.error(err)
+  }
   }
 
   /**
