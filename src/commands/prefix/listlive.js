@@ -6,15 +6,13 @@ module.exports = {
     name: "listlive",
     description: "list all active live shards/skytimes",
     category: "OWNER",
-    args: ["shards", "times"],
+    args: {
+      require: true,
+      args: ["shards", "times"]
+    },
   },
   async execute(msg, args) {
-    if (!args) {
-      return msg.reply(`You need to provide one of these arguments: \`${this.data.args}\``);
-    }
-    if (!this.data.args.includes(args[0])) {
-      return msg.reply("**Invalid Comand Usage**\nAvailable Args: `shards`, `times`");
-    }
+    
     let model;
     let type;
     if (args[0] === "shards") {

@@ -62,8 +62,15 @@ module.exports = async (client, msg) => {
     return msg.reply(`You need ${parsePerm(command.data.userPermissions)} to use this command`);
   }
   
-  //Check if flags are valid
- // ...
+  //Check if args are valid
+  if (command.data.args && command.data.args.required) {
+    if (args.length === 0) {
+    return msg.reply(`You didn't provide any arguments, ${msg.author}!`);
+   }
+   if (!command.data.args.args.include(args[0])) {
+    return msg.reply(`Invalid arguments, Valid args are ${command.data.args.args.map(arg => `\`${arg}\``).join(', ')}!`);
+   }
+  }
 
 // Check if command has flags defined and flags were provided
 if (command.data.flags && flags.length > 0) {
