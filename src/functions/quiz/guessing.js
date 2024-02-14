@@ -48,10 +48,22 @@ async function respond(interaction, data) {
     })
     .setDescription(`${questionData.question}\n\n<a:timer1:1197767726324781157> <a:timer2:1197767745610203218>`);
   let msg;
+  if (questionData.image) {
+    const attachment = new AttachmentBuilder(path.join(__dirname, questionData.image.url), {
+      name: `image.${questionData.image.type}`,
+    });
+    quesEmbed.setImage(`attachment://${attachment.name}`);
+    msg = await interaction.channel.send({
+      embeds: [quesEmbed],
+      files: [attachment],
+      fetchReply: true,
+    });
+  } else {
     msg = await interaction.channel.send({
       embeds: [quesEmbed],
       fetchReply: true,
     });
+  }
 
   collector.on("collect", (message) => {
     const answer = message.content.toLowerCase();
