@@ -14,7 +14,6 @@ module.exports = async (client, msg) => {
 
   if (
     msg.mentions.has(client.user) &&
-    !OWNER.includes(msg.author.id) &&
     msg.channel.permissionsFor(client.user.id).has("SendMessages")
   ) {
     msg.channel.send("That's me...");
