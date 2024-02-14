@@ -10,86 +10,78 @@ module.exports = {
     description: "reloads the bot",
     category: "OWNER",
     args: {
-        require: true,
-        args: ["bot"]
+      require: true,
+      args: ["bot"],
     },
-    flags: ["bot", "commands", "files"],
+    flags: ["commands", "events", "files", "local", "l"],
   },
   async execute(msg, args, client, flags) {
-    const type = this.data.flags.every(flag => flags.includes(flag)) ? 'Bot and Files' : 'Files';
+    const filtered = ['commands', 'events', 'files']
+    const combinations = [
+      { match: ['commands', 'events', 'files'], result: 'Commands and Events and Files' },
+      { match: ['commands', 'files'], result: 'Commands and Files' },
+      { match: ['commands', 'events'], result: 'Commands and Events' },
+      { match: ['events', 'files'], result: 'Events and Files' },
+      { match: ['commands'], result: 'Commands' },
+      { match: ['events'], result: 'Events' },
+      { match: ['files'], result: 'Files' },
+      { match: [], result: 'Commands' },
+    ];
+    const matchingCombination = combinations.find(combination => combination.match.every(flag => flags.includes(flag))) || combinations[combinations.length - 1];
+    const type = matchingCombination.result;
+    if (args[0] === "bot") {
+      await msg.reply("later");
+    }
     msg.channel.send({
       embeds: [
         new EmbedBuilder()
-        .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})
-        .setTitle('Reload')
-        .setDescription(`Reloading ${type}`)
-        ]
+          .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+          .setTitle("Reload")
+          .setDescription(`Reloading ${type}`),
+      ],
     });
-    const refresh = this.data.flags.every(flag => flags.includes(flag)) ? 'bot' : flags[0]
-
-    const pull = async () => {
-        const embed = await consoleRun(type, client);
-        if (embed === 'Upto date.')  {
-            msg.channel.send({ embeds: [
-            new EmbedBuilder()
-            .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})
-            .setTitle('Upto date')
-            .setDescription(`Local branch is already upto date with remote branch, nothing to update`)
-            .setTimestamp()
-        ]})
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+      .setTimestamp();
+    if (!flags.includes("local") && !flags.includes("l")) {
+      const data = await consoleRun(type, client);
+      if (data === "Upto date.") {
+        embed
+          .setTitle("Upto date")
+          .setDescription(`Local branch is already upto date with remote branch, nothing to update`);
+        msg.channel.send({ embeds: [embed] });
         return;
-    }
-    return embed;
+      }
+    } else {
+      embed.setDescription(`Reloded ${type}`);
     }
 
-    try {
-      
-      switch (refresh) {
-        case "commands": {
-          const embed = await pull(type);
-          client.commands.clear();
-          client.prefix.clear();
-          client.loadSlashCmd("./src/commands");
-          client.loadPrefix("./src/commands/prefix");
-          if (!embed) return;
-          msg.channel.send({ embeds: [embed] });
-          break;
-        }
-        case "bot": {
-        msg.channel.send('Done. Now go to sleep')
-          break;
-        }
-        case 'files': {
-          msg.channel.send('Starting total cache sweep...')
-          const functions = path.resolve(__dirname, '../../functions');
-          const handler = path.resolve(__dirname, '../../handler');
-          const events = path.resolve(__dirname, '../../events');
-          clearCache(functions);
-          clearCache(handler);
-          client.commands.clear();
-          client.prefix.clear();
-          client.loadSlashCmd("./src/commands");
-          client.loadPrefix("./src/commands/prefix");
-          client.loadEvents('./src/events');
-          msg.channel.send('success');
-          break;
-        }
-         default : {
-          const embed = await pull(type);
-          client.commands.clear();
-          client.prefix.clear();
-          client.loadSlashCmd("./src/commands");
-          client.loadPrefix("./src/commands/prefix");
-          client.loadEvents("./src/events");
-          if (!embed) return;
-          msg.channel.send({ embeds: [embed] });
-          break;
-       }
-      }
-    } catch (error) {
-      const errorEmb = new EmbedBuilder().setAuthor({ name: "☣️ Error"}).setColor("Red").setDescription(`Error while reloading\n\`\`\`bash\n${error}\`\`\``);
-      msg.channel.send({ embeds: [errorEmb] });
+    if (flags.includes("commands")) {
+      client.commands.clear();
+      client.prefix.clear();
+      client.loadSlashCmd("./src/commands");
+      client.loadPrefix("./src/commands/prefix");
     }
+
+    if (flags.includes("events")) {
+      client.loadEvents("./src/events");
+    }
+
+    if (flags.includes("files")) {
+      const functions = path.resolve(__dirname, "../../functions");
+      const handler = path.resolve(__dirname, "../../handler");
+      clearCache(functions);
+      clearCache(handler);
+    }
+
+    if (filtered.every((item) => !flags.includes(item))) {
+      client.commands.clear();
+      client.prefix.clear();
+      client.loadSlashCmd("./src/commands");
+      client.loadPrefix("./src/commands/prefix");
+    }
+
+    await msg.channel.send({ embeds: [embed] });
   },
 };
 
@@ -101,31 +93,33 @@ async function consoleRun(type, client) {
         return;
       }
 
-      
       const regex = /.*Fast-forward\s+([\s\S]*)/g;
-      const match = regex.exec(stdout)
+      const match = regex.exec(stdout);
       let matched = "";
       if (match && match[1]) {
-        matched = match[1].trim().replace('deleted mode', 'deleted').replace('created mode', 'created');
+        matched = match[1].trim().replace("deleted mode", "deleted").replace("created mode", "created");
       }
-      
+
       if (stdout.includes("Already up to date.")) {
-        resolve('Upto date.');
+        resolve("Upto date.");
       } else {
-      resolve(
-        new EmbedBuilder()
-          .setColor("Green")
-          .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})    
-          .setTitle(`Successfully reloaded ${type}.`)
-          .setFields({ name: "Files changed", value: `\`\`\`bash\n${matched.length > 4096 ? matched.substr(0, 4000) : matched}\`\`\`` })
-          .setTimestamp()
-      );
+        resolve(
+          new EmbedBuilder()
+            .setColor("Green")
+            .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+            .setTitle(`Successfully reloaded ${type}.`)
+            .setFields({
+              name: "Files changed",
+              value: `\`\`\`bash\n${matched.length > 4096 ? matched.substr(0, 4000) : matched}\`\`\``,
+            })
+            .setTimestamp()
+        );
       }
     });
   });
 }
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 function clearCache(directory) {
   const files = fs.readdirSync(directory);
@@ -142,4 +136,3 @@ function clearCache(directory) {
     }
   });
 }
-

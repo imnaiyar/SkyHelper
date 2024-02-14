@@ -10,6 +10,8 @@ module.exports = {
 
     const cardBuffer = await card.build();
     const attachment = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
-    message.reply({ files: [attachment] });
+    message.reply({
+      content: "okay",
+      files: [attachment] });
   },
 };

@@ -8,11 +8,10 @@ module.exports = {
     category: "OWNER",
     args: {
       require: true,
-      args: ["shards", "times"]
+      args: ["shards", "times"],
     },
   },
   async execute(msg, args) {
-    
     let model;
     let type;
     if (args[0] === "shards") {
