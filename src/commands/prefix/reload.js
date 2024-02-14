@@ -40,7 +40,7 @@ module.exports = {
           .setDescription(`Reloading ${type}`),
       ],
     });
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
       .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
       .setTimestamp();
     if (!flags.includes("local") && !flags.includes("l")) {
@@ -52,8 +52,9 @@ module.exports = {
         msg.channel.send({ embeds: [embed] });
         return;
       }
+      embed = data;
     } else {
-      embed.setDescription(`Reloded ${type}`);
+      embed.setDescription(`Reloaded ${type}`);
     }
 
     if (flags.includes("commands")) {
