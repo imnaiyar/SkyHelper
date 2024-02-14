@@ -13,7 +13,7 @@ module.exports = {
         require: true,
         args: ["bot"]
     },
-    flags: ["bot", "files"],
+    flags: ["bot", "commands", "files"],
   },
   async execute(msg, args, client, flags) {
     const type = this.data.flags.every(flag => flags.includes(flag)) ? 'Bot and Files' : 'Files';
@@ -25,7 +25,6 @@ module.exports = {
         .setDescription(`Reloading ${type}`)
         ]
     });
-
     const refresh = this.data.flags.every(flag => flags.includes(flag)) ? 'bot' : flags[0]
 
     const pull = async () => {
@@ -46,19 +45,33 @@ module.exports = {
     try {
       
       switch (refresh) {
-        case "files": {
+        case "commands": {
           const embed = await pull(type);
-          if (!embed) return;
           client.commands.clear();
           client.prefix.clear();
           client.loadSlashCmd("./src/commands");
           client.loadPrefix("./src/commands/prefix");
-          client.loadEvents("./src/events");
+          if (!embed) return;
           msg.channel.send({ embeds: [embed] });
           break;
         }
         case "bot": {
         msg.channel.send('Done. Now go to sleep')
+          break;
+        }
+        case 'files': {
+          msg.channel.send('Starting total cache sweep...')
+          const functions = path.resolve(__dirname, '../../functions');
+          const handler = path.resolve(__dirname, '../../handler');
+          const events = path.resolve(__dirname, '../../events');
+          clearCache(functions);
+          clearCache(handler);
+          client.commands.clear();
+          client.prefix.clear();
+          client.loadSlashCmd("./src/commands");
+          client.loadPrefix("./src/commands/prefix");
+          client.loadEvents('./src/events');
+          msg.channel.send('success');
           break;
         }
          default : {
@@ -68,12 +81,13 @@ module.exports = {
           client.loadSlashCmd("./src/commands");
           client.loadPrefix("./src/commands/prefix");
           client.loadEvents("./src/events");
+          if (!embed) return;
           msg.channel.send({ embeds: [embed] });
           break;
        }
       }
     } catch (error) {
-      const errorEmb = new EmbedBuilder().setAuthor("☣️ Error").setColor("Red").setDescription(`Error while reloading\n\`\`\`${error}\`\`\``);
+      const errorEmb = new EmbedBuilder().setAuthor({ name: "☣️ Error"}).setColor("Red").setDescription(`Error while reloading\n\`\`\`bash\n${error}\`\`\``);
       msg.channel.send({ embeds: [errorEmb] });
     }
   },
@@ -103,10 +117,29 @@ async function consoleRun(type, client) {
           .setColor("Green")
           .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})    
           .setTitle(`Successfully reloaded ${type}.`)
-          .setFields({ name: "Files changed", value: `\`\`\`${matched.length > 4096 ? matched.substr(0, 4000) : matched}\`\`\`` })
+          .setFields({ name: "Files changed", value: `\`\`\`bash\n${matched.length > 4096 ? matched.substr(0, 4000) : matched}\`\`\`` })
           .setTimestamp()
       );
       }
     });
   });
 }
+const fs = require('fs');
+const path = require('path');
+
+function clearCache(directory) {
+  const files = fs.readdirSync(directory);
+
+  files.forEach((file) => {
+    const filePath = path.join(directory, file);
+
+    if (fs.statSync(filePath).isDirectory()) {
+      // Recursively clear cache for subdirectories
+      clearCache(filePath);
+    } else {
+      // Delete cache for each file
+      delete require.cache[require.resolve(filePath)];
+    }
+  });
+}
+

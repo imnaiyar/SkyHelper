@@ -1,13 +1,8 @@
-const canvas = require("canvas");
-const { colorFetch } = require("./helpers/colorFetch");
-const path = require("path");
-const { readFile } = require("fs/promises");
-
-canvas.registerFont(path.join(__dirname, `fonts/circularstd-black.otf`), { family: "circular-std"});
-canvas.registerFont(path.join(__dirname, `fonts/notosans-jp-black.ttf`), { family: "noto-sans-jp"});
-canvas.registerFont(path.join(__dirname, `fonts/notosans-black.ttf`), { family: "noto-sans"});
-canvas.registerFont(path.join(__dirname, `fonts/notoemoji-bold.ttf`), { family: "noto-emoji"});
-canvas.registerFont(path.join(__dirname, `fonts/notosans-kr-black.ttf`), { family: "noto-sans-kr"});
+const { createCanvas, loadImage } = require("canvas");
+const { colors, fancyCount } = require('./helpers/util');
+const {join} = require("path");
+require ('@discord-card/core');
+const size = 100;
 
 class QuizWinnerCard {
   constructor(member, wins, total) {
@@ -15,114 +10,116 @@ class QuizWinnerCard {
     this.author = member.user.username;
     this.color = "auto";
     this.brightness = 50;
+    this.client = member.client;
     this.thumbnail = member?.displayAvatarURL({ extension: "jpg"}) || member.user.displayAvatarURL({ extension: "jpg"});
-    this.points = `${wins}/${total} points`;
+    this.points = wins;
+    this.total = total;
   }
+   path(strs) {
+  return join(__dirname,  strs);
+}
+
+roundRect(ctx, x, y, w, h, r) {
+  if (w < 2 * r) r = w / 2;
+  if (h < 2 * r) r = h / 2;
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  return ctx;
+}
+
+changeFontSize(ctx, size) {
+  const fontArgs = ctx.font.split(' ');
+  ctx.font = `${size} ${fontArgs.slice(1).join(' ')}`; /// using the last part
+  return ctx;
+}
   async build() {
-    console.log('hi')
-    if (!this.name) {
-      throw new Error("Missing name parameter");
-    }
-    if (!this.author) {
-      throw new Error("Missing author parameter");
-    }
-
-    try {
-    let thumbnailURL = this.thumbnail;
-
-    const validatedColor = await colorFetch(this.color || "ff0000", parseInt(this.brightness) || 0, thumbnailURL);
-    const bg = await readFile(path.join(__dirname, "assets/winnerBg.png"));
-    console.log('hi mif')
-    const bgImg = new canvas.Image();
-    console.log('1')
-    console.log('2')
-    console.log('3')
-    const background = await readFile(path.join(__dirname, "assets/background.png"));
-    console.log('hi sec')
-    const backgroundImage = new canvas.Image();
     
-    console.log('hi for')
-    const thumbnailCanvas = canvas.createCanvas(564, 564);
-    const thumbnailCtx = thumbnailCanvas.getContext("2d");
+    const canvas = createCanvas(16 * size, 5 * size);
+    const ctx = canvas.getContext('2d');
+   const { width: w, height: h } = canvas;
+    ctx.font = '85px SegoeUI, SegoeUIEmoji';
 
-    let thumbnailImage;
+    ctx.fillStyle = colors.darkgrey;
+    this.roundRect(ctx, 0, 0, w, h, size * 0.75).clip();
+    ctx.fill();
+  // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  // ctx.shadowOffsetY = 40;
+  // ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+  // ctx.shadowOffsetX = 40;
 
-    thumbnailImage = await canvas.loadImage(thumbnailURL, {
-      requestOptions: {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
-        },
-      },
-    });
-    console.log('hi3')
-    const thumbnailSize = Math.min(thumbnailImage.width, thumbnailImage.height);
-    const thumbnailX = (thumbnailImage.width - thumbnailSize) / 2;
-    const thumbnailY = (thumbnailImage.height - thumbnailSize) / 2;
+  //Avatar
+  //
+  ctx.save();
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.arc(h / 2, h / 2, h * 0.3, 0, Math.PI * 2, true);
+  ctx.closePath();
+  ctx.clip();
 
-    thumbnailCtx.beginPath();
-    const cornerRadius2 = 45;
-    thumbnailCtx.moveTo(0 + cornerRadius2, 0);
-    thumbnailCtx.arcTo(thumbnailCanvas.width, 0, thumbnailCanvas.width, thumbnailCanvas.height, cornerRadius2);
-    thumbnailCtx.arcTo(thumbnailCanvas.width, thumbnailCanvas.height, 0, thumbnailCanvas.height, cornerRadius2);
-    thumbnailCtx.arcTo(0, thumbnailCanvas.height, 0, 0, cornerRadius2);
-    thumbnailCtx.arcTo(0, 0, thumbnailCanvas.width, 0, cornerRadius2);
-    thumbnailCtx.closePath();
-    thumbnailCtx.clip();
+  ctx.fillStyle = colors.grey;
+  ctx.fillRect(h * 0.2, h * 0.2, h * 0.6, h * 0.6);
+  ctx.drawImage(await loadImage(this.thumbnail), h * 0.2, h * 0.2, h * 0.6, h * 0.6);
+  ctx.restore();
 
-    console.log('hi4')
-    thumbnailCtx.drawImage(
-      thumbnailImage,
-      thumbnailX,
-      thumbnailY,
-      thumbnailSize,
-      thumbnailSize,
-      0,
-      0,
-      thumbnailCanvas.width,
-      thumbnailCanvas.height
-    );
+  //Status
+  ctx.save();
+  ctx.translate(size * 3.55, size * 3.55);
 
-    if (this.name.length > 15) this.name = `${this.name.slice(0, 15)}...`;
-    if (this.author.length > 15) this.author = `${this.author.slice(0, 15)}...`;
-    if (this.points.length > 15) this.author = `${this.author.slice(0, 15)}...`;
-    console.log('hi5')
-    const canvasWidth = 1282;
-    const canvasHeight = 592;
-    const imgWidth = 1270;
-    const imgHeight = 350;
+  ctx.fillStyle = colors.darkgrey;
+  ctx.beginPath();
+  ctx.arc(0, 0, size * 0.4, 0, Math.PI * 2, true);
+  ctx.closePath();
+  ctx.fill();
 
-    // Calculate the center coordinates for the image
-    const centerX = (canvasWidth - imgWidth) / 2;
-    const centerY = (canvasHeight - imgHeight) / 2;
+  ctx.drawImage(await loadImage(this.path('/assets/Win.png')), -size * 0.3, -size * 0.3, size * 0.6, size * 0.6);
+  ctx.restore();
 
-    const image = canvas.createCanvas(canvasWidth, canvasHeight);
-    const ctx = image.getContext("2d");
+  //User Text
+  //
+  ctx.fillStyle = colors.blue;
+  this.changeFontSize(ctx, h * 0.17 + 'px');
+  ctx.fillText(this.name, w * 0.3, h * 0.45, w * 0.425);
+  ctx.fillStyle = colors.idle
+  ctx.fillText('#', w * 0.3 + w * 0.4375, h * 0.45);
+  ctx.fillStyle = colors.online;
+  ctx.fillText('1', w * 0.3 + w * 0.425 + w * 0.05, h * 0.45, w * 0.15625);
 
-    // Draw the original image (ogImg) as the background
-    bgImg.onload = () => ctx.drawImage(bgImg, 0, 0, canvasWidth, canvasHeight);
-    bgImg.src = bg;
-    // Draw the img at the center of the canvas
-    backgroundImage.onload = () => ctx.drawImage(backgroundImage, centerX + 20, centerY + 30, imgWidth, imgHeight);
-    backgroundImage.src = background;
-    console.log('hi6')
-    ctx.fillStyle = `#${validatedColor}`;
-    ctx.font = `75px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-    ctx.fillText(this.name, 90, 260);
+  //Botlist URL
+  //
+  //ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = colors.blue;
+    this.roundRect(ctx, w * 0.5, -(w * 0.0625), w * 0.5, h * 0.4, w * 0.0625);
+    ctx.fill();
+    ctx.fillRect(w * 0.625, 0, w * 0.5, w * 0.0625);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+    this.changeFontSize(ctx, h * 0.15 + 'px');
+    ctx.fillText('Quiz Game', w * 0.55 + h * 0.65, h * 0.15, w * 0.421875);
 
-    ctx.fillStyle = "#b8b8b8";
-    ctx.font = `50px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-    ctx.fillText(this.author, 95, 330);
+  //Counters
+  //
+  ctx.textAlign = 'left';
+  ctx.fillStyle = colors.lightgrey;
+  ctx.drawImage(await loadImage(this.path('assets/Point.png')), w * 0.3, h * 0.65, w * 0.0625, w * 0.0625);
+  this.changeFontSize(ctx, h * 0.15 + 'px');
+  ctx.fillText(`${fancyCount(this.points)}/${fancyCount(this.total)} points`, w * 0.25 + h * 0.45, h * 0.65 + h * 0.15, h * 10);
 
-    ctx.fillStyle = "#b8b8b8";
-    ctx.font = `50 circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-    ctx.fillText(this.points, 95, 455);
+  // ctx.drawImage(await loadImage(this.path('assets/vote.svg')), w * 0.6, h * 0.65, w * 0.0625, w * 0.0625);
+//   ctx.fillText(fancyCount(this.total), w * 0.55 + h * 0.45, h * 0.65 + h * 0.15, h * 0.45);
 
-    ctx.drawImage(thumbnailCanvas, 850, centerY + 35, 380, centerY + 220);
-    console.log('hi7')
-    return image.toBuffer("image/png");
-    } catch (err) {
-      throw new Error(err)
-    }
+  //Library
+  //
+    ctx.fillStyle = colors.grey;
+    this.roundRect(ctx, w * 0.875, h * 0.6, h * 0.4, h * 0.4, h * 0.15).clip();
+    ctx.fill();
+    ctx.drawImage(await loadImage(this.client.user.displayAvatarURL({ extension: "jpg"})), w * 0.875, h * 0.6, h * 0.4, h * 0.4);
+
+  return canvas.toBuffer("image/png");
   }
 }
 

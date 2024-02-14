@@ -150,17 +150,16 @@ module.exports = class SkyHelper extends Client {
     let success = 0;
     let failed = 0;
     const clientEvents = [];
-
+    this.removeAllListeners();
     recursiveReadDirSync(directory).forEach((filePath) => {
       const file = path.basename(filePath);
       try {
         const eventName = path.basename(file, ".js");
+        delete require.cache[require.resolve(filePath)];
         const event = require(filePath);
 
         this.on(eventName, event.bind(null, this));
         clientEvents.push([file, "✓"]);
-
-        delete require.cache[require.resolve(filePath)];
         success += 1;
       } catch (ex) {
         failed += 1;
