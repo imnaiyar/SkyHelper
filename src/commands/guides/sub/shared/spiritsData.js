@@ -9,7 +9,7 @@ module.exports = {
     realm: "Isle of Dawn",
     main: {
       description: "Pointing Candlemaker Infographics by Ed.7",
-      total: '',
+      total: ' ',
       image:
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337576995131452/Pointing-Candlemaker-Guide-777-Ed.webp",
     },
@@ -156,9 +156,9 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337730699726998/Bird-Whisperer-Guide-777-Ed.webp",
     },
     call: {
-      title: '',
+      title: 'Bird Call',
       icon: "<:birdwhisperer:1205914321897398332>",
-      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057093698261043/Bird_Call.mp4"
+      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057093698261043/Bird_Call.mp4?ex=65de4285&is=65cbcd85&hm=f9d97c7de6ac0a8d14e3a7e9cf1f844eb1a524b0ff90edaf700fe31386444630&"
     }
   },
   charmer: {
@@ -620,7 +620,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206489819459624960/Whale-Whisperer-Guide-777-Ed.png",
     },
     call: {
-      title: 'Hi',
+      title: 'Whale Call',
       icon: "<:whalewhisperer:1205914501241765918>",
       image: "https://media.discordapp.net/attachments/1207056758514909315/1207057094373679154/Whale_Call.mp4?ex=65de4285&is=65cbcd85&hm=e04b3ea6c35c529038e07cdb4246245e44acf89fb8fb08e0e3eaebaf437e8a4d&",
     },
@@ -633,7 +633,7 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Backflipping Champion Infographics by Ed.7",
-      total: '',
+      total: ' ',
       image:
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337372522807316/Backflipping-Champion-Guide-777-Ed.webp",
     },
@@ -743,7 +743,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337363207389244/Confident-Sightseer-Guide-777-Ed.png",
     },
     stance: {
-      title: '',
+      title: 'Confident Stance',
       icon: "<:confidentsightseer:1205914692346712194>",
       image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050208416890971/Confident_Stance.gif",
     },
@@ -793,9 +793,9 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337371168055306/Manta-Whisperer-Guide-777-Ed.png",
     },
     call: {
-      title: '',
+      title: 'Manta Call',
       icon: "<:mantawhisperer:1205914655885889647>",
-      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057094948290601/Manta_Call.mp4",
+      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057094948290601/Manta_Call.mp4?ex=65de4285&is=65cbcd85&hm=d2a258a13d60fde1a57b58caa39fb0210ea1f109ec45721b1b9752477f8b319e&",
     },
   },
   proud_victor: {
@@ -808,7 +808,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337369117298728/Proud-Victor-Guide-777-Ed.webp",
     },
     stance: {
-      title: '',
+      title: 'Proud Stance',
       icon: "<:proudvictor:1205914638747836538>",
       image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050205422161930/Proud_Stance.gif",
     },
@@ -825,7 +825,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206482771946770432/Courageous-Soldier-Guide-777-Ed.png",
     },
     stance: {
-      title: '',
+      title: 'Courageous Stance',
       icon: "<:courageoussoldier:1205914854456696892>",
       image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050203727659038/Courageous_Stance.gif",
     },
@@ -980,7 +980,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206482761083265054/Stealthy-Survivor-Guide-777-Ed.png",
     },
     stance: {
-      title: '',
+      title: 'Sneaky Stance',
       icon: "<:stealthysurvivor:1205914765558423552>",
       image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050204973633576/Sneaky_Stance.gif",
     },
@@ -1067,9 +1067,9 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206483136956080149/Memory-Whisperer-Guide-777-Ed.png",
     },
     call: {
-      title: '',
+      title: 'Cosmic Manta Call',
       icon: "<:memorywhisperer:1205914905275011123>",
-      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057095510331442/Cosmic_Manta_Call.mp4",
+      image: "https://cdn.discordapp.com/attachments/1207056758514909315/1207057095510331442/Cosmic_Manta_Call.mp4?ex=65de4285&is=65cbcd85&hm=99a0e68a8787cadf5a0eea7ed229c46f9cda56b2e89838e6bb08e1173b5bf0db&",
     },
   },
   polite_scholar: {
@@ -1082,7 +1082,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/867638574571323424/1206483134770581504/Polite-Scholar-Guide-777-Ed.png",
     },
     stance: {
-      title: '',
+      title: 'Polite Stance',
       icon: "<:politescholar:1205914889650970644>",
       image: "https://cdn.discordapp.com/attachments/1207049883232768000/1207050206269669526/Polite_Stance.gif",
     },
@@ -1131,11 +1131,12 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
       description: "",
+      total: ' ',
       image: "",
     },
     location: {
@@ -1155,7 +1156,7 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1179,7 +1180,7 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1203,7 +1204,7 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1229,7 +1230,7 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1253,7 +1254,7 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1277,7 +1278,7 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1301,7 +1302,7 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1327,7 +1328,7 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1340,9 +1341,9 @@ module.exports = {
     },
     cosmetics: [{}],
     call: {
-      title: '',
+      title: 'Nightbird Call',
       icon: "<:nightbird:1130948807396429884>",
-      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057098056409150/Nightbird_Call.mp4',
+      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057098056409150/Nightbird_Call.mp4?ex=65de4286&is=65cbcd86&hm=9665dec9d4b88f657781f48467c11cb26ce526b8634f3a6125f7386b689b94ed&',
     },
   },
   monk: {
@@ -1352,7 +1353,7 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1376,7 +1377,7 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1400,7 +1401,7 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1424,7 +1425,7 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1448,7 +1449,7 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1472,7 +1473,7 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1496,7 +1497,7 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1520,7 +1521,7 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1533,7 +1534,7 @@ module.exports = {
     },
     cosmetics: [{}],
     stance: {
-      title: '',
+      title: 'Injured Stance',
       icon: "<:wounded:1131584200735211710>",
       image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050204164001832/Injured_Stance.gif',
     },
@@ -1545,7 +1546,7 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1569,7 +1570,7 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1593,7 +1594,7 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1617,7 +1618,7 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1641,7 +1642,7 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1665,7 +1666,7 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1689,7 +1690,7 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1712,7 +1713,7 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1735,7 +1736,7 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1758,7 +1759,7 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1781,7 +1782,7 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1805,7 +1806,7 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1829,7 +1830,7 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1853,7 +1854,7 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1877,7 +1878,7 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1901,7 +1902,7 @@ module.exports = {
     season: "Abyss",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1925,7 +1926,7 @@ module.exports = {
     season: "Abyss",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1949,7 +1950,7 @@ module.exports = {
     season: "Abyss",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1973,7 +1974,7 @@ module.exports = {
     season: "Abyss",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -1997,7 +1998,7 @@ module.exports = {
     season: "Flight",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2010,7 +2011,7 @@ module.exports = {
     },
     cosmetics: [{}],
     stance: {
-      title: '',
+      title: 'Tinker Stance',
       icon: "<:chimesmith:1131589172822544435>",
       image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050206890303538/Tinker_Stance_.gif',
     },
@@ -2022,7 +2023,7 @@ module.exports = {
     season: "Flight ",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2046,7 +2047,7 @@ module.exports = {
     season: "Flight",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2059,9 +2060,9 @@ module.exports = {
     },
     cosmetics: [{}],
     call: {
-      title: '',
+      title: 'Baby Manta Call',
       icon: "<:lightwhisperer:1131589102626672761>",
-      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057097355952158/Baby_Manta_Call.mp4',
+      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057097355952158/Baby_Manta_Call.mp4?ex=65de4286&is=65cbcd86&hm=f935965daf363f003f40aa99c33c9455284540947f8ac1a954451566e2673450&',
     },
   },
   talented_builder: {
@@ -2071,7 +2072,7 @@ module.exports = {
     season: "Flight",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2095,7 +2096,7 @@ module.exports = {
     season: "The Little Prince",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2119,7 +2120,7 @@ module.exports = {
     season: "The Little Prince",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2143,7 +2144,7 @@ module.exports = {
     season: "The Little Prince",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2167,7 +2168,7 @@ module.exports = {
     season: "The Little Prince",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2191,7 +2192,7 @@ module.exports = {
     season: "The Little Prince",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2215,7 +2216,7 @@ module.exports = {
     season: "The Little Prince",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2239,7 +2240,7 @@ module.exports = {
     season: "Assembly",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2263,7 +2264,7 @@ module.exports = {
     season: "Assembly",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2287,7 +2288,7 @@ module.exports = {
     season: "Assembly",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2311,7 +2312,7 @@ module.exports = {
     season: "Assembly",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2335,7 +2336,7 @@ module.exports = {
     season: "Assembly",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2359,7 +2360,7 @@ module.exports = {
     season: "Assembly",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2383,7 +2384,7 @@ module.exports = {
     season: "Dreams",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2407,7 +2408,7 @@ module.exports = {
     season: "Dreams",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2431,7 +2432,7 @@ module.exports = {
     season: "Dreams",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2455,7 +2456,7 @@ module.exports = {
     season: "Dreams",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2479,7 +2480,7 @@ module.exports = {
     season: "Prophecy",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2503,7 +2504,7 @@ module.exports = {
     season: "Prophecy",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2527,7 +2528,7 @@ module.exports = {
     season: "Prophecy",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2551,7 +2552,7 @@ module.exports = {
     season: "Prophecy",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2575,7 +2576,7 @@ module.exports = {
     season: "Sanctuary",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2588,7 +2589,7 @@ module.exports = {
     },
     cosmetics: [{}],
     stance: {
-      title: '',
+      title: 'Timid Stance',
       icon: "<:bookworm:1131649753420140595>",
       image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207583393613746177/Timid_Bookworm_Timid_Stance.gif',
     },
@@ -2600,7 +2601,7 @@ module.exports = {
     season: "Sanctuary",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2624,7 +2625,7 @@ module.exports = {
     season: "Sanctuary",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2637,9 +2638,9 @@ module.exports = {
     },
     cosmetics: [{}],
     call: {
-      title: '',
+      title: 'Jellyfish Call',
       icon: "<:jellywhisperer:1131649695807176895>",
-      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057096810696734/Jellyfish_Call.mp4',
+      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057096810696734/Jellyfish_Call.mp4?ex=65de4285&is=65cbcd85&hm=cb7f912fcaec61df531749a8fb8aab5d26e0a2d5ed2098baf96b3546474fa2d3&',
     },
   },
   grouch: {
@@ -2649,7 +2650,7 @@ module.exports = {
     season: "Sanctuary",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2673,7 +2674,7 @@ module.exports = {
     season: "Sanctuary",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2697,7 +2698,7 @@ module.exports = {
     season: "Sanctuary",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2721,7 +2722,7 @@ module.exports = {
     season: "Enchantment",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2745,7 +2746,7 @@ module.exports = {
     season: "ENchantment",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2769,7 +2770,7 @@ module.exports = {
     season: "Enchantment",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2793,7 +2794,7 @@ module.exports = {
     season: "Enchantment",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2817,7 +2818,7 @@ module.exports = {
     season: "Enchantment",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2841,7 +2842,7 @@ module.exports = {
     season: "Enchantment",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2865,7 +2866,7 @@ module.exports = {
     season: "Rhythm",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2889,7 +2890,7 @@ module.exports = {
     season: "Rhythm",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2913,7 +2914,7 @@ module.exports = {
     season: "Rhythm",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2937,7 +2938,7 @@ module.exports = {
     season: "Rhythm",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2961,7 +2962,7 @@ module.exports = {
     season: "Rhythm",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -2985,7 +2986,7 @@ module.exports = {
     season: "Rhythm",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3009,7 +3010,7 @@ module.exports = {
     season: "Belonging",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3022,7 +3023,7 @@ module.exports = {
     },
     cosmetics: [{}],
     stance: {
-      title: '',
+      title: 'Wise Stance',
       icon: "<:wisegrandparent:1131650518792536125>",
       image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050204545556500/Wise_Stand.gif',
     },
@@ -3034,7 +3035,7 @@ module.exports = {
     season: "Belonging",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3058,7 +3059,7 @@ module.exports = {
     season: "Belonging",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3082,7 +3083,7 @@ module.exports = {
     season: "Belonging",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3106,7 +3107,7 @@ module.exports = {
     season: "Belonging",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3130,7 +3131,7 @@ module.exports = {
     season: "Belonging",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3154,7 +3155,7 @@ module.exports = {
     season: "Lightseekers",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3178,7 +3179,7 @@ module.exports = {
     season: "Lightseekers",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3202,7 +3203,7 @@ module.exports = {
     season: "Lightseekers",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3226,7 +3227,7 @@ module.exports = {
     season: "Lightseekers",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3239,7 +3240,7 @@ module.exports = {
     },
     cosmetics: [{}],
     stance: {
-      title: '',
+      title: 'Laidback Stance',
       icon: "<:laidbackPioneer:1153511482949107765>",
       image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050205803970610/Laidback_Stance.gif?',
     },
@@ -3251,7 +3252,7 @@ module.exports = {
     season: "Lightseekers",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3275,7 +3276,7 @@ module.exports = {
     season: "Lightseekers",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3288,9 +3289,9 @@ module.exports = {
     },
     cosmetics: [{}],
     call: {
-      title: '',
+      title: 'Crab Call',
       icon: "<:crabWhisperer:1153511432349032508>",
-      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057096281948210/Crab_Call.mp4',
+      image: 'https://cdn.discordapp.com/attachments/1207056758514909315/1207057096281948210/Crab_Call.mp4?ex=65de4285&is=65cbcd85&hm=55bb9650cb7eb68778038781822057a9c269af8a5d2c141bbf7fed22cd726c53&',
     },
   },
   stretching: {
@@ -3300,7 +3301,7 @@ module.exports = {
     season: "Gratitude",
     ts: {
       eligible: true,
-      returned: false,
+      returned: true,
       dates: ``,
     },
     tree: {
@@ -3324,8 +3325,14 @@ module.exports = {
     season: "Gratitude",
     ts: {
       eligible: true,
-      returned: false,
-      dates: ``,
+      returned: true,
+      total: '4',
+      dates: [
+  "      December 8, 2022 (#76)",
+"July 8, 2021 (#39)",
+"May 28, 2020 (#10)",
+"January 31, 2020 (#1)"
+      ],
     },
     tree: {
       description: "",
@@ -3337,7 +3344,7 @@ module.exports = {
     },
     cosmetics: [{}],
     stance: {
-      title: '',
+      title: 'Sassy Stance',
       icon: "<:sassyDrifter:1153511651522396322>",
       image: 'https://cdn.discordapp.com/attachments/1207049883232768000/1207050207498608720/Sassy_Stance.gif',
     },
@@ -3349,8 +3356,11 @@ module.exports = {
     season: "Gratitude",
     ts: {
       eligible: true,
-      returned: false,
-      dates: ``,
+      returned: true,
+      total: '1',
+      dates: [
+       'January 20, 2022 (#53)'
+      ],
     },
     tree: {
       description: "",
@@ -3362,8 +3372,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:salutingProtector:1153511628596334723>",
+      level: [
+        {
+          title: '"Acknowledge Emote" Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765965303980122/Saluting-Protector-acknowledge-emote-level-1.gif?ex=65e0d6b5&is=65ce61b5&hm=b3abde13352ea5965855c171e6a8e8bc6905575794ae1dbc7c6b6eecb6c5c578&'
+        },
+        {
+          title: '"Acknowledge Emote" Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765971654152202/Saluting-Protector-acknowledge-emote-level-2.gif?ex=65e0d6b6&is=65ce61b6&hm=d583bd5801dbb30d149c6cb496774ca200956f8b761ba7ff98e2b66d65a504be&'
+        },
+        {
+          title: '"Acknowledge Emote" Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765972031897641/Saluting-Protector-acknowledge-emote-level-3.gif?ex=65e0d6b6&is=65ce61b6&hm=d49101c68852ad09c2e34a2abf27b9f227b5ffaa7c80060381157f564fc73441&'
+        },
+        {
+          title: '"Acknowledge Emote" Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765972472172584/Saluting-Protector-acknowledge-emote-level-4.gif?ex=65e0d6b7&is=65ce61b7&hm=5d8a2d83d540319de493088bc85ff7654303449d5a5ac43e253d581a1cc1c9e9&'
+        },
+      ],
     },
   },
   provoking: {
@@ -3373,8 +3400,12 @@ module.exports = {
     season: "Gratitude",
     ts: {
       eligible: true,
-      returned: false,
-      dates: ``,
+      returned: true,
+      dates: [
+       'March 30, 2023 (#84)',
+       'October 1, 2020 (#19)',
+       'March 12, 2020 (#4)'
+      ],
     },
     tree: {
       description: "",
@@ -3386,8 +3417,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:provokingProtector:1153511606475554906>",
+      level: [
+        {
+          title: '"Kabuki Emote" Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766331894669312/Provoking-Performer-kabuki-emote-level-1.gif?ex=65e0d70c&is=65ce620c&hm=699a48b46bcb5370d9db4bf83f9d798a58166f8c2ac4baa1fe7d2b338cd236fc&'
+        },
+        {
+          title: '"Kabuki Emote" Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766332326547466/Provoking-Performer-kabuki-emote-level-2.gif?ex=65e0d70c&is=65ce620c&hm=76efa184cbd99124db218098dca0e2cdc6fa31a76c6fa47c8487f95409f9d394&'
+        },
+        {
+          title: '"Kabuki Emote" Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766332729196614/Provoking-Performer-kabuki-emote-level-3.gif?ex=65e0d70c&is=65ce620c&hm=5b6690c83d00bed589348167155d51aef70e03cd9f97cadded2a2dc850db1b2f&'
+        },
+        {
+          title: '"Kabuki Emote" Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766333123592242/Provoking-Performer-kabuki-emote-level-4.gif?ex=65e0d70d&is=65ce620d&hm=48b91bb3fff8bf6e2fd886d95a4e3599eab3ed073c5aca6c99ed1bbd20382e6f&'
+        },
+      ],
     },
   },
   leaping: {
@@ -3397,8 +3445,13 @@ module.exports = {
     season: "Gratitude",
     ts: {
       eligible: true,
-      returned: false,
-      dates: ``,
+      returned: true,
+      total: '3',
+      dates: [
+        'March 18, 2021 (#31)',
+        'June 25, 2020 (#12)',
+        'July 3, 2023 (SV#3)'
+      ],
     },
     tree: {
       description: "",
@@ -3410,8 +3463,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:leepingDancer:1153511583532716032>",
+      level: [
+        {
+          title: '"Kabuki Emote" Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766703019270154/Leaping-Dancer-leap-emote-level-1.gif?ex=65e0d765&is=65ce6265&hm=0c10997e5a40f60b5aba84e5386288c0e2396809b01ad83c2c5c8f2cd4d6ddbd&'
+        },
+        {
+          title: '"Kabuki Emote" Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766703493349406/Leaping-Dancer-leap-emote-level-2.gif?ex=65e0d765&is=65ce6265&hm=5006fb1075d8c32361bf8b4c6736b628c4b21fe53fcc238c11072d921c64e7c4&'
+        },
+        {
+          title: '"Kabuki Emote" Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766703979892786/Leaping-Dancer-leap-emote-level-3.gif?ex=65e0d765&is=65ce6265&hm=1e0c86bc476226ed2e451368ea25d0653b8b64e754dd6f1297158b1d01827842&'
+        },
+        {
+          title: '"Kabuki Emote" Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207766704411644025/Leaping-Dancer-leap-emote-level-4.gif?ex=65e0d765&is=65ce6265&hm=9e669bcdedf929c723a4ee9523042b9d3adac49bbae4c205b959deec75598ee6&'
+        }
+      ],
     },
   },
   shaman: {
@@ -3421,8 +3491,13 @@ module.exports = {
     season: "Gratitude",
     ts: {
       eligible: true,
-      returned: false,
-      dates: ``,
+      returned: true,
+      total: '3',
+      dates: [
+        'May 26, 2022 (#62)',
+        'July 23, 2020 (#14)',
+        'July 3, 2023 (SV#3)'
+      ],
     },
     tree: {
       description: "",
@@ -3434,8 +3509,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:greetingShaman:1153511559490965664>",
+      level: [
+        {
+          title: '"Kung Fu Emote" Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207767067713863720/Greeting-Shaman-kung-fu-emote-level-1.gif?ex=65e0d7bc&is=65ce62bc&hm=f9f908d8b73086e361a9bc2301dd90414d1716864b80d04da29da59998d3c22b&'
+        },
+        {
+          title: '"Kung Fu Emote" Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207767068179562526/Greeting-Shaman-kung-fu-emote-level-2.gif?ex=65e0d7bc&is=65ce62bc&hm=5b80774b3692bbdea091712ce1bca09af89890a61b97d769c3b58ec2b5fb70dd&'
+        },
+        {
+          title: '"Kung Fu Emote" Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207767068569763860/Greeting-Shaman-kung-fu-emote-level-3.gif?ex=65e0d7bc&is=65ce62bc&hm=d83f672188e5617eb01fd0314dcecaebab563400c97698fd869fc44c301e4495&'
+        },
+        {
+          title: '"Kung Fu Emote" Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207767068905312266/Greeting-Shaman-kung-fu-emote-level-4.gif?ex=65e0d7bc&is=65ce62bc&hm=6f3ba7b69a9c2cd5961b69e4a552b652e989b8f1381fdc0ef81d5d9e957453f0&'
+        },
+      ],
     },
   },
 };

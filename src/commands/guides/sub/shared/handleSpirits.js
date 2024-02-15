@@ -4,11 +4,11 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 module.exports = async (int, value, ephemeral, userChoices) => {
   const data = spiritsData[value];
   const embed = new EmbedBuilder()
-    .setDescription(
-      `### ${data.emote?.icon || data.stance?.icon || data.call?.icon} [${
-        data.name
-      }](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`
+    .setTitle(
+      `${data.emote?.icon || data.stance?.icon || data.call?.icon} ${
+        data.name}`
     )
+    .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`)
     .addFields({
         name: "Type",
         value: `<:purpleright:1207596527737118811> ${data.type}`,
@@ -33,28 +33,26 @@ module.exports = async (int, value, ephemeral, userChoices) => {
   const row = new ActionRowBuilder();
   const lctnBtn = new ButtonBuilder().setCustomId("spirit_location").setLabel("Location").setStyle("2");
 
-  const emoteBtn = new ButtonBuilder().setCustomId("spirit_emote").setStyle("1").setLabel("Emote");
+  const expressionBtn = new ButtonBuilder().setCustomId(data.emote ? 'spirit_emote' : data.stance ? 'spirit_stance' : data.call ? 'spirit_call' : 'spirit_action')
+  .setLabel(data.emote ? 'Emote' : data.stance ? 'Stance' : data.call ? 'Call' : 'Friend Action')
+  .setEmoji(data.emote?.icon || data.stance?.icon || data.call?.icon || data.action?.icon )
+  .setStyle("1");
 
   const treeBtn = new ButtonBuilder().setCustomId("spirit_tree").setStyle("1").setLabel("Friendship Tree");
 
   const cosmeticBtn = new ButtonBuilder().setCustomId("spirit_cosmetic").setStyle("1").setLabel("Cosmetics");
 
-  const callBtn = new ButtonBuilder().setCustomId("spirit_call").setLabel("Call").setStyle("1");
-
-  const stanceBtn = new ButtonBuilder().setCustomId("spirit_stance").setLabel("Stance").setStyle("1");
-
   if (data.main) {
-    embed.addFields({ name: `Infographics by Ed.7`, value: data.main.total });
+    embed.addFields({ name: `Infographics by Ed.7`, value: ' ' });
     embed.setImage(data.main.image);
   } else {
-    embed.addFields({ name: `Friendship Tree ${data.tree.credit}`, value: data.tree?.total });
+    embed.addFields({ name: `Friendship Tree ${data.tree.credit}`, value: ' ' });
     row.addComponents(lctnBtn);
   }
 
   if (data.cosmetics) row.addComponents(cosmeticBtn);
-  if (data.emote) row.addComponents(emoteBtn);
-  if (data.stance) row.addComponents(stanceBtn.setEmoji(data.stance?.icon));
-  if (data.call) row.addComponents(callBtn.setEmoji(data.call?.icon));
+  row.addComponents(expressionBtn);
+  
 
   const msg = await int.reply({ embeds: [embed], components: [row], ephemeral: ephemeral, fetchReply: true });
   const filter = int.client.getFilter(int);
@@ -88,8 +86,11 @@ module.exports = async (int, value, ephemeral, userChoices) => {
       }
       case "spirit_stance": {
         const stanceEmbed = new EmbedBuilder()
-        .setDescription(`### ${data.stance.icon} [${data.stance.title}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#Stance)\n${data.name} stance preview (Standing, sitting, kneeling and laying).`)
-        .setImage(data.stance.image);
+        .setTitle(`${data.stance.icon} ${data.stance.title}`)
+        .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#Stance`)
+        .setDescription(`Stance preview (Standing, sitting, kneeling and laying).`)
+        .setImage(data.stance.image)
+        .setAuthor({ name: `Stance - ${data.name}`});
         await inter.editReply({
           embeds: [stanceEmbed],
           components: [new ActionRowBuilder().addComponents(backBtn)]
@@ -140,12 +141,11 @@ async function handleEmote(int, data, collector, backBtn) {
   const getEmote = () => {
     const emote = data.emote.level[page - 1];
     const embed = new EmbedBuilder()
-      .setAuthor({ name: `Emote preview of ${data.name}` })
-      .setDescription(
-        `### ${data.emote.icon} [${emote.title}](https://sky-children-of-the-light.fandom.com/wiki/${data.name
-          .split(" ")
-          .join("_")}#Expression)`
+      .setAuthor({ name: `Emote - ${data.name}` })
+      .setTitle(
+        `${data.emote.icon} ${emote.title}`
       )
+      .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#Stance`)
       .setImage(emote.image);
 
     const row = new ActionRowBuilder().addComponents(
