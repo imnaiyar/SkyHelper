@@ -46,7 +46,7 @@ module.exports = async (interaction, ephemeral) => {
     row.components.forEach((component) => component.setDisabled(true).setPlaceholder("Menu Expired"));
     await reply.edit({
       components: [row],
-    });
+    }).catch(err => {});
   });
 };
 

@@ -114,7 +114,7 @@ module.exports = class SkyHelper extends Client {
       "Enchantment": '<:enchantment:1130958367674867742>',
       "Rhythm": '<:rhythm:1130958345352777849>',
       "Belonging": '<:belonging:1130958323823423509>',
-      "Lightseeker": '<:lightseekers:1130958300293365870>',
+      "Lightseekers": '<:lightseekers:1130958300293365870>',
       "Gratitude": '<:gratitude:1130958261349261435>',
     })
 

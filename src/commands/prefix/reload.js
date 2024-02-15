@@ -58,6 +58,8 @@ module.exports = {
     }
 
     if (flags.includes("commands")) {
+      const commands = path.resolve(__dirname, "../../commands");
+      clearCache(commands)
       client.commands.clear();
       client.prefix.clear();
       client.loadSlashCmd("./src/commands");
@@ -70,7 +72,6 @@ module.exports = {
 
     if (flags.includes("files")) {
       const functions = path.resolve(__dirname, "../../functions");
-
       const handler = path.resolve(__dirname, "../../handler");
     
       clearCache(functions);
