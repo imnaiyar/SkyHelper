@@ -80,10 +80,10 @@ async function showShard(interaction, shard, Zhii, Christian) {
   };
 
   const actionRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setEmoji("<a:left:1148644073670975640>").setCustomId("timeline_left").setStyle("1"),
-    new ButtonBuilder().setEmoji("<a:right:1148627450608222278>").setCustomId("timeline_right").setStyle("1"),
+    new ButtonBuilder().setEmoji("<:left:1207594669882613770>").setCustomId("timeline_left").setStyle("1"),
+    new ButtonBuilder().setEmoji("<:right:1207593237544435752>").setCustomId("timeline_right").setStyle("1"),
     new ButtonBuilder()
-      .setEmoji("<a:back:1148653107773976576>")
+      .setEmoji("<:purpleUp:1207632852770881576>")
       .setCustomId("timeline_original")
       .setStyle(3)
       .setDisabled(false)

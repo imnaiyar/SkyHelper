@@ -9,6 +9,7 @@ module.exports = {
     realm: "Isle of Dawn",
     main: {
       description: "Pointing Candlemaker Infographics by Ed.7",
+      total: '',
       image:
         "https://cdn.discordapp.com/attachments/867638574571323424/1206337576995131452/Pointing-Candlemaker-Guide-777-Ed.webp",
     },

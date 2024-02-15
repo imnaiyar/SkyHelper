@@ -17,7 +17,7 @@ module.exports = async (int, value, ephemeral, userChoices) => {
     if (data.realm) embed.addFields({
       name: "Realm",
       value: `<:purpleright:1207596527737118811> ${int.client.emojisMap.get("realms")[data.realm]} ${data.realm}`,
-    })
+    });
   if (data.season) {
     embed.addFields({ name: "Season", value: `<:purpleright:1207596527737118811> ${int.client.emojisMap.get("seasons")[data.season]} Season of ${data.season}` });
   }
@@ -47,7 +47,7 @@ module.exports = async (int, value, ephemeral, userChoices) => {
     embed.addFields({ name: `Infographics by Ed.7`, value: data.main.total });
     embed.setImage(data.main.image);
   } else {
-    embed.addFields({ name: `Friendship Tree ${data.tree.credit}`, value: data.tree.total });
+    embed.addFields({ name: `Friendship Tree ${data.tree.credit}`, value: data.tree?.total });
     row.addComponents(lctnBtn);
   }
 
@@ -93,7 +93,8 @@ module.exports = async (int, value, ephemeral, userChoices) => {
         await inter.editReply({
           embeds: [stanceEmbed],
           components: [new ActionRowBuilder().addComponents(backBtn)]
-        })
+        });
+        break;
       }
       case "spirit_call": {
         await inter.editReply({
@@ -101,7 +102,8 @@ module.exports = async (int, value, ephemeral, userChoices) => {
           embeds: [],
           files: [data.call.image],
           components: [new ActionRowBuilder().addComponents(backBtn)],
-        })
+        });
+        break;
       }
       case "spirit_cosmetic": {
         await handleCosmetic(inter, data, collector);

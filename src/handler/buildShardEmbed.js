@@ -44,8 +44,8 @@ module.exports = async (currentDate, footer) => {
     disabled = true;
   }
   const actionRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setEmoji("<a:left:1148644073670975640>").setCustomId("prev").setStyle("1"),
-    new ButtonBuilder().setEmoji("<a:right:1148627450608222278>").setCustomId("next").setStyle("1"),
+    new ButtonBuilder().setEmoji("<:left:1207594669882613770>").setCustomId("prev").setStyle("1"),
+    new ButtonBuilder().setEmoji("<:right:1207593237544435752>").setCustomId("next").setStyle("1"),
     new ButtonBuilder().setLabel("Timeline").setCustomId("timeline").setDisabled(disabled).setStyle("3"),
     new ButtonBuilder().setLabel("Location/Data").setCustomId("location").setDisabled(disabled).setStyle("3"),
     new ButtonBuilder().setLabel("About Shard").setCustomId("about").setStyle("3")
