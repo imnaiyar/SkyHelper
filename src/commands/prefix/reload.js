@@ -70,7 +70,9 @@ module.exports = {
 
     if (flags.includes("files")) {
       const functions = path.resolve(__dirname, "../../functions");
+
       const handler = path.resolve(__dirname, "../../handler");
+    
       clearCache(functions);
       clearCache(handler);
     }
@@ -129,11 +131,10 @@ function clearCache(directory) {
     const filePath = path.join(directory, file);
 
     if (fs.statSync(filePath).isDirectory()) {
-      // Recursively clear cache for subdirectories
       clearCache(filePath);
     } else {
-      // Delete cache for each file
       delete require.cache[require.resolve(filePath)];
+      
     }
   });
 }

@@ -67,11 +67,11 @@ module.exports = class quizUtils {
       interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
     } else {
       const winner = interaction.guild.members.cache.get(highestScorer);
-      console.log('hi')
+      
       const card = new QuizWinnerCard(winner, highestScore, data.totalQuestions);
 
       const cardBuffer = await card.build();
-      console.log('hi2')
+     
       const winnerBnr = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
       resultEmbed.setImage(`attachment://${winnerBnr.name}`);
       interaction.channel.send({

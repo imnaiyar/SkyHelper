@@ -97,7 +97,7 @@ changeFontSize(ctx, size) {
     this.roundRect(ctx, w * 0.5, -(w * 0.0625), w * 0.5, h * 0.4, w * 0.0625);
     ctx.fill();
     ctx.fillRect(w * 0.625, 0, w * 0.5, w * 0.0625);
-    ctx.fillStyle = colors.lightgrey;
+    ctx.fillStyle = colors.darkgrey;
     this.changeFontSize(ctx, h * 0.15 + 'px');
     ctx.fillText('Sky CoTL Quiz Game', w * 0.55 + h * 0.65, h * 0.15, w * 0.421875);
 

@@ -9,17 +9,15 @@ module.exports = async (int, value, ephemeral, userChoices) => {
         data.name
       }](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`
     )
-    .addFields(
-      {
+    .addFields({
         name: "Type",
         value: data.type,
-      },
-      {
-        name: "Realm",
-        value: `${int.client.emojisMap.get("realms")[data.realm]} ${data.realm}`,
-      }
-    )
+      })
     .setAuthor({ name: "Spirit Summary" });
+    if (data.realm) embed.addFields({
+      name: "Realm",
+      value: `${int.client.emojisMap.get("realms")[data.realm]} ${data.realm}`,
+    })
   if (data.season)
     embed.addFields({ name: "Season", value: `${int.client.emojisMap.get("season")[data.season]} ${data.season}` });
   if (data.ts)

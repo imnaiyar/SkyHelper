@@ -1306,10 +1306,10 @@ module.exports = {
 
   // moments
   nightbird: {
-    name: "Talented Builder",
+    name: "Nightbird Whisperer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Moments",
     ts: {
       eligible: true,
       returned: true,
@@ -1330,10 +1330,10 @@ module.exports = {
     },
   },
   monk: {
-    name: "Talented Builder",
+    name: "Ascetic Monk",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Moments",
     ts: {
       eligible: true,
       returned: true,
@@ -1354,10 +1354,10 @@ module.exports = {
     },
   },
   geologist: {
-    name: "Talented Builder",
+    name: "Jolly Geolist",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Moments",
     ts: {
       eligible: true,
       returned: true,
@@ -1378,10 +1378,10 @@ module.exports = {
     },
   },
   ranger: {
-    name: "Talented Builder",
+    name: "Reassuring Ranger",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Moments",
     ts: {
       eligible: true,
       returned: true,
@@ -1402,10 +1402,10 @@ module.exports = {
     },
   },
   outcast: {
-    name: "Talented Builder",
+    name: "Oddball Outcast",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Passage",
     ts: {
       eligible: true,
       returned: true,
@@ -1426,10 +1426,10 @@ module.exports = {
     },
   },
   overachiever: {
-    name: "Talented Builder",
+    name: "Overacting Overachiever",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Passage",
     ts: {
       eligible: true,
       returned: true,
@@ -1450,10 +1450,10 @@ module.exports = {
     },
   },
   mope: {
-    name: "Talented Builder",
+    name: "Melancholy Mope",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Passage",
     ts: {
       eligible: true,
       returned: true,
@@ -1474,10 +1474,10 @@ module.exports = {
     },
   },
   troublemaker: {
-    name: "Talented Builder",
+    name: "Tumbling Troublemaker",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Passage",
     ts: {
       eligible: true,
       returned: true,
@@ -1498,10 +1498,10 @@ module.exports = {
     },
   },
   wounded_warrior: {
-    name: "Talented Builder",
+    name: "Wounded Warrior",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Remembrance",
     ts: {
       eligible: true,
       returned: true,
@@ -1522,10 +1522,10 @@ module.exports = {
     },
   },
   pleading_child: {
-    name: "Talented Builder",
+    name: "Pleading Child",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Remembrance",
     ts: {
       eligible: true,
       returned: true,
@@ -1546,10 +1546,10 @@ module.exports = {
     },
   },
   veteran: {
-    name: "Talented Builder",
+    name: "Bereft Veteran",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Remembrance",
     ts: {
       eligible: true,
       returned: true,
@@ -1570,10 +1570,10 @@ module.exports = {
     },
   },
   tea_brewer: {
-    name: "Talented Builder",
+    name: "Tiptoeing Tea-Brewer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Remembrance",
     ts: {
       eligible: true,
       returned: true,
@@ -1594,10 +1594,10 @@ module.exports = {
     },
   },
   warrior_of_love: {
-    name: "Talented Builder",
+    name: "Warrior of Love",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Aurora",
     ts: {
       eligible: true,
       returned: true,
@@ -1618,10 +1618,10 @@ module.exports = {
     },
   },
   seed_of_hope: {
-    name: "Talented Builder",
+    name: "Seed of Hope",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Aurora",
     ts: {
       eligible: true,
       returned: true,
@@ -1642,10 +1642,10 @@ module.exports = {
     },
   },
   wayfarer: {
-    name: "Talented Builder",
+    name: "Running Wayfarer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Aurora",
     ts: {
       eligible: true,
       returned: true,
@@ -1666,10 +1666,10 @@ module.exports = {
     },
   },
   mindful_miner: {
-    name: "Talented Builder",
+    name: "Mindful Miner",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Aurora",
     ts: {
       eligible: true,
       returned: true,
@@ -1690,10 +1690,9 @@ module.exports = {
     },
   },
   dark_plant: {
-    name: "Talented Builder",
+    name: "Ancient Darkness (Plant)",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Shattering",
     ts: {
       eligible: true,
       returned: true,
@@ -1714,10 +1713,9 @@ module.exports = {
     },
   },
   dark_dragon: {
-    name: "Talented Builder",
+    name: "Ancient Darkness (Dragon)",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Shattering",
     ts: {
       eligible: true,
       returned: true,
@@ -1738,10 +1736,9 @@ module.exports = {
     },
   },
   light_manta: {
-    name: "Talented Builder",
+    name: "Ancient Light (Manta)",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Shattering",
     ts: {
       eligible: true,
       returned: true,
@@ -1762,10 +1759,9 @@ module.exports = {
     },
   },
   light_jelly: {
-    name: "Talented Builder",
+    name: "Ancient Light (Jellyfish)",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Shattering",
     ts: {
       eligible: true,
       returned: true,
@@ -1786,10 +1782,10 @@ module.exports = {
     },
   },
   modest_dancer: {
-    name: "Talented Builder",
+    name: "Modest Dancer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Performance",
     ts: {
       eligible: true,
       returned: true,
@@ -1810,10 +1806,10 @@ module.exports = {
     },
   },
   mellow_musician: {
-    name: "Talented Builder",
+    name: "Mellow Musician",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Performance",
     ts: {
       eligible: true,
       returned: true,
@@ -1834,10 +1830,10 @@ module.exports = {
     },
   },
   stagehand: {
-    name: "Talented Builder",
+    name: "Frantic Stagehand",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Performance",
     ts: {
       eligible: true,
       returned: true,
@@ -1858,10 +1854,10 @@ module.exports = {
     },
   },
   storyteller: {
-    name: "Talented Builder",
+    name: "Forgetful Storyteller",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Performance",
     ts: {
       eligible: true,
       returned: true,
@@ -1882,10 +1878,10 @@ module.exports = {
     },
   },
   commodore: {
-    name: "Talented Builder",
+    name: "Ceasing Commodore",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Abyss",
     ts: {
       eligible: true,
       returned: true,
@@ -1906,10 +1902,10 @@ module.exports = {
     },
   },
   cannoneer: {
-    name: "Talented Builder",
+    name: "Cackling Cannoneer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Abyss",
     ts: {
       eligible: true,
       returned: true,
@@ -1930,10 +1926,10 @@ module.exports = {
     },
   },
   boatswain: {
-    name: "Talented Builder",
+    name: "Bumbling Boatswain",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Abyss",
     ts: {
       eligible: true,
       returned: true,
@@ -1954,10 +1950,10 @@ module.exports = {
     },
   },
   angler: {
-    name: "Talented Builder",
+    name: "Anxious Angler",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Abyss",
     ts: {
       eligible: true,
       returned: true,
@@ -1978,10 +1974,10 @@ module.exports = {
     },
   },
   chimesmith: {
-    name: "Talented Builder",
+    name: "Tinkering Chimesmith",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Flight",
     ts: {
       eligible: true,
       returned: true,
@@ -2002,10 +1998,10 @@ module.exports = {
     },
   },
   navigator: {
-    name: "Talented Builder",
+    name: "Lively Navigator",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Flight ",
     ts: {
       eligible: true,
       returned: true,
@@ -2026,10 +2022,10 @@ module.exports = {
     },
   },
   light_whisperer: {
-    name: "Talented Builder",
+    name: "Light Whisperer",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Flight",
     ts: {
       eligible: true,
       returned: true,
@@ -2053,7 +2049,7 @@ module.exports = {
     name: "Talented Builder",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Flight",
     ts: {
       eligible: true,
       returned: true,
@@ -2074,10 +2070,10 @@ module.exports = {
     },
   },
   lamplighter: {
-    name: "Talented Builder",
+    name: "Stretching Lamplighter",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "The Little Prince",
     ts: {
       eligible: true,
       returned: true,
@@ -2098,10 +2094,10 @@ module.exports = {
     },
   },
   star_collector: {
-    name: "Talented Builder",
+    name: "Star Collector",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "The Little Prince",
     ts: {
       eligible: true,
       returned: true,
@@ -2122,10 +2118,10 @@ module.exports = {
     },
   },
   geographer: {
-    name: "Talented Builder",
+    name: "Sneezing Geographer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "The Little Prince",
     ts: {
       eligible: true,
       returned: true,
@@ -2146,10 +2142,10 @@ module.exports = {
     },
   },
   slouching_soldier: {
-    name: "Talented Builder",
+    name: "Slouching Soldier",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "The Little Prince",
     ts: {
       eligible: true,
       returned: true,
@@ -2170,10 +2166,10 @@ module.exports = {
     },
   },
   narcissist: {
-    name: "Talented Builder",
+    name: "Gloating Narcissist",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "The Little Prince",
     ts: {
       eligible: true,
       returned: true,
@@ -2194,10 +2190,10 @@ module.exports = {
     },
   },
   beckoning_ruler: {
-    name: "Talented Builder",
+    name: "Beckoning Ruler",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "The Little Prince",
     ts: {
       eligible: true,
       returned: true,
@@ -2218,10 +2214,10 @@ module.exports = {
     },
   },
   scolding_student: {
-    name: "Talented Builder",
+    name: "Scolding Student",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Assembly",
     ts: {
       eligible: true,
       returned: true,
@@ -2242,10 +2238,10 @@ module.exports = {
     },
   },
   cadet: {
-    name: "Talented Builder",
+    name: "Scaredy Cadet",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Assembly",
     ts: {
       eligible: true,
       returned: true,
@@ -2265,11 +2261,11 @@ module.exports = {
       level: [],
     },
   },
-  talentforesterer: {
-    name: "Talented Builder",
+  foresterer: {
+    name: "Daydream Forester",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Assembly",
     ts: {
       eligible: true,
       returned: true,
@@ -2290,10 +2286,10 @@ module.exports = {
     },
   },
   adventurer: {
-    name: "Talented Builder",
+    name: "Marching Adventurer",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Assembly",
     ts: {
       eligible: true,
       returned: true,
@@ -2314,10 +2310,10 @@ module.exports = {
     },
   },
   scout: {
-    name: "Talented Builder",
+    name: "Chuckling Scout",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Assembly",
     ts: {
       eligible: true,
       returned: true,
@@ -2338,10 +2334,10 @@ module.exports = {
     },
   },
   botanist: {
-    name: "Talented Builder",
+    name: "Baffled Botanist",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Assembly",
     ts: {
       eligible: true,
       returned: true,
@@ -2362,10 +2358,10 @@ module.exports = {
     },
   },
   spinning_mentor: {
-    name: "Talented Builder",
+    name: "Spinning Mentor",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumoh",
+    season: "Dreams",
     ts: {
       eligible: true,
       returned: true,
@@ -2386,10 +2382,10 @@ module.exports = {
     },
   },
   postman: {
-    name: "Talented Builder",
+    name: "Peeking Postman",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of triumph",
+    season: "Dreams",
     ts: {
       eligible: true,
       returned: true,
@@ -2410,10 +2406,10 @@ module.exports = {
     },
   },
   dancing_performer: {
-    name: "Talented Builder",
+    name: "Dancing Performer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "HValley of Triumph",
+    season: "Dreams",
     ts: {
       eligible: true,
       returned: true,
@@ -2434,10 +2430,10 @@ module.exports = {
     },
   },
   hermit: {
-    name: "Talented Builder",
+    name: "Bearhug Hermit",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Dreams",
     ts: {
       eligible: true,
       returned: true,
@@ -2458,10 +2454,10 @@ module.exports = {
     },
   },
   fireprophet: {
-    name: "Talented Builder",
+    name: "Prophet of Fire",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Prophecy",
     ts: {
       eligible: true,
       returned: true,
@@ -2482,10 +2478,10 @@ module.exports = {
     },
   },
   airprophet: {
-    name: "Talented Builder",
+    name: "Prophet of Air",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Prophecy",
     ts: {
       eligible: true,
       returned: true,
@@ -2506,10 +2502,10 @@ module.exports = {
     },
   },
   earthprophet: {
-    name: "Talented Builder",
+    name: "Prophet of Earth",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Prophecy",
     ts: {
       eligible: true,
       returned: true,
@@ -2530,10 +2526,10 @@ module.exports = {
     },
   },
   waterprophet: {
-    name: "Talented Builder",
+    name: "Prophet of Water",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Prophecy",
     ts: {
       eligible: true,
       returned: true,
@@ -2554,10 +2550,10 @@ module.exports = {
     },
   },
   bookworm: {
-    name: "Talented Builder",
+    name: "Timid Bookworm",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Sanctuary",
     ts: {
       eligible: true,
       returned: true,
@@ -2578,10 +2574,10 @@ module.exports = {
     },
   },
   rallying_thrillseeker: {
-    name: "Talented Builder",
+    name: "Rallying Thrillseeker",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Sanctuary",
     ts: {
       eligible: true,
       returned: true,
@@ -2602,10 +2598,10 @@ module.exports = {
     },
   },
   jellywhisperer: {
-    name: "Talented Builder",
+    name: "Jelly Whisperer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Sanctuary",
     ts: {
       eligible: true,
       returned: true,
@@ -2626,10 +2622,10 @@ module.exports = {
     },
   },
   grouch: {
-    name: "Talented Builder",
+    name: "Hiking Grouch",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Sanctuary",
     ts: {
       eligible: true,
       returned: true,
@@ -2650,10 +2646,10 @@ module.exports = {
     },
   },
   shell_collector: {
-    name: "Talented Builder",
+    name: "Gratefull Shell Collector",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Sanctuary",
     ts: {
       eligible: true,
       returned: true,
@@ -2674,10 +2670,10 @@ module.exports = {
     },
   },
   sunbather: {
-    name: "Talented Builder",
+    name: "Chill SUnbather",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Sanctuary",
     ts: {
       eligible: true,
       returned: true,
@@ -2698,10 +2694,10 @@ module.exports = {
     },
   },
   carpenter: {
-    name: "Talented Builder",
+    name: "Snoozing Carpenter",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Enchantment",
     ts: {
       eligible: true,
       returned: true,
@@ -2722,10 +2718,10 @@ module.exports = {
     },
   },
   scarecrow_farmer: {
-    name: "Talented Builder",
+    name: "Scarecrow Farmer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "ENchantment",
     ts: {
       eligible: true,
       returned: true,
@@ -2746,10 +2742,10 @@ module.exports = {
     },
   },
   herbalist: {
-    name: "Talented Builder",
+    name: "Playfighting Herbalist",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Enchantment",
     ts: {
       eligible: true,
       returned: true,
@@ -2770,10 +2766,10 @@ module.exports = {
     },
   },
   muralist: {
-    name: "Talented Builder",
+    name: "Nodding Muralist",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Enchantment",
     ts: {
       eligible: true,
       returned: true,
@@ -2794,10 +2790,10 @@ module.exports = {
     },
   },
   alchemist: {
-    name: "Talented Builder",
+    name: "Indifferent Alchemist",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Enchantment",
     ts: {
       eligible: true,
       returned: true,
@@ -2818,10 +2814,10 @@ module.exports = {
     },
   },
   crab_walker: {
-    name: "Talented Builder",
+    name: "Crab Walker",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Enchantment",
     ts: {
       eligible: true,
       returned: true,
@@ -2842,10 +2838,10 @@ module.exports = {
     },
   },
   juggler: {
-    name: "Talented Builder",
+    name: "Troupe Juggler",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Rhythm",
     ts: {
       eligible: true,
       returned: true,
@@ -2866,10 +2862,10 @@ module.exports = {
     },
   },
   greeter: {
-    name: "Talented Builder",
+    name: "Troupe Greeter",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Rhythm",
     ts: {
       eligible: true,
       returned: true,
@@ -2890,10 +2886,10 @@ module.exports = {
     },
   },
   director: {
-    name: "Talented Builder",
+    name: "Thoughtful Director",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Rhythm",
     ts: {
       eligible: true,
       returned: true,
@@ -2914,10 +2910,10 @@ module.exports = {
     },
   },
   pianist: {
-    name: "Talented Builder",
+    name: "Respectful Pianist",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Rhythm",
     ts: {
       eligible: true,
       returned: true,
@@ -2938,10 +2934,10 @@ module.exports = {
     },
   },
   spin_dancer: {
-    name: "Talented Builder",
+    name: "Festival Spin Dancer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Rhythm",
     ts: {
       eligible: true,
       returned: true,
@@ -2962,10 +2958,10 @@ module.exports = {
     },
   },
   actor: {
-    name: "Talented Builder",
+    name: "Admiring Actor",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Rhythm",
     ts: {
       eligible: true,
       returned: true,
@@ -2986,10 +2982,10 @@ module.exports = {
     },
   },
   wise_grandparent: {
-    name: "Talented Builder",
+    name: "Wise Grandparent",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Belonging",
     ts: {
       eligible: true,
       returned: true,
@@ -3010,10 +3006,10 @@ module.exports = {
     },
   },
   sparkler_parent: {
-    name: "Talented Builder",
+    name: "Sparkler Parent",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Belonging",
     ts: {
       eligible: true,
       returned: true,
@@ -3034,10 +3030,10 @@ module.exports = {
     },
   },
   pleaful_parent: {
-    name: "Talented Builder",
+    name: "Pleaful Parent",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Belonging",
     ts: {
       eligible: true,
       returned: true,
@@ -3058,10 +3054,10 @@ module.exports = {
     },
   },
   hairtousle_teen: {
-    name: "Talented Builder",
+    name: "Hairtousle Teen",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Belonging",
     ts: {
       eligible: true,
       returned: true,
@@ -3082,10 +3078,10 @@ module.exports = {
     },
   },
   confetti_cousin: {
-    name: "Talented Builder",
+    name: "Confetti Cousin",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Belonging",
     ts: {
       eligible: true,
       returned: true,
@@ -3106,10 +3102,10 @@ module.exports = {
     },
   },
   boogie_kid: {
-    name: "Talented Builder",
+    name: "Boogie Kid",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Belonging",
     ts: {
       eligible: true,
       returned: true,
@@ -3130,10 +3126,10 @@ module.exports = {
     },
   },
   twirling_champion: {
-    name: "Talented Builder",
+    name: "Twirling Champion",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Lightseekers",
     ts: {
       eligible: true,
       returned: true,
@@ -3154,10 +3150,10 @@ module.exports = {
     },
   },
   light_scholar: {
-    name: "Talented Builder",
+    name: "Sushing Light Scholar",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of Knowledge",
+    season: "Lightseekers",
     ts: {
       eligible: true,
       returned: true,
@@ -3178,10 +3174,10 @@ module.exports = {
     },
   },
   piggyback: {
-    name: "Talented Builder",
+    name: "Piggyback Lightseeker",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Lightseekers",
     ts: {
       eligible: true,
       returned: true,
@@ -3202,10 +3198,10 @@ module.exports = {
     },
   },
   laidback: {
-    name: "Talented Builder",
+    name: "Laidback Pioneer",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Lightseekers",
     ts: {
       eligible: true,
       returned: true,
@@ -3226,10 +3222,10 @@ module.exports = {
     },
   },
   light_catcher: {
-    name: "Talented Builder",
+    name: "Doublefive light Catcher",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Lightseekers",
     ts: {
       eligible: true,
       returned: true,
@@ -3250,10 +3246,10 @@ module.exports = {
     },
   },
   crab_whisperer: {
-    name: "Talented Builder",
+    name: "Crab Whisperer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Lightseekers",
     ts: {
       eligible: true,
       returned: true,
@@ -3274,10 +3270,10 @@ module.exports = {
     },
   },
   stretching: {
-    name: "Talented Builder",
+    name: "Stretching Guru",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Daylight Prairie",
+    season: "Gratitude",
     ts: {
       eligible: true,
       returned: true,
@@ -3298,10 +3294,10 @@ module.exports = {
     },
   },
   sassy: {
-    name: "Talented Builder",
+    name: "Sassy Drifter",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Isle of Dawn",
+    season: "Gratitude",
     ts: {
       eligible: true,
       returned: true,
@@ -3322,10 +3318,10 @@ module.exports = {
     },
   },
   saluting: {
-    name: "Talented Builder",
+    name: "Saluting Protector",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Golden Wasteland",
+    season: "Gratitude",
     ts: {
       eligible: true,
       returned: true,
@@ -3346,10 +3342,10 @@ module.exports = {
     },
   },
   provoking: {
-    name: "Talented Builder",
+    name: "Provoking Performer",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Season of Flight",
+    season: "Gratitude",
     ts: {
       eligible: true,
       returned: true,
@@ -3370,10 +3366,10 @@ module.exports = {
     },
   },
   leaping: {
-    name: "Talented Builder",
+    name: "Leaping Dancer",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Valley of Triumph",
+    season: "Gratitude",
     ts: {
       eligible: true,
       returned: true,
@@ -3394,10 +3390,10 @@ module.exports = {
     },
   },
   shaman: {
-    name: "Talented Builder",
+    name: "Greeting Shaman",
     type: "Seasonal Spirit",
-    realm: "Hidden Forest",
-    season: "Season of Flight",
+    realm: "Vault of knowledge",
+    season: "Gratitude",
     ts: {
       eligible: true,
       returned: true,
