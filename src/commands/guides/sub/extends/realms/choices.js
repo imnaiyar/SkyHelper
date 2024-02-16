@@ -44,7 +44,7 @@ const getSpiritsObj = (realm, type) => {
     .map(([k, v]) => ({
       label: v.name,
       value: k,
-      emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon,
+      emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon || v.action?.icon,
     }));
 };
 const spiritChoices = {

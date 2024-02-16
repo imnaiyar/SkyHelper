@@ -2723,7 +2723,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [     
+        "April 27, 2023 (#86)",
+        "May 27, 2021 (#36)"
+      ],
     },
     tree: {
       description: "",
@@ -2735,8 +2738,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:carpenter:1131649953505230848>",
+      level: [
+        {
+          title: '"Doze" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746113000579082/Snoozing-Carpenter-doze-emote-level-1.gif?ex=65e0c438&is=65ce4f38&hm=8ab06208a61e34a8ec475fcf4e966cc4a4786568439662a7ee09a80aff663817&'
+        },
+        {
+          title: '"Doze" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746113466015774/Snoozing-Carpenter-doze-emote-level-2.gif?ex=65e0c438&is=65ce4f38&hm=3b03e2dea3cdd962ffaef70828da19d28b7cf24818369ff6838a34056080fa97&'
+        },
+        {
+          title: '"Doze" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746113835376660/Snoozing-Carpenter-doze-emote-level-3.gif?ex=65e0c438&is=65ce4f38&hm=121ec20e847bd830f70bf223b70ae488b386a5fde20bf6fc10cad12ea9889e11&'
+        },
+        {
+          title: '"Doze" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207989083360591872/Snoozing-Carpenter-doze-emote-level-4.gif?ex=65e1a680&is=65cf3180&hm=c50c1b89d448e64e716a2c6ec66bd1a110232a1413487de86f906d468c5e09a2&'
+        },
+      ],
     },
   },
   scarecrow_farmer: {
@@ -2747,7 +2767,9 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "March 31, 2022 (#58)"
+      ],
     },
     tree: {
       description: "",
@@ -2759,8 +2781,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:scarecrow:1131649929492828180>",
+      level: [
+        {
+          title: '"Boo" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746538277961818/Scarecrow-Farmer-boo-emote-level-1.gif?ex=65e0c49d&is=65ce4f9d&hm=cd42b0dc3a25f6a0f7c1a9d439f663d4ceb4c04bbb6710587ef13885ab7be207&'
+        },
+        {
+          title: '"Boo" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746538747592705/Scarecrow-Farmer-boo-emote-level-2.gif?ex=65e0c49d&is=65ce4f9d&hm=e6c146e9469b652bb58186903deab025c9298a26831d1cfd08eab2b72b2ab843&'
+        },
+        {
+          title: '"Boo" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746539137531996/Scarecrow-Farmer-boo-emote-level-3.gif?ex=65e0c49d&is=65ce4f9d&hm=a4f292063b265c750b1c11db6d7adbf0063b4351b9518495079992ae6a05713f&'
+        },
+        {
+          title: '"Boo" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746539531935794/Scarecrow-Farmer-boo-emote-level-4.gif?ex=65e0c49d&is=65ce4f9d&hm=ce4fa7d3d5c1ba969f01d6a67d94556668e78f7959a13ddef6f2c834ff67400a&'
+        },
+      ],
     },
   },
   herbalist: {
@@ -2771,7 +2810,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+      "October 12, 2023 (#98)",
+      "October 28, 2021 (#47)"
+      ],
     },
     tree: {
       description: "",
@@ -2782,9 +2824,18 @@ module.exports = {
       image: "",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:herbalist:1131649901814624276>",
+      level: [
+        {
+          title: '"Playfight" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746921427509248/Playfighting-Herbalist-play-fight-emote-level-1.gif?ex=65e0c4f8&is=65ce4ff8&hm=bfc07851df0615034297128574b8ed0905a591b23986051dace14da8105b23c2&'
+        },
+        {
+          title: '"Playfight" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207746928012558436/Playfighting-Herbalist-play-fight-emote-level-2.gif?ex=65e0c4fa&is=65ce4ffa&hm=ec3d66406ac01db0e0065fd8bf4ccfb739904275c2ed12f167e8eafbd398e8cb&'
+        },
+      ],
     },
   },
   muralist: {
@@ -2795,7 +2846,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [    
+        "October 27, 2022 (#73)",
+        "January 07, 2021 (#26)"
+      ],
     },
     tree: {
       description: "",
@@ -2807,8 +2861,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:muralist:1131649861377339452>",
+      level: [
+        {
+          title: '"Nod" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747298998616165/Nodding-Muralist-nod-emote-level-1.gif?ex=65e0c552&is=65ce5052&hm=22d1f399e35f2e9751236a3c4361ea761b1c153e6e68ec85e9b6eaba76e8294d&'
+        },
+        {
+          title: '"Nod" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747299653062706/Nodding-Muralist-nod-emote-level-2.gif?ex=65e0c553&is=65ce5053&hm=40921003da4dd538f41db630fdb37d00f3f21c238366f0ba574e81bbdf25e830&'
+        },
+        {
+          title: '"Nod" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747300408041592/Nodding-Muralist-nod-emote-level-3.gif?ex=65e0c553&is=65ce5053&hm=e3cb341017b0ce97ac0967b1244ea2c2f608035f78c7c92124f9e4dcdcf8b7bc&'
+        },
+        {
+          title: '"Nod" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747301976834128/Nodding-Muralist-nod-emote-level-4.gif?ex=65e0c553&is=65ce5053&hm=2cbede104da383a6473e4a0af1214f6cfda8259bdb92fb743069417c56a0b8b6&'
+        },
+      ],
     },
   },
   alchemist: {
@@ -2819,7 +2890,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "September 01, 2022 (#69)",
+        "October 29, 2020 (#21)"
+      ],
     },
     tree: {
       description: "",
@@ -2831,8 +2905,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:alchemist:1131649811439947796>",
+      level: [
+        {
+          title: '"Shrug" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747741187309658/Indifferent-Alchemist-shrug-emote-level-1.gif?ex=65e0c5bc&is=65ce50bc&hm=e373fe9759a892434a3d95412ac375744f7fb57821cf9eb7f092264419138eea&'
+        },
+        {
+          title: '"Shrug" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747741632167956/Indifferent-Alchemist-shrug-emote-level-2.gif?ex=65e0c5bc&is=65ce50bc&hm=6c64b2f8f9e57d72c53c240d1cef3bd885587aa016f3a1d82ae308ee3149d588&'
+        },
+        {
+          title: '"Shrug" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747742172975154/Indifferent-Alchemist-shrug-emote-level-3.gif?ex=65e0c5bc&is=65ce50bc&hm=e1f91f99b8c6cddc6e51657746116224bea1479286f283156dbdafc1002bd08e&'
+        },
+        {
+          title: '"Shrug" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207747742953246771/Indifferent-Alchemist-shrug-emote-level-4.gif?ex=65e0c5bc&is=65ce50bc&hm=0fb28086938d7e1d753af0cfcc5319b899efb47f15f8616abaab86e34eb48700&'
+        },
+      ],
     },
   },
   crab_walker: {
@@ -2843,7 +2934,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "March 16, 2023 (#83)",
+        "February 18, 2021 (#29)"
+      ],
     },
     tree: {
       description: "",
@@ -2855,8 +2949,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:crabwalker:1131649778434981908>",
+      level: [
+        {
+          title: '"Crab Walk" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207748353656492073/Crab-Walker-crab-walk-emote-level-1.gif?ex=65e0c64e&is=65ce514e&hm=861b51d448c354fbf5fdd424c84316692ebf1dad364c1fd94d38f6542fc9e61c&'
+        },
+        {
+          title: '"Crab Walk" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207748354180775997/Crab-Walker-crab-walk-emote-level-2.gif?ex=65e0c64e&is=65ce514e&hm=31d6566ea28f055330713036d20f90ebd87ccbff2c7c8621aeaeb2f790afc375&'
+        },
+        {
+          title: '"Crab Walk" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207748354679767060/Crab-Walker-crab-walk-emote-level-3.gif?ex=65e0c64e&is=65ce514e&hm=04bbdfd8506f57c81d0c56c80c2c8281fdd3f73c0285d731beb2943f0f3c5520&'
+        },
+        {
+          title: '"Crab Walk" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207745251062714448/1207748355250196610/Crab-Walker-crab-walk-emote-level-4.gif?ex=65e0c64e&is=65ce514e&hm=f3fe190cf36863f4c8ccad6672d4f8ac4199efce13b84843a06b3667730cb544&'
+        },
+      ],
     },
   },
   juggler: {
@@ -2867,7 +2978,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "October 26, 2023 (#99)",
+        "September 16, 2021 (#44)"
+      ],
     },
     tree: {
       description: "",
@@ -2879,8 +2993,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:troupejuggler:1131650191754268854>",
+      level: [
+        {
+          title: '"Juggle" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756259109900298/Troupe-Juggler-juggle-emote-level-1.gif?ex=65e0cdab&is=65ce58ab&hm=e2c435cd1104de331313846822a720ae12184e84f39cf29ec995edeaf2c2c2ea&'
+        },
+        {
+          title: '"Juggle" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756259537850438/Troupe-Juggler-juggle-emote-level-2.gif?ex=65e0cdab&is=65ce58ab&hm=6f7f189f51f9827d2306722491f4742a77048d22955ab2166238e1f5b83fd88a&'
+        },
+        {
+          title: '"Juggle" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756259932119091/Troupe-Juggler-juggle-emote-level-3.gif?ex=65e0cdab&is=65ce58ab&hm=3cf117977e459ee34cbd2417273fc7e3f3dc59f1eef0bb26317e4acf13d3d33b&'
+        },
+        {
+          title: '"Juggle" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756260351680543/Troupe-Juggler-juggle-emote-level-4.gif?ex=65e0cdab&is=65ce58ab&hm=81e75a9527bf5cbc89f1276e2f5325c74f690561f9f06976b772f141a0b71355&'
+        },
+      ],
     },
   },
   greeter: {
@@ -2891,7 +3022,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "August 07, 2023 (SV#4)",
+        "March 03, 2022 (#56)",
+        "December 24, 2020 (#25)"
+      ],
     },
     tree: {
       description: "",
@@ -2903,8 +3038,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:troupegreeter:1131650161655943228>",
+      level: [
+        {
+          title: '"Welcome" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756572487589968/Troupe-Greeter-welcome-emote-level-1.gif?ex=65e0cdf5&is=65ce58f5&hm=d05ce2234017d65322e0f59eda843747b783381470396b5160c4f7d1902287b6&'
+        },
+        {
+          title: '"Welcome" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756572944502845/Troupe-Greeter-welcome-emote-level-2.gif?ex=65e0cdf6&is=65ce58f6&hm=33ade74c5f0f2d2e1763021cc3cb670da2897b6d69b0099d980eb4fecc72d29c&'
+        },
+        {
+          title: '"Welcome" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756573363929098/Troupe-Greeter-welcome-emote-level-3.gif?ex=65e0cdf6&is=65ce58f6&hm=4b12579b73375e13d2e5d1db51c25fb1ba379ddb9335fa311f6223b3440aae6c&'
+        },
+        {
+          title: '"Welcome" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756573850599524/Troupe-Greeter-welcome-emote-level-4.gif?ex=65e0cdf6&is=65ce58f6&hm=478fe2e0b67d72620db363119ca5438b28c96c6bf80e4029b853ae80547b25c9&'
+        },
+      ],
     },
   },
   director: {
@@ -2915,7 +3067,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "July 03, 2023 (SV#3)",
+        "July 08, 2022 (#67)",
+        "May 13, 2021 (#35)"
+      ],
     },
     tree: {
       description: "",
@@ -2927,8 +3083,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:thoughtfuldirector:1131650086422728795>",
+      level: [
+        {
+          title: '"Thinking" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756887550988369/Thoughtful-Director-thinking-emote-level-1.gif?ex=65e0ce41&is=65ce5941&hm=101262a25053cade6a360be4656965cc490a53ff018a572044a7d615e4b2fa4e&'
+        },
+        {
+          title: '"Thinking" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756887983005726/Thoughtful-Director-thinking-emote-level-2.gif?ex=65e0ce41&is=65ce5941&hm=2b062526559f93cbf8ec2bfe874824dd7da2264d7bed60737d2e0dff462307f9&'
+        },
+        {
+          title: '"Thinking" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756888389976096/Thoughtful-Director-thinking-emote-level-3.gif?ex=65e0ce41&is=65ce5941&hm=0ed1c28ef216bf4cd393734b64a292021cd023728918fd5dfb668bb6736069e4&'
+        },
+        {
+          title: '"Thinking" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207756888867995719/Thoughtful-Director-thinking-emote-level-4.gif?ex=65e0ce41&is=65ce5941&hm=4314a23216788b1ac643b94332a361f15132dfd0ab9ae1238deece4d5daed2dc&'
+        },
+      ],
     },
   },
   pianist: {
@@ -2939,7 +3112,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "July 03, 2023 (SV#3)",
+        "February 04, 2021 (#28)"
+      ],
     },
     tree: {
       description: "",
@@ -2951,8 +3127,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:respectfulpianist:1131650056206942300>",
+      level: [
+        {
+          title: '"Respect" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757209581129858/Respectful-Pianist-respect-emote-level-1.gif?ex=65e0ce8d&is=65ce598d&hm=8f07462e1081b35458113ab7df7ca623a87e5b64e3d9bf7eece7d3e475e27319&'
+        },
+        {
+          title: '"Respect" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757215683837972/Respectful-Pianist-respect-emote-level-2.gif?ex=65e0ce8f&is=65ce598f&hm=82ef9279be583f50c68f1476efa8ed532975f90112f305539828ec87bc922941&'
+        },
+        {
+          title: '"Respect" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757216141287484/Respectful-Pianist-respect-emote-level-3.gif?ex=65e0ce8f&is=65ce598f&hm=f119dbc3a2142378b95be1baf74077ebe1c721e7606c1cf30ca3dee6258c57f2&'
+        },
+        {
+          title: '"Respect" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757216707379200/Respectful-Pianist-respect-emote-level-4.gif?ex=65e0ce8f&is=65ce598f&hm=9f45e363b2bad9b8f803663176d435ca351d3815a5c09dca4743309655384391&'
+        },
+      ],
     },
   },
   spin_dancer: {
@@ -2963,7 +3156,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "December 21, 2023 (#103)",
+        "October 14, 2021 (#46)",
+        "September 03, 2020 (#17)"
+      ],
     },
     tree: {
       description: "",
@@ -2975,8 +3172,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:spindancer:1131650001571946616>",
+      level: [
+        {
+          title: '"Spin Dance" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757564419252246/Festive-Spin-Dancer-spin-dance-emote-level-1.gif?ex=65e0cee2&is=65ce59e2&hm=464c7ceaddd5fe65f5e1c40afe9d8558b2be4b1a0b44d12dab93a75f218d9c8f&'
+        },
+        {
+          title: '"Spin Dance" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757565061238824/Festive-Spin-Dancer-spin-dance-emote-level-2.gif?ex=65e0cee2&is=65ce59e2&hm=97b2902de8d401c6849d0302a99d011f43282a577ee448c53dd3bdcefd9d5ffb&'
+        },
+        {
+          title: '"Spin Dance" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757565593649212/Festive-Spin-Dancer-spin-dance-emote-level-3.gif?ex=65e0cee2&is=65ce59e2&hm=da1d7f8f65e16077392729b4134be44b5027910c3c349286e99ec8c12e8752f4&'
+        },
+        {
+          title: '"Spin Dance" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207757566587961384/Festive-Spin-Dancer-spin-dance-emote-level-4.gif?ex=65e0cee2&is=65ce59e2&hm=660b63c96ec79c39262eade629a92b904ca53cade56ca9335a38cd6f93fb69bb&'
+        },
+      ],
     },
   },
   actor: {
@@ -2987,7 +3201,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "June 08, 2023 (#89)",
+        "June 24, 2021 (#38)",
+        "October 15, 2020 (#20)"
+      ],
     },
     tree: {
       description: "",
@@ -2999,8 +3217,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:actor:1131649977710555136>",
+      level: [
+        {
+          title: '"Blow Kiss" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207758047724699758/Admiring-Actor-blow-kiss-emote-level-1.gif?ex=65e0cf55&is=65ce5a55&hm=311ebb652bdea685d9e091c1bd330045685c56eac2a900ba49bab97d29be9b80&'
+        },
+        {
+          title: '"Blow Kiss" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207758048135745567/Admiring-Actor-blow-kiss-emote-level-2.gif?ex=65e0cf55&is=65ce5a55&hm=0e2e52cd3c4e2e0ffb60d52ac5466a93c61eef6cc0cafff7736eb05fd42dbcf2&'
+        },
+        {
+          title: '"Blow Kiss" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207758048488202240/Admiring-Actor-blow-kiss-emote-level-3.gif?ex=65e0cf55&is=65ce5a55&hm=3830359ca79565c77e54a34f0973936c41e06fdbc6c1bd5c8e61a971fc4eab85&'
+        },
+        {
+          title: '"Blow Kiss" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207755518903320707/1207758048865681459/Admiring-Actor-blow-kiss-emote-level-4.gif?ex=65e0cf55&is=65ce5a55&hm=5ca41c7cdc43d93e6d2db44541427a13d26ee926833c175a2b49b6688049a7f9&'
+        },
+      ],
     },
   },
   wise_grandparent: {
@@ -3011,7 +3246,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "November 09, 2023 (#100)",
+        "November 11, 2021 (#48)",
+        "August 06, 2020 (#15)"
+      ],
     },
     tree: {
       description: "",
@@ -3036,7 +3275,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "June 22, 2023 (#90)",
+        "December 23, 2021 (#51)",
+        "April 01, 2021 (#32)",
+        "May 14, 2020 (#9)"
+      ],
     },
     tree: {
       description: "",
@@ -3048,8 +3292,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:sparklerparent:1131650491923837018>",
+      level: [
+        {
+          title: '"Sparkler" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759069256089620/Sparkler-Parent-sparkler-emote-level-1.gif?ex=65e0d049&is=65ce5b49&hm=d785c58166ecb792a94bd45f48a000c29817a7665412359e35488e8227d07b92&'
+        },
+        {
+          title: '"Sparkler" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759069692039198/Sparkler-Parent-sparkler-emote-level-2.gif?ex=65e0d049&is=65ce5b49&hm=fed740e61a409f086d6d4b3b89a18fdbd1e0062158e5516b7e95b7ac89ea9cea&'
+        },
+        {
+          title: '"Sparkler" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759070090629181/Sparkler-Parent-sparkler-emote-level-3.gif?ex=65e0d049&is=65ce5b49&hm=d078d9b26db05358897e6b0f85906258e9eb1cbc60b341660f272752d903308d&'
+        },
+        {
+          title: '"Sparkler" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759070745071648/Sparkler-Parent-sparkler-emote-level-4.gif?ex=65e0d049&is=65ce5b49&hm=06676c8e5ed64072c74bf0e5a1358a3f022118f11eb4414f968223ab907edb94&'
+        },
+      ],
     },
   },
   pleaful_parent: {
@@ -3060,7 +3321,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "December 22, 2022 (#77)",
+        "December 10, 2020 (#24)",
+        "March 26, 2020 (#5)"
+      ],
     },
     tree: {
       description: "",
@@ -3072,8 +3337,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:pleafulparent:1131650465076101212>",
+      level: [
+        {
+          title: '"Don\'t Go!" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759475964911657/Pleaful-Parent-dont-go-emote-level-1.gif?ex=65e0d0aa&is=65ce5baa&hm=0143aea7d6707e787d59ba195600cafad0efafc0e43c518ed9fba5821402f5b4&'
+        },
+        {
+          title: '"Don\'t Go!" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759476388798573/Pleaful-Parent-dont-go-emote-level-2.gif?ex=65e0d0aa&is=65ce5baa&hm=9c3861b094ebd8e918c5ffd33d7e6132f5fc2bbc2b0b4683d80e245f47cb951b&'
+        },
+        {
+          title: '"Don\'t Go!" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759476845842483/Pleaful-Parent-dont-go-emote-level-3.gif?ex=65e0d0aa&is=65ce5baa&hm=ac47ddcb9874e4a23b40935914d72966be806049417ce2b9fe5f9bfaa12e0b72&'
+        },
+        {
+          title: '"Don\'t Go!" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207759477323997184/Pleaful-Parent-dont-go-emote-level-4.gif?ex=65e0d0aa&is=65ce5baa&hm=1e765290bc4f58f2af4b8a8da482455d00fe55606cfd153fcbd4d274d4a20217&'
+        },
+      ],
     },
   },
   hairtousle_teen: {
@@ -3084,7 +3366,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "June 09, 2022 (#63)",
+        "June 11, 2020 (#11)"
+      ],
     },
     tree: {
       description: "",
@@ -3095,9 +3380,18 @@ module.exports = {
       image: "",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:hairtousle:1131650432180175008>",
+      level: [
+        {
+          title: '"Hairtousle" Firned Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207760273512071248/Hairtousle-Teen-hairtousle-emote-level-1.gif?ex=65e0d168&is=65ce5c68&hm=7f545082ca22e08170db22f0b06f217144a7f06add1b7085329232b49add7715&'
+        },
+        {
+          title: '"Hairtousle" Firned Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207758640627580969/1207760273109164082/Hairtousle-Teen-hairtousle-emote-level-2.gif?ex=65e0d168&is=65ce5c68&hm=1b69b5aff8ce5a307a1007e5cd87d4ae3d1b54b9ec1f4c0e53994fc88337f264&'
+        },
+      ],
     },
   },
   confetti_cousin: {
@@ -3108,7 +3402,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [    
+        "September 28, 2023 (#97)",
+        "January 21, 2021 (#27)",
+        "July 09, 2020 (#13)"
+      ],
     },
     tree: {
       description: "",
@@ -3120,8 +3418,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:confettiCousin:1131650251216920656>",
+      level: [
+        {
+          title: '"Confetti" Emote Level 1',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207760869593710672/Confetti-Cousin-confetti-emote-level-1.gif?ex=65e0d1f6&is=65ce5cf6&hm=1c34506e20cd55938aadc2f3246852c705472723f38e9589a8a909b7063843d4&"
+        },
+        {
+          title: '"Confetti" Emote Level 2',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207760870138974290/Confetti-Cousin-confetti-emote-level-2.gif?ex=65e0d1f6&is=65ce5cf6&hm=8be7c0174e984276fc536423c5d3a94f8175875ec0c0aa59cad98cc9ea4942bb&"
+        },
+        {
+          title: '"Confetti" Emote Level 3',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207760870801940571/Confetti-Cousin-confetti-emote-level-3.gif?ex=65e0d1f6&is=65ce5cf6&hm=5c4e4a21504eafd467f0c1b468aecdb2448c45bef80b12f67b3c7bea01af557f&"
+        },
+        {
+          title: '"Confetti" Emote Level 4',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207760871217168414/Confetti-Cousin-confetti-emote-level-4.gif?ex=65e0d1f6&is=65ce5cf6&hm=5b27b596d4b7dc4b0686fac5fd69c4b29f97d3ff156460f012934c7d5fd2baa1&"
+        },
+      ],
     },
   },
   boogie_kid: {
@@ -3132,7 +3447,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "March 02, 2023 (#82)",
+        "July 22, 2021 (#40)",
+        "November 12, 2020 (#22)"
+      ],
     },
     tree: {
       description: "",
@@ -3144,8 +3463,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:boogiekid:1131650220317478923>",
+      level: [
+        {
+          title: '"Boogie Dance" Emote Level 1',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207761486953447534/Boogie-Kid-boogie-dance-emote-level-1.gif?ex=65e0d289&is=65ce5d89&hm=c1363d99ed48908f5c8008e69890390716e1aaefebe6f8da8e9ba088be96f24a&"
+        },
+        {
+          title: '"Boogie Dance" Emote Level 2',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207761487540658196/Boogie-Kid-boogie-dance-emote-level-2.gif?ex=65e0d289&is=65ce5d89&hm=d4c89ca7d97ffeb321de3d3dfed1dcbe42ebac19683aa416c3fdb9dbe47a7c23&"
+        },
+        {
+          title: '"Boogie Dance" Emote Level 3',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207761488023130242/Boogie-Kid-boogie-dance-emote-level-3.gif?ex=65e0d289&is=65ce5d89&hm=645029e7e1f5606c916459cf3e46dd4c0fbbcf49779c98e41b551b01fe46a324&"
+        },
+        {
+          title: '"Boogie Dance" Emote Level 4',
+          image: "https://cdn.discordapp.com/attachments/1207758640627580969/1207761488597491822/Boogie-Kid-boogie-dance-emote-level-4.gif?ex=65e0d28a&is=65ce5d8a&hm=9e8d8c0537572301b609bbf6da192252b8289a0531ace1d038ad0a3b31fa7fbe&"
+        },
+      ],
     },
   },
   twirling_champion: {
@@ -3156,7 +3492,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "February 01, 2024 (#106)",
+        "January 06, 2022 (#52)",
+        "September 17, 2020 (#18)"
+      ],
     },
     tree: {
       description: "",
@@ -3168,8 +3508,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:twirlingChampion:1153511535499550771>",
+      level: [
+        {
+          title: '"Triple Axel" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762687988338828/Twirling-Champion-triple-axel-emote-level-1.gif?ex=65e0d3a7&is=65ce5ea7&hm=7747611597dcd5b75e81c68f8166febc1189a52b0c3113de1492385435df8fe8&'
+        },
+        {
+          title: '"Triple Axel" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762688537530408/Twirling-Champion-triple-axel-emote-level-2.gif?ex=65e0d3a8&is=65ce5ea8&hm=5fa6ab21584b5e26cdc334ecb75757dca3ae0e8672337aceb8131949ba2908f6&'
+        },
+        {
+          title: '"Triple Axel" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762688898371595/Twirling-Champion-triple-axel-emote-level-3.gif?ex=65e0d3a8&is=65ce5ea8&hm=5145cfb66e630b08cc0059c8e846109346e1007007116ac5bfb8f6ab14fe9f01&'
+        },
+        {
+          title: '"Triple Axel" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762689326194728/Twirling-Champion-triple-axel-emote-level-4.gif?ex=65e0d3a8&is=65ce5ea8&hm=a948026e803522a3d4263709a477a71c4d22fe534d81d25fe4bcee6099bc7ccd&'
+        },
+      ],
     },
   },
   light_scholar: {
@@ -3180,7 +3537,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+       "September 15, 2022 (#70)",
+      " August 20, 2020 (#16)"
+      ],
     },
     tree: {
       description: "",
@@ -3192,8 +3552,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:shushingscholar:1153511408537980969>",
+      level: [
+        {
+          title: '"Shush" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762961192456202/Shushing-Light-Scholar-shush-emote-level-1.gif?ex=65e0d3e9&is=65ce5ee9&hm=145b07b9f4bf8e2a024662041ca3098d2de12e33d13cf604ca44ce06259671f3&'
+        },
+        {
+          title: '"Shush" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762961691713566/Shushing-Light-Scholar-shush-emote-level-2.gif?ex=65e0d3e9&is=65ce5ee9&hm=9e9637d9bf6a0daa321f5d093cb3d2da1eb1d04012dc82c6688ed38267a679b6&'
+        },
+        {
+          title: '"Shush" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762962178121788/Shushing-Light-Scholar-shush-emote-level-3.gif?ex=65e0d3e9&is=65ce5ee9&hm=7d1e3517e49cc4ae178ec0d43bf8e923fb5f328e0f28beb64a7c3dd35e484f38&'
+        },
+        {
+          title: '"Shush" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207762962790752316/Shushing-Light-Scholar-shush-emote-level-4.gif?ex=65e0d3e9&is=65ce5ee9&hm=80571a1d00fadd31ea9f0cac6d2f5a0875da4847099e0c50bb0af204da0e6a34&'
+        },
+      ],
     },
   },
   piggyback: {
@@ -3204,7 +3581,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "February 02, 2023 (#80)",
+        "March 04, 2021 (#30)",
+        "April 16, 2020 (#7)"
+      ],
     },
     tree: {
       description: "",
@@ -3215,9 +3596,18 @@ module.exports = {
       image: "",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:piggyback:1153511511701065738>",
+      level: [
+        {
+          title: '"Piggyback" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207763346372300820/Piggyback-Lightseeker-piggyback-emote-level-1.gif?ex=65e0d444&is=65ce5f44&hm=faf0ed695f81811772085caa9986701e8776b24fd61136cefdff3d02f3ffe22d&'
+        },
+        {
+          title: '"Piggyback" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207763346884001903/Piggyback-Lightseeker-piggyback-emote-level-2.gif?ex=65e0d445&is=65ce5f45&hm=0ff47bdc7d2b8eefdf491a1684b402b6a4f0eef485fbea0709c564e53e738e97&'
+        },
+      ],
     },
   },
   laidback: {
@@ -3228,7 +3618,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "October 13, 2022 (#72)",
+        "November 26, 2020 (#23)",
+        "February 27, 2020 (#3)"
+      ],
     },
     tree: {
       description: "",
@@ -3253,7 +3647,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      total: '3',
+      dates: [
+        "July 21, 2022(#66)",
+        "April 15, 2021(#33)",
+        "February 14, 2020(#2)"
+      ],
     },
     tree: {
       description: "",
@@ -3264,9 +3663,18 @@ module.exports = {
       image: "",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:doublefiveCatcher:1153511455132496032>",
+      level: [
+        {
+          title: '"Double Five" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207763897839394856/Doublefive-Light-Catcher-double-five-emote-level-1.gif?ex=65e0d4c8&is=65ce5fc8&hm=d6abba6d836d33357a8609d54c487b850575056f7557c443850e71576306da67&'
+        },
+        {
+          title: '"Double Five" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207762455619702805/1207763898611277854/Doublefive-Light-Catcher-double-five-emote-level-2.gif?ex=65e0d4c8&is=65ce5fc8&hm=2a8d16183253048adb0e0b09c34e276743bd41c5f60a8ad894985d9384933c9c&'
+        },
+      ],
     },
   },
   crab_whisperer: {
@@ -3278,9 +3686,9 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        "August 7, 2023(SV#4)",
-        "September 2, 2021(#43)",
-        "April 9, 2020(#6)"
+        "August 07, 2023(SV#4)",
+        "September 02, 2021(#43)",
+        "April 09, 2020(#6)"
       ],
     },
     tree: {
@@ -3352,8 +3760,8 @@ module.exports = {
       returned: true,
       total: '4',
       dates: [
-       "December 8, 2022 (#76)",
-       "July 8, 2021 (#39)",
+       "December 08, 2022 (#76)",
+       "July 08, 2021 (#39)",
        "May 28, 2020 (#10)",
        "January 31, 2020 (#1)"
       ],
@@ -3427,7 +3835,7 @@ module.exports = {
       returned: true,
       dates: [
        'March 30, 2023 (#84)',
-       'October 1, 2020 (#19)',
+       'October 01, 2020 (#19)',
        'March 12, 2020 (#4)'
       ],
     },
@@ -3474,7 +3882,7 @@ module.exports = {
       dates: [
         'March 18, 2021 (#31)',
         'June 25, 2020 (#12)',
-        'July 3, 2023 (SV#3)'
+        'July 03, 2023 (SV#3)'
       ],
     },
     tree: {
@@ -3520,7 +3928,7 @@ module.exports = {
       dates: [
         'May 26, 2022 (#62)',
         'July 23, 2020 (#14)',
-        'July 3, 2023 (SV#3)'
+        'July 03, 2023 (SV#3)'
       ],
     },
     tree: {

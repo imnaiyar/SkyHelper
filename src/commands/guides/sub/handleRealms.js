@@ -1,6 +1,6 @@
 const { firstChoices, spiritChoices } = require("./extends/realms/choices");
 const { rowBuilder, getRealmsRow } = require("./shared/helpers");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const summary = require("./extends/realms/summaries");
 const maps = require("./extends/realms/maps");
 const handleSpirits = require("./shared/handleSpirits");
@@ -10,7 +10,7 @@ const CUSTOM_ID = {
   THIRD_CHOICE: "thirdChoice",
   FOURTH_CHOICE: "fourthChoice",
 };
-
+const startBtn = new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('back-start').setLabel('Start').setEmoji('<:purpleUp:1207632852770881576>').setStyle(ButtonStyle.Danger))
 const userChoices = new Map();
 module.exports = async (interaction, ephemeral) => {
   const row = rowBuilder(CUSTOM_ID.FIRST_CHOICE, firstChoices, "Choose a Realm", false);
@@ -22,7 +22,7 @@ module.exports = async (interaction, ephemeral) => {
   const collector = createCollector(reply, interaction);
 
   collector.on("collect", async (int) => {
-    const value = int.values[0];
+    const value = int.values ? int.values[0] : null
     const id = int.customId;
     switch (id) {
       case CUSTOM_ID.FIRST_CHOICE:
@@ -31,14 +31,15 @@ module.exports = async (interaction, ephemeral) => {
       case CUSTOM_ID.SECOND_CHOICE:
         await handleSecond(int, value, ephemeral);
         break;
+      case 'back-start':
+        await int.update({content: 'Please Select a Realm', components: [row], embeds: [], files: []})
+        break;
       case CUSTOM_ID.THIRD_CHOICE:
         await handleThird(int, value, ephemeral);
         break;
       case CUSTOM_ID.FOURTH_CHOICE:
-        await handleFourth(int, value, ephemeral);
+        await handleFourth(int, value, ephemeral, collector);
         break;
-      default:
-        int.reply("Invalid choice selected.");
     }
   });
 
@@ -61,7 +62,7 @@ async function handleFirst(interaction, value) {
   const row = buildSecondRow(value, interaction);
   await interaction.update({
     content: `Guides for __${userChoices.get(interaction.message.id).firstChoice.label}__`,
-    components: [row],
+    components: [row, startBtn],
   });
 }
 
@@ -79,7 +80,7 @@ async function handleSecond(interaction, value, ephemeral) {
     const row = buildSpiritsRow(realmValue);
     await interaction.update({
       content: `Spirits of __${userChoices.get(interaction.message.id).firstChoice.label}__`,
-      components: [row],
+      components: [row, startBtn],
     });
   } else if (value.startsWith("maps_")) {
     await respondMaps(interaction, value, ephemeral);
@@ -93,7 +94,7 @@ async function handleThird(interaction, value, ephemeral) {
 
     await interaction.update({
       content: `Guides for __${choices.label}__`,
-      components: [row],
+      components: [row, startBtn],
     });
     return;
   }
@@ -112,24 +113,24 @@ async function handleThird(interaction, value, ephemeral) {
 
     await interaction.update({
       content: `${type} Spirits of __${choices.label}__`,
-      components: [row],
+      components: [row, startBtn],
     });
   } catch (err) {
     interaction.client.logger.error("Third Choice Error [Realm Guide]", err);
   }
 }
 
-async function handleFourth(interaction, value, ephemeral) {
+async function handleFourth(interaction, value, ephemeral, collector) {
   const choices = userChoices.get(interaction.message.id).firstChoice;
   if (value === "back") {
     const row = buildSpiritsRow(choices.value);
     return await interaction.update({
       content: `Spirits of __${choices.label}__`,
-      components: [row],
+      components: [row, startBtn],
     });
   }
 
-  await handleSpirits(interaction, value, ephemeral, userChoices);
+  await handleSpirits(interaction, value, ephemeral, collector);
 }
 
 async function respondSummary(int, value, ephemeral) {
