@@ -3277,7 +3277,11 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "August 7, 2023(SV#4)",
+        "September 2, 2021(#43)",
+        "April 9, 2020(#6)"
+      ],
     },
     tree: {
       description: "",
@@ -3302,7 +3306,10 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        "March 17, 2022 (#57)",
+        "April 30, 2020 (#8)"
+      ],
     },
     tree: {
       description: "",
@@ -3314,8 +3321,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:stretchingGuru:1153511673949343805>",
+      level: [
+        {
+          title: '"Yoga Emote" Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765237563002890/Stretching-Guru-yoga-emote-level-1.gif?ex=65e0d607&is=65ce6107&hm=186dcb922d2e855b7dc00e3e6a38d2bfd8425cf42b7848b883446a2d5bcac00c&'
+        },
+        {
+          title: '"Yoga Emote" Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765238074839160/Stretching-Guru-yoga-emote-level-2.gif?ex=65e0d607&is=65ce6107&hm=9e5fd7448ff53a7e7a0edefa7f9823104b4d12152d69c85cee6657597eba68df&'
+        },
+        {
+          title: '"Yoga Emote" Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765238821289995/Stretching-Guru-yoga-emote-level-3.gif?ex=65e0d608&is=65ce6108&hm=a5c3270c21cde298b22ebe1dbc2293631615daeca84f5386f677b6cf53553dcb&'
+        },
+        {
+          title: '"Yoga Emote" Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207765118717534298/1207765239416750160/Stretching-Guru-yoga-emote-level-4.gif?ex=65e0d608&is=65ce6108&hm=125c091c115e62a618232d322de23b8ae9e3a681953eb25232439322dd03c5ad&'
+        },
+      ],
     },
   },
   sassy: {
@@ -3328,10 +3352,10 @@ module.exports = {
       returned: true,
       total: '4',
       dates: [
-  "      December 8, 2022 (#76)",
-"July 8, 2021 (#39)",
-"May 28, 2020 (#10)",
-"January 31, 2020 (#1)"
+       "December 8, 2022 (#76)",
+       "July 8, 2021 (#39)",
+       "May 28, 2020 (#10)",
+       "January 31, 2020 (#1)"
       ],
     },
     tree: {

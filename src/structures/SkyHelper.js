@@ -66,7 +66,18 @@ module.exports = class SkyHelper extends Client {
       eventEnds: moment.tz("2024-02-11T23:59:59", this.timezone),
       eventDuration: "13 days",
     };
-
+    
+    /**
+     * stores current/upcoming ts details
+     * @type {Object}
+     */
+    this.ts = {
+      lastOccurence: '',
+      name: '',
+      location: '',
+      tree: '',
+      total: ''
+    };
     // user object cache for credits
     /**
      * Stores users fetched from API that are not in bot's cache
