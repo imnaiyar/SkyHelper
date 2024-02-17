@@ -8,6 +8,7 @@ const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READ
 module.exports = async (client) => {
   await client.guilds.fetch();
   let text;
+  client.logger.log(`Logged in as ${client.user.tag}`);
   if (client.config.DASHBOARD.enabled) {
     text = `Website started on port ${client.config.DASHBOARD.port}`;
   } else {

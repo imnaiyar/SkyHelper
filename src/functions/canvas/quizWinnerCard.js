@@ -1,7 +1,6 @@
 const { createCanvas, loadImage } = require("canvas");
 const { colors, fancyCount } = require('./helpers/util');
 const {join} = require("path");
-require ('@discord-card/core');
 const size = 100;
 
 class QuizWinnerCard {
@@ -11,7 +10,7 @@ class QuizWinnerCard {
     this.color = "auto";
     this.brightness = 50;
     this.client = member.client;
-    this.thumbnail = member?.displayAvatarURL({ extension: "jpg"}) || member.user.displayAvatarURL({ extension: "jpg"});
+    this.thumbnail = member?.displayAvatarURL({forceStatic:true, extension: "jpg"}) || member.user.displayAvatarURL({forceStatic:true, extension: "jpg"});
     this.points = wins;
     this.total = total;
   }
@@ -117,7 +116,7 @@ changeFontSize(ctx, size) {
     ctx.fillStyle = colors.grey;
     this.roundRect(ctx, w * 0.875, h * 0.6, h * 0.4, h * 0.4, h * 0.15).clip();
     ctx.fill();
-    ctx.drawImage(await loadImage(this.client.user.displayAvatarURL({ extension: "jpg"})), w * 0.875, h * 0.6, h * 0.4, h * 0.4);
+    ctx.drawImage(await loadImage(this.client.user.displayAvatarURL({forceStatic: true, extension: "jpg"})), w * 0.875, h * 0.6, h * 0.4, h * 0.4);
 
   return canvas.toBuffer("image/png");
   }

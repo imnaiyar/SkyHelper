@@ -12,7 +12,7 @@ const moment = require('moment-timezone')
      longDesc: 'To be decided'
    },
    
-   async execute(interaction client) {
+   async execute(interaction, client) {
      const [ lastOccurence, name, location, tree, total ] = client.ts;
      const now = moment().tz(client.timezone)
      const lastDate = moment.tz(lastOccurrence, 'DD-MM-YYYY', client.timezone).startOf('day')
