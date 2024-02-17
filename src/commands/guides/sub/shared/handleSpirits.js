@@ -51,7 +51,7 @@ module.exports = async (int, value, ephemeral) => {
   .setEmoji(icon )
   .setStyle("1");
 
-  const treeBtn = new ButtonBuilder().setCustomId("spirit_tree").setStyle("1").setLabel("Friendship Tree");
+  const treeBtn = new ButtonBuilder().setCustomId("spirit_tree").setStyle("2").setLabel("Friendship Tree");
 
   const cosmeticBtn = new ButtonBuilder().setCustomId("spirit_cosmetic").setStyle("1").setLabel("Cosmetics");
   const selectBackBtn = new ButtonBuilder().setCustomId("select_back").setStyle(ButtonStyle.Danger).setLabel("Back");
@@ -74,8 +74,8 @@ module.exports = async (int, value, ephemeral) => {
     idle: 2 * 60 * 1000
   })
   collector.on("collect", async (inter) => {
-     
     const customID = inter.customId;
+    if (!["spirit_home", "spirit_location", "select_back", "spirit_expression", "spirit_stance", "spirit_call", "spirit_home", "spirit_tree", "spirit_cosmetic", "spirit_emote_next", "spirit_emote_prev"].includes(customID)) collector.stop()
     const newEmbed = EmbedBuilder.from(embed);
     const lastField = newEmbed.data.fields[newEmbed.data.fields.length - 1]; 
    const backBtn = new ButtonBuilder()
