@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
+const spirits = require('../commands//guides/sub/shared/spiritsData.js')
 const { table } = require("table");
 const moment = require("moment-timezone");
 const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
@@ -128,10 +129,8 @@ module.exports = class SkyHelper extends Client {
       "Lightseekers": '<:lightseekers:1130958300293365870>',
       "Gratitude": '<:gratitude:1130958261349261435>',
     })
-
-    // TODO: Add Spirirts emote in emojis map
-    // this.emojisMap.set('spirits', {})
     
+    this.spiritsData = spirits;
     // Checks for how this class is created so it doesnt mess up the process
     if (
       require.main.filename !== path.join(process.cwd(), "src", "commandsRegister.js") &&

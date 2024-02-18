@@ -1,7 +1,9 @@
-const { ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder } = require("discord.js");
-const { handleSeasonal, handleRealms, handleEvents } = require("./sub/index");
-const { seasonalSpirits, realmsSpirits } = require("./sub/extends/spiritsIndex.js");
+const { ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+const { handleSeasonal, HandleRealms, handleEvents } = require("./sub/index");
+const { getRealmsRow } = require("./sub/shared/helpers.js");
+const summary = require("./sub/extends/realms/summaries.js");
 const desc = require("@src/cmdDesc");
+let reply;
 module.exports = {
   cooldown: 3,
   data: {
@@ -35,11 +37,60 @@ module.exports = {
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
-            name: "spirit",
+            name: "realm",
             description: "directly search for a base spirit`s tree/location",
             type: ApplicationCommandOptionType.String,
-            required: false,
-            autocomplete: true,
+            choices: [
+              {
+                name: "Isle of Dawn",
+                value: "isle",
+              },
+              {
+                name: "Daylight Prairie",
+                value: "prairie",
+              },
+              {
+                name: "Hidden Forest",
+                value: "forest",
+              },
+              {
+                name: "Valley of Triumph",
+                value: "valley",
+              },
+              {
+                name: "Golden Wasteland",
+                value: "wasteland",
+              },
+              {
+                name: "Vault of Knowledge",
+                value: "vault",
+              },
+              {
+                name: "Eye of Eden",
+                value: "eden",
+              },
+            ],
+            required: true,
+          },
+          {
+            name: "type",
+            description: "summary, maps or spirits guides",
+            type: ApplicationCommandOptionType.String,
+            choices: [
+              {
+                name: "Realm Summary",
+                value: "summary",
+              },
+              {
+                name: "Maps",
+                value: "maps",
+              },
+              {
+                name: "spirits",
+                value: "spirits",
+              },
+            ],
+            required: true,
           },
           {
             name: "hide",
@@ -66,153 +117,33 @@ module.exports = {
   },
   async execute(interaction) {
     const sub = interaction.options.getSubcommand();
-    const spiritValue = interaction.options.getString("spirit");
-
     const ephmrl = interaction.options.getBoolean("hide");
-    const ephemeral = ephmrl !== null ? ephmrl : true;
-    if (spiritValue) {
-      await handleSpirits(interaction, sub, spiritValue, ephemeral);
-      return;
-    }
+    const ephemeral = ephmrl !== null ? ephmrl : false;
+    reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
     switch (sub) {
-      case "seasonal":
+      case "seasonal": {
         await handleSeasonal(interaction, ephemeral);
         break;
-      case "realms":
-        await handleRealms(interaction, ephemeral);
+      }
+      case "realms": {
+        const realmValue = interaction.options.getString("realm");
+        const type = interaction.options.getString("type");
+        if (!realmValue || !type) {
+          interaction.followUp("You need to provide both `realm` and `type` options");
+        }
+        const realm = this.data.options[1].options[0].choices.find((v) => v.value === realmValue)?.name;
+        const value = `${type}_${realmValue}`;
+        await new HandleRealms(interaction, realm, value, reply).respond();
         break;
-      case "events":
+      }
+      case "events": {
         await handleEvents(interaction, ephemeral);
         break;
+      }
     }
   },
   async autocomplete(interaction, client) {
     const focusedValue = interaction.options.getFocused();
     const sub = interaction.options.getSubcommand();
-    if (sub === "seasonal") {
-      const spiritNames = Object.keys(seasonalSpirits);
-      const filtered = spiritNames
-        .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
-        .slice(0, 25);
-      await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
-    } else if (sub === "realms") {
-      const spiritNames = Object.keys(realmsSpirits);
-      const filtered = spiritNames
-        .filter((choice) => choice.toUpperCase().includes(focusedValue.toUpperCase()))
-        .slice(0, 25);
-      await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })));
-    }
   },
 };
-
-async function handleSpirits(interaction, sub, spiritValue, ephemeral) {
-  const msg = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
-  let index;
-  let responses;
-  if (sub === "seasonal") {
-    responses = require("./sub/extends/seasonal/GuideResponse");
-    index = seasonalSpirits;
-  } else if (sub === "realms") {
-    responses = require("./sub/extends/realms/summaries");
-    index = realmsSpirits;
-  }
-
-  const getSpirit = (value) => {
-    for (const key in index) {
-      if (key.toUpperCase() === value.toUpperCase()) {
-        return index[key];
-      }
-    }
-  };
-  const spirit = getSpirit(spiritValue);
-  if (!spirit) {
-    return interaction.followUp({
-      content: `\`${spiritValue}\` does not exist.\n\nMake sure the spirit name is valid and you provide the full name, like, \`Talented Builder\` (without any extra spaces)`,
-      ephemeral: true,
-    });
-  }
-
-  let tree;
-  let location;
-  if (Array.isArray(spirit)) {
-    tree = spirit[1];
-    location = spirit[0];
-  } else {
-    tree = spirit + "_tree";
-    location = spirit + "_location";
-  }
-
-  const response = await responses.getResponse(tree);
-  const respn = await responses.getResponse(location);
-  let disabled;
-  if (respn) {
-    disabled = false;
-  } else {
-    disabled = true;
-  }
-  const lctnBtn = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setEmoji("<:location:1131173266883612722>")
-      .setLabel("Location")
-      .setCustomId("sprtLctn")
-      .setDisabled(disabled)
-      .setStyle("1")
-  );
-  const treeBtn = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setEmoji("<:tree:1131279758907424870>")
-      .setLabel("Friendship Tree")
-      .setCustomId("sprtTree")
-      .setStyle("1")
-  );
-  await interaction.followUp({
-    ...response,
-    components: [lctnBtn],
-  });
-
-  const filter = (i) => {
-    if (i.user.id !== interaction.user.id) {
-      i.reply({
-        content:
-          "You can't use the menu generated by others. Run the command </seasonal-guides:1147244751708491897> if you wish to use it.",
-        ephemeral: true,
-      });
-      return false;
-    }
-    return true;
-  };
-
-  const collector = msg.createMessageComponentCollector({
-    filter,
-    idle: 3 * 60 * 1000,
-  });
-  collector.on("collect", async (int) => {
-    const id = int.customId;
-    const btn = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setDisabled(true)
-        .setCustomId("search")
-        .setStyle("1")
-        .setEmoji("1205464032182665239")
-        .setLabel("Searching")
-    );
-    await int.update({ components: [btn] });
-    if (id === "sprtTree") {
-      await int.editReply({
-        ...response,
-        components: [lctnBtn],
-      });
-    } else if (id === "sprtLctn") {
-      await int.editReply({
-        ...respn,
-        components: [treeBtn],
-      });
-    }
-  });
-
-  collector.on("end", async () => {
-    await msg.edit({
-      components: [],
-    });
-  });
-}

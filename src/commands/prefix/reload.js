@@ -16,18 +16,20 @@ module.exports = {
     flags: ["commands", "events", "files", "local", "l"],
   },
   async execute(msg, args, client, flags) {
-    const filtered = ['commands', 'events', 'files']
+    const filtered = ["commands", "events", "files"];
     const combinations = [
-      { match: ['commands', 'events', 'files'], result: 'Commands and Events and Files' },
-      { match: ['commands', 'files'], result: 'Commands and Files' },
-      { match: ['commands', 'events'], result: 'Commands and Events' },
-      { match: ['events', 'files'], result: 'Events and Files' },
-      { match: ['commands'], result: 'Commands' },
-      { match: ['events'], result: 'Events' },
-      { match: ['files'], result: 'Files' },
-      { match: [], result: 'Commands' },
+      { match: ["commands", "events", "files"], result: "Commands and Events and Files" },
+      { match: ["commands", "files"], result: "Commands and Files" },
+      { match: ["commands", "events"], result: "Commands and Events" },
+      { match: ["events", "files"], result: "Events and Files" },
+      { match: ["commands"], result: "Commands" },
+      { match: ["events"], result: "Events" },
+      { match: ["files"], result: "Files" },
+      { match: [], result: "Commands" },
     ];
-    const matchingCombination = combinations.find(combination => combination.match.every(flag => flags.includes(flag))) || combinations[combinations.length - 1];
+    const matchingCombination =
+      combinations.find((combination) => combination.match.every((flag) => flags.includes(flag))) ||
+      combinations[combinations.length - 1];
     const type = matchingCombination.result;
     if (args[0] === "bot") {
       await msg.reply("later");
@@ -59,7 +61,7 @@ module.exports = {
 
     if (flags.includes("commands")) {
       const commands = path.resolve(__dirname, "../../commands");
-      clearCache(commands)
+      clearCache(commands);
       client.commands.clear();
       client.prefix.clear();
       client.loadSlashCmd("./src/commands");
@@ -73,7 +75,7 @@ module.exports = {
     if (flags.includes("files")) {
       const functions = path.resolve(__dirname, "../../functions");
       const handler = path.resolve(__dirname, "../../handler");
-    
+
       clearCache(functions);
       clearCache(handler);
     }
@@ -135,7 +137,6 @@ function clearCache(directory) {
       clearCache(filePath);
     } else {
       delete require.cache[require.resolve(filePath)];
-      
     }
   });
 }

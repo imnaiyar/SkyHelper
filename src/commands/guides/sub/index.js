@@ -1,5 +1,6 @@
+const { HandleRealms } = require("./handleRealms");
 module.exports = {
   handleSeasonal: require("./handleSeasonal"),
-  handleRealms: require("./handleRealms"),
+  HandleRealms,
   handleEvents: require("./handleEvents"),
 };

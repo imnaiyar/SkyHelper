@@ -12,6 +12,7 @@ module.exports = {
     const attachment = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
     message.reply({
       content: "Okay, Like This!",
-      files: [attachment] });
+      files: [attachment],
+    });
   },
 };
