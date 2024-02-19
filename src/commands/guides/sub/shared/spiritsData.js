@@ -1139,12 +1139,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
-      total: " ",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1164,11 +1164,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1188,11 +1189,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1212,11 +1214,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1238,11 +1241,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1262,11 +1266,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1286,11 +1291,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1310,11 +1316,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1336,11 +1343,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1362,11 +1370,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1386,11 +1395,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1410,11 +1420,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1434,11 +1445,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1458,11 +1470,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1482,11 +1495,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1506,11 +1520,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1530,11 +1545,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1555,11 +1571,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1579,11 +1596,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1603,11 +1621,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1627,11 +1646,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1651,11 +1671,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1675,11 +1696,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1699,11 +1721,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1722,11 +1745,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1745,11 +1769,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1768,11 +1793,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1791,11 +1817,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1815,11 +1842,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1839,11 +1867,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1863,11 +1892,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1887,11 +1917,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1911,11 +1942,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1935,11 +1967,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1959,11 +1992,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -1983,11 +2017,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2007,11 +2042,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2032,11 +2068,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2056,11 +2093,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2082,11 +2120,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2106,11 +2145,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2130,11 +2170,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2154,11 +2195,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2178,11 +2220,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2202,11 +2245,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2226,11 +2270,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2250,11 +2295,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2274,11 +2320,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2298,11 +2345,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2322,11 +2370,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2346,11 +2395,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2370,11 +2420,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2394,11 +2445,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2418,11 +2470,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2442,11 +2495,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2466,11 +2520,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2490,11 +2545,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2514,11 +2570,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2538,11 +2595,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2562,11 +2620,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2586,11 +2645,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2612,11 +2672,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2636,11 +2697,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2662,11 +2724,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2686,11 +2749,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2710,11 +2774,12 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2734,11 +2799,12 @@ module.exports = {
       dates: ["April 27, 2023 (#86)", "May 27, 2021 (#36)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2779,11 +2845,12 @@ module.exports = {
       dates: ["March 31, 2022 (#58)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2824,11 +2891,12 @@ module.exports = {
       dates: ["October 12, 2023 (#98)", "October 28, 2021 (#47)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2859,11 +2927,12 @@ module.exports = {
       dates: ["October 27, 2022 (#73)", "January 07, 2021 (#26)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2904,11 +2973,12 @@ module.exports = {
       dates: ["September 01, 2022 (#69)", "October 29, 2020 (#21)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2949,11 +3019,12 @@ module.exports = {
       dates: ["March 16, 2023 (#83)", "February 18, 2021 (#29)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -2994,11 +3065,12 @@ module.exports = {
       dates: ["October 26, 2023 (#99)", "September 16, 2021 (#44)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3039,11 +3111,12 @@ module.exports = {
       dates: ["August 07, 2023 (SV#4)", "March 03, 2022 (#56)", "December 24, 2020 (#25)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3084,11 +3157,12 @@ module.exports = {
       dates: ["July 03, 2023 (SV#3)", "July 08, 2022 (#67)", "May 13, 2021 (#35)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3129,11 +3203,12 @@ module.exports = {
       dates: ["July 03, 2023 (SV#3)", "February 04, 2021 (#28)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3174,11 +3249,12 @@ module.exports = {
       dates: ["December 21, 2023 (#103)", "October 14, 2021 (#46)", "September 03, 2020 (#17)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3219,11 +3295,12 @@ module.exports = {
       dates: ["June 08, 2023 (#89)", "June 24, 2021 (#38)", "October 15, 2020 (#20)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3264,11 +3341,12 @@ module.exports = {
       dates: ["November 09, 2023 (#100)", "November 11, 2021 (#48)", "August 06, 2020 (#15)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3289,11 +3367,12 @@ module.exports = {
       dates: ["June 22, 2023 (#90)", "December 23, 2021 (#51)", "April 01, 2021 (#32)", "May 14, 2020 (#9)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3334,11 +3413,12 @@ module.exports = {
       dates: ["December 22, 2022 (#77)", "December 10, 2020 (#24)", "March 26, 2020 (#5)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3379,11 +3459,12 @@ module.exports = {
       dates: ["June 09, 2022 (#63)", "June 11, 2020 (#11)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3414,11 +3495,12 @@ module.exports = {
       dates: ["September 28, 2023 (#97)", "January 21, 2021 (#27)", "July 09, 2020 (#13)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3459,11 +3541,12 @@ module.exports = {
       dates: ["March 02, 2023 (#82)", "July 22, 2021 (#40)", "November 12, 2020 (#22)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3504,11 +3587,12 @@ module.exports = {
       dates: ["February 01, 2024 (#106)", "January 06, 2022 (#52)", "September 17, 2020 (#18)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3549,11 +3633,12 @@ module.exports = {
       dates: ["September 15, 2022 (#70)", " August 20, 2020 (#16)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3594,11 +3679,12 @@ module.exports = {
       dates: ["February 02, 2023 (#80)", "March 04, 2021 (#30)", "April 16, 2020 (#7)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3629,11 +3715,12 @@ module.exports = {
       dates: ["October 13, 2022 (#72)", "November 26, 2020 (#23)", "February 27, 2020 (#3)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3655,11 +3742,12 @@ module.exports = {
       dates: ["July 21, 2022(#66)", "April 15, 2021(#33)", "February 14, 2020(#2)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3690,11 +3778,12 @@ module.exports = {
       dates: ["August 07, 2023(SV#4)", "September 02, 2021(#43)", "April 09, 2020(#6)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3716,11 +3805,12 @@ module.exports = {
       dates: ["March 17, 2022 (#57)", "April 30, 2020 (#8)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3762,11 +3852,12 @@ module.exports = {
       dates: ["December 08, 2022 (#76)", "July 08, 2021 (#39)", "May 28, 2020 (#10)", "January 31, 2020 (#1)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3788,11 +3879,12 @@ module.exports = {
       dates: ["January 20, 2022 (#53)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
@@ -3833,11 +3925,12 @@ module.exports = {
       dates: ["March 30, 2023 (#84)", "October 01, 2020 (#19)", "March 12, 2020 (#4)"],
     },
     tree: {
-      description: "",
+      by: "",
+      total: '',
       image: "",
     },
     location: {
-      description: "",
+      by: "",
       image: "",
     },
     cosmetics: [{}],
