@@ -3879,12 +3879,13 @@ module.exports = {
       dates: ["March 18, 2021 (#31)", "June 25, 2020 (#12)", "July 03, 2023 (SV#3)"],
     },
     tree: {
-      description: "",
+      by: "Jed",
+      total: '107 <:RegularCandle:1207793250895794226> 13  2<:AscendedCandle:1207793254301433926>',
       image: "",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207765118717534298/1209165315599114250/Leaping_Dancer_Location.png?ex=65e5edf4&is=65d378f4&hm=f16d7c6d9087072ea90801191c3a0ea1dff2aa7dd1bc043ca95f414ac4c58699&",
     },
     cosmetics: [{}],
     emote: {
