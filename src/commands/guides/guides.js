@@ -1,7 +1,6 @@
-const { ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+const { ApplicationCommandOptionType } = require("discord.js");
 const { handleSeasonal, HandleRealms, handleEvents } = require("./sub/index");
-const { getRealmsRow } = require("./sub/shared/helpers.js");
-const summary = require("./sub/extends/realms/summaries.js");
+
 const desc = require("@src/cmdDesc");
 let reply;
 module.exports = {
@@ -17,11 +16,27 @@ module.exports = {
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
-            name: "spirit",
-            description: "directly search for a seasonal spirit`s tree/location",
+            name: "season",
+            description: "select a season for the guideZ",
             type: ApplicationCommandOptionType.String,
-            required: false,
+            required: true,
             autocomplete: true,
+          },
+          {
+            name: "type",
+            description: "quest, or spirits guides",
+            type: ApplicationCommandOptionType.String,
+            choices: [
+              {
+                name: "Quests",
+                value: "quest",
+              },
+              {
+                name: "Spirits",
+                value: "spirits",
+              }
+            ],
+            required: true,
           },
           {
             name: "hide",
@@ -86,7 +101,7 @@ module.exports = {
                 value: "maps",
               },
               {
-                name: "spirits",
+                name: "Spirits",
                 value: "spirits",
               },
             ],
@@ -122,6 +137,8 @@ module.exports = {
     reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
     switch (sub) {
       case "seasonal": {
+        const choice = interaction.options.getString("season");
+        console.log(choice)
         await handleSeasonal(interaction, ephemeral);
         break;
       }
@@ -143,7 +160,17 @@ module.exports = {
     }
   },
   async autocomplete(interaction, client) {
-    const focusedValue = interaction.options.getFocused();
+    const focusedValue = interaction.options.getFocused(true);
     const sub = interaction.options.getSubcommand();
+
+    if (sub === "seasonal" && focusedValue.name === 'season') {
+      // EmojisMap contain all the season name, so get it from there
+      const choices = Object.keys(client.emojisMap.get('seasons')).map(ch => {
+        return `Season of ${ch}`;
+      });      
+      const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.value.toLowerCase())).slice(0, 25);
+      console.log(filtered)
+      await interaction.respond(filtered.map(choice => ({ name: choice, value: choice.replace('Season of ', '').split(' ').join('_').toLocaleLowerCase() })));
+    }
   },
 };

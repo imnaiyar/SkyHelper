@@ -1,5 +1,4 @@
-const { rowBuilder } = require("./shared/helpers");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
 const summary = require("./extends/realms/summaries.js");
 const maps = require("./extends/realms/maps.js");
 const respondSpirits = require('./shared/handleSpirits.js')
@@ -146,10 +145,33 @@ class HandleRealms {
   }
 
   async handleSpirits() {
-    const rows = this.buildSpiritsRow();
+    const spiritsData = Object.entries(this.client.spiritsData);
+    const getSpiritsObj = (type) => {
+      return spiritsData
+        .filter(([k, v]) => v.realm === this.realm && v.type === type)
+        .map(([k, v]) => ({
+          label: v.name,
+          value: k,
+          emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon || v.action?.icon,
+        }));
+    };
+    
+    const regularRow = new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(`regular_${this.value}`)
+        .setPlaceholder("Regular Spirits")
+        .addOptions(getSpiritsObj("Regular Spirit"))
+    );
+    const seasonalRow = new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(`seasonal_${this.value}`)
+        .setPlaceholder("Seasonal Spirits")
+        .addOptions(getSpiritsObj("Seasonal Spirit"))
+    );
+    
     await this.interaction.followUp({
       content: `Spirits of __${this.realm}__`,
-      ...rows,
+      components: [regularRow, seasonalRow]
     });
     
     const filter = this.filter;
@@ -217,33 +239,6 @@ class HandleRealms {
     );
     row.push(menu, btns);
     return { embeds: [emb], components: row };
-  }
-
-  buildSpiritsRow() {
-    const spiritsData = Object.entries(this.client.spiritsData);
-    const getSpiritsObj = (type) => {
-      return spiritsData
-        .filter(([k, v]) => v.realm === this.realm && v.type === type)
-        .map(([k, v]) => ({
-          label: v.name,
-          value: k,
-          emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon || v.action?.icon,
-        }));
-    };
-    
-    const regularRow = new ActionRowBuilder().addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId(`regular_${this.value}`)
-        .setPlaceholder("Regular Spirits")
-        .addOptions(getSpiritsObj("Regular Spirit"))
-    );
-    const seasonalRow = new ActionRowBuilder().addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId(`seasonal_${this.value}`)
-        .setPlaceholder("Seasonal Spirits")
-        .addOptions(getSpiritsObj("Seasonal Spirit"))
-    );
-    return ({components: [regularRow, seasonalRow]});
   }
 }
 

@@ -58,7 +58,7 @@ module.exports = async (int, value, guides) => {
                 return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
               })
               .join("\n")}`
-          : "<:purpleright:1207596527737118811> This spirit has not returned yet",
+          : "<:purpleright:1207596527737118811> This spirit has not returned yet, when they do return, they'll offer the same items during the season but in a restructured friendship tree.",
     });
     
     
@@ -80,7 +80,8 @@ module.exports = async (int, value, guides) => {
   const treeBtn = new ButtonBuilder().setCustomId("spirit_tree").setStyle("2").setLabel("Friendship Tree");
   
   // Define cosmetic button
-  const cosmeticBtn = new ButtonBuilder().setCustomId("spirit_cosmetic").setStyle("1").setLabel("Cosmetics");
+  // TODO: Don't forget this..
+  // const cosmeticBtn = new ButtonBuilder().setCustomId("spirit_cosmetic").setStyle("1").setLabel("Cosmetics");
   
   // If spirit's data has 'main' property (Regular Spirits), no location or tree buttons here since the initial guide already contains tree and location
   if (data.main) {
@@ -95,7 +96,8 @@ module.exports = async (int, value, guides) => {
   }
   
   // If spirit's data has cosmetic property, add cosmetic button
-  if (data.cosmetics) row.addComponents(cosmeticBtn);
+  // TODO: Complete cosmetics you guy!
+  // if (data.cosmetics) row.addComponents(cosmeticBtn);
   // add expression button
   row.addComponents(expressionBtn);
   
@@ -111,13 +113,15 @@ module.exports = async (int, value, guides) => {
   }
   
   // update the message with the results
- const reply =  await int.editReply({ content: "", embeds: [embed], components: [row] });
- 
+  await int.editReply({ content: "", embeds: [embed], components: [row] });
+
+  // create a collector for the embed buttons
   const filter = int.client.getFilter(int);
   const collector = int.message.createMessageComponentCollector({
     filter,
     idle: 2 * 60 * 1000,
   });
+
   collector.on("collect", async (inter) => {
     const customID = inter.customId;
     if (
