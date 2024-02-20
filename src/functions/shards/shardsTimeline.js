@@ -86,7 +86,7 @@ async function showShard(interaction, shard, Zhii, Christian) {
       .setEmoji("<:purpleUp:1207632852770881576>")
       .setCustomId("timeline_original")
       .setStyle(3)
-      .setDisabled(false)
+      .setDisabled(false),
   );
   if (currentShardIndex === 0) {
     actionRow.components[0].setDisabled(true);

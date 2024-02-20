@@ -50,14 +50,14 @@ async function handleSpirits(interaction, sub, spiritValue, ephemeral) {
       .setLabel("Location")
       .setCustomId("sprtLctn")
       .setDisabled(disabled)
-      .setStyle("1")
+      .setStyle("1"),
   );
   const treeBtn = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setEmoji("<:tree:1131279758907424870>")
       .setLabel("Friendship Tree")
       .setCustomId("sprtTree")
-      .setStyle("1")
+      .setStyle("1"),
   );
   await interaction.followUp({
     ...response,
@@ -88,7 +88,7 @@ async function handleSpirits(interaction, sub, spiritValue, ephemeral) {
         .setCustomId("search")
         .setStyle("1")
         .setEmoji("1205464032182665239")
-        .setLabel("Searching")
+        .setLabel("Searching"),
     );
     await int.update({ components: [btn] });
     if (id === "sprtTree") {

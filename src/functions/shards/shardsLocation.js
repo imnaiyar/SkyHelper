@@ -70,7 +70,7 @@ async function showShard(interaction, shard, Gale, Clement) {
   const actionRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setLabel("Location").setCustomId("location_leftL").setStyle("1"),
     new ButtonBuilder().setLabel("Data").setCustomId("location_rightL").setStyle("1"),
-    new ButtonBuilder().setEmoji("<:purpleUp:1207632852770881576>").setCustomId("location_originalL").setStyle(3)
+    new ButtonBuilder().setEmoji("<:purpleUp:1207632852770881576>").setCustomId("location_originalL").setStyle(3),
   );
 
   // Disable navigation buttons if the current shard is the first or last

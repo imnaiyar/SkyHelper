@@ -76,11 +76,11 @@ async function helpMenu(interaction, client) {
     .setColor("Gold")
     .setFooter({ text: "SkyHelper", iconURL: client.user.displayAvatarURL() })
     .setDescription(
-      `SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky.\n\n Checkout our updated [ToS](${config.WEB_URL}/tos) and [Privacy Policy](${config.WEB_URL}/privacy)\n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[Website](${config.WEB_URL}) • [TopGG](https://top.gg/bot/1121541967730450574) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky Official Server](http://discord.gg/thatskygame)`
+      `SkyHelper is a versatile Discord bot designed to enhance the [Sky: Children of the Light](https://thatskygame.com) gaming experience. It provides a wide range of useful information to help players navigate the enchanting world of Sky.\n\n Checkout our updated [ToS](${config.WEB_URL}/tos) and [Privacy Policy](${config.WEB_URL}/privacy)\n\n To learn about all the commands, use the select menu.\n\n**Useful Links**\n[Website](${config.WEB_URL}) • [TopGG](https://top.gg/bot/1121541967730450574) • [SkyWiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki) • [Sky Shards Tracker](https://sky-shards.pages.dev) • [Sky Official Server](http://discord.gg/thatskygame)`,
     );
 
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId("commands-help").setLabel("Commands").setStyle(3)
+    new ButtonBuilder().setCustomId("commands-help").setLabel("Commands").setStyle(3),
   );
   const reply = await interaction.reply({
     embeds: [embed],
@@ -149,7 +149,7 @@ async function helpMenu(interaction, client) {
     const hmBtn = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setLabel("Prev").setCustomId("prevBtn").setStyle(2),
       new ButtonBuilder().setLabel("🏠").setCustomId("homeBtn").setStyle(4),
-      new ButtonBuilder().setLabel("Next").setCustomId("nextBtn").setStyle(2)
+      new ButtonBuilder().setLabel("Next").setCustomId("nextBtn").setStyle(2),
     );
     if (page === 1) {
       hmBtn.components[0].setDisabled(true);

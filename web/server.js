@@ -57,7 +57,7 @@ module.exports = {
       })
       .get("/invite", (req, res) => {
         res.redirect(
-          "https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412854114496&scope=bot+applications.commands"
+          "https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412854114496&scope=bot+applications.commands",
         );
       });
     // creating a route for every files in 'views' dir
@@ -86,7 +86,7 @@ module.exports = {
               { name: "Email", value: email || "Not Provided" },
               { name: "Username", value: discordUsername || "Not Provided" },
               { name: "Reason", value: reason || "Not Provided" },
-              { name: "Message", value: message }
+              { name: "Message", value: message },
             );
 
           if (webhookLogger) {

@@ -1140,7 +1140,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1165,7 +1165,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1190,7 +1190,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1215,7 +1215,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1242,7 +1242,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1267,7 +1267,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1292,7 +1292,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1317,7 +1317,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1344,7 +1344,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1371,7 +1371,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1396,7 +1396,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1421,7 +1421,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1434,6 +1434,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Passage
   outcast: {
     name: "Oddball Outcast",
     type: "Seasonal Spirit",
@@ -1446,7 +1448,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1471,7 +1473,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1496,7 +1498,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1521,7 +1523,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1534,6 +1536,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Remembrance
   wounded_warrior: {
     name: "Wounded Warrior",
     type: "Seasonal Spirit",
@@ -1546,7 +1550,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1572,7 +1576,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1597,7 +1601,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1622,7 +1626,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1635,6 +1639,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Aurora
   warrior_of_love: {
     name: "Warrior of Love",
     type: "Seasonal Spirit",
@@ -1647,7 +1653,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1672,7 +1678,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1697,7 +1703,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1722,7 +1728,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1735,6 +1741,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Shattering
   dark_plant: {
     name: "Ancient Darkness (Plant)",
     type: "Seasonal Spirit",
@@ -1746,7 +1754,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1770,7 +1778,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1794,7 +1802,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1818,7 +1826,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1831,6 +1839,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Performance
   modest_dancer: {
     name: "Modest Dancer",
     type: "Seasonal Spirit",
@@ -1843,7 +1853,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1868,7 +1878,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1893,7 +1903,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1918,7 +1928,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1931,6 +1941,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Abyss
   commodore: {
     name: "Ceasing Commodore",
     type: "Seasonal Spirit",
@@ -1943,7 +1955,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1968,7 +1980,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -1993,7 +2005,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2018,7 +2030,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2031,6 +2043,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Flight
   chimesmith: {
     name: "Tinkering Chimesmith",
     type: "Seasonal Spirit",
@@ -2043,7 +2057,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2069,7 +2083,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2094,7 +2108,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2121,7 +2135,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2134,6 +2148,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // The Little Prince
   lamplighter: {
     name: "Stretching Lamplighter",
     type: "Seasonal Spirit",
@@ -2146,7 +2162,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2171,7 +2187,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2196,7 +2212,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2221,7 +2237,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2246,7 +2262,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2271,7 +2287,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2284,6 +2300,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Assembly
   scolding_student: {
     name: "Scolding Student",
     type: "Seasonal Spirit",
@@ -2296,7 +2314,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2321,7 +2339,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2346,7 +2364,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2371,7 +2389,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2396,7 +2414,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2421,7 +2439,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2434,6 +2452,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Dreams
   spinning_mentor: {
     name: "Spinning Mentor",
     type: "Seasonal Spirit",
@@ -2446,7 +2466,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2471,7 +2491,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2496,7 +2516,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2521,7 +2541,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2534,6 +2554,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Prophecy
   fireprophet: {
     name: "Prophet of Fire",
     type: "Seasonal Spirit",
@@ -2546,7 +2568,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2571,7 +2593,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2596,7 +2618,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2621,7 +2643,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2634,6 +2656,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Sanctuary
   bookworm: {
     name: "Timid Bookworm",
     type: "Seasonal Spirit",
@@ -2646,7 +2670,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2673,7 +2697,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2698,7 +2722,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2725,7 +2749,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2750,7 +2774,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2775,7 +2799,7 @@ module.exports = {
     },
     tree: {
       by: "",
-      total: '',
+      total: "",
       image: "",
     },
     location: {
@@ -2788,6 +2812,8 @@ module.exports = {
       level: [],
     },
   },
+
+  // Enchantment
   carpenter: {
     name: "Snoozing Carpenter",
     type: "Seasonal Spirit",
@@ -2799,13 +2825,16 @@ module.exports = {
       dates: ["April 27, 2023 (#86)", "May 27, 2021 (#36)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185574460854403/Golden_Wasteland_-_Snoozing_Carpenter.png?ex=65e600d2&is=65d38bd2&hm=e2e181977cbfe8ecf9546f7acaa6a8d70c6948c6f3475657a76e627a90d31923&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185695277785159/05_Season_of_Enchantment_-_Snoozing_Carpenter.png?ex=65e600ef&is=65d38bef&hm=f88e2ef71425a6e982f988a6ffec4f914aab99c0131c036b7a01589506f81eaf&",
     },
     cosmetics: [{}],
     emote: {
@@ -2845,13 +2874,16 @@ module.exports = {
       dates: ["March 31, 2022 (#58)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "88 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185572480880680/Traveling_Spirit_0582.png?ex=65e600d2&is=65d38bd2&hm=8564a0f821a4e5946b8afba1867bddc103d65ee0510fe048f9ee82923eea4353&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185697827790858/Scarecrow_Farmer_Location_Clement.png?ex=65e600ef&is=65d38bef&hm=d66402e6952d52c57eb3179afb40c55d425be0542ed2a533e0f56b555e111d48&",
     },
     cosmetics: [{}],
     emote: {
@@ -2891,13 +2923,16 @@ module.exports = {
       dates: ["October 12, 2023 (#98)", "October 28, 2021 (#47)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "195 <:RegularCandle:1207793250895794226> 10 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185573164810260/Playfight_herbalist-TS2.jpg?ex=65e600d2&is=65d38bd2&hm=d223a90efcac17e9970bb2c6be207857c58f086edb843523814776450e3fa37d&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185699463696455/Playfighting_Herbalist_Location_Clement.jpg?ex=65e600f0&is=65d38bf0&hm=48d9a74e663b9ab51ccd2b8e1fb94e1e9d6592b1eb9513bd7ffe1f8ed140a134&",
     },
     cosmetics: [{}],
     action: {
@@ -2927,13 +2962,16 @@ module.exports = {
       dates: ["October 27, 2022 (#73)", "January 07, 2021 (#26)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "77 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:RegularCandle:1207793250895794226>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185575383605248/Nodding_Muralist_Tree_Jed.png?ex=65e600d2&is=65d38bd2&hm=b418da31a5dcc1175a21dbc82ca3da2ceb39a8e8787e9128deaa91da95ab5a8a&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185701896130563/Nodding_Muralist_Location_Clement.png?ex=65e600f0&is=65d38bf0&hm=2c5be2affbff9a4f5d991ef642d28b2aa717212e0efb9364c3674aed67a266ef&",
     },
     cosmetics: [{}],
     emote: {
@@ -2973,13 +3011,16 @@ module.exports = {
       dates: ["September 01, 2022 (#69)", "October 29, 2020 (#21)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "167 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185576423530546/Indifferent_Alchemist_Tree_Jed.png?ex=65e600d3&is=65d38bd3&hm=3ca6c645738f522e911702a86d5cf7b2f6ca9c6005d187d2c80af27a3a3d05e1&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185703595081739/Indifferent_Alchemist_Location_Clement.jpg?ex=65e600f1&is=65d38bf1&hm=4f2e88042bb27c4845be7400de8fe84754446a14e3a42aa4068a068c5af8c62f&",
     },
     cosmetics: [{}],
     emote: {
@@ -3019,13 +3060,16 @@ module.exports = {
       dates: ["March 16, 2023 (#83)", "February 18, 2021 (#29)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "115 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185577388351558/Crab_Walker_Tree_Jed.png?ex=65e600d3&is=65d38bd3&hm=1ca8cc29229988b0f5af814a9de80bf054f1dee1920cb9dc58b0708e0c643876&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207745251062714448/1209185704714969238/Crab_Walker_Location_Clement.jpg?ex=65e600f1&is=65d38bf1&hm=5aef598ae1fada8060c8046a9cdf4dbb198deed8643896b46bbe5b4a32c36ef9&",
     },
     cosmetics: [{}],
     emote: {
@@ -3054,6 +3098,8 @@ module.exports = {
       ],
     },
   },
+
+  // Rhythm
   juggler: {
     name: "Troupe Juggler",
     type: "Seasonal Spirit",
@@ -3065,13 +3111,16 @@ module.exports = {
       dates: ["October 26, 2023 (#99)", "September 16, 2021 (#44)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "205 <:RegularCandle:1207793250895794226> 27 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182520390713424/Troupe_Juggler_Tree_Clement.png?ex=65e5fdfa&is=65d388fa&hm=16fc7ec6a8703bfdf1ecdca56a22064b9dc35105916cc4c17d46aa63ffd0054b&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182673197600869/Troupe_Juggler_Location_Clement.jpg?ex=65e5fe1e&is=65d3891e&hm=ec165c6d1c3dcadadf252c60e7d02550c14dd85202c39b3ab02f9f5839e2f822&",
     },
     cosmetics: [{}],
     emote: {
@@ -3111,13 +3160,16 @@ module.exports = {
       dates: ["August 07, 2023 (SV#4)", "March 03, 2022 (#56)", "December 24, 2020 (#25)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "146 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182520839774208/Troupe_Greeter_Tree_Clement.png?ex=65e5fdfa&is=65d388fa&hm=813e09c67639294fe9f30d93fafa9778eebacd098916c14af04c710204739223&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182673663426591/Troupe_Greeter_Location_Clement.jpg?ex=65e5fe1e&is=65d3891e&hm=62bb45c77e86271a2af2088f8a4cf7b0d8cc509ed53f893671c800beae977385&",
     },
     cosmetics: [{}],
     emote: {
@@ -3157,13 +3209,16 @@ module.exports = {
       dates: ["July 03, 2023 (SV#3)", "July 08, 2022 (#67)", "May 13, 2021 (#35)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "195 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182521900667010/Thoughtful_Director_Tree_Jed.png?ex=65e5fdfa&is=65d388fa&hm=0a203e731a9bc583d64029eaddb7808a3b05b20412c3b05571094e11102687f9&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182675152142417/Thoughtful_Director_Location_Clement.png?ex=65e5fe1f&is=65d3891f&hm=9169995ba1ac48a37bbbd4239d9bf9a7f97295061ae0a3087dc26e7bf98fe4f0&",
     },
     cosmetics: [{}],
     emote: {
@@ -3203,13 +3258,16 @@ module.exports = {
       dates: ["July 03, 2023 (SV#3)", "February 04, 2021 (#28)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "162 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2<:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182522622345306/Respectful_Pianist_Tree_Jed.png?ex=65e5fdfa&is=65d388fa&hm=6231c9d36cc2225c87bec18a33d8939e49cdabf82af362cff58ba0813189e4bb&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182677454823434/Respectful_Pianist_Location_Clement.png?ex=65e5fe1f&is=65d3891f&hm=f9ef0d81f247945880b86f14810655828b4907e1741a328606eea9b1ef9384ac&",
     },
     cosmetics: [{}],
     emote: {
@@ -3249,13 +3307,16 @@ module.exports = {
       dates: ["December 21, 2023 (#103)", "October 14, 2021 (#46)", "September 03, 2020 (#17)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "157 <:RegularCandle:1207793250895794226> 19 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182521129042000/Spin_Dancer_Tree_Clement.png?ex=65e5fdfa&is=65d388fa&hm=cfe3d6ae0fc95b39e7a7bdb4de504bbb6617542108e9150263b908a1cc6aa59a&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182678444941433/Spin_Dancer_Location.png?ex=65e5fe20&is=65d38920&hm=04160dcafd21e41ae85b367ff17898b5faacb0602321665d762e0eeb2dc8a96e&",
     },
     cosmetics: [{}],
     emote: {
@@ -3295,13 +3356,16 @@ module.exports = {
       dates: ["June 08, 2023 (#89)", "June 24, 2021 (#38)", "October 15, 2020 (#20)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "135 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182523238912043/Admiring_Actor_Tree_Jed.png?ex=65e5fdfb&is=65d388fb&hm=7fe301f5f10d656f81226da68c10d00945641f5cca3e4d16a3a9feeaf91c8938&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207755518903320707/1209182678922952775/Admiring_Actor_Location_Clement.png?ex=65e5fe20&is=65d38920&hm=d6b7616c71080d771e8b12388f72cc449ec5bfe6543861cae8c5cd41274cad62&",
     },
     cosmetics: [{}],
     emote: {
@@ -3330,6 +3394,8 @@ module.exports = {
       ],
     },
   },
+
+  // Belonging
   wise_grandparent: {
     name: "Wise Grandparent",
     type: "Seasonal Spirit",
@@ -3341,13 +3407,16 @@ module.exports = {
       dates: ["November 09, 2023 (#100)", "November 11, 2021 (#48)", "August 06, 2020 (#15)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "156 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179045506449418/Wise_Grandparent_Tree_Clement.png?ex=65e5fabd&is=65d385bd&hm=5e218f03b115f0b5c77d8592b4b449c2c5198a9f43020ee762351b1bc303c193&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179138124943400/Wise_Grandparent_Location_Clement.jpg?ex=65e5fad3&is=65d385d3&hm=7032320b95bb12ee6bb83b6c6751054748d5dd59cb6e456015148f3443db741a&",
     },
     cosmetics: [{}],
     stance: {
@@ -3367,13 +3436,16 @@ module.exports = {
       dates: ["June 22, 2023 (#90)", "December 23, 2021 (#51)", "April 01, 2021 (#32)", "May 14, 2020 (#9)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "116 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179047389569064/Sparkler_Parent_Tree_Clement.png?ex=65e5fabe&is=65d385be&hm=b716e844420bd17d2f5996c84e134a728589a5b6d6b7b6cd092249abab4da186&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179140050133093/Sparkler_Parent_Location_Clement.png?ex=65e5fad4&is=65d385d4&hm=be35e171f6b306e4812c4c569629430fe67296e90c5f5d39b392dd131f671490&",
     },
     cosmetics: [{}],
     emote: {
@@ -3413,13 +3485,16 @@ module.exports = {
       dates: ["December 22, 2022 (#77)", "December 10, 2020 (#24)", "March 26, 2020 (#5)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "195 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179054788313238/Pleaful_Parent_Tree_Jed.png?ex=65e5fac0&is=65d385c0&hm=db10c64210a3cd91c13a6ef38b3dd6aa8ed6b02c8a678805b455145f6eadaf46&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179141287579769/Pleaful_Parent_Location_Clement.jpg?ex=65e5fad4&is=65d385d4&hm=17aecb2ddb79a59ba793daf8e11ab83bc7d94bc5718afe01bf0efa867c08c4f0&",
     },
     cosmetics: [{}],
     emote: {
@@ -3459,13 +3534,16 @@ module.exports = {
       dates: ["June 09, 2022 (#63)", "June 11, 2020 (#11)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "148 <:RegularCandle:1207793250895794226> 9 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179050002882601/Hairtousle_Teen_Tree_Clement.png?ex=65e5fabe&is=65d385be&hm=639a8b00a94616197da85be5aacd89c0b27233ed91ac28280844862f0a120a1a&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179141610405999/Haitousle_Teen_Location_Clement.webp?ex=65e5fad4&is=65d385d4&hm=58045a392b2f5978a4e3efd34e3e17bec61dc977fc26496ecaba494963a0f2a4&",
     },
     cosmetics: [{}],
     action: {
@@ -3495,13 +3573,16 @@ module.exports = {
       dates: ["September 28, 2023 (#97)", "January 21, 2021 (#27)", "July 09, 2020 (#13)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jay",
+      total:
+        "115 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179052313813082/Confetti_Cousin_Tree_Jay.png?ex=65e5fabf&is=65d385bf&hm=4e343d20148cbce2108e3d9431564771a959abfc27551d748a027430f9413994&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179142025781298/Confetti_Cousin_Location_Clement.png?ex=65e5fad4&is=65d385d4&hm=efd20bf74db308c3c4ca7427de3aba04b47b1a51096bc38ec888c6a2d38da170&",
     },
     cosmetics: [{}],
     emote: {
@@ -3541,13 +3622,16 @@ module.exports = {
       dates: ["March 02, 2023 (#82)", "July 22, 2021 (#40)", "November 12, 2020 (#22)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "103 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179057561010268/Boogie_Kid_Tree_Jed.png?ex=65e5fac0&is=65d385c0&hm=01299728151e1092bd2302e6ed4415722edbcc475f5be2e2a89aa9b5dd24259f&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207758640627580969/1209179142663446628/Boogie_Kid_Location_Clement.jpg?ex=65e5fad5&is=65d385d5&hm=2743dc71e3d3e4f86a30ecaf88c0b87e6ac2cd089edf5aa670d064650d3e0971&",
     },
     cosmetics: [{}],
     emote: {
@@ -3576,6 +3660,8 @@ module.exports = {
       ],
     },
   },
+
+  // Lighseekers
   twirling_champion: {
     name: "Twirling Champion",
     type: "Seasonal Spirit",
@@ -3587,13 +3673,16 @@ module.exports = {
       dates: ["February 01, 2024 (#106)", "January 06, 2022 (#52)", "September 17, 2020 (#18)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "131 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209174977023058011/SoL_Valley_TS_placeholder.PNG2.png?ex=65e5f6f3&is=65d381f3&hm=7d8478b30ab8ec4fc2d5f17d73e6bda39415098c2086ab9b70214292a12f1b7c&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209175547020836965/Twirling_Champion_Location_Clement.jpg?ex=65e5f77b&is=65d3827b&hm=26c157ec4c6e0e6048f5150748f81a901950c213c015c8f2eed20d0cdf07359d&",
     },
     cosmetics: [{}],
     emote: {
@@ -3633,13 +3722,16 @@ module.exports = {
       dates: ["September 15, 2022 (#70)", " August 20, 2020 (#16)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "108 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209174978604306432/Shushing_Light_Scholar_Tree_Jed.png?ex=65e5f6f4&is=65d381f4&hm=594aac54c780d262a6d6376ae464d56b58eface5c6abb86fe66ac2248da0bf26&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209175545040867358/Shushing_Light_Scholar_Location_Clement.png?ex=65e5f77b&is=65d3827b&hm=702c57a773b5e3044943fae7f04e1fb90b05d45065b6b03aeb13b72604d48391&",
     },
     cosmetics: [{}],
     emote: {
@@ -3679,13 +3771,16 @@ module.exports = {
       dates: ["February 02, 2023 (#80)", "March 04, 2021 (#30)", "April 16, 2020 (#7)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total:
+        "123 <:RegularCandle:1207793250895794226> 8 <:regularHeart:1207793247792013474> 2<:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209174979128856577/Piggyback_Lightseeker_Tree_Jed.png?ex=65e5f6f4&is=65d381f4&hm=e9d00fa02628f4db75b98b16e171f33ed9e7f0466b69e676b5b68042965aae7e&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209175545514819725/Puggyback_Lightseeker_Location_Clement.jpg?ex=65e5f77b&is=65d3827b&hm=1ee5d03d14eb1021c2fb2165f497b186fc0bca5e8c6548b74f278bf4eb5dbfe5&",
     },
     cosmetics: [{}],
     action: {
@@ -3715,13 +3810,16 @@ module.exports = {
       dates: ["October 13, 2022 (#72)", "November 26, 2020 (#23)", "February 27, 2020 (#3)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "151 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209174977320984667/Traveling_Spirit_072-by-Clement2.png?ex=65e5f6f3&is=65d381f3&hm=b29890d4268ad698d91cf76941d2cf7dab3abd67c680403133e1f935c3cf26d9&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209175547557716048/02_HF_Seasonal_Spirit_-_Laidback_Pioneer.png?ex=65e5f77b&is=65d3827b&hm=5a8e6e8a2dac57cfb84f522e25576498c6d5838cfe86f9ad4707156b2d888e15&",
     },
     cosmetics: [{}],
     stance: {
@@ -3742,13 +3840,16 @@ module.exports = {
       dates: ["July 21, 2022(#66)", "April 15, 2021(#33)", "February 14, 2020(#2)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "126 <:RegularCandle:1207793250895794226> 7 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209174977736351744/Traveling_Spirit_0662.png?ex=65e5f6f4&is=65d381f4&hm=31202161900431f577fdee401e2ab0371cfffee80afd80949689ee17af3d40ed&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209175545917612123/DoubleFive_Light_Catcher_Location_Clement.png?ex=65e5f77b&is=65d3827b&hm=82dd3848ba34243e340d2dd570b46bcaefe752a28d1f19d70629d4a86af60791&",
     },
     cosmetics: [{}],
     action: {
@@ -3778,13 +3879,16 @@ module.exports = {
       dates: ["August 07, 2023(SV#4)", "September 02, 2021(#43)", "April 09, 2020(#6)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "190 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209174978038202388/Crab_Whisperer_Tree_Clement.png?ex=65e5f6f4&is=65d381f4&hm=4397c9ceeda060846c0231a990ec349f553eb4b518b56bd11a90306e80f6d875&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207762455619702805/1209175546617929748/Crab_Whisperer_Location_Clement.jpg?ex=65e5f77b&is=65d3827b&hm=f712966bafe685a4fd7aa492dc7d86577f0f095c488ec9231cefd290bcf4ac0e&",
     },
     cosmetics: [{}],
     call: {
@@ -3794,6 +3898,8 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/1207056758514909315/1207057096281948210/Crab_Call.mp4?ex=65de4285&is=65cbcd85&hm=55bb9650cb7eb68778038781822057a9c269af8a5d2c141bbf7fed22cd726c53&",
     },
   },
+
+  // Gratitude
   stretching: {
     name: "Stretching Guru",
     type: "Seasonal Spirit",
@@ -3805,13 +3911,16 @@ module.exports = {
       dates: ["March 17, 2022 (#57)", "April 30, 2020 (#8)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "104 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165822363177060/Stretching_Guru_Tree.png?ex=65e5ee6d&is=65d3796d&hm=09f8e27dfd5a71b339e0b5427b0a47697b1ea0056112989b41c3e54e5a2668f2&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165320246272041/Stretching_Guru_Location.png?ex=65e5edf5&is=65d378f5&hm=0a21a35c6d48e36470186108c0e084b20cbc1fac80c6e1e426e2a1d61c4865b3&",
     },
     cosmetics: [{}],
     emote: {
@@ -3852,13 +3961,15 @@ module.exports = {
       dates: ["December 08, 2022 (#76)", "July 08, 2021 (#39)", "May 28, 2020 (#10)", "January 31, 2020 (#1)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jed",
+      total: "87 <:RegularCandle:1207793250895794226> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165821486825472/Sassy_Drifter_Tree.png?ex=65e5ee6d&is=65d3796d&hm=3af4c03effce0c5089e9f1dc4fc8e63df086bc1be7a9b2f7d5356fbe45ef1852&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165308934234182/Sassy_Drifter_Location.jpg?ex=65e5edf2&is=65d378f2&hm=5ed0e689fe55f522595d0c5220c0a367c242c82d12395d7705a462d24b47a07f&",
     },
     cosmetics: [{}],
     stance: {
@@ -3879,13 +3990,16 @@ module.exports = {
       dates: ["January 20, 2022 (#53)"],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total:
+        "145 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165820438118420/saluting_Protector_Tree.png?ex=65e5ee6c&is=65d3796c&hm=90b5f6d24c23d803a1f19f632584f740f6ddc6705a3cbe30408541c7911b3cd6&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165310448504892/Saluting_Performer_Location.png?ex=65e5edf3&is=65d378f3&hm=8dc3c13db3b82d898cb92234136875981c7e5fb6ce08d1c59cd65a823cab1e24&",
     },
     cosmetics: [{}],
     emote: {
@@ -3925,13 +4039,15 @@ module.exports = {
       dates: ["March 30, 2023 (#84)", "October 01, 2020 (#19)", "March 12, 2020 (#4)"],
     },
     tree: {
-      by: "",
-      total: '',
+      by: "Clement",
+      total:
+        "104 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
       image: "",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165312927469618/Provoking_Performer_Location.png?ex=65e5edf3&is=65d378f3&hm=30c741d54b2cf1062fcc17c23f900f3490e596ff6c569e30864e616fe114aaf5&",
     },
     cosmetics: [{}],
     emote: {
@@ -3973,12 +4089,14 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total: '107 <:RegularCandle:1207793250895794226> 13  2<:AscendedCandle:1207793254301433926>',
-      image: "",
+      total: "107 <:RegularCandle:1207793250895794226> 13  2<:AscendedCandle:1207793254301433926>",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165822916956252/leaping_dancer_tree.png?ex=65e5ee6d&is=65d3796d&hm=80c5854330968e705648a61706e1cc35147ad96087fcd99eca70bea976a39748&",
     },
     location: {
       by: "Clement",
-      image: "https://cdn.discordapp.com/attachments/1207765118717534298/1209165315599114250/Leaping_Dancer_Location.png?ex=65e5edf4&is=65d378f4&hm=f16d7c6d9087072ea90801191c3a0ea1dff2aa7dd1bc043ca95f414ac4c58699&",
+      image:
+        "https://cdn.discordapp.com/attachments/1207765118717534298/1209165315599114250/Leaping_Dancer_Location.png?ex=65e5edf4&is=65d378f4&hm=f16d7c6d9087072ea90801191c3a0ea1dff2aa7dd1bc043ca95f414ac4c58699&",
     },
     cosmetics: [{}],
     emote: {
@@ -4019,13 +4137,16 @@ module.exports = {
       dates: ["May 26, 2022 (#62)", "July 23, 2020 (#14)", "July 03, 2023 (SV#3)"],
     },
     tree: {
-      by: 'Clement',
-      total: "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> <:AscendedCandle:1207793254301433926>",
-      image: "https://media.discordapp.net/attachments/1207765118717534298/1209165821985951744/Greeting_Shaman_Tree.png?ex=65e5ee6d&is=65d3796d&hm=f507b9ee2d41711a703aea5790406bcc17a6e4b5b82c83c83d7168b393a18170&=&format=webp&quality=lossless&width=1092&height=1092",
+      by: "Clement",
+      total:
+        "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> <:AscendedCandle:1207793254301433926>",
+      image:
+        "https://media.discordapp.net/attachments/1207765118717534298/1209165821985951744/Greeting_Shaman_Tree.png?ex=65e5ee6d&is=65d3796d&hm=f507b9ee2d41711a703aea5790406bcc17a6e4b5b82c83c83d7168b393a18170&=&format=webp&quality=lossless&width=1092&height=1092",
     },
     location: {
       by: "Clement",
-      image: "https://media.discordapp.net/attachments/1207765118717534298/1209165317561913414/Greeting_Shaman_Location.png?ex=65e5edf4&is=65d378f4&hm=db222fa3ff9490bdf49241981ac6bf0155436f0461de18b70abee7c3c040a77f&=&format=webp&quality=lossless&width=1092&height=1092",
+      image:
+        "https://media.discordapp.net/attachments/1207765118717534298/1209165317561913414/Greeting_Shaman_Location.png?ex=65e5edf4&is=65d378f4&hm=db222fa3ff9490bdf49241981ac6bf0155436f0461de18b70abee7c3c040a77f&=&format=webp&quality=lossless&width=1092&height=1092",
     },
     cosmetics: [{}],
     emote: {

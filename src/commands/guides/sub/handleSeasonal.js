@@ -63,7 +63,7 @@ module.exports = async (interaction, ephemeral) => {
         .setCustomId("expired")
         .addOptions(firstChoices)
         .setPlaceholder("Menu Expired")
-        .setDisabled(true)
+        .setDisabled(true),
     );
     interaction.editReply({
       components: [disabledRow],
@@ -117,7 +117,7 @@ async function handleSecond(int, value, ephemeral) {
     secondChoice: {
       value: value,
       label: secondChoices[messageChoices.get(int.message.id).firstChoice.value].find(
-        (choice) => choice.value === value
+        (choice) => choice.value === value,
       ).label,
     },
   });
@@ -155,7 +155,7 @@ async function handleBack(int) {
         emoji: getEmoji(choice.label),
       })),
       map.firstChoice.label,
-      true
+      true,
     );
     await int.update({
       content: `Guides for ${map.firstChoice.label}`,

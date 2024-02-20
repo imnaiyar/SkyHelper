@@ -28,61 +28,63 @@ module.exports = class quizUtils {
   static async displayResults(interaction, data) {
     try {
       let result = ``;
-    const sortedUserPoints = Object.entries(data.userPoints)
-      .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
-      .reduce((obj, [userId, points]) => ({ ...obj, [userId]: points }), {});
-    const keys = Object.keys(sortedUserPoints);
-    const highestScorer = keys[0];
-    const highestScore = sortedUserPoints[highestScorer];
-    if (highestScorer && keys.length !== 1) {
-      await updateUser(interaction.client, sortedUserPoints, highestScore > 0 ? highestScorer : null);
-    }
-    for (const userId in sortedUserPoints) {
-      result += `- <@${userId}> -  ${data.userPoints[userId]} (Accuracy Rate: ${
-        (data.userPoints[userId] / data.totalQuestions) * 100
-      }%)\n`;
-    }
-    const resultEmbed = new EmbedBuilder()
-      .setTitle("Result")
-      .setDescription(
-        `<@${highestScorer}> (${highestScore} points) is the winner <:confettiCousin:1131650251216920656>\n\n**Scoreboard**\n${result}\n\n${
-          keys.length === 1 ? "_Note: Score won't be updated on the leaderboard for single player game._" : ""
-        }`
-      )
-      .setColor("Random")
-      .setThumbnail("https://media.discordapp.net/attachments/867638574571323424/1196578824784191488/1705349785289.png")
-      .setFooter({
-        text: "SkyHelper",
-        iconURL: interaction.client.user.displayAvatarURL(),
-      })
-      .setAuthor({ name: "End of Quiz" });
-    const btn = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId(`play-again_${data.totalQuestions}`).setLabel("Play Again").setStyle(3)
-    );
-    if (!highestScorer) {
-      resultEmbed.setDescription("No one participated in the game");
-      interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
-    } else if (highestScore === 0) {
-      resultEmbed.setDescription("No one got a correct answer");
-      interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
-    } else {
-      const winner = interaction.guild.members.cache.get(highestScorer);
-      
-      const card = new QuizWinnerCard(winner, highestScore, data.totalQuestions);
+      const sortedUserPoints = Object.entries(data.userPoints)
+        .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
+        .reduce((obj, [userId, points]) => ({ ...obj, [userId]: points }), {});
+      const keys = Object.keys(sortedUserPoints);
+      const highestScorer = keys[0];
+      const highestScore = sortedUserPoints[highestScorer];
+      if (highestScorer && keys.length !== 1) {
+        await updateUser(interaction.client, sortedUserPoints, highestScore > 0 ? highestScorer : null);
+      }
+      for (const userId in sortedUserPoints) {
+        result += `- <@${userId}> -  ${data.userPoints[userId]} (Accuracy Rate: ${
+          (data.userPoints[userId] / data.totalQuestions) * 100
+        }%)\n`;
+      }
+      const resultEmbed = new EmbedBuilder()
+        .setTitle("Result")
+        .setDescription(
+          `<@${highestScorer}> (${highestScore} points) is the winner <:confettiCousin:1131650251216920656>\n\n**Scoreboard**\n${result}\n\n${
+            keys.length === 1 ? "_Note: Score won't be updated on the leaderboard for single player game._" : ""
+          }`,
+        )
+        .setColor("Random")
+        .setThumbnail(
+          "https://media.discordapp.net/attachments/867638574571323424/1196578824784191488/1705349785289.png",
+        )
+        .setFooter({
+          text: "SkyHelper",
+          iconURL: interaction.client.user.displayAvatarURL(),
+        })
+        .setAuthor({ name: "End of Quiz" });
+      const btn = new ActionRowBuilder().addComponents(
+        new ButtonBuilder().setCustomId(`play-again_${data.totalQuestions}`).setLabel("Play Again").setStyle(3),
+      );
+      if (!highestScorer) {
+        resultEmbed.setDescription("No one participated in the game");
+        interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
+      } else if (highestScore === 0) {
+        resultEmbed.setDescription("No one got a correct answer");
+        interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
+      } else {
+        const winner = interaction.guild.members.cache.get(highestScorer);
 
-      const cardBuffer = await card.build();
-     
-      const winnerBnr = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
-      resultEmbed.setImage(`attachment://${winnerBnr.name}`);
-      interaction.channel.send({
-        embeds: [resultEmbed],
-        components: [btn],
-        files: [winnerBnr],
-      });
+        const card = new QuizWinnerCard(winner, highestScore, data.totalQuestions);
+
+        const cardBuffer = await card.build();
+
+        const winnerBnr = new AttachmentBuilder(cardBuffer, { name: "winner.png" });
+        resultEmbed.setImage(`attachment://${winnerBnr.name}`);
+        interaction.channel.send({
+          embeds: [resultEmbed],
+          components: [btn],
+          files: [winnerBnr],
+        });
+      }
+    } catch (err) {
+      interaction.client.logger.error(err);
     }
-  } catch (err) {
-    interaction.client.logger.error(err)
-  }
   }
 
   /**

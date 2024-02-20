@@ -24,7 +24,7 @@ module.exports = class GuideUtils {
       ];
     }
     return new ActionRowBuilder().addComponents(
-      new StringSelectMenuBuilder().setCustomId(customId).setPlaceholder(placeholder).addOptions(options)
+      new StringSelectMenuBuilder().setCustomId(customId).setPlaceholder(placeholder).addOptions(options),
     );
   }
 
@@ -69,7 +69,7 @@ module.exports = class GuideUtils {
         .setCustomId("back")
         .setLabel(`⬅️ ${data[page - 2]?.title || data[page - 1].title}`)
         .setDisabled(page - 1 === 0)
-        .setStyle("2")
+        .setStyle("2"),
     );
 
     if (emoji) {
@@ -81,7 +81,7 @@ module.exports = class GuideUtils {
         .setCustomId("forward")
         .setLabel(`${data[page]?.title || data[page - 1].title} ➡️`)
         .setDisabled(page - 1 === total)
-        .setStyle("2")
+        .setStyle("2"),
     );
 
     const menu = new ActionRowBuilder().addComponents(
@@ -93,8 +93,8 @@ module.exports = class GuideUtils {
             label: area.title,
             default: area.title === embed.title,
             value: "area_" + index.toString(),
-          }))
-        )
+          })),
+        ),
     );
     row.push(menu, btns);
     return { embeds: [emb], components: row };

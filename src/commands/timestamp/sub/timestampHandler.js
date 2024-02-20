@@ -22,7 +22,7 @@ async function convertTime(interaction) {
     });
   }
 
-  let timezone = options.getString("timezone") || "America/Los_Angeles";
+  const timezone = options.getString("timezone") || "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
     return interaction.reply({
       content: "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`",
@@ -88,7 +88,7 @@ async function convertTime(interaction) {
                   ? "F"
                   : format === "shortTime"
                     ? "t"
-                    : "T"
+                    : "T",
       );
 
       result.addFields({
@@ -100,7 +100,7 @@ async function convertTime(interaction) {
   }
 
   const fieldsArray = Array.from(result.data.fields);
-  let fieldsData = [];
+  const fieldsData = [];
 
   const formatMap = {
     "Date 1": "DD/MM/YYYY",
@@ -133,7 +133,7 @@ async function convertTime(interaction) {
 
   timeRoute(webPath, content);
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${webPath}`).setStyle(ButtonStyle.Link)
+    new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${webPath}`).setStyle(ButtonStyle.Link),
   );
 
   return interaction.reply({

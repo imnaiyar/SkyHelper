@@ -29,10 +29,10 @@ const pinoLogger = pino.default(
           new Date().getMonth() + 1
         }.${new Date().getDate()}.log`,
         sync: true,
-        mkdir: true
+        mkdir: true,
       }),
     },
-  ])
+  ]),
 );
 
 function sendWebhook(content, err) {
@@ -41,10 +41,11 @@ function sendWebhook(content, err) {
 
   const embed = new EmbedBuilder().setColor("Blue").setAuthor({ name: err?.name || "Error" });
 
-  if (errString)
+  if (errString) {
     embed.setDescription(
-      "```js\n" + (errString.length > 4096 ? `${errString.substr(0, 4000)}...` : errString) + "\n```"
+      "```js\n" + (errString.length > 4096 ? `${errString.substr(0, 4000)}...` : errString) + "\n```",
     );
+  }
 
   if (
     errString ===
@@ -54,8 +55,9 @@ function sendWebhook(content, err) {
   at async SequentialHandler.queueRequest (/home/container/node_modules/@discordjs/rest/dist/index.js:712:14)
   at async REST.request (/home/container/node_modules/@discordjs/rest/dist/index.js:1321:22)
   at async TextChannel.send (/home/container/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:176:15)`
-  )
+  ) {
     console.log("Missing Access");
+  }
 
   embed.addFields({
     name: "Description",

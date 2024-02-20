@@ -11,7 +11,7 @@ const config = require("@root/config");
 module.exports = async (currentDate, footer) => {
   const { type, location, rewards, colors, showButtons, thumbUrl, noShard, eventStatus, timeRemaining } =
     await shardsReply(currentDate);
-  let result = new EmbedBuilder()
+  const result = new EmbedBuilder()
     .setAuthor({
       name: `Shards Info`,
       iconURL:
@@ -30,7 +30,7 @@ module.exports = async (currentDate, footer) => {
         { name: `Shard Type`, value: `${type} (${rewards})`, inline: true },
         { name: "Location", value: `${location}`, inline: true },
         { name: "Status", value: `${eventStatus}` },
-        { name: "Countdown", value: `${timeRemaining}`, inline: true }
+        { name: "Countdown", value: `${timeRemaining}`, inline: true },
       )
       .setColor(colors)
       .setThumbnail(thumbUrl);
@@ -48,7 +48,7 @@ module.exports = async (currentDate, footer) => {
     new ButtonBuilder().setEmoji("<:right:1207593237544435752>").setCustomId("next").setStyle("1"),
     new ButtonBuilder().setLabel("Timeline").setCustomId("timeline").setDisabled(disabled).setStyle("3"),
     new ButtonBuilder().setLabel("Location/Data").setCustomId("location").setDisabled(disabled).setStyle("3"),
-    new ButtonBuilder().setLabel("About Shard").setCustomId("about").setStyle("3")
+    new ButtonBuilder().setLabel("About Shard").setCustomId("about").setStyle("3"),
   );
   return { result, actionRow };
 };

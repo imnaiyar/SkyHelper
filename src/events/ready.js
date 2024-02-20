@@ -20,7 +20,7 @@ module.exports = async (client) => {
         name: "Bot Status",
         value: `Total guilds: ${client.guilds.cache.size}\nTotal Users: ${client.guilds.cache.reduce(
           (size, g) => size + g.memberCount,
-          0
+          0,
         )}`,
         inline: false,
       },
@@ -37,7 +37,7 @@ module.exports = async (client) => {
       {
         name: "Success",
         value: `SkyHelper is now online`,
-      }
+      },
     )
     .setColor("Gold")
     .setTimestamp();

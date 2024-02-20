@@ -16,7 +16,7 @@ async function calculateResult(targetTime, now, offset = 0) {
     const duration = moment.duration(end.diff(now)).format("d [days] h [hours] mm [minutes] ss [seconds]");
     return `${targetTime} is ongoing and will end at ${time(
       end.toDate(),
-      "t"
+      "t",
     )} (in ${duration})\n> - \`Next ${targetTime} Time:\` ${time(target.toDate(), "t")}`;
   } else {
     const duration = moment.duration(target.diff(now)).format("d [days] h [hours] mm [minutes] ss [seconds]");
@@ -46,8 +46,8 @@ async function skyTimes(client) {
   // eden
   const targetDayOfWeek = 0;
   const currentDayOfWeek = now.day();
-  let daysToAdd = targetDayOfWeek - currentDayOfWeek;
-  let edenTargetTime = now.clone().startOf("day").add(daysToAdd, "days");
+  const daysToAdd = targetDayOfWeek - currentDayOfWeek;
+  const edenTargetTime = now.clone().startOf("day").add(daysToAdd, "days");
   if (daysToAdd <= 0 || (daysToAdd === 0 && now.isAfter(edenTargetTime))) {
     edenTargetTime.add(7, "days");
   }
@@ -65,18 +65,18 @@ async function skyTimes(client) {
     .duration(client.skyEvents.eventStarts.diff(now))
     .format("d [days] h [hours] mm [minutes] ss [seconds]");
 
-  let eventDescription =
+  const eventDescription =
     client.skyEvents.eventActive &&
     !now.isAfter(client.skyEvents.eventEnds) &&
     now.isAfter(client.skyEvents.eventStarts)
       ? `${client.skyEvents.eventName} is currently active, and ends on ${time(
           client.skyEvents.eventEnds.toDate(),
-          "f"
+          "f",
         )} (in ${eventDurEnd})`
       : client.skyEvents.eventActive && !now.isAfter(client.skyEvents.eventEnds)
         ? `${client.skyEvents.eventName} will start on ${time(
             client.skyEvents.eventStarts.toDate(),
-            "f"
+            "f",
           )} (in ${eventDurStart})`
         : "No active events.";
 

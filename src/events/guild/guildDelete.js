@@ -45,7 +45,7 @@ module.exports = async (client, guild) => {
           client.user.displayName
         }\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${
           client.application.commands.cache.size + 3
-        }`
+        }`,
       )
       .setColor(2895153)
       .setFooter({
@@ -82,7 +82,7 @@ module.exports = async (client, guild) => {
         name: "Members",
         value: `\`\`\`yaml\n${guild.memberCount}\`\`\``,
         inline: false,
-      }
+      },
     )
     .setFooter({ text: `Guild #${client.guilds.cache.size}` });
 

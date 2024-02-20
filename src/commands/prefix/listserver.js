@@ -38,14 +38,14 @@ module.exports = {
     let currentPage = 1;
 
     // Buttons Row
-    let components = [];
+    const components = [];
     components.push(
       new ButtonBuilder().setCustomId("prevBtn").setEmoji("⬅️").setStyle(ButtonStyle.Secondary).setDisabled(true),
       new ButtonBuilder()
         .setCustomId("nxtBtn")
         .setEmoji("➡️")
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(totalPages === 1)
+        .setDisabled(totalPages === 1),
     );
     let buttonsRow = new ActionRowBuilder().addComponents(components);
 
@@ -75,10 +75,10 @@ module.exports = {
       }
       embed.addFields(fields);
 
-      let components = [];
+      const components = [];
       components.push(
         ButtonBuilder.from(buttonsRow.components[0]).setDisabled(currentPage === 1),
-        ButtonBuilder.from(buttonsRow.components[1]).setDisabled(currentPage === totalPages)
+        ButtonBuilder.from(buttonsRow.components[1]).setDisabled(currentPage === totalPages),
       );
       buttonsRow = new ActionRowBuilder().addComponents(components);
       return embed;

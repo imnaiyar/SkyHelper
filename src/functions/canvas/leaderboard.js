@@ -141,7 +141,7 @@ class QuizLeaderboardCard {
           return this;
         } else {
           throw new Error(
-            "Invalid color for the second argument in setForeground method. You must give a hexadecimal color."
+            "Invalid color for the second argument in setForeground method. You must give a hexadecimal color.",
           );
         }
       } else {
@@ -161,17 +161,18 @@ class QuizLeaderboardCard {
   }
 
   async build() {
-    registerFont(path.join(__dirname, `fonts/circularstd-black.otf`), { family: "circular-std"});
-    registerFont(path.join(__dirname, `fonts/notosans-jp-black.ttf`), { family: "noto-sans-jp"});
-    registerFont(path.join(__dirname, `fonts/notosans-black.ttf`), { family: "noto-sans"});
-    registerFont(path.join(__dirname, `fonts/notoemoji-bold.ttf`), { family: "noto-emoji"});
-    registerFont(path.join(__dirname, `fonts/notosans-kr-black.ttf`), { family: "noto-sans-kr"});
+    registerFont(path.join(__dirname, `fonts/circularstd-black.otf`), { family: "circular-std" });
+    registerFont(path.join(__dirname, `fonts/notosans-jp-black.ttf`), { family: "noto-sans-jp" });
+    registerFont(path.join(__dirname, `fonts/notosans-black.ttf`), { family: "noto-sans" });
+    registerFont(path.join(__dirname, `fonts/notoemoji-bold.ttf`), { family: "noto-emoji" });
+    registerFont(path.join(__dirname, `fonts/notosans-kr-black.ttf`), { family: "noto-sans-kr" });
 
     const fillRoundRect = (ctx, x, y, w, h, r, f, s) => {
-      if (typeof r === "number") r = { tl: r, tr: r, br: r, bl: r };
-      else {
-        var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
-        for (var side in defaultRadius) {
+      if (typeof r === "number") {
+        r = { tl: r, tr: r, br: r, bl: r };
+      } else {
+        const defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+        for (const side in defaultRadius) {
           r[side] = r[side] || defaultRadius[side];
         }
       }
@@ -191,14 +192,14 @@ class QuizLeaderboardCard {
     };
 
     const abbreviateNumber = (value) => {
-      var newValue = value;
+      let newValue = value;
       if (value >= 1000) {
-        var suffixes = ["", "K", "M", "B", "T"];
-        var suffixNum = Math.floor(("" + value).length / 3);
-        var shortValue = "";
-        for (var precision = 2; precision >= 1; precision--) {
+        const suffixes = ["", "K", "M", "B", "T"];
+        const suffixNum = Math.floor(("" + value).length / 3);
+        let shortValue = "";
+        for (let precision = 2; precision >= 1; precision--) {
           shortValue = parseFloat((suffixNum != 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(precision));
-          var dotLessShortValue = (shortValue + "").replace(/[^a-zA-Z 0-9]+/g, "");
+          const dotLessShortValue = (shortValue + "").replace(/[^a-zA-Z 0-9]+/g, "");
           if (dotLessShortValue.length <= 2) {
             break;
           }
@@ -209,7 +210,7 @@ class QuizLeaderboardCard {
       return newValue;
     };
 
-    let yuksek = this.usersData.length * 74.5;
+    const yuksek = this.usersData.length * 74.5;
 
     const canvas = createCanvas(680, yuksek);
     const ctx = canvas.getContext("2d");
@@ -225,19 +226,19 @@ class QuizLeaderboardCard {
         ctx.drawImage(await loadImage(this.background.background), 0, 0, canvas.width, canvas.height);
       } catch {
         throw new Error(
-          "The image given in the second parameter of the setBackground method is not valid or you are not connected to the internet."
+          "The image given in the second parameter of the setBackground method is not valid or you are not connected to the internet.",
         );
       }
     }
 
     if (this.usersData) {
-      var Box_Y = 0,
+      let Box_Y = 0,
         Avatar_Y = 0,
         Tag_Y = 45,
         XP_Y = 45,
         Level_Y = 30,
         Rank_Y = 45;
-      for (var i = 0; i < this.usersData.length; i++) {
+      for (let i = 0; i < this.usersData.length; i++) {
         ctx.save();
         ctx.fillStyle = this.colors.box;
         ctx.globalAlpha = this.opacity;
@@ -272,7 +273,7 @@ class QuizLeaderboardCard {
           }`,
           560,
           XP_Y,
-          200
+          200,
         );
 
         if (this.usersData[i].top === 1) {

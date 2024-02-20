@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
-const spirits = require('../commands//guides/sub/shared/spiritsData.js')
+const spirits = require("../commands//guides/sub/shared/spiritsData.js");
 const { table } = require("table");
 const moment = require("moment-timezone");
 const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
@@ -67,17 +67,17 @@ module.exports = class SkyHelper extends Client {
       eventEnds: moment.tz("2024-02-11T23:59:59", this.timezone),
       eventDuration: "13 days",
     };
-    
+
     /**
      * stores current/upcoming ts details
      * @type {Object}
      */
     this.ts = {
-      lastOccurence: '',
-      name: '',
-      location: '',
-      tree: '',
-      total: ''
+      lastOccurence: "",
+      name: "",
+      location: "",
+      tree: "",
+      total: "",
     };
     // user object cache for credits
     /**
@@ -98,38 +98,38 @@ module.exports = class SkyHelper extends Client {
      * @type {Map<String, Object>}
      */
     this.emojisMap = new Map();
-    this.emojisMap.set('realms', {
-      "Isle of Dawn": '<:Isle:1150605424752590868>',
-      "Daylight Prairie": '<:Prairie:1150605405408473179>',
-      "Hidden Forest": '<:Forest:1150605383656800317>',
-      "Valley of Triumph": '<:Valley:1150605355777273908>',
-      "Golden Wasteland": '<:Wasteland:1150605333862027314>',
-      "Vault of Knowledge": '<:Vault:1150605308364861580>',
-      "Eye of Eden": '<:eden:1205960597456293969>',
-    })
-    this.emojisMap.set('seasons', {
-      "Nine-Colored Deer": '<:ninecoloreddeer:1197412132657053746>',
-      "Revival": '<:revival:1163480957706321950>',
-      "Moments": '<:moments:1130958731211985019>',
-      "Passage": '<:passage:1130958698571911239>',
-      "Rememberance": '<:remembrance:1130958673959719062>',
-      "Aurora": '<:aurora:1130958641189621771>',
-      "Shattering": '<:shattering:1130961257097334895>',
-      "Performance": '<:performance:1130958595345895444>',
-      "Abyss": '<:abyss:1130958569748045845>',
-      "Flight": '<:flight:1130958544276045945>',
-      "The Little Prince": '<:littleprince:1130958521253502987>',
-      "Assembly": '<:assembly:1130958465351811173>',
-      "Dreams": '<:dreams:1130958442232815646>',
-      "Prophecy": '<:prophecy:1130958414655279304>',
-      "Sanctuary": '<:sanctuary:1130958391347515573>',
-      "Enchantment": '<:enchantment:1130958367674867742>',
-      "Rhythm": '<:rhythm:1130958345352777849>',
-      "Belonging": '<:belonging:1130958323823423509>',
-      "Lightseekers": '<:lightseekers:1130958300293365870>',
-      "Gratitude": '<:gratitude:1130958261349261435>',
-    })
-    
+    this.emojisMap.set("realms", {
+      "Isle of Dawn": "<:Isle:1150605424752590868>",
+      "Daylight Prairie": "<:Prairie:1150605405408473179>",
+      "Hidden Forest": "<:Forest:1150605383656800317>",
+      "Valley of Triumph": "<:Valley:1150605355777273908>",
+      "Golden Wasteland": "<:Wasteland:1150605333862027314>",
+      "Vault of Knowledge": "<:Vault:1150605308364861580>",
+      "Eye of Eden": "<:eden:1205960597456293969>",
+    });
+    this.emojisMap.set("seasons", {
+      "Nine-Colored Deer": "<:ninecoloreddeer:1197412132657053746>",
+      Revival: "<:revival:1163480957706321950>",
+      Moments: "<:moments:1130958731211985019>",
+      Passage: "<:passage:1130958698571911239>",
+      Rememberance: "<:remembrance:1130958673959719062>",
+      Aurora: "<:aurora:1130958641189621771>",
+      Shattering: "<:shattering:1130961257097334895>",
+      Performance: "<:performance:1130958595345895444>",
+      Abyss: "<:abyss:1130958569748045845>",
+      Flight: "<:flight:1130958544276045945>",
+      "The Little Prince": "<:littleprince:1130958521253502987>",
+      Assembly: "<:assembly:1130958465351811173>",
+      Dreams: "<:dreams:1130958442232815646>",
+      Prophecy: "<:prophecy:1130958414655279304>",
+      Sanctuary: "<:sanctuary:1130958391347515573>",
+      Enchantment: "<:enchantment:1130958367674867742>",
+      Rhythm: "<:rhythm:1130958345352777849>",
+      Belonging: "<:belonging:1130958323823423509>",
+      Lightseekers: "<:lightseekers:1130958300293365870>",
+      Gratitude: "<:gratitude:1130958261349261435>",
+    });
+
     this.spiritsData = spirits;
     // Checks for how this class is created so it doesnt mess up the process
     if (
@@ -185,7 +185,7 @@ module.exports = class SkyHelper extends Client {
         },
         singleLine: true,
         columns: [{ width: 25 }, { width: 5, alignment: "center" }],
-      })
+      }),
     );
 
     Logger.log(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`);
@@ -288,10 +288,10 @@ module.exports = class SkyHelper extends Client {
       typeof value === "string" && isNaN(value)
         ? this.application.commands.cache.find((cmd) => cmd.name === value.toLowerCase())
         : !isNaN(value)
-        ? this.application.commands.cache.get(value)
-        : (() => {
-            throw new Error("Provided Value Must Either be a String or a Number");
-          })();
+          ? this.application.commands.cache.get(value)
+          : (() => {
+              throw new Error("Provided Value Must Either be a String or a Number");
+            })();
     if (!command) throw new Error("No matching command found");
     return command;
   }
@@ -331,14 +331,13 @@ module.exports = class SkyHelper extends Client {
 
   /**
    * Basic filter for a collector
-   * @param {import('discord.js').MessageComponentInteraction} int 
+   * @param {import('discord.js').MessageComponentInteraction} int
    */
   getFilter(int) {
     const filter = (i) => {
       if (i.user.id !== int.user?.id || int.author?.id) {
         i.reply({
-          content:
-            "You can't use the menu generated by others.",
+          content: "You can't use the menu generated by others.",
           ephemeral: true,
         });
         return false;

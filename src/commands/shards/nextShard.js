@@ -74,10 +74,10 @@ module.exports = {
 
 function getNextRedEvents(daysNum, type) {
   const redEvents = [];
-  let today = moment().tz("America/Los_Angeles").startOf("day");
+  const today = moment().tz("America/Los_Angeles").startOf("day");
 
   while (redEvents.length < daysNum) {
-    let dayCount = today.date() - 1;
+    const dayCount = today.date() - 1;
     const event = shardType[dayCount % shardType.length];
     const secondEvent = shardLocation[dayCount % shardLocation.length];
     const dayOfWeek = today.day();
@@ -110,14 +110,12 @@ function getNextRedEvents(daysNum, type) {
           }
         }
       }
-    } else {
-      if (!dayToSkip[event].includes(dayOfWeek)) {
-        const fallTime = eventTimes[event];
-        const unix = Math.floor(fallTime.valueOf() / 1000);
-        const shard = event === event.toUpperCase() ? "Red Shard" : "Black Shard";
-        const todayDate = today.format("YYYY-MM-DD");
-        redEvents.push({ day: todayDate, event, secondEvent, unix, shard });
-      }
+    } else if (!dayToSkip[event].includes(dayOfWeek)) {
+      const fallTime = eventTimes[event];
+      const unix = Math.floor(fallTime.valueOf() / 1000);
+      const shard = event === event.toUpperCase() ? "Red Shard" : "Black Shard";
+      const todayDate = today.format("YYYY-MM-DD");
+      redEvents.push({ day: todayDate, event, secondEvent, unix, shard });
     }
     today.add(1, "day");
   }

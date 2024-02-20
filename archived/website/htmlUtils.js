@@ -174,7 +174,7 @@ module.exports = (interaction, fieldsData, unixTime, offset, timezone) => {
     <button class="copyBtn" onclick="copyText(${index}, this)">Copy</button>
   </div>
   <br>
-`
+`,
          )
          .join("")}
 <script>

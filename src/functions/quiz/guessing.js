@@ -88,7 +88,7 @@ async function respond(interaction, data) {
   collector.on("end", async (collected) => {
     if (collected.size === 0) {
       interaction.channel.send(
-        `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`
+        `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`,
       );
     }
 

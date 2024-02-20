@@ -8,7 +8,7 @@ module.exports = (currentDate) => {
   const getTime = (hours, minutes, seconds) => {
     return time(
       currentDate.clone().startOf("day").add(hours, "hours").add(minutes, "minutes").add(seconds, "seconds").toDate(),
-      seconds > 0 ? "T" : "t"
+      seconds > 0 ? "T" : "t",
     );
   };
 
@@ -24,7 +24,7 @@ module.exports = (currentDate) => {
     shardLandSeconds,
     shardEndHours,
     shardEndMinutes,
-    shardMusic
+    shardMusic,
   ) => {
     return {
       title,

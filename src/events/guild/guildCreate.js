@@ -25,11 +25,11 @@ module.exports = async (client, guild) => {
   registerGuild(guild);
 
   // Check if joined guild is blacklisted
-  let data = await Guild.findOne({ Guild: guild.id }).catch((err) => {});
+  const data = await Guild.findOne({ Guild: guild.id }).catch((err) => {});
   if (data) {
     const owner = guild.members.cache.get(guild.ownerId);
     owner.user.send(
-      `An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`
+      `An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`,
     );
     await guild.leave();
 
@@ -39,7 +39,7 @@ module.exports = async (client, guild) => {
       .addFields(
         { name: "Blacklisted Guild Name", value: `${data.Name}` },
         { name: "Reason", value: `${data.Reason}` },
-        { name: "Blacklisted Date", value: `${data?.Date || "Unknown"}` }
+        { name: "Blacklisted Date", value: `${data?.Date || "Unknown"}` },
       );
     webhookLogger.send({
       username: "Blacklist Server",
@@ -62,7 +62,7 @@ module.exports = async (client, guild) => {
           client.user.displayName
         }\n**Total Servers**: ${guildCount}\n**Total Users**: ${userCount}\n**Total Commands**: ${
           client.application.commands.cache.size + 3
-        }`
+        }`,
       )
       .setColor(2895153)
       .setFooter({
@@ -115,7 +115,7 @@ module.exports = async (client, guild) => {
         name: "Members",
         value: `\`\`\`yaml\n${guild.memberCount}\`\`\``,
         inline: false,
-      }
+      },
     )
     .setFooter({ text: `Guild #${client.guilds.cache.size}` });
 

@@ -11,7 +11,7 @@ const config = require("@root/config");
 module.exports = async (client, footer) => {
   const { geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr, eventDescription } =
     await skyTimes(client);
-  let result = new EmbedBuilder()
+  const result = new EmbedBuilder()
     .setAuthor({
       name: `SkyTimes`,
       iconURL: config.BOT_ICON,
@@ -40,7 +40,7 @@ module.exports = async (client, footer) => {
       {
         name: "Event",
         value: eventDescription,
-      }
+      },
     )
     .setTimestamp(Date.now())
     .setFooter({

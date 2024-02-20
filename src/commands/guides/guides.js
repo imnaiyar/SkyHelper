@@ -34,7 +34,7 @@ module.exports = {
               {
                 name: "Spirits",
                 value: "spirits",
-              }
+              },
             ],
             required: true,
           },
@@ -138,7 +138,7 @@ module.exports = {
     switch (sub) {
       case "seasonal": {
         const choice = interaction.options.getString("season");
-        console.log(choice)
+        console.log(choice);
         await handleSeasonal(interaction, ephemeral);
         break;
       }
@@ -163,14 +163,21 @@ module.exports = {
     const focusedValue = interaction.options.getFocused(true);
     const sub = interaction.options.getSubcommand();
 
-    if (sub === "seasonal" && focusedValue.name === 'season') {
+    if (sub === "seasonal" && focusedValue.name === "season") {
       // EmojisMap contain all the season name, so get it from there
-      const choices = Object.keys(client.emojisMap.get('seasons')).map(ch => {
+      const choices = Object.keys(client.emojisMap.get("seasons")).map((ch) => {
         return `Season of ${ch}`;
-      });      
-      const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.value.toLowerCase())).slice(0, 25);
-      console.log(filtered)
-      await interaction.respond(filtered.map(choice => ({ name: choice, value: choice.replace('Season of ', '').split(' ').join('_').toLocaleLowerCase() })));
+      });
+      const filtered = choices
+        .filter((choice) => choice.toLowerCase().includes(focusedValue.value.toLowerCase()))
+        .slice(0, 25);
+      console.log(filtered);
+      await interaction.respond(
+        filtered.map((choice) => ({
+          name: choice,
+          value: choice.replace("Season of ", "").split(" ").join("_").toLocaleLowerCase(),
+        })),
+      );
     }
   },
 };

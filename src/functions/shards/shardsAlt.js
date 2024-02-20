@@ -47,7 +47,7 @@ async function shardsAlt(currentDate) {
     ) {
       const startUnix2 = Math.floor(eventTimings[i + 1].start.valueOf() / 1000);
       eventStatus = `${i + 1}${util.getSuffix(i + 1)} shard ended at <t:${endUnix}:t>, ${i + 2}${util.getSuffix(
-        i + 2
+        i + 2,
       )} Shard has not fallen yet`;
       const duration = moment.duration(eventTimings[i + 1].start.diff(present));
       timeRemaining = `Falls in ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s (at <t:${startUnix2}:T>)`;

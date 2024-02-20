@@ -24,7 +24,7 @@ const client = new SkyHelper();
   // setup mongoose
   initializeMongoose();
 
-  //bots presence
+  // bots presence
   setupPresence(client);
   // auto shard function
   cron.schedule("*/1 * * * *", async () => {

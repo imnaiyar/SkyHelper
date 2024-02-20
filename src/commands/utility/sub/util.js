@@ -73,7 +73,7 @@ async function getChangelog(interaction) {
     .setColor("Gold")
     .setTitle(`Changelog v4.4.0`)
     .setDescription(
-      `Bot's website at ${client.config.WEB_URL} has been completely redesigned, added [commands](${client.config.WEB_URL}/commands) page to the website with detailed instructions on how to use them.\n\nCopy feature for 'timestsamp' command on the website has been redesignedt to provide a smooth experience.\n\nAdded a new option [spirit] to </seasonal-guides:1147244751708491897> command\n- you can search directly for a seasonal spirit's tree/location\n*other minor changes*\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`
+      `Bot's website at ${client.config.WEB_URL} has been completely redesigned, added [commands](${client.config.WEB_URL}/commands) page to the website with detailed instructions on how to use them.\n\nCopy feature for 'timestsamp' command on the website has been redesignedt to provide a smooth experience.\n\nAdded a new option [spirit] to </seasonal-guides:1147244751708491897> command\n- you can search directly for a seasonal spirit's tree/location\n*other minor changes*\n\nFor previous/detailed changelogs, checkout the release page on GitHub [here](https://github.com/imnaiyar/SkyHelper/releases).`,
     )
     .setFooter({ text: `v4.4.0` });
   interaction.reply({ embeds: [embed], ephemral: true });

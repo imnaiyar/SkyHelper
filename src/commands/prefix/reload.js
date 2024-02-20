@@ -118,7 +118,7 @@ async function consoleRun(type, client) {
               name: "Files changed",
               value: `\`\`\`bash\n${matched.length > 4096 ? matched.substr(0, 4000) : matched}\`\`\``,
             })
-            .setTimestamp()
+            .setTimestamp(),
         );
       }
     });

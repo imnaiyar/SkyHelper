@@ -27,14 +27,15 @@ module.exports = async (client, interaction) => {
       command.data.category &&
       command.data.category === "OWNER" &&
       !client.config.OWNER.includes(interaction.user.id)
-    )
+    ) {
       return;
+    }
 
     // Check if the user has permissions to use the command.
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
       return interaction.reply({
         content: `You don't have necessary permission(s) (${parsePerm(
-          command.data.userPermissions
+          command.data.userPermissions,
         )}) to use this command`,
         ephemeral: true,
       });
@@ -44,7 +45,7 @@ module.exports = async (client, interaction) => {
     if (command.data?.botPermissions && !interaction.guild.members.me.permissions.has(command.data.botPermissions)) {
       return interaction.reply({
         content: `I do not have the required permission(s) (${parsePerm(
-          command.data.botPermissions
+          command.data.botPermissions,
         )}) to perform this action. Please run the command again after granting me the necessary permission(s).`,
         ephemeral: true,
       });
@@ -94,7 +95,7 @@ module.exports = async (client, interaction) => {
           {
             name: `Channel`,
             value: `${interaction.channel?.name} \`[${interaction.channel?.id}]\``,
-          }
+          },
         )
         .setColor("Blurple")
         .setTimestamp();
@@ -110,7 +111,7 @@ module.exports = async (client, interaction) => {
         .setDescription(`An error occurred while executing this command.`);
 
       const actionRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setLabel("Report Bug").setCustomId("error_report").setStyle(ButtonStyle.Secondary)
+        new ButtonBuilder().setLabel("Report Bug").setCustomId("error_report").setStyle(ButtonStyle.Secondary),
       );
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
@@ -167,7 +168,7 @@ module.exports = async (client, interaction) => {
             name: `Server`,
             value: `${interaction.guild.name} \`[${interaction.guild.id}]\``,
           },
-          { name: `What Happened`, value: `${whatHappened}` }
+          { name: `What Happened`, value: `${whatHappened}` },
         )
         .setColor("Blurple")
         .setTimestamp();

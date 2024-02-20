@@ -12,7 +12,7 @@ module.exports = {
       await client.registerCommands();
       await client.application.commands.fetch();
       await reply.edit(
-        `✅️ Started refreshing application (/) commands.\n✅️ Registered ${client.application.commands.cache.size} commands`
+        `✅️ Started refreshing application (/) commands.\n✅️ Registered ${client.application.commands.cache.size} commands`,
       );
     } catch (error) {
       client.logger.error(error);

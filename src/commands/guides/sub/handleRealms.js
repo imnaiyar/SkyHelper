@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
 const summary = require("./extends/realms/summaries.js");
 const maps = require("./extends/realms/maps.js");
-const respondSpirits = require('./shared/handleSpirits.js')
+const respondSpirits = require("./shared/handleSpirits.js");
 class HandleRealms {
   constructor(interaction, realm, value, msg) {
     this.interaction = interaction;
@@ -9,7 +9,7 @@ class HandleRealms {
     this.value = value;
     this.msg = msg;
     this.client = interaction.client;
-    this.filter = this.client.getFilter(this.interaction)
+    this.filter = this.client.getFilter(this.interaction);
   }
   async respond() {
     const value = this.value;
@@ -37,7 +37,7 @@ class HandleRealms {
       .setImage(data.main?.image);
 
     const rowFirst = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setLabel("Different Areas").setCustomId("areas").setStyle("1")
+      new ButtonBuilder().setLabel("Different Areas").setCustomId("areas").setStyle("1"),
     );
     await this.interaction.followUp({
       embeds: [embed],
@@ -105,7 +105,7 @@ class HandleRealms {
     const data = maps.getMaps(this.value);
 
     let page = 1;
-    let total = data.maps.length - 1;
+    const total = data.maps.length - 1;
     const author = `Maps of ${this.realm}`;
     const row = this.getRealmsRow(data.maps, page, total, author, true);
     await this.interaction.followUp({
@@ -155,31 +155,31 @@ class HandleRealms {
           emoji: v?.emote?.icon || v?.stance?.icon || v?.call?.icon || v.action?.icon,
         }));
     };
-    
+
     const regularRow = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId(`regular_${this.value}`)
         .setPlaceholder("Regular Spirits")
-        .addOptions(getSpiritsObj("Regular Spirit"))
+        .addOptions(getSpiritsObj("Regular Spirit")),
     );
     const seasonalRow = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId(`seasonal_${this.value}`)
         .setPlaceholder("Seasonal Spirits")
-        .addOptions(getSpiritsObj("Seasonal Spirit"))
+        .addOptions(getSpiritsObj("Seasonal Spirit")),
     );
-    
+
     await this.interaction.followUp({
       content: `Spirits of __${this.realm}__`,
-      components: [regularRow, seasonalRow]
+      components: [regularRow, seasonalRow],
     });
-    
+
     const filter = this.filter;
     const collector = this.msg.createMessageComponentCollector({
       filter,
-      idle: 2 * 60 * 1000
-    })
-    collector.on('collect', async (inter) => {
+      idle: 2 * 60 * 1000,
+    });
+    collector.on("collect", async (inter) => {
       if (!inter.isStringSelectMenu()) return;
       await inter.deferUpdate();
       const value = inter.values[0];
@@ -199,7 +199,7 @@ class HandleRealms {
       emb.setURL(`https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#Maps`);
     } else {
       emb.setURL(
-        `https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#${embed.title.split(" ").join("_")}`
+        `https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#${embed.title.split(" ").join("_")}`,
       );
     }
     const row = [];
@@ -210,7 +210,7 @@ class HandleRealms {
         .setCustomId("back")
         .setLabel(`⬅️ ${data[page - 2]?.title || data[page - 1].title}`)
         .setDisabled(page - 1 === 0)
-        .setStyle("2")
+        .setStyle("2"),
     );
 
     if (emoji) {
@@ -222,7 +222,7 @@ class HandleRealms {
         .setCustomId("forward")
         .setLabel(`${data[page]?.title || data[page - 1].title} ➡️`)
         .setDisabled(page - 1 === total)
-        .setStyle("2")
+        .setStyle("2"),
     );
 
     const menu = new ActionRowBuilder().addComponents(
@@ -234,8 +234,8 @@ class HandleRealms {
             label: area.title,
             default: area.title === embed.title,
             value: "area_" + index.toString(),
-          }))
-        )
+          })),
+        ),
     );
     row.push(menu, btns);
     return { embeds: [emb], components: row };

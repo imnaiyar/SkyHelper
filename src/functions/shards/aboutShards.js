@@ -67,7 +67,7 @@ async function showShard(interaction, shard, Art) {
       .setEmoji("<:purpleUp:1207632852770881576>")
       .setCustomId("about_original")
       .setStyle(3)
-      .setDisabled(false)
+      .setDisabled(false),
   );
 
   if (currentShardIndex === 0) {

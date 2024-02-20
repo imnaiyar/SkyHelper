@@ -75,7 +75,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle("Start Quiz!")
         .setDescription(
-          "**Rules**\n- You will be presented with questions, and your answers should be typed in the channel.\n- You have 15 seconds to answer correctly.\n- The first correct answer earns a point; if no one answers correctly, the quiz moves to the next question.\n- The default number of questions in a round is 15, but you can choose the quantity when running the command."
+          "**Rules**\n- You will be presented with questions, and your answers should be typed in the channel.\n- You have 15 seconds to answer correctly.\n- The first correct answer earns a point; if no one answers correctly, the quiz moves to the next question.\n- The default number of questions in a round is 15, but you can choose the quantity when running the command.",
         )
         .setColor("Random")
         .setTimestamp()
@@ -88,7 +88,7 @@ module.exports = {
         });
 
       const btn = new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setCustomId("start-quiz").setLabel("Start").setStyle(3)
+        new ButtonBuilder().setCustomId("start-quiz").setLabel("Start").setStyle(3),
       );
       const reply = await interaction.reply({
         embeds: [embed],
@@ -128,7 +128,7 @@ module.exports = {
         .catch(async (error) => {
           if (error.code === "InteractionCollectorError") {
             const newRow = new ActionRowBuilder().addComponents(
-              new ButtonBuilder().setLabel("Timed Out").setStyle(1).setCustomId("lol").setDisabled(true)
+              new ButtonBuilder().setLabel("Timed Out").setStyle(1).setCustomId("lol").setDisabled(true),
             );
 
             await reply.edit({
@@ -194,8 +194,8 @@ async function getAllUser(data, client) {
 
   const top = await new QuizLeaderboardCard()
     .setOpacity(0.6)
-    .setScoreMessage("Wins:") //(Preferred Option)
-    .setabbreviateNumber(false) //(Preferred Option)
+    .setScoreMessage("Wins:") // (Preferred Option)
+    .setabbreviateNumber(false) // (Preferred Option)
     .setColors({
       box: "#212121",
       username: "#ffffff",
@@ -203,7 +203,7 @@ async function getAllUser(data, client) {
       firstRank: "#f7c716",
       secondRank: "#9e9e9e",
       thirdRank: "#94610f",
-    }) //(Preferred Option)
+    }) // (Preferred Option)
     .setUsersData(lbData.slice(0, 10))
     .build();
   return top;

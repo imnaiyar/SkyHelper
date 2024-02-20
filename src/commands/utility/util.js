@@ -102,7 +102,7 @@ function getPing(interaction) {
   const { client } = interaction;
   interaction.reply(
     `🏓 Message Latency is ${Date.now() - interaction.createdTimestamp}ms.\n🏓 Websocket Latency is ${Math.round(
-      client.ws.ping
-    )}ms`
+      client.ws.ping,
+    )}ms`,
   );
 }
