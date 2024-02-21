@@ -1,13 +1,13 @@
-const { ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
+const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, EmbedBuilder} = require("discord.js");
 const { QuestChoices } = require("./extends/seasonal/SeasonalChoices.js");
 const handleSpirits = require('./shared/handleSpirits.js');
 const responses = require("./extends/seasonal/GuideResponse.js");
 
 /**
  * @param {import('discord.js').ChatInputCommandInteraction} interaction
- * @param {*} season
- * @param {*} type
- * @param {*} ephemeral
+ * @param {String} season
+ * @param {String} type
+ * @param {Boolean} ephemeral
  */
 module.exports = async (interaction, season, type, ephemeral) => {
   const filter = (i) => {
@@ -71,12 +71,20 @@ module.exports = async (interaction, season, type, ephemeral) => {
    const row = new ActionRowBuilder()
    .addComponents(
     new StringSelectMenuBuilder()
-    .setCustomId('quests')
+    .setCustomId('seasonal-quests')
     .setPlaceholder(`Quests - ${season}`)
     .setOptions(options),
    );
+   const backBtn = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+      .setCustomId('getBack')
+      .setLabel('Back')
+      .setStyle('1')
+      .setEmoji("1207632852770881576")
+    )
 
-   const reply = await interaction.followUp({ content: `Quests for ${interaction.client.emojisMap.get('seasons')[season.replace("Season of ", "").trim()]} **${season}**`, components: [row] });
+   const reply = await interaction.followUp({ content: `Quests for ${interaction.client.emojisMap.get('seasons')[season.replace("Season of ", "").trim()]} **${season}**`, components: [row], fetchReply: true});
 
    const collector = reply.createMessageComponentCollector({
     filter,
@@ -84,11 +92,46 @@ module.exports = async (interaction, season, type, ephemeral) => {
    });
 
    collector.on('collect', async (int) => {
-    if (!int.isStringSelectMenu() && int.customId !== 'quests') return;
-    await int.deferReply({ ephemeral: ephemeral });
-    const qValue = int.values[0];
-    console.log(qValue);
-    await int.followUp(responses.getResponse(qValue));
-   });
+    if (!['getBack', 'seasonal-quests'].includes(int.customId)) return;
+    await int.deferUpdate();
+    switch (int.customId) {
+      case 'seasonal-quests': {
+       const qValue = int.values[0];
+       const res = responses.getResponse(qValue)
+       
+     await int.editReply({
+      components: [backBtn],
+      embeds: [new EmbedBuilder().setAuthor({ name: `Quests - ${season}`}).setDescription(res.content).setImage(res.files[0])]
+    });
+      break;
+     }
+     case 'getBack': {
+      await int.editReply({
+        content: reply.content,
+        components: reply.components,
+        embeds: reply.embeds,
+        files: reply.files
+      })
+      break;
+     }
+    }
+    });
+
+  collector.on('end', async () => {
+    const fr = new ActionRowBuilder()
+   .addComponents(
+    new StringSelectMenuBuilder()
+    .setCustomId('out')
+    .setPlaceholder(`Timed Out`)
+    .setOptions([
+      {
+        label: 'hi',
+        value: 'g'
+      }
+    ])
+    .setDisabled(true),
+   );
+    reply.edit({components: [fr]})
+  })
   }
 };

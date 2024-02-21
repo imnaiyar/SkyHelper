@@ -134,12 +134,16 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const ephmrl = interaction.options.getBoolean("hide");
     const ephemeral = ephmrl !== null ? ephmrl : false;
-    reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
     switch (sub) {
       case "seasonal": {
         const season = interaction.options.getString("season");
         const type = interaction.options.getString("type");
-
+        const valid =  Object.keys(interaction.client.emojisMap.get('seasons')).includes(season.replace('Season of ', '').trim())
+        if (!valid) {
+          interaction.reply({ content: `Selected season (${season}) is not a valid season in Sky. You wanna try again?`, ephemeral: true})
+          return;
+        }
+        reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
         await handleSeasonal(interaction, season, type, ephemeral);
         break;
       }
@@ -147,13 +151,15 @@ module.exports = {
         const realmValue = interaction.options.getString("realm");
         const type = interaction.options.getString("type");
         if (!realmValue || !type) {
-          interaction.followUp("You need to provide both `realm` and `type` options");
+          interaction.reply({ content: "You need to provide both `realm` and `type` options", ephemeral: true});
           return;
         }
         if (realmValue === 'eden' && type === 'spirits') {
-          interaction.followUp('Eye of Eden does not contain any spirits. But hey, you can always search for other realms!');
+          interaction.reply({ content: 'Eye of Eden does not contain any spirits. But hey, you can always search for other realms!', ephemral: true});
           return;
         }
+        
+        reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
         const realm = this.data.options[1].options[0].choices.find((v) => v.value === realmValue)?.name;
         const value = `${type}_${realmValue}`;
         await new HandleRealms(interaction, realm, value, reply).respond();
@@ -171,6 +177,8 @@ module.exports = {
 
     if (sub === "seasonal" && focusedValue.name === "season") {
       // EmojisMap contain all the season name, so get it from there
+      const type = interaction.options.getString('type')
+      console.log(type);
       const choices = Object.keys(client.emojisMap.get("seasons")).map((ch) => {
         return `Season of ${ch}`;
       });
