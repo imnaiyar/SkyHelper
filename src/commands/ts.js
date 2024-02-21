@@ -13,15 +13,18 @@ module.exports = {
   },
 
   async execute(interaction, client) {
-    const [lastOccurence, name, location, tree, total] = client.ts;
+    const [lastOccurence, value] = client.ts;
     const now = moment().tz(client.timezone);
-    const lastDate = moment.tz(lastOccurrence, "DD-MM-YYYY", client.timezone).startOf("day");
+    const lastDate = moment.tz(lastOccurence, "DD-MM-YYYY", client.timezone).endOf("day");
     const nextDate = lastDate.clone();
     while (now.isAfter(lastDate)) {
       nextDate.add(14, "days");
     }
     const prev = nextDate.clone().subtract(14, "day");
     const stay = prev.clone().add(3, "day");
+    if (now.isBetween(prev, stay)) {
+      
+    }
     let embed;
     if (now.isBetween(prev, stay)) {
       if (name) {
