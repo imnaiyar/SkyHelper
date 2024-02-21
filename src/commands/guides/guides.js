@@ -150,7 +150,7 @@ module.exports = {
           interaction.followUp("You need to provide both `realm` and `type` options");
           return;
         }
-        if (realmValue === 'eden') {
+        if (realmValue === 'eden' && type === 'spirits') {
           interaction.followUp('Eye of Eden does not contain any spirits. But hey, you can always search for other realms!');
           return;
         }
