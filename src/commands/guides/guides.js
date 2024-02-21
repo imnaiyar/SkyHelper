@@ -148,6 +148,11 @@ module.exports = {
         const type = interaction.options.getString("type");
         if (!realmValue || !type) {
           interaction.followUp("You need to provide both `realm` and `type` options");
+          return;
+        }
+        if (realmValue === 'eden') {
+          interaction.followUp('Eye of Eden does not contain any spirits. But hey, you can always search for other realms!');
+          return;
         }
         const realm = this.data.options[1].options[0].choices.find((v) => v.value === realmValue)?.name;
         const value = `${type}_${realmValue}`;

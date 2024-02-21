@@ -68,12 +68,6 @@ module.exports = async (int, value, guides) => {
   // Define location button
   const lctnBtn = new ButtonBuilder().setCustomId("spirit_location").setLabel("Location").setStyle("2");
 
-  // Define Expression (Emote/Friend Action) button
-  const expressionBtn = new ButtonBuilder()
-    .setCustomId(data.call ? "spirit_call" : data.stance ? "spirit_stance" : "spirit_expression")
-    .setLabel(data.emote ? "Emote" : data.stance ? "Stance" : data.call ? "Call" : "Friend Action")
-    .setEmoji(icon)
-    .setStyle("1");
 
   // Define Friendship Tree button
   const treeBtn = new ButtonBuilder().setCustomId("spirit_tree").setStyle("2").setLabel("Friendship Tree");
@@ -92,14 +86,24 @@ module.exports = async (int, value, guides) => {
     embed.setImage(data.tree.image);
 
     // Add location buttons to seasonal spirits embed
-    row.addComponents(lctnBtn);
+    if (data.location) row.addComponents(lctnBtn);
   }
 
   // If spirit's data has cosmetic property, add cosmetic button
   // TODO: Complete cosmetics you guy!
   // if (data.cosmetics) row.addComponents(cosmeticBtn);
-  // add expression button
-  row.addComponents(expressionBtn);
+
+  // add expression button if it has any expressions
+  let backBtn = null;
+  if (data.emote || data.stance || data.action || data.call) {
+     backBtn = new ButtonBuilder().setCustomId("spirit_home").setEmoji(icon).setStyle("3");
+    const expressionBtn = new ButtonBuilder()
+    .setCustomId(data.call ? "spirit_call" : data.stance ? "spirit_stance" : "spirit_expression")
+    .setLabel(data.emote ? "Emote" : data.stance ? "Stance" : data.call ? "Call" : "Friend Action")
+    .setEmoji(icon)
+    .setStyle("1");
+    row.addComponents(expressionBtn);
+  }
 
   // if the this function was triggered by 'guides' command, add a back button to get back to select menu
   let originalEmb;
@@ -126,24 +130,17 @@ module.exports = async (int, value, guides) => {
     const customID = inter.customId;
     if (
       ![
-        "spirit_home",
         "spirit_location",
-        "select_back",
         "spirit_expression",
         "spirit_stance",
         "spirit_call",
-        "spirit_home",
         "spirit_tree",
         "spirit_cosmetic",
-        "spirit_emote_next",
-        "spirit_emote_prev",
+        'back-start',
       ].includes(customID)
-    ) {
-      collector.stop();
-    }
+    ) return;
     const newEmbed = EmbedBuilder.from(embed);
     const lastField = newEmbed.data.fields[newEmbed.data.fields.length - 1];
-    const backBtn = new ButtonBuilder().setCustomId("spirit_home").setEmoji(icon).setStyle("3");
     switch (customID) {
       case "spirit_location": {
         await inter.deferUpdate();

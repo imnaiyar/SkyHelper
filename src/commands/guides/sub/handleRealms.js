@@ -3,6 +3,12 @@ const summary = require("./extends/realms/summaries.js");
 const maps = require("./extends/realms/maps.js");
 const respondSpirits = require("./shared/handleSpirits.js");
 class HandleRealms {
+  /**
+   * @param {import('discord.js').ChatInputCommandInteraction} interaction
+   * @param {String} realm
+   * @param {String} value
+   * @param {Return} msg
+   */
   constructor(interaction, realm, value, msg) {
     this.interaction = interaction;
     this.realm = realm;
@@ -107,7 +113,7 @@ class HandleRealms {
     let page = 1;
     const total = data.maps.length - 1;
     const author = `Maps of ${this.realm}`;
-    const row = this.getRealmsRow(data.maps, page, total, author, true);
+    const row = this.getRealmsRow(data.maps, page, total, author, false, true);
     await this.interaction.followUp({
       content: data?.content,
       ...row,
@@ -124,19 +130,19 @@ class HandleRealms {
       switch (componentID) {
         case "back": {
           page--;
-          const datas = this.getRealmsRow(data.maps, page, total, author, true);
+          const datas = this.getRealmsRow(data.maps, page, total, author, false, true);
           await inter.editReply(datas);
           break;
         }
         case "forward": {
           page++;
-          const datas = this.getRealmsRow(data.maps, page, total, author, true);
+          const datas = this.getRealmsRow(data.maps, page, total, author, false, true);
           await inter.editReply(datas);
           break;
         }
         case "area-menu": {
           page = parseInt(inter.values[0].split("_")[1]) + 1;
-          const datas = this.getRealmsRow(data.maps, page, total, author, true);
+          const datas = this.getRealmsRow(data.maps, page, total, author, false, true);
           await inter.editReply(datas);
           break;
         }

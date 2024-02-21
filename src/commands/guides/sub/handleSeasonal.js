@@ -21,7 +21,7 @@ module.exports = async (interaction, season, type, ephemeral) => {
     }
     return true;
   };
-  console.log(type)
+  console.log(type);
   const seasonValue = season.replace("Season of ", "").split(" ").join("_").toLocaleLowerCase();
 
   if (type === 'spirits') {
@@ -87,7 +87,7 @@ module.exports = async (interaction, season, type, ephemeral) => {
     if (!int.isStringSelectMenu() && int.customId !== 'quests') return;
     await int.deferReply({ ephemeral: ephemeral });
     const qValue = int.values[0];
-    console.log(qValue)
+    console.log(qValue);
     await int.followUp(responses.getResponse(qValue));
    });
   }

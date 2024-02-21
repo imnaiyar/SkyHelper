@@ -1297,7 +1297,6 @@ module.exports = {
   forgotten_haven: {
     name: "Remnant Of A Forgotten Haven",
     type: "Seasonal Spirit",
-    realm: "Aviary Village",
     season: "Revival",
     ts: {
       eligible: false,
@@ -1314,7 +1313,6 @@ module.exports = {
   abandoned_refuge: {
     name: "Echo Of An Abandoned Refuge",
     type: "Seasonal Spirit",
-    realm: "Aviary Village",
     season: "Revival",
     ts: {
       eligible: false,
@@ -1331,7 +1329,6 @@ module.exports = {
   lost_village: {
     name: "Memory Of A Lost Village",
     type: "Seasonal Spirit",
-    realm: "Aviary Village",
     season: "Revival",
     ts: {
       eligible: false,
@@ -1348,7 +1345,6 @@ module.exports = {
   deserted_oasis: {
     name: "Vestige Of A Deserted Oasis",
     type: "Seasonal Spirit",
-    realm: "Aviary Village",
     season: "Revival",
     ts: {
       eligible: false,
