@@ -2053,16 +2053,16 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['May 11, 2023 (#87)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '238 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447536197111828/Tinkering_Chimesmith_Tree_Clement.png?ex=65e6f4cb&is=65d47fcb&hm=990dc9f3ed81b107d8c87d4dfcd42e2d1e526ab1095246c84a75e8ed964e64ca&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447671224598538/Tinkering_Chimesmith_Location_Clement.png?ex=65e6f4eb&is=65d47feb&hm=73e61d57a6b2d0e7898c44bf56228671d97500e168737eff70c1a78cd12684d0&",
     },
     cosmetics: [{}],
     stance: {
@@ -2079,21 +2079,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['August 17, 2023 (#94)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Xander",
+      total: '198 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447537384230942/Lively_Navigator_Tree_Xander.jpg?ex=65e6f4cb&is=65d47fcb&hm=c1796f4fad7ec718204282e99ce9f14ddab13acf58146c7be13f347789434ff4&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447672520384512/Lively_Navigator_Location_Clement.jpg?ex=65e6f4eb&is=65d47feb&hm=7879a050da32c25132b5cf1482e46dec187fb756fad198a09c0e263883e3f6f9&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:navigator:1131589125636632596>",
+      level: [
+        {
+          title:'"Navigate" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731148957159454/Lively-Navigator-navigate-emote-level-1.gif?ex=65e0b648&is=65ce4148&hm=e9e97280cbfc4c8541b6a376ba12bbb789e9dd8a70c393f756c614ccddbcfea7&'
+        },
+        {
+          title:'"Navigate" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731149451960440/Lively-Navigator-navigate-emote-level-2.gif?ex=65e0b648&is=65ce4148&hm=792bda58b1c608ffcb12805e1f0c8a4d7d98222c70701c6f3d43ae50713425c6&'
+        },
+        {
+          title:'"Navigate" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731150261330001/Lively-Navigator-navigate-emote-level-3.gif?ex=65e0b648&is=65ce4148&hm=793163abb6b0544e415b57129103750dc221229b441a6b0c8bac46f18664c05f&'
+        },
+        {
+          title:'"Navigate" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731150651523133/Lively-Navigator-navigate-emote-level-4.gif?ex=65e0b648&is=65ce4148&hm=44e549d926439c6c30a8ea1eb22ca733f4c73889236c0a22e6a2ef3274e72593&'
+        },
+        ],
     },
   },
   light_whisperer: {
@@ -2103,17 +2120,17 @@ module.exports = {
     season: "Flight",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447537682022441/Light_Whisperer_Seasonal_Chart_Clement.jpg?ex=65e6f4cb&is=65d47fcb&hm=68d30611c48786f412d745a898a608effbdffe76f2f6b0f24913a7feda54bda0&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447673619423262/light_whisperer_location_skyzed.png?ex=65e6f4eb&is=65d47feb&hm=3025b26dfa167ca5729f064a79090a993755482e262072ee081182f6726489f6&",
     },
     cosmetics: [{}],
     call: {
@@ -2131,21 +2148,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['November 23, 2023 (#101)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Kontra",
+      total: '183 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447536918798377/Talented_Builder_Tree_Kontra.png?ex=65e6f4cb&is=65d47fcb&hm=99fd4b2e617e619ed90295923696d7a017c82566b690e6e31a11035c808d7974&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207730361195438200/1209447672100950056/Talented_Builder_Location_Clement.png?ex=65e6f4eb&is=65d47feb&hm=7f868dd66ab5ab8be0ecf4a2455394c4446588b5dbc0e4f2d2a515cbd1470eda&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:builder:1131589149464481812>",
+      level: [
+        {
+          title: '"Voila!" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731368197361675/Talented-Builder-voila-emote-level-1.gif?ex=65e0b67c&is=65ce417c&hm=d9022f69fe1a0ead48ca1a58b574de840b33782bf92cbf0fe25e9b3edb86eb40&'
+        },
+        {
+          title: '"Voila!" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731368650477669/Talented-Builder-voila-emote-level-2.gif?ex=65e0b67c&is=65ce417c&hm=2c49637cc9230b7de4ad4948347d712080ccd8d81c10b9d4837c8a0fcd297e61&'
+        },
+        {
+          title: '"Voila!" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731369078300722/Talented-Builder-voila-emote-level-3.gif?ex=65e0b67c&is=65ce417c&hm=97d36e9ca7d1878ea6e95b74bfd166f3ec977f77290de951e0a83cb5f673ab4f&'
+        },
+        {
+          title: '"Voila!" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731369979945010/Talented-Builder-voila-emote-level-4.gif?ex=65e0b67d&is=65ce417d&hm=e0efa1a60bdfdd725a3ffd6d2504812032cd4e312d6be9917b67bcf445f935d4&'
+        },
+        ],
     },
   },
   
@@ -2158,21 +2192,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['December 7, 2023 (#102)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "EM",
+      total: '127 <:RegularCandle:1207793250895794226> 13<:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926> ',
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443662585528360/Stretching_Lamplighter_Tree_Clement.jpg?ex=65e6f12f&is=65d47c2f&hm=f6d284f70fa7fa96e8c8d2b1008c5dc7285112708e9fe38e2cdea84acdeb9e62&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443766851866644/Stretching_Lamplighter_Location_Clement.jpg?ex=65e6f148&is=65d47c48&hm=ac860f4d7777de6d368a42620462102f46b7a686c4808ca98a421ce557c5ac28&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:lamplighter:1131590417360625675>",
+      level: [
+        {
+          title: '"Stretch" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732519253057546/Stretching-Lamplighter-stretch-emote-level-1.gif?ex=65e0b78f&is=65ce428f&hm=9476980e8871e93fabc36062cf58bb4e46314b812c4afec8dc8b6ea4291b8070&'
+        },
+        {
+          title: '"Stretch" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732519877873695/Stretching-Lamplighter-stretch-emote-level-2.gif?ex=65e0b78f&is=65ce428f&hm=9cdfac354178ce26edc66b6c5cf281fbdd39e0036b25852aec8cdf61a9a1db0c&'
+        },
+        {
+          title: '"Stretch" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732520435712071/Stretching-Lamplighter-stretch-emote-level-3.gif?ex=65e0b78f&is=65ce428f&hm=3be827d29f88394353aa88ed1b5755821e9d3968c57d7e8d8c17f92484b22834&'
+        },
+        {
+          title: '"Stretch" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732520913993808/Stretching-Lamplighter-stretch-emote-level-4.gif?ex=65e0b78f&is=65ce428f&hm=5dbba3929e72a95755e4be2b89bf5defffa95c178476f7af0c10e7fc74be76e7&'
+        },
+        ],
     },
   },
   star_collector: {
@@ -2183,21 +2234,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['September 14, 2023 (#96)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Kontra",
+      total: '198 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443665206972416/Star_Collector_Tree_Kontra.png?ex=65e6f130&is=65d47c30&hm=2743b8c49d1b04141491eb04709a1ff0c876d2aa3b29530ffe1134a1d24b1bd0&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443767174561822/Star_Collector_Location_Clement.jpg?ex=65e6f148&is=65d47c48&hm=dbf700d99a293cc82651b10b6ccb5f9c0d83b9e41bc7c06db8111b41f8f085c6&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:starcollector:1131590394874962040>",
+      level: [
+        {
+          title: '"Hand Rub" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732772869775410/Star-Collector-hand-rub-emote-level-1.gif?ex=65e0b7cb&is=65ce42cb&hm=de5753cbd44aaddced7b21a64ed1b18d4b8572ac0d38711adf3f9ce78af4a263&'
+        },
+        {
+          title: '"Hand Rub" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732772358332527/Star-Collector-hand-rub-emote-level-2.gif?ex=65e0b7cb&is=65ce42cb&hm=b1b5958034fe5aec34317bcf0e1e64fe66543ad9bfe49648fd53b2ab8b8701c3&'
+        },
+        {
+          title: '"Hand Rub" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732771901018223/Star-Collector-hand-rub-emote-level-3.gif?ex=65e0b7cb&is=65ce42cb&hm=0335961019030c01b64e67a3d6c373464e31d9eb662cc98265b22a3f624630ab&'
+        },
+        {
+          title: '"Hand Rub" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732771469135902/Star-Collector-hand-rub-emote-level-4.gif?ex=65e0b7cb&is=65ce42cb&hm=3b46592a260ae95284f63966fcf17b2fba9c3499adbee738ed442e741243f54f&'
+        },
+        ],
     },
   },
   geographer: {
@@ -2208,21 +2276,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['April 13, 2023 (#85)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '123 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443663109955624/Sneezing_Geographer_Tree_Clement.png?ex=65e6f12f&is=65d47c2f&hm=1dec7dc4295c32533d480fc4f30bd0653c82390d7cdbdbad6a03011d0ad96614&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443767833071616/Sneezing_Geographer_Location_Clement.png?ex=65e6f148&is=65d47c48&hm=49d5a3c64d9bed8bf1964d72a1fd3eba53e51101a3a7450014704fc4e9952fa7&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:geographer:1131590372502548660>",
+      level: [
+        {
+          title: '"Sneeze" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732846156980326/Sneezing-Geographer-sneeze-emote-level-1.gif?ex=65e0b7dd&is=65ce42dd&hm=2e75623b66f153a890b5a238db568f1f23a606a45780e728e5b1dc01a5c7ac1f&'
+        },
+        {
+          title: '"Sneeze" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732846584791080/Sneezing-Geographer-sneeze-emote-level-2.gif?ex=65e0b7dd&is=65ce42dd&hm=8972c4d6804793cd0b2c581e24c9baf97f44c8ead09a4125e2b06aa70f63a443&'
+        },
+        {
+          title: '"Sneeze" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732847004356618/Sneezing-Geographer-sneeze-emote-level-3.gif?ex=65e0b7dd&is=65ce42dd&hm=89bd0eb19e4f3f781393ba81b8c0c347fa49c2cc19b6fa34ac1e354dbd680430&'
+        },
+        {
+          title: '"Sneeze" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732847566131310/Sneezing-Geographer-sneeze-emote-level-4.gif?ex=65e0b7dd&is=65ce42dd&hm=14b569e2c7de52ecdc9b4a5c8c740640e1fbf574b51a81f96381225df27d5086&'
+        },
+        ],
     },
   },
   slouching_soldier: {
@@ -2233,21 +2318,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['February 16, 2023 (#81)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '140 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443663642624070/Slouching_Soldier_Tree_Clement.png?ex=65e6f12f&is=65d47c2f&hm=ef8e066d85f470a1eb771a7985d1f20902c37d35da362fbc80d2acf7c9d432b9&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443769863380992/Slouching_Soldier_Location_Clement.png?ex=65e6f149&is=65d47c49&hm=ffa8bc1282ca9a079a322d5274b532ec609a079dbfc05a37a071626de6b796a3&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:slouching:1131590352038531143>",
+      level: [
+        {
+          title: '"Slouch" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732956064518154/Slouching-Soldier-slouch-emote-level-1.gif?ex=65e0b7f7&is=65ce42f7&hm=547765498880e3dd01d209400450b2df5cd98e9c1cca9b3b5cc19162112ef9a1&'
+        },
+        {
+          title: '"Slouch" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732956869955584/Slouching-Soldier-slouch-emote-level-2.gif?ex=65e0b7f7&is=65ce42f7&hm=f98f5b5fd4e391d97f0d90d450c1c8321f3a8114a750b286723fe1250166f67f&'
+        },
+        {
+          title: '"Slouch" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732957700161646/Slouching-Soldier-slouch-emote-level-3.gif?ex=65e0b7f7&is=65ce42f7&hm=c4faf66b01bcaed853cdfae9b4c3632d5d1842d09a65b5ddc697435e858ea5d1&'
+        },
+        {
+          title: '"Slouch" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732958383837184/Slouching-Soldier-slouch-emote-level-4.gif?ex=65e0b7f7&is=65ce42f7&hm=650e3496360136bc04885afe89891c2fdb781dc1fc590a0d995aad38935c5287&'
+        },
+        ],
     },
   },
   narcissist: {
@@ -2258,21 +2360,40 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'July 20, 2023 (#92)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Jay",
+      total: '139 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443664082767882/Gloating_Narcissist_Tree_Jay.png?ex=65e6f12f&is=65d47c2f&hm=b05ff6497c32112e24d5adf4200fbae0a98e04aa1fd5007ab54e2d2db4c53fc6&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443770337202196/Gloating_Narcissist_Location_Clement.jpg?ex=65e6f149&is=65d47c49&hm=37628c0a920a35acbf7ce8ee5dc47fffa279417200ccd997ff29428027f82f6e&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:narcissist:1131590328714010684>",
+      level: [
+        {
+          title: '"Gloat" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733393455063040/Gloating-Narcissist-gloat-emote-level-1.gif?ex=65e0b85f&is=65ce435f&hm=cca4ce60e894dc1e4086bed630eba30fd08a4f1c51153b618003ec76670a5918&'
+        },
+        {
+          title: '"Gloat" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733393987473501/Gloating-Narcissist-gloat-emote-level-2.gif?ex=65e0b85f&is=65ce435f&hm=9479b99cf906184b7d34bb39b9ca68b14715bf67e3fa8d0d0b01d94c8b9e1a00&'
+        },
+        {
+          title: '"Gloat" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733394411233340/Gloating-Narcissist-gloat-emote-level-3.gif?ex=65e0b85f&is=65ce435f&hm=8f09615e345e3468e00aa4ac64fe968566e6999f4e2b4d4f290ee933fb8d331a&'
+        },
+        {
+          title: '"Gloat" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733394969198622/Gloating-Narcissist-gloat-emote-level-4.gif?ex=65e0b85f&is=65ce435f&hm=0795bfc9eff31181c06fea3f8f0b5fa4449baff4b24bd8c0e5051925626e33e5&'
+        },
+        ],
     },
   },
   beckoning_ruler: {
@@ -2283,21 +2404,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['September 29, 2022 (#71)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '103 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443664581894215/Beckoning_Ruler_Tree_Clement.png?ex=65e6f130&is=65d47c30&hm=95ca575e55043aa7e455702f160ff5261fc4ca12e12ba36766894b5392df842b&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207732307558141952/1209443772199477269/Beckoning_Ruler_Location_Clement.png?ex=65e6f149&is=65d47c49&hm=053b8ae8880e6ef9e7f84ce1d599dab722111c30fa14cab1409f1d3f0abd9409&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:ruler:1131590308430348369>",
+      level: [
+        {
+          title: '"Beckon" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733462237315204/Beckoning-Ruler-beckon-emote-level-1.gif?ex=65e0b870&is=65ce4370&hm=2cdcfd61c79e472186fa4b92c9bbf16710ecfac97968c50c80a4e4eeb98447f7&'
+        },
+        {
+          title: '"Beckon" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733462740762664/Beckoning-Ruler-beckon-emote-level-2.gif?ex=65e0b870&is=65ce4370&hm=db9100cc2cc43b5acc7d2c0bd6336fa6baf64b68efe3824ccdabaf8ff52e7b3a&'
+        },
+        {
+          title: '"Beckon" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733463214727189/Beckoning-Ruler-beckon-emote-level-3.gif?ex=65e0b870&is=65ce4370&hm=d0165276e810d234af5f07a397b40e947dc84bb2c59a7a54d361ef29a60c0cbd&'
+        },
+        {
+          title: '"Beckon" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733463650664498/Beckoning-Ruler-beckon-emote-level-4.gif?ex=65e0b870&is=65ce4370&hm=350380750c2184dd51fbf7ab5ddad9438e11d415990eb8e8088f53bcc870fc3a&'
+        },
+        ],
     },
   },
   
@@ -2310,21 +2448,40 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'August 18, 2022 (#68)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '157 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209432951675158538/Scolding_Student_Tree_Clement.png?ex=65e6e735&is=65d47235&hm=b3388a10124960b323632670baffe8a1e0b19fabe1809849ce72455b6292e511&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209433056776036373/Scolding_Student_Location_Clement.png?ex=65e6e74e&is=65d4724e&hm=f7b4ffeb858908962079d3da2eecaefde64511019323eeae65d6e41d0066c8c8&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:student:1131591495993016421>",
+      level: [
+        {
+          title: '"Scold" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735446759800852/Scolding-Student-scold-emote-level-1.gif?ex=65e0ba49&is=65ce4549&hm=5f7d5bf8fa461e562ea2b5a6f81a29b11b49c690ec9b159256858bdc88df3bf7&'
+        },
+        {
+          title: '"Scold" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735447749394505/Scolding-Student-scold-emote-level-2.gif?ex=65e0ba49&is=65ce4549&hm=db94d4bcf9962aebd68a36052fad99f3c9bc22f8d4b772a90e3705d094d0b24e&'
+        },
+        {
+          title: '"Scold" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735448286531594/Scolding-Student-scold-emote-level-3.gif?ex=65e0ba49&is=65ce4549&hm=0ea2b3c4ae5f725e8d352a8d68da3ed71b3a80ae16b486e00c051641ca4739ce&'
+        },
+        {
+          title: '"Scold" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735448785395712/Scolding-Student-scold-emote-level-4.gif?ex=65e0ba49&is=65ce4549&hm=6a8d74a96c9cbf56ae832877c6f918c44527d81572caebe68c4aa523b6c506cd&'
+        },
+        ],
     },
   },
   cadet: {
@@ -2335,21 +2492,40 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'March 6, 2023 (SV#1)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: '152 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209432952967139388/Scaredy_Cadet_Tree_NyR.jpg?ex=65e6e736&is=65d47236&hm=352317efb1f9a3ac422a2dfde441c81580caf96d57fe23fdd3c46059abc7bf25&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209433057904295936/Scaredy_Cadet_Location_Clement.png?ex=65e6e74f&is=65d4724f&hm=ae29e0da23cb3cb869c642f4021fcc216225a26ccc939403526efc9f1b32409f&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:cadet:1131591467429793962>",
+      level: [
+        {
+          title: '"Eww" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735572513292308/Scaredy-Cadet-eww-emote-level-1.gif?ex=65e0ba67&is=65ce4567&hm=a7b11537b8f8e82bc751ccccaa4877e06f48c7c7d43c377eb7d99893e6b68f19&'
+        },
+        {
+          title: '"Eww" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735572940984320/Scaredy-Cadet-eww-emote-level-2.gif?ex=65e0ba67&is=65ce4567&hm=6bb64eafe8c355c416b43f31597c7e7649a409aa5065f1d5065a5a67e72429b6&'
+        },
+        {
+          title: '"Eww" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735573352161301/Scaredy-Cadet-eww-emote-level-3.gif?ex=65e0ba67&is=65ce4567&hm=3faaa1eb3b3a14adcd6101d9e2499efae6853ae943bf5c4101af40b086ba6810&'
+        },
+        {
+          title: '"Eww" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735573788491847/Scaredy-Cadet-eww-emote-level-4.gif?ex=65e0ba67&is=65ce4567&hm=5e5b8a2f0698e2c21e174e4359c9138bb407ebd527361e8112ec0998ed93a102&'
+        },
+        ],
     },
   },
   foresterer: {
@@ -2360,21 +2536,40 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'April 28, 2022 (#60)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209432952057102437/Daydream-forester_Tree_Clement.png?ex=65e6e735&is=65d47235&hm=0759a327b722a4fb1fa0b4594eb4397cac07fc52b22450a5c4bc73872d5efb7c&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209433058571321405/Daydreaming_Forester_Location_Clement.png?ex=65e6e74f&is=65d4724f&hm=6bea2f5b24edae9d265c177ec9a3f18f83a77157e4bb08c582ba4f7a16a9b09b&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:forester:1131591420239675402>",
+      level: [
+        {
+          title: '"Bubbles" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736113717059704/Daydream-Forester-bubbles-emote-level-1.gif?ex=65e0bae8&is=65ce45e8&hm=b40d4fb70e5b8594e755fab67e75b049de78c469c4725fa937c1f80e6d2f26d9&'
+        },
+        {
+          title: '"Bubbles" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736114232954911/Daydream-Forester-bubbles-emote-level-2.gif?ex=65e0bae8&is=65ce45e8&hm=9f5436da9db1ee1d9f8613de5c9bff0babbbd78277ae981ceb947e629aac765c&'
+        },
+        {
+          title: '"Bubbles" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736114794733589/Daydream-Forester-bubbles-emote-level-3.gif?ex=65e0bae8&is=65ce45e8&hm=601e479dc17d7ea5b5a7371edce2cb21bf33572b082c0bd08a7923fb39516702&'
+        },
+        {
+          title: '"Bubbles" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736115419676713/Daydream-Forester-bubbles-emote-level-4.gif?ex=65e0bae8&is=65ce45e8&hm=21beb87399e80d0a220516d8f02257f2016da30ad1433de45824f2101d946685&'
+        },
+        ],
     },
   },
   adventurer: {
@@ -2385,21 +2580,40 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'March 6, 2023 (SV#1)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: '143<:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209432953302679634/Marching_Adventurer_Tree_NyR.jpg?ex=65e6e736&is=65d47236&hm=4f2834afd228146a2e715f5e22474e174fbe00c2df65010a676b395633e1ecff&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209433056080035930/Marching_Adventurer_Location_Clement.png?ex=65e6e74e&is=65d4724e&hm=c2dc4f0c43174f993655e7ca55c734c2bafaf9737a229bd2dadf47883bb534e9&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:adventurer:1131591445057372272>",
+      level: [
+        {
+          title: '"Marching" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735723256578128/Marching-Adventurer-marching-emote-level-1.gif?ex=65e0ba8b&is=65ce458b&hm=13f9782720c95dbd4d73e0a8c87d722beee188f1de93db24e26d2b9d254c72c4&'
+        },
+        {
+          title: '"Marching" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735723692789800/Marching-Adventurer-marching-emote-level-2.gif?ex=65e0ba8b&is=65ce458b&hm=1f4e5c6688d916a7bd7c0d53e5506c303cb446147d48ef4c8b90029eed1ff712&'
+        },
+        {
+          title: '"Marching" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735724120739950/Marching-Adventurer-marching-emote-level-3.gif?ex=65e0ba8b&is=65ce458b&hm=6d27b30165ce83d1df128266e7acace350aeb2603338a6e04c4e4fccad936591&'
+        },
+        {
+          title: '"Marching" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735724569534515/Marching-Adventurer-marching-emote-level-4.gif?ex=65e0ba8b&is=65ce458b&hm=cc4cc4c9e3b3991b38bae3fca1d3207e7cfe102f95ee3871ec7df3d8d7a354d2&'
+        },
+        ],
     },
   },
   scout: {
@@ -2410,21 +2624,40 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'March 6, 2023 (SV#1)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: '159 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209432953839685662/Chuckling_Scout_Tree_NyR.jpg?ex=65e6e736&is=65d47236&hm=20736367e606e0c1af9b18673d8909c4ef74399f9e3775974df036444b892222&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209433059309654056/Chuckling_Scout_Location_Clement.png?ex=65e6e74f&is=65d4724f&hm=98056bfd293ad16020614ecf610836b3e5d313e92dd0952a7b64c1b56252af9e&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:scout:1131591393282904084>",
+      level: [
+        {
+          title: '"Chuckle" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736285884579880/Chuckling-Scout-chuckle-emote-level-1.gif?ex=65e0bb11&is=65ce4611&hm=5df82e97d092517303a5602725e15beebe62778b2dd1ce60e94aebca386c9119&'
+        },
+        {
+          title: '"Chuckle" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736286400614461/Chuckling-Scout-chuckle-emote-level-2.gif?ex=65e0bb11&is=65ce4611&hm=e4c416f8e6d8fadc5fd7428037afdf1e64968aba8049b29992ef0bc4ce14832d&'
+        },
+        {
+          title: '"Chuckle" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736286836695070/Chuckling-Scout-chuckle-emote-level-3.gif?ex=65e0bb11&is=65ce4611&hm=12eed3052e9567c7e39cb285fcd2cda470ab28965ed3b0556efe99c2756e222b&'
+        },
+        {
+          title: '"Chuckle" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736287314841630/Chuckling-Scout-chuckle-emote-level-4.gif?ex=65e0bb11&is=65ce4611&hm=6dde258d5c68915d3d0ae53ef4ed49790f7ae0f910523366b816aea6001840ee&'
+        },
+        ],
     },
   },
   botanist: {
@@ -2435,21 +2668,41 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'March 6, 2023 (SV#1)',
+        'January 05, 2023 (#78)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '127 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209432952551776256/Baffled_Botanist_Tree_Clement.png?ex=65e6e736&is=65d47236&hm=5127481be56ee8f963973c56f2aebc5d68d789bbd309360d920e44f1efff0335&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207735126440542239/1209433060089532446/Baffled_Botanist_Location_Clement.png?ex=65e6e74f&is=65d4724f&hm=320471bb0c60b5e6ca7fda693317141e1786b3108dafc31a232e3a8abf4525bb&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:botanist:1131591369492795503>",
+      level: [
+        {
+          title: '"Facepalm" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736374707626054/Baffled-Botanist-facepalm-emote-level-1.gif?ex=65e0bb26&is=65ce4626&hm=7b7b2ab41c27afb621e77882f9ac9ea163368b7edee3b606d267572a568d9218&'
+        },
+        {
+          title: '"Facepalm" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375139504128/Baffled-Botanist-facepalm-emote-level-2.gif?ex=65e0bb26&is=65ce4626&hm=6b0ea25f87dfeb353322652d47e222d152e7f6a1518272d77656c39f1caca3b7&'
+        },
+        {
+          title: '"Facepalm" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375550672937/Baffled-Botanist-facepalm-emote-level-3.gif?ex=65e0bb26&is=65ce4626&hm=bb1b5e4ac3148af0ec290f7b7ff5b66f8b1011059c24787667ee8fd98c290b48&'
+        },
+        {
+          title: '"Facepalm" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375953203230/Baffled-Botanist-facepalm-emote-level-4.gif?ex=65e0bb26&is=65ce4626&hm=59415c21f3b5eda1a3c494e14b48c91146cda89ff9bae103de5f5ef8975fbb6e&'
+        },
+        ],
     },
   },
   
@@ -2462,21 +2715,41 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'July 6, 2023 (#91)',
+        'April 14, 2022 (#59)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '169 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413137082617856/Spinning_Mentor_Tree_Clement.png?ex=65e6d4c1&is=65d45fc1&hm=01a56f1fc3acc12275a37e57519938f66c810ee796e6c4fdd906bfb32cfc98a4&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413343639642242/Spinning_Mentor_Location_Clement.png?ex=65e6d4f2&is=65d45ff2&hm=3eaa5e98cb8f7c4b82e966653d2ec9975169ee3df5da861eeb736fd8a50f6bcd&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:mentor:1131645203548209162>",
+      level: [
+        {
+          title: '"Spin Trick" Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737470645567508/Spinning-Mentor-spin-trick-emote-level-1.gif?ex=65e0bc2b&is=65ce472b&hm=acc1c951a0cb06192619986789f6778d36ee159da4981927208246896f833ba8&'
+        },
+        {
+          title: '"Spin Trick" Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737471740420136/Spinning-Mentor-spin-trick-emote-level-2.gif?ex=65e0bc2b&is=65ce472b&hm=62433411a4306685178652c968bb3e798630e244ea016ce4f08b148cc7416aea&'
+        },
+        {
+          title: '"Spin Trick" Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737472113582142/Spinning-Mentor-spin-trick-emote-level-3.gif?ex=65e0bc2c&is=65ce472c&hm=bcd4461650fdd38ca08242c8bc63c02657c93414217b9c5b19df66cfe6a74955&'
+        },
+        {
+          title: '"Spin Trick" Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737472486739978/Spinning-Mentor-spin-trick-emote-level-4.gif?ex=65e0bc2c&is=65ce472c&hm=71cac21c888578a9386003354ec2b76239e2064fa4aaef460bcd2148ea07c134&'
+        },
+        ],
     },
   },
   postman: {
@@ -2487,46 +2760,82 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'June 23, 2022 (#64)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
+      by: "Clement",
+      total: '217 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
       image: "",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413341693345812/Peeking_Postman_Location_Clement.png?ex=65e6d4f2&is=65d45ff2&hm=3c634a762fd1946cd219d5f60eb04316cc67c6ebcd6c8c65138461f8ea1dec56&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:postman:1131645181926584341>",
+      level: [
+        {
+          title: '"Peek" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737542288609381/Peeking-Postman-peek-emote-level-1.gif?ex=65e0bc3c&is=65ce473c&hm=915cf4c6aca34e606c92a7668770e3385c076660d49ffc99b0b7a02bd36f4541&'
+        },
+        {
+          title: '"Peek" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737542674227270/Peeking-Postman-peek-emote-level-2.gif?ex=65e0bc3c&is=65ce473c&hm=1d2593674d1962fdbe844524cbf3f67dbea78481dba733b9ba7576b61760f894&'
+        },
+        {
+          title: '"Peek" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737543064293416/Peeking-Postman-peek-emote-level-3.gif?ex=65e0bc3c&is=65ce473c&hm=c8f54aa6a635f525981c79342767b3c2211eb922f78ea0a034a6a1834aa750b9&'
+        },
+        {
+          title: '"Peek" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737543479656448/Peeking-Postman-peek-emote-level-4.gif?ex=65e0bc3d&is=65ce473d&hm=92d15b5e33762bb65a4c4d2aadaf0b883aaebd8285f3a6f1508f5203a72690e7&'
+        },
+        ],
     },
   },
   dancing_performer: {
     name: "Dancing Performer",
     type: "Seasonal Spirit",
-    realm: "HValley of Triumph",
+    realm: "Valley of Triumph",
     season: "Dreams",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413137539928094/Dancing_Performer_Seasonal_Chart_NyR.jpg?ex=65e6d4c1&is=65d45fc1&hm=67f2c135dee9a7aeb7ed51e39cb935d0d365ffe8e060a77c8dc5bf588e06bcf0&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413345254441011/Dancing_Performer_Location_Clement.png?ex=65e6d4f3&is=65d45ff3&hm=66ba36640a75b599d1bd61d66aef9eef28804d2197506ce895317d76f3ff4210&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:dancing:1131645163383574569>",
+      level: [
+        {
+          title: '"Snow Dance" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737845561696276/Dancing-Performer-show-dance-emote-level-1.gif?ex=65e0bc85&is=65ce4785&hm=86fa66f51fc52ace75f2dbab5cb0a416ca80e1747ad83b1c34093d47d41fbbd7&'
+        },
+        {
+          title: '"Snow Dance" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846002094161/Dancing-Performer-show-dance-emote-level-2.gif?ex=65e0bc85&is=65ce4785&hm=bd1591adb9961d804b526ef6e47a9c4a169791327eb6eaabc474f447442be230&'
+        },
+        {
+          title: '"Snow Dance" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846346289182/Dancing-Performer-show-dance-emote-level-3.gif?ex=65e0bc85&is=65ce4785&hm=0647b877740a35a3eb8132d12cbd8ff5eaeaa69db5212aec246e135f45dd6a03&'
+        },
+        {
+          title: '"Snow Dance" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846828367894/Dancing-Performer-show-dance-emote-level-4.gif?ex=65e0bc85&is=65ce4785&hm=680a045ea78e7b4f7a87535c26dea51c3ccc7bf6883030f1ae060759291b6d11&'
+        },
+        ],
     },
   },
   hermit: {
@@ -2537,21 +2846,33 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: [
+        'February 15, 2024 (#107)',
+        'November 24, 2022 (#75)'
+        ],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: '190 <:RegularCandle:1207793250895794226> 8 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413136281767996/BearHug_Hermit_Tree_Clement.png?ex=65e6d4c1&is=65d45fc1&hm=3f071bd3d2fa21d814cae437e68704cc2ce992f17151232dd25ee8afc7e11976&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207737270740844584/1209413346042847292/Bearhug_Hermit_Location_Clement.png.jpg?ex=65e6d4f3&is=65d45ff3&hm=b593ed7ff1194fd4fc215aa0caac33311d844034196189effdcf4a1096663cf4&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:hermit:1131645142898581535>",
+      level: [
+        {
+          title: '"Bear Hug" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207738661949677659/Bearhug-Hermit-bearhug-emote-level-1.gif?ex=65e0bd47&is=65ce4847&hm=dad13e5ff129b5fd947f06824ca94ef437b5f282ae1f5e42a95bdcc469bbaba8&'
+        },
+        {
+          title: '"Bear Hug" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1209412983894179840/Bearhug_Hermit_Bear_Hug_LvL_2.gif?ex=65e6d49d&is=65d45f9d&hm=f63c16b611d53862990040cacef82b4b3ac25590994c0d1d1ce6b76176a0cffa&'
+        },
+        ],
     },
   },
   
@@ -2783,7 +3104,7 @@ module.exports = {
         ],
     },
     tree: {
-      by: "Jes",
+      by: "Jed",
       total: '125 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
       image: "https://cdn.discordapp.com/attachments/1207742742311215185/1209391896481243136/Rallying_Thrillseeker_Tree_jed.png?ex=65e6c0f9&is=65d44bf9&hm=2e764a55f8416a665f85e5e2e31ce5da393b6b94e13adcb9b3a8257ad8016f17&",
     },
@@ -2793,8 +3114,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:rallying:1131649722042564758>",
+      level: [
+        {
+          title: '"Rally Cheer" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744075453698089/Rallying-Thrillseeker-rally-cheer-emote-level-1.gif?ex=65e0c252&is=65ce4d52&hm=b765c0f858d5ab51c6c6200a0fc4557d731ced4cd5cf992c1db771a296ee4fc3&'
+        },
+        {
+          title: '"Rally Cheer" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744075923464232/Rallying-Thrillseeker-rally-cheer-emote-level-2.gif?ex=65e0c252&is=65ce4d52&hm=00181585b8b6a5d1e7e7a409896759487020a9fa896ecf385a77e0d940713a07&'
+        },
+        {
+          title: '"Rally Cheer" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744076422709268/Rallying-Thrillseeker-rally-cheer-emote-level-3.gif?ex=65e0c252&is=65ce4d52&hm=2fa876f8b6910d1341a492f24570e4ee3ccef97d76075b46887b4407794b0b37&'
+        },
+        {
+          title: '"Rally Cheer" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744076980691005/Rallying-Thrillseeker-rally-cheer-emote-level-4.gif?ex=65e0c252&is=65ce4d52&hm=3976e447f6c262daf89848e6440dfd39282d229ef6ea782b4a1e9d361b49fc37&'
+        },
+        ],
     },
   },
   jellywhisperer: {
@@ -2843,7 +3181,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: '139 <:RegularCandle:1207793250895794226> 29 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
-      image: "",
+      image: "https://cdn.discordapp.com/attachments/1207742742311215185/1209391894078029904/Hiking_Grouch_Tree_Clement.png?ex=65e6c0f8&is=65d44bf8&hm=1175553a9dccbfbc210aac1c7cca833fa2a1ae43b4576c752296be860a2319b6&",
     },
     location: {
       by: "Clement",
@@ -2917,8 +3255,6 @@ module.exports = {
         ],
     },
   },
-  
-  // TODO: Update tree prices
   sunbather: {
     name: "Chill Sunbather",
     type: "Seasonal Spirit",
@@ -2933,9 +3269,9 @@ module.exports = {
         ],
     },
     tree: {
-      by: "Clement",
+      by: "NyR",
       total: '213 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
-      image: "https://cdn.discordapp.com/attachments/1207742742311215185/1209391894665101312/Chill_sunbather_Tree_Clement.png?ex=65e6c0f9&is=65d44bf9&hm=ddad58d809fd7d1361dcf09fe604fcf5e4143c1bfa6ce920f6e422186e6c5c13&",
+      image: "https://cdn.discordapp.com/attachments/1207742742311215185/1209743777338490930/Chill_sunbather_tree_NyR.png?ex=65e808b0&is=65d593b0&hm=a48c8fe4b8d79db523a76d3ad772efdbc95f6d8d4009b34668919c4683932b68&",
     },
     location: {
       by: "Clement",
