@@ -205,7 +205,9 @@ class HandleRealms {
       emb.setURL(`https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#Maps`);
     } else {
       emb.setURL(
-        `https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#${embed.title.split(" ").join("_")}`,
+        `https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#${embed.title
+          .split(" ")
+          .join("_")}`,
       );
     }
     const row = [];

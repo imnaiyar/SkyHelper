@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
 const { table } = require("table");
 const moment = require("moment-timezone");
+const { UpdateEvent } = require('../handler/updateEvent');
 const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
 const { schemas } = require("@src/database/mongoose");
 const fs = require("fs");
@@ -57,16 +58,21 @@ module.exports = class SkyHelper extends Client {
     // Datas for Events in Sky
     /**
      * Stores current/upcoming events (in Sky) details
-     * @type {object}
+     * @type {Map<String, Object>}
      */
-    this.skyEvents = {
+    this.skyEvents = new Map();
+    this.skyEvents.set('event', {
       eventActive: true,
       eventName: "Days of Fortune",
       eventStarts: moment.tz("2024-01-29T00:00:00", this.timezone),
       eventEnds: moment.tz("2024-02-11T23:59:59", this.timezone),
       eventDuration: "13 days",
-    };
+    });
 
+    /**
+     * @type {Class}
+     */
+    this.UpdateEvent = UpdateEvent;
     /**
      * stores current/upcoming ts details
      * @type {Object}
@@ -287,10 +293,10 @@ module.exports = class SkyHelper extends Client {
       typeof value === "string" && isNaN(value)
         ? this.application.commands.cache.find((cmd) => cmd.name === value.toLowerCase())
         : !isNaN(value)
-          ? this.application.commands.cache.get(value)
-          : (() => {
-              throw new Error("Provided Value Must Either be a String or a Number");
-            })();
+        ? this.application.commands.cache.get(value)
+        : (() => {
+            throw new Error("Provided Value Must Either be a String or a Number");
+          })();
     if (!command) throw new Error("No matching command found");
     return command;
   }

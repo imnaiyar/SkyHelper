@@ -76,7 +76,11 @@ module.exports = async (client, msg) => {
 
     if (invalidFlags.length > 0) {
       return msg.reply(
-        `[${invalidFlags.map((flag) => `\`${flag}\``).join(", ")}] Flag(s) is Invalid. Valid flags are [${command.data.flags.map((flag) => `\`${flag}\``).join(", ")}]`,
+        `[${invalidFlags
+          .map((flag) => `\`${flag}\``)
+          .join(", ")}] Flag(s) is Invalid. Valid flags are [${command.data.flags
+          .map((flag) => `\`${flag}\``)
+          .join(", ")}]`,
       );
     }
   }

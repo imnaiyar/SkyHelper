@@ -58,27 +58,28 @@ async function skyTimes(client) {
   const edenResultStr = `${time(edenTargetTime.toDate(), "F")} ( in ${durationEden})`;
 
   // event
+  const event = client.skyEvents.get('event');
   const eventDurEnd = moment
-    .duration(client.skyEvents.eventEnds.diff(now))
+    .duration(event.eventEnds.diff(now))
     .format("d [days] h [hours] mm [minutes] ss [seconds]");
   const eventDurStart = moment
-    .duration(client.skyEvents.eventStarts.diff(now))
+    .duration(event.eventStarts.diff(now))
     .format("d [days] h [hours] mm [minutes] ss [seconds]");
 
   const eventDescription =
-    client.skyEvents.eventActive &&
-    !now.isAfter(client.skyEvents.eventEnds) &&
-    now.isAfter(client.skyEvents.eventStarts)
-      ? `${client.skyEvents.eventName} is currently active, and ends on ${time(
-          client.skyEvents.eventEnds.toDate(),
+    event.eventActive &&
+    !now.isAfter(event.eventEnds) &&
+    now.isAfter(event.eventStarts)
+      ? `${event.eventName} is currently active, and ends on ${time(
+          event.eventEnds.toDate(),
           "f",
         )} (in ${eventDurEnd})`
-      : client.skyEvents.eventActive && !now.isAfter(client.skyEvents.eventEnds)
-        ? `${client.skyEvents.eventName} will start on ${time(
-            client.skyEvents.eventStarts.toDate(),
-            "f",
-          )} (in ${eventDurStart})`
-        : "No active events.";
+      : event.eventActive && !now.isAfter(event.eventEnds)
+      ? `${event.eventName} will start on ${time(
+          event.eventStarts.toDate(),
+          "f",
+        )} (in ${eventDurStart})`
+      : "No active events.";
 
   return {
     geyserResultStr,

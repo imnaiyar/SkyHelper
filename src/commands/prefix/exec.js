@@ -38,7 +38,15 @@ async function run(script, message) {
       const outputEmbed = new EmbedBuilder()
         .setTitle("📥 Output")
         .setDescription(
-          `\`\`\`bash\n${totalPages === 1 ? result : currentPage === 1 ? `${result}...` : currentPage === totalPages ? `...${result}` : `...${result}...`}\n\`\`\``,
+          `\`\`\`bash\n${
+            totalPages === 1
+              ? result
+              : currentPage === 1
+              ? `${result}...`
+              : currentPage === totalPages
+              ? `...${result}`
+              : `...${result}...`
+          }\n\`\`\``,
         )
         .setColor("Random")
         .setFooter({ text: `Page ${currentPage} of ${totalPages}` })

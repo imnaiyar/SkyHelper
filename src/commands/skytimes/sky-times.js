@@ -54,16 +54,17 @@ module.exports = {
         await interaction.reply(`\`Next eden reset for you on:\` ${result.edenResultStr}`);
         break;
 
-      case "event":
-        if (client.skyEvents.eventActive || result.eventDescription !== "No active events.") {
+      case "event":{
+        const evnt = client.skyEvents.get('event');
+        if (evnt.eventActive || result.eventDescription !== "No active events.") {
           await interaction.reply(
             `${
-              client.skyEvents.eventActive
-                ? `**Event:** ${client.skyEvents.eventName}\n**Start Date:** ${time(
-                    client.skyEvents.eventStarts.toDate(),
+              evnt.eventActive
+                ? `**Event:** ${evnt.eventName}\n**Start Date:** ${time(
+                    evnt.eventStarts.toDate(),
                     "f",
-                  )}\n**End Date:** ${time(client.skyEvents.eventEnds.toDate(), "f")}\n**Duration:** ${
-                    client.skyEvents.eventDuration
+                  )}\n**End Date:** ${time(evnt.eventEnds.toDate(), "f")}\n**Duration:** ${
+                    evnt.eventDuration
                   }\n`
                 : ""
             }\`\`\`Countdown\`\`\`\n${result.eventDescription}`,
@@ -73,6 +74,7 @@ module.exports = {
         }
 
         break;
+      }
 
       default:
         await interaction.reply(
