@@ -2,24 +2,24 @@ const QuestChoices = {
   "nine-colored_deer_quest": [
     {
       label: "Quest 1",
-      value: "nine_colored_quest1",
+      value: "nine_colored_q1",
       emoji: "<:questuests:1131171487877963886>",
     },
   ],
   revival_quest: [
     {
       label: "Quest 1",
-      value: "revival_quest1",
+      value: "revival_q1",
       emoji: "<:questuests:1131171487877963886>",
     },
     {
       label: "Quest 2",
-      value: "revival_quest2",
+      value: "revival_q2",
       emoji: "<:questuests:1131171487877963886>",
     },
     {
       label: "Quest 3",
-      value: "revival_quest3",
+      value: "revival_q3",
       emoji: "<:questuests:1131171487877963886>",
     },
   ],

@@ -9,7 +9,7 @@ const startBtn = new ButtonBuilder()
 module.exports = async (int, value, guides) => {
   // Get the spirits data
   const data = spiritsData[value];
-  const icon = data.emote?.icon || data.stance?.icon || data.call?.icon || data.action?.icon;
+  const icon = data.emote?.icon || data.stance?.icon || data.call?.icon || data.action?.icon || '';
 
   // Build the initial embed
   const embed = new EmbedBuilder()

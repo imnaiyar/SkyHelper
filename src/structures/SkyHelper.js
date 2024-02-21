@@ -111,7 +111,7 @@ module.exports = class SkyHelper extends Client {
       Revival: "<:revival:1163480957706321950>",
       Moments: "<:moments:1130958731211985019>",
       Passage: "<:passage:1130958698571911239>",
-      Rememberance: "<:remembrance:1130958673959719062>",
+      Remembrance: "<:remembrance:1130958673959719062>",
       Aurora: "<:aurora:1130958641189621771>",
       Shattering: "<:shattering:1130961257097334895>",
       Performance: "<:performance:1130958595345895444>",

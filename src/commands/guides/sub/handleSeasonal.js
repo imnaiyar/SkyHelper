@@ -21,10 +21,12 @@ module.exports = async (interaction, season, type, ephemeral) => {
     }
     return true;
   };
+  console.log(type)
   const seasonValue = season.replace("Season of ", "").split(" ").join("_").toLocaleLowerCase();
 
   if (type === 'spirits') {
-    const spiritsData = Object.entries(interaction.client.spiritsData).filter(([k, v]) => v.season.toLowerCase() === season.replace("Season of ", "").toLowerCase().trim())
+    const spiritsData = Object.entries(interaction.client.spiritsData)
+  .filter(([k, v]) => v.season && v.season.toLowerCase() === season.replace("Season of ", "").toLowerCase().trim())
         .map(([k, v]) => ({
           label: v.name,
           value: k,
@@ -49,7 +51,7 @@ module.exports = async (interaction, season, type, ephemeral) => {
     });
 
     clctr.on('collect', async (int) => {
-      if (!int.isStringSelectMenu()) return;
+      if (!int.isStringSelectMenu() && int.customId !== 'Spirits') return;
       await int.deferUpdate();
       const value = int.values[0];
       await handleSpirits(int, value, true);
@@ -58,7 +60,7 @@ module.exports = async (interaction, season, type, ephemeral) => {
     clctr.on('end', async () => {
       interaction.editReply({ components: [] }).catch(() => {});
     });
-  } else if (type === 'quests') {
+  } else if (type === 'quest') {
    const value = seasonValue + '_quest';
    const options = QuestChoices[value];
    if (!options) {
@@ -82,9 +84,10 @@ module.exports = async (interaction, season, type, ephemeral) => {
    });
 
    collector.on('collect', async (int) => {
-    if (!int.isStringSelectMenu()) return;
+    if (!int.isStringSelectMenu() && int.customId !== 'quests') return;
     await int.deferReply({ ephemeral: ephemeral });
     const qValue = int.values[0];
+    console.log(qValue)
     await int.followUp(responses.getResponse(qValue));
    });
   }
