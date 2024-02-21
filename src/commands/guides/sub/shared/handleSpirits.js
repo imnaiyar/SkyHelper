@@ -150,7 +150,7 @@ module.exports = async (int, value, guides) => {
         newRow.components[0] = treeBtn;
         lastField.name = `Location by ${data.location.by}`;
         lastField.value = " ";
-        // newEmbed.setImage(data.location.image);
+         newEmbed.setImage(data.location.image);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
@@ -204,7 +204,7 @@ module.exports = async (int, value, guides) => {
         newRow.components[0] = lctnBtn;
         lastField.name = `Friendship Tree ${data.tree.by}`;
         lastField.value = data.tree.total;
-        // newEmbed.setImage(data.tree.image);
+         newEmbed.setImage(data.tree.image);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }

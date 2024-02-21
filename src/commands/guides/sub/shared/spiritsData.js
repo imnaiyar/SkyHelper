@@ -4194,7 +4194,7 @@ module.exports = {
   shaman: {
     name: "Greeting Shaman",
     type: "Seasonal Spirit",
-    realm: "Vault of knowledge",
+    realm: "Vault of Knowledge",
     season: "Gratitude",
     ts: {
       eligible: true,
@@ -4204,7 +4204,7 @@ module.exports = {
     },
     tree: {
       by: 'Clement',
-      total: "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> <:AscendedCandle:1207793254301433926>",
+      total: "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
       image: "https://media.discordapp.net/attachments/1207765118717534298/1209165821985951744/Greeting_Shaman_Tree.png?ex=65e5ee6d&is=65d3796d&hm=f507b9ee2d41711a703aea5790406bcc17a6e4b5b82c83c83d7168b393a18170&=&format=webp&quality=lossless&width=1092&height=1092",
     },
     location: {
