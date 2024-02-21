@@ -24,8 +24,7 @@ module.exports = async (interaction, season, type, ephemeral) => {
   const seasonValue = season.replace("Season of ", "").split(" ").join("_").toLocaleLowerCase();
 
   if (type === 'spirits') {
-    const spiritsData = Object.entries(interaction.client.spiritsData)
-    .filter(([, v]) => v.season.toLowerCase() === season.replace("Season of ", "").toLowerCase().trim())
+    const spiritsData = Object.entries(interaction.client.spiritsData).filter(([k, v]) => v.season.toLowerCase() === season.replace("Season of ", "").toLowerCase().trim())
         .map(([k, v]) => ({
           label: v.name,
           value: k,

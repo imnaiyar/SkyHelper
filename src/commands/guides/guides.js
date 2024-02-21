@@ -172,7 +172,6 @@ module.exports = {
       const filtered = choices
         .filter((choice) => choice.toLowerCase().includes(focusedValue.value.toLowerCase()))
         .slice(0, 25);
-      console.log(filtered);
       await interaction.respond(
         filtered.map((choice) => ({
           name: choice,
