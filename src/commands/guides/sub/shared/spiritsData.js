@@ -1150,8 +1150,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:hunter:1197413131736064052>",
+      level: [
+        {
+          title: '"Flex" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692575486517338/Hunter-flex-emote-level-1.gif?ex=65e0925b&is=65ce1d5b&hm=4d78fb5f466e57c03f05123aadf607fedf7f48ab2b6b6c064b516f5d38d38793&'
+        },
+        {
+          title: '"Flex" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692576040157265/Hunter-flex-emote-level-2.gif?ex=65e0925b&is=65ce1d5b&hm=38d11b8dc4aad4468dd3d5211e24c846a9dd0d7e182b61bedd9a7b8f9cff8be9&'
+        },
+        {
+          title: '"Flex" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692576652664832/Hunter-flex-emote-level-3.gif?ex=65e0925c&is=65ce1d5c&hm=95885ae869523a5ee0e8d1b3cefde5736086750ff142687cc1871991c30f66b9&'
+        },
+        {
+          title: '"Flex" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692577047056384/Hunter-flex-emote-level-4.gif?ex=65e0925c&is=65ce1d5c&hm=b968219b41c42641bb0b3550b4255349ec9401a267ece71a33fb87e91340c316&'
+        },
+        ],
     },
   },
   princess: {
@@ -1176,8 +1193,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:princess:1197413108717731840>",
+      level: [
+        {
+          title: '"Float Spin" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694788074151996/Princess-float-spin-emote-level-1_1.gif?ex=65e0946b&is=65ce1f6b&hm=3ff0f4bfe70077a689de2b0ffffaa062df6723dc449c87550239d179d218ba52&'
+        },
+        {
+          title: '"Float Spin" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694788523065394/Princess-float-spin-emote-level-2.gif?ex=65e0946b&is=65ce1f6b&hm=734d94254b01cbf97bcd88c429e88e6b39c2d914e70576bbd58b432320c43031&'
+        },
+        {
+          title: '"Float Spin" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694789198352474/Princess-float-spin-emote-level-3.gif?ex=65e0946b&is=65ce1f6b&hm=2f868923589f97dfc045f45217bf57a5e362dcffb9ee068d48fc948c0bd10392&'
+        },
+        {
+          title: '"Float Spin" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694789613723730/Princess-float-spin-emote-level-4.gif?ex=65e0946b&is=65ce1f6b&hm=83125d45712fd53db3169f571cf0ea987b2b1dc71a4a59785e536c0f2c3a95dd&'
+        },
+        ],
     },
   },
   lord: {
@@ -1201,9 +1235,18 @@ module.exports = {
       image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560271580958790/Deer_Spirits_Location_Em_Clement.jpg?ex=65e75dc9&is=65d4e8c9&hm=71be274b0d7afee90570ef1a47270ab4ed1e5abec51191cad4e6df38cf3fa932&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:feudallord:1197413178330578964>",
+      level: [
+        {
+          title: '"Cradle Carry" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207698863507636244/Feudal-Lord-cradle-carry-emote-level-1.gif?ex=65e09837&is=65ce2337&hm=c7b6cf312e72d3a7a11669fc2315fe940cbc788323a99acd0e49cab1089b7ef3&'
+        },
+        {
+          title: '"Cradle Carry" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207698864023277629/Feudal-Lord-cradle-carry-emote-level-2.gif?ex=65e09837&is=65ce2337&hm=07e26ec432884e4435dc0ba7ba656ff9d0ad8ef461e7ca4d7675727decd18ee5&'
+        },
+        ],
     },
   },
   herb_gather: {
@@ -1228,8 +1271,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:herbgatherer:1197413154938957885>",
+      level: [
+        {
+          title: '"Whistle" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699115484520488/Herb-Gatherer-whistle-emote-level-1.gif?ex=65e09873&is=65ce2373&hm=85fe95da65c26bfdea174557dda93bef48d69699b1f785eabca86a495250555b&'
+        },
+        {
+          title: '"Whistle" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699115912204339/Herb-Gatherer-whistle-emote-level-2.gif?ex=65e09873&is=65ce2373&hm=cc11e7969603101c6e34eef39f021402042d9419f843228b5ade40153a76c78c&'
+        },
+        {
+          title: '"Whistle" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699116277104640/Herb-Gatherer-whistle-emote-level-3.gif?ex=65e09873&is=65ce2373&hm=d29bab19c90c937249825f3dbf637dd01abd5890cad59c97338da0ddf0c212ea&'
+        },
+        {
+          title: '"Whistle" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699116772302928/Herb-Gatherer-whistle-emote-level-4.gif?ex=65e09873&is=65ce2373&hm=50912e3278bc1ff8719f645359de7454700c94d4184a85c64509d29262cb596e&'
+        },
+        ],
     },
   },
 
@@ -1352,8 +1412,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:monk:1130948859674243185>",
+      level: [
+        {
+          title: '"Blindfold Balance" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033056220872764/Ascetic_Monk_Blindfold_Balance_LvL_1.gif?ex=65e572c7&is=65d2fdc7&hm=6c86b8e518a549063cff0e33a11c449eccf018b5daccb9d8544f81de81928547&'
+        },
+        {
+          title: '"Blindfold Balance" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033056783048794/Ascetic_Monk_Blindfold_Balance_LvL_2.gif?ex=65e572c7&is=65d2fdc7&hm=98349a46578382078c51ae642b976cff400d6938ede20f0b7ed606703d1c8096&'
+        },
+        {
+          title: '"Blindfold Balance" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033057177440318/Ascetic_Monk_Blindfold_Balance_LvL_3.gif?ex=65e572c7&is=65d2fdc7&hm=257cb11b109ff002243b3feb651bc9ab2e4bd2a637816d1942edeef8cfaf4787&'
+        },
+        {
+          title: '"Blindfold Balance" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033057709858858/Ascetic_Monk_Blindfold_Balance_LvL_4.gif?ex=65e572c7&is=65d2fdc7&hm=001cab2eefd155010add2c9ac29614fecc316b13e1cffd259dfd7a6501d97651&'
+        },
+        ],
     },
   },
   geologist: {
@@ -1377,8 +1454,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:geologist:1130948834365816973>",
+      level: [
+        {
+          title: '"Jolly Dance" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031623933165589/Geologist_Jolly_Dance_LvL_1.gif?ex=65e57171&is=65d2fc71&hm=88ee3d751e052bdb78274105902b2cf9f619e90e9563d89074df020f4ca6ae2f&'
+        },
+        {
+          title: '"Jolly Dance" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624302526474/Geologist_Jolly_Dance_LvL_2.gif?ex=65e57171&is=65d2fc71&hm=1a7f84089c67fe1e96998c3c0684bc486963ee53d4cb10db4c9ade10afaee748&'
+        },
+        {
+          title: '"Jolly Dance" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624625496114/Geologist_Jolly_Dance_LvL_3.gif?ex=65e57172&is=65d2fc72&hm=7aca4c27921fe873afb703bcd00b9b280b9bdd3abe5d028a261fd4e4d0536535&'
+        },
+        {
+          title: '"Jolly Dance" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624998649906/Geologist_Jolly_Dance_LvL_4.gif?ex=65e57172&is=65d2fc72&hm=6e936395b10a44c0eecaf542cf64c7dcb4f9d43b181a6c64cb674031802e89e1&'
+        },
+        ],
     },
   },
   ranger: {
@@ -1401,9 +1495,18 @@ module.exports = {
       image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556395037433977/Moments_Spirits_Location_Mimi.jpg?ex=65e75a2d&is=65d4e52d&hm=cd1830cf3be6aa111ea08165d951a93a30aad05f64447455ab3db17215834f44&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:ranger:1130948781026844692>",
+      level: [
+        {
+          title: '"Sidehug" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209040284307169310/Ranger_Side_Hug_LvL_1.gif?ex=65e57982&is=65d30482&hm=1af7de8d458943ad8a81f850fe4fd4bb70845638ddbd972460ca6a3cd42bfb06&'
+        },
+        {
+          title: '"Sidehug" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209040283975680030/Ranger_Side_Hug_LvL_2.gif?ex=65e57982&is=65d30482&hm=0dd4ed01fe175fa1de2b64a344fa1ee80afeec42f0dda76afdba7142cc97e120&'
+        },
+        ],
     },
   },
   
@@ -1429,8 +1532,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:oddball:1131583444116308072>",
+      level: [
+        {
+          title: '"Hacky Sack" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024893463695360/Oddball_Hacky_Sack_Lvl_1.gif?ex=65e56b2d&is=65d2f62d&hm=a68a116c294e9e5337202c87a028a007329c052e69a0269ae3aaca9859f65b1d&'
+        },
+        {
+          title: '"Hacky Sack" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024893832659025/Oddball_Hacky_Sack_Lvl_2.gif?ex=65e56b2d&is=65d2f62d&hm=08e0cf9ec868ebab97ceee0eb797f57a389260ef477db619b6e504683ffda970&'
+        },
+        {
+          title: '"Hacky Sack" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024894231257108/Oddball_Hacky_Sack_Lvl_3.gif?ex=65e56b2d&is=65d2f62d&hm=2215fae117d1f0eb9c021ba740b3fdf520607086c61c59739171d1897e20f244&'
+        },
+        {
+          title: '"Hacky Sack" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024894785032213/Oddball_Hacky_Sack_Lvl_4.gif?ex=65e56b2d&is=65d2f62d&hm=53c15392a932f1dc19238f9d3d65ca7a9cf7376bd8320321e03d75059075d986&'
+        },
+        ],
     },
   },
   overachiever: {
@@ -1454,8 +1574,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:achiever:1131583465649876992>",
+      level: [
+        {
+          title: '"Pull-Up" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030160070737940/Overachiever_Pull-Up_Lvl_1.gif?ex=65e57014&is=65d2fb14&hm=31013febf8c957bd7468000ba83e1eedbd3f63004b5961f6a61994456879a63b&'
+        },
+        {
+          title: '"Pull-Up" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030160523857920/Overachiever_Pull-Up_Lvl_2.gif?ex=65e57014&is=65d2fb14&hm=502a4432f461487dd83a44f2d9fc55b636e5a9e7fc542d756f4c88d3a9736321&'
+        },
+        {
+          title: '"Pull-Up" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030161056403516/Overachiever_Pull-Up_Lvl_3.gif?ex=65e57015&is=65d2fb15&hm=34a952377031bcdaf8c926fddafa2d3e09dc3960826b3f064c03aef5c36d184b&'
+        },
+        {
+          title: '"Pull-Up" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030161966702592/Overachiever_Pull-Up_Lvl_4.gif?ex=65e57015&is=65d2fb15&hm=0f89a48c6013dd198b585b752241b256374385b0e21ad81ac416b1df721e42cf&'
+        },
+        ],
     },
   },
   mope: {
@@ -1479,8 +1616,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:mope:1131583421529989211>",
+      level: [
+        {
+          title: '"Moping" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026906834468934/Melancholy_Mope_Moping_LvL_1.gif?ex=65e56d0d&is=65d2f80d&hm=9fdc43062db7250c49689dc9508549a3b86dba74dae2aef0ee309c9498056d6f&'
+        },
+        {
+          title: '"Moping" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026907287322624/Melancholy_Mope_Moping_LvL_2.gif?ex=65e56d0d&is=65d2f80d&hm=7003a58c9a8cbc870c7452acb90c738dd25da481d3fae7e77e41f3d531bf934e&'
+        },
+        {
+          title: '"Moping" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026907677401088/Melancholy_Mope_Moping_LvL_3.gif?ex=65e56d0d&is=65d2f80d&hm=cdbd328716485bed170861b5ce038a557d96ee8a2180b85dbbabd85ec401d12b&'
+        },
+        {
+          title: '"Moping" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026908059344946/Melancholy_Mope_Moping_LvL_4.gif?ex=65e56d0d&is=65d2f80d&hm=fe4e02535d68ca000cd55dbcc8032d7b9b52545c87d6edd4b374e99e3b2a0f5f&'
+        },
+        ],
     },
   },
   troublemaker: {
@@ -1504,8 +1658,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:tumbling:1131583486940164126>",
+      level: [
+        {
+          title: '"Somersault" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028710666076201/Troublemaker_Somersault_LvL_1.gif?ex=65e56ebb&is=65d2f9bb&hm=bba3d8a4dbc0735c7ae2d750042af1ea7efddca8683dd278fa71ea47b1bcbc9b&'
+        },
+        {
+          title: '"Somersault" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711215800320/Troublemaker_Somersault_LvL_2.gif?ex=65e56ebb&is=65d2f9bb&hm=419a514fadadb92956a5a52fcf13b90536781306cdc6f56d608e1d70165d06d1&'
+        },
+        {
+          title: '"Somersault" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711597477929/Troublemaker_Somersault_LvL_3.gif?ex=65e56ebb&is=65d2f9bb&hm=81c3419ad8c23c708c640b407ea7a6d71cca7120776a8c29b97f98cbd9f8a57f&'
+        },
+        {
+          title: '"Somersault" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711928692736/Troublemaker_Somersault_LvL_4.gif?ex=65e56ebb&is=65d2f9bb&hm=4299dea4e5cd6b27542f5f3a10ba67ab898b475a51ac8ea3778086344e5527e5&'
+        },
+        ],
     },
   },
   
@@ -1557,8 +1728,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:pleading:1131584152332935331>",
+      level: [
+        {
+          title: '"Pleading" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019613598449664/Pleading_Child_Pleading_Lvl_1.gif?ex=65e56642&is=65d2f142&hm=d5683a802281c1c54b6d413c7cc4206826079da2e2b4536504eee216d476cdb6&'
+        },
+        {
+          title: '"Pleading" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019613975941230/Pleading_Child_Pleading_Lvl_2.gif?ex=65e56642&is=65d2f142&hm=2f21e21e55626de36be0bcbc3492fbfca385f6cd38041dc3960aa80ca5c3eb67&'
+        },
+        {
+          title: '"Pleading" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019614428659712/Pleading_Child_Pleading_Lvl_3.gif?ex=65e56642&is=65d2f142&hm=1f8df29ec152c2bf6dee4cb982f9264a4eb8a9d2a375d275795ef879d9b8914d&'
+        },
+        {
+          title: '"Pleading" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019614819000381/Pleading_Child_Pleading_Lvl_4.gif?ex=65e56642&is=65d2f142&hm=2a83a4bd1cf8295015c34f5c4d04731143386f5fa50a59a4a2bd3f6e729acbe7&'
+        },
+        ],
     },
   },
   veteran: {
@@ -1582,8 +1770,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:Bereft:1131584129054560396>",
+      level: [
+        {
+          title: '"Grieving" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023028902756352/Veteran_Grieving_LvL_1.gif?ex=65e56970&is=65d2f470&hm=7401dbe594ed9a971ecefc12d65a81b195523fcd310ad49d918faedb38fef3ee&'
+        },
+        {
+          title: '"Grieving" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023029376589824/Veteran_Grieving_LvL_2.gif?ex=65e56970&is=65d2f470&hm=7b8457eec11f284a2701dacb9673f6354a93de475413b56582a3c01e56406f37&'
+        },
+        {
+          title: '"Grieving" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023029947142144/Veteran_Grieving_LvL_3.gif?ex=65e56970&is=65d2f470&hm=56e3965edd32b2e9b38072953c359fe72a67092956c56c193682b4791e0b7041&'
+        },
+        {
+          title: '"Grieving" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023030328692776/Veteran_Grieving_LvL_4.gif?ex=65e56970&is=65d2f470&hm=3eb13768764229537d4299498be31ce36148b22d7355f59edef3854348516cb8&'
+        },
+        ],
     },
   },
   tea_brewer: {
@@ -1607,8 +1812,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:tiptoe:1131584176882192455>",
+      level: [
+        {
+          title: '"Tiptoeing" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021328892633138/Teamaker_Tiptoeing_Lvl_1.gif?ex=65e567db&is=65d2f2db&hm=b6b7057e7f749e504d7db25e2aebe2acefc6dbcde0ba23ddb39ecf900efe30d4&'
+        },
+        {
+          title: '"Tiptoeing" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021329450344458/Teamaker_Tiptoeing_Lvl_2.gif?ex=65e567db&is=65d2f2db&hm=df0f70a713f0d39e8ea617af78c2868342f2d1db6d3528ba7081a238a80d3241&'
+        },
+        {
+          title: '"Tiptoeing" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021329815371816/Teamaker_Tiptoeing_Lvl_3.gif?ex=65e567db&is=65d2f2db&hm=bbf92aa866e701475ec8c8cf111de7cd471e75f2f9412e92a247560fa3689abe&'
+        },
+        {
+          title: '"Tiptoeing" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021330192863292/Teamaker_Tiptoeing_Lvl_4.gif?ex=65e567db&is=65d2f2db&hm=c7f866bcc9dea60d225762195bc8f0971fdce452053010497f83e7de98901b57&'
+        },
+        ],
     },
   },
   
@@ -1634,8 +1856,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:warriorlove:1131584753036963882>",
+      level: [
+        {
+          title: '"Twirl" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986832562298880/Warrior_of_Love_Twirl_Lvl_1.gif?ex=65e547ba&is=65d2d2ba&hm=cd97c8bd997e53fe48f8ff03c7473ad24a42727517686b2ca3dc699f80c1c204&'
+        },
+        {
+          title: '"Twirl" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986832981856256/Warrior_of_Love_Twirl_Lvl_2.gif?ex=65e547ba&is=65d2d2ba&hm=b9a977c04e3f0187493b0b96c6379b3e353ae29c17c55eb99a8cd24ad6af481e&'
+        },
+        {
+          title: '"Twirl" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986833380319232/Warrior_of_Love_Twirl_Lvl_3.gif?ex=65e547ba&is=65d2d2ba&hm=7b7ff7de0d2e6aee5e3d40c9f8032985b48666f078e0280adac56ffbef2bd8a0&'
+        },
+        {
+          title: '"Twirl" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986833783099472/Warrior_of_Love_Twirl_Lvl_4.gif?ex=65e547bb&is=65d2d2bb&hm=e50862e6c9c46a119804716b718f1921a3c814cfa90b2a4c7c611eb33941adcb&'
+        },
+        ],
     },
   },
   seed_of_hope: {
@@ -1659,8 +1898,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:seedofhope:1131584732887523388>",
+      level: [
+        {
+          title: '"Rhythmic Clap" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985394390237184/Seed_of_Hope_Rhythmic_Clap_Lvl_1.gif?ex=65e54663&is=65d2d163&hm=bdfb356141551c7d34d53dd6ff2dd04d67c5c3bcc53828aaf79f21b1fb373f98&'
+        },
+        {
+          title: '"Rhythmic Clap" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985394847154227/Seed_of_Hope_Rhythmic_Clap_Lvl_2.gif?ex=65e54663&is=65d2d163&hm=24e236ae170a26e75739503c600b23ff00b0bcb0ef489f8af6d56edca326aec8&'
+        },
+        {
+          title: '"Rhythmic Clap" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985395216523264/Seed_of_Hope_Rhythmic_Clap_Lvl_3.gif?ex=65e54664&is=65d2d164&hm=8b92fa560819234ead30eca554cd2fd8bac99a51ba11eb544d90c862ce625c56&'
+        },
+        {
+          title: '"Rhythmic Clap" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985395535286343/Seed_of_Hope_Rhythmic_Clap_Lvl_4.gif?ex=65e54664&is=65d2d164&hm=7fe7a862f6dc0e5b5185023e817345de4dfe3652b7896b8ecfead1b4ed19cdf6&'
+        },
+        ],
     },
   },
   wayfarer: {
@@ -1684,8 +1940,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:wayfarer:1131584710192144606>",
+      level: [
+        {
+          title: '"Waving Light" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351046709258/Running_Wayfarer-_Waving_Light_Level_1_.gif?ex=65e5447c&is=65d2cf7c&hm=6d0b8c4fbdb9f47f340d7e7f3159ff61871b47fa2bed434140f0e15e9d4f2249&'
+        },
+        {
+          title: '"Waving Light" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351453548594/Running_Wayfarer-_Waving_Light_Level_2.gif?ex=65e5447c&is=65d2cf7c&hm=a98f14c8949649202a83aab8fa5e5f5a6f7993ccb8b1a2d53f12f94409ba3280&'
+        },
+        {
+          title: '"Waving Light" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351856205834/Running_Wayfarer-_Waving_Light_Level_3.gif?ex=65e5447c&is=65d2cf7c&hm=af21f09599f77d9f39baca4084719fd299e51ce65eed9fe5831be739dc92a1f3&'
+        },
+        {
+          title: '"Waving Light" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983352250732564/Running_Wayfarer-_Waving_Light_Level_4.gif?ex=65e5447d&is=65d2cf7d&hm=ea26ab9434b87c8bde20383b98ea19c524277b67e6609d016ca84964aeff7e73&'
+        },
+        ],
     },
   },
   mindful_miner: {
@@ -1709,8 +1982,25 @@ module.exports = {
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:miner:1131584687454818404>",
+      level: [
+        {
+          title: '"Raise the Roof" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527097385040/Mindful-Miner-Raise-The-Roof-Emote_Lvl_1.gif?ex=65e4e961&is=65d27461&hm=ce48ec191d3fb51c6834de95b619fc96a6233b4103a4be81452e77e674d03f61&'
+        },
+        {
+          title: '"Raise the Roof" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527487586375/Mindful-Miner-Raise-The-Roof-Emote_Lvl_2.gif?ex=65e4e961&is=65d27461&hm=67582aa4e6cbe15eb5e011d4149d6cff5f375191200f952750061f25a63e5e0c&'
+        },
+        {
+          title: '"Raise the Roof" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527861002311/Mindful-Miner-Raise-The-Roof-Emote_Lvl_3.gif?ex=65e4e961&is=65d27461&hm=a9c3eaccad50dc81ccad2f7ac18d8d4dce8f7440537ca7e20f0da2dc59cc81a7&'
+        },
+        {
+          title: '"Raise the Roof" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885528297214013/Mindful-Miner-Raise-The-Roof-Emote_Lvl_4.gif?ex=65e4e961&is=65d27461&hm=781cf97739285b68f61091b8ab87bfa6d2e0de4876e0a019a2c1672c3b415d1c&'
+        },
+        ],
     },
   },
   
