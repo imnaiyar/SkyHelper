@@ -10,7 +10,6 @@ const responses = require("./extends/seasonal/GuideResponse.js");
  * @param {*} ephemeral
  */
 module.exports = async (interaction, season, type, ephemeral) => {
-  await interaction.deferReply({ ephemeral: ephemeral });
   const filter = (i) => {
     if (i.user.id !== interaction.user.id) {
       i.reply({
