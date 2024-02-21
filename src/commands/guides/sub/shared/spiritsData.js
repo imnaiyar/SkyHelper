@@ -2917,6 +2917,8 @@ module.exports = {
         ],
     },
   },
+  
+  // TODO: Update tree prices
   sunbather: {
     name: "Chill Sunbather",
     type: "Seasonal Spirit",

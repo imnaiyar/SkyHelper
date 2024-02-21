@@ -88,7 +88,8 @@ module.exports = async (int, value, guides) => {
     embed.setImage(data.main.image);
   } else {
     // For seasonal spirits
-    embed.addFields({ name: `Friendship Tree ${data.tree.by}`, value: data.tree.total });
+    embed.addFields({ name: `Friendship Tree by ${data.tree.by}`, value: data.tree.total });
+    embed.setImage(data.tree.image)
 
     // Add location buttons to seasonal spirits embed
     row.addComponents(lctnBtn);
@@ -169,6 +170,7 @@ module.exports = async (int, value, guides) => {
         await handleExpression(inter, data, backBtn, content);
         break;
       }
+      // TODO: Figure out a way to handle back btns for these two
       case "spirit_stance": {
         await inter.deferUpdate();
         const stanceEmbed = new EmbedBuilder()
@@ -202,7 +204,7 @@ module.exports = async (int, value, guides) => {
         await inter.deferUpdate();
         const newRow = ActionRowBuilder.from(row);
         newRow.components[0] = lctnBtn;
-        lastField.name = `Friendship Tree ${data.tree.by}`;
+        lastField.name = `Friendship Tree by ${data.tree.by}`;
         lastField.value = data.tree.total;
          newEmbed.setImage(data.tree.image);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
