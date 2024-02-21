@@ -1744,28 +1744,20 @@ module.exports = {
   
   // Shattering
   dark_plant: {
-    name: "Ancient Darkness (Plant)",
+    name: "Ancient Darkness (Darkness Plant)",
     type: "Seasonal Spirit",
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724695709941781/1209515278623309824/Ancient_Darkness_Dark_Plant_Seasonal_Chart_NyR.png?ex=65e733e2&is=65d4bee2&hm=5c94e32c2ec4eb09884945fe9875c0918354b3085527e631771db6795c672767&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   dark_dragon: {
     name: "Ancient Darkness (Dragon)",
@@ -1773,23 +1765,15 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724695709941781/1209515279021899776/Ancient_Darkness_Dragon_Seasonal_chart_NyR.png?ex=65e733e2&is=65d4bee2&hm=703479486c10cae2caba4d4a623c19dc92366c578da5d3717435d83994db6651&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   light_manta: {
     name: "Ancient Light (Manta)",
@@ -1797,23 +1781,15 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724695709941781/1209515279332409384/Ancient_Light_Manta_Seasonal_Chart_NyR.png?ex=65e733e2&is=65d4bee2&hm=eebcec36c55b8e2a1b478d8db69a596f70fa7af4d3447f609b890e7b0ea9315a&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   light_jelly: {
     name: "Ancient Light (Jellyfish)",
@@ -1821,23 +1797,15 @@ module.exports = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724695709941781/1209515279693123714/Ancient_Light_Jellyfish_Seasonal_Chart_NyR.png?ex=65e733e2&is=65d4bee2&hm=8df7910beac598a1d178034d9e21d31c977102e1508b4512fd1fd01dfb066c45&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   
   // Performance
@@ -1848,22 +1816,31 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476674996150272/Modest_Dancer_Seasonal_Chart_Clement.jpg?ex=65e70fee&is=65d49aee&hm=f63ff351ce79de649bd1669222382b6f02eea0f06dce6d8a493f15d285adb745&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476728687435776/Modest_Dancer_Location_SkyZed.jpg?ex=65e70ffb&is=65d49afb&hm=7b243882d46b5c09a061443eee13dc8f9559512e35f869e20ac141fc3c4d9b8b&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:modest:1131586528540381194>",
+      level: [
+        {
+          title: '"Duet Dance" Friemd Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207726026726187088/Modest-Dancer-duet-dance-emote-level-1.gif?ex=65e0b183&is=65ce3c83&hm=c16d063a0fb85c266aae78f691d446ce4d95684c0de9f952457e405d722ee35f&'
+        },
+        {
+          title: '"Duet Dance" Friemd Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207726027154137169/Modest-Dancer-duet-dance-emote-level-2.gif?ex=65e0b183&is=65ce3c83&hm=4971ef5bc88f13851963a0e696a8fe78fed718d2eed8e276d7565290de6ec95f&'
+        },
+        ],
     },
   },
   mellow_musician: {
@@ -1873,22 +1850,39 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476675323035748/Mellow_Musician_Seasonal_Chart_Clement.jpg?ex=65e70fee&is=65d49aee&hm=a53aef148657df69ec789ae6a961007be92115dd70cd49e3a39226587b0000c3&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476728406278294/Mellow_Musician_Location_SkyZed.jpg?ex=65e70ffb&is=65d49afb&hm=7f27cfdd6d18c7d12636ccca5789413d4fadafe9a984fdd8f12c722ec69fcd1c&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:mellow:1131586502149816411>",
+      level: [
+        {
+          title: '"Headbob" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725949693468743/Mellow-Musician-headbob-emote-level-1.gif?ex=65e0b170&is=65ce3c70&hm=5c1d9f08e4c5e9ddabe0700c268402b0caffcd5799fd9bcb3d7fccad24b8672c&'
+        },
+        {
+          title: '"Headbob" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725950129799168/Mellow-Musician-headbob-emote-level-2.gif?ex=65e0b170&is=65ce3c70&hm=b796552d790af7f9ba1aa16475d9bbd2eb978dda2f5f955027144e603118776c&'
+        },
+        {
+          title: '"Headbob" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725950956208179/Mellow-Musician-headbob-emote-level-3.gif?ex=65e0b171&is=65ce3c71&hm=81e545e26f118708123d44b3e9513a3f859622dbffcec95f2378b9b6c86a3183&'
+        },
+        {
+          title: '"Headbob" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725951413260338/Mellow-Musician-headbob-emote-level-4.gif?ex=65e0b171&is=65ce3c71&hm=7f55dde5898c008fb0528b06bcaf21c66448647ace5572549c0b9d08f613ed1e&'
+        },
+        ],
     },
   },
   stagehand: {
@@ -1898,22 +1892,31 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476675952316486/Frantic_Stagehand_Seasonal_Chart_Clement.jpg?ex=65e70fee&is=65d49aee&hm=01bd309076aa2af407b0b31f7368dfe44ae441f13bb76faaa73c08591a956bd4&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476729006194760/Frantic_Stagehand_Location_SkyZed.jpg?ex=65e70ffb&is=65d49afb&hm=69572fd332e50a991cfa427a7e7374da5b1f57cfe241334a11799dfb9e7f57b5&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
+    action: {
+      icon: "<:stagehand:1131586475226562670>",
+      level: [
+        {
+          title: '"Handshake" Friend Action Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1209040535675871242/Frantic_Stagehand_Handshake_Action_LvL_1.gif?ex=65e579be&is=65d304be&hm=1c220a131a3baf5c9be40087ca48c9ac5fa6160d504db4bcf79e16484d5281d1&'
+        },
+        {
+          title: '"Handshake" Friend Action Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1209040535256309820/Frantic_Stagehand_Handshake_Action_LvL_2.gif?ex=65e579be&is=65d304be&hm=1d5db6cd81fd3417dbf467e0edda45a442e737356060f3b7c2f2a5826e6b8143&'
+        },
+        ],
     },
   },
   storyteller: {
@@ -1923,22 +1926,39 @@ module.exports = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: " Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476675621093417/Forgetful_Storyteller_Seasonal_Chart_Clement.jpg?ex=65e70fee&is=65d49aee&hm=8041b65f7415a84baebfad249b94f1431c8cbe60bdcfe578b6c0ffb149052fb8&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207724774864855090/1209476729345679420/Storyteller_Location_SkyZed.jpg?ex=65e70ffb&is=65d49afb&hm=73ec0fd766bb11baa6f2b72fd8a082b822aebc42d9ca4a2c3b8fb9f8abbd4435&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:storyteller:1131586451885260831>",
+      level: [
+        {
+          title: '"Aww!" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412113842307/Forgetful-Storyteller-awww-emote-level-1.gif?ex=65e0b0f0&is=65ce3bf0&hm=7a68280c31564f5fefd3ebb553397d897e553111ca0117d5bb889400097eec94&'
+        },
+        {
+          title: '"Aww!" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412503789658/Forgetful-Storyteller-awww-emote-level-2.gif?ex=65e0b0f0&is=65ce3bf0&hm=122d6afc943e86babffbb2ed0b272ba17b471885c4126d3f036d2f7282a0268b&'
+        },
+        {
+          title: '"Aww!" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412910628944/Forgetful-Storyteller-awww-emote-level-3.gif?ex=65e0b0f0&is=65ce3bf0&hm=88dac810197dcef08e6c17341aa82c50435859f21c2cf50b930bb7804c5cf733&'
+        },
+        {
+          title: '"Aww!" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725413443567677/Forgetful-Storyteller-awww-emote-level-4.gif?ex=65e0b0f1&is=65ce3bf1&hm=8e10aafb9df13bfb5d7c2c9aa2de698ebbb58221f524505f06257960af06f4c2&'
+        },
+        ],
     },
   },
   
@@ -1950,22 +1970,39 @@ module.exports = {
     season: "Abyss",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472599969759252/Ceasing_Commodore_Seasonal_Chart_NyR.png?ex=65e70c22&is=65d49722&hm=40313618ed2680b1235ed2b770ce57ecfe1e540bb17218f25bb6e9045ffd3648&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472658723573830/Ceasing_comodore_Location_SkyZed.png?ex=65e70c30&is=65d49730&hm=2830370c227251599d0b9d99ae20148882286394539b9c04fa361977f50403e7&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:commodore:1131587707315949608>",
+      level: [
+        {
+          title: '"Calm Down" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730121687965797/Ceasing-Commodore-calm-down-emote-level-1.gif?ex=65e0b553&is=65ce4053&hm=7c52ac859d410d53723094283cfac081343a9b433326f08faa4e9f146d59a485&'
+        },
+        {
+          title: '"Calm Down" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122111721603/Ceasing-Commodore-calm-down-emote-level-2.gif?ex=65e0b553&is=65ce4053&hm=63833fa811ad175e19c2bff726954f0e4242e18964dddfb3100b332f8767c317&'
+        },
+        {
+          title: '"Calm Down" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122514497586/Ceasing-Commodore-calm-down-emote-level-3.gif?ex=65e0b553&is=65ce4053&hm=af3c4528b6f899e96bc812f1fcd374a9c279bba6d91cbd772e6eb3f5772c7b19&'
+        },
+        {
+          title: '"Calm Down" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122925277234/Ceasing-Commodore-calm-down-emote-level-4.gif?ex=65e0b553&is=65ce4053&hm=639e8e7af47af684c018a40026407c47bc93580bf409dd6472a4cd55daf6b949&'
+        },
+        ],
     },
   },
   cannoneer: {
@@ -1976,21 +2013,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['August 7, 2023 (SV#4)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: '188 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472601072738315/Cackling_Cannoner_Tree_NyR.png?ex=65e70c23&is=65d49723&hm=734a6a85f1f5cbb6d7a91dc3bff65ef3b8cbf6f5f16875ddd607aa21f0bc2c3b&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472659520356482/Cackling_Cannoneer_Location_Clement.png?ex=65e70c30&is=65d49730&hm=bbe427927a1182203c4ac6eb80c7cec857e94bb190ce0e55ecf68b3fc366415d&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:cannoneer:1131587675061747854>",
+      level: [
+        {
+          title: '"Evil Laugh" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729986379710575/Cackling-Cannoneer-evil-laugh-emote-level-1.gif?ex=65e0b533&is=65ce4033&hm=eef9f10219e3c0f3844f8dc38e73c1458bf6d00dfa9f5256134419b13263f8bc&'
+        },
+        {
+          title: '"Evil Laugh" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729986845282395/Cackling-Cannoneer-evil-laugh-emote-level-2.gif?ex=65e0b533&is=65ce4033&hm=2d8f0a4514c68104a473e577f552f26d04f38d3d0ec5fbbd41eeaccf6e2ec3fe&'
+        },
+        {
+          title: '"Evil Laugh" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729987378085898/Cackling-Cannoneer-evil-laugh-emote-level-3.gif?ex=65e0b533&is=65ce4033&hm=2b780a7dd5b2015bb14d0d8018244d3702cee5174c56715e4eca570ea86a29cd&'
+        },
+        {
+          title: '"Evil Laugh" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729987889659994/Cackling-Cannoneer-evil-laugh-emote-level-4.gif?ex=65e0b533&is=65ce4033&hm=ab8f350c359e353976c8394bffca471187771238794d470fd5fe0b78fb21bc0b&'
+        },
+        ],
     },
   },
   boatswain: {
@@ -2000,22 +2054,39 @@ module.exports = {
     season: "Abyss",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472601651679312/Bumbling_Boatswain_Seasonal_Chart_Clement.jpg?ex=65e70c23&is=65d49723&hm=358708725bedd65919b2a1977f90902cf3ddffa7562f202d312cef51d6086b76&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "SkyZed",
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472658228650014/Bumbling_boatswain_Location_SkyZed.png?ex=65e70c30&is=65d49730&hm=4ea35042c6ea4cf8bd15cafcfd75f23319e869ad7cc28750f6c3511d3bffc409&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:boatswain:1131587645219295382>",
+      level: [
+        {
+          title: '"Ouch!" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729871326023720/Bumbling-Boatswain-ouch-emote-level-1.gif?ex=65e0b517&is=65ce4017&hm=2138cba3c37c5934d781f92ee23bfb3a13fb63f5550bda206e87bff999a9ff27&'
+        },
+        {
+          title: '"Ouch!" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729871741124608/Bumbling-Boatswain-ouch-emote-level-2.gif?ex=65e0b517&is=65ce4017&hm=ee96929c6e2edd0971184d4a392dc2ea1e2f8ef5ed3cbff98dcdd9c66cf581b2&'
+        },
+        {
+          title: '"Ouch!" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729872168947762/Bumbling-Boatswain-ouch-emote-level-3.gif?ex=65e0b518&is=65ce4018&hm=6e6c5974d2b19bca0ebb3157b538aa5fd3cde878379b6f7d0296702dec34414c&'
+        },
+        {
+          title: '"Ouch!" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729872760348752/Bumbling-Boatswain-ouch-emote-level-4.gif?ex=65e0b518&is=65ce4018&hm=fdd8047bc4a2778e6f30d7e7d21d89c297fb9409177e04bcf2ffbf5d530802fa&'
+        },
+        ],
     },
   },
   angler: {
@@ -2026,21 +2097,38 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ``,
+      dates: ['January 18, 2024 (#105)'],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "EM",
+      total: '228 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>',
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472599088824381/Anxious_Angler_Tree_Em.jpg?ex=65e70c22&is=65d49722&hm=c67bf80bbb5215d519c52f9837e28c6bdbbde5be8a3c01ef1df04d325e318dae&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207728765472342067/1209472660111761458/Anxious_Angler_Location_Clement.jpg?ex=65e70c31&is=65d49731&hm=f2edf84ecb96bfe0b4981bbe82c9badf40ef92e2876ba69b22859345d43688d8&",
     },
     cosmetics: [{}],
     emote: {
-      icon: "",
-      level: [],
+      icon: "<:angler:1131587623165632594>",
+      level: [
+        {
+          title: '"Anxious" Emote Level 1',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729079395295302/Anxious-Angler-anxious-emote-level-1.gif?ex=65e0b45b&is=65ce3f5b&hm=65f6771e52176c819a40ff44cb761c393396bc13e1856b66f909c91ca4d6d9f0&'
+        },
+        {
+          title: '"Anxious" Emote Level 2',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729079806197821/Anxious-Angler-anxious-emote-level-2.gif?ex=65e0b45b&is=65ce3f5b&hm=caf771eaf0db721a7d2951b2711e4c66efb4839e3745823366b52f646bb831e6&'
+        },
+        {
+          title: '"Anxious" Emote Level 3',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729080238080000/Anxious-Angler-anxious-emote-level-3.gif?ex=65e0b45b&is=65ce3f5b&hm=efed29416e005e6b5593ea9fd5348eaa2a4378937e86be5932a8a742dd6b6897&'
+        },
+        {
+          title: '"Anxious" Emote Level 4',
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729080741400586/Anxious-Angler-anxious-emote-level-4.gif?ex=65e0b45b&is=65ce3f5b&hm=9966bec897ea8580b4bb919a5ababebc00cc65ef280038e1c760a922403b04a1&'
+        },
+        ],
     },
   },
   
