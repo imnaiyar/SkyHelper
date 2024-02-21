@@ -1135,17 +1135,18 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Mimi and Sam",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560243995156550/Hunter-Tree_Mimi.jpg?ex=65e75dc2&is=65d4e8c2&hm=819c6f613c247d4d56412088c6950f3565c78e56e365ae229dc48bea874a270b&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "EM",
+      description: 'How to reach Crescent Oasis by Clement',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560271580958790/Deer_Spirits_Location_Em_Clement.jpg?ex=65e75dc9&is=65d4e8c9&hm=71be274b0d7afee90570ef1a47270ab4ed1e5abec51191cad4e6df38cf3fa932&",
     },
     cosmetics: [{}],
     emote: {
@@ -1164,13 +1165,14 @@ module.exports = {
       dates: ``,
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Mimi and Sam",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560243487637554/Princess-tree_Mimi.jpg?ex=65e75dc2&is=65d4e8c2&hm=9925399c216c9003ad9e034276df33b4e9ea51bf2f953d6782611adf93fd676a&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "EM",
+      description: 'How to reach Crescent Oasis by Clement',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560271580958790/Deer_Spirits_Location_Em_Clement.jpg?ex=65e75dc9&is=65d4e8c9&hm=71be274b0d7afee90570ef1a47270ab4ed1e5abec51191cad4e6df38cf3fa932&",
     },
     cosmetics: [{}],
     emote: {
@@ -1185,17 +1187,18 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Mimi and Sam",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560242250194985/Feudal_Lord_Tree_Mimi.jpg?ex=65e75dc2&is=65d4e8c2&hm=e7b59c8076d35d2546d81a2ae11432904bf39e5a64ab1a2050066fd8897b0fa4&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "EM",
+      description: 'How to reach Crescent Oasis by Clement',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560271580958790/Deer_Spirits_Location_Em_Clement.jpg?ex=65e75dc9&is=65d4e8c9&hm=71be274b0d7afee90570ef1a47270ab4ed1e5abec51191cad4e6df38cf3fa932&",
     },
     cosmetics: [{}],
     emote: {
@@ -1210,17 +1213,18 @@ module.exports = {
     season: "Nine-Colored Deer",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Mimi and Sam",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560242774343761/Herb_Gatherer_Tree_Mimi.jpg?ex=65e75dc2&is=65d4e8c2&hm=8cca943af5143aec41861ad39fb6c44e6bcf2a580579b217fc8908c75d100f4e&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "EM",
+      description: 'How to reach Crescent Oasis by Clement',
+      image: "https://cdn.discordapp.com/attachments/1207681996453580802/1209560271580958790/Deer_Spirits_Location_Em_Clement.jpg?ex=65e75dc9&is=65d4e8c9&hm=71be274b0d7afee90570ef1a47270ab4ed1e5abec51191cad4e6df38cf3fa932&",
     },
     cosmetics: [{}],
     emote: {
@@ -1237,23 +1241,15 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724394672033862/1209557319478935634/Forgotten_Haven_Seasonal_Chart_Clement.jpg?ex=65e75b09&is=65d4e609&hm=74a2438f1432ebffaed796a137d967cc374b2a20753024bea09aa99fb5d8bdce&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   abandoned_refuge: {
     name: "Echo Of An Abandoned Refuge",
@@ -1262,23 +1258,15 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724394672033862/1209557320020004955/Abandoned_Refuge_Seasonal_Chart_Clement.jpg?ex=65e75b09&is=65d4e609&hm=f9c19fc1b48166bf3f51fbd98bfd937b69762fa238be399ec7d5ff876294e4c5&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   lost_village: {
     name: "Memory Of A Lost Village",
@@ -1287,23 +1275,15 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724394672033862/1209557320430911548/Lost_Village_Seasonal_Chart_Clement.jpg?ex=65e75b09&is=65d4e609&hm=ce209902a3521838604bfcf98fefcfd45bdaa852f9fe485a13c9b69657b51bef&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
   deserted_oasis: {
     name: "Vestige Of A Deserted Oasis",
@@ -1312,23 +1292,15 @@ module.exports = {
     season: "Revival",
     ts: {
       eligible: false,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
-    },
-    location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724394672033862/1209557319143268432/Deserted_Oasis_Seasonal_Chart_Clement.jpg?ex=65e75b09&is=65d4e609&hm=6299f29d5ca224d0ff45c9633f9a4106e0412deec35e03e01b42de0cf475e5d8&",
     },
     cosmetics: [{}],
-    emote: {
-      icon: "",
-      level: [],
-    },
   },
 
   // moments
@@ -1339,17 +1311,17 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556366939783199/Nightbird_Seasonal_Chart_NyR.png?ex=65e75a26&is=65d4e526&hm=14a784e22a541c007bc016e9036c600ced07b690a012ea29a71fd2aace31cff2&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556395037433977/Moments_Spirits_Location_Mimi.jpg?ex=65e75a2d&is=65d4e52d&hm=cd1830cf3be6aa111ea08165d951a93a30aad05f64447455ab3db17215834f44&",
     },
     cosmetics: [{}],
     call: {
@@ -1366,17 +1338,17 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556365572579388/Ascetic_Monk_Seasonal_Chart_NyR.png?ex=65e75a26&is=65d4e526&hm=c44fb5def5944c1eb39273cad89162057da418f4c5b9ec983d501986f17001d4&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556395037433977/Moments_Spirits_Location_Mimi.jpg?ex=65e75a2d&is=65d4e52d&hm=cd1830cf3be6aa111ea08165d951a93a30aad05f64447455ab3db17215834f44&",
     },
     cosmetics: [{}],
     emote: {
@@ -1391,17 +1363,17 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556366239211600/Jolly_Geologist_Seasonal_Chart_NyR.png?ex=65e75a26&is=65d4e526&hm=97351b9e2dd826e314dd1cad1bc9876c2daa6d9a6da4ce90372655af6619f2e5&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556395037433977/Moments_Spirits_Location_Mimi.jpg?ex=65e75a2d&is=65d4e52d&hm=cd1830cf3be6aa111ea08165d951a93a30aad05f64447455ab3db17215834f44&",
     },
     cosmetics: [{}],
     emote: {
@@ -1416,17 +1388,17 @@ module.exports = {
     season: "Moments",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "NyR",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556364884582431/Reassuring_Ranger_Seasonal_Chart_NyR.png?ex=65e75a25&is=65d4e525&hm=b9e9c250e3a054ec53aa92205f65d42669034cc6008a928d640bcc1eb8c9f587&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724465535057970/1209556395037433977/Moments_Spirits_Location_Mimi.jpg?ex=65e75a2d&is=65d4e52d&hm=cd1830cf3be6aa111ea08165d951a93a30aad05f64447455ab3db17215834f44&",
     },
     cosmetics: [{}],
     emote: {
@@ -1443,17 +1415,17 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545826347647066/Oddball_Outcast_Seasonal_Chart_Clement.jpg?ex=65e75055&is=65d4db55&hm=ddbdf22e1ee39b5019a53ae7f7b6a317214bdd95bbd2746b8c16b8ec28f6b6ef&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545865476444170/Passage_Spirits_Location_Clement.jpg?ex=65e7505e&is=65d4db5e&hm=523a90faae2a94a99506e35b825c1d60b4e6329861d2fbf56e2b87ba9bd541b5&",
     },
     cosmetics: [{}],
     emote: {
@@ -1468,17 +1440,17 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545825034706984/Overacting_Overachiever_Seasonal_Chart_Clement.jpg?ex=65e75054&is=65d4db54&hm=6af1be480214efc4515c82e4d0b22e07544a622b0bd6431cfd8faa2a23d5d162&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545865476444170/Passage_Spirits_Location_Clement.jpg?ex=65e7505e&is=65d4db5e&hm=523a90faae2a94a99506e35b825c1d60b4e6329861d2fbf56e2b87ba9bd541b5&",
     },
     cosmetics: [{}],
     emote: {
@@ -1493,17 +1465,17 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545825492148295/Melancholy_Mope_Seasonal_Chart_Clement.jpg?ex=65e75055&is=65d4db55&hm=1bda42224ec69f53b7f4c6ee958b469d7ac1cd8ecb0b3ef33b93442df5df5ed5&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545865476444170/Passage_Spirits_Location_Clement.jpg?ex=65e7505e&is=65d4db5e&hm=523a90faae2a94a99506e35b825c1d60b4e6329861d2fbf56e2b87ba9bd541b5&",
     },
     cosmetics: [{}],
     emote: {
@@ -1518,17 +1490,17 @@ module.exports = {
     season: "Passage",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545825974485002/Tumbling_Troublemaker_Seasonal_Chart_Clement.jpg?ex=65e75055&is=65d4db55&hm=bff8f11102a17a9265fddf1d60b0778899b0841b4e9c13a2e5e5fda592fd3b74&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Clement",
+      image: "https://cdn.discordapp.com/attachments/1207724512238637147/1209545865476444170/Passage_Spirits_Location_Clement.jpg?ex=65e7505e&is=65d4db5e&hm=523a90faae2a94a99506e35b825c1d60b4e6329861d2fbf56e2b87ba9bd541b5&",
     },
     cosmetics: [{}],
     emote: {
@@ -1545,17 +1517,17 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528480593616987/Wounded_Warrior_Seasonal_Chart_Clement.jpg?ex=65e7402d&is=65d4cb2d&hm=c11709117754608f9340899c2639bbe40d2efc11a866988fc9ee8ac1f576ae37&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528544963600404/Remembrance_Spirits_Location_Mimi.png?ex=65e7403d&is=65d4cb3d&hm=00bc16e381313e07b0c0a9969c19b673d7721c0ca09980fb89a51caa21122aed&",
     },
     cosmetics: [{}],
     stance: {
@@ -1571,17 +1543,17 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528479876653137/Pleading_Child_Seasonal_Chart_Clement.jpg?ex=65e7402d&is=65d4cb2d&hm=bf49db7ef1a7a76758395c2bce5785707031739421d4b338072d2f714654175e&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528544963600404/Remembrance_Spirits_Location_Mimi.png?ex=65e7403d&is=65d4cb3d&hm=00bc16e381313e07b0c0a9969c19b673d7721c0ca09980fb89a51caa21122aed&",
     },
     cosmetics: [{}],
     emote: {
@@ -1596,17 +1568,17 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528480333565993/Bereft_Veteran_Seasonal_Chart_Clement.jpg?ex=65e7402d&is=65d4cb2d&hm=661a14f3eca47f11f9aa798e3f64a86800ce5f3517966492ea1274843bd3bab8&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528544963600404/Remembrance_Spirits_Location_Mimi.png?ex=65e7403d&is=65d4cb3d&hm=00bc16e381313e07b0c0a9969c19b673d7721c0ca09980fb89a51caa21122aed&",
     },
     cosmetics: [{}],
     emote: {
@@ -1621,17 +1593,17 @@ module.exports = {
     season: "Remembrance",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528480858116166/Tea_Brewer_Seasonal_Chart_Clement.jpg?ex=65e7402d&is=65d4cb2d&hm=51bd9da3daf3052fb05012ec207497a106e079b12de00cc78d3d52d7894d28c4&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Mimi and Sam",
+      image: "https://cdn.discordapp.com/attachments/1207724588348219402/1209528544963600404/Remembrance_Spirits_Location_Mimi.png?ex=65e7403d&is=65d4cb3d&hm=00bc16e381313e07b0c0a9969c19b673d7721c0ca09980fb89a51caa21122aed&",
     },
     cosmetics: [{}],
     emote: {
@@ -1648,17 +1620,17 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519112188067900/Warrior_of_Love_Seasonal_Chart_Clement.jpg?ex=65e73774&is=65d4c274&hm=d9a88f3ed01f748b553a7b512c5050679a029945dfaab11a77a1ea8fe8c42246&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Zed",
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519155984867428/AURORA_Location_Zed.png?ex=65e7377e&is=65d4c27e&hm=f967954e0013e038dc5d8a577fbf056194cbd66df48fae69078722ecb2517b30&",
     },
     cosmetics: [{}],
     emote: {
@@ -1673,17 +1645,17 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519111676235811/Seed_of_Hope_Seasonal_Chart_Clement.jpg?ex=65e73774&is=65d4c274&hm=df875bd2998c59be41694f2e2dfcd58bc23bb137dc442d73c7491c3ef3647865&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Zed",
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519155984867428/AURORA_Location_Zed.png?ex=65e7377e&is=65d4c27e&hm=f967954e0013e038dc5d8a577fbf056194cbd66df48fae69078722ecb2517b30&",
     },
     cosmetics: [{}],
     emote: {
@@ -1698,17 +1670,17 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519112410374195/Running_Wayfarer_Seasonal_Chart_Clement.jpg?ex=65e73774&is=65d4c274&hm=3c2751082c9799a3f074ac39180b44475fa567a70ce407ca4d1429276fa93af5&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Zed",
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519155984867428/AURORA_Location_Zed.png?ex=65e7377e&is=65d4c27e&hm=f967954e0013e038dc5d8a577fbf056194cbd66df48fae69078722ecb2517b30&",
     },
     cosmetics: [{}],
     emote: {
@@ -1723,17 +1695,17 @@ module.exports = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: true,
-      dates: ``,
+      returned: false,
+      dates: [],
     },
     tree: {
-      by: "",
-      total: '',
-      image: "",
+      by: "Clement",
+      total: ' ',
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519111940345936/Mindful_Miner_Seasonal_Chart_Clement.jpg?ex=65e73774&is=65d4c274&hm=47cc062338396a5314d595974bd2cbfc9a3ab1de816fe0bf75736c5773a2af93&",
     },
     location: {
-      by: "",
-      image: "",
+      by: "Zed",
+      image: "https://cdn.discordapp.com/attachments/1207724643583008769/1209519155984867428/AURORA_Location_Zed.png?ex=65e7377e&is=65d4c27e&hm=f967954e0013e038dc5d8a577fbf056194cbd66df48fae69078722ecb2517b30&",
     },
     cosmetics: [{}],
     emote: {

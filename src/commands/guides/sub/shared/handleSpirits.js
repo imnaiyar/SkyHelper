@@ -150,7 +150,7 @@ module.exports = async (int, value, guides) => {
         const newRow = ActionRowBuilder.from(row);
         newRow.components[0] = treeBtn;
         lastField.name = `Location by ${data.location.by}`;
-        lastField.value = " ";
+        lastField.value =  data.location?.description || ' ';
          newEmbed.setImage(data.location.image);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
