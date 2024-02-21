@@ -98,7 +98,7 @@ class HandleRealms {
             components: [],
           });
         })
-        .catch((err) => {});
+        .catch(() => {});
     });
   }
   async handleMaps() {
@@ -148,7 +148,7 @@ class HandleRealms {
     const spiritsData = Object.entries(this.client.spiritsData);
     const getSpiritsObj = (type) => {
       return spiritsData
-        .filter(([k, v]) => v.realm === this.realm && v.type === type)
+        .filter(([, v]) => v.realm === this.realm && v.type === type)
         .map(([k, v]) => ({
           label: v.name,
           value: k,
@@ -186,7 +186,7 @@ class HandleRealms {
       await respondSpirits(inter, value, true);
     });
   }
-  getRealmsRow(data, page, total, author, emoji, maps) {
+  getRealmsRow(data, page, total, author, emoji, map) {
     const embed = data[page - 1];
     const emb = new EmbedBuilder()
       .setTitle(embed.title)
@@ -195,7 +195,7 @@ class HandleRealms {
       .setFooter({ text: `Page ${page}/${total + 1}` });
     if (embed.description) emb.setDescription(embed.description);
 
-    if (maps) {
+    if (map) {
       emb.setURL(`https://sky-children-of-the-light.fandom.com/wiki/${this.realm.split(" ").join("_")}#Maps`);
     } else {
       emb.setURL(

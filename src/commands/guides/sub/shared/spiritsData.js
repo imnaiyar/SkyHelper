@@ -1154,19 +1154,19 @@ module.exports = {
       level: [
         {
           title: '"Flex" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692575486517338/Hunter-flex-emote-level-1.gif?ex=65e0925b&is=65ce1d5b&hm=4d78fb5f466e57c03f05123aadf607fedf7f48ab2b6b6c064b516f5d38d38793&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692575486517338/Hunter-flex-emote-level-1.gif?ex=65e0925b&is=65ce1d5b&hm=4d78fb5f466e57c03f05123aadf607fedf7f48ab2b6b6c064b516f5d38d38793&',
         },
         {
           title: '"Flex" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692576040157265/Hunter-flex-emote-level-2.gif?ex=65e0925b&is=65ce1d5b&hm=38d11b8dc4aad4468dd3d5211e24c846a9dd0d7e182b61bedd9a7b8f9cff8be9&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692576040157265/Hunter-flex-emote-level-2.gif?ex=65e0925b&is=65ce1d5b&hm=38d11b8dc4aad4468dd3d5211e24c846a9dd0d7e182b61bedd9a7b8f9cff8be9&',
         },
         {
           title: '"Flex" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692576652664832/Hunter-flex-emote-level-3.gif?ex=65e0925c&is=65ce1d5c&hm=95885ae869523a5ee0e8d1b3cefde5736086750ff142687cc1871991c30f66b9&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692576652664832/Hunter-flex-emote-level-3.gif?ex=65e0925c&is=65ce1d5c&hm=95885ae869523a5ee0e8d1b3cefde5736086750ff142687cc1871991c30f66b9&',
         },
         {
           title: '"Flex" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692577047056384/Hunter-flex-emote-level-4.gif?ex=65e0925c&is=65ce1d5c&hm=b968219b41c42641bb0b3550b4255349ec9401a267ece71a33fb87e91340c316&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207692577047056384/Hunter-flex-emote-level-4.gif?ex=65e0925c&is=65ce1d5c&hm=b968219b41c42641bb0b3550b4255349ec9401a267ece71a33fb87e91340c316&',
         },
         ],
     },
@@ -1197,19 +1197,19 @@ module.exports = {
       level: [
         {
           title: '"Float Spin" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694788074151996/Princess-float-spin-emote-level-1_1.gif?ex=65e0946b&is=65ce1f6b&hm=3ff0f4bfe70077a689de2b0ffffaa062df6723dc449c87550239d179d218ba52&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694788074151996/Princess-float-spin-emote-level-1_1.gif?ex=65e0946b&is=65ce1f6b&hm=3ff0f4bfe70077a689de2b0ffffaa062df6723dc449c87550239d179d218ba52&',
         },
         {
           title: '"Float Spin" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694788523065394/Princess-float-spin-emote-level-2.gif?ex=65e0946b&is=65ce1f6b&hm=734d94254b01cbf97bcd88c429e88e6b39c2d914e70576bbd58b432320c43031&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694788523065394/Princess-float-spin-emote-level-2.gif?ex=65e0946b&is=65ce1f6b&hm=734d94254b01cbf97bcd88c429e88e6b39c2d914e70576bbd58b432320c43031&',
         },
         {
           title: '"Float Spin" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694789198352474/Princess-float-spin-emote-level-3.gif?ex=65e0946b&is=65ce1f6b&hm=2f868923589f97dfc045f45217bf57a5e362dcffb9ee068d48fc948c0bd10392&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694789198352474/Princess-float-spin-emote-level-3.gif?ex=65e0946b&is=65ce1f6b&hm=2f868923589f97dfc045f45217bf57a5e362dcffb9ee068d48fc948c0bd10392&',
         },
         {
           title: '"Float Spin" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694789613723730/Princess-float-spin-emote-level-4.gif?ex=65e0946b&is=65ce1f6b&hm=83125d45712fd53db3169f571cf0ea987b2b1dc71a4a59785e536c0f2c3a95dd&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207694789613723730/Princess-float-spin-emote-level-4.gif?ex=65e0946b&is=65ce1f6b&hm=83125d45712fd53db3169f571cf0ea987b2b1dc71a4a59785e536c0f2c3a95dd&',
         },
         ],
     },
@@ -1240,11 +1240,11 @@ module.exports = {
       level: [
         {
           title: '"Cradle Carry" Friend Action Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207698863507636244/Feudal-Lord-cradle-carry-emote-level-1.gif?ex=65e09837&is=65ce2337&hm=c7b6cf312e72d3a7a11669fc2315fe940cbc788323a99acd0e49cab1089b7ef3&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207698863507636244/Feudal-Lord-cradle-carry-emote-level-1.gif?ex=65e09837&is=65ce2337&hm=c7b6cf312e72d3a7a11669fc2315fe940cbc788323a99acd0e49cab1089b7ef3&',
         },
         {
           title: '"Cradle Carry" Friend Action Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207698864023277629/Feudal-Lord-cradle-carry-emote-level-2.gif?ex=65e09837&is=65ce2337&hm=07e26ec432884e4435dc0ba7ba656ff9d0ad8ef461e7ca4d7675727decd18ee5&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207698864023277629/Feudal-Lord-cradle-carry-emote-level-2.gif?ex=65e09837&is=65ce2337&hm=07e26ec432884e4435dc0ba7ba656ff9d0ad8ef461e7ca4d7675727decd18ee5&',
         },
         ],
     },
@@ -1275,19 +1275,19 @@ module.exports = {
       level: [
         {
           title: '"Whistle" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699115484520488/Herb-Gatherer-whistle-emote-level-1.gif?ex=65e09873&is=65ce2373&hm=85fe95da65c26bfdea174557dda93bef48d69699b1f785eabca86a495250555b&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699115484520488/Herb-Gatherer-whistle-emote-level-1.gif?ex=65e09873&is=65ce2373&hm=85fe95da65c26bfdea174557dda93bef48d69699b1f785eabca86a495250555b&',
         },
         {
           title: '"Whistle" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699115912204339/Herb-Gatherer-whistle-emote-level-2.gif?ex=65e09873&is=65ce2373&hm=cc11e7969603101c6e34eef39f021402042d9419f843228b5ade40153a76c78c&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699115912204339/Herb-Gatherer-whistle-emote-level-2.gif?ex=65e09873&is=65ce2373&hm=cc11e7969603101c6e34eef39f021402042d9419f843228b5ade40153a76c78c&',
         },
         {
           title: '"Whistle" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699116277104640/Herb-Gatherer-whistle-emote-level-3.gif?ex=65e09873&is=65ce2373&hm=d29bab19c90c937249825f3dbf637dd01abd5890cad59c97338da0ddf0c212ea&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699116277104640/Herb-Gatherer-whistle-emote-level-3.gif?ex=65e09873&is=65ce2373&hm=d29bab19c90c937249825f3dbf637dd01abd5890cad59c97338da0ddf0c212ea&',
         },
         {
           title: '"Whistle" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699116772302928/Herb-Gatherer-whistle-emote-level-4.gif?ex=65e09873&is=65ce2373&hm=50912e3278bc1ff8719f645359de7454700c94d4184a85c64509d29262cb596e&'
+          image: 'https://cdn.discordapp.com/attachments/1207681996453580802/1207699116772302928/Herb-Gatherer-whistle-emote-level-4.gif?ex=65e09873&is=65ce2373&hm=50912e3278bc1ff8719f645359de7454700c94d4184a85c64509d29262cb596e&',
         },
         ],
     },
@@ -1416,19 +1416,19 @@ module.exports = {
       level: [
         {
           title: '"Blindfold Balance" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033056220872764/Ascetic_Monk_Blindfold_Balance_LvL_1.gif?ex=65e572c7&is=65d2fdc7&hm=6c86b8e518a549063cff0e33a11c449eccf018b5daccb9d8544f81de81928547&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033056220872764/Ascetic_Monk_Blindfold_Balance_LvL_1.gif?ex=65e572c7&is=65d2fdc7&hm=6c86b8e518a549063cff0e33a11c449eccf018b5daccb9d8544f81de81928547&',
         },
         {
           title: '"Blindfold Balance" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033056783048794/Ascetic_Monk_Blindfold_Balance_LvL_2.gif?ex=65e572c7&is=65d2fdc7&hm=98349a46578382078c51ae642b976cff400d6938ede20f0b7ed606703d1c8096&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033056783048794/Ascetic_Monk_Blindfold_Balance_LvL_2.gif?ex=65e572c7&is=65d2fdc7&hm=98349a46578382078c51ae642b976cff400d6938ede20f0b7ed606703d1c8096&',
         },
         {
           title: '"Blindfold Balance" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033057177440318/Ascetic_Monk_Blindfold_Balance_LvL_3.gif?ex=65e572c7&is=65d2fdc7&hm=257cb11b109ff002243b3feb651bc9ab2e4bd2a637816d1942edeef8cfaf4787&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033057177440318/Ascetic_Monk_Blindfold_Balance_LvL_3.gif?ex=65e572c7&is=65d2fdc7&hm=257cb11b109ff002243b3feb651bc9ab2e4bd2a637816d1942edeef8cfaf4787&',
         },
         {
           title: '"Blindfold Balance" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033057709858858/Ascetic_Monk_Blindfold_Balance_LvL_4.gif?ex=65e572c7&is=65d2fdc7&hm=001cab2eefd155010add2c9ac29614fecc316b13e1cffd259dfd7a6501d97651&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209033057709858858/Ascetic_Monk_Blindfold_Balance_LvL_4.gif?ex=65e572c7&is=65d2fdc7&hm=001cab2eefd155010add2c9ac29614fecc316b13e1cffd259dfd7a6501d97651&',
         },
         ],
     },
@@ -1458,19 +1458,19 @@ module.exports = {
       level: [
         {
           title: '"Jolly Dance" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031623933165589/Geologist_Jolly_Dance_LvL_1.gif?ex=65e57171&is=65d2fc71&hm=88ee3d751e052bdb78274105902b2cf9f619e90e9563d89074df020f4ca6ae2f&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031623933165589/Geologist_Jolly_Dance_LvL_1.gif?ex=65e57171&is=65d2fc71&hm=88ee3d751e052bdb78274105902b2cf9f619e90e9563d89074df020f4ca6ae2f&',
         },
         {
           title: '"Jolly Dance" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624302526474/Geologist_Jolly_Dance_LvL_2.gif?ex=65e57171&is=65d2fc71&hm=1a7f84089c67fe1e96998c3c0684bc486963ee53d4cb10db4c9ade10afaee748&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624302526474/Geologist_Jolly_Dance_LvL_2.gif?ex=65e57171&is=65d2fc71&hm=1a7f84089c67fe1e96998c3c0684bc486963ee53d4cb10db4c9ade10afaee748&',
         },
         {
           title: '"Jolly Dance" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624625496114/Geologist_Jolly_Dance_LvL_3.gif?ex=65e57172&is=65d2fc72&hm=7aca4c27921fe873afb703bcd00b9b280b9bdd3abe5d028a261fd4e4d0536535&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624625496114/Geologist_Jolly_Dance_LvL_3.gif?ex=65e57172&is=65d2fc72&hm=7aca4c27921fe873afb703bcd00b9b280b9bdd3abe5d028a261fd4e4d0536535&',
         },
         {
           title: '"Jolly Dance" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624998649906/Geologist_Jolly_Dance_LvL_4.gif?ex=65e57172&is=65d2fc72&hm=6e936395b10a44c0eecaf542cf64c7dcb4f9d43b181a6c64cb674031802e89e1&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209031624998649906/Geologist_Jolly_Dance_LvL_4.gif?ex=65e57172&is=65d2fc72&hm=6e936395b10a44c0eecaf542cf64c7dcb4f9d43b181a6c64cb674031802e89e1&',
         },
         ],
     },
@@ -1500,16 +1500,16 @@ module.exports = {
       level: [
         {
           title: '"Sidehug" Friend Action Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209040284307169310/Ranger_Side_Hug_LvL_1.gif?ex=65e57982&is=65d30482&hm=1af7de8d458943ad8a81f850fe4fd4bb70845638ddbd972460ca6a3cd42bfb06&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209040284307169310/Ranger_Side_Hug_LvL_1.gif?ex=65e57982&is=65d30482&hm=1af7de8d458943ad8a81f850fe4fd4bb70845638ddbd972460ca6a3cd42bfb06&',
         },
         {
           title: '"Sidehug" Friend Action Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209040283975680030/Ranger_Side_Hug_LvL_2.gif?ex=65e57982&is=65d30482&hm=0dd4ed01fe175fa1de2b64a344fa1ee80afeec42f0dda76afdba7142cc97e120&'
+          image: 'https://cdn.discordapp.com/attachments/1207724465535057970/1209040283975680030/Ranger_Side_Hug_LvL_2.gif?ex=65e57982&is=65d30482&hm=0dd4ed01fe175fa1de2b64a344fa1ee80afeec42f0dda76afdba7142cc97e120&',
         },
         ],
     },
   },
-  
+
   // Passage
   outcast: {
     name: "Oddball Outcast",
@@ -1536,19 +1536,19 @@ module.exports = {
       level: [
         {
           title: '"Hacky Sack" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024893463695360/Oddball_Hacky_Sack_Lvl_1.gif?ex=65e56b2d&is=65d2f62d&hm=a68a116c294e9e5337202c87a028a007329c052e69a0269ae3aaca9859f65b1d&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024893463695360/Oddball_Hacky_Sack_Lvl_1.gif?ex=65e56b2d&is=65d2f62d&hm=a68a116c294e9e5337202c87a028a007329c052e69a0269ae3aaca9859f65b1d&',
         },
         {
           title: '"Hacky Sack" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024893832659025/Oddball_Hacky_Sack_Lvl_2.gif?ex=65e56b2d&is=65d2f62d&hm=08e0cf9ec868ebab97ceee0eb797f57a389260ef477db619b6e504683ffda970&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024893832659025/Oddball_Hacky_Sack_Lvl_2.gif?ex=65e56b2d&is=65d2f62d&hm=08e0cf9ec868ebab97ceee0eb797f57a389260ef477db619b6e504683ffda970&',
         },
         {
           title: '"Hacky Sack" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024894231257108/Oddball_Hacky_Sack_Lvl_3.gif?ex=65e56b2d&is=65d2f62d&hm=2215fae117d1f0eb9c021ba740b3fdf520607086c61c59739171d1897e20f244&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024894231257108/Oddball_Hacky_Sack_Lvl_3.gif?ex=65e56b2d&is=65d2f62d&hm=2215fae117d1f0eb9c021ba740b3fdf520607086c61c59739171d1897e20f244&',
         },
         {
           title: '"Hacky Sack" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024894785032213/Oddball_Hacky_Sack_Lvl_4.gif?ex=65e56b2d&is=65d2f62d&hm=53c15392a932f1dc19238f9d3d65ca7a9cf7376bd8320321e03d75059075d986&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209024894785032213/Oddball_Hacky_Sack_Lvl_4.gif?ex=65e56b2d&is=65d2f62d&hm=53c15392a932f1dc19238f9d3d65ca7a9cf7376bd8320321e03d75059075d986&',
         },
         ],
     },
@@ -1578,19 +1578,19 @@ module.exports = {
       level: [
         {
           title: '"Pull-Up" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030160070737940/Overachiever_Pull-Up_Lvl_1.gif?ex=65e57014&is=65d2fb14&hm=31013febf8c957bd7468000ba83e1eedbd3f63004b5961f6a61994456879a63b&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030160070737940/Overachiever_Pull-Up_Lvl_1.gif?ex=65e57014&is=65d2fb14&hm=31013febf8c957bd7468000ba83e1eedbd3f63004b5961f6a61994456879a63b&',
         },
         {
           title: '"Pull-Up" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030160523857920/Overachiever_Pull-Up_Lvl_2.gif?ex=65e57014&is=65d2fb14&hm=502a4432f461487dd83a44f2d9fc55b636e5a9e7fc542d756f4c88d3a9736321&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030160523857920/Overachiever_Pull-Up_Lvl_2.gif?ex=65e57014&is=65d2fb14&hm=502a4432f461487dd83a44f2d9fc55b636e5a9e7fc542d756f4c88d3a9736321&',
         },
         {
           title: '"Pull-Up" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030161056403516/Overachiever_Pull-Up_Lvl_3.gif?ex=65e57015&is=65d2fb15&hm=34a952377031bcdaf8c926fddafa2d3e09dc3960826b3f064c03aef5c36d184b&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030161056403516/Overachiever_Pull-Up_Lvl_3.gif?ex=65e57015&is=65d2fb15&hm=34a952377031bcdaf8c926fddafa2d3e09dc3960826b3f064c03aef5c36d184b&',
         },
         {
           title: '"Pull-Up" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030161966702592/Overachiever_Pull-Up_Lvl_4.gif?ex=65e57015&is=65d2fb15&hm=0f89a48c6013dd198b585b752241b256374385b0e21ad81ac416b1df721e42cf&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209030161966702592/Overachiever_Pull-Up_Lvl_4.gif?ex=65e57015&is=65d2fb15&hm=0f89a48c6013dd198b585b752241b256374385b0e21ad81ac416b1df721e42cf&',
         },
         ],
     },
@@ -1620,19 +1620,19 @@ module.exports = {
       level: [
         {
           title: '"Moping" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026906834468934/Melancholy_Mope_Moping_LvL_1.gif?ex=65e56d0d&is=65d2f80d&hm=9fdc43062db7250c49689dc9508549a3b86dba74dae2aef0ee309c9498056d6f&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026906834468934/Melancholy_Mope_Moping_LvL_1.gif?ex=65e56d0d&is=65d2f80d&hm=9fdc43062db7250c49689dc9508549a3b86dba74dae2aef0ee309c9498056d6f&',
         },
         {
           title: '"Moping" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026907287322624/Melancholy_Mope_Moping_LvL_2.gif?ex=65e56d0d&is=65d2f80d&hm=7003a58c9a8cbc870c7452acb90c738dd25da481d3fae7e77e41f3d531bf934e&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026907287322624/Melancholy_Mope_Moping_LvL_2.gif?ex=65e56d0d&is=65d2f80d&hm=7003a58c9a8cbc870c7452acb90c738dd25da481d3fae7e77e41f3d531bf934e&',
         },
         {
           title: '"Moping" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026907677401088/Melancholy_Mope_Moping_LvL_3.gif?ex=65e56d0d&is=65d2f80d&hm=cdbd328716485bed170861b5ce038a557d96ee8a2180b85dbbabd85ec401d12b&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026907677401088/Melancholy_Mope_Moping_LvL_3.gif?ex=65e56d0d&is=65d2f80d&hm=cdbd328716485bed170861b5ce038a557d96ee8a2180b85dbbabd85ec401d12b&',
         },
         {
           title: '"Moping" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026908059344946/Melancholy_Mope_Moping_LvL_4.gif?ex=65e56d0d&is=65d2f80d&hm=fe4e02535d68ca000cd55dbcc8032d7b9b52545c87d6edd4b374e99e3b2a0f5f&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209026908059344946/Melancholy_Mope_Moping_LvL_4.gif?ex=65e56d0d&is=65d2f80d&hm=fe4e02535d68ca000cd55dbcc8032d7b9b52545c87d6edd4b374e99e3b2a0f5f&',
         },
         ],
     },
@@ -1662,25 +1662,25 @@ module.exports = {
       level: [
         {
           title: '"Somersault" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028710666076201/Troublemaker_Somersault_LvL_1.gif?ex=65e56ebb&is=65d2f9bb&hm=bba3d8a4dbc0735c7ae2d750042af1ea7efddca8683dd278fa71ea47b1bcbc9b&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028710666076201/Troublemaker_Somersault_LvL_1.gif?ex=65e56ebb&is=65d2f9bb&hm=bba3d8a4dbc0735c7ae2d750042af1ea7efddca8683dd278fa71ea47b1bcbc9b&',
         },
         {
           title: '"Somersault" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711215800320/Troublemaker_Somersault_LvL_2.gif?ex=65e56ebb&is=65d2f9bb&hm=419a514fadadb92956a5a52fcf13b90536781306cdc6f56d608e1d70165d06d1&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711215800320/Troublemaker_Somersault_LvL_2.gif?ex=65e56ebb&is=65d2f9bb&hm=419a514fadadb92956a5a52fcf13b90536781306cdc6f56d608e1d70165d06d1&',
         },
         {
           title: '"Somersault" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711597477929/Troublemaker_Somersault_LvL_3.gif?ex=65e56ebb&is=65d2f9bb&hm=81c3419ad8c23c708c640b407ea7a6d71cca7120776a8c29b97f98cbd9f8a57f&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711597477929/Troublemaker_Somersault_LvL_3.gif?ex=65e56ebb&is=65d2f9bb&hm=81c3419ad8c23c708c640b407ea7a6d71cca7120776a8c29b97f98cbd9f8a57f&',
         },
         {
           title: '"Somersault" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711928692736/Troublemaker_Somersault_LvL_4.gif?ex=65e56ebb&is=65d2f9bb&hm=4299dea4e5cd6b27542f5f3a10ba67ab898b475a51ac8ea3778086344e5527e5&'
+          image: 'https://cdn.discordapp.com/attachments/1207724512238637147/1209028711928692736/Troublemaker_Somersault_LvL_4.gif?ex=65e56ebb&is=65d2f9bb&hm=4299dea4e5cd6b27542f5f3a10ba67ab898b475a51ac8ea3778086344e5527e5&',
         },
         ],
     },
   },
-  
-  // Remembrance 
+
+  // Remembrance
   wounded_warrior: {
     name: "Wounded Warrior",
     type: "Seasonal Spirit",
@@ -1732,19 +1732,19 @@ module.exports = {
       level: [
         {
           title: '"Pleading" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019613598449664/Pleading_Child_Pleading_Lvl_1.gif?ex=65e56642&is=65d2f142&hm=d5683a802281c1c54b6d413c7cc4206826079da2e2b4536504eee216d476cdb6&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019613598449664/Pleading_Child_Pleading_Lvl_1.gif?ex=65e56642&is=65d2f142&hm=d5683a802281c1c54b6d413c7cc4206826079da2e2b4536504eee216d476cdb6&',
         },
         {
           title: '"Pleading" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019613975941230/Pleading_Child_Pleading_Lvl_2.gif?ex=65e56642&is=65d2f142&hm=2f21e21e55626de36be0bcbc3492fbfca385f6cd38041dc3960aa80ca5c3eb67&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019613975941230/Pleading_Child_Pleading_Lvl_2.gif?ex=65e56642&is=65d2f142&hm=2f21e21e55626de36be0bcbc3492fbfca385f6cd38041dc3960aa80ca5c3eb67&',
         },
         {
           title: '"Pleading" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019614428659712/Pleading_Child_Pleading_Lvl_3.gif?ex=65e56642&is=65d2f142&hm=1f8df29ec152c2bf6dee4cb982f9264a4eb8a9d2a375d275795ef879d9b8914d&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019614428659712/Pleading_Child_Pleading_Lvl_3.gif?ex=65e56642&is=65d2f142&hm=1f8df29ec152c2bf6dee4cb982f9264a4eb8a9d2a375d275795ef879d9b8914d&',
         },
         {
           title: '"Pleading" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019614819000381/Pleading_Child_Pleading_Lvl_4.gif?ex=65e56642&is=65d2f142&hm=2a83a4bd1cf8295015c34f5c4d04731143386f5fa50a59a4a2bd3f6e729acbe7&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209019614819000381/Pleading_Child_Pleading_Lvl_4.gif?ex=65e56642&is=65d2f142&hm=2a83a4bd1cf8295015c34f5c4d04731143386f5fa50a59a4a2bd3f6e729acbe7&',
         },
         ],
     },
@@ -1774,19 +1774,19 @@ module.exports = {
       level: [
         {
           title: '"Grieving" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023028902756352/Veteran_Grieving_LvL_1.gif?ex=65e56970&is=65d2f470&hm=7401dbe594ed9a971ecefc12d65a81b195523fcd310ad49d918faedb38fef3ee&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023028902756352/Veteran_Grieving_LvL_1.gif?ex=65e56970&is=65d2f470&hm=7401dbe594ed9a971ecefc12d65a81b195523fcd310ad49d918faedb38fef3ee&',
         },
         {
           title: '"Grieving" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023029376589824/Veteran_Grieving_LvL_2.gif?ex=65e56970&is=65d2f470&hm=7b8457eec11f284a2701dacb9673f6354a93de475413b56582a3c01e56406f37&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023029376589824/Veteran_Grieving_LvL_2.gif?ex=65e56970&is=65d2f470&hm=7b8457eec11f284a2701dacb9673f6354a93de475413b56582a3c01e56406f37&',
         },
         {
           title: '"Grieving" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023029947142144/Veteran_Grieving_LvL_3.gif?ex=65e56970&is=65d2f470&hm=56e3965edd32b2e9b38072953c359fe72a67092956c56c193682b4791e0b7041&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023029947142144/Veteran_Grieving_LvL_3.gif?ex=65e56970&is=65d2f470&hm=56e3965edd32b2e9b38072953c359fe72a67092956c56c193682b4791e0b7041&',
         },
         {
           title: '"Grieving" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023030328692776/Veteran_Grieving_LvL_4.gif?ex=65e56970&is=65d2f470&hm=3eb13768764229537d4299498be31ce36148b22d7355f59edef3854348516cb8&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209023030328692776/Veteran_Grieving_LvL_4.gif?ex=65e56970&is=65d2f470&hm=3eb13768764229537d4299498be31ce36148b22d7355f59edef3854348516cb8&',
         },
         ],
     },
@@ -1816,24 +1816,24 @@ module.exports = {
       level: [
         {
           title: '"Tiptoeing" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021328892633138/Teamaker_Tiptoeing_Lvl_1.gif?ex=65e567db&is=65d2f2db&hm=b6b7057e7f749e504d7db25e2aebe2acefc6dbcde0ba23ddb39ecf900efe30d4&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021328892633138/Teamaker_Tiptoeing_Lvl_1.gif?ex=65e567db&is=65d2f2db&hm=b6b7057e7f749e504d7db25e2aebe2acefc6dbcde0ba23ddb39ecf900efe30d4&',
         },
         {
           title: '"Tiptoeing" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021329450344458/Teamaker_Tiptoeing_Lvl_2.gif?ex=65e567db&is=65d2f2db&hm=df0f70a713f0d39e8ea617af78c2868342f2d1db6d3528ba7081a238a80d3241&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021329450344458/Teamaker_Tiptoeing_Lvl_2.gif?ex=65e567db&is=65d2f2db&hm=df0f70a713f0d39e8ea617af78c2868342f2d1db6d3528ba7081a238a80d3241&',
         },
         {
           title: '"Tiptoeing" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021329815371816/Teamaker_Tiptoeing_Lvl_3.gif?ex=65e567db&is=65d2f2db&hm=bbf92aa866e701475ec8c8cf111de7cd471e75f2f9412e92a247560fa3689abe&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021329815371816/Teamaker_Tiptoeing_Lvl_3.gif?ex=65e567db&is=65d2f2db&hm=bbf92aa866e701475ec8c8cf111de7cd471e75f2f9412e92a247560fa3689abe&',
         },
         {
           title: '"Tiptoeing" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021330192863292/Teamaker_Tiptoeing_Lvl_4.gif?ex=65e567db&is=65d2f2db&hm=c7f866bcc9dea60d225762195bc8f0971fdce452053010497f83e7de98901b57&'
+          image: 'https://cdn.discordapp.com/attachments/1207724588348219402/1209021330192863292/Teamaker_Tiptoeing_Lvl_4.gif?ex=65e567db&is=65d2f2db&hm=c7f866bcc9dea60d225762195bc8f0971fdce452053010497f83e7de98901b57&',
         },
         ],
     },
   },
-  
+
   // Aurora
   warrior_of_love: {
     name: "Warrior of Love",
@@ -1860,19 +1860,19 @@ module.exports = {
       level: [
         {
           title: '"Twirl" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986832562298880/Warrior_of_Love_Twirl_Lvl_1.gif?ex=65e547ba&is=65d2d2ba&hm=cd97c8bd997e53fe48f8ff03c7473ad24a42727517686b2ca3dc699f80c1c204&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986832562298880/Warrior_of_Love_Twirl_Lvl_1.gif?ex=65e547ba&is=65d2d2ba&hm=cd97c8bd997e53fe48f8ff03c7473ad24a42727517686b2ca3dc699f80c1c204&',
         },
         {
           title: '"Twirl" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986832981856256/Warrior_of_Love_Twirl_Lvl_2.gif?ex=65e547ba&is=65d2d2ba&hm=b9a977c04e3f0187493b0b96c6379b3e353ae29c17c55eb99a8cd24ad6af481e&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986832981856256/Warrior_of_Love_Twirl_Lvl_2.gif?ex=65e547ba&is=65d2d2ba&hm=b9a977c04e3f0187493b0b96c6379b3e353ae29c17c55eb99a8cd24ad6af481e&',
         },
         {
           title: '"Twirl" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986833380319232/Warrior_of_Love_Twirl_Lvl_3.gif?ex=65e547ba&is=65d2d2ba&hm=7b7ff7de0d2e6aee5e3d40c9f8032985b48666f078e0280adac56ffbef2bd8a0&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986833380319232/Warrior_of_Love_Twirl_Lvl_3.gif?ex=65e547ba&is=65d2d2ba&hm=7b7ff7de0d2e6aee5e3d40c9f8032985b48666f078e0280adac56ffbef2bd8a0&',
         },
         {
           title: '"Twirl" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986833783099472/Warrior_of_Love_Twirl_Lvl_4.gif?ex=65e547bb&is=65d2d2bb&hm=e50862e6c9c46a119804716b718f1921a3c814cfa90b2a4c7c611eb33941adcb&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208986833783099472/Warrior_of_Love_Twirl_Lvl_4.gif?ex=65e547bb&is=65d2d2bb&hm=e50862e6c9c46a119804716b718f1921a3c814cfa90b2a4c7c611eb33941adcb&',
         },
         ],
     },
@@ -1902,19 +1902,19 @@ module.exports = {
       level: [
         {
           title: '"Rhythmic Clap" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985394390237184/Seed_of_Hope_Rhythmic_Clap_Lvl_1.gif?ex=65e54663&is=65d2d163&hm=bdfb356141551c7d34d53dd6ff2dd04d67c5c3bcc53828aaf79f21b1fb373f98&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985394390237184/Seed_of_Hope_Rhythmic_Clap_Lvl_1.gif?ex=65e54663&is=65d2d163&hm=bdfb356141551c7d34d53dd6ff2dd04d67c5c3bcc53828aaf79f21b1fb373f98&',
         },
         {
           title: '"Rhythmic Clap" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985394847154227/Seed_of_Hope_Rhythmic_Clap_Lvl_2.gif?ex=65e54663&is=65d2d163&hm=24e236ae170a26e75739503c600b23ff00b0bcb0ef489f8af6d56edca326aec8&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985394847154227/Seed_of_Hope_Rhythmic_Clap_Lvl_2.gif?ex=65e54663&is=65d2d163&hm=24e236ae170a26e75739503c600b23ff00b0bcb0ef489f8af6d56edca326aec8&',
         },
         {
           title: '"Rhythmic Clap" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985395216523264/Seed_of_Hope_Rhythmic_Clap_Lvl_3.gif?ex=65e54664&is=65d2d164&hm=8b92fa560819234ead30eca554cd2fd8bac99a51ba11eb544d90c862ce625c56&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985395216523264/Seed_of_Hope_Rhythmic_Clap_Lvl_3.gif?ex=65e54664&is=65d2d164&hm=8b92fa560819234ead30eca554cd2fd8bac99a51ba11eb544d90c862ce625c56&',
         },
         {
           title: '"Rhythmic Clap" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985395535286343/Seed_of_Hope_Rhythmic_Clap_Lvl_4.gif?ex=65e54664&is=65d2d164&hm=7fe7a862f6dc0e5b5185023e817345de4dfe3652b7896b8ecfead1b4ed19cdf6&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208985395535286343/Seed_of_Hope_Rhythmic_Clap_Lvl_4.gif?ex=65e54664&is=65d2d164&hm=7fe7a862f6dc0e5b5185023e817345de4dfe3652b7896b8ecfead1b4ed19cdf6&',
         },
         ],
     },
@@ -1944,19 +1944,19 @@ module.exports = {
       level: [
         {
           title: '"Waving Light" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351046709258/Running_Wayfarer-_Waving_Light_Level_1_.gif?ex=65e5447c&is=65d2cf7c&hm=6d0b8c4fbdb9f47f340d7e7f3159ff61871b47fa2bed434140f0e15e9d4f2249&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351046709258/Running_Wayfarer-_Waving_Light_Level_1_.gif?ex=65e5447c&is=65d2cf7c&hm=6d0b8c4fbdb9f47f340d7e7f3159ff61871b47fa2bed434140f0e15e9d4f2249&',
         },
         {
           title: '"Waving Light" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351453548594/Running_Wayfarer-_Waving_Light_Level_2.gif?ex=65e5447c&is=65d2cf7c&hm=a98f14c8949649202a83aab8fa5e5f5a6f7993ccb8b1a2d53f12f94409ba3280&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351453548594/Running_Wayfarer-_Waving_Light_Level_2.gif?ex=65e5447c&is=65d2cf7c&hm=a98f14c8949649202a83aab8fa5e5f5a6f7993ccb8b1a2d53f12f94409ba3280&',
         },
         {
           title: '"Waving Light" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351856205834/Running_Wayfarer-_Waving_Light_Level_3.gif?ex=65e5447c&is=65d2cf7c&hm=af21f09599f77d9f39baca4084719fd299e51ce65eed9fe5831be739dc92a1f3&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983351856205834/Running_Wayfarer-_Waving_Light_Level_3.gif?ex=65e5447c&is=65d2cf7c&hm=af21f09599f77d9f39baca4084719fd299e51ce65eed9fe5831be739dc92a1f3&',
         },
         {
           title: '"Waving Light" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983352250732564/Running_Wayfarer-_Waving_Light_Level_4.gif?ex=65e5447d&is=65d2cf7d&hm=ea26ab9434b87c8bde20383b98ea19c524277b67e6609d016ca84964aeff7e73&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208983352250732564/Running_Wayfarer-_Waving_Light_Level_4.gif?ex=65e5447d&is=65d2cf7d&hm=ea26ab9434b87c8bde20383b98ea19c524277b67e6609d016ca84964aeff7e73&',
         },
         ],
     },
@@ -1986,24 +1986,24 @@ module.exports = {
       level: [
         {
           title: '"Raise the Roof" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527097385040/Mindful-Miner-Raise-The-Roof-Emote_Lvl_1.gif?ex=65e4e961&is=65d27461&hm=ce48ec191d3fb51c6834de95b619fc96a6233b4103a4be81452e77e674d03f61&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527097385040/Mindful-Miner-Raise-The-Roof-Emote_Lvl_1.gif?ex=65e4e961&is=65d27461&hm=ce48ec191d3fb51c6834de95b619fc96a6233b4103a4be81452e77e674d03f61&',
         },
         {
           title: '"Raise the Roof" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527487586375/Mindful-Miner-Raise-The-Roof-Emote_Lvl_2.gif?ex=65e4e961&is=65d27461&hm=67582aa4e6cbe15eb5e011d4149d6cff5f375191200f952750061f25a63e5e0c&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527487586375/Mindful-Miner-Raise-The-Roof-Emote_Lvl_2.gif?ex=65e4e961&is=65d27461&hm=67582aa4e6cbe15eb5e011d4149d6cff5f375191200f952750061f25a63e5e0c&',
         },
         {
           title: '"Raise the Roof" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527861002311/Mindful-Miner-Raise-The-Roof-Emote_Lvl_3.gif?ex=65e4e961&is=65d27461&hm=a9c3eaccad50dc81ccad2f7ac18d8d4dce8f7440537ca7e20f0da2dc59cc81a7&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885527861002311/Mindful-Miner-Raise-The-Roof-Emote_Lvl_3.gif?ex=65e4e961&is=65d27461&hm=a9c3eaccad50dc81ccad2f7ac18d8d4dce8f7440537ca7e20f0da2dc59cc81a7&',
         },
         {
           title: '"Raise the Roof" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885528297214013/Mindful-Miner-Raise-The-Roof-Emote_Lvl_4.gif?ex=65e4e961&is=65d27461&hm=781cf97739285b68f61091b8ab87bfa6d2e0de4876e0a019a2c1672c3b415d1c&'
+          image: 'https://cdn.discordapp.com/attachments/1207724643583008769/1208885528297214013/Mindful-Miner-Raise-The-Roof-Emote_Lvl_4.gif?ex=65e4e961&is=65d27461&hm=781cf97739285b68f61091b8ab87bfa6d2e0de4876e0a019a2c1672c3b415d1c&',
         },
         ],
     },
   },
-  
+
   // Shattering
   dark_plant: {
     name: "Ancient Darkness (Darkness Plant)",
@@ -2069,7 +2069,7 @@ module.exports = {
     },
     cosmetics: [{}],
   },
-  
+
   // Performance
   modest_dancer: {
     name: "Modest Dancer",
@@ -2096,11 +2096,11 @@ module.exports = {
       level: [
         {
           title: '"Duet Dance" Friemd Action Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207726026726187088/Modest-Dancer-duet-dance-emote-level-1.gif?ex=65e0b183&is=65ce3c83&hm=c16d063a0fb85c266aae78f691d446ce4d95684c0de9f952457e405d722ee35f&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207726026726187088/Modest-Dancer-duet-dance-emote-level-1.gif?ex=65e0b183&is=65ce3c83&hm=c16d063a0fb85c266aae78f691d446ce4d95684c0de9f952457e405d722ee35f&',
         },
         {
           title: '"Duet Dance" Friemd Action Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207726027154137169/Modest-Dancer-duet-dance-emote-level-2.gif?ex=65e0b183&is=65ce3c83&hm=4971ef5bc88f13851963a0e696a8fe78fed718d2eed8e276d7565290de6ec95f&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207726027154137169/Modest-Dancer-duet-dance-emote-level-2.gif?ex=65e0b183&is=65ce3c83&hm=4971ef5bc88f13851963a0e696a8fe78fed718d2eed8e276d7565290de6ec95f&',
         },
         ],
     },
@@ -2130,19 +2130,19 @@ module.exports = {
       level: [
         {
           title: '"Headbob" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725949693468743/Mellow-Musician-headbob-emote-level-1.gif?ex=65e0b170&is=65ce3c70&hm=5c1d9f08e4c5e9ddabe0700c268402b0caffcd5799fd9bcb3d7fccad24b8672c&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725949693468743/Mellow-Musician-headbob-emote-level-1.gif?ex=65e0b170&is=65ce3c70&hm=5c1d9f08e4c5e9ddabe0700c268402b0caffcd5799fd9bcb3d7fccad24b8672c&',
         },
         {
           title: '"Headbob" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725950129799168/Mellow-Musician-headbob-emote-level-2.gif?ex=65e0b170&is=65ce3c70&hm=b796552d790af7f9ba1aa16475d9bbd2eb978dda2f5f955027144e603118776c&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725950129799168/Mellow-Musician-headbob-emote-level-2.gif?ex=65e0b170&is=65ce3c70&hm=b796552d790af7f9ba1aa16475d9bbd2eb978dda2f5f955027144e603118776c&',
         },
         {
           title: '"Headbob" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725950956208179/Mellow-Musician-headbob-emote-level-3.gif?ex=65e0b171&is=65ce3c71&hm=81e545e26f118708123d44b3e9513a3f859622dbffcec95f2378b9b6c86a3183&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725950956208179/Mellow-Musician-headbob-emote-level-3.gif?ex=65e0b171&is=65ce3c71&hm=81e545e26f118708123d44b3e9513a3f859622dbffcec95f2378b9b6c86a3183&',
         },
         {
           title: '"Headbob" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725951413260338/Mellow-Musician-headbob-emote-level-4.gif?ex=65e0b171&is=65ce3c71&hm=7f55dde5898c008fb0528b06bcaf21c66448647ace5572549c0b9d08f613ed1e&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725951413260338/Mellow-Musician-headbob-emote-level-4.gif?ex=65e0b171&is=65ce3c71&hm=7f55dde5898c008fb0528b06bcaf21c66448647ace5572549c0b9d08f613ed1e&',
         },
         ],
     },
@@ -2172,11 +2172,11 @@ module.exports = {
       level: [
         {
           title: '"Handshake" Friend Action Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1209040535675871242/Frantic_Stagehand_Handshake_Action_LvL_1.gif?ex=65e579be&is=65d304be&hm=1c220a131a3baf5c9be40087ca48c9ac5fa6160d504db4bcf79e16484d5281d1&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1209040535675871242/Frantic_Stagehand_Handshake_Action_LvL_1.gif?ex=65e579be&is=65d304be&hm=1c220a131a3baf5c9be40087ca48c9ac5fa6160d504db4bcf79e16484d5281d1&',
         },
         {
           title: '"Handshake" Friend Action Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1209040535256309820/Frantic_Stagehand_Handshake_Action_LvL_2.gif?ex=65e579be&is=65d304be&hm=1d5db6cd81fd3417dbf467e0edda45a442e737356060f3b7c2f2a5826e6b8143&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1209040535256309820/Frantic_Stagehand_Handshake_Action_LvL_2.gif?ex=65e579be&is=65d304be&hm=1d5db6cd81fd3417dbf467e0edda45a442e737356060f3b7c2f2a5826e6b8143&',
         },
         ],
     },
@@ -2206,24 +2206,24 @@ module.exports = {
       level: [
         {
           title: '"Aww!" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412113842307/Forgetful-Storyteller-awww-emote-level-1.gif?ex=65e0b0f0&is=65ce3bf0&hm=7a68280c31564f5fefd3ebb553397d897e553111ca0117d5bb889400097eec94&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412113842307/Forgetful-Storyteller-awww-emote-level-1.gif?ex=65e0b0f0&is=65ce3bf0&hm=7a68280c31564f5fefd3ebb553397d897e553111ca0117d5bb889400097eec94&',
         },
         {
           title: '"Aww!" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412503789658/Forgetful-Storyteller-awww-emote-level-2.gif?ex=65e0b0f0&is=65ce3bf0&hm=122d6afc943e86babffbb2ed0b272ba17b471885c4126d3f036d2f7282a0268b&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412503789658/Forgetful-Storyteller-awww-emote-level-2.gif?ex=65e0b0f0&is=65ce3bf0&hm=122d6afc943e86babffbb2ed0b272ba17b471885c4126d3f036d2f7282a0268b&',
         },
         {
           title: '"Aww!" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412910628944/Forgetful-Storyteller-awww-emote-level-3.gif?ex=65e0b0f0&is=65ce3bf0&hm=88dac810197dcef08e6c17341aa82c50435859f21c2cf50b930bb7804c5cf733&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725412910628944/Forgetful-Storyteller-awww-emote-level-3.gif?ex=65e0b0f0&is=65ce3bf0&hm=88dac810197dcef08e6c17341aa82c50435859f21c2cf50b930bb7804c5cf733&',
         },
         {
           title: '"Aww!" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725413443567677/Forgetful-Storyteller-awww-emote-level-4.gif?ex=65e0b0f1&is=65ce3bf1&hm=8e10aafb9df13bfb5d7c2c9aa2de698ebbb58221f524505f06257960af06f4c2&'
+          image: 'https://cdn.discordapp.com/attachments/1207724774864855090/1207725413443567677/Forgetful-Storyteller-awww-emote-level-4.gif?ex=65e0b0f1&is=65ce3bf1&hm=8e10aafb9df13bfb5d7c2c9aa2de698ebbb58221f524505f06257960af06f4c2&',
         },
         ],
     },
   },
-  
+
   // Abyss
   commodore: {
     name: "Ceasing Commodore",
@@ -2250,19 +2250,19 @@ module.exports = {
       level: [
         {
           title: '"Calm Down" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730121687965797/Ceasing-Commodore-calm-down-emote-level-1.gif?ex=65e0b553&is=65ce4053&hm=7c52ac859d410d53723094283cfac081343a9b433326f08faa4e9f146d59a485&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730121687965797/Ceasing-Commodore-calm-down-emote-level-1.gif?ex=65e0b553&is=65ce4053&hm=7c52ac859d410d53723094283cfac081343a9b433326f08faa4e9f146d59a485&',
         },
         {
           title: '"Calm Down" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122111721603/Ceasing-Commodore-calm-down-emote-level-2.gif?ex=65e0b553&is=65ce4053&hm=63833fa811ad175e19c2bff726954f0e4242e18964dddfb3100b332f8767c317&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122111721603/Ceasing-Commodore-calm-down-emote-level-2.gif?ex=65e0b553&is=65ce4053&hm=63833fa811ad175e19c2bff726954f0e4242e18964dddfb3100b332f8767c317&',
         },
         {
           title: '"Calm Down" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122514497586/Ceasing-Commodore-calm-down-emote-level-3.gif?ex=65e0b553&is=65ce4053&hm=af3c4528b6f899e96bc812f1fcd374a9c279bba6d91cbd772e6eb3f5772c7b19&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122514497586/Ceasing-Commodore-calm-down-emote-level-3.gif?ex=65e0b553&is=65ce4053&hm=af3c4528b6f899e96bc812f1fcd374a9c279bba6d91cbd772e6eb3f5772c7b19&',
         },
         {
           title: '"Calm Down" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122925277234/Ceasing-Commodore-calm-down-emote-level-4.gif?ex=65e0b553&is=65ce4053&hm=639e8e7af47af684c018a40026407c47bc93580bf409dd6472a4cd55daf6b949&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207730122925277234/Ceasing-Commodore-calm-down-emote-level-4.gif?ex=65e0b553&is=65ce4053&hm=639e8e7af47af684c018a40026407c47bc93580bf409dd6472a4cd55daf6b949&',
         },
         ],
     },
@@ -2292,19 +2292,19 @@ module.exports = {
       level: [
         {
           title: '"Evil Laugh" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729986379710575/Cackling-Cannoneer-evil-laugh-emote-level-1.gif?ex=65e0b533&is=65ce4033&hm=eef9f10219e3c0f3844f8dc38e73c1458bf6d00dfa9f5256134419b13263f8bc&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729986379710575/Cackling-Cannoneer-evil-laugh-emote-level-1.gif?ex=65e0b533&is=65ce4033&hm=eef9f10219e3c0f3844f8dc38e73c1458bf6d00dfa9f5256134419b13263f8bc&',
         },
         {
           title: '"Evil Laugh" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729986845282395/Cackling-Cannoneer-evil-laugh-emote-level-2.gif?ex=65e0b533&is=65ce4033&hm=2d8f0a4514c68104a473e577f552f26d04f38d3d0ec5fbbd41eeaccf6e2ec3fe&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729986845282395/Cackling-Cannoneer-evil-laugh-emote-level-2.gif?ex=65e0b533&is=65ce4033&hm=2d8f0a4514c68104a473e577f552f26d04f38d3d0ec5fbbd41eeaccf6e2ec3fe&',
         },
         {
           title: '"Evil Laugh" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729987378085898/Cackling-Cannoneer-evil-laugh-emote-level-3.gif?ex=65e0b533&is=65ce4033&hm=2b780a7dd5b2015bb14d0d8018244d3702cee5174c56715e4eca570ea86a29cd&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729987378085898/Cackling-Cannoneer-evil-laugh-emote-level-3.gif?ex=65e0b533&is=65ce4033&hm=2b780a7dd5b2015bb14d0d8018244d3702cee5174c56715e4eca570ea86a29cd&',
         },
         {
           title: '"Evil Laugh" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729987889659994/Cackling-Cannoneer-evil-laugh-emote-level-4.gif?ex=65e0b533&is=65ce4033&hm=ab8f350c359e353976c8394bffca471187771238794d470fd5fe0b78fb21bc0b&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729987889659994/Cackling-Cannoneer-evil-laugh-emote-level-4.gif?ex=65e0b533&is=65ce4033&hm=ab8f350c359e353976c8394bffca471187771238794d470fd5fe0b78fb21bc0b&',
         },
         ],
     },
@@ -2334,19 +2334,19 @@ module.exports = {
       level: [
         {
           title: '"Ouch!" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729871326023720/Bumbling-Boatswain-ouch-emote-level-1.gif?ex=65e0b517&is=65ce4017&hm=2138cba3c37c5934d781f92ee23bfb3a13fb63f5550bda206e87bff999a9ff27&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729871326023720/Bumbling-Boatswain-ouch-emote-level-1.gif?ex=65e0b517&is=65ce4017&hm=2138cba3c37c5934d781f92ee23bfb3a13fb63f5550bda206e87bff999a9ff27&',
         },
         {
           title: '"Ouch!" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729871741124608/Bumbling-Boatswain-ouch-emote-level-2.gif?ex=65e0b517&is=65ce4017&hm=ee96929c6e2edd0971184d4a392dc2ea1e2f8ef5ed3cbff98dcdd9c66cf581b2&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729871741124608/Bumbling-Boatswain-ouch-emote-level-2.gif?ex=65e0b517&is=65ce4017&hm=ee96929c6e2edd0971184d4a392dc2ea1e2f8ef5ed3cbff98dcdd9c66cf581b2&',
         },
         {
           title: '"Ouch!" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729872168947762/Bumbling-Boatswain-ouch-emote-level-3.gif?ex=65e0b518&is=65ce4018&hm=6e6c5974d2b19bca0ebb3157b538aa5fd3cde878379b6f7d0296702dec34414c&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729872168947762/Bumbling-Boatswain-ouch-emote-level-3.gif?ex=65e0b518&is=65ce4018&hm=6e6c5974d2b19bca0ebb3157b538aa5fd3cde878379b6f7d0296702dec34414c&',
         },
         {
           title: '"Ouch!" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729872760348752/Bumbling-Boatswain-ouch-emote-level-4.gif?ex=65e0b518&is=65ce4018&hm=fdd8047bc4a2778e6f30d7e7d21d89c297fb9409177e04bcf2ffbf5d530802fa&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729872760348752/Bumbling-Boatswain-ouch-emote-level-4.gif?ex=65e0b518&is=65ce4018&hm=fdd8047bc4a2778e6f30d7e7d21d89c297fb9409177e04bcf2ffbf5d530802fa&',
         },
         ],
     },
@@ -2376,24 +2376,24 @@ module.exports = {
       level: [
         {
           title: '"Anxious" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729079395295302/Anxious-Angler-anxious-emote-level-1.gif?ex=65e0b45b&is=65ce3f5b&hm=65f6771e52176c819a40ff44cb761c393396bc13e1856b66f909c91ca4d6d9f0&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729079395295302/Anxious-Angler-anxious-emote-level-1.gif?ex=65e0b45b&is=65ce3f5b&hm=65f6771e52176c819a40ff44cb761c393396bc13e1856b66f909c91ca4d6d9f0&',
         },
         {
           title: '"Anxious" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729079806197821/Anxious-Angler-anxious-emote-level-2.gif?ex=65e0b45b&is=65ce3f5b&hm=caf771eaf0db721a7d2951b2711e4c66efb4839e3745823366b52f646bb831e6&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729079806197821/Anxious-Angler-anxious-emote-level-2.gif?ex=65e0b45b&is=65ce3f5b&hm=caf771eaf0db721a7d2951b2711e4c66efb4839e3745823366b52f646bb831e6&',
         },
         {
           title: '"Anxious" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729080238080000/Anxious-Angler-anxious-emote-level-3.gif?ex=65e0b45b&is=65ce3f5b&hm=efed29416e005e6b5593ea9fd5348eaa2a4378937e86be5932a8a742dd6b6897&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729080238080000/Anxious-Angler-anxious-emote-level-3.gif?ex=65e0b45b&is=65ce3f5b&hm=efed29416e005e6b5593ea9fd5348eaa2a4378937e86be5932a8a742dd6b6897&',
         },
         {
           title: '"Anxious" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729080741400586/Anxious-Angler-anxious-emote-level-4.gif?ex=65e0b45b&is=65ce3f5b&hm=9966bec897ea8580b4bb919a5ababebc00cc65ef280038e1c760a922403b04a1&'
+          image: 'https://cdn.discordapp.com/attachments/1207728765472342067/1207729080741400586/Anxious-Angler-anxious-emote-level-4.gif?ex=65e0b45b&is=65ce3f5b&hm=9966bec897ea8580b4bb919a5ababebc00cc65ef280038e1c760a922403b04a1&',
         },
         ],
     },
   },
-  
+
   // Flight
   chimesmith: {
     name: "Tinkering Chimesmith",
@@ -2446,19 +2446,19 @@ module.exports = {
       level: [
         {
           title:'"Navigate" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731148957159454/Lively-Navigator-navigate-emote-level-1.gif?ex=65e0b648&is=65ce4148&hm=e9e97280cbfc4c8541b6a376ba12bbb789e9dd8a70c393f756c614ccddbcfea7&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731148957159454/Lively-Navigator-navigate-emote-level-1.gif?ex=65e0b648&is=65ce4148&hm=e9e97280cbfc4c8541b6a376ba12bbb789e9dd8a70c393f756c614ccddbcfea7&',
         },
         {
           title:'"Navigate" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731149451960440/Lively-Navigator-navigate-emote-level-2.gif?ex=65e0b648&is=65ce4148&hm=792bda58b1c608ffcb12805e1f0c8a4d7d98222c70701c6f3d43ae50713425c6&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731149451960440/Lively-Navigator-navigate-emote-level-2.gif?ex=65e0b648&is=65ce4148&hm=792bda58b1c608ffcb12805e1f0c8a4d7d98222c70701c6f3d43ae50713425c6&',
         },
         {
           title:'"Navigate" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731150261330001/Lively-Navigator-navigate-emote-level-3.gif?ex=65e0b648&is=65ce4148&hm=793163abb6b0544e415b57129103750dc221229b441a6b0c8bac46f18664c05f&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731150261330001/Lively-Navigator-navigate-emote-level-3.gif?ex=65e0b648&is=65ce4148&hm=793163abb6b0544e415b57129103750dc221229b441a6b0c8bac46f18664c05f&',
         },
         {
           title:'"Navigate" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731150651523133/Lively-Navigator-navigate-emote-level-4.gif?ex=65e0b648&is=65ce4148&hm=44e549d926439c6c30a8ea1eb22ca733f4c73889236c0a22e6a2ef3274e72593&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731150651523133/Lively-Navigator-navigate-emote-level-4.gif?ex=65e0b648&is=65ce4148&hm=44e549d926439c6c30a8ea1eb22ca733f4c73889236c0a22e6a2ef3274e72593&',
         },
         ],
     },
@@ -2515,24 +2515,24 @@ module.exports = {
       level: [
         {
           title: '"Voila!" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731368197361675/Talented-Builder-voila-emote-level-1.gif?ex=65e0b67c&is=65ce417c&hm=d9022f69fe1a0ead48ca1a58b574de840b33782bf92cbf0fe25e9b3edb86eb40&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731368197361675/Talented-Builder-voila-emote-level-1.gif?ex=65e0b67c&is=65ce417c&hm=d9022f69fe1a0ead48ca1a58b574de840b33782bf92cbf0fe25e9b3edb86eb40&',
         },
         {
           title: '"Voila!" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731368650477669/Talented-Builder-voila-emote-level-2.gif?ex=65e0b67c&is=65ce417c&hm=2c49637cc9230b7de4ad4948347d712080ccd8d81c10b9d4837c8a0fcd297e61&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731368650477669/Talented-Builder-voila-emote-level-2.gif?ex=65e0b67c&is=65ce417c&hm=2c49637cc9230b7de4ad4948347d712080ccd8d81c10b9d4837c8a0fcd297e61&',
         },
         {
           title: '"Voila!" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731369078300722/Talented-Builder-voila-emote-level-3.gif?ex=65e0b67c&is=65ce417c&hm=97d36e9ca7d1878ea6e95b74bfd166f3ec977f77290de951e0a83cb5f673ab4f&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731369078300722/Talented-Builder-voila-emote-level-3.gif?ex=65e0b67c&is=65ce417c&hm=97d36e9ca7d1878ea6e95b74bfd166f3ec977f77290de951e0a83cb5f673ab4f&',
         },
         {
           title: '"Voila!" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731369979945010/Talented-Builder-voila-emote-level-4.gif?ex=65e0b67d&is=65ce417d&hm=e0efa1a60bdfdd725a3ffd6d2504812032cd4e312d6be9917b67bcf445f935d4&'
+          image: 'https://cdn.discordapp.com/attachments/1207730361195438200/1207731369979945010/Talented-Builder-voila-emote-level-4.gif?ex=65e0b67d&is=65ce417d&hm=e0efa1a60bdfdd725a3ffd6d2504812032cd4e312d6be9917b67bcf445f935d4&',
         },
         ],
     },
   },
-  
+
   // The Little Prince
   lamplighter: {
     name: "Stretching Lamplighter",
@@ -2559,19 +2559,19 @@ module.exports = {
       level: [
         {
           title: '"Stretch" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732519253057546/Stretching-Lamplighter-stretch-emote-level-1.gif?ex=65e0b78f&is=65ce428f&hm=9476980e8871e93fabc36062cf58bb4e46314b812c4afec8dc8b6ea4291b8070&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732519253057546/Stretching-Lamplighter-stretch-emote-level-1.gif?ex=65e0b78f&is=65ce428f&hm=9476980e8871e93fabc36062cf58bb4e46314b812c4afec8dc8b6ea4291b8070&',
         },
         {
           title: '"Stretch" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732519877873695/Stretching-Lamplighter-stretch-emote-level-2.gif?ex=65e0b78f&is=65ce428f&hm=9cdfac354178ce26edc66b6c5cf281fbdd39e0036b25852aec8cdf61a9a1db0c&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732519877873695/Stretching-Lamplighter-stretch-emote-level-2.gif?ex=65e0b78f&is=65ce428f&hm=9cdfac354178ce26edc66b6c5cf281fbdd39e0036b25852aec8cdf61a9a1db0c&',
         },
         {
           title: '"Stretch" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732520435712071/Stretching-Lamplighter-stretch-emote-level-3.gif?ex=65e0b78f&is=65ce428f&hm=3be827d29f88394353aa88ed1b5755821e9d3968c57d7e8d8c17f92484b22834&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732520435712071/Stretching-Lamplighter-stretch-emote-level-3.gif?ex=65e0b78f&is=65ce428f&hm=3be827d29f88394353aa88ed1b5755821e9d3968c57d7e8d8c17f92484b22834&',
         },
         {
           title: '"Stretch" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732520913993808/Stretching-Lamplighter-stretch-emote-level-4.gif?ex=65e0b78f&is=65ce428f&hm=5dbba3929e72a95755e4be2b89bf5defffa95c178476f7af0c10e7fc74be76e7&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732520913993808/Stretching-Lamplighter-stretch-emote-level-4.gif?ex=65e0b78f&is=65ce428f&hm=5dbba3929e72a95755e4be2b89bf5defffa95c178476f7af0c10e7fc74be76e7&',
         },
         ],
     },
@@ -2601,19 +2601,19 @@ module.exports = {
       level: [
         {
           title: '"Hand Rub" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732772869775410/Star-Collector-hand-rub-emote-level-1.gif?ex=65e0b7cb&is=65ce42cb&hm=de5753cbd44aaddced7b21a64ed1b18d4b8572ac0d38711adf3f9ce78af4a263&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732772869775410/Star-Collector-hand-rub-emote-level-1.gif?ex=65e0b7cb&is=65ce42cb&hm=de5753cbd44aaddced7b21a64ed1b18d4b8572ac0d38711adf3f9ce78af4a263&',
         },
         {
           title: '"Hand Rub" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732772358332527/Star-Collector-hand-rub-emote-level-2.gif?ex=65e0b7cb&is=65ce42cb&hm=b1b5958034fe5aec34317bcf0e1e64fe66543ad9bfe49648fd53b2ab8b8701c3&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732772358332527/Star-Collector-hand-rub-emote-level-2.gif?ex=65e0b7cb&is=65ce42cb&hm=b1b5958034fe5aec34317bcf0e1e64fe66543ad9bfe49648fd53b2ab8b8701c3&',
         },
         {
           title: '"Hand Rub" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732771901018223/Star-Collector-hand-rub-emote-level-3.gif?ex=65e0b7cb&is=65ce42cb&hm=0335961019030c01b64e67a3d6c373464e31d9eb662cc98265b22a3f624630ab&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732771901018223/Star-Collector-hand-rub-emote-level-3.gif?ex=65e0b7cb&is=65ce42cb&hm=0335961019030c01b64e67a3d6c373464e31d9eb662cc98265b22a3f624630ab&',
         },
         {
           title: '"Hand Rub" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732771469135902/Star-Collector-hand-rub-emote-level-4.gif?ex=65e0b7cb&is=65ce42cb&hm=3b46592a260ae95284f63966fcf17b2fba9c3499adbee738ed442e741243f54f&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732771469135902/Star-Collector-hand-rub-emote-level-4.gif?ex=65e0b7cb&is=65ce42cb&hm=3b46592a260ae95284f63966fcf17b2fba9c3499adbee738ed442e741243f54f&',
         },
         ],
     },
@@ -2643,19 +2643,19 @@ module.exports = {
       level: [
         {
           title: '"Sneeze" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732846156980326/Sneezing-Geographer-sneeze-emote-level-1.gif?ex=65e0b7dd&is=65ce42dd&hm=2e75623b66f153a890b5a238db568f1f23a606a45780e728e5b1dc01a5c7ac1f&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732846156980326/Sneezing-Geographer-sneeze-emote-level-1.gif?ex=65e0b7dd&is=65ce42dd&hm=2e75623b66f153a890b5a238db568f1f23a606a45780e728e5b1dc01a5c7ac1f&',
         },
         {
           title: '"Sneeze" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732846584791080/Sneezing-Geographer-sneeze-emote-level-2.gif?ex=65e0b7dd&is=65ce42dd&hm=8972c4d6804793cd0b2c581e24c9baf97f44c8ead09a4125e2b06aa70f63a443&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732846584791080/Sneezing-Geographer-sneeze-emote-level-2.gif?ex=65e0b7dd&is=65ce42dd&hm=8972c4d6804793cd0b2c581e24c9baf97f44c8ead09a4125e2b06aa70f63a443&',
         },
         {
           title: '"Sneeze" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732847004356618/Sneezing-Geographer-sneeze-emote-level-3.gif?ex=65e0b7dd&is=65ce42dd&hm=89bd0eb19e4f3f781393ba81b8c0c347fa49c2cc19b6fa34ac1e354dbd680430&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732847004356618/Sneezing-Geographer-sneeze-emote-level-3.gif?ex=65e0b7dd&is=65ce42dd&hm=89bd0eb19e4f3f781393ba81b8c0c347fa49c2cc19b6fa34ac1e354dbd680430&',
         },
         {
           title: '"Sneeze" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732847566131310/Sneezing-Geographer-sneeze-emote-level-4.gif?ex=65e0b7dd&is=65ce42dd&hm=14b569e2c7de52ecdc9b4a5c8c740640e1fbf574b51a81f96381225df27d5086&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732847566131310/Sneezing-Geographer-sneeze-emote-level-4.gif?ex=65e0b7dd&is=65ce42dd&hm=14b569e2c7de52ecdc9b4a5c8c740640e1fbf574b51a81f96381225df27d5086&',
         },
         ],
     },
@@ -2685,19 +2685,19 @@ module.exports = {
       level: [
         {
           title: '"Slouch" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732956064518154/Slouching-Soldier-slouch-emote-level-1.gif?ex=65e0b7f7&is=65ce42f7&hm=547765498880e3dd01d209400450b2df5cd98e9c1cca9b3b5cc19162112ef9a1&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732956064518154/Slouching-Soldier-slouch-emote-level-1.gif?ex=65e0b7f7&is=65ce42f7&hm=547765498880e3dd01d209400450b2df5cd98e9c1cca9b3b5cc19162112ef9a1&',
         },
         {
           title: '"Slouch" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732956869955584/Slouching-Soldier-slouch-emote-level-2.gif?ex=65e0b7f7&is=65ce42f7&hm=f98f5b5fd4e391d97f0d90d450c1c8321f3a8114a750b286723fe1250166f67f&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732956869955584/Slouching-Soldier-slouch-emote-level-2.gif?ex=65e0b7f7&is=65ce42f7&hm=f98f5b5fd4e391d97f0d90d450c1c8321f3a8114a750b286723fe1250166f67f&',
         },
         {
           title: '"Slouch" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732957700161646/Slouching-Soldier-slouch-emote-level-3.gif?ex=65e0b7f7&is=65ce42f7&hm=c4faf66b01bcaed853cdfae9b4c3632d5d1842d09a65b5ddc697435e858ea5d1&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732957700161646/Slouching-Soldier-slouch-emote-level-3.gif?ex=65e0b7f7&is=65ce42f7&hm=c4faf66b01bcaed853cdfae9b4c3632d5d1842d09a65b5ddc697435e858ea5d1&',
         },
         {
           title: '"Slouch" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732958383837184/Slouching-Soldier-slouch-emote-level-4.gif?ex=65e0b7f7&is=65ce42f7&hm=650e3496360136bc04885afe89891c2fdb781dc1fc590a0d995aad38935c5287&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207732958383837184/Slouching-Soldier-slouch-emote-level-4.gif?ex=65e0b7f7&is=65ce42f7&hm=650e3496360136bc04885afe89891c2fdb781dc1fc590a0d995aad38935c5287&',
         },
         ],
     },
@@ -2711,7 +2711,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'July 20, 2023 (#92)'
+        'July 20, 2023 (#92)',
         ],
     },
     tree: {
@@ -2729,19 +2729,19 @@ module.exports = {
       level: [
         {
           title: '"Gloat" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733393455063040/Gloating-Narcissist-gloat-emote-level-1.gif?ex=65e0b85f&is=65ce435f&hm=cca4ce60e894dc1e4086bed630eba30fd08a4f1c51153b618003ec76670a5918&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733393455063040/Gloating-Narcissist-gloat-emote-level-1.gif?ex=65e0b85f&is=65ce435f&hm=cca4ce60e894dc1e4086bed630eba30fd08a4f1c51153b618003ec76670a5918&',
         },
         {
           title: '"Gloat" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733393987473501/Gloating-Narcissist-gloat-emote-level-2.gif?ex=65e0b85f&is=65ce435f&hm=9479b99cf906184b7d34bb39b9ca68b14715bf67e3fa8d0d0b01d94c8b9e1a00&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733393987473501/Gloating-Narcissist-gloat-emote-level-2.gif?ex=65e0b85f&is=65ce435f&hm=9479b99cf906184b7d34bb39b9ca68b14715bf67e3fa8d0d0b01d94c8b9e1a00&',
         },
         {
           title: '"Gloat" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733394411233340/Gloating-Narcissist-gloat-emote-level-3.gif?ex=65e0b85f&is=65ce435f&hm=8f09615e345e3468e00aa4ac64fe968566e6999f4e2b4d4f290ee933fb8d331a&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733394411233340/Gloating-Narcissist-gloat-emote-level-3.gif?ex=65e0b85f&is=65ce435f&hm=8f09615e345e3468e00aa4ac64fe968566e6999f4e2b4d4f290ee933fb8d331a&',
         },
         {
           title: '"Gloat" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733394969198622/Gloating-Narcissist-gloat-emote-level-4.gif?ex=65e0b85f&is=65ce435f&hm=0795bfc9eff31181c06fea3f8f0b5fa4449baff4b24bd8c0e5051925626e33e5&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733394969198622/Gloating-Narcissist-gloat-emote-level-4.gif?ex=65e0b85f&is=65ce435f&hm=0795bfc9eff31181c06fea3f8f0b5fa4449baff4b24bd8c0e5051925626e33e5&',
         },
         ],
     },
@@ -2771,24 +2771,24 @@ module.exports = {
       level: [
         {
           title: '"Beckon" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733462237315204/Beckoning-Ruler-beckon-emote-level-1.gif?ex=65e0b870&is=65ce4370&hm=2cdcfd61c79e472186fa4b92c9bbf16710ecfac97968c50c80a4e4eeb98447f7&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733462237315204/Beckoning-Ruler-beckon-emote-level-1.gif?ex=65e0b870&is=65ce4370&hm=2cdcfd61c79e472186fa4b92c9bbf16710ecfac97968c50c80a4e4eeb98447f7&',
         },
         {
           title: '"Beckon" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733462740762664/Beckoning-Ruler-beckon-emote-level-2.gif?ex=65e0b870&is=65ce4370&hm=db9100cc2cc43b5acc7d2c0bd6336fa6baf64b68efe3824ccdabaf8ff52e7b3a&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733462740762664/Beckoning-Ruler-beckon-emote-level-2.gif?ex=65e0b870&is=65ce4370&hm=db9100cc2cc43b5acc7d2c0bd6336fa6baf64b68efe3824ccdabaf8ff52e7b3a&',
         },
         {
           title: '"Beckon" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733463214727189/Beckoning-Ruler-beckon-emote-level-3.gif?ex=65e0b870&is=65ce4370&hm=d0165276e810d234af5f07a397b40e947dc84bb2c59a7a54d361ef29a60c0cbd&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733463214727189/Beckoning-Ruler-beckon-emote-level-3.gif?ex=65e0b870&is=65ce4370&hm=d0165276e810d234af5f07a397b40e947dc84bb2c59a7a54d361ef29a60c0cbd&',
         },
         {
           title: '"Beckon" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733463650664498/Beckoning-Ruler-beckon-emote-level-4.gif?ex=65e0b870&is=65ce4370&hm=350380750c2184dd51fbf7ab5ddad9438e11d415990eb8e8088f53bcc870fc3a&'
+          image: 'https://cdn.discordapp.com/attachments/1207732307558141952/1207733463650664498/Beckoning-Ruler-beckon-emote-level-4.gif?ex=65e0b870&is=65ce4370&hm=350380750c2184dd51fbf7ab5ddad9438e11d415990eb8e8088f53bcc870fc3a&',
         },
         ],
     },
   },
-  
+
   // Assembly
   scolding_student: {
     name: "Scolding Student",
@@ -2799,7 +2799,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'August 18, 2022 (#68)'
+        'August 18, 2022 (#68)',
         ],
     },
     tree: {
@@ -2817,19 +2817,19 @@ module.exports = {
       level: [
         {
           title: '"Scold" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735446759800852/Scolding-Student-scold-emote-level-1.gif?ex=65e0ba49&is=65ce4549&hm=5f7d5bf8fa461e562ea2b5a6f81a29b11b49c690ec9b159256858bdc88df3bf7&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735446759800852/Scolding-Student-scold-emote-level-1.gif?ex=65e0ba49&is=65ce4549&hm=5f7d5bf8fa461e562ea2b5a6f81a29b11b49c690ec9b159256858bdc88df3bf7&',
         },
         {
           title: '"Scold" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735447749394505/Scolding-Student-scold-emote-level-2.gif?ex=65e0ba49&is=65ce4549&hm=db94d4bcf9962aebd68a36052fad99f3c9bc22f8d4b772a90e3705d094d0b24e&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735447749394505/Scolding-Student-scold-emote-level-2.gif?ex=65e0ba49&is=65ce4549&hm=db94d4bcf9962aebd68a36052fad99f3c9bc22f8d4b772a90e3705d094d0b24e&',
         },
         {
           title: '"Scold" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735448286531594/Scolding-Student-scold-emote-level-3.gif?ex=65e0ba49&is=65ce4549&hm=0ea2b3c4ae5f725e8d352a8d68da3ed71b3a80ae16b486e00c051641ca4739ce&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735448286531594/Scolding-Student-scold-emote-level-3.gif?ex=65e0ba49&is=65ce4549&hm=0ea2b3c4ae5f725e8d352a8d68da3ed71b3a80ae16b486e00c051641ca4739ce&',
         },
         {
           title: '"Scold" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735448785395712/Scolding-Student-scold-emote-level-4.gif?ex=65e0ba49&is=65ce4549&hm=6a8d74a96c9cbf56ae832877c6f918c44527d81572caebe68c4aa523b6c506cd&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735448785395712/Scolding-Student-scold-emote-level-4.gif?ex=65e0ba49&is=65ce4549&hm=6a8d74a96c9cbf56ae832877c6f918c44527d81572caebe68c4aa523b6c506cd&',
         },
         ],
     },
@@ -2843,7 +2843,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'March 6, 2023 (SV#1)'
+        'March 6, 2023 (SV#1)',
         ],
     },
     tree: {
@@ -2861,19 +2861,19 @@ module.exports = {
       level: [
         {
           title: '"Eww" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735572513292308/Scaredy-Cadet-eww-emote-level-1.gif?ex=65e0ba67&is=65ce4567&hm=a7b11537b8f8e82bc751ccccaa4877e06f48c7c7d43c377eb7d99893e6b68f19&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735572513292308/Scaredy-Cadet-eww-emote-level-1.gif?ex=65e0ba67&is=65ce4567&hm=a7b11537b8f8e82bc751ccccaa4877e06f48c7c7d43c377eb7d99893e6b68f19&',
         },
         {
           title: '"Eww" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735572940984320/Scaredy-Cadet-eww-emote-level-2.gif?ex=65e0ba67&is=65ce4567&hm=6bb64eafe8c355c416b43f31597c7e7649a409aa5065f1d5065a5a67e72429b6&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735572940984320/Scaredy-Cadet-eww-emote-level-2.gif?ex=65e0ba67&is=65ce4567&hm=6bb64eafe8c355c416b43f31597c7e7649a409aa5065f1d5065a5a67e72429b6&',
         },
         {
           title: '"Eww" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735573352161301/Scaredy-Cadet-eww-emote-level-3.gif?ex=65e0ba67&is=65ce4567&hm=3faaa1eb3b3a14adcd6101d9e2499efae6853ae943bf5c4101af40b086ba6810&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735573352161301/Scaredy-Cadet-eww-emote-level-3.gif?ex=65e0ba67&is=65ce4567&hm=3faaa1eb3b3a14adcd6101d9e2499efae6853ae943bf5c4101af40b086ba6810&',
         },
         {
           title: '"Eww" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735573788491847/Scaredy-Cadet-eww-emote-level-4.gif?ex=65e0ba67&is=65ce4567&hm=5e5b8a2f0698e2c21e174e4359c9138bb407ebd527361e8112ec0998ed93a102&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735573788491847/Scaredy-Cadet-eww-emote-level-4.gif?ex=65e0ba67&is=65ce4567&hm=5e5b8a2f0698e2c21e174e4359c9138bb407ebd527361e8112ec0998ed93a102&',
         },
         ],
     },
@@ -2887,7 +2887,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'April 28, 2022 (#60)'
+        'April 28, 2022 (#60)',
         ],
     },
     tree: {
@@ -2905,19 +2905,19 @@ module.exports = {
       level: [
         {
           title: '"Bubbles" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736113717059704/Daydream-Forester-bubbles-emote-level-1.gif?ex=65e0bae8&is=65ce45e8&hm=b40d4fb70e5b8594e755fab67e75b049de78c469c4725fa937c1f80e6d2f26d9&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736113717059704/Daydream-Forester-bubbles-emote-level-1.gif?ex=65e0bae8&is=65ce45e8&hm=b40d4fb70e5b8594e755fab67e75b049de78c469c4725fa937c1f80e6d2f26d9&',
         },
         {
           title: '"Bubbles" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736114232954911/Daydream-Forester-bubbles-emote-level-2.gif?ex=65e0bae8&is=65ce45e8&hm=9f5436da9db1ee1d9f8613de5c9bff0babbbd78277ae981ceb947e629aac765c&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736114232954911/Daydream-Forester-bubbles-emote-level-2.gif?ex=65e0bae8&is=65ce45e8&hm=9f5436da9db1ee1d9f8613de5c9bff0babbbd78277ae981ceb947e629aac765c&',
         },
         {
           title: '"Bubbles" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736114794733589/Daydream-Forester-bubbles-emote-level-3.gif?ex=65e0bae8&is=65ce45e8&hm=601e479dc17d7ea5b5a7371edce2cb21bf33572b082c0bd08a7923fb39516702&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736114794733589/Daydream-Forester-bubbles-emote-level-3.gif?ex=65e0bae8&is=65ce45e8&hm=601e479dc17d7ea5b5a7371edce2cb21bf33572b082c0bd08a7923fb39516702&',
         },
         {
           title: '"Bubbles" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736115419676713/Daydream-Forester-bubbles-emote-level-4.gif?ex=65e0bae8&is=65ce45e8&hm=21beb87399e80d0a220516d8f02257f2016da30ad1433de45824f2101d946685&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736115419676713/Daydream-Forester-bubbles-emote-level-4.gif?ex=65e0bae8&is=65ce45e8&hm=21beb87399e80d0a220516d8f02257f2016da30ad1433de45824f2101d946685&',
         },
         ],
     },
@@ -2931,7 +2931,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'March 6, 2023 (SV#1)'
+        'March 6, 2023 (SV#1)',
         ],
     },
     tree: {
@@ -2949,19 +2949,19 @@ module.exports = {
       level: [
         {
           title: '"Marching" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735723256578128/Marching-Adventurer-marching-emote-level-1.gif?ex=65e0ba8b&is=65ce458b&hm=13f9782720c95dbd4d73e0a8c87d722beee188f1de93db24e26d2b9d254c72c4&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735723256578128/Marching-Adventurer-marching-emote-level-1.gif?ex=65e0ba8b&is=65ce458b&hm=13f9782720c95dbd4d73e0a8c87d722beee188f1de93db24e26d2b9d254c72c4&',
         },
         {
           title: '"Marching" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735723692789800/Marching-Adventurer-marching-emote-level-2.gif?ex=65e0ba8b&is=65ce458b&hm=1f4e5c6688d916a7bd7c0d53e5506c303cb446147d48ef4c8b90029eed1ff712&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735723692789800/Marching-Adventurer-marching-emote-level-2.gif?ex=65e0ba8b&is=65ce458b&hm=1f4e5c6688d916a7bd7c0d53e5506c303cb446147d48ef4c8b90029eed1ff712&',
         },
         {
           title: '"Marching" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735724120739950/Marching-Adventurer-marching-emote-level-3.gif?ex=65e0ba8b&is=65ce458b&hm=6d27b30165ce83d1df128266e7acace350aeb2603338a6e04c4e4fccad936591&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735724120739950/Marching-Adventurer-marching-emote-level-3.gif?ex=65e0ba8b&is=65ce458b&hm=6d27b30165ce83d1df128266e7acace350aeb2603338a6e04c4e4fccad936591&',
         },
         {
           title: '"Marching" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735724569534515/Marching-Adventurer-marching-emote-level-4.gif?ex=65e0ba8b&is=65ce458b&hm=cc4cc4c9e3b3991b38bae3fca1d3207e7cfe102f95ee3871ec7df3d8d7a354d2&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207735724569534515/Marching-Adventurer-marching-emote-level-4.gif?ex=65e0ba8b&is=65ce458b&hm=cc4cc4c9e3b3991b38bae3fca1d3207e7cfe102f95ee3871ec7df3d8d7a354d2&',
         },
         ],
     },
@@ -2975,7 +2975,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'March 6, 2023 (SV#1)'
+        'March 6, 2023 (SV#1)',
         ],
     },
     tree: {
@@ -2993,19 +2993,19 @@ module.exports = {
       level: [
         {
           title: '"Chuckle" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736285884579880/Chuckling-Scout-chuckle-emote-level-1.gif?ex=65e0bb11&is=65ce4611&hm=5df82e97d092517303a5602725e15beebe62778b2dd1ce60e94aebca386c9119&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736285884579880/Chuckling-Scout-chuckle-emote-level-1.gif?ex=65e0bb11&is=65ce4611&hm=5df82e97d092517303a5602725e15beebe62778b2dd1ce60e94aebca386c9119&',
         },
         {
           title: '"Chuckle" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736286400614461/Chuckling-Scout-chuckle-emote-level-2.gif?ex=65e0bb11&is=65ce4611&hm=e4c416f8e6d8fadc5fd7428037afdf1e64968aba8049b29992ef0bc4ce14832d&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736286400614461/Chuckling-Scout-chuckle-emote-level-2.gif?ex=65e0bb11&is=65ce4611&hm=e4c416f8e6d8fadc5fd7428037afdf1e64968aba8049b29992ef0bc4ce14832d&',
         },
         {
           title: '"Chuckle" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736286836695070/Chuckling-Scout-chuckle-emote-level-3.gif?ex=65e0bb11&is=65ce4611&hm=12eed3052e9567c7e39cb285fcd2cda470ab28965ed3b0556efe99c2756e222b&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736286836695070/Chuckling-Scout-chuckle-emote-level-3.gif?ex=65e0bb11&is=65ce4611&hm=12eed3052e9567c7e39cb285fcd2cda470ab28965ed3b0556efe99c2756e222b&',
         },
         {
           title: '"Chuckle" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736287314841630/Chuckling-Scout-chuckle-emote-level-4.gif?ex=65e0bb11&is=65ce4611&hm=6dde258d5c68915d3d0ae53ef4ed49790f7ae0f910523366b816aea6001840ee&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736287314841630/Chuckling-Scout-chuckle-emote-level-4.gif?ex=65e0bb11&is=65ce4611&hm=6dde258d5c68915d3d0ae53ef4ed49790f7ae0f910523366b816aea6001840ee&',
         },
         ],
     },
@@ -3020,7 +3020,7 @@ module.exports = {
       returned: true,
       dates: [
         'March 6, 2023 (SV#1)',
-        'January 05, 2023 (#78)'
+        'January 05, 2023 (#78)',
         ],
     },
     tree: {
@@ -3038,24 +3038,24 @@ module.exports = {
       level: [
         {
           title: '"Facepalm" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736374707626054/Baffled-Botanist-facepalm-emote-level-1.gif?ex=65e0bb26&is=65ce4626&hm=7b7b2ab41c27afb621e77882f9ac9ea163368b7edee3b606d267572a568d9218&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736374707626054/Baffled-Botanist-facepalm-emote-level-1.gif?ex=65e0bb26&is=65ce4626&hm=7b7b2ab41c27afb621e77882f9ac9ea163368b7edee3b606d267572a568d9218&',
         },
         {
           title: '"Facepalm" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375139504128/Baffled-Botanist-facepalm-emote-level-2.gif?ex=65e0bb26&is=65ce4626&hm=6b0ea25f87dfeb353322652d47e222d152e7f6a1518272d77656c39f1caca3b7&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375139504128/Baffled-Botanist-facepalm-emote-level-2.gif?ex=65e0bb26&is=65ce4626&hm=6b0ea25f87dfeb353322652d47e222d152e7f6a1518272d77656c39f1caca3b7&',
         },
         {
           title: '"Facepalm" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375550672937/Baffled-Botanist-facepalm-emote-level-3.gif?ex=65e0bb26&is=65ce4626&hm=bb1b5e4ac3148af0ec290f7b7ff5b66f8b1011059c24787667ee8fd98c290b48&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375550672937/Baffled-Botanist-facepalm-emote-level-3.gif?ex=65e0bb26&is=65ce4626&hm=bb1b5e4ac3148af0ec290f7b7ff5b66f8b1011059c24787667ee8fd98c290b48&',
         },
         {
           title: '"Facepalm" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375953203230/Baffled-Botanist-facepalm-emote-level-4.gif?ex=65e0bb26&is=65ce4626&hm=59415c21f3b5eda1a3c494e14b48c91146cda89ff9bae103de5f5ef8975fbb6e&'
+          image: 'https://cdn.discordapp.com/attachments/1207735126440542239/1207736375953203230/Baffled-Botanist-facepalm-emote-level-4.gif?ex=65e0bb26&is=65ce4626&hm=59415c21f3b5eda1a3c494e14b48c91146cda89ff9bae103de5f5ef8975fbb6e&',
         },
         ],
     },
   },
-  
+
   // Dreams
   spinning_mentor: {
     name: "Spinning Mentor",
@@ -3067,7 +3067,7 @@ module.exports = {
       returned: true,
       dates: [
         'July 6, 2023 (#91)',
-        'April 14, 2022 (#59)'
+        'April 14, 2022 (#59)',
         ],
     },
     tree: {
@@ -3085,19 +3085,19 @@ module.exports = {
       level: [
         {
           title: '"Spin Trick" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737470645567508/Spinning-Mentor-spin-trick-emote-level-1.gif?ex=65e0bc2b&is=65ce472b&hm=acc1c951a0cb06192619986789f6778d36ee159da4981927208246896f833ba8&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737470645567508/Spinning-Mentor-spin-trick-emote-level-1.gif?ex=65e0bc2b&is=65ce472b&hm=acc1c951a0cb06192619986789f6778d36ee159da4981927208246896f833ba8&',
         },
         {
           title: '"Spin Trick" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737471740420136/Spinning-Mentor-spin-trick-emote-level-2.gif?ex=65e0bc2b&is=65ce472b&hm=62433411a4306685178652c968bb3e798630e244ea016ce4f08b148cc7416aea&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737471740420136/Spinning-Mentor-spin-trick-emote-level-2.gif?ex=65e0bc2b&is=65ce472b&hm=62433411a4306685178652c968bb3e798630e244ea016ce4f08b148cc7416aea&',
         },
         {
           title: '"Spin Trick" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737472113582142/Spinning-Mentor-spin-trick-emote-level-3.gif?ex=65e0bc2c&is=65ce472c&hm=bcd4461650fdd38ca08242c8bc63c02657c93414217b9c5b19df66cfe6a74955&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737472113582142/Spinning-Mentor-spin-trick-emote-level-3.gif?ex=65e0bc2c&is=65ce472c&hm=bcd4461650fdd38ca08242c8bc63c02657c93414217b9c5b19df66cfe6a74955&',
         },
         {
           title: '"Spin Trick" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737472486739978/Spinning-Mentor-spin-trick-emote-level-4.gif?ex=65e0bc2c&is=65ce472c&hm=71cac21c888578a9386003354ec2b76239e2064fa4aaef460bcd2148ea07c134&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737472486739978/Spinning-Mentor-spin-trick-emote-level-4.gif?ex=65e0bc2c&is=65ce472c&hm=71cac21c888578a9386003354ec2b76239e2064fa4aaef460bcd2148ea07c134&',
         },
         ],
     },
@@ -3111,7 +3111,7 @@ module.exports = {
       eligible: true,
       returned: true,
       dates: [
-        'June 23, 2022 (#64)'
+        'June 23, 2022 (#64)',
         ],
     },
     tree: {
@@ -3129,19 +3129,19 @@ module.exports = {
       level: [
         {
           title: '"Peek" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737542288609381/Peeking-Postman-peek-emote-level-1.gif?ex=65e0bc3c&is=65ce473c&hm=915cf4c6aca34e606c92a7668770e3385c076660d49ffc99b0b7a02bd36f4541&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737542288609381/Peeking-Postman-peek-emote-level-1.gif?ex=65e0bc3c&is=65ce473c&hm=915cf4c6aca34e606c92a7668770e3385c076660d49ffc99b0b7a02bd36f4541&',
         },
         {
           title: '"Peek" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737542674227270/Peeking-Postman-peek-emote-level-2.gif?ex=65e0bc3c&is=65ce473c&hm=1d2593674d1962fdbe844524cbf3f67dbea78481dba733b9ba7576b61760f894&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737542674227270/Peeking-Postman-peek-emote-level-2.gif?ex=65e0bc3c&is=65ce473c&hm=1d2593674d1962fdbe844524cbf3f67dbea78481dba733b9ba7576b61760f894&',
         },
         {
           title: '"Peek" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737543064293416/Peeking-Postman-peek-emote-level-3.gif?ex=65e0bc3c&is=65ce473c&hm=c8f54aa6a635f525981c79342767b3c2211eb922f78ea0a034a6a1834aa750b9&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737543064293416/Peeking-Postman-peek-emote-level-3.gif?ex=65e0bc3c&is=65ce473c&hm=c8f54aa6a635f525981c79342767b3c2211eb922f78ea0a034a6a1834aa750b9&',
         },
         {
           title: '"Peek" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737543479656448/Peeking-Postman-peek-emote-level-4.gif?ex=65e0bc3d&is=65ce473d&hm=92d15b5e33762bb65a4c4d2aadaf0b883aaebd8285f3a6f1508f5203a72690e7&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737543479656448/Peeking-Postman-peek-emote-level-4.gif?ex=65e0bc3d&is=65ce473d&hm=92d15b5e33762bb65a4c4d2aadaf0b883aaebd8285f3a6f1508f5203a72690e7&',
         },
         ],
     },
@@ -3171,19 +3171,19 @@ module.exports = {
       level: [
         {
           title: '"Snow Dance" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737845561696276/Dancing-Performer-show-dance-emote-level-1.gif?ex=65e0bc85&is=65ce4785&hm=86fa66f51fc52ace75f2dbab5cb0a416ca80e1747ad83b1c34093d47d41fbbd7&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737845561696276/Dancing-Performer-show-dance-emote-level-1.gif?ex=65e0bc85&is=65ce4785&hm=86fa66f51fc52ace75f2dbab5cb0a416ca80e1747ad83b1c34093d47d41fbbd7&',
         },
         {
           title: '"Snow Dance" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846002094161/Dancing-Performer-show-dance-emote-level-2.gif?ex=65e0bc85&is=65ce4785&hm=bd1591adb9961d804b526ef6e47a9c4a169791327eb6eaabc474f447442be230&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846002094161/Dancing-Performer-show-dance-emote-level-2.gif?ex=65e0bc85&is=65ce4785&hm=bd1591adb9961d804b526ef6e47a9c4a169791327eb6eaabc474f447442be230&',
         },
         {
           title: '"Snow Dance" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846346289182/Dancing-Performer-show-dance-emote-level-3.gif?ex=65e0bc85&is=65ce4785&hm=0647b877740a35a3eb8132d12cbd8ff5eaeaa69db5212aec246e135f45dd6a03&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846346289182/Dancing-Performer-show-dance-emote-level-3.gif?ex=65e0bc85&is=65ce4785&hm=0647b877740a35a3eb8132d12cbd8ff5eaeaa69db5212aec246e135f45dd6a03&',
         },
         {
           title: '"Snow Dance" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846828367894/Dancing-Performer-show-dance-emote-level-4.gif?ex=65e0bc85&is=65ce4785&hm=680a045ea78e7b4f7a87535c26dea51c3ccc7bf6883030f1ae060759291b6d11&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207737846828367894/Dancing-Performer-show-dance-emote-level-4.gif?ex=65e0bc85&is=65ce4785&hm=680a045ea78e7b4f7a87535c26dea51c3ccc7bf6883030f1ae060759291b6d11&',
         },
         ],
     },
@@ -3198,7 +3198,7 @@ module.exports = {
       returned: true,
       dates: [
         'February 15, 2024 (#107)',
-        'November 24, 2022 (#75)'
+        'November 24, 2022 (#75)',
         ],
     },
     tree: {
@@ -3216,16 +3216,16 @@ module.exports = {
       level: [
         {
           title: '"Bear Hug" Friend Action Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207738661949677659/Bearhug-Hermit-bearhug-emote-level-1.gif?ex=65e0bd47&is=65ce4847&hm=dad13e5ff129b5fd947f06824ca94ef437b5f282ae1f5e42a95bdcc469bbaba8&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1207738661949677659/Bearhug-Hermit-bearhug-emote-level-1.gif?ex=65e0bd47&is=65ce4847&hm=dad13e5ff129b5fd947f06824ca94ef437b5f282ae1f5e42a95bdcc469bbaba8&',
         },
         {
           title: '"Bear Hug" Friend Action Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1209412983894179840/Bearhug_Hermit_Bear_Hug_LvL_2.gif?ex=65e6d49d&is=65d45f9d&hm=f63c16b611d53862990040cacef82b4b3ac25590994c0d1d1ce6b76176a0cffa&'
+          image: 'https://cdn.discordapp.com/attachments/1207737270740844584/1209412983894179840/Bearhug_Hermit_Bear_Hug_LvL_2.gif?ex=65e6d49d&is=65d45f9d&hm=f63c16b611d53862990040cacef82b4b3ac25590994c0d1d1ce6b76176a0cffa&',
         },
         ],
     },
   },
-  
+
   // Prophecy
   fireprophet: {
     name: "Prophet of Fire",
@@ -3237,7 +3237,7 @@ module.exports = {
       returned: true,
       dates: [
         'August 3, 2023 (#93)',
-        'December 9, 2021 (#50)'
+        'December 9, 2021 (#50)',
         ],
     },
     tree: {
@@ -3255,19 +3255,19 @@ module.exports = {
       level: [
         {
           title: '"Chest Pound" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741351228346428/Prophet-of-Fire-chest-pound-emote-level-3.gif?ex=65e0bfc8&is=65ce4ac8&hm=e77cdaff105f38bcb70e4d4c1d03685403fc09a5f9ecfb1b49415eccf4502a7d&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741351228346428/Prophet-of-Fire-chest-pound-emote-level-3.gif?ex=65e0bfc8&is=65ce4ac8&hm=e77cdaff105f38bcb70e4d4c1d03685403fc09a5f9ecfb1b49415eccf4502a7d&',
         },
         {
           title: '"Chest Pound" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741350741545051/Prophet-of-Fire-chest-pound-emote-level-2.gif?ex=65e0bfc8&is=65ce4ac8&hm=da7f8d027389eedf789cc62fb9b7c1ab1ca036f798cf62ae1deb5d1b3b79510b&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741350741545051/Prophet-of-Fire-chest-pound-emote-level-2.gif?ex=65e0bfc8&is=65ce4ac8&hm=da7f8d027389eedf789cc62fb9b7c1ab1ca036f798cf62ae1deb5d1b3b79510b&',
         },
         {
           title: '"Chest Pound" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741351228346428/Prophet-of-Fire-chest-pound-emote-level-3.gif?ex=65e0bfc8&is=65ce4ac8&hm=e77cdaff105f38bcb70e4d4c1d03685403fc09a5f9ecfb1b49415eccf4502a7d&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741351228346428/Prophet-of-Fire-chest-pound-emote-level-3.gif?ex=65e0bfc8&is=65ce4ac8&hm=e77cdaff105f38bcb70e4d4c1d03685403fc09a5f9ecfb1b49415eccf4502a7d&',
         },
         {
           title: '"Chest Pound" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741351643324416/Prophet-of-Fire-chest-pound-emote-level-4.gif?ex=65e0bfc8&is=65ce4ac8&hm=d407b3b7eb752fa033cf232d85ec84be88eb9d3c1336710ba6c7300fe6bb136a&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741351643324416/Prophet-of-Fire-chest-pound-emote-level-4.gif?ex=65e0bfc8&is=65ce4ac8&hm=d407b3b7eb752fa033cf232d85ec84be88eb9d3c1336710ba6c7300fe6bb136a&',
         },
         ],
     },
@@ -3282,7 +3282,7 @@ module.exports = {
       returned: true,
       dates: [
         'May 15, 2023 (SV#2)',
-        'May 12, 2022 (#61)'
+        'May 12, 2022 (#61)',
         ],
     },
     tree: {
@@ -3300,19 +3300,19 @@ module.exports = {
       level: [
         {
           title: '"Balance" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741960438288454/Prophet-of-Air-balance-emote-level-1.gif?ex=65e0c05a&is=65ce4b5a&hm=d3a9b32b1b6246c7df3bf7a0b861059ab4fe99630e284d0323999ea51a27c11b&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741960438288454/Prophet-of-Air-balance-emote-level-1.gif?ex=65e0c05a&is=65ce4b5a&hm=d3a9b32b1b6246c7df3bf7a0b861059ab4fe99630e284d0323999ea51a27c11b&',
         },
         {
           title: '"Balance" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741961130221619/Prophet-of-Air-balance-emote-level-2.gif?ex=65e0c05a&is=65ce4b5a&hm=2af62d727f8854071544de695bda0990760dc5ecaec4da3857450e7739e7edfe&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741961130221619/Prophet-of-Air-balance-emote-level-2.gif?ex=65e0c05a&is=65ce4b5a&hm=2af62d727f8854071544de695bda0990760dc5ecaec4da3857450e7739e7edfe&',
         },
         {
           title: '"Balance" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741961939984384/Prophet-of-Air-balance-emote-level-3.gif?ex=65e0c05a&is=65ce4b5a&hm=cb621b751c918a87a423afd89f151a9c94c4c661d9727a217120b08931d06e56&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741961939984384/Prophet-of-Air-balance-emote-level-3.gif?ex=65e0c05a&is=65ce4b5a&hm=cb621b751c918a87a423afd89f151a9c94c4c661d9727a217120b08931d06e56&',
         },
         {
           title: '"Balance" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741962942291978/Prophet-of-Air-balance-emote-level-4.gif?ex=65e0c05a&is=65ce4b5a&hm=17769e065d1ee83005f991d33d80dc19d93ed5bf8af4e6900a7028971960df2c&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741962942291978/Prophet-of-Air-balance-emote-level-4.gif?ex=65e0c05a&is=65ce4b5a&hm=17769e065d1ee83005f991d33d80dc19d93ed5bf8af4e6900a7028971960df2c&',
         },
         ],
     },
@@ -3327,7 +3327,7 @@ module.exports = {
       returned: true,
       dates: [
         'May 15, 2023 (SV#2)',
-        'February 3, 2022 (#54)'
+        'February 3, 2022 (#54)',
         ],
     },
     tree: {
@@ -3345,19 +3345,19 @@ module.exports = {
       level: [
         {
           title: '"Dust Off" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741492458823710/Prophet-of-Earth-dust-off-emote-level-1.gif?ex=65e0bfea&is=65ce4aea&hm=b14e0632e447a6e58e924cd80b3bf17906ec742cef2aa31a78add7e7fd0ae8cc&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741492458823710/Prophet-of-Earth-dust-off-emote-level-1.gif?ex=65e0bfea&is=65ce4aea&hm=b14e0632e447a6e58e924cd80b3bf17906ec742cef2aa31a78add7e7fd0ae8cc&',
         },
         {
           title: '"Dust Off" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741491997581384/Prophet-of-Earth-dust-off-emote-level-2.gif?ex=65e0bfea&is=65ce4aea&hm=3220e20d529101f89f5630a2b8c73c0a01fabe21688be06b801b06623996c718&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741491997581384/Prophet-of-Earth-dust-off-emote-level-2.gif?ex=65e0bfea&is=65ce4aea&hm=3220e20d529101f89f5630a2b8c73c0a01fabe21688be06b801b06623996c718&',
         },
         {
           title: '"Dust Off" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741491473031250/Prophet-of-Earth-dust-off-emote-level-3.gif?ex=65e0bfea&is=65ce4aea&hm=dcdd170cdd0c184311438899d3c1c923fe47c56b92f661ac27d27389f4138d7f&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741491473031250/Prophet-of-Earth-dust-off-emote-level-3.gif?ex=65e0bfea&is=65ce4aea&hm=dcdd170cdd0c184311438899d3c1c923fe47c56b92f661ac27d27389f4138d7f&',
         },
         {
           title: '"Dust Off" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741490986749973/Prophet-of-Earth-dust-off-emote-level-4.gif?ex=65e0bfea&is=65ce4aea&hm=1bd84a4eea6e753979a29b5743946aebd937c30690381d79d701cf45f8921063&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207741490986749973/Prophet-of-Earth-dust-off-emote-level-4.gif?ex=65e0bfea&is=65ce4aea&hm=1bd84a4eea6e753979a29b5743946aebd937c30690381d79d701cf45f8921063&',
         },
         ],
     },
@@ -3373,7 +3373,7 @@ module.exports = {
       dates: [
         'May 15, 2023 (SV#2)',
         'November 10, 2022 (#74)',
-        'August 8, 2021 (#41)'
+        'August 8, 2021 (#41)',
         ],
     },
     tree: {
@@ -3391,24 +3391,24 @@ module.exports = {
       level: [
         {
           title: '"Deep Breath" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740791649337355/Prophet-of-Water-deep-breath-emote-level-1.gif?ex=65e0bf43&is=65ce4a43&hm=1a21cdcfc626e35658dfbee8f82098f28554854ec08888181a4376703eddf352&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740791649337355/Prophet-of-Water-deep-breath-emote-level-1.gif?ex=65e0bf43&is=65ce4a43&hm=1a21cdcfc626e35658dfbee8f82098f28554854ec08888181a4376703eddf352&',
         },
         {
           title: '"Deep Breath" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740792366436474/Prophet-of-Water-deep-breath-emote-level-2.gif?ex=65e0bf43&is=65ce4a43&hm=d13e84e84f2e18d97909b210c6ae825e6f867d6d0e6935eaf8db2416f9165e2e&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740792366436474/Prophet-of-Water-deep-breath-emote-level-2.gif?ex=65e0bf43&is=65ce4a43&hm=d13e84e84f2e18d97909b210c6ae825e6f867d6d0e6935eaf8db2416f9165e2e&',
         },
         {
           title: '"Deep Breath" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740792907497472/Prophet-of-Water-deep-breath-emote-level-3.gif?ex=65e0bf43&is=65ce4a43&hm=8181b378421dcd7119610f4613ebca33fa77a13631eece8e61c7f002af060ca0&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740792907497472/Prophet-of-Water-deep-breath-emote-level-3.gif?ex=65e0bf43&is=65ce4a43&hm=8181b378421dcd7119610f4613ebca33fa77a13631eece8e61c7f002af060ca0&',
         },
         {
           title: '"Deep Breath" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740793419341895/Prophet-of-Water-deep-breath-emote-level-4.gif?ex=65e0bf43&is=65ce4a43&hm=d6158c565d6e7404f361b9a41e23943424d1a7e8cc4895a7bbf12c912bf44b88&'
+          image: 'https://cdn.discordapp.com/attachments/1207740431786442772/1207740793419341895/Prophet-of-Water-deep-breath-emote-level-4.gif?ex=65e0bf43&is=65ce4a43&hm=d6158c565d6e7404f361b9a41e23943424d1a7e8cc4895a7bbf12c912bf44b88&',
         },
         ],
     },
   },
-  
+
   // Sanctuary
   bookworm: {
     name: "Timid Bookworm",
@@ -3420,7 +3420,7 @@ module.exports = {
       returned: true,
       dates: [
         'July 7, 2022 (#65)',
-        'June 10, 2021 (#37)'
+        'June 10, 2021 (#37)',
         ],
     },
     tree: {
@@ -3450,7 +3450,7 @@ module.exports = {
       returned: true,
       dates: [
         'January 19, 2023 (#79)',
-        'April 29, 2021 (#34)'
+        'April 29, 2021 (#34)',
         ],
     },
     tree: {
@@ -3468,19 +3468,19 @@ module.exports = {
       level: [
         {
           title: '"Rally Cheer" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744075453698089/Rallying-Thrillseeker-rally-cheer-emote-level-1.gif?ex=65e0c252&is=65ce4d52&hm=b765c0f858d5ab51c6c6200a0fc4557d731ced4cd5cf992c1db771a296ee4fc3&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744075453698089/Rallying-Thrillseeker-rally-cheer-emote-level-1.gif?ex=65e0c252&is=65ce4d52&hm=b765c0f858d5ab51c6c6200a0fc4557d731ced4cd5cf992c1db771a296ee4fc3&',
         },
         {
           title: '"Rally Cheer" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744075923464232/Rallying-Thrillseeker-rally-cheer-emote-level-2.gif?ex=65e0c252&is=65ce4d52&hm=00181585b8b6a5d1e7e7a409896759487020a9fa896ecf385a77e0d940713a07&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744075923464232/Rallying-Thrillseeker-rally-cheer-emote-level-2.gif?ex=65e0c252&is=65ce4d52&hm=00181585b8b6a5d1e7e7a409896759487020a9fa896ecf385a77e0d940713a07&',
         },
         {
           title: '"Rally Cheer" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744076422709268/Rallying-Thrillseeker-rally-cheer-emote-level-3.gif?ex=65e0c252&is=65ce4d52&hm=2fa876f8b6910d1341a492f24570e4ee3ccef97d76075b46887b4407794b0b37&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744076422709268/Rallying-Thrillseeker-rally-cheer-emote-level-3.gif?ex=65e0c252&is=65ce4d52&hm=2fa876f8b6910d1341a492f24570e4ee3ccef97d76075b46887b4407794b0b37&',
         },
         {
           title: '"Rally Cheer" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744076980691005/Rallying-Thrillseeker-rally-cheer-emote-level-4.gif?ex=65e0c252&is=65ce4d52&hm=3976e447f6c262daf89848e6440dfd39282d229ef6ea782b4a1e9d361b49fc37&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744076980691005/Rallying-Thrillseeker-rally-cheer-emote-level-4.gif?ex=65e0c252&is=65ce4d52&hm=3976e447f6c262daf89848e6440dfd39282d229ef6ea782b4a1e9d361b49fc37&',
         },
         ],
     },
@@ -3495,7 +3495,7 @@ module.exports = {
       returned: true,
       dates: [
         'August 31, 2023 (#95)',
-        'November 25, 2021 (#49)'
+        'November 25, 2021 (#49)',
         ],
     },
     tree: {
@@ -3525,7 +3525,7 @@ module.exports = {
       returned: true,
       dates: [
         'August 7, 2023 (SV#4)',
-        'February 17, 2022 (#55)'
+        'February 17, 2022 (#55)',
         ],
     },
     tree: {
@@ -3543,19 +3543,19 @@ module.exports = {
       level: [
         {
           title: '"Grumpy" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743457146437693/Hiking-Grouch-grumpy-emote-level-1.gif?ex=65e0c1be&is=65ce4cbe&hm=01ece1ca27df016b7db0bf42f3dfaf9b267c6b80d8eb4a89295641166d21679f&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743457146437693/Hiking-Grouch-grumpy-emote-level-1.gif?ex=65e0c1be&is=65ce4cbe&hm=01ece1ca27df016b7db0bf42f3dfaf9b267c6b80d8eb4a89295641166d21679f&',
         },
         {
           title: '"Grumpy" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743457582522428/Hiking-Grouch-grumpy-emote-level-2.gif?ex=65e0c1bf&is=65ce4cbf&hm=28509ea0fe96d3e885ce98ad1fae2120fd1c8a054b9da179ae007ce672ba1913&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743457582522428/Hiking-Grouch-grumpy-emote-level-2.gif?ex=65e0c1bf&is=65ce4cbf&hm=28509ea0fe96d3e885ce98ad1fae2120fd1c8a054b9da179ae007ce672ba1913&',
         },
         {
           title: '"Grumpy" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743457989234768/Hiking-Grouch-grumpy-emote-level-3.gif?ex=65e0c1bf&is=65ce4cbf&hm=cd09283c10d0a3b81f0b19b9ac8b1b2b78e0429ad971180feb1b17bc91f858b6&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743457989234768/Hiking-Grouch-grumpy-emote-level-3.gif?ex=65e0c1bf&is=65ce4cbf&hm=cd09283c10d0a3b81f0b19b9ac8b1b2b78e0429ad971180feb1b17bc91f858b6&',
         },
         {
           title: '"Grumpy" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743458433826948/Hiking-Grouch-grumpy-emote-level-4.gif?ex=65e0c1bf&is=65ce4cbf&hm=66344722239d66a6230b6259f59eebe20f249a3ea79d530f60efbf8e29cbf355&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207743458433826948/Hiking-Grouch-grumpy-emote-level-4.gif?ex=65e0c1bf&is=65ce4cbf&hm=66344722239d66a6230b6259f59eebe20f249a3ea79d530f60efbf8e29cbf355&',
         },
         ],
     },
@@ -3570,7 +3570,7 @@ module.exports = {
       returned: true,
       dates: [
         'May 25, 2023 (#88)',
-        'September 30, 2021 (#45)'
+        'September 30, 2021 (#45)',
         ],
     },
     tree: {
@@ -3588,19 +3588,19 @@ module.exports = {
       level: [
         {
           title: '"Grateful" Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742908942254171/Grateful-Shell-Collector-grateful-emote-level-1.gif?ex=65e0c13c&is=65ce4c3c&hm=18badfc9cd3bbba744ac3f0b9f9f55d180991bd7ebeb9f1b1bb792a53e1aa5ea&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742908942254171/Grateful-Shell-Collector-grateful-emote-level-1.gif?ex=65e0c13c&is=65ce4c3c&hm=18badfc9cd3bbba744ac3f0b9f9f55d180991bd7ebeb9f1b1bb792a53e1aa5ea&',
         },
         {
           title: '"Grateful" Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742910146027621/Grateful-Shell-Collector-grateful-emote-level-2.gif?ex=65e0c13c&is=65ce4c3c&hm=c235d0af809f4ef0e4c553718873f5989fedb691198613b4371dde9e1a01e8ae&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742910146027621/Grateful-Shell-Collector-grateful-emote-level-2.gif?ex=65e0c13c&is=65ce4c3c&hm=c235d0af809f4ef0e4c553718873f5989fedb691198613b4371dde9e1a01e8ae&',
         },
         {
           title: '"Grateful" Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742910968242256/Grateful-Shell-Collector-grateful-emote-level-3.gif?ex=65e0c13c&is=65ce4c3c&hm=cfa5cf970676730c31aa4a498a2db6e796c19808bcdfff94ce2b9da6fcada045&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742910968242256/Grateful-Shell-Collector-grateful-emote-level-3.gif?ex=65e0c13c&is=65ce4c3c&hm=cfa5cf970676730c31aa4a498a2db6e796c19808bcdfff94ce2b9da6fcada045&',
         },
         {
           title: '"Grateful" Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742911668818040/Grateful-Shell-Collector-grateful-emote-level-4.gif?ex=65e0c13c&is=65ce4c3c&hm=bc28c3e821f7d2943ab51a2b2740d6d0bff72287e09f07405fe5eff169443419&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207742911668818040/Grateful-Shell-Collector-grateful-emote-level-4.gif?ex=65e0c13c&is=65ce4c3c&hm=bc28c3e821f7d2943ab51a2b2740d6d0bff72287e09f07405fe5eff169443419&',
         },
         ],
     },
@@ -3615,7 +3615,7 @@ module.exports = {
       returned: true,
       dates: [
         'January 4, 2024 (#104)',
-        'August 19, 2021 (#42)'
+        'August 19, 2021 (#42)',
         ],
     },
     tree: {
@@ -3633,24 +3633,24 @@ module.exports = {
       level: [
         {
           title: '"Belly Scratch" Emote Level 1',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744574534189079/Chill-Sunbather-belly-scratch-emote-level-1.gif?ex=65e0c2c9&is=65ce4dc9&hm=4012c9a7bd82bd9a57561f2e753ce24c219496efab30feb2e81e423df2be04eb&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744574534189079/Chill-Sunbather-belly-scratch-emote-level-1.gif?ex=65e0c2c9&is=65ce4dc9&hm=4012c9a7bd82bd9a57561f2e753ce24c219496efab30feb2e81e423df2be04eb&',
         },
         {
           title: '"Belly Scratch" Emote Level 2',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744574999498762/Chill-Sunbather-belly-scratch-emote-level-2.gif?ex=65e0c2c9&is=65ce4dc9&hm=f76a8c3541dc51e0da0131414368119559c791a041db504b94d4f2e76126b802&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744574999498762/Chill-Sunbather-belly-scratch-emote-level-2.gif?ex=65e0c2c9&is=65ce4dc9&hm=f76a8c3541dc51e0da0131414368119559c791a041db504b94d4f2e76126b802&',
         },
         {
           title: '"Belly Scratch" Emote Level 3',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744575515660308/Chill-Sunbather-belly-scratch-emote-level-3.gif?ex=65e0c2c9&is=65ce4dc9&hm=4683a248c45f38f9d15be36f0cb921f0f1b814aa1da353d349a7998f3dadbadf&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744575515660308/Chill-Sunbather-belly-scratch-emote-level-3.gif?ex=65e0c2c9&is=65ce4dc9&hm=4683a248c45f38f9d15be36f0cb921f0f1b814aa1da353d349a7998f3dadbadf&',
         },
         {
           title: '"Belly Scratch" Emote Level 4',
-          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744575934959636/Chill-Sunbather-belly-scratch-emote-level-4.gif?ex=65e0c2c9&is=65ce4dc9&hm=c4acefe1cd8d84225432bc3733a934fe5cf04f5f18a8542eff2d4952fa499318&'
+          image: 'https://cdn.discordapp.com/attachments/1207742742311215185/1207744575934959636/Chill-Sunbather-belly-scratch-emote-level-4.gif?ex=65e0c2c9&is=65ce4dc9&hm=c4acefe1cd8d84225432bc3733a934fe5cf04f5f18a8542eff2d4952fa499318&',
         },
         ],
     },
   },
-  
+
   // Enchantment
   carpenter: {
     name: "Snoozing Carpenter",
@@ -3918,7 +3918,7 @@ module.exports = {
       ],
     },
   },
-  
+
   // Rhythm
   juggler: {
     name: "Troupe Juggler",
@@ -4196,7 +4196,7 @@ module.exports = {
       ],
     },
   },
-  
+
   // Belonging
   wise_grandparent: {
     name: "Wise Grandparent",
@@ -4444,7 +4444,7 @@ module.exports = {
       ],
     },
   },
-  
+
   // Lighseekers
   twirling_champion: {
     name: "Twirling Champion",
@@ -4664,7 +4664,7 @@ module.exports = {
         "https://cdn.discordapp.com/attachments/1207056758514909315/1207057096281948210/Crab_Call.mp4?ex=65de4285&is=65cbcd85&hm=55bb9650cb7eb68778038781822057a9c269af8a5d2c141bbf7fed22cd726c53&",
     },
   },
-  
+
   // Gratitude
   stretching: {
     name: "Stretching Guru",

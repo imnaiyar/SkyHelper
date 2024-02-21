@@ -1,5 +1,4 @@
 const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
-const spirits = require("../commands//guides/sub/shared/spiritsData.js");
 const { table } = require("table");
 const moment = require("moment-timezone");
 const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
@@ -130,7 +129,7 @@ module.exports = class SkyHelper extends Client {
       Gratitude: "<:gratitude:1130958261349261435>",
     });
 
-    this.spiritsData = spirits;
+    this.spiritsData = require("../commands//guides/sub/shared/spiritsData.js");
     // Checks for how this class is created so it doesnt mess up the process
     if (
       require.main.filename !== path.join(process.cwd(), "src", "commandsRegister.js") &&

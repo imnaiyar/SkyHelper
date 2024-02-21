@@ -115,19 +115,19 @@ module.exports = {
           },
         ],
       },
-      {
-        name: "events",
-        description: "various event guides (Days of ...)",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "hide",
-            description: "hide the guides from others (default: false)",
-            type: ApplicationCommandOptionType.Boolean,
-            required: false,
-          },
-        ],
-      },
+      // {
+      //   name: "events",
+      //   description: "various event guides (Days of ...)",
+      //   type: ApplicationCommandOptionType.Subcommand,
+      //   options: [
+      //     {
+      //       name: "hide",
+      //       description: "hide the guides from others (default: false)",
+      //       type: ApplicationCommandOptionType.Boolean,
+      //       required: false,
+      //     },
+      //   ],
+      // },
     ],
   },
   async execute(interaction) {
@@ -137,9 +137,10 @@ module.exports = {
     reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
     switch (sub) {
       case "seasonal": {
-        const choice = interaction.options.getString("season");
-        console.log(choice);
-        await handleSeasonal(interaction, ephemeral);
+        const season = interaction.options.getString("season");
+        const type = interaction.options.getString("type");
+
+        await handleSeasonal(interaction, season, type, ephemeral);
         break;
       }
       case "realms": {
@@ -175,7 +176,7 @@ module.exports = {
       await interaction.respond(
         filtered.map((choice) => ({
           name: choice,
-          value: choice.replace("Season of ", "").split(" ").join("_").toLocaleLowerCase(),
+          value: choice,
         })),
       );
     }
