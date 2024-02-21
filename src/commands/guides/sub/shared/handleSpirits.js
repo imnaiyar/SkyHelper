@@ -88,7 +88,7 @@ module.exports = async (int, value, guides) => {
     embed.setImage(data.main.image);
   } else {
     // For seasonal spirits
-    embed.addFields({ name: `Friendship Tree ${data.tree.by}`, value: daya.tree.total });
+    embed.addFields({ name: `Friendship Tree ${data.tree.by}`, value: data.tree.total });
 
     // Add location buttons to seasonal spirits embed
     row.addComponents(lctnBtn);
