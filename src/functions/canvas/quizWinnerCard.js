@@ -1,4 +1,4 @@
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage } = require("@napi-rs/canvas");
 const { colors, fancyCount } = require("./helpers/util");
 const { join } = require("path");
 const size = 100;

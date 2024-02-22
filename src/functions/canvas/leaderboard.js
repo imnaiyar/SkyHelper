@@ -3,7 +3,7 @@
  * see {@link https://github.com/Bes-js/canvafy|canvafy}
  */
 
-const { createCanvas, loadImage, registerFont } = require("canvas");
+const { createCanvas, loadImage, registerFont } = require("@napi-rs/canvas");
 const path = require("path");
 
 /**
