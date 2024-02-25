@@ -6,7 +6,7 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 
 /**
  * messageCreate event handler
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').msg} msg
  */
 module.exports = async (client, msg) => {

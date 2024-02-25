@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const { exec } = require("child_process");
 
 /**
- * @type {import('@src/structures').PrefixCommands}
+ * @type {import('@src/frameworks').PrefixCommands}
  */
 module.exports = {
   data: {

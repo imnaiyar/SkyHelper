@@ -1,6 +1,6 @@
 /**
  * messageReactionAdd event handler
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').MessageReaction|import('discord.js').PartialMessageReaction} reaction
  * @param {import('discord.js').User|import('discord.js').PartialUser} user
  */

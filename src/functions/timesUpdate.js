@@ -5,7 +5,7 @@ const { WebhookClient } = require("discord.js");
 
 /**
  * Updates SkyTimes details in all the registered guilds
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  */
 module.exports = async (client) => {
   const currentDate = moment().tz(client.timezone);

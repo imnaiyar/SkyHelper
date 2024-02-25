@@ -17,7 +17,7 @@ module.exports = {
         options: [
           {
             name: "season",
-            description: "select a season for the guideZ",
+            description: "select a season for the guide",
             type: ApplicationCommandOptionType.String,
             required: true,
             autocomplete: true,
@@ -28,11 +28,11 @@ module.exports = {
             type: ApplicationCommandOptionType.String,
             choices: [
               {
-                name: "Quests",
+                name: "↪️ Quests",
                 value: "quest",
               },
               {
-                name: "Spirits",
+                name: "↪️ Spirits",
                 value: "spirits",
               },
             ],
@@ -57,31 +57,31 @@ module.exports = {
             type: ApplicationCommandOptionType.String,
             choices: [
               {
-                name: "Isle of Dawn",
+                name: "↪️ Isle of Dawn",
                 value: "isle",
               },
               {
-                name: "Daylight Prairie",
+                name: "↪️ Daylight Prairie",
                 value: "prairie",
               },
               {
-                name: "Hidden Forest",
+                name: "↪️ Hidden Forest",
                 value: "forest",
               },
               {
-                name: "Valley of Triumph",
+                name: "↪️ Valley of Triumph",
                 value: "valley",
               },
               {
-                name: "Golden Wasteland",
+                name: "↪️ Golden Wasteland",
                 value: "wasteland",
               },
               {
-                name: "Vault of Knowledge",
+                name: "↪️ Vault of Knowledge",
                 value: "vault",
               },
               {
-                name: "Eye of Eden",
+                name: "↪️ Eye of Eden",
                 value: "eden",
               },
             ],
@@ -93,15 +93,15 @@ module.exports = {
             type: ApplicationCommandOptionType.String,
             choices: [
               {
-                name: "Realm Summary",
+                name: "↪️ Realm Summary",
                 value: "summary",
               },
               {
-                name: "Maps",
+                name: "↪️ Maps",
                 value: "maps",
               },
               {
-                name: "Spirits",
+                name: "↪️ Spirits",
                 value: "spirits",
               },
             ],
@@ -168,7 +168,7 @@ module.exports = {
         }
 
         reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
-        const realm = this.data.options[1].options[0].choices.find((v) => v.value === realmValue)?.name;
+        const realm = this.data.options[1].options[0].choices.find((v) => v.value === realmValue)?.name.replace('↪️ ', '');
         const value = `${type}_${realmValue}`;
         await new HandleRealms(interaction, realm, value, reply).respond();
         break;

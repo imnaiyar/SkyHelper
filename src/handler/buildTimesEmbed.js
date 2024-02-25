@@ -4,7 +4,7 @@ const config = require("@root/config");
 
 /**
  * Returns an embed with SkyTimes data
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {string} footer
  * @returns
  */

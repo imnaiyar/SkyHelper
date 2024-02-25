@@ -1,7 +1,7 @@
 const moment = require("moment-timezone");
 
 /**
- * @type {import('@src/structures').SlashCommands}
+ * @type {import('@src/frameworks').SlashCommands}
  */
 
 module.exports = {

@@ -3,7 +3,7 @@ const Logger = require("@src/logger");
 
 /**
  * Post Bot's stats on TopGG
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  */
 module.exports = async (client) => {
   const poster = AutoPoster(process.env.TOPGG_TOKEN, client);

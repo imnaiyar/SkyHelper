@@ -54,7 +54,7 @@ function sendWebhook(content, err) {
   at processTicksAndRejections (node:internal/process/task_queues:96:5)
   at async SequentialHandler.queueRequest (/home/container/node_modules/@discordjs/rest/dist/index.js:712:14)
   at async REST.request (/home/container/node_modules/@discordjs/rest/dist/index.js:1321:22)
-  at async TextChannel.send (/home/container/node_modules/discord.js/src/structures/interfaces/TextBasedChannel.js:176:15)`
+  at async TextChannel.send (/home/container/node_modules/discord.js/src/frameworks/interfaces/TextBasedChannel.js:176:15)`
   ) {
     console.log("Missing Access");
   }

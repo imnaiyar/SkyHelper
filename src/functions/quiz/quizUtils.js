@@ -23,7 +23,7 @@ module.exports = class quizUtils {
   /**
    * Sends the result in the interaction channel on game end
    * @param {import('discord.js').Interaction} interaction - The interaction that initiated the game
-   * @param {import('@src/structures').SkyHelper.data} data - object containing a game data
+   * @param {import('@src/frameworks').SkyHelper.data} data - object containing a game data
    */
   static async displayResults(interaction, data) {
     try {

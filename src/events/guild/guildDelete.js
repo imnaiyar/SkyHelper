@@ -7,7 +7,7 @@ const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.G
 
 /**
  * Functions for when bot leaves a server
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
 

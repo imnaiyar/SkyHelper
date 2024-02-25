@@ -5,7 +5,7 @@ const { shardsUpdate, timesUpdate } = require("@functions");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { setupPresence } = require("@handler");
 const chalk = require("chalk");
-const { SkyHelper } = require("@structures/index");
+const { SkyHelper } = require("@frameworks/index");
 const client = new SkyHelper();
 
 (async () => {

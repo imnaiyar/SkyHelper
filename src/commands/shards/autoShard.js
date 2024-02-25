@@ -5,7 +5,7 @@ const { buildShardEmbed, deleteSchema } = require("@src/handler");
 const desc = require("@src/cmdDesc");
 
 /**
- * @type {import("@src/structures").SlashCommands}
+ * @type {import("@src/frameworks").SlashCommands}
  */
 module.exports = {
   data: {
@@ -50,7 +50,7 @@ module.exports = {
   },
   /**
    * @param {import('discord.js').Interaction} interaction
-   * @param {import('@src/structures').SkyHelper} client
+   * @param {import('@src/frameworks').SkyHelper} client
    */
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });

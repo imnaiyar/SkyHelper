@@ -1,6 +1,6 @@
 /**
  * Client error event handler
- * @param {import('@src/structures').SkyHelper} client - Bot's client instance
+ * @param {import('@src/frameworks').SkyHelper} client - Bot's client instance
  * @param {import('discord.js').ErrorEvent} err - The error object
  * @returns {void}
  */

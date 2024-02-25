@@ -5,7 +5,7 @@ const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.B
 
 /**
  * Intraction event handler
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').Interaction} interaction
  */
 module.exports = async (client, interaction) => {

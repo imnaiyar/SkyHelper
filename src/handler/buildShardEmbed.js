@@ -3,7 +3,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const config = require("@root/config");
 
 /**
- *
+ * Builds Guve Shards embed
  * @param {Date} currentDate
  * @param {string} footer
  * @returns {object} result, actionRow

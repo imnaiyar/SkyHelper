@@ -10,7 +10,7 @@
         "@schemas/*": ["./src/database/schemas/*"],
         "@src/*": ["./src/*"],
         "@commands/*": ["./src/commands/*"],
-        "@structures/*": ["./src/structures/*"],
+        "@frameworks/*": ["./src/frameworks/*"],
         
       }
     },

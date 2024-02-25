@@ -1,7 +1,7 @@
 const { ApplicationCommandOptionType } = require('discord.js');
 const handleSpirits = require('./sub/shared/handleSpirits');
 /**
- * @type {import('@src/structures').SlashCommands}
+ * @type {import('@src/frameworks').SlashCommands}
  */
 module.exports = {
   data: {

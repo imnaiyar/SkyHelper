@@ -10,7 +10,7 @@ const { botSettings } = require("@schemas/botStats");
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
- * @param {import('@src/structures').SkyHelper} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
 module.exports = async (client, guild) => {
