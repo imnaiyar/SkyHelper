@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
 const { table } = require("table");
 const moment = require("moment-timezone");
-const { UpdateEvent } = require('../handler/updateEvent');
+const { UpdateEvent } = require("../handler/updateEvent");
 const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
 const { schemas } = require("@src/database/mongoose");
 const fs = require("fs");
@@ -61,7 +61,7 @@ module.exports = class SkyHelper extends Client {
      * @type {Map<String, Object>}
      */
     this.skyEvents = new Map();
-    this.skyEvents.set('event', {
+    this.skyEvents.set("event", {
       eventActive: true,
       eventName: "Days of Fortune",
       eventStarts: moment.tz("2024-01-29T00:00:00", this.timezone),
@@ -78,11 +78,14 @@ module.exports = class SkyHelper extends Client {
      * @type {Object}
      */
     this.ts = {
-      lastOccurence: "",
-      name: "",
-      location: "",
-      tree: "",
-      total: "",
+      name: "Talented Builder",
+      visitDate: "15-02-2024",
+      departDate: "18-02-2024",
+      value: "hermit",
+      spiritImage:
+        "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Dreams-Spirit-Bearhug-Hermit.png/revision/latest?cb=20221124085127",
+      emote: "<:hermit:1131645142898581535>",
+      index: "22",
     };
     // user object cache for credits
     /**

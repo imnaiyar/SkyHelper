@@ -6,38 +6,26 @@ const startBtn = new ButtonBuilder()
   .setEmoji("<:purpleUp:1207632852770881576>")
   .setLabel("Back")
   .setStyle(ButtonStyle.Danger);
-module.exports = async (int, value, guides) => {
+
+/**
+ * @param {import('discord.js').ChatInputCommandInteraction | import('discord.js').ButtonInteraction | import('discord.js').StringSelectMenuInteraction} int
+ * @param {String} value The spirt's value
+ * @param {Boolean} guides whether the function was called from a guides command
+ * @param {import('discord.js').EmbedBuilder} embs the initial emb to display if provided
+ */
+module.exports = async (int, value, guides, embs) => {
   // Get the spirits data
   const data = spiritsData[value];
   const icon = data.emote?.icon || data.stance?.icon || data.call?.icon || data.action?.icon || "";
-
+  const desc = `**Type:** ${data.type}${
+    data.realm ? `\n**Realm:** ${int.client.emojisMap.get("realms")[data.realm]} ${data.realm}` : ""
+  }${data.season ? `\n**Season:** ${int.client.emojisMap.get("seasons")[data.season]} Season of ${data.season}` : ""}`;
   // Build the initial embed
   const embed = new EmbedBuilder()
     .setTitle(`${icon} ${data.name}`)
     .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`)
-    .addFields({
-      name: "Type",
-      value: `<:purpleright:1207596527737118811> ${data.type}`,
-    })
+    .setDescription(desc)
     .setAuthor({ name: "Spirit Summary" });
-
-  // Add realm fields if spirits data has realm property
-  if (data.realm) {
-    embed.addFields({
-      name: "Realm",
-      value: `<:purpleright:1207596527737118811> ${int.client.emojisMap.get("realms")[data.realm]} ${data.realm}`,
-    });
-  }
-
-  // Add season field if spirit data has season property
-  if (data.season) {
-    embed.addFields({
-      name: "Season",
-      value: `<:purpleright:1207596527737118811> ${int.client.emojisMap.get("seasons")[data.season]} Season of ${
-        data.season
-      }`,
-    });
-  }
 
   // Add TS field if spirit data has ts property
   if (data.ts) {
@@ -78,18 +66,18 @@ module.exports = async (int, value, guides) => {
   // Define cosmetic button
   // TODO: Don't forget this..
   // const cosmeticBtn = new ButtonBuilder().setCustomId("spirit_cosmetic").setStyle("1").setLabel("Cosmetics");
-
+  const emb = embs ? embs : embed;
   // If spirit's data has 'main' property (Regular Spirits), no location or tree buttons here since the initial guide already contains tree and location
   if (data.main) {
-    embed.addFields({ name: `Infographics by Ed.7`, value: " " });
-    embed.setImage(data.main.image);
+    emb.addFields({ name: `Infographics by Ed.7`, value: " " });
+    emb.setImage(data.main.image);
   } else {
     // For seasonal spirits
-    embed.addFields({
-      name: `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree.by}`,
+    emb.addFields({
+      name: `${data.ts?.returned ? "Friendship Tree (Last Visit)" : "Seasonal Price Chart"} by ${data.tree.by}`,
       value: data.tree.total,
     });
-    embed.setImage(data.tree.image);
+    emb.setImage(data.tree.image);
 
     // Add location buttons to seasonal spirits embed
     if (data.location) row.addComponents(lctnBtn);
@@ -123,7 +111,7 @@ module.exports = async (int, value, guides) => {
   }
 
   // update the message with the results
-  const msg = await int.editReply({ content: "", embeds: [embed], components: [row], fetchReply: true });
+  const msg = await int.editReply({ content: "", embeds: [emb], components: [row], fetchReply: true });
 
   // create a collector for the embed buttons
   const filter = int.client.getFilter(int);
@@ -149,7 +137,7 @@ module.exports = async (int, value, guides) => {
       return;
     }
     await inter.deferUpdate();
-    const newEmbed = EmbedBuilder.from(embed);
+    const newEmbed = EmbedBuilder.from(emb);
     const lastField = newEmbed.data.fields[newEmbed.data.fields.length - 1];
     switch (customID) {
       case "spirit_location": {
@@ -184,7 +172,7 @@ module.exports = async (int, value, guides) => {
           .setAuthor({ name: `Stance - ${data.name}` });
         await inter.editReply({
           embeds: [stanceEmbed],
-          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId('exp-back'))],
+          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("exp-back"))],
         });
         break;
       }
@@ -197,7 +185,7 @@ module.exports = async (int, value, guides) => {
           } call preview (Normal and Deep Call)\n**Sound ON** <a:sound_on:1207073334853107832>.`,
           embeds: [],
           files: [data.call.image],
-          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId('exp-back'))],
+          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("exp-back"))],
         });
         break;
       }
@@ -206,7 +194,6 @@ module.exports = async (int, value, guides) => {
       //   break;
       // }
       case "spirit_tree": {
-        await inter.deferUpdate();
         const newRow = ActionRowBuilder.from(row);
         newRow.components[0] = lctnBtn;
         lastField.name = `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree.by}`;
@@ -215,8 +202,8 @@ module.exports = async (int, value, guides) => {
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
-      case 'exp-back': {
-        await inter.editReply({ embeds: [embed], components: [row], content: '' });
+      case "exp-back": {
+        await inter.editReply({ embeds: [embed], components: [row], content: "" });
       }
     }
   });

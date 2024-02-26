@@ -168,7 +168,9 @@ module.exports = {
         }
 
         reply = await interaction.deferReply({ ephemeral: ephemeral, fetchReply: true });
-        const realm = this.data.options[1].options[0].choices.find((v) => v.value === realmValue)?.name.replace('↪️ ', '');
+        const realm = this.data.options[1].options[0].choices
+          .find((v) => v.value === realmValue)
+          ?.name.replace("↪️ ", "");
         const value = `${type}_${realmValue}`;
         await new HandleRealms(interaction, realm, value, reply).respond();
         break;

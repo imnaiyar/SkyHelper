@@ -54,8 +54,8 @@ module.exports = {
         await interaction.reply(`\`Next eden reset for you on:\` ${result.edenResultStr}`);
         break;
 
-      case "event":{
-        const evnt = client.skyEvents.get('event');
+      case "event": {
+        const evnt = client.skyEvents.get("event");
         if (evnt.eventActive || result.eventDescription !== "No active events.") {
           await interaction.reply(
             `${
@@ -63,9 +63,7 @@ module.exports = {
                 ? `**Event:** ${evnt.eventName}\n**Start Date:** ${time(
                     evnt.eventStarts.toDate(),
                     "f",
-                  )}\n**End Date:** ${time(evnt.eventEnds.toDate(), "f")}\n**Duration:** ${
-                    evnt.eventDuration
-                  }\n`
+                  )}\n**End Date:** ${time(evnt.eventEnds.toDate(), "f")}\n**Duration:** ${evnt.eventDuration}\n`
                 : ""
             }\`\`\`Countdown\`\`\`\n${result.eventDescription}`,
           );

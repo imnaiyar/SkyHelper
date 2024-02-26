@@ -1,16 +1,16 @@
-const { ApplicationCommandOptionType } = require('discord.js');
-const handleSpirits = require('./sub/shared/handleSpirits');
+const { ApplicationCommandOptionType } = require("discord.js");
+const handleSpirits = require("./sub/shared/handleSpirits");
 /**
  * @type {import('@src/frameworks').SlashCommands}
  */
 module.exports = {
   data: {
-    name: 'spirits',
-    description: 'Search for a spirits informations',
+    name: "spirits",
+    description: "Search for a spirits informations",
     options: [
       {
-        name: 'search',
-        description: 'value to search',
+        name: "search",
+        description: "value to search",
         type: ApplicationCommandOptionType.String,
         autocomplete: true,
         required: true,
@@ -29,7 +29,10 @@ module.exports = {
     const ephemeral = ephmrl === null ? false : ephmrl;
     const spiritValue = interaction.options.getString("search");
     if (!Object.keys(client.spiritsData).includes(spiritValue)) {
-      await interaction.reply({ content: `Provided spirit value (\`${spiritValue}\`) does not exists, wanna try again?`, ephemeral: true });
+      await interaction.reply({
+        content: `Provided spirit value (\`${spiritValue}\`) does not exists, wanna try again?`,
+        ephemeral: true,
+      });
       return;
     }
     await interaction.deferReply({ ephemeral: ephemeral });
@@ -38,10 +41,12 @@ module.exports = {
 
   async autocomplete(interaction, client) {
     const focusedValue = interaction.options.getFocused();
-    const data = Object.entries(client.spiritsData).filter(([, v]) => v.name.toLowerCase().includes(focusedValue.toLowerCase())).map(([key, value]) => ({
-      name: `↪️ ${value.name}`,
-      value: key,
-    }));
+    const data = Object.entries(client.spiritsData)
+      .filter(([, v]) => v.name.toLowerCase().includes(focusedValue.toLowerCase()))
+      .map(([key, value]) => ({
+        name: `↪️ ${value.name}`,
+        value: key,
+      }));
     await interaction.respond(data.slice(0, 25));
   },
 };
