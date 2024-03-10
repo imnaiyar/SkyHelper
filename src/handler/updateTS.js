@@ -103,3 +103,5 @@ class UpdateTs {
     return this.client.ts;
   }
 }
+
+module.exports = { UpdateTs }
