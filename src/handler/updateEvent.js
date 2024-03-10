@@ -9,7 +9,7 @@ const moment = require("moment-timezone");
 
 class UpdateEvent {
   /**
-   * @param {import('@src/handlers').SkyHelper} client
+   * @param {import('@src/frameworks').SkyHelper} client
    */
   constructor(client) {
     this.client = client;

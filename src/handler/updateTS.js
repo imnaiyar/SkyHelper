@@ -1,12 +1,12 @@
 /**
  * @class
- * @classdesc A class to uodate traveling spirit details in the client constructor
+ * @classdesc A class to update traveling spirit details in the client constructor
  * @method update updates the ts details
  * @returns {Object}
  */
 class UpdateTs {
   /**
-   * @param {import('@src/handlers').SkyHelper} client
+   * @param {import('@src/frameworks').SkyHelper} client
    */
   constructor(client) {
     this.client = client;

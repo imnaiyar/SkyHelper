@@ -73,6 +73,7 @@ module.exports = class SkyHelper extends Client {
      * @type {Class}
      */
     this.UpdateEvent = UpdateEvent;
+    
     /**
      * stores current/upcoming ts details
      * @type {Object}
