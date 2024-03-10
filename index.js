@@ -42,6 +42,10 @@ const client = new SkyHelper();
       client.logger.error("AutoTimes Error:", err);
     }
   });
+  
+  client
+    .on("debug", console.log)
+    .on("warn", console.log)
 
   await client.login(process.env.TOKEN);
 })();

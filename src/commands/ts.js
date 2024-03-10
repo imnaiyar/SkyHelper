@@ -1,5 +1,5 @@
 const moment = require("moment-timezone");
-const { EmbedBuilder, time } = require("discord.js");
+const { EmbedBuilder, time, ApplicationCommandOptionType } = require("discord.js");
 const handleSpirits = require("./guides/sub/shared/handleSpirits");
 /**
  * @type {import('@src/frameworks').SlashCommands}
@@ -10,6 +10,14 @@ module.exports = {
   data: {
     name: "traveling-spirit",
     description: "get current/upcoming ts details",
+    options: [
+      {
+        name: 'hide',
+        description: 'hides the guide from others',
+        type: ApplicationCommandOptionType.Boolean,
+        required: false
+      }
+      ],
     longDesc: "To be decided",
   },
 
@@ -18,7 +26,8 @@ module.exports = {
    * @param {import('@src/frameworks').SkyHelper} client
    */
   async execute(interaction, client) {
-    await interaction.deferReply();
+    const hide = interaction.options.getBoolean('hide') || false;
+    await interaction.deferReply({ ephemeral: hide });
     const { name, visitDate, departDate, value, index, spiritImage, emote } = client.ts;
     const now = moment().tz(client.timezone);
     const lastVisitDate = moment.tz(visitDate, "DD-MM-YYYY", client.timezone).startOf("day");
