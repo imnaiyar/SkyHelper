@@ -12,12 +12,12 @@ module.exports = {
     description: "get current/upcoming ts details",
     options: [
       {
-        name: 'hide',
-        description: 'hides the guide from others',
+        name: "hide",
+        description: "hides the guide from others",
         type: ApplicationCommandOptionType.Boolean,
-        required: false
-      }
-      ],
+        required: false,
+      },
+    ],
     longDesc: "To be decided",
   },
 
@@ -26,7 +26,7 @@ module.exports = {
    * @param {import('@src/frameworks').SkyHelper} client
    */
   async execute(interaction, client) {
-    const hide = interaction.options.getBoolean('hide') || false;
+    const hide = interaction.options.getBoolean("hide") || false;
     await interaction.deferReply({ ephemeral: hide });
     const { name, visitDate, departDate, value, index, spiritImage, emote } = client.ts;
     const now = moment().tz(client.timezone);

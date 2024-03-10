@@ -296,10 +296,10 @@ module.exports = class SkyHelper extends Client {
       typeof value === "string" && isNaN(value)
         ? this.application.commands.cache.find((cmd) => cmd.name === value.toLowerCase())
         : !isNaN(value)
-        ? this.application.commands.cache.get(value)
-        : (() => {
-            throw new Error("Provided Value Must Either be a String or a Number");
-          })();
+          ? this.application.commands.cache.get(value)
+          : (() => {
+              throw new Error("Provided Value Must Either be a String or a Number");
+            })();
     if (!command) throw new Error("No matching command found");
     return command;
   }

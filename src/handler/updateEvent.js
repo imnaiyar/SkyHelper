@@ -1,13 +1,14 @@
 const moment = require("moment-timezone");
 
 /**
- * Updates SkyEvents Data in the client constructor
  * @class
+ * @classdesc A class to update Events details in the client constructor
+ * @method update Updates the event details
+ * @returns {Object}
  */
- 
+
 class UpdateEvent {
-  
-  /** 
+  /**
    * @param {import('@src/handlers').SkyHelper} client
    */
   constructor(client) {
@@ -24,7 +25,7 @@ class UpdateEvent {
     this.client.skyEvents.set("event", { ...this.client.skyEvents.get("event"), eventActive: boolean });
     return this;
   }
-  
+
   /**
    * @param {string} name
    */
@@ -35,7 +36,7 @@ class UpdateEvent {
     this.client.skyEvents.set("event", { ...this.client.skyEvents.get("event"), eventName: name });
     return this;
   }
-  
+
   /**
    * @param {string} date - format DD-MM-YYYY
    * @example
@@ -49,7 +50,7 @@ class UpdateEvent {
     this.client.skyEvents.set("event", { ...this.client.skyEvents.get("event"), eventStarts: mDate });
     return this;
   }
-  
+
   /**
    * @param {string} date - format DD-MM-YYYY
    * @example
@@ -63,7 +64,7 @@ class UpdateEvent {
     this.client.skyEvents.set("event", { ...this.client.skyEvents.get("event"), eventEnds: mDate });
     return this;
   }
-  
+
   setDuration(duration) {
     if (!duration || typeof duration !== "number") {
       throw new TypeError("Duration must be a number.");

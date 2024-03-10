@@ -68,8 +68,8 @@ async function skyTimes(client) {
     event.eventActive && !now.isAfter(event.eventEnds) && now.isAfter(event.eventStarts)
       ? `${event.eventName} is currently active, and ends on ${time(event.eventEnds.toDate(), "f")} (in ${eventDurEnd})`
       : event.eventActive && !now.isAfter(event.eventEnds)
-      ? `${event.eventName} will start on ${time(event.eventStarts.toDate(), "f")} (in ${eventDurStart})`
-      : "No active events.";
+        ? `${event.eventName} will start on ${time(event.eventStarts.toDate(), "f")} (in ${eventDurStart})`
+        : "No active events.";
 
   return {
     geyserResultStr,

@@ -8,7 +8,6 @@ const path = require("path");
 
 /**
  * Represents a Quiz Leaderboard Card.
- *
  * @class
  * @classdesc A class for generating a leaderboard card for a quiz or game.
  * @method build - Asynchronously builds the leaderboard card and returns the generated image buffer.
@@ -164,8 +163,8 @@ class QuizLeaderboardCard {
     GlobalFonts.registerFromPath(path.join(__dirname, `fonts/circularstd-black.otf`), "circular-std");
     GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-jp-black.ttf`), "noto-sans-jp");
     GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-black.ttf`), "noto-sans");
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notoemoji-bold.ttf`),"noto-emoji");
-    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-kr-black.ttf`),"noto-sans-kr");
+    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notoemoji-bold.ttf`), "noto-emoji");
+    GlobalFonts.registerFromPath(path.join(__dirname, `fonts/notosans-kr-black.ttf`), "noto-sans-kr");
 
     const fillRoundRect = (ctx, x, y, w, h, r, f, s) => {
       if (typeof r === "number") {

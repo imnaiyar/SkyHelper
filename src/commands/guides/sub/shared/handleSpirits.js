@@ -36,21 +36,21 @@ module.exports = async (int, value, guides, embs) => {
             int.client.emojisMap.get("seasons")[data.season]
           } **__Season of ${data.season}__** ends!`
         : data.ts.returned
-        ? `Total Visits: ${data.ts.dates.length}\n__Returned Dates__\n${data.ts.dates
-            .map((date) => {
-              let index;
-              const formatDate = date
-                .replace(/\([^)]+\)/g, (match) => {
-                  index = match.trim();
-                  return "";
-                })
-                .trim();
-              const dateM = moment.tz(formatDate, "MMMM DD, YYYY", "America/Los_Angeles").startOf("day");
-              const dateE = dateM.clone().add(3, "days");
-              return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
-            })
-            .join("\n")}`
-        : "<:purpleright:1207596527737118811> This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree.",
+          ? `Total Visits: ${data.ts.dates.length}\n__Returned Dates__\n${data.ts.dates
+              .map((date) => {
+                let index;
+                const formatDate = date
+                  .replace(/\([^)]+\)/g, (match) => {
+                    index = match.trim();
+                    return "";
+                  })
+                  .trim();
+                const dateM = moment.tz(formatDate, "MMMM DD, YYYY", "America/Los_Angeles").startOf("day");
+                const dateE = dateM.clone().add(3, "days");
+                return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
+              })
+              .join("\n")}`
+          : "<:purpleright:1207596527737118811> This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree.",
     });
   }
 

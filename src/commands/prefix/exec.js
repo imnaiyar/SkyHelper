@@ -42,10 +42,10 @@ async function run(script, message) {
             totalPages === 1
               ? result
               : currentPage === 1
-              ? `${result}...`
-              : currentPage === totalPages
-              ? `...${result}`
-              : `...${result}...`
+                ? `${result}...`
+                : currentPage === totalPages
+                  ? `...${result}`
+                  : `...${result}...`
           }\n\`\`\``,
         )
         .setColor("Random")
