@@ -159,7 +159,7 @@ module.exports = {
       title: "Bird Call",
       icon: "<:birdwhisperer:1205914321897398332>",
       image:
-        "https://cdn.discordapp.com/attachments/1207056758514909315/1207057093698261043/Bird_Call.mp4?ex=65de4285&is=65cbcd85&hm=f9d97c7de6ac0a8d14e3a7e9cf1f844eb1a524b0ff90edaf700fe31386444630&",
+        "./assets/call/Bird_Call.mp4",
     },
   },
   charmer: {
@@ -618,7 +618,7 @@ module.exports = {
     main: {
       description: "Whale Whisperer Infographics by Ed.7",
       image:
-        "https://cdn.discordapp.com/attachments/867638574571323424/1206489819459624960/Whale-Whisperer-Guide-777-Ed.png",
+        "./assets/call/Whale_Call.mp4",
     },
     call: {
       title: "Whale Call",
@@ -798,7 +798,7 @@ module.exports = {
       title: "Manta Call",
       icon: "<:mantawhisperer:1205914655885889647>",
       image:
-        "https://cdn.discordapp.com/attachments/1207056758514909315/1207057094948290601/Manta_Call.mp4?ex=65de4285&is=65cbcd85&hm=d2a258a13d60fde1a57b58caa39fb0210ea1f109ec45721b1b9752477f8b319e&",
+        "./assets/call/Manta_Call.mp4",
     },
   },
   proud_victor: {
@@ -1073,7 +1073,7 @@ module.exports = {
       title: "Cosmic Manta Call",
       icon: "<:memorywhisperer:1205914905275011123>",
       image:
-        "https://cdn.discordapp.com/attachments/1207056758514909315/1207057095510331442/Cosmic_Manta_Call.mp4?ex=65de4285&is=65cbcd85&hm=99a0e68a8787cadf5a0eea7ed229c46f9cda56b2e89838e6bb08e1173b5bf0db&",
+        "./assets/call/Cosmic_Manta_Call.mp4",
     },
   },
   polite_scholar: {
@@ -2657,7 +2657,7 @@ module.exports = {
       title: "Baby Manta Call",
       icon: "<:lightwhisperer:1131589102626672761>",
       image:
-        "https://cdn.discordapp.com/attachments/1207056758514909315/1207057097355952158/Baby_Manta_Call.mp4?ex=65de4286&is=65cbcd86&hm=f935965daf363f003f40aa99c33c9455284540947f8ac1a954451566e2673450&",
+        "./assets/call/Baby_Manta_Call.mp4",
     },
   },
   talented_builder: {
@@ -3793,7 +3793,7 @@ module.exports = {
       title: "Jellyfish Call",
       icon: "<:jellywhisperer:1131649695807176895>",
       image:
-        "https://cdn.discordapp.com/attachments/1207056758514909315/1207057096810696734/Jellyfish_Call.mp4?ex=65de4285&is=65cbcd85&hm=cb7f912fcaec61df531749a8fb8aab5d26e0a2d5ed2098baf96b3546474fa2d3&",
+        "./assets/call/Jellyfish_Call.mp4",
     },
   },
   grouch: {
@@ -5026,7 +5026,7 @@ module.exports = {
       title: "Crab Call",
       icon: "<:crabWhisperer:1153511432349032508>",
       image:
-        "https://cdn.discordapp.com/attachments/1207056758514909315/1207057096281948210/Crab_Call.mp4?ex=65de4285&is=65cbcd85&hm=55bb9650cb7eb68778038781822057a9c269af8a5d2c141bbf7fed22cd726c53&",
+        "./assets/call/Crab_Call.mp4",
     },
   },
 

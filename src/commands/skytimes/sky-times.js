@@ -1,4 +1,5 @@
 const { ApplicationCommandOptionType, time } = require("discord.js");
+const moment = require('moment-timezone');
 const { skyTimes } = require("./sub/skyTimes");
 const desc = require("@src/cmdDesc");
 module.exports = {
@@ -28,22 +29,31 @@ module.exports = {
     const { client } = interaction;
     const result = await skyTimes(client);
     const chosenOption = interaction.options.getString("times");
-
+    const buildTimestamps = (offset) => {
+      const now = moment().tz(interaction.client.timezone).startOf('day').add(offset, 'minutes');
+      const clonedTime = now.clone();
+      let timeBuilt = `> `;
+      while (now.date() === clonedTime.date()) {
+        timeBuilt += `${time(clonedTime.toDate(), 't')} 》`;
+        clonedTime.add(2, 'hours');
+      }
+      return timeBuilt;
+    };
     switch (chosenOption) {
       case "geyser":
         await interaction.reply(`${result.geyserResultStr}\n**__All Geyser Times:__**
-> <t:1699257600:t> 》<t:1699178400:t>》<t:1699185600:t> 》<t:1699192800:t> 》<t:1699200000:t> 》 <t:1699207200:t>》<t:1699214400:t> 》<t:1699221600:t> 》<t:1699228800:t> 》<t:1699236000:t> 》<t:1699243200:t> 》<t:1699250400:t>`);
+${buildTimestamps(0)}`);
         break;
 
       case "turtle":
         await interaction.reply(
-          `${result.turtleResultStr}\n**__All Turtle Times:__**\n> <t:1699260600:t> 》 <t:1699181400:t> 》<t:1699188600:t> 》<t:1699195800:t> 》<t:1699203000:t> 》 <t:1699210200:t>》<t:1699217400:t> 》<t:1699224600:t> 》<t:1699231800:t>》<t:1699239000:t> 》<t:1699246200:t> 》<t:1699253400:t>`,
+          `${result.turtleResultStr}\n**__All Turtle Times:__**\n${buildTimestamps(50)}`,
         );
         break;
 
       case "grandma":
         await interaction.reply(`${result.grandmaResultStr}\n**__All Grandma Times:__**
-> <t:1699259400:t> 》<t:1699180200:t>》<t:1699187400:t> 》<t:1699194600:t> 》<t:1699201800:t> 》 <t:1699209000:t>》<t:1699216200:t>》<t:1699223400:t> 》<t:1699230600:t> 》<t:1699237800:t> 》<t:1699245000:t> 》<t:1699252200:t>`);
+${buildTimestamps(30)}`);
         break;
 
       case "reset":

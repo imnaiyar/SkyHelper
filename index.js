@@ -44,8 +44,7 @@ const client = new SkyHelper();
   });
   
   client
-    .on("debug", console.log)
-    .on("warn", console.log)
+    .on("warn", console.log);
 
   await client.login(process.env.TOKEN);
 })();

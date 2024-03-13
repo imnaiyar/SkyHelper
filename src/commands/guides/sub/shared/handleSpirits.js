@@ -1,6 +1,7 @@
 const spiritsData = require("./spiritsData");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time, AttachmentBuilder } = require("discord.js");
 const moment = require("moment-timezone");
+const path = require('path');
 const startBtn = new ButtonBuilder()
   .setCustomId("back-start")
   .setEmoji("<:purpleUp:1207632852770881576>")
@@ -138,13 +139,14 @@ module.exports = async (int, value, guides, embs) => {
     }
     await inter.deferUpdate();
     const newEmbed = EmbedBuilder.from(emb);
-    const lastField = newEmbed.data.fields[newEmbed.data.fields.length - 1];
     switch (customID) {
       case "spirit_location": {
         const newRow = ActionRowBuilder.from(row);
         newRow.components[0] = treeBtn;
-        lastField.name = `Location by ${data.location.by}`;
-        lastField.value = data.location?.description || " ";
+        newEmbed.spliceFields(-1, 1, {
+          name: `Location by ${data.location.by}`,
+          value: data.location?.description || " "
+        });
         newEmbed.setImage(data.location.image);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
@@ -177,6 +179,7 @@ module.exports = async (int, value, guides, embs) => {
         break;
       }
       case "spirit_call": {
+        const file = new AttachmentBuilder(path.join(__dirname, data.call.image));
         await inter.editReply({
           content: `### ${data.call.icon} [${
             data.call.title
@@ -184,7 +187,7 @@ module.exports = async (int, value, guides, embs) => {
             data.name
           } call preview (Normal and Deep Call)\n**Sound ON** <a:sound_on:1207073334853107832>.`,
           embeds: [],
-          files: [data.call.image],
+          files: [file],
           components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("exp-back"))],
         });
         break;
@@ -196,14 +199,16 @@ module.exports = async (int, value, guides, embs) => {
       case "spirit_tree": {
         const newRow = ActionRowBuilder.from(row);
         newRow.components[0] = lctnBtn;
-        lastField.name = `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree.by}`;
-        lastField.value = data.tree.total;
+        newEmbed.spliceFields(-1, 1, {
+          name: `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree.by}`,
+          value: data.tree.total
+        });
         newEmbed.setImage(data.tree.image);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
       case "exp-back": {
-        await inter.editReply({ embeds: [embed], components: [row], content: "" });
+        await inter.editReply({ embeds: [embed], components: [row], content: "", files: []});
       }
     }
   });
