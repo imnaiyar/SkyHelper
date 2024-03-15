@@ -11,8 +11,8 @@ const startBtn = new ButtonBuilder()
 /**
  * @param {import('discord.js').ChatInputCommandInteraction | import('discord.js').ButtonInteraction | import('discord.js').StringSelectMenuInteraction} int
  * @param {String} value The spirt's value
- * @param {Boolean} guides whether the function was called from a guides command
- * @param {import('discord.js').EmbedBuilder} embs the initial emb to display if provided
+ * @param {Boolean} guides whether the function was called from a guides command (for including back button)
+ * @param {import('discord.js').EmbedBuilder} embs the initial emb to display if provided (mostly for traveling spirit command)
  */
 module.exports = async (int, value, guides, embs) => {
   // Get the spirits data
@@ -101,10 +101,12 @@ module.exports = async (int, value, guides, embs) => {
   }
 
   // if the this function was triggered by 'guides' command, add a back button to get back to select menu
+  let originalMsg;
   let originalEmb;
   let originalCnt;
   let originalBtns;
   if (guides) {
+    originalMsg = int.message;
     originalCnt = int.message?.content;
     originalBtns = int.message?.components;
     originalEmb = int.message.embeds;
@@ -152,7 +154,7 @@ module.exports = async (int, value, guides, embs) => {
         break;
       }
       case "back-start": {
-        await inter.editReply({ content: originalCnt, components: originalBtns, embeds: originalEmb });
+        await inter.editReply(...originalMsg);
         collector.stop();
         break;
       }
