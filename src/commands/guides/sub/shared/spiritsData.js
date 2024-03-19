@@ -2586,7 +2586,7 @@ module.exports = {
     name: "Lively Navigator",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
-    season: "Flight ",
+    season: "Flight",
     ts: {
       eligible: true,
       returned: true,

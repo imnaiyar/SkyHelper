@@ -187,8 +187,6 @@ module.exports = {
 
     if (sub === "seasonal" && focusedValue.name === "season") {
       // EmojisMap contain all the season name, so get it from there
-      const type = interaction.options.getString("type");
-      console.log(type);
       const choices = Object.keys(client.emojisMap.get("seasons")).map((ch) => {
         return `Season of ${ch}`;
       });

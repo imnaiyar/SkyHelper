@@ -17,6 +17,14 @@ const Schema = new mongoose.Schema({
   },
   prefix: String,
   skyGPT: String,
+  reminders: {
+    dailies: Boolean,
+    grandma: Boolean,
+    turtle: Boolean,
+    eden: Boolean,
+    geyser: Boolean,
+    channel: String,
+  }
 });
 
 const Model = mongoose.model("guild", Schema);

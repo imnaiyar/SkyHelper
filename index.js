@@ -1,5 +1,8 @@
 require("dotenv").config();
 require("module-alias/register");
+
+// register extenders
+require('@src/extenders/Client.js');
 const cron = require("node-cron");
 const { shardsUpdate, timesUpdate } = require("@functions");
 const { initializeMongoose } = require("@src/database/mongoose");

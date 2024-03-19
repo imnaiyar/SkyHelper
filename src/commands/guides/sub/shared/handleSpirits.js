@@ -3,7 +3,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time, Attach
 const moment = require("moment-timezone");
 const path = require('path');
 const startBtn = new ButtonBuilder()
-  .setCustomId("back-start")
+  .setCustomId("spirit-back-start")
   .setEmoji("<:purpleUp:1207632852770881576>")
   .setLabel("Back")
   .setStyle(ButtonStyle.Danger);
@@ -91,7 +91,7 @@ module.exports = async (int, value, guides, embs) => {
   // add expression button if it has any expressions
   let backBtn = null;
   if (data.emote || data.stance || data.action || data.call) {
-    backBtn = new ButtonBuilder().setCustomId("spirit_home").setEmoji(icon).setStyle("3");
+    backBtn = new ButtonBuilder().setCustomId("emote_home").setEmoji(icon).setStyle("3");
     const expressionBtn = new ButtonBuilder()
       .setCustomId(data.call ? "spirit_call" : data.stance ? "spirit_stance" : "spirit_expression")
       .setLabel(data.emote ? "Emote" : data.stance ? "Stance" : data.call ? "Call" : "Friend Action")
@@ -102,14 +102,12 @@ module.exports = async (int, value, guides, embs) => {
 
   // if the this function was triggered by 'guides' command, add a back button to get back to select menu
   let originalMsg;
-  let originalEmb;
-  let originalCnt;
-  let originalBtns;
   if (guides) {
-    originalMsg = int.message;
-    originalCnt = int.message?.content;
-    originalBtns = int.message?.components;
-    originalEmb = int.message.embeds;
+    originalMsg = {
+      content: int.message?.content,
+      components: int.message?.components,
+      embeds: int.message?.embeds
+    };
     row.addComponents(startBtn);
   }
 
@@ -120,25 +118,12 @@ module.exports = async (int, value, guides, embs) => {
   const filter = int.client.getFilter(int);
   const collector = msg.createMessageComponentCollector({
     filter,
-    idle: 2 * 60 * 1000,
+    idle: 2 * 10 * 1000,
   });
 
   collector.on("collect", async (inter) => {
     const customID = inter.customId;
-    if (
-      ![
-        "spirit_location",
-        "spirit_expression",
-        "exp-back",
-        "spirit_stance",
-        "spirit_call",
-        "spirit_tree",
-        "spirit_cosmetic",
-        "back-start",
-      ].includes(customID)
-    ) {
-      return;
-    }
+    if (!customID.startsWith('spirit')) return;
     await inter.deferUpdate();
     const newEmbed = EmbedBuilder.from(emb);
     switch (customID) {
@@ -153,9 +138,9 @@ module.exports = async (int, value, guides, embs) => {
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
-      case "back-start": {
-        await inter.editReply(...originalMsg);
-        collector.stop();
+      case "spirit-back-start": {
+        await inter.editReply(originalMsg);
+        collector.stop('Back');
         break;
       }
       case "spirit_expression": {
@@ -176,7 +161,7 @@ module.exports = async (int, value, guides, embs) => {
           .setAuthor({ name: `Stance - ${data.name}` });
         await inter.editReply({
           embeds: [stanceEmbed],
-          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("exp-back"))],
+          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("spirit-exp-back"))],
         });
         break;
       }
@@ -190,7 +175,7 @@ module.exports = async (int, value, guides, embs) => {
           } call preview (Normal and Deep Call)\n**Sound ON** <a:sound_on:1207073334853107832>.`,
           embeds: [],
           files: [file],
-          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("exp-back"))],
+          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("spirit-exp-back"))],
         });
         break;
       }
@@ -209,16 +194,19 @@ module.exports = async (int, value, guides, embs) => {
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
-      case "exp-back": {
+      case "spirit-exp-back": {
         await inter.editReply({ embeds: [embed], components: [row], content: "", files: []});
       }
     }
   });
 
-  collector.on("end", async () => {
-    // const components = ActionRowBuilder.from(msg.components[0]);
-    // components?.components?.forEach((component) => component.setStyle(ButtonStyle.Danger).setDisabled(true));
-    // int.editReply({ components: [components] }).catch((err) => {});
+  collector.on("end", async (collected, reason) => {
+    if (reason === 'Back') return;
+    const msg2 = await int.fetchReply();
+    
+     const components = ActionRowBuilder.from(msg2.components[0]);
+     components?.components?.forEach((component) => component.setDisabled(true));
+     int.editReply({ components: [components] }).catch((err) => {});
   });
 };
 
@@ -241,13 +229,13 @@ async function handleExpression(int, data, backBtn, content) {
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId("spirit_emote_prev")
+        .setCustomId("emote_prev")
         .setLabel(`⬅️ ${exprsn.level[page - 2]?.title.slice(-7) || emote.title.slice(-7)}`)
         .setStyle("1")
         .setDisabled(page === 1),
       backBtn,
       new ButtonBuilder()
-        .setCustomId("spirit_emote_next")
+        .setCustomId("emote_next")
         .setLabel(`${exprsn.level[page]?.title.slice(-7) || emote.title.slice(-7)} ➡️`)
         .setStyle("1")
         .setDisabled(page === total + 1),
@@ -267,26 +255,24 @@ async function handleExpression(int, data, backBtn, content) {
   });
   collector.on("collect", async (inter) => {
     const customID = inter.customId;
+    if (!customID.startsWith('emote')) return;
+    await inter.deferUpdate();
     switch (customID) {
-      case "spirit_emote_prev": {
-        await inter.deferUpdate();
+      case "emote_prev": {
         page--;
         const respn = getEmote();
         await inter.editReply(respn);
         break;
       }
-      case "spirit_emote_next": {
-        await inter.deferUpdate();
+      case "emote_next": {
         page++;
         const respn = getEmote();
         await inter.editReply(respn);
         break;
       }
-      case "spirit_home": {
-        await inter.deferUpdate();
-
+      case "emote_home": {
         await inter.editReply(content);
-        collector.stop();
+        collector.stop('Back');
       }
     }
   });

@@ -21,12 +21,12 @@ module.exports = async (client, msg) => {
   if (!msg.content.startsWith(prefix)) return;
 
   // Initialize the commands
-  const flagRegex = /--([a-zA-Z0-9_-]+)/g;
-  const flags = [];
-  let match;
-  while ((match = flagRegex.exec(msg.content)) !== null) {
-    flags.push(match[1]);
-  }
+  const flagRegex = /--([^\s]+(?:=[^\s]+)?)/g;
+const flags = [];
+let match;
+while ((match = flagRegex.exec(msg.content)) !== null) {
+  flags.push(match[1]);
+}
 
   // Remove flags from the msg content
   const message = msg.content.replace(flagRegex, "").trim();
@@ -72,7 +72,7 @@ module.exports = async (client, msg) => {
 
   // Check if command has flags defined and flags were provided
   if (command.data.flags && flags.length > 0) {
-    const invalidFlags = flags.filter((flag) => !command.data.flags.includes(flag));
+    const invalidFlags = flags.filter((flag) => !command.data.flags.find(fl => flag.startsWith(fl)));
 
     if (invalidFlags.length > 0) {
       return msg.reply(

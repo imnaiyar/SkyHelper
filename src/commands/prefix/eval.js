@@ -7,16 +7,24 @@ module.exports = {
     name: "e",
     description: "Evaluate JavaScript code",
     category: "OWNER",
-    flags: ["a", "async", "haste"],
+    flags: ["a", "async", "haste", 'depth'],
   },
   async execute(msg, args, client, flags) {
-    let code = args.join(" ");
+    let code = args.join(" ").trim();
     if (flags.length > 0 && ["a", "async"].some((flag) => flags.includes(flag))) {
-      code = `(async () => { return ${code} })()`;
+      code = `(async () => {\n${code}\n})()`;
     }
-
     let response;
     let type;
+    const dp = flags?.find(f => f.startsWith('depth'));
+  
+    const regex = /depth=(\d+|Infinity)/;
+    if (dp) {
+    const match = dp.match(regex);
+    if (!match) 
+    return msg.reply('Not a valid depth format (`depth:\'Depth Here\'`)');
+    }
+    const depth = dp ? parseFloat(dp.split('=')[1]) : 0;
     if (code.includes("client.token") || code.includes("process.env"))
       return msg.reply(buildErrorResponse("You cannot evaluate codes revealing secrets!"));
 
@@ -25,7 +33,7 @@ module.exports = {
       const output = await eval(code);
       type = new Type(output).toString();
       time.stop();
-      response = await buildSuccessResponse(output, client, type, time, flags.includes("haste"));
+      response = await buildSuccessResponse(output, client, type, time, flags.includes("haste"), depth);
     } catch (ex) {
       response = buildErrorResponse(ex);
     }
@@ -33,9 +41,9 @@ module.exports = {
   },
 };
 
-const buildSuccessResponse = async (output, client, type, time, haste) => {
+const buildSuccessResponse = async (output, client, type, time, haste, depth) => {
   // Token protection
-  output = require("util").inspect(output, { depth: 0 }).replaceAll(client.token, "~~REDACTED~~");
+  output = require("util").inspect(output, { depth: depth }).replaceAll(client.token, "~~REDACTED~~");
   let embOutput;
 
   if (!haste && output.length <= 2048) {
@@ -52,7 +60,7 @@ const buildSuccessResponse = async (output, client, type, time, haste) => {
     })
     .setColor("Random")
     .setFooter({
-      text: `Took ${time}`,
+      text: `⏱️ Took ${time}`,
     })
     .setTimestamp(Date.now());
 

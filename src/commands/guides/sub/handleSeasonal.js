@@ -19,7 +19,6 @@ module.exports = async (interaction, season, type) => {
     }
     return true;
   };
-  console.log(type);
   const seasonValue = season.replace("Season of ", "").split(" ").join("_").toLocaleLowerCase();
 
   if (type === "spirits") {
@@ -56,9 +55,6 @@ module.exports = async (interaction, season, type) => {
       await handleSpirits(int, value, true);
     });
 
-    clctr.on("end", async () => {
-      interaction.editReply({ components: [] }).catch(() => {});
-    });
   } else if (type === "quest") {
     const value = seasonValue + "_quest";
     const options = QuestChoices[value];
