@@ -54,7 +54,6 @@ module.exports = async (interaction, season, type) => {
       const value = int.values[0];
       await handleSpirits(int, value, true);
     });
-
   } else if (type === "quest") {
     const value = seasonValue + "_quest";
     const options = QuestChoices[value];

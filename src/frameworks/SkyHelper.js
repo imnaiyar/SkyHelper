@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Collection, Partials } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, Partials, Routes,PermissionFlagsBits } = require("discord.js");
 const { table } = require("table");
 const moment = require("moment-timezone");
 const { UpdateEvent } = require("../handler/updateEvent");
@@ -73,7 +73,7 @@ module.exports = class SkyHelper extends Client {
      * @type {Class}
      */
     this.UpdateEvent = UpdateEvent;
-    
+
     /**
      * stores current/upcoming ts details
      * @type {Object}
@@ -239,6 +239,11 @@ module.exports = class SkyHelper extends Client {
       delete require.cache[require.resolve(filePath)];
       const command = require(filePath);
       this.prefix.set(command.data.name, command);
+      if (command.data?.aliases) {
+        command.data.aliases.forEach((alias) => {
+          this.prefix.set(alias, command);
+        });
+      }
     }
   }
 
@@ -247,20 +252,28 @@ module.exports = class SkyHelper extends Client {
    */
   async registerCommands() {
     const toRegister = [];
-
+    
     this.commands
       .map((cmd) => ({
         name: cmd.data.name,
         description: cmd.data.description,
         type: 1,
         options: cmd.data?.options,
-        integration_types: [0, 1],
-        contexts: [0, 1, 2],
+        integration_types: cmd.data.integration_types,
+        ...(cmd.data.userPermissions && {
+            default_member_permissions: cmd.data.userPermissions.reduce(
+              (accumulator, permission) => accumulator | PermissionFlagsBits[permission],
+              BigInt(0)
+            ).toString(),
+          }),
+        contexts: cmd.data.contexts,
         dm_permission: cmd.data?.dm_permission,
       }))
       .forEach((s) => toRegister.push(s));
-
-    await this.application.commands.set(toRegister);
+     
+    await this.rest.put(Routes.applicationCommands(this.user.id), {
+      body: toRegister,
+    });
 
     this.logger.success("Successfully registered interactions");
   }

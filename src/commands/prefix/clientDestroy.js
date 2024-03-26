@@ -5,6 +5,7 @@ module.exports = {
     name: "destroy",
     description: "Destroy client instance",
     category: "OWNER",
+    aliases: ['ds']
   },
   async execute(message, args, client) {
     const confirmationMessage = await message.channel.send("Are you sure you want to shut down the bot?");

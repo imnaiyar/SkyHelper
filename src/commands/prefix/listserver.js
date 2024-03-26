@@ -8,6 +8,7 @@ module.exports = {
     name: "listservers",
     description: "lists all/matching servers",
     category: "OWNER",
+    aliases: ['ls']
   },
   async execute(message, args) {
     const { client, channel, author } = message;

@@ -104,4 +104,4 @@ class UpdateTs {
   }
 }
 
-module.exports = { UpdateTs }
+module.exports = { UpdateTs };

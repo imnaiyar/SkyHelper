@@ -42,7 +42,7 @@ module.exports = async (client, interaction) => {
     }
 
     // Check if bot has necessary permissions to execute the command functions
-    if (command.data?.botPermissions && !interaction.guild.members.me.permissions.has(command.data.botPermissions)) {
+    if (interaction.inGuild() && command.data?.botPermissions && !interaction.guild.members.me.permissions.has(command.data.botPermissions)) {
       return interaction.reply({
         content: `I do not have the required permission(s) (${parsePerm(
           command.data.botPermissions,

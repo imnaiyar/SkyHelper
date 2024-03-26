@@ -4,15 +4,15 @@ const { join } = require("path");
 const size = 100;
 
 class QuizWinnerCard {
-  constructor(member, wins, total) {
-    this.name = member?.displayName || member.user.globalName;
-    this.author = member.user.username;
+  constructor(winner, wins, total, client) {
+    this.name = winner?.displayName || winner.user?.globalName || winner?.globalName;
+    this.author = winner.user?.username || winner?.username;
     this.color = "auto";
     this.brightness = 50;
-    this.client = member.client;
+    this.client = client;
     this.thumbnail =
-      member?.displayAvatarURL({ forceStatic: true, extension: "jpg" }) ||
-      member.user.displayAvatarURL({ forceStatic: true, extension: "jpg" });
+      winner?.displayAvatarURL({ forceStatic: true, extension: "jpg" }) ||
+      winner.user?.displayAvatarURL({ forceStatic: true, extension: "jpg" });
     this.points = wins;
     this.total = total;
   }

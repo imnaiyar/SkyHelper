@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js");
+const d = require("discord.js");
 const createHstbn = require("@handler/createHastebin");
 const { Type } = require("@sapphire/type");
 const { Stopwatch } = require("@sapphire/stopwatch");
@@ -7,27 +7,28 @@ module.exports = {
     name: "e",
     description: "Evaluate JavaScript code",
     category: "OWNER",
-    flags: ["a", "async", "haste", 'depth'],
+    flags: ["a", "async", "haste", "depth", 'd', 'suppress'],
+    aliases: ['eval', 'ev']
   },
   async execute(msg, args, client, flags) {
     let code = args.join(" ").trim();
+    const {guild, channel, author, member} = msg;
     if (flags.length > 0 && ["a", "async"].some((flag) => flags.includes(flag))) {
       code = `(async () => {\n${code}\n})()`;
     }
     let response;
     let type;
-    const dp = flags?.find(f => f.startsWith('depth'));
-  
-    const regex = /depth=(\d+|Infinity)/;
+    const dp = flags?.find((f) => f.startsWith("depth"));
+
+    const regex = /(?:depth|d)=(\d+|Infinity)/;
     if (dp) {
-    const match = dp.match(regex);
-    if (!match) 
-    return msg.reply('Not a valid depth format (`depth:\'Depth Here\'`)');
+      const match = dp.match(regex);
+      if (!match) return msg.reply("Not a valid depth format (`depth:'Depth Here'`)");
     }
-    const depth = dp ? parseFloat(dp.split('=')[1]) : 0;
+    const depth = dp ? parseFloat(dp.split("=")[1]) : 0;
     if (code.includes("client.token") || code.includes("process.env"))
       return msg.reply(buildErrorResponse("You cannot evaluate codes revealing secrets!"));
-
+  let errored = false;
     try {
       const time = new Stopwatch().start();
       const output = await eval(code);
@@ -35,8 +36,10 @@ module.exports = {
       time.stop();
       response = await buildSuccessResponse(output, client, type, time, flags.includes("haste"), depth);
     } catch (ex) {
+      errored = true;
       response = buildErrorResponse(ex);
     }
+    if (flags && flags.includes('suppress') && !errored) return;
     msg.channel.send(response);
   },
 };
@@ -51,7 +54,7 @@ const buildSuccessResponse = async (output, client, type, time, haste, depth) =>
   } else {
     embOutput = await createHstbn(output);
   }
-  const embed = new EmbedBuilder()
+  const embed = new d.EmbedBuilder()
     .setAuthor({ name: "📤 Output" })
     .setDescription(embOutput)
     .addFields({
@@ -68,7 +71,7 @@ const buildSuccessResponse = async (output, client, type, time, haste, depth) =>
 };
 
 const buildErrorResponse = (err) => {
-  const embed = new EmbedBuilder()
+  const embed = new d.EmbedBuilder()
     .setAuthor({ name: "📤 Error" })
     .setDescription("```js\n" + (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) + "\n```")
     .setColor("Red")

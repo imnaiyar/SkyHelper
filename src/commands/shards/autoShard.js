@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType, WebhookClient } = require("discord.js");
+const { ApplicationCommandOptionType, WebhookClient, ChannelType } = require("discord.js");
 const moment = require("moment-timezone");
 const { autoShard } = require("@schemas/autoShard");
 const { buildShardEmbed, deleteSchema } = require("@src/handler");
@@ -21,19 +21,8 @@ module.exports = {
             name: "channel",
             description: "channel where shard details should be updated",
             type: ApplicationCommandOptionType.Channel,
+            channel_types: [ChannelType.GuildText],
             required: true,
-          },
-          {
-            name: "name",
-            description: "name of the webhook used to send the live updates (default: Shards Update)",
-            type: ApplicationCommandOptionType.String,
-            required: false,
-          },
-          {
-            name: "avatar",
-            description: "avatar to be used for the webhook used to send live updates (default: Bot's Avatar)",
-            type: ApplicationCommandOptionType.Attachment,
-            required: false,
           },
         ],
       },
@@ -43,6 +32,8 @@ module.exports = {
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
+    integration_types: [0],
+    contexts: [0],
     dm_permission: false,
     longDesc: desc.autoShard,
     botPermissions: ["ManageWebhooks"],

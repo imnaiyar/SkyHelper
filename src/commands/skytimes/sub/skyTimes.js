@@ -3,7 +3,18 @@ require("moment-duration-format");
 const { time } = require("discord.js");
 
 const targetTimezone = "America/Los_Angeles";
-async function calculateResult(targetTime, now, offset = 0) {
+function calculateResult(targetTime, now, offset = 0) {
+  const { start, end, ongoing, duration, target } = getTime(now, offset);
+  if (ongoing) {
+    return `${targetTime} is ongoing and will end at ${time(
+      end.toDate(),
+      "t",
+    )} (in ${duration})\n> - \`Next ${targetTime} Time:\` ${time(target.toDate(), "t")}`;
+  } else {
+    return `\`Next ${targetTime} Time:\` ${time(target.toDate(), "t")} ( in ${duration})`;
+  }
+}
+function getTime(now, offset) {
   const target = now.clone().startOf("day").add(offset, "minutes");
   while (now.isAfter(target)) {
     target.add(2, "hours");
@@ -14,24 +25,33 @@ async function calculateResult(targetTime, now, offset = 0) {
 
   if (now.isBetween(start, end)) {
     const duration = moment.duration(end.diff(now)).format("d [days] h [hours] mm [minutes] ss [seconds]");
-    return `${targetTime} is ongoing and will end at ${time(
-      end.toDate(),
-      "t",
-    )} (in ${duration})\n> - \`Next ${targetTime} Time:\` ${time(target.toDate(), "t")}`;
+    return {
+      start: start,
+      end: end,
+      ongoing: true,
+      duration: duration,
+      target: target,
+    };
   } else {
     const duration = moment.duration(target.diff(now)).format("d [days] h [hours] mm [minutes] ss [seconds]");
-    return `\`Next ${targetTime} Time:\` ${time(target.toDate(), "t")} ( in ${duration})`;
+    return {
+      start: start,
+      end: end,
+      ongoing: false,
+      duration: duration,
+      target: target,
+    };
   }
 }
 
 async function skyTimes(client) {
   const now = moment().tz(targetTimezone);
   // geyser
-  const geyserResultStr = await calculateResult("Geyser", now);
+  const geyserResultStr = calculateResult("Geyser", now);
   // grandma
-  const grandmaResultStr = await calculateResult("Grandma", now, 30);
+  const grandmaResultStr = calculateResult("Grandma", now, 30);
   // grandma
-  const turtleResultStr = await calculateResult("Turtle", now, 50);
+  const turtleResultStr = calculateResult("Turtle", now, 50);
 
   // reset
   const resetTargetTime = now
@@ -81,4 +101,4 @@ async function skyTimes(client) {
   };
 }
 
-module.exports = { skyTimes };
+module.exports = { skyTimes, getTime };

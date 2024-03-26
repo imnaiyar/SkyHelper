@@ -7,6 +7,7 @@ const cron = require("node-cron");
 const { shardsUpdate, timesUpdate } = require("@functions");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { setupPresence } = require("@handler");
+const reminders = require('@functions/reminders')
 const chalk = require("chalk");
 const { SkyHelper } = require("@frameworks/index");
 const client = new SkyHelper();
@@ -30,7 +31,7 @@ const client = new SkyHelper();
   // bots presence
   setupPresence(client);
   // auto shard function
-  cron.schedule("*/1 * * * *", async () => {
+  cron.schedule("*/5 * * * *", async () => {
     try {
       await shardsUpdate(client);
     } catch (err) {
@@ -45,6 +46,7 @@ const client = new SkyHelper();
       client.logger.error("AutoTimes Error:", err);
     }
   });
+  
   
   client
     .on("warn", console.log);

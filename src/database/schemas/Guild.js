@@ -18,13 +18,37 @@ const Schema = new mongoose.Schema({
   prefix: String,
   skyGPT: String,
   reminders: {
-    dailies: Boolean,
-    grandma: Boolean,
-    turtle: Boolean,
-    eden: Boolean,
-    geyser: Boolean,
-    channel: String,
-  }
+    active: { type: Boolean, default: false},
+    default_role: { type: String, default: null },
+    dailies: {
+      active: { type: Boolean, default: false },
+      role: { type: String, default: null },
+    },
+    grandma: {
+      active: { type: Boolean, default: false },
+      role: { type: String, default: null },
+    },
+    turtle: {
+      active: { type: Boolean, default: false },
+      role: { type: String, default: null },
+    },
+    eden: {
+      active: { type: Boolean, default: false },
+      role: { type: String, default: null },
+    },
+    reset: {
+      active: { type: Boolean, default: false },
+      role: { type: String, default: null },
+    },
+    geyser: {
+      active: { type: Boolean, default: false },
+      role: { type: String, default: null },
+    },
+    webhook: {
+      token: String,
+      id: String,
+    },
+  },
 });
 
 const Model = mongoose.model("guild", Schema);

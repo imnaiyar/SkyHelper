@@ -1,4 +1,6 @@
 const { WebhookClient, EmbedBuilder } = require("discord.js");
+const cron = require("node-cron");
+const reminders = require("@functions/reminders");
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 /**
@@ -6,7 +8,6 @@ const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READ
  * @param {import('@src/frameworks').SkyHelper} client
  */
 module.exports = async (client) => {
-  await client.guilds.fetch();
   let text;
   client.logger.log(`Logged in as ${client.user.tag}`);
   if (client.config.DASHBOARD.enabled) {
@@ -53,4 +54,61 @@ module.exports = async (client) => {
 
   // Fetching for eval purpose
   await client.application.fetch();
+
+  cron.schedule(
+    "0 */2 * * *",
+    async () => {
+      try {
+        await reminders(client, "geyser");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+
+  cron.schedule(
+    "30 */2 * * *",
+    async () => {
+      try {
+        await reminders(client, "grandma");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+
+  // reset
+  cron.schedule(
+    "0 0 * * *",
+    async () => {
+      try {
+        await reminders(client, "reset");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+
+  cron.schedule(
+    "50 */2 * * *",
+    async () => {
+      try {
+        await reminders(client, "turtle");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
 };

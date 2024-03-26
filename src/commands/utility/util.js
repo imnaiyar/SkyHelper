@@ -26,6 +26,8 @@ module.exports = {
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2], 
   },
   async execute(interaction) {
     const sub = interaction.options.getSubcommand();

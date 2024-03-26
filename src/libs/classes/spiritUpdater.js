@@ -1,7 +1,5 @@
-
-
-class UpdateSeasonalSpirit{
-  constructor(value){
+class UpdateSeasonalSpirit {
+  constructor(value) {
     this.spiritValue = value;
     this.ts = null;
     this.tree = null;
@@ -9,9 +7,8 @@ class UpdateSeasonalSpirit{
     this.expression = null;
     this.cosmetics = null;
   }
-  
+
   setTS(options) {
-    if (typeof options !== 'object') throw new TypeError('Provide options must be an object');
-    
+    if (typeof options !== "object") throw new TypeError("Provide options must be an object");
   }
 }

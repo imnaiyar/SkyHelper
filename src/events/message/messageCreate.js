@@ -11,7 +11,6 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
  */
 module.exports = async (client, msg) => {
   if (msg.author.bot) return;
-
   if (msg.mentions.has(client.user) && msg.channel.permissionsFor(client.user.id).has("SendMessages")) {
     msg.channel.send("That's me...");
   }
@@ -22,11 +21,11 @@ module.exports = async (client, msg) => {
 
   // Initialize the commands
   const flagRegex = /--([^\s]+(?:=[^\s]+)?)/g;
-const flags = [];
-let match;
-while ((match = flagRegex.exec(msg.content)) !== null) {
-  flags.push(match[1]);
-}
+  const flags = [];
+  let match;
+  while ((match = flagRegex.exec(msg.content)) !== null) {
+    flags.push(match[1]);
+  }
 
   // Remove flags from the msg content
   const message = msg.content.replace(flagRegex, "").trim();
@@ -72,7 +71,7 @@ while ((match = flagRegex.exec(msg.content)) !== null) {
 
   // Check if command has flags defined and flags were provided
   if (command.data.flags && flags.length > 0) {
-    const invalidFlags = flags.filter((flag) => !command.data.flags.find(fl => flag.startsWith(fl)));
+    const invalidFlags = flags.filter((flag) => !command.data.flags.find((fl) => flag.startsWith(fl)));
 
     if (invalidFlags.length > 0) {
       return msg.reply(

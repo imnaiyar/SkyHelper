@@ -14,6 +14,8 @@ module.exports = {
         autocomplete: true,
       },
     ],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2], 
   },
   async execute(interaction, client) {
     await helpMenu(interaction, client);

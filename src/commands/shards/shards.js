@@ -17,6 +17,8 @@ module.exports = {
         required: false,
       },
     ],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2], 
   },
   async execute(interaction, client) {
     const dateOption = interaction.options.getString("date");

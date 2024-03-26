@@ -3,9 +3,10 @@ const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("@schemas/User.js");
 module.exports = {
   data: {
-    name: "bl",
+    name: "blacklist",
     description: "blacklist a guild or an user.",
     category: "OWNER",
+    aliases: ['bl']
   },
 
   async execute(message, args, client) {

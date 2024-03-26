@@ -14,6 +14,7 @@ module.exports = {
       args: ["bot"],
     },
     flags: ["commands", "events", "files", "local", "l"],
+    aliases: ['rl']
   },
   async execute(msg, args, client, flags) {
     const filtered = ["commands", "events", "files"];

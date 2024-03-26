@@ -1,7 +1,8 @@
 const spiritsData = require("./spiritsData");
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time, AttachmentBuilder } = require("discord.js");
 const moment = require("moment-timezone");
-const path = require('path');
+const path = require("path");
+const { CDN_URL } = require('@root/config.js');
 const startBtn = new ButtonBuilder()
   .setCustomId("spirit-back-start")
   .setEmoji("<:purpleUp:1207632852770881576>")
@@ -71,14 +72,14 @@ module.exports = async (int, value, guides, embs) => {
   // If spirit's data has 'main' property (Regular Spirits), no location or tree buttons here since the initial guide already contains tree and location
   if (data.main) {
     emb.addFields({ name: `Infographics by Ed.7`, value: " " });
-    emb.setImage(data.main.image);
+    emb.setImage(`${CDN_URL}/${data.main.image}`);
   } else {
     // For seasonal spirits
     emb.addFields({
       name: `${data.ts?.returned ? "Friendship Tree (Last Visit)" : "Seasonal Price Chart"} by ${data.tree.by}`,
       value: data.tree.total,
     });
-    emb.setImage(data.tree.image);
+    emb.setImage(`${CDN_URL}/${data.tree.image}`);
 
     // Add location buttons to seasonal spirits embed
     if (data.location) row.addComponents(lctnBtn);
@@ -106,7 +107,7 @@ module.exports = async (int, value, guides, embs) => {
     originalMsg = {
       content: int.message?.content,
       components: int.message?.components,
-      embeds: int.message?.embeds
+      embeds: int.message?.embeds,
     };
     row.addComponents(startBtn);
   }
@@ -118,12 +119,12 @@ module.exports = async (int, value, guides, embs) => {
   const filter = int.client.getFilter(int);
   const collector = msg.createMessageComponentCollector({
     filter,
-    idle: 2 * 10 * 1000,
+    idle: 2 * 60 * 1000,
   });
 
   collector.on("collect", async (inter) => {
     const customID = inter.customId;
-    if (!customID.startsWith('spirit')) return;
+    if (!customID.startsWith("spirit")) return;
     await inter.deferUpdate();
     const newEmbed = EmbedBuilder.from(emb);
     switch (customID) {
@@ -132,15 +133,15 @@ module.exports = async (int, value, guides, embs) => {
         newRow.components[0] = treeBtn;
         newEmbed.spliceFields(-1, 1, {
           name: `Location by ${data.location.by}`,
-          value: data.location?.description || " "
+          value: data.location?.description || " ",
         });
-        newEmbed.setImage(data.location.image);
+        newEmbed.setImage(`${CDN_URL}/${data.location.image}`);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
       case "spirit-back-start": {
         await inter.editReply(originalMsg);
-        collector.stop('Back');
+        collector.stop("Back");
         break;
       }
       case "spirit_expression": {
@@ -157,16 +158,17 @@ module.exports = async (int, value, guides, embs) => {
           .setTitle(`${data.stance.icon} ${data.stance.title}`)
           .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#Stance`)
           .setDescription(`Stance preview (Standing, sitting, kneeling and laying).`)
-          .setImage(data.stance.image)
+          .setImage(`${CDN_URL}/${data.stance.image}`)
           .setAuthor({ name: `Stance - ${data.name}` });
         await inter.editReply({
           embeds: [stanceEmbed],
-          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("spirit-exp-back"))],
+          components: [
+            new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("spirit-exp-back")),
+          ],
         });
         break;
       }
       case "spirit_call": {
-        const file = new AttachmentBuilder(path.join(__dirname, data.call.image));
         await inter.editReply({
           content: `### ${data.call.icon} [${
             data.call.title
@@ -174,8 +176,10 @@ module.exports = async (int, value, guides, embs) => {
             data.name
           } call preview (Normal and Deep Call)\n**Sound ON** <a:sound_on:1207073334853107832>.`,
           embeds: [],
-          files: [file],
-          components: [new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("spirit-exp-back"))],
+          files: [`${CDN_URL}/${data.call.image}`],
+          components: [
+            new ActionRowBuilder().addComponents(ButtonBuilder.from(backBtn).setCustomId("spirit-exp-back")),
+          ],
         });
         break;
       }
@@ -188,25 +192,25 @@ module.exports = async (int, value, guides, embs) => {
         newRow.components[0] = lctnBtn;
         newEmbed.spliceFields(-1, 1, {
           name: `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree.by}`,
-          value: data.tree.total
+          value: data.tree.total,
         });
-        newEmbed.setImage(data.tree.image);
+        newEmbed.setImage(`${CDN_URL}/${data.tree.image}`);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });
         break;
       }
       case "spirit-exp-back": {
-        await inter.editReply({ embeds: [embed], components: [row], content: "", files: []});
+        await inter.editReply({ embeds: [embed], components: [row], content: "", files: [] });
       }
     }
   });
 
   collector.on("end", async (collected, reason) => {
-    if (reason === 'Back') return;
+    if (reason === "Back") return;
     const msg2 = await int.fetchReply();
-    
-     const components = ActionRowBuilder.from(msg2.components[0]);
-     components?.components?.forEach((component) => component.setDisabled(true));
-     int.editReply({ components: [components] }).catch((err) => {});
+
+    const components = ActionRowBuilder.from(msg2.components[0]);
+    components?.components?.forEach((component) => component.setDisabled(true));
+    int.editReply({ components: [components] }).catch((err) => {});
   });
 };
 
@@ -225,7 +229,7 @@ async function handleExpression(int, data, backBtn, content) {
           data.emote ? "Expression" : "Friend_Action"
         }`,
       )
-      .setImage(emote.image);
+      .setImage(`${CDN_URL}/${emote.image}`);
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -255,7 +259,7 @@ async function handleExpression(int, data, backBtn, content) {
   });
   collector.on("collect", async (inter) => {
     const customID = inter.customId;
-    if (!customID.startsWith('emote')) return;
+    if (!customID.startsWith("emote")) return;
     await inter.deferUpdate();
     switch (customID) {
       case "emote_prev": {
@@ -272,7 +276,7 @@ async function handleExpression(int, data, backBtn, content) {
       }
       case "emote_home": {
         await inter.editReply(content);
-        collector.stop('Back');
+        collector.stop("Back");
       }
     }
   });

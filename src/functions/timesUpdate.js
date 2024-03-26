@@ -19,21 +19,30 @@ module.exports = async (client) => {
   const dltSChm = (id) => {
     deleteSchema("autoTimes", id);
   };
-  for (const guild of data) {
-    if (!guild.webhookURL) continue;
-    const webhook = new WebhookClient({ url: guild.webhookURL });
+  data.forEach(async (guild) => {
+    if (!guild?.webhook?.id && guild.channelId && guild.messageId ) {
+      const ch = client.channels.cache.get(guild.channelId);
+      const orgMsg = await ch.messages.fetch(guild.messageId).catch(() => {});
+      if (orgMsg) {
+        dltSChm(guild._id);
+        await orgMsg.edit('Some warning here').catch(() => {});
+      }
+      return;
+      }
+    if (!guild?.webhook?.id) return;
+    const webhook = await client.fetchWebhook(guild.webhook.id, guild.webhook.token).catch(() => {});
     if (!webhook) {
       dltSChm(guild._id);
-      continue;
+      return;
     }
-    webhook
+  await webhook
       .editMessage(guild.messageId, { content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
-      .catch((e) => {
+      .catch(async (e) => {
         if (e.message === "Unknown Message") {
           dltSChm(guild._id);
-          webhook.delete();
+         await webhook.delete().catch(() => client.logger.error(err));
           return;
         }
       });
-  }
+  });
 };

@@ -30,12 +30,7 @@ module.exports = async (interaction, total) => {
  */
 async function respond(interaction, data) {
   const questionData = data.randomQuestions[data.currentQuestion];
-  const filter = (response) => !response.author.bot;
-
-  const collector = interaction.channel.createMessageCollector({
-    filter,
-    time: 16000,
-  });
+  
 
   const quesEmbed = new EmbedBuilder()
     .setTitle(`Question ${data.currentQuestion + 1}`)
@@ -44,7 +39,7 @@ async function respond(interaction, data) {
       name: "Quiz Game",
     })
     .setFooter({
-      text: 'type "**stop**" to stop the game',
+      text: 'type "stop" to stop the game',
     })
     .setDescription(`${questionData.question}\n\n<a:timer1:1197767726324781157> <a:timer2:1197767745610203218>`);
   let msg;
@@ -64,15 +59,21 @@ async function respond(interaction, data) {
       fetchReply: true,
     });
   }
-
+  
+  const filter = (response) => !response.author.bot;
+  const collector = interaction.channel.createMessageCollector({
+    filter,
+    time: 16000,
+  });
+  
   collector.on("collect", (message) => {
-    const answer = message.content.toLowerCase();
+    const answer = message.content.toLowerCase().trim();
     if (answer === "stop") {
       if (message.author.id !== interaction.user.id) {
         return message.reply("Only the one who started the game can perform this action.");
       }
       data.currentQuestion = data.totalQuestions;
-      collector.stop();
+      collector.stop('stopped');
       return;
     }
     updateUserPoints(message.author.id, data.userPoints);
@@ -80,13 +81,13 @@ async function respond(interaction, data) {
       interaction.channel.send(`${message.author} got it correct!`);
       updateUserPoints(message.author.id, data.userPoints, true);
       setTimeout(async () => {
-        collector.stop();
+        collector.stop('correct');
       }, 2000);
     }
   });
 
-  collector.on("end", async (collected) => {
-    if (collected.size === 0) {
+  collector.on("end", async (collected, reason) => {
+    if (reason !== 'correct' && reason !== 'stopped') {
       interaction.channel.send(
         `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`,
       );

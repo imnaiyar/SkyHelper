@@ -5,6 +5,7 @@ module.exports = {
     description: "",
     category: "",
     args: [],
+    aliases: [],
   },
   async execute(interaction, client) {},
 };

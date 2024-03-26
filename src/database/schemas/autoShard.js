@@ -5,7 +5,10 @@ const Schema = new mongoose.Schema({
   name: String,
   channelId: String,
   messageId: String,
-  webhookURL: String,
+  webhook: {
+    id: String,
+    token: String,
+  },
 });
 
 const Model = mongoose.model("autoShard", Schema);

@@ -2,7 +2,7 @@ const { AttachmentBuilder } = require("discord.js");
 const { QuizWinnerCard } = require("@functions");
 module.exports = {
   data: {
-    name: "test",
+    name: "test2",
     description: "Set a new prefix for this server",
   },
   async execute(message, args) {

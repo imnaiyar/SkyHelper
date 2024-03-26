@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, time } = require("discord.js");
-const moment = require('moment-timezone');
+const moment = require("moment-timezone");
 const { skyTimes } = require("./sub/skyTimes");
 const desc = require("@src/cmdDesc");
 module.exports = {
@@ -24,18 +24,20 @@ module.exports = {
         ],
       },
     ],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2], 
   },
   async execute(interaction) {
     const { client } = interaction;
     const result = await skyTimes(client);
     const chosenOption = interaction.options.getString("times");
     const buildTimestamps = (offset) => {
-      const now = moment().tz(interaction.client.timezone).startOf('day').add(offset, 'minutes');
+      const now = moment().tz(interaction.client.timezone).startOf("day").add(offset, "minutes");
       const clonedTime = now.clone();
       let timeBuilt = `> `;
       while (now.date() === clonedTime.date()) {
-        timeBuilt += `${time(clonedTime.toDate(), 't')} 》`;
-        clonedTime.add(2, 'hours');
+        timeBuilt += `${time(clonedTime.toDate(), "t")} 》`;
+        clonedTime.add(2, "hours");
       }
       return timeBuilt;
     };
@@ -46,9 +48,7 @@ ${buildTimestamps(0)}`);
         break;
 
       case "turtle":
-        await interaction.reply(
-          `${result.turtleResultStr}\n**__All Turtle Times:__**\n${buildTimestamps(50)}`,
-        );
+        await interaction.reply(`${result.turtleResultStr}\n**__All Turtle Times:__**\n${buildTimestamps(50)}`);
         break;
 
       case "grandma":
