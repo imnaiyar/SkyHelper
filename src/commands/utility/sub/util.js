@@ -72,12 +72,12 @@ async function getSuggestion(interaction) {
 
 async function getChangelog(interaction) {
   const comMen = (command, sub) => {
-    const com = interaction.client.application.commands.cache.find((cm) => cm.name === command).first();
+    const com = interaction.client.application.commands.cache.find((cm) => cm.name === command);
     return `</${com.name}${sub ? ` ${sub}` : ''}:${com.id}>`;
   };
   const changes = [`### New Commands:
 - **${comMen('spirits')}**: Search for detailed information about any spirits including trees, locations, realms, and emote previews.
-- **${comMen('traveling-spirits')}**: Access information about current or upcoming traveling spirits. If the current traveling spirit is unknown, it will provide an approximate return date for the next one.
+- **${comMen('traveling-spirit')}**: Access information about current or upcoming traveling spirits. If the current traveling spirit is unknown, it will provide an approximate return date for the next one.
 - **${comMen('guides')}**: Merged with \`seasonal-guides\` and now includes a \`realms\` subcommand for realm-based guides. An \`events\` guide is also planned for future addition (IDK when I'll add it tho lol).
   - **${comMen('guides', 'seasonal')}**:  various seasonal guides.
   - **${comMen('guides', 'realms')}**: various realms guides.

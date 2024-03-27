@@ -1,7 +1,8 @@
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const cron = require("node-cron");
 const reminders = require("@functions/reminders");
-const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
+const { UpdateEvent, UpdateTS} = require('@src/libs/classes')
+;const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 /**
  * ready event handler
@@ -15,46 +16,12 @@ module.exports = async (client) => {
   } else {
     text = "Website is disabled";
   }
-  const readyalertemb = new EmbedBuilder()
-    .addFields(
-      {
-        name: "Bot Status",
-        value: `Total guilds: ${client.guilds.cache.size}\nTotal Users: ${client.guilds.cache.reduce(
-          (size, g) => size + g.memberCount,
-          0,
-        )}`,
-        inline: false,
-      },
-      {
-        name: "Website",
-        value: text,
-        inline: false,
-      },
-      {
-        name: "Interactions",
-        value: `Loaded Interactions`,
-        inline: false,
-      },
-      {
-        name: "Success",
-        value: `SkyHelper is now online`,
-      },
-    )
-    .setColor("Gold")
-    .setTimestamp();
-
-  // Ready alert
-  if (ready) {
-    ready.send({
-      username: "Ready",
-      avatarURL: client.user.displayAvatarURL(),
-      embeds: [readyalertemb],
-    });
-  }
-
+  
   // Fetching for eval purpose
   await client.application.fetch();
-
+  
+  client.classes.set('UpdateTS', UpdateTS);
+  client.classes.set('UpdateEvent', UpdateEvent);
   cron.schedule(
     "0 */2 * * *",
     async () => {
@@ -111,4 +78,43 @@ module.exports = async (client) => {
       timezone: "America/Los_Angeles",
     },
   );
+  
+  
+  const readyalertemb = new EmbedBuilder()
+    .addFields(
+      {
+        name: "Bot Status",
+        value: `Total guilds: ${client.guilds.cache.size}\nTotal Users: ${client.guilds.cache.reduce(
+          (size, g) => size + g.memberCount,
+          0,
+        )}`,
+        inline: false,
+      },
+      {
+        name: "Website",
+        value: text,
+        inline: false,
+      },
+      {
+        name: "Interactions",
+        value: `Loaded Interactions`,
+        inline: false,
+      },
+      {
+        name: "Success",
+        value: `SkyHelper is now online`,
+      },
+    )
+    .setColor("Gold")
+    .setTimestamp();
+
+  // Ready alert
+  if (ready) {
+    ready.send({
+      username: "Ready",
+      avatarURL: client.user.displayAvatarURL(),
+      embeds: [readyalertemb],
+    });
+  }
+
 };

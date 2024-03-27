@@ -4,7 +4,7 @@
  * @method update updates the ts details
  * @returns {Object}
  */
-class UpdateTs {
+class UpdateTS {
   /**
    * @param {import('@src/frameworks').SkyHelper} client
    */
@@ -104,4 +104,4 @@ class UpdateTs {
   }
 }
 
-module.exports = { UpdateTs };
+module.exports = { UpdateTS };

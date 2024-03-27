@@ -1,7 +1,6 @@
 const { Client, GatewayIntentBits, Collection, Partials, Routes,PermissionFlagsBits } = require("discord.js");
 const { table } = require("table");
 const moment = require("moment-timezone");
-const { UpdateEvent } = require("../handler/updateEvent");
 const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
 const { schemas } = require("@src/database/mongoose");
 const fs = require("fs");
@@ -63,23 +62,23 @@ module.exports = class SkyHelper extends Client {
     this.skyEvents = new Map();
     this.skyEvents.set("event", {
       eventActive: true,
-      eventName: "Days of Fortune",
-      eventStarts: moment.tz("2024-01-29T00:00:00", this.timezone),
-      eventEnds: moment.tz("2024-02-11T23:59:59", this.timezone),
+      eventName: "Days of Bloom",
+      eventStarts: moment.tz("2024-03-25T00:00:00", this.timezone),
+      eventEnds: moment.tz("2024-04-14T23:59:59", this.timezone),
       eventDuration: "13 days",
     });
 
     /**
-     * @type {Class}
+     * @type {Collection<string, Class>}
      */
-    this.UpdateEvent = UpdateEvent;
+    this.classes = new Collection();
 
     /**
      * stores current/upcoming ts details
      * @type {Object}
      */
     this.ts = {
-      name: "Hairtousle Tenn",
+      name: "Hairtousle Teen",
       visitDate: "28-03-2024",
       departDate: "31-03-2024",
       value: "hairtousle_teen",

@@ -30,7 +30,7 @@ module.exports = {
   async execute(interaction, client) {
      const hide = interaction.options.getBoolean("hide") || false;
     await interaction.deferReply({ ephemeral: hide });
-    const { name, visitDate, departDate, value, index, spiritImage, emote } = client.ts;
+    const { name, visitDate, departDate, value, index, spiritImage } = client.ts;
     const now = moment().tz(client.timezone);
     const lastVisitDate = moment.tz(visitDate, "DD-MM-YYYY", client.timezone).startOf("day");
     const lastDepartDate = lastVisitDate.clone().add('3', 'day').endOf("day");
@@ -58,10 +58,10 @@ module.exports = {
 
       if (nextVisitDay.isSame(lastVisitDate)) {
         const spirit = client.spiritsData[value];
-        const emote2 = spirit.call?.icon || spirit.emote?.icon || spirit.action?.icon || spirit.stance?.icon;
+        const emote = spirit.call?.icon || spirit.emote?.icon || spirit.action?.icon || spirit.stance?.icon;
         embed = new EmbedBuilder()
           .setAuthor({ name: `Traveling Spirit Summary #${index}`, iconURL: spiritImage })
-          .setTitle(`${emote2} ${name}`)
+          .setTitle(`${emote} ${name}`)
           .setDescription(
             `is scheduled to arrive at ${time(
               nextVisitDay.toDate(),
@@ -91,11 +91,12 @@ module.exports = {
 
       if (lastDepartDate.isSame(nextDepartDate)) {
         const spirit = client.spiritsData[value];
+        const emote= spirit.call?.icon || spirit.emote?.icon || spirit.action?.icon || spirit.stance?.icon;
         embed = new EmbedBuilder()
           .setAuthor({ name: `Traveling Spirit Summary #${index}`, iconURL: spiritImage })
           .setTitle(`${emote} ${spirit.name}`)
           .setDescription(
-            `is currently visiting the realms of Sky. They will enjoy their stay till ${time(
+            `is currently visiting the realms of Sky. They will depart till ${time(
               nextDepartDate.toDate(),
               "F",
             )} (${endDur}) during which SkyKids can get a chance to get acquanted and buy their cosmetics.\n\n**Vsiting Dates:** ${visitingDates}\n**Realm:** ${
