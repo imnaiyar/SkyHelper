@@ -4,3 +4,4 @@ node_modules
 logs/
 messageData.json
 package-lock.json
+.env.ex
