@@ -88,7 +88,7 @@ async function getChangelog(interaction) {
 - Introduced reminders feature, enabling users to receive notifications for various in-game times.
 - Restructured the guides command to include options for reducing the number of choices required after execution.
 
-*For previous/detailed changelogs, checkout the release page on GitHub **[here](https://github.com/imnaiyar/SkyHelper/releases)**.*`];
+*For previous/detailed changelogs, checkout the release page on GitHub **[here](https://github.com/imnaiyar/SkyHelper/releases/tag/v5.0.0)**.*`];
   const { client } = interaction;
     let page = 0;
     let total = changes.length - 1;
