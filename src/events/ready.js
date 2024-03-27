@@ -1,54 +1,120 @@
-const { WebhookClient, EmbedBuilder } = require('discord.js');
-const ready = process.env.READY_LOGS
-  ? new WebhookClient({ url: process.env.READY_LOGS })
-  : undefined;
+const { WebhookClient, EmbedBuilder } = require("discord.js");
+const cron = require("node-cron");
+const reminders = require("@functions/reminders");
+const { UpdateEvent, UpdateTS} = require('@src/libs/classes')
+;const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
+
+/**
+ * ready event handler
+ * @param {import('@src/frameworks').SkyHelper} client
+ */
 module.exports = async (client) => {
-  await client.guilds.fetch();
   let text;
+  client.logger.log(`Logged in as ${client.user.tag}`);
   if (client.config.DASHBOARD.enabled) {
     text = `Website started on port ${client.config.DASHBOARD.port}`;
   } else {
-    text = 'Website is disabled';
+    text = "Website is disabled";
   }
+  
+  // Fetching for eval purpose
+  await client.application.fetch();
+  
+  client.classes.set('UpdateTS', UpdateTS);
+  client.classes.set('UpdateEvent', UpdateEvent);
+  cron.schedule(
+    "0 */2 * * *",
+    async () => {
+      try {
+        await reminders(client, "geyser");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+
+  cron.schedule(
+    "30 */2 * * *",
+    async () => {
+      try {
+        await reminders(client, "grandma");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+
+  // reset
+  cron.schedule(
+    "0 0 * * *",
+    async () => {
+      try {
+        await reminders(client, "reset");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+
+  cron.schedule(
+    "50 */2 * * *",
+    async () => {
+      try {
+        await reminders(client, "turtle");
+      } catch (err) {
+        client.logger.error(err);
+      }
+    },
+    {
+      timezone: "America/Los_Angeles",
+    },
+  );
+  
+  
   const readyalertemb = new EmbedBuilder()
     .addFields(
       {
-        name: 'Bot Status',
-        value: `Total guilds: ${
-          client.guilds.cache.size
-        }\nTotal Users: ${client.guilds.cache.reduce(
+        name: "Bot Status",
+        value: `Total guilds: ${client.guilds.cache.size}\nTotal Users: ${client.guilds.cache.reduce(
           (size, g) => size + g.memberCount,
           0,
         )}`,
         inline: false,
       },
       {
-        name: 'Website',
+        name: "Website",
         value: text,
         inline: false,
       },
       {
-        name: 'Interactions',
+        name: "Interactions",
         value: `Loaded Interactions`,
         inline: false,
       },
       {
-        name: 'Success',
+        name: "Success",
         value: `SkyHelper is now online`,
       },
     )
-    .setColor('Gold')
+    .setColor("Gold")
     .setTimestamp();
 
   // Ready alert
   if (ready) {
     ready.send({
-      username: 'Ready',
+      username: "Ready",
       avatarURL: client.user.displayAvatarURL(),
       embeds: [readyalertemb],
     });
   }
 
-  // Fetching for eval purpose
-  await client.application.fetch();
 };

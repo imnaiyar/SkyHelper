@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const tos = express.Router();
 
-tos.get('/tos', (req, res) => {
+tos.get("/tos", (req, res) => {
   // Send an HTML response
   res.send(`
     <!DOCTYPE html>

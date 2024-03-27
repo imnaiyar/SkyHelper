@@ -1,37 +1,31 @@
-const { EmbedBuilder, WebhookClient } = require('discord.js');
-const { dblStats } = require('@functions');
-const { getSettings: registerGuild } = require('@schemas/Guild');
-const Guild = require('@schemas/guildBlackList');
-const Logger = require('@src/logger');
-const config = require('@root/config.js');
-const { topggAutopost } = require('@handler/functions/topgg-autopost');
-const { botSettings } = require('@schemas/botStats');
+const { EmbedBuilder, WebhookClient } = require("discord.js");
+const { dblStats } = require("@functions");
+const { getSettings: registerGuild } = require("@schemas/Guild");
+const Guild = require("@schemas/guildBlackList");
+const Logger = require("@src/logger");
+const config = require("@root/config.js");
+const { topggAutopost } = require("@functions");
+const { botSettings } = require("@schemas/botStats");
 
-const webhookLogger = process.env.GUILD
-  ? new WebhookClient({ url: process.env.GUILD })
-  : undefined;
+const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
- * @param {import('@root/main')} client
+ * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
 module.exports = async (client, guild) => {
   if (!guild.available) return;
-  if (!guild.members.cache.has(guild.ownerId))
-    await guild.fetchOwner({ cache: true }).catch(() => {});
+  if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
 
   const guildCount = client.guilds.cache.size;
-  const userCount = client.guilds.cache.reduce(
-    (total, guild) => total + guild.memberCount,
-    0,
-  );
+  const userCount = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
 
   // Register guild on database
   registerGuild(guild);
 
   // Check if joined guild is blacklisted
-  let data = await Guild.findOne({ Guild: guild.id }).catch((err) => {});
+  const data = await Guild.findOne({ Guild: guild.id }).catch((err) => {});
   if (data) {
     const owner = guild.members.cache.get(guild.ownerId);
     owner.user.send(
@@ -43,12 +37,12 @@ module.exports = async (client, guild) => {
       .setAuthor({ name: `Blacklisted Server` })
       .setDescription(`Someone tried to invite me to a blacklisted server.`)
       .addFields(
-        { name: 'Blacklisted Guild Name', value: `${data.Name}` },
-        { name: 'Reason', value: `${data.Reason}` },
-        { name: 'Blacklisted Date', value: `${data?.Date || 'Unknown'}` },
+        { name: "Blacklisted Guild Name", value: `${data.Name}` },
+        { name: "Reason", value: `${data.Reason}` },
+        { name: "Blacklisted Date", value: `${data?.Date || "Unknown"}` },
       );
     webhookLogger.send({
-      username: 'Blacklist Server',
+      username: "Blacklist Server",
       avatarURL: client.user.displayAvatarURL(),
       embeds: [embed],
     });
@@ -56,7 +50,7 @@ module.exports = async (client, guild) => {
   }
 
   // updates bot info stats on support server.
-  const channels = client.channels.cache.get('1158068842040414351');
+  const channels = client.channels.cache.get("1158068842040414351");
   if (channels) {
     const botInfo = new EmbedBuilder()
       .setAuthor({
@@ -72,9 +66,9 @@ module.exports = async (client, guild) => {
       )
       .setColor(2895153)
       .setFooter({
-        text: `Last Updated: ${new Date().toLocaleString('en-GB')}`,
+        text: `Last Updated: ${new Date().toLocaleString("en-GB")}`,
       });
-    channels.messages.fetch('1179858980923768893').then((m) => {
+    channels.messages.fetch("1179858980923768893").then((m) => {
       m.edit({ embeds: [botInfo] });
     });
   }
@@ -98,29 +92,27 @@ module.exports = async (client, guild) => {
   if (!process.env.GUILD) return;
 
   const embed = new EmbedBuilder()
-    .setTitle('Guild Joined')
+    .setTitle("Guild Joined")
     .setThumbnail(guild.iconURL())
-    .setColor('DarkAqua')
+    .setColor("DarkAqua")
     .addFields(
       {
-        name: 'Guild Name',
+        name: "Guild Name",
         value: guild.name,
         inline: false,
       },
       {
-        name: 'ID',
+        name: "ID",
         value: guild.id,
         inline: false,
       },
       {
-        name: 'Owner',
-        value: `${client.users.cache.get(guild.ownerId).username} [\`${
-          guild.ownerId
-        }\`]`,
+        name: "Owner",
+        value: `${client.users.cache.get(guild.ownerId).username} [\`${guild.ownerId}\`]`,
         inline: false,
       },
       {
-        name: 'Members',
+        name: "Members",
         value: `\`\`\`yaml\n${guild.memberCount}\`\`\``,
         inline: false,
       },
@@ -128,7 +120,7 @@ module.exports = async (client, guild) => {
     .setFooter({ text: `Guild #${client.guilds.cache.size}` });
 
   webhookLogger.send({
-    username: 'Join',
+    username: "Join",
     avatarURL: client.user.displayAvatarURL(),
     embeds: [embed],
   });

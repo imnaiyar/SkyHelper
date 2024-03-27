@@ -1,3 +1,8 @@
+<h6 align="center">
+<b> This is a development branch, for production branches, see "<a href="https://github.com/imnaiyar/SkyHelper/tree/dev">dev</a>" (IK name doesn't make sense lol, I am just too lazy to change it) and "<a href="https://github.com/imnaiyar/SkyHelper/tree/main">main</a>"
+</b>
+</h6>
+
 <h1 align="center">
   <br>
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/boticon.png" height="200" alt="SkyHelper"></a>
@@ -36,7 +41,7 @@
 ```js
 git clone https://github.com/imnaiyar/SkyHelper
 ```
-- Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js` and `example.messageData.json` to `messageData.json`.
+- Rename `example.env` to `.env` and fill all the required fields and also rename `ex.config.js` to `config.js`.
 - Create a new folder in the root directory named `logs` (All the terminal and error logs will go here).
 - Run ```npm run commands``` to register the slash commands.
 - [Prefix Commands](https://github.com/imnaiyar/SkyHelper/tree/main/src%2Fcommands%2Fprefix) is for my personal use and you can chose to delete the folder if you wish. Should you delete, `messageCreate.js` event won't be needed either and you can remove that too.
