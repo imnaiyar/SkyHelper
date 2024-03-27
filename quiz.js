@@ -1,3 +1,5 @@
+// this is placeholder for upcoming project
+
 const { askQuestion, QuizLeaderboardCard } = require("@functions/index");
 const {
   EmbedBuilder,
