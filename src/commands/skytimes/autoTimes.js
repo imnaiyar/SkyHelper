@@ -43,7 +43,7 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const config = await autoTimes(interaction.guild);
     if (sub === "start") {
-      if (config.messageId && config.webhook) {
+      if (config.messageId && config.webhook?.id) {
         const wbh = await client.fetchWebhook(config.webhook.id, config.webhook.token).catch(() => {});
         const ms = await wbh?.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {

@@ -79,14 +79,13 @@ module.exports = class SkyHelper extends Client {
      * @type {Object}
      */
     this.ts = {
-      name: "Talented Builder",
-      visitDate: "15-02-2024",
-      departDate: "18-02-2024",
-      value: "hermit",
+      name: "Hairtousle Tenn",
+      visitDate: "28-03-2024",
+      departDate: "31-03-2024",
+      value: "hairtousle_teen",
       spiritImage:
-        "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Dreams-Spirit-Bearhug-Hermit.png/revision/latest?cb=20221124085127",
-      emote: "<:hermit:1131645142898581535>",
-      index: "22",
+        "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9f/Belonging-Spirit-Hairtousle-Teen.png/revision/latest?cb=20220609194811",
+      index: "110",
     };
     // user object cache for credits
     /**

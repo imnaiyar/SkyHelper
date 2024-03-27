@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType, WebhookClient, ChannelType } = require("discord.js");
+const { ApplicationCommandOptionType, WebhookClient, MessageFlags, ChannelType } = require("discord.js");
 const moment = require("moment-timezone");
 const { autoShard } = require("@schemas/autoShard");
 const { buildShardEmbed, deleteSchema } = require("@src/handler");
@@ -51,12 +51,13 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     const config = await autoShard(interaction.guild);
     if (sub === "start") {
-      if (config.messageId && config.webhookURL) {
-        const wbh = new WebhookClient({ url: config.webhookURL });
+      if (config.messageId && config.webhook?.id) {
+        const wbh = await client.fetchWebhook(config.webhook.id, config.webhook.token).catch(() => {});
         const ms = await wbh.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
-            content: `Live Shards is already configured in <#${config.channelId}> for this message https://discord.com/channels/${interaction.guild.id}/${config.channelId}/${ms.id}.`,
+            content: `Live Shards is already configured in <#${config.channelId}> for this this message ${ms.url}.`,
+            flags: MessageFlags.SuppressEmbeds
           });
         }
       }
@@ -67,8 +68,8 @@ module.exports = {
         });
       }
       const name = interaction.options.getString("name");
-      const avatar = interaction.options.getAttachment("avatar");
-      const wb = await client.createWebhook(channel, "For live Shards Update", name, avatar?.url);
+
+      const wb = await client.createWebhook(channel, "For live Shards Update", name, client.displayAvatarURL());
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildShardEmbed(currentDate, "Live Shard");
@@ -76,27 +77,32 @@ module.exports = {
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
       });
-      config.channelId = channel.id;
       config.messageId = msg.id;
-      config.webhookURL = wb.url;
+      config.webhook.id = wb.id;
+      config.webhook.token = wb.token;
       await config.save();
-      interaction.followUp({
+      await interaction.followUp({
         content: `Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`,
+        flags: MessageFlags.SuppressEmbeds
       });
     } else if (sub === "stop") {
-      if (!config.webhookURL || !config.messageId) {
-        return interaction.followUp({
+      if (!config.webhook.id || !config.messageId) {
+        return await interaction.followUp({
           content: "Live Shard is already disabled for this server",
         });
       }
 
-      const wbh = new WebhookClient({ url: config.webhookURL });
+      const wbh = await client.fetchWebhook(config.webhook.id, config.webhook.token).catch(() => {});
+      if (!wbh) {
+        await interaction.followUp('Live SkyTimes is already disabled for this server');
+        return;
+      }
       try {
-        await wbh.deleteMessage(config.messageId);
+        await wbh.deleteMessage(config.messageId).catch(() => {});
         await wbh.delete();
         await deleteSchema("autoShard", interaction.guild.id);
 
-        interaction.followUp({
+       await interaction.followUp({
           content: "Live Shard is disabled",
         });
       } catch (err) {

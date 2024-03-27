@@ -13,7 +13,7 @@ const cmds = [
   "timestamps",
   "help",
 ];
-
+let totalCommands = [];
 async function helpMenu(interaction, client) {
   const slash = client.commands;
 
@@ -87,7 +87,22 @@ async function helpMenu(interaction, client) {
     components: [row],
     fetchReply: true,
   });
+  const pageCommands = Array.from(appCommands.values())
 
+    pageCommands.forEach((command) => {
+      if (command.options?.some((op) => op.type === 1)) {
+        command.options.forEach((o) => {
+          totalCommands.push(`**</${command.name} ${o.name}:${command.id}>** ${o.options?.length ? `${o.options.map((m) => {
+            return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
+          }).join(', ')}` : ''}\n  ↪${o.description}\n\n`);
+          
+        });
+      } else {
+        totalCommands.push(`</${command.name}:${command.id}> ${command.options?.length ? `${command.options.map((m) => {
+            return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
+          }).join(', ')}` : ''}\n${command.description}\n\n`);
+      }
+    });
   const filter = (i) => i.message.id === reply.id;
   const collector = reply.createMessageComponentCollector({
     filter,
@@ -95,7 +110,7 @@ async function helpMenu(interaction, client) {
   });
   let page = 1;
   const commandsPerPage = 5;
-  const totalPages = Math.ceil(appCommands.size / commandsPerPage);
+  const totalPages = Math.ceil(totalCommands.length / commandsPerPage);
   collector.on("collect", async (selectInteraction) => {
     const selectedChoice = selectInteraction.customId;
 
@@ -132,20 +147,8 @@ async function helpMenu(interaction, client) {
 
     const startIndex = (page - 1) * commandsPerPage;
     const endIndex = startIndex + commandsPerPage;
-    const pageCommands = Array.from(appCommands.values()).slice(startIndex, endIndex);
-
-    pageCommands.forEach((command) => {
-      if (command.name === "util" || command.name === "auto-shard") {
-        description += `</${command.name}:${command.id}>\n${command.description}\n`;
-        command.options.forEach((o) => {
-          description += `- **${o.name}**\n  ↪${o.description}\n`;
-        });
-      } else {
-        description += `</${command.name}:${command.id}>\n${command.description}\n\n`;
-      }
-    });
-
-    slashEmbed.setDescription(description);
+  
+    slashEmbed.setDescription(totalCommands.slice(startIndex, endIndex).join(''));
     const hmBtn = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setLabel("Prev").setCustomId("prevBtn").setStyle(2),
       new ButtonBuilder().setLabel("🏠").setCustomId("homeBtn").setStyle(4),

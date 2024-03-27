@@ -6,7 +6,7 @@ module.exports = {
     description: "Set a new prefix for this server",
   },
   async execute(message, args) {
-    const card = new QuizWinnerCard(message.member, "5", "10");
+    const card = new QuizWinnerCard(message.member, "5", "10", message.client);
 
     const cardBuffer = await card.build();
     const attachment = new AttachmentBuilder(cardBuffer, { name: "winner.png" });

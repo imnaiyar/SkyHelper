@@ -16,8 +16,16 @@ module.exports = {
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
-        name: "suggestions",
-        description: "suggest a feature or a change",
+        name: "contact-us",
+        description: "suggest something or report a bug or just for any reasons at all",
+        options: [
+          {
+            name: 'attachment',
+            type: ApplicationCommandOptionType.Attachment,
+            required: false,
+            description: 'any image attachment you may want to include'
+          }
+          ],
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
@@ -33,7 +41,7 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     if (sub === "credits") {
       getCredits(interaction);
-    } else if (sub === "suggestions") {
+    } else if (sub === "contact-us") {
       getSuggestion(interaction);
     } else if (sub === "changelog") {
       getChangelog(interaction);

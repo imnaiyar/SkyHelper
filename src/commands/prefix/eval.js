@@ -70,8 +70,8 @@ const buildSuccessResponse = async (output, client, type, time, haste, depth) =>
   return { embeds: [embed] };
 };
 
-const buildErrorResponse = (err) => {
-  const embed = new d.EmbedBuilder()
+const buildErrorResponse =  (err) => {
+    const embed = new d.EmbedBuilder()
     .setAuthor({ name: "📤 Error" })
     .setDescription("```js\n" + (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) + "\n```")
     .setColor("Red")

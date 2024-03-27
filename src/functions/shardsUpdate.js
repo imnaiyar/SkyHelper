@@ -20,10 +20,10 @@ module.exports = async (client) => {
     deleteSchema("autoShard", id);
   };
   data.forEach(async (guild) => {
-    if (!guild?.webhook && guild.channelId && guild.messageId ) {
+    if (!guild.webhook?.id && guild.channelId && guild.messageId ) {
       const ch = client.channels.cache.get(guild.channelId);
       const orgMsg = await ch.messages.fetch(guild.messageId).catch((err) => {});
-      if (orgMsg) orgMsg.edit('Some warning here');
+      if (orgMsg) await orgMsg.edit('Some warning here');
       dltSChm(guild._id);
       return;
       }

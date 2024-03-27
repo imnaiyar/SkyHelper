@@ -48,7 +48,7 @@ module.exports = async (int, value, guides, embs) => {
                   })
                   .trim();
                 const dateM = moment.tz(formatDate, "MMMM DD, YYYY", "America/Los_Angeles").startOf("day");
-                const dateE = dateM.clone().add(3, "days");
+                const dateE = dateM.clone().add(3, "days").endOf('day');
                 return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
               })
               .join("\n")}`
@@ -77,7 +77,7 @@ module.exports = async (int, value, guides, embs) => {
     // For seasonal spirits
     emb.addFields({
       name: `${data.ts?.returned ? "Friendship Tree (Last Visit)" : "Seasonal Price Chart"} by ${data.tree.by}`,
-      value: data.tree.total,
+      value: data.tree.total.replaceAll(':RegularCandle:', '<:RegularCandle:1207793250895794226>').replaceAll(':RegularHeart:', '<:regularHeart:1207793247792013474>').replaceAll(':AC:', '<:AscendedCandle:1207793254301433926>'),
     });
     emb.setImage(`${CDN_URL}/${data.tree.image}`);
 
@@ -192,7 +192,7 @@ module.exports = async (int, value, guides, embs) => {
         newRow.components[0] = lctnBtn;
         newEmbed.spliceFields(-1, 1, {
           name: `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree.by}`,
-          value: data.tree.total,
+          value: data.tree.total.replaceAll(':RegularCandle:', '<:RegularCandle:1207793250895794226>').replaceAll(':RegularHeart:', '<:regularHeart:1207793247792013474>').replaceAll(':AC:', '<:AscendedCandle:1207793254301433926>'),
         });
         newEmbed.setImage(`${CDN_URL}/${data.tree.image}`);
         await inter.editReply({ embeds: [newEmbed], components: [newRow] });

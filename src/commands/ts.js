@@ -33,7 +33,7 @@ module.exports = {
     const { name, visitDate, departDate, value, index, spiritImage, emote } = client.ts;
     const now = moment().tz(client.timezone);
     const lastVisitDate = moment.tz(visitDate, "DD-MM-YYYY", client.timezone).startOf("day");
-    const lastDepartDate = moment.tz(departDate, "DD-MM-YYYY", client.timezone).endOf("day");
+    const lastDepartDate = lastVisitDate.clone().add('3', 'day').endOf("day");
     const nextDepartDate = lastDepartDate.clone();
     while (now.isAfter(nextDepartDate)) {
       nextDepartDate.add(14, "days");
@@ -58,9 +58,10 @@ module.exports = {
 
       if (nextVisitDay.isSame(lastVisitDate)) {
         const spirit = client.spiritsData[value];
+        const emote2 = spirit.call?.icon || spirit.emote?.icon || spirit.action?.icon || spirit.stance?.icon;
         embed = new EmbedBuilder()
           .setAuthor({ name: `Traveling Spirit Summary #${index}`, iconURL: spiritImage })
-          .setTitle(`${emote} ${name}`)
+          .setTitle(`${emote2} ${name}`)
           .setDescription(
             `is scheduled to arrive at ${time(
               nextVisitDay.toDate(),

@@ -2409,12 +2409,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["August 7, 2023 (SV#4)"],
+      dates: ["August 07, 2023 (SV#4)"],
     },
     tree: {
       by: "NyR",
       total:
-        "188 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "188 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Cackling_Cannoner_Tree_NyR.png",
     },
@@ -2511,7 +2511,7 @@ module.exports = {
     tree: {
       by: "EM",
       total:
-        "228 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "228 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Anxious_Angler_Tree_Em.jpg",
     },
@@ -2562,7 +2562,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "238 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "238 :RegularCandle: 0 :RegularHeart: 2 :AC:",
       image:
         "Tinkering_Chimesmith_Tree_Clement.png",
     },
@@ -2591,7 +2591,7 @@ module.exports = {
     tree: {
       by: "Xander",
       total:
-        "198 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "198 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Lively_Navigator_Tree_Xander.jpg",
     },
@@ -2634,19 +2634,19 @@ module.exports = {
     season: "Flight",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: ['February 29, 2024 (#108)'],
     },
     tree: {
-      by: "Clement",
-      total: " ",
+      by: "Kai Ji",
+      total: "243 :RegularCandle: 0 :RegularHeart: 2 :AC: ",
       image:
-        "Light_Whisperer_Seasonal_Chart_Clement.jpg",
+        "Light_Whisperer_Tree_Kai-Ji.png",
     },
     location: {
-      by: "SkyZed",
+      by: "Clement",
       image:
-        "light_whisperer_location_skyzed.png",
+        "Light_Whisper_Location_Clement.png",
     },
     cosmetics: [{}],
     call: {
@@ -2668,7 +2668,7 @@ module.exports = {
     tree: {
       by: "Kontra",
       total:
-        "183 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "183 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Talented_Builder_Tree_Kontra.png",
     },
@@ -2714,12 +2714,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["December 7, 2023 (#102)"],
+      dates: ["December 07, 2023 (#102)"],
     },
     tree: {
       by: "EM",
       total:
-        "127 <:RegularCandle:1207793250895794226> 13<:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926> ",
+        "127 :RegularCandle: 13:RegularHeart: 2 :AC: ",
       image:
         "Stretching_Lamplighter_Tree_Clement.jpg",
     },
@@ -2768,7 +2768,7 @@ module.exports = {
     tree: {
       by: "Kontra",
       total:
-        "198 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "198 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Star_Collector_Tree_Kontra.png",
     },
@@ -2817,7 +2817,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "123 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "123 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Sneezing_Geographer_Tree_Clement.png",
     },
@@ -2866,7 +2866,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "140 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "140 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Slouching_Soldier_Tree_Clement.png",
     },
@@ -2915,7 +2915,7 @@ module.exports = {
     tree: {
       by: "Jay",
       total:
-        "139 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "139 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Gloating_Narcissist_Tree_Jay.png",
     },
@@ -2964,7 +2964,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "103 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "103 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Beckoning_Ruler_Tree_Clement.png",
     },
@@ -3015,7 +3015,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "157 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "157 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Scolding_Student_Tree_Clement.png",
     },
@@ -3059,12 +3059,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["March 6, 2023 (SV#1)"],
+      dates: ["March 06, 2023 (SV#1)"],
     },
     tree: {
       by: "NyR",
       total:
-        "152 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "152 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Scaredy_Cadet_Tree_NyR.jpg",
     },
@@ -3108,14 +3108,14 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["April 28, 2022 (#60)"],
+      dates: ["March 14, 2024 (#109)", "April 28, 2022 (#60)"],
     },
     tree: {
       by: "Clement",
       total:
-        "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "96 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
-        "Daydream-forester_Tree_Clement.png",
+        "Daydream_Forestor_Tree_Clement.png",
     },
     location: {
       by: "Clement",
@@ -3157,12 +3157,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["March 6, 2023 (SV#1)"],
+      dates: ["March 06, 2023 (SV#1)"],
     },
     tree: {
       by: "NyR",
       total:
-        "143<:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "143:RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Marching_Adventurer_Tree_NyR.jpg",
     },
@@ -3206,12 +3206,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["March 6, 2023 (SV#1)"],
+      dates: ["March 06, 2023 (SV#1)"],
     },
     tree: {
       by: "NyR",
       total:
-        "159 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "159 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Chuckling_Scout_Tree_NyR.jpg",
     },
@@ -3255,12 +3255,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["March 6, 2023 (SV#1)", "January 05, 2023 (#78)"],
+      dates: ["March 06, 2023 (SV#1)", "January 05, 2023 (#78)"],
     },
     tree: {
       by: "Clement",
       total:
-        "127 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "127 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Baffled_Botanist_Tree_Clement.png",
     },
@@ -3306,12 +3306,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["July 6, 2023 (#91)", "April 14, 2022 (#59)"],
+      dates: ["July 06, 2023 (#91)", "April 14, 2022 (#59)"],
     },
     tree: {
       by: "Clement",
       total:
-        "169 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "169 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Spinning_Mentor_Tree_Clement.png",
     },
@@ -3360,7 +3360,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "217 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "217 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image: "",
     },
     location: {
@@ -3456,7 +3456,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "190 <:RegularCandle:1207793250895794226> 8 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "190 :RegularCandle: 8 :RegularHeart: 2 :AC:",
       image:
         "BearHug_Hermit_Tree_Clement.png",
     },
@@ -3492,12 +3492,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["August 3, 2023 (#93)", "December 9, 2021 (#50)"],
+      dates: ["August 03, 2023 (#93)", "December 09, 2021 (#50)"],
     },
     tree: {
       by: "Clement",
       total:
-        "216 <:RegularCandle:1207793250895794226> 26 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "216 :RegularCandle: 26 :RegularHeart: 2 :AC:",
       image:
         "Prophet_of_Fire_Tree_Jay.png",
     },
@@ -3546,7 +3546,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "201 <:RegularCandle:1207793250895794226> 12 <:regularHeart:1207793247792013474> 2<:AscendedCandle:1207793254301433926>",
+        "201 :RegularCandle: 12 :RegularHeart: 2:AC:",
       image:
         "Prophet_of_Air_Tree_Clement.png",
     },
@@ -3590,12 +3590,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["May 15, 2023 (SV#2)", "February 3, 2022 (#54)"],
+      dates: ["May 15, 2023 (SV#2)", "February 03, 2022 (#54)"],
     },
     tree: {
       by: "Clement",
       total:
-        "211 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "211 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Prophet_of_Earth_Tree_Clement.jpg",
     },
@@ -3639,12 +3639,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["May 15, 2023 (SV#2)", "November 10, 2022 (#74)", "August 8, 2021 (#41)"],
+      dates: ["May 15, 2023 (SV#2)", "November 10, 2022 (#74)", "August 08, 2021 (#41)"],
     },
     tree: {
       by: "Clement",
       total:
-        "187 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "187 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Prophecy_Water_Tree_Clement.png",
     },
@@ -3690,12 +3690,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["July 7, 2022 (#65)", "June 10, 2021 (#37)"],
+      dates: ["July 07, 2022 (#65)", "June 10, 2021 (#37)"],
     },
     tree: {
       by: "Jed",
       total:
-        "140 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "140 :RegularCandle: 0 :RegularHeart: 2 :AC:",
       image:
         "Timid_Bookworm_Tree_Jed.png",
     },
@@ -3725,7 +3725,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "125 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "125 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Rallying_Thrillseeker_Tree_jed.png",
     },
@@ -3774,7 +3774,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "135 <:RegularCandle:1207793250895794226> 15 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "135 :RegularCandle: 15 :RegularHeart: 2 :AC:",
       image:
         "Jelly_Whisperer_Tree_Clement.png",
     },
@@ -3798,12 +3798,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["August 7, 2023 (SV#4)", "February 17, 2022 (#55)"],
+      dates: ["August 07, 2023 (SV#4)", "February 17, 2022 (#55)"],
     },
     tree: {
       by: "Clement",
       total:
-        "139 <:RegularCandle:1207793250895794226> 29 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "139 :RegularCandle: 29 :RegularHeart: 2 :AC:",
       image:
         "Hiking_Grouch_Tree_Clement.png",
     },
@@ -3852,7 +3852,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "162 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "162 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Shell_Collector_Tree_Clement.png",
     },
@@ -3896,12 +3896,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["January 4, 2024 (#104)", "August 19, 2021 (#42)"],
+      dates: ["January 04, 2024 (#104)", "August 19, 2021 (#42)"],
     },
     tree: {
       by: "NyR",
       total:
-        "213 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "213 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Chill_sunbather_tree_NyR.png",
     },
@@ -3952,7 +3952,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Golden_Wasteland_-_Snoozing_Carpenter.png",
     },
@@ -4001,7 +4001,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "88 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "88 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Traveling_Spirit_0582.png",
     },
@@ -4050,7 +4050,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "195 <:RegularCandle:1207793250895794226> 10 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "195 :RegularCandle: 10 :RegularHeart: 2 :AC:",
       image:
         "Playfight_herbalist-TS2.jpg",
     },
@@ -4089,7 +4089,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "77 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:RegularCandle:1207793250895794226>",
+        "77 :RegularCandle: 13 :RegularHeart: 2 :RegularCandle:",
       image:
         "Nodding_Muralist_Tree_Jed.png",
     },
@@ -4138,7 +4138,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "167 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "167 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Indifferent_Alchemist_Tree_Jed.png",
     },
@@ -4187,7 +4187,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "115 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "115 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Crab_Walker_Tree_Jed.png",
     },
@@ -4238,7 +4238,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "205 <:RegularCandle:1207793250895794226> 27 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "205 :RegularCandle: 27 :RegularHeart: 2 :AC:",
       image:
         "Troupe_Juggler_Tree_Clement.png",
     },
@@ -4287,7 +4287,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "146 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "146 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Troupe_Greeter_Tree_Clement.png",
     },
@@ -4336,7 +4336,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "195 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "195 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Thoughtful_Director_Tree_Jed.png",
     },
@@ -4385,7 +4385,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "162 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2<:AscendedCandle:1207793254301433926>",
+        "162 :RegularCandle: 13 :RegularHeart: 2:AC:",
       image:
         "Respectful_Pianist_Tree_Jed.png",
     },
@@ -4434,7 +4434,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "157 <:RegularCandle:1207793250895794226> 19 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "157 :RegularCandle: 19 :RegularHeart: 2 :AC:",
       image:
         "Spin_Dancer_Tree_Clement.png",
     },
@@ -4483,7 +4483,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "135 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "135 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Admiring_Actor_Tree_Jed.png",
     },
@@ -4534,7 +4534,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "156 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "156 :RegularCandle: 0 :RegularHeart: 2 :AC:",
       image:
         "Wise_Grandparent_Tree_Clement.png",
     },
@@ -4563,7 +4563,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "116 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "116 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Sparkler_Parent_Tree_Clement.png",
     },
@@ -4612,7 +4612,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "195 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "195 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Pleaful_Parent_Tree_Jed.png",
     },
@@ -4656,12 +4656,12 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["June 09, 2022 (#63)", "June 11, 2020 (#11)"],
+      dates: ["March 28, 2024 (#110)", "June 09, 2022 (#63)", "June 11, 2020 (#11)"],
     },
     tree: {
       by: "Clement",
       total:
-        "148 <:RegularCandle:1207793250895794226> 9 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "148 :RegularCandle: 9 :RegularHeart: 2 :AC:",
       image:
         "Hairtousle_Teen_Tree_Clement.png",
     },
@@ -4700,7 +4700,7 @@ module.exports = {
     tree: {
       by: "Jay",
       total:
-        "115 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "115 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Confetti_Cousin_Tree_Jay.png",
     },
@@ -4749,7 +4749,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "103 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "103 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Boogie_Kid_Tree_Jed.png",
     },
@@ -4800,7 +4800,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "131 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "131 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "SoL_Valley_TS_placeholder.PNG2.png",
     },
@@ -4849,7 +4849,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "108 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "108 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Shushing_Light_Scholar_Tree_Jed.png",
     },
@@ -4898,7 +4898,7 @@ module.exports = {
     tree: {
       by: "Jed",
       total:
-        "123 <:RegularCandle:1207793250895794226> 8 <:regularHeart:1207793247792013474> 2<:AscendedCandle:1207793254301433926>",
+        "123 :RegularCandle: 8 :RegularHeart: 2:AC:",
       image:
         "Piggyback_Lightseeker_Tree_Jed.png",
     },
@@ -4937,7 +4937,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "151 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "151 :RegularCandle: 0 :RegularHeart: 2 :AC:",
       image:
         "Traveling_Spirit_072-by-Clement2.png",
     },
@@ -4962,12 +4962,12 @@ module.exports = {
       eligible: true,
       returned: true,
       total: "3",
-      dates: ["July 21, 2022(#66)", "April 15, 2021(#33)", "February 14, 2020(#2)"],
+      dates: ["July 01, 2022(#66)", "April 15, 2021(#33)", "February 14, 2020(#2)"],
     },
     tree: {
       by: "Clement",
       total:
-        "126 <:RegularCandle:1207793250895794226> 7 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "126 :RegularCandle: 7 :RegularHeart: 2 :AC:",
       image:
         "Traveling_Spirit_0662.png",
     },
@@ -5006,7 +5006,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "190 <:RegularCandle:1207793250895794226> 0 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "190 :RegularCandle: 0 :RegularHeart: 2 :AC:",
       image:
         "Crab_Whisperer_Tree_Clement.png",
     },
@@ -5037,7 +5037,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "104 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Stretching_Guru_Tree.png",
     },
@@ -5086,7 +5086,7 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total: "87 <:RegularCandle:1207793250895794226> 2 <:AscendedCandle:1207793254301433926>",
+      total: "87 :RegularCandle: 2 :AC:",
       image:
         "Sassy_Drifter_Tree.png",
     },
@@ -5116,7 +5116,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "145 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "145 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "saluting_Protector_Tree.png",
     },
@@ -5165,7 +5165,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "104 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image: "",
     },
     location: {
@@ -5213,7 +5213,7 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total: "107 <:RegularCandle:1207793250895794226> 13  2<:AscendedCandle:1207793254301433926>",
+      total: "107 :RegularCandle: 13  2:AC:",
       image:
         "leaping_dancer_tree.png",
     },
@@ -5263,7 +5263,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total:
-        "112 <:RegularCandle:1207793250895794226> 13 <:regularHeart:1207793247792013474> 2 <:AscendedCandle:1207793254301433926>",
+        "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image:
         "Greeting_Shaman_Tree.png",
     },
