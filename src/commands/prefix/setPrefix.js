@@ -1,11 +1,11 @@
-const { getSettings } = require('@schemas/Guild');
-const { EmbedBuilder } = require('discord.js');
+const { getSettings } = require("@schemas/Guild");
+const { EmbedBuilder } = require("discord.js");
 module.exports = {
   data: {
-    name: 'test',
-    description: 'Set a new prefix for this server',
-    userPermissions: 'ManageGuild',
-    category: 'OWNER',
+    name: "test",
+    description: "Set a new prefix for this server",
+    userPermissions: "ManageGuild",
+    category: "OWNER",
   },
   async execute(message, args) {
     const embed = new EmbedBuilder().setDescription(`\`\`\`

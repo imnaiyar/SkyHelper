@@ -1,10 +1,7 @@
 const {
   Client,
   GatewayIntentBits,
-  WebhookClient,
-  createWebhook,
   Collection,
-  EmbedBuilder,
   Partials,
 } = require('discord.js');
 const { table } = require('table');
@@ -22,13 +19,14 @@ module.exports = class SkyHelper extends Client {
       intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.MessageContent,
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.DirectMessages,
 
         GatewayIntentBits.GuildMessageReactions,
       ],
-      partials: [Partials.Channel, Partials.Message],
+      partials: [Partials.Channel, Partials.Message, Partials.GuildMember],
     });
     this.config = require('./config.js');
     this.logger = Logger;

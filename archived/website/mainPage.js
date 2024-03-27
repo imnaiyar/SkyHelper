@@ -1,33 +1,27 @@
-const express = require('express');
-const { DASHBOARD } = require('@root/config');
-const { botSettings } = require('@schemas/botStats');
-const path = require('path');
+const express = require("express");
+const { DASHBOARD } = require("@root/config");
+const { botSettings } = require("@schemas/botStats");
+const path = require("path");
 const app = express();
-const htmlUtils = require('./htmlUtils');
+const htmlUtils = require("./htmlUtils");
 const PORT = DASHBOARD.port;
 async function unixPage(interaction, fieldsData, unixTime, offset, timezone) {
-  const html = await htmlUtils(
-    interaction,
-    fieldsData,
-    unixTime,
-    offset,
-    timezone,
-  );
+  const html = await htmlUtils(interaction, fieldsData, unixTime, offset, timezone);
   app.get(`/${interaction.id}`, (req, res) => {
     res.send(html.Content);
   });
 }
 function loadWebsite(client) {
-  app.set('views', path.join(__dirname, 'views'));
+  app.set("views", path.join(__dirname, "views"));
 
-  app.set('view engine', 'ejs');
+  app.set("view engine", "ejs");
 
-  app.use('/', express.static(path.join(__dirname, 'views', 'page')));
+  app.use("/", express.static(path.join(__dirname, "views", "page")));
 
-  const tosRoute = require('./tos');
-  const privacyRoute = require('./privacy');
-  app.use('/', tosRoute);
-  app.use('/', privacyRoute);
+  const tosRoute = require("./tos");
+  const privacyRoute = require("./privacy");
+  app.use("/", tosRoute);
+  app.use("/", privacyRoute);
 
   app.use(async (req, res, next) => {
     try {
@@ -42,13 +36,13 @@ function loadWebsite(client) {
     }
   });
 
-  app.get('/', (req, res) => {
-    res.render('page/index');
+  app.get("/", (req, res) => {
+    res.render("page/index");
   });
 
-  app.get('/invite', (req, res) => {
+  app.get("/invite", (req, res) => {
     const redirectUrl =
-      'https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands';
+      "https://discord.com/api/oauth2/authorize?client_id=1121541967730450574&permissions=412317240384&scope=bot%20applications.commands";
 
     const html = `
     <!DOCTYPE html>
@@ -226,8 +220,8 @@ to { left: 90vw; }
 
     res.send(html);
   });
-  app.get('/vote', (req, res) => {
-    res.redirect('https://top.gg/bot/1121541967730450574/vote');
+  app.get("/vote", (req, res) => {
+    res.redirect("https://top.gg/bot/1121541967730450574/vote");
   });
   app.listen(PORT, () => {
     client.logger.success(`Server is running on port ${PORT}`);

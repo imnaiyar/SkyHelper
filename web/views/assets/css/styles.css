@@ -1,5 +1,5 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -21,7 +21,7 @@
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: 'Poppins', sans-serif;
+  --body-font: "Poppins", sans-serif;
   --biggest-font-size: 2.25rem;
   --h1-font-size: 1.5rem;
   --h2-font-size: 1.25rem;
@@ -152,7 +152,9 @@ body.dark-theme {
 .dark-theme .subscribe__container {
   background-color: var(--container-color);
 }
-
+.dark-theme .skyhelper {
+  box-shadow: #ffffff;
+}
 .dark-theme .subscribe__container {
   border: 6px solid var(--border-color);
 }
@@ -236,7 +238,7 @@ body.dark-theme {
 }
 
 .progress-bar {
-  height: 3px;
+  height: 2px;
   background-color: var(--second-color);
   width: 0;
   border-radius: 10px;
@@ -284,6 +286,14 @@ body.dark-theme {
 }
 .nav__com {
   display: inline-flex;
+}
+.nav__logo-text.skyhelper {
+  top: 50px;
+  left: 50px;
+  width: 100px;
+  height: 45px;
+  padding-left: 3px;
+  padding-top: 4px;
 }
 
 @media screen and (max-width: 1023px) {
@@ -487,11 +497,7 @@ copyBtn:focus:end {
 .home__orbe {
   width: 265px;
   height: 284px;
-  background: linear-gradient(
-    180deg,
-    hsl(0, 0%, 16%) 93%,
-    hsl(0, 0%, 67%) 100%
-  );
+  background: linear-gradient(180deg, hsl(0, 0%, 16%) 93%, hsl(0, 0%, 67%) 100%);
   border-radius: 135px 135px 0 0;
 }
 
@@ -594,7 +600,7 @@ copyBtn:focus:end {
 /* Swiper class */
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  content: '';
+  content: "";
 }
 
 .swiper-button-next,
@@ -630,7 +636,7 @@ copyBtn:focus:end {
   max-width: calc(100vw - 40px);
   box-sizing: border-box;
   position: relative;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .contact-header {
   margin: 10px 0;
@@ -647,7 +653,7 @@ copyBtn:focus:end {
   outline: none;
   resize: none;
   border: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   transition: all 0.3s;
   border-bottom: 2px solid #bebed2;
   color: var(--text-color);
@@ -660,7 +666,7 @@ copyBtn:focus:end {
   outline: none;
   resize: none;
   border: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   transition: all 0.3s;
   border-bottom: 2px solid #bebed2;
   color: var(--text-color);
@@ -674,7 +680,7 @@ copyBtn:focus:end {
   outline: none;
   resize: none;
   border: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   transition: all 0.3s;
   border-bottom: 2px solid #bebed2;
   color: var(--text-color);
@@ -695,7 +701,7 @@ copyBtn:focus:end {
   float: none;
   padding: 8px 12px;
   margin: 20px 0 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   border: 2px solid #78788c;
   background: 0;
   color: #5a5a6e;
@@ -1067,7 +1073,7 @@ copyBtn:focus:end {
   line-height: 1.8;
 }
 .toc .toc-head:before {
-  content: '';
+  content: "";
   position: absolute;
   height: 8px;
   width: 8px;
@@ -1192,6 +1198,10 @@ copyBtn:focus:end {
   .nav__menu {
     width: 342px;
   }
+  .nav__logo-text.skyhelper {
+    width: 120px;
+    height: 40px;
+  }
   .com-icon {
     padding-right: 0.75rem;
   }
@@ -1203,7 +1213,7 @@ copyBtn:focus:end {
   }
 
   .progress-bar {
-    height: 4px;
+    height: 2.5px;
   }
   .form {
     width: 80%;
@@ -1240,6 +1250,10 @@ copyBtn:focus:end {
   .nav__com {
     padding-right: 1rem;
   }
+  .nav__logo-text.skyhelper {
+    width: 150px;
+    height: 45px;
+  }
   .home__container {
     grid-template-columns: repeat(2, 1fr);
     padding-top: 2rem;
@@ -1252,7 +1266,7 @@ copyBtn:focus:end {
   }
 
   .progress-bar {
-    height: 5px;
+    height: 3px;
   }
 
   .home__orbe {
@@ -1289,6 +1303,10 @@ copyBtn:focus:end {
     height: 50px;
   }
 
+  .nav__logo-text.skyhelper {
+    width: 200px;
+    height: 60px;
+  }
   .copyBtn:focus {
     height: 60px;
     width: 140px;
@@ -1315,7 +1333,7 @@ copyBtn:focus:end {
     font-size: var(--normal-font-size);
   }
   .progress-bar {
-    height: 6px;
+    height: 3.5px;
   }
   .nav {
     height: calc(var(--header-height) + 1.5rem);

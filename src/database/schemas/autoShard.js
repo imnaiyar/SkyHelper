@@ -1,22 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = new mongoose.Schema({
   _id: String,
+  name: String,
   channelId: String,
   messageId: String,
+  webhook: {
+    id: String,
+    token: String,
+  },
 });
 
-const Model = mongoose.model('autoShard', Schema);
+const Model = mongoose.model("autoShard", Schema);
 
 module.exports = {
   autoShard: async (guild) => {
-    if (!guild) throw new Error('Guild is undefined');
-    if (!guild.id) throw new Error('Guild Id is undefined');
+    if (!guild) throw new Error("Guild is undefined");
+    if (!guild.id) throw new Error("Guild Id is undefined");
 
     let guildData = await Model.findById(guild.id);
     if (!guildData) {
       guildData = new Model({
         _id: guild.id,
+        name: guild.name,
       });
 
       await guildData.save();
