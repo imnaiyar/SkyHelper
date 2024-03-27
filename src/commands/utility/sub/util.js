@@ -71,13 +71,17 @@ async function getSuggestion(interaction) {
 }
 
 async function getChangelog(interaction) {
+  const comMen = (command, sub) => {
+    const com = interaction.client.application.commands.cache.find((cm) => cm.name === command);
+    return `</${com.name}${sub ? ` ${sub}` : ''}:${com.id}>`;
+  };
   const changes = [`### New Commands:
-- **</spirits:28383838>**: Search for detailed information about any spirits including trees, locations, realms, and emote previews.
-- **</traveling-spirits:28283288>**: Access information about current or upcoming traveling spirits. If the current traveling spirit is unknown, it will provide an approximate return date for the next one.
-- **</guides:2838382>**: Merged with \`seasonal-guides\` and now includes a \`realms\` subcommand for realm-based guides. An \`events\` guide is also planned for future addition (IDK when I'll add it tho lol).
-  - **</guides seasonal:83833938>**:  various seasonal guides.
-  - **</guides realms:3838383>**: various realms guides.
-- **</reminders:383838>**: Set up reminders for various in-game times such as grandma, reset, and turtle events. (Requires \`Manage Webhook\` permission). Daily quest reminder is still a work in progress.
+- **${comMen('spirits')}**: Search for detailed information about any spirits including trees, locations, realms, and emote previews.
+- **${comMen('traveling-spirits')}**: Access information about current or upcoming traveling spirits. If the current traveling spirit is unknown, it will provide an approximate return date for the next one.
+- **${comMen('guides')}**: Merged with \`seasonal-guides\` and now includes a \`realms\` subcommand for realm-based guides. An \`events\` guide is also planned for future addition (IDK when I'll add it tho lol).
+  - **${comMen('guides', 'seasonal')}**:  various seasonal guides.
+  - **${comMen('guides', 'realms')}**: various realms guides.
+- **${comMen('reminders')}**: Set up reminders for various in-game times such as grandma, reset, and turtle events. (Requires \`Manage Webhook\` permission). Daily quest reminder is still a work in progress.
 - Not yet added but a quiz game command is also work in progress based on Sky: CoTL (need to just add the question), will probably add them in the next update.
 `,`### Other Major Changes:
 - Transitioned Live Updates feature to utilize webhooks instead of channel IDs. It will require reconfiguration to function properly.
