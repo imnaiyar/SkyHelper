@@ -72,7 +72,7 @@ async function getSuggestion(interaction) {
 
 async function getChangelog(interaction) {
   const comMen = (command, sub) => {
-    const com = interaction.client.application.commands.cache.find((cm) => cm.name === command);
+    const com = interaction.client.application.commands.cache.find((cm) => cm.name === command).first();
     return `</${com.name}${sub ? ` ${sub}` : ''}:${com.id}>`;
   };
   const changes = [`### New Commands:
