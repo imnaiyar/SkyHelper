@@ -66,7 +66,7 @@ module.exports = {
         });
       }
       
-      const wb = await client.createWebhook(channel, "For live Shards Update", name, client.user.displayAvatarURL());
+      const wb = await client.createWebhook(channel, "For live Shards Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildShardEmbed(currentDate, "Live Shard");

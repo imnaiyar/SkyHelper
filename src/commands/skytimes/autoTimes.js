@@ -59,7 +59,7 @@ module.exports = {
         });
       }
 
-      const wb = await client.createWebhook(channel, "For live SkyTimes Update", name, avatar?.url);
+      const wb = await client.createWebhook(channel, "For live SkyTimes Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildTimesEmbed(client, "Live SkyTimes");
