@@ -48,8 +48,7 @@ module.exports = {
         if (ms) {
           return interaction.followUp({
             embeds: [ new EmbedBuilder()
-        .setDescription(`Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`) ],
-            flags: MessageFlags.SuppressEmbeds
+        .setDescription(`Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`) ]
           });
         }
       }
@@ -78,7 +77,6 @@ module.exports = {
       interaction.followUp({
         embeds: [ new EmbedBuilder()
         .setDescription(`Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 2 minutes with live in-game events (grandma, geyser, etc.) details.`) ],
-        flags: MessageFlags.SuppressEmbeds
       });
     } else if (sub === "stop") {
       if (!config?.webhook.id || !config.messageId) {

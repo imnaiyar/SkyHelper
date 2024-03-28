@@ -56,7 +56,6 @@ module.exports = {
           return interaction.followUp({
             embeds: [ new EmbedBuilder()
         .setDescription(`Live Shards is already configured in <#${wbh.channelId}> for this this message ${ms.url}.`).setColor('Red') ],
-            flags: MessageFlags.SuppressEmbeds
           });
         }
       }
@@ -85,7 +84,6 @@ module.exports = {
       await interaction.followUp({
         embeds: [ new EmbedBuilder()
         .setDescription(`Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`).setColor('Green') ],
-        flags: MessageFlags.SuppressEmbeds
       });
     } else if (sub === "stop") {
       if (!config.webhook.id || !config.messageId) {
