@@ -16,7 +16,7 @@ module.exports = async (client, msg) => {
   }
 
   // Check Bot'sprefix
-  const prefix = ".";
+  const prefix = ",";
   if (!msg.content.startsWith(prefix)) return;
 
   // Initialize the commands

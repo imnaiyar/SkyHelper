@@ -10,31 +10,26 @@ module.exports = {
     main: {
       description: "Pointing Candlemaker Infographics by Ed.7",
       total: " ",
-      image:
-        "Pointing-Candlemaker-Guide-777-Ed.webp",
+      image: "Pointing-Candlemaker-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:pointingcandlermaker:1205914230553976863>",
       level: [
         {
           title: '"Point Emote" Level 1',
-          image:
-            "Pointing-Candlemaker-point-emote-level-1.gif",
+          image: "Pointing-Candlemaker-point-emote-level-1.gif",
         },
         {
           title: '"Point Emote" Level 2',
-          image:
-            "Pointing-Candlemaker-point-emote-level-2.gif",
+          image: "Pointing-Candlemaker-point-emote-level-2.gif",
         },
         {
           title: '"Point Emote" Level 3',
-          image:
-            "Pointing-Candlemaker-point-emote-level-3.gif",
+          image: "Pointing-Candlemaker-point-emote-level-3.gif",
         },
         {
           title: '"Point Emote" Level 4',
-          image:
-            "Pointing-Candlemaker-point-emote-level-4.gif",
+          image: "Pointing-Candlemaker-point-emote-level-4.gif",
         },
       ],
     },
@@ -45,31 +40,26 @@ module.exports = {
     realm: "Isle of Dawn",
     main: {
       description: "Ushering Stargazer Infographics by Ed.7",
-      image:
-        "Ushering-Stargazer-Guide-777-Ed.webp",
+      image: "Ushering-Stargazer-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:usheringstargazer:1205914276498513972>",
       level: [
         {
           title: '"Come Emote" Level 1',
-          image:
-            "Ushering-Stargazer-come-emote-level-1.gif",
+          image: "Ushering-Stargazer-come-emote-level-1.gif",
         },
         {
           title: '"Come Emote" Level 2',
-          image:
-            "Ushering-Stargazer-come-emote-level-2.gif",
+          image: "Ushering-Stargazer-come-emote-level-2.gif",
         },
         {
           title: '"Come Emote" Level 3',
-          image:
-            "Ushering-Stargazer-come-emote-level-3.gif",
+          image: "Ushering-Stargazer-come-emote-level-3.gif",
         },
         {
           title: '"Come Emote" Level 4',
-          image:
-            "Ushering-Stargazer-come-emote-level-4.gif",
+          image: "Ushering-Stargazer-come-emote-level-4.gif",
         },
       ],
     },
@@ -80,31 +70,26 @@ module.exports = {
     realm: "Isle of Dawn",
     main: {
       description: "Rejecting Voyager Infographics by Ed.7",
-      image:
-        "Rejecting-Voyager-Guide-777-Ed.webp",
+      image: "Rejecting-Voyager-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:rejectingvoyager:1205914255178727425>",
       level: [
         {
           title: '"No Thanks Emote" Level 1',
-          image:
-            "Rejecting-Voyager-no-thanks-emote-level-1.gif",
+          image: "Rejecting-Voyager-no-thanks-emote-level-1.gif",
         },
         {
           title: '"No Thanks Emote" Level 2',
-          image:
-            "Rejecting-Voyager-no-thanks-emote-level-2.gif",
+          image: "Rejecting-Voyager-no-thanks-emote-level-2.gif",
         },
         {
           title: '"No Thanks Emote" Level 3',
-          image:
-            "Rejecting-Voyager-no-thanks-emote-level-3.gif",
+          image: "Rejecting-Voyager-no-thanks-emote-level-3.gif",
         },
         {
           title: '"No Thanks Emote" Level 4',
-          image:
-            "Rejecting-Voyager-no-thanks-emote-level-4.gif",
+          image: "Rejecting-Voyager-no-thanks-emote-level-4.gif",
         },
       ],
     },
@@ -117,31 +102,26 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Applauding Bellmaker Infographics by Ed.7",
-      image:
-        "Applauding-Bellmaker-Guide-777-Ed.webp",
+      image: "Applauding-Bellmaker-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:applaudingbellmaker:1205914299814518784>",
       level: [
         {
           title: '"Clap Emote" Level 1',
-          image:
-            "Applauding-Bellmaker-clap-emote-level-1.gif",
+          image: "Applauding-Bellmaker-clap-emote-level-1.gif",
         },
         {
           title: '"Clap Emote" Level 2',
-          image:
-            "Applauding-Bellmaker-clap-emote-level-2.gif",
+          image: "Applauding-Bellmaker-clap-emote-level-2.gif",
         },
         {
           title: '"Clap Emote" Level 3',
-          image:
-            "Applauding-Bellmaker-clap-emote-level-3.gif",
+          image: "Applauding-Bellmaker-clap-emote-level-3.gif",
         },
         {
           title: '"Clap Emote" Level 4',
-          image:
-            "Applauding-Bellmaker-clap-emote-level-4.gif",
+          image: "Applauding-Bellmaker-clap-emote-level-4.gif",
         },
       ],
     },
@@ -152,8 +132,7 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Bird Whisperer Infographics by Ed.7",
-      image:
-        "Bird-Whisperer-Guide-777-Ed.webp",
+      image: "Bird-Whisperer-Guide-777-Ed.webp",
     },
     call: {
       title: "Bird Call",
@@ -167,31 +146,26 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Butterfly Charmer Infographics by Ed.7",
-      image:
-        "Butterfly-Charmer-Guide-777-Ed.png",
+      image: "Butterfly-Charmer-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:butterflycharmer:1205914343519158302>",
       level: [
         {
           title: '"Butterfly Emote" Level 1',
-          image:
-            "Butterfly-Charmer-butterfly-emote-level-1.gif",
+          image: "Butterfly-Charmer-butterfly-emote-level-1.gif",
         },
         {
           title: '"Butterfly Emote" Level 2',
-          image:
-            "Butterfly-Charmer-butterfly-emote-level-2.gif",
+          image: "Butterfly-Charmer-butterfly-emote-level-2.gif",
         },
         {
           title: '"Butterfly Emote" Level 3',
-          image:
-            "Butterfly-Charmer-butterfly-emote-level-3.gif",
+          image: "Butterfly-Charmer-butterfly-emote-level-3.gif",
         },
         {
           title: '"Butterfly Emote" Level 4',
-          image:
-            "Butterfly-Charmer-butterfly-emote-level-4.gif",
+          image: "Butterfly-Charmer-butterfly-emote-level-4.gif",
         },
       ],
     },
@@ -202,16 +176,14 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Ceremonial Worshipper Infographics by Ed.7",
-      image:
-        "Ceremonial-Worshiper-Guide-777-Ed.png",
+      image: "Ceremonial-Worshiper-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:ceremonialworshiper:1205914362733404181>",
       level: [
         {
           title: '"Teamwork Emote"\n- There\'s only 1 level of this emote',
-          image:
-            "Ceremonial-Worshiper-teamwork-emote-level-1.gif",
+          image: "Ceremonial-Worshiper-teamwork-emote-level-1.gif",
         },
       ],
     },
@@ -222,31 +194,26 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Exhausted Dock Worker Infographics by Ed.7",
-      image:
-        "Exhausted-Dock-Worker-Guide-777-Ed.png",
+      image: "Exhausted-Dock-Worker-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:exhausteddockworker:1205914381519556708>",
       level: [
         {
           title: '"Exhasted Emote" Level 1',
-          image:
-            "Exhausted-Dock-Worker-wipe-brow-emote-level-1.gif",
+          image: "Exhausted-Dock-Worker-wipe-brow-emote-level-1.gif",
         },
         {
           title: '"Exhasted Emote" Level 2',
-          image:
-            "Exhausted-Dock-Worker-wipe-brow-emote-level-2.gif",
+          image: "Exhausted-Dock-Worker-wipe-brow-emote-level-2.gif",
         },
         {
           title: '"Exhasted Emote" Level 3',
-          image:
-            "Exhausted-Dock-Worker-wipe-brow-emote-level-3.gif",
+          image: "Exhausted-Dock-Worker-wipe-brow-emote-level-3.gif",
         },
         {
           title: '"Exhasted Emote" Level 4',
-          image:
-            "Exhausted-Dock-Worker-wipe-brow-emote-level-4.gif",
+          image: "Exhausted-Dock-Worker-wipe-brow-emote-level-4.gif",
         },
       ],
     },
@@ -257,31 +224,26 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Laughing Light Catcher Infographics by Ed.7",
-      image:
-        "Laughing-Light-Catcher-Guide-777-Ed.webp",
+      image: "Laughing-Light-Catcher-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:laughinglightcatcher:1205914422309290015>",
       level: [
         {
           title: '"Laugh Emote" Level 1',
-          image:
-            "Laughing-Light-Catcher-laugh-emote-level-1.gif",
+          image: "Laughing-Light-Catcher-laugh-emote-level-1.gif",
         },
         {
           title: '"Laugh Emote" Level 2',
-          image:
-            "Laughing-Light-Catcher-laugh-emote-level-2.gif",
+          image: "Laughing-Light-Catcher-laugh-emote-level-2.gif",
         },
         {
           title: '"Laugh Emote" Level 3',
-          image:
-            "Laughing-Light-Catcher-laugh-emote-level-3.gif",
+          image: "Laughing-Light-Catcher-laugh-emote-level-3.gif",
         },
         {
           title: '"Laugh Emote" Level 4',
-          image:
-            "Laughing-Light-Catcher-laugh-emote-level-4.gif",
+          image: "Laughing-Light-Catcher-laugh-emote-level-4.gif",
         },
       ],
     },
@@ -292,31 +254,26 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Slumbering Shipwright Infographics by Ed.7",
-      image:
-        "Slumbering-Shipwright-Guide-777-Ed.webp",
+      image: "Slumbering-Shipwright-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:slumberingshipwright:1205914400901308546>",
       level: [
         {
           title: '"Yawn Emote" Level 1',
-          image:
-            "Slumbering-Shipwright-yawn-emote-level-1.gif",
+          image: "Slumbering-Shipwright-yawn-emote-level-1.gif",
         },
         {
           title: '"Yawn Emote" Level 2',
-          image:
-            "Slumbering-Shipwright-yawn-emote-level-2.gif",
+          image: "Slumbering-Shipwright-yawn-emote-level-2.gif",
         },
         {
           title: '"Yawn Emote" Level 3',
-          image:
-            "Slumbering-Shipwright-yawn-emote-level-3.gif",
+          image: "Slumbering-Shipwright-yawn-emote-level-3.gif",
         },
         {
           title: '"Yawn Emote" Level 4',
-          image:
-            "Slumbering-Shipwright-yawn-emote-level-4.gif",
+          image: "Slumbering-Shipwright-yawn-emote-level-4.gif",
         },
       ],
     },
@@ -327,41 +284,34 @@ module.exports = {
     realm: "Daylight Prairie",
     main: {
       description: "Waving Bellmaker Infographics by Ed.7",
-      image:
-        "Waving-Bellmaker-Guide-777-Ed.png",
+      image: "Waving-Bellmaker-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:wavingbellmaker:1205914441330466889>",
       level: [
         {
           title: '"Wave Emote" Level 1',
-          image:
-            "Waving-Bellmaker-wave-emote-level-1.gif",
+          image: "Waving-Bellmaker-wave-emote-level-1.gif",
         },
         {
           title: '"Wave Emote" Level 2',
-          image:
-            "Waving-Bellmaker-wave-emote-level-2.gif",
+          image: "Waving-Bellmaker-wave-emote-level-2.gif",
         },
         {
           title: '"Wave Emote" Level 3',
-          image:
-            "Waving-Bellmaker-wave-emote-level-3.gif",
+          image: "Waving-Bellmaker-wave-emote-level-3.gif",
         },
         {
           title: '"Wave Emote" Level 4',
-          image:
-            "Waving-Bellmaker-wave-emote-level-4.gif",
+          image: "Waving-Bellmaker-wave-emote-level-4.gif",
         },
         {
           title: '"Wave Emote" Level 5',
-          image:
-            "Waving-Bellmaker-wave-emote-level-5.gif",
+          image: "Waving-Bellmaker-wave-emote-level-5.gif",
         },
         {
           title: '"Wave Emote" Level 6',
-          image:
-            "Waving-Bellmaker-wave-emote-level-6.gif",
+          image: "Waving-Bellmaker-wave-emote-level-6.gif",
         },
       ],
     },
@@ -374,31 +324,26 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Apologetic Lumberjack Infographics by Ed.7",
-      image:
-        "Apologetic-Lumberjack-Guide-777-Ed.png",
+      image: "Apologetic-Lumberjack-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:apologeticlumberjack:1205914460661751808>",
       level: [
         {
           title: '"Apologize Emote" Level 1',
-          image:
-            "Apologetic-Lumberjack-Apologize_Level_1.gif",
+          image: "Apologetic-Lumberjack-Apologize_Level_1.gif",
         },
         {
           title: '"Apologize Emote" Level 2',
-          image:
-            "Apologetic-Lumberjack-Apologize_Level_2.gif",
+          image: "Apologetic-Lumberjack-Apologize_Level_2.gif",
         },
         {
           title: '"Apologize Emote" Level 3',
-          image:
-            "Apologetic-Lumberjack-Apologize_Level_3.gif",
+          image: "Apologetic-Lumberjack-Apologize_Level_3.gif",
         },
         {
           title: '"Apologize Emote" Level 4',
-          image:
-            "Apologetic-Lumberjack-Apologize_Level_4.gif",
+          image: "Apologetic-Lumberjack-Apologize_Level_4.gif",
         },
       ],
     },
@@ -409,31 +354,26 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Blushing Prospector Infographics by Ed.7",
-      image:
-        "Blushing-Prospector-Guide-777-Ed.png",
+      image: "Blushing-Prospector-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:blushhingprosprector:1205914615259861132>",
       level: [
         {
           title: '"Shy Emote" Level 1',
-          image:
-            "Blushing-Prospector-Shy_Level_1.gif",
+          image: "Blushing-Prospector-Shy_Level_1.gif",
         },
         {
           title: '"Shy Emote" Level 2',
-          image:
-            "Blushing-Prospector-Shy_Level_2.gif",
+          image: "Blushing-Prospector-Shy_Level_2.gif",
         },
         {
           title: '"Shy Emote" Level 3',
-          image:
-            "Blushing-Prospector-Shy_Level_3.gif",
+          image: "Blushing-Prospector-Shy_Level_3.gif",
         },
         {
           title: '"Shy Emote" Level 4',
-          image:
-            "Blushing-Prospector-Shy_Level_4.gif",
+          image: "Blushing-Prospector-Shy_Level_4.gif",
         },
       ],
     },
@@ -444,31 +384,26 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Dismayed Hunter Infographics by Ed.7",
-      image:
-        "Dismayed-Hunter-Guide-777-Ed.png",
+      image: "Dismayed-Hunter-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:dismayedhunter:1205914594724290650>",
       level: [
         {
           title: '"Shock Emote" Level 1',
-          image:
-            "Dismayed-Hunter-Shock_Level_1.gif",
+          image: "Dismayed-Hunter-Shock_Level_1.gif",
         },
         {
           title: '"Shock Emote" Level 2',
-          image:
-            "Dismayed-Hunter-Shock_Level_2.gif",
+          image: "Dismayed-Hunter-Shock_Level_2.gif",
         },
         {
           title: '"Shock Emote" Level 3',
-          image:
-            "Dismayed-Hunter-Shock_Level_3.gif",
+          image: "Dismayed-Hunter-Shock_Level_3.gif",
         },
         {
           title: '"Shock Emote" Level 4',
-          image:
-            "Dismayed-Hunter-Shock_Level_4.gif",
+          image: "Dismayed-Hunter-Shock_Level_4.gif",
         },
       ],
     },
@@ -479,8 +414,7 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Hide'n'seek Pioneer Infographics by Ed.7",
-      image:
-        "Hide-n-Seek-Pioneer-Guide-777-Ed.png",
+      image: "Hide-n-Seek-Pioneer-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:hidenseekpioneer:1205914575447527436>",
@@ -489,8 +423,7 @@ module.exports = {
           title: "Hide and Seek Emote",
           description:
             "<:hidenseekpioneer:1205914575447527436> emote has only one level with no upgrades.\n\nInstead of being a standard animation, this Expression begins a mini game of Hide and Seek. When selected, a Hide and Seek icon (<:hidenseekpioneer:1205914575447527436>) appears over your avatar's head, inviting all nearby players to join the game by clicking on the icon. The player who starts the game is always the seeker. Everyone else is told to hide while a timer counts down to the start of the game. The seeker then has a limited amount of time to find the hidden players and tap on them. Honking and Deep Calls do not show any hidden players to the seeker for the duration of the game.",
-          image:
-            "HidenSeek_Hide_and_Seek.gif",
+          image: "HidenSeek_Hide_and_Seek.gif",
         },
       ],
     },
@@ -501,31 +434,26 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Pouty Porter Infographics by Ed.7",
-      image:
-        "Pouty-Porter-Guide-777-Ed.png",
+      image: "Pouty-Porter-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:poutyporter:1205914557579788298>",
       level: [
         {
           title: '"Angry Emote" Level 1',
-          image:
-            "Pouty-Porter-Angry_Level_1.gif",
+          image: "Pouty-Porter-Angry_Level_1.gif",
         },
         {
           title: '"Angry Emote" Level 2',
-          image:
-            "Pouty_Porter_Angry_Level_2.gif",
+          image: "Pouty_Porter_Angry_Level_2.gif",
         },
         {
           title: '"Angry Emote" Level 3',
-          image:
-            "Pouty_Porter_Angry_Level_3.gif",
+          image: "Pouty_Porter_Angry_Level_3.gif",
         },
         {
           title: '"Angry Emote" Level 4',
-          image:
-            "Pouty_Porter_Angry_Level_4.gif",
+          image: "Pouty_Porter_Angry_Level_4.gif",
         },
       ],
     },
@@ -536,31 +464,26 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Shivering Trailblazer Infographics by Ed.7",
-      image:
-        "Shivering-Trailblazer-Guide-777-Ed.png",
+      image: "Shivering-Trailblazer-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:shiveringtrailblazer:1205914480601595954>",
       level: [
         {
           title: '"Shiver Emote" Level 1',
-          image:
-            "Shivering_Trailblazer_Shiver_Level_1.gif",
+          image: "Shivering_Trailblazer_Shiver_Level_1.gif",
         },
         {
           title: '"Shiver Emote" Level 2',
-          image:
-            "Shivering_Trailblazer_Shiver_Level_2.gif",
+          image: "Shivering_Trailblazer_Shiver_Level_2.gif",
         },
         {
           title: '"Shiver Emote" Level 3',
-          image:
-            "Shivering_Trailblazer_Shiver_Level_3.gif",
+          image: "Shivering_Trailblazer_Shiver_Level_3.gif",
         },
         {
           title: '"Shiver Emote" Level 4',
-          image:
-            "Shivering_Trailblazer_Shiver_Level_4.gif",
+          image: "Shivering_Trailblazer_Shiver_Level_4.gif",
         },
       ],
     },
@@ -571,41 +494,34 @@ module.exports = {
     realm: "Hidden Forest",
     main: {
       description: "Tearful Light Miner Infographics by Ed.7",
-      image:
-        "Tearful-Light-Miner-Guide-777-Ed.png",
+      image: "Tearful-Light-Miner-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:tearfullightminer:1205914519575076915>",
       level: [
         {
           title: '"Crying Emote" Level 1',
-          image:
-            "Tearful_Light_Miner_Crying_Level_1.gif",
+          image: "Tearful_Light_Miner_Crying_Level_1.gif",
         },
         {
           title: '"Crying Emote" Level 2',
-          image:
-            "Tearful_Light_Miner_Crying_Level_2.gif",
+          image: "Tearful_Light_Miner_Crying_Level_2.gif",
         },
         {
           title: '"Crying Emote" Level 3',
-          image:
-            "Tearful_Light_Miner_Crying_Level_3.gif",
+          image: "Tearful_Light_Miner_Crying_Level_3.gif",
         },
         {
           title: '"Crying Emote" Level 4',
-          image:
-            "Tearful_Light_Miner_Crying_Level_4.gif",
+          image: "Tearful_Light_Miner_Crying_Level_4.gif",
         },
         {
           title: '"Crying Emote" Level 5',
-          image:
-            "Tearful_Light_Miner_Crying_Level_5.gif",
+          image: "Tearful_Light_Miner_Crying_Level_5.gif",
         },
         {
           title: '"Crying Emote" Level 6',
-          image:
-            "Tearful_Light_Miner_Crying_Level_6.gif",
+          image: "Tearful_Light_Miner_Crying_Level_6.gif",
         },
       ],
     },
@@ -621,8 +537,7 @@ module.exports = {
     call: {
       title: "Whale Call",
       icon: "<:whalewhisperer:1205914501241765918>",
-      image:
-        "Whale_Call-1.mp4",
+      image: "Whale_Call-1.mp4",
     },
   },
 
@@ -634,31 +549,26 @@ module.exports = {
     main: {
       description: "Backflipping Champion Infographics by Ed.7",
       total: " ",
-      image:
-        "Backflipping-Champion-Guide-777-Ed.webp",
+      image: "Backflipping-Champion-Guide-777-Ed.webp",
     },
     emote: {
       icon: "<:backflippingchampion:1205914746977779762>",
       level: [
         {
           title: '"Backflip Emote" Level 1',
-          image:
-            "Backflipping_Champion_Backflip_Level_1.gif",
+          image: "Backflipping_Champion_Backflip_Level_1.gif",
         },
         {
           title: '"Backflip Emote" Level 2',
-          image:
-            "Backflipping_Champion_Backflip_Level_2.gif",
+          image: "Backflipping_Champion_Backflip_Level_2.gif",
         },
         {
           title: '"Backflip Emote" Level 3',
-          image:
-            "Backflipping_Champion_Backflip_Level_3.gif",
+          image: "Backflipping_Champion_Backflip_Level_3.gif",
         },
         {
           title: '"Backflip Emote" Level 4',
-          image:
-            "Backflipping_Champion_Backflip_Level_4.gif",
+          image: "Backflipping_Champion_Backflip_Level_4.gif",
         },
       ],
     },
@@ -669,31 +579,26 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Bowing Medalist Infographics by Ed.7",
-      image:
-        "Bowing-Medalist-Guide-777-Ed.png",
+      image: "Bowing-Medalist-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:bowingmedalist:1205914729130885130> ",
       level: [
         {
           title: '"Bow Emote" Level 1',
-          image:
-            "Bowing_Medalist_Bow_Level_1.gif",
+          image: "Bowing_Medalist_Bow_Level_1.gif",
         },
         {
           title: '"Bow Emote" Level 2',
-          image:
-            "Bowing_Medalist_Bow_Level_2.gif",
+          image: "Bowing_Medalist_Bow_Level_2.gif",
         },
         {
           title: '"Bow Emote" Level 3',
-          image:
-            "Bowing_Medalist_Bow_Level_3.gif",
+          image: "Bowing_Medalist_Bow_Level_3.gif",
         },
         {
           title: '"Bow Emote" Level 4',
-          image:
-            "Bowing_Medalist_Bow_Level_4.gif",
+          image: "Bowing_Medalist_Bow_Level_4.gif",
         },
       ],
     },
@@ -704,31 +609,26 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Cheerful Spectator Infographics by Ed.7",
-      image:
-        "Cheerful-Spectator-Guide-777-Ed.png",
+      image: "Cheerful-Spectator-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:cheerfulspectator:1205914711745626122>",
       level: [
         {
           title: '"Cheer Emote" Level 1',
-          image:
-            "Cheerful_Spectator_Cheer_Level_1.gif",
+          image: "Cheerful_Spectator_Cheer_Level_1.gif",
         },
         {
           title: '"Cheer Emote" Level 2',
-          image:
-            "Cheerful_Spectator_Cheer_Level_2.gif",
+          image: "Cheerful_Spectator_Cheer_Level_2.gif",
         },
         {
           title: '"Cheer Emote" Level 3',
-          image:
-            "Cheerful_Spectator_Cheer_Level_3.gif",
+          image: "Cheerful_Spectator_Cheer_Level_3.gif",
         },
         {
           title: '"Cheer Emote" Level 4',
-          image:
-            "Cheerful_Spectator_Cheer_Level_4.gif",
+          image: "Cheerful_Spectator_Cheer_Level_4.gif",
         },
       ],
     },
@@ -739,8 +639,7 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Confident Sightseer Infographics by Ed.7",
-      image:
-        "Confident-Sightseer-Guide-777-Ed.png",
+      image: "Confident-Sightseer-Guide-777-Ed.png",
     },
     stance: {
       title: "Confident Stance",
@@ -754,31 +653,26 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Handstanding Thrillseeker Infographics by Ed.7",
-      image:
-        "Handstanding-Thrillseeker-Guide-777-Ed.png",
+      image: "Handstanding-Thrillseeker-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:handstandingthrillseeker:1205914674445422642>",
       level: [
         {
           title: '"Handstand Emote" Level 1',
-          image:
-            "Handstanding_Handstand_Level_1.gif",
+          image: "Handstanding_Handstand_Level_1.gif",
         },
         {
           title: '"Handstand Emote" Level 2',
-          image:
-            "Handstanding_Handstand_Level_2.gif",
+          image: "Handstanding_Handstand_Level_2.gif",
         },
         {
           title: '"Handstand Emote" Level 3',
-          image:
-            "Handstanding_Handstand_Level_3.gif",
+          image: "Handstanding_Handstand_Level_3.gif",
         },
         {
           title: '"Handstand Emote" Level 4',
-          image:
-            "Handstanding_Handstand_Level_4.gif",
+          image: "Handstanding_Handstand_Level_4.gif",
         },
       ],
     },
@@ -789,8 +683,7 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Manta Whisperer Infographics by Ed.7",
-      image:
-        "Manta-Whisperer-Guide-777-Ed.png",
+      image: "Manta-Whisperer-Guide-777-Ed.png",
     },
     call: {
       title: "Manta Call",
@@ -804,8 +697,7 @@ module.exports = {
     realm: "Valley of Triumph",
     main: {
       description: "Proud Victor Infographics by Ed.7",
-      image:
-        "Proud-Victor-Guide-777-Ed.webp",
+      image: "Proud-Victor-Guide-777-Ed.webp",
     },
     stance: {
       title: "Proud Stance",
@@ -821,8 +713,7 @@ module.exports = {
     realm: "Golden Wasteland",
     main: {
       description: "Courageous Soldier Infographics by Ed.7",
-      image:
-        "Courageous-Soldier-Guide-777-Ed.png",
+      image: "Courageous-Soldier-Guide-777-Ed.png",
     },
     stance: {
       title: "Courageous Stance",
@@ -836,31 +727,26 @@ module.exports = {
     realm: "Golden Wasteland",
     main: {
       description: "Fainting Warrior Infographics by Ed.7",
-      image:
-        "Fainting-Warrior-Guide-777-Ed.png",
+      image: "Fainting-Warrior-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:faintingwarrior:1205914837360840714>",
       level: [
         {
           title: '"Faint Emote" Level 1',
-          image:
-            "Fainting_Warrior_Faint_Level_1.gif",
+          image: "Fainting_Warrior_Faint_Level_1.gif",
         },
         {
           title: '"Faint Emote" Level 2',
-          image:
-            "Fainting_Warrior_Faint_Level_2.gif",
+          image: "Fainting_Warrior_Faint_Level_2.gif",
         },
         {
           title: '"Faint Emote" Level 3',
-          image:
-            "Fainting_Warrior_Faint_Level_3.gif",
+          image: "Fainting_Warrior_Faint_Level_3.gif",
         },
         {
           title: '"Faint Emote" Level 4',
-          image:
-            "Fainting_Warrior_Faint_Level_4.gif",
+          image: "Fainting_Warrior_Faint_Level_4.gif",
         },
       ],
     },
@@ -871,31 +757,26 @@ module.exports = {
     realm: "Golden Wasteland",
     main: {
       description: "Frightened Refugee Infographics by Ed.7",
-      image:
-        "Frightened-Refugee-Guide-777-Ed.png",
+      image: "Frightened-Refugee-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:frightenedrefuge:1205914818134155294>",
       level: [
         {
           title: '"Duck Emote" Level 1',
-          image:
-            "Frightened_Refugee_Duck_Level_1.gif",
+          image: "Frightened_Refugee_Duck_Level_1.gif",
         },
         {
           title: '"Duck Emote" Level 2',
-          image:
-            "Frightened_Refugee_Duck_Level_2.gif",
+          image: "Frightened_Refugee_Duck_Level_2.gif",
         },
         {
           title: '"Duck Emote" Level 3',
-          image:
-            "Frightened_Refugee_Duck_Level_3.gif",
+          image: "Frightened_Refugee_Duck_Level_3.gif",
         },
         {
           title: '"Duck Emote" Level 4',
-          image:
-            "Frightened_Refugee_Duck_Level_4.gif",
+          image: "Frightened_Refugee_Duck_Level_4.gif",
         },
       ],
     },
@@ -906,31 +787,26 @@ module.exports = {
     realm: "Golden Wasteland",
     main: {
       description: "Looking Scout Infographics by Ed.7",
-      image:
-        "Lookout-Scout-Guide-777-Ed.png",
+      image: "Lookout-Scout-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:lookoutscout:1205914800161558550>",
       level: [
         {
           title: '"Lookout Emote" Level 1',
-          image:
-            "Looking_Scout_Look_Around_Level_1.gif",
+          image: "Looking_Scout_Look_Around_Level_1.gif",
         },
         {
           title: '"Lookout Emote" Level 2',
-          image:
-            "Looking_Scout_Look_Around_Level_2.gif",
+          image: "Looking_Scout_Look_Around_Level_2.gif",
         },
         {
           title: '"Lookout Emote" Level 3',
-          image:
-            "Looking_Scout_Look_Around_Level_3.gif",
+          image: "Looking_Scout_Look_Around_Level_3.gif",
         },
         {
           title: '"Lookout Emote" Level 4',
-          image:
-            "Looking_Scout_Look_Around_Level_4.gif",
+          image: "Looking_Scout_Look_Around_Level_4.gif",
         },
       ],
     },
@@ -941,31 +817,26 @@ module.exports = {
     realm: "Golden Wasteland",
     main: {
       description: "Saluting Captain Infographics by Ed.7",
-      image:
-        "Saluting-Captain-Guide-777-Ed.png",
+      image: "Saluting-Captain-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:salutingcaptian:1205914782998335649>",
       level: [
         {
           title: '"Salute Emote" Level 1',
-          image:
-            "Saluting_Captain_Salute_Level_1.gif",
+          image: "Saluting_Captain_Salute_Level_1.gif",
         },
         {
           title: '"Salute Emote" Level 2',
-          image:
-            "Saluting_Captain_Salute_Level_2.gif",
+          image: "Saluting_Captain_Salute_Level_2.gif",
         },
         {
           title: '"Salute Emote" Level 3',
-          image:
-            "Saluting_Captain_Salute_Level_3.gif",
+          image: "Saluting_Captain_Salute_Level_3.gif",
         },
         {
           title: '"Salute Emote" Level 4',
-          image:
-            "Saluting_Captain_Salute_Level_4.gif",
+          image: "Saluting_Captain_Salute_Level_4.gif",
         },
       ],
     },
@@ -976,8 +847,7 @@ module.exports = {
     realm: "Golden Wasteland",
     main: {
       description: "Stealthy Survivor Infographics by Ed.7",
-      image:
-        "Stealthy-Survivor-Guide-777-Ed.png",
+      image: "Stealthy-Survivor-Guide-777-Ed.png",
     },
     stance: {
       title: "Sneaky Stance",
@@ -993,31 +863,26 @@ module.exports = {
     realm: "Vault of Knowledge",
     main: {
       description: "Levitating Adept Infographics by Ed.7",
-      image:
-        "Levitating-Adept-Guide-777-Ed.png",
+      image: "Levitating-Adept-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:levitatingadept:1205914962921525269>",
       level: [
         {
           title: '"Telekinesis Emote" Level 1',
-          image:
-            "Levitating_Adept_Telekinesis_Level_1.gif",
+          image: "Levitating_Adept_Telekinesis_Level_1.gif",
         },
         {
           title: '"Telekinesis Emote" Level 2',
-          image:
-            "Levitating_Adept_Telekinesis_Level_2.gif",
+          image: "Levitating_Adept_Telekinesis_Level_2.gif",
         },
         {
           title: '"Telekinesis Emote" Level 3',
-          image:
-            "Levitating_Adept_Telekinesis_Level_3.gif",
+          image: "Levitating_Adept_Telekinesis_Level_3.gif",
         },
         {
           title: '"Telekinesis Emote" Level 4',
-          image:
-            "Levitating_Adept_Telekinesis_Level_4.gif",
+          image: "Levitating_Adept_Telekinesis_Level_4.gif",
         },
       ],
     },
@@ -1028,31 +893,26 @@ module.exports = {
     realm: "Vault of Knowledge",
     main: {
       description: "Meditating Monastic Infographics by Ed.7",
-      image:
-        "Meditating-Monastic-Guide-777-Ed.png",
+      image: "Meditating-Monastic-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:meditatingmonastic:1205914942193143808>",
       level: [
         {
           title: '"Float Emote" Level 1',
-          image:
-            "Meditating_Monastic_Float_Level_1.gif",
+          image: "Meditating_Monastic_Float_Level_1.gif",
         },
         {
           title: '"Float Emote" Level 2',
-          image:
-            "Meditating_Monastic_Float_Level_2.gif",
+          image: "Meditating_Monastic_Float_Level_2.gif",
         },
         {
           title: '"Float Emote" Level 3',
-          image:
-            "Meditating_Monastic_Float_Level_3.gif",
+          image: "Meditating_Monastic_Float_Level_3.gif",
         },
         {
           title: '"Float Emote" Level 4',
-          image:
-            "Meditating_Monastic_Float_Level_4.gif",
+          image: "Meditating_Monastic_Float_Level_4.gif",
         },
       ],
     },
@@ -1063,8 +923,7 @@ module.exports = {
     realm: "Vault of Knowledge",
     main: {
       description: "Memory Whisperer Infographics by Ed.7",
-      image:
-        "Memory-Whisperer-Guide-777-Ed.png",
+      image: "Memory-Whisperer-Guide-777-Ed.png",
     },
     call: {
       title: "Cosmic Manta Call",
@@ -1078,8 +937,7 @@ module.exports = {
     realm: "Vault of Knowledge",
     main: {
       description: "Polite Scholar Infographics by Ed.7",
-      image:
-        "Polite-Scholar-Guide-777-Ed.png",
+      image: "Polite-Scholar-Guide-777-Ed.png",
     },
     stance: {
       title: "Polite Stance",
@@ -1093,31 +951,26 @@ module.exports = {
     realm: "Vault of Knowledge",
     main: {
       description: "Praying Acolyte Infographics by Ed.7",
-      image:
-        "Praying-Acolyte-Guide-777-Ed.png",
+      image: "Praying-Acolyte-Guide-777-Ed.png",
     },
     emote: {
       icon: "<:prayinacolite:1205914871783235684>",
       level: [
         {
           title: '"Pray Emote" Level 1',
-          image:
-            "Praying_Acolyte_Pray_Level_1.gif",
+          image: "Praying_Acolyte_Pray_Level_1.gif",
         },
         {
           title: '"Pray Emote" Level 2',
-          image:
-            "Praying_Acolyte_Pray_Level_2.gif",
+          image: "Praying_Acolyte_Pray_Level_2.gif",
         },
         {
           title: '"Pray Emote" Level 3',
-          image:
-            "Praying_Acolyte_Pray_Level_3.gif",
+          image: "Praying_Acolyte_Pray_Level_3.gif",
         },
         {
           title: '"Pray Emote" Level 4',
-          image:
-            "Praying_Acolyte_Pray_Level_4.gif",
+          image: "Praying_Acolyte_Pray_Level_4.gif",
         },
       ],
     },
@@ -1137,14 +990,12 @@ module.exports = {
     tree: {
       by: "Mimi and Sam",
       total: " ",
-      image:
-        "Hunter-Tree_Mimi.jpg",
+      image: "Hunter-Tree_Mimi.jpg",
     },
     location: {
       by: "EM",
       description: "How to reach Crescent Oasis by Clement",
-      image:
-        "Deer_Spirits_Location_Em_Clement.jpg",
+      image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1152,23 +1003,19 @@ module.exports = {
       level: [
         {
           title: '"Flex" Emote Level 1',
-          image:
-            "Hunter-flex-emote-level-1.gif",
+          image: "Hunter-flex-emote-level-1.gif",
         },
         {
           title: '"Flex" Emote Level 2',
-          image:
-            "Hunter-flex-emote-level-2.gif",
+          image: "Hunter-flex-emote-level-2.gif",
         },
         {
           title: '"Flex" Emote Level 3',
-          image:
-            "Hunter-flex-emote-level-3.gif",
+          image: "Hunter-flex-emote-level-3.gif",
         },
         {
           title: '"Flex" Emote Level 4',
-          image:
-            "Hunter-flex-emote-level-4.gif",
+          image: "Hunter-flex-emote-level-4.gif",
         },
       ],
     },
@@ -1186,14 +1033,12 @@ module.exports = {
     tree: {
       by: "Mimi and Sam",
       total: " ",
-      image:
-        "Princess-tree_Mimi.jpg",
+      image: "Princess-tree_Mimi.jpg",
     },
     location: {
       by: "EM",
       description: "How to reach Crescent Oasis by Clement",
-      image:
-        "Deer_Spirits_Location_Em_Clement.jpg",
+      image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1201,23 +1046,19 @@ module.exports = {
       level: [
         {
           title: '"Float Spin" Emote Level 1',
-          image:
-            "Princess-float-spin-emote-level-1_1.gif",
+          image: "Princess-float-spin-emote-level-1_1.gif",
         },
         {
           title: '"Float Spin" Emote Level 1',
-          image:
-            "Princess-float-spin-emote-level-2.gif",
+          image: "Princess-float-spin-emote-level-2.gif",
         },
         {
           title: '"Float Spin" Emote Level 1',
-          image:
-            "Princess-float-spin-emote-level-3.gif",
+          image: "Princess-float-spin-emote-level-3.gif",
         },
         {
           title: '"Float Spin" Emote Level 1',
-          image:
-            "Princess-float-spin-emote-level-4.gif",
+          image: "Princess-float-spin-emote-level-4.gif",
         },
       ],
     },
@@ -1235,14 +1076,12 @@ module.exports = {
     tree: {
       by: "Mimi and Sam",
       total: " ",
-      image:
-        "Feudal_Lord_Tree_Mimi.jpg",
+      image: "Feudal_Lord_Tree_Mimi.jpg",
     },
     location: {
       by: "EM",
       description: "How to reach Crescent Oasis by Clement",
-      image:
-        "Deer_Spirits_Location_Em_Clement.jpg",
+      image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -1250,13 +1089,11 @@ module.exports = {
       level: [
         {
           title: '"Cradle Carry" Friend Action Level 1',
-          image:
-            "Feudal-Lord-cradle-carry-emote-level-1.gif",
+          image: "Feudal-Lord-cradle-carry-emote-level-1.gif",
         },
         {
           title: '"Cradle Carry" Friend Action Level 2',
-          image:
-            "Feudal-Lord-cradle-carry-emote-level-2.gif",
+          image: "Feudal-Lord-cradle-carry-emote-level-2.gif",
         },
       ],
     },
@@ -1274,14 +1111,12 @@ module.exports = {
     tree: {
       by: "Mimi and Sam",
       total: " ",
-      image:
-        "Herb_Gatherer_Tree_Mimi.jpg",
+      image: "Herb_Gatherer_Tree_Mimi.jpg",
     },
     location: {
       by: "EM",
       description: "How to reach Crescent Oasis by Clement",
-      image:
-        "Deer_Spirits_Location_Em_Clement.jpg",
+      image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1289,23 +1124,19 @@ module.exports = {
       level: [
         {
           title: '"Whistle" Emote Level 1',
-          image:
-            "Herb-Gatherer-whistle-emote-level-1.gif",
+          image: "Herb-Gatherer-whistle-emote-level-1.gif",
         },
         {
           title: '"Whistle" Emote Level 2',
-          image:
-            "Herb-Gatherer-whistle-emote-level-2.gif",
+          image: "Herb-Gatherer-whistle-emote-level-2.gif",
         },
         {
           title: '"Whistle" Emote Level 3',
-          image:
-            "Herb-Gatherer-whistle-emote-level-3.gif",
+          image: "Herb-Gatherer-whistle-emote-level-3.gif",
         },
         {
           title: '"Whistle" Emote Level 4',
-          image:
-            "Herb-Gatherer-whistle-emote-level-4.gif",
+          image: "Herb-Gatherer-whistle-emote-level-4.gif",
         },
       ],
     },
@@ -1324,8 +1155,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Forgotten_Haven_Seasonal_Chart_Clement.jpg",
+      image: "Forgotten_Haven_Seasonal_Chart_Clement.jpg",
     },
     cosmetics: [{}],
   },
@@ -1341,8 +1171,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Abandoned_Refuge_Seasonal_Chart_Clement.jpg",
+      image: "Abandoned_Refuge_Seasonal_Chart_Clement.jpg",
     },
     cosmetics: [{}],
   },
@@ -1358,8 +1187,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Lost_Village_Seasonal_Chart_Clement.jpg",
+      image: "Lost_Village_Seasonal_Chart_Clement.jpg",
     },
     cosmetics: [{}],
   },
@@ -1375,8 +1203,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Deserted_Oasis_Seasonal_Chart_Clement.jpg",
+      image: "Deserted_Oasis_Seasonal_Chart_Clement.jpg",
     },
     cosmetics: [{}],
   },
@@ -1395,20 +1222,17 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Nightbird_Seasonal_Chart_NyR.png",
+      image: "Nightbird_Seasonal_Chart_NyR.png",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Moments_Spirits_Location_Mimi.jpg",
+      image: "Moments_Spirits_Location_Mimi.jpg",
     },
     cosmetics: [{}],
     call: {
       title: "Nightbird Call",
       icon: "<:nightbird:1130948807396429884>",
-      image:
-        "Nightbird_Call.mp4",
+      image: "Nightbird_Call.mp4",
     },
   },
   monk: {
@@ -1424,13 +1248,11 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Ascetic_Monk_Seasonal_Chart_NyR.png",
+      image: "Ascetic_Monk_Seasonal_Chart_NyR.png",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Moments_Spirits_Location_Mimi.jpg",
+      image: "Moments_Spirits_Location_Mimi.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1438,23 +1260,19 @@ module.exports = {
       level: [
         {
           title: '"Blindfold Balance" Emote Level 1',
-          image:
-            "Ascetic_Monk_Blindfold_Balance_LvL_1.gif",
+          image: "Ascetic_Monk_Blindfold_Balance_LvL_1.gif",
         },
         {
           title: '"Blindfold Balance" Emote Level 2',
-          image:
-            "Ascetic_Monk_Blindfold_Balance_LvL_2.gif",
+          image: "Ascetic_Monk_Blindfold_Balance_LvL_2.gif",
         },
         {
           title: '"Blindfold Balance" Emote Level 3',
-          image:
-            "Ascetic_Monk_Blindfold_Balance_LvL_3.gif",
+          image: "Ascetic_Monk_Blindfold_Balance_LvL_3.gif",
         },
         {
           title: '"Blindfold Balance" Emote Level 4',
-          image:
-            "Ascetic_Monk_Blindfold_Balance_LvL_4.gif",
+          image: "Ascetic_Monk_Blindfold_Balance_LvL_4.gif",
         },
       ],
     },
@@ -1472,13 +1290,11 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Jolly_Geologist_Seasonal_Chart_NyR.png",
+      image: "Jolly_Geologist_Seasonal_Chart_NyR.png",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Moments_Spirits_Location_Mimi.jpg",
+      image: "Moments_Spirits_Location_Mimi.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1486,23 +1302,19 @@ module.exports = {
       level: [
         {
           title: '"Jolly Dance" Emote Level 1',
-          image:
-            "Geologist_Jolly_Dance_LvL_1.gif",
+          image: "Geologist_Jolly_Dance_LvL_1.gif",
         },
         {
           title: '"Jolly Dance" Emote Level 2',
-          image:
-            "Geologist_Jolly_Dance_LvL_2.gif",
+          image: "Geologist_Jolly_Dance_LvL_2.gif",
         },
         {
           title: '"Jolly Dance" Emote Level 3',
-          image:
-            "Geologist_Jolly_Dance_LvL_3.gif",
+          image: "Geologist_Jolly_Dance_LvL_3.gif",
         },
         {
           title: '"Jolly Dance" Emote Level 4',
-          image:
-            "Geologist_Jolly_Dance_LvL_4.gif",
+          image: "Geologist_Jolly_Dance_LvL_4.gif",
         },
       ],
     },
@@ -1520,13 +1332,11 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Reassuring_Ranger_Seasonal_Chart_NyR.png",
+      image: "Reassuring_Ranger_Seasonal_Chart_NyR.png",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Moments_Spirits_Location_Mimi.jpg",
+      image: "Moments_Spirits_Location_Mimi.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -1534,13 +1344,11 @@ module.exports = {
       level: [
         {
           title: '"Sidehug" Friend Action Level 1',
-          image:
-            "Ranger_Side_Hug_LvL_1.gif",
+          image: "Ranger_Side_Hug_LvL_1.gif",
         },
         {
           title: '"Sidehug" Friend Action Level 2',
-          image:
-            "Ranger_Side_Hug_LvL_2.gif",
+          image: "Ranger_Side_Hug_LvL_2.gif",
         },
       ],
     },
@@ -1560,13 +1368,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Oddball_Outcast_Seasonal_Chart_Clement.jpg",
+      image: "Oddball_Outcast_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Passage_Spirits_Location_Clement.jpg",
+      image: "Passage_Spirits_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1574,23 +1380,19 @@ module.exports = {
       level: [
         {
           title: '"Hacky Sack" Emote Level 1',
-          image:
-            "Oddball_Hacky_Sack_Lvl_1.gif",
+          image: "Oddball_Hacky_Sack_Lvl_1.gif",
         },
         {
           title: '"Hacky Sack" Emote Level 2',
-          image:
-            "Oddball_Hacky_Sack_Lvl_2.gif",
+          image: "Oddball_Hacky_Sack_Lvl_2.gif",
         },
         {
           title: '"Hacky Sack" Emote Level 3',
-          image:
-            "Oddball_Hacky_Sack_Lvl_3.gif",
+          image: "Oddball_Hacky_Sack_Lvl_3.gif",
         },
         {
           title: '"Hacky Sack" Emote Level 4',
-          image:
-            "Oddball_Hacky_Sack_Lvl_4.gif",
+          image: "Oddball_Hacky_Sack_Lvl_4.gif",
         },
       ],
     },
@@ -1608,13 +1410,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Overacting_Overachiever_Seasonal_Chart_Clement.jpg",
+      image: "Overacting_Overachiever_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Passage_Spirits_Location_Clement.jpg",
+      image: "Passage_Spirits_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1622,23 +1422,19 @@ module.exports = {
       level: [
         {
           title: '"Pull-Up" Emote Level 1',
-          image:
-            "Overachiever_Pull-Up_Lvl_1.gif",
+          image: "Overachiever_Pull-Up_Lvl_1.gif",
         },
         {
           title: '"Pull-Up" Emote Level 2',
-          image:
-            "Overachiever_Pull-Up_Lvl_2.gif",
+          image: "Overachiever_Pull-Up_Lvl_2.gif",
         },
         {
           title: '"Pull-Up" Emote Level 3',
-          image:
-            "Overachiever_Pull-Up_Lvl_3.gif",
+          image: "Overachiever_Pull-Up_Lvl_3.gif",
         },
         {
           title: '"Pull-Up" Emote Level 4',
-          image:
-            "Overachiever_Pull-Up_Lvl_4.gif",
+          image: "Overachiever_Pull-Up_Lvl_4.gif",
         },
       ],
     },
@@ -1656,13 +1452,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Melancholy_Mope_Seasonal_Chart_Clement.jpg",
+      image: "Melancholy_Mope_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Passage_Spirits_Location_Clement.jpg",
+      image: "Passage_Spirits_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1670,23 +1464,19 @@ module.exports = {
       level: [
         {
           title: '"Moping" Emote Level 1',
-          image:
-            "Melancholy_Mope_Moping_LvL_1.gif",
+          image: "Melancholy_Mope_Moping_LvL_1.gif",
         },
         {
           title: '"Moping" Emote Level 2',
-          image:
-            "Melancholy_Mope_Moping_LvL_2.gif",
+          image: "Melancholy_Mope_Moping_LvL_2.gif",
         },
         {
           title: '"Moping" Emote Level 3',
-          image:
-            "Melancholy_Mope_Moping_LvL_3.gif",
+          image: "Melancholy_Mope_Moping_LvL_3.gif",
         },
         {
           title: '"Moping" Emote Level 4',
-          image:
-            "Melancholy_Mope_Moping_LvL_4.gif",
+          image: "Melancholy_Mope_Moping_LvL_4.gif",
         },
       ],
     },
@@ -1704,13 +1494,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Tumbling_Troublemaker_Seasonal_Chart_Clement.jpg",
+      image: "Tumbling_Troublemaker_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Passage_Spirits_Location_Clement.jpg",
+      image: "Passage_Spirits_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -1718,23 +1506,19 @@ module.exports = {
       level: [
         {
           title: '"Somersault" Emote Level 1',
-          image:
-            "Troublemaker_Somersault_LvL_1.gif",
+          image: "Troublemaker_Somersault_LvL_1.gif",
         },
         {
           title: '"Somersault" Emote Level 2',
-          image:
-            "Troublemaker_Somersault_LvL_2.gif",
+          image: "Troublemaker_Somersault_LvL_2.gif",
         },
         {
           title: '"Somersault" Emote Level 3',
-          image:
-            "Troublemaker_Somersault_LvL_3.gif",
+          image: "Troublemaker_Somersault_LvL_3.gif",
         },
         {
           title: '"Somersault" Emote Level 4',
-          image:
-            "Troublemaker_Somersault_LvL_4.gif",
+          image: "Troublemaker_Somersault_LvL_4.gif",
         },
       ],
     },
@@ -1754,13 +1538,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Wounded_Warrior_Seasonal_Chart_Clement.jpg",
+      image: "Wounded_Warrior_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Remembrance_Spirits_Location_Mimi.png",
+      image: "Remembrance_Spirits_Location_Mimi.png",
     },
     cosmetics: [{}],
     stance: {
@@ -1782,13 +1564,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Pleading_Child_Seasonal_Chart_Clement.jpg",
+      image: "Pleading_Child_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Remembrance_Spirits_Location_Mimi.png",
+      image: "Remembrance_Spirits_Location_Mimi.png",
     },
     cosmetics: [{}],
     emote: {
@@ -1796,23 +1576,19 @@ module.exports = {
       level: [
         {
           title: '"Pleading" Emote Level 1',
-          image:
-            "Pleading_Child_Pleading_Lvl_1.gif",
+          image: "Pleading_Child_Pleading_Lvl_1.gif",
         },
         {
           title: '"Pleading" Emote Level 2',
-          image:
-            "Pleading_Child_Pleading_Lvl_2.gif",
+          image: "Pleading_Child_Pleading_Lvl_2.gif",
         },
         {
           title: '"Pleading" Emote Level 3',
-          image:
-            "Pleading_Child_Pleading_Lvl_3.gif",
+          image: "Pleading_Child_Pleading_Lvl_3.gif",
         },
         {
           title: '"Pleading" Emote Level 4',
-          image:
-            "Pleading_Child_Pleading_Lvl_4.gif",
+          image: "Pleading_Child_Pleading_Lvl_4.gif",
         },
       ],
     },
@@ -1830,13 +1606,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Bereft_Veteran_Seasonal_Chart_Clement.jpg",
+      image: "Bereft_Veteran_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Remembrance_Spirits_Location_Mimi.png",
+      image: "Remembrance_Spirits_Location_Mimi.png",
     },
     cosmetics: [{}],
     emote: {
@@ -1844,23 +1618,19 @@ module.exports = {
       level: [
         {
           title: '"Grieving" Emote Level 1',
-          image:
-            "Veteran_Grieving_LvL_1.gif",
+          image: "Veteran_Grieving_LvL_1.gif",
         },
         {
           title: '"Grieving" Emote Level 2',
-          image:
-            "Veteran_Grieving_LvL_2.gif",
+          image: "Veteran_Grieving_LvL_2.gif",
         },
         {
           title: '"Grieving" Emote Level 3',
-          image:
-            "Veteran_Grieving_LvL_3.gif",
+          image: "Veteran_Grieving_LvL_3.gif",
         },
         {
           title: '"Grieving" Emote Level 4',
-          image:
-            "Veteran_Grieving_LvL_4.gif",
+          image: "Veteran_Grieving_LvL_4.gif",
         },
       ],
     },
@@ -1878,13 +1648,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Tea_Brewer_Seasonal_Chart_Clement.jpg",
+      image: "Tea_Brewer_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Mimi and Sam",
-      image:
-        "Remembrance_Spirits_Location_Mimi.png",
+      image: "Remembrance_Spirits_Location_Mimi.png",
     },
     cosmetics: [{}],
     emote: {
@@ -1892,23 +1660,19 @@ module.exports = {
       level: [
         {
           title: '"Tiptoeing" Emote Level 1',
-          image:
-            "Teamaker_Tiptoeing_Lvl_1.gif",
+          image: "Teamaker_Tiptoeing_Lvl_1.gif",
         },
         {
           title: '"Tiptoeing" Emote Level 2',
-          image:
-            "Teamaker_Tiptoeing_Lvl_2.gif",
+          image: "Teamaker_Tiptoeing_Lvl_2.gif",
         },
         {
           title: '"Tiptoeing" Emote Level 3',
-          image:
-            "Teamaker_Tiptoeing_Lvl_3.gif",
+          image: "Teamaker_Tiptoeing_Lvl_3.gif",
         },
         {
           title: '"Tiptoeing" Emote Level 4',
-          image:
-            "Teamaker_Tiptoeing_Lvl_4.gif",
+          image: "Teamaker_Tiptoeing_Lvl_4.gif",
         },
       ],
     },
@@ -1928,13 +1692,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Warrior_of_Love_Seasonal_Chart_Clement.jpg",
+      image: "Warrior_of_Love_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Zed",
-      image:
-        "AURORA_Location_Zed.png",
+      image: "AURORA_Location_Zed.png",
     },
     cosmetics: [{}],
     emote: {
@@ -1942,23 +1704,19 @@ module.exports = {
       level: [
         {
           title: '"Twirl" Emote Level 1',
-          image:
-            "Warrior_of_Love_Twirl_Lvl_1.gif",
+          image: "Warrior_of_Love_Twirl_Lvl_1.gif",
         },
         {
           title: '"Twirl" Emote Level 2',
-          image:
-            "Warrior_of_Love_Twirl_Lvl_2.gif",
+          image: "Warrior_of_Love_Twirl_Lvl_2.gif",
         },
         {
           title: '"Twirl" Emote Level 3',
-          image:
-            "Warrior_of_Love_Twirl_Lvl_3.gif",
+          image: "Warrior_of_Love_Twirl_Lvl_3.gif",
         },
         {
           title: '"Twirl" Emote Level 4',
-          image:
-            "Warrior_of_Love_Twirl_Lvl_4.gif",
+          image: "Warrior_of_Love_Twirl_Lvl_4.gif",
         },
       ],
     },
@@ -1976,13 +1734,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Seed_of_Hope_Seasonal_Chart_Clement.jpg",
+      image: "Seed_of_Hope_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Zed",
-      image:
-        "AURORA_Location_Zed.png",
+      image: "AURORA_Location_Zed.png",
     },
     cosmetics: [{}],
     emote: {
@@ -1990,23 +1746,19 @@ module.exports = {
       level: [
         {
           title: '"Rhythmic Clap" Emote Level 1',
-          image:
-            "Seed_of_Hope_Rhythmic_Clap_Lvl_1.gif",
+          image: "Seed_of_Hope_Rhythmic_Clap_Lvl_1.gif",
         },
         {
           title: '"Rhythmic Clap" Emote Level 2',
-          image:
-            "Seed_of_Hope_Rhythmic_Clap_Lvl_2.gif",
+          image: "Seed_of_Hope_Rhythmic_Clap_Lvl_2.gif",
         },
         {
           title: '"Rhythmic Clap" Emote Level 3',
-          image:
-            "Seed_of_Hope_Rhythmic_Clap_Lvl_3.gif",
+          image: "Seed_of_Hope_Rhythmic_Clap_Lvl_3.gif",
         },
         {
           title: '"Rhythmic Clap" Emote Level 4',
-          image:
-            "Seed_of_Hope_Rhythmic_Clap_Lvl_4.gif",
+          image: "Seed_of_Hope_Rhythmic_Clap_Lvl_4.gif",
         },
       ],
     },
@@ -2024,13 +1776,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Running_Wayfarer_Seasonal_Chart_Clement.jpg",
+      image: "Running_Wayfarer_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Zed",
-      image:
-        "AURORA_Location_Zed.png",
+      image: "AURORA_Location_Zed.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2038,23 +1788,19 @@ module.exports = {
       level: [
         {
           title: '"Waving Light" Emote Level 1',
-          image:
-            "Running_Wayfarer-_Waving_Light_Level_1_.gif",
+          image: "Running_Wayfarer-_Waving_Light_Level_1_.gif",
         },
         {
           title: '"Waving Light" Emote Level 2',
-          image:
-            "Running_Wayfarer-_Waving_Light_Level_2.gif",
+          image: "Running_Wayfarer-_Waving_Light_Level_2.gif",
         },
         {
           title: '"Waving Light" Emote Level 3',
-          image:
-            "Running_Wayfarer-_Waving_Light_Level_3.gif",
+          image: "Running_Wayfarer-_Waving_Light_Level_3.gif",
         },
         {
           title: '"Waving Light" Emote Level 4',
-          image:
-            "Running_Wayfarer-_Waving_Light_Level_4.gif",
+          image: "Running_Wayfarer-_Waving_Light_Level_4.gif",
         },
       ],
     },
@@ -2072,13 +1818,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Mindful_Miner_Seasonal_Chart_Clement.jpg",
+      image: "Mindful_Miner_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "Zed",
-      image:
-        "AURORA_Location_Zed.png",
+      image: "AURORA_Location_Zed.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2086,23 +1830,19 @@ module.exports = {
       level: [
         {
           title: '"Raise the Roof" Emote Level 1',
-          image:
-            "Mindful-Miner-Raise-The-Roof-Emote_Lvl_1.gif",
+          image: "Mindful-Miner-Raise-The-Roof-Emote_Lvl_1.gif",
         },
         {
           title: '"Raise the Roof" Emote Level 2',
-          image:
-            "Mindful-Miner-Raise-The-Roof-Emote_Lvl_2.gif",
+          image: "Mindful-Miner-Raise-The-Roof-Emote_Lvl_2.gif",
         },
         {
           title: '"Raise the Roof" Emote Level 3',
-          image:
-            "Mindful-Miner-Raise-The-Roof-Emote_Lvl_3.gif",
+          image: "Mindful-Miner-Raise-The-Roof-Emote_Lvl_3.gif",
         },
         {
           title: '"Raise the Roof" Emote Level 4',
-          image:
-            "Mindful-Miner-Raise-The-Roof-Emote_Lvl_4.gif",
+          image: "Mindful-Miner-Raise-The-Roof-Emote_Lvl_4.gif",
         },
       ],
     },
@@ -2121,8 +1861,7 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Ancient_Darkness_Dark_Plant_Seasonal_Chart_NyR.png",
+      image: "Ancient_Darkness_Dark_Plant_Seasonal_Chart_NyR.png",
     },
     cosmetics: [{}],
   },
@@ -2138,8 +1877,7 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Ancient_Darkness_Dragon_Seasonal_chart_NyR.png",
+      image: "Ancient_Darkness_Dragon_Seasonal_chart_NyR.png",
     },
     cosmetics: [{}],
   },
@@ -2155,8 +1893,7 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Ancient_Light_Manta_Seasonal_Chart_NyR.png",
+      image: "Ancient_Light_Manta_Seasonal_Chart_NyR.png",
     },
     cosmetics: [{}],
   },
@@ -2172,8 +1909,7 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Ancient_Light_Jellyfish_Seasonal_Chart_NyR.png",
+      image: "Ancient_Light_Jellyfish_Seasonal_Chart_NyR.png",
     },
     cosmetics: [{}],
   },
@@ -2192,13 +1928,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Modest_Dancer_Seasonal_Chart_Clement.jpg",
+      image: "Modest_Dancer_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "SkyZed",
-      image:
-        "Modest_Dancer_Location_SkyZed.jpg",
+      image: "Modest_Dancer_Location_SkyZed.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -2206,13 +1940,11 @@ module.exports = {
       level: [
         {
           title: '"Duet Dance" Friemd Action Level 1',
-          image:
-            "Modest-Dancer-duet-dance-emote-level-1.gif",
+          image: "Modest-Dancer-duet-dance-emote-level-1.gif",
         },
         {
           title: '"Duet Dance" Friemd Action Level 2',
-          image:
-            "Modest-Dancer-duet-dance-emote-level-2.gif",
+          image: "Modest-Dancer-duet-dance-emote-level-2.gif",
         },
       ],
     },
@@ -2230,13 +1962,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Mellow_Musician_Seasonal_Chart_Clement.jpg",
+      image: "Mellow_Musician_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "SkyZed",
-      image:
-        "Mellow_Musician_Location_SkyZed.jpg",
+      image: "Mellow_Musician_Location_SkyZed.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2244,23 +1974,19 @@ module.exports = {
       level: [
         {
           title: '"Headbob" Emote Level 1',
-          image:
-            "Mellow-Musician-headbob-emote-level-1.gif",
+          image: "Mellow-Musician-headbob-emote-level-1.gif",
         },
         {
           title: '"Headbob" Emote Level 2',
-          image:
-            "Mellow-Musician-headbob-emote-level-2.gif",
+          image: "Mellow-Musician-headbob-emote-level-2.gif",
         },
         {
           title: '"Headbob" Emote Level 3',
-          image:
-            "Mellow-Musician-headbob-emote-level-3.gif",
+          image: "Mellow-Musician-headbob-emote-level-3.gif",
         },
         {
           title: '"Headbob" Emote Level 4',
-          image:
-            "Mellow-Musician-headbob-emote-level-4.gif",
+          image: "Mellow-Musician-headbob-emote-level-4.gif",
         },
       ],
     },
@@ -2278,13 +2004,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Frantic_Stagehand_Seasonal_Chart_Clement.jpg",
+      image: "Frantic_Stagehand_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "SkyZed",
-      image:
-        "Frantic_Stagehand_Location_SkyZed.jpg",
+      image: "Frantic_Stagehand_Location_SkyZed.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -2292,13 +2016,11 @@ module.exports = {
       level: [
         {
           title: '"Handshake" Friend Action Level 1',
-          image:
-            "Frantic_Stagehand_Handshake_Action_LvL_1.gif",
+          image: "Frantic_Stagehand_Handshake_Action_LvL_1.gif",
         },
         {
           title: '"Handshake" Friend Action Level 2',
-          image:
-            "Frantic_Stagehand_Handshake_Action_LvL_2.gif",
+          image: "Frantic_Stagehand_Handshake_Action_LvL_2.gif",
         },
       ],
     },
@@ -2316,13 +2038,11 @@ module.exports = {
     tree: {
       by: " Clement",
       total: " ",
-      image:
-        "Forgetful_Storyteller_Seasonal_Chart_Clement.jpg",
+      image: "Forgetful_Storyteller_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "SkyZed",
-      image:
-        "Storyteller_Location_SkyZed.jpg",
+      image: "Storyteller_Location_SkyZed.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2330,23 +2050,19 @@ module.exports = {
       level: [
         {
           title: '"Aww!" Emote Level 1',
-          image:
-            "Forgetful-Storyteller-awww-emote-level-1.gif",
+          image: "Forgetful-Storyteller-awww-emote-level-1.gif",
         },
         {
           title: '"Aww!" Emote Level 2',
-          image:
-            "Forgetful-Storyteller-awww-emote-level-2.gif",
+          image: "Forgetful-Storyteller-awww-emote-level-2.gif",
         },
         {
           title: '"Aww!" Emote Level 3',
-          image:
-            "Forgetful-Storyteller-awww-emote-level-3.gif",
+          image: "Forgetful-Storyteller-awww-emote-level-3.gif",
         },
         {
           title: '"Aww!" Emote Level 4',
-          image:
-            "Forgetful-Storyteller-awww-emote-level-4.gif",
+          image: "Forgetful-Storyteller-awww-emote-level-4.gif",
         },
       ],
     },
@@ -2366,13 +2082,11 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Ceasing_Commodore_Seasonal_Chart_NyR.png",
+      image: "Ceasing_Commodore_Seasonal_Chart_NyR.png",
     },
     location: {
       by: "SkyZed",
-      image:
-        "Ceasing_comodore_Location_SkyZed.png",
+      image: "Ceasing_comodore_Location_SkyZed.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2380,23 +2094,19 @@ module.exports = {
       level: [
         {
           title: '"Calm Down" Emote Level 1',
-          image:
-            "Ceasing-Commodore-calm-down-emote-level-1.gif",
+          image: "Ceasing-Commodore-calm-down-emote-level-1.gif",
         },
         {
           title: '"Calm Down" Emote Level 2',
-          image:
-            "Ceasing-Commodore-calm-down-emote-level-2.gif",
+          image: "Ceasing-Commodore-calm-down-emote-level-2.gif",
         },
         {
           title: '"Calm Down" Emote Level 3',
-          image:
-            "Ceasing-Commodore-calm-down-emote-level-3.gif",
+          image: "Ceasing-Commodore-calm-down-emote-level-3.gif",
         },
         {
           title: '"Calm Down" Emote Level 4',
-          image:
-            "Ceasing-Commodore-calm-down-emote-level-4.gif",
+          image: "Ceasing-Commodore-calm-down-emote-level-4.gif",
         },
       ],
     },
@@ -2413,15 +2123,12 @@ module.exports = {
     },
     tree: {
       by: "NyR",
-      total:
-        "188 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Cackling_Cannoner_Tree_NyR.png",
+      total: "188 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Cackling_Cannoner_Tree_NyR.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Cackling_Cannoneer_Location_Clement.png",
+      image: "Cackling_Cannoneer_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2429,23 +2136,19 @@ module.exports = {
       level: [
         {
           title: '"Evil Laugh" Emote Level 1',
-          image:
-            "Cackling-Cannoneer-evil-laugh-emote-level-1.gif",
+          image: "Cackling-Cannoneer-evil-laugh-emote-level-1.gif",
         },
         {
           title: '"Evil Laugh" Emote Level 2',
-          image:
-            "Cackling-Cannoneer-evil-laugh-emote-level-2.gif",
+          image: "Cackling-Cannoneer-evil-laugh-emote-level-2.gif",
         },
         {
           title: '"Evil Laugh" Emote Level 3',
-          image:
-            "Cackling-Cannoneer-evil-laugh-emote-level-3.gif",
+          image: "Cackling-Cannoneer-evil-laugh-emote-level-3.gif",
         },
         {
           title: '"Evil Laugh" Emote Level 4',
-          image:
-            "Cackling-Cannoneer-evil-laugh-emote-level-4.gif",
+          image: "Cackling-Cannoneer-evil-laugh-emote-level-4.gif",
         },
       ],
     },
@@ -2463,13 +2166,11 @@ module.exports = {
     tree: {
       by: "Clement",
       total: " ",
-      image:
-        "Bumbling_Boatswain_Seasonal_Chart_Clement.jpg",
+      image: "Bumbling_Boatswain_Seasonal_Chart_Clement.jpg",
     },
     location: {
       by: "SkyZed",
-      image:
-        "Bumbling_boatswain_Location_SkyZed.png",
+      image: "Bumbling_boatswain_Location_SkyZed.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2477,23 +2178,19 @@ module.exports = {
       level: [
         {
           title: '"Ouch!" Emote Level 1',
-          image:
-            "Bumbling-Boatswain-ouch-emote-level-1.gif",
+          image: "Bumbling-Boatswain-ouch-emote-level-1.gif",
         },
         {
           title: '"Ouch!" Emote Level 2',
-          image:
-            "Bumbling-Boatswain-ouch-emote-level-2.gif",
+          image: "Bumbling-Boatswain-ouch-emote-level-2.gif",
         },
         {
           title: '"Ouch!" Emote Level 3',
-          image:
-            "Bumbling-Boatswain-ouch-emote-level-3.gif",
+          image: "Bumbling-Boatswain-ouch-emote-level-3.gif",
         },
         {
           title: '"Ouch!" Emote Level 4',
-          image:
-            "Bumbling-Boatswain-ouch-emote-level-4.gif",
+          image: "Bumbling-Boatswain-ouch-emote-level-4.gif",
         },
       ],
     },
@@ -2510,15 +2207,12 @@ module.exports = {
     },
     tree: {
       by: "EM",
-      total:
-        "228 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Anxious_Angler_Tree_Em.jpg",
+      total: "228 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Anxious_Angler_Tree_Em.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Anxious_Angler_Location_Clement.jpg",
+      image: "Anxious_Angler_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2526,23 +2220,19 @@ module.exports = {
       level: [
         {
           title: '"Anxious" Emote Level 1',
-          image:
-            "Anxious-Angler-anxious-emote-level-1.gif",
+          image: "Anxious-Angler-anxious-emote-level-1.gif",
         },
         {
           title: '"Anxious" Emote Level 2',
-          image:
-            "Anxious-Angler-anxious-emote-level-2.gif",
+          image: "Anxious-Angler-anxious-emote-level-2.gif",
         },
         {
           title: '"Anxious" Emote Level 3',
-          image:
-            "Anxious-Angler-anxious-emote-level-3.gif",
+          image: "Anxious-Angler-anxious-emote-level-3.gif",
         },
         {
           title: '"Anxious" Emote Level 4',
-          image:
-            "Anxious-Angler-anxious-emote-level-4.gif",
+          image: "Anxious-Angler-anxious-emote-level-4.gif",
         },
       ],
     },
@@ -2561,15 +2251,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "238 :RegularCandle: 0 :RegularHeart: 2 :AC:",
-      image:
-        "Tinkering_Chimesmith_Tree_Clement.png",
+      total: "238 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Tinkering_Chimesmith_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Tinkering_Chimesmith_Location_Clement.png",
+      image: "Tinkering_Chimesmith_Location_Clement.png",
     },
     cosmetics: [{}],
     stance: {
@@ -2590,15 +2277,12 @@ module.exports = {
     },
     tree: {
       by: "Xander",
-      total:
-        "198 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Lively_Navigator_Tree_Xander.jpg",
+      total: "198 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Lively_Navigator_Tree_Xander.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Lively_Navigator_Location_Clement.jpg",
+      image: "Lively_Navigator_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2606,23 +2290,19 @@ module.exports = {
       level: [
         {
           title: '"Navigate" Emote Level 1',
-          image:
-            "Lively-Navigator-navigate-emote-level-1.gif",
+          image: "Lively-Navigator-navigate-emote-level-1.gif",
         },
         {
           title: '"Navigate" Emote Level 2',
-          image:
-            "Lively-Navigator-navigate-emote-level-2.gif",
+          image: "Lively-Navigator-navigate-emote-level-2.gif",
         },
         {
           title: '"Navigate" Emote Level 3',
-          image:
-            "Lively-Navigator-navigate-emote-level-3.gif",
+          image: "Lively-Navigator-navigate-emote-level-3.gif",
         },
         {
           title: '"Navigate" Emote Level 4',
-          image:
-            "Lively-Navigator-navigate-emote-level-4.gif",
+          image: "Lively-Navigator-navigate-emote-level-4.gif",
         },
       ],
     },
@@ -2635,18 +2315,16 @@ module.exports = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ['February 29, 2024 (#108)'],
+      dates: ["February 29, 2024 (#108)"],
     },
     tree: {
       by: "Kai Ji",
       total: "243 :RegularCandle: 0 :RegularHeart: 2 :AC: ",
-      image:
-        "Light_Whisperer_Tree_Kai-Ji.png",
+      image: "Light_Whisperer_Tree_Kai-Ji.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Light_Whisper_Location_Clement.png",
+      image: "Light_Whisper_Location_Clement.png",
     },
     cosmetics: [{}],
     call: {
@@ -2667,15 +2345,12 @@ module.exports = {
     },
     tree: {
       by: "Kontra",
-      total:
-        "183 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Talented_Builder_Tree_Kontra.png",
+      total: "183 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Talented_Builder_Tree_Kontra.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Talented_Builder_Location_Clement.png",
+      image: "Talented_Builder_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2683,23 +2358,19 @@ module.exports = {
       level: [
         {
           title: '"Voila!" Emote Level 1',
-          image:
-            "Talented-Builder-voila-emote-level-1.gif",
+          image: "Talented-Builder-voila-emote-level-1.gif",
         },
         {
           title: '"Voila!" Emote Level 2',
-          image:
-            "Talented-Builder-voila-emote-level-2.gif",
+          image: "Talented-Builder-voila-emote-level-2.gif",
         },
         {
           title: '"Voila!" Emote Level 3',
-          image:
-            "Talented-Builder-voila-emote-level-3.gif",
+          image: "Talented-Builder-voila-emote-level-3.gif",
         },
         {
           title: '"Voila!" Emote Level 4',
-          image:
-            "Talented-Builder-voila-emote-level-4.gif",
+          image: "Talented-Builder-voila-emote-level-4.gif",
         },
       ],
     },
@@ -2718,15 +2389,12 @@ module.exports = {
     },
     tree: {
       by: "EM",
-      total:
-        "127 :RegularCandle: 13:RegularHeart: 2 :AC: ",
-      image:
-        "Stretching_Lamplighter_Tree_Clement.jpg",
+      total: "127 :RegularCandle: 13:RegularHeart: 2 :AC: ",
+      image: "Stretching_Lamplighter_Tree_Clement.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Stretching_Lamplighter_Location_Clement.jpg",
+      image: "Stretching_Lamplighter_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2734,23 +2402,19 @@ module.exports = {
       level: [
         {
           title: '"Stretch" Emote Level 1',
-          image:
-            "Stretching-Lamplighter-stretch-emote-level-1.gif",
+          image: "Stretching-Lamplighter-stretch-emote-level-1.gif",
         },
         {
           title: '"Stretch" Emote Level 2',
-          image:
-            "Stretching-Lamplighter-stretch-emote-level-2.gif",
+          image: "Stretching-Lamplighter-stretch-emote-level-2.gif",
         },
         {
           title: '"Stretch" Emote Level 3',
-          image:
-            "Stretching-Lamplighter-stretch-emote-level-3.gif",
+          image: "Stretching-Lamplighter-stretch-emote-level-3.gif",
         },
         {
           title: '"Stretch" Emote Level 4',
-          image:
-            "Stretching-Lamplighter-stretch-emote-level-4.gif",
+          image: "Stretching-Lamplighter-stretch-emote-level-4.gif",
         },
       ],
     },
@@ -2767,15 +2431,12 @@ module.exports = {
     },
     tree: {
       by: "Kontra",
-      total:
-        "198 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Star_Collector_Tree_Kontra.png",
+      total: "198 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Star_Collector_Tree_Kontra.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Star_Collector_Location_Clement.jpg",
+      image: "Star_Collector_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2783,23 +2444,19 @@ module.exports = {
       level: [
         {
           title: '"Hand Rub" Emote Level 1',
-          image:
-            "Star-Collector-hand-rub-emote-level-1.gif",
+          image: "Star-Collector-hand-rub-emote-level-1.gif",
         },
         {
           title: '"Hand Rub" Emote Level 2',
-          image:
-            "Star-Collector-hand-rub-emote-level-2.gif",
+          image: "Star-Collector-hand-rub-emote-level-2.gif",
         },
         {
           title: '"Hand Rub" Emote Level 3',
-          image:
-            "Star-Collector-hand-rub-emote-level-3.gif",
+          image: "Star-Collector-hand-rub-emote-level-3.gif",
         },
         {
           title: '"Hand Rub" Emote Level 4',
-          image:
-            "Star-Collector-hand-rub-emote-level-4.gif",
+          image: "Star-Collector-hand-rub-emote-level-4.gif",
         },
       ],
     },
@@ -2816,15 +2473,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "123 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Sneezing_Geographer_Tree_Clement.png",
+      total: "123 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Sneezing_Geographer_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Sneezing_Geographer_Location_Clement.png",
+      image: "Sneezing_Geographer_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2832,23 +2486,19 @@ module.exports = {
       level: [
         {
           title: '"Sneeze" Emote Level 1',
-          image:
-            "Sneezing-Geographer-sneeze-emote-level-1.gif",
+          image: "Sneezing-Geographer-sneeze-emote-level-1.gif",
         },
         {
           title: '"Sneeze" Emote Level 2',
-          image:
-            "Sneezing-Geographer-sneeze-emote-level-2.gif",
+          image: "Sneezing-Geographer-sneeze-emote-level-2.gif",
         },
         {
           title: '"Sneeze" Emote Level 3',
-          image:
-            "Sneezing-Geographer-sneeze-emote-level-3.gif",
+          image: "Sneezing-Geographer-sneeze-emote-level-3.gif",
         },
         {
           title: '"Sneeze" Emote Level 4',
-          image:
-            "Sneezing-Geographer-sneeze-emote-level-4.gif",
+          image: "Sneezing-Geographer-sneeze-emote-level-4.gif",
         },
       ],
     },
@@ -2865,15 +2515,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "140 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Slouching_Soldier_Tree_Clement.png",
+      total: "140 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Slouching_Soldier_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Slouching_Soldier_Location_Clement.png",
+      image: "Slouching_Soldier_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2881,23 +2528,19 @@ module.exports = {
       level: [
         {
           title: '"Slouch" Emote Level 1',
-          image:
-            "Slouching-Soldier-slouch-emote-level-1.gif",
+          image: "Slouching-Soldier-slouch-emote-level-1.gif",
         },
         {
           title: '"Slouch" Emote Level 2',
-          image:
-            "Slouching-Soldier-slouch-emote-level-2.gif",
+          image: "Slouching-Soldier-slouch-emote-level-2.gif",
         },
         {
           title: '"Slouch" Emote Level 3',
-          image:
-            "Slouching-Soldier-slouch-emote-level-3.gif",
+          image: "Slouching-Soldier-slouch-emote-level-3.gif",
         },
         {
           title: '"Slouch" Emote Level 4',
-          image:
-            "Slouching-Soldier-slouch-emote-level-4.gif",
+          image: "Slouching-Soldier-slouch-emote-level-4.gif",
         },
       ],
     },
@@ -2914,15 +2557,12 @@ module.exports = {
     },
     tree: {
       by: "Jay",
-      total:
-        "139 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Gloating_Narcissist_Tree_Jay.png",
+      total: "139 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Gloating_Narcissist_Tree_Jay.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Gloating_Narcissist_Location_Clement.jpg",
+      image: "Gloating_Narcissist_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -2930,23 +2570,19 @@ module.exports = {
       level: [
         {
           title: '"Gloat" Emote Level 1',
-          image:
-            "Gloating-Narcissist-gloat-emote-level-1.gif",
+          image: "Gloating-Narcissist-gloat-emote-level-1.gif",
         },
         {
           title: '"Gloat" Emote Level 2',
-          image:
-            "Gloating-Narcissist-gloat-emote-level-2.gif",
+          image: "Gloating-Narcissist-gloat-emote-level-2.gif",
         },
         {
           title: '"Gloat" Emote Level 3',
-          image:
-            "Gloating-Narcissist-gloat-emote-level-3.gif",
+          image: "Gloating-Narcissist-gloat-emote-level-3.gif",
         },
         {
           title: '"Gloat" Emote Level 4',
-          image:
-            "Gloating-Narcissist-gloat-emote-level-4.gif",
+          image: "Gloating-Narcissist-gloat-emote-level-4.gif",
         },
       ],
     },
@@ -2963,15 +2599,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "103 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Beckoning_Ruler_Tree_Clement.png",
+      total: "103 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Beckoning_Ruler_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Beckoning_Ruler_Location_Clement.png",
+      image: "Beckoning_Ruler_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -2979,23 +2612,19 @@ module.exports = {
       level: [
         {
           title: '"Beckon" Emote Level 1',
-          image:
-            "Beckoning-Ruler-beckon-emote-level-1.gif",
+          image: "Beckoning-Ruler-beckon-emote-level-1.gif",
         },
         {
           title: '"Beckon" Emote Level 2',
-          image:
-            "Beckoning-Ruler-beckon-emote-level-2.gif",
+          image: "Beckoning-Ruler-beckon-emote-level-2.gif",
         },
         {
           title: '"Beckon" Emote Level 3',
-          image:
-            "Beckoning-Ruler-beckon-emote-level-3.gif",
+          image: "Beckoning-Ruler-beckon-emote-level-3.gif",
         },
         {
           title: '"Beckon" Emote Level 4',
-          image:
-            "Beckoning-Ruler-beckon-emote-level-4.gif",
+          image: "Beckoning-Ruler-beckon-emote-level-4.gif",
         },
       ],
     },
@@ -3014,15 +2643,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "157 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Scolding_Student_Tree_Clement.png",
+      total: "157 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Scolding_Student_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Scolding_Student_Location_Clement.png",
+      image: "Scolding_Student_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3030,23 +2656,19 @@ module.exports = {
       level: [
         {
           title: '"Scold" Emote Level 1',
-          image:
-            "Scolding-Student-scold-emote-level-1.gif",
+          image: "Scolding-Student-scold-emote-level-1.gif",
         },
         {
           title: '"Scold" Emote Level 2',
-          image:
-            "Scolding-Student-scold-emote-level-2.gif",
+          image: "Scolding-Student-scold-emote-level-2.gif",
         },
         {
           title: '"Scold" Emote Level 3',
-          image:
-            "Scolding-Student-scold-emote-level-3.gif",
+          image: "Scolding-Student-scold-emote-level-3.gif",
         },
         {
           title: '"Scold" Emote Level 4',
-          image:
-            "Scolding-Student-scold-emote-level-4.gif",
+          image: "Scolding-Student-scold-emote-level-4.gif",
         },
       ],
     },
@@ -3063,15 +2685,12 @@ module.exports = {
     },
     tree: {
       by: "NyR",
-      total:
-        "152 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Scaredy_Cadet_Tree_NyR.jpg",
+      total: "152 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Scaredy_Cadet_Tree_NyR.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Scaredy_Cadet_Location_Clement.png",
+      image: "Scaredy_Cadet_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3079,23 +2698,19 @@ module.exports = {
       level: [
         {
           title: '"Eww" Emote Level 1',
-          image:
-            "Scaredy-Cadet-eww-emote-level-1.gif",
+          image: "Scaredy-Cadet-eww-emote-level-1.gif",
         },
         {
           title: '"Eww" Emote Level 2',
-          image:
-            "Scaredy-Cadet-eww-emote-level-2.gif",
+          image: "Scaredy-Cadet-eww-emote-level-2.gif",
         },
         {
           title: '"Eww" Emote Level 3',
-          image:
-            "Scaredy-Cadet-eww-emote-level-3.gif",
+          image: "Scaredy-Cadet-eww-emote-level-3.gif",
         },
         {
           title: '"Eww" Emote Level 4',
-          image:
-            "Scaredy-Cadet-eww-emote-level-4.gif",
+          image: "Scaredy-Cadet-eww-emote-level-4.gif",
         },
       ],
     },
@@ -3112,15 +2727,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "96 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Daydream_Forestor_Tree_Clement.png",
+      total: "96 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Daydream_Forestor_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Daydreaming_Forester_Location_Clement.png",
+      image: "Daydreaming_Forester_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3128,23 +2740,19 @@ module.exports = {
       level: [
         {
           title: '"Bubbles" Emote Level 1',
-          image:
-            "Daydream-Forester-bubbles-emote-level-1.gif",
+          image: "Daydream-Forester-bubbles-emote-level-1.gif",
         },
         {
           title: '"Bubbles" Emote Level 2',
-          image:
-            "Daydream-Forester-bubbles-emote-level-2.gif",
+          image: "Daydream-Forester-bubbles-emote-level-2.gif",
         },
         {
           title: '"Bubbles" Emote Level 3',
-          image:
-            "Daydream-Forester-bubbles-emote-level-3.gif",
+          image: "Daydream-Forester-bubbles-emote-level-3.gif",
         },
         {
           title: '"Bubbles" Emote Level 4',
-          image:
-            "Daydream-Forester-bubbles-emote-level-4.gif",
+          image: "Daydream-Forester-bubbles-emote-level-4.gif",
         },
       ],
     },
@@ -3161,15 +2769,12 @@ module.exports = {
     },
     tree: {
       by: "NyR",
-      total:
-        "143:RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Marching_Adventurer_Tree_NyR.jpg",
+      total: "143:RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Marching_Adventurer_Tree_NyR.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Marching_Adventurer_Location_Clement.png",
+      image: "Marching_Adventurer_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3177,23 +2782,19 @@ module.exports = {
       level: [
         {
           title: '"Marching" Emote Level 1',
-          image:
-            "Marching-Adventurer-marching-emote-level-1.gif",
+          image: "Marching-Adventurer-marching-emote-level-1.gif",
         },
         {
           title: '"Marching" Emote Level 2',
-          image:
-            "Marching-Adventurer-marching-emote-level-2.gif",
+          image: "Marching-Adventurer-marching-emote-level-2.gif",
         },
         {
           title: '"Marching" Emote Level 3',
-          image:
-            "Marching-Adventurer-marching-emote-level-3.gif",
+          image: "Marching-Adventurer-marching-emote-level-3.gif",
         },
         {
           title: '"Marching" Emote Level 4',
-          image:
-            "Marching-Adventurer-marching-emote-level-4.gif",
+          image: "Marching-Adventurer-marching-emote-level-4.gif",
         },
       ],
     },
@@ -3210,15 +2811,12 @@ module.exports = {
     },
     tree: {
       by: "NyR",
-      total:
-        "159 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Chuckling_Scout_Tree_NyR.jpg",
+      total: "159 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Chuckling_Scout_Tree_NyR.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Chuckling_Scout_Location_Clement.png",
+      image: "Chuckling_Scout_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3226,23 +2824,19 @@ module.exports = {
       level: [
         {
           title: '"Chuckle" Emote Level 1',
-          image:
-            "Chuckling-Scout-chuckle-emote-level-1.gif",
+          image: "Chuckling-Scout-chuckle-emote-level-1.gif",
         },
         {
           title: '"Chuckle" Emote Level 2',
-          image:
-            "Chuckling-Scout-chuckle-emote-level-2.gif",
+          image: "Chuckling-Scout-chuckle-emote-level-2.gif",
         },
         {
           title: '"Chuckle" Emote Level 3',
-          image:
-            "Chuckling-Scout-chuckle-emote-level-3.gif",
+          image: "Chuckling-Scout-chuckle-emote-level-3.gif",
         },
         {
           title: '"Chuckle" Emote Level 4',
-          image:
-            "Chuckling-Scout-chuckle-emote-level-4.gif",
+          image: "Chuckling-Scout-chuckle-emote-level-4.gif",
         },
       ],
     },
@@ -3259,15 +2853,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "127 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Baffled_Botanist_Tree_Clement.png",
+      total: "127 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Baffled_Botanist_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Baffled_Botanist_Location_Clement.png",
+      image: "Baffled_Botanist_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3275,23 +2866,19 @@ module.exports = {
       level: [
         {
           title: '"Facepalm" Emote Level 1',
-          image:
-            "Baffled-Botanist-facepalm-emote-level-1.gif",
+          image: "Baffled-Botanist-facepalm-emote-level-1.gif",
         },
         {
           title: '"Facepalm" Emote Level 2',
-          image:
-            "Baffled-Botanist-facepalm-emote-level-2.gif",
+          image: "Baffled-Botanist-facepalm-emote-level-2.gif",
         },
         {
           title: '"Facepalm" Emote Level 3',
-          image:
-            "Baffled-Botanist-facepalm-emote-level-3.gif",
+          image: "Baffled-Botanist-facepalm-emote-level-3.gif",
         },
         {
           title: '"Facepalm" Emote Level 4',
-          image:
-            "Baffled-Botanist-facepalm-emote-level-4.gif",
+          image: "Baffled-Botanist-facepalm-emote-level-4.gif",
         },
       ],
     },
@@ -3310,15 +2897,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "169 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Spinning_Mentor_Tree_Clement.png",
+      total: "169 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Spinning_Mentor_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Spinning_Mentor_Location_Clement.png",
+      image: "Spinning_Mentor_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3326,23 +2910,19 @@ module.exports = {
       level: [
         {
           title: '"Spin Trick" Level 1',
-          image:
-            "Spinning-Mentor-spin-trick-emote-level-1.gif",
+          image: "Spinning-Mentor-spin-trick-emote-level-1.gif",
         },
         {
           title: '"Spin Trick" Level 2',
-          image:
-            "Spinning-Mentor-spin-trick-emote-level-2.gif",
+          image: "Spinning-Mentor-spin-trick-emote-level-2.gif",
         },
         {
           title: '"Spin Trick" Level 3',
-          image:
-            "Spinning-Mentor-spin-trick-emote-level-3.gif",
+          image: "Spinning-Mentor-spin-trick-emote-level-3.gif",
         },
         {
           title: '"Spin Trick" Level 4',
-          image:
-            "Spinning-Mentor-spin-trick-emote-level-4.gif",
+          image: "Spinning-Mentor-spin-trick-emote-level-4.gif",
         },
       ],
     },
@@ -3359,14 +2939,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "217 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      total: "217 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image: "",
     },
     location: {
       by: "Clement",
-      image:
-        "Peeking_Postman_Location_Clement.png",
+      image: "Peeking_Postman_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3374,23 +2952,19 @@ module.exports = {
       level: [
         {
           title: '"Peek" Emote Level 1',
-          image:
-            "Peeking-Postman-peek-emote-level-1.gif",
+          image: "Peeking-Postman-peek-emote-level-1.gif",
         },
         {
           title: '"Peek" Emote Level 2',
-          image:
-            "Peeking-Postman-peek-emote-level-2.gif",
+          image: "Peeking-Postman-peek-emote-level-2.gif",
         },
         {
           title: '"Peek" Emote Level 3',
-          image:
-            "Peeking-Postman-peek-emote-level-3.gif",
+          image: "Peeking-Postman-peek-emote-level-3.gif",
         },
         {
           title: '"Peek" Emote Level 4',
-          image:
-            "Peeking-Postman-peek-emote-level-4.gif",
+          image: "Peeking-Postman-peek-emote-level-4.gif",
         },
       ],
     },
@@ -3408,13 +2982,11 @@ module.exports = {
     tree: {
       by: "NyR",
       total: " ",
-      image:
-        "Dancing_Performer_Seasonal_Chart_NyR.jpg",
+      image: "Dancing_Performer_Seasonal_Chart_NyR.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Dancing_Performer_Location_Clement.png",
+      image: "Dancing_Performer_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3422,23 +2994,19 @@ module.exports = {
       level: [
         {
           title: '"Snow Dance" Emote Level 1',
-          image:
-            "Dancing-Performer-show-dance-emote-level-1.gif",
+          image: "Dancing-Performer-show-dance-emote-level-1.gif",
         },
         {
           title: '"Snow Dance" Emote Level 2',
-          image:
-            "Dancing-Performer-show-dance-emote-level-2.gif",
+          image: "Dancing-Performer-show-dance-emote-level-2.gif",
         },
         {
           title: '"Snow Dance" Emote Level 3',
-          image:
-            "Dancing-Performer-show-dance-emote-level-3.gif",
+          image: "Dancing-Performer-show-dance-emote-level-3.gif",
         },
         {
           title: '"Snow Dance" Emote Level 4',
-          image:
-            "Dancing-Performer-show-dance-emote-level-4.gif",
+          image: "Dancing-Performer-show-dance-emote-level-4.gif",
         },
       ],
     },
@@ -3455,15 +3023,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "190 :RegularCandle: 8 :RegularHeart: 2 :AC:",
-      image:
-        "BearHug_Hermit_Tree_Clement.png",
+      total: "190 :RegularCandle: 8 :RegularHeart: 2 :AC:",
+      image: "BearHug_Hermit_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Bearhug_Hermit_Location_Clement.png.jpg",
+      image: "Bearhug_Hermit_Location_Clement.png.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -3471,13 +3036,11 @@ module.exports = {
       level: [
         {
           title: '"Bear Hug" Friend Action Level 1',
-          image:
-            "Bearhug-Hermit-bearhug-emote-level-1.gif",
+          image: "Bearhug-Hermit-bearhug-emote-level-1.gif",
         },
         {
           title: '"Bear Hug" Friend Action Level 2',
-          image:
-            "Bearhug_Hermit_Bear_Hug_LvL_2.gif",
+          image: "Bearhug_Hermit_Bear_Hug_LvL_2.gif",
         },
       ],
     },
@@ -3496,15 +3059,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "216 :RegularCandle: 26 :RegularHeart: 2 :AC:",
-      image:
-        "Prophet_of_Fire_Tree_Jay.png",
+      total: "216 :RegularCandle: 26 :RegularHeart: 2 :AC:",
+      image: "Prophet_of_Fire_Tree_Jay.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Prophet_of_Fire_Location_Clement.jpg",
+      image: "Prophet_of_Fire_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -3512,23 +3072,19 @@ module.exports = {
       level: [
         {
           title: '"Chest Pound" Level 1',
-          image:
-            "Prophet-of-Fire-chest-pound-emote-level-3.gif",
+          image: "Prophet-of-Fire-chest-pound-emote-level-3.gif",
         },
         {
           title: '"Chest Pound" Level 2',
-          image:
-            "Prophet-of-Fire-chest-pound-emote-level-2.gif",
+          image: "Prophet-of-Fire-chest-pound-emote-level-2.gif",
         },
         {
           title: '"Chest Pound" Level 3',
-          image:
-            "Prophet-of-Fire-chest-pound-emote-level-3.gif",
+          image: "Prophet-of-Fire-chest-pound-emote-level-3.gif",
         },
         {
           title: '"Chest Pound" Level 4',
-          image:
-            "Prophet-of-Fire-chest-pound-emote-level-4.gif",
+          image: "Prophet-of-Fire-chest-pound-emote-level-4.gif",
         },
       ],
     },
@@ -3545,15 +3101,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "201 :RegularCandle: 12 :RegularHeart: 2:AC:",
-      image:
-        "Prophet_of_Air_Tree_Clement.png",
+      total: "201 :RegularCandle: 12 :RegularHeart: 2:AC:",
+      image: "Prophet_of_Air_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Prophet_of_Air_Location_Clement.png",
+      image: "Prophet_of_Air_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3561,23 +3114,19 @@ module.exports = {
       level: [
         {
           title: '"Balance" Emote Level 1',
-          image:
-            "Prophet-of-Air-balance-emote-level-1.gif",
+          image: "Prophet-of-Air-balance-emote-level-1.gif",
         },
         {
           title: '"Balance" Emote Level 2',
-          image:
-            "Prophet-of-Air-balance-emote-level-2.gif",
+          image: "Prophet-of-Air-balance-emote-level-2.gif",
         },
         {
           title: '"Balance" Emote Level 3',
-          image:
-            "Prophet-of-Air-balance-emote-level-3.gif",
+          image: "Prophet-of-Air-balance-emote-level-3.gif",
         },
         {
           title: '"Balance" Emote Level 4',
-          image:
-            "Prophet-of-Air-balance-emote-level-4.gif",
+          image: "Prophet-of-Air-balance-emote-level-4.gif",
         },
       ],
     },
@@ -3594,15 +3143,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "211 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Prophet_of_Earth_Tree_Clement.jpg",
+      total: "211 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Prophet_of_Earth_Tree_Clement.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Prophet_of_Earth_Location_Clement.png",
+      image: "Prophet_of_Earth_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3610,23 +3156,19 @@ module.exports = {
       level: [
         {
           title: '"Dust Off" Emote Level 1',
-          image:
-            "Prophet-of-Earth-dust-off-emote-level-1.gif",
+          image: "Prophet-of-Earth-dust-off-emote-level-1.gif",
         },
         {
           title: '"Dust Off" Emote Level 2',
-          image:
-            "Prophet-of-Earth-dust-off-emote-level-2.gif",
+          image: "Prophet-of-Earth-dust-off-emote-level-2.gif",
         },
         {
           title: '"Dust Off" Emote Level 3',
-          image:
-            "Prophet-of-Earth-dust-off-emote-level-3.gif",
+          image: "Prophet-of-Earth-dust-off-emote-level-3.gif",
         },
         {
           title: '"Dust Off" Emote Level 4',
-          image:
-            "Prophet-of-Earth-dust-off-emote-level-4.gif",
+          image: "Prophet-of-Earth-dust-off-emote-level-4.gif",
         },
       ],
     },
@@ -3643,15 +3185,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "187 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Prophecy_Water_Tree_Clement.png",
+      total: "187 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Prophecy_Water_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Prophet_of_Water_Location_Clement.png",
+      image: "Prophet_of_Water_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3659,23 +3198,19 @@ module.exports = {
       level: [
         {
           title: '"Deep Breath" Emote Level 1',
-          image:
-            "Prophet-of-Water-deep-breath-emote-level-1.gif",
+          image: "Prophet-of-Water-deep-breath-emote-level-1.gif",
         },
         {
           title: '"Deep Breath" Emote Level 2',
-          image:
-            "Prophet-of-Water-deep-breath-emote-level-2.gif",
+          image: "Prophet-of-Water-deep-breath-emote-level-2.gif",
         },
         {
           title: '"Deep Breath" Emote Level 3',
-          image:
-            "Prophet-of-Water-deep-breath-emote-level-3.gif",
+          image: "Prophet-of-Water-deep-breath-emote-level-3.gif",
         },
         {
           title: '"Deep Breath" Emote Level 4',
-          image:
-            "Prophet-of-Water-deep-breath-emote-level-4.gif",
+          image: "Prophet-of-Water-deep-breath-emote-level-4.gif",
         },
       ],
     },
@@ -3694,22 +3229,18 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "140 :RegularCandle: 0 :RegularHeart: 2 :AC:",
-      image:
-        "Timid_Bookworm_Tree_Jed.png",
+      total: "140 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Timid_Bookworm_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Timid_Bookworm_Location.png",
+      image: "Timid_Bookworm_Location.png",
     },
     cosmetics: [{}],
     stance: {
       title: "Timid Stance",
       icon: "<:bookworm:1131649753420140595>",
-      image:
-        "Timid_Bookworm_Timid_Stance.gif",
+      image: "Timid_Bookworm_Timid_Stance.gif",
     },
   },
   rallying_thrillseeker: {
@@ -3724,15 +3255,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "125 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Rallying_Thrillseeker_Tree_jed.png",
+      total: "125 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Rallying_Thrillseeker_Tree_jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Rallying_Thrillseeker_Location.png",
+      image: "Rallying_Thrillseeker_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3740,23 +3268,19 @@ module.exports = {
       level: [
         {
           title: '"Rally Cheer" Emote Level 1',
-          image:
-            "Rallying-Thrillseeker-rally-cheer-emote-level-1.gif",
+          image: "Rallying-Thrillseeker-rally-cheer-emote-level-1.gif",
         },
         {
           title: '"Rally Cheer" Emote Level 2',
-          image:
-            "Rallying-Thrillseeker-rally-cheer-emote-level-2.gif",
+          image: "Rallying-Thrillseeker-rally-cheer-emote-level-2.gif",
         },
         {
           title: '"Rally Cheer" Emote Level 3',
-          image:
-            "Rallying-Thrillseeker-rally-cheer-emote-level-3.gif",
+          image: "Rallying-Thrillseeker-rally-cheer-emote-level-3.gif",
         },
         {
           title: '"Rally Cheer" Emote Level 4',
-          image:
-            "Rallying-Thrillseeker-rally-cheer-emote-level-4.gif",
+          image: "Rallying-Thrillseeker-rally-cheer-emote-level-4.gif",
         },
       ],
     },
@@ -3773,15 +3297,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "135 :RegularCandle: 15 :RegularHeart: 2 :AC:",
-      image:
-        "Jelly_Whisperer_Tree_Clement.png",
+      total: "135 :RegularCandle: 15 :RegularHeart: 2 :AC:",
+      image: "Jelly_Whisperer_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "jelly_Whisperer_Location_Clement.png",
+      image: "jelly_Whisperer_Location_Clement.png",
     },
     cosmetics: [{}],
     call: {
@@ -3802,15 +3323,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "139 :RegularCandle: 29 :RegularHeart: 2 :AC:",
-      image:
-        "Hiking_Grouch_Tree_Clement.png",
+      total: "139 :RegularCandle: 29 :RegularHeart: 2 :AC:",
+      image: "Hiking_Grouch_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Hiking_Grouch_Location_Clement.png",
+      image: "Hiking_Grouch_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3818,23 +3336,19 @@ module.exports = {
       level: [
         {
           title: '"Grumpy" Emote Level 1',
-          image:
-            "Hiking-Grouch-grumpy-emote-level-1.gif",
+          image: "Hiking-Grouch-grumpy-emote-level-1.gif",
         },
         {
           title: '"Grumpy" Emote Level 2',
-          image:
-            "Hiking-Grouch-grumpy-emote-level-2.gif",
+          image: "Hiking-Grouch-grumpy-emote-level-2.gif",
         },
         {
           title: '"Grumpy" Emote Level 3',
-          image:
-            "Hiking-Grouch-grumpy-emote-level-3.gif",
+          image: "Hiking-Grouch-grumpy-emote-level-3.gif",
         },
         {
           title: '"Grumpy" Emote Level 4',
-          image:
-            "Hiking-Grouch-grumpy-emote-level-4.gif",
+          image: "Hiking-Grouch-grumpy-emote-level-4.gif",
         },
       ],
     },
@@ -3851,15 +3365,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "162 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Shell_Collector_Tree_Clement.png",
+      total: "162 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Shell_Collector_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Grateful_Shell_Collector_Location_Clement.png",
+      image: "Grateful_Shell_Collector_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3867,23 +3378,19 @@ module.exports = {
       level: [
         {
           title: '"Grateful" Level 1',
-          image:
-            "Grateful-Shell-Collector-grateful-emote-level-1.gif",
+          image: "Grateful-Shell-Collector-grateful-emote-level-1.gif",
         },
         {
           title: '"Grateful" Level 2',
-          image:
-            "Grateful-Shell-Collector-grateful-emote-level-2.gif",
+          image: "Grateful-Shell-Collector-grateful-emote-level-2.gif",
         },
         {
           title: '"Grateful" Level 3',
-          image:
-            "Grateful-Shell-Collector-grateful-emote-level-3.gif",
+          image: "Grateful-Shell-Collector-grateful-emote-level-3.gif",
         },
         {
           title: '"Grateful" Level 4',
-          image:
-            "Grateful-Shell-Collector-grateful-emote-level-4.gif",
+          image: "Grateful-Shell-Collector-grateful-emote-level-4.gif",
         },
       ],
     },
@@ -3900,15 +3407,12 @@ module.exports = {
     },
     tree: {
       by: "NyR",
-      total:
-        "213 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Chill_sunbather_tree_NyR.png",
+      total: "213 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Chill_sunbather_tree_NyR.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Spirit_-_Chill_Sunbather_Location_Clement.png",
+      image: "Spirit_-_Chill_Sunbather_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3916,23 +3420,19 @@ module.exports = {
       level: [
         {
           title: '"Belly Scratch" Emote Level 1',
-          image:
-            "Chill-Sunbather-belly-scratch-emote-level-1.gif",
+          image: "Chill-Sunbather-belly-scratch-emote-level-1.gif",
         },
         {
           title: '"Belly Scratch" Emote Level 2',
-          image:
-            "Chill-Sunbather-belly-scratch-emote-level-2.gif",
+          image: "Chill-Sunbather-belly-scratch-emote-level-2.gif",
         },
         {
           title: '"Belly Scratch" Emote Level 3',
-          image:
-            "Chill-Sunbather-belly-scratch-emote-level-3.gif",
+          image: "Chill-Sunbather-belly-scratch-emote-level-3.gif",
         },
         {
           title: '"Belly Scratch" Emote Level 4',
-          image:
-            "Chill-Sunbather-belly-scratch-emote-level-4.gif",
+          image: "Chill-Sunbather-belly-scratch-emote-level-4.gif",
         },
       ],
     },
@@ -3951,15 +3451,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Golden_Wasteland_-_Snoozing_Carpenter.png",
+      total: "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Golden_Wasteland_-_Snoozing_Carpenter.png",
     },
     location: {
       by: "Clement",
-      image:
-        "05_Season_of_Enchantment_-_Snoozing_Carpenter.png",
+      image: "05_Season_of_Enchantment_-_Snoozing_Carpenter.png",
     },
     cosmetics: [{}],
     emote: {
@@ -3967,23 +3464,19 @@ module.exports = {
       level: [
         {
           title: '"Doze" Emote Level 1',
-          image:
-            "Snoozing-Carpenter-doze-emote-level-1.gif",
+          image: "Snoozing-Carpenter-doze-emote-level-1.gif",
         },
         {
           title: '"Doze" Emote Level 2',
-          image:
-            "Snoozing-Carpenter-doze-emote-level-2.gif",
+          image: "Snoozing-Carpenter-doze-emote-level-2.gif",
         },
         {
           title: '"Doze" Emote Level 3',
-          image:
-            "Snoozing-Carpenter-doze-emote-level-3.gif",
+          image: "Snoozing-Carpenter-doze-emote-level-3.gif",
         },
         {
           title: '"Doze" Emote Level 4',
-          image:
-            "Snoozing-Carpenter-doze-emote-level-4.gif",
+          image: "Snoozing-Carpenter-doze-emote-level-4.gif",
         },
       ],
     },
@@ -4000,15 +3493,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "88 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Traveling_Spirit_0582.png",
+      total: "88 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Traveling_Spirit_0582.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Scarecrow_Farmer_Location_Clement.png",
+      image: "Scarecrow_Farmer_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4016,23 +3506,19 @@ module.exports = {
       level: [
         {
           title: '"Boo" Emote Level 1',
-          image:
-            "Scarecrow-Farmer-boo-emote-level-1.gif",
+          image: "Scarecrow-Farmer-boo-emote-level-1.gif",
         },
         {
           title: '"Boo" Emote Level 2',
-          image:
-            "Scarecrow-Farmer-boo-emote-level-2.gif",
+          image: "Scarecrow-Farmer-boo-emote-level-2.gif",
         },
         {
           title: '"Boo" Emote Level 3',
-          image:
-            "Scarecrow-Farmer-boo-emote-level-3.gif",
+          image: "Scarecrow-Farmer-boo-emote-level-3.gif",
         },
         {
           title: '"Boo" Emote Level 4',
-          image:
-            "Scarecrow-Farmer-boo-emote-level-4.gif",
+          image: "Scarecrow-Farmer-boo-emote-level-4.gif",
         },
       ],
     },
@@ -4049,15 +3535,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "195 :RegularCandle: 10 :RegularHeart: 2 :AC:",
-      image:
-        "Playfight_herbalist-TS2.jpg",
+      total: "195 :RegularCandle: 10 :RegularHeart: 2 :AC:",
+      image: "Playfight_herbalist-TS2.jpg",
     },
     location: {
       by: "Clement",
-      image:
-        "Playfighting_Herbalist_Location_Clement.jpg",
+      image: "Playfighting_Herbalist_Location_Clement.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -4065,13 +3548,11 @@ module.exports = {
       level: [
         {
           title: '"Playfight" Friend Action Level 1',
-          image:
-            "Playfighting-Herbalist-play-fight-emote-level-1.gif",
+          image: "Playfighting-Herbalist-play-fight-emote-level-1.gif",
         },
         {
           title: '"Playfight" Friend Action Level 2',
-          image:
-            "Playfighting-Herbalist-play-fight-emote-level-2.gif",
+          image: "Playfighting-Herbalist-play-fight-emote-level-2.gif",
         },
       ],
     },
@@ -4088,15 +3569,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "77 :RegularCandle: 13 :RegularHeart: 2 :RegularCandle:",
-      image:
-        "Nodding_Muralist_Tree_Jed.png",
+      total: "77 :RegularCandle: 13 :RegularHeart: 2 :RegularCandle:",
+      image: "Nodding_Muralist_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Nodding_Muralist_Location_Clement.png",
+      image: "Nodding_Muralist_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4104,23 +3582,19 @@ module.exports = {
       level: [
         {
           title: '"Nod" Emote Level 1',
-          image:
-            "Nodding-Muralist-nod-emote-level-1.gif",
+          image: "Nodding-Muralist-nod-emote-level-1.gif",
         },
         {
           title: '"Nod" Emote Level 2',
-          image:
-            "Nodding-Muralist-nod-emote-level-2.gif",
+          image: "Nodding-Muralist-nod-emote-level-2.gif",
         },
         {
           title: '"Nod" Emote Level 3',
-          image:
-            "Nodding-Muralist-nod-emote-level-3.gif",
+          image: "Nodding-Muralist-nod-emote-level-3.gif",
         },
         {
           title: '"Nod" Emote Level 4',
-          image:
-            "Nodding-Muralist-nod-emote-level-4.gif",
+          image: "Nodding-Muralist-nod-emote-level-4.gif",
         },
       ],
     },
@@ -4137,15 +3611,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "167 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Indifferent_Alchemist_Tree_Jed.png",
+      total: "167 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Indifferent_Alchemist_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Indifferent_Alchemist_Location_Clement.jpg",
+      image: "Indifferent_Alchemist_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4153,23 +3624,19 @@ module.exports = {
       level: [
         {
           title: '"Shrug" Emote Level 1',
-          image:
-            "Indifferent-Alchemist-shrug-emote-level-1.gif",
+          image: "Indifferent-Alchemist-shrug-emote-level-1.gif",
         },
         {
           title: '"Shrug" Emote Level 2',
-          image:
-            "Indifferent-Alchemist-shrug-emote-level-2.gif",
+          image: "Indifferent-Alchemist-shrug-emote-level-2.gif",
         },
         {
           title: '"Shrug" Emote Level 3',
-          image:
-            "Indifferent-Alchemist-shrug-emote-level-3.gif",
+          image: "Indifferent-Alchemist-shrug-emote-level-3.gif",
         },
         {
           title: '"Shrug" Emote Level 4',
-          image:
-            "Indifferent-Alchemist-shrug-emote-level-4.gif",
+          image: "Indifferent-Alchemist-shrug-emote-level-4.gif",
         },
       ],
     },
@@ -4186,15 +3653,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "115 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Crab_Walker_Tree_Jed.png",
+      total: "115 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Crab_Walker_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Crab_Walker_Location_Clement.jpg",
+      image: "Crab_Walker_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4202,23 +3666,19 @@ module.exports = {
       level: [
         {
           title: '"Crab Walk" Emote Level 1',
-          image:
-            "Crab-Walker-crab-walk-emote-level-1.gif",
+          image: "Crab-Walker-crab-walk-emote-level-1.gif",
         },
         {
           title: '"Crab Walk" Emote Level 2',
-          image:
-            "Crab-Walker-crab-walk-emote-level-2.gif",
+          image: "Crab-Walker-crab-walk-emote-level-2.gif",
         },
         {
           title: '"Crab Walk" Emote Level 3',
-          image:
-            "Crab-Walker-crab-walk-emote-level-3.gif",
+          image: "Crab-Walker-crab-walk-emote-level-3.gif",
         },
         {
           title: '"Crab Walk" Emote Level 4',
-          image:
-            "Crab-Walker-crab-walk-emote-level-4.gif",
+          image: "Crab-Walker-crab-walk-emote-level-4.gif",
         },
       ],
     },
@@ -4237,15 +3697,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "205 :RegularCandle: 27 :RegularHeart: 2 :AC:",
-      image:
-        "Troupe_Juggler_Tree_Clement.png",
+      total: "205 :RegularCandle: 27 :RegularHeart: 2 :AC:",
+      image: "Troupe_Juggler_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Troupe_Juggler_Location_Clement.jpg",
+      image: "Troupe_Juggler_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4253,23 +3710,19 @@ module.exports = {
       level: [
         {
           title: '"Juggle" Emote Level 1',
-          image:
-            "Troupe-Juggler-juggle-emote-level-1.gif",
+          image: "Troupe-Juggler-juggle-emote-level-1.gif",
         },
         {
           title: '"Juggle" Emote Level 2',
-          image:
-            "Troupe-Juggler-juggle-emote-level-2.gif",
+          image: "Troupe-Juggler-juggle-emote-level-2.gif",
         },
         {
           title: '"Juggle" Emote Level 3',
-          image:
-            "Troupe-Juggler-juggle-emote-level-3.gif",
+          image: "Troupe-Juggler-juggle-emote-level-3.gif",
         },
         {
           title: '"Juggle" Emote Level 4',
-          image:
-            "Troupe-Juggler-juggle-emote-level-4.gif",
+          image: "Troupe-Juggler-juggle-emote-level-4.gif",
         },
       ],
     },
@@ -4286,15 +3739,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "146 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Troupe_Greeter_Tree_Clement.png",
+      total: "146 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Troupe_Greeter_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Troupe_Greeter_Location_Clement.jpg",
+      image: "Troupe_Greeter_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4302,23 +3752,19 @@ module.exports = {
       level: [
         {
           title: '"Welcome" Emote Level 1',
-          image:
-            "Troupe-Greeter-welcome-emote-level-1.gif",
+          image: "Troupe-Greeter-welcome-emote-level-1.gif",
         },
         {
           title: '"Welcome" Emote Level 2',
-          image:
-            "Troupe-Greeter-welcome-emote-level-2.gif",
+          image: "Troupe-Greeter-welcome-emote-level-2.gif",
         },
         {
           title: '"Welcome" Emote Level 3',
-          image:
-            "Troupe-Greeter-welcome-emote-level-3.gif",
+          image: "Troupe-Greeter-welcome-emote-level-3.gif",
         },
         {
           title: '"Welcome" Emote Level 4',
-          image:
-            "Troupe-Greeter-welcome-emote-level-4.gif",
+          image: "Troupe-Greeter-welcome-emote-level-4.gif",
         },
       ],
     },
@@ -4335,15 +3781,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "195 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Thoughtful_Director_Tree_Jed.png",
+      total: "195 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Thoughtful_Director_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Thoughtful_Director_Location_Clement.png",
+      image: "Thoughtful_Director_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4351,23 +3794,19 @@ module.exports = {
       level: [
         {
           title: '"Thinking" Emote Level 1',
-          image:
-            "Thoughtful-Director-thinking-emote-level-1.gif",
+          image: "Thoughtful-Director-thinking-emote-level-1.gif",
         },
         {
           title: '"Thinking" Emote Level 2',
-          image:
-            "Thoughtful-Director-thinking-emote-level-2.gif",
+          image: "Thoughtful-Director-thinking-emote-level-2.gif",
         },
         {
           title: '"Thinking" Emote Level 3',
-          image:
-            "Thoughtful-Director-thinking-emote-level-3.gif",
+          image: "Thoughtful-Director-thinking-emote-level-3.gif",
         },
         {
           title: '"Thinking" Emote Level 4',
-          image:
-            "Thoughtful-Director-thinking-emote-level-4.gif",
+          image: "Thoughtful-Director-thinking-emote-level-4.gif",
         },
       ],
     },
@@ -4384,15 +3823,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "162 :RegularCandle: 13 :RegularHeart: 2:AC:",
-      image:
-        "Respectful_Pianist_Tree_Jed.png",
+      total: "162 :RegularCandle: 13 :RegularHeart: 2:AC:",
+      image: "Respectful_Pianist_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Respectful_Pianist_Location_Clement.png",
+      image: "Respectful_Pianist_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4400,23 +3836,19 @@ module.exports = {
       level: [
         {
           title: '"Respect" Emote Level 1',
-          image:
-            "Respectful-Pianist-respect-emote-level-1.gif",
+          image: "Respectful-Pianist-respect-emote-level-1.gif",
         },
         {
           title: '"Respect" Emote Level 2',
-          image:
-            "Respectful-Pianist-respect-emote-level-2.gif",
+          image: "Respectful-Pianist-respect-emote-level-2.gif",
         },
         {
           title: '"Respect" Emote Level 3',
-          image:
-            "Respectful-Pianist-respect-emote-level-3.gif",
+          image: "Respectful-Pianist-respect-emote-level-3.gif",
         },
         {
           title: '"Respect" Emote Level 4',
-          image:
-            "Respectful-Pianist-respect-emote-level-4.gif",
+          image: "Respectful-Pianist-respect-emote-level-4.gif",
         },
       ],
     },
@@ -4433,15 +3865,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "157 :RegularCandle: 19 :RegularHeart: 2 :AC:",
-      image:
-        "Spin_Dancer_Tree_Clement.png",
+      total: "157 :RegularCandle: 19 :RegularHeart: 2 :AC:",
+      image: "Spin_Dancer_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Spin_Dancer_Location.png",
+      image: "Spin_Dancer_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4449,23 +3878,19 @@ module.exports = {
       level: [
         {
           title: '"Spin Dance" Emote Level 1',
-          image:
-            "Festive-Spin-Dancer-spin-dance-emote-level-1.gif",
+          image: "Festive-Spin-Dancer-spin-dance-emote-level-1.gif",
         },
         {
           title: '"Spin Dance" Emote Level 2',
-          image:
-            "Festive-Spin-Dancer-spin-dance-emote-level-2.gif",
+          image: "Festive-Spin-Dancer-spin-dance-emote-level-2.gif",
         },
         {
           title: '"Spin Dance" Emote Level 3',
-          image:
-            "Festive-Spin-Dancer-spin-dance-emote-level-3.gif",
+          image: "Festive-Spin-Dancer-spin-dance-emote-level-3.gif",
         },
         {
           title: '"Spin Dance" Emote Level 4',
-          image:
-            "Festive-Spin-Dancer-spin-dance-emote-level-4.gif",
+          image: "Festive-Spin-Dancer-spin-dance-emote-level-4.gif",
         },
       ],
     },
@@ -4482,15 +3907,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "135 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Admiring_Actor_Tree_Jed.png",
+      total: "135 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Admiring_Actor_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Admiring_Actor_Location_Clement.png",
+      image: "Admiring_Actor_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4498,23 +3920,19 @@ module.exports = {
       level: [
         {
           title: '"Blow Kiss" Emote Level 1',
-          image:
-            "Admiring-Actor-blow-kiss-emote-level-1.gif",
+          image: "Admiring-Actor-blow-kiss-emote-level-1.gif",
         },
         {
           title: '"Blow Kiss" Emote Level 2',
-          image:
-            "Admiring-Actor-blow-kiss-emote-level-2.gif",
+          image: "Admiring-Actor-blow-kiss-emote-level-2.gif",
         },
         {
           title: '"Blow Kiss" Emote Level 3',
-          image:
-            "Admiring-Actor-blow-kiss-emote-level-3.gif",
+          image: "Admiring-Actor-blow-kiss-emote-level-3.gif",
         },
         {
           title: '"Blow Kiss" Emote Level 4',
-          image:
-            "Admiring-Actor-blow-kiss-emote-level-4.gif",
+          image: "Admiring-Actor-blow-kiss-emote-level-4.gif",
         },
       ],
     },
@@ -4533,15 +3951,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "156 :RegularCandle: 0 :RegularHeart: 2 :AC:",
-      image:
-        "Wise_Grandparent_Tree_Clement.png",
+      total: "156 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Wise_Grandparent_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Wise_Grandparent_Location_Clement.jpg",
+      image: "Wise_Grandparent_Location_Clement.jpg",
     },
     cosmetics: [{}],
     stance: {
@@ -4562,15 +3977,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "116 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Sparkler_Parent_Tree_Clement.png",
+      total: "116 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Sparkler_Parent_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Sparkler_Parent_Location_Clement.png",
+      image: "Sparkler_Parent_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4578,23 +3990,19 @@ module.exports = {
       level: [
         {
           title: '"Sparkler" Emote Level 1',
-          image:
-            "Sparkler-Parent-sparkler-emote-level-1.gif",
+          image: "Sparkler-Parent-sparkler-emote-level-1.gif",
         },
         {
           title: '"Sparkler" Emote Level 2',
-          image:
-            "Sparkler-Parent-sparkler-emote-level-2.gif",
+          image: "Sparkler-Parent-sparkler-emote-level-2.gif",
         },
         {
           title: '"Sparkler" Emote Level 3',
-          image:
-            "Sparkler-Parent-sparkler-emote-level-3.gif",
+          image: "Sparkler-Parent-sparkler-emote-level-3.gif",
         },
         {
           title: '"Sparkler" Emote Level 4',
-          image:
-            "Sparkler-Parent-sparkler-emote-level-4.gif",
+          image: "Sparkler-Parent-sparkler-emote-level-4.gif",
         },
       ],
     },
@@ -4611,15 +4019,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "195 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Pleaful_Parent_Tree_Jed.png",
+      total: "195 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Pleaful_Parent_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Pleaful_Parent_Location_Clement.jpg",
+      image: "Pleaful_Parent_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4627,23 +4032,19 @@ module.exports = {
       level: [
         {
           title: '"Don\'t Go!" Emote Level 1',
-          image:
-            "Pleaful-Parent-dont-go-emote-level-1.gif",
+          image: "Pleaful-Parent-dont-go-emote-level-1.gif",
         },
         {
           title: '"Don\'t Go!" Emote Level 2',
-          image:
-            "Pleaful-Parent-dont-go-emote-level-2.gif",
+          image: "Pleaful-Parent-dont-go-emote-level-2.gif",
         },
         {
           title: '"Don\'t Go!" Emote Level 3',
-          image:
-            "Pleaful-Parent-dont-go-emote-level-3.gif",
+          image: "Pleaful-Parent-dont-go-emote-level-3.gif",
         },
         {
           title: '"Don\'t Go!" Emote Level 4',
-          image:
-            "Pleaful-Parent-dont-go-emote-level-4.gif",
+          image: "Pleaful-Parent-dont-go-emote-level-4.gif",
         },
       ],
     },
@@ -4660,15 +4061,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "148 :RegularCandle: 9 :RegularHeart: 2 :AC:",
-      image:
-        "Hairtousle_Teen_Tree_Clement.png",
+      total: "148 :RegularCandle: 9 :RegularHeart: 2 :AC:",
+      image: "Hairtousle_Teen_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Haitousle_Teen_Location_Clement.webp",
+      image: "Haitousle_Teen_Location_Clement.webp",
     },
     cosmetics: [{}],
     action: {
@@ -4676,13 +4074,11 @@ module.exports = {
       level: [
         {
           title: '"Hairtousle" Firned Action Level 1',
-          image:
-            "Hairtousle-Teen-hairtousle-emote-level-1.gif",
+          image: "Hairtousle-Teen-hairtousle-emote-level-1.gif",
         },
         {
           title: '"Hairtousle" Firned Action Level 2',
-          image:
-            "Hairtousle-Teen-hairtousle-emote-level-2.gif",
+          image: "Hairtousle-Teen-hairtousle-emote-level-2.gif",
         },
       ],
     },
@@ -4699,15 +4095,12 @@ module.exports = {
     },
     tree: {
       by: "Jay",
-      total:
-        "115 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Confetti_Cousin_Tree_Jay.png",
+      total: "115 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Confetti_Cousin_Tree_Jay.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Confetti_Cousin_Location_Clement.png",
+      image: "Confetti_Cousin_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4715,23 +4108,19 @@ module.exports = {
       level: [
         {
           title: '"Confetti" Emote Level 1',
-          image:
-            "Confetti-Cousin-confetti-emote-level-1.gif",
+          image: "Confetti-Cousin-confetti-emote-level-1.gif",
         },
         {
           title: '"Confetti" Emote Level 2',
-          image:
-            "Confetti-Cousin-confetti-emote-level-2.gif",
+          image: "Confetti-Cousin-confetti-emote-level-2.gif",
         },
         {
           title: '"Confetti" Emote Level 3',
-          image:
-            "Confetti-Cousin-confetti-emote-level-3.gif",
+          image: "Confetti-Cousin-confetti-emote-level-3.gif",
         },
         {
           title: '"Confetti" Emote Level 4',
-          image:
-            "Confetti-Cousin-confetti-emote-level-4.gif",
+          image: "Confetti-Cousin-confetti-emote-level-4.gif",
         },
       ],
     },
@@ -4748,15 +4137,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "103 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Boogie_Kid_Tree_Jed.png",
+      total: "103 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Boogie_Kid_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Boogie_Kid_Location_Clement.jpg",
+      image: "Boogie_Kid_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4764,23 +4150,19 @@ module.exports = {
       level: [
         {
           title: '"Boogie Dance" Emote Level 1',
-          image:
-            "Boogie-Kid-boogie-dance-emote-level-1.gif",
+          image: "Boogie-Kid-boogie-dance-emote-level-1.gif",
         },
         {
           title: '"Boogie Dance" Emote Level 2',
-          image:
-            "Boogie-Kid-boogie-dance-emote-level-2.gif",
+          image: "Boogie-Kid-boogie-dance-emote-level-2.gif",
         },
         {
           title: '"Boogie Dance" Emote Level 3',
-          image:
-            "Boogie-Kid-boogie-dance-emote-level-3.gif",
+          image: "Boogie-Kid-boogie-dance-emote-level-3.gif",
         },
         {
           title: '"Boogie Dance" Emote Level 4',
-          image:
-            "Boogie-Kid-boogie-dance-emote-level-4.gif",
+          image: "Boogie-Kid-boogie-dance-emote-level-4.gif",
         },
       ],
     },
@@ -4799,15 +4181,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "131 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "SoL_Valley_TS_placeholder.PNG2.png",
+      total: "131 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "SoL_Valley_TS_placeholder.PNG2.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Twirling_Champion_Location_Clement.jpg",
+      image: "Twirling_Champion_Location_Clement.jpg",
     },
     cosmetics: [{}],
     emote: {
@@ -4815,23 +4194,19 @@ module.exports = {
       level: [
         {
           title: '"Triple Axel" Emote Level 1',
-          image:
-            "Twirling-Champion-triple-axel-emote-level-1.gif",
+          image: "Twirling-Champion-triple-axel-emote-level-1.gif",
         },
         {
           title: '"Triple Axel" Emote Level 2',
-          image:
-            "Twirling-Champion-triple-axel-emote-level-2.gif",
+          image: "Twirling-Champion-triple-axel-emote-level-2.gif",
         },
         {
           title: '"Triple Axel" Emote Level 3',
-          image:
-            "Twirling-Champion-triple-axel-emote-level-3.gif",
+          image: "Twirling-Champion-triple-axel-emote-level-3.gif",
         },
         {
           title: '"Triple Axel" Emote Level 4',
-          image:
-            "Twirling-Champion-triple-axel-emote-level-4.gif",
+          image: "Twirling-Champion-triple-axel-emote-level-4.gif",
         },
       ],
     },
@@ -4848,15 +4223,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "108 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Shushing_Light_Scholar_Tree_Jed.png",
+      total: "108 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Shushing_Light_Scholar_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Shushing_Light_Scholar_Location_Clement.png",
+      image: "Shushing_Light_Scholar_Location_Clement.png",
     },
     cosmetics: [{}],
     emote: {
@@ -4864,23 +4236,19 @@ module.exports = {
       level: [
         {
           title: '"Shush" Emote Level 1',
-          image:
-            "Shushing-Light-Scholar-shush-emote-level-1.gif",
+          image: "Shushing-Light-Scholar-shush-emote-level-1.gif",
         },
         {
           title: '"Shush" Emote Level 2',
-          image:
-            "Shushing-Light-Scholar-shush-emote-level-2.gif",
+          image: "Shushing-Light-Scholar-shush-emote-level-2.gif",
         },
         {
           title: '"Shush" Emote Level 3',
-          image:
-            "Shushing-Light-Scholar-shush-emote-level-3.gif",
+          image: "Shushing-Light-Scholar-shush-emote-level-3.gif",
         },
         {
           title: '"Shush" Emote Level 4',
-          image:
-            "Shushing-Light-Scholar-shush-emote-level-4.gif",
+          image: "Shushing-Light-Scholar-shush-emote-level-4.gif",
         },
       ],
     },
@@ -4897,15 +4265,12 @@ module.exports = {
     },
     tree: {
       by: "Jed",
-      total:
-        "123 :RegularCandle: 8 :RegularHeart: 2:AC:",
-      image:
-        "Piggyback_Lightseeker_Tree_Jed.png",
+      total: "123 :RegularCandle: 8 :RegularHeart: 2:AC:",
+      image: "Piggyback_Lightseeker_Tree_Jed.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Puggyback_Lightseeker_Location_Clement.jpg",
+      image: "Puggyback_Lightseeker_Location_Clement.jpg",
     },
     cosmetics: [{}],
     action: {
@@ -4913,13 +4278,11 @@ module.exports = {
       level: [
         {
           title: '"Piggyback" Friend Action Level 1',
-          image:
-            "Piggyback-Lightseeker-piggyback-emote-level-1.gif",
+          image: "Piggyback-Lightseeker-piggyback-emote-level-1.gif",
         },
         {
           title: '"Piggyback" Friend Action Level 2',
-          image:
-            "Piggyback-Lightseeker-piggyback-emote-level-2.gif",
+          image: "Piggyback-Lightseeker-piggyback-emote-level-2.gif",
         },
       ],
     },
@@ -4936,15 +4299,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "151 :RegularCandle: 0 :RegularHeart: 2 :AC:",
-      image:
-        "Traveling_Spirit_072-by-Clement2.png",
+      total: "151 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Traveling_Spirit_072-by-Clement2.png",
     },
     location: {
       by: "Clement",
-      image:
-        "02_HF_Seasonal_Spirit_-_Laidback_Pioneer.png",
+      image: "02_HF_Seasonal_Spirit_-_Laidback_Pioneer.png",
     },
     cosmetics: [{}],
     stance: {
@@ -4966,15 +4326,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "126 :RegularCandle: 7 :RegularHeart: 2 :AC:",
-      image:
-        "Traveling_Spirit_0662.png",
+      total: "126 :RegularCandle: 7 :RegularHeart: 2 :AC:",
+      image: "Traveling_Spirit_0662.png",
     },
     location: {
       by: "Clement",
-      image:
-        "DoubleFive_Light_Catcher_Location_Clement.png",
+      image: "DoubleFive_Light_Catcher_Location_Clement.png",
     },
     cosmetics: [{}],
     action: {
@@ -4982,13 +4339,11 @@ module.exports = {
       level: [
         {
           title: '"Double Five" Friend Action Level 1',
-          image:
-            "Doublefive-Light-Catcher-double-five-emote-level-1.gif",
+          image: "Doublefive-Light-Catcher-double-five-emote-level-1.gif",
         },
         {
           title: '"Double Five" Friend Action Level 2',
-          image:
-            "Doublefive-Light-Catcher-double-five-emote-level-2.gif",
+          image: "Doublefive-Light-Catcher-double-five-emote-level-2.gif",
         },
       ],
     },
@@ -5005,15 +4360,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "190 :RegularCandle: 0 :RegularHeart: 2 :AC:",
-      image:
-        "Crab_Whisperer_Tree_Clement.png",
+      total: "190 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Crab_Whisperer_Tree_Clement.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Crab_Whisperer_Location_Clement.jpg",
+      image: "Crab_Whisperer_Location_Clement.jpg",
     },
     cosmetics: [{}],
     call: {
@@ -5036,15 +4388,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Stretching_Guru_Tree.png",
+      total: "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Stretching_Guru_Tree.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Stretching_Guru_Location.png",
+      image: "Stretching_Guru_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -5052,23 +4401,19 @@ module.exports = {
       level: [
         {
           title: '"Yoga Emote" Level 1',
-          image:
-            "Stretching-Guru-yoga-emote-level-1.gif",
+          image: "Stretching-Guru-yoga-emote-level-1.gif",
         },
         {
           title: '"Yoga Emote" Level 2',
-          image:
-            "Stretching-Guru-yoga-emote-level-2.gif",
+          image: "Stretching-Guru-yoga-emote-level-2.gif",
         },
         {
           title: '"Yoga Emote" Level 3',
-          image:
-            "Stretching-Guru-yoga-emote-level-3.gif",
+          image: "Stretching-Guru-yoga-emote-level-3.gif",
         },
         {
           title: '"Yoga Emote" Level 4',
-          image:
-            "Stretching-Guru-yoga-emote-level-4.gif",
+          image: "Stretching-Guru-yoga-emote-level-4.gif",
         },
       ],
     },
@@ -5087,13 +4432,11 @@ module.exports = {
     tree: {
       by: "Jed",
       total: "87 :RegularCandle: 2 :AC:",
-      image:
-        "Sassy_Drifter_Tree.png",
+      image: "Sassy_Drifter_Tree.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Sassy_Drifter_Location.jpg",
+      image: "Sassy_Drifter_Location.jpg",
     },
     cosmetics: [{}],
     stance: {
@@ -5115,15 +4458,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "145 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "saluting_Protector_Tree.png",
+      total: "145 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "saluting_Protector_Tree.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Saluting_Performer_Location.png",
+      image: "Saluting_Performer_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -5131,23 +4471,19 @@ module.exports = {
       level: [
         {
           title: '"Acknowledge Emote" Level 1',
-          image:
-            "Saluting-Protector-acknowledge-emote-level-1.gif",
+          image: "Saluting-Protector-acknowledge-emote-level-1.gif",
         },
         {
           title: '"Acknowledge Emote" Level 2',
-          image:
-            "Saluting-Protector-acknowledge-emote-level-2.gif",
+          image: "Saluting-Protector-acknowledge-emote-level-2.gif",
         },
         {
           title: '"Acknowledge Emote" Level 3',
-          image:
-            "Saluting-Protector-acknowledge-emote-level-3.gif",
+          image: "Saluting-Protector-acknowledge-emote-level-3.gif",
         },
         {
           title: '"Acknowledge Emote" Level 4',
-          image:
-            "Saluting-Protector-acknowledge-emote-level-4.gif",
+          image: "Saluting-Protector-acknowledge-emote-level-4.gif",
         },
       ],
     },
@@ -5164,14 +4500,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      total: "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image: "",
     },
     location: {
       by: "Clement",
-      image:
-        "Provoking_Performer_Location.png",
+      image: "Provoking_Performer_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -5179,23 +4513,19 @@ module.exports = {
       level: [
         {
           title: '"Kabuki Emote" Level 1',
-          image:
-            "Provoking-Performer-kabuki-emote-level-1.gif",
+          image: "Provoking-Performer-kabuki-emote-level-1.gif",
         },
         {
           title: '"Kabuki Emote" Level 2',
-          image:
-            "Provoking-Performer-kabuki-emote-level-2.gif",
+          image: "Provoking-Performer-kabuki-emote-level-2.gif",
         },
         {
           title: '"Kabuki Emote" Level 3',
-          image:
-            "Provoking-Performer-kabuki-emote-level-3.gif",
+          image: "Provoking-Performer-kabuki-emote-level-3.gif",
         },
         {
           title: '"Kabuki Emote" Level 4',
-          image:
-            "Provoking-Performer-kabuki-emote-level-4.gif",
+          image: "Provoking-Performer-kabuki-emote-level-4.gif",
         },
       ],
     },
@@ -5214,13 +4544,11 @@ module.exports = {
     tree: {
       by: "Jed",
       total: "107 :RegularCandle: 13  2:AC:",
-      image:
-        "leaping_dancer_tree.png",
+      image: "leaping_dancer_tree.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Leaping_Dancer_Location.png",
+      image: "Leaping_Dancer_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -5228,23 +4556,19 @@ module.exports = {
       level: [
         {
           title: '"Kabuki Emote" Level 1',
-          image:
-            "Leaping-Dancer-leap-emote-level-1.gif",
+          image: "Leaping-Dancer-leap-emote-level-1.gif",
         },
         {
           title: '"Kabuki Emote" Level 2',
-          image:
-            "Leaping-Dancer-leap-emote-level-2.gif",
+          image: "Leaping-Dancer-leap-emote-level-2.gif",
         },
         {
           title: '"Kabuki Emote" Level 3',
-          image:
-            "Leaping-Dancer-leap-emote-level-3.gif",
+          image: "Leaping-Dancer-leap-emote-level-3.gif",
         },
         {
           title: '"Kabuki Emote" Level 4',
-          image:
-            "Leaping-Dancer-leap-emote-level-4.gif",
+          image: "Leaping-Dancer-leap-emote-level-4.gif",
         },
       ],
     },
@@ -5262,15 +4586,12 @@ module.exports = {
     },
     tree: {
       by: "Clement",
-      total:
-        "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image:
-        "Greeting_Shaman_Tree.png",
+      total: "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Greeting_Shaman_Tree.png",
     },
     location: {
       by: "Clement",
-      image:
-        "Greeting_Shaman_Location.png",
+      image: "Greeting_Shaman_Location.png",
     },
     cosmetics: [{}],
     emote: {
@@ -5278,23 +4599,19 @@ module.exports = {
       level: [
         {
           title: '"Kung Fu Emote" Level 1',
-          image:
-            "Greeting-Shaman-kung-fu-emote-level-1.gif",
+          image: "Greeting-Shaman-kung-fu-emote-level-1.gif",
         },
         {
           title: '"Kung Fu Emote" Level 2',
-          image:
-            "Greeting-Shaman-kung-fu-emote-level-2.gif",
+          image: "Greeting-Shaman-kung-fu-emote-level-2.gif",
         },
         {
           title: '"Kung Fu Emote" Level 3',
-          image:
-            "Greeting-Shaman-kung-fu-emote-level-3.gif",
+          image: "Greeting-Shaman-kung-fu-emote-level-3.gif",
         },
         {
           title: '"Kung Fu Emote" Level 4',
-          image:
-            "Greeting-Shaman-kung-fu-emote-level-4.gif",
+          image: "Greeting-Shaman-kung-fu-emote-level-4.gif",
         },
       ],
     },

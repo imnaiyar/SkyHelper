@@ -2,7 +2,12 @@ const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilde
 const { parsePerm, btnHandler } = require("@src/handler");
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
-
+const errorEmbed = new EmbedBuilder()
+  .setTitle(`ERROR`)
+  .setDescription(`An error occurred while executing this command.`);
+const errorBtn = new ActionRowBuilder().addComponents(
+  new ButtonBuilder().setLabel("Report Bug").setCustomId("error-report").setStyle(ButtonStyle.Secondary),
+);
 /**
  * Intraction event handler
  * @param {import('@src/frameworks').SkyHelper} client
@@ -42,7 +47,11 @@ module.exports = async (client, interaction) => {
     }
 
     // Check if bot has necessary permissions to execute the command functions
-    if (interaction.inGuild() && command.data?.botPermissions && !interaction.guild.members.me.permissions.has(command.data.botPermissions)) {
+    if (
+      interaction.inGuild() &&
+      command.data?.botPermissions &&
+      !interaction.guild.members.me.permissions.has(command.data.botPermissions)
+    ) {
       return interaction.reply({
         content: `I do not have the required permission(s) (${parsePerm(
           command.data.botPermissions,
@@ -106,22 +115,16 @@ module.exports = async (client, interaction) => {
       }
     } catch (error) {
       client.logger.error(error);
-      const embed = new EmbedBuilder()
-        .setTitle(`ERROR`)
-        .setDescription(`An error occurred while executing this command.`);
 
-      const actionRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setLabel("Report Bug").setCustomId("error_report").setStyle(ButtonStyle.Secondary),
-      );
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
-          embeds: [embed],
-          components: [actionRow],
+          embeds: [errorEmbed],
+          components: [errorBtn],
         });
       } else {
         await interaction.reply({
-          embeds: [embed],
-          components: [actionRow],
+          embeds: [errorEmbed],
+          components: [errorBtn],
           ephemeral: true,
         });
       }
@@ -145,7 +148,27 @@ module.exports = async (client, interaction) => {
   }
   // Buttons
   if (interaction.isButton()) {
-    btnHandler(interaction);
+    const button = client.buttons.find((btn) => interaction.customId.startsWith(btn.name));
+    if (!button) return;
+
+    try {
+      await button.execute(interaction, client);
+    } catch (err) {
+      client.logger.error(err);
+
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({
+          embeds: [errorEmbed],
+          components: [errorBtn],
+        });
+      } else {
+        await interaction.reply({
+          embeds: [errorEmbed],
+          components: [errorBtn],
+          ephemeral: true,
+        });
+      }
+    }
   }
   // Modals
   if (interaction.isModalSubmit()) {

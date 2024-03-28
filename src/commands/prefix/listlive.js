@@ -10,7 +10,7 @@ module.exports = {
       require: true,
       args: ["shards", "times"],
     },
-    aliases: ['ll']
+    aliases: ["ll"],
   },
   async execute(msg, args) {
     let model;

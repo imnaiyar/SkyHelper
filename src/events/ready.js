@@ -1,8 +1,10 @@
 const { WebhookClient, EmbedBuilder } = require("discord.js");
 const cron = require("node-cron");
 const reminders = require("@functions/reminders");
-const { UpdateEvent, UpdateTS} = require('@src/libs/classes')
-;const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
+const { shardsUpdate, timesUpdate } = require("@functions");
+const { setupPresence } = require("@handler");
+const { UpdateEvent, UpdateTS } = require("@src/libs/classes");
+const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 /**
  * ready event handler
@@ -16,12 +18,37 @@ module.exports = async (client) => {
   } else {
     text = "Website is disabled";
   }
-  
+
   // Fetching for eval purpose
   await client.application.fetch();
-  
-  client.classes.set('UpdateTS', UpdateTS);
-  client.classes.set('UpdateEvent', UpdateEvent);
+
+  client.classes.set("UpdateTS", UpdateTS);
+  client.classes.set("UpdateEvent", UpdateEvent);
+
+  // bots presence
+  setupPresence(client);
+
+  // cron jobs
+
+  // live shards
+  cron.schedule("*/5 * * * *", async () => {
+    try {
+      await shardsUpdate(client);
+    } catch (err) {
+      client.logger.error("AutoShard Error:", err);
+    }
+  });
+
+  // live times
+  cron.schedule("*/2 * * * *", async () => {
+    try {
+      await timesUpdate(client);
+    } catch (err) {
+      client.logger.error("AutoTimes Error:", err);
+    }
+  });
+
+  // geyser reminder
   cron.schedule(
     "0 */2 * * *",
     async () => {
@@ -36,6 +63,7 @@ module.exports = async (client) => {
     },
   );
 
+  // grandma reminder
   cron.schedule(
     "30 */2 * * *",
     async () => {
@@ -50,7 +78,7 @@ module.exports = async (client) => {
     },
   );
 
-  // reset
+  // reset reminder
   cron.schedule(
     "0 0 * * *",
     async () => {
@@ -65,6 +93,7 @@ module.exports = async (client) => {
     },
   );
 
+  // turtle reminder
   cron.schedule(
     "50 */2 * * *",
     async () => {
@@ -78,8 +107,7 @@ module.exports = async (client) => {
       timezone: "America/Los_Angeles",
     },
   );
-  
-  
+
   const readyalertemb = new EmbedBuilder()
     .addFields(
       {
@@ -116,5 +144,4 @@ module.exports = async (client) => {
       embeds: [readyalertemb],
     });
   }
-
 };

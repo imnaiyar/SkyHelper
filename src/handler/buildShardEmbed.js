@@ -4,13 +4,13 @@ const config = require("@root/config");
 
 /**
  * Builds Guve Shards embed
- * @param {Date} currentDate
+ * @param {Date} givenDate
  * @param {string} footer
  * @returns {object} result, actionRow
  */
-module.exports = async (currentDate, footer) => {
+module.exports = (givenDate, footer, noBtn) => {
   const { type, location, rewards, colors, showButtons, thumbUrl, noShard, eventStatus, timeRemaining } =
-    await shardsReply(currentDate);
+    shardsReply(givenDate);
   const result = new EmbedBuilder()
     .setAuthor({
       name: `Shards Info`,
@@ -43,12 +43,36 @@ module.exports = async (currentDate, footer) => {
 
     disabled = true;
   }
+
+  const prevDate = givenDate.clone().subtract(1, "day").format("YYYY-MM-DD");
+  const nextDate = givenDate.clone().add(1, "day").format("YYYY-MM-DD");
+  const buttonsToAdd = [];
+  if (!noBtn) {
+    buttonsToAdd.push(
+      new ButtonBuilder()
+        .setEmoji("<:left:1207594669882613770>")
+        .setCustomId(`shards-scroll_${prevDate}`)
+        .setStyle("1"),
+      new ButtonBuilder()
+        .setEmoji("<:right:1207593237544435752>")
+        .setCustomId(`shards-scroll_${nextDate}`)
+        .setStyle("1"),
+    );
+  }
+
   const actionRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setEmoji("<:left:1207594669882613770>").setCustomId("prev").setStyle("1"),
-    new ButtonBuilder().setEmoji("<:right:1207593237544435752>").setCustomId("next").setStyle("1"),
-    new ButtonBuilder().setLabel("Timeline").setCustomId("timeline").setDisabled(disabled).setStyle("3"),
-    new ButtonBuilder().setLabel("Location/Data").setCustomId("location").setDisabled(disabled).setStyle("3"),
-    new ButtonBuilder().setLabel("About Shard").setCustomId("about").setStyle("3"),
+    ...buttonsToAdd,
+    new ButtonBuilder()
+      .setLabel("Timeline")
+      .setCustomId(`shards-timeline_${givenDate.format("YYYY-MM-DD")}`)
+      .setDisabled(disabled)
+      .setStyle("3"),
+    new ButtonBuilder()
+      .setLabel("Location/Data")
+      .setCustomId(`shards-location_${givenDate.format("YYYY-MM-DD")}`)
+      .setDisabled(disabled)
+      .setStyle("3"),
+    new ButtonBuilder().setLabel("About Shard").setCustomId("shards-about").setStyle("3"),
   );
   return { result, actionRow };
 };

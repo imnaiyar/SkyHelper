@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 const { exec } = require("child_process");
-
+const { recursiveReadDirSync } = require("@handler");
+const { error } = require("@src/logger");
 /**
  * @type {import('@src/frameworks').PrefixCommands}
  */
@@ -14,19 +15,19 @@ module.exports = {
       args: ["bot"],
     },
     flags: ["commands", "events", "files", "local", "l"],
-    aliases: ['rl']
+    aliases: ["rl"],
   },
   async execute(msg, args, client, flags) {
     const filtered = ["commands", "events", "files"];
     const combinations = [
-      { match: ["commands", "events", "files"], result: "Commands and Events and Files" },
-      { match: ["commands", "files"], result: "Commands and Files" },
-      { match: ["commands", "events"], result: "Commands and Events" },
+      { match: ["commands", "events", "files"], result: "Commands and Buttons and Events and Files" },
+      { match: ["commands", "files"], result: "Commands and Buttons and Files" },
+      { match: ["commands", "events"], result: "Commands and Buttons and Events" },
       { match: ["events", "files"], result: "Events and Files" },
-      { match: ["commands"], result: "Commands" },
+      { match: ["commands"], result: "Commands and Buttons" },
       { match: ["events"], result: "Events" },
       { match: ["files"], result: "Files" },
-      { match: [], result: "Commands" },
+      { match: [], result: "Commands and Buttons" },
     ];
     const matchingCombination =
       combinations.find((combination) => combination.match.every((flag) => flags.includes(flag))) ||
@@ -61,10 +62,7 @@ module.exports = {
     }
 
     if (flags.includes("commands")) {
-      const commands = path.resolve(__dirname, "../../commands");
-      clearCache(commands);
-      client.commands.clear();
-      client.prefix.clear();
+      client.loadButtons("./src/buttons");
       client.loadSlashCmd("./src/commands");
       client.loadPrefix("./src/commands/prefix");
     }
@@ -74,16 +72,13 @@ module.exports = {
     }
 
     if (flags.includes("files")) {
-      const functions = path.resolve(__dirname, "../../functions");
-      const handler = path.resolve(__dirname, "../../handler");
-
-      clearCache(functions);
-      clearCache(handler);
+      clearCache("src/functions");
+      clearCache("src/handler");
+      clearCache("src/frameworks");
     }
 
     if (filtered.every((item) => !flags.includes(item))) {
-      client.commands.clear();
-      client.prefix.clear();
+      client.loadButtons("./src/buttons");
       client.loadSlashCmd("./src/commands");
       client.loadPrefix("./src/commands/prefix");
     }
@@ -125,19 +120,14 @@ async function consoleRun(type, client) {
     });
   });
 }
-const fs = require("fs");
-const path = require("path");
 
 function clearCache(directory) {
-  const files = fs.readdirSync(directory);
-
-  files.forEach((file) => {
-    const filePath = path.join(directory, file);
-
-    if (fs.statSync(filePath).isDirectory()) {
-      clearCache(filePath);
-    } else {
+  recursiveReadDirSync(directory).forEach((filePath) => {
+    const file = require("path").basename(filePath);
+    try {
       delete require.cache[require.resolve(filePath)];
+    } catch (err) {
+      error(`Failed to reload ${file}`);
     }
   });
 }

@@ -1,7 +1,8 @@
-const { Client, GatewayIntentBits, Collection, Partials, Routes,PermissionFlagsBits } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, Partials, Routes, PermissionFlagsBits } = require("discord.js");
+const chalk = require("chalk");
 const { table } = require("table");
 const moment = require("moment-timezone");
-const { recursiveReadDirSync, validations, cmdValidation } = require("@handler");
+const { recursiveReadDirSync, cmdValidation } = require("@handler");
 const { schemas } = require("@src/database/mongoose");
 const fs = require("fs");
 const path = require("path");
@@ -34,6 +35,11 @@ module.exports = class SkyHelper extends Client {
     this.cooldowns = new Collection();
 
     /**
+     * @type {Collection<string, import('./Buttons.js')>}
+     */
+    this.buttons = new Collection();
+
+    /**
      * Timezone for various time based calculations.
      * Timezone is defaultly set to "America/Los_Angeles" ,
      * as the developer of the game (TGC) is based from California
@@ -46,13 +52,6 @@ module.exports = class SkyHelper extends Client {
      */
     this.prefix = new Collection();
     this.database = schemas;
-
-    // Shards data
-    /**
-     * Stores shards commands datas
-     * @type {Map<String, Object>}
-     */
-    this.shardsData = new Map();
 
     // Datas for Events in Sky
     /**
@@ -67,11 +66,6 @@ module.exports = class SkyHelper extends Client {
       eventEnds: moment.tz("2024-04-14T23:59:59", this.timezone),
       eventDuration: "13 days",
     });
-
-    /**
-     * @type {Collection<string, Class>}
-     */
-    this.classes = new Collection();
 
     /**
      * stores current/upcoming ts details
@@ -138,6 +132,11 @@ module.exports = class SkyHelper extends Client {
     });
 
     this.spiritsData = require("../commands//guides/sub/shared/spiritsData.js");
+
+    /**
+     * @type {Collection<string, Class>}
+     */
+    this.classes = new Collection();
     // Checks for how this class is created so it doesnt mess up the process
     if (
       require.main.filename !== path.join(process.cwd(), "src", "commandsRegister.js") &&
@@ -149,21 +148,11 @@ module.exports = class SkyHelper extends Client {
   }
 
   /**
-   * Validate environment variable
-   */
-  async validate() {
-    const vld = await validations();
-    if (!vld) {
-      process.exit(1);
-    }
-  }
-
-  /**
    * Load all events from the specified directory
    * @param {string} directory
    */
   loadEvents(directory) {
-    Logger.log(`Loading events...`);
+    this.logger.log(chalk.blueBright("<------------ Loading Events -------------->"));
     let success = 0;
     let failed = 0;
     const clientEvents = [];
@@ -184,7 +173,7 @@ module.exports = class SkyHelper extends Client {
       }
     });
 
-    console.log(
+    this.logger.log(
       table(clientEvents, {
         header: {
           alignment: "center",
@@ -203,25 +192,53 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadSlashCmd(dir) {
-    const directory = path.resolve(process.cwd(), dir);
-    const files = fs.readdirSync(directory);
-
-    for (const file of files) {
-      const filePath = path.resolve(directory, file);
-      const fileStat = fs.statSync(filePath);
-
-      if (fileStat.isDirectory()) {
-        if (file !== "sub" && file !== "prefix") {
-          this.loadSlashCmd(filePath);
-        }
-      } else if (file.endsWith(".js") && !file.startsWith("skyEvents")) {
+    this.logger.log(chalk.blueBright("<------- Loading Slash Commands ----------->"));
+    let added = 0;
+    let failed = 0;
+    recursiveReadDirSync(dir).forEach((filePath) => {
+      const file = path.basename(filePath);
+      try {
         delete require.cache[require.resolve(filePath)];
         const command = require(filePath);
         const vld = cmdValidation(command, file);
-        if (!vld) continue;
+        if (!vld) return;
         this.commands.set(command.data.name, command);
+        this.logger.log(`Loaded ${command.data.name}`);
+        added++;
+      } catch (err) {
+        failed++;
+        Logger.error(`loadSlashCmds - ${file}`, ex);
       }
-    }
+    });
+
+    this.logger.log(`Loaded ${added} Slash Commands. Failed ${failed}`);
+  }
+
+  /**
+   * Load buttons to client on startup
+   * @param {string} dir
+   */
+  loadButtons(dir) {
+    this.logger.log(chalk.blueBright("<---------- Loading Buttons ------------->"));
+    let added = 0;
+    let failed = 0;
+    recursiveReadDirSync(dir).forEach((filePath) => {
+      const file = path.basename(filePath);
+
+      try {
+        delete require.cache[require.resolve(filePath)];
+        const button = require(filePath);
+        if (typeof button !== "object") return;
+        this.buttons.set(button.name, button);
+        this.logger.log(`Loaded ${button.name}`);
+        added++;
+      } catch (ex) {
+        failed += 1;
+        Logger.error(`loadButtons - ${file}`, ex);
+      }
+    });
+
+    this.logger.log(`Loaded ${added} buttons. Failed ${failed}`);
   }
 
   /**
@@ -229,20 +246,26 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadPrefix(dir) {
-    const prefixDirectory = path.join(process.cwd(), dir);
-    const commandFiles = fs.readdirSync(prefixDirectory).filter((file) => file.endsWith(".js"));
+    this.logger.log(chalk.blueBright("<----------- Loading Prefix ------------->"));
+    let added = 0;
+    let failed = 0;
+    recursiveReadDirSync(dir).forEach((filePath) => {
+      const file = path.basename(filePath);
+      try {
+        delete require.cache[require.resolve(filePath)];
+        const command = require(filePath);
 
-    for (const file of commandFiles) {
-      const filePath = path.join(prefixDirectory, file);
-      delete require.cache[require.resolve(filePath)];
-      const command = require(filePath);
-      this.prefix.set(command.data.name, command);
-      if (command.data?.aliases) {
-        command.data.aliases.forEach((alias) => {
-          this.prefix.set(alias, command);
-        });
+        this.prefix.set(command.data.name, command);
+        command.data?.aliases?.forEach((al) => this.prefix.set(al, command));
+        this.logger.log(`Loaded ${command.data.name}`);
+        added++;
+      } catch (err) {
+        failed++;
+        Logger.error(`loadPrefix - ${file}`, ex);
       }
-    }
+    });
+
+    this.logger.log(`Loaded ${added} Prefix Commands. Failed ${failed}`);
   }
 
   /**
@@ -250,7 +273,7 @@ module.exports = class SkyHelper extends Client {
    */
   async registerCommands() {
     const toRegister = [];
-    
+
     this.commands
       .map((cmd) => ({
         name: cmd.data.name,
@@ -259,16 +282,15 @@ module.exports = class SkyHelper extends Client {
         options: cmd.data?.options,
         integration_types: cmd.data.integration_types,
         ...(cmd.data.userPermissions && {
-            default_member_permissions: cmd.data.userPermissions.reduce(
-              (accumulator, permission) => accumulator | PermissionFlagsBits[permission],
-              BigInt(0)
-            ).toString(),
-          }),
+          default_member_permissions: cmd.data.userPermissions
+            .reduce((accumulator, permission) => accumulator | PermissionFlagsBits[permission], BigInt(0))
+            .toString(),
+        }),
         contexts: cmd.data.contexts,
         dm_permission: cmd.data?.dm_permission,
       }))
       .forEach((s) => toRegister.push(s));
-     
+
     await this.rest.put(Routes.applicationCommands(this.user.id), {
       body: toRegister,
     });
@@ -292,7 +314,7 @@ module.exports = class SkyHelper extends Client {
    */
   async createWebhook(channel, reason) {
     const webhook = await channel.createWebhook({
-      name:  "SkyHelper",
+      name: "SkyHelper",
       avatar: this.user.displayAvatarURL(),
       reason: reason ? reason : "SkyHelper Webhook",
     });

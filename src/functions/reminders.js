@@ -37,13 +37,15 @@ module.exports = async (client, type) => {
         response = `${role}The world of Sky just reset and daily quests have been refreshed!`;
       }
       if (!response) return;
-      await wb.send({
-        username: `${type.charAt(0).toUpperCase() + type.slice(1)} Reminder`,
-        avatarURL: client.user.displayAvatarURL(),
-        content: response
-      }).catch((err) => {
-        client.logger.log(guild.name, ": ", error);
-      });
+      await wb
+        .send({
+          username: `${type.charAt(0).toUpperCase() + type.slice(1)} Reminder`,
+          avatarURL: client.user.displayAvatarURL(),
+          content: response,
+        })
+        .catch((err) => {
+          client.logger.log(guild.name, ": ", error);
+        });
     } catch (err) {
       client.logger.error(err);
     }

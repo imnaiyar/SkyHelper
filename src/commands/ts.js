@@ -19,7 +19,7 @@ module.exports = {
       },
     ],
     integration_types: [0, 1],
-    contexts: [0, 1, 2], 
+    contexts: [0, 1, 2],
     longDesc: "To be decided",
   },
 
@@ -28,12 +28,12 @@ module.exports = {
    * @param {import('@src/frameworks').SkyHelper} client
    */
   async execute(interaction, client) {
-     const hide = interaction.options.getBoolean("hide") || false;
+    const hide = interaction.options.getBoolean("hide") || false;
     await interaction.deferReply({ ephemeral: hide });
     const { name, visitDate, departDate, value, index, spiritImage } = client.ts;
     const now = moment().tz(client.timezone);
     const lastVisitDate = moment.tz(visitDate, "DD-MM-YYYY", client.timezone).startOf("day");
-    const lastDepartDate = lastVisitDate.clone().add('3', 'day').endOf("day");
+    const lastDepartDate = lastVisitDate.clone().add("3", "day").endOf("day");
     const nextDepartDate = lastDepartDate.clone();
     while (now.isAfter(nextDepartDate)) {
       nextDepartDate.add(14, "days");
@@ -91,7 +91,7 @@ module.exports = {
 
       if (lastDepartDate.isSame(nextDepartDate)) {
         const spirit = client.spiritsData[value];
-        const emote= spirit.call?.icon || spirit.emote?.icon || spirit.action?.icon || spirit.stance?.icon;
+        const emote = spirit.call?.icon || spirit.emote?.icon || spirit.action?.icon || spirit.stance?.icon;
         embed = new EmbedBuilder()
           .setAuthor({ name: `Traveling Spirit Summary #${index}`, iconURL: spiritImage })
           .setTitle(`${emote} ${spirit.name}`)

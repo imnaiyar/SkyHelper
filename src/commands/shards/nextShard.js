@@ -40,7 +40,7 @@ module.exports = {
       },
     ],
     integration_types: [0, 1],
-    contexts: [0, 1, 2], 
+    contexts: [0, 1, 2],
   },
   async execute(interaction) {
     const input = interaction.options.getInteger("number");

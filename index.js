@@ -2,55 +2,30 @@ require("dotenv").config();
 require("module-alias/register");
 
 // register extenders
-require('@src/extenders/Client.js');
+require("@src/extenders/Client.js");
 const cron = require("node-cron");
-const { shardsUpdate, timesUpdate } = require("@functions");
-const { initializeMongoose } = require("@src/database/mongoose");
-const { setupPresence } = require("@handler");
-const reminders = require('@functions/reminders')
 const chalk = require("chalk");
+const { initializeMongoose } = require("@src/database/mongoose");
+const { validations } = require("@handler");
+const reminders = require("@functions/reminders");
 const { SkyHelper } = require("@frameworks/index");
 const client = new SkyHelper();
 
-(async () => {
-  await client.validate();
-  console.log(chalk.blueBright("<-------------------------- Loading Events --------------------------->"));
-  await client.loadEvents("./src/events");
-  console.log(chalk.blueBright("<----------------------- Loading Slash Commands ---------------------->"));
-  await client.loadSlashCmd("./src/commands");
-  console.log(chalk.blueBright("<----------------------- Loading Prefix Commands --------------------->"));
-  await client.loadPrefix("./src/commands/prefix");
+client.logger.log(chalk.blueBright("<---------- Validating Secrets ------------>"));
+validations();
+client.loadEvents("./src/events");
+client.loadSlashCmd("./src/commands");
+client.loadButtons("./src/buttons");
+client.loadPrefix("./src/commands/prefix");
 
-  // unhandled error handling
-  process.on("unhandledRejection", (err) => client.logger.error(`Unhandled rejection`, err));
-  process.on("uncaughtException", (err) => client.logger.error(`Uncaught exception`, err));
+// unhandled error handling
+process.on("unhandledRejection", (err) => client.logger.error(`Unhandled rejection`, err));
+process.on("uncaughtException", (err) => client.logger.error(`Uncaught exception`, err));
 
-  // setup mongoose
-  initializeMongoose();
+// setup mongoose
+initializeMongoose();
 
-  // bots presence
-  setupPresence(client);
-  // auto shard function
-  cron.schedule("*/5 * * * *", async () => {
-    try {
-      await shardsUpdate(client);
-    } catch (err) {
-      client.logger.error("AutoShard Error:", err);
-    }
-  });
+client.on("warn", console.log);
 
-  cron.schedule("*/1 * * * *", async () => {
-    try {
-      await timesUpdate(client);
-    } catch (err) {
-      client.logger.error("AutoTimes Error:", err);
-    }
-  });
-  
-  
-  client
-    .on("warn", console.log);
-
-  await client.login(process.env.TOKEN);
-})();
+client.login(process.env.TOKEN);
 module.exports = { client };

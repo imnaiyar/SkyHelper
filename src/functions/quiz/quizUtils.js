@@ -68,7 +68,8 @@ module.exports = class quizUtils {
         resultEmbed.setDescription("No one got a correct answer");
         interaction.channel.send({ embeds: [resultEmbed], components: [btn] });
       } else {
-        const winner = interaction?.guild?.members.cache.get(highestScorer) || interaction.client.users.cache.get(highestScorer);
+        const winner =
+          interaction?.guild?.members.cache.get(highestScorer) || interaction.client.users.cache.get(highestScorer);
 
         const card = new QuizWinnerCard(winner, highestScore, data.totalQuestions, interaction.client);
 

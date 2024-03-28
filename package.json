@@ -11,13 +11,14 @@
   ],
   "scripts": {
     "start": "node index.js",
+    "dev": "node index.js",
     "commands": "node src/commandsRegister.js",
     "format": "npx prettier --write \"**/*.{js,css,ejs}\""
   },
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.49",
+    "@napi-rs/canvas": "^0.1.51",
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
     "axios": "^1.6.5",

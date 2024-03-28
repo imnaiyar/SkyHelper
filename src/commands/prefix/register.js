@@ -3,7 +3,7 @@ module.exports = {
     name: "register",
     description: "deploy commands",
     category: "OWNER",
-    aliases: ['rg']
+    aliases: ["rg"],
   },
 
   async execute(message, args, client) {

@@ -7,14 +7,14 @@ const util = require("@handler/shardsUtil");
  * @param {Date} currentDate - date for which shard info is needed
  * @returns
  */
-async function shardsAlt(currentDate) {
+function shardsAlt(currentDate) {
   const timezone = "America/Los_Angeles";
   const dayOfWeek = currentDate.day();
   const formatDate = currentDate.format("DD MMMM YYYY");
   const today = moment().tz(timezone).startOf("day");
   const noShard = currentDate.isSame(today, "day") ? "Today" : `${formatDate}`;
 
-  const { currentShard, currentRealm } = await util.shardsIndex(currentDate);
+  const { currentShard, currentRealm } = util.shardsIndex(currentDate);
   const timings = shardsTime(currentDate);
   const eventTimings = timings[currentShard];
 

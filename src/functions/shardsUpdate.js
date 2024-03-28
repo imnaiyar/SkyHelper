@@ -11,7 +11,7 @@ module.exports = async (client) => {
   const timezone = "America/Los_Angeles";
   const currentDate = moment().tz(timezone);
   const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-  const { result } = await buildShardEmbed(currentDate, "Live Shard (updates every 5 min.)");
+  const { result, actionRow } = buildShardEmbed(currentDate, "Live Shard (updates every 5 min.)", true);
 
   const guildData = mongoose.model("autoShard");
   const data = await guildData.find();
@@ -26,8 +26,12 @@ module.exports = async (client) => {
       dltSChm(guild._id);
       return;
     }
-  await webhook
-      .editMessage(guild.messageId, { content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
+    await webhook
+      .editMessage(guild.messageId, {
+        content: `Last Update At: <t:${updatedAt}:R>`,
+        embeds: [result],
+        components: [actionRow],
+      })
       .catch((e) => {
         if (e.message === "Unknown Message") {
           dltSChm(guild._id);

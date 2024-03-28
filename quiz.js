@@ -50,14 +50,13 @@ module.exports = {
       },
     ],
     integration_types: [0],
-    contexts: [0, 1], 
-    botPermissions: ['SendMessages', 'ViewChannel'],
+    contexts: [0, 1],
+    botPermissions: ["SendMessages", "ViewChannel"],
     longDesc: "Guessing Game",
   },
   async execute(interaction, client) {
     const sub = interaction.options.getSubcommand();
     if (sub === "start") {
-
       if (client.gameData.get(interaction.channel.id)) {
         return interaction.reply({
           content: "There's already a game in progress in this channel",
@@ -143,8 +142,8 @@ module.exports = {
       await interaction.deferReply();
       const opt = interaction.options.getString("type");
       const { getAll } = client.database.quizData;
-      if (opt === 'server' && !interaction.inGuild()) {
-        return interaction.followUp('This selected type is only available in servers!');
+      if (opt === "server" && !interaction.inGuild()) {
+        return interaction.followUp("This selected type is only available in servers!");
       }
       const embed = new EmbedBuilder()
         .setAuthor({ name: "Sky CoTL Quiz Leaderboard" })

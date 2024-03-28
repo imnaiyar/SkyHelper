@@ -6,7 +6,7 @@ module.exports = {
     name: "blacklist",
     description: "blacklist a guild or an user.",
     category: "OWNER",
-    aliases: ['bl']
+    aliases: ["bl"],
   },
 
   async execute(message, args, client) {

@@ -54,29 +54,37 @@ module.exports = {
         const ms = await wbh.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
-            embeds: [ new EmbedBuilder()
-        .setDescription(`Live Shards is already configured in <#${wbh.channelId}> for this this message ${ms.url}.`).setColor('Red') ],
+            embeds: [
+              new EmbedBuilder()
+                .setDescription(
+                  `Live Shards is already configured in <#${wbh.channelId}> for this this message ${ms.url}.`,
+                )
+                .setColor("Red"),
+            ],
           });
         }
       }
       const channel = interaction.options.getChannel("channel");
-      
+
       /*
       This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case  
       */
       if (!channel.isTextBased() || channel.isVoiceBased()) {
         return interaction.followUp({
-          embeds: [ new EmbedBuilder()
-        .setDescription(`${channel} is not a text channel. Please provide a valid text channel`).setColor('Red') ],
+          embeds: [
+            new EmbedBuilder()
+              .setDescription(`${channel} is not a text channel. Please provide a valid text channel`)
+              .setColor("Red"),
+          ],
         });
       }
-      
+
       const wb = await client.createWebhook(channel, "For live Shards Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildShardEmbed(currentDate, "Live Shard");
       const msg = await wb.send({
-        username: 'Shards Updates',
+        username: "Shards Updates",
         avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
@@ -86,22 +94,27 @@ module.exports = {
       config.webhook.token = wb.token;
       await config.save();
       await interaction.followUp({
-        embeds: [ new EmbedBuilder()
-        .setDescription(`Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`).setColor('Green') ],
+        embeds: [
+          new EmbedBuilder()
+            .setDescription(
+              `Live Shard configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live Shards details.`,
+            )
+            .setColor("Green"),
+        ],
       });
     } else if (sub === "stop") {
       if (!config.webhook.id || !config.messageId) {
         return await interaction.followUp({
-          embeds: [ new EmbedBuilder()
-        .setDescription("Live Shard is already disabled for this server").setColor('Red') ],
+          embeds: [new EmbedBuilder().setDescription("Live Shard is already disabled for this server").setColor("Red")],
         });
       }
 
       const wbh = await client.fetchWebhook(config.webhook.id, config.webhook.token).catch(() => {});
       if (!wbh) {
         await interaction.followUp({
-          embeds: [ new EmbedBuilder()
-        .setDescription('Live SkyTimes is already disabled for this server').setColor('Red')] 
+          embeds: [
+            new EmbedBuilder().setDescription("Live SkyTimes is already disabled for this server").setColor("Red"),
+          ],
         });
         return;
       }
@@ -110,9 +123,8 @@ module.exports = {
         await wbh.delete();
         await deleteSchema("autoShard", interaction.guild.id);
 
-       await interaction.followUp({
-          embeds: [ new EmbedBuilder()
-        .setDescription("Live Shard is disabled").setColor('Red')],
+        await interaction.followUp({
+          embeds: [new EmbedBuilder().setDescription("Live Shard is disabled").setColor("Red")],
         });
       } catch (err) {
         client.logger.error("Failed to stop Shards Updates in " + interaction.guild.name, err);

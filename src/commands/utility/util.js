@@ -20,12 +20,12 @@ module.exports = {
         description: "suggest something or report a bug or just for any reasons at all",
         options: [
           {
-            name: 'attachment',
+            name: "attachment",
             type: ApplicationCommandOptionType.Attachment,
             required: false,
-            description: 'any image attachment you may want to include'
-          }
-          ],
+            description: "any image attachment you may want to include",
+          },
+        ],
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
@@ -35,7 +35,7 @@ module.exports = {
       },
     ],
     integration_types: [0, 1],
-    contexts: [0, 1, 2], 
+    contexts: [0, 1, 2],
   },
   async execute(interaction) {
     const sub = interaction.options.getSubcommand();

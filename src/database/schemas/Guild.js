@@ -18,7 +18,7 @@ const Schema = new mongoose.Schema({
   prefix: String,
   skyGPT: String,
   reminders: {
-    active: { type: Boolean, default: false},
+    active: { type: Boolean, default: false },
     default_role: { type: String, default: null },
     dailies: {
       active: { type: Boolean, default: false },

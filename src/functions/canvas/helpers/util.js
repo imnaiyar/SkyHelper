@@ -1,4 +1,3 @@
-const { loadImage } = require("canvas");
 const { join } = require("path");
 
 const colors = {

@@ -26,12 +26,12 @@ module.exports = async (client) => {
       dltSChm(guild._id);
       return;
     }
-  await webhook
+    await webhook
       .editMessage(guild.messageId, { content: `Last Update At: <t:${updatedAt}:R>`, embeds: [result] })
       .catch(async (e) => {
         if (e.message === "Unknown Message") {
           dltSChm(guild._id);
-         await webhook.delete().catch(() => client.logger.error(err));
+          await webhook.delete().catch(() => client.logger.error(err));
           return;
         }
       });

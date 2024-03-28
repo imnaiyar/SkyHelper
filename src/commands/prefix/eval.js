@@ -7,12 +7,12 @@ module.exports = {
     name: "e",
     description: "Evaluate JavaScript code",
     category: "OWNER",
-    flags: ["a", "async", "haste", "depth", 'd', 'suppress'],
-    aliases: ['eval', 'ev']
+    flags: ["a", "async", "haste", "depth", "d", "suppress"],
+    aliases: ["eval", "ev"],
   },
   async execute(msg, args, client, flags) {
     let code = args.join(" ").trim();
-    const {guild, channel, author, member} = msg;
+    const { guild, channel, author, member } = msg;
     if (flags.length > 0 && ["a", "async"].some((flag) => flags.includes(flag))) {
       code = `(async () => {\n${code}\n})()`;
     }
@@ -28,7 +28,7 @@ module.exports = {
     const depth = dp ? parseFloat(dp.split("=")[1]) : 0;
     if (code.includes("client.token") || code.includes("process.env"))
       return msg.reply(buildErrorResponse("You cannot evaluate codes revealing secrets!"));
-  let errored = false;
+    let errored = false;
     try {
       const time = new Stopwatch().start();
       const output = await eval(code);
@@ -39,7 +39,7 @@ module.exports = {
       errored = true;
       response = buildErrorResponse(ex);
     }
-    if (flags && flags.includes('suppress') && !errored) return;
+    if (flags && flags.includes("suppress") && !errored) return;
     msg.channel.send(response);
   },
 };
@@ -70,8 +70,8 @@ const buildSuccessResponse = async (output, client, type, time, haste, depth) =>
   return { embeds: [embed] };
 };
 
-const buildErrorResponse =  (err) => {
-    const embed = new d.EmbedBuilder()
+const buildErrorResponse = (err) => {
+  const embed = new d.EmbedBuilder()
     .setAuthor({ name: "📤 Error" })
     .setDescription("```js\n" + (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) + "\n```")
     .setColor("Red")

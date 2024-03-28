@@ -8,31 +8,24 @@ module.exports = {
    * Validates environment variables
    * @returns {Boolean}
    */
-  validations: async () => {
+  validations: () => {
     if (!process.env.TOKEN) {
       error(`env: "TOKEN" cannot be empty.`);
-      return false;
+      process.exit(1);
     } else {
       success(`env: ${chalk.bold.white("✔")} "TOKEN" validated.`);
     }
 
     if (!process.env.MONGO_CONNECTION) {
       error(`env: "MONGO_CONNECTION" cannot be empty.`);
-      return false;
+      process.exit(1);
     } else {
       success(`env: ${chalk.bold.white("✔")} "MONGO_CONNECTION" validated.`);
     }
 
-    if (!process.env.CLIENT_ID) {
-      error(`env: "CLIENT_ID" cannot be empty`);
-      return false;
-    } else {
-      success(`env: ${chalk.bold.white("✔")} Client ID validated.`);
-    }
-
     if (config.DASHBOARD.enabled && !process.env.AUTH_TOKEN) {
       error(`env: "AUTH_TOKEN" cannot is empty, contact form on website won't work.`);
-      return false;
+      process.exit(1);
     } else {
       success(`env: ${chalk.bold.white("✔")} "AUTH_TOKEN" validated.`);
     }
@@ -48,7 +41,5 @@ module.exports = {
     if (!process.env.SUGGESTION) {
       warn('env: "SUGGESTION" webhook URL is not provided, suggestion command wont work properly');
     }
-
-    return true;
   },
 };

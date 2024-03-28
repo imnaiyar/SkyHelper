@@ -30,7 +30,6 @@ module.exports = async (interaction, total) => {
  */
 async function respond(interaction, data) {
   const questionData = data.randomQuestions[data.currentQuestion];
-  
 
   const quesEmbed = new EmbedBuilder()
     .setTitle(`Question ${data.currentQuestion + 1}`)
@@ -59,13 +58,13 @@ async function respond(interaction, data) {
       fetchReply: true,
     });
   }
-  
+
   const filter = (response) => !response.author.bot;
   const collector = interaction.channel.createMessageCollector({
     filter,
     time: 16000,
   });
-  
+
   collector.on("collect", (message) => {
     const answer = message.content.toLowerCase().trim();
     if (answer === "stop") {
@@ -73,7 +72,7 @@ async function respond(interaction, data) {
         return message.reply("Only the one who started the game can perform this action.");
       }
       data.currentQuestion = data.totalQuestions;
-      collector.stop('stopped');
+      collector.stop("stopped");
       return;
     }
     updateUserPoints(message.author.id, data.userPoints);
@@ -81,13 +80,13 @@ async function respond(interaction, data) {
       interaction.channel.send(`${message.author} got it correct!`);
       updateUserPoints(message.author.id, data.userPoints, true);
       setTimeout(async () => {
-        collector.stop('correct');
+        collector.stop("correct");
       }, 2000);
     }
   });
 
   collector.on("end", async (collected, reason) => {
-    if (reason !== 'correct' && reason !== 'stopped') {
+    if (reason !== "correct" && reason !== "stopped") {
       interaction.channel.send(
         `Time is up! Correct answer was **"${data.randomQuestions[data.currentQuestion].answer}"**`,
       );

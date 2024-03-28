@@ -7,8 +7,8 @@ const Schema = new mongoose.Schema({
   messageId: String,
   webhook: {
     id: String,
-    token: String
-  }
+    token: String,
+  },
 });
 
 const Model = mongoose.model("autoTimes", Schema);
