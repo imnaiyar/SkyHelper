@@ -54,7 +54,7 @@ module.exports = {
         const ms = await wbh.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
-            content: `Live Shards is already configured in <#${config.channelId}> for this this message ${ms.url}.`,
+            content: `Live Shards is already configured in <#${wbh.channelId}> for this this message ${ms.url}.`,
             flags: MessageFlags.SuppressEmbeds
           });
         }

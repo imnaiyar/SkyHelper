@@ -47,7 +47,7 @@ module.exports = {
         const ms = await wbh?.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
-            content: `Live SkyTimes is already configured in <#${config.channelId}> for this message ${ms.url}.`,
+            content: `Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`,
             flags: MessageFlags.SuppressEmbeds
           });
         }
