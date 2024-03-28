@@ -71,7 +71,7 @@ module.exports = {
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildShardEmbed(currentDate, "Live Shard");
       const msg = await wb.send({
-        name: 'Shards Updates',
+        username: 'Shards Updates',
         avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],

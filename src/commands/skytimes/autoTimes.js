@@ -64,7 +64,7 @@ module.exports = {
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildTimesEmbed(client, "Live SkyTimes");
       const msg = await wb.send({
-        name: 'SkyTimes Updates',
+        username: 'SkyTimes Updates',
         avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
