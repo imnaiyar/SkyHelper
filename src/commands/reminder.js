@@ -230,7 +230,7 @@ async function handleSetup(interaction, settings) {
         if (wb) await wb.delete();
         const ch = int.guild.channels.cache.get(channelId);
         if (!ch.permissionsFor(int.guild.members.me).has('ManageWebhooks')) {
-          return await int.editReply(`I do not have \`Manage Webhooks\` permission in ${ch}. Please make sure that there is not channel level permissions overwride and if there is, please grant me the necessary permissions in the said channel before running the command again.`);
+          return await int.editReply(`I do not have \`Manage Webhooks\` permission in ${ch}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.`);
         }
         const newWb = await ch.createWebhook({
           name: "SkyHelper Reminder",
