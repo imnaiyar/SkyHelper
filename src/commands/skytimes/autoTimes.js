@@ -48,15 +48,17 @@ module.exports = {
         if (ms) {
           return interaction.followUp({
             embeds: [ new EmbedBuilder()
-        .setDescription(`Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`) ]
+        .setDescription(`Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`).setColor('Red') ]
           });
         }
       }
       const channel = interaction.options.getChannel("channel");
+      
+      // This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case
       if (!channel.isTextBased() || channel.isVoiceBased()) {
         return interaction.followUp({
           embeds: [ new EmbedBuilder()
-        .setDescription(`${channel} is not a text channel. Please provide a valid text channel`) ],
+        .setDescription(`${channel} is not a text channel. Please provide a valid text channel`).setColor('Red') ],
         });
       }
 
@@ -76,20 +78,20 @@ module.exports = {
       await config.save();
       interaction.followUp({
         embeds: [ new EmbedBuilder()
-        .setDescription(`Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 2 minutes with live in-game events (grandma, geyser, etc.) details.`) ],
+        .setDescription(`Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 2 minutes with live in-game events (grandma, geyser, etc.) details.`).setColor('Green') ],
       });
     } else if (sub === "stop") {
       if (!config?.webhook.id || !config.messageId) {
         return interaction.followUp({
           embeds: [ new EmbedBuilder()
-        .setDescription("Live SkyTimes is already disabled for this server") ],
+        .setDescription("Live SkyTimes is already disabled for this server").setColor('Red')],
         });
       }
       const wbh = await client.fetchWebhook(config.webhook.id, config.webhook.token).catch(() => {});
       if (!wbh) {
         await interaction.followUp({
           embeds: [ new EmbedBuilder()
-        .setDescription('Live SkyTimes is already disabled for this server') ]
+        .setDescription('Live SkyTimes is already disabled for this server').setColor('Red') ]
         });
         return;
       }
@@ -100,7 +102,7 @@ module.exports = {
 
         interaction.followUp({
           embeds: [ new EmbedBuilder()
-        .setDescription("Live SkyTimes is disabled") ],
+        .setDescription("Live SkyTimes is disabled").setColor('Red') ],
         });
       } catch (err) {
         client.logger.error("Failed to stop SkyTimes Updates in " + interaction.guild.name, err);

@@ -60,6 +60,10 @@ module.exports = {
         }
       }
       const channel = interaction.options.getChannel("channel");
+      
+      /*
+      This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case  
+      */
       if (!channel.isTextBased() || channel.isVoiceBased()) {
         return interaction.followUp({
           embeds: [ new EmbedBuilder()
