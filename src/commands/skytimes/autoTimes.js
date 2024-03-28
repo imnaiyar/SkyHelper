@@ -61,7 +61,7 @@ module.exports = {
 
       // This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case
       if (!channel.permissionsFor(interaction.guild.members.me).has('ManageWebhooks')) {
-          return await interaction.editReply(`I do not have \`Manage Webhooks\` permission in ${ch}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.`);
+          return await interaction.editReply(`I do not have \`Manage Webhooks\` permission in ${channel}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.`);
         }
         
       if (!channel.isTextBased() || channel.isVoiceBased()) {
