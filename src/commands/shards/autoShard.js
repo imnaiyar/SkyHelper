@@ -2,7 +2,6 @@ const { ApplicationCommandOptionType, WebhookClient, MessageFlags, ChannelType }
 const moment = require("moment-timezone");
 const { autoShard } = require("@schemas/autoShard");
 const { buildShardEmbed, deleteSchema } = require("@src/handler");
-const desc = require("@src/cmdDesc");
 
 /**
  * @type {import("@src/frameworks").SlashCommands}
@@ -35,7 +34,6 @@ module.exports = {
     integration_types: [0],
     contexts: [0],
     dm_permission: false,
-    longDesc: desc.autoShard,
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
@@ -67,13 +65,14 @@ module.exports = {
           content: `${channel} is not a text channel. Please provide a valid text channel`,
         });
       }
-      const name = interaction.options.getString("name");
-
+      
       const wb = await client.createWebhook(channel, "For live Shards Update", name, client.user.displayAvatarURL());
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildShardEmbed(currentDate, "Live Shard");
       const msg = await wb.send({
+        name: 'Shards Updates',
+        avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
       });

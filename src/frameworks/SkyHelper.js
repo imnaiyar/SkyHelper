@@ -290,10 +290,10 @@ module.exports = class SkyHelper extends Client {
    * @param {string} name - name of the webhook
    * @param {string} avatar - avatar of the webhook
    */
-  async createWebhook(channel, reason, name, avatar) {
+  async createWebhook(channel, reason) {
     const webhook = await channel.createWebhook({
-      name: name ? name : "SkyHelper",
-      avatar: avatar ? avatar : this.user.displayAvatarURL(),
+      name:  "SkyHelper",
+      avatar: this.user.displayAvatarURL(),
       reason: reason ? reason : "SkyHelper Webhook",
     });
     return webhook;

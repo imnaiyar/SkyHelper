@@ -1,12 +1,10 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const { convertTime } = require("./sub/timestampHandler");
-const desc = require("@src/cmdDesc");
 module.exports = {
   cooldown: 3,
   data: {
     name: "timestamp",
     description: "Converts time into UNIX timestamp",
-    longDesc: desc.timestamp,
     options: [
       {
         name: "time",

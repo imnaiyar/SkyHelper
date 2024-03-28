@@ -1,13 +1,11 @@
 const { ApplicationCommandOptionType, time } = require("discord.js");
 const moment = require("moment-timezone");
 const { skyTimes } = require("./sub/skyTimes");
-const desc = require("@src/cmdDesc");
 module.exports = {
   cooldown: 5,
   data: {
     name: "sky-times",
     description: "Get various times related to the world of Sky",
-    longDesc: desc.skytimes,
     options: [
       {
         name: "times",

@@ -1,72 +1,9 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const config = require("@root/config");
-const stringSimilarity = require("string-similarity");
-const cmds = [
-  "shards",
-  "next-shards",
-  "sky-times",
-  "shards-live",
-  "sky-times-live",
-  "seasonal-guides",
-  "auto-shard",
-  "utils",
-  "timestamps",
-  "help",
-];
 let totalCommands = [];
 async function helpMenu(interaction, client) {
-  const slash = client.commands;
+  const appCommands = await client.application.commands.cache;
 
-  const input = interaction.options.getString("command");
-  const Command = slash?.get(input);
-  const appCommands = await client.application.commands.fetch();
-  if (input && !Command) {
-    const matches = stringSimilarity.findBestMatch(input, cmds);
-    const mostSimilarWord = matches.bestMatch.target;
-
-    if (matches.bestMatch.rating < 0.8) {
-      return interaction.reply({
-        content: `\`${input}\` is not a valid commands.\nDid you mean: \`${mostSimilarWord}\`?`,
-        ephemeral: true,
-      });
-    } else {
-      return interaction.reply({
-        content: `\`${input}\` is not a valid commands.`,
-        ephemeral: true,
-      });
-    }
-  } else if (input) {
-    if (Command.data.category && Command.data.category === "OWNER") {
-      return interaction.reply({
-        content: `No such commands are found`,
-        ephemeral: true,
-      });
-    }
-    const appC = await appCommands.find((c) => c.name === input);
-    let cName;
-    if (appC) {
-      cName = `</${appC.name}:${appC.id}>`;
-    }
-    const embed = new EmbedBuilder()
-      .setAuthor({
-        name: `Requested by ${interaction.user.username}`,
-        iconURL: interaction.user.displayAvatarURL(),
-      })
-      .setFooter({ text: "SkyHelper", iconURL: client.user.displayAvatarURL() })
-      .setDescription(Command.data.description)
-      .setTitle(cName);
-
-    if (Command.data?.longDesc) {
-      embed.addFields({
-        name: "Description",
-        value: Command.data.longDesc,
-      });
-    }
-
-    await interaction.reply({ embeds: [embed], ephemeral: true });
-
-    return;
-  }
   const embed = new EmbedBuilder()
     .setAuthor({
       name: `Requested by ${interaction.user.username}`,
@@ -87,7 +24,7 @@ async function helpMenu(interaction, client) {
     components: [row],
     fetchReply: true,
   });
-  const pageCommands = Array.from(appCommands.values())
+  const pageCommands = Array.from(appCommands.values());
 
     pageCommands.forEach((command) => {
       if (command.options?.some((op) => op.type === 1)) {

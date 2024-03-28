@@ -1,14 +1,11 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const { handleSeasonal, HandleRealms, handleEvents } = require("./sub/index");
-
-const desc = require("@src/cmdDesc");
 let reply;
 module.exports = {
   cooldown: 3,
   data: {
     name: "guides",
     description: "various guides",
-    longDesc: desc.guides,
     options: [
       {
         name: "seasonal",

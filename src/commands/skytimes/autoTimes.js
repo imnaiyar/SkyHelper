@@ -2,7 +2,7 @@ const { ApplicationCommandOptionType, WebhookClient, MessageFlags, ChannelType }
 const moment = require("moment-timezone");
 const { autoTimes } = require("@schemas/autoTimes");
 const { buildTimesEmbed, deleteSchema } = require("@src/handler");
-const desc = require("@src/cmdDesc");
+
 module.exports = {
   data: {
     name: "sky-times-live",
@@ -29,7 +29,6 @@ module.exports = {
       },
     ],
     dm_permission: false,
-    longDesc: desc.autoTimes,
     integration_types: [0],
     contexts: [0], 
     botPermissions: ["ManageWebhooks"],
@@ -60,13 +59,13 @@ module.exports = {
         });
       }
 
-      const name = interaction.options.getString("name");
-      const avatar = interaction.options.getAttachment("avatar");
       const wb = await client.createWebhook(channel, "For live SkyTimes Update", name, avatar?.url);
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const { result } = await buildTimesEmbed(client, "Live SkyTimes");
       const msg = await wb.send({
+        name: 'SkyTimes Updates',
+        avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
       });

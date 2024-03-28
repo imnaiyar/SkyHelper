@@ -43,7 +43,6 @@
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
     "sourcebin_js": "^0.0.3-ignore",
-    "string-similarity": "^4.0.4",
     "table": "^6.8.1",
     "text-table": "^0.2.0",
     "tippy.js": "^6.3.7",

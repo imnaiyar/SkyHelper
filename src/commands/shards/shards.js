@@ -2,13 +2,11 @@ const { ApplicationCommandOptionType } = require("discord.js");
 const { buildShardEmbed } = require("@handler");
 const shardsUtil = require("@handler/shardsUtil");
 const moment = require("moment-timezone");
-const desc = require("@src/cmdDesc");
 module.exports = {
   cooldown: 3,
   data: {
     name: "shards",
     description: "Get Sky Shards information",
-    longDesc: desc.shards,
     options: [
       {
         name: "date",
