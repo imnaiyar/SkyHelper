@@ -84,12 +84,13 @@ module.exports = {
       const wb = await client.createWebhook(channel, "For live Shards Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const { result } = await buildShardEmbed(currentDate, "Live Shard");
+      const { result, actionRow } = await buildShardEmbed(currentDate, "Live Shard");
       const msg = await wb.send({
         username: "Shards Updates",
         avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
+        components: [actionRow]
       });
       config.messageId = msg.id;
       config.webhook.id = wb.id;
