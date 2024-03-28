@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType, WebhookClient, MessageFlags, ChannelType } = require("discord.js");
+const { ApplicationCommandOptionType, WebhookClient, MessageFlags, EmbedBuilder, ChannelType } = require("discord.js");
 const moment = require("moment-timezone");
 const { autoTimes } = require("@schemas/autoTimes");
 const { buildTimesEmbed, deleteSchema } = require("@src/handler");
@@ -47,7 +47,8 @@ module.exports = {
         const ms = await wbh?.fetchMessage(config.messageId).catch((err) => {});
         if (ms) {
           return interaction.followUp({
-            content: `Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`,
+            embeds: [ new EmbedBuilder()
+        .setDescription(`Live SkyTimes is already configured in <#${wbh.channelId}> for this message ${ms.url}.`) ],
             flags: MessageFlags.SuppressEmbeds
           });
         }
@@ -55,7 +56,8 @@ module.exports = {
       const channel = interaction.options.getChannel("channel");
       if (!channel.isTextBased() || channel.isVoiceBased()) {
         return interaction.followUp({
-          content: `${channel} is not a text channel. Please provide a valid text channel`,
+          embeds: [ new EmbedBuilder()
+        .setDescription(`${channel} is not a text channel. Please provide a valid text channel`) ],
         });
       }
 
@@ -74,18 +76,23 @@ module.exports = {
       config.webhook.token = wb.token;
       await config.save();
       interaction.followUp({
-        content: `Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 2 minutes with live in-game events (grandma, geyser, etc.) details.`,
+        embeds: [ new EmbedBuilder()
+        .setDescription(`Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 2 minutes with live in-game events (grandma, geyser, etc.) details.`) ],
         flags: MessageFlags.SuppressEmbeds
       });
     } else if (sub === "stop") {
       if (!config?.webhook.id || !config.messageId) {
         return interaction.followUp({
-          content: "Live SkyTimes is already disabled for this server",
+          embeds: [ new EmbedBuilder()
+        .setDescription("Live SkyTimes is already disabled for this server") ],
         });
       }
       const wbh = await client.fetchWebhook(config.webhook.id, config.webhook.token).catch(() => {});
       if (!wbh) {
-        await interaction.followUp('Live SkyTimes is already disabled for this server');
+        await interaction.followUp({
+          embeds: [ new EmbedBuilder()
+        .setDescription('Live SkyTimes is already disabled for this server') ]
+        });
         return;
       }
       try {
@@ -94,7 +101,8 @@ module.exports = {
         await deleteSchema("autoTimes", interaction.guild.id);
 
         interaction.followUp({
-          content: "Live SkyTimes is disabled",
+          embeds: [ new EmbedBuilder()
+        .setDescription("Live SkyTimes is disabled") ],
         });
       } catch (err) {
         client.logger.error("Failed to stop SkyTimes Updates in " + interaction.guild.name, err);
