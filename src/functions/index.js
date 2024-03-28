@@ -8,4 +8,5 @@ module.exports = {
   QuizLeaderboardCard,
   QuizWinnerCard,
   topggAutopost: require("./topgg-autopost"),
+  dblStats: require('./dblStats.js')
 };

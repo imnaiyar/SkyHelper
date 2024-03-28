@@ -101,7 +101,7 @@ module.exports = async (client, interaction) => {
         .setTimestamp();
 
       // Slash Commands
-      if (!interaction.user.id.includes(client.config.OWNER) && process.env.COMMANDS_USED) {
+      if (!client.config.OWNER.includes(interaction.user.id) && process.env.COMMANDS_USED) {
         cLogger.send({ username: "Command Logs", embeds: [embed] }).catch((ex) => {});
       }
     } catch (error) {
