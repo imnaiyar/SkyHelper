@@ -21,7 +21,7 @@ module.exports = (givenDate, footer, noBtn) => {
     .setTimestamp(Date.now())
     .setFooter({
       text: footer,
-      iconURL: config.BOT_ICON,
+      iconURL: 'https://cdn.imnaiyar.site/bot-icon.gif',
     });
   let disabled;
   if (showButtons) {

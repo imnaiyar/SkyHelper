@@ -4073,11 +4073,11 @@ module.exports = {
       icon: "<:hairtousle:1131650432180175008>",
       level: [
         {
-          title: '"Hairtousle" Firned Action Level 1',
+          title: '"Hairtousle" Friend Action Level 1',
           image: "Hairtousle-Teen-hairtousle-emote-level-1.gif",
         },
         {
-          title: '"Hairtousle" Firned Action Level 2',
+          title: '"Hairtousle" Friend Action Level 2',
           image: "Hairtousle-Teen-hairtousle-emote-level-2.gif",
         },
       ],

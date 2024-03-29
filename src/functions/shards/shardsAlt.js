@@ -10,7 +10,7 @@ const util = require("@handler/shardsUtil");
 function shardsAlt(currentDate) {
   const timezone = "America/Los_Angeles";
   const dayOfWeek = currentDate.day();
-  const formatDate = currentDate.format("DD MMMM YYYY");
+  const formatDate = currentDate.format("Do MMMM YYYY");
   const today = moment().tz(timezone).startOf("day");
   const noShard = currentDate.isSame(today, "day") ? "Today" : `${formatDate}`;
 

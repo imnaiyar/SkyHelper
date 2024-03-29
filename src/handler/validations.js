@@ -1,4 +1,4 @@
-const { success, error, warn } = require("@src/logger");
+const { log, error, warn } = require("../logger.js");
 const fs = require("fs");
 const util = require("util");
 const config = require("@root/config");
@@ -13,21 +13,21 @@ module.exports = {
       error(`env: "TOKEN" cannot be empty.`);
       process.exit(1);
     } else {
-      success(`env: ${chalk.bold.white("✔")} "TOKEN" validated.`);
+      log(`env: ${chalk.bold.white("✔")} "TOKEN" validated.`);
     }
 
     if (!process.env.MONGO_CONNECTION) {
       error(`env: "MONGO_CONNECTION" cannot be empty.`);
       process.exit(1);
     } else {
-      success(`env: ${chalk.bold.white("✔")} "MONGO_CONNECTION" validated.`);
+      log(`env: ${chalk.bold.white("✔")} "MONGO_CONNECTION" validated.`);
     }
 
     if (config.DASHBOARD.enabled && !process.env.AUTH_TOKEN) {
       error(`env: "AUTH_TOKEN" cannot is empty, contact form on website won't work.`);
       process.exit(1);
     } else {
-      success(`env: ${chalk.bold.white("✔")} "AUTH_TOKEN" validated.`);
+      log(`env: ${chalk.bold.white("✔")} "AUTH_TOKEN" validated.`);
     }
 
     if (!process.env.TOPGG_TOKEN) {

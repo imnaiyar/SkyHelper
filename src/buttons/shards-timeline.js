@@ -18,7 +18,7 @@ module.exports = {
       const data = datas[page];
       const shardEmbed = {
         title: data.title,
-        description: data.description,
+        description: `${moment().tz(client.timezone).startOf('day').isSame(date.startOf('day')) ? 'Today' : date.format('Do MMMM YYYY')}`,
         color: parseInt("00ff00", 16),
         footer: {
           text: `Sky changes and Shard music by Christian(${Christian.username}) | Page ${page + 1} of ${total + 1}`,

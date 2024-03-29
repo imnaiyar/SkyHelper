@@ -39,16 +39,18 @@ const pinoLogger = pino.default(
   ]),
 );
 
-function sendWebhook(content, err) {
+async function sendWebhook(content, err) {
   if (!content && !err) return;
-  const errString = err?.stack || err;
+  const errString = err?.stack || err || content.stack || content;
 
   const embed = new EmbedBuilder().setColor("Blue").setAuthor({ name: err?.name || "Error" });
 
   if (errString) {
-    embed.setDescription(
-      "```js\n" + (errString.length > 4096 ? `${errString.substr(0, 4000)}...` : errString) + "\n```",
-    );
+    let output = `\`\`\`js\n${errString}\n\`\`\``;
+    if (errString.length > 4096) {
+      output = await createHaste(errString);
+    }
+    embed.setDescription(output);
   }
 
   if (

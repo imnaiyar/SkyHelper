@@ -1,5 +1,5 @@
 const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const { OWNER } = require("@root/config.js");
+const { OWNER, PREFIX } = require("@root/config.js");
 const Log = require("@src/logger");
 const { parsePerm } = require("@functions");
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
@@ -16,7 +16,7 @@ module.exports = async (client, msg) => {
   }
 
   // Check Bot'sprefix
-  const prefix = ",";
+  const prefix = PREFIX;
   if (!msg.content.startsWith(prefix)) return;
 
   // Initialize the commands

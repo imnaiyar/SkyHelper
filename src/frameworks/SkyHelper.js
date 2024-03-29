@@ -261,7 +261,7 @@ module.exports = class SkyHelper extends Client {
         added++;
       } catch (err) {
         failed++;
-        Logger.error(`loadPrefix - ${file}`, ex);
+        Logger.error(`loadPrefix - ${file}`, err);
       }
     });
 

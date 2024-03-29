@@ -62,19 +62,21 @@ module.exports = {
     }
 
     if (flags.includes("commands")) {
-      client.loadButtons("./src/buttons");
-      client.loadSlashCmd("./src/commands");
-      client.loadPrefix("./src/commands/prefix");
+      client.loadButtons("src/buttons");
+      client.loadSlashCmd("src/commands");
+      client.loadPrefix("src/commands/prefix");
     }
 
     if (flags.includes("events")) {
-      client.loadEvents("./src/events");
+      client.loadEvents("src/events");
     }
 
     if (flags.includes("files")) {
       clearCache("src/functions");
       clearCache("src/handler");
       clearCache("src/frameworks");
+      clearCache("src/libs");
+      clearCache("src/extenders");
     }
 
     if (filtered.every((item) => !flags.includes(item))) {
