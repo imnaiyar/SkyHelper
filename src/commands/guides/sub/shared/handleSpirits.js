@@ -116,8 +116,9 @@ module.exports = async (int, value, guides, embs) => {
   }
 
   // update the message with the results
+  let msg;
   if (row.components.length) {
-  const msg = await int.editReply({ content: "", embeds: [emb], components: [row], fetchReply: true });
+   msg = await int.editReply({ content: "", embeds: [emb], components: [row], fetchReply: true });
   } else {
   await int.editReply({ content: "", embeds: [emb] });  
   return;
