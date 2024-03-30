@@ -2,6 +2,7 @@ config.js
 node_modules
 .env
 logs/
+src/commands/wip/
 messageData.json
 package-lock.json
 .env.ex
