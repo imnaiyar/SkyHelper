@@ -79,7 +79,13 @@ async function handleSetup(interaction, settings) {
       .setAuthor({ name: "SkyHelper Reminders", iconURL: client.user.displayAvatarURL() })
       .setTitle(interaction.guild.name)
       .setDescription(
-        `**Reminder Settings**\nChannel: ${await getChannel()}\nDefault Role: ${settings?.reminders?.default_role ? roleMention(settings.reminders.default_role) : "None"}\nStatus: ${status}\n- Geyser  ${getActive(geyser)}\n- Grandma  ${getActive(grandma)}\n- Turtle  ${getActive(turtle)}\n- Daily Reset  ${getActive(reset)}\n- ~~ Eden Reset ~~ ${getActive(eden)} (WIP)\n- ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
+        `**Reminder Settings**\nChannel: ${await getChannel()}\nDefault Role: ${
+          settings?.reminders?.default_role ? roleMention(settings.reminders.default_role) : "None"
+        }\nStatus: ${status}\n- Geyser  ${getActive(geyser)}\n- Grandma  ${getActive(grandma)}\n- Turtle  ${getActive(
+          turtle,
+        )}\n- Daily Reset  ${getActive(reset)}\n- ~~ Eden Reset ~~ ${getActive(
+          eden,
+        )} (WIP)\n- ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
       );
   };
   const row = new ActionRowBuilder().addComponents(
@@ -117,6 +123,11 @@ async function handleSetup(interaction, settings) {
         .setStyle("4")
         .setLabel("Disable All")
         .setDisabled(!geyser?.active && !grandma?.active && !turtle?.active && !reset?.active ? true : false),
+      new ButtonBuilder()
+        .setCustomId("reminders-default_role-remove")
+        .setStyle("4")
+        .setLabel("Remove Default Role")
+        .setDisabled(!settings?.reminders?.default_role),
     );
   };
   const rows = [row, defaultRoleMenu, remimdersChannelMenu];
@@ -155,19 +166,25 @@ async function handleSetup(interaction, settings) {
           const editEmbed = new EmbedBuilder()
             .setTitle(`${strEnums[value]} Reminder!`)
             .setDescription(
-              `- **Status**: ${type.active ? "Active" : "Inactive"}\n- **Role**: ${type.role ? roleMention(type.role) : "None"}`,
+              `- **Status**: ${type.active ? "Active" : "Inactive"}\n- **Role**: ${
+                type.role ? roleMention(type.role) : "None"
+              }`,
             );
           const editBtn = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
               .setLabel(type.active ? "Disable" : "Enable")
               .setStyle(type.active ? "4" : "3")
               .setCustomId("reminders-toggle-btn"),
+            new ButtonBuilder()
+              .setCustomId("reminders-role-remove")
+              .setLabel("Remove Role")
+              .setStyle("4")
+              .setDisabled(!type?.role),
           );
 
           const roleMenu = new ActionRowBuilder().addComponents(
             new RoleSelectMenuBuilder().setCustomId("reminders-role-edit").setPlaceholder("Choose a role to ping"),
           );
-
           return {
             embeds: [editEmbed],
             components: [roleMenu, editBtn],
@@ -192,6 +209,12 @@ async function handleSetup(interaction, settings) {
           }
           if (notAnotherCustomId === "reminders-role-edit" && btnInt.isRoleSelectMenu()) {
             type.role = btnInt.values[0];
+            await settings.save();
+            await btnInt.editReply(getResponseData());
+          }
+
+          if (notAnotherCustomId === "reminders-role-remove") {
+            type.role = null;
             await settings.save();
             await btnInt.editReply(getResponseData());
           }
@@ -245,18 +268,25 @@ async function handleSetup(interaction, settings) {
         await int.editReply("Reminders channel updated!");
         await updateOriginal();
       }
+
+      if (customId === "reminders-default_role-remove") {
+        settings.reminders.default_role = null;
+        await settings.save();
+        await int.editReply("Default role removed!");
+        await updateOriginal();
+      }
     } catch (err) {
       int.client.logger.error(err);
     }
   });
   collector.on("end", async () => {
-    const msg = await interaction.fetchReply();
+    const msg = await interaction.fetchReply().catch(() => {});
     let components = [];
-    msg.components.forEach((comp) => {
+    msg?.components?.forEach((comp) => {
       const btn = ActionRowBuilder.from(comp);
       btn.components.forEach((c) => c.setDisabled(true));
       components.push(btn);
     });
-    await interaction.editReply({ components: components });
+    interaction.editReply({ components: components }).catch(() => {});
   });
 }
