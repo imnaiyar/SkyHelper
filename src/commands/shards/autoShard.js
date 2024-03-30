@@ -78,9 +78,11 @@ module.exports = {
           ],
         });
       }
-      if (!channel.permissionsFor(interaction.guild.members.me).has('ManageWebhooks')) {
-          return await interaction.editReply(`I do not have \`Manage Webhooks\` permission in ${channel}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.`);
-        }
+      if (!channel.permissionsFor(interaction.guild.members.me).has("ManageWebhooks")) {
+        return await interaction.editReply(
+          `I do not have \`Manage Webhooks\` permission in ${channel}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.`,
+        );
+      }
       const wb = await client.createWebhook(channel, "For live Shards Update");
       const currentDate = moment().tz(interaction.client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
@@ -90,7 +92,7 @@ module.exports = {
         avatarURL: client.user.displayAvatarURL(),
         content: `Last Updated: <t:${updatedAt}:R>`,
         embeds: [result],
-        components: [actionRow]
+        components: [actionRow],
       });
       config.messageId = msg.id;
       config.webhook.id = wb.id;

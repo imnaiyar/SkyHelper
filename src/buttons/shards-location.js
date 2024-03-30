@@ -12,7 +12,7 @@ module.exports = {
     const date = utils.getDate(shardDate);
     const { currentShard, currentRealm } = utils.shardsIndex(date);
     let page = 0;
-    
+
     const datas = shardData[currentRealm][currentShard];
     const total = datas.length - 1;
     const getResponse = () => {
@@ -22,7 +22,7 @@ module.exports = {
       const authorIcon = page === 0 ? Clement.displayAvatarURL() : Gale.displayAvatarURL();
       const shardEmbed = {
         title: data.description,
-        description: `${moment().tz(client.timezone).startOf('day').isSame(date.startOf('day')) ? 'Today' : date.format('Do MMMM YYYY')}`,
+        description: `${moment().tz(client.timezone).startOf("day").isSame(date.startOf("day")) ? "Today" : date.format("Do MMMM YYYY")}`,
         color: parseInt("00ff00", 16),
         footer: {
           text: `Page ${page + 1} of ${total + 1} | Sky Shards Information`,

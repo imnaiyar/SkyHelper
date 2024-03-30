@@ -1,8 +1,11 @@
 const d = require("discord.js");
 
+/**
+ * @type {import(''@structures/Buttons)}
+ */
 module.exports = {
   name: "error-report",
-  async execute(interaction, client) {
+    async execute(interaction, client) {
     const modal = new d.ModalBuilder().setCustomId("errorModal").setTitle("Bug Report");
 
     const commandUsed = new d.TextInputBuilder()

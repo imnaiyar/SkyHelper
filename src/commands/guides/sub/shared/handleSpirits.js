@@ -116,7 +116,12 @@ module.exports = async (int, value, guides, embs) => {
   }
 
   // update the message with the results
+  if (row.components.length) {
   const msg = await int.editReply({ content: "", embeds: [emb], components: [row], fetchReply: true });
+  } else {
+  await int.editReply({ content: "", embeds: [emb] });  
+  return;
+  }
 
   // create a collector for the embed buttons
   const filter = int.client.getFilter(int);

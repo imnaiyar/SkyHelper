@@ -12,5 +12,5 @@ module.exports = {
   updateUser: require("./updateUser"),
   validations,
   cmdValidation,
-  createHaste: require('./createHastebin.js')
+  createHaste: require("./createHastebin.js"),
 };
