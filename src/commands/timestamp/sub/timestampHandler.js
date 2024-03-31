@@ -79,16 +79,16 @@ async function convertTime(interaction) {
         format === "minutes"
           ? "R"
           : format === "date1"
-            ? "d"
-            : format === "date2"
-              ? "D"
-              : format === "shortDateAndTime"
-                ? "f"
-                : format === "longDateAndTime"
-                  ? "F"
-                  : format === "shortTime"
-                    ? "t"
-                    : "T",
+          ? "d"
+          : format === "date2"
+          ? "D"
+          : format === "shortDateAndTime"
+          ? "f"
+          : format === "longDateAndTime"
+          ? "F"
+          : format === "shortTime"
+          ? "t"
+          : "T",
       );
 
       result.addFields({
@@ -126,10 +126,10 @@ async function convertTime(interaction) {
   }
   const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
   const offset1 = `\nOffset - \` ${offsetString} \``;
-  const { buildTimeHTML } = require("@src/handler");
+  const { buildTimesHTML } = require("@skyhelperbot/utils");
   const { timeRoute } = require("@root/web/server");
   const webPath = `timestamp/${interaction.id}`;
-  const content = buildTimeHTML(interaction, fieldsData, offsetString, timezone, providedTime);
+  const content = buildTimesHTML(interaction, fieldsData, offsetString, timezone, providedTime);
 
   timeRoute(webPath, content);
   const row = new ActionRowBuilder().addComponents(

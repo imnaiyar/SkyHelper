@@ -32,6 +32,8 @@ module.exports = {
           const { botSettings } = require("@schemas/botStats");
           const settings = await botSettings(client);
           const stats = settings.data;
+          const commands = await client.application.commands.fetch();
+          res.locals.commands = commands;
           res.locals.stats = stats;
           next();
         } catch (err) {

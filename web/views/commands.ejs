@@ -38,221 +38,45 @@
               </p>
             </div>
             <div class="value__accordion">
+              <% commands.forEach((cmd) => { %>
               <div class="value__accordion-item">
                 <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/shards</h3>
-                  <p class="cmd__desc">- get shards information</p>
+                  <h3 class="value__accordion-title">/<%= cmd.name %></h3>
+                  <p class="cmd__desc">- <%= cmd.description %> </p>
                   <div class="value__accordion-arrow">
                     <i class="bx bxs-down-arrow"></i>
                   </div>
                 </header>
                 <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
+                 <p class="cmd__accordion-desc">
+                 <% if (cmd.options?.filter(o => o.type !== 1).length) { %>
+                  <b>Usage:</b> <br>
+                <% cmd.options?.filter(o => o.type !== 1).forEach((opt) => { %>
+                  <span class="code-block"><%= opt.required ?  `<${opt.name}>` : `[${opt.name}]` %></span> - <%= opt.description %>
                     <br />
                     <br />
-                    <span class="code-block">/shards [date]</span>
+               <% }) %>
+               <% } %>
+                <% if (cmd.options?.filter(o => o.type === 1).length) { %>
+                <b> SubCommands </b> <br> <br>
+               <% cmd.options?.filter((o) => o.type === 1).forEach((opt, i) => { %>
+                 <%= i + 1 %>. <span class="code-block">/<%= cmd.name %> <%= opt.name %></span> - <%= opt.description %> <% if (opt.options?.length) { %><br> <br>&nbsp&nbsp <b> Usage:</b>
+                 <% } %>
+                   <% opt.options?.forEach((op) => { %>
+                      <br>
+                     &nbsp &nbsp &nbsp &nbsp
+                     • <span class="code-block"><%= op.required ?  `<${op.name}>` : `[${op.name}]` %></span> - <%= op.description %>
+                     <br>
+                  <% }) %>
                     <br />
                     <br />
-                    Provides detailed information about shattering shards in Sky: Children of the Light. Specify a date
-                    to get shard details for that day (e.g., "2023-09-15").
-                    <br /><br />This command will give you insights into shard locations, landing times, and essential
-                    data for the selected date.
+             <%  }) %>
+             <% } %>
                   </p>
                 </div>
               </div>
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/sky-times</h3>
-                  <p class="cmd__desc">- get countdowns for various in-game times</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/sky-times [times]</span>
-                    <br />
-                    <br />
-                    Provides times for various in-game events and resets in Sky: Children of the Light.<br />
-                    This command offers a quick overview of the following times:<br />
-                    ● Geyser time<br />
-                    ● Grandma time<br />
-                    ● Turtle time<br />
-                    ● Reset time<br />
-                    ● Eden reset time<br />
-                    ● Events (Days of ...)
-                  </p>
-                </div>
-              </div>
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/shards-live</h3>
-                  <p class="cmd__desc">- configure live shards update</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/shards-live start &lt;channel&gt;</span>: starts live shards update in the
-                    given channel
-                    <br />
-                    <br />
-                    <span class="code-block">/shards-live stop</span>: stops live shards update
-                    <br />
-                    <br />
-                    Configure the channel where live shards update will be shown (updates every 5 minute)
-                  </p>
-                </div>
-              </div>
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/sky-times-live</h3>
-                  <p class="cmd__desc">- configure live sky-times updates</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/sky-times-live start &lt;channel&gt;</span>: starts live shards update in
-                    the given channel
-                    <br />
-                    <br />
-                    <span class="code-block">/sky-times-live stop</span>: stops live sky-times update
-                    <br />
-                    <br />
-                    Configure the channel where live sky-times update will be shown (updates every 2 minute)
-                  </p>
-                </div>
-              </div>
-              <div class="alert alert-info">
-                <strong>Note:</strong> It is advisable to choose a channel for <b>"-live"</b> commands where no-one can
-                send a message (except for the bot) so the bot's message doesn't get lost as the bot will be updating
-                the same message sent during configuring the channel with live updates
-              </div>
-
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/seasonal-guides</h3>
-                  <p class="cmd__desc">-get various seasonal seasonal guides</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/seasonal-guides [spirit] [ephemeral]</span>
-                    <br />
-                    <br />
-                    ● [spirit] - directly search for a seasonal spirit's tree/location
-                    <br />
-                    <br />
-                    Provides guides for seasonal quests, locations of seasonal spirits, and their cosmetic price trees,
-                    created by fellow game players. Results are ephemeral by default, but you can make them
-                    non-ephemeral optionally. The select menus are deleted after 1 minute of inactivity to prevent
-                    channel clogging.
-                  </p>
-                </div>
-              </div>
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/next-shards</h3>
-                  <p class="cmd__desc">- get upcoming shards details</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/next-shards [type] [number]</span>
-                    <br />
-                    <br />
-                    This command offers details on the date and location of the upcoming red shards. Use the optional
-                    [--number] flag to adjust the number of results. Default
-                    <span class="code-block">[number]</span> is 5, max value for server is 10 and for bot's DM is 15 (To
-                    prevent channel clogs and respect text limits respectively)
-                  </p>
-                </div>
-              </div>
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/timestamp</h3>
-                  <p class="cmd__desc">- convert time into UNIX</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/timestamp &lt;time&gt; [timezone] [date] [month] [year] [format]</span>
-                    <br />
-                    <br />
-                    Converts a user-provided time into Unix time, using the default timezone (America/Los_Angeles)
-                    unless a different timezone is specified.
-                    <br /><br />
-                    ● &lt;time&gt;: Specify the time you want to convert. Format:
-                    <span class="code-block">HH mm ss</span> (e.g, "12 45 20").<br />
-                    ● [timezone]: Specify a timezone to use for the conversion (default: America/Los_Angeles).<br />
-                    ● [date]: Specify a specific date (e.g., "15").<br />
-                    ● [month]: Specify a specific month (e.g., "09").<br />
-                    ● [year]: Specify a specific year (e.g., "2023").<br />
-                    ● [format]: Specify the desired output format (e.g., "long-date", "short-date",
-                    "long-time-and-date", etc.).
-                    <br />
-                    <br />
-                    For the convenience of iOS users, a copy link is available, providing direct access to the raw
-                    results for effortless copying.
-                  </p>
-                </div>
-              </div>
-              <div class="value__accordion-item">
-                <header class="value__accordion-header">
-                  <h3 class="value__accordion-title">/util</h3>
-                  <p class="cmd__desc">- utility commands</p>
-                  <div class="value__accordion-arrow">
-                    <i class="bx bxs-down-arrow"></i>
-                  </div>
-                </header>
-                <div class="value__accordion-content">
-                  <p class="cmd__accordion-desc">
-                    <b>Usage:</b>
-                    <br />
-                    <br />
-                    <span class="code-block">/util ping</span>: get the bot's ping
-                    <br />
-                    <br />
-                    <span class="code-block">/util credits</span>: to works included in the bot
-                    <br />
-                    <br />
-                    <span class="code-block">/util suggestions</span>: suggest a feature or a change
-                    <br />
-                    <br />
-                    <span class="code-block">/util changelog</span>: bot's changelog
-                    <br />
-                    <br />
-                  </p>
-                </div>
-              </div>
+            <% }) %>
+                
             </div>
           </div>
         </div>
