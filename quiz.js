@@ -58,7 +58,7 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     if (sub === "start") {
       if (client.gameData.get(interaction.channel.id)) {
-        return interaction.reply({
+        return await interaction.reply({
           content: "There's already a game in progress in this channel",
           ephemeral: true,
         });
@@ -131,7 +131,7 @@ module.exports = {
 
             await reply.edit({
               components: [newRow],
-            });
+            }).catch(() => {});
           } else {
             client.logger.error(error);
           }
@@ -143,7 +143,7 @@ module.exports = {
       const opt = interaction.options.getString("type");
       const { getAll } = client.database.quizData;
       if (opt === "server" && !interaction.inGuild()) {
-        return interaction.followUp("This selected type is only available in servers!");
+        return await interaction.followUp("This selected type is only available in servers!");
       }
       const embed = new EmbedBuilder()
         .setAuthor({ name: "Sky CoTL Quiz Leaderboard" })
@@ -156,7 +156,7 @@ module.exports = {
           embed.setImage(`attachment://quiz.png`);
           interaction.editReply({ embeds: [embed], files: [attachment] });
         } else {
-          interaction.editReply({
+          await interaction.editReply({
             content: `Oops! Looks like it's all empty. Be the first one to cement your name on the leaderboard. Try the quiz game by running </${interaction.commandName}:${interaction.commandId}`,
             ephemeral: true,
           });
@@ -170,7 +170,7 @@ module.exports = {
           embed.setFooter({ text: "Game stats here displayed are over all the servers, and not just this one." });
           interaction.editReply({ embeds: [embed], files: [attachment] });
         } else {
-          interaction.editReply({
+          await interaction.editReply({
             content: `Oops! Looks like it's all empty. Be the first one to cement your name on the leaderboard. Try the quiz game by running </${interaction.commandName}:${interaction.commandId}`,
             ephemeral: true,
           });

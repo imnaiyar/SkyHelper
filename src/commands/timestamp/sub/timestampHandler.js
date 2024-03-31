@@ -24,7 +24,7 @@ async function convertTime(interaction) {
 
   const timezone = options.getString("timezone") || "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
-    return interaction.reply({
+    return await interaction.reply({
       content: "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`",
       ephemeral: true,
     });
@@ -38,7 +38,7 @@ async function convertTime(interaction) {
   const timestamp = moment.tz(`${fDate} ${Time}`, "DD-MM-YYYY HH mm ss", timezone);
 
   if (!moment(timestamp).isValid()) {
-    return interaction.reply({
+    return await interaction.reply({
       content: `\`${fDate}\` does not exist, please provide a valid date.`,
       ephemeral: true,
     });
@@ -136,7 +136,7 @@ async function convertTime(interaction) {
     new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${webPath}`).setStyle(ButtonStyle.Link),
   );
 
-  return interaction.reply({
+  return await interaction.reply({
     content: `${offset1}`,
     embeds: [result],
     components: [row],
