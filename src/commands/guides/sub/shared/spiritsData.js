@@ -2940,7 +2940,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: "217 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image: "",
+      image: "Peeking_Postman_Tree_Clement.png",
     },
     location: {
       by: "Clement",
@@ -4501,7 +4501,7 @@ module.exports = {
     tree: {
       by: "Clement",
       total: "104 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image: "",
+      image: "Provoking_Performer_Tree.png.jpg",
     },
     location: {
       by: "Clement",
