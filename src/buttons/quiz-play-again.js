@@ -4,14 +4,14 @@ module.exports = {
   name: "play-again",
   async execute(interaction, client) {
     if (!interaction.channel.permissionsFor(interaction.guild.members.me).has(["SendMessages", "ViewChannel"])) {
-      return interaction.reply({
+      return await interaction.reply({
         content: "I need `View Channel/Send Message` permissions in this channel for the command to work",
         ephemeral: true,
       });
     }
 
     if (client.gameData.get(interaction.channel.id)) {
-      return interaction.reply({
+      return await interaction.reply({
         content: "There's already a game in progress in this channel",
         ephemeral: true,
       });

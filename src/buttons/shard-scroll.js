@@ -6,12 +6,12 @@ module.exports = {
     const date = interaction.customId.split("_")[1];
     const currentDate = shardsUtil.getDate(date);
     if (currentDate === "invalid") {
-      return interaction.reply({
+      return await interaction.reply({
         content: `\` ${date} \` does not exist, try running the command again.`,
         ephemeral: true,
       });
     } else if (currentDate === "error") {
-      return interaction.reply({
+      return await interaction.reply({
         content: "An error occurred while processing the date.",
         ephemeral: true,
       });

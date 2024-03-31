@@ -16,7 +16,7 @@ async function convertTime(interaction) {
 
   const Time = options.getString("time");
   if (!isTimeStringValid(Time)) {
-    return interaction.reply({
+    return await interaction.reply({
       content: "Invalid time format. Please provide time in `HH mm ss` format.",
       ephemeral: true,
     });

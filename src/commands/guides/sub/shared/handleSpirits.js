@@ -218,7 +218,7 @@ module.exports = async (int, value, guides, embs) => {
 
   collector.on("end", async (collected, reason) => {
     if (reason === "Back") return;
-    const msg2 = await int.fetchReply();
+    const msg2 = await int.fetchReply().catch(() => {});
 
     const components = ActionRowBuilder.from(msg2.components[0]);
     components?.components?.forEach((component) => component.setDisabled(true));

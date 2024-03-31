@@ -22,7 +22,7 @@ module.exports = async (client, interaction) => {
     const command = client.commands.get(commandName);
 
     if (!command) {
-      return interaction.reply({
+      return await interaction.reply({
         content: "This command is Invalid or doesn`t exist",
         ephemeral: true,
       });
@@ -38,7 +38,7 @@ module.exports = async (client, interaction) => {
 
     // Check if the user has permissions to use the command.
     if (command.data?.userPermissions && !interaction.member.permissions.has(command.data.userPermissions)) {
-      return interaction.reply({
+      return await interaction.reply({
         content: `You don't have necessary permission(s) (${parsePerm(
           command.data.userPermissions,
         )}) to use this command`,
@@ -52,7 +52,7 @@ module.exports = async (client, interaction) => {
       command.data?.botPermissions &&
       !interaction.guild.members.me.permissions.has(command.data.botPermissions)
     ) {
-      return interaction.reply({
+      return await interaction.reply({
         content: `I do not have the required permission(s) (${parsePerm(
           command.data.botPermissions,
         )}) to perform this action. Please run the command again after granting me the necessary permission(s).`,
@@ -77,7 +77,7 @@ module.exports = async (client, interaction) => {
 
         if (now < expirationTime) {
           const expiredTimestamp = Math.round(expirationTime / 1000);
-          return interaction.reply({
+          return await interaction.reply({
             content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`,
             ephemeral: true,
           });
