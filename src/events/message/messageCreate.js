@@ -62,7 +62,7 @@ module.exports = async (client, msg) => {
     if (args.length === 0) {
       return msg.reply(`You didn't provide any arguments, ${msg.author}!`);
     }
-    if (!command.data.args.includes(args[0])) {
+    if (!command.data.args.args.includes(args[0])) {
       return msg.reply(
         `Invalid arguments, Valid args are ${command.data.args.args.map((arg) => `\`${arg}\``).join(", ")}!`,
       );
