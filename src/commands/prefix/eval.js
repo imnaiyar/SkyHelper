@@ -1,6 +1,6 @@
 const d = require("discord.js");
 const createHstbn = require("@handler/createHastebin");
-const { Type } = require("@sapphire/type");
+ const { Type } = require("@sapphire/type");
 const { Stopwatch } = require("@sapphire/stopwatch");
 module.exports = {
   data: {
@@ -10,6 +10,30 @@ module.exports = {
     flags: ["a", "async", "haste", "depth", "d", "suppress"],
     aliases: ["eval", "ev"],
   },
+  validations: [
+    // Checking secrets
+    {
+      message: "You cannot eval codes containing that may reveal secrets",
+      callback(msg) {
+        if (msg.content.includes("client.token") || msg.content.includes("process.env")) return false;
+        return true;
+      },
+    },
+    // checking depth format
+    {
+      message: "Not a valid depth format (`--depth=0-9/Infinity/null`)",
+      callback(msg, flags) {
+        const dp = flags?.find((f) => f.startsWith("depth"));
+
+        const regex = /(?:depth|d)=(\d+|Infinity)/;
+        if (dp) {
+          const match = dp.match(regex);
+          if (!match) return false;
+        }
+        return true;
+      },
+    },
+  ],
   async execute(msg, args, client, flags) {
     let code = args.join(" ").trim();
     const { guild, channel, author, member } = msg;
@@ -20,19 +44,14 @@ module.exports = {
     let type;
     const dp = flags?.find((f) => f.startsWith("depth"));
 
-    const regex = /(?:depth|d)=(\d+|Infinity)/;
-    if (dp) {
-      const match = dp.match(regex);
-      if (!match) return msg.reply("Not a valid depth format (`depth:'Depth Here'`)");
-    }
     const depth = dp ? parseFloat(dp.split("=")[1]) : 0;
-    if (code.includes("client.token") || code.includes("process.env"))
-      return msg.reply(buildErrorResponse("You cannot evaluate codes revealing secrets!"));
+
     let errored = false;
     try {
       const time = new Stopwatch().start();
       const output = await eval(code);
-      type = new Type(output).toString();
+       type = new Type(output).toString();
+      // type = "Test";
       time.stop();
       response = await buildSuccessResponse(output, client, type, time, flags.includes("haste"), depth);
     } catch (ex) {

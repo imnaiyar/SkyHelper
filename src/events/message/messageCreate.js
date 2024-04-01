@@ -62,7 +62,7 @@ module.exports = async (client, msg) => {
     if (args.length === 0) {
       return msg.reply(`You didn't provide any arguments, ${msg.author}!`);
     }
-    if (!command.data.args.args.include(args[0])) {
+    if (!command.data.args.include(args[0])) {
       return msg.reply(
         `Invalid arguments, Valid args are ${command.data.args.args.map((arg) => `\`${arg}\``).join(", ")}!`,
       );
@@ -84,6 +84,13 @@ module.exports = async (client, msg) => {
     }
   }
 
+  if (command.validations?.length) {
+    for (const validation of command.validations) {
+      if (!validation.callback(msg, flags)) {
+        return await msg.reply(validation.message);
+      }
+    }
+  }
   // ...
 
   // Execute the command.
