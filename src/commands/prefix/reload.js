@@ -75,6 +75,8 @@ module.exports = {
       clearCache("src/functions");
       clearCache("src/handler");
       clearCache("src/frameworks");
+      clearCache("src/commands");
+      clearCache("src/buttons");
       clearCache("src/libs");
       clearCache("src/extenders");
     }
