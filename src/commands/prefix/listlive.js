@@ -27,7 +27,7 @@ module.exports = {
     try {
       const data = await model.find();
       if (data.length === 0) {
-        return msg.reply(`No active live ${type}`);
+        return await msg.reply(`No active live ${type}`);
       }
 
       for (const g of data) {
@@ -35,7 +35,7 @@ module.exports = {
 
         if (!guild || !guild.name) continue;
 
-        const owner = msg.client.users.cache.get(guild.ownerId);
+        const owner = await msg.client.users.fetch(guild.ownerId);
         if (!g.webhook?.id) continue;
         const wb = await msg.client.fetchWebhook(g.webhook.id, g.webhook.token).catch(() => {});
         if (!wb) continue;
@@ -50,7 +50,6 @@ module.exports = {
       }
 
       if (!actives.length) actives.push("No active live updates");
-      console.log(actives);
       let page = 0;
       const total = actives.length;
       const totalPages = Math.ceil(total / 5);

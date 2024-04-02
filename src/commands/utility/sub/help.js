@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const config = require("@root/config");
-let totalCommands = [];
 async function helpMenu(interaction, client) {
+  let totalCommands = [];
   const appCommands = await client.application.commands.cache;
 
   const embed = new EmbedBuilder()

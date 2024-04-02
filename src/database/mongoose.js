@@ -3,7 +3,7 @@ const { log, success, error } = require("../logger");
 const chalk = require("chalk");
 module.exports = {
   async initializeMongoose() {
-    log(chalk.blueBright("<----------- Connecting ------------->"));
+    log(chalk.blueBright("<-------------- Connecting ----------------->"));
     log(`Connecting to MongoDb...`);
 
     try {

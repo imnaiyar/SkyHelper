@@ -62,67 +62,44 @@ async function convertTime(interaction) {
     minutes: "Relative",
   };
   const selectedFormat = options.getString("format");
+  const getFormat = (type) => {
+    return type
+      ? `${time(timestamp.toDate(), type)} \`<t:${timestamp.unix()}:${type}\`>`
+      : `${time(timestamp.toDate())} \`<t:${timestamp.unix()}>\``;
+  };
   const result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion` })
     .setColor("DarkGold")
-    .setDescription("Follow the link attached for easy copying.")
+    .setDescription(
+      `**Defatult:** ${getFormat()}\n**Relative:** ${getFormat("R")}\n**Short Time:** ${getFormat(
+        "t",
+      )}\n**Short Date:** ${getFormat("d")}\n**Long Date:** ${getFormat("D")}\n**Short Date & Time:** ${getFormat(
+        "f",
+      )}\n**Long Date & Time:** ${getFormat("F")}`,
+    )
     .setFooter({
-      text: `for ${interaction.user.username}`,
+      text: `Follow the link attached for easy copying.`,
       iconURL: interaction.user.displayAvatarURL(),
     });
-
-  for (const format of formats) {
-    if (!selectedFormat || format === selectedFormat) {
-      const formatKey = formatted[format];
-      const timeValue = time(
-        timestamp.toDate(),
-        format === "minutes"
-          ? "R"
-          : format === "date1"
-          ? "d"
-          : format === "date2"
-          ? "D"
-          : format === "shortDateAndTime"
-          ? "f"
-          : format === "longDateAndTime"
-          ? "F"
-          : format === "shortTime"
-          ? "t"
-          : "T",
-      );
-
-      result.addFields({
-        name: `${formatKey} - ${timeValue}`,
-        value: `\`\`\`${timeValue}\`\`\``,
-        inline: true,
-      });
-    }
-  }
-
-  const fieldsArray = Array.from(result.data.fields);
   const fieldsData = [];
 
   const formatMap = {
-    "Date 1": "DD/MM/YYYY",
-    "Date 2": "DD MMMM YYYY",
-    "Short Time": "HH:mm",
-    "Long Time": "HH:mm:ss",
-    "Short Date and Time": "DD MMMM YYYY HH:mm",
-    "Long Date and Time": "dddd, DD MMMM YYYY HH:mm",
-    Relative: null,
+    Default: { format: "DD MMMM YYYY HH:mm", type: null },
+    "Short Time": { format: "HH:mm", type: "t" },
+    "Long Time": { format: "HH:mm:ss", type: "T" },
+    "Short Date": { format: "DD/MM/YYYY", type: "d" },
+    "Long Date": { format: "DD MMMM YYYY", type: "D" },
+    "Short Date & Time": { format: "DD MMMM YYYY HH:mm", type: "f" },
+    "Long Date & Time": { format: "dddd, DD MMMM YYYY HH:mm", type: "F" },
+    Relative: { format: null, type: "R" },
   };
 
-  for (const field of fieldsArray) {
-    for (const [name, format] of Object.entries(formatMap)) {
-      if (field.name.startsWith(name)) {
-        fieldsData.push({
-          name,
-          example: format ? timestamp.format(format) : timestamp.fromNow(),
-          value: field.value,
-        });
-        break;
-      }
-    }
+  for (const [name, data] of Object.entries(formatMap)) {
+    fieldsData.push({
+      name,
+      example: data.format ? timestamp.format(data.format) : timestamp.fromNow(),
+      value: data.type ? `<t:${timestamp.unix()}:${data.type}` : `<t:${timestamp.unix()}>`,
+    });
   }
   const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
   const offset1 = `\nOffset - \` ${offsetString} \``;
@@ -137,7 +114,7 @@ async function convertTime(interaction) {
   );
 
   return await interaction.reply({
-    content: `${offset1}`,
+    content: `${offset1}\nTimestamp: \`${timestamp.unix()}\``,
     embeds: [result],
     components: [row],
     ephemeral: true,

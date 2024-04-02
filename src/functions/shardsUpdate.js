@@ -22,10 +22,7 @@ module.exports = async (client) => {
   data.forEach(async (guild) => {
     if (!guild?.webhook?.id) return;
     const webhook = await client.fetchWebhook(guild.webhook.id, guild.webhook.token).catch(() => {});
-    if (!webhook) {
-      dltSChm(guild._id);
-      return;
-    }
+    if (!webhook) return;
     await webhook
       .editMessage(guild.messageId, {
         content: `Last Update At: <t:${updatedAt}:R>`,

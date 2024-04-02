@@ -11,7 +11,7 @@ const reminders = require("@functions/reminders");
 const { SkyHelper } = require("@frameworks/index");
 const client = new SkyHelper();
 
-client.logger.log(chalk.blueBright("<---------- Validating Secrets ------------>"));
+client.logger.log(chalk.blueBright("<----------- Validating Secrets ------------->"));
 validations();
 client.loadEvents("./src/events");
 client.loadSlashCmd("./src/commands");

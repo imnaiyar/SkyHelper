@@ -152,7 +152,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} directory
    */
   loadEvents(directory) {
-    this.logger.log(chalk.blueBright("<------------ Loading Events -------------->"));
+    this.logger.log(chalk.blueBright("<------------ Loading Events --------------->"));
     let success = 0;
     let failed = 0;
     const clientEvents = [];
@@ -174,14 +174,14 @@ module.exports = class SkyHelper extends Client {
     });
 
     this.logger.log(
-      table(clientEvents, {
+      `\n${table(clientEvents, {
         header: {
           alignment: "center",
           content: "Client Events",
         },
         singleLine: true,
         columns: [{ width: 25 }, { width: 5, alignment: "center" }],
-      }),
+      })}`,
     );
 
     Logger.log(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`);
@@ -192,7 +192,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadSlashCmd(dir) {
-    this.logger.log(chalk.blueBright("<------- Loading Slash Commands ----------->"));
+    this.logger.log(chalk.blueBright("<------------ Loading Slash ---------------->"));
     let added = 0;
     let failed = 0;
     recursiveReadDirSync(dir).forEach((filePath) => {
@@ -210,7 +210,6 @@ module.exports = class SkyHelper extends Client {
         Logger.error(`loadSlashCmds - ${file}`, ex);
       }
     });
-
     this.logger.log(`Loaded ${added} Slash Commands. Failed ${failed}`);
   }
 
@@ -219,7 +218,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadButtons(dir) {
-    this.logger.log(chalk.blueBright("<---------- Loading Buttons ------------->"));
+    this.logger.log(chalk.blueBright("<------------ Loading Buttons -------------->"));
     let added = 0;
     let failed = 0;
     recursiveReadDirSync(dir).forEach((filePath) => {
@@ -234,10 +233,9 @@ module.exports = class SkyHelper extends Client {
         added++;
       } catch (ex) {
         failed += 1;
-        Logger.error(`loadButtons - ${file}`, ex);
+        Logger.error(`${file}`, ex);
       }
     });
-
     this.logger.log(`Loaded ${added} buttons. Failed ${failed}`);
   }
 
@@ -246,7 +244,7 @@ module.exports = class SkyHelper extends Client {
    * @param {string} dir
    */
   loadPrefix(dir) {
-    this.logger.log(chalk.blueBright("<----------- Loading Prefix ------------->"));
+    this.logger.log(chalk.blueBright("<------------ Loading Prefix --------------->"));
     let added = 0;
     let failed = 0;
     recursiveReadDirSync(dir).forEach((filePath) => {
@@ -261,7 +259,7 @@ module.exports = class SkyHelper extends Client {
         added++;
       } catch (err) {
         failed++;
-        Logger.error(`loadPrefix - ${file}`, err);
+        Logger.error(`${file}`, err);
       }
     });
 

@@ -1,7 +1,6 @@
 const d = require("discord.js");
 const createHstbn = require("@handler/createHastebin");
- const { Type } = require("@sapphire/type");
-const { Stopwatch } = require("@sapphire/stopwatch");
+ const { Stopwatch } = require("@sapphire/stopwatch");
 module.exports = {
   data: {
     name: "e",
