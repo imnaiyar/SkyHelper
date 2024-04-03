@@ -51,17 +51,6 @@ async function convertTime(interaction) {
     .toString()
     .padStart(2, "0")} UTC`;
 
-  const formats = ["date1", "date2", "shortTime", "longTime", "shortDateAndTime", "longDateAndTime", "minutes"];
-  const formatted = {
-    date1: "Date 1",
-    date2: "Date 2",
-    shortTime: "Short Time",
-    longTime: "Long Time",
-    shortDateAndTime: "Short Date and Time",
-    longDateAndTime: "Long Date and Time",
-    minutes: "Relative",
-  };
-  const selectedFormat = options.getString("format");
   const getFormat = (type) => {
     return type
       ? `${time(timestamp.toDate(), type)} \`<t:${timestamp.unix()}:${type}\`>`
@@ -73,9 +62,9 @@ async function convertTime(interaction) {
     .setDescription(
       `**Defatult:** ${getFormat()}\n**Relative:** ${getFormat("R")}\n**Short Time:** ${getFormat(
         "t",
-      )}\n**Short Date:** ${getFormat("d")}\n**Long Date:** ${getFormat("D")}\n**Short Date & Time:** ${getFormat(
-        "f",
-      )}\n**Long Date & Time:** ${getFormat("F")}`,
+      )}\n**Long Date:** ${getFormat("T")}\n**Short Date:** ${getFormat("d")}\n**Long Date:** ${getFormat(
+        "D",
+      )}\n**Short Date & Time:** ${getFormat("f")}\n**Long Date & Time:** ${getFormat("F")}`,
     )
     .setFooter({
       text: `Follow the link attached for easy copying.`,
@@ -102,7 +91,7 @@ async function convertTime(interaction) {
     });
   }
   const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
-  const offset1 = `\nOffset - \` ${offsetString} \``;
+  const offset1 = `\nOffset: \` ${offsetString} \``;
   const { buildTimesHTML } = require("@skyhelperbot/utils");
   const { timeRoute } = require("@root/web/server");
   const webPath = `timestamp/${interaction.id}`;
