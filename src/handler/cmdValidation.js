@@ -7,11 +7,8 @@ module.exports = {
    * @returns {Boolean}
    */
   cmdValidation: (cmd, file) => {
-    if (!cmd.data) {
-      error(`
-         ${chalk.yellow(`[${file}]:`)} This command doesn't contain a valid "data" object. Skipping..`);
-      return false;
-    }
+    if (typeof cmd !== "object") return false;
+    if (!cmd.data) return false;
 
     if (!cmd.execute) {
       error(`
@@ -19,7 +16,7 @@ module.exports = {
       return false;
     }
 
-    if (cmd.data && cmd.data.name !== cmd.data.name.toLowerCase()) {
+    if (cmd.data.name !== cmd.data.name.toLowerCase()) {
       error(`
          ${chalk.yellow(`[${file}]:`)}
           Command name must be lowercase. Skipping..`);

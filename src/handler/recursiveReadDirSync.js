@@ -11,7 +11,7 @@ module.exports = (dir, allowedExtensions = [".js"]) => {
     const files = readdirSync(join(process.cwd(), dir));
     files.forEach((file) => {
       const stat = lstatSync(join(process.cwd(), dir, file));
-      if (stat.isDirectory() && file !== "prefix" && file !== "sub") {
+      if (stat.isDirectory() && file !== "prefix") {
         readCommands(join(dir, file));
       } else {
         const extension = extname(file);
