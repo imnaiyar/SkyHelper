@@ -53,14 +53,14 @@ async function convertTime(interaction) {
 
   const getFormat = (type) => {
     return type
-      ? `${time(timestamp.toDate(), type)} \`<t:${timestamp.unix()}:${type}\`>`
-      : `${time(timestamp.toDate())} \`<t:${timestamp.unix()}>\``;
+      ? `${time(timestamp.toDate(), type)} (\`<t:${timestamp.unix()}:${type}\`>)`
+      : `${time(timestamp.toDate())} (\`<t:${timestamp.unix()}>\`)`;
   };
   const result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion` })
     .setColor("DarkGold")
     .setDescription(
-      `**Defatult:** ${getFormat()}\n**Relative:** ${getFormat("R")}\n**Short Time:** ${getFormat(
+      `**Default:** ${getFormat()}\n**Relative:** ${getFormat("R")}\n**Short Time:** ${getFormat(
         "t",
       )}\n**Long Date:** ${getFormat("T")}\n**Short Date:** ${getFormat("d")}\n**Long Date:** ${getFormat(
         "D",
