@@ -1,6 +1,6 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time } = require("discord.js");
-const config = require("@root/config");
-const moment = require("moment-timezone");
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time } from 'discord.js';
+import config from '@root/config';
+import moment from 'moment-timezone';
 
 function isTimezoneValid(timezone) {
   return moment.tz.zone(timezone) !== null;
@@ -110,4 +110,4 @@ async function convertTime(interaction) {
   });
 }
 
-module.exports = { convertTime };
+export default { convertTime };

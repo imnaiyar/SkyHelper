@@ -1,6 +1,6 @@
 require("dotenv").config();
-require("module-alias/register");
-const { SkyHelper } = require("@src/frameworks");
+import 'module-alias/register';
+import { SkyHelper } from '@src/frameworks';
 const client = new SkyHelper();
 client.loadSlashCmd("./src/commands");
 

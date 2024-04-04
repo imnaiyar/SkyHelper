@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const Schema = new mongoose.Schema({
   _id: String,
@@ -13,7 +13,7 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model("autoShard", Schema);
 
-module.exports = {
+export default {
   autoShard: async (guild) => {
     if (!guild) throw new Error("Guild is undefined");
     if (!guild.id) throw new Error("Guild Id is undefined");

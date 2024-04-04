@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   AddReactions: "Add Reactions",
   Administrator: "Administrator",
   AttachFiles: "Attach files",

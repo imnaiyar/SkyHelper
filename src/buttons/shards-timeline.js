@@ -1,8 +1,9 @@
-const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const shardData = require("./sub/timelineData.js");
-const utils = require("@handler/shardsUtil");
-const moment = require("moment-timezone");
-module.exports = {
+import { ActionRowBuilder, ButtonBuilder } from 'discord.js';
+import shardData from './sub/timelineData.js';
+import utils from '@handler/shardsUtil';
+import moment from 'moment-timezone';
+
+export default {
   name: "shards-timeline",
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });

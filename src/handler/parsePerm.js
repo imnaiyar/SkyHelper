@@ -46,7 +46,7 @@ const permissions = {
  * @param {Array|String} perms
  * @returns
  */
-module.exports = (perms) => {
+export default (perms) => {
   if (Array.isArray(perms)) {
     return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ");
   } else {

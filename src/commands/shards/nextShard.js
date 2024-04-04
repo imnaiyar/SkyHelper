@@ -1,5 +1,5 @@
-const { ApplicationCommandOptionType } = require("discord.js");
-const moment = require("moment-timezone");
+import { ApplicationCommandOptionType } from 'discord.js';
+import moment from 'moment-timezone';
 const shardType = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"];
 const shardLocation = [
   "<:Prairie:1150605405408473179> Daylight Prairie",
@@ -16,7 +16,8 @@ const dayToSkip = {
   a: [6, 0],
   b: [0, 1],
 };
-module.exports = {
+
+export default {
   cooldown: 10,
   data: {
     name: "next-shards",

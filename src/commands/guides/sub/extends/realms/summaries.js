@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   responses: {
     summary_isle: {
       main: {

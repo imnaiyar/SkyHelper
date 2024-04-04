@@ -1,6 +1,7 @@
-const { ApplicationCommandOptionType } = require("discord.js");
-const { helpMenu } = require("./sub/help");
-module.exports = {
+import { ApplicationCommandOptionType } from 'discord.js';
+import { helpMenu } from './sub/help';
+
+export default {
   data: {
     name: "help",
     description: "help menu",

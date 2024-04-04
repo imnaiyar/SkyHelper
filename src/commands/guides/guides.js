@@ -1,7 +1,8 @@
-const { ApplicationCommandOptionType } = require("discord.js");
-const { handleSeasonal, HandleRealms, handleEvents } = require("./sub/index");
+import { ApplicationCommandOptionType } from 'discord.js';
+import { handleSeasonal, HandleRealms, handleEvents } from './sub/index';
 let reply;
-module.exports = {
+
+export default {
   cooldown: 3,
   data: {
     name: "guides",

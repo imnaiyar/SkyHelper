@@ -5,6 +5,6 @@
  * @param {import('discord.js').User|import('discord.js').PartialUser} user
  */
 
-module.exports = async (client, reaction, user) => {
+export default async (client, reaction, user) => {
   return { reaction, user };
 };

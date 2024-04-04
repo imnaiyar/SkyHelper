@@ -1,8 +1,8 @@
-const moment = require("moment-timezone");
-const { getTime } = require("@commands/skytimes/sub/skyTimes.js");
-const { time, roleMention } = require("discord.js");
+import moment from 'moment-timezone';
+import { getTime } from '@commands/skytimes/sub/skyTimes.js';
+import { time, roleMention } from 'discord.js';
 
-module.exports = async (client, type) => {
+export default async (client, type) => {
   const guilds = client.guilds.cache;
   guilds.forEach(async (guild) => {
     try {

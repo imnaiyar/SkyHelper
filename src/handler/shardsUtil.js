@@ -1,6 +1,6 @@
-const config = require("@root/config");
-const moment = require("moment-timezone");
-const fs = require("fs");
+import config from '@root/config';
+import moment from 'moment-timezone';
+import fs from 'fs';
 
 /**
  * @class
@@ -8,7 +8,7 @@ const fs = require("fs");
  * @property {Object}
  * @returns
  */
-module.exports = class shardsUtil {
+export default class shardsUtil {
   /**
    * @method getDate - get provided date in moment
    * @param {Date} date - date to get in moment

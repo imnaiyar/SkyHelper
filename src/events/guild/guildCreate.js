@@ -1,11 +1,11 @@
-const { EmbedBuilder, WebhookClient } = require("discord.js");
-const { dblStats } = require("@functions");
-const { getSettings: registerGuild } = require("@schemas/Guild");
-const Guild = require("@schemas/guildBlackList");
-const Logger = require("@src/logger");
-const config = require("@root/config.js");
-const { topggAutopost } = require("@functions");
-const { botSettings } = require("@schemas/botStats");
+import { EmbedBuilder, WebhookClient } from 'discord.js';
+import { dblStats } from '@functions';
+import { getSettings as registerGuild } from '@schemas/Guild';
+import Guild from '@schemas/guildBlackList';
+import Logger from '@src/logger';
+import config from '@root/config.js';
+import { topggAutopost } from '@functions';
+import { botSettings } from '@schemas/botStats';
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
@@ -13,7 +13,7 @@ const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.G
  * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
-module.exports = async (client, guild) => {
+export default async (client, guild) => {
   if (!guild.available) return;
   if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
   Logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);

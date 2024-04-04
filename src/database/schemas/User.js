@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const { CACHE_SIZE } = require("@root/config.js");
-const FixedSizeMap = require("fixedsize-map");
+import mongoose from 'mongoose';
+import { CACHE_SIZE } from '@root/config.js';
+import FixedSizeMap from 'fixedsize-map';
 
 const cache = new FixedSizeMap(CACHE_SIZE.USERS);
 const Schema = new mongoose.Schema({
@@ -14,7 +14,7 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model("users", Schema);
 
-module.exports = {
+export default {
   getUser: async (user) => {
     if (!user) throw new Error("User is undefined");
     if (!user.id) throw new Error("User Id is undefined");

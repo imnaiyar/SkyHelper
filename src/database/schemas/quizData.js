@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 const Schema = new mongoose.Schema({
   _id: String,
   data: {
@@ -19,7 +19,7 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model("quizData", Schema);
 
-module.exports = {
+export default {
   /**
    * Gets or creates a quiz document for user on MongoDb
    * @param {import('discord.js').User} user - User for which to get or create a quiz document

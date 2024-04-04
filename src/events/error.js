@@ -4,6 +4,6 @@
  * @param {import('discord.js').ErrorEvent} err - The error object
  * @returns {void}
  */
-module.exports = (client, err) => {
+export default (client, err) => {
   client.logger.error(`Client Error:`, err);
 };

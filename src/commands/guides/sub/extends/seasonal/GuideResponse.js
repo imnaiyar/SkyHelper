@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   responses: {
     // nine-colored-deer
     // nine-colored-deer quests

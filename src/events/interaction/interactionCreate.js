@@ -1,5 +1,13 @@
-const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, Collection } = require("discord.js");
-const { parsePerm, btnHandler } = require("@src/handler");
+import {
+  WebhookClient,
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  ButtonBuilder,
+  Collection,
+} from 'discord.js';
+
+import { parsePerm, btnHandler } from '@src/handler';
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = new EmbedBuilder()
@@ -8,12 +16,13 @@ const errorEmbed = new EmbedBuilder()
 const errorBtn = new ActionRowBuilder().addComponents(
   new ButtonBuilder().setLabel("Report Bug").setCustomId("error-report").setStyle(ButtonStyle.Secondary),
 );
+
 /**
  * Intraction event handler
  * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').Interaction} interaction
  */
-module.exports = async (client, interaction) => {
+export default async (client, interaction) => {
   if (interaction.isChatInputCommand()) {
     // Chat Input
     if (!interaction.isCommand()) return;

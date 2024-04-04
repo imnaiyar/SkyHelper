@@ -1,5 +1,5 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const config = require("@root/config");
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder } from 'discord.js';
+import config from '@root/config';
 async function helpMenu(interaction, client) {
   let totalCommands = [];
   const appCommands = await client.application.commands.fetch();
@@ -125,4 +125,4 @@ async function helpMenu(interaction, client) {
   });
 }
 
-module.exports = { helpMenu };
+export default { helpMenu };

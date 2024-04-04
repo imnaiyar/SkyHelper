@@ -1,4 +1,4 @@
-const { shardsAlt } = require("../shardsAlt");
+import { shardsAlt } from '../shardsAlt';
 
 /**
  * Returns final info for a shard for a given date
@@ -185,6 +185,6 @@ function shardsReply(givenDate) {
   };
 }
 
-module.exports = {
+export default {
   shardsReply,
 };

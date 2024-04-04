@@ -137,4 +137,4 @@ const realmsSpirits = {
   "Praying Acolyte": "praying acolyte",
 };
 
-module.exports = { seasonalSpirits, realmsSpirits };
+export default { seasonalSpirits, realmsSpirits };

@@ -1,6 +1,7 @@
-const { validations } = require("./validations");
-const { cmdValidation } = require("./cmdValidation");
-module.exports = {
+import { validations } from './validations';
+import { cmdValidation } from './cmdValidation';
+
+export default {
   buildShardEmbed: require("./buildShardEmbed"),
   deleteSchema: require("./deleteSchema"),
   buildTimesEmbed: require("./buildTimesEmbed"),

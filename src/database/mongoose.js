@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
-const { log, success, error } = require("../logger");
-const chalk = require("chalk");
-module.exports = {
+import mongoose from 'mongoose';
+import { log, success, error } from '../logger';
+import chalk from 'chalk';
+
+export default {
   async initializeMongoose() {
     log(chalk.blueBright("<-------------- Connecting ----------------->"));
     log(`Connecting to MongoDb...`);

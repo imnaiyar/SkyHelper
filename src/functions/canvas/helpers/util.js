@@ -1,4 +1,4 @@
-const { join } = require("path");
+import { join } from 'path';
 
 const colors = {
   blue: "#7289DA",
@@ -24,4 +24,4 @@ function fancyCount(n) {
   return Math.floor(n) + "";
 }
 
-module.exports = { colors, fancyCount };
+export default { colors, fancyCount };

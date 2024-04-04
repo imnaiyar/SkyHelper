@@ -1,8 +1,9 @@
-const d = require("discord.js");
-const createHstbn = require("@handler/createHastebin")
-const { Type } = require('@sapphire/type');
- const { Stopwatch } = require("@sapphire/stopwatch");
-module.exports = {
+import d from 'discord.js';
+import createHstbn from '@handler/createHastebin';
+import { Type } from '@sapphire/type';
+import { Stopwatch } from '@sapphire/stopwatch';
+
+export default {
   data: {
     name: "e",
     description: "Evaluate JavaScript code",

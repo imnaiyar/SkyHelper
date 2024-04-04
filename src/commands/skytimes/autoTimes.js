@@ -1,9 +1,16 @@
-const { ApplicationCommandOptionType, WebhookClient, MessageFlags, EmbedBuilder, ChannelType } = require("discord.js");
-const moment = require("moment-timezone");
-const { autoTimes } = require("@schemas/autoTimes");
-const { buildTimesEmbed, deleteSchema } = require("@src/handler");
+import {
+  ApplicationCommandOptionType,
+  WebhookClient,
+  MessageFlags,
+  EmbedBuilder,
+  ChannelType,
+} from 'discord.js';
 
-module.exports = {
+import moment from 'moment-timezone';
+import { autoTimes } from '@schemas/autoTimes';
+import { buildTimesEmbed, deleteSchema } from '@src/handler';
+
+export default {
   data: {
     name: "sky-times-live",
     description: "auto updating message with live in-game events details/countdown",

@@ -1,9 +1,9 @@
-const { StringSelectMenuBuilder, ActionRowBuilder, EmbedBuilder, ButtonBuilder } = require("discord.js");
+import { StringSelectMenuBuilder, ActionRowBuilder, EmbedBuilder, ButtonBuilder } from 'discord.js';
 
 /**
  * Utilities for guide commands
  */
-module.exports = class GuideUtils {
+export default class GuideUtils {
   /**
    * Returns StringSelect Menu ActionRow for guides
    * @param {string} customId - The custom Id for the select menu

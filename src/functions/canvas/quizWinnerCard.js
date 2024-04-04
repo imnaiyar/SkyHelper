@@ -1,6 +1,6 @@
-const { createCanvas, loadImage } = require("@napi-rs/canvas");
-const { colors, fancyCount } = require("./helpers/util");
-const { join } = require("path");
+import { createCanvas, loadImage } from '@napi-rs/canvas';
+import { colors, fancyCount } from './helpers/util';
+import { join } from 'path';
 const size = 100;
 
 class QuizWinnerCard {
@@ -134,4 +134,4 @@ class QuizWinnerCard {
   }
 }
 
-module.exports = { QuizWinnerCard };
+export default { QuizWinnerCard };

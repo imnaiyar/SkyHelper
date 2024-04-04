@@ -1,6 +1,7 @@
-const { error } = require("@src/logger");
-const chalk = require("chalk");
-module.exports = {
+import { error } from '@src/logger';
+import chalk from 'chalk';
+
+export default {
   /**
    * @param {import('@src/frameworks').SlashCommands} cmd
    * @param {string} file

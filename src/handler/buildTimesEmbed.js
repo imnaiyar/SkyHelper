@@ -1,7 +1,7 @@
-const { skyTimes } = require("@commands/skytimes/sub/skyTimes");
-const moment = require("moment-timezone");
-const { EmbedBuilder, time } = require("discord.js");
-const config = require("@root/config");
+import { skyTimes } from '@commands/skytimes/sub/skyTimes';
+import moment from 'moment-timezone';
+import { EmbedBuilder, time } from 'discord.js';
+import config from '@root/config';
 
 /**
  * Returns an embed with SkyTimes data
@@ -9,7 +9,7 @@ const config = require("@root/config");
  * @param {string} footer
  * @returns
  */
-module.exports = async (client, footer) => {
+export default async (client, footer) => {
   const { geyserResultStr, grandmaResultStr, resetResultStr, edenResultStr, turtleResultStr, eventDescription } =
     await skyTimes(client);
   const result = new EmbedBuilder()

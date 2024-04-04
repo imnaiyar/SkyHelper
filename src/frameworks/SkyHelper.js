@@ -1,13 +1,22 @@
-const { Client, GatewayIntentBits, Collection, Partials, Routes, PermissionFlagsBits } = require("discord.js");
-const chalk = require("chalk");
-const { table } = require("table");
-const moment = require("moment-timezone");
-const { recursiveReadDirSync, cmdValidation } = require("@handler");
-const { schemas } = require("@src/database/mongoose");
-const fs = require("fs");
-const path = require("path");
-const Logger = require("@src/logger");
-module.exports = class SkyHelper extends Client {
+import {
+  Client,
+  GatewayIntentBits,
+  Collection,
+  Partials,
+  Routes,
+  PermissionFlagsBits,
+} from 'discord.js';
+
+import chalk from 'chalk';
+import { table } from 'table';
+import moment from 'moment-timezone';
+import { recursiveReadDirSync, cmdValidation } from '@handler';
+import { schemas } from '@src/database/mongoose';
+import fs from 'fs';
+import path from 'path';
+import Logger from '@src/logger';
+
+export default class SkyHelper extends Client {
   constructor() {
     super({
       intents: [

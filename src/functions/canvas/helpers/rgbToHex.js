@@ -11,4 +11,4 @@ async function rgbToHex(r, g, b) {
   return `#${hexR}${hexG}${hexB}`;
 }
 
-module.exports = { rgbToHex };
+export default { rgbToHex };

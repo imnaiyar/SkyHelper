@@ -6,4 +6,4 @@ async function adjustBrightness(r, g, b, adjustment) {
   return [adjustedR, adjustedG, adjustedB];
 }
 
-module.exports = { adjustBrightness };
+export default { adjustBrightness };

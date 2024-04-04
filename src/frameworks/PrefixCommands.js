@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   cooldown: 0,
   data: {
     name: "",

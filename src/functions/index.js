@@ -1,7 +1,7 @@
-const { QuizWinnerCard } = require("./canvas/quizWinnerCard");
-const { QuizLeaderboardCard } = require("./canvas/leaderboard");
+import { QuizWinnerCard } from './canvas/quizWinnerCard';
+import { QuizLeaderboardCard } from './canvas/leaderboard';
 
-module.exports = {
+export default {
   shardsUpdate: require("./shardsUpdate"),
   timesUpdate: require("./timesUpdate"),
   askQuestion: require("./quiz/guessing"),

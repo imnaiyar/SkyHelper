@@ -1,9 +1,10 @@
-const { log, error, warn } = require("../logger.js");
-const fs = require("fs");
-const util = require("util");
-const config = require("@root/config");
-const chalk = require("chalk");
-module.exports = {
+import { log, error, warn } from '../logger.js';
+import fs from 'fs';
+import util from 'util';
+import config from '@root/config';
+import chalk from 'chalk';
+
+export default {
   /**
    * Validates environment variables
    * @returns {Boolean}

@@ -1,7 +1,8 @@
-const { ApplicationCommandOptionType, time } = require("discord.js");
-const moment = require("moment-timezone");
-const { skyTimes } = require("./sub/skyTimes");
-module.exports = {
+import { ApplicationCommandOptionType, time } from 'discord.js';
+import moment from 'moment-timezone';
+import { skyTimes } from './sub/skyTimes';
+
+export default {
   cooldown: 5,
   data: {
     name: "sky-times",

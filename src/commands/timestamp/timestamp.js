@@ -1,6 +1,7 @@
-const { ApplicationCommandOptionType } = require("discord.js");
-const { convertTime } = require("./sub/timestampHandler");
-module.exports = {
+import { ApplicationCommandOptionType } from 'discord.js';
+import { convertTime } from './sub/timestampHandler';
+
+export default {
   cooldown: 3,
   data: {
     name: "timestamp",

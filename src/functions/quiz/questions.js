@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
     question: "Which season has the highest number of Traveling Spirits returned?",
     answer: "Belonging",

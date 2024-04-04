@@ -1,11 +1,12 @@
-const moment = require("moment-timezone");
-const { EmbedBuilder, time, ApplicationCommandOptionType } = require("discord.js");
-const handleSpirits = require("./guides/sub/shared/handleSpirits");
+import moment from 'moment-timezone';
+import { EmbedBuilder, time, ApplicationCommandOptionType } from 'discord.js';
+import handleSpirits from './guides/sub/shared/handleSpirits';
+
 /**
  * @type {import('@src/frameworks').SlashCommands}
  */
 
-module.exports = {
+export default {
   cooldown: 15,
   data: {
     name: "traveling-spirit",

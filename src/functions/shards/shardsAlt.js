@@ -1,6 +1,6 @@
-const moment = require("moment");
-const shardsTime = require("./sub/eventTimings.js");
-const util = require("@handler/shardsUtil");
+import moment from 'moment';
+import shardsTime from './sub/eventTimings.js';
+import util from '@handler/shardsUtil';
 
 /**
  * returns shard info for  a given date
@@ -77,4 +77,4 @@ function shardsAlt(currentDate) {
   };
 }
 
-module.exports = { shardsAlt };
+export default { shardsAlt };

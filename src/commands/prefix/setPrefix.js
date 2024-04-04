@@ -1,6 +1,7 @@
-const { getSettings } = require("@schemas/Guild");
-const { EmbedBuilder } = require("discord.js");
-module.exports = {
+import { getSettings } from '@schemas/Guild';
+import { EmbedBuilder } from 'discord.js';
+
+export default {
   data: {
     name: "test",
     description: "Set a new prefix for this server",

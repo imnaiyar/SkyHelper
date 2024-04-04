@@ -1,4 +1,4 @@
-const {
+import {
   EmbedBuilder,
   ModalBuilder,
   TextInputBuilder,
@@ -6,7 +6,8 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   WebhookClient,
-} = require("discord.js");
+} from 'discord.js';
+
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
 async function getSuggestion(interaction) {
   const { client } = interaction;
@@ -146,4 +147,4 @@ async function getChangelog(interaction) {
   });
 }
 
-module.exports = { getSuggestion, getChangelog };
+export default { getSuggestion, getChangelog };

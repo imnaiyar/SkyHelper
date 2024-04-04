@@ -1,6 +1,6 @@
-const { shardsReply } = require("@functions/shards/sub/shardsReply");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const config = require("@root/config");
+import { shardsReply } from '@functions/shards/sub/shardsReply';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder } from 'discord.js';
+import config from '@root/config';
 
 /**
  * Builds Guve Shards embed
@@ -8,7 +8,7 @@ const config = require("@root/config");
  * @param {string} footer
  * @returns {object} result, actionRow
  */
-module.exports = (givenDate, footer, noBtn) => {
+export default (givenDate, footer, noBtn) => {
   const { type, location, rewards, colors, showButtons, thumbUrl, noShard, eventStatus, timeRemaining } =
     shardsReply(givenDate);
   const result = new EmbedBuilder()

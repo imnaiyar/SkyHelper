@@ -1,10 +1,10 @@
-const { time } = require("discord.js");
+import { time } from 'discord.js';
 
 /**
  * @param {Date} currentDate
  * @returns
  */
-module.exports = (currentDate) => {
+export default (currentDate) => {
   const getTime = (hours, minutes, seconds) => {
     return time(
       currentDate.clone().startOf("day").add(hours, "hours").add(minutes, "minutes").add(seconds, "seconds").toDate(),

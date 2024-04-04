@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 const Schema = new mongoose.Schema({
   _id: String,
   data: {
@@ -10,7 +10,7 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model("botStats", Schema);
 
-module.exports = {
+export default {
   botSettings: async (client) => {
     let botData = await Model.findById(client.user.id);
     const commands = await client.application.commands.fetch();

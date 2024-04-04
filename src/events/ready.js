@@ -1,16 +1,16 @@
-const { WebhookClient, EmbedBuilder } = require("discord.js");
-const cron = require("node-cron");
-const reminders = require("@functions/reminders");
-const { shardsUpdate, timesUpdate } = require("@functions");
-const { setupPresence } = require("@handler");
-const { UpdateEvent, UpdateTS } = require("@src/libs/classes");
+import { WebhookClient, EmbedBuilder } from 'discord.js';
+import cron from 'node-cron';
+import reminders from '@functions/reminders';
+import { shardsUpdate, timesUpdate } from '@functions';
+import { setupPresence } from '@handler';
+import { UpdateEvent, UpdateTS } from '@src/libs/classes';
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 /**
  * ready event handler
  * @param {import('@src/frameworks').SkyHelper} client
  */
-module.exports = async (client) => {
+export default async (client) => {
   let text;
   client.logger.log(`Logged in as ${client.user.tag}`);
   if (client.config.DASHBOARD.enabled) {

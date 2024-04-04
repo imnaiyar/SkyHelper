@@ -1,9 +1,9 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } from 'discord.js';
 
 const IDLE_TIMEOUT = 60; // in seconds
 const MAX_PER_PAGE = 10; // max number of embed fields per page
 
-module.exports = {
+export default {
   data: {
     name: "listservers",
     description: "lists all/matching servers",

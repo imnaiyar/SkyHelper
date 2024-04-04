@@ -1,11 +1,11 @@
-const { AutoPoster } = require("topgg-autoposter");
-const Logger = require("@src/logger");
+import { AutoPoster } from 'topgg-autoposter';
+import Logger from '@src/logger';
 
 /**
  * Post Bot's stats on TopGG
  * @param {import('@src/frameworks').SkyHelper} client
  */
-module.exports = async (client) => {
+export default async (client) => {
   const poster = AutoPoster(process.env.TOPGG_TOKEN, client);
 
   poster.on("posted", (stats) => {

@@ -3,8 +3,9 @@
  * see {@link https://github.com/Bes-js/canvafy|canvafy}
  */
 
-const { createCanvas, loadImage, GlobalFonts } = require("@napi-rs/canvas");
-const path = require("path");
+import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
+
+import path from 'path';
 
 /**
  * Represents a Quiz Leaderboard Card.
@@ -309,4 +310,4 @@ class QuizLeaderboardCard {
     return canvas.toBuffer("image/png");
   }
 }
-module.exports = { QuizLeaderboardCard };
+export default { QuizLeaderboardCard };

@@ -1,14 +1,14 @@
-const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
-const { updateUserPoints, displayResults, getRandomQuestions } = require("./quizUtils.js");
-const path = require("path");
-const questions = require("./questions");
+import { EmbedBuilder, AttachmentBuilder } from 'discord.js';
+import { updateUserPoints, displayResults, getRandomQuestions } from './quizUtils.js';
+import path from 'path';
+import questions from './questions';
 
 /**
  * Initiate a quiz game
  * @param {import('discord.js').Interaction} interaction
  * @param {number} total
  */
-module.exports = async (interaction, total) => {
+export default async (interaction, total) => {
   const gameData = interaction.client.gameData;
   gameData.set(interaction.channel.id, {
     currentQuestion: 0,

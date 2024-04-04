@@ -1,7 +1,7 @@
-const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const { OWNER, PREFIX } = require("@root/config.js");
-const Log = require("@src/logger");
-const { parsePerm } = require("@functions");
+import { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { OWNER, PREFIX } from '@root/config.js';
+import Log from '@src/logger';
+import { parsePerm } from '@functions';
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 /**
@@ -9,7 +9,7 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
  * @param {import('@src/frameworks').SkyHelper} client
  * @param {import('discord.js').msg} msg
  */
-module.exports = async (client, msg) => {
+export default async (client, msg) => {
   if (msg.author.bot) return;
   if (msg.mentions.has(client.user) && msg.channel.permissionsFor(client.user.id).has("SendMessages")) {
     msg.channel.send("That's me...");

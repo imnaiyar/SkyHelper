@@ -1,6 +1,7 @@
-const { AttachmentBuilder } = require("discord.js");
-const { QuizWinnerCard } = require("@functions");
-module.exports = {
+import { AttachmentBuilder } from 'discord.js';
+import { QuizWinnerCard } from '@functions';
+
+export default {
   data: {
     name: "test2",
     description: "Set a new prefix for this server",

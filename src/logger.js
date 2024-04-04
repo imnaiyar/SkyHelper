@@ -1,5 +1,5 @@
-const { EmbedBuilder, WebhookClient } = require("discord.js");
-const pino = require("pino");
+import { EmbedBuilder, WebhookClient } from 'discord.js';
+import pino from 'pino';
 
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 let toHide = true;
@@ -72,7 +72,7 @@ async function sendWebhook(content, err) {
   webhookLogger.send({ username: "Logs", embeds: [embed] }).catch((ex) => {});
 }
 
-module.exports = class Logger {
+export default class Logger {
   /**
    * @param {string} content
    */

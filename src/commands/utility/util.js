@@ -1,6 +1,7 @@
-const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
-const { getChangelog, getSuggestion } = require("./sub/util");
-module.exports = {
+import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
+import { getChangelog, getSuggestion } from './sub/util';
+
+export default {
   data: {
     name: "util",
     description: "utility commands",

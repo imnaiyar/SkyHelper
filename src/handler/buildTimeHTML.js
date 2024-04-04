@@ -7,7 +7,7 @@
  * @param {String} providedTime
  * @returns {String}
  */
-module.exports = (interaction, fieldsData, offset, timezone, providedTime) => {
+export default (interaction, fieldsData, offset, timezone, providedTime) => {
   return `
   <!DOCTYPE html>
 

@@ -369,4 +369,4 @@ const QuestChoices = {
   ],
 };
 
-module.exports = { QuestChoices };
+export default { QuestChoices };

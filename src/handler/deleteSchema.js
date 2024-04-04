@@ -3,7 +3,7 @@
  * @param {string} model - the model name
  * @param {string} guildId - the guildId to search for
  */
-module.exports = async (model, guildId) => {
+export default async (model, guildId) => {
   const mongoose = require("mongoose");
 
   const guildData = mongoose.model(model);

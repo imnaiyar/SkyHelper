@@ -1,7 +1,7 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } = require("discord.js");
-const summary = require("./extends/realms/summaries.js");
-const maps = require("./extends/realms/maps.js");
-const respondSpirits = require("./shared/handleSpirits.js");
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } from 'discord.js';
+import summary from './extends/realms/summaries.js';
+import maps from './extends/realms/maps.js';
+import respondSpirits from './shared/handleSpirits.js';
 class HandleRealms {
   /**
    * @param {import('discord.js').ChatInputCommandInteraction} interaction
@@ -250,4 +250,4 @@ class HandleRealms {
   }
 }
 
-module.exports = { HandleRealms };
+export default { HandleRealms };

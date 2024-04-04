@@ -1,11 +1,12 @@
-const { EmbedBuilder } = require("discord.js");
-const { exec } = require("child_process");
-const { recursiveReadDirSync } = require("@handler");
-const { error } = require("@src/logger");
+import { EmbedBuilder } from 'discord.js';
+import { exec } from 'child_process';
+import { recursiveReadDirSync } from '@handler';
+import { error } from '@src/logger';
+
 /**
  * @type {import('@src/frameworks').PrefixCommands}
  */
-module.exports = {
+export default {
   data: {
     name: "reload",
     description: "reloads the bot",

@@ -4,7 +4,7 @@
  * @param {Object} userPoints - Object containing ID's of participant of the Quiz game'
  * @param {string} winnerId - The ID of the winner of the quiz.
  */
-module.exports = async (client, userPoints, winnerId) => {
+export default async (client, userPoints, winnerId) => {
   const { getUser } = client.database.quizData;
   for (const userId in userPoints) {
     const user = client.users.cache.get(userId);

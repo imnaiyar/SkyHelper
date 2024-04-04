@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   responses: {
     maps_isle: {
       content:

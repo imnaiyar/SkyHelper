@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
+import { ActionRowBuilder, ButtonBuilder } from 'discord.js';
 
 const shardInfo = [
   {
@@ -18,7 +18,7 @@ const shardInfo = [
   },
 ];
 
-module.exports = {
+export default {
   name: "shards-about",
 
   async execute(interaction, client) {

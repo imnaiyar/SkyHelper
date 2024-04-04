@@ -1,10 +1,11 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } = require("discord.js");
-const updateUser = require("../../handler/updateUser");
-const { QuizWinnerCard } = require("../canvas/quizWinnerCard");
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, AttachmentBuilder } from 'discord.js';
+import updateUser from '../../handler/updateUser';
+import { QuizWinnerCard } from '../canvas/quizWinnerCard';
+
 /**
  * Utilities for quiz function
  */
-module.exports = class quizUtils {
+export default class quizUtils {
   /**
    * Updates user points of those participating in the game
    * @param {string} userId - Id of the user to update

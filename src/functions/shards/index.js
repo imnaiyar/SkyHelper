@@ -1,5 +1,4 @@
-const { shardsAlt } = require("./shardsAlt");
+import { shardsAlt } from './shardsAlt';
+import { shardsReply } from './sub/shardsReply';
 
-const { shardsReply } = require("./sub/shardsReply");
-
-module.exports = { shardsAlt, shardsReply };
+export default { shardsAlt, shardsReply };

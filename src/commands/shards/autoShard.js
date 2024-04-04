@@ -1,12 +1,19 @@
-const { ApplicationCommandOptionType, WebhookClient, MessageFlags, EmbedBuilder, ChannelType } = require("discord.js");
-const moment = require("moment-timezone");
-const { autoShard } = require("@schemas/autoShard");
-const { buildShardEmbed, deleteSchema } = require("@src/handler");
+import {
+  ApplicationCommandOptionType,
+  WebhookClient,
+  MessageFlags,
+  EmbedBuilder,
+  ChannelType,
+} from 'discord.js';
+
+import moment from 'moment-timezone';
+import { autoShard } from '@schemas/autoShard';
+import { buildShardEmbed, deleteSchema } from '@src/handler';
 
 /**
  * @type {import("@src/frameworks").SlashCommands}
  */
-module.exports = {
+export default {
   data: {
     name: "shards-live",
     description: "auto updating message with live shards details",

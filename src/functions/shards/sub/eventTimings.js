@@ -3,7 +3,7 @@
  * @param {import('moment').Moment} currentDate
  * @returns
  */
-module.exports = (currentDate) => {
+export default (currentDate) => {
   return {
     C: [
       {

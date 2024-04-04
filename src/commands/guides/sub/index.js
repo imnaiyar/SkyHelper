@@ -1,5 +1,6 @@
-const { HandleRealms } = require("./handleRealms");
-module.exports = {
+import { HandleRealms } from './handleRealms';
+
+export default {
   handleSeasonal: require("./handleSeasonal"),
   HandleRealms,
   handleEvents: require("./handleEvents"),

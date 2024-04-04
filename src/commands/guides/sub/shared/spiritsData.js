@@ -1,7 +1,7 @@
 /**
  * Spirits Data
  */
-module.exports = {
+export default {
   // Isle
   candlemaker: {
     name: "Pointing Candlemaker",

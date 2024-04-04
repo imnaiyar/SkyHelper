@@ -1,6 +1,6 @@
-const askQuestion = require("../functions/quiz/guessing");
+import askQuestion from '../functions/quiz/guessing';
 
-module.exports = {
+export default {
   name: "play-again",
   async execute(interaction, client) {
     if (!interaction.channel.permissionsFor(interaction.guild.members.me).has(["SendMessages", "ViewChannel"])) {

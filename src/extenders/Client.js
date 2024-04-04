@@ -1,4 +1,11 @@
-const { Client, ClientUser, DataResolver, Routes, DiscordjsTypeError, DiscordjsErrorCodes } = require("discord.js");
+import {
+  Client,
+  ClientUser,
+  DataResolver,
+  Routes,
+  DiscordjsTypeError,
+  DiscordjsErrorCodes,
+} from 'discord.js';
 
 Client.prototype.codeBlock = function (content, language = "js") {
   return `\`\`\`${language}\n${content}\`\`\``;

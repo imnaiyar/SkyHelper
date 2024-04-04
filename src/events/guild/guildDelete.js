@@ -1,7 +1,7 @@
-const { EmbedBuilder, WebhookClient } = require("discord.js");
-const { botSettings } = require("@schemas/botStats");
-const { getSettings } = require("@schemas/Guild");
-const Logger = require("@src/logger");
+import { EmbedBuilder, WebhookClient } from 'discord.js';
+import { botSettings } from '@schemas/botStats';
+import { getSettings } from '@schemas/Guild';
+import Logger from '@src/logger';
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
@@ -11,7 +11,7 @@ const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.G
  * @param {import('discord.js').Guild} guild
  */
 
-module.exports = async (client, guild) => {
+export default async (client, guild) => {
   if (!guild.available) return;
   Logger.success(`Guild Left: ${guild.name} Members: ${guild.memberCount}`);
   const guildCount = client.guilds.cache.size;

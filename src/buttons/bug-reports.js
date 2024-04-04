@@ -1,9 +1,9 @@
-const d = require("discord.js");
+import d from 'discord.js';
 
 /**
  * @type {import(''@structures/Buttons)}
  */
-module.exports = {
+export default {
   name: "error-report",
     async execute(interaction, client) {
     const modal = new d.ModalBuilder().setCustomId("errorModal").setTitle("Bug Report");

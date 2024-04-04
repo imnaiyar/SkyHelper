@@ -1,8 +1,9 @@
-const { ApplicationCommandOptionType } = require("discord.js");
-const { buildShardEmbed } = require("@handler");
-const shardsUtil = require("@handler/shardsUtil");
-const moment = require("moment-timezone");
-module.exports = {
+import { ApplicationCommandOptionType } from 'discord.js';
+import { buildShardEmbed } from '@handler';
+import shardsUtil from '@handler/shardsUtil';
+import moment from 'moment-timezone';
+
+export default {
   cooldown: 3,
   data: {
     name: "shards",

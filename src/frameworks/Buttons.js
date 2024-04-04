@@ -1,6 +1,6 @@
-const { ButtonInteraction } = require('discord.js');
+import { ButtonInteraction } from 'discord.js';
 
-module.exports = {
+export default {
   name: '',
   
   /**
@@ -10,4 +10,4 @@ module.exports = {
    */
   async execute(interaction, client) {
   }
-}
+};

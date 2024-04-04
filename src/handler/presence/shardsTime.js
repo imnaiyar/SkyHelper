@@ -1,6 +1,5 @@
-const moment = require("moment-timezone");
-
-const config = require("@root/config");
+import moment from 'moment-timezone';
+import config from '@root/config';
 function shardsTime() {
   const timezone = "America/Los_Angeles";
 
@@ -172,4 +171,4 @@ function shardsTime() {
   return status;
 }
 
-module.exports = { shardsTime };
+export default { shardsTime };

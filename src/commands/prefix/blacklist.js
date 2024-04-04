@@ -1,7 +1,8 @@
-const Guild = require("@schemas/guildBlackList.js");
-const { EmbedBuilder } = require("discord.js");
-const { getUser } = require("@schemas/User.js");
-module.exports = {
+import Guild from '@schemas/guildBlackList.js';
+import { EmbedBuilder } from 'discord.js';
+import { getUser } from '@schemas/User.js';
+
+export default {
   data: {
     name: "blacklist",
     description: "blacklist a guild or an user.",

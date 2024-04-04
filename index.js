@@ -1,14 +1,15 @@
 require("dotenv").config();
-require("module-alias/register");
+import 'module-alias/register';
 
 // register extenders
-require("@src/extenders/Client.js");
-const cron = require("node-cron");
-const chalk = require("chalk");
-const { initializeMongoose } = require("@src/database/mongoose");
-const { validations } = require("@handler");
-const reminders = require("@functions/reminders");
-const { SkyHelper } = require("@frameworks/index");
+import '@src/extenders/Client.js';
+
+import cron from 'node-cron';
+import chalk from 'chalk';
+import { initializeMongoose } from '@src/database/mongoose';
+import { validations } from '@handler';
+import reminders from '@functions/reminders';
+import { SkyHelper } from '@frameworks/index';
 const client = new SkyHelper();
 
 client.logger.log(chalk.blueBright("<----------- Validating Secrets ------------->"));
@@ -28,4 +29,4 @@ initializeMongoose();
 client.on("warn", console.log);
 
 client.login(process.env.TOKEN);
-module.exports = { client };
+export default { client };

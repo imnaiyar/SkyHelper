@@ -1,11 +1,11 @@
-const d = require("discord.js");
-const { shardLocation, shardTimeline, shardInfos, nextPrev } = require("@functions/shards");
+import d from 'discord.js';
+import { shardLocation, shardTimeline, shardInfos, nextPrev } from '@functions/shards';
 
 /**
  * Handler for button interactions.
  * @param {import('discord.js').ButtonInteraction} interaction
  */
-module.exports = async (interaction) => {
+export default async (interaction) => {
   if (!interaction.isButton()) return;
   const { client } = interaction;
 

@@ -1,6 +1,6 @@
-const { CACHE_SIZE } = require("@root/config.js");
-const mongoose = require("mongoose");
-const FixedSizeMap = require("fixedsize-map");
+import { CACHE_SIZE } from '@root/config.js';
+import mongoose from 'mongoose';
+import FixedSizeMap from 'fixedsize-map';
 
 const cache = new FixedSizeMap(CACHE_SIZE.GUILDS);
 
@@ -53,7 +53,7 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model("guild", Schema);
 
-module.exports = {
+export default {
   /**
    * @param {import('discord.js').Guild} guild
    */

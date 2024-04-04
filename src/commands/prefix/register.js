@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   data: {
     name: "register",
     description: "deploy commands",

@@ -1,4 +1,4 @@
-const moment = require("moment-timezone");
+import moment from 'moment-timezone';
 
 /**
  * @class
@@ -78,4 +78,4 @@ class UpdateEvent {
   }
 }
 
-module.exports = { UpdateEvent };
+export default { UpdateEvent };

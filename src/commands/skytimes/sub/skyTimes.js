@@ -1,6 +1,6 @@
-const moment = require("moment-timezone");
-require("moment-duration-format");
-const { time } = require("discord.js");
+import moment from 'moment-timezone';
+import 'moment-duration-format';
+import { time } from 'discord.js';
 
 const targetTimezone = "America/Los_Angeles";
 function calculateResult(targetTime, now, offset = 0) {
@@ -101,4 +101,4 @@ async function skyTimes(client) {
   };
 }
 
-module.exports = { skyTimes, getTime };
+export default { skyTimes, getTime };

@@ -1,8 +1,17 @@
-const spiritsData = require("./spiritsData");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time, AttachmentBuilder } = require("discord.js");
-const moment = require("moment-timezone");
-const path = require("path");
-const { CDN_URL } = require("@root/config.js");
+import spiritsData from './spiritsData';
+
+import {
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  time,
+  AttachmentBuilder,
+} from 'discord.js';
+
+import moment from 'moment-timezone';
+import path from 'path';
+import { CDN_URL } from '@root/config.js';
 const startBtn = new ButtonBuilder()
   .setCustomId("spirit-back-start")
   .setEmoji("<:purpleUp:1207632852770881576>")
@@ -15,7 +24,7 @@ const startBtn = new ButtonBuilder()
  * @param {Boolean} guides whether the function was called from a guides command (for including back button)
  * @param {import('discord.js').EmbedBuilder} embs the initial emb to display if provided (mostly for traveling spirit command)
  */
-module.exports = async (int, value, guides, embs) => {
+export default async (int, value, guides, embs) => {
   // Get the spirits data
   const data = spiritsData[value];
   const icon = data.emote?.icon || data.stance?.icon || data.call?.icon || data.action?.icon || "";

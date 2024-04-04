@@ -1,6 +1,7 @@
-const { buildShardEmbed } = require("@handler");
-const shardsUtil = require("@handler/shardsUtil");
-module.exports = {
+import { buildShardEmbed } from '@handler';
+import shardsUtil from '@handler/shardsUtil';
+
+export default {
   name: "shards-scroll",
   async execute(interaction, client) {
     const date = interaction.customId.split("_")[1];

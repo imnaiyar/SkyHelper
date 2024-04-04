@@ -1,11 +1,11 @@
-const { readdirSync, lstatSync } = require("fs");
-const { join, extname } = require("path");
+import { readdirSync, lstatSync } from 'fs';
+import { join, extname } from 'path';
 
 /**
  * @param {String} dir - the directory to read
  * @param {string} allowedExtensions - extension of the files to read
  */
-module.exports = (dir, allowedExtensions = [".js"]) => {
+export default (dir, allowedExtensions = [".js"]) => {
   const filePaths = [];
   const readCommands = (dir) => {
     const files = readdirSync(join(process.cwd(), dir));

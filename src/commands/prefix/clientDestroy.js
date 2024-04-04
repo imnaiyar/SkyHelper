@@ -1,6 +1,6 @@
-const Logger = require("@src/logger");
+import Logger from '@src/logger';
 
-module.exports = {
+export default {
   data: {
     name: "destroy",
     description: "Destroy client instance",

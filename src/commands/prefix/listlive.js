@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
+import mongoose from 'mongoose';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder } from 'discord.js';
 
-module.exports = {
+export default {
   data: {
     name: "listlive",
     description: "list all active live shards/skytimes",

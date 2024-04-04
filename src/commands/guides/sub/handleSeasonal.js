@@ -1,14 +1,14 @@
-const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, EmbedBuilder } = require("discord.js");
-const { QuestChoices } = require("./extends/seasonal/SeasonalChoices.js");
-const handleSpirits = require("./shared/handleSpirits.js");
-const responses = require("./extends/seasonal/GuideResponse.js");
+import { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, EmbedBuilder } from 'discord.js';
+import { QuestChoices } from './extends/seasonal/SeasonalChoices.js';
+import handleSpirits from './shared/handleSpirits.js';
+import responses from './extends/seasonal/GuideResponse.js';
 
 /**
  * @param {import('discord.js').ChatInputCommandInteraction} interaction
  * @param {String} season
  * @param {String} type
  */
-module.exports = async (interaction, season, type) => {
+export default async (interaction, season, type) => {
   const filter = (i) => {
     if (i.user.id !== interaction.user.id) {
        i.reply({

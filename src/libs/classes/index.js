@@ -1,7 +1,7 @@
-const { UpdateEvent } = require("./updateEvent.js");
-const { UpdateTS } = require("./updateTS.js");
+import { UpdateEvent } from './updateEvent.js';
+import { UpdateTS } from './updateTS.js';
 
-module.exports = {
+export default {
   UpdateTS,
   UpdateEvent,
 };

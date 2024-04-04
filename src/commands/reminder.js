@@ -1,5 +1,6 @@
-const moment = require("moment-timezone");
-const {
+import moment from 'moment-timezone';
+
+import {
   EmbedBuilder,
   time,
   ApplicationCommandOptionType,
@@ -10,14 +11,16 @@ const {
   ButtonBuilder,
   roleMention,
   ChannelSelectMenuBuilder,
-} = require("discord.js");
-const { getSettings } = require("@schemas/Guild");
-const handleSpirits = require("./guides/sub/shared/handleSpirits");
+} from 'discord.js';
+
+import { getSettings } from '@schemas/Guild';
+import handleSpirits from './guides/sub/shared/handleSpirits';
+
 /**
  * @type {import('@src/frameworks').SlashCommands}
  */
 
-module.exports = {
+export default {
   cooldown: 15,
   data: {
     name: "reminders",

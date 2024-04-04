@@ -104,4 +104,4 @@ class UpdateTS {
   }
 }
 
-module.exports = { UpdateTS };
+export default { UpdateTS };

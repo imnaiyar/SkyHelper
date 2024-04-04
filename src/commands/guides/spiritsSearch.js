@@ -1,9 +1,10 @@
-const { ApplicationCommandOptionType } = require("discord.js");
-const handleSpirits = require("./sub/shared/handleSpirits");
+import { ApplicationCommandOptionType } from 'discord.js';
+import handleSpirits from './sub/shared/handleSpirits';
+
 /**
  * @type {import('@src/frameworks').SlashCommands}
  */
-module.exports = {
+export default {
   data: {
     name: "spirits",
     description: "Search for a spirits informations",
