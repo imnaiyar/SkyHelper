@@ -1,15 +1,15 @@
-require("dotenv").config();
+import('dotenv/config');
 import 'module-alias/register';
 
 // register extenders
-import '@src/extenders/Client.js';
+import '#src/extenders/Client.js';
 
 import cron from 'node-cron';
 import chalk from 'chalk';
-import { initializeMongoose } from '@src/database/mongoose';
-import { validations } from '@handler';
-import reminders from '@functions/reminders';
-import { SkyHelper } from '@frameworks/index';
+import { initializeMongoose } from '#src/database/mongoose';
+import { validations } from '#handler';
+import reminders from '#functions/reminders';
+import { SkyHelper } from '#frameworks/index';
 const client = new SkyHelper();
 
 client.logger.log(chalk.blueBright("<----------- Validating Secrets ------------->"));

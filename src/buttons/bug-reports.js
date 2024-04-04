@@ -5,7 +5,8 @@ import d from 'discord.js';
  */
 export default {
   name: "error-report",
-    async execute(interaction, client) {
+  
+  async execute(interaction, client) {
     const modal = new d.ModalBuilder().setCustomId("errorModal").setTitle("Bug Report");
 
     const commandUsed = new d.TextInputBuilder()

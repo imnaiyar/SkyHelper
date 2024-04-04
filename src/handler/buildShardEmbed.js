@@ -1,6 +1,6 @@
-import { shardsReply } from '@functions/shards/sub/shardsReply';
+import { shardsReply } from '#functions/shards/sub/shardsReply';
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder } from 'discord.js';
-import config from '@root/config';
+import config from '#root/config';
 
 /**
  * Builds Guve Shards embed

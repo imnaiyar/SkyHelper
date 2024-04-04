@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { buildShardEmbed } from '@handler';
-import shardsUtil from '@handler/shardsUtil';
+import { buildShardEmbed } from '#handler';
+import shardsUtil from '#handler/shardsUtil';
 import moment from 'moment-timezone';
 
 export default {

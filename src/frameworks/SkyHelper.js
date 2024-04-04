@@ -10,11 +10,11 @@ import {
 import chalk from 'chalk';
 import { table } from 'table';
 import moment from 'moment-timezone';
-import { recursiveReadDirSync, cmdValidation } from '@handler';
-import { schemas } from '@src/database/mongoose';
+import { recursiveReadDirSync, cmdValidation } from '#handler';
+import { schemas } from '#src/database/mongoose';
 import fs from 'fs';
 import path from 'path';
-import Logger from '@src/logger';
+import Logger from '#src/logger';
 
 export default class SkyHelper extends Client {
   constructor() {
@@ -30,7 +30,7 @@ export default class SkyHelper extends Client {
       ],
       partials: [Partials.Channel, Partials.Message, Partials.GuildMember],
     });
-    this.config = require("@root/config.js");
+    this.config = require("#root/config.js");
     this.logger = Logger;
 
     /**
@@ -151,7 +151,7 @@ export default class SkyHelper extends Client {
       require.main.filename !== path.join(process.cwd(), "src", "commandsRegister.js") &&
       this.config.DASHBOARD.enabled
     ) {
-      const { loadWebsite } = require("@root/web/server.js");
+      const { loadWebsite } = require("#root/web/server.js");
       loadWebsite(this);
     }
   }

@@ -7,11 +7,11 @@ import {
 } from 'discord.js';
 
 import moment from 'moment-timezone';
-import { autoShard } from '@schemas/autoShard';
-import { buildShardEmbed, deleteSchema } from '@src/handler';
+import { autoShard } from '#schemas/autoShard';
+import { buildShardEmbed, deleteSchema } from '#src/handler';
 
 /**
- * @type {import("@src/frameworks").SlashCommands}
+ * @type {import("#src/frameworks").SlashCommands}
  */
 export default {
   data: {
@@ -46,7 +46,7 @@ export default {
   },
   /**
    * @param {import('discord.js').Interaction} interaction
-   * @param {import('@src/frameworks').SkyHelper} client
+   * @param {import('#src/frameworks').SkyHelper} client
    */
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });

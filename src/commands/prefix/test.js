@@ -1,5 +1,5 @@
 import { AttachmentBuilder } from 'discord.js';
-import { QuizWinnerCard } from '@functions';
+import { QuizWinnerCard } from '#functions';
 
 export default {
   data: {

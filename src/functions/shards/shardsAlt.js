@@ -1,6 +1,6 @@
 import moment from 'moment';
 import shardsTime from './sub/eventTimings.js';
-import util from '@handler/shardsUtil';
+import util from '#handler/shardsUtil';
 
 /**
  * returns shard info for  a given date

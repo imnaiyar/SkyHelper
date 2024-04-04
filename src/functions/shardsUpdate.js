@@ -1,11 +1,11 @@
-import { buildShardEmbed, deleteSchema } from '@src/handler';
+import { buildShardEmbed, deleteSchema } from '#src/handler';
 import mongoose from 'mongoose';
 import moment from 'moment-timezone';
 import { WebhookClient } from 'discord.js';
 
 /**
  * Updates shards details in all the registered guilds
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  */
 export default async (client) => {
   const timezone = "America/Los_Angeles";

@@ -1,10 +1,10 @@
 import { EmbedBuilder } from 'discord.js';
 import { exec } from 'child_process';
-import { recursiveReadDirSync } from '@handler';
-import { error } from '@src/logger';
+import { recursiveReadDirSync } from '#handler';
+import { error } from '#src/logger';
 
 /**
- * @type {import('@src/frameworks').PrefixCommands}
+ * @type {import('#src/frameworks').PrefixCommands}
  */
 export default {
   data: {

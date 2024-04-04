@@ -1,17 +1,10 @@
-import spiritsData from './spiritsData';
+import spiritsData from "./spiritsData.js";
 
-import {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  time,
-  AttachmentBuilder,
-} from 'discord.js';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time, AttachmentBuilder } from "discord.js";
 
-import moment from 'moment-timezone';
-import path from 'path';
-import { CDN_URL } from '@root/config.js';
+import moment from "moment-timezone";
+import path from "path";
+import { CDN_URL } from "#root/config";
 const startBtn = new ButtonBuilder()
   .setCustomId("spirit-back-start")
   .setEmoji("<:purpleUp:1207632852770881576>")
@@ -47,21 +40,21 @@ export default async (int, value, guides, embs) => {
             int.client.emojisMap.get("seasons")[data.season]
           } **__Season of ${data.season}__** ends!`
         : data.ts.returned
-          ? `Total Visits: ${data.ts.dates.length}\n__Returned Dates__\n${data.ts.dates
-              .map((date) => {
-                let index;
-                const formatDate = date
-                  .replace(/\([^)]+\)/g, (match) => {
-                    index = match.trim();
-                    return "";
-                  })
-                  .trim();
-                const dateM = moment.tz(formatDate, "MMMM DD, YYYY", "America/Los_Angeles").startOf("day");
-                const dateE = dateM.clone().add(3, "days").endOf("day");
-                return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
-              })
-              .join("\n")}`
-          : "<:purpleright:1207596527737118811> This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree.",
+        ? `Total Visits: ${data.ts.dates.length}\n__Returned Dates__\n${data.ts.dates
+            .map((date) => {
+              let index;
+              const formatDate = date
+                .replace(/\([^)]+\)/g, (match) => {
+                  index = match.trim();
+                  return "";
+                })
+                .trim();
+              const dateM = moment.tz(formatDate, "MMMM DD, YYYY", "America/Los_Angeles").startOf("day");
+              const dateE = dateM.clone().add(3, "days").endOf("day");
+              return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
+            })
+            .join("\n")}`
+        : "<:purpleright:1207596527737118811> This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree.",
     });
   }
 
@@ -127,10 +120,10 @@ export default async (int, value, guides, embs) => {
   // update the message with the results
   let msg;
   if (row.components.length) {
-   msg = await int.editReply({ content: "", embeds: [emb], components: [row], fetchReply: true });
+    msg = await int.editReply({ content: "", embeds: [emb], components: [row], fetchReply: true });
   } else {
-  await int.editReply({ content: "", embeds: [emb] });  
-  return;
+    await int.editReply({ content: "", embeds: [emb] });
+    return;
   }
 
   // create a collector for the embed buttons

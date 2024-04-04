@@ -1,5 +1,5 @@
 import d from 'discord.js';
-import { shardLocation, shardTimeline, shardInfos, nextPrev } from '@functions/shards';
+import { shardLocation, shardTimeline, shardInfos, nextPrev } from '#functions/shards';
 
 /**
  * Handler for button interactions.

@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import config from '@root/config';
+import config from '#root/config';
 function shardsTime() {
   const timezone = "America/Los_Angeles";
 

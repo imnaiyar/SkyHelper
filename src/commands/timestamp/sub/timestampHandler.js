@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time } from 'discord.js';
-import config from '@root/config';
+import config from '#root/config';
 import moment from 'moment-timezone';
 
 function isTimezoneValid(timezone) {
@@ -93,7 +93,7 @@ async function convertTime(interaction) {
   const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
   const offset1 = `\nOffset: \` ${offsetString} \``;
   const { buildTimesHTML } = require("@skyhelperbot/utils");
-  const { timeRoute } = require("@root/web/server");
+  const { timeRoute } = require("#root/web/server");
   const webPath = `timestamp/${interaction.id}`;
   const content = buildTimesHTML(interaction, fieldsData, offsetString, timezone, providedTime);
 

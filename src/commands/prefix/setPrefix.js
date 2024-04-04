@@ -1,4 +1,4 @@
-import { getSettings } from '@schemas/Guild';
+import { getSettings } from '#schemas/Guild';
 import { EmbedBuilder } from 'discord.js';
 
 export default {

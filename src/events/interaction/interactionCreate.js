@@ -7,7 +7,7 @@ import {
   Collection,
 } from 'discord.js';
 
-import { parsePerm, btnHandler } from '@src/handler';
+import { parsePerm, btnHandler } from '#src/handler';
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = new EmbedBuilder()
@@ -19,7 +19,7 @@ const errorBtn = new ActionRowBuilder().addComponents(
 
 /**
  * Intraction event handler
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  * @param {import('discord.js').Interaction} interaction
  */
 export default async (client, interaction) => {

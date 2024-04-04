@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { log, success, error } from '../logger';
+import { log, success, error } from '#src/logger';
 import chalk from 'chalk';
 
 export default {

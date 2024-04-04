@@ -1,9 +1,9 @@
-import { error } from '@src/logger';
+import { error } from '#src/logger';
 import chalk from 'chalk';
 
 export default {
   /**
-   * @param {import('@src/frameworks').SlashCommands} cmd
+   * @param {import('#src/frameworks').SlashCommands} cmd
    * @param {string} file
    * @returns {Boolean}
    */

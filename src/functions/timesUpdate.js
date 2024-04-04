@@ -1,11 +1,11 @@
-import { buildTimesEmbed, deleteSchema } from '@src/handler';
+import { buildTimesEmbed, deleteSchema } from '#src/handler';
 import mongoose from 'mongoose';
 import moment from 'moment-timezone';
 import { WebhookClient } from 'discord.js';
 
 /**
  * Updates SkyTimes details in all the registered guilds
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  */
 export default async (client) => {
   const currentDate = moment().tz(client.timezone);

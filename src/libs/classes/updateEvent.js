@@ -9,7 +9,7 @@ import moment from 'moment-timezone';
 
 class UpdateEvent {
   /**
-   * @param {import('@src/frameworks').SkyHelper} client
+   * @param {import('#src/frameworks').SkyHelper} client
    */
   constructor(client) {
     this.client = client;

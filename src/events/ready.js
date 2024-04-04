@@ -1,14 +1,14 @@
 import { WebhookClient, EmbedBuilder } from 'discord.js';
 import cron from 'node-cron';
-import reminders from '@functions/reminders';
-import { shardsUpdate, timesUpdate } from '@functions';
-import { setupPresence } from '@handler';
-import { UpdateEvent, UpdateTS } from '@src/libs/classes';
+import reminders from '#functions/reminders';
+import { shardsUpdate, timesUpdate } from '#functions';
+import { setupPresence } from '#handler';
+import { UpdateEvent, UpdateTS } from '#src/libs/classes';
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 /**
  * ready event handler
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  */
 export default async (client) => {
   let text;

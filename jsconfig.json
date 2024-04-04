@@ -1,17 +1,16 @@
 {
     "compilerOptions": {
-      "module": "commonjs",
-      "target": "es6",
+      "module": "esnext",
+      "target": "esnext",
       "baseUrl": "./",
       "paths": {
-        "@root/*": ["./*"],
-        "@handler/*": ["./src/handler/*"],
-        "@functions/*": ["./src/functions/*"],
-        "@schemas/*": ["./src/database/schemas/*"],
-        "@src/*": ["./src/*"],
-        "@commands/*": ["./src/commands/*"],
-        "@frameworks/*": ["./src/frameworks/*"],
-        
+        "#root/*": ["./*"],
+        "#handler/*": ["./src/handler/*"],
+        "#functions/*": ["./src/functions/*"],
+        "#schemas/*": ["./src/database/schemas/*"],
+        "#src/*": ["./src/*"],
+        "#commands/*": ["./src/commands/*"],
+        "#frameworks/*": ["./src/frameworks/*"]
       }
     },
     "exclude": ["node_modules", "**/node_modules/*"]

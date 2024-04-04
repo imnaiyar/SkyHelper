@@ -1,6 +1,6 @@
 const express = require("express");
-const { DASHBOARD } = require("@root/config");
-const { botSettings } = require("@schemas/botStats");
+const { DASHBOARD } = require("#root/config");
+const { botSettings } = require("#schemas/botStats");
 const path = require("path");
 const app = express();
 const htmlUtils = require("./htmlUtils");

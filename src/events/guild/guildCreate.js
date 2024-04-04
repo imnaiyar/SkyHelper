@@ -1,16 +1,16 @@
 import { EmbedBuilder, WebhookClient } from 'discord.js';
-import { dblStats } from '@functions';
-import { getSettings as registerGuild } from '@schemas/Guild';
-import Guild from '@schemas/guildBlackList';
-import Logger from '@src/logger';
-import config from '@root/config.js';
-import { topggAutopost } from '@functions';
-import { botSettings } from '@schemas/botStats';
+import { dblStats } from '#functions';
+import { getSettings as registerGuild } from '#schemas/Guild';
+import Guild from '#schemas/guildBlackList';
+import Logger from '#src/logger';
+import config from '#root/config.js';
+import { topggAutopost } from '#functions';
+import { botSettings } from '#schemas/botStats';
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
 export default async (client, guild) => {

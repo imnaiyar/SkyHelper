@@ -7,8 +7,8 @@ import {
 } from 'discord.js';
 
 import moment from 'moment-timezone';
-import { autoTimes } from '@schemas/autoTimes';
-import { buildTimesEmbed, deleteSchema } from '@src/handler';
+import { autoTimes } from '#schemas/autoTimes';
+import { buildTimesEmbed, deleteSchema } from '#src/handler';
 
 export default {
   data: {

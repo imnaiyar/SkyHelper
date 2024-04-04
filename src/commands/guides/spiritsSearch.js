@@ -1,8 +1,8 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import handleSpirits from './sub/shared/handleSpirits';
+import handleSpirits from './sub/shared/handleSpirits.ja';
 
 /**
- * @type {import('@src/frameworks').SlashCommands}
+ * @type {import('#src/frameworks').SlashCommands}
  */
 export default {
   data: {

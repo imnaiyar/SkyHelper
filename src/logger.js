@@ -1,5 +1,5 @@
-import { EmbedBuilder, WebhookClient } from 'discord.js';
-import pino from 'pino';
+import { EmbedBuilder, WebhookClient } from "discord.js";
+import pino from "pino";
 
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 let toHide = true;
@@ -113,4 +113,4 @@ export default class Logger {
   static debug(content) {
     pinoLogger.debug(content);
   }
-};
+}

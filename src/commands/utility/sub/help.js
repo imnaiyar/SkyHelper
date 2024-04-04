@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder } from 'discord.js';
-import config from '@root/config';
+import config from '#root/config';
 async function helpMenu(interaction, client) {
   let totalCommands = [];
   const appCommands = await client.application.commands.fetch();

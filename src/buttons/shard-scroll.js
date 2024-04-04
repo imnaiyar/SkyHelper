@@ -1,5 +1,5 @@
-import { buildShardEmbed } from '@handler';
-import shardsUtil from '@handler/shardsUtil';
+import { buildShardEmbed } from '#handler';
+import shardsUtil from '#handler/shardsUtil';
 
 export default {
   name: "shards-scroll",

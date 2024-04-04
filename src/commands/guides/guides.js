@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { handleSeasonal, HandleRealms, handleEvents } from './sub/index';
+import { handleSeasonal, HandleRealms, handleEvents } from './sub/index.js';
 let reply;
 
 export default {

@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 /**
  * Posts bot's stat on DBL
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  */
 export default async (client) => {
   await fetch(`https://discordbotlist.com/api/v1/bots/${client.user.id}/stats`, {

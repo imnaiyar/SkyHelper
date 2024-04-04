@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { CACHE_SIZE } from '@root/config.js';
+import { CACHE_SIZE } from '#root/config';
 import FixedSizeMap from 'fixedsize-map';
 
 const cache = new FixedSizeMap(CACHE_SIZE.USERS);

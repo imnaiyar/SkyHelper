@@ -13,11 +13,11 @@ import {
   ChannelSelectMenuBuilder,
 } from 'discord.js';
 
-import { getSettings } from '@schemas/Guild';
-import handleSpirits from './guides/sub/shared/handleSpirits';
+import { getSettings } from '#schemas/Guild';
+import handleSpirits from './guides/sub/shared/handleSpirits.js';
 
 /**
- * @type {import('@src/frameworks').SlashCommands}
+ * @type {import('#src/frameworks').SlashCommands}
  */
 
 export default {
@@ -35,7 +35,7 @@ export default {
 
   /**
    * @param {import('discord.js').ChatInputCommandInteraction} interaction
-   * @param {import('@src/frameworks').SkyHelper} client
+   * @param {import('#src/frameworks').SkyHelper} client
    */
   async execute(interaction, client) {
     await interaction.deferReply();

@@ -6,7 +6,7 @@
  */
 class UpdateTS {
   /**
-   * @param {import('@src/frameworks').SkyHelper} client
+   * @param {import('#src/frameworks').SkyHelper} client
    */
   constructor(client) {
     this.client = client;

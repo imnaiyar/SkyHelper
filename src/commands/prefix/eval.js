@@ -1,5 +1,5 @@
 import d from 'discord.js';
-import createHstbn from '@handler/createHastebin';
+import createHstbn from '#handler/createHastebin';
 import { Type } from '@sapphire/type';
 import { Stopwatch } from '@sapphire/stopwatch';
 

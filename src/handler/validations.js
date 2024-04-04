@@ -1,7 +1,7 @@
 import { log, error, warn } from '../logger.js';
 import fs from 'fs';
 import util from 'util';
-import config from '@root/config';
+import config from '#root/config';
 import chalk from 'chalk';
 
 export default {

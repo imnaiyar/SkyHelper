@@ -3,6 +3,7 @@
   "version": "5.0.0",
   "description": "A Bot for Sky: Children of the Light",
   "main": "index.js",
+  "type": "module",
   "keywords": [
     "SkyCoTL",
     "SkyShards",
@@ -53,14 +54,17 @@
     "undici": "^6.4.0",
     "url": "^0.11.1"
   },
-  "_moduleAliases": {
-    "@handler": "src/handler/",
-    "@src": "src/",
-    "@commands": "src/commands",
-    "@root": ".",
-    "@schemas": "src/database/schemas/",
-    "@frameworks": "src/frameworks/",
-    "@functions": "src/functions"
+  "imports": {
+    "#handler": ["./src/handler/index.js"],
+    "#handler/*": ["./src/handler/*.js"],
+    "#src/*":[ "./src/*.js"],
+    "#commands/*": ["./src/commands/*.js"],
+    "#root/*": ["./*.js"],
+    "#schemas/*": ["./src/database/schemas/*.js"],
+    "#frameworks/*": ["./src/frameworks/*.js"],
+    "#frameworks": ["./src/frameworks/index.js"],
+    "#functions/*": ["./src/functions/*.js"],
+    "#functions": ["./src/functions/index.js"]
   },
   "devDependencies": {
     "eslint": "^8.52.0",

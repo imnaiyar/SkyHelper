@@ -1,13 +1,13 @@
 import { EmbedBuilder, WebhookClient } from 'discord.js';
-import { botSettings } from '@schemas/botStats';
-import { getSettings } from '@schemas/Guild';
-import Logger from '@src/logger';
+import { botSettings } from '#schemas/botStats';
+import { getSettings } from '#schemas/Guild';
+import Logger from '#src/logger';
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 /**
  * Functions for when bot leaves a server
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  * @param {import('discord.js').Guild} guild
  */
 

@@ -26,7 +26,7 @@ export default async (interaction, total) => {
 /**
  * Responds with a question in the channel
  * @param {import('discord.js').Interaction} interaction - Interaction that initiated the game
- * @param {import('@src/frameworks').Skyhelper.gameData} data - Object containing game data
+ * @param {import('#src/frameworks').Skyhelper.gameData} data - Object containing game data
  */
 async function respond(interaction, data) {
   const questionData = data.randomQuestions[data.currentQuestion];

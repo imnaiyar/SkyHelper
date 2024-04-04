@@ -29,7 +29,7 @@ module.exports = {
       // getting bot stats from database
       .use(async (req, res, next) => {
         try {
-          const { botSettings } = require("@schemas/botStats");
+          const { botSettings } = require("#schemas/botStats");
           const settings = await botSettings(client);
           const stats = settings.data;
           const commands = await client.application.commands.fetch();

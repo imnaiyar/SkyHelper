@@ -1,12 +1,12 @@
 import { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { OWNER, PREFIX } from '@root/config.js';
-import Log from '@src/logger';
-import { parsePerm } from '@functions';
+import { OWNER, PREFIX } from '#root/config.js';
+import Log from '#src/logger';
+import { parsePerm } from '#functions';
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 /**
  * messageCreate event handler
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  * @param {import('discord.js').msg} msg
  */
 export default async (client, msg) => {

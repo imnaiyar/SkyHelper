@@ -1,4 +1,4 @@
-import { CACHE_SIZE } from '@root/config.js';
+import { CACHE_SIZE } from '#root/config';
 import mongoose from 'mongoose';
 import FixedSizeMap from 'fixedsize-map';
 

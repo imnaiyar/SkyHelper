@@ -1,6 +1,6 @@
-import Guild from '@schemas/guildBlackList.js';
-import { EmbedBuilder } from 'discord.js';
-import { getUser } from '@schemas/User.js';
+import Guild from "#schemas/guildBlackList";
+import { EmbedBuilder } from "discord.js";
+import { getUser } from "#schemas/User";
 
 export default {
   data: {

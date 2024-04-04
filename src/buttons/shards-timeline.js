@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder } from 'discord.js';
 import shardData from './sub/timelineData.js';
-import utils from '@handler/shardsUtil';
+import utils from '#handler/shardsUtil';
 import moment from 'moment-timezone';
 
 export default {

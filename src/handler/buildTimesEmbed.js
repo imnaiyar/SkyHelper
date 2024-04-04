@@ -1,11 +1,11 @@
 import { skyTimes } from '@commands/skytimes/sub/skyTimes';
 import moment from 'moment-timezone';
 import { EmbedBuilder, time } from 'discord.js';
-import config from '@root/config';
+import config from '#root/config';
 
 /**
  * Returns an embed with SkyTimes data
- * @param {import('@src/frameworks').SkyHelper} client
+ * @param {import('#src/frameworks').SkyHelper} client
  * @param {string} footer
  * @returns
  */

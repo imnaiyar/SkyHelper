@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 import { ActionRowBuilder, ButtonBuilder } from 'discord.js';
 import shardData from './sub/LocationData.js';
-import utils from '@handler/shardsUtil';
+import utils from '#handler/shardsUtil';
 
 export default {
   name: "shards-location",
