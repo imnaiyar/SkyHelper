@@ -1,6 +1,6 @@
 import { EmbedBuilder, WebhookClient } from "discord.js";
 import * as pino from "pino";
-import { postToHaste } from 'skyhelper-utils';
+import { postToHaste } from "skyhelper-utils";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 
 const pinoLogger = pino.default(
@@ -39,12 +39,12 @@ async function sendWebhook(content: any, err?: any): Promise<void> {
   if (!content && !err) return;
   const link = await postToHaste(err ?? content);
 
-  const embed = new EmbedBuilder().setColor("Blue").setAuthor({ name:  err?.name ?? "Error" });
+  const embed = new EmbedBuilder().setColor("Blue").setAuthor({ name: err?.name ?? "Error" });
 
   embed.setDescription(`${link}`);
   embed.addFields({
     name: "Description",
-    value: `${ content?.message || content || err?.message || "NA"}`,
+    value: `${content?.message || content || err?.message || "NA"}`,
   });
 
   webhookLogger?.send({ username: "Logs", embeds: [embed] }).catch(() => {});
@@ -79,7 +79,7 @@ export default class {
    * @param content
    * @param ex
    */
-  static error(content: string, ex?: any) {
+  static error(content: any, ex?: any) {
     if (ex) {
       pinoLogger.error(ex, `${content}: ${ex?.message}`);
     } else {

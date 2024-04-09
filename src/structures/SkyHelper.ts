@@ -54,7 +54,7 @@ export class SkyHelper extends Client<true> {
   public buttons: Collection<string, Button>;
 
   /** Collection of command cooldowns */
-  public cooldowns: Collection<string, Collection<string, Date>>;
+  public cooldowns: Collection<string, Collection<string, number>>;
 
   /** Default timezone used thorughout the client for time-based calculations */
   public timezone: string;
@@ -131,9 +131,9 @@ export class SkyHelper extends Client<true> {
     let success = 0;
     let failed = 0;
     const clientEvents: unknown[][] = [];
-    const dirs = recursiveReadDir(directory);
+    const files = recursiveReadDir(directory);
 
-    for (const filePath of dirs) {
+    for (const filePath of files) {
       const file = path.basename(filePath);
       try {
         const eventName = path.basename(file, ".js");
@@ -166,11 +166,12 @@ export class SkyHelper extends Client<true> {
    * Load slash command to client on startup
    * @param dir
    */
-  public loadSlashCmd(dir: string): void {
+  public async loadSlashCmd(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Slash ---------------->"));
     let added = 0;
     let failed = 0;
-    recursiveReadDir(dir, ["prefix", "sub"]).forEach(async (filePath): Promise<void> => {
+    const files = recursiveReadDir(dir, ["sub"]);
+    for (const filePath of files) {
       const file = path.basename(filePath);
       try {
         const { default: command } = await import(pathToFileURL(filePath).href);
@@ -183,7 +184,8 @@ export class SkyHelper extends Client<true> {
         failed++;
         Logger.error(`loadSlashCmds - ${file}`, err);
       }
-    });
+    }
+
     this.logger.log(`Loaded ${added} Slash Commands. Failed ${failed}`);
   }
 
@@ -191,11 +193,12 @@ export class SkyHelper extends Client<true> {
    * Load context menu commands to client on startup
    * @param dir
    */
-  public loadContextCmd(dir: string): void {
+  public async loadContextCmd(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Contexts ---------------->"));
     let added = 0;
     let failed = 0;
-    recursiveReadDir(dir, ["sub"]).forEach(async (filePath): Promise<void> => {
+    const files = recursiveReadDir(dir, ["sub"]);
+    for (const filePath of files) {
       const file = path.basename(filePath);
       try {
         const { default: command } = await import(pathToFileURL(filePath).href);
@@ -208,7 +211,8 @@ export class SkyHelper extends Client<true> {
         failed++;
         Logger.error(`loaContextCmds - ${file}`, err);
       }
-    });
+    }
+
     this.logger.log(`Loaded ${added} Context Menu Commands. Failed ${failed}`);
   }
 
@@ -216,11 +220,12 @@ export class SkyHelper extends Client<true> {
    * Load buttons to client on startup
    * @param dir
    */
-  public loadButtons(dir: string): void {
+  public async loadButtons(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Buttons -------------->"));
     let added = 0;
     let failed = 0;
-    recursiveReadDir(dir).forEach(async (filePath): Promise<void> => {
+    const files = recursiveReadDir(dir);
+    for (const filePath of files) {
       const file = path.basename(filePath);
 
       try {
@@ -234,7 +239,7 @@ export class SkyHelper extends Client<true> {
         failed += 1;
         Logger.error(`${file}`, ex);
       }
-    });
+    }
     this.logger.log(`Loaded ${added} buttons. Failed ${failed}`);
   }
 
@@ -242,11 +247,12 @@ export class SkyHelper extends Client<true> {
    * Load prefix command on startup
    * @param dir
    */
-  public loadPrefix(dir: string) {
+  public async loadPrefix(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Prefix --------------->"));
     let added = 0;
     let failed = 0;
-    recursiveReadDir(dir).forEach(async (filePath): Promise<void> => {
+    const files = recursiveReadDir(dir);
+    for (const filePath of files) {
       const file = path.basename(filePath);
       try {
         const { default: command } = await import(pathToFileURL(filePath).href);
@@ -259,7 +265,7 @@ export class SkyHelper extends Client<true> {
         failed++;
         Logger.error(`${file}`, err);
       }
-    });
+    }
 
     this.logger.log(`Loaded ${added} Prefix Commands. Failed ${failed}`);
   }

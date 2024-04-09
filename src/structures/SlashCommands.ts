@@ -48,10 +48,17 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
     /** Permissions bot requires for this command */
     botPermissions?: PermissionResolvable[];
   };
+  /* Command category */
+  category?: string;
+
+  /* Command cooldown */
+  cooldown?: number;
 
   /** The callback function to run when the command is used */
-  execute: (interaction: ChatInputCommandInteraction, client: SkyHelper) => void;
+  execute: (interaction: ChatInputCommandInteraction, client: SkyHelper) => Promise<void>;
 
   /** Autocomplete callback if it exists */
-  autocomplete?: Autocomplete extends true ? (interaction: AutocompleteInteraction, client: SkyHelper) => void : never;
+  autocomplete?: Autocomplete extends true
+    ? (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void>
+    : never;
 }
