@@ -24,7 +24,6 @@
   "dependencies": {
     "@napi-rs/canvas": "^0.1.51",
     "@sapphire/stopwatch": "^1.5.2",
-    "@skyhelperbot/utils": "^1.1.6",
     "axios": "^1.6.5",
     "body-parser": "^1.20.2",
     "chalk": "^4.1.2",
@@ -46,6 +45,7 @@
     "node-fetch": "^2.6.7",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
+    "skyhelper-utils": "^1.1.2",
     "sourcebin_js": "^0.0.3-ignore",
     "table": "^6.8.1",
     "text-table": "^0.2.0",
@@ -55,21 +55,46 @@
     "url": "^0.11.1"
   },
   "imports": {
-    "#handler": ["./src/handler/index.js"],
-    "#handler/*": ["./src/handler/*.js"],
-    "#src/*":[ "./src/*.js"],
-    "#commands/*": ["./src/commands/*.js"],
-    "#root/*": ["./*.js"],
-    "#schemas/*": ["./src/database/schemas/*.js"],
-    "#frameworks/*": ["./src/frameworks/*.js"],
-    "#frameworks": ["./src/frameworks/index.js"],
-    "#functions/*": ["./src/functions/*.js"],
-    "#functions": ["./src/functions/index.js"]
+    "#handlers": [
+      "./src/handlers/index.js"
+    ],
+    "#handlers/*": [
+      "./src/handlers/*.js"
+    ],
+    "#src/*": [
+      "./src/*.js"
+    ],
+    "#commands/*": [
+      "./src/commands/*.js"
+    ],
+    "#root/*": [
+      "./*.js"
+    ],
+    "#schemas/*": [
+      "./src/database/schemas/*.js"
+    ],
+    "#structures/*": [
+      "./src/structures/*.js"
+    ],
+    "#structures": [
+      "./src/structures/index.js"
+    ],
+    "#functions/*": [
+      "./src/functions/*.js"
+    ],
+    "#functions": [
+      "./src/functions/index.js"
+    ]
   },
   "devDependencies": {
-    "eslint": "^8.52.0",
+    "@types/node": "^20.12.5",
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^46.8.2",
     "prettier": "^3.0.3",
-    "prettier-plugin-ejs": "^0.0.18"
+    "prettier-plugin-ejs": "^0.0.18",
+    "typescript": "^5.4.4"
   }
 }

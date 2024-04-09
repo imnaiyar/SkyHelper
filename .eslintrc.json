@@ -1,16 +1,22 @@
 {
-	"extends": "eslint:recommended",
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended"
+	  ],
 	"env": {
 		"node": true,
 		"es6": true
 	},
-	"parserOptions": {
-		"ecmaVersion": 2021
-	},
-	"plugins": ["jsdoc"],
+	"parser": "@typescript-eslint/parser", 
+    "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module" 
+    },
+    "plugins": ["@typescript-eslint", "jsdoc", "import"],
 	"rules": {
 		"arrow-spacing": ["warn", { "before": true, "after": true }],
 		"comma-dangle": ["error", "always-multiline"],
+		"import/no-commonjs": "error",
 		"comma-spacing": "error",
 		"comma-style": "error",
 		"curly": ["error", "multi-line", "consistent"],
