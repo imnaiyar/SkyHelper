@@ -7,7 +7,7 @@ export default {
         },
         PREFIX: ',',
         BOT_ICON: 'https://cdn.imnaiyar.site/bot-icon.gif',
-    
+
        //  WEB_URL: 'http://localhost:5001',
         WEB_URL: 'https://skyhelper.xyz',
        CDN_URL: 'https://cdn.imnaiyar.site',
@@ -16,7 +16,7 @@ export default {
           port: '1592',
         },
         Support: 'https://discord.gg/u9zUjWbbQ4',
-    
+
         EMBED_COLORS: {
           BOT_EMBED: '#48d4ca',
           TRANSPARENT: '#303236',
@@ -24,7 +24,7 @@ export default {
           ERROR: '#275457',
           WARNING: '#275457',
         },
-    
+
         // Do not touch this or modify this unless you know what you are doing
         shardSequence: [
         'C',
@@ -47,4 +47,4 @@ export default {
         'wasteland',
         'vault',
       ],
-}
+};

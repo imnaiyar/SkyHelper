@@ -2,7 +2,7 @@
   "name": "skyhelper",
   "version": "5.0.0",
   "description": "A Bot for Sky: Children of the Light",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "keywords": [
     "SkyCoTL",
@@ -11,8 +11,8 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js",
+    "start": "node dist/index.js",
+    "dev": "node dist/index.js",
     "commands": "node src/commandsRegister.js",
     "format": "npx prettier --write \"**/*.{js,css,ejs}\""
   },
@@ -56,34 +56,40 @@
   },
   "imports": {
     "#handlers": [
-      "./src/handlers/index.js"
+      "./dist/handlers/index.js"
     ],
     "#handlers/*": [
-      "./src/handlers/*.js"
+      "./dist/handlers/*.js"
     ],
     "#src/*": [
-      "./src/*.js"
+      "./dist/*.js"
     ],
     "#commands/*": [
-      "./src/commands/*.js"
+      "./dist/commands/*.js"
     ],
     "#root/*": [
       "./*.js"
     ],
     "#schemas/*": [
-      "./src/database/schemas/*.js"
+      "./dist/database/schemas/*.js"
     ],
     "#structures/*": [
-      "./src/structures/*.js"
+      "./dist/structures/*.js"
     ],
     "#structures": [
-      "./src/structures/index.js"
+      "./dist/structures/index.js"
+    ],
+    "#libs/*": [
+      "./dist/libs/*.js"
+    ],
+    "#libs": [
+      "./dist/libs/index.js"
     ],
     "#functions/*": [
-      "./src/functions/*.js"
+      "./dist/functions/*.js"
     ],
     "#functions": [
-      "./src/functions/index.js"
+      "./dist/functions/index.js"
     ]
   },
   "devDependencies": {

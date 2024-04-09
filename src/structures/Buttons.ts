@@ -1,9 +1,15 @@
-import { ButtonInteraction } from 'discord.js';
-import { type SkyHelper } from './SkyHelper';
+import { ButtonInteraction } from "discord.js";
+import { type SkyHelper } from "./SkyHelper";
 /* eslint-disable */
+
+/** Buttons structure */
 export type Button = {
-    data: {
-        name: string
-    },
-    execute: (interaction: ButtonInteraction, client: SkyHelper) => void,
-}
+  /** Button Data */
+  data: {
+    /** Button id (or ID starts with) */
+    name: string;
+  };
+
+  /** The callback for when the button is clicked */
+  execute: (interaction: ButtonInteraction, client: SkyHelper) => void;
+};
