@@ -17,12 +17,18 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 /** Message Handler */
 export default async (client: SkyHelper, message: Message): Promise<void> => {
   if (message.author.bot) return;
+
+  // Check for bot's mention
   if (message.content.startsWith(`<@!${client.user.id}>`)) {
     await message.channel.send("That's me...");
     return;
   }
+
+  // Prefix
   const prefix = client.config.PREFIX;
   if (!message.content.startsWith(prefix)) return;
+
+  // Flags
   const flags = new Flags(message.content);
   const msg = flags.removeFlags();
   const args = msg.slice(prefix.length).trim().split(/ +/g);
@@ -74,6 +80,7 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
     }
   }
 
+  // Check for validations
   if (command.validations?.length) {
     for (const validation of command.validations) {
       if (!validation.callback(message)) {
