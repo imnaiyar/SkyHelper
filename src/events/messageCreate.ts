@@ -1,4 +1,4 @@
-import { SkyHelper } from "#src/structures";
+import { SkyHelper } from "#structures";
 import {
   EmbedBuilder,
   GuildChannelResolvable,

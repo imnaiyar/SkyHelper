@@ -1,5 +1,5 @@
 import { EmbedBuilder, WebhookClient } from "discord.js";
-import * as pino from "pino";
+import pino from "pino";
 import { postToHaste } from "skyhelper-utils";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 

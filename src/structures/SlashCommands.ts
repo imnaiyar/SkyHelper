@@ -1,10 +1,5 @@
-import {
-  ChatInputCommandInteraction,
-  AutocompleteInteraction,
-  ApplicationCommandOption,
-  PermissionResolvable,
-} from "discord.js";
-import { type SkyHelper } from "./SkyHelper";
+import { ChatInputCommandInteraction, AutocompleteInteraction, ApplicationCommandOption, PermissionResolvable } from "discord.js";
+import { type SkyHelper } from "#structures";
 
 import { IntegrationTypes, ContextTypes } from "#libs/types";
 /* eslint-disable */
@@ -49,7 +44,7 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
     botPermissions?: PermissionResolvable[];
   };
   /* Command category */
-  category?: string;
+  ownerOnly?: boolean;
 
   /* Command cooldown */
   cooldown?: number;
@@ -58,7 +53,5 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
   execute: (interaction: ChatInputCommandInteraction, client: SkyHelper) => Promise<void>;
 
   /** Autocomplete callback if it exists */
-  autocomplete?: Autocomplete extends true
-    ? (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void>
-    : never;
+  autocomplete?: Autocomplete extends true ? (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void> : never;
 }

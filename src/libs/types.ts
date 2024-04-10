@@ -1,11 +1,7 @@
-export interface UserContext {}
-
-export interface MessageContext {}
-
-export type ContextMenuType = UserContext | MessageContext | null;
+export type ContextMenuType = "UserContext" | "MessageContext" | null;
 
 /* eslint-disable */
-export declare enum ContextTypes {
+export enum ContextTypes {
   /** Command can be used in guilds */
   Guild = 0,
 
@@ -16,7 +12,7 @@ export declare enum ContextTypes {
   PrivateChannels = 2,
 }
 
-export declare enum IntegrationTypes {
+export enum IntegrationTypes {
   /** Command is for guild */
   Guilds = 0,
 

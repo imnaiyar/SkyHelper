@@ -12,9 +12,10 @@
   ],
   "scripts": {
     "start": "node dist/index.js",
+    "build": "tsc -p tsconfig.json",
     "dev": "node dist/index.js",
-    "commands": "node src/commandsRegister.js",
-    "format": "npx prettier --write \"**/*.{js,css,ejs}\""
+    "commands": "node dist/libs/registerCommands.js",
+    "format": "npx prettier --write \"**/*.{js,css,ejs, ts}\""
   },
   "author": "Naiyar Imam",
   "license": "MIT",

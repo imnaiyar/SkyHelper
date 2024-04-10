@@ -11,14 +11,12 @@ import {
 } from "discord.js";
 import { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
 import { parsePerms } from "skyhelper-utils";
-import { Permission } from "skyhelper-utils/dist/utils/parsePerms";
+import { Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
 import config from "#src/config";
 
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
-const errorEmbed = new EmbedBuilder()
-  .setTitle(`ERROR`)
-  .setDescription(`An error occurred while executing this command.`);
+const errorEmbed = new EmbedBuilder().setTitle(`ERROR`).setDescription(`An error occurred while executing this command.`);
 const errorBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setLabel("Report Bug").setCustomId("error-report").setStyle(ButtonStyle.Secondary),
 );
@@ -120,7 +118,7 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
 
   // Context menus
   if (interaction.isContextMenuCommand()) {
-    const command = client.contexts.get(interaction.commandName);
+    const command = client.contexts.get(interaction.commandName + interaction.commandType.toString());
     if (!command) {
       await interaction.reply({
         content: "No such commands or outdated command.",
@@ -199,7 +197,7 @@ async function validateCommand(
 ): Promise<boolean> {
   const client = interaction.client as SkyHelper;
   // Handle owner commands
-  if (command.category && command.category === "Owner" && !config.OWNER.includes(interaction.user.id)) {
+  if (command.ownerOnly && !config.OWNER.includes(interaction.user.id)) {
     await interaction.reply({
       content: "This command is for owner(s) only.",
       ephemeral: true,

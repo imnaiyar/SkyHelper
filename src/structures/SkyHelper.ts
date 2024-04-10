@@ -17,6 +17,7 @@ import { recursiveReadDir } from "skyhelper-utils";
 import { logger as Logger } from "#handlers";
 import path from "node:path";
 import chalk from "chalk";
+import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import spiritsData from "#libs/datas/spiritsData";
@@ -65,6 +66,9 @@ export class SkyHelper extends Client<true> {
   /** Collection of utility classes */
   public classes: Collection<string, any>;
 
+  /** Database schemas/fuctions */
+  public database: typeof schemas;
+
   /** Current Traveling Spirit Data */
   public ts: TS;
 
@@ -75,7 +79,12 @@ export class SkyHelper extends Client<true> {
   public gameData: Map<string, any>;
 
   /** Map of emojis */
-  public emojisMap: Map<string, any>;
+  public emojisMap: Map<
+    string,
+    {
+      [key: string]: string;
+    }
+  >;
 
   /** All the Sky: SCOTL spirits data */
   public spiritsData: typeof spiritsData;
@@ -102,6 +111,7 @@ export class SkyHelper extends Client<true> {
     this.buttons = new Collection();
     this.logger = Logger;
     this.cooldowns = new Collection();
+    this.database = schemas;
     this.timezone = "America/Los_Angeles";
     this.skyEvents = new Map();
     this.skyEvents.set("events", {
@@ -178,7 +188,9 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const { default: command } = await import(pathToFileURL(filePath).href);
+        const { default: cmd } = await import(pathToFileURL(filePath).href);
+        const command = cmd as SlashCommand;
+        if (this.commands.has(command.data.name)) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
         this.commands.set(command.data.name, command);
@@ -206,10 +218,13 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const { default: command } = await import(pathToFileURL(filePath).href);
+        const { default: cmd } = await import(pathToFileURL(filePath).href);
+        const command = cmd as ContextMenuCommand;
+        if (typeof command !== "object") return;
+        if (this.contexts.has(command.data.name + command.data.type.toString())) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
-        this.contexts.set(command.data.name, command);
+        this.contexts.set(command.data.name + command.data.type.toString(), command);
         this.logger.log(`Loaded ${command.data.name}`);
         added++;
       } catch (err) {
@@ -234,10 +249,12 @@ export class SkyHelper extends Client<true> {
       const file = path.basename(filePath);
 
       try {
-        const { default: button } = await import(pathToFileURL(filePath).href);
+        const { default: btn } = await import(pathToFileURL(filePath).href);
+        const button = btn as Button;
+        if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         if (typeof button !== "object") return;
-        this.buttons.set(button.name, button);
-        this.logger.log(`Loaded ${button.name}`);
+        this.buttons.set(button.data.name, button);
+        this.logger.log(`Loaded ${button.data.name}`);
         added++;
       } catch (ex) {
         failed += 1;
@@ -259,8 +276,9 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const { default: command } = await import(pathToFileURL(filePath).href);
-
+        const { default: cmd } = await import(pathToFileURL(filePath).href);
+        const command = cmd as PrefixCommand;
+        if (this.prefix.has(command.data.name)) throw new Error("The command already exists");
         this.prefix.set(command.data.name, command);
         command.data?.aliases?.forEach((al: string) => this.prefix.set(al, command));
         this.logger.log(`Loaded ${command.data.name}`);

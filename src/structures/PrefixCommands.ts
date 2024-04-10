@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { type SkyHelper } from "./SkyHelper";
-import { type Permission } from "skyhelper-utils/dist/utils/parsePerms";
+import { type SkyHelper } from "#structures";
+import { type Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
 /* eslint-disable */
 
 /** Structure of command validation */
@@ -42,6 +42,8 @@ export type PrefixCommand = {
     /** The command category */
     category?: string;
 
+    ownerOnly?: boolean;
+
     /** Permissions of the user required for the command */
     userPermissions?: Permission[];
 
@@ -49,9 +51,12 @@ export type PrefixCommand = {
     botPermissions?: Permission[];
   };
 
+  /** Command cooldown */
+  cooldown?: number;
+
   /** Any validations for the command */
   validations?: Validation[];
 
   /** Callback function to run when the command is used */
-  execute: (interaction: Message, args: string[], client: SkyHelper) => Promise<void>;
+  execute: (message: Message, args: string[], client: SkyHelper) => Promise<void>;
 };

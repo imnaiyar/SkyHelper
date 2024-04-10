@@ -6,10 +6,10 @@ const client = new SkyHelper();
 // Load everything
 // Change path if different
 await client.loadEvents("dist/events");
-await client.loadSlashCmd("dist/commands");
-await client.loadContextCmd("dist/contexts");
+await client.loadSlashCmd("dist/commands/slash");
+await client.loadContextCmd("dist/commands/contexts");
 await client.loadButtons("dist/buttons");
-await client.loadPrefix("dist/prefix");
+await client.loadPrefix("dist/commands/prefix");
 
 // Login
 client.login(process.env.TOKEN);
