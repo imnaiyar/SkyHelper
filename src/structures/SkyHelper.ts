@@ -188,8 +188,9 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const { default: cmd } = await import(pathToFileURL(filePath).href);
-        const command = cmd as SlashCommand;
+        const { default: command } = (await import(pathToFileURL(filePath).href)) as {
+          default: SlashCommand;
+        };
         if (this.commands.has(command.data.name)) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
@@ -211,15 +212,16 @@ export class SkyHelper extends Client<true> {
    * TODO: Add validation for commands
    */
   public async loadContextCmd(dir: string): Promise<void> {
-    this.logger.log(chalk.blueBright("<------------ Loading Contexts ---------------->"));
+    this.logger.log(chalk.blueBright("<------------ Loading Contexts ------------->"));
     let added = 0;
     let failed = 0;
     const files = recursiveReadDir(dir, ["sub"]);
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const { default: cmd } = await import(pathToFileURL(filePath).href);
-        const command = cmd as ContextMenuCommand;
+        const { default: command } = (await import(pathToFileURL(filePath).href)) as {
+          default: ContextMenuCommand;
+        };
         if (typeof command !== "object") return;
         if (this.contexts.has(command.data.name + command.data.type.toString())) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
@@ -249,8 +251,9 @@ export class SkyHelper extends Client<true> {
       const file = path.basename(filePath);
 
       try {
-        const { default: btn } = await import(pathToFileURL(filePath).href);
-        const button = btn as Button;
+        const { default: button } = (await import(pathToFileURL(filePath).href)) as {
+          default: Button;
+        };
         if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         if (typeof button !== "object") return;
         this.buttons.set(button.data.name, button);
@@ -276,8 +279,9 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const { default: cmd } = await import(pathToFileURL(filePath).href);
-        const command = cmd as PrefixCommand;
+        const { default: command } = (await import(pathToFileURL(filePath).href)) as {
+          default: PrefixCommand;
+        };
         if (this.prefix.has(command.data.name)) throw new Error("The command already exists");
         this.prefix.set(command.data.name, command);
         command.data?.aliases?.forEach((al: string) => this.prefix.set(al, command));

@@ -44,6 +44,9 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
     botPermissions?: PermissionResolvable[];
   };
   /* Command category */
+  category?: string;
+
+  /* Whether or not the command is owner only */
   ownerOnly?: boolean;
 
   /* Command cooldown */
