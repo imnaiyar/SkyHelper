@@ -3,8 +3,10 @@ import {
   ApplicationCommandType,
   UserContextMenuCommandInteraction,
   MessageContextMenuCommandInteraction,
+  PermissionResolvable,
 } from "discord.js";
 import { IntegrationTypes, ContextTypes, ContextMenuType, UserContext, MessageContext } from "#libs/types";
+import { SkyHelper } from "#structures/SkyHelper";
 /* eslint-disable */
 
 export interface ContextMenuCommand<Type extends ContextMenuType = null> {
@@ -13,7 +15,11 @@ export interface ContextMenuCommand<Type extends ContextMenuType = null> {
     type: typeof ApplicationCommandType.User | typeof ApplicationCommandType.Message;
     integration_types?: IntegrationTypes[];
     contexts?: ContextTypes[];
+    userPermissions?: PermissionResolvable[];
+    botPermissions?: PermissionResolvable[];
   };
+  category?: string;
+  cooldown?: number;
 
   execute(
     interaction: Type extends UserContext
@@ -21,5 +27,6 @@ export interface ContextMenuCommand<Type extends ContextMenuType = null> {
       : Type extends MessageContext
         ? MessageContextMenuCommandInteraction
         : ContextMenuCommandInteraction,
-  ): void;
+    client: SkyHelper,
+  ): Promise<void>;
 }

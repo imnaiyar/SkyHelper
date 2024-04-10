@@ -12,6 +12,11 @@ export interface Validation {
   callback(msg: Message): boolean;
 }
 
+export interface Arg {
+  trigger: string;
+  description: string;
+}
+
 /** Prefix command structure */
 export type PrefixCommand = {
   /** Command data */
@@ -21,6 +26,12 @@ export type PrefixCommand = {
 
     /** Description of the command */
     description: string;
+
+    /** Args of the command */
+    args?: {
+      required?: boolean;
+      args: Arg[];
+    };
 
     /** Flags for the command */
     flags?: string[];
@@ -36,11 +47,11 @@ export type PrefixCommand = {
 
     /** Permissions of the bot required for the command */
     botPermissions?: Permission[];
-
-    /** Any validations for the command */
-    validations?: Validation[];
   };
 
+  /** Any validations for the command */
+  validations?: Validation[];
+
   /** Callback function to run when the command is used */
-  execute: (interaction: Message, client: SkyHelper) => void;
+  execute: (interaction: Message, args: string[], client: SkyHelper) => Promise<void>;
 };

@@ -11,5 +11,5 @@ export type Button = {
   };
 
   /** The callback for when the button is clicked */
-  execute: (interaction: ButtonInteraction, client: SkyHelper) => void;
+  execute: (interaction: ButtonInteraction, client: SkyHelper) => Promise<void>;
 };

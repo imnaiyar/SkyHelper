@@ -6,8 +6,10 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  ChatInputCommandInteraction,
+  ContextMenuCommandInteraction,
 } from "discord.js";
-import { SkyHelper } from "#structures";
+import { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
 import { parsePerms } from "skyhelper-utils";
 import { Permission } from "skyhelper-utils/dist/utils/parsePerms";
 import config from "#src/config";
@@ -21,67 +23,20 @@ const errorBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setLabel("Report Bug").setCustomId("error-report").setStyle(ButtonStyle.Secondary),
 );
 
-export default async (client: SkyHelper, interaction: Interaction) => {
+export default async (client: SkyHelper, interaction: Interaction): Promise<void> => {
+  // Slash Commands
   if (interaction.isChatInputCommand()) {
-    const cmd = client.commands.get(interaction.commandName);
-    if (!cmd) return await interaction.reply({ content: "No such command or outdated command", ephemeral: true });
-    if (cmd.category && cmd.category === "Owner" && !config.OWNER.includes(interaction.user.id)) {
-      return await interaction.reply({
-        content: "This command is for owner(s) only.",
-        ephemeral: true,
-      });
-    }
-    if (
-      cmd.data.userPermissions &&
-      interaction.inCachedGuild() &&
-      !interaction.member?.permissions.has(cmd.data.userPermissions)
-    ) {
-      return await interaction.reply({
-        content: `You don't have necessary permission(s) (${parsePerms([cmd.data.userPermissions as unknown as Permission])}) to use this command`,
-        ephemeral: true,
-      });
-    }
-    if (
-      cmd.data.botPermissions &&
-      interaction.inGuild() &&
-      !interaction.guild?.members.me?.permissions.has(cmd.data.botPermissions)
-    ) {
-      return await interaction.reply({
-        content: `I do not have the required permission(s) (${parsePerms(cmd.data.botPermissions as unknown as Permission)}) to perform this action. Please run the command again after granting me the necessary permission(s).`,
-        ephemeral: true,
-      });
+    const command = client.commands.get(interaction.commandName);
+    if (!command) {
+      await interaction.reply({ content: "No such command or outdated command", ephemeral: true });
+      return;
     }
 
-    // Check cooldowns
-    if (cmd?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
-      const { cooldowns } = client;
-
-      if (!cooldowns.has(cmd.data.name)) {
-        cooldowns.set(cmd.data.name, new Collection());
-      }
-
-      const now = Date.now();
-      const timestamps = cooldowns.get(cmd.data.name);
-      const cooldownAmount = cmd.cooldown * 1000;
-
-      if (timestamps?.has(interaction.user.id)) {
-        const expirationTime = (timestamps.get(interaction.user.id) as number) + cooldownAmount;
-
-        if (now < expirationTime) {
-          const expiredTimestamp = Math.round(expirationTime / 1000);
-          return await interaction.reply({
-            content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`,
-            ephemeral: true,
-          });
-        }
-      }
-
-      timestamps?.set(interaction.user.id, now);
-      setTimeout(() => timestamps?.delete(interaction.user.id), cooldownAmount);
-    }
+    const isChecked = await validateCommand(command, interaction);
+    if (!isChecked) return;
 
     try {
-      await cmd.execute(interaction, client);
+      await command.execute(interaction, client);
       const embed = new EmbedBuilder()
         .setTitle("New command used")
         .addFields(
@@ -109,12 +64,96 @@ export default async (client: SkyHelper, interaction: Interaction) => {
     } catch (err) {
       client.logger.error(err);
       if (interaction.replied || interaction.deferred) {
-        return await interaction.followUp({
+        await interaction.followUp({
+          embeds: [errorEmbed],
+          components: [errorBtn],
+        });
+        return;
+      } else {
+        await interaction.reply({
+          embeds: [errorEmbed],
+          components: [errorBtn],
+          ephemeral: true,
+        });
+        return;
+      }
+    }
+  }
+
+  // Autocompletes
+  if (interaction.isAutocomplete()) {
+    const command = client.commands.get(interaction.commandName) as unknown as SlashCommand<true>;
+
+    if (!command) {
+      await interaction.respond([
+        {
+          name: "No choices for this option was found.",
+          value: "none",
+        },
+      ]);
+      return;
+    }
+
+    if (!command.autocomplete) {
+      await interaction.respond([
+        {
+          name: "No choices for this option was found.",
+          value: "none",
+        },
+      ]);
+      return;
+    }
+    try {
+      await command.autocomplete(interaction, client);
+    } catch (error) {
+      client.logger.error(error);
+      if (!interaction.responded) {
+        await interaction.respond([
+          {
+            name: "Oops! An error occured while searching for the choices.",
+            value: "none",
+          },
+        ]);
+      }
+    }
+  }
+
+  // Context menus
+  if (interaction.isContextMenuCommand()) {
+    const command = client.contexts.get(interaction.commandName);
+    if (!command) {
+      await interaction.reply({
+        content: "No such commands or outdated command.",
+        ephemeral: true,
+      });
+      return;
+    }
+    const isChecked = await validateCommand(command, interaction);
+    if (!isChecked) return;
+    try {
+      await command.execute(interaction, client);
+    } catch (err) {
+      client.logger.error(err);
+    }
+  }
+
+  // Buttons
+  if (interaction.isButton()) {
+    const button = client.buttons.find((btn) => interaction.customId.startsWith(btn.data.name));
+    if (!button) return;
+
+    try {
+      await button.execute(interaction, client);
+    } catch (err) {
+      client.logger.error(err);
+
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({
           embeds: [errorEmbed],
           components: [errorBtn],
         });
       } else {
-        return await interaction.reply({
+        await interaction.reply({
           embeds: [errorEmbed],
           components: [errorBtn],
           ephemeral: true,
@@ -122,4 +161,118 @@ export default async (client: SkyHelper, interaction: Interaction) => {
       }
     }
   }
+
+  // Modals
+  if (interaction.isModalSubmit()) {
+    if (interaction.customId === "errorModal") {
+      await interaction.reply({
+        content: "Your submission was received successfully!",
+        ephemeral: true,
+      });
+      const commandUsed = interaction.fields.getTextInputValue("commandUsed");
+      const whatHappened = interaction.fields.getTextInputValue("whatHappened");
+      const embed = new EmbedBuilder()
+        .setTitle("BUG REPORT")
+        .addFields(
+          { name: `Command Used`, value: `\`${commandUsed}\`` },
+          {
+            name: `User`,
+            value: `${interaction.user.username} \`[${interaction.user.id}]\``,
+          },
+          {
+            name: `Server`,
+            value: `${interaction.guild?.name} \`[${interaction.guild?.id}]\``,
+          },
+          { name: `What Happened`, value: `${whatHappened}` },
+        )
+        .setColor("Blurple")
+        .setTimestamp();
+      bLogger?.send({ username: "Bug Report", embeds: [embed] }).catch(() => {});
+    }
+  }
 };
+
+/** Validates requirements for Slash and Context Menu commands */
+async function validateCommand(
+  command: SlashCommand | ContextMenuCommand,
+  interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
+): Promise<boolean> {
+  const client = interaction.client as SkyHelper;
+  // Handle owner commands
+  if (command.category && command.category === "Owner" && !config.OWNER.includes(interaction.user.id)) {
+    await interaction.reply({
+      content: "This command is for owner(s) only.",
+      ephemeral: true,
+    });
+    return false;
+  }
+
+  // Handle command user required permissions
+  if (command.data.userPermissions) {
+    if (interaction.inGuild()) {
+      if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.data.userPermissions)) {
+        await interaction.reply({
+          content: `You don't have necessary permission(s) (${parsePerms([command.data.userPermissions as unknown as Permission])}) to use this command`,
+          ephemeral: true,
+        });
+        return false;
+      } else {
+        await interaction.reply({
+          content: `Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.`,
+          ephemeral: true,
+        });
+        return false;
+      }
+    }
+  }
+
+  // Handle bot's required permissions
+  if (command.data.botPermissions) {
+    if (interaction.inGuild()) {
+      if (interaction.inCachedGuild() && !interaction.guild.members.me?.permissions.has(command.data.botPermissions)) {
+        await interaction.reply({
+          content: `I do not have the required permission(s) (${parsePerms(command.data.botPermissions as unknown as Permission)}) to perform this action. Please run the command again after granting me the necessary permission(s).`,
+          ephemeral: true,
+        });
+        return false;
+      } else {
+        await interaction.reply({
+          content: `Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.`,
+          ephemeral: true,
+        });
+        return false;
+      }
+    }
+  }
+
+  // Check cooldowns
+  if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
+    const { cooldowns } = client;
+
+    if (!cooldowns.has(command.data.name)) {
+      cooldowns.set(command.data.name, new Collection());
+    }
+
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.data.name);
+    const cooldownAmount = command.cooldown * 1000;
+
+    if (timestamps?.has(interaction.user.id)) {
+      const expirationTime = (timestamps.get(interaction.user.id) as number) + cooldownAmount;
+
+      if (now < expirationTime) {
+        const expiredTimestamp = Math.round(expirationTime / 1000);
+        await interaction.reply({
+          content: `Please wait, you are on a cooldown for </${interaction.commandName}:${interaction.commandId}>. You can use it again <t:${expiredTimestamp}:R>.`,
+          ephemeral: true,
+        });
+        return false;
+      }
+    }
+
+    timestamps?.set(interaction.user.id, now);
+    setTimeout(() => timestamps?.delete(interaction.user.id), cooldownAmount);
+  }
+
+  return true;
+}

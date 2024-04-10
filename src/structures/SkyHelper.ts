@@ -91,6 +91,9 @@ export class SkyHelper extends Client<true> {
         GatewayIntentBits.GuildMessageReactions,
       ],
       partials: [Partials.Channel, Partials.GuildMember, Partials.Message],
+      allowedMentions: {
+        repliedUser: false,
+      },
     });
     this.config = config;
     this.commands = new Collection();
@@ -164,7 +167,8 @@ export class SkyHelper extends Client<true> {
 
   /**
    * Load slash command to client on startup
-   * @param dir
+   * @param dir The command directory
+   * TODO: Add validation for commands
    */
   public async loadSlashCmd(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Slash ---------------->"));
@@ -191,7 +195,8 @@ export class SkyHelper extends Client<true> {
 
   /**
    * Load context menu commands to client on startup
-   * @param dir
+   * @param dir The command directory
+   * TODO: Add validation for commands
    */
   public async loadContextCmd(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Contexts ---------------->"));
@@ -218,7 +223,7 @@ export class SkyHelper extends Client<true> {
 
   /**
    * Load buttons to client on startup
-   * @param dir
+   * @param dir The butoons directory
    */
   public async loadButtons(dir: string): Promise<void> {
     this.logger.log(chalk.blueBright("<------------ Loading Buttons -------------->"));
@@ -229,7 +234,6 @@ export class SkyHelper extends Client<true> {
       const file = path.basename(filePath);
 
       try {
-        delete require.cache[require.resolve(filePath)];
         const { default: button } = await import(pathToFileURL(filePath).href);
         if (typeof button !== "object") return;
         this.buttons.set(button.name, button);
@@ -301,6 +305,15 @@ export class SkyHelper extends Client<true> {
         type: cmd.data.type,
         integration_types: cmd.data.integration_types,
         contexts: cmd.data.contexts,
+        ...(cmd.data.userPermissions && {
+          default_member_permissions: cmd.data.userPermissions
+            .reduce(
+              (accumulator: bigint, permission) =>
+                accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
+              BigInt(0),
+            )
+            .toString(),
+        }),
       }))
       .forEach((s) => toRegister.push(s));
     await this.rest.put(Routes.applicationCommands(this.user.id), {
