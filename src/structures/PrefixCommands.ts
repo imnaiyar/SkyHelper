@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { type SkyHelper } from "#structures";
 import { type Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
+import { Flags } from "#libs/classes/Flags";
 /* eslint-disable */
 
 /** Structure of command validation */
@@ -58,5 +58,5 @@ export type PrefixCommand = {
   validations?: Validation[];
 
   /** Callback function to run when the command is used */
-  execute: (message: Message, args: string[], client: SkyHelper) => Promise<void>;
+  execute: (message: Message, args: string[], flags: Flags) => Promise<void>;
 };

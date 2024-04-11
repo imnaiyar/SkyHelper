@@ -37,7 +37,7 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
   if (!command) return;
 
   // Check if command is 'OWNER' only.
-  if (command.data.category && command.data.category === "OWNER" && !client.config.OWNER.includes(message.author.id)) return;
+  if (command.data.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
 
   // Check send permission(s);
   if (
@@ -92,7 +92,7 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
 
   // Execute the command.
   try {
-    await command.execute(message, args, client);
+    await command.execute(message, args, flags);
 
     // Send Logs
     const embed = new EmbedBuilder()

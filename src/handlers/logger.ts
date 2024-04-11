@@ -3,6 +3,11 @@ import pino from "pino";
 import { postToHaste } from "skyhelper-utils";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 
+let toHide = true;
+if (process.env.npm_lifecycle_event === "dev") {
+  toHide = false;
+}
+
 const pinoLogger = pino.default(
   {
     level: "debug",
@@ -14,11 +19,10 @@ const pinoLogger = pino.default(
         target: "pino-pretty",
         options: {
           colorize: true,
-          translateTime: "SYS:default",
           ignore: "pid,hostname",
           singleLine: false,
-          hideObject: false,
-          customColors: "info:green,warn:yellow,error:red,message:white,",
+          hideObject: toHide,
+          customColors: "info:green,warn:yellow,error:red,message:cyan,",
         },
       }),
     },

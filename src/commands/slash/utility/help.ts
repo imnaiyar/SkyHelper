@@ -5,6 +5,7 @@ import {
   ApplicationCommand,
   ApplicationCommandOptionType,
   ApplicationCommandSubCommandData,
+  ApplicationCommandType,
   ButtonBuilder,
   ButtonInteraction,
   EmbedBuilder,
@@ -29,14 +30,14 @@ export default <SlashCommand<true>>{
   category: "Utility",
   cooldown: 10,
   async execute(interaction, client) {
-    const commands = await client.application.commands.fetch();
     const command = interaction.options.getString("command");
+    const reply = await interaction.deferReply({ ephemeral: command ? true : false, fetchReply: true });
+    const commands = await client.application.commands.fetch();
     if (command) {
       const cmd = commands.find((c) => c.name === command);
       if (!cmd) {
-        await interaction.reply({
+        await interaction.followUp({
           content: "No such command or outdated command",
-          ephemeral: true,
         });
         return;
       }
@@ -44,26 +45,27 @@ export default <SlashCommand<true>>{
       data.setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
       data.setFooter({ text: "Help command", iconURL: client.user.displayAvatarURL() });
       data.setColor("Random");
-      await interaction.reply({ embeds: [data], ephemeral: true });
+      await interaction.followUp({ embeds: [data] });
       return;
     }
-    const reply = await interaction.deferReply({ fetchReply: true });
     const totalCommands: string[] = [];
     const pageCommands = Array.from(commands.values());
 
     pageCommands.forEach((cmd) => {
-      if (cmd.options?.some((op) => op.type === 1)) {
+      if (cmd.type === ApplicationCommandType.Message || cmd.type === ApplicationCommandType.User) {
+        totalCommands.push(`</${cmd.name}:${cmd.id}>  \`${cmd.type === 3 ? "Message App Command" : "User App Command"}\`\n\n`);
+      } else if (cmd.options?.some((op) => op.type === 1 || op.type === ApplicationCommandOptionType.SubcommandGroup)) {
         cmd.options.forEach((o) => {
           totalCommands.push(
             `**</${cmd.name} ${o.name}:${cmd.id}>** ${
-              (o as unknown as any).options?.length
-                ? `${(o as unknown as any).options
-                    .map((m: any) => {
+              (o as ApplicationCommandSubCommandData).options?.length
+                ? `${(o as ApplicationCommandSubCommandData).options
+                    ?.map((m) => {
                       return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
                     })
                     .join(", ")}`
                 : ""
-            }\n  ↪${o.description}\n\n`,
+            }\n  ↪ ${o.description}\n\n`,
           );
         });
       } else {
@@ -71,7 +73,9 @@ export default <SlashCommand<true>>{
           `</${cmd.name}:${cmd.id}> ${
             cmd.options?.length
               ? `${cmd.options
-                  .map((m: any) => {
+                  .map((m) => {
+                    // prettier-ignore
+                    if (m.type === ApplicationCommandOptionType.Subcommand || m.type === ApplicationCommandOptionType.SubcommandGroup) return;
                     return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
                   })
                   .join(", ")}`
@@ -180,9 +184,9 @@ function handleCommand(command: ApplicationCommand): EmbedBuilder {
     desc += "- **Options**:\n";
     desc += options
       ?.map((opt) => {
-        return (opt as unknown as any).required
-          ? ` - \`<${opt.name}>\` - ${opt.description}`
-          : ` - \`[${opt.name}]\` - ${opt.description}`;
+        if (opt.type !== ApplicationCommandOptionType.Subcommand && opt.type !== ApplicationCommandOptionType.SubcommandGroup) {
+          return opt.required ? ` - \`<${opt.name}>\` - ${opt.description}` : ` - \`[${opt.name}]\` - ${opt.description}`;
+        }
       })
       .join("\n");
   }
