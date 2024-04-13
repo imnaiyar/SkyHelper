@@ -10,8 +10,7 @@ import {
   ContextMenuCommandInteraction,
 } from "discord.js";
 import { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
-import { parsePerms } from "skyhelper-utils";
-import { Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
+import { parsePerms, Permission } from "skyhelper-utils";
 import config from "#src/config";
 
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;

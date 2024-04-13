@@ -4,7 +4,7 @@ import { postToHaste } from "skyhelper-utils";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 
 let toHide = true;
-if (process.env.npm_lifecycle_event === "dev") {
+if (process.env.npm_lifecycle_event === "dev" || process.env.npm_lifecycle_event === "commands") {
   toHide = false;
 }
 

@@ -10,7 +10,6 @@ import {
   Webhook,
   ApplicationCommand,
 } from "discord.js";
-import moment from "moment-timezone";
 import { SlashCommand, Button, PrefixCommand, ContextMenuCommand } from "#structures";
 import config from "#src/config";
 import { recursiveReadDir } from "skyhelper-utils";
@@ -21,73 +20,62 @@ import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import spiritsData from "#libs/datas/spiritsData";
-interface SkyEvent {
-  eventActive: boolean;
-  eventName: string;
-  eventStarts: moment.Moment;
-  eventEnds: moment.Moment;
-  eventDuration: string;
-}
-interface TS {
-  name: string;
-  visitDate: string;
-  departDate: string;
-  value: string;
-  spiritImage: string;
-  index: string;
-}
 
 /** The bot's client */
 export class SkyHelper extends Client<true> {
   /** Configurations for the bot */
-  public config: typeof config;
+  public config = config;
 
   /** Collection of Slash Commands */
-  public commands: Collection<string, SlashCommand>;
+  public commands = new Collection<string, SlashCommand>();
 
   /** Collection of Prefix Commands */
-  public prefix: Collection<string, PrefixCommand>;
+  public prefix = new Collection<string, PrefixCommand>();
 
   /** Collection of Context Menu Commands */
-  public contexts: Collection<string, ContextMenuCommand>;
+  public contexts = new Collection<string, ContextMenuCommand>();
 
   /** Collection of Buttons */
-  public buttons: Collection<string, Button>;
+  public buttons = new Collection<string, Button>();
 
   /** Collection of command cooldowns */
-  public cooldowns: Collection<string, Collection<string, number>>;
+  public cooldowns = new Collection<string, Collection<string, number>>();
 
   /** Default timezone used thorughout the client for time-based calculations */
-  public timezone: string;
+  public timezone = "America/Los_Angeles";
 
   /** A map of events occuring in Sky: COTL */
-  public skyEvents: Map<string, SkyEvent>;
+  public skyEvent = schemas.Event;
 
   /** Collection of utility classes */
-  public classes: Collection<string, any>;
+  public classes = new Collection<string, any>();
 
   /** Database schemas/fuctions */
-  public database: typeof schemas;
+  public database = schemas;
 
-  /** Current Traveling Spirit Data */
-  public ts: TS;
+  /**
+   * Current Traveling Spirit Data
+   * @example
+   * const data = await <Client>.ts.getTS()
+   */
+  public ts = schemas.TS;
 
   /** Custom logger */
-  public logger: typeof Logger;
+  public logger = Logger;
 
   /** Map of currently active Quiz game data */
-  public gameData: Map<string, any>;
+  public gameData = new Collection<string, any>();
 
   /** Map of emojis */
-  public emojisMap: Map<
+  public emojisMap = new Collection<
     string,
     {
       [key: string]: string;
     }
-  >;
+  >();
 
   /** All the Sky: SCOTL spirits data */
-  public spiritsData: typeof spiritsData;
+  public spiritsData = spiritsData;
   constructor() {
     super({
       intents: [
@@ -104,35 +92,6 @@ export class SkyHelper extends Client<true> {
         repliedUser: false,
       },
     });
-    this.config = config;
-    this.commands = new Collection();
-    this.prefix = new Collection();
-    this.contexts = new Collection();
-    this.buttons = new Collection();
-    this.logger = Logger;
-    this.cooldowns = new Collection();
-    this.database = schemas;
-    this.timezone = "America/Los_Angeles";
-    this.skyEvents = new Map();
-    this.skyEvents.set("events", {
-      eventActive: false,
-      eventName: "Days of Bloom",
-      eventStarts: moment.tz("2024-03-12", this.timezone),
-      eventEnds: moment.tz("2024-03-14", this.timezone),
-      eventDuration: "12 days",
-    });
-    this.classes = new Collection();
-    this.ts = {
-      name: "Hairtousle Teen",
-      visitDate: "kujwdhcbdc",
-      departDate: "khdbcs",
-      spiritImage: "djncd",
-      value: "dfjn",
-      index: "dbjcm",
-    };
-    this.gameData = new Map();
-    this.emojisMap = new Map();
-    this.spiritsData = spiritsData;
   }
 
   /**
@@ -191,6 +150,7 @@ export class SkyHelper extends Client<true> {
         const { default: command } = (await import(pathToFileURL(filePath).href)) as {
           default: SlashCommand;
         };
+        if (typeof command !== "object") continue;
         if (this.commands.has(command.data.name)) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
@@ -254,8 +214,8 @@ export class SkyHelper extends Client<true> {
         const { default: button } = (await import(pathToFileURL(filePath).href)) as {
           default: Button;
         };
-        if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         if (typeof button !== "object") return;
+        if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         this.buttons.set(button.data.name, button);
         this.logger.log(`Loaded ${button.data.name}`);
         added++;
@@ -282,6 +242,7 @@ export class SkyHelper extends Client<true> {
         const { default: command } = (await import(pathToFileURL(filePath).href)) as {
           default: PrefixCommand;
         };
+        if (typeof command !== "object") continue;
         if (this.prefix.has(command.data.name)) throw new Error("The command already exists");
         this.prefix.set(command.data.name, command);
         command.data?.aliases?.forEach((al: string) => this.prefix.set(al, command));

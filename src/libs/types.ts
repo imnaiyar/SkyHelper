@@ -1,3 +1,5 @@
+import moment from "moment-timezone";
+
 export type ContextMenuType = "UserContext" | "MessageContext" | null;
 
 /* eslint-disable */
@@ -18,4 +20,13 @@ export enum IntegrationTypes {
 
   /** Command is for User apps */
   Users = 1,
+}
+
+export interface ShardsCountdown {
+  index?: number;
+  active?: boolean;
+  ended?: boolean;
+  start: moment.Moment;
+  end: moment.Moment;
+  duration: string;
 }

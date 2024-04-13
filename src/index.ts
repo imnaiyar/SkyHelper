@@ -1,4 +1,4 @@
-import("dotenv/config");
+import "dotenv/config";
 import { SkyHelper } from "#structures";
 import { initializeMongoose } from "#src/database/mongoose";
 const client = new SkyHelper();
