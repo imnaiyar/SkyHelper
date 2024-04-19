@@ -1,19 +1,20 @@
 import moment from "moment-timezone";
 import "moment-duration-format";
-import { ShardsUtil } from "skyhelper-utils";
-const util = ShardsUtil;
+import { ShardsUtil as util } from "skyhelper-utils";
 import shardsTime from "#libs/datas/shardsTimelines";
 import { ShardsCountdown } from "#src/libs/types";
+import { shardConfig } from "#src/libs/datas/shardsInfo";
 /**
  * Returns the shard info/times relative to present
  * @param date The date to get the shard information
  */
-export default (date: moment.Moment) => {
+export default (date: moment.Moment): ShardsCountdown | "No Shard" => {
   const timezone = "America/Los_Angeles";
   const { currentShard } = util.shardsIndex(date);
-  const timings = shardsTime(date)[currentShard as "a" | "A" | "b" | "B" | "C"];
+  const timings = shardsTime(date)[currentShard];
   const present = moment().tz(timezone);
-
+  const isNoShard = shardConfig[currentShard].weekdays.includes(date.day());
+  if (isNoShard) return "No Shard";
   let toReturn: ShardsCountdown = {
     ended: true,
     start: present,

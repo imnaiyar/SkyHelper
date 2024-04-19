@@ -5,7 +5,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
 import { ShardsUtil } from "skyhelper-utils";
 
-export default <SlashCommand>{
+export default {
   data: {
     name: "shards",
     description: "Get the a specific shard information",
@@ -26,6 +26,7 @@ export default <SlashCommand>{
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
   },
+  category: "Informations",
   async execute(interaction) {
     const date = interaction.options.getString("date");
     const hide = interaction.options.getBoolean("hide") || false;
@@ -54,4 +55,4 @@ export default <SlashCommand>{
       components: [actionRow],
     });
   },
-};
+} satisfies SlashCommand;

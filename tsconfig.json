@@ -4,6 +4,7 @@
     "module": "Node16",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "checkJs": true,
     "rootDir": "src",

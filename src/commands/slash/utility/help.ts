@@ -1,6 +1,7 @@
 import { ContextTypes, IntegrationTypes } from "#src/libs/types";
 import { SlashCommand } from "#structures";
 import {
+  APIApplicationCommandBasicOption,
   ActionRowBuilder,
   ApplicationCommand,
   ApplicationCommandOptionType,
@@ -11,7 +12,7 @@ import {
   EmbedBuilder,
 } from "discord.js";
 
-export default <SlashCommand<true>>{
+export default {
   data: {
     name: "help",
     description: "help menu",
@@ -32,7 +33,7 @@ export default <SlashCommand<true>>{
   async execute(interaction, client) {
     const command = interaction.options.getString("command");
     const reply = await interaction.deferReply({ ephemeral: command ? true : false, fetchReply: true });
-    const commands = await client.application.commands.fetch();
+    const commands = client.application.commands.cache;
     if (command) {
       const cmd = commands.find((c) => c.name === command);
       if (!cmd) {
@@ -145,7 +146,7 @@ export default <SlashCommand<true>>{
 
   async autocomplete(interaction, client) {
     const value = interaction.options.getFocused();
-    const commands = (await client.application.commands.fetch()).map((cmd) => cmd.name);
+    const commands = client.application.commands.cache.map((cmd) => cmd.name);
     const choices = commands
       .filter((cmd) => cmd.includes(value))
       .map((cmd) => ({
@@ -154,7 +155,7 @@ export default <SlashCommand<true>>{
       }));
     await interaction.respond(choices);
   },
-};
+} satisfies SlashCommand<true>;
 
 function handleCommand(command: ApplicationCommand): EmbedBuilder {
   const name = command.name;
@@ -184,9 +185,9 @@ function handleCommand(command: ApplicationCommand): EmbedBuilder {
     desc += "- **Options**:\n";
     desc += options
       ?.map((opt) => {
-        if (opt.type !== ApplicationCommandOptionType.Subcommand && opt.type !== ApplicationCommandOptionType.SubcommandGroup) {
-          return opt.required ? ` - \`<${opt.name}>\` - ${opt.description}` : ` - \`[${opt.name}]\` - ${opt.description}`;
-        }
+        return (opt as APIApplicationCommandBasicOption).required
+          ? ` - \`<${opt.name}>\` - ${opt.description}`
+          : ` - \`[${opt.name}]\` - ${opt.description}`;
       })
       .join("\n");
   }

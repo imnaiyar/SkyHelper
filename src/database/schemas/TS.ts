@@ -1,17 +1,18 @@
+import { TSData } from "#libs/types";
 import { Collection } from "discord.js";
 import mongoose from "mongoose";
-const cache = new Collection<string, mongoose.Document>();
+const cache = new Collection<string, TSData>();
 const Schema = new mongoose.Schema({
   name: String,
   value: String,
   visitDate: String,
   spiritImage: String,
-  index: String,
+  index: Number,
 });
 
-const Model = mongoose.model("TS", Schema);
+const Model = mongoose.model<TSData>("TS", Schema);
 
-export async function getTS(): Promise<mongoose.Document> {
+export async function getTS(): Promise<TSData> {
   const cached = cache.first();
   if (cached) return cached;
   let tsData = await Model.findOne();

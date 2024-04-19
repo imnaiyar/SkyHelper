@@ -7,7 +7,7 @@ import { EmbedBuilder } from "discord.js";
 import * as d from "discord.js";
 import { postToHaste } from "skyhelper-utils";
 import util from "node:util";
-export default <PrefixCommand>{
+export default {
   data: {
     name: "eval",
     description: "Evaluate a JavaScript code",
@@ -20,7 +20,7 @@ export default <PrefixCommand>{
   async execute(message, args, flags) {
     /* eslint-disable no-unused-vars */
     /* @ts-ignore */
-    const { author, guild, member, channel } = message;
+    const { author, guild, member, channel, client } = message;
     let code = args.join(" ");
     if (flags.hasAny(["a", "async"])) code = `(async () => { ${code} })()`;
     let response;
@@ -39,7 +39,7 @@ export default <PrefixCommand>{
     if (flags.hasAny(["s", "suppress"]) && !errored) return;
     message.channel.send(response);
   },
-};
+} satisfies PrefixCommand;
 
 // prettier-ignore
 async function buildSuccessResponse(output: any, client: SkyHelper, type: string, time: any, haste: boolean, depth: number): Promise<{

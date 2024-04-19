@@ -3,7 +3,7 @@ import { SkyHelper, SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 // @ts-ignore
 import pkg from "#root/package.json" assert { type: "json" };
-export default <SlashCommand>{
+export default {
   data: {
     name: "utils",
     description: "Utilities",
@@ -27,6 +27,7 @@ export default <SlashCommand>{
       },
     ],
   },
+  category: "Utility",
   async execute(interaction) {
     const reply = await interaction.deferReply({ fetchReply: true });
     const sub = interaction.options.getSubcommand();
@@ -42,7 +43,7 @@ export default <SlashCommand>{
         break;
     }
   },
-};
+} satisfies SlashCommand;
 
 async function handleInfo(interaction: ChatInputCommandInteraction, time: number): Promise<void> {
   const { client } = interaction as unknown as { client: SkyHelper };

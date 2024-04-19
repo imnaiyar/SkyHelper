@@ -20,7 +20,6 @@ import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import spiritsData from "#libs/datas/spiritsData";
-
 /** The bot's client */
 export class SkyHelper extends Client<true> {
   /** Configurations for the bot */

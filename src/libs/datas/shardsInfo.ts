@@ -1,4 +1,4 @@
-const shardConfig = {
+export const shardConfig = {
   a: { type: "Black Shard", colors: "#000000", weekdays: [6, 0] },
   A: { type: "Red Shard", colors: "#FF0000", weekdays: [2, 3] },
   b: { type: "Black Shard", colors: "#000000", weekdays: [0, 1] },

@@ -11,5 +11,9 @@ await client.loadContextCmd("dist/commands/contexts");
 await client.loadButtons("dist/buttons");
 await client.loadPrefix("dist/commands/prefix");
 initializeMongoose();
+
+// Catching unhandle rejections
+process.on("unhandledRejection", (err) => client.logger.error(err));
+process.on("uncaughtException", (err) => client.logger.error(err));
 // Login
 client.login(process.env.TOKEN);

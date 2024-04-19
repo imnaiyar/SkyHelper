@@ -1,7 +1,9 @@
+import { getShardStatus } from "#handlers";
+import moment from "moment-timezone";
 import { Flags } from "#libs/classes/Flags";
 import { type SkyHelper } from "#structures";
-import { EmbedBuilder, WebhookClient } from "discord.js";
-import { UpdateEvent, UpdateTS } from "skyhelper-utils";
+import { ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
+import { UpdateEvent, UpdateTS, ShardsUtil as util } from "skyhelper-utils";
 
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
@@ -14,6 +16,9 @@ export default async (client: SkyHelper): Promise<void> => {
 
   // TODO: Add Website
   // TODO: Add Presence
+  setInterval(() => {
+    client.user.setActivity(getActivity());
+  }, 2 * 60_000);
 
   await client.application.fetch();
   await client.application.commands.fetch();
@@ -90,3 +95,45 @@ export default async (client: SkyHelper): Promise<void> => {
     });
   }
 };
+
+function getActivity(): ActivityOptions {
+  const status = getShardStatus(moment().tz("America/Los_Angeles"));
+  const shardStatus =
+    status === "No Shard"
+      ? "No shard today"
+      : status.ended
+        ? "All shards ended for today"
+        : status.active
+          ? `${status.index}${util.getSuffix(status.index!)} shard ends in ${status.duration}`
+          : `${status.index}${util.getSuffix(status.index!)} shard lands in ${status.duration}`;
+
+  const activities: ActivityOptions[] = [
+    {
+      name: "Shards being mesmerizing",
+      type: ActivityType.Watching,
+    },
+    {
+      name: "Shards fall",
+      type: ActivityType.Watching,
+    },
+    {
+      name: "Mellow Musician",
+      type: ActivityType.Listening,
+    },
+    {
+      name: "Custom status",
+      state: shardStatus,
+      type: ActivityType.Custom,
+    },
+    {
+      name: "Valley Race",
+      type: ActivityType.Competing,
+    },
+    {
+      name: "Sky COTL videos",
+      type: ActivityType.Streaming,
+      url: "https://www.twitch.tv/directory/category/sky-children-of-the-light",
+    },
+  ];
+  return activities[Math.floor(Math.random() * activities.length)];
+}

@@ -35,8 +35,9 @@
     "mongoose": "^7.5.0",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
-    "skyhelper-utils": "^1.2.1",
-    "table": "^6.8.1"
+    "skyhelper-utils": "^1.2.3",
+    "table": "^6.8.1",
+    "undici": "^6.13.0"
   },
   "imports": {
     "#handlers": [

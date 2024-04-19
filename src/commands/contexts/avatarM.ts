@@ -2,7 +2,7 @@ import { ContextTypes, IntegrationTypes } from "#libs/types";
 import { ContextMenuCommand } from "#structures";
 import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 
-export default <ContextMenuCommand<"MessageContext">>{
+export default {
   data: {
     name: "Avatar",
     type: ApplicationCommandType.Message,
@@ -17,4 +17,4 @@ export default <ContextMenuCommand<"MessageContext">>{
       .setImage(user.displayAvatarURL({ size: 2048 }));
     await interaction.reply({ embeds: [embed] });
   },
-};
+} satisfies ContextMenuCommand<"MessageContext">;

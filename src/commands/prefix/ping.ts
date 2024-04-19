@@ -1,7 +1,7 @@
 import { PrefixCommand, SkyHelper } from "#structures";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
-export default <PrefixCommand>{
+export default {
   data: {
     name: "ping",
     description: "Replies with pong!",
@@ -14,4 +14,4 @@ export default <PrefixCommand>{
     );
     message.reply({ content: "Pong! " + client.ws.ping.toString() + "ms", components: [row] });
   },
-};
+} satisfies PrefixCommand;

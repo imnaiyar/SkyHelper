@@ -1,3 +1,7 @@
+import { SpiritsData } from "#libs/types";
+interface data {
+  [key: string]: SpiritsData;
+}
 /**
  * Spirits Data
  */
@@ -40,6 +44,7 @@ export default {
     realm: "Isle of Dawn",
     main: {
       description: "Ushering Stargazer Infographics by Ed.7",
+      total: " ",
       image: "Ushering-Stargazer-Guide-777-Ed.webp",
     },
     emote: {
@@ -70,6 +75,7 @@ export default {
     realm: "Isle of Dawn",
     main: {
       description: "Rejecting Voyager Infographics by Ed.7",
+      total: " ",
       image: "Rejecting-Voyager-Guide-777-Ed.webp",
     },
     emote: {
@@ -101,6 +107,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Applauding Bellmaker Infographics by Ed.7",
+      total: " ",
       image: "Applauding-Bellmaker-Guide-777-Ed.webp",
     },
     emote: {
@@ -131,6 +138,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Bird Whisperer Infographics by Ed.7",
+      total: " ",
       image: "Bird-Whisperer-Guide-777-Ed.webp",
     },
     call: {
@@ -145,6 +153,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Butterfly Charmer Infographics by Ed.7",
+      total: " ",
       image: "Butterfly-Charmer-Guide-777-Ed.png",
     },
     emote: {
@@ -175,6 +184,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Ceremonial Worshipper Infographics by Ed.7",
+      total: " ",
       image: "Ceremonial-Worshiper-Guide-777-Ed.png",
     },
     emote: {
@@ -193,6 +203,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Exhausted Dock Worker Infographics by Ed.7",
+      total: " ",
       image: "Exhausted-Dock-Worker-Guide-777-Ed.png",
     },
     emote: {
@@ -223,6 +234,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Laughing Light Catcher Infographics by Ed.7",
+      total: " ",
       image: "Laughing-Light-Catcher-Guide-777-Ed.webp",
     },
     emote: {
@@ -253,6 +265,7 @@ export default {
     realm: "Daylight Prairie",
     main: {
       description: "Slumbering Shipwright Infographics by Ed.7",
+      total: " ",
       image: "Slumbering-Shipwright-Guide-777-Ed.webp",
     },
     emote: {
@@ -1027,7 +1040,7 @@ export default {
     ts: {
       eligible: false,
       returned: true,
-      dates: ``,
+      dates: [],
     },
     tree: {
       by: "Mimi and Sam",
@@ -4615,4 +4628,4 @@ export default {
       ],
     },
   },
-};
+} satisfies data;

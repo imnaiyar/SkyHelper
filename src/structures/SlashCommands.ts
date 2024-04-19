@@ -6,7 +6,7 @@ import { IntegrationTypes, ContextTypes } from "#libs/types";
 
 export interface SlashCommand<Autocomplete extends boolean = false> {
   /**
-   * Slash Command API dat
+   * Slash Command API data
    */
   data: {
     /**
@@ -25,7 +25,7 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
     options?: ApplicationCommandOption[];
 
     /**
-     * TYpe of the command
+     * Type of the command
      */
     type?: number;
 

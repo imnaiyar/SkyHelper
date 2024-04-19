@@ -2,7 +2,7 @@ import shardsInfo from "#libs/datas/shardsInfo";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable, EmbedBuilder, time } from "discord.js";
 import moment from "moment-timezone";
 import { ShardsUtil } from "skyhelper-utils";
-import getCountdown from "#handlers/shard";
+import getCountdown from "#handlers/getShardStatus";
 // prettier-ignore
 export default (date: moment.Moment, footer: string, noBtn?: boolean): {
   result: EmbedBuilder;
@@ -10,11 +10,10 @@ export default (date: moment.Moment, footer: string, noBtn?: boolean): {
 } => {
   const { currentShard, currentRealm } = ShardsUtil.shardsIndex(date);
   const info = shardsInfo[currentRealm][currentShard];
-  const noShard = info.weekdays.includes(date.day()) ?? false;
   const buttonsToAdd: ButtonBuilder[] = [];
   const today = moment().tz("America/Los_Angeles").startOf("day");
   const formatted = date.isSame(today, "day") ? "Today" : date.format("Do MMMM YYYY");
-
+  const status = getCountdown(date);
   const result = new EmbedBuilder()
     .setAuthor({
       name: `Shards Info`,
@@ -45,22 +44,21 @@ export default (date: moment.Moment, footer: string, noBtn?: boolean): {
     new ButtonBuilder()
       .setLabel("Timeline")
       .setCustomId(`shards-timeline_${date.format("YYYY-MM-DD")}`)
-      .setDisabled(noShard)
+      .setDisabled(status === "No Shard")
       .setStyle(ButtonStyle.Success),
     new ButtonBuilder()
       .setLabel("Location/Data")
       .setCustomId(`shards-location_${date.format("YYYY-MM-DD")}`)
-      .setDisabled(noShard)
+      .setDisabled(status === "No Shard")
       .setStyle(ButtonStyle.Success),
     new ButtonBuilder().setLabel("About Shard").setCustomId("shards-about").setStyle(ButtonStyle.Success),
   );
-  if (noShard) {
+  if (status === "No Shard") {
     result
       .setImage("https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif")
       .setDescription(`**It's a no shard day.**`)
       .setColor("#9fb686");
   } else {
-    const status = getCountdown(date);
     result
       .addFields(
         { name: `Shard Type`, value: `${info.type} (${info.rewards})`, inline: true },
