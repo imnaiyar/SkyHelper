@@ -35,9 +35,10 @@
     "mongoose": "^7.5.0",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
-    "skyhelper-utils": "^1.2.3",
+    "skyhelper-utils": "^1.2.5",
     "table": "^6.8.1",
-    "undici": "^6.13.0"
+    "undici": "^6.13.0",
+    "uuid": "^9.0.1"
   },
   "imports": {
     "#handlers": [
@@ -82,6 +83,7 @@
     "@types/mocha": "^10.0.6",
     "@types/moment-duration-format": "^2.2.6",
     "@types/node": "^20.12.5",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",

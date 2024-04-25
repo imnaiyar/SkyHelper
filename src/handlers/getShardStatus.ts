@@ -1,9 +1,9 @@
 import moment from "moment-timezone";
 import "moment-duration-format";
 import { ShardsUtil as util } from "skyhelper-utils";
-import shardsTime from "#libs/datas/shardsTimelines";
+import shardsTime from "#libs/constants/shardsTimelines";
 import { ShardsCountdown } from "#src/libs/types";
-import { shardConfig } from "#src/libs/datas/shardsInfo";
+import { shardConfig } from "#src/libs/constants/shardsInfo";
 /**
  * Returns the shard info/times relative to present
  * @param date The date to get the shard information

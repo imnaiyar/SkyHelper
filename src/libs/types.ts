@@ -61,13 +61,41 @@ export interface Times {
 }
 
 export interface TSData extends Document {
+  /* Name of the returning TS */
   name: string;
+
+  /* The value of spirit in the spiritsData */
   value: string;
+
+  /* Date of the visit */
   visitDate: string;
+
+  /* Link to the image of the spirit */
   spiritImage: string;
+
+  /* TS returning Index */
   index: number;
 }
 
+export interface EventData extends Document {
+  /* Start date of the event */
+  startDate: string;
+
+  /* End date of the event */
+  endDate: string;
+
+  /* Name of the event */
+  name: string;
+}
+
+export interface EventType {
+  active: boolean;
+  name: string;
+  start: moment.Moment;
+  end: moment.Moment;
+  duration: string;
+  days: number;
+}
 interface Level {
   title: string;
   description?: string;

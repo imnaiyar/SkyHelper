@@ -3,6 +3,7 @@ import { SkyHelper, SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 // @ts-ignore
 import pkg from "#root/package.json" assert { type: "json" };
+
 export default {
   data: {
     name: "utils",

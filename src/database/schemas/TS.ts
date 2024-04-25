@@ -27,5 +27,6 @@ export async function getTS(): Promise<TSData> {
 
     await tsData.save();
   }
+  cache.set("ts", tsData);
   return tsData;
 }

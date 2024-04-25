@@ -1,14 +1,22 @@
-import shardsInfo from "#libs/datas/shardsInfo";
+import shardsInfo from "#libs/constants/shardsInfo";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable, EmbedBuilder, time } from "discord.js";
 import moment from "moment-timezone";
-import { ShardsUtil } from "skyhelper-utils";
+import { ShardsUtil as utils } from "skyhelper-utils";
 import getCountdown from "#handlers/getShardStatus";
-// prettier-ignore
-export default (date: moment.Moment, footer: string, noBtn?: boolean): {
+/**
+ * @param date The date for which the shards embed is to be built
+ * @param footer The footer text for the embed
+ * @param noBtn Whether to add buttons or not (for Scroll Buttons in Live Updates)
+ */
+export default (
+  date: moment.Moment,
+  footer: string,
+  noBtn?: boolean,
+): {
   result: EmbedBuilder;
   actionRow: ActionRowBuilder<ButtonBuilder>;
 } => {
-  const { currentShard, currentRealm } = ShardsUtil.shardsIndex(date);
+  const { currentShard, currentRealm } = utils.shardsIndex(date);
   const info = shardsInfo[currentRealm][currentShard];
   const buttonsToAdd: ButtonBuilder[] = [];
   const today = moment().tz("America/Los_Angeles").startOf("day");
@@ -59,6 +67,7 @@ export default (date: moment.Moment, footer: string, noBtn?: boolean): {
       .setDescription(`**It's a no shard day.**`)
       .setColor("#9fb686");
   } else {
+    const index = status.index?.toString() + utils.getSuffix(status.index as number);
     result
       .addFields(
         { name: `Shard Type`, value: `${info.type} (${info.rewards})`, inline: true },
@@ -68,8 +77,8 @@ export default (date: moment.Moment, footer: string, noBtn?: boolean): {
           value: status.ended
             ? "All Shards Ended"
             : status.active
-              ? `${status.index} is currently active`
-              : `${status.index} is has not fallen yet`,
+              ? `${index} shard is currently active`
+              : `${index} shard has not fallen yet`,
         },
         {
           name: "Countdown",
@@ -77,7 +86,7 @@ export default (date: moment.Moment, footer: string, noBtn?: boolean): {
             ? `${status.duration} ago (at ${time(status.end.unix(), "t")})`
             : status.active
               ? `Ends in ${status.duration} (at ${time(status.end.unix(), "t")})`
-              : `Falls in ${status.duration} ago (at ${time(status.start.unix(), "T")})`,
+              : `Falls in ${status.duration} (at ${time(status.start.unix(), "T")})`,
           inline: true,
         },
       )

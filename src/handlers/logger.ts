@@ -1,6 +1,7 @@
-import { EmbedBuilder, WebhookClient } from "discord.js";
+import { EmbedBuilder, WebhookClient, codeBlock } from "discord.js";
 import pino from "pino";
-import { postToHaste } from "skyhelper-utils";
+import config from "#src/config";
+import { v4 as genId } from "uuid";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 
 let toHide = true;
@@ -39,19 +40,19 @@ const pinoLogger = pino.default(
   ]),
 );
 
-async function sendWebhook(content: any, err?: any): Promise<void> {
+async function sendWebhook(id: string, content: any, err?: any): Promise<void> {
   if (!content && !err) return;
-  const link = await postToHaste(err ?? content);
-
   const embed = new EmbedBuilder().setColor("Blue").setAuthor({ name: err?.name ?? "Error" });
-
-  embed.setDescription(`${link}`);
+  const errString: string = err?.stack || err || content?.stack || content;
+  embed.setDescription(`${codeBlock("js", errString.substring(0, 4000))}`);
   embed.addFields({
     name: "Description",
     value: `${content?.message || content || err?.message || "NA"}`,
   });
 
-  webhookLogger?.send({ username: "Logs", embeds: [embed] }).catch(() => {});
+  webhookLogger
+    ?.send({ username: "Error Log", avatarURL: config.BOT_ICON, embeds: [embed], content: `Error ID: \`${id}\`` })
+    .catch(() => {});
 }
 
 /**
@@ -82,14 +83,17 @@ export default class {
   /**
    * @param content
    * @param ex
+   * @returns The error ID
    */
   static error(content: any, ex?: any) {
+    const id = genId();
     if (ex) {
-      pinoLogger.error(ex, `${content}: ${ex?.message}`);
+      pinoLogger.error(ex, `${id} ${content}: ${ex?.message}`);
     } else {
-      pinoLogger.error(content);
+      pinoLogger.error(content, `${id}`);
     }
-    if (webhookLogger) sendWebhook(content, ex);
+    if (webhookLogger) sendWebhook(id, content, ex);
+    return id;
   }
 
   /**

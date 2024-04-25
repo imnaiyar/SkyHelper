@@ -100,16 +100,16 @@ function getActivity(): ActivityOptions {
   const status = getShardStatus(moment().tz("America/Los_Angeles"));
   const shardStatus =
     status === "No Shard"
-      ? "No shard today"
+      ? "😟 No shard today"
       : status.ended
-        ? "All shards ended for today"
+        ? "😟 All shards ended for today"
         : status.active
-          ? `${status.index}${util.getSuffix(status.index!)} shard ends in ${status.duration}`
-          : `${status.index}${util.getSuffix(status.index!)} shard lands in ${status.duration}`;
+          ? `🌋 ${status.index}${util.getSuffix(status.index!)} shard ends in ${status.duration}`
+          : `🌋 ${status.index}${util.getSuffix(status.index!)} shard lands in ${status.duration}`;
 
   const activities: ActivityOptions[] = [
     {
-      name: "Shards being mesmerizing",
+      name: "Shards being menacing",
       type: ActivityType.Watching,
     },
     {
@@ -130,7 +130,7 @@ function getActivity(): ActivityOptions {
       type: ActivityType.Competing,
     },
     {
-      name: "Sky COTL videos",
+      name: "Sky COTL Videos",
       type: ActivityType.Streaming,
       url: "https://www.twitch.tv/directory/category/sky-children-of-the-light",
     },

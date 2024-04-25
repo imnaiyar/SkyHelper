@@ -12,10 +12,14 @@ import {
 import { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
 import { parsePerms, Permission } from "skyhelper-utils";
 import config from "#src/config";
+import eventTimes from "#libs/constants/eventTimes";
+import { getTimes } from "#handlers/getDailyEventTimes";
 
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
-const errorEmbed = new EmbedBuilder().setTitle(`ERROR`).setDescription(`An error occurred while executing this command.`);
+const errorEmbed = new EmbedBuilder()
+  .setTitle(`ERROR`)
+  .setDescription(`An error occurred while executing this command. Please include the error ID while submiting the bug report`);
 const errorBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setLabel("Report Bug").setCustomId("error-report").setStyle(ButtonStyle.Secondary),
 );
@@ -59,15 +63,18 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
         cLogger.send({ username: "Command Logs", embeds: [embed] }).catch(() => {});
       }
     } catch (err) {
-      client.logger.error(err);
+      const errorId = client.logger.error(err);
+      const content = { content: `Error ID: \`${errorId}\`` };
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
+          ...content,
           embeds: [errorEmbed],
           components: [errorBtn],
         });
         return;
       } else {
         await interaction.reply({
+          ...content,
           embeds: [errorEmbed],
           components: [errorBtn],
           ephemeral: true,
@@ -130,7 +137,22 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
     try {
       await command.execute(interaction, client);
     } catch (err) {
-      client.logger.error(err);
+      const errorId = client.logger.error(err);
+      const content = { content: `Error ID: \`${errorId}\`` };
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({
+          ...content,
+          embeds: [errorEmbed],
+          components: [errorBtn],
+        });
+      } else {
+        await interaction.reply({
+          ...content,
+          embeds: [errorEmbed],
+          components: [errorBtn],
+          ephemeral: true,
+        });
+      }
     }
   }
 
@@ -142,15 +164,17 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
     try {
       await button.execute(interaction, client);
     } catch (err) {
-      client.logger.error(err);
-
+      const errorId = client.logger.error(err);
+      const content = { content: `Error ID: \`${errorId}\`` };
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
+          ...content,
           embeds: [errorEmbed],
           components: [errorBtn],
         });
       } else {
         await interaction.reply({
+          ...content,
           embeds: [errorEmbed],
           components: [errorBtn],
           ephemeral: true,
@@ -185,6 +209,43 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
         .setColor("Blurple")
         .setTimestamp();
       bLogger?.send({ username: "Bug Report", embeds: [embed] }).catch(() => {});
+    }
+  }
+
+  // Select Menus
+  if (interaction.isStringSelectMenu()) {
+    if (interaction.customId === "skytimes-details") {
+      const buildEmbed = (data: string, info: any, type: string) => {
+        return new EmbedBuilder()
+          .setTitle(type + " Times")
+          .setDescription(info + `\n\nTimeline\n` + data)
+          .setColor("Random");
+      };
+      const fulltimes = eventTimes();
+      const value = interaction.values[0];
+      await interaction.update({ components: interaction.message.components });
+      switch (value) {
+        case "geyser":
+          await interaction.followUp({
+            embeds: [buildEmbed(fulltimes.geyser, getTimes(0, "geyser"), "Geyser")],
+            ephemeral: true,
+          });
+          break;
+        case "grandma":
+          await interaction.followUp({
+            embeds: [buildEmbed(fulltimes.grandma, getTimes(0, "grandma"), "Grandma")],
+            ephemeral: true,
+          });
+          break;
+        case "turtle":
+          await interaction.followUp({
+            embeds: [buildEmbed(fulltimes.turtle, getTimes(0, "turtle"), "Turtle")],
+            ephemeral: true,
+          });
+          break;
+        default:
+          await interaction.followUp({ content: "Not a valid choice", ephemeral: true });
+      }
     }
   }
 };
