@@ -1,7 +1,11 @@
 import moment from "moment-timezone";
 
 /**
- * Returns shards fall - end times for a givent date
+ * Returns shards fall - end times for a given date
+ * @param currentDate The date to get the timeline for
+ * @example
+ * const timelines = shardsTimeline(moment())
+ * const times = timelines[currentShard]
  */
 export default (currentDate: moment.Moment) => {
   const getTimes = (

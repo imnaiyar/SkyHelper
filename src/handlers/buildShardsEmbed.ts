@@ -1,4 +1,4 @@
-import shardsInfo from "#libs/constants/shardsInfo";
+import { shardsInfo } from "#libs/constants/index";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable, EmbedBuilder, time } from "discord.js";
 import moment from "moment-timezone";
 import { ShardsUtil as utils } from "skyhelper-utils";
@@ -13,8 +13,8 @@ export default (
   footer: string,
   noBtn?: boolean,
 ): {
-  result: EmbedBuilder;
-  actionRow: ActionRowBuilder<ButtonBuilder>;
+  embeds: EmbedBuilder[];
+  components: ActionRowBuilder<ButtonBuilder>[];
 } => {
   const { currentShard, currentRealm } = utils.shardsIndex(date);
   const info = shardsInfo[currentRealm][currentShard];
@@ -34,9 +34,9 @@ export default (
       text: footer,
       iconURL: "https://cdn.imnaiyar.site/bot-icon.gif",
     });
-
+  let navBtns = null;
   if (!noBtn) {
-    buttonsToAdd.push(
+    navBtns = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setEmoji("<:left:1207594669882613770>")
         .setCustomId(`shards-scroll_${date.clone().subtract(1, "day").format("YYYY-MM-DD")}`)
@@ -55,7 +55,7 @@ export default (
       .setDisabled(status === "No Shard")
       .setStyle(ButtonStyle.Success),
     new ButtonBuilder()
-      .setLabel("Location/Data")
+      .setLabel("Location")
       .setCustomId(`shards-location_${date.format("YYYY-MM-DD")}`)
       .setDisabled(status === "No Shard")
       .setStyle(ButtonStyle.Success),
@@ -94,7 +94,7 @@ export default (
       .setThumbnail(info.image);
   }
   return {
-    result,
-    actionRow,
+    embeds: [result],
+    components: navBtns ? [actionRow, navBtns] : [actionRow],
   };
 };

@@ -4,6 +4,8 @@ interface data {
 }
 /**
  * Spirits Data
+ * @example
+ * const data = spiritsData["backflipping_champion"];
  */
 export default {
   // Isle

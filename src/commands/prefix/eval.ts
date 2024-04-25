@@ -11,7 +11,7 @@ export default {
   data: {
     name: "eval",
     description: "Evaluate a JavaScript code",
-    flags: ["a", "async", "haste", "depth", "suppress", "s"],
+    flags: ["a", "async", "haste", "depth", "silent", "s"],
     ownerOnly: true,
     aliases: ["e", "ev"],
     botPermissions: ["ViewChannel", "SendMessages"],
@@ -34,9 +34,9 @@ export default {
       response = await buildSuccessResponse(output, message.client as SkyHelper, type, time, flags.has("haste"), depth);
     } catch (ex) {
       errored = true;
-      response = buildErrorResponse(ex);
+      response = await buildErrorResponse(ex);
     }
-    if (flags.hasAny(["s", "suppress"]) && !errored) return;
+    if (flags.hasAny(["s", "silent"]) && !errored) return;
     message.channel.send(response);
   },
 } satisfies PrefixCommand;
@@ -70,12 +70,13 @@ async function buildSuccessResponse(output: any, client: SkyHelper, type: string
   return { embeds: [embed] };
 }
 
-function buildErrorResponse(err: any) {
+async function buildErrorResponse(err: any) {
+  const post = await postToHaste(util.inspect(err, { depth: null }));
   const embed = new EmbedBuilder()
     .setAuthor({ name: "📤 Error" })
     .setDescription("```js\n" + (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) + "\n```")
     .setColor("Red")
     .setTimestamp();
 
-  return { embeds: [embed] };
+  return { content: `Error: <${post}>`, embeds: [embed] };
 }

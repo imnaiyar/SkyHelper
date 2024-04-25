@@ -11,6 +11,8 @@ export default {
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
   },
+  cooldown: 20,
+  category: "Info",
   async execute(interaction, client) {
     const ts = await getTS();
 

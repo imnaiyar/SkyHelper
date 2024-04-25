@@ -1,5 +1,5 @@
-import shardsInfo from "#libs/constants/shardsInfo";
-import { Button } from "#src/structures/Buttons";
+import { shardsInfo } from "#libs/constants/index";
+import { Button } from "#structures";
 import { APIEmbed, ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, InteractionCollector } from "discord.js";
 import moment from "moment-timezone";
 import { ShardsUtil as utils } from "skyhelper-utils";

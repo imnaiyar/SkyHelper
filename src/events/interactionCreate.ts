@@ -12,7 +12,7 @@ import {
 import { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
 import { parsePerms, Permission } from "skyhelper-utils";
 import config from "#src/config";
-import eventTimes from "#libs/constants/eventTimes";
+import { eventTimes } from "#libs/constants/index";
 import { getTimes } from "#handlers/getDailyEventTimes";
 
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;

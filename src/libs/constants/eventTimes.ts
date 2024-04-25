@@ -1,6 +1,9 @@
 import { time } from "discord.js";
 import moment from "moment-timezone";
 
+/**
+ * Returns all times for events in a day
+ */
 export default (): {
   geyser: string;
   grandma: string;

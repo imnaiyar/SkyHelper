@@ -2,6 +2,8 @@ import { EmbedBuilder, WebhookClient, codeBlock } from "discord.js";
 import pino from "pino";
 import config from "#src/config";
 import { v4 as genId } from "uuid";
+import util from "node:util";
+import { postToHaste } from "skyhelper-utils";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 
 let toHide = true;
@@ -49,9 +51,9 @@ async function sendWebhook(id: string, content: any, err?: any): Promise<void> {
     name: "Description",
     value: `${content?.message || content || err?.message || "NA"}`,
   });
-
+  const fullErr = await postToHaste(util.inspect(err ?? content, { depth: null }));
   webhookLogger
-    ?.send({ username: "Error Log", avatarURL: config.BOT_ICON, embeds: [embed], content: `Error ID: \`${id}\`` })
+    ?.send({ username: "Error Log", avatarURL: config.BOT_ICON, embeds: [embed], content: `Error ID: \`${id}\`\n${fullErr}` })
     .catch(() => {});
 }
 

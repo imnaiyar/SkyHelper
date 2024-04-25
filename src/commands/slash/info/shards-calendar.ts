@@ -1,17 +1,8 @@
 import { getShardStatus } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#libs/types";
-import shardsInfo from "#libs/constants/shardsInfo";
-import shardsTimelines from "#src/libs/constants/shardsTimelines";
+import { shardsInfo, shardsTimelines } from "#libs/constants/index";
 import { SlashCommand } from "#structures";
-import {
-  APIActionRowComponent,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  EmbedBuilder,
-  StringSelectMenuInteraction,
-  time,
-} from "discord.js";
+import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuInteraction, time } from "discord.js";
 import {
   APIEmbedField,
   APISelectMenuOption,
@@ -36,8 +27,10 @@ export default {
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
   },
+  cooldown: 15,
+  category: "Info",
   async execute(interaction, client) {
-    const reply = await interaction.deferReply({ fetchReply: true });
+    const reply = await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false, fetchReply: true });
     const shardsCmd = `</shards:${(await client.getCommand("shards")).id}>`;
     const now = moment().tz(client.timezone);
     const date = 1;
@@ -134,13 +127,13 @@ export default {
           name: d.isSame(now, "day") ? time(d.unix(), "D") + " (Today) <a:uptime:1228956558113771580>" : time(d.unix(), "D"),
           value:
             typeof noShard === "string"
-              ? "No Shard"
-              : `**Info**: ${getType(currentShard)} Shard in *${info.area}*\n**Times**: ${timelines.map((t) => `${time(t.start.unix(), "T")}`).join(" • ")}\n\n`,
+              ? "↪ No Shard"
+              : `↪ **Info**: ${info.type} in *${info.area}*\n↪ **Times**: ${timelines.map((t) => `${time(t.start.unix(), "T")}`).join(" • ")}\n\n`,
         });
       });
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `Shards Calender of ${monthStr}`,
+          name: `Shards Calender of ${monthStr}, ${year}`,
           iconURL: client.user.displayAvatarURL(),
         })
         .setDescription(`For detailed shard info, use ${shardsCmd}`)
@@ -187,13 +180,21 @@ export default {
         }
       }
     });
-    /*  collector.on("end", async () => {
-      const msg = await interaction.fetchReply().catch(() => null);
-      const components = msg?.components.map((comp) => {
-        const row = ActionRowBuilder.from(comp as APIActionRowComponent<>) as ActionRowBuilder<StringSelectMenuBuilder | ButtonBuilder>;
-        row.components.forEach(c => c.setDisabled(true));
-      });
-    }); */
+    collector.on("end", () => {
+      interaction
+        .fetchReply()
+        .then((): void => {
+          const components = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+            new StringSelectMenuBuilder()
+              .setCustomId("any")
+              .setPlaceholder("Menu Expired!")
+              .setDisabled(true)
+              .addOptions([{ label: "Menu Expired!", value: "expired", default: true }]),
+          );
+          interaction.editReply({ components: [components] }).catch(() => {});
+        })
+        .catch(() => {});
+    });
   },
 } satisfies SlashCommand;
 
@@ -207,22 +208,3 @@ const getDates = (date: moment.Moment): moment.Moment[] => {
   }
   return dates;
 };
-
-const getType = (type: string) => {
-  return type.toUpperCase() === type ? "<:ShardRed:1233057065799254106> Red" : "<:ShardBlue:1233057106903699497> Black";
-};
-
-/* const getRealm = (realm: string) => {
-  switch (realm) {
-    case "prairie":
-      return "<:r5Prairie:1150596314883690607> Daylight Prairie";
-    case "forest":
-      return "<:r4Forest:1150596343354630235> Hidden Forest";
-    case "valley":
-      return "<:r3Valley:1150596376930037850> Valley of Triumph";
-    case "wasteland":
-      return "<:r2Wasteland:1150596423822356511> Golden Wasteland";
-    case "vault":
-      return "<:r1Vault:1150596447679553636> Vault of Knowledge";
-  }
-}; */

@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import "moment-duration-format";
 import { ShardsUtil as util } from "skyhelper-utils";
-import shardsTime from "#libs/constants/shardsTimelines";
+import { shardsTimelines as shardsTime } from "#libs/constants/index";
 import { ShardsCountdown } from "#src/libs/types";
 import { shardConfig } from "#src/libs/constants/shardsInfo";
 /**

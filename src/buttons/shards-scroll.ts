@@ -10,7 +10,7 @@ export default {
     const date = interaction.customId.split("_")[1];
     const givenDate = utils.getDate(date) as moment.Moment;
     await interaction.deferUpdate();
-    const { actionRow, result } = buildShardEmbed(givenDate, "SkyHelper");
-    await interaction.editReply({ embeds: [result], components: [actionRow] });
+    const res = buildShardEmbed(givenDate, "SkyHelper");
+    await interaction.editReply(res);
   },
 } satisfies Button;

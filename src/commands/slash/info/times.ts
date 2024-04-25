@@ -18,6 +18,8 @@ export default {
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
+  category: "Info",
+  cooldown: 20,
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
 

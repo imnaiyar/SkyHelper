@@ -1,4 +1,4 @@
-import buildShardsEmbed from "#handlers/buildShardsEmbed";
+import { buildShardEmbed } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#src/libs/types";
 import { SlashCommand } from "#src/structures/SlashCommands";
 import { ApplicationCommandOptionType } from "discord.js";
@@ -26,7 +26,8 @@ export default {
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
   },
-  category: "Informations",
+  category: "Info",
+  cooldown: 5,
   async execute(interaction) {
     const date = interaction.options.getString("date");
     const hide = interaction.options.getBoolean("hide") || false;
@@ -47,12 +48,9 @@ export default {
       return;
     }
 
-    const { result, actionRow } = buildShardsEmbed(currentDate as moment.Moment, "SkyHelper");
+    const res = buildShardEmbed(currentDate as moment.Moment, "SkyHelper");
 
     await interaction.deferReply({ ephemeral: hide });
-    await interaction.editReply({
-      embeds: [result],
-      components: [actionRow],
-    });
+    await interaction.editReply(res);
   },
 } satisfies SlashCommand;

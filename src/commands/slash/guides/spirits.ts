@@ -25,6 +25,8 @@ export default {
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
   },
+  cooldown: 5,
+  category: "Guides",
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false });
     const value = interaction.options.getString("search");
