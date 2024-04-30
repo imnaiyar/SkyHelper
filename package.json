@@ -24,6 +24,7 @@
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
     "chalk": "^4.1.2",
+    "cropify": "^1.0.9",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
     "fixedsize-map": "^1.0.1",
