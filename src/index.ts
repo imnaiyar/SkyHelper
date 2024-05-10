@@ -5,11 +5,11 @@ const client = new SkyHelper();
 
 // Load everything
 // Change path if different
-await client.loadEvents("dist/events");
-await client.loadSlashCmd("dist/commands/slash");
-await client.loadContextCmd("dist/commands/contexts");
-await client.loadButtons("dist/buttons");
-await client.loadPrefix("dist/commands/prefix");
+await client.loadEvents("src/events");
+await client.loadSlashCmd("src/commands/slash");
+await client.loadContextCmd("src/commands/contexts");
+await client.loadButtons("src/buttons");
+await client.loadPrefix("src/commands/prefix");
 initializeMongoose();
 
 // Catching unhandle rejections

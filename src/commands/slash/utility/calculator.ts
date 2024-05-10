@@ -1,57 +1,57 @@
-import { ApplicationCommandOptionType } from "discord.js";
-import {
-    SeasonPrices as prices,
-    SeasonData as data
-} from "#libs/constants/index";
+import { ApplicationCommandOptionType, GuildMember } from "discord.js";
 import { SlashCommand } from "#structures";
-import moment from "moment-timezone";
+import { SeasonCalculator, SeasonData as sn } from "#libs/index";
+import moment from "moment";
 export default {
-    data: {
-        name: "calculator",
-        description: "calculate currencies",
-        integration_types: [0, 1],
-        contexts: [0, 1, 2],
-        options: [
-            {
-                name: "type",
-                description: "currency type",
-                required: true,
-                type: ApplicationCommandOptionType.String,
-                choices: [
-                    {
-                        name: "Seasonal Currency",
-                        value: "seasonal"
-                    },
-                    {
-                        name: "Ascende Candles",
-                        value: "ac"
-                    }
-                ]
-            }
-        ]
-    },
-    cooldown: 10,
-    category: "Utility",
-    async execute(interaction, client) {
-        // const type = interaction.options.getString("type");
-        const hasPass = interaction.options.getBoolean("pass")!;
-        const doneDailies = interaction.options.getBoolean("dailies")!;
-        const currentCandles = interaction.options.getInteger("candles")! + (doneDailies ? (hasPass ? 6 : 5) : 0);
-        const totalCandles = Object.keys(prices)
-            .map(k => {
-                const spirit = prices[k];
-                return spirit.reduce((acc, value) => acc + value.price, 0);
-            })
-            .reduce((acc, num) => acc + num, 0);
-        const start = moment
-            .tz(data.start, "DD-MM-YYYY", client.timezone)
-            .startOf("day");
-        const end = moment
-            .tz(data.end, "DD-MM-YYYY", client.timezone)
-            .endOf("day");
-        const duration = data.duration;
-        const now = moment().tz(client.timezone);
-        
-        interaction.reply(totalCandles.toString());
+  data: {
+    name: "seasona-calculator",
+    description: "calculate currencies",
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
+    options: [
+      {
+        name: "candles",
+        description: "amount of candles you have?",
+        required: true,
+        type: ApplicationCommandOptionType.Integer,
+      },
+      {
+        name: "dailies",
+        description: "did you do your dailies today?",
+        required: true,
+        type: ApplicationCommandOptionType.Boolean,
+      },
+      {
+        name: "season-pass",
+        description: "do you have the season pass?",
+        required: false,
+        type: ApplicationCommandOptionType.Boolean,
+      },
+    ],
+  },
+  cooldown: 10,
+  category: "Utility",
+  async execute(interaction, client) {
+    // const type = interaction.options.getString("type");
+    await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
+    const hasPass = interaction.options.getBoolean("season-pass")!;
+    const candles = interaction.options.getInteger("candles")!;
+    const dailies = interaction.options.getBoolean("dailies")!;
+    const now = moment().tz(client.timezone);
+    const end = moment.tz(sn.end, "MM-DD-YYYY", client.timezone);
+    // prettier-ignore
+    if (now.isAfter(end)) return void await interaction.followUp('No active season at the moment. Please run this command when a seson is active.');
+    const userData = await client.database.getUserData(interaction.user);
+    if (hasPass !== undefined) {
+      userData.hasPass = hasPass;
+      await userData.save();
     }
+    const calculator = new SeasonCalculator(
+      interaction.inCachedGuild() ? (interaction.member as GuildMember) : interaction.user,
+      userData,
+      dailies,
+      candles,
+    );
+    await calculator.handleInt(interaction);
+  },
 } satisfies SlashCommand;

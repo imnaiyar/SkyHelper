@@ -6,4 +6,5 @@ import * as guildBlackList from "#schemas/guildBlackList";
 import * as quizData from "#schemas/quizData";
 import * as TS from "#schemas/TS";
 import * as Event from "#schemas/Event";
+export * from "#schemas/seasonsData";
 export { Guild, botStats, autoShard, autoTimes, guildBlackList, quizData, TS, Event };

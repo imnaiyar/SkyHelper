@@ -148,3 +148,14 @@ export interface SpiritsData {
   };
   cosmetics?: any;
 }
+export interface SpiritItems {
+  item: string;
+  icon: string;
+  price: number;
+  canSkip?: boolean;
+  pass?: boolean;
+}
+export interface SeasonPrice {
+  icon?: string;
+  cosmetics: SpiritItems[];
+}

@@ -199,7 +199,7 @@ export default class {
       );
     }
 
-    if (this.progress > 100) {
+    if (this.progress >= 100) {
       this.progress = 99.999;
     }
 
