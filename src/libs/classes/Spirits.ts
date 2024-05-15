@@ -1,15 +1,15 @@
-import { SpiritsData } from "#libs/types";
-import { SkyHelper } from "#structures";
+import type { SpiritsData } from "#libs";
+import type { SkyHelper } from "#structures";
 import {
-  APIActionRowComponent,
-  APIButtonComponent,
+  type APIActionRowComponent,
+  type APIButtonComponent,
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonInteraction,
+  type ButtonInteraction,
   ButtonStyle,
-  ChatInputCommandInteraction,
+  type ChatInputCommandInteraction,
   EmbedBuilder,
-  InteractionCollector,
+  type InteractionCollector,
   time,
 } from "discord.js";
 import config from "#src/config";

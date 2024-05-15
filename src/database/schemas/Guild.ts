@@ -2,10 +2,10 @@ import config from "#src/config";
 import mongoose from "mongoose";
 import FixedSizeMap from "fixedsize-map";
 import { Guild } from "discord.js";
+import { GuildSchema } from "#libs";
+const cache = new FixedSizeMap<string, GuildSchema>(config.CACHE_SIZE.GUILDS);
 
-const cache = new FixedSizeMap(config.CACHE_SIZE.GUILDS);
-
-const Schema = new mongoose.Schema({
+const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,
 
   data: {
@@ -49,6 +49,22 @@ const Schema = new mongoose.Schema({
       id: String,
     },
   },
+  autoShard: {
+    active: Boolean,
+    messageId: String,
+    webhook: {
+      id: String,
+      token: String,
+    },
+  },
+  autoTimes: {
+    active: Boolean,
+    messageId: String,
+    webhook: {
+      id: String,
+      token: String,
+    },
+  },
 });
 
 const Model = mongoose.model("guild", Schema);
@@ -57,11 +73,10 @@ const Model = mongoose.model("guild", Schema);
  * Get a guild's settings
  * @param guild Particular guild
  */
-export async function getSettings(guild: Guild): Promise<mongoose.Document> {
+export async function getSettings(guild: Guild): Promise<GuildSchema> {
   if (!guild) throw new Error("Guild is undefined");
   if (!guild.id) throw new Error("Guild Id is undefined");
-
-  const cached = cache.get(guild.id) as mongoose.Document;
+  const cached = cache.get(guild.id);
   if (cached) return cached;
 
   let guildData = await Model.findById(guild.id);
@@ -83,4 +98,12 @@ export async function getSettings(guild: Guild): Promise<mongoose.Document> {
   }
   cache.add(guild.id, guildData);
   return guildData;
+}
+
+/** Returns all the active auto updates */
+export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSchema[]> {
+  if (type !== "shard" && type !== "times") throw new Error('Param "type" must be either "shard" or "times"');
+  const query = type === "shard" ? { "autoShard.active": true } : { "autoTimes.active": true };
+  const activeGuilds = await Model.find(query);
+  return activeGuilds;
 }

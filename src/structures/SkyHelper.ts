@@ -10,7 +10,7 @@ import {
   Webhook,
   ApplicationCommand,
 } from "discord.js";
-import { SlashCommand, Button, PrefixCommand, ContextMenuCommand } from "#structures";
+import type { SlashCommand, Button, PrefixCommand, ContextMenuCommand } from "#structures";
 import config from "#src/config";
 import { recursiveReadDir } from "skyhelper-utils";
 import { logger as Logger } from "#handlers";
@@ -19,7 +19,7 @@ import chalk from "chalk";
 import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
-import { spiritsData } from "#libs/constants/index";
+import { spiritsData } from "#libs";
 /** The bot's client */
 export class SkyHelper extends Client<true> {
   /** Configurations for the bot */
@@ -43,8 +43,11 @@ export class SkyHelper extends Client<true> {
   /** Default timezone used thorughout the client for time-based calculations */
   public timezone = "America/Los_Angeles";
 
-  /** A map of events occuring in Sky: COTL */
-  public skyEvent = schemas.Event;
+  /** get current event Data
+   * @example
+   * const data = await <Client>.getEvent()
+   */
+  public getEvent = schemas.getEvent;
 
   /** Collection of utility classes */
   public classes = new Collection<string, any>();
@@ -55,9 +58,9 @@ export class SkyHelper extends Client<true> {
   /**
    * Current Traveling Spirit Data
    * @example
-   * const data = await <Client>.ts.getTS()
+   * const data = await <Client>.getTS()
    */
-  public ts = schemas.TS;
+  public getTS = schemas.getTS;
 
   /** Custom logger */
   public logger = Logger;
@@ -83,8 +86,6 @@ export class SkyHelper extends Client<true> {
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.GuildMessageReactions,
       ],
       partials: [Partials.Channel, Partials.GuildMember, Partials.Message],
       allowedMentions: {
@@ -181,7 +182,7 @@ export class SkyHelper extends Client<true> {
         const { default: command } = (await import(pathToFileURL(filePath).href)) as {
           default: ContextMenuCommand;
         };
-        if (typeof command !== "object") return;
+        if (typeof command !== "object") continue;
         if (this.contexts.has(command.data.name + command.data.type.toString())) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
@@ -213,7 +214,7 @@ export class SkyHelper extends Client<true> {
         const { default: button } = (await import(pathToFileURL(filePath).href)) as {
           default: Button;
         };
-        if (typeof button !== "object") return;
+        if (typeof button !== "object") continue;
         if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         this.buttons.set(button.data.name, button);
         this.logger.log(`Loaded ${button.data.name}`);

@@ -1,4 +1,4 @@
-import { PrefixCommand, SkyHelper } from "#structures";
+import type { PrefixCommand, SkyHelper } from "#structures";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
 export default {

@@ -1,6 +1,6 @@
-import { Message } from "discord.js";
-import { type Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
-import { Flags } from "#libs/classes/Flags";
+import type { Message } from "discord.js";
+import type { Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
+import type { Flags } from "#libs";
 /* eslint-disable */
 
 /** Structure of command validation */

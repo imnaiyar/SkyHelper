@@ -6,10 +6,10 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
-  ContextMenuCommandInteraction,
+  type ChatInputCommandInteraction,
+  type ContextMenuCommandInteraction,
 } from "discord.js";
-import { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
+import type { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
 import { parsePerms, Permission } from "skyhelper-utils";
 import config from "#src/config";
 import { eventTimes } from "#libs/constants/index";
@@ -264,7 +264,6 @@ async function validateCommand(
     });
     return false;
   }
-
   // Handle command user required permissions
   if (command.data.userPermissions) {
     if (interaction.inGuild()) {
@@ -274,7 +273,8 @@ async function validateCommand(
           ephemeral: true,
         });
         return false;
-      } else {
+      }
+      if (!interaction.inCachedGuild()) {
         await interaction.reply({
           content: `Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.`,
           ephemeral: true,
@@ -293,7 +293,8 @@ async function validateCommand(
           ephemeral: true,
         });
         return false;
-      } else {
+      }
+      if (!interaction.inCachedGuild()) {
         await interaction.reply({
           content: `Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.`,
           ephemeral: true,

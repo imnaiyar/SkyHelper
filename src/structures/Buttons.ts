@@ -1,5 +1,5 @@
-import { ButtonInteraction } from "discord.js";
-import { type SkyHelper } from "#structures";
+import type { ButtonInteraction } from "discord.js";
+import type { SkyHelper } from "#structures";
 /* eslint-disable */
 
 /** Buttons structure */

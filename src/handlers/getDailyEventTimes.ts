@@ -1,5 +1,5 @@
 import { SpiritsData, Times } from "#libs/types";
-import { SkyHelper } from "#structures";
+import type { SkyHelper } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 import getEvent from "#handlers/getSpecialEvent";
 import moment from "moment-timezone";
@@ -51,7 +51,7 @@ export const getEdenTimes = (): Times => {
 
 import { getDailyEventTimes } from "#handlers";
 import { getTS } from "#handlers";
-export const getEventEmbed = async (client: SkyHelper): Promise<EmbedBuilder> => {
+export const getEventEmbed = async (client: SkyHelper, text?: string): Promise<EmbedBuilder> => {
   const geyser = getTimes(0, "Geyser");
   const grandma = getTimes(30, "Grandma");
   const turtle = getTimes(50, "Turtle");
@@ -115,6 +115,7 @@ export const getEventEmbed = async (client: SkyHelper): Promise<EmbedBuilder> =>
       },
     )
     .setTimestamp();
+  if (text) embed.setFooter({ text: text, iconURL: client.user.displayAvatarURL() });
   return embed;
 };
 

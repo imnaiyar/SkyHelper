@@ -1,5 +1,6 @@
 import moment from "moment-timezone";
 import { Document } from "mongoose";
+import { ScheduleOptions } from "node-cron";
 
 export type ContextMenuType = "UserContext" | "MessageContext" | null;
 
@@ -158,4 +159,51 @@ export interface SpiritItems {
 export interface SeasonPrice {
   icon?: string;
   cosmetics: SpiritItems[];
+}
+export interface LiveUpdates {
+  active: boolean;
+  messageId: string;
+  webhook: {
+    id: string | null;
+    token: string | null;
+  };
+}
+interface EventReminder {
+  active: boolean;
+  role: string;
+}
+interface Reminders {
+  active: boolean;
+  default_role: string;
+  dailies: EventReminder;
+  grandma: EventReminder;
+  turtle: EventReminder;
+  geyser: EventReminder;
+  reset: EventReminder;
+  eden: EventReminder;
+  webhook: {
+    id: string | null;
+    token: string | null;
+  };
+}
+export interface GuildSchema extends Document {
+  _id: string;
+  data: {
+    name: string;
+    region: string;
+    owner: string;
+    joinedAt: Date;
+    leftAt: Date;
+    bots: number;
+  };
+  prefix: string;
+  reminders: Reminders;
+  autoShard: LiveUpdates;
+  autoTimes: LiveUpdates;
+}
+
+export interface JobOptions {
+  interval: string;
+  callback: () => Promise<void>;
+  options?: ScheduleOptions;
 }

@@ -1,4 +1,4 @@
-import { PrefixCommand, SkyHelper } from "#structures";
+import type { PrefixCommand, SkyHelper } from "#structures";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { Type } from "@sapphire/type";
 import { EmbedBuilder } from "discord.js";

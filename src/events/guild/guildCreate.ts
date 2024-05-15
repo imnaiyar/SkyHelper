@@ -1,6 +1,6 @@
-import { SkyHelper } from "#structures";
-import { EmbedBuilder, Guild, TextChannel, WebhookClient } from "discord.js";
-
+import type { SkyHelper } from "#structures";
+import { EmbedBuilder, type Guild, type TextChannel, WebhookClient } from "discord.js";
+import { dblStats, topggAutopost } from "#handlers";
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
 export default async (client: SkyHelper, guild: Guild): Promise<void> => {
@@ -10,17 +10,19 @@ export default async (client: SkyHelper, guild: Guild): Promise<void> => {
 
   const guildCount = client.guilds.cache.size;
   const userCount = client.guilds.cache.reduce((total, g) => total + g.memberCount, 0);
-
+  const { getSettings: registerGuild } = client.database;
   // Register guild on database
-  /* registerGuild(guild);
-
+  registerGuild(guild);
+  const BlackList = client.database.guildBlackList;
   // Check if joined guild is blacklisted
-  const data = await Guild.findOne({ Guild: guild.id }).catch(() => {});
+  const data = await BlackList.findOne({ Guild: guild.id }).catch(() => {});
   if (data) {
-    const owner = guild.members.cache.get(guild.ownerId);
-    owner.user.send(
-      `An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${config.Support}).`,
-    );
+    const owner = await client.users.fetch(guild.ownerId);
+    owner
+      .send(
+        `An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${client.config.Support}).`,
+      )
+      .catch(() => {});
     await guild.leave();
 
     const embed = new EmbedBuilder()
@@ -31,13 +33,13 @@ export default async (client: SkyHelper, guild: Guild): Promise<void> => {
         { name: "Reason", value: `${data.Reason}` },
         { name: "Blacklisted Date", value: `${data?.Date || "Unknown"}` },
       );
-    webhookLogger.send({
+    webhookLogger?.send({
       username: "Blacklist Server",
       avatarURL: client.user.displayAvatarURL(),
       embeds: [embed],
     });
     return;
-  } */
+  }
 
   // updates bot info stats on support server.
   const channels = client.channels.cache.get("1158068842040414351") as TextChannel;
@@ -63,7 +65,7 @@ export default async (client: SkyHelper, guild: Guild): Promise<void> => {
     });
   }
 
-  /* // Update DBL Stats
+  // Update DBL Stats
   if (process.env.DBL_TOKEN) {
     await dblStats(client);
   }
@@ -73,11 +75,10 @@ export default async (client: SkyHelper, guild: Guild): Promise<void> => {
   }
 
   // Update Bot Stats
-  const settings = await botSettings(client);
+  const settings = await client.database.botSettings(client);
   settings.data.servers = guildCount;
   settings.data.members = userCount;
   await settings.save();
- */
 
   // Send a guild join Log
   if (!process.env.GUILD) return;

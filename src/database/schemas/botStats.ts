@@ -1,6 +1,14 @@
-import { SkyHelper } from "#structures";
-import mongoose from "mongoose";
-const Schema = new mongoose.Schema({
+import type { SkyHelper } from "#structures";
+import mongoose, { Document } from "mongoose";
+interface BotSchema extends Document {
+  _id: string;
+  data: {
+    servers: number;
+    slash: number;
+    members: number;
+  };
+}
+const Schema = new mongoose.Schema<BotSchema>({
   _id: String,
   data: {
     servers: Number,
@@ -11,7 +19,7 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model("botStats", Schema);
 
-export async function botSettings(client: SkyHelper): Promise<mongoose.Document> {
+export async function botSettings(client: SkyHelper): Promise<BotSchema> {
   let botData = await Model.findById(client.user.id);
   const commands = await client.application.commands.fetch();
   if (!botData) {

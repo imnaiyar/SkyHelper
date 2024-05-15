@@ -1,10 +1,9 @@
-import { getShardStatus } from "#handlers";
+import { getShardStatus, scheduler } from "#handlers";
 import moment from "moment-timezone";
-import { Flags } from "#libs/classes/Flags";
+import { Flags } from "#libs";
 import { type SkyHelper } from "#structures";
-import { ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
+import { type ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
 import { UpdateEvent, UpdateTS, ShardsUtil as util } from "skyhelper-utils";
-
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 export default async (client: SkyHelper): Promise<void> => {
@@ -56,7 +55,8 @@ export default async (client: SkyHelper): Promise<void> => {
     Gratitude: "<:gratitude:1130958261349261435>",
   });
 
-  // TODO: Add Cron Jobs
+  // Registers Jobs
+  scheduler(client);
 
   const readyalertemb = new EmbedBuilder()
     .addFields(

@@ -1,5 +1,5 @@
-import { SkyHelper } from "#structures";
-import { EmbedBuilder, Guild, TextChannel, WebhookClient } from "discord.js";
+import type { SkyHelper } from "#structures";
+import { EmbedBuilder, type Guild, type TextChannel, WebhookClient } from "discord.js";
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
@@ -9,15 +9,15 @@ export default async (client: SkyHelper, guild: Guild) => {
 
   const guildCount = client.guilds.cache.size;
   const userCount = client.guilds.cache.reduce((total, g) => total + g.memberCount, 0);
-  /*
-  const settings = await getSettings(guild);
-  const settings1 = await botSettings(client);
+
+  const settings = await client.database.getSettings(guild);
+  const settings1 = await client.database.botSettings(client);
   settings1.data.servers = client.guilds.cache.size;
-  settings1.data.members = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
+  settings1.data.members = client.guilds.cache.reduce((total, g) => total + g.memberCount, 0);
   settings.data.leftAt = new Date();
   await settings.save();
   await settings1.save();
- */
+
   let ownerTag;
   const ownerId = guild.ownerId; // || settings.data.owner
   try {

@@ -1,5 +1,5 @@
 import { shardsInfo } from "#libs/constants/index";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable, EmbedBuilder, time } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type ColorResolvable, EmbedBuilder, time } from "discord.js";
 import moment from "moment-timezone";
 import { ShardsUtil as utils } from "skyhelper-utils";
 import getCountdown from "#handlers/getShardStatus";

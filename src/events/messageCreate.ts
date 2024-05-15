@@ -1,12 +1,12 @@
-import { SkyHelper } from "#structures";
+import type { SkyHelper } from "#structures";
 import {
   EmbedBuilder,
-  GuildChannelResolvable,
-  Message,
+  type GuildChannelResolvable,
+  type Message,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  GuildBasedChannel,
+  type GuildBasedChannel,
   WebhookClient,
 } from "discord.js";
 import { Flags } from "#libs/classes/Flags";

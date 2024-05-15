@@ -1,6 +1,6 @@
 import { buildShardEmbed } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#src/libs/types";
-import { SlashCommand } from "#src/structures/SlashCommands";
+import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
 import { ShardsUtil } from "skyhelper-utils";

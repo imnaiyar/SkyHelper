@@ -1,12 +1,12 @@
-import {
+import type {
   ContextMenuCommandInteraction,
   ApplicationCommandType,
   UserContextMenuCommandInteraction,
   MessageContextMenuCommandInteraction,
   PermissionResolvable,
 } from "discord.js";
-import { IntegrationTypes, ContextTypes, ContextMenuType } from "#libs/types";
-import { SkyHelper } from "#structures/SkyHelper";
+import type { IntegrationTypes, ContextTypes, ContextMenuType } from "#libs/types";
+import type { SkyHelper } from "#structures/SkyHelper";
 /* eslint-disable */
 
 export interface ContextMenuCommand<T extends ContextMenuType = null> {

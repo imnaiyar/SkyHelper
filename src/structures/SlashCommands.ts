@@ -1,7 +1,12 @@
-import { ChatInputCommandInteraction, AutocompleteInteraction, ApplicationCommandOption, PermissionResolvable } from "discord.js";
-import { type SkyHelper } from "#structures";
+import type {
+  ChatInputCommandInteraction,
+  AutocompleteInteraction,
+  PermissionResolvable,
+  APIApplicationCommandOption,
+} from "discord.js";
+import type { SkyHelper } from "#structures";
 
-import { IntegrationTypes, ContextTypes } from "#libs/types";
+import type { IntegrationTypes, ContextTypes } from "#libs/types";
 /* eslint-disable */
 
 export interface SlashCommand<Autocomplete extends boolean = false> {
@@ -22,7 +27,7 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
     /**
      * Command options in an array
      */
-    options?: ApplicationCommandOption[];
+    options?: APIApplicationCommandOption[];
 
     /**
      * Type of the command

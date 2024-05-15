@@ -5,6 +5,7 @@ import {
   ComponentType,
   EmbedBuilder,
   GuildMember,
+  InteractionUpdateOptions,
   StringSelectMenuBuilder,
   User,
   parseEmoji,
@@ -89,7 +90,7 @@ export default class {
     return SpiritsProgress;
   }
 
-  public async getContent() {
+  public async getContent(): Promise<InteractionUpdateOptions> {
     const { client } = this.author;
     const emoji = client.emojis.cache.get(parseEmoji(this.seasonIcon)?.id ?? "");
     const startDate = moment.tz(ssn.start, "DD-MM-YYYY", "America/Los_Angeles").startOf("day");
