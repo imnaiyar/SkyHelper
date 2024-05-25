@@ -92,7 +92,7 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
 
   // Execute the command.
   try {
-    await command.execute(message, args, flags);
+    await command.execute({ message, args, flags, client });
 
     // Send Logs
     const embed = new EmbedBuilder()

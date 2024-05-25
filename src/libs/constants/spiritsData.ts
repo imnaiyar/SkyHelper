@@ -1,4 +1,4 @@
-import { SpiritsData } from "#libs/types";
+import type { SpiritsData } from "#libs/types";
 interface data {
   [key: string]: SpiritsData;
 }
@@ -7,7 +7,7 @@ interface data {
  * @example
  * const data = spiritsData["backflipping_champion"];
  */
-export default {
+export default <data>{
   // Isle
   candlemaker: {
     name: "Pointing Candlemaker",
@@ -4630,4 +4630,4 @@ export default {
       ],
     },
   },
-} satisfies data;
+};

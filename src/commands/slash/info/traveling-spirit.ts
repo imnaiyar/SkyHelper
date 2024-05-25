@@ -1,7 +1,7 @@
 import getTS from "#handlers/getTS";
 import { Spirits } from "#src/libs/classes/Spirits";
-import { ContextTypes, IntegrationTypes, SpiritsData } from "#src/libs/types";
-import { SlashCommand } from "#structures";
+import { ContextTypes, IntegrationTypes, type SpiritsData } from "#src/libs/types";
+import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 
 export default {

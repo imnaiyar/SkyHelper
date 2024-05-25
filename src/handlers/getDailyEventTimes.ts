@@ -1,4 +1,4 @@
-import { SpiritsData, Times } from "#libs/types";
+import type { SpiritsData, Times } from "#libs/types";
 import type { SkyHelper } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 import getEvent from "#handlers/getSpecialEvent";

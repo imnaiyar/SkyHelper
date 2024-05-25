@@ -1,4 +1,4 @@
-import { TSData } from "#libs/types";
+import type { TSData } from "#libs/types";
 import { Collection } from "discord.js";
 import mongoose from "mongoose";
 const cache = new Collection<string, TSData>();

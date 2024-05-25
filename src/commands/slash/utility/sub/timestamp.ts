@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, EmbedBuilder, TimestampStylesString, time } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, type TimestampStylesString, time } from "discord.js";
 import moment from "moment-timezone";
 
 export async function handleTimestamp(interaction: ChatInputCommandInteraction): Promise<void> {
@@ -44,53 +44,24 @@ export async function handleTimestamp(interaction: ChatInputCommandInteraction):
 
   const getFormat = (type?: TimestampStylesString) => {
     return type
-      ? `${time(timestamp.toDate(), type)} (\`<t:${timestamp.unix()}:${type}\`>)`
+      ? `${time(timestamp.toDate(), type)} (\`<t:${timestamp.unix()}:${type}>\`)`
       : `${time(timestamp.toDate())} (\`<t:${timestamp.unix()}>\`)`;
   };
   const result = new EmbedBuilder()
     .setAuthor({ name: `Unix Time Conversion` })
     .setColor("DarkGold")
     .setDescription(
-      `**Default:** ${getFormat()}\n**Relative:** ${getFormat("R")}\n**Short Time:** ${getFormat(
+      `- **Default:** ${getFormat()}\n- **Relative:** ${getFormat("R")}\n- **Short Time:** ${getFormat(
         "t",
-      )}\n**Long Date:** ${getFormat("T")}\n**Short Date:** ${getFormat("d")}\n**Long Date:** ${getFormat(
+      )}\n- **Long Date:** ${getFormat("T")}\n- **Short Date:** ${getFormat("d")}\n- **Long Date:** ${getFormat(
         "D",
-      )}\n**Short Date & Time:** ${getFormat("f")}\n**Long Date & Time:** ${getFormat("F")}`,
+      )}\n- **Short Date & Time:** ${getFormat("f")}\n- **Long Date & Time:** ${getFormat("F")}`,
     )
     .setFooter({
-      text: `Follow the link attached for easy copying.`,
+      text: `UNIX Timestamp.`,
       iconURL: interaction.user.displayAvatarURL(),
     });
-  /* const fieldsData = [];
 
-  const formatMap = {
-    Default: { format: "DD MMMM YYYY HH:mm", type: null },
-    "Short Time": { format: "HH:mm", type: "t" },
-    "Long Time": { format: "HH:mm:ss", type: "T" },
-    "Short Date": { format: "DD/MM/YYYY", type: "d" },
-    "Long Date": { format: "DD MMMM YYYY", type: "D" },
-    "Short Date & Time": { format: "DD MMMM YYYY HH:mm", type: "f" },
-    "Long Date & Time": { format: "dddd, DD MMMM YYYY HH:mm", type: "F" },
-    Relative: { format: null, type: "R" },
-  };
-
-  for (const [name, data] of Object.entries(formatMap)) {
-    fieldsData.push({
-      name,
-      example: data.format ? timestamp.format(data.format) : timestamp.fromNow(),
-      value: data.type ? `<t:${timestamp.unix()}:${data.type}` : `<t:${timestamp.unix()}>`,
-    });
-  }
-  const providedTime = timestamp.format("DD/MM/YYYY HH:mm:ss");
-  const { buildTimesHTML } = require("skyhelper-utils");
-  const { timeRoute } = require("@root/web/server");
-  const webPath = `timestamp/${interaction.id}`;
-  const content = buildTimesHTML(interaction, fieldsData, offsetString, timezone, providedTime);
-
-  timeRoute(webPath, content);
-  const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setLabel("Copy").setURL(`${config.WEB_URL}/${webPath}`).setStyle(ButtonStyle.Link),
-  ); */
   const offset1 = `\nOffset: \` ${offsetString} \``;
   return void (await interaction.reply({
     content: `${offset1}\nTimestamp: \`${timestamp.unix()}\``,

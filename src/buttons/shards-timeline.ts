@@ -1,6 +1,6 @@
-import { Button } from "#structures";
+import type { Button } from "#structures";
 import {
-  APIEmbed,
+  type APIEmbed,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonInteraction,

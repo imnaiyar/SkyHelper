@@ -119,11 +119,11 @@ export class Spirits {
    * A manager to handle spirit buttons interactions
    * @param interaction The initial interaction that initiated the response
    */
-  public async handleInt(interaction: ChatInputCommandInteraction): Promise<void> {
+  public async handleInt(interaction: ChatInputCommandInteraction): Promise<InteractionCollector<ButtonInteraction> | undefined> {
     const data = this.data;
 
     // prettier-ignore
-    const customIDs = ["spirit_location", "spirit_tree", "spirit_call", "spirit_stance", "spirit_expression", "spirit_tree", "guide-back"];
+    const customIDs = ["spirit_location", "spirit_tree", "spirit_call", "spirit_stance", "spirit_expression", "spirit_tree", "guide-back", "exprsn_back"];
     try {
       const reply = await interaction.fetchReply();
 
@@ -138,26 +138,30 @@ export class Spirits {
           return;
         }
         await int.deferUpdate();
+        const index = reply.components.length > 1 ? 1 : 0;
         const newEmbed = EmbedBuilder.from(reply.embeds[0]);
         switch (int.customId) {
           // Handle Location Button
           case "spirit_location": {
             // prettier-ignore
-            const newRow = ActionRowBuilder.from(reply.components[0] as APIActionRowComponent<APIButtonComponent>) as ActionRowBuilder<ButtonBuilder>;
+            const newRow = ActionRowBuilder.from(reply.components[index] as APIActionRowComponent<APIButtonComponent>) as ActionRowBuilder<ButtonBuilder>;
             newRow.components[0] = treeBtn;
             newEmbed.spliceFields(-1, 1, {
               name: `Location by ${data.location!.by}`,
               value: data.location?.description || " ",
             });
             newEmbed.setImage(`${config.CDN_URL}/${data.location!.image}`);
-            await int.editReply({ embeds: [newEmbed], components: [newRow] });
+            await int.editReply({
+              embeds: [newEmbed],
+              ...(index === 1 ? { components: [reply.components[0], newRow] } : { components: [newRow] }),
+            });
             break;
           }
 
           // Handle Tree Button
           case "spirit_tree": {
             // prettier-ignore
-            const newRow = ActionRowBuilder.from(reply.components[0] as APIActionRowComponent<APIButtonComponent>) as ActionRowBuilder<ButtonBuilder>;
+            const newRow = ActionRowBuilder.from(reply.components[index] as APIActionRowComponent<APIButtonComponent>) as ActionRowBuilder<ButtonBuilder>;
             newRow.components[0] = lctnBtn;
             newEmbed.spliceFields(-1, 1, {
               name: `${data.ts?.returned ? "Friendship Tree" : "Seasonal Price Chart"} by ${data.tree!.by}`,
@@ -167,7 +171,10 @@ export class Spirits {
                 .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
             });
             newEmbed.setImage(`${config.CDN_URL}/${data.tree!.image}`);
-            await int.editReply({ embeds: [newEmbed], components: [newRow] });
+            await int.editReply({
+              embeds: [newEmbed],
+              ...(index === 1 ? { components: [reply.components[0], newRow] } : { components: [newRow] }),
+            });
             break;
           }
 
@@ -209,6 +216,9 @@ export class Spirits {
           case "guide-back":
             collector.stop("Guide Back");
             break;
+          case "exprsn_back":
+            await int.editReply({ content: reply.content, components: reply.components, embeds: reply.embeds });
+            break;
         }
       });
 
@@ -222,6 +232,7 @@ export class Spirits {
         }) as ActionRowBuilder<ButtonBuilder>[];
         await interaction.editReply({ components });
       });
+      return collector;
     } catch (err) {
       this.client.logger.error(err);
     }

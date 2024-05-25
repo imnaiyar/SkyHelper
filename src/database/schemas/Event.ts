@@ -1,4 +1,4 @@
-import { EventData } from "#libs/types";
+import type { EventData } from "#libs/types";
 import { Collection } from "discord.js";
 import mongoose from "mongoose";
 const cache = new Collection<string, EventData>();

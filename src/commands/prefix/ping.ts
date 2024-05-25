@@ -7,7 +7,7 @@ export default {
     description: "Replies with pong!",
     aliases: ["pong"],
   },
-  async execute(message) {
+  async execute({ message }) {
     const client = message.client as SkyHelper;
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder().setCustomId("ping").setLabel("Refresh").setStyle(ButtonStyle.Primary),

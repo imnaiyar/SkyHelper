@@ -1,11 +1,11 @@
 import { ContextTypes, IntegrationTypes } from "#src/libs/types";
-import { SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import {
-  APIApplicationCommandBasicOption,
+  type APIApplicationCommandBasicOption,
   ActionRowBuilder,
   ApplicationCommand,
   ApplicationCommandOptionType,
-  ApplicationCommandSubCommandData,
+  type ApplicationCommandSubCommandData,
   ApplicationCommandType,
   ButtonBuilder,
   ButtonInteraction,

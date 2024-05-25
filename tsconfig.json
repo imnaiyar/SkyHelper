@@ -14,6 +14,7 @@
     "alwaysStrict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
     "moduleResolution": "Node16",
     "skipLibCheck": true,
     "paths": {

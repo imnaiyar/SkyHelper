@@ -21,6 +21,7 @@
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.52",
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
     "chalk": "^4.1.2",

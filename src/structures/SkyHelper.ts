@@ -5,10 +5,10 @@ import {
   Collection,
   PermissionFlagsBits,
   Routes,
-  OAuth2Scopes,
-  TextChannel,
-  Webhook,
-  ApplicationCommand,
+  type OAuth2Scopes,
+  type TextChannel,
+  type Webhook,
+  type ApplicationCommand,
 } from "discord.js";
 import type { SlashCommand, Button, PrefixCommand, ContextMenuCommand } from "#structures";
 import config from "#src/config";
@@ -32,7 +32,7 @@ export class SkyHelper extends Client<true> {
   public prefix = new Collection<string, PrefixCommand>();
 
   /** Collection of Context Menu Commands */
-  public contexts = new Collection<string, ContextMenuCommand>();
+  public contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
 
   /** Collection of Buttons */
   public buttons = new Collection<string, Button>();
@@ -180,7 +180,7 @@ export class SkyHelper extends Client<true> {
       const file = path.basename(filePath);
       try {
         const { default: command } = (await import(pathToFileURL(filePath).href)) as {
-          default: ContextMenuCommand;
+          default: ContextMenuCommand<"MessageContext" | "UserContext">;
         };
         if (typeof command !== "object") continue;
         if (this.contexts.has(command.data.name + command.data.type.toString())) throw new Error("The command already exists");
@@ -261,7 +261,7 @@ export class SkyHelper extends Client<true> {
    * Register Slash Commands
    */
   public async registerCommands(): Promise<void> {
-    const toRegister: SlashCommand["data"] | ContextMenuCommand["data"][] = [];
+    const toRegister: SlashCommand["data"] | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
     this.commands
       .map((cmd) => ({
         name: cmd.data.name,

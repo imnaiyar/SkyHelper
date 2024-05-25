@@ -1,8 +1,6 @@
 import moment from "moment-timezone";
 import { Document } from "mongoose";
-import { ScheduleOptions } from "node-cron";
-
-export type ContextMenuType = "UserContext" | "MessageContext" | null;
+import type { ScheduleOptions } from "node-cron";
 
 /* eslint-disable */
 export enum ContextTypes {
@@ -44,15 +42,9 @@ export interface ShardsCountdown {
   duration: string;
 }
 
-export interface Times {
+export interface BaseTimes {
   /* Whether the event is active or not */
   active: boolean;
-
-  /* The time when the event started if active */
-  startTime?: moment.Moment;
-
-  /* The time when the event ends if active */
-  endTime?: moment.Moment;
 
   /* The time when the event starts */
   nextTime: moment.Moment;
@@ -61,8 +53,26 @@ export interface Times {
   duration: string;
 }
 
+interface ActiveTimes extends BaseTimes {
+  active: true;
+  /* The time when the event started if active */
+  startTime: moment.Moment;
+
+  /* The time when the event ends if active */
+  endTime: moment.Moment;
+}
+interface NotActiveTimes extends BaseTimes {
+  active: false;
+  /* The time when the event started if active */
+  startTime?: moment.Moment;
+
+  /* The time when the event ends if active */
+  endTime?: moment.Moment;
+}
+export type Times = ActiveTimes | NotActiveTimes;
+
 export interface TSData extends Document {
-  /* Name of the returning TS */
+  // Name of the returning TS
   name: string;
 
   /* The value of spirit in the spiritsData */
@@ -168,13 +178,13 @@ export interface LiveUpdates {
     token: string | null;
   };
 }
-interface EventReminder {
+export interface EventReminder {
   active: boolean;
-  role: string;
+  role: string | null;
 }
-interface Reminders {
+export interface Reminders {
   active: boolean;
-  default_role: string;
+  default_role: string | null;
   dailies: EventReminder;
   grandma: EventReminder;
   turtle: EventReminder;
@@ -184,6 +194,7 @@ interface Reminders {
   webhook: {
     id: string | null;
     token: string | null;
+    channelId: string | null;
   };
 }
 export interface GuildSchema extends Document {

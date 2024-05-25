@@ -1,5 +1,5 @@
 import { buildShardEmbed } from "#handlers";
-import { Button } from "#structures";
+import type { Button } from "#structures";
 import moment from "moment";
 import { ShardsUtil as utils } from "skyhelper-utils";
 export default {

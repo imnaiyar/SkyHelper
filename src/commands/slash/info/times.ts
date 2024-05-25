@@ -1,5 +1,5 @@
 import { getEventEmbed } from "#handlers/getDailyEventTimes";
-import { SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from "discord.js";
 import "moment-duration-format";
 
@@ -46,6 +46,6 @@ export default {
     const btn = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder().setCustomId("times-refresh").setEmoji("🔃").setStyle(ButtonStyle.Primary),
     );
-    await interaction.followUp({ embeds: [embed], components: [row, btn], fetchReply: true });
+    await interaction.reply({ embeds: [embed], components: [row, btn], fetchReply: true });
   },
 } satisfies SlashCommand;

@@ -6,5 +6,5 @@ export * from "#handlers/getDailyEventTimes";
 export { default as getTS } from "#handlers/getTS";
 export { default as dblStats } from "#handlers/dblStats";
 export { default as topggAutopost } from "#handlers/topggAutopost";
-export { default as scheduledUpdates } from "#handlers/scheduledUpdates";
+export * from "#handlers/scheduledUpdates";
 export { default as scheduler } from "#handlers/scheduler";

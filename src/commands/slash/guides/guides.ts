@@ -1,5 +1,8 @@
-import { SlashCommand } from "#structures";
+import { seasonsData } from "#src/libs/index";
+import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
+import { handleSeasional } from "./sub/handleSeasional.js";
+import { handleRealms } from "./sub/handleRealms.js";
 
 export default {
   cooldown: 10,
@@ -131,22 +134,32 @@ export default {
     contexts: [0, 1, 2],
   },
   async execute(interaction) {
-    interaction.options.getSubcommand();
+    const sub = interaction.options.getSubcommand();
+    await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
+    switch (sub) {
+      case "seasonal": {
+        await handleSeasional(interaction);
+        break;
+      }
+      case "realms": {
+        await handleRealms(interaction);
+        break;
+      }
+    }
   },
-  async autocomplete(interaction, client) {
+  async autocomplete(interaction) {
     const focusedValue = interaction.options.getFocused(true);
     const sub = interaction.options.getSubcommand();
 
     if (sub === "seasonal" && focusedValue.name === "season") {
       // EmojisMap contain all the season name, so get it from there
-      const choices = Object.keys(client.emojisMap.get("seasons")!).map((ch) => {
-        return `Season of ${ch}`;
-      });
-      const filtered = choices.filter((choice) => choice.toLowerCase().includes(focusedValue.value.toLowerCase())).slice(0, 25);
+      const choices = Object.entries(seasonsData).filter(([, v]) =>
+        v.name.toLowerCase().includes(focusedValue.value.toLowerCase()),
+      );
       await interaction.respond(
-        filtered.map((choice) => ({
-          name: `↪️ ${choice}`,
-          value: choice,
+        choices.map(([k, v]) => ({
+          name: `↪️ Season of ${v.name}`,
+          value: k.toString(),
         })),
       );
     }

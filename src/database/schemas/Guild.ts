@@ -2,7 +2,7 @@ import config from "#src/config";
 import mongoose from "mongoose";
 import FixedSizeMap from "fixedsize-map";
 import { Guild } from "discord.js";
-import { GuildSchema } from "#libs";
+import type { GuildSchema } from "#libs";
 const cache = new FixedSizeMap<string, GuildSchema>(config.CACHE_SIZE.GUILDS);
 
 const Schema = new mongoose.Schema<GuildSchema>({
@@ -47,6 +47,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
     webhook: {
       token: String,
       id: String,
+      channelId: String,
     },
   },
   autoShard: {
@@ -100,10 +101,21 @@ export async function getSettings(guild: Guild): Promise<GuildSchema> {
   return guildData;
 }
 
-/** Returns all the active auto updates */
+/** Returns all guilds with the given active auto updates
+ * @param type The type of the event to query for ("shard" | "times")
+ * @example
+ * await getActiveUpdate("shard")
+ */
 export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSchema[]> {
   if (type !== "shard" && type !== "times") throw new Error('Param "type" must be either "shard" or "times"');
   const query = type === "shard" ? { "autoShard.active": true } : { "autoTimes.active": true };
   const activeGuilds = await Model.find(query);
   return activeGuilds;
+}
+
+/**
+ * Returns all the guilds with active reminders
+ */
+export async function getActiveReminders(): Promise<GuildSchema[]> {
+  return await Model.find({ "reminders.active": true });
 }

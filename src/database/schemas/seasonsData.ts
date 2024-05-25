@@ -1,4 +1,4 @@
-import { SeasonPrice, SpiritItems } from "#src/libs/types";
+import type { SeasonPrice, SpiritItems } from "#src/libs/types";
 import { Collection, User } from "discord.js";
 import { SeasonPrices } from "#libs/constants/seasonPrices";
 import mongoose, { Document } from "mongoose";

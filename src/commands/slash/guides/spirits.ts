@@ -1,6 +1,6 @@
-import { ContextTypes, IntegrationTypes, SpiritsData } from "#libs/types";
+import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs/types";
 import { Spirits } from "#libs/classes/Spirits";
-import { SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 
 export default {

@@ -1,11 +1,11 @@
 import { getShardStatus } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#libs/types";
 import { shardsInfo, shardsTimelines } from "#libs/constants/index";
-import { SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuInteraction, time } from "discord.js";
 import {
-  APIEmbedField,
-  APISelectMenuOption,
+  type APIEmbedField,
+  type APISelectMenuOption,
   ActionRowBuilder,
   ApplicationCommandOptionType,
   StringSelectMenuBuilder,

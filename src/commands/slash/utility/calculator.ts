@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, GuildMember } from "discord.js";
-import { SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import { SeasonCalculator, SeasonData as sn } from "#libs/index";
 import moment from "moment";
 export default {

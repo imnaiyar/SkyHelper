@@ -1,4 +1,4 @@
-import { Button } from "#structures";
+import type { Button } from "#structures";
 
 export default {
   data: {

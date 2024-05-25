@@ -1,9 +1,17 @@
 import { ContextTypes, IntegrationTypes } from "#src/libs/types";
 import type { SkyHelper, SlashCommand } from "#structures";
-import { ApplicationCommandOptionType, ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import {
+  ActionRowBuilder,
+  ApplicationCommandOptionType,
+  ButtonBuilder,
+  ButtonStyle,
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+} from "discord.js";
 // @ts-ignore
 import pkg from "#root/package.json" assert { type: "json" };
 import { handleTimestamp } from "./sub/timestamp.js";
+import { getChangelog, getSuggestion } from "./sub/utility.js";
 
 export default {
   data: {
@@ -50,8 +58,8 @@ export default {
         ],
       },
       {
-        name: "credits",
-        description: "get the bot's credits",
+        name: "changelog",
+        description: "bot's changelog",
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
@@ -70,8 +78,8 @@ export default {
   async execute(interaction) {
     const sub = interaction.options.getSubcommand();
     switch (sub) {
-      case "credits":
-        // await handleCredits(interaction);
+      case "changelog":
+        await getChangelog(interaction);
         break;
       case "botinfo": {
         const reply = await interaction.deferReply({ fetchReply: true });
@@ -79,7 +87,7 @@ export default {
         break;
       }
       case "contact-us":
-        // await handleContact(interaction);
+        await getSuggestion(interaction);
         break;
       case "timestamp":
         await handleTimestamp(interaction);
@@ -92,14 +100,34 @@ async function handleInfo(interaction: ChatInputCommandInteraction, time: number
   const guilds = client.guilds.cache.size;
   const users = client.guilds.cache.reduce((size, g) => size + g.memberCount, 0);
   let desc = "";
-  desc += `❒ Total guilds: ${guilds}\n`;
-  desc += `❒ Total users: ${users}\n`;
-  desc += `❒ Websocket Ping: ${client.ws.ping} ms\n`;
-  desc += `❒ Latency: ${time - interaction.createdTimestamp} ms\n`;
+  desc += `<:servers:1243977429542764636> Total servers: ${guilds}\n`;
+  desc += `<:users:1243977425725952161> Total users: ${users}\n`;
+  desc += `<a:uptime:1228956558113771580> Websocket Ping: ${client.ws.ping} ms\n`;
+  desc += `<:latency:1243977421812924426> Latency: ${time - interaction.createdTimestamp} ms\n`;
   desc += "\n";
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Bot Info", iconURL: client.user.displayAvatarURL() })
     .setTitle(client.user.username)
-    .setDescription(desc + `**Version:** v${pkg.version}\n**Uptime:** ${client.uptime}`);
-  await interaction.editReply({ embeds: [embed] });
+    .setDescription(desc + `**Version:** v${pkg.version}\n**Uptime:** ${timeformat(client.uptime)}`);
+  const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setURL("https://discord.com/oauth2/authorize?client_id=1121541967730450574")
+      .setLabel("Invite")
+      .setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setURL(client.config.Support).setLabel("Support Server").setStyle(ButtonStyle.Link),
+  );
+  await interaction.editReply({ embeds: [embed], components: [btns] });
+}
+
+function timeformat(timeInSeconds: number) {
+  const days = Math.floor((timeInSeconds % 31536000) / 86400);
+  const hours = Math.floor((timeInSeconds % 86400) / 3600);
+  const minutes = Math.floor((timeInSeconds % 3600) / 60);
+  const seconds = Math.round(timeInSeconds % 60);
+  return (
+    (days > 0 ? `${days} days, ` : "") +
+    (hours > 0 ? `${hours} hours, ` : "") +
+    (minutes > 0 ? `${minutes} minutes, ` : "") +
+    (seconds > 0 ? `${seconds} seconds` : "")
+  );
 }

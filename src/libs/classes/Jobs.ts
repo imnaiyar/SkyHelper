@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { JobOptions } from "#libs";
+import type { JobOptions } from "#libs";
 /**
  * Class to create cron jobs for scheduled events
  */

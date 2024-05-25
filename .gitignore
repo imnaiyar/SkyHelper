@@ -9,3 +9,4 @@ package-lock.json
 test.js
 errors.toml
 dist
+.vscode

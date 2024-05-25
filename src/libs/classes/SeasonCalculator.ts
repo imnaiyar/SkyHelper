@@ -5,7 +5,7 @@ import {
   ComponentType,
   EmbedBuilder,
   GuildMember,
-  InteractionUpdateOptions,
+  type InteractionUpdateOptions,
   StringSelectMenuBuilder,
   User,
   parseEmoji,
@@ -13,7 +13,7 @@ import {
 } from "discord.js";
 import SeasonProgressCard from "#libs/classes/SeasonProgressCard";
 import { SeasonPrices as prices, SeasonData as ssn } from "#libs/constants/seasonPrices";
-import { UserSpiritData } from "#schemas/seasonsData";
+import type { UserSpiritData } from "#schemas/seasonsData";
 import moment from "moment-timezone";
 
 interface UserSpiritProgress {

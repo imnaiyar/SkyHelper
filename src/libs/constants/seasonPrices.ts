@@ -1,4 +1,4 @@
-import { SeasonPrice } from "#libs/types";
+import type { SeasonPrice } from "#libs/types";
 
 /**
  * Spirit prices of the current season (For calculator)

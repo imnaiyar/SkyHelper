@@ -1,5 +1,5 @@
 import {
-  Interaction,
+  type Interaction,
   Collection,
   EmbedBuilder,
   WebhookClient,
@@ -10,7 +10,7 @@ import {
   type ContextMenuCommandInteraction,
 } from "discord.js";
 import type { ContextMenuCommand, SkyHelper, SlashCommand } from "#structures";
-import { parsePerms, Permission } from "skyhelper-utils";
+import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#src/config";
 import { eventTimes } from "#libs/constants/index";
 import { getTimes } from "#handlers/getDailyEventTimes";
@@ -20,9 +20,13 @@ const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.B
 const errorEmbed = new EmbedBuilder()
   .setTitle(`ERROR`)
   .setDescription(`An error occurred while executing this command. Please include the error ID while submiting the bug report`);
-const errorBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
-  new ButtonBuilder().setLabel("Report Bug").setCustomId("error-report").setStyle(ButtonStyle.Secondary),
-);
+const errorBtn = (errorId: string) =>
+  new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setLabel("Report Bug")
+      .setCustomId("error-report" + `_${errorId}`)
+      .setStyle(ButtonStyle.Secondary),
+  );
 
 export default async (client: SkyHelper, interaction: Interaction): Promise<void> => {
   // Slash Commands
@@ -69,14 +73,14 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
         await interaction.followUp({
           ...content,
           embeds: [errorEmbed],
-          components: [errorBtn],
+          components: [errorBtn(errorId)],
         });
         return;
       } else {
         await interaction.reply({
           ...content,
           embeds: [errorEmbed],
-          components: [errorBtn],
+          components: [errorBtn(errorId)],
           ephemeral: true,
         });
         return;
@@ -143,13 +147,13 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
         await interaction.followUp({
           ...content,
           embeds: [errorEmbed],
-          components: [errorBtn],
+          components: [errorBtn(errorId)],
         });
       } else {
         await interaction.reply({
           ...content,
           embeds: [errorEmbed],
-          components: [errorBtn],
+          components: [errorBtn(errorId)],
           ephemeral: true,
         });
       }
@@ -170,13 +174,13 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
         await interaction.followUp({
           ...content,
           embeds: [errorEmbed],
-          components: [errorBtn],
+          components: [errorBtn(errorId)],
         });
       } else {
         await interaction.reply({
           ...content,
           embeds: [errorEmbed],
-          components: [errorBtn],
+          components: [errorBtn(errorId)],
           ephemeral: true,
         });
       }
@@ -192,6 +196,7 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
       });
       const commandUsed = interaction.fields.getTextInputValue("commandUsed");
       const whatHappened = interaction.fields.getTextInputValue("whatHappened");
+      const errorId = interaction.fields.getTextInputValue("errorId");
       const embed = new EmbedBuilder()
         .setTitle("BUG REPORT")
         .addFields(
@@ -208,7 +213,7 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
         )
         .setColor("Blurple")
         .setTimestamp();
-      bLogger?.send({ username: "Bug Report", embeds: [embed] }).catch(() => {});
+      bLogger?.send({ username: "Bug Report", content: `Error ID: \`${errorId}\``, embeds: [embed] }).catch(() => {});
     }
   }
 
@@ -252,7 +257,7 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
 
 /** Validates requirements for Slash and Context Menu commands */
 async function validateCommand(
-  command: SlashCommand | ContextMenuCommand,
+  command: SlashCommand | ContextMenuCommand<"UserContext" | "MessageContext">,
   interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
 ): Promise<boolean> {
   const client = interaction.client as SkyHelper;

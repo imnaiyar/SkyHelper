@@ -1,5 +1,5 @@
 import { getEvent } from "#schemas/Event";
-import { EventType } from "#libs/types";
+import type { EventType } from "#libs/types";
 import moment from "moment-timezone";
 
 type T = EventType | string;

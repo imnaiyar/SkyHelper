@@ -1,15 +1,14 @@
 import type {
-  ContextMenuCommandInteraction,
   ApplicationCommandType,
   UserContextMenuCommandInteraction,
   MessageContextMenuCommandInteraction,
   PermissionResolvable,
 } from "discord.js";
-import type { IntegrationTypes, ContextTypes, ContextMenuType } from "#libs/types";
+import type { IntegrationTypes, ContextTypes } from "#libs/types";
 import type { SkyHelper } from "#structures/SkyHelper";
 /* eslint-disable */
 
-export interface ContextMenuCommand<T extends ContextMenuType = null> {
+export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> {
   data: {
     name: string;
     type: typeof ApplicationCommandType.User | typeof ApplicationCommandType.Message;
@@ -22,11 +21,7 @@ export interface ContextMenuCommand<T extends ContextMenuType = null> {
   cooldown?: number;
 
   execute(
-    interaction: T extends "UserContext"
-      ? UserContextMenuCommandInteraction
-      : T extends "MessageContext"
-        ? MessageContextMenuCommandInteraction
-        : ContextMenuCommandInteraction,
+    interaction: T extends "UserContext" ? UserContextMenuCommandInteraction : MessageContextMenuCommandInteraction,
     client: SkyHelper,
   ): Promise<void>;
 }

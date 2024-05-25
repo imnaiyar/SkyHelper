@@ -17,7 +17,7 @@ export default {
     botPermissions: ["ViewChannel", "SendMessages"],
     category: "OWNER",
   },
-  async execute(message, args, flags) {
+  async execute({ message, args, flags }) {
     /* eslint-disable no-unused-vars */
     /* @ts-ignore */
     const { author, guild, member, channel, client } = message;

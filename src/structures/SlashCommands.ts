@@ -4,9 +4,9 @@ import type {
   PermissionResolvable,
   APIApplicationCommandOption,
 } from "discord.js";
-import type { SkyHelper } from "#structures";
 
 import type { IntegrationTypes, ContextTypes } from "#libs/types";
+import type { SkyHelper } from "#structures";
 /* eslint-disable */
 
 export interface SlashCommand<Autocomplete extends boolean = false> {
