@@ -13,7 +13,8 @@ export default {
   CDN_URL: "https://cdn.imnaiyar.site",
   DASHBOARD: {
     enabled: true,
-    port: "1592",
+    WEB_URL: "http://localhost:3000", // https://dash.skyhelper.xyz
+    port: "8080",
   },
   Support: "https://discord.gg/u9zUjWbbQ4",
 
