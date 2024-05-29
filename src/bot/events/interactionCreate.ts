@@ -220,10 +220,10 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
   // Select Menus
   if (interaction.isStringSelectMenu()) {
     if (interaction.customId === "skytimes-details") {
-      const buildEmbed = (data: string, info: any, type: string) => {
+      const buildEmbed = (data: string, info: { title: string; description: string }, type: string) => {
         return new EmbedBuilder()
           .setTitle(type + " Times")
-          .setDescription(info + `\n\nTimeline\n` + data)
+          .setDescription(`${info.description}\n\nTimeline\n` + data)
           .setColor("Random");
       };
       const fulltimes = eventTimes();
