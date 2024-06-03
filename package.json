@@ -1,6 +1,6 @@
 {
   "name": "skyhelper",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "A Bot for Sky: Children of the Light",
   "main": "dist/src/index.js",
   "type": "module",
@@ -11,10 +11,10 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "bun run src/index.ts",
+    "start": "npm run build && node dist/src/index.js",
     "build": "tsc -p tsconfig.json",
     "dev": "bun run src/index.ts",
-    "commands": "bun run src/libs/registerCommands.ts",
+    "commands": "node dist/src/libs/registerCommands.js",
     "bun-cmd": "bun run src/libs/registerCommands.ts",
     "format": "npx prettier --write \"**/*.{js,css,ejs, ts}\""
   },
