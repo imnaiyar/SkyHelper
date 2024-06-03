@@ -36,7 +36,7 @@
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.43",
-    "mongoose": "^7.5.0",
+    "mongoose": "^8.4.1",
     "node-cron": "^3.0.3",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
