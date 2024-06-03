@@ -109,8 +109,6 @@ export class SkyHelper extends Client<true> {
                 MessageManager: 0,
                 ReactionManager: 0,
                 ReactionUserManager: 0,
-                GuildMemberManager: 0,
-                UserManager: 0,
                 DMMessageManager: 0,
                 GuildForumThreadManager: 0,
                 GuildMessageManager: 0,
