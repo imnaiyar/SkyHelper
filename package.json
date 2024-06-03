@@ -2,7 +2,7 @@
   "name": "skyhelper",
   "version": "5.0.0",
   "description": "A Bot for Sky: Children of the Light",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "type": "module",
   "keywords": [
     "SkyCoTL",
@@ -26,7 +26,6 @@
     "@nestjs/core": "^10.3.8",
     "@nestjs/platform-express": "^10.3.8",
     "@sapphire/stopwatch": "^1.5.2",
-    "@sapphire/type": "^2.4.4",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "cropify": "^1.0.9",
@@ -50,34 +49,34 @@
   },
   "imports": {
     "#handlers": [
-      "./dist/bot/handlers/index.js"
+      "./dist/src/handlers/index.js"
     ],
     "#handlers/*": [
-      "./dist/bot/handlers/*.js"
+      "./dist/src/handlers/*.js"
     ],
     "#src/*": [
-      "./dist/*.js"
+      "./dist/src/*.js"
     ],
     "#commands/*": [
-      "./dist/bot/commands/*.js"
+      "./dist/src/commands/*.js"
     ],
     "#root/*": [
       "./*"
     ],
     "#schemas/*": [
-      "./dist/bot/database/schemas/*.js"
+      "./dist/src/database/schemas/*.js"
     ],
     "#structures/*": [
-      "./dist/bot/structures/*.js"
+      "./dist/src/structures/*.js"
     ],
     "#structures": [
-      "./dist/bot/structures/index.js"
+      "./dist/src/structures/index.js"
     ],
     "#libs/*": [
-      "./dist/bot/libs/*.js"
+      "./dist/src/libs/*.js"
     ],
     "#libs": [
-      "./dist/bot/libs/index.js"
+      "./dist/src/libs/index.js"
     ]
   },
   "devDependencies": {

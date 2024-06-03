@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module.js";
-import config from "../config.js";
+import config from "../src/config.js";
 import { logger } from "#handlers";
 export async function Dashboard() {
   const app = await NestFactory.create(AppModule);

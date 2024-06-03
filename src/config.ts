@@ -12,7 +12,8 @@ export default {
   WEB_URL: "https://skyhelper.xyz",
   CDN_URL: "https://cdn.imnaiyar.site",
   DASHBOARD: {
-    enabled: true,
+    enabled: false,
+    /** Web URL requesting to the API*/
     WEB_URL: "http://localhost:3000", // https://dash.skyhelper.xyz
     port: "8080",
   },

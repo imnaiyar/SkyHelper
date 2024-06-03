@@ -16,7 +16,7 @@ import { recursiveReadDir } from "skyhelper-utils";
 import { logger as Logger } from "#handlers";
 import path from "node:path";
 import chalk from "chalk";
-import * as schemas from "#src/bot/database/index";
+import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import { spiritsData } from "#libs";
@@ -108,7 +108,8 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const eventName = path.basename(file, ".ts");
+        const ext = process.argv[0].includes("bun") ? ".ts" : ".js"
+        const eventName = path.basename(file, ext);
         const { default: event } = await import(pathToFileURL(filePath).href);
 
         this.on(eventName, event.bind(null, this));
