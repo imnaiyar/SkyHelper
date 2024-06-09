@@ -1,13 +1,11 @@
 import type { SpiritsData } from "#libs/types";
-interface data {
-  [key: string]: SpiritsData;
-}
+
 /**
  * Spirits Data
  * @example
  * const data = spiritsData["backflipping_champion"];
  */
-export default <data>{
+export default <Record<string, SpiritsData>>{
   // Isle
   candlemaker: {
     name: "Pointing Candlemaker",
@@ -46,7 +44,6 @@ export default <data>{
     realm: "Isle of Dawn",
     main: {
       description: "Ushering Stargazer Infographics by Ed.7",
-      total: " ",
       image: "Ushering-Stargazer-Guide-777-Ed.webp",
     },
     emote: {
@@ -77,7 +74,6 @@ export default <data>{
     realm: "Isle of Dawn",
     main: {
       description: "Rejecting Voyager Infographics by Ed.7",
-      total: " ",
       image: "Rejecting-Voyager-Guide-777-Ed.webp",
     },
     emote: {
@@ -102,6 +98,7 @@ export default <data>{
       ],
     },
   },
+
   // prairie
   applauding_bellmaker: {
     name: "Applauding Bellmaker",
@@ -109,7 +106,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Applauding Bellmaker Infographics by Ed.7",
-      total: " ",
       image: "Applauding-Bellmaker-Guide-777-Ed.webp",
     },
     emote: {
@@ -140,7 +136,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Bird Whisperer Infographics by Ed.7",
-      total: " ",
       image: "Bird-Whisperer-Guide-777-Ed.webp",
     },
     call: {
@@ -155,7 +150,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Butterfly Charmer Infographics by Ed.7",
-      total: " ",
       image: "Butterfly-Charmer-Guide-777-Ed.png",
     },
     emote: {
@@ -186,7 +180,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Ceremonial Worshipper Infographics by Ed.7",
-      total: " ",
       image: "Ceremonial-Worshiper-Guide-777-Ed.png",
     },
     emote: {
@@ -205,7 +198,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Exhausted Dock Worker Infographics by Ed.7",
-      total: " ",
       image: "Exhausted-Dock-Worker-Guide-777-Ed.png",
     },
     emote: {
@@ -236,7 +228,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Laughing Light Catcher Infographics by Ed.7",
-      total: " ",
       image: "Laughing-Light-Catcher-Guide-777-Ed.webp",
     },
     emote: {
@@ -267,7 +258,6 @@ export default <data>{
     realm: "Daylight Prairie",
     main: {
       description: "Slumbering Shipwright Infographics by Ed.7",
-      total: " ",
       image: "Slumbering-Shipwright-Guide-777-Ed.webp",
     },
     emote: {
@@ -989,7 +979,83 @@ export default <data>{
       ],
     },
   },
+  // Seasonal
+  //nesting
+  solarium: {
+    name: "Nesting Solarium",
+    type: "Seasonal Spirit",
+    realm: "Aviary Village",
+    season: "Nesting",
+    current: true,
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "Mimi and Sam",
+      total: " ",
+      image: "Solarium_Tree_Mimi.jpg",
+    },
+    cosmetics: [{}],
+  },
 
+  loft: {
+    name: "Nesting Loft",
+    type: "Seasonal Spirit",
+    realm: "Aviary Village",
+    season: "Nesting",
+    current: true,
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "Mimi and Sam",
+      total: " ",
+      image: "Loft_Tree_Mimi.jpg",
+    },
+    cosmetics: [{}],
+  },
+
+  atrium: {
+    name: "Nesting Atrium",
+    type: "Seasonal Spirit",
+    realm: "Aviary Village",
+    season: "Nesting",
+    current: true,
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "Mimi and Sam",
+      total: " ",
+      image: "Atrium_Tree_Mimi.jpg",
+    },
+    cosmetics: [{}],
+  },
+
+  nook: {
+    name: "Nesting Nook",
+    type: "Seasonal Spirit",
+    realm: "Aviary Village",
+    season: "Nesting",
+    current: true,
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "Mimi and Sam",
+      total: " ",
+      image: "Nook_Tree_Mimi.jpg",
+    },
+    cosmetics: [{}],
+  },
   // nine colored deer
   hunter: {
     name: "Hunter",
@@ -1162,7 +1228,7 @@ export default <data>{
     type: "Seasonal Spirit",
     season: "Revival",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -1178,7 +1244,7 @@ export default <data>{
     type: "Seasonal Spirit",
     season: "Revival",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -1194,7 +1260,7 @@ export default <data>{
     type: "Seasonal Spirit",
     season: "Revival",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -1210,7 +1276,7 @@ export default <data>{
     type: "Seasonal Spirit",
     season: "Revival",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -1236,7 +1302,7 @@ export default <data>{
     tree: {
       by: "NyR",
       total: " ",
-      image: "Nightbird_Seasonal_Chart_NyR.png",
+      image: "Nightbird_Seasonal_Chart_NyR-1.png",
     },
     location: {
       by: "Mimi and Sam",
@@ -2990,13 +3056,13 @@ export default <data>{
     season: "Dreams",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: ["April 25, 2024 (#112)"],
     },
     tree: {
       by: "NyR",
-      total: " ",
-      image: "Dancing_Performer_Seasonal_Chart_NyR-1.jpg",
+      total: "251 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Dancing_Performer_Tree_NyR-1.png",
     },
     location: {
       by: "Clement",
@@ -4440,8 +4506,14 @@ export default <data>{
     ts: {
       eligible: true,
       returned: true,
-      total: "4",
-      dates: ["December 08, 2022 (#76)", "July 08, 2021 (#39)", "May 28, 2020 (#10)", "January 31, 2020 (#1)"],
+      total: "5",
+      dates: [
+        "April 11, 2024 (#111)",
+        "December 08, 2022 (#76)",
+        "July 08, 2021 (#39)",
+        "May 28, 2020 (#10)",
+        "January 31, 2020 (#1)",
+      ],
     },
     tree: {
       by: "Jed",

@@ -11,7 +11,7 @@ import type { SkyHelper } from "#structures/SkyHelper";
 export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> {
   data: {
     name: string;
-    type: typeof ApplicationCommandType.User | typeof ApplicationCommandType.Message;
+    type: T extends "UserContext" ? typeof ApplicationCommandType.User : typeof ApplicationCommandType.Message;
     integration_types?: IntegrationTypes[];
     contexts?: ContextTypes[];
     userPermissions?: PermissionResolvable[];

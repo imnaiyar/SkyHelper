@@ -8,3 +8,4 @@ test.js
 errors.toml
 dist
 .vscode
+bun.lockb
