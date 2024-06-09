@@ -26,11 +26,6 @@
 </p>
 
 <br>
-<div align="center">
-  <a href="https://top.gg/bot/1121541967730450574">
-    <img src="https://top.gg/api/widget/1121541967730450574.svg" alt="Discord Bots">
-  </a>
-</div>
 
 ## Building the bot
 - Clone this repository by running
