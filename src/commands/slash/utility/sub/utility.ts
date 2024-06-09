@@ -71,7 +71,7 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction) {
           suggWb?.send({ embeds: [embed] });
         });
     })
-    .catch(console.error);
+    .catch((err) => client.logger.error(err));
 }
 
 export async function getChangelog(interaction: ChatInputCommandInteraction) {
