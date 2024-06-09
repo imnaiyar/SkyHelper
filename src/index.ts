@@ -18,7 +18,7 @@ console.log(
         "\n\n<------------------------ Dashboard --------------------------->\n"
     )
 );
-if (client.config.DASHBOARD.enabled) Dashboard();
+if (client.config.DASHBOARD.enabled) Dashboard(client);
 // Catching unhandle rejections
 process.on("unhandledRejection", err => client.logger.error(err));
 process.on("uncaughtException", err => client.logger.error(err));

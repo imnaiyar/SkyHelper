@@ -1,5 +1,5 @@
 import { getEventEmbed } from "#handlers";
-import { BotService } from "../services/bot.service.js";
+import type { SkyHelper as BotService } from "#structures";
 import getSettings from "../utils/getSettings.js";
 import type { TextChannel, WebhookMessageCreateOptions } from "discord.js";
 

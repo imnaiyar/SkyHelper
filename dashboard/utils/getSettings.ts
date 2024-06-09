@@ -1,4 +1,4 @@
-import type { BotService } from "../services/bot.service.js";
+import type { SkyHelper as BotService } from "#structures";
 
 /**
  * Get the guild settings from database

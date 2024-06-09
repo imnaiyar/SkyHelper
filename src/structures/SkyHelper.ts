@@ -17,6 +17,8 @@ import type {
     PrefixCommand,
     ContextMenuCommand
 } from "#structures";
+import { HttpException, HttpStatus } from "@nestjs/common";
+import { getUserID, type UserSession } from "../../dashboard/utils/discord.js";
 import config from "#src/config";
 import { recursiveReadDir } from "skyhelper-utils";
 import { logger as Logger } from "#handlers";
@@ -456,5 +458,24 @@ export class SkyHelper extends Client<true> {
                   })();
         if (!command) throw new Error("No matching command found");
         return command;
+    }
+
+    public async checkPermissions(user: UserSession, guildID: string) {
+        const guild = this.guilds.cache.get(guildID);
+        if (guild == null)
+            throw new HttpException("Guild Not found", HttpStatus.NOT_FOUND);
+
+        const userID = await getUserID(user.access_token);
+        const member = await guild?.members.fetch(userID);
+
+        if (
+            !member?.permissions.has("Administrator") &&
+            guild.ownerId !== member.id
+        ) {
+            throw new HttpException(
+                "Missing permissions",
+                HttpStatus.BAD_REQUEST
+            );
+        }
     }
 }

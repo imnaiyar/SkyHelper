@@ -2,7 +2,7 @@ import { buildShardEmbed } from "#handlers";
 import moment from "moment";
 import getSettings from "../utils/getSettings.js";
 import type { TextChannel } from "discord.js";
-import type { BotService } from "../services/bot.service.js";
+import type { SkyHelper as BotService } from "#structures";
 
 export class LiveShard {
   static async get(client: BotService, guildId: string) {
