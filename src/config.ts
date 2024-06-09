@@ -5,7 +5,7 @@ export default {
     USERS: 200000,
     MEMBERS: 200000,
   },
-  PREFIX: ".",
+  PREFIX: ",",
   BOT_ICON: "https://cdn.imnaiyar.site/bot-icon.gif",
 
   //  WEB_URL: 'http://localhost:5001',
