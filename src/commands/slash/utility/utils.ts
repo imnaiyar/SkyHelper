@@ -108,7 +108,7 @@ async function handleInfo(interaction: ChatInputCommandInteraction, time: number
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Bot Info", iconURL: client.user.displayAvatarURL() })
     .setTitle(client.user.username)
-    .setDescription(desc + `**Version:** v${pkg.version}\n**Uptime:** ${timeformat(client.uptime)}`);
+    .setDescription(desc + `**Version:** v${pkg.version}\n**Uptime:** ${timeformat(client.uptime / 1000)}`);
   const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setURL("https://discord.com/oauth2/authorize?client_id=1121541967730450574")
