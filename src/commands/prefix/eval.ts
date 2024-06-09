@@ -1,7 +1,7 @@
 import type { PrefixCommand, SkyHelper } from "#structures";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { Type } from "@sapphire/type";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, codeBlock } from "discord.js";
 // @ts-ignore
 // eslint-disable-next-line
 import * as d from "discord.js";
@@ -31,7 +31,7 @@ export default {
       const output = await eval(code);
       time.stop();
       const type = new Type(output).toString();
-      response = await buildSuccessResponse(output, message.client as SkyHelper, type, time, flags.has("haste"), depth);
+      response = await buildSuccessResponse(output, message.client as SkyHelper, type, time, flags.has("haste"), depth, code);
     } catch (ex) {
       errored = true;
       response = await buildErrorResponse(ex);
@@ -42,7 +42,7 @@ export default {
 } satisfies PrefixCommand;
 
 // prettier-ignore
-async function buildSuccessResponse(output: any, client: SkyHelper, type: string, time: any, haste: boolean, depth: number): Promise<{
+async function buildSuccessResponse(output: any, client: SkyHelper, type: string, time: any, haste: boolean, depth: number, input: any): Promise<{
   embeds: EmbedBuilder[];
 }> {
   // Token protection
@@ -50,13 +50,13 @@ async function buildSuccessResponse(output: any, client: SkyHelper, type: string
   let embOutput;
 
   if (!haste && output.length <= 2048) {
-    embOutput = `\`\`\`js\n${output}\n\`\`\``;
+    embOutput = codeBlock("js", output);
   } else {
     embOutput = await postToHaste(output);
   }
   const embed = new EmbedBuilder()
     .setAuthor({ name: "📤 Output" })
-    .setDescription(embOutput)
+    .setDescription(`**Input**\n\n` + codeBlock(input) + "\n**Output**\n\n" + embOutput)
     .addFields({
       name: `Type`,
       value: `\`\`\`\n${type ? type : "Unknown"}\`\`\``,
