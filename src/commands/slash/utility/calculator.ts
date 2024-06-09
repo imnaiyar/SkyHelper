@@ -4,8 +4,8 @@ import { SeasonCalculator, SeasonData as sn } from "#libs/index";
 import moment from "moment";
 export default {
   data: {
-    name: "seasona-calculator",
-    description: "calculate currencies",
+    name: "seasonal-calculator",
+    description: "calculate seasonal currencies",
     integration_types: [0, 1],
     contexts: [0, 1, 2],
     options: [
