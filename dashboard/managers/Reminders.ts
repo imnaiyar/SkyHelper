@@ -15,7 +15,11 @@ const payload = (r: GuildSchema["reminders"]) => ({
 export class Reminders {
   static async get(client: BotService, guildId: string): Promise<ReminderFeature | null> {
     const settings = await getSettings(client, guildId);
-
+    if (settings?.reminders.webhook.id && !settings.reminders.webhook.channelId) {
+      const wb = await client.fetchWebhook(settings.reminders.webhook.id);
+      if (wb) settings.reminders.webhook.channelId === wb.channelId;
+      await settings.save();
+    }
     return settings?.reminders?.active ? payload(settings.reminders) : null;
   }
 
