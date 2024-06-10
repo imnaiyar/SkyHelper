@@ -2,9 +2,10 @@ import type { GuildSchema } from "#libs";
 import getSettings from "../utils/getSettings.js";
 import type { TextChannel } from "discord.js";
 import type { SkyHelper as BotService } from "#structures";
+import type { ReminderFeature } from "../types.js";
 const payload = (r: GuildSchema["reminders"]) => ({
-  channel: r.webhook.channelId,
-  default_role: r.default_role,
+  channel: r.webhook.channelId ?? undefined,
+  default_role: r.default_role ?? undefined,
   geyser: r.geyser.active,
   grandma: r.grandma.active,
   turtle: r.turtle.active,
@@ -12,7 +13,7 @@ const payload = (r: GuildSchema["reminders"]) => ({
 });
 
 export class Reminders {
-  static async get(client: BotService, guildId: string) {
+  static async get(client: BotService, guildId: string): Promise<ReminderFeature | null> {
     const settings = await getSettings(client, guildId);
 
     return settings?.reminders?.active ? payload(settings.reminders) : null;

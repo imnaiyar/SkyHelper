@@ -9,7 +9,7 @@ export class LiveShard {
     const settings = await getSettings(client, guildId);
     if (!settings) return null;
     if (!settings.autoShard.active) return null;
-    if (!settings.autoShard.webhook.id) return JSON.stringify({ channel: undefined });
+    if (!settings.autoShard.webhook.id) return { channel: undefined };
     const wb = await client.fetchWebhook(settings.autoShard.webhook.id).catch(() => {});
     if (!wb) return { channel: undefined };
     return { channel: wb.channelId };

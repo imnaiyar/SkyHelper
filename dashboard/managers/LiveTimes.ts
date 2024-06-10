@@ -8,7 +8,7 @@ export class LiveTimes {
     const settings = await getSettings(client, guildId);
     if (!settings) return null;
     if (!settings.autoTimes.active) return null;
-    if (!settings.autoTimes.webhook.id) return JSON.stringify({ channel: undefined });
+    if (!settings.autoTimes.webhook.id) return { channel: undefined };
     const wb = await client.fetchWebhook(settings.autoTimes.webhook.id).catch(() => {});
     if (!wb) return { channel: undefined };
     return { channel: wb.channelId };

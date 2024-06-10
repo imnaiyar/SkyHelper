@@ -1,4 +1,3 @@
-
 <h1 align="center">
   <br>
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/boticon.png" height="200" alt="SkyHelper"></a>
@@ -16,11 +15,13 @@
 <p align="center">
   <a href="https://skyhelper.xyz">Website</a>
   •
+  <a href="https://dash.skyhelper.xyz">Dashboard</a>
+  •
   <a href="https://skyhelper.xyz/invite">Invite</a>
   •
   <a href="https://skyhelper.xyz/vote">Vote</a>
   •
-  <a href="https://docs.skyhelper.xyz">Documentation</a>
+  <a href="./documentations/Credits.md">Credits</a>
   •
   <a href="https://discord.com/invite/u9zUjWbbQ4">Support Server</a>
 </p>
@@ -28,40 +29,68 @@
 <br>
 
 ## Building the bot
+
 - Clone this repository by running
+
 ```js
 git clone https://github.com/imnaiyar/SkyHelper
 ```
+
 - Rename `example.env` to `.env` and fill all the required fields.
 - Install the required deps by running `npm i`
 - Run `npm run build` to build the project
-- Run ```npm run commands``` to register the slash commands.
+- Run `npm run commands` to register the slash commands.
 - [Prefix Commands](https://github.com/imnaiyar/SkyHelper/tree/main/src%2Fcommands%2Fprefix) is for my personal use and you can chose to delete the folder if you wish. Should you delete, `messageCreate.ts` event won't be needed either and you can remove that too.
 - Run `npm start` to start the project
-# Credits
-This bot wouldn't be possible without these people and the work they do.    
-  
-**__Shards Predictions__**
-- Zhii (zhiiran4275)
-- Christian (christiankingfu)
-- Hucker (hucker_)  
-- Plutoy (plutoy)  
-- Kion (kion_anzu)  
-- LN (ln.cookie)  
-- Gale (galerowfylery)  
-- Stoat (.stoat.)  
-  
-**__Seosanal Guides__**  
-- Clement (clement8978)  
-- Mimi (mimi4117)  
-- Sam (sam6917)  
-- Zed (zedlocked_)  
-- Art (lovecry)  
-**and all others who do the awesome job of creating guides.**  
-  
-**__Special Mentions__**  
-- Big thanks to Xander (_a.l._) and Christian (christiankingfu) for testing the early version of this bot.  
-- Thanks to Plutoy (plutoy) for creating the [Sky Shards website](https://sky-shards.pages.dev/), which was the initial inspiration for the bot.  
-- Emotes icon, traveling spirits descriptions and some aspects of guides have been taken from [Sky Wiki](https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki).
+
+## Dashboard
+
+Only backend is hosted with the bot, front-end is a closed-source, unless you can build your own front-end, it's better if you disable it before running the bot
+`src > config.ts`
+
+```js
+DASHBOARD: {
+  enabled: false,
+  ...//
+}
+```
+
+### Endpoints
+
+Endpoints available for the dashboards are:-
+
+#### `GET /guilds/{guild}`
+
+Get guild info (`dashboard > types.ts > GuildInfo`)  
+Respond 404 or null if bot hasn't joined the guild
+
+#### `GET /guilds/{guild}/features/{feature}`
+
+Get Feature options (`dashboard > types.ts`)
+Respond 404 if not enabled
+
+#### `PATCH /guilds/{guild}/features/{feature}`
+
+Update feature options
+With custom body (defined in `dashboard > types.ts > Features[K]`)
+Respond updated feature options
+
+#### `POST /guilds/{guild}/features/{feature}`
+
+Enable a feature
+
+#### `DELETE /guilds/{guild}/features/{feature}`
+
+Disable a feature
+
+#### `GET /guilds/{guild}/roles`
+
+Get Roles of the guild
+Responds a list of Role Object (Same as discord documentation)
+
+#### `GET /guilds/{guild}/channels`
+
+Get Channels of the guild
+Responds a list of Guild Channel (Same as discord documentation)
 
 <h6 align="center">This bot is not affiliated with Sky: Children of the Light or thatgamecompany<h6>
