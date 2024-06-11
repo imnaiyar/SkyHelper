@@ -980,7 +980,7 @@ export default <Record<string, SpiritsData>>{
     },
   },
   // Seasonal
-  //nesting
+  // nesting
   solarium: {
     name: "Nesting Solarium",
     type: "Seasonal Spirit",

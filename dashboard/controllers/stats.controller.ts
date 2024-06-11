@@ -1,6 +1,7 @@
 import { Controller, Get, Inject } from "@nestjs/common";
 import { SkyHelper as BotService } from "#structures";
-import type { BotStats } from "../types.js";
+import type { BotStats, SpiritData } from "../types.js";
+import { parseEmoji } from "discord.js";
 @Controller("/stats")
 export class StatsController {
   // eslint-disable-next-line
@@ -18,5 +19,17 @@ export class StatsController {
       ping: ping,
       commands: commands,
     };
+  }
+  @Get("spirits")
+  async getSpirits(): Promise<SpiritData[]> {
+    const spirits = this.bot.spiritsData;
+    const toReturn = Object.entries(spirits).map(([k, v]) => {
+      const emoji = v.call || v.emote || v.action || v.stance;
+      const id = emoji && parseEmoji(emoji.icon)?.id;
+      const url = id && this.bot.emojis.cache.get(id)?.imageURL();
+      const t = { name: v.name, value: k, ...(url && { icon: url }) };
+      return t;
+    });
+    return toReturn;
   }
 }

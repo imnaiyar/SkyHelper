@@ -16,6 +16,7 @@ export default {
     /** Web URL requesting to the API*/
     WEB_URL: ["http://localhost:3000", "https://dash.skyhelper.xyz", "https://skyhelper.xyz", "https://dashboard.skyhelper.xyz"], // https://dash.skyhelper.xyz
     port: "5000",
+    ADMINS: ["851588007697580033"],
   },
   Support: "https://discord.gg/u9zUjWbbQ4",
 

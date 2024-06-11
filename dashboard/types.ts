@@ -6,7 +6,11 @@ export type ReminderFeature = {
   turtle?: boolean;
   reset?: boolean;
 };
-
+export type SpiritData = {
+  name: string;
+  value: string;
+  icon?: string;
+};
 export type Features = {
   "shards-live": {
     channel?: string;
@@ -28,4 +32,16 @@ export interface BotStats {
   totalMembers: number;
   ping: number;
   commands: number;
+}
+
+export interface EventData {
+  name: string;
+  startDate: string;
+  endDate: string;
+}
+export interface TSData {
+  spirit: string;
+  visitDate: string;
+  spiritImage: string;
+  index: string;
 }
