@@ -14,7 +14,13 @@ export default {
   DASHBOARD: {
     enabled: true,
     /** Web URL requesting to the API*/
-    WEB_URL: ["http://localhost:3000", "https://dash.skyhelper.xyz", "https://skyhelper.xyz", "https://dashboard.skyhelper.xyz"], // https://dash.skyhelper.xyz
+    WEB_URL: [
+      "http://localhost:3000",
+      "https://dash.skyhelper.xyz",
+      "https://skyhelper.xyz",
+      "https://dashboard.skyhelper.xyz",
+      "https://preview.skyhelper.xyz",
+    ], // https://dash.skyhelper.xyz
     port: "5000",
     ADMINS: ["851588007697580033"],
   },

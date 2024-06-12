@@ -1,10 +1,22 @@
 export type ReminderFeature = {
   channel?: string;
   default_role?: string;
-  geyser?: boolean;
-  grandma?: boolean;
-  turtle?: boolean;
-  reset?: boolean;
+  geyser?: {
+    active: boolean;
+    role: string | null;
+  };
+  grandma?: {
+    active: boolean;
+    role: string | null;
+  };
+  turtle?: {
+    active: boolean;
+    role: string | null;
+  };
+  reset?: {
+    active: boolean;
+    role: string | null;
+  };
 };
 export type SpiritData = {
   name: string;

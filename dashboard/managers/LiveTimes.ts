@@ -57,15 +57,15 @@ export class LiveTimes {
   }
   static async delete(client: BotService, guildId: string): Promise<"Success"> {
     const data = await getSettings(client, guildId);
-    if (!data || !data.autoTimes.webhook.id) return "Success";
+    if (!data || !data.autoTimes.active) return "Success";
+    data.autoTimes.active = false;
 
-    const wb = await client.fetchWebhook(data.autoTimes.webhook.id).catch(() => {});
+    const wb = data.autoTimes.webhook.id && (await client.fetchWebhook(data.autoTimes.webhook.id).catch(() => {}));
     if (wb) {
       const msg = await wb.fetchMessage(data.autoTimes.messageId!).catch(() => {});
       if (msg) await wb.deleteMessage(msg).catch(() => {});
       await wb.delete();
     }
-    data.autoTimes.active = false;
     data.autoTimes.messageId = "";
     data.autoTimes.webhook.id = null;
     data.autoTimes.webhook.token = null;

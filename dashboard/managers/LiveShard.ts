@@ -58,15 +58,14 @@ export class LiveShard {
   }
   static async delete(client: BotService, guildId: string): Promise<"Success"> {
     const data = await getSettings(client, guildId);
-    if (!data || !data.autoShard.webhook.id) return "Success";
-
-    const wb = await client.fetchWebhook(data.autoShard.webhook.id).catch(() => {});
+    if (!data || !data.autoShard.active) return "Success";
+    data.autoShard.active = false;
+    const wb = data.autoShard.webhook.id && (await client.fetchWebhook(data.autoShard.webhook.id).catch(() => {}));
     if (wb) {
       const msg = await wb.fetchMessage(data.autoShard.messageId!).catch(() => {});
       if (msg) await wb.deleteMessage(msg).catch(() => {});
       await wb.delete();
     }
-    data.autoShard.active = false;
     data.autoShard.messageId = "";
     data.autoShard.webhook.id = null;
     data.autoShard.webhook.token = null;
