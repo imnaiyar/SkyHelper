@@ -18,8 +18,8 @@ export class GuildController {
     const settings = await getSettings(this.bot, guild);
     const actives: Array<keyof Features> = [];
     if (settings?.reminders.active) actives.push("reminders");
-    if (settings?.autoShard.active) actives.push("times-live");
-    if (settings?.autoTimes.active) actives.push("shards-live");
+    if (settings?.autoTimes.active) actives.push("times-live");
+    if (settings?.autoShard.active) actives.push("shards-live");
     return {
       id: data.id,
       name: data.name,
