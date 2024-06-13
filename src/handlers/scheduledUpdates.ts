@@ -53,7 +53,7 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
       if (!wb) return;
 
       const roleid = typesEnum[type]?.role ?? default_role ?? "";
-      const role = roleid && `Hey ${roleMention(roleid)}`;
+      const role = roleid && `Hey ${roleMention(roleid)}, `;
 
       let response = null;
       if (typesEnum[type].active) response = getResponse(type, role);
@@ -71,6 +71,9 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
           username: `${type.charAt(0).toUpperCase() + type.slice(1)} Reminder`,
           avatarURL: client.user.displayAvatarURL(),
           content: response,
+          allowedMentions: {
+            parse: ["roles"],
+          },
         })
         .catch((err) => {
           client.logger.error(guild.data.name + ": ", err);
