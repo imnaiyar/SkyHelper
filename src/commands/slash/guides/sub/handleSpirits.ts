@@ -12,8 +12,8 @@ import {
 export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRealm: SeasonData | string) {
   const client = int.client as SkyHelper;
   const spirits = Object.entries(client.spiritsData).filter(([, v]) => {
-    if (typeof seasonOrRealm !== "string") return v.season && v.season === seasonOrRealm.name;
-    return v.realm && v.realm === seasonOrRealm;
+    if (typeof seasonOrRealm !== "string") return v.season && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
+    return v.realm && v.realm.toLowerCase() === seasonOrRealm.toLowerCase();
   });
   let value = spirits[0][0];
   const placehoder = typeof seasonOrRealm === "string" ? `${seasonOrRealm} Spirits` : `Season of ${seasonOrRealm.name}`;
@@ -34,7 +34,11 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
         ),
     );
     const manager = new Spirits(data, client);
-    const msg = await i.editReply({ embeds: [manager.getEmbed()], components: [row, manager.getButtons()] });
+    const btns = manager.getButtons();
+    const msg = await i.editReply({
+      embeds: [manager.getEmbed()],
+      ...(btns.data.components?.length ? { components: [row, manager.getButtons()] } : { components: [row] }),
+    });
     sprtCltr = await manager.handleInt(int);
     return msg;
   };
