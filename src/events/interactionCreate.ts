@@ -14,6 +14,7 @@ import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#src/config";
 import { eventTimes } from "#libs/constants/index";
 import { getTimes } from "#handlers/getDailyEventTimes";
+import { getTranslator } from "#src/il8n";
 
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
@@ -39,9 +40,9 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
 
     const isChecked = await validateCommand(command, interaction);
     if (!isChecked) return;
-
+    const t = getTranslator(client.lang);
     try {
-      await command.execute(interaction, client);
+      await command.execute(interaction, client, t);
       const embed = new EmbedBuilder()
         .setTitle("New command used")
         .addFields(
@@ -274,7 +275,7 @@ async function validateCommand(
     if (interaction.inGuild()) {
       if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.data.userPermissions)) {
         await interaction.reply({
-          content: `You don't have necessary permission(s) (${parsePerms([command.data.userPermissions as unknown as Permission])}) to use this command`,
+          content: `You don't have necessary permission(s) (${parsePerms([command.data.userPermissions as unknown as Permission])}) to use this command.`,
           ephemeral: true,
         });
         return false;

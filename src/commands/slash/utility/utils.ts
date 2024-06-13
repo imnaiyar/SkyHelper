@@ -14,6 +14,24 @@ import { handleTimestamp } from "./sub/timestamp.js";
 import { getChangelog, getSuggestion } from "./sub/utility.js";
 
 export default {
+  async execute(interaction) {
+    const sub = interaction.options.getSubcommand();
+    switch (sub) {
+      case "changelog":
+        await getChangelog(interaction);
+        break;
+      case "botinfo": {
+        const reply = await interaction.deferReply({ fetchReply: true });
+        await handleInfo(interaction, reply.createdTimestamp);
+        break;
+      }
+      case "contact-us":
+        await getSuggestion(interaction);
+        break;
+      case "timestamp":
+        await handleTimestamp(interaction);
+    }
+  },
   data: {
     name: "utils",
     description: "Utilities",
@@ -75,24 +93,6 @@ export default {
     ],
   },
   category: "Utility",
-  async execute(interaction) {
-    const sub = interaction.options.getSubcommand();
-    switch (sub) {
-      case "changelog":
-        await getChangelog(interaction);
-        break;
-      case "botinfo": {
-        const reply = await interaction.deferReply({ fetchReply: true });
-        await handleInfo(interaction, reply.createdTimestamp);
-        break;
-      }
-      case "contact-us":
-        await getSuggestion(interaction);
-        break;
-      case "timestamp":
-        await handleTimestamp(interaction);
-    }
-  },
 } satisfies SlashCommand;
 
 async function handleInfo(interaction: ChatInputCommandInteraction, time: number): Promise<void> {

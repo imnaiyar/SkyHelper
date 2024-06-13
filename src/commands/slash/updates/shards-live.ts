@@ -86,7 +86,7 @@ export default {
       const wb = await client.createWebhook(channel, "For live Shards Update");
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const result = await buildShardEmbed(currentDate, "Live Shard (updates every 5 minutes)", true);
+      const result = buildShardEmbed(currentDate, "Live Shard (updates every 5 minutes)", true);
       const msg = await wb.send({
         username: "Shards Updates",
         avatarURL: client.user.displayAvatarURL(),

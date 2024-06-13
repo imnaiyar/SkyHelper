@@ -1,0 +1,74 @@
+{
+  "common": {
+    "bot": {
+      "name": "SkyHelper"
+    },
+    "errors": {
+      "COMMAND_NOT_FOUND": "No such command or outdated command",
+      "autoCompleteCOMMAND_NOT_FOUND": "No choices for this option was found.",
+      "AUTOCOMPLETE_ERROR": "Oops! An error occured while searching for the choices.",
+      "ERROR_ID": "Error ID: `{{ID}}`",
+      "EMBED_TITLE": "ERROR",
+      "NO_PERMS_USER": "You don't have necessary permission(s) ({{PERMISSIONS}}) to use this command.",
+      "NOT_A_SERVER": "Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.",
+      "NO_PERMS_BOT": "I do not have the required permission(s) ({{PERMISSIONS}}) to perform this action. Please run the command again after granting me the necessary permission(s).",
+      "COOLDOWN": "Please wait, you are on a cooldown for {{COMMAND}}. You can use it again {{TIME}}",
+      "EMBED_DESCRIPTION": "An error occurred while executing this command. Please include the error ID while submiting the bug report",
+      "BUTTON_LABEL": "Report Bug",
+      "ERROR_MODAL": {
+        "SUCCESS": "Your submission was received successfully!",
+        "FIELDS": {
+          "COMMAN_USED": {
+            "LABEL": "Name of the command.",
+            "PLACEHOLDER": "The command that produced the said error."
+          },
+          "WHAT_HAPPENED": {
+            "LABEL": "Explain what happened?",
+            "PLACEHOLDER": "Explain in brief what happened. What outcome were you hoping?"
+          },
+          "ERROR_ID": {
+            "LABEL": "Error ID"
+          }
+        }
+      }
+    }
+  },
+  "shards-embed": {
+    "TODAY": "Today",
+    "AUTHOR": "Shards Info",
+    "FOOTER": "Last Updated: {{TIME}}",
+    "NO-SHARD": "It's a no shard day.",
+    "FIELDS": {
+      "TYPE": {
+        "LABEL": "Shard Type",
+        "VALUE": "{{VALUE}}"
+      },
+      "LOCATION": {
+        "LABEL": "Location",
+        "VALUE": "{{VALUE}}"
+      },
+      "STATUS": {
+        "LABEL": "Status",
+        "VALUE": {
+          "ENDED": "All Shards Ended",
+          "ACTIVE": "{{INDEX}} shard is currently active",
+          "EXPECTED": "shard has not fallen yet"
+        }
+      },
+      "COUNTDOWN": {
+        "LABEL": "Countdown",
+        "VALUE": {
+          "ENDED": "{{DURATION}} ago ( at {{TIME}})",
+          "ACTIVE": "Ends in {{DURATION}} (at {{TIME}})",
+          "EXPECTED": "Falls in {{DURATION}} (at {{TIME}})"
+        }
+      }
+    },
+    "BUTTON1": "Timeline",
+    "BUTTON2": "Location",
+    "BUTTON3": "About Shards"
+  },
+  "commands": {
+    "ping": "Pong! {{latency}}ms"
+  }
+}

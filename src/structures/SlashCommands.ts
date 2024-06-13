@@ -7,6 +7,7 @@ import type {
 
 import type { IntegrationTypes, ContextTypes } from "#libs/types";
 import type { SkyHelper } from "#structures";
+import type { getTranslator } from "#src/il8n";
 /* eslint-disable */
 
 export interface SlashCommand<Autocomplete extends boolean = false> {
@@ -58,7 +59,7 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
   cooldown?: number;
 
   /** The callback function to run when the command is used */
-  execute: (interaction: ChatInputCommandInteraction, client: SkyHelper) => Promise<void>;
+  execute: (interaction: ChatInputCommandInteraction, client: SkyHelper, t: ReturnType<typeof getTranslator>) => Promise<void>;
 
   /** Autocomplete callback if it exists */
   autocomplete?: Autocomplete extends true ? (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void> : never;

@@ -72,7 +72,7 @@ export class SkyHelper extends Client<true> {
    * const data = await <Client>.getTS()
    */
   public getTS = schemas.getTS;
-
+  public lang = "hi";
   /** Custom logger */
   public logger = Logger;
 
