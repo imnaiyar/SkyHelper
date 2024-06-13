@@ -24,7 +24,6 @@ export class UpdateController {
   async updateTS(@Req() req: AuthRequest, @Body() body: TSData): Promise<TSData> {
     await this.bot.checkAdmin(req.session);
     const data = await this.bot.getTS();
-    console.log(body);
     const spirit = this.bot.spiritsData[body.spirit];
     if (!spirit) throw new HttpException(`No spirit found for the given value "${body.spirit}"`, HttpStatus.NOT_FOUND);
     const values = {
