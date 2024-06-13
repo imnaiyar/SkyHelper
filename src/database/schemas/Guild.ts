@@ -16,6 +16,8 @@ const Schema = new mongoose.Schema<GuildSchema>({
     leftAt: Date,
     bots: { type: Number, default: 0 },
   },
+  beta: { type: Boolean, default: null },
+  annoucement_channel: { type: String, default: null },
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },

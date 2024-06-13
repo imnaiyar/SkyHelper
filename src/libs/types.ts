@@ -207,6 +207,8 @@ export interface GuildSchema extends Document {
     leftAt: Date;
     bots: number;
   };
+  annoucement_channel: string | null;
+  beta: boolean;
   prefix: string;
   reminders: Reminders;
   autoShard: LiveUpdates;

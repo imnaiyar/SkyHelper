@@ -33,10 +33,14 @@ export type Features = {
   reminders: ReminderFeature;
 };
 export interface GuildInfo {
-  id: string;
-  name: string;
-  icon: string | null;
-  enabledFeatures: Array<keyof Features>;
+  id?: string;
+  name?: string;
+  icon?: string | null;
+  prefix?: string;
+  announcement_channel?: string;
+  beta?: boolean;
+  language?: string;
+  enabledFeatures?: Array<keyof Features>;
 }
 
 export interface BotStats {

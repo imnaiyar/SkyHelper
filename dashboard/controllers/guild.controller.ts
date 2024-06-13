@@ -24,7 +24,28 @@ export class GuildController {
       id: data.id,
       name: data.name,
       icon: data.icon,
+      prefix: settings?.prefix,
+      language: "hi-IN",
+      announcement_channel: settings?.annoucement_channel ?? undefined,
+      beta: settings?.beta,
       enabledFeatures: actives,
+    };
+  }
+
+  @Patch()
+  async updateGuild(@Param("guild") guild: string, @Body() body: GuildInfo): Promise<GuildInfo | "null"> {
+    const g = this.bot.guilds.cache.get(guild);
+    const settings = g && (await this.bot.database.getSettings(g));
+    if (!settings) return "null";
+    settings.prefix = body.prefix ?? "";
+    settings.beta = body.beta || false;
+    settings.annoucement_channel = body.announcement_channel ?? "";
+    await settings.save();
+    return {
+      prefix: settings.prefix,
+      beta: settings.beta,
+      language: "hi-IN",
+      announcement_channel: settings.annoucement_channel ?? undefined,
     };
   }
 
