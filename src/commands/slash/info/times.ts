@@ -20,7 +20,7 @@ export default {
   },
   category: "Info",
   cooldown: 20,
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
 
     const embed = await getEventEmbed(client);

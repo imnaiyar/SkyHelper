@@ -30,7 +30,8 @@ export default {
   },
   category: "Utility",
   cooldown: 10,
-  async execute(interaction, client) {
+  async execute(interaction) {
+    const client = interaction.client;
     const command = interaction.options.getString("command");
     const reply = await interaction.deferReply({ ephemeral: command ? true : false, fetchReply: true });
     const commands = client.application.commands.cache;

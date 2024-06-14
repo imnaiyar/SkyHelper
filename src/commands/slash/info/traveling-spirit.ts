@@ -13,7 +13,7 @@ export default {
   },
   cooldown: 20,
   category: "Info",
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     const ts = await getTS();
 
     if (!ts) {

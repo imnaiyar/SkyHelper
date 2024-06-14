@@ -211,6 +211,11 @@ export interface GuildSchema extends Document {
   annoucement_channel: string | null;
   beta: boolean;
   prefix: string;
+  language?: {
+    name: string;
+    value: string;
+    flag?: string;
+  };
   reminders: Reminders;
   autoShard: LiveUpdates;
   autoTimes: LiveUpdates;

@@ -26,7 +26,9 @@ export default {
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
-  async execute(interaction, client) {
+  async execute(interaction) {
+    const client = interaction.client;
+
     if (!interaction.inCachedGuild()) {
       return void (await interaction.reply("Please run this command in a server I am a member of!"));
     }

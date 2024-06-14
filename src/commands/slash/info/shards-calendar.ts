@@ -29,7 +29,9 @@ export default {
   },
   cooldown: 15,
   category: "Info",
-  async execute(interaction, client) {
+  async execute(interaction) {
+    const client = interaction.client;
+
     const reply = await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false, fetchReply: true });
     const shardsCmd = `</shards:${(await client.getCommand("shards")).id}>`;
     const now = moment().tz(client.timezone);

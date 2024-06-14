@@ -24,7 +24,7 @@ const Model = mongoose.model("quizData", Schema);
  * Gets or creates a quiz document for user on MongoDb
  * @param user User for which to get or create a quiz document
  */
-export async function getUser(user: User): Promise<mongoose.Document> {
+export async function getUserQuizData(user: User): Promise<mongoose.Document> {
   if (!user) throw new Error("User is undefined");
   if (!user.id) throw new Error("User Id is undefined");
 

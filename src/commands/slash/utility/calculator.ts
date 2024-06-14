@@ -31,7 +31,8 @@ export default {
   },
   cooldown: 10,
   category: "Utility",
-  async execute(interaction, client) {
+  async execute(interaction) {
+    const client = interaction.client;
     // const type = interaction.options.getString("type");
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
     const hasPass = interaction.options.getBoolean("season-pass")!;

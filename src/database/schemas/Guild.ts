@@ -18,6 +18,11 @@ const Schema = new mongoose.Schema<GuildSchema>({
   },
   beta: { type: Boolean, default: null },
   annoucement_channel: { type: String, default: null },
+  language: {
+    name: String,
+    value: String,
+    flag: String,
+  },
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },

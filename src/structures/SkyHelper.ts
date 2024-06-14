@@ -23,8 +23,8 @@ import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import { Flags, spiritsData } from "#libs";
-
-type ClassTypes = {
+import "./Interaction.js";
+export type ClassTypes = {
   UpdateTS: typeof UpdateTS;
   UpdateEvent: typeof UpdateEvent;
   Flags: typeof Flags;
@@ -72,7 +72,6 @@ export class SkyHelper extends Client<true> {
    * const data = await <Client>.getTS()
    */
   public getTS = schemas.getTS;
-  public lang = "hi";
   /** Custom logger */
   public logger = Logger;
 

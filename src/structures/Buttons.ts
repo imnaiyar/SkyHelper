@@ -1,5 +1,6 @@
 import type { ButtonInteraction } from "discord.js";
 import type { SkyHelper } from "#structures";
+import type { getTranslator } from "#src/il8n";
 /* eslint-disable */
 
 /** Buttons structure */
@@ -11,5 +12,5 @@ export type Button = {
   };
 
   /** The callback for when the button is clicked */
-  execute: (interaction: ButtonInteraction, client: SkyHelper) => Promise<void>;
+  execute: (interaction: ButtonInteraction, t: ReturnType<typeof getTranslator>, client: SkyHelper) => Promise<void>;
 };

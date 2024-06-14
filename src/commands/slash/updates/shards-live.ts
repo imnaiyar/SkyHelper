@@ -34,7 +34,8 @@ export default {
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
-  async execute(interaction, client) {
+  async execute(interaction) {
+    const client = interaction.client;
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.guild) {
       return void (await interaction.followUp("This command can only be used in a server"));

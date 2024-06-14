@@ -27,7 +27,7 @@ export default {
   },
   cooldown: 5,
   category: "Guides",
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false });
     const value = interaction.options.getString("search");
     const data = client.spiritsData[value as keyof typeof client.spiritsData] as SpiritsData;

@@ -7,6 +7,7 @@ export default {
   },
   PREFIX: ",",
   BOT_ICON: "https://cdn.imnaiyar.site/bot-icon.gif",
+  SUPPORTED_LANG: ["en-US", "hi", "ru"],
 
   //  WEB_URL: 'http://localhost:5001',
   WEB_URL: "https://skyhelper.xyz",

@@ -11,10 +11,9 @@ await i18next.use(Backend).init({
   interpolation: {
     escapeValue: false,
   },
-  returnNull: false,
   returnEmptyString: false,
-  preload: ["en-US", "hi"],
-  supportedLngs: ["en-US", "hi"],
+  preload: ["en-US", "hi", "ru"],
+  supportedLngs: ["en-US", "hi", "ru"],
 });
 export const getTranslator =
   (lang: string) =>

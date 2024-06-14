@@ -59,7 +59,7 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
   cooldown?: number;
 
   /** The callback function to run when the command is used */
-  execute: (interaction: ChatInputCommandInteraction, client: SkyHelper, t: ReturnType<typeof getTranslator>) => Promise<void>;
+  execute: (interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>, client: SkyHelper) => Promise<void>;
 
   /** Autocomplete callback if it exists */
   autocomplete?: Autocomplete extends true ? (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void> : never;
