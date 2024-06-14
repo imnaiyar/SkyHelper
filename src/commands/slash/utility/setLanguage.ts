@@ -29,7 +29,7 @@ export default {
           return void (await interaction.editReply(
             t("commands.LANGUAGE.options.RESPONSES.ALREADY_SET", {
               TYPE: "The server's",
-              LANGUAGE: `${language.name} (${lang})`,
+              LANGUAGE: `${language.name} (${settings.language?.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
             }),
           ));
         }
@@ -40,7 +40,7 @@ export default {
         return void (await interaction.editReply(
           ts("commands.LANGUAGE.options.RESPONSES.SUCCESS", {
             TYPE: `\`${interaction.guild.name}\``,
-            Language: `${language.name} (\`${language.value}\`)`,
+            Language: `${language.name} (${settings.language?.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
             LINK: "<https://crowdin.com/project/skyhelper>",
           }),
         ));
@@ -52,7 +52,7 @@ export default {
           return void (await interaction.editReply(
             t("commands.LANGUAGE.options.RESPONSES.ALREADY_SET", {
               TYPE: "Your",
-              LANGUAGE: `${language.name} (${lang})`,
+              LANGUAGE: `${language.name} (${user_settings.language?.flag ? user_settings.language.flag + " " : ""}\`${language.value}\`)`,
             }),
           ));
         }
@@ -62,7 +62,7 @@ export default {
         await interaction.editReply(
           ts("commands.LANGUAGE.options.RESPONSES.SUCCESS", {
             TYPE: `\`${interaction.user.username}\``,
-            Language: `${language.name} (\`${language.value}\`)`,
+            Language: `${language.name} (${user_settings.language?.flag ? user_settings.language.flag + " " : ""}\`${language.value}\`)`,
             LINK: "<https://crowdin.com/project/skyhelper>",
           }),
         );
