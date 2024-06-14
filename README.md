@@ -1,3 +1,6 @@
+### Progress
+[![Crowdin](https://badges.crowdin.net/skyhelper/localized.svg)](https://crowdin.com/project/skyhelper)
+
 <h1 align="center">
   <br>
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/boticon.png" height="200" alt="SkyHelper"></a>
