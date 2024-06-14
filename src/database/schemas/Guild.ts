@@ -22,6 +22,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
   reminders: {
     active: { type: Boolean, default: false },
     default_role: { type: String, default: null },
+    prev_message: { type: String, default: null },
     dailies: {
       active: { type: Boolean, default: false },
       role: { type: String, default: null },

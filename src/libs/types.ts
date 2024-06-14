@@ -185,6 +185,7 @@ export interface EventReminder {
 export interface Reminders {
   active: boolean;
   default_role: string | null;
+  prev_message: string | null;
   dailies: EventReminder;
   grandma: EventReminder;
   turtle: EventReminder;

@@ -66,7 +66,8 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
         response = `${role}The world of Sky just reset and daily quests have been refreshed!`;
       }
       if (!response) return;
-      await wb
+      if (guild.reminders.prev_message) await wb.deleteMessage(guild.reminders.prev_message).catch(() => {});
+      const msg = await wb
         .send({
           username: `${type.charAt(0).toUpperCase() + type.slice(1)} Reminder`,
           avatarURL: client.user.displayAvatarURL(),
@@ -78,6 +79,8 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
         .catch((err) => {
           client.logger.error(guild.data.name + ": ", err);
         });
+      guild.reminders.prev_message = msg?.id || null;
+      await guild.save();
     } catch (err) {
       client.logger.error(err);
     }
