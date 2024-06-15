@@ -2,15 +2,16 @@ export const supportedLang = [
   {
     name: "English",
     value: "en-US",
-    flag: "",
+    flag: "🇺🇸",
   },
   {
     name: "Hindi",
     value: "hi",
-    flag: "U+1F1ED",
+    flag: "🇮🇳",
   },
   {
     name: "Russian",
     value: "ru",
+    flag: "🇷🇺"
   },
 ] as const;

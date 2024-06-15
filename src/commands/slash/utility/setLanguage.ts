@@ -94,7 +94,10 @@ export default {
         name: "languages",
         description: "select a language",
         type: ApplicationCommandOptionType.String,
-        choices: [...supportedLang],
+        choices: supportedLang.map((lang) => ({
+          name: `${lang.flag} ${lang.name}`,
+          value: lang.value
+        })),
         required: true,
       },
     ],
