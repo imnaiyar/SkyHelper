@@ -222,7 +222,7 @@
         "NO_DATA": "Oops! It seems no TS data was found, please try again later.",
         "VISITING": "{{SPIRIT}} is currently visiting the realms of Sky. They will depart at {{TIME}} (in {{DURATION}})",
         "EXPECTED": "{{SPIRIT}} will be visiting the realms of Sky on {{DATE}} (in {{DURATION}})",
-        "EMBED_AUTHOR": "Traveling spirit #{{ts.index}} summary!"
+        "EMBED_AUTHOR": "Traveling spirit #{{INDEX}} summary!"
       }
     },
     "REMINDERS": {
@@ -342,7 +342,7 @@
       },
       "RESPONSES": {
         "NOT_FOUND": "No such command or outdated command",
-        "REQUESTED_BY": "Requested by {{interaction.user.username}}",
+        "REQUESTED_BY": "Requested by {{USER}}",
         "FOOTER_SINGLE": "Help Command",
         "FOOTER": "run /help <command> for details. | Page {{PAGE}}/{{TOTAL}}",
         "BTN-PREV": "Prev",
