@@ -421,7 +421,7 @@
         },
         "RESPONSES": {
           "NO-PERM": "आपको इस सर्वर की भाषा चुनने की अनुमति ({{PERMISSION}}) नहीं है!",
-          "SUCCESS": "{{TYPE}} के लिए {{Language}} सेट हो चुका है, आपको फिर भी कुछ जगहों पे अंग्रेजी भाषा दिखाई दे सकतीं है क्यूंकि हर एक रेस्पॉन्स का अनुवाद करना संभव नहीं है।\n\nकृपया इस बोट का अनुवाद करने में मदद करें। यह लिंक {{LINK}} पर जाएं और बोट को और भाषा को सुप्पोर्ट करने में मदद करें।\n\nनोट: User स्तर की भाषा सेटिंग्स को सर्वर सेटिंग्स (यदि कोई हो) पर प्राथमिकता दी जाएगी।",
+          "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nSome translations may not be accurate, as it was mostly done by AI, please consider contrubuting to translation of this bot by visiting {{LINK}} and help us add correct and more  supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
           "ALREADY_SET": "{{TYPE}} की भाषा सेटिंग पहले से ही {{LANGUAGE}} पे सेट है"
         }
       }
