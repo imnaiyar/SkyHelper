@@ -421,7 +421,7 @@
         },
         "RESPONSES": {
           "NO-PERM": "You do not have permission(s) ({{PERMISSION}}) to set a server's language",
-          "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nSome translations may not be accurate, as it was mostly done by AI, please consider contrubuting to translation of this bot by visiting {{LINK}} and help us add correct and more  supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
+          "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nPlease consider contrubuting to translation of this bot by visiting {{LINK}} and help us add more supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
           "ALREADY_SET": "{{TYPE}} language setting is already set to {{LANGUAGE}}"
         }
       }
