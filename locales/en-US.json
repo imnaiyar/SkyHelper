@@ -205,7 +205,7 @@
       },
       "RESPONSES": {
         "INVALID_DATE": "Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**",
-        "DATE_NONEXIST": "`{{DATE}} does not exist, please provide a valid date."
+        "DATE_NONEXIST": "{{DATE}} does not exist, please provide a valid date."
       }
     },
     "SKYTIMES": {
