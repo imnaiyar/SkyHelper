@@ -24,6 +24,8 @@ jobs:
             export PATH=$PATH:/root/.nvm/versions/node/v20.14.0/bin
             cd skyhelper
             git pull
-            npm run build
-            pm2 restart 3
+            docker stop skyhelper
+            docker rm skyhelper
+            docker build -t skyhelper .
+            docker run -d --name skyhelper -p 5000:5000 --restart always skyhelper
           EOF

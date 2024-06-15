@@ -59,6 +59,7 @@ export default async (): Promise<TSValue | undefined> => {
         visiting: true,
         name: name,
         nextVisit: nextVisitDay,
+        index: index,
         spiritImage: spiritImage,
         duration: dur,
         value: value,
