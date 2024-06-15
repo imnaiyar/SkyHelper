@@ -8,7 +8,7 @@ export default {
   data: {
     name: "shards-location",
   },
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Gale = await client.users.fetch("473761854175576075");
     const Clement = await client.users.fetch("693802004018888714");

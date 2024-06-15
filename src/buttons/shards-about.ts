@@ -5,7 +5,7 @@ export default {
   data: {
     name: "shards-about",
   },
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Art = await client.users.fetch("504605855539265537");
     let page = 0;

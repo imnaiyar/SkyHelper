@@ -11,6 +11,9 @@ declare module "discord.js" {
   export interface BaseInteraction {
     t(): Promise<ReturnType<typeof getTranslator>>;
   }
+  export interface Message {
+    t(): Promise<ReturnType<typeof getTranslator>>;
+  }
   export interface Client {
     /** Configurations for the bot */
     config: typeof config;

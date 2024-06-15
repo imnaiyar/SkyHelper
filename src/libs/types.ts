@@ -180,12 +180,12 @@ export interface LiveUpdates {
 }
 export interface EventReminder {
   active: boolean;
+  last_messageId?: string;
   role: string | null;
 }
 export interface Reminders {
   active: boolean;
   default_role: string | null;
-  prev_message: string | null;
   dailies: EventReminder;
   grandma: EventReminder;
   turtle: EventReminder;

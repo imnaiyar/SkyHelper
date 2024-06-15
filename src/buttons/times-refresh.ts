@@ -5,7 +5,7 @@ export default {
   data: {
     name: "times-refresh",
   },
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     const embed = await getEventEmbed(client);
     await interaction.update({ embeds: [embed] });
   },

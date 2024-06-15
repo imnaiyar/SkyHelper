@@ -23,7 +23,7 @@ import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import { Flags, spiritsData } from "#libs";
-import "./Interaction.js";
+import "./Extenders.js";
 export type ClassTypes = {
   UpdateTS: typeof UpdateTS;
   UpdateEvent: typeof UpdateEvent;

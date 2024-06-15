@@ -3,6 +3,7 @@ import moment from "moment";
 import getSettings from "../utils/getSettings.js";
 import type { TextChannel } from "discord.js";
 import type { SkyHelper as BotService } from "#structures";
+import { getTranslator } from "#src/il8n";
 
 export class LiveShard {
   static async get(client: BotService, guildId: string) {
@@ -18,7 +19,8 @@ export class LiveShard {
     const data = await getSettings(client, guildId);
     if (!data) return null;
     const now = moment().tz(client.timezone);
-    const response = buildShardEmbed(now, "Live Shard (updates every 5 min.)", true);
+    const t = getTranslator(data.language?.value ?? "en-US");
+    const response = buildShardEmbed(now, t, t("shards-embed.FOOTER"), true);
     if (data.autoShard.webhook.id) {
       const wb = await client.fetchWebhook(data.autoShard.webhook.id).catch(() => {});
       if (wb) {

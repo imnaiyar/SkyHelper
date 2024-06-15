@@ -48,7 +48,7 @@ export default {
       return;
     }
 
-    const res = buildShardEmbed(currentDate as moment.Moment, "SkyHelper");
+    const res = buildShardEmbed(currentDate as moment.Moment, await interaction.t(), "SkyHelper");
 
     await interaction.deferReply({ ephemeral: hide });
     await interaction.editReply(res);

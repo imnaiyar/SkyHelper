@@ -15,7 +15,7 @@ export default {
   data: {
     name: "shards-timeline",
   },
-  async execute(interaction, client) {
+  async execute(interaction, _t, client) {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Zhii = await client.users.fetch("650487047160725508");
     const Christian = await client.users.fetch("594485678625128466");

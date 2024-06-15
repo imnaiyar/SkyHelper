@@ -1,5 +1,6 @@
 import { buildShardEmbed, getDailyEventTimes, getEventEmbed } from "#handlers";
 import type { GuildSchema } from "#libs";
+import { getTranslator } from "#src/il8n";
 import type { SkyHelper } from "#structures";
 import { type WebhookMessageCreateOptions, time, roleMention } from "discord.js";
 import moment from "moment";
@@ -14,13 +15,16 @@ export async function eventSchedules(type: "shard" | "times", client: SkyHelper)
   switch (type) {
     case "times": {
       const embed = await getEventEmbed(client);
-      const response: WebhookMessageCreateOptions = { embeds: [embed] };
+      const response = (_t: ReturnType<typeof getTranslator>): WebhookMessageCreateOptions => {
+        return { embeds: [embed] };
+      };
       const data = await client.database.getActiveUpdates("times");
       await update(data, "autoTimes", client, response);
       break;
     }
     case "shard": {
-      const response: WebhookMessageCreateOptions = buildShardEmbed(currentDate, "Live Shard (updates every 5 min.)", true);
+      const response = (t: ReturnType<typeof getTranslator>): WebhookMessageCreateOptions =>
+        buildShardEmbed(currentDate, t, t("shards-embed.FOOTER"), true);
       const data = await client.database.getActiveUpdates("shard");
       await update(data, "autoShard", client, response);
     }
@@ -39,34 +43,28 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
     try {
       const rmd = guild?.reminders;
       if (!rmd) return;
-      const { grandma, geyser, dailies, turtle, reset, eden, webhook, default_role } = rmd;
-      if (!grandma.active && !geyser.active && !eden.active && !turtle.active && !dailies.active) return;
-      const typesEnum = {
-        grandma: grandma,
-        geyser: geyser,
-        turtle: turtle,
-        reset: reset,
-        eden: eden,
-        dailies: dailies,
-      };
+      const event = rmd[type];
+      const { webhook, default_role } = rmd;
+      if (!event?.active) return;
+
       const wb = await client.fetchWebhook(webhook.id!, webhook.token ?? undefined).catch(() => {});
       if (!wb) return;
 
-      const roleid = typesEnum[type]?.role ?? default_role ?? "";
+      const roleid = event?.role ?? default_role ?? "";
       const role = roleid && `Hey ${roleMention(roleid)}, `;
 
       let response = null;
-      if (typesEnum[type].active) response = getResponse(type, role);
-      if (type === "eden" && eden) {
+      if (event.active) response = getResponse(type, role);
+      if (type === "eden") {
         response = `${role} Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!`;
       }
       // TODO
       /* if (type === "dailies" && dailies.active) response = getDailiesResponse(type, role); */
-      if (type === "reset" && reset.active) {
+      if (type === "reset") {
         response = `${role}The world of Sky just reset and daily quests have been refreshed!`;
       }
       if (!response) return;
-      if (guild.reminders.prev_message) await wb.deleteMessage(guild.reminders.prev_message).catch(() => {});
+      if (event.last_messageId) await wb.deleteMessage(event.last_messageId).catch(() => {});
       const msg = await wb
         .send({
           username: `${type.charAt(0).toUpperCase() + type.slice(1)} Reminder`,
@@ -79,7 +77,7 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
         .catch((err) => {
           client.logger.error(guild.data.name + ": ", err);
         });
-      guild.reminders.prev_message = msg?.id || null;
+      guild.reminders[type]!.last_messageId = msg?.id || undefined;
       await guild.save();
     } catch (err) {
       client.logger.error(err);
@@ -126,7 +124,7 @@ const update = async (
   data: GuildSchema[],
   type: "autoShard" | "autoTimes",
   client: SkyHelper,
-  response: WebhookMessageCreateOptions,
+  response: (t: ReturnType<typeof getTranslator>) => WebhookMessageCreateOptions,
 ): Promise<void> => {
   data.forEach(async (guild) => {
     const event = guild[type];
@@ -141,11 +139,11 @@ const update = async (
       client.logger.error(`Live ${type} disabled for ${guild.data.name}, webhook found deleted!`);
       return;
     }
-
+    const t = getTranslator(guild.language?.value ?? "en-US");
     webhook
       .editMessage(event.messageId, {
         content: `Last Update At: ${time(new Date(), "R")}`,
-        ...response,
+        ...response(t),
       })
       .catch((e) => {
         if (e.message === "Unknown Message") {

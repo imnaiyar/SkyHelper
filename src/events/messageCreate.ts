@@ -17,10 +17,10 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 /** Message Handler */
 export default async (client: SkyHelper, message: Message): Promise<void> => {
   if (message.author.bot) return;
-
+  const t = await message.t();
   // Check for bot's mention
   if (message.content.startsWith(`<@!${client.user.id}>`)) {
-    await message.channel.send("That's me...");
+    await message.channel.send(t("common.bot.intro"));
     return;
   }
 
@@ -46,7 +46,12 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
   ) {
     message.author
       .send(
-        `Hi, It seems you tried to use my command in a channel/server where I don't have ${parsePerms("SendMessages")}/${parsePerms("ViewChannel")}. Please ask a server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: ${message.guild.name}\n- Channel: ${message.channel}\n- Command Used: \` ${command.data.name} \``,
+        t("common.errors.MESSAGE_BOT_NO_PERM", {
+          PERMISSIONS: `${parsePerms("SendMessages")}/${parsePerms("ViewChannel")}`,
+          SERVER: message.guild.name,
+          CHANNEL: message.channel,
+          COMMAND: command.data.name,
+        }),
       )
       .catch(() => {});
     return;
@@ -54,20 +59,28 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
 
   // Check if the user has permissions to use the command.
   if (message.guild && command.data.userPermissions && !message.member?.permissions.has(command.data.userPermissions)) {
-    await message.reply(`You need ${parsePerms(command.data.userPermissions)} to use this command`);
+    await message.reply(
+      t("common.errors.NO_PERMS_USER", {
+        PERMISSIONS: parsePerms(command.data.userPermissions),
+      }),
+    );
     return;
   }
 
   // Check if args are valid
   if (command.data.args && command.data.args.required) {
     if (args.length === 0) {
-      await message.reply(`You didn't provide any arguments, ${message.author}!`);
+      await message.reply(
+        t("common.errors.MESSAGE_NO_ARGS", {
+          ARGS: command.data.args.args.map((arg) => `\`${arg}\``).join(", "),
+        }),
+      );
       return;
     }
 
     if (!command.data.args.args.find((arg) => arg.trigger === args[0])) {
       message.reply({
-        content: "Invalid Arguments!",
+        content: t("common.errors.INVALID_ARGS"),
         embeds: [
           new EmbedBuilder()
             .setAuthor({ name: `${command.data.name} Command`, iconURL: client.user.displayAvatarURL() })
@@ -118,13 +131,20 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
       Logger.send({ username: "Command Logs", embeds: [embed] }).catch(() => {});
     }
   } catch (error) {
-    client.logger.error(error);
-    const embed = new EmbedBuilder().setTitle(`ERROR`).setDescription(`An error occurred while executing this command.`);
+    const id = client.logger.error(error);
+    const content = { content: t("common.errors.ERROR_ID", { ID: id }) };
+    const embed = new EmbedBuilder()
+      .setTitle(t("common.errors.EMBED_TITLE"))
+      .setDescription(t("common.errors.EMBED_DESCRIPTION"));
 
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder().setLabel("Report Bug").setCustomId("error_report").setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+        .setLabel(t("common.errors.BUTTON_LABEL"))
+        .setCustomId(`error-report_${id}`)
+        .setStyle(ButtonStyle.Secondary),
     );
     await message.reply({
+      ...content,
       embeds: [embed],
       components: [actionRow],
     });

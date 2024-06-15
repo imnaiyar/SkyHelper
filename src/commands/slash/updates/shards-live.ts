@@ -3,6 +3,7 @@ import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
+import { getTranslator } from "#src/il8n";
 
 export default {
   data: {
@@ -87,7 +88,8 @@ export default {
       const wb = await client.createWebhook(channel, "For live Shards Update");
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const result = buildShardEmbed(currentDate, "Live Shard (updates every 5 minutes)", true);
+      const ts = getTranslator(config.language?.value ?? "en-us");
+      const result = buildShardEmbed(currentDate, ts, ts("shards-embed.FOOTER"), true);
       const msg = await wb.send({
         username: "Shards Updates",
         avatarURL: client.user.displayAvatarURL(),
