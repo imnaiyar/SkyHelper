@@ -12,14 +12,20 @@ import {
 } from "discord.js";
 import moment from "moment-timezone";
 import { ShardsUtil as utils } from "skyhelper-utils";
+import { useTranslations } from "#handlers/useTranslation";
+const x = useTranslations;
 export default {
   data: {
     name: "shards-calendar",
+    name_localizations: x("commands.SHARDS_CALENDAR.name"),
     description: "Show the shards calendar",
+    description_localizations: x("commands.SHARDS_CALENDAR.description"),
     options: [
       {
         name: "hide",
+        name_localizations: x("common.hide-options.name"),
         description: "hides the response",
+        description_localizations: x("common.hide-options.description"),
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },

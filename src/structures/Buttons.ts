@@ -1,6 +1,6 @@
 import type { ButtonInteraction } from "discord.js";
 import type { SkyHelper } from "#structures";
-import type { getTranslator } from "#src/il8n";
+import type { getTranslator } from "#src/i18n";
 /* eslint-disable */
 
 /** Buttons structure */

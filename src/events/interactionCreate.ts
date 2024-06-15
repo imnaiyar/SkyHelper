@@ -14,7 +14,7 @@ import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#src/config";
 import { eventTimes } from "#libs/constants/index";
 import { getTimes } from "#handlers/getDailyEventTimes";
-import type { getTranslator } from "#src/il8n";
+import type { getTranslator } from "#src/i18n";
 
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
@@ -234,19 +234,19 @@ export default async (client: SkyHelper, interaction: Interaction): Promise<void
       switch (value) {
         case "geyser":
           await interaction.followUp({
-            embeds: [buildEmbed(fulltimes.geyser, getTimes(0, "geyser"), t("times-embed.GEYSER"))],
+            embeds: [buildEmbed(fulltimes.geyser, getTimes(0, t, "geyser"), t("times-embed.GEYSER"))],
             ephemeral: true,
           });
           break;
         case "grandma":
           await interaction.followUp({
-            embeds: [buildEmbed(fulltimes.grandma, getTimes(0, "grandma"), t("times-embed.GRANDMA"))],
+            embeds: [buildEmbed(fulltimes.grandma, getTimes(0, t, "grandma"), t("times-embed.GRANDMA"))],
             ephemeral: true,
           });
           break;
         case "turtle":
           await interaction.followUp({
-            embeds: [buildEmbed(fulltimes.turtle, getTimes(0, "turtle"), t("times-embed.TURTLE"))],
+            embeds: [buildEmbed(fulltimes.turtle, getTimes(0, t, "turtle"), t("times-embed.TURTLE"))],
             ephemeral: true,
           });
           break;

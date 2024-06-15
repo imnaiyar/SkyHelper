@@ -1,22 +1,28 @@
-import { getEventEmbed } from "#handlers";
+import { getTimesEmbed } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
-
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   data: {
     name: "skytimes-live",
+    name_localizations: x("commands.SKYTIMES_LIVE.name"),
     description: "auto updating message with live skytimes details",
+    description_localizations: x("commands.SKYTIMES_LIVE.description"),
     options: [
       {
         name: "start",
+        name_localizations: x("commands.SKYTIMES_LIVE.options.START.name"),
         description: "configure auto skytimes",
+        description_localizations: x("commands.SKYTIMES_LIVE.options.START.description"),
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "channel",
+            name_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.name"),
             description: "channel where skytimes details should be updated",
+            description_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.description"),
             type: ApplicationCommandOptionType.Channel,
             channel_types: [ChannelType.GuildText],
             required: true,
@@ -25,7 +31,9 @@ export default {
       },
       {
         name: "stop",
+        name_localizations: x("commands.SKYTIMES_LIVE.options.STOP.name"),
         description: "stop auto skytimes",
+        description_localizations: x("commands.SKYTIMES_LIVE.options.STOP.description"),
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
@@ -34,8 +42,7 @@ export default {
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
-  async execute(interaction) {
-    const client = interaction.client;
+  async execute(interaction, t, client) {
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.inCachedGuild()) {
       return void (await interaction.followUp("This command can only be used in a server"));
@@ -88,7 +95,7 @@ export default {
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const result = {
-        embeds: [await getEventEmbed(client, "Live SkyTimes (updates every 2 minutes)")],
+        embeds: [await getTimesEmbed(client, t, "Live SkyTimes (updates every 2 minutes)")],
       };
       const msg = await wb.send({
         username: "SkyTimes Updates",

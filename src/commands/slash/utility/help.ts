@@ -11,15 +11,19 @@ import {
   ButtonInteraction,
   EmbedBuilder,
 } from "discord.js";
-
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   data: {
     name: "help",
+    name_localizations: x("commands.HELP.name"),
     description: "help menu",
+    description_localizations: x("commands.HELP.description"),
     options: [
       {
         name: "command",
+        name_localizations: x("commands.HELP.options.COMMAND.name"),
         description: "help about a specific command",
+        description_localizations: x("commands.HELP.options.COMMAND.description"),
         type: ApplicationCommandOptionType.String,
         required: false,
         autocomplete: true,

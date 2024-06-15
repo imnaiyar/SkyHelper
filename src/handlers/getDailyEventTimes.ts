@@ -51,7 +51,7 @@ export const getEdenTimes = (): Times => {
 
 import { getDailyEventTimes } from "#handlers";
 import { getTS } from "#handlers";
-import type { getTranslator } from "#src/il8n";
+import type { getTranslator } from "#src/i18n";
 /**
  * Get Times Embed
  * @param client Bot client

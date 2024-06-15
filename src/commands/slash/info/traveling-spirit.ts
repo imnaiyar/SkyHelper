@@ -1,13 +1,16 @@
 import getTS from "#handlers/getTS";
+import { useTranslations } from "#handlers/useTranslation";
 import { Spirits } from "#libs";
 import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs";
 import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
-
+const x = useTranslations;
 export default {
   data: {
     name: "traveling-spirit",
+    name_localizations: x("commands.TRAVELING-SPIRIT.name"),
     description: "get details about current/upcoming TS.",
+    description_localizations: x("commands.TRAVELING-SPIRIT.description"),
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
   },

@@ -1,4 +1,4 @@
-import { getTranslator } from "#src/il8n";
+import { getTranslator } from "#src/i18n";
 import { supportedLang } from "#src/libs/constants/supportedLang";
 import { IntegrationTypes } from "#src/libs/types";
 import type { SlashCommand } from "#structures";
@@ -96,7 +96,7 @@ export default {
         type: ApplicationCommandOptionType.String,
         choices: supportedLang.map((lang) => ({
           name: `${lang.flag} ${lang.name}`,
-          value: lang.value
+          value: lang.value,
         })),
         required: true,
       },

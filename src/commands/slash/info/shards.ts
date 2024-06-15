@@ -1,24 +1,31 @@
 import { buildShardEmbed } from "#handlers";
+import { useTranslations } from "#handlers/useTranslation";
 import { ContextTypes, IntegrationTypes } from "#libs/types";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
 import { ShardsUtil } from "skyhelper-utils";
-
+const x = useTranslations;
 export default {
   data: {
     name: "shards",
+    name_localizations: x("commands.SHARDS.name"),
     description: "Get the a specific shard information",
+    description_localizations: x("commands.SHARDS.description"),
     options: [
       {
         name: "date",
+        name_localizations: x("commands.SHARDS.options.DATE.name"),
         description: "The date to get the shard information",
+        description_localizations: x("commands.SHARDS.options.DATE.description"),
         type: ApplicationCommandOptionType.String,
         required: false,
       },
       {
         name: "hide",
+        name_localizations: x("common.hide-options.name"),
         description: "Hide the shard response",
+        description_localizations: x("common.hide-options.description"),
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },

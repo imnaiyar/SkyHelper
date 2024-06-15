@@ -2,23 +2,29 @@ import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs/types";
 import { Spirits } from "#libs/classes/Spirits";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
-
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   data: {
     name: "spirits",
+    name_localizations: x("commands.SPIRITS.name"),
     description: "search for spirits",
+    description_localizations: x("commands.SPIRITS.description"),
     options: [
       {
         name: "search",
+        name_localizations: x("commands.SPIRITS.options.name"),
         type: ApplicationCommandOptionType.String,
         autocomplete: true,
         description: "search for a spirit",
+        description_localizations: x("commands.SPIRITS.options.description"),
         required: true,
       },
       {
         name: "hide",
+        name_localizations: x("common.hide-options.name"),
         type: ApplicationCommandOptionType.Boolean,
         description: "Hide the response",
+        description_localizations: x("common.hide-options.description"),
         required: false,
       },
     ],

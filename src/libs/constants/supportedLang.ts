@@ -5,13 +5,13 @@ export const supportedLang = [
     flag: "🇺🇸",
   },
   {
-    name: "Hindi",
+    name: "Hindi (हिन्दी)",
     value: "hi",
     flag: "🇮🇳",
   },
   {
-    name: "Russian",
+    name: "Russian (русский)",
     value: "ru",
-    flag: "🇷🇺"
+    flag: "🇷🇺",
   },
 ] as const;

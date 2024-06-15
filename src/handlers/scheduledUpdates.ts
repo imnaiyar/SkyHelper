@@ -1,6 +1,6 @@
-import { buildShardEmbed, getDailyEventTimes, getEventEmbed } from "#handlers";
+import { buildShardEmbed, getDailyEventTimes, getTimesEmbed } from "#handlers";
 import type { GuildSchema } from "#libs";
-import { getTranslator } from "#src/il8n";
+import { getTranslator } from "#src/i18n";
 import type { SkyHelper } from "#structures";
 import { type WebhookMessageCreateOptions, time, roleMention } from "discord.js";
 import moment from "moment";
@@ -14,8 +14,8 @@ export async function eventSchedules(type: "shard" | "times", client: SkyHelper)
   const currentDate = moment().tz(client.timezone);
   switch (type) {
     case "times": {
-      const embed = await getEventEmbed(client);
-      const response = (_t: ReturnType<typeof getTranslator>): WebhookMessageCreateOptions => {
+      const response = async (_t: ReturnType<typeof getTranslator>): Promise<WebhookMessageCreateOptions> => {
+        const embed = await getTimesEmbed(client, _t);
         return { embeds: [embed] };
       };
       const data = await client.database.getActiveUpdates("times");
@@ -23,7 +23,7 @@ export async function eventSchedules(type: "shard" | "times", client: SkyHelper)
       break;
     }
     case "shard": {
-      const response = (t: ReturnType<typeof getTranslator>): WebhookMessageCreateOptions =>
+      const response = async (t: ReturnType<typeof getTranslator>): Promise<WebhookMessageCreateOptions> =>
         buildShardEmbed(currentDate, t, t("shards-embed.FOOTER"), true);
       const data = await client.database.getActiveUpdates("shard");
       await update(data, "autoShard", client, response);
@@ -124,7 +124,7 @@ const update = async (
   data: GuildSchema[],
   type: "autoShard" | "autoTimes",
   client: SkyHelper,
-  response: (t: ReturnType<typeof getTranslator>) => WebhookMessageCreateOptions,
+  response: (t: ReturnType<typeof getTranslator>) => Promise<WebhookMessageCreateOptions>,
 ): Promise<void> => {
   data.forEach(async (guild) => {
     const event = guild[type];
@@ -143,7 +143,7 @@ const update = async (
     webhook
       .editMessage(event.messageId, {
         content: `Last Update At: ${time(new Date(), "R")}`,
-        ...response(t),
+        ...(await response(t)),
       })
       .catch((e) => {
         if (e.message === "Unknown Message") {

@@ -1,4 +1,4 @@
-import { getEventEmbed } from "#handlers/getDailyEventTimes";
+import { getTimesEmbed } from "#handlers/getDailyEventTimes";
 import type { Button } from "#structures";
 
 export default {
@@ -6,7 +6,7 @@ export default {
     name: "times-refresh",
   },
   async execute(interaction, _t, client) {
-    const embed = await getEventEmbed(client);
+    const embed = await getTimesEmbed(client, _t);
     await interaction.update({ embeds: [embed] });
   },
 } satisfies Button;

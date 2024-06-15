@@ -3,7 +3,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type ColorResolvable, Emb
 import moment from "moment-timezone";
 import { ShardsUtil as utils } from "skyhelper-utils";
 import getCountdown from "#handlers/getShardStatus";
-import type { getTranslator } from "#src/il8n";
+import type { getTranslator } from "#src/i18n";
 /**
  * @param date The date for which the shards embed is to be built
  * @param footer The footer text for the embed

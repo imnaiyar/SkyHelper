@@ -16,11 +16,13 @@ import {
   ChannelSelectMenuInteraction,
   TextChannel,
 } from "discord.js";
-
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   data: {
     name: "reminders",
+    name_localizations: x("commands.REMINDERS.name"),
     description: "Set up reminders",
+    description_localizations: x("commands.REMINDERS.description"),
     integration_types: [IntegrationTypes.Guilds],
     contexts: [ContextTypes.Guild],
     botPermissions: ["ManageWebhooks"],

@@ -1,4 +1,4 @@
-import { getTranslator } from "#src/il8n";
+import { getTranslator } from "#src/i18n";
 import * as schemas from "#src/database/index";
 import type config from "#src/config";
 import type { Button, ClassTypes, ContextMenuCommand, PrefixCommand, SlashCommand } from "#structures";

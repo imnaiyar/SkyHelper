@@ -3,21 +3,27 @@ import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
-import { getTranslator } from "#src/il8n";
-
+import { getTranslator } from "#src/i18n";
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   data: {
     name: "shards-live",
+    name_localizations: x("commands.SHARDS_LIVE.name"),
     description: "auto updating message with live shards details",
+    description_localizations: x("commands.SHARDS_LIVE.description"),
     options: [
       {
         name: "start",
+        name_localizations: x("commands.SHARDS_LIVE.options.START.name"),
         description: "configure auto shard",
+        description_localizations: x("commands.SHARDS_LIVE.options.START.description"),
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "channel",
+            name_localizations: x("commands.SHARDS_LIVE.options.START.option.CHANNEL.name"),
             description: "channel where shard details should be updated",
+            description_localizations: x("commands.SHARDS_LIVE.options.START.option.CHANNEL.description"),
             type: ApplicationCommandOptionType.Channel,
             channel_types: [ChannelType.GuildText],
             required: true,
@@ -26,7 +32,9 @@ export default {
       },
       {
         name: "stop",
+        name_localizations: x("commands.SHARDS_LIVE.options.STOP.name"),
         description: "stop auto shard",
+        description_localizations: x("commands.SHARDS_LIVE.options.STOP.description"),
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],

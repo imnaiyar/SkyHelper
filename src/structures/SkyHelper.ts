@@ -291,6 +291,8 @@ export class SkyHelper extends Client<true> {
         name: cmd.data.name,
         description: cmd.data.description,
         type: 1,
+        name_localizations: cmd.data.name_localizations,
+        description_localizations: cmd.data.description_localizations,
         options: cmd.data?.options,
         integration_types: cmd.data.integration_types,
         ...(cmd.data.userPermissions && {

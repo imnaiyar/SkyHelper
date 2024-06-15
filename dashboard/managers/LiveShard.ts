@@ -3,7 +3,7 @@ import moment from "moment";
 import getSettings from "../utils/getSettings.js";
 import type { TextChannel } from "discord.js";
 import type { SkyHelper as BotService } from "#structures";
-import { getTranslator } from "#src/il8n";
+import { getTranslator } from "#src/i18n";
 
 export class LiveShard {
   static async get(client: BotService, guildId: string) {
