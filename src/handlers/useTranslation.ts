@@ -54,6 +54,7 @@ export function useTranslations(key: langKeys): Partial<Record<string, string>> 
   const t: Partial<Record<string, string>> = {};
   const langs = Object.keys(datas);
   for (const l of langs) {
+    const filename = l.split(".")[0];
     let data = datas[l];
     for (const k of keys) {
       if (data[k] !== undefined) {
@@ -66,7 +67,7 @@ export function useTranslations(key: langKeys): Partial<Record<string, string>> 
 
     if (data !== undefined) {
       if (typeof data !== "string") throw new TypeError(`Expected a string, recieved ${typeof data}.\n\nRecieved: ${data}`);
-      t[l.replace(".json", "")] = last_key ? data.trim().replaceAll(" ", "-").toLocaleLowerCase(l.replace(".json", "")) : data;
+      t[filename] = last_key ? data.trim().replaceAll(" ", "-").toLocaleLowerCase(filename) : data;
     }
   }
   return t;
