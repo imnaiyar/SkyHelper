@@ -8,7 +8,7 @@ WORKDIR /root/skyhelper
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --omit=dev
+RUN npm ci
 
 # Bundle rest of the source code
 COPY . .
