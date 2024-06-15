@@ -50,7 +50,7 @@ for (const lg of languages) {
  */
 export function useTranslations(key: langKeys): Partial<Record<string, string>> {
   const keys = key.split(".");
-  const last_key = keys[keys.length - 1] === "name" || keys[keys.length - 1] === "description";
+  const last_key = keys[keys.length - 1] === "name";
   const t: Partial<Record<string, string>> = {};
   const langs = Object.keys(datas);
   for (const l of langs) {
