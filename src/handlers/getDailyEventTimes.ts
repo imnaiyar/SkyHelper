@@ -51,65 +51,94 @@ export const getEdenTimes = (): Times => {
 
 import { getDailyEventTimes } from "#handlers";
 import { getTS } from "#handlers";
-export const getEventEmbed = async (client: SkyHelper, text?: string): Promise<EmbedBuilder> => {
-  const geyser = getTimes(0, "Geyser");
-  const grandma = getTimes(30, "Grandma");
-  const turtle = getTimes(50, "Turtle");
-  const reset = getTimes(0, "Daily");
-  const eden = `At ${time(getEdenTimes().nextTime.toDate(), "F")} (in ${getEdenTimes().duration}`;
+import type { getTranslator } from "#src/il8n";
+/**
+ * Get Times Embed
+ * @param client Bot client
+ * @param text text to include in the footer
+ * @param t translator
+ * @returns
+ */
+export const getTimesEmbed = async (
+  client: SkyHelper,
+  t: ReturnType<typeof getTranslator>,
+  text?: string,
+): Promise<EmbedBuilder> => {
+  const geyser = getTimes(0, t, "Geyser");
+  const grandma = getTimes(30, t, "Grandma");
+  const turtle = getTimes(50, t, "Turtle");
+  const reset = getTimes(0, t, "Daily");
+  const eden = t("times-embed.EDEN_RESET", {
+    DATE: time(getEdenTimes().nextTime.toDate(), "F"),
+    DURATION: getEdenTimes().duration,
+  });
   const tsData = await getTS();
   const event = await getEvent();
   const eventDesc =
     typeof event === "string"
-      ? "No Active Events"
-      : `**Event**: ${event.name}\n**From**: ${time(event.start.unix(), "F")} - ${time(event.end.unix(), "F")}\n**Total Days**: ${event.days}\n**${event.active ? "Ends In" : "Starts In"}**: ${event.duration}`;
+      ? t("times-embed.EVENT_INACTIVE")
+      : t("times-embed.EVENT_ACTIVE", {
+          EVENT_NAME: event.name,
+          DATE1: time(event.start.unix(), "F"),
+          DATE2: time(event.end.unix(), "F"),
+          DAYS: event.days,
+          DURATION: event.duration,
+        }).replace("Starts In", event.active ? "Ends In" : "Starts In");
   let tsDesc: string;
   if (!tsData) {
     tsDesc = "Unknown!";
   } else {
     const spirit: SpiritsData = client.spiritsData[tsData.value as keyof typeof client.spiritsData];
     const emote = spirit?.emote?.icon || spirit?.call?.icon || spirit?.stance?.icon || spirit?.action?.icon || "❓";
-    tsDesc = tsData.visiting
-      ? `**Currently Visiting:** ${emote} ${spirit?.name || "Yet to be updated"}\n**Departure:** At ${time(tsData.nextVisit.clone().add(3, "days").endOf("day").toDate(), "F")} (in ${tsData.duration})`
-      : `${emote} ${spirit?.name || "Unknown Spirit"} arriving at ${time(tsData.nextVisit.toDate(), "F")} (in ${tsData.duration})`;
+    const strVisiting = t("times-embed.TS_VISITING", {
+      TS_NAME: `${emote} ${spirit?.name || t("times-embed.TS_UPDATED")}`,
+      DATE: time(tsData.nextVisit.clone().add(3, "days").endOf("day").toDate(), "F"),
+      DURATION: tsData.duration,
+    });
+    const strExpected = t("times-embed.TS_EXPECTED", {
+      TS_NAME: `${emote} ${spirit?.name || t("times-embed.TS_UNKNOWN")}`,
+      DATE: time(tsData.nextVisit.toDate(), "F"),
+      DURATION: tsData.duration,
+    });
+    tsDesc = tsData.visiting ? strVisiting : strExpected;
   }
   const embed = new EmbedBuilder()
-    .setAuthor({ name: `SkyTimes`, iconURL: client.user.displayAvatarURL() })
-    .setTitle("Times")
+    .setAuthor({ name: t("times-embed.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
+    .setTitle(t("times-embed.EMBED_TITLE"))
     .setColor("Random")
     .addFields(
       {
-        name: geyser.title,
+        name: t("times-embed.GEYSER"),
         value: geyser.description,
         inline: true,
       },
       {
-        name: grandma.title,
+        name: t("times-embed.GRANDMA"),
         value: grandma.description,
         inline: true,
       },
       {
-        name: turtle.title,
+        name: t("times-embed.TURTLE"),
         value: turtle.description,
         inline: true,
       },
       {
-        name: "Daily " + reset.title,
+        name: t("times-embed.DAILY"),
         value: reset.description,
         inline: true,
       },
       {
-        name: "Eden Reset",
+        name: t("times-embed.EDEN"),
         value: eden,
         inline: true,
       },
       {
-        name: "Traveling Spirit",
+        name: t("times-embed.TS_TITLE"),
         value: tsDesc,
         inline: true,
       },
       {
-        name: "Events",
+        name: t("times-embed.EVENT_TITLE"),
         value: eventDesc,
         inline: true,
       },
@@ -119,20 +148,41 @@ export const getEventEmbed = async (client: SkyHelper, text?: string): Promise<E
   return embed;
 };
 
-export function getTimes(offset: number, type: string): { title: string; description: string } {
+export function getTimes(
+  offset: number,
+  t: ReturnType<typeof getTranslator>,
+  type: string,
+): { title: string; description: string } {
   const times = getDailyEventTimes(offset);
   if (type.toLocaleLowerCase().includes("daily")) {
     const resetAt = moment().tz("America/Los_Angeles").startOf("day").add(1, "day");
     const duration = moment.duration(resetAt.diff(moment().tz("America/Los_Angeles"))).format("d[d] h[h] m[m] s[s]");
-    return { title: type, description: `At ${time(resetAt.unix(), "t")} (in ${duration})` };
+    return {
+      title: type,
+      description: t("times-embed.COUNTDOWN", {
+        TIME: time(resetAt.unix(), "t"),
+        DURATION: duration,
+      }),
+    };
   }
   // TODO: Add emoji for active events
 
   if (times.active) {
     return {
       title: type + " <a:uptime:1228956558113771580>",
-      description: `**Ongoing:** Ends in ${times.duration} (at ${time(times.endTime!.unix(), "t")})\nNext Occurence: ${time(times.nextTime.unix(), "t")}`,
+      description: `${t("times-embed.ACTIVE", {
+        TIME: time(times.endTime!.unix(), "t"),
+        DURATION: times.duration,
+      })}\n${t("times-embed.NEXT-OCC", {
+        TIME: time(times.nextTime.unix(), "t"),
+      })}}`,
     };
   }
-  return { title: type, description: `**Next:** At ${time(times.nextTime.unix(), "t")} (in ${times.duration})` };
+  return {
+    title: type,
+    description: t("times-embed.NEXT", {
+      TIME: time(times.nextTime.unix(), "t"),
+      DURATION: times.duration,
+    }),
+  };
 }

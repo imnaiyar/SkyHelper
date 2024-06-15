@@ -1,6 +1,10 @@
 import i18next from "i18next";
 import Backend from "i18next-fs-backend";
+import en from "../locales/en-US.json";
 
+type NestedKeys<T> = {
+  [K in keyof T & (string | number)]: T[K] extends Record<string, any> ? `${K}` | `${K}.${NestedKeys<T[K]>}` : `${K}`;
+}[keyof T & (string | number)];
 await i18next.use(Backend).init({
   cleanCode: true,
   lng: "en-US",
@@ -17,5 +21,5 @@ await i18next.use(Backend).init({
 });
 export const getTranslator =
   (lang: string) =>
-  (key: string, options = {}) =>
+  (key: NestedKeys<typeof en>, options = {}) =>
     i18next.t(key, { ...options, lng: lang });
