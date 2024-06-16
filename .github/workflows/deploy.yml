@@ -21,11 +21,31 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
-            export PATH=$PATH:/root/.nvm/versions/node/v20.14.0/bin
+            export PATH=\$PATH:/root/.nvm/versions/node/v20.14.0/bin
             cd skyhelper
+            
+            # current branch name
+            current_branch=\$(git rev-parse --abbrev-ref HEAD)
+
+            if [ "\$current_branch" = "translation" ]; then
+              # stash any uncomitt3d changes
+              git stash save "auto-stash before deploy"
+              
+
+              git checkout main
+            fi
+            
             git pull
+            
+            # Docker operations
             docker stop skyhelper
             docker rm skyhelper
             docker build -t skyhelper .
             docker run -d --name skyhelper -p 5000:5000 --restart always skyhelper
+
+            # switch back after operation to pop the stash
+            if [ "\$current_branch" = "translation" ]; then
+              git checkout translation
+              git stash pop
+            fi
           EOF
