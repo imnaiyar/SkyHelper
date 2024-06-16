@@ -2,3 +2,4 @@ node_modules/
 logs/
 website/
 web/
+jest.config.js
