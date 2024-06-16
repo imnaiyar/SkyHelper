@@ -9,7 +9,7 @@ errors.toml
 dist
 .vscode
 bun.lockb
-coverage
+coverage/
 Dockerfile
 docker-compose.debug.yml
 .b.env
