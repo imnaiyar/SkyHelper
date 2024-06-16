@@ -156,7 +156,8 @@ const update = async (
           client.logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
           return;
         }
-        client.logger.error(`AutoUpdate [${type}]:`, e);
+        client.logger.error(`AutoUpdate[${type}] for G: ${guild.data.name}:`, e);
       });
   });
 };
+
