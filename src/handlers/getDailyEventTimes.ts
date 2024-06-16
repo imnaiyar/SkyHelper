@@ -55,8 +55,9 @@ import type { getTranslator } from "#src/i18n";
 /**
  * Get Times Embed
  * @param client Bot client
- * @param text text to include in the footer
+
  * @param t translator
+ * @param text text to include in the footer
  * @returns
  */
 export const getTimesEmbed = async (
@@ -186,3 +187,4 @@ export function getTimes(
     }),
   };
 }
+

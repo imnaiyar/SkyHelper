@@ -113,6 +113,13 @@
     "ERROR": "This is not working as expected",
     "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
   },
+  "SPIRITS": {
+    "SEASON_TITLE": "Season",
+    "UNKNOWN": "Unknown Spirit",
+    "REALM_TITLE": "Realm",
+    "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
+    "LOCATION_TITLE": "Location by {{CREDIT}}"
+  },
   "commands": {
     "GUIDES": {
       "name": "guides",
@@ -233,7 +240,8 @@
         "NO_DATA": "Oops! It seems no TS data was found, please try again later.",
         "VISITING": "{{SPIRIT}} is currently visiting the realms of Sky. They will depart at {{TIME}} (in {{DURATION}})",
         "EXPECTED": "{{SPIRIT}} will be visiting the realms of Sky on {{DATE}} (in {{DURATION}})",
-        "EMBED_AUTHOR": "Traveling spirit #{{INDEX}} summary!"
+        "EMBED_AUTHOR": "Traveling spirit #{{INDEX}} summary!",
+        "VISITING_TITLE": "Visiting Dates:"
       }
     },
     "REMINDERS": {
@@ -439,3 +447,4 @@
     }
   }
 }
+

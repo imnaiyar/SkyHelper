@@ -1,6 +1,6 @@
 import { buildShardEmbed, getDailyEventTimes, getTimesEmbed } from "#handlers";
 import type { GuildSchema } from "#libs";
-import { getTranslator } from "#src/i18n";
+import { getTranslator, langKeys } from "#src/i18n";
 import type { SkyHelper } from "#structures";
 import { type WebhookMessageCreateOptions, time, roleMention } from "discord.js";
 import moment from "moment";
@@ -40,6 +40,7 @@ type events = "geyser" | "grandma" | "turtle" | "dailies" | "eden" | "reset";
 export async function reminderSchedules(client: SkyHelper, type: events): Promise<void> {
   const activeGuilds = await client.database.getActiveReminders();
   activeGuilds.forEach(async (guild) => {
+    const t = getTranslator(guild.language?.value ?? "en-US");
     try {
       const rmd = guild?.reminders;
       if (!rmd) return;
@@ -51,23 +52,24 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
       if (!wb) return;
 
       const roleid = event?.role ?? default_role ?? "";
-      const role = roleid && `Hey ${roleMention(roleid)}, `;
+      const role = roleid && t("reminders.ROLE_MENTION", { ROLE: roleMention(roleid) });
 
       let response = null;
-      if (event.active) response = getResponse(type, role);
+      if (event.active) response = getResponse(type, t, role);
       if (type === "eden") {
-        response = `${role} Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!`;
+        response = `${role} ${t("reminders.EDEN_RESET")}`;
       }
       // TODO
       /* if (type === "dailies" && dailies.active) response = getDailiesResponse(type, role); */
       if (type === "reset") {
-        response = `${role}The world of Sky just reset and daily quests have been refreshed!`;
+        response = `${role}${t("reminders.DAILY_RESET")}`;
       }
       if (!response) return;
       if (event.last_messageId) await wb.deleteMessage(event.last_messageId).catch(() => {});
       const msg = await wb
         .send({
-          username: `${type.charAt(0).toUpperCase() + type.slice(1)} Reminder`,
+          // @ts-expect-error
+          username: t("reminders.TITLE", { TYPE: t("times-embed." + type.toUpperCase()) }),
           avatarURL: client.user.displayAvatarURL(),
           content: response,
           allowedMentions: {
@@ -91,7 +93,7 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
  * @param role Role mention, if any
  * @returns The response to send
  */
-function getResponse(type: events, role: string) {
+function getResponse(type: events, t: (key: langKeys, options?: {}) => string, role: string) {
   let skytime;
   let offset = 0;
   switch (type) {
@@ -109,8 +111,14 @@ function getResponse(type: events, role: string) {
       break;
   }
   const { startTime, endTime, active } = getDailyEventTimes(offset);
-  if (!active) return "This is not working as expected";
-  return `${role}${skytime} just started (at ${time(startTime.toDate(), "t")}) and will end at ${time(endTime.toDate(), "t")} (${time(endTime.toDate(), "R")})`;
+  if (!active) return t("reminders.ERROR");
+  return `${role}\n${t("reminders.COMMON", {
+    // @ts-expect-error
+    TYPE: t("times-embed." + skytime?.toUpperCase()),
+    TIME: time(startTime.toDate(), "t"),
+    "TIME-END": time(endTime.toDate(), "t"),
+    "TIME-END-R": time(endTime.toDate(), "R"),
+  })}`;
 }
 
 /**
@@ -142,7 +150,7 @@ const update = async (
     const t = getTranslator(guild.language?.value ?? "en-US");
     webhook
       .editMessage(event.messageId, {
-        content: `Last Update At: ${time(new Date(), "R")}`,
+        content: t("shards-embed.CONTENT"),
         ...(await response(t)),
       })
       .catch((e) => {
