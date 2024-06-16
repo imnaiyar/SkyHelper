@@ -22,13 +22,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd skyhelper
-            git stash
-            git checkout main
             git pull
             docker stop skyhelper
             docker rm skyhelper
             docker build -t skyhelper .
             docker run -d --name skyhelper -p 5000:5000 --restart always skyhelper
-            git checkout translation
-            git stash pop
           EOF
