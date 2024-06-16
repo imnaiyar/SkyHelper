@@ -9,7 +9,7 @@
   <br>
 </h1>
 
-<p align="center">Shards, Next Shards, Seasonal Guides, Timestamp, Sky Times and more...</p>
+<p align="center">A Sky COTL Discord Bot</p>
 <p align="center"><img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/github/stars/imnaiyar/SkyHelper"/> <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper"> <img alt="GitHub License" src="https://img.shields.io/github/license/imnaiyar/SkyHelper">
  <img alt="GitHub package.json dependency version (subfolder of monorepo)" src="https://img.shields.io/github/package-json/dependency-version/imnaiyar/SkyHelper/discord.js">
  </p>
@@ -30,6 +30,17 @@
 </p>
 
 <br>
+
+### Features
+- 🌋 Shards
+- 🗓 Shards calendar
+- 🧮 Seasonal currency calculator
+- 🕑 In-game events times and countdowns
+- ⏰️ Reminders (Geyser, Grandma, etc...)
+- 🟢 Live Updates
+- 🈯️ Supports mulitple language ([help us](https://crowdin.com/project/skyhelper) support more)
+- and much more...
+
 
 ## Building the bot
 
