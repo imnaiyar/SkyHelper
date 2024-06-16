@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+.git/
+.vscode/
+documentations/
+dist/
+.github
+*.log
+*.tar.gz
+*.tar
