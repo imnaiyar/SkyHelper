@@ -9,3 +9,5 @@ errors.toml
 dist
 .vscode
 bun.lockb
+Dockerfile
+docker-compose.debug.yml
