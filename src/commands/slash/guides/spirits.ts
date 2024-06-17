@@ -45,7 +45,10 @@ export default {
     }
     const manager = new Spirits(data, client);
     const btns = manager.getButtons();
-    await interaction.followUp({ embeds: [manager.getEmbed()], ...(btns.data.components?.length && { components: [btns] }) });
+    await interaction.followUp({
+      embeds: [manager.getEmbed()],
+      ...(btns.components?.length && { components: [btns] }),
+    });
     manager.handleInt(interaction).catch((err) => client.logger.error(err));
   },
 
