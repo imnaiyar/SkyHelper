@@ -347,7 +347,8 @@
       },
       "RESPONSES": {
         "NOT_ACTIVE": "No active season at the moment. Please run this command when a seson is active.",
-        "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles"
+        "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles",
+        "ENDS_IN": "Ends in {{DAYS}} days"
       }
     },
     "HELP": {
@@ -360,7 +361,8 @@
         }
       },
       "RESPONSES": {
-        "NOT_FOUND": "No such command or outdated command",
+        "MESSAGE_APP_DESC": "Message App Command",
+        "USER_APP_DESC": "User App Command",
         "REQUESTED_BY": "Requested by {{USER}}",
         "FOOTER_SINGLE": "Help Command",
         "FOOTER": "run /help <command> for details. | Page {{PAGE}}/{{TOTAL}}",
@@ -441,7 +443,9 @@
         "RESPONSES": {
           "NO-PERM": "You do not have permission(s) ({{PERMISSION}}) to set a server's language",
           "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nPlease consider contrubuting to translation of this bot by visiting {{LINK}} and help us add more supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
-          "ALREADY_SET": "{{TYPE}} language setting is already set to {{LANGUAGE}}"
+          "ALREADY_SET": "{{TYPE}} language setting is already set to {{LANGUAGE}}",
+          "ALREADY_NOT_SET": "There's already no language set for {{CATEGORY}}.",
+          "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
         }
       }
     }
