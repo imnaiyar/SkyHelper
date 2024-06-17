@@ -1,4 +1,4 @@
-import type { SkyHelper } from "#structures";
+import { getTranslator } from "#src/i18n";
 import {
   EmbedBuilder,
   ModalBuilder,
@@ -12,22 +12,24 @@ import {
   ModalSubmitInteraction,
 } from "discord.js";
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
-export async function getSuggestion(interaction: ChatInputCommandInteraction) {
-  const client = interaction.client as SkyHelper;
+export async function getSuggestion(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) {
+  const client = interaction.client;
   const attachment = interaction.options.getAttachment("attachment");
-  const modal = new ModalBuilder().setCustomId("suggestionModal" + `-${interaction.id}`).setTitle("Contact Us");
+  const modal = new ModalBuilder()
+    .setCustomId("suggestionModal" + `-${interaction.id}`)
+    .setTitle(t("commands.UTILS.RESPONSES.SUGGESTION_MODAL_TITLE"));
 
   const fields = {
     title: new TextInputBuilder()
       .setCustomId("title")
-      .setLabel("Title")
-      .setPlaceholder("Title for the suggestion")
+      .setLabel(t("commands.UTILS.RESPONSES.SUGGESTION_TITLE"))
+      .setPlaceholder(t("commands.UTILS.RESPONSES.TITLE_PLACEHOLDER"))
       .setStyle(TextInputStyle.Short),
     suggestion: new TextInputBuilder()
       .setCustomId("suggestion")
-      .setLabel("Suggestion/Bug Report/Others")
+      .setLabel(t("commands.UTILS.RESPONSES.SUGGESTION"))
       .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder("Explain in brief."),
+      .setPlaceholder(t("commands.UTILS.RESPONSES.SUGGESTION_PLACEHOLDER")),
   };
 
   const firstActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(fields.title);
@@ -58,7 +60,7 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction) {
       }
       modalInt
         .reply({
-          content: `Your message is received. Here's a preview!`,
+          content: t("commands.UTILS.RESPONSES.RECIEVED"),
           embeds: [embed],
           ephemeral: true,
         })

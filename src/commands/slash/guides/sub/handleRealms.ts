@@ -19,6 +19,7 @@ const realms = {
   valley: "Valley of Triumph",
 };
 export async function handleRealms(interaction: ChatInputCommandInteraction) {
+  const t = await interaction.t();
   const realm = interaction.options.getString("realm");
   const type = interaction.options.getString("type");
   switch (type) {
@@ -32,7 +33,7 @@ export async function handleRealms(interaction: ChatInputCommandInteraction) {
     }
     case "spirits": {
       if (realm === "eden") {
-        await interaction.followUp({ content: "Eden doesn't have any spirits, they do not like scary places." });
+        await interaction.followUp({ content: t("commands.GUIDES.RESPONSES.NO-SPIRITS") });
         return;
       }
       await handleSpirits(interaction, realms[realm as keyof typeof realms]);
@@ -41,6 +42,7 @@ export async function handleRealms(interaction: ChatInputCommandInteraction) {
 }
 async function handleSummary(interaction: ChatInputCommandInteraction, realm: keyof typeof SummaryData) {
   const data = getSummary(realm);
+  const t = await interaction.t();
   const client = interaction.client as SkyHelper;
   let page = 1;
   const total = data.areas.length - 1;
@@ -54,7 +56,10 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
     .setImage(data.main?.image);
 
   const rowFirst = new ActionRowBuilder<ButtonBuilder>().addComponents(
-    new ButtonBuilder().setLabel("Different Areas").setCustomId("areas").setStyle(ButtonStyle.Primary),
+    new ButtonBuilder()
+      .setLabel(t("commands.GUIDES.RESPONSES.REALM-BUTTON-LABEL"))
+      .setCustomId("areas")
+      .setStyle(ButtonStyle.Primary),
   );
   const msg = await interaction.followUp({
     embeds: [embed],
@@ -66,23 +71,53 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
   });
 
   collector.on("collect", async (inter) => {
+    if (inter.user.id !== interaction.user.id) {
+      await inter.deferReply({ ephemeral: true });
+      const ts = await inter.t();
+      await inter.editReply({ content: ts("common.SELECT_EXPIRED") });
+      return;
+    }
     await inter.deferUpdate();
     const componentID = inter.customId;
     switch (componentID) {
       case "areas": {
-        const datas = getRealmsRow(data.areas, page, total, author, emoji, data.main.title);
+        const datas = getRealmsRow(
+          data.areas,
+          page,
+          total,
+          author,
+          emoji,
+          data.main.title,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+        );
         await inter.editReply(datas);
         break;
       }
       case "back": {
         page--;
-        const datas = getRealmsRow(data.areas, page, total, author, emoji, data.main.title);
+        const datas = getRealmsRow(
+          data.areas,
+          page,
+          total,
+          author,
+          emoji,
+          data.main.title,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+        );
         await inter.editReply(datas);
         break;
       }
       case "forward": {
         page++;
-        const datas = getRealmsRow(data.areas, page, total, author, emoji, data.main.title);
+        const datas = getRealmsRow(
+          data.areas,
+          page,
+          total,
+          author,
+          emoji,
+          data.main.title,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+        );
         await inter.editReply(datas);
         break;
       }
@@ -96,12 +131,20 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
       }
       case "area-menu": {
         page = parseInt((inter as StringSelectMenuInteraction).values[0].split("_")[1]) + 1;
-        const datas = getRealmsRow(data.areas, page, total, author, emoji, data.main.title);
+        const datas = getRealmsRow(
+          data.areas,
+          page,
+          total,
+          author,
+          emoji,
+          data.main.title,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+        );
         await inter.editReply(datas);
         break;
       }
       default:
-        await inter.editReply({ content: "Invalid choice or Guide yet to be updated" });
+        await inter.editReply({ content: t("commands.GUIDES.RESPONSES.INVALID-CHOICE") });
     }
   });
 
@@ -119,11 +162,20 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
 
 async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof typeof MapsData) {
   const data = getMaps(realm);
-
+  const t = await interaction.t();
   let page = 1;
   const total = data.maps.length - 1;
   const author = `Maps of ${data.realm}`;
-  const row = getRealmsRow(data.maps, page, total, author, undefined, data.realm, true);
+  const row = getRealmsRow(
+    data.maps,
+    page,
+    total,
+    author,
+    undefined,
+    data.realm,
+    t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+    true,
+  );
   const msg = await interaction.followUp({
     content: data?.content,
     ...row,
@@ -135,7 +187,9 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
 
   collector.on("collect", async (inter) => {
     if (inter.user.id !== interaction.user.id) {
-      await inter.reply({ content: "You cannot use menu(s) generated by others!", ephemeral: true });
+      await inter.deferReply({ ephemeral: true });
+      const ts = await inter.t();
+      await inter.editReply({ content: ts("common.SELECT_EXPIRED") });
       return;
     }
     await inter.deferUpdate();
@@ -143,19 +197,46 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
     switch (componentID) {
       case "back": {
         page--;
-        const datas = getRealmsRow(data.maps, page, total, author, undefined, data.realm, true);
+        const datas = getRealmsRow(
+          data.maps,
+          page,
+          total,
+          author,
+          undefined,
+          data.realm,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          true,
+        );
         await inter.editReply(datas);
         break;
       }
       case "forward": {
         page++;
-        const datas = getRealmsRow(data.maps, page, total, author, undefined, data.realm, true);
+        const datas = getRealmsRow(
+          data.maps,
+          page,
+          total,
+          author,
+          undefined,
+          data.realm,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          true,
+        );
         await inter.editReply(datas);
         break;
       }
       case "area-menu": {
         page = parseInt((inter as StringSelectMenuInteraction).values[0].split("_")[1]) + 1;
-        const datas = getRealmsRow(data.maps, page, total, author, undefined, data.realm, true);
+        const datas = getRealmsRow(
+          data.maps,
+          page,
+          total,
+          author,
+          undefined,
+          data.realm,
+          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          true,
+        );
         await inter.editReply(datas);
         break;
       }
@@ -172,6 +253,7 @@ function getRealmsRow(
   author: string,
   emoji: string | undefined,
   realm: string,
+  t: string,
   map?: boolean,
 ) {
   const embed = data[page - 1];
@@ -216,7 +298,7 @@ function getRealmsRow(
 
   const menu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder()
-      .setPlaceholder("Choose an area.")
+      .setPlaceholder(t)
       .setCustomId("area-menu")
       .addOptions(
         data.map((area, index) => ({

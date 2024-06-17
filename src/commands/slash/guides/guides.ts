@@ -5,6 +5,37 @@ import { handleSeasional } from "./sub/handleSeasional.js";
 import { handleRealms } from "./sub/handleRealms.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
+  async execute(interaction) {
+    const sub = interaction.options.getSubcommand();
+    await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
+    switch (sub) {
+      case "seasonal": {
+        await handleSeasional(interaction);
+        break;
+      }
+      case "realms": {
+        await handleRealms(interaction);
+        break;
+      }
+    }
+  },
+  async autocomplete(interaction) {
+    const focusedValue = interaction.options.getFocused(true);
+    const sub = interaction.options.getSubcommand();
+
+    if (sub === "seasonal" && focusedValue.name === "season") {
+      // EmojisMap contain all the season name, so get it from there
+      const choices = Object.entries(seasonsData).filter(([, v]) =>
+        v.name.toLowerCase().includes(focusedValue.value.toLowerCase()),
+      );
+      await interaction.respond(
+        choices.map(([k, v]) => ({
+          name: `↪️ Season of ${v.name}`,
+          value: k.toString(),
+        })),
+      );
+    }
+  },
   cooldown: 10,
   category: "Guides",
   data: {
@@ -162,36 +193,5 @@ export default {
     ],
     integration_types: [0, 1],
     contexts: [0, 1, 2],
-  },
-  async execute(interaction) {
-    const sub = interaction.options.getSubcommand();
-    await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
-    switch (sub) {
-      case "seasonal": {
-        await handleSeasional(interaction);
-        break;
-      }
-      case "realms": {
-        await handleRealms(interaction);
-        break;
-      }
-    }
-  },
-  async autocomplete(interaction) {
-    const focusedValue = interaction.options.getFocused(true);
-    const sub = interaction.options.getSubcommand();
-
-    if (sub === "seasonal" && focusedValue.name === "season") {
-      // EmojisMap contain all the season name, so get it from there
-      const choices = Object.entries(seasonsData).filter(([, v]) =>
-        v.name.toLowerCase().includes(focusedValue.value.toLowerCase()),
-      );
-      await interaction.respond(
-        choices.map(([k, v]) => ({
-          name: `↪️ Season of ${v.name}`,
-          value: k.toString(),
-        })),
-      );
-    }
   },
 } satisfies SlashCommand<true>;

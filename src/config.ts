@@ -14,6 +14,8 @@ export default {
   CDN_URL: "https://cdn.imnaiyar.site",
   DASHBOARD: {
     enabled: true,
+    /* The URL of the dashboard */
+    URL: "https://dash.skyhelper.xyz",
     /** Web URL requesting to the API*/
     WEB_URL: [
       "http://localhost:3000",
@@ -39,4 +41,3 @@ export default {
   shardSequence: ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"],
   realmSequence: ["prairie", "forest", "valley", "wasteland", "vault"],
 };
-

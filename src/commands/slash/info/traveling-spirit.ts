@@ -45,7 +45,7 @@ export default {
           value: spirit.tree!.total,
         })
         .setImage("https://cdn.imnaiyar.site/" + spirit.tree!.image);
-      const manager = new Spirits(spirit, client);
+      const manager = new Spirits(spirit, t, client);
       await interaction.followUp({ embeds: [embed], components: [manager.getButtons()] });
       manager.handleInt(interaction).catch((err) => client.logger.error(err));
     } else {
@@ -78,4 +78,3 @@ export default {
   cooldown: 20,
   category: "Info",
 } satisfies SlashCommand;
-

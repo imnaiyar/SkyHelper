@@ -2,7 +2,22 @@
   "common": {
     "bot": {
       "name": "SkyHelper",
-      "intro": "That's me..."
+      "intro": "That's me...",
+      "EMBED_TITLE": "Bot Info",
+      "TOTAL_SERVER": "Total Servers",
+      "TOTAL_USERS": "Total Users",
+      "LATENCY": "Latency",
+      "VERSION": "Version",
+      "UPTIME": "Uptime",
+      "PING": "Websocket Ping",
+      "GUILD_SETTINGS": "Guild Settings",
+      "LANGUAGE": "Language",
+      "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
+      "NOT_SET": "None (you can set it via bot's dashboard)",
+      "USER_SETTINGS": "User Settings",
+      "INVITE": "Invite",
+      "SUPPORT": "Support Server",
+      "DASHBOARD": "Dashboard"
     },
     "NO-WB-PERM-BOT": "I do not have `Manage Webhooks` permission in {{CHANNEL}}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.",
     "SELECT_EXPIRED": "Menu Expired!",
@@ -113,11 +128,21 @@
     "ERROR": "This is not working as expected",
     "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
   },
+  "REALMS": {
+    "ISLE": "Isle of Dawn",
+    "PRAIRIE": "Daylight Prairie",
+    "FOREST": "Hidden Forest",
+    "VALLEY": "Valley of Triumph",
+    "WASTELAND": "Golden Wasteland",
+    "VAULT": "Vault of Knowledge",
+    "EDEN": "Eye of Eden"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "Season",
     "UNKNOWN": "Unknown Spirit",
     "REALM_TITLE": "Realm",
     "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
+    "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
     "LOCATION_TITLE": "Location by {{CREDIT}}"
   },
   "commands": {
@@ -192,7 +217,28 @@
         "description": "search for a spirit"
       },
       "RESPONSES": {
-        "NO_DATA": "No data found for {{VALUE}}! If you think this is an error, please let us know via {{COMMAND}}"
+        "NO_DATA": "No data found for {{VALUE}}! If you think this is an error, please let us know via {{COMMAND}}",
+        "BUTTONS": {
+          "TREE": "Friendship Tree",
+          "LOCATION": "Location",
+          "ACTION": "Friendship Action",
+          "CALL": "Call",
+          "STANCE": "Stance",
+          "EMOTE": "Emote"
+        },
+        "EMBED": {
+          "AUTHOR": "Spirit Summary",
+          "TYPE": "**Type: {{SPIRIT_TYPE}}",
+          "REALM": "**Realm**: {{REALM}}",
+          "SEASON": "**Season**: Season of {{SEASON}}",
+          "FIELDS": {
+            "SUMMARY_TITLE": "TS Summary",
+            "SUMMARY_DESC_NO_ELIGIBLE": "This spirit is not eligible to return as a TS yet, and will become eligible when the season after the ${{SEASON}} ends!",
+            "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}\n__Returned Dates__",
+            "SUMMARY_DESC_NO_VISIT": "This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree."
+          },
+          "CREDIT": "Infographic by Ed.7"
+        }
       }
     },
     "SHARDS_CALENDAR": {
@@ -406,7 +452,7 @@
         },
         "BOTINFO": {
           "name": "botinfo",
-          "description": "get the bot's info"
+          "description": "get the bot's info and configure settings"
         },
         "CONTACT-US": {
           "name": "contact-us",
@@ -419,17 +465,19 @@
         "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
         "SUGGESTION_TITLE": "Title",
         "TITLE_PLACEHOLDER": "Title for the suggestion",
+        "SUGGESTION_MODAL_TITLE": "Contact Us",
         "SUGGESTION": "Suggestion/Bug Report/Others",
         "SUGGESTION_PLACEHOLDER": "Explain in brief.",
         "RECIEVED": "Your message is received. Here's a preview!"
       }
     },
     "LANGUAGE": {
-      "name": "set-language",
-      "description": "set a preferred language for the bot's response",
+      "name": "language",
+      "description": "manage preferred language for the bot's response",
+
       "options": {
-        "TYPE": {
-          "name": "type",
+        "CATEGORY": {
+          "name": "category",
           "description": "what level to set the language up?",
           "choices": {
             "GUILD": "Server",
@@ -439,6 +487,19 @@
         "LANGUAGES": {
           "name": "languages",
           "description": "select a language"
+        },
+        "SUB": {
+          "SET": {
+            "name": "set",
+            "description": "set your/server language for the bot"
+          },
+          "REMOVE": {
+            "name": "remove",
+            "description": "remove a set language",
+            "options": {
+              "description": "select a category type to remove"
+            }
+          }
         },
         "RESPONSES": {
           "NO-PERM": "You do not have permission(s) ({{PERMISSION}}) to set a server's language",
@@ -451,4 +512,3 @@
     }
   }
 }
-

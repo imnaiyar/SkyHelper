@@ -21,14 +21,17 @@ export async function handleSeasional(interaction: discordJs.ChatInputCommandInt
 
 async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: SeasonData) {
   const quests = season.quests;
-  if (!quests) return void int.editReply({ content: `No quest available for ${season.icon} ${season.name}` });
+  const t = await int.t();
+  if (!quests) {
+    return void int.editReply({ content: t("commands.GUIDES.RESPONSES.NO_QUEST", { SEASON: `${season.icon} ${season.name}` }) });
+  }
   const total = quests.length;
   let page = 1;
   const getResponse = () => {
     const quest = quests[page - 1];
     const emojiUrl = int.client.emojis.cache.get(discordJs.parseEmoji(season.icon)!.id!)?.imageURL();
     const embed = new discordJs.EmbedBuilder()
-      .setAuthor({ name: `Season of ${season.name} Quests`, iconURL: emojiUrl })
+      .setAuthor({ name: t("commands.GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { EASON: season.name }), iconURL: emojiUrl })
       .setTitle(`${season.icon} ${quest.title}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name}#${quest.title.split(" ").join("_")}`)
       .setFooter({ text: "SkyHelper", iconURL: int.client.user.displayAvatarURL() });
@@ -37,7 +40,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
     const select = new discordJs.ActionRowBuilder<discordJs.StringSelectMenuBuilder>().addComponents(
       new discordJs.StringSelectMenuBuilder()
         .setCustomId("guide-season-select")
-        .setPlaceholder("Choose a quest")
+        .setPlaceholder(t("commands.GUIDES.RESPONSES.QUEST_SELECT_PLACEHOLDER"))
         .setOptions(
           quests.map((q, i) => ({
             label: q.title,
