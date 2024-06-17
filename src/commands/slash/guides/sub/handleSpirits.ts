@@ -37,7 +37,7 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
     const btns = manager.getButtons();
     const msg = await i.editReply({
       embeds: [manager.getEmbed()],
-      ...(btns.data.components?.length ? { components: [row, manager.getButtons()] } : { components: [row] }),
+      ...(btns.components?.length ? { components: [row, manager.getButtons()] } : { components: [row] }),
     });
     sprtCltr = await manager.handleInt(int);
     return msg;
