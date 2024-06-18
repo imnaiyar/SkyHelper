@@ -53,7 +53,9 @@ export default {
       }
       if (!channel.permissionsFor(interaction.guild.members.me!).has("ManageWebhooks")) {
         return void (await interaction.editReply({
-          embeds: [new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: channel })).setColor("Red")],
+          embeds: [
+            new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: channel.toString() })).setColor("Red"),
+          ],
         }));
       }
       const wb = await client.createWebhook(channel, "For live Shards Update");
@@ -76,7 +78,11 @@ export default {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", { CHANNEL: channel, MESSAGE: msg.url, TYPE: `"Live Shard"` }),
+              t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", {
+                CHANNEL: channel.toString(),
+                MESSAGE: msg.url,
+                TYPE: `"Live Shard"`,
+              }),
             )
             .setColor("Green"),
         ],

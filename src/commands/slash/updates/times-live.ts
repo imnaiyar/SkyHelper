@@ -35,7 +35,7 @@ export default {
           return;
         }
       }
-      const channel = interaction.options.getChannel("channel")! as TextChannel;
+      const channel = interaction.options.getChannel("channel", true);
 
       /*
       This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case
@@ -44,17 +44,19 @@ export default {
         return void (await interaction.followUp({
           embeds: [
             new EmbedBuilder()
-              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel }))
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel.toString() }))
               .setColor("Red"),
           ],
         }));
       }
       if (!channel.permissionsFor(interaction.guild.members.me!).has("ManageWebhooks")) {
         return void (await interaction.editReply({
-          embeds: [new EmbedBuilder().setDescription(t("common.errors.NO_PERMS_BOT", { CHANNEL: channel })).setColor("Red")],
+          embeds: [
+            new EmbedBuilder().setDescription(t("common.errors.NO_PERMS_BOT", { CHANNEL: channel.toString() })).setColor("Red"),
+          ],
         }));
       }
-      const wb = await client.createWebhook(channel, "For live SkyTimes Update");
+      const wb = await client.createWebhook(channel as TextChannel, "For live SkyTimes Update");
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const result = {
@@ -75,7 +77,11 @@ export default {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", { CHANNEL: channel, MESSAGE: msg.url, TYPE: `"Live SkyTimes"` }),
+              t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", {
+                CHANNEL: channel.toString(),
+                MESSAGE: msg.url,
+                TYPE: `"Live SkyTimes"`,
+              }),
             )
             .setColor("Green"),
         ],

@@ -75,7 +75,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
       .setAuthor({ name: t("commands.REMINDERS.RESPONSES.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
       .setTitle(interaction.guild.name)
       .setDescription(
-        `${t("commands.REMINDERS.RESPONSES.DES_TITLE")}\n${t("commands.REMINDERS.RESPONSES.CHANNEL", { CHANNEL: await getChannel() })}\n${t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE", { ROLE: reminders.default_role ? roleMention(reminders.default_role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE") })}\n${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}: ${status}\n- ${t("times-embed.GEYSER")} ${getActive(geyser)}\n- ${t("times-embed.GRANDMA")} ${getActive(grandma)}\n- ${t("times-embed.TURTLE")} ${getActive(turtle)}\n- ${t("times-embed.DAILY")} ${getActive(reset)}\n- ~~ ${t("times-embed.EDEN")} ~~ ${getActive(eden)} (WIP)\n- ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
+        `${t("commands.REMINDERS.RESPONSES.DES_TITLE")}\n${t("commands.REMINDERS.RESPONSES.CHANNEL", { CHANNEL: (await getChannel())?.toString() })}\n${t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE", { ROLE: reminders.default_role ? roleMention(reminders.default_role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE") })}\n${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}: ${status}\n- ${t("times-embed.GEYSER")} ${getActive(geyser)}\n- ${t("times-embed.GRANDMA")} ${getActive(grandma)}\n- ${t("times-embed.TURTLE")} ${getActive(turtle)}\n- ${t("times-embed.DAILY")} ${getActive(reset)}\n- ~~ ${t("times-embed.EDEN")} ~~ ${getActive(eden)} (WIP)\n- ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
       );
   };
 
@@ -230,7 +230,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
 
           if (!ch.permissionsFor(int.guild.members.me!).has("ManageWebhooks")) {
             return await int.editReply({
-              embeds: [new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: ch })).setColor("Red")],
+              embeds: [new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: ch.toString() })).setColor("Red")],
             });
           }
 
