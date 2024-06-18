@@ -8,7 +8,7 @@ export default {
   data: {
     name: "shards-location",
   },
-  async execute(interaction, _t, client) {
+  async execute(interaction, t, client) {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Gale = await client.users.fetch("473761854175576075");
     const Clement = await client.users.fetch("693802004018888714");
@@ -22,11 +22,13 @@ export default {
     const getResponse = () => {
       const data = datas[page];
       const authorName =
-        page === 0 ? `Shard location by Clement  (${Clement.username})` : `Shard data by Gale (${Gale.username})`;
+        page === 0
+          ? t("buttons.SHARD_LOCATION.L_CREDIT", { CREDIT: `Clement (${Clement.username})` })
+          : t("buttons.SHARD_LOCATION.D_CREDIT", { CREDIT: `Gale (${Gale.username})` });
       const authorIcon = page === 0 ? Clement.displayAvatarURL() : Gale.displayAvatarURL();
       const shardEmbed: APIEmbed = {
         title: data.description,
-        description: `${moment().tz(client.timezone).startOf("day").isSame(date.startOf("day")) ? "Today" : date.format("Do MMMM YYYY")}`,
+        description: `${moment().tz(client.timezone).startOf("day").isSame(date.startOf("day")) ? t("shards-embed.TODAY") : date.format("Do MMMM YYYY")}`,
         color: parseInt("00ff00", 16),
         footer: {
           text: `Page ${page + 1} of ${total + 1} | Sky Shards Information`,
@@ -43,12 +45,12 @@ export default {
 
       const shardBtns = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
-          .setLabel("Location")
+          .setLabel(t("buttons.SHARD_LOCATION"))
           .setCustomId("shardLocation-left")
           .setStyle(ButtonStyle.Primary)
           .setDisabled(page === 0),
         new ButtonBuilder()
-          .setLabel("Data")
+          .setLabel(t("buttons.SHARD_LOCATION.DATA"))
           .setCustomId("shardLocation-right")
           .setStyle(ButtonStyle.Primary)
           .setDisabled(page === total),

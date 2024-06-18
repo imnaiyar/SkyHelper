@@ -15,7 +15,7 @@ export default {
   data: {
     name: "shards-timeline",
   },
-  async execute(interaction, _t, client) {
+  async execute(interaction, t, client) {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Zhii = await client.users.fetch("650487047160725508");
     const Christian = await client.users.fetch("594485678625128466");
@@ -29,36 +29,36 @@ export default {
       const data = datas[page];
       const shardEmbed: APIEmbed = {
         title: "__" + (page + 1).toString() + utils.getSuffix(page + 1) + " Shard__",
-        description: `**${moment().tz(client.timezone).startOf("day").isSame(date.startOf("day")) ? "Today" : date.format("Do MMMM YYYY")}**`,
+        description: `**${moment().tz(client.timezone).startOf("day").isSame(date.startOf("day")) ? t("shards-embed.TODAY") : date.format("Do MMMM YYYY")}**`,
         color: parseInt("00ff00", 16),
         footer: {
-          text: `Sky changes and Shard music by Christian(${Christian.username}) | Page ${page + 1} of ${total + 1}`,
+          text: `${t("buttons.SHARD_TIMELINE.MUSIC_CREDIT", { CREDIT: `Christian ${Christian.username}` })} | Page ${page + 1} of ${total + 1}`,
           icon_url: Christian.displayAvatarURL(),
         },
         fields: [
           {
-            name: "Early Sky Change",
-            value: "Sky colour changes at: " + time(data.earlySky.unix(), "T"),
+            name: t("buttons.SHARD_TIMELINE.COLOR.LABEL"),
+            value: t("buttons.SHARD_TIMELINE.COLOR.VALUE", { TIME: time(data.earlySky.unix(), "T") }),
           },
           {
-            name: "Gate Shard",
-            value: "Shards crystal on gate appears at: " + time(data.gateShard.unix(), "T"),
+            name: t("buttons.SHARD_TIMELINE.GATE.LABEL"),
+            value: t("buttons.SHARD_TIMELINE.GATE.VALUE", { TIME: time(data.gateShard.unix(), "T") }),
           },
           {
-            name: "Shard Landing",
-            value: "Shard lands at: " + time(data.start.unix(), "T"),
+            name: t("buttons.SHARD_TIMELINE.LANDS.LABEL"),
+            value: t("buttons.SHARD_TIMELINE.LANDS.VALUE", { TIME: time(data.start.unix(), "T") }),
           },
           {
-            name: "End of Shard",
-            value: "Shard ends at: " + time(data.end.unix(), "T"),
+            name: t("buttons.SHARD_TIMELINE.ENDS.LABEL"),
+            value: t("buttons.SHARD_TIMELINE.ENDS.VALUE", { TIME: time(data.end.unix(), "T") }),
           },
           {
-            name: "Shard Music",
-            value: `***${data.shardMusic}*** music will play during this shard.`,
+            name: t("buttons.SHARD_TIMELINE.MUSIC.LABEL"),
+            value: t("buttons.SHARD_TIMELINE.MUSIC.VALUE", { MUSIC: `**${data.shardMusic}**` }),
           },
         ],
         author: {
-          name: `Shards Timestamp by Zhii(${Zhii.username})`,
+          name: t("buttons.SHARD_TIMELINE.TIMESTAMP_CREDIT", { CREDIT: `Zhii ${Zhii.username}` }),
           icon_url: Zhii.displayAvatarURL(),
         },
       };
