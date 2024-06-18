@@ -25,7 +25,7 @@ export class GuildController {
       name: data.name,
       icon: data.icon,
       prefix: settings?.prefix,
-      language: "hi-IN",
+      language: settings?.language?.value ?? "en-US",
       announcement_channel: settings?.annoucement_channel ?? undefined,
       beta: settings?.beta,
       enabledFeatures: actives,
@@ -146,3 +146,4 @@ export class GuildController {
     return [...roles.values()];
   }
 }
+
