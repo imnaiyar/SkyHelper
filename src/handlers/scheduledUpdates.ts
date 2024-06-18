@@ -139,12 +139,6 @@ const update = async (
     if (!event.webhook.id) return;
     const webhook = await client.fetchWebhook(event.webhook.id, event.webhook.token ?? undefined).catch(() => null);
     if (!webhook) {
-      guild[type].active = false;
-      guild[type].messageId = "";
-      guild[type].webhook.id = null;
-      guild[type].webhook.token = null;
-      await guild.save();
-      client.logger.error(`Live ${type} disabled for ${guild.data.name}, webhook found deleted!`);
       return;
     }
     const t = getTranslator(guild.language?.value ?? "en-US");
@@ -168,4 +162,3 @@ const update = async (
       });
   });
 };
-
