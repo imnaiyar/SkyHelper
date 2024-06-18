@@ -103,7 +103,9 @@
     "EDEN_RESET": "At {{DATE}} (in {{DURATION}})",
     "EMBED_TITLE": "Event Times",
     "EMBED_AUTHOR": "SkyTimes",
-    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**Starts In**: {{DURATION}}",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "Starts In",
+    "ENDS": "Ends In",
     "TS_VISITING": "**Currently Visiting:** {{TS_NAME}}\n**Departure:** At {{DATE}} (in {{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}}} arriving at {{DATE}} (in {{DURATION}})",
     "TS_UPDATED": "Yet to be updated",
@@ -550,3 +552,4 @@
     }
   }
 }
+

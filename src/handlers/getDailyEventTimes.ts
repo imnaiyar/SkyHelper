@@ -84,7 +84,8 @@ export const getTimesEmbed = async (
           DATE2: time(event.end.unix(), "F"),
           DAYS: event.days,
           DURATION: event.duration,
-        }).replace("Starts In", event.active ? "Ends In" : "Starts In");
+          STARTS_ENDS: event.active ? t("times-embed.STARTS") : t("times-embed.ENDS"),
+        });
   let tsDesc: string;
   if (!tsData) {
     tsDesc = "Unknown!";

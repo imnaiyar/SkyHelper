@@ -32,7 +32,7 @@ export default {
         description: `**${moment().tz(client.timezone).startOf("day").isSame(date.startOf("day")) ? t("shards-embed.TODAY") : date.format("Do MMMM YYYY")}**`,
         color: parseInt("00ff00", 16),
         footer: {
-          text: `${t("buttons.SHARD_TIMELINE.MUSIC_CREDIT", { CREDIT: `Christian ${Christian.username}` })} | Page ${page + 1} of ${total + 1}`,
+          text: `${t("buttons.SHARD_TIMELINE.MUSIC_CREDIT", { CREDIT: `Christian (${Christian.username})` })} | Page ${page + 1} of ${total + 1}`,
           icon_url: Christian.displayAvatarURL(),
         },
         fields: [
@@ -42,7 +42,7 @@ export default {
           },
           {
             name: t("buttons.SHARD_TIMELINE.GATE.LABEL"),
-            value: t("buttons.SHARD_TIMELINE.GATE.VALUE", { TIME: time(data.gateShard.unix(), "T") }),
+            value: t("buttons.SHARD_TIMELINE.GATE.VALUE", { TIME: time(data.gateShard.unix(), "t") }),
           },
           {
             name: t("buttons.SHARD_TIMELINE.LANDS.LABEL"),
@@ -50,7 +50,7 @@ export default {
           },
           {
             name: t("buttons.SHARD_TIMELINE.ENDS.LABEL"),
-            value: t("buttons.SHARD_TIMELINE.ENDS.VALUE", { TIME: time(data.end.unix(), "T") }),
+            value: t("buttons.SHARD_TIMELINE.ENDS.VALUE", { TIME: time(data.end.unix(), "t") }),
           },
           {
             name: t("buttons.SHARD_TIMELINE.MUSIC.LABEL"),
@@ -58,7 +58,7 @@ export default {
           },
         ],
         author: {
-          name: t("buttons.SHARD_TIMELINE.TIMESTAMP_CREDIT", { CREDIT: `Zhii ${Zhii.username}` }),
+          name: t("buttons.SHARD_TIMELINE.TIMESTAMP_CREDIT", { CREDIT: `Zhii (${Zhii.username})` }),
           icon_url: Zhii.displayAvatarURL(),
         },
       };
@@ -109,3 +109,4 @@ export default {
     });
   },
 } satisfies Button;
+

@@ -6,7 +6,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   async execute(interaction, t, client) {
-    const type = interaction.options.getString("type", true);
+    const type = interaction.options.getString("category", true);
     const sub = interaction.options.getSubcommand();
     if (type === "server") {
       if (!interaction.inCachedGuild()) {
@@ -200,3 +200,4 @@ export default {
     contexts: [0, 1, 2],
   },
 } satisfies SlashCommand;
+
