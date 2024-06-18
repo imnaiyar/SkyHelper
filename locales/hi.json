@@ -103,7 +103,9 @@
     "EDEN_RESET": "{{DATE}} को ({{DURATION}} में)",
     "EMBED_TITLE": "इवेंट्स का समय",
     "EMBED_AUTHOR": "स्काइटाइम्स",
-    "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारीक**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**शुरू होगा**: {{DURATION}}",
+    "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
+    "STARTS": "शुरू होगा",
+    "ENDS": "ख़तम होगा",
     "TS_VISITING": "**अभी विजिट में**: {{TS_NAME}}\n**वापिस जाएंगे**: {{DATE}} को ({{DURATION}} में)",
     "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
     "TS_UPDATED": "अभी अपडेट होने को है",
@@ -245,7 +247,7 @@
       "name": "शार्डस-कैलेंडर",
       "description": "शार्ड कैलेंडर दिखाएं",
       "RESPONSES": {
-        "DATE_SELECT_PLACEHOLDER": "एक तारीक सीमा को चुनें",
+        "DATE_SELECT_PLACEHOLDER": "एक तारिख सीमा को चुनें",
         "MONTH_SELECT_PLACEHOLDER": "एक महीना चुनें",
         "YEAR_SELECT_PLACEHOLDER": "एक वर्ष चुनें",
         "INFO": {
@@ -269,7 +271,7 @@
       },
       "RESPONSES": {
         "INVALID_DATE": "गलत तारिक फॉर्मेट: कृपया YYYY-MM-DD फॉर्मेट use करें। अधिकतम इनपुट: **275760-09-12**",
-        "DATE_NONEXIST": "यह {{DATE}} एक्जिस्ट नहीं करता है, कृपया सही तारीक दें।"
+        "DATE_NONEXIST": "यह {{DATE}} एक्जिस्ट नहीं करता है, कृपया सही तारिख दें।"
       }
     },
     "SKYTIMES": {
@@ -422,7 +424,7 @@
       "options": {
         "TIMESTAMP": {
           "name": "टाइमस्टम्प",
-          "description": "एक दिए हुए तारीक के लिए Unix टाइमस्टम्प प्राप्त करें",
+          "description": "एक दिए हुए तारिख के लिए Unix टाइमस्टम्प प्राप्त करें",
           "options": {
             "TIME": {
               "name": "समय",
@@ -433,8 +435,8 @@
               "description": "Continent/City के फॉर्मेट में आपका टाइमजोन"
             },
             "DATE": {
-              "name": "तारीक",
-              "description": "कन्वर्ट करने के लिए तारीक (फॉर्मेट: DD)"
+              "name": "तारिख",
+              "description": "कन्वर्ट करने के लिए तारिख (फॉर्मेट: DD)"
             },
             "MONTH": {
               "name": "महीना",
@@ -462,7 +464,7 @@
       "RESPONSES": {
         "INVALID-FORMAT": "समय का फॉर्मेट गलत है। कृपया इस `HH mm ss` फॉर्मेट मे समय दें।",
         "INVALID-TIMEZONE": "टाइमजोन गलत है। कृपया इस `Continet/City` फॉर्मेट मे दें।\nयदि आपको अपना टाइमजोन पता नहीं है तो आप यहां से पता कर सकतें हैं: <https://timezonedb.com/time-zones>",
-        "DATE_NOT_EXIST": "{{DATE}} एक्जिस्ट नहीं करता है। कृपया सही तारीक दें।",
+        "DATE_NOT_EXIST": "{{DATE}} एक्जिस्ट नहीं करता है। कृपया सही तारिख दें।",
         "SUGGESTION_TITLE": "टाइटल",
         "TITLE_PLACEHOLDER": "सुझाव के लिए टाइटल",
         "SUGGESTION_MODAL_TITLE": "हमें कॉन्टैक्ट करें",
@@ -549,3 +551,4 @@
     }
   }
 }
+
