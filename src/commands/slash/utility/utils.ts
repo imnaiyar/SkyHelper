@@ -140,10 +140,17 @@ async function handleInfo(
     );
   if (interaction.inCachedGuild()) {
     const settings = await client.database.getSettings(interaction.guild);
-    embed.addFields({
-      name: t("common.bot.GUILD_SETTINGS"),
-      value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
-    });
+    const user_settings = await client.database.getUser(interaction.user);
+    embed.addFields(
+      {
+        name: t("common.bot.GUILD_SETTINGS"),
+        value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
+      },
+      {
+        name: t("common.bot.USER_SETTINGS"),
+        value: `**${t("common.bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
+      },
+    );
   }
 
   const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -169,3 +176,4 @@ function timeformat(timeInSeconds: number) {
     (seconds > 0 ? `${seconds} seconds` : "")
   );
 }
+

@@ -325,6 +325,7 @@
         "CHANNEL_UPDATE": "Reminders channel updated!",
         "ALL_ACTIVE": "All reminders are enabled!",
         "ALL_DISABLED": "All reminders are disabled!",
+        "DEFAULT_ROLE_UPDATE": "Default role updated!",
         "DEFAULT_ROLE_REMOVE": "Default role removed!"
       }
     },
@@ -351,7 +352,7 @@
         "NOT_GUILD": "This command can only be used in a server",
         "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
         "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
-        "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated every 5 minutes with live Shards details.",
+        "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
         "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
         "DISABLED": "{{TYPE}} is disabled"
       }

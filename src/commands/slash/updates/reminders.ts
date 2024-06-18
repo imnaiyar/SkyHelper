@@ -1,5 +1,5 @@
 import { ContextTypes, IntegrationTypes, type EventReminder, type GuildSchema } from "#libs";
-import type { SkyHelper, SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import {
   Webhook,
   ChatInputCommandInteraction,
@@ -17,7 +17,19 @@ import {
   TextChannel,
 } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
+import { getTranslator } from "#src/i18n";
 export default {
+  async execute(interaction, t) {
+    if (!interaction.inCachedGuild()) {
+      return void (await interaction.reply(t("commands.REMINDERS.RESPONSES.USER_APP_ERROR")));
+    }
+
+    await interaction.deferReply();
+    const client = interaction.client;
+    const settings = await client.database.getSettings(interaction.guild);
+
+    await handleSetup(interaction, t, settings);
+  },
   data: {
     name: "reminders",
     name_localizations: x("commands.REMINDERS.name"),
@@ -28,24 +40,13 @@ export default {
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
-  async execute(interaction) {
-    if (!interaction.inCachedGuild()) {
-      return void (await interaction.reply("Please run this command in a server I am a member of!"));
-    }
-
-    await interaction.deferReply();
-    const client = interaction.client as SkyHelper;
-    const settings = await client.database.getSettings(interaction.guild);
-
-    await handleSetup(interaction, settings);
-  },
 } satisfies SlashCommand;
 
-async function handleSetup(interaction: ChatInputCommandInteraction, settings: GuildSchema) {
-  const client = interaction.client as SkyHelper;
+async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>, settings: GuildSchema) {
+  const client = interaction.client;
 
   if (!interaction.inCachedGuild()) {
-    throw new Error("Not a cached server. Please contact the bot dev(s)");
+    throw new Error(t("commands.REMINDERS.RESPONSES.NOT_CACHED"));
   }
 
   const { reminders } = settings;
@@ -62,18 +63,19 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
     if (!webhook.id) return "None";
     wb = await client.fetchWebhook(webhook.id, webhook.token ?? undefined).catch(() => null);
     if (!wb) return "None";
-    status = geyser.active || grandma.active || turtle.active || reset.active ? "🟢 Active" : "🔴 Inactive";
+    status =
+      geyser.active || grandma.active || turtle.active || reset.active
+        ? t("commands.REMINDERS.RESPONSES.ACTIVE")
+        : t("commands.REMINDERS.RESPONSES.INACTIVE");
     return wb.channel;
   };
 
   const initialEmbed = async () => {
     return new EmbedBuilder()
-      .setAuthor({ name: "SkyHelper Reminders", iconURL: client.user.displayAvatarURL() })
+      .setAuthor({ name: t("commands.REMINDERS.RESPONSES.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
       .setTitle(interaction.guild.name)
       .setDescription(
-        `**Reminder Settings**\nChannel: ${await getChannel()}\nDefault Role: ${
-          reminders.default_role ? roleMention(reminders.default_role) : "None"
-        }\nStatus: ${status}\n- Geyser ${getActive(geyser)}\n- Grandma ${getActive(grandma)}\n- Turtle ${getActive(turtle)}\n- Daily Reset ${getActive(reset)}\n- ~~ Eden Reset ~~ ${getActive(eden)} (WIP)\n- ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
+        `${t("commands.REMINDERS.RESPONSES.DES_TITLE")}\n${t("commands.REMINDERS.RESPONSES.CHANNEL", { CHANNEL: await getChannel() })}\n${t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE", { ROLE: reminders.default_role ? roleMention(reminders.default_role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE") })}\n${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}: ${status}\n- ${t("times-embed.GEYSER")} ${getActive(geyser)}\n- ${t("times-embed.GRANDMA")} ${getActive(grandma)}\n- ${t("times-embed.TURTLE")} ${getActive(turtle)}\n- ${t("times-embed.DAILY")} ${getActive(reset)}\n- ~~ ${t("times-embed.EDEN")} ~~ ${getActive(eden)} (WIP)\n- ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
       );
   };
 
@@ -81,14 +83,16 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
     const mainMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId("reminders-edit-menu")
-        .setPlaceholder("Choose a type to edit!")
+        .setPlaceholder(t("commands.REMINDERS.RESPONSES.TYPE_SELECT_PLACEHOLDER"))
         .addOptions(
           Object.keys(strEnums).map((key) => ({ label: strEnums[key as keyof typeof strEnums], value: `edit-reminders_${key}` })),
         ),
     );
 
     const defaultRoleMenu = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
-      new RoleSelectMenuBuilder().setCustomId("reminders-edit-default_role").setPlaceholder("Select a default role to ping!"),
+      new RoleSelectMenuBuilder()
+        .setCustomId("reminders-edit-default_role")
+        .setPlaceholder(t("commands.REMINDERS.RESPONSES.ROLE_SELECT_PLACEHOLDER")),
     );
 
     if (reminders.default_role) {
@@ -98,7 +102,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
     const channelSelectMenu = new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(
       new ChannelSelectMenuBuilder()
         .setCustomId("reminders-edit-channel")
-        .setPlaceholder("Edit the reminders channel!")
+        .setPlaceholder(t("commands.REMINDERS.RESPONSES.CHANNEL_SELECT_PLACEHOLDER"))
         .setChannelTypes([ChannelType.GuildText]),
     );
 
@@ -110,17 +114,17 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
       new ButtonBuilder()
         .setCustomId("reminders-enable-all")
         .setStyle(ButtonStyle.Success)
-        .setLabel("Enable All")
+        .setLabel(t("commands.REMINDERS.RESPONSES.BTN_ENABLE_ALL"))
         .setDisabled(geyser.active && grandma.active && turtle.active && reset.active),
       new ButtonBuilder()
         .setCustomId("reminders-disable-all")
         .setStyle(ButtonStyle.Danger)
-        .setLabel("Disable All")
+        .setLabel(t("commands.REMINDERS.RESPONSES.BTN_DISABLE_ALL"))
         .setDisabled(!geyser.active && !grandma.active && !turtle.active && !reset.active),
       new ButtonBuilder()
         .setCustomId("reminders-default_role-remove")
         .setStyle(ButtonStyle.Danger)
-        .setLabel("Remove Default Role")
+        .setLabel(t("commands.REMINDERS.RESPONSES.BTN_DISABLE_DEFAULT_ROLE"))
         .setDisabled(!reminders.default_role),
     );
 
@@ -134,21 +138,16 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
   const reply = await interaction.editReply({ embeds: [await initialEmbed()], components: createActionRows() });
 
   const collector = reply.createMessageComponentCollector({
-    filter: (i) => {
-      if (i.user.id !== interaction.user.id) {
-        i.reply({ content: "You cannot use buttons generated by others!", ephemeral: true }).catch((err) =>
-          client.logger.error(err),
-        );
-        return false;
-      }
-      return true;
-    },
     idle: 2 * 60 * 1000,
   });
 
   collector.on("collect", async (int) => {
     const customId = int.customId;
-
+    if (int.user.id !== interaction.user.id) {
+      await int.deferReply({ ephemeral: true });
+      const ts = await int.t();
+      await int.editReply(ts("common.errors.NOT-ALLOWED"));
+    }
     try {
       await int.deferReply({ ephemeral: true });
 
@@ -161,23 +160,29 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
             const editEmbed = new EmbedBuilder()
               .setTitle(`${strEnums[value]} Reminder!`)
               .setDescription(
-                `- **Status**: ${type.active ? "Active" : "Inactive"}\n- **Role**: ${type.role ? roleMention(type.role) : "None"}`,
+                `- **${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}**: ${type.active ? t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.ACTIVE") : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.INACTIVE")}\n- **${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.ROLE")}**: ${type.role ? roleMention(type.role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE")}`,
               );
 
             const editBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
               new ButtonBuilder()
-                .setLabel(type.active ? "Disable" : "Enable")
+                .setLabel(
+                  type.active
+                    ? t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.BTN_DISABLE")
+                    : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.BTN_ENABLE"),
+                )
                 .setStyle(type.active ? ButtonStyle.Danger : ButtonStyle.Success)
                 .setCustomId("reminders-toggle-btn"),
               new ButtonBuilder()
                 .setCustomId("reminders-role-remove")
-                .setLabel("Remove Role")
+                .setLabel(t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.BTN_REMOVE_ROLE"))
                 .setStyle(ButtonStyle.Danger)
                 .setDisabled(!type.role),
             );
 
             const roleMenu = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
-              new RoleSelectMenuBuilder().setCustomId("reminders-role-edit").setPlaceholder("Choose a role to ping"),
+              new RoleSelectMenuBuilder()
+                .setCustomId("reminders-role-edit")
+                .setPlaceholder(t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.ROLE_TYPE_SELECT_PLACEHOLDER")),
             );
 
             return { embeds: [editEmbed], components: [roleMenu, editBtn] };
@@ -192,7 +197,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
 
             if (notAnotherCustomId === "reminders-toggle-btn") {
               type.active = !type.active;
-              reminders.active = Object.values(typesEnum).some((t) => t.active);
+              reminders.active = Object.values(typesEnum).some((ty) => ty.active);
               await settings.save();
               await btnInt.editReply(getResponseData());
               await updateOriginal();
@@ -214,7 +219,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
           const value = int.values[0];
           reminders.default_role = value;
           await settings.save();
-          await int.editReply("Default Role Updated!");
+          await int.editReply(t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE_UPDATE"));
           await updateOriginal();
         } else if (customId === "reminders-edit-channel") {
           const ch = (int as ChannelSelectMenuInteraction).channels.first() as TextChannel;
@@ -225,13 +230,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
 
           if (!ch.permissionsFor(int.guild.members.me!).has("ManageWebhooks")) {
             return await int.editReply({
-              embeds: [
-                new EmbedBuilder()
-                  .setDescription(
-                    `I do not have \`Manage Webhooks\` permission in ${ch}. Please ensure there are no channel-level permission overrides and if there are, grant me the necessary permissions before running the command again.`,
-                  )
-                  .setColor("Red"),
-              ],
+              embeds: [new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: ch })).setColor("Red")],
             });
           }
 
@@ -245,7 +244,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
           reminders.webhook.token = newWb.token;
           reminders.webhook.channelId = newWb.channelId;
           await settings.save();
-          await int.editReply("Reminders channel updated!");
+          await int.editReply(t("commands.REMINDERS.RESPONSES.CHANNEL_UPDATE"));
           await updateOriginal();
         }
       } else if (int.isButton()) {
@@ -253,18 +252,18 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
           Object.keys(typesEnum).forEach((key) => (reminders[key as keyof typeof typesEnum].active = true));
           reminders.active = true;
           await settings.save();
-          await int.editReply("All reminders are enabled!");
+          await int.editReply(t("commands.REMINDERS.RESPONSES.ALL_ACTIVE"));
           await updateOriginal();
         } else if (customId === "reminders-disable-all") {
           Object.keys(typesEnum).forEach((key) => (reminders[key as keyof typeof typesEnum].active = false));
           reminders.active = false;
           await settings.save();
-          await int.editReply("All reminders are disabled!");
+          await int.editReply(t("commands.REMINDERS.RESPONSES.ALL_DISABLED"));
           await updateOriginal();
         } else if (customId === "reminders-default_role-remove") {
           reminders.default_role = null;
           await settings.save();
-          await int.editReply("Default role removed!");
+          await int.editReply(t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE_REMOVE"));
           await updateOriginal();
         }
       }
@@ -286,3 +285,4 @@ async function handleSetup(interaction: ChatInputCommandInteraction, settings: G
     await interaction.editReply({ components }).catch(() => {});
   });
 }
+
