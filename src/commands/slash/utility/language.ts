@@ -49,7 +49,7 @@ export default {
             ts("commands.LANGUAGE.options.RESPONSES.SUCCESS", {
               TYPE: `\`${interaction.guild!.name}\``,
               Language: `${language.name} (${settings.language?.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
-              LINK: "<https://crowdin.com/project/skyhelper>",
+              LINK: "<https://docs.skyhelper.xyz/pages/translating>",
             }),
           ));
         }
@@ -200,4 +200,3 @@ export default {
     contexts: [0, 1, 2],
   },
 } satisfies SlashCommand;
-
