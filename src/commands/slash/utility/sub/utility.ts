@@ -85,7 +85,8 @@ export async function getChangelog(interaction: ChatInputCommandInteraction) {
   const changes = [
     `### Localization
 - Bot now supports multiple languages. You can set your desired language by running /language set command for yourself or your server. Currently supported languages are: English, Hindi, Russian, Chinese (soon), this is an ongoing project and more languages will be made available as they are translated. You can help translate [here](https://docs.skyhelper.xyz/pages/translating)
-- Command ${comMen("shards-calendar")} and ${comMen("seasonal-calculator")} have been added
+- Command ${comMen("shards-calendar")} and ${comMen("seasonal-calculator")} have been added.
+- Added a [dashboard](https://dash.skyhelper.xyz)
 Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
   ];
   const { client } = interaction;
