@@ -40,7 +40,7 @@ const files = fs.readdirSync("locales");
 const languages = files.filter((f) => allowed_langs.includes(f.replace(".json", "")));
 const datas: Record<string, any> = {};
 for (const lg of languages) {
-  const { default: translations } = await import(pathToFileURL(path.resolve("locales", lg)).href);
+  const { default: translations } = await import(pathToFileURL(path.resolve("locales", lg)).href, { assert: { type: "json" } });
   datas[lg] = translations;
 }
 /**
