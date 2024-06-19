@@ -1,3 +1,3 @@
-#### Docs repo for SkyHelper
+## Docs repo for SkyHelper
 
 https://docs.skyhelper.xyz
