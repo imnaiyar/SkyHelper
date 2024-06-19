@@ -26,7 +26,7 @@
   •
   <a href="./documentations/Credits.md">Credits</a>
   •
-  <a href="https://discord.com/invite/u9zUjWbbQ4">Support Server</a>
+  <a href="https://discord.com/invite/2rjCRKZsBb">Support Server</a>
 </p>
 
 <br>
