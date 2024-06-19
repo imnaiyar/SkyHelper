@@ -32,6 +32,10 @@ export type Features = {
   };
   reminders: ReminderFeature;
 };
+export interface UserInfo {
+  language?: string;
+}
+
 export interface GuildInfo {
   id?: string;
   name?: string;

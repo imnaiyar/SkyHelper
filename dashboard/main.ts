@@ -8,10 +8,11 @@ import { GuildController } from "./controllers/guild.controller.js";
 import { AuthMiddleware } from "./middlewares/auth.middleware.js";
 import { StatsController } from "./controllers/stats.controller.js";
 import { UpdateController } from "./controllers/update.controller.js";
+import { UsersController } from "./controllers/user.controller.js";
 export async function Dashboard(client: SkyHelper) {
   @Module({
     imports: [],
-    controllers: [AppController, GuildController, StatsController, UpdateController],
+    controllers: [AppController, GuildController, StatsController, UpdateController, UsersController],
     providers: [{ provide: "BotClient", useValue: client }],
   })
   class AppModule implements NestModule {

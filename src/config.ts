@@ -24,7 +24,7 @@ export default {
       "https://dashboard.skyhelper.xyz",
       "https://preview.skyhelper.xyz",
     ], // https://dash.skyhelper.xyz
-    port: "3000",
+    port: "5000",
     ADMINS: ["851588007697580033"],
   },
   Support: "https://discord.gg/u9zUjWbbQ4",
@@ -41,4 +41,3 @@ export default {
   shardSequence: ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"],
   realmSequence: ["prairie", "forest", "valley", "wasteland", "vault"],
 };
-
