@@ -7,7 +7,7 @@ Thank you for your interest in contributing to the localization of SkyHelper! Th
 1. **Consistency**: Ensure that the translation is consistent with the original meaning. If you're unsure about the context, feel free to ask for clarification in the [Support Server](https://discord.com/invite/2rjCRKZsBb).
 
 2. **Application Command Names and Options**:
-    - **No Uppercase**: Command names and options should not contain uppercase letters.
+    - **No Uppercase**: Command and options names (names only) should not contain uppercase letters.
     - **No Spaces**: Command and options names (only "names") should not contain spaces. Use underscores `_` or hyphens `-` if necessary.
 
 
