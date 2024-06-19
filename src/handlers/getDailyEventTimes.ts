@@ -177,7 +177,7 @@ export function getTimes(
         DURATION: times.duration,
       })}\n${t("times-embed.NEXT-OCC", {
         TIME: time(times.nextTime.unix(), "t"),
-      })}}`,
+      })}`,
     };
   }
   return {
@@ -188,4 +188,3 @@ export function getTimes(
     }),
   };
 }
-
