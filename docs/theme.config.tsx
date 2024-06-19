@@ -25,7 +25,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: "https://discord.com/invite/2rjCRKZsBb",
   },
-  docsRepositoryBase: "https://github.com/imnaiyar/SkyHelper/tree/translation/docs",
+  docsRepositoryBase: "https://github.com/imnaiyar/SkyHelper/tree/main/docs",
   footer: {
     text: "SkyHelper Docs",
   },
