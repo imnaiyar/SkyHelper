@@ -1,12 +1,11 @@
 #!/bin/bash
 
-git fetch --depth=2
+COMMIT_MESSAGE=$(git log -1 --pretty=%B)
 
-# Check for changes in the ./docs directory
-if git diff HEAD^ HEAD --quiet -- ./docs; then
-  echo "No changes in ./docs"
-  exit 0  # No changes, exit with status 0 to skip the build
+if [[ $COMMIT_MESSAGE =~ "docs:" ]]; then
+  echo "Deploy keyword found in commit message. Proceeding with deployment."
+  exit 0  # Exit with success status to allow deployment
 else
-  echo "Changes detected in ./docs"
-  exit 1  # Changes detected, exit with status 1 to proceed with the build
+  echo "Deploy keyword not found in commit message. Skipping deployment."
+  exit 1  # Exit with non-zero status to skip deployment
 fi
