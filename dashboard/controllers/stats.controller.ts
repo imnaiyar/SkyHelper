@@ -23,13 +23,15 @@ export class StatsController {
   @Get("spirits")
   async getSpirits(): Promise<SpiritData[]> {
     const spirits = this.bot.spiritsData;
-    const toReturn = Object.entries(spirits).map(([k, v]) => {
-      const emoji = v.call || v.emote || v.action || v.stance;
-      const id = emoji && parseEmoji(emoji.icon)?.id;
-      const url = id && this.bot.emojis.cache.get(id)?.imageURL();
-      const t = { name: v.name, value: k, ...(url && { icon: url }) };
-      return t;
-    });
+    const toReturn = Object.entries(spirits)
+      .filter(([, v]) => v.season)
+      .map(([k, v]) => {
+        const emoji = v.call || v.emote || v.action || v.stance;
+        const id = emoji && parseEmoji(emoji.icon)?.id;
+        const url = id && this.bot.emojis.cache.get(id)?.imageURL();
+        const t = { name: v.name, value: k, ...(url && { icon: url }) };
+        return t;
+      });
     return toReturn;
   }
 }

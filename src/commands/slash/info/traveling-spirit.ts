@@ -41,8 +41,13 @@ export default {
         .setDescription(description)
         .setTitle(emote! + " " + spirit.name)
         .addFields({
-          name: spirit.tree!.by,
-          value: spirit.tree!.total,
+          name: spirit.ts?.returned
+            ? t("SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
+            : t("SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by }),
+          value: spirit
+            .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+            .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+            .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
         })
         .setImage("https://cdn.imnaiyar.site/" + spirit.tree!.image);
       const manager = new Spirits(spirit, t, client);
