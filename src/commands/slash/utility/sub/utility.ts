@@ -12,7 +12,8 @@ import {
   ModalSubmitInteraction,
 } from "discord.js";
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
-import { version } from "#root/package.json" assert { type: "json" };
+import pkg from "#root/package.json" assert { type: "json" };
+const version = pkg.version;
 export async function getSuggestion(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) {
   const client = interaction.client;
   const attachment = interaction.options.getAttachment("attachment");
