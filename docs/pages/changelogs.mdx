@@ -1,0 +1,134 @@
+# Changelogs
+
+## v6.0.0 (Latest)
+
+##### Added Localisation
+
+Bot now supports multiple languages. You can set your desired language by running `/language set` command for yourself or your server.
+Currently supported languages are: English, Hindi, Russian, Chinese (soon), this is an ongoing project and more languages will be made available as they are translated.
+You can help translate [here](pages/translating)
+
+##### Dashboard
+
+Now configuring the live updates/reminders is easier than ever You can access the dashboard [here](https://dash.skyhelper.xyz).
+This is still in beta so any errors/feedback report would be appreciated.
+
+##### New Commands
+
+###### `/shard-calendar` command
+
+Check out shards calendar, there schedules, availability and more with just one command.
+
+###### `/seasonal-currency` command
+
+Calculate required seasonal currency to reach your desired goal.
+
+###### Other Bug Fixes and Imporvements
+
+## v5.1.0 (Minor)
+
+- Switched to TypeScript, added dashboard (not yet live, soon...)
+
+- Added /season-calculator command for calculating seasonal currency, so responses have been redesigned,
+  Other internal changes
+
+## v5.0.0 (Major)
+
+##### New Commands:
+
+- **`/spirits`**: Search for detailed information about any spirits including trees, locations, realms, and emote previews.
+- **`/traveling-spirits`**: Access information about current or upcoming traveling spirits. If the current traveling spirit is unknown, it will provide an approximate return date for the next one.
+- **`/guides`**: Merged with `seasonal-guides` and now includes a `realms` subcommand for realm-based guides. An `events` guide is also planned for future addition (IDK when I'll add it tho lol).
+  - **`/guides seasonal`**: various seasonal guides.
+  - **`/guides realms`**: various realms guides.
+- **`/reminders`**: Set up reminders for various in-game times such as grandma, reset, and turtle events. (Requires `Manage Webhook` permission). Daily quest reminder is still a work in progress.
+- Not yet added but a quiz game command is also work in progress based on Sky: CoTL (need to just add the question), will probably add them in the next update.
+
+##### Other Major Changes:
+
+<InfoBox>
+  Transitioned Live Updates feature to utilize webhooks instead of channel IDs. It will require reconfiguration to function
+  properly.
+</InfoBox>
+- Introduced reminders feature, enabling users to receive notifications for various in-game times. - Restructured the guides
+command to include options for reducing the number of choices required after execution.
+
+##### Minor Changes
+
+- Renamed `/util suggestion` to `/util contact-us` to make it universal
+- some backend codes clean-up
+- Images are now served by my very own CDN https://cdn.imnaiyar.site/ since discord links now expires and not reliable for file sharing
+- Completely redesigned Spirits guides, it's not only limited to 'Friendship Tree' and 'Locations', in addition of both being merged in one command (option), emotes previews, additional informations, etc. are also included. <ins>Cosmetic previews are also planned for the future</ins>
+- Other changes I probably missed but you may notice when you use the bot
+
+<WarningBox>
+  As there was lot's of changes, there was not enough time too test it all, some things may not work as expected, please use
+  `/util contact-us` to report any issues you may encounter.
+</WarningBox>
+
+## v4.4.0
+
+##### Main Changes
+
+- Completely redesigned the bot's website at https://skyhelper.xyz. Made it more responsive and visually appealing.
+- Added commands for easy access with detailed descriptions.
+- The page 'timestamp' command redirects to for copying has also been redesigned for smoother experience
+
+##### Other Changes
+
+- Fixed 'sky-times' stuck at the same time ( had accidentally put the now variable outside the function which initialized now as the moment of time when the bot started instead of current moment of time when the command was run.)
+- Various commands restructuring and simplification to make it easier to understand ( I will continue doing it for most of the files as I previously)
+- other minor fixes
+
+## v4.3.2
+
+##### Main Changes
+
+Added a new command `\shards-live`
+Shard updates with an auto-updating message in your designated channel. It's advisable to create a dedicated channel to ensure the bot's vital updates don't get lost in the chatter (As the bot will be updating the original message sent at the time of configuring the command). The message dynamically refreshes every 5 minutes.
+Usage:
+
+- /shards-live start : Set up the channel for automated updates.
+- /shards-live stop: Halt AutoShard updates, including the removal of the original message.
+
+##### Backend Changes
+
+- Added code validations for commands and required parameter to ensure bot is initialised without anything missing.
+- Added timezone in \sky-times command to account for DST changes
+- Made some major changes changes to codes and code structure(I’ll be doing this a lot as many things are a bit of a mess)
+- Some changes in README.md
+- Other minor changes that I can't remember
+
+## v4.2.0
+
+- Added a new command /next-red.
+- check /help for more info.
+- added a suggestion command.
+- You can request a feature or give an opinion on already existing one.
+- updated timestamp command results.
+- `/seasonal-guides` command is fully updated.
+- added `/changelog` command.
+- added skygpt prefix command
+- skygpt model has been trained a little in Sky: CoTL (still long way to go)
+- check `/help` for more info
+
+## 1.0.1
+
+##### Bot's status
+
+First of, with discord.js v14.13.0, it is now possible to add custom bot presence status, taking advantage of this, Bot's status will now show current shards status, like when it will fall or end, or if there is no shard today.
+It updates every 1 minute to respect discord's rate-limit.
+
+##### SkyGPT
+
+Added a feature that would use the OpenAI gpt model to respond with Sky:Children of the Light query. Keep in mind tho that since ChatGPT's knowledgebase is limited to 2021, it often provides wrong information, so take it as a fun command rather than a go-to information place, always confirm stuffs from other players.
+It can be set up by using the command `!skygpt set #channelname`, and stopped by `!skygpt stop`
+
+##### Website
+
+Added a website for the bot. you can change the port in website/mainPage.js to the one you use.
+
+##### Shards command update
+
+Removed so bot doesn't send the results to dms, it can be tiring, so it sends the result in the same channel, but in ephemeral state so it wouldn't clutter the chat.
+other small changes that doesn't need mentioning.
