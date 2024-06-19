@@ -160,8 +160,9 @@ const update = async (
 
         const t = getTranslator(guild.language?.value ?? "en-US");
         try {
+          const now = moment();
           await webhook.editMessage(event.messageId, {
-            content: t("shards-embed.CONTENT"),
+            content: t("shards-embed.CONTENT", { TIME: time(now.toDate(), "R") }),
             ...(await response(t)),
           });
         } catch (e: any) {
