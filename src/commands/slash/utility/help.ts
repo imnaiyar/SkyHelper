@@ -11,40 +11,34 @@ import {
   ButtonInteraction,
   EmbedBuilder,
 } from "discord.js";
-
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  data: {
-    name: "help",
-    description: "help menu",
-    options: [
-      {
-        name: "command",
-        description: "help about a specific command",
-        type: ApplicationCommandOptionType.String,
-        required: false,
-        autocomplete: true,
-      },
-    ],
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
-  },
-  category: "Utility",
-  cooldown: 10,
-  async execute(interaction, client) {
+  async execute(interaction, t, client) {
     const command = interaction.options.getString("command");
-    const reply = await interaction.deferReply({ ephemeral: command ? true : false, fetchReply: true });
+    const reply = await interaction.deferReply({
+      ephemeral: command ? true : false,
+      fetchReply: true,
+    });
     const commands = client.application.commands.cache;
     if (command) {
       const cmd = commands.find((c) => c.name === command);
       if (!cmd) {
         await interaction.followUp({
-          content: "No such command or outdated command",
+          content: t("common.errors.COMMAND_NOT_FOUND"),
         });
         return;
       }
       const data = handleCommand(cmd);
-      data.setAuthor({ name: `Requested by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
-      data.setFooter({ text: "Help command", iconURL: client.user.displayAvatarURL() });
+      data.setAuthor({
+        name: t("commands.HELP.RESPONSES.REQUESTED_BY", {
+          USER: interaction.user.username,
+        }),
+        iconURL: interaction.user.displayAvatarURL(),
+      });
+      data.setFooter({
+        text: t("commands.HELP.RESPONSES.FOOTER_SINGLE"),
+        iconURL: client.user.displayAvatarURL(),
+      });
       data.setColor("Random");
       await interaction.followUp({ embeds: [data] });
       return;
@@ -54,7 +48,11 @@ export default {
 
     pageCommands.forEach((cmd) => {
       if (cmd.type === ApplicationCommandType.Message || cmd.type === ApplicationCommandType.User) {
-        totalCommands.push(`</${cmd.name}:${cmd.id}>  \`${cmd.type === 3 ? "Message App Command" : "User App Command"}\`\n\n`);
+        totalCommands.push(
+          `</${cmd.name}:${cmd.id}>  \`${
+            cmd.type === 3 ? t("commands.HELP.RESPONSES.MESSAGE_APP_DESC") : t("commands.HELP.RESPONSES.USER_APP_DESC")
+          }\`\n\n`,
+        );
       } else if (cmd.options?.some((op) => op.type === 1 || op.type === ApplicationCommandOptionType.SubcommandGroup)) {
         cmd.options.forEach((o) => {
           totalCommands.push(
@@ -97,12 +95,17 @@ export default {
     const updateSlashMenu = async () => {
       const slashEmbed = new EmbedBuilder()
         .setAuthor({
-          name: `Requested by ${interaction.user.username}`,
+          name: t("commands.HELP.RESPONSES.REQUESTED_BY", {
+            USER: interaction.user.username,
+          }),
           iconURL: interaction.user.displayAvatarURL(),
         })
         .setColor("Gold")
         .setFooter({
-          text: `run /help <command> for details. | Page ${page}/${totalPages}`,
+          text: t("commands.HELP.RESPONSES.FOOTER", {
+            PAGE: page,
+            TOTAL: totalPages,
+          }),
         });
 
       const startIndex = (page - 1) * commandsPerPage;
@@ -111,13 +114,13 @@ export default {
       slashEmbed.setDescription(totalCommands.slice(startIndex, endIndex).join(""));
       const hmBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
-          .setLabel("Prev")
           .setCustomId("prevBtn")
+          .setLabel(t("commands.HELP.RESPONSES.BTN-PREV"))
           .setStyle(2)
           .setDisabled(page === 1),
         new ButtonBuilder().setLabel("🏠").setCustomId("homeBtn").setStyle(3).setDisabled(true),
         new ButtonBuilder()
-          .setLabel("Next")
+          .setLabel(t("commands.HELP.RESPONSES.BTN-NEXT"))
           .setCustomId("nextBtn")
           .setStyle(2)
           .setDisabled(page === totalPages),
@@ -155,6 +158,27 @@ export default {
       }));
     await interaction.respond(choices);
   },
+  data: {
+    name: "help",
+    name_localizations: x("commands.HELP.name"),
+    description: "help menu",
+    description_localizations: x("commands.HELP.description"),
+    options: [
+      {
+        name: "command",
+        name_localizations: x("commands.HELP.options.COMMAND.name"),
+        description: "help about a specific command",
+        description_localizations: x("commands.HELP.options.COMMAND.description"),
+        type: ApplicationCommandOptionType.String,
+        required: false,
+        autocomplete: true,
+      },
+    ],
+    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
+    contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
+  },
+  category: "Utility",
+  cooldown: 10,
 } satisfies SlashCommand<true>;
 
 function handleCommand(command: ApplicationCommand): EmbedBuilder {

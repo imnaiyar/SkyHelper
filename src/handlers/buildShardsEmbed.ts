@@ -3,6 +3,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type ColorResolvable, Emb
 import moment from "moment-timezone";
 import { ShardsUtil as utils } from "skyhelper-utils";
 import getCountdown from "#handlers/getShardStatus";
+import type { getTranslator } from "#src/i18n";
 /**
  * @param date The date for which the shards embed is to be built
  * @param footer The footer text for the embed
@@ -10,6 +11,7 @@ import getCountdown from "#handlers/getShardStatus";
  */
 export default (
   date: moment.Moment,
+  t: ReturnType<typeof getTranslator>,
   footer: string,
   noBtn?: boolean,
 ): {
@@ -20,11 +22,11 @@ export default (
   const info = shardsInfo[currentRealm][currentShard];
   const buttonsToAdd: ButtonBuilder[] = [];
   const today = moment().tz("America/Los_Angeles").startOf("day");
-  const formatted = date.isSame(today, "day") ? "Today" : date.format("Do MMMM YYYY");
+  const formatted = date.isSame(today, "day") ? t("shards-embed.TODAY") : date.format("Do MMMM YYYY");
   const status = getCountdown(date);
   const result = new EmbedBuilder()
     .setAuthor({
-      name: `Shards Info`,
+      name: t("shards-embed.AUTHOR"),
       iconURL:
         "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925",
     })
@@ -50,43 +52,52 @@ export default (
   const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
     ...buttonsToAdd,
     new ButtonBuilder()
-      .setLabel("Timeline")
+      .setLabel(t("shards-embed.BUTTON1"))
       .setCustomId(`shards-timeline_${date.format("YYYY-MM-DD")}`)
       .setDisabled(status === "No Shard")
       .setStyle(ButtonStyle.Success),
     new ButtonBuilder()
-      .setLabel("Location")
+      .setLabel(t("shards-embed.BUTTON2"))
       .setCustomId(`shards-location_${date.format("YYYY-MM-DD")}`)
       .setDisabled(status === "No Shard")
       .setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setLabel("About Shard").setCustomId("shards-about").setStyle(ButtonStyle.Success),
+    new ButtonBuilder().setLabel(t("shards-embed.BUTTON3")).setCustomId("shards-about").setStyle(ButtonStyle.Success),
   );
   if (status === "No Shard") {
     result
       .setImage("https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif")
-      .setDescription(`**It's a no shard day.**`)
+      .setDescription(`**${t("shards-embed.NO-SHARD")}**`)
       .setColor("#9fb686");
   } else {
     const index = status.index?.toString() + utils.getSuffix(status.index as number);
     result
       .addFields(
-        { name: `Shard Type`, value: `${info.type} (${info.rewards})`, inline: true },
-        { name: "Location", value: `${info.area}`, inline: true },
+        { name: t("shards-embed.FIELDS.TYPE.LABEL"), value: `${info.type} (${info.rewards})`, inline: true },
+        { name: t("shards-embed.FIELDS.LOCATION.LABEL"), value: `${info.area}`, inline: true },
         {
-          name: "Status",
+          name: t("shards-embed.FIELDS.STATUS.LABEL"),
           value: status.ended
-            ? "All Shards Ended"
+            ? t("shards-embed.FIELDS.STATUS.VALUE.ENDED")
             : status.active
-              ? `${index} shard is currently active`
-              : `${index} shard has not fallen yet`,
+              ? t("shards-embed.FIELDS.STATUS.VALUE.ACTIVE", { INDEX: index })
+              : t("shards-embed.FIELDS.STATUS.VALUE.EXPECTED", { INDEX: index }),
         },
         {
-          name: "Countdown",
+          name: t("shards-embed.FIELDS.COUNTDOWN.LABEL"),
           value: status.ended
-            ? `${status.duration} ago (at ${time(status.end.unix(), "t")})`
+            ? t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", {
+                DURATION: status.duration,
+                TIME: time(status.end.unix(), "t"),
+              })
             : status.active
-              ? `Ends in ${status.duration} (at ${time(status.end.unix(), "t")})`
-              : `Falls in ${status.duration} (at ${time(status.start.unix(), "T")})`,
+              ? t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", {
+                  DURATION: status.duration,
+                  TIME: time(status.end.unix(), "t"),
+                })
+              : t("shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", {
+                  DURATION: status.duration,
+                  TIME: time(status.start.unix(), "T"),
+                }),
           inline: true,
         },
       )

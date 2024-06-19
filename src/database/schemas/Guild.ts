@@ -18,33 +18,43 @@ const Schema = new mongoose.Schema<GuildSchema>({
   },
   beta: { type: Boolean, default: null },
   annoucement_channel: { type: String, default: null },
+  language: {
+    name: String,
+    value: String,
+    flag: String,
+  },
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
     default_role: { type: String, default: null },
-    prev_message: { type: String, default: null },
     dailies: {
       active: { type: Boolean, default: false },
+      last_messageId: { type: String, default: null },
       role: { type: String, default: null },
     },
     grandma: {
       active: { type: Boolean, default: false },
+      last_messageId: { type: String, default: null },
       role: { type: String, default: null },
     },
     turtle: {
       active: { type: Boolean, default: false },
+      last_messageId: { type: String, default: null },
       role: { type: String, default: null },
     },
     eden: {
       active: { type: Boolean, default: false },
+      last_messageId: { type: String, default: null },
       role: { type: String, default: null },
     },
     reset: {
       active: { type: Boolean, default: false },
+      last_messageId: { type: String, default: null },
       role: { type: String, default: null },
     },
     geyser: {
       active: { type: Boolean, default: false },
+      last_messageId: { type: String, default: null },
       role: { type: String, default: null },
     },
     webhook: {

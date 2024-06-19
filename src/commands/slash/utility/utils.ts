@@ -5,77 +5,18 @@ import {
   ApplicationCommandOptionType,
   ButtonBuilder,
   ButtonStyle,
+  channelMention,
   ChatInputCommandInteraction,
   EmbedBuilder,
 } from "discord.js";
-// @ts-ignore
+import { useTranslations as x } from "#handlers/useTranslation";
 import pkg from "#root/package.json" assert { type: "json" };
 import { handleTimestamp } from "./sub/timestamp.js";
 import { getChangelog, getSuggestion } from "./sub/utility.js";
+import { getTranslator } from "#src/i18n";
 
 export default {
-  data: {
-    name: "utils",
-    description: "Utilities",
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
-    options: [
-      {
-        name: "timestamp",
-        description: "get unix timestamp for the given date",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "time",
-            description: "The time to convert (format: HH mm ss)",
-            type: ApplicationCommandOptionType.String,
-            required: true,
-          },
-          {
-            name: "timezone",
-            description: "Your timezone in the format: Continent/City",
-            type: ApplicationCommandOptionType.String,
-            required: false,
-          },
-          {
-            name: "date",
-            description: "The date to convert (format: DD)",
-            type: ApplicationCommandOptionType.Integer,
-            required: false,
-          },
-          {
-            name: "month",
-            description: "The month to convert (format: MM)",
-            type: ApplicationCommandOptionType.Integer,
-            required: false,
-          },
-          {
-            name: "year",
-            description: "The year to convert (format: YYYY)",
-            type: ApplicationCommandOptionType.Integer,
-            required: false,
-          },
-        ],
-      },
-      {
-        name: "changelog",
-        description: "bot's changelog",
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-      {
-        name: "botinfo",
-        description: "get the bot's info",
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-      {
-        name: "contact-us",
-        description: "for suggestions/bug reports/contacting us or just anything",
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-    ],
-  },
-  category: "Utility",
-  async execute(interaction) {
+  async execute(interaction, t) {
     const sub = interaction.options.getSubcommand();
     switch (sub) {
       case "changelog":
@@ -83,38 +24,142 @@ export default {
         break;
       case "botinfo": {
         const reply = await interaction.deferReply({ fetchReply: true });
-        await handleInfo(interaction, reply.createdTimestamp);
+        await handleInfo(interaction, t, reply.createdTimestamp);
         break;
       }
       case "contact-us":
-        await getSuggestion(interaction);
+        await getSuggestion(interaction, t);
         break;
       case "timestamp":
         await handleTimestamp(interaction);
     }
   },
+  data: {
+    name: "utils",
+    name_localizations: x("commands.UTILS.name"),
+    description: "Utilities",
+    description_localizations: x("commands.UTILS.description"),
+    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
+    contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
+    options: [
+      {
+        name: "timestamp",
+        name_localizations: x("commands.UTILS.options.TIMESTAMP.name"),
+        description: "get unix timestamp for the given date",
+        description_localizations: x("commands.UTILS.options.TIMESTAMP.description"),
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          {
+            name: "time",
+            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIME.name"),
+            description: "The time to convert (format: HH mm ss)",
+            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIME.description"),
+            type: ApplicationCommandOptionType.String,
+            required: true,
+          },
+          {
+            name: "timezone",
+            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIMEZONE.name"),
+            description: "Your timezone in the format: Continent/City",
+            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIMEZONE.description"),
+            type: ApplicationCommandOptionType.String,
+            required: false,
+          },
+          {
+            name: "date",
+            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.DATE.name"),
+            description: "The date to convert (format: DD)",
+            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.DATE.description"),
+            type: ApplicationCommandOptionType.Integer,
+            required: false,
+          },
+          {
+            name: "month",
+            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.MONTH.name"),
+            description: "The month to convert (format: MM)",
+            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.MONTH.description"),
+            type: ApplicationCommandOptionType.Integer,
+            required: false,
+          },
+          {
+            name: "year",
+            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.YEAR.name"),
+            description: "The year to convert (format: YYYY)",
+            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.YEAR.description"),
+            type: ApplicationCommandOptionType.Integer,
+            required: false,
+          },
+        ],
+      },
+      {
+        name: "changelog",
+        name_localizations: x("commands.UTILS.options.CHANGELOG.name"),
+        description: "bot's changelog",
+        description_localizations: x("commands.UTILS.options.CHANGELOG.description"),
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "botinfo",
+        name_localizations: x("commands.UTILS.options.BOTINFO.name"),
+        description: "get the bot's info",
+        description_localizations: x("commands.UTILS.options.BOTINFO.description"),
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "contact-us",
+        name_localizations: x("commands.UTILS.options.CONTACT-US.name"),
+        description: "for suggestions/bug reports/contacting us or just anything",
+        description_localizations: x("commands.UTILS.options.CONTACT-US.description"),
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+    ],
+  },
+  category: "Utility",
 } satisfies SlashCommand;
 
-async function handleInfo(interaction: ChatInputCommandInteraction, time: number): Promise<void> {
+async function handleInfo(
+  interaction: ChatInputCommandInteraction,
+  t: ReturnType<typeof getTranslator>,
+  time: number,
+): Promise<void> {
   const { client } = interaction as unknown as { client: SkyHelper };
   const guilds = client.guilds.cache.size;
   const users = client.guilds.cache.reduce((size, g) => size + g.memberCount, 0);
   let desc = "";
-  desc += `<:servers:1243977429542764636> Total servers: ${guilds}\n`;
-  desc += `<:users:1243977425725952161> Total users: ${users}\n`;
-  desc += `<a:uptime:1228956558113771580> Websocket Ping: ${client.ws.ping} ms\n`;
-  desc += `<:latency:1243977421812924426> Latency: ${time - interaction.createdTimestamp} ms\n`;
+  desc += `<:servers:1243977429542764636> ${t("common.bot.TOTAL_SERVER")}: ${guilds}\n`;
+  desc += `<:users:1243977425725952161> ${t("common.bot.TOTAL_USERS")}: ${users}\n`;
+  desc += `<a:uptime:1228956558113771580> ${t("common.bot.PING")}: ${client.ws.ping} ms\n`;
+  desc += `<:latency:1243977421812924426> ${t("common.bot.LATENCY")}: ${time - interaction.createdTimestamp} ms\n`;
   desc += "\n";
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "Bot Info", iconURL: client.user.displayAvatarURL() })
+    .setAuthor({ name: t("common.bot.EMBED_TITLE"), iconURL: client.user.displayAvatarURL() })
     .setTitle(client.user.username)
-    .setDescription(desc + `**Version:** v${pkg.version}\n**Uptime:** ${timeformat(client.uptime / 1000)}`);
+    .setDescription(
+      desc +
+        `**${t("common.bot.VERSION")}:** v${pkg.version}\n**${t("common.bot.UPTIME")}:** ${timeformat(client.uptime / 1000)}`,
+    );
+  if (interaction.inCachedGuild()) {
+    const settings = await client.database.getSettings(interaction.guild);
+    const user_settings = await client.database.getUser(interaction.user);
+    embed.addFields(
+      {
+        name: t("common.bot.GUILD_SETTINGS"),
+        value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
+      },
+      {
+        name: t("common.bot.USER_SETTINGS"),
+        value: `**${t("common.bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
+      },
+    );
+  }
+
   const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setURL("https://discord.com/oauth2/authorize?client_id=1121541967730450574")
-      .setLabel("Invite")
+      .setLabel(t("common.bot.INVITE"))
       .setStyle(ButtonStyle.Link),
-    new ButtonBuilder().setURL(client.config.Support).setLabel("Support Server").setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setURL(client.config.Support).setLabel(t("common.bot.SUPPORT")).setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setURL(client.config.DASHBOARD.URL).setLabel(t("common.bot.SUPPORT")).setStyle(ButtonStyle.Link),
   );
   await interaction.editReply({ embeds: [embed], components: [btns] });
 }
@@ -131,3 +176,4 @@ function timeformat(timeInSeconds: number) {
     (seconds > 0 ? `${seconds} seconds` : "")
   );
 }
+

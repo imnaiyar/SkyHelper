@@ -23,8 +23,8 @@ import * as schemas from "#src/database/index";
 import { table } from "table";
 import { pathToFileURL } from "node:url";
 import { Flags, spiritsData } from "#libs";
-
-type ClassTypes = {
+import "./Extenders.js";
+export type ClassTypes = {
   UpdateTS: typeof UpdateTS;
   UpdateEvent: typeof UpdateEvent;
   Flags: typeof Flags;
@@ -72,7 +72,6 @@ export class SkyHelper extends Client<true> {
    * const data = await <Client>.getTS()
    */
   public getTS = schemas.getTS;
-
   /** Custom logger */
   public logger = Logger;
 
@@ -292,6 +291,8 @@ export class SkyHelper extends Client<true> {
         name: cmd.data.name,
         description: cmd.data.description,
         type: 1,
+        name_localizations: cmd.data.name_localizations,
+        description_localizations: cmd.data.description_localizations,
         options: cmd.data?.options,
         integration_types: cmd.data.integration_types,
         ...(cmd.data.userPermissions && {

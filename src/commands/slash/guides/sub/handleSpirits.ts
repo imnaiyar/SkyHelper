@@ -11,6 +11,7 @@ import {
 } from "discord.js";
 export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRealm: SeasonData | string) {
   const client = int.client as SkyHelper;
+  const t = await int.t();
   const spirits = Object.entries(client.spiritsData).filter(([, v]) => {
     if (typeof seasonOrRealm !== "string") return v.season && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
     return v.realm && v.realm.toLowerCase() === seasonOrRealm.toLowerCase();
@@ -33,7 +34,7 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
           })),
         ),
     );
-    const manager = new Spirits(data, client);
+    const manager = new Spirits(data, t, client);
     const btns = manager.getButtons();
     const msg = await i.editReply({
       embeds: [manager.getEmbed()],

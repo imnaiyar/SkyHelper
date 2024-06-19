@@ -5,6 +5,7 @@ import { LiveTimes as Times, LiveShard as Shard, Reminders } from "../managers/i
 import { ChannelType } from "discord.js";
 import getSettings from "../utils/getSettings.js";
 import type { Features, GuildInfo } from "../types.js";
+import { supportedLang } from "#src/libs/constants/supportedLang";
 @Controller("/guilds/:guild")
 export class GuildController {
   // eslint-disable-next-line
@@ -25,7 +26,7 @@ export class GuildController {
       name: data.name,
       icon: data.icon,
       prefix: settings?.prefix,
-      language: "hi-IN",
+      language: settings?.language?.value ?? "en-US",
       announcement_channel: settings?.annoucement_channel ?? undefined,
       beta: settings?.beta,
       enabledFeatures: actives,
@@ -40,11 +41,13 @@ export class GuildController {
     settings.prefix = body.prefix ?? "";
     settings.beta = body.beta || false;
     settings.annoucement_channel = body.announcement_channel ?? "";
+    const language = supportedLang.find((l) => l.value === body.language);
+    settings.language = language;
     await settings.save();
     return {
       prefix: settings.prefix,
       beta: settings.beta,
-      language: "hi-IN",
+      language: settings.language?.value ?? "en-US",
       announcement_channel: settings.annoucement_channel ?? undefined,
     };
   }

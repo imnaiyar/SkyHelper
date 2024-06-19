@@ -1,43 +1,14 @@
-import { getEventEmbed } from "#handlers";
+import { getTimesEmbed } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
-
+import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  data: {
-    name: "skytimes-live",
-    description: "auto updating message with live skytimes details",
-    options: [
-      {
-        name: "start",
-        description: "configure auto skytimes",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "channel",
-            description: "channel where skytimes details should be updated",
-            type: ApplicationCommandOptionType.Channel,
-            channel_types: [ChannelType.GuildText],
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "stop",
-        description: "stop auto skytimes",
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-    ],
-    integration_types: [IntegrationTypes.Guilds],
-    contexts: [ContextTypes.Guild],
-    botPermissions: ["ManageWebhooks"],
-    userPermissions: ["ManageGuild"],
-  },
-  async execute(interaction, client) {
+  async execute(interaction, t, client) {
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.inCachedGuild()) {
-      return void (await interaction.followUp("This command can only be used in a server"));
+      return void (await interaction.followUp(t("commands.SHARDS_LIVE.RESPONSES.NOT_GUILD")));
     }
     const sub = interaction.options.getSubcommand();
     const config = await client.database.getSettings(interaction.guild);
@@ -51,14 +22,20 @@ export default {
           await interaction.followUp({
             embeds: [
               new EmbedBuilder()
-                .setDescription(`Live SkyTimes is already configured in <#${wbh.channelId}> for this this message ${ms.url}.`)
+                .setDescription(
+                  t("commands.SHARDS_LIVE.RESPONSES.ALREADY_CONFIGURED", {
+                    CHANNEL: `<#${wbh.channelId}>`,
+                    MESSAGE: ms.url,
+                    TYPE: `"Live SkyTimes"`,
+                  }),
+                )
                 .setColor("Red"),
             ],
           });
           return;
         }
       }
-      const channel = interaction.options.getChannel("channel")! as TextChannel;
+      const channel = interaction.options.getChannel("channel", true);
 
       /*
       This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case
@@ -67,7 +44,7 @@ export default {
         return void (await interaction.followUp({
           embeds: [
             new EmbedBuilder()
-              .setDescription(`${channel} is not a text channel. Please provide a valid text channel`)
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel.toString() }))
               .setColor("Red"),
           ],
         }));
@@ -75,24 +52,20 @@ export default {
       if (!channel.permissionsFor(interaction.guild.members.me!).has("ManageWebhooks")) {
         return void (await interaction.editReply({
           embeds: [
-            new EmbedBuilder()
-              .setDescription(
-                `I do not have \`Manage Webhooks\` permission in ${channel}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.`,
-              )
-              .setColor("Red"),
+            new EmbedBuilder().setDescription(t("common.errors.NO_PERMS_BOT", { CHANNEL: channel.toString() })).setColor("Red"),
           ],
         }));
       }
-      const wb = await client.createWebhook(channel, "For live SkyTimes Update");
+      const wb = await client.createWebhook(channel as TextChannel, "For live SkyTimes Update");
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const result = {
-        embeds: [await getEventEmbed(client, "Live SkyTimes (updates every 2 minutes)")],
+        embeds: [await getTimesEmbed(client, t, t("times-embed.FOOTER"))],
       };
       const msg = await wb.send({
         username: "SkyTimes Updates",
         avatarURL: client.user.displayAvatarURL(),
-        content: `Last Updated: <t:${updatedAt}:R>`,
+        content: t("shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` }),
         ...result,
       });
       config.autoTimes.active = true;
@@ -104,7 +77,11 @@ export default {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `Live SkyTimes configured for <#${channel.id}>. This message ${msg.url} will be updated every 5 minutes with live SkyTimes details.`,
+              t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", {
+                CHANNEL: channel.toString(),
+                MESSAGE: msg.url,
+                TYPE: `"Live SkyTimes"`,
+              }),
             )
             .setColor("Green"),
         ],
@@ -112,7 +89,11 @@ export default {
     } else if (sub === "stop") {
       if (!config.autoTimes.webhook.id || !config.autoTimes.messageId) {
         return void (await interaction.followUp({
-          embeds: [new EmbedBuilder().setDescription("Live SkyTimes is already disabled for this server").setColor("Red")],
+          embeds: [
+            new EmbedBuilder()
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live SkyTimes"` }))
+              .setColor("Red"),
+          ],
         }));
       }
 
@@ -121,7 +102,11 @@ export default {
         .catch(() => {});
       if (!wbh) {
         await interaction.followUp({
-          embeds: [new EmbedBuilder().setDescription("Live SkyTimes is already disabled for this server").setColor("Red")],
+          embeds: [
+            new EmbedBuilder()
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live SkyTimes"` }))
+              .setColor("Red"),
+          ],
         });
         return;
       }
@@ -133,11 +118,53 @@ export default {
         config.autoTimes.webhook.token = null;
 
         await interaction.followUp({
-          embeds: [new EmbedBuilder().setDescription("Live SkyTimes is disabled").setColor("Red")],
+          embeds: [
+            new EmbedBuilder()
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live SkyTimes"` }))
+              .setColor("Red"),
+          ],
         });
       } catch (err) {
         client.logger.error("Failed to stop SkyTimes Updates in " + interaction.guild.name, err);
       }
     }
   },
+  data: {
+    name: "skytimes-live",
+    name_localizations: x("commands.SKYTIMES_LIVE.name"),
+    description: "auto updating message with live skytimes details",
+    description_localizations: x("commands.SKYTIMES_LIVE.description"),
+    options: [
+      {
+        name: "start",
+        name_localizations: x("commands.SKYTIMES_LIVE.options.START.name"),
+        description: "configure auto skytimes",
+        description_localizations: x("commands.SKYTIMES_LIVE.options.START.description"),
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          {
+            name: "channel",
+            name_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.name"),
+            description: "channel where skytimes details should be updated",
+            description_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.description"),
+            type: ApplicationCommandOptionType.Channel,
+            channel_types: [ChannelType.GuildText],
+            required: true,
+          },
+        ],
+      },
+      {
+        name: "stop",
+        name_localizations: x("commands.SKYTIMES_LIVE.options.STOP.name"),
+        description: "stop auto skytimes",
+        description_localizations: x("commands.SKYTIMES_LIVE.options.STOP.description"),
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+    ],
+    integration_types: [IntegrationTypes.Guilds],
+    contexts: [ContextTypes.Guild],
+    botPermissions: ["ManageWebhooks"],
+    userPermissions: ["ManageGuild"],
+  },
 } satisfies SlashCommand;
+

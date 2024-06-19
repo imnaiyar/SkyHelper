@@ -180,12 +180,12 @@ export interface LiveUpdates {
 }
 export interface EventReminder {
   active: boolean;
+  last_messageId?: string;
   role: string | null;
 }
 export interface Reminders {
   active: boolean;
   default_role: string | null;
-  prev_message: string | null;
   dailies: EventReminder;
   grandma: EventReminder;
   turtle: EventReminder;
@@ -211,6 +211,11 @@ export interface GuildSchema extends Document {
   annoucement_channel: string | null;
   beta: boolean;
   prefix: string;
+  language?: {
+    name: string;
+    value: string;
+    flag?: string;
+  };
   reminders: Reminders;
   autoShard: LiveUpdates;
   autoTimes: LiveUpdates;

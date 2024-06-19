@@ -1,4 +1,4 @@
-import type { SkyHelper } from "#structures";
+import { getTranslator } from "#src/i18n";
 import {
   EmbedBuilder,
   ModalBuilder,
@@ -12,22 +12,25 @@ import {
   ModalSubmitInteraction,
 } from "discord.js";
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
-export async function getSuggestion(interaction: ChatInputCommandInteraction) {
-  const client = interaction.client as SkyHelper;
+import { version } from "package.json" assert { type: "json" };
+export async function getSuggestion(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) {
+  const client = interaction.client;
   const attachment = interaction.options.getAttachment("attachment");
-  const modal = new ModalBuilder().setCustomId("suggestionModal" + `-${interaction.id}`).setTitle("Contact Us");
+  const modal = new ModalBuilder()
+    .setCustomId("suggestionModal" + `-${interaction.id}`)
+    .setTitle(t("commands.UTILS.RESPONSES.SUGGESTION_MODAL_TITLE"));
 
   const fields = {
     title: new TextInputBuilder()
       .setCustomId("title")
-      .setLabel("Title")
-      .setPlaceholder("Title for the suggestion")
+      .setLabel(t("commands.UTILS.RESPONSES.SUGGESTION_TITLE"))
+      .setPlaceholder(t("commands.UTILS.RESPONSES.TITLE_PLACEHOLDER"))
       .setStyle(TextInputStyle.Short),
     suggestion: new TextInputBuilder()
       .setCustomId("suggestion")
-      .setLabel("Suggestion/Bug Report/Others")
+      .setLabel(t("commands.UTILS.RESPONSES.SUGGESTION"))
       .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder("Explain in brief."),
+      .setPlaceholder(t("commands.UTILS.RESPONSES.SUGGESTION_PLACEHOLDER")),
   };
 
   const firstActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(fields.title);
@@ -58,7 +61,7 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction) {
       }
       modalInt
         .reply({
-          content: `Your message is received. Here's a preview!`,
+          content: t("commands.UTILS.RESPONSES.RECIEVED"),
           embeds: [embed],
           ephemeral: true,
         })
@@ -80,21 +83,11 @@ export async function getChangelog(interaction: ChatInputCommandInteraction) {
     return `</${com!.name}${sub ? ` ${sub}` : ""}:${com!.id}>`;
   };
   const changes = [
-    `### New Commands:
-  - **${comMen("spirits")}**: Search for detailed information about any spirits including trees, locations, realms, and emote previews.
-  - **${comMen("traveling-spirit")}**: Access information about current or upcoming traveling spirits. If the current traveling spirit is unknown, it will provide an approximate return date for the next one.
-  - **${comMen("guides")}**: Merged with \`seasonal-guides\` and now includes a \`realms\` subcommand for realm-based guides. An \`events\` guide is also planned for future addition (IDK when I'll add it tho lol).
-    - **${comMen("guides", "seasonal")}**:  various seasonal guides.
-    - **${comMen("guides", "realms")}**: various realms guides.
-  - **${comMen("reminders")}**: Set up reminders for various in-game times such as grandma, reset, and turtle events. (Requires \`Manage Webhook\` permission). Daily quest reminder is still a work in progress.
-  - Not yet added but a quiz game command is also work in progress based on Sky: CoTL (need to just add the question), will probably add them in the next update.
-  `,
-    `### Other Major Changes:
-  - Transitioned Live Updates feature to utilize webhooks instead of channel IDs. It will require reconfiguration to function properly.
-  - Introduced reminders feature, enabling users to receive notifications for various in-game times.
-  - Restructured the guides command to include options for reducing the number of choices required after execution.
-  
-  *For previous/detailed changelogs, checkout the release page on GitHub **[here](https://github.com/imnaiyar/SkyHelper/releases)**.*`,
+    `### Localization
+- Bot now supports multiple languages. You can set your desired language by running /language set command for yourself or your server. Currently supported languages are: English, Hindi, Russian, Chinese (soon), this is an ongoing project and more languages will be made available as they are translated. You can help translate [here](https://docs.skyhelper.xyz/pages/translating)
+- Command ${comMen("shards-calendar")} and ${comMen("seasonal-calculator")} have been added.
+- Added a [dashboard](https://dash.skyhelper.xyz)
+Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
   ];
   const { client } = interaction;
   let page = 0;
@@ -103,10 +96,9 @@ export async function getChangelog(interaction: ChatInputCommandInteraction) {
     const embed = new EmbedBuilder()
       .setAuthor({ name: `Changelog`, iconURL: client.user.displayAvatarURL() })
       .setColor("Gold")
-      .setTitle(`Changelog v5.5.0`)
+      .setTitle(`Changelog v${version}`)
       .setDescription(changes[page])
-      .setImage("https://cdn.imnaiyar.site/warning-img.png")
-      .setFooter({ text: `v5.0.0 - Page ${page + 1}/${total + 1}` });
+      .setFooter({ text: `v${version} - Page ${page + 1}/${total + 1}` });
     const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("chng-prev")

@@ -1,3 +1,4 @@
+import { getTranslator } from "#src/i18n";
 import type { Button } from "#structures";
 import { type APIEmbed, ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, InteractionCollector } from "discord.js";
 
@@ -5,13 +6,13 @@ export default {
   data: {
     name: "shards-about",
   },
-  async execute(interaction, client) {
+  async execute(interaction, t, client) {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Art = await client.users.fetch("504605855539265537");
     let page = 0;
     const total = shards_about.length - 1;
     const getResponse = () => {
-      const data = shards_about[page];
+      const data = shards_about(t)[page];
       const shardEmbed: APIEmbed = {
         title: data.description,
         color: parseInt("00ff00", 16),
@@ -20,7 +21,7 @@ export default {
           icon_url: "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
         },
         author: {
-          name: `All about shards by Art(${Art.username})`,
+          name: t("buttons.ABOUT_SHARDS.CREDIT", { CREDIT: `Art (${Art.username})` }),
           icon_url: Art.displayAvatarURL(),
         },
         image: {
@@ -75,19 +76,19 @@ export default {
   },
 } satisfies Button;
 
-const shards_about = [
+const shards_about = (t: ReturnType<typeof getTranslator>) => [
   {
-    description: "What are shards?",
+    description: t("buttons.ABOUT_SHARDS.WHAT_ARE"),
     image:
       "https://media.discordapp.net/attachments/585339436322259003/998518823231688724/I_watch_you_when_u_sleep_20220718171142.png",
   },
   {
-    description: "How do I know when a shard comes?",
+    description: t("buttons.ABOUT_SHARDS.TIMING"),
     image:
       "https://media.discordapp.net/attachments/585339436322259003/998518823869231164/I_watch_you_when_u_sleep_20220718171208.png",
   },
   {
-    description: "What are the rewards?",
+    description: t("buttons.ABOUT_SHARDS.REWARDS"),
     image:
       "https://media.discordapp.net/attachments/585339436322259003/998518824443846696/I_watch_you_when_u_sleep_20220718171215.png",
   },
