@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import Backend from "i18next-fs-backend";
-import type en from "../locales/en-US.json";
+import type en from "#root/locales/en-US.json";
 
 type NestedKeys<T> = {
   [K in keyof T & (string | number)]: T[K] extends Record<string, any> ? `${K}` | `${K}.${NestedKeys<T[K]>}` : `${K}`;

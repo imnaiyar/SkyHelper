@@ -32,6 +32,6 @@
       "#libs": ["./src/libs/index.js"]
     }
   },
-  "include": ["src", "dashboard", "__tests__"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "dashboard"],
+  "exclude": ["node_modules", "__tests__"]
 }
