@@ -67,7 +67,7 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
       if (!response) return;
       wb.send({
         // @ts-expect-error
-        username: t("reminders.TITLE", { TYPE: t("times-embed." + type === "reset" ? "DAILY" : type.toUpperCase()) }),
+        username: t("reminders.TITLE", { TYPE: t("times-embed." + (type === "reset" ? "DAILY" : type.toUpperCase())) }),
         avatarURL: client.user.displayAvatarURL(),
         content: response,
       })
@@ -76,7 +76,16 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
           guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
         })
         .catch((err) => {
-          client.logger.error(guild.data.name + ": ", err);
+          if (err.message === "Unknown Webhook") {
+            guild.reminders.webhook.id = null;
+            guild.reminders.active = false;
+            guild.reminders.webhook.token = null;
+            guild
+              .save()
+              .then(() => client.logger.error(`Reminders disabled for ${guild.data.name}, webhook not found!`))
+              .catch((er) => client.logger.error("Error Saving to Database" + ` ${type}[Guild: ${guild.data.name}]`, er));
+          }
+          client.logger.error(guild.data.name + " Reminder Error: ", err);
         });
       if (event.last_messageId) wb.deleteMessage(event.last_messageId).catch(() => {});
     } catch (err) {
