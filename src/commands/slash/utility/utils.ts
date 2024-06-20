@@ -159,7 +159,7 @@ async function handleInfo(
       .setLabel(t("common.bot.INVITE"))
       .setStyle(ButtonStyle.Link),
     new ButtonBuilder().setURL(client.config.Support).setLabel(t("common.bot.SUPPORT")).setStyle(ButtonStyle.Link),
-    new ButtonBuilder().setURL(client.config.DASHBOARD.URL).setLabel(t("common.bot.SUPPORT")).setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setURL(client.config.DASHBOARD.URL).setLabel(t("common.bot.DASHBOARD")).setStyle(ButtonStyle.Link),
   );
   await interaction.editReply({ embeds: [embed], components: [btns] });
 }
