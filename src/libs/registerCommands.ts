@@ -1,7 +1,7 @@
 await import("dotenv/config");
 import { SkyHelper } from "#structures";
 const client = new SkyHelper();
-const root = process.argv0 === "bun" ? "src" : "dist/src";
+const root = process.isBun ? "src" : "dist/src";
 client.on("ready", async () => {
   try {
     client.logger.success("Started refreshing application (/) commands.");

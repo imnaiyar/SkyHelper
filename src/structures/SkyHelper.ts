@@ -130,7 +130,7 @@ export class SkyHelper extends Client<true> {
     for (const filePath of files) {
       const file = path.basename(filePath);
       try {
-        const ext = process.argv[0].includes("bun") ? ".ts" : ".js";
+        const ext = process.isBun ? ".ts" : ".js";
         const eventName = path.basename(file, ext);
         const { default: event } = await import(pathToFileURL(filePath).href);
 
