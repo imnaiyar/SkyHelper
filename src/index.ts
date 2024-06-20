@@ -6,7 +6,7 @@ import { Dashboard } from "../dashboard/main.js";
 import chalk from "chalk";
 // Load everything
 // Change path if different
-const root = process.argv[0].includes("bun") ? "src" : "dist/src";
+const root = process.argv0 === "bun" ? "src" : "dist/src";
 await client.loadEvents(root + "/events");
 await client.loadSlashCmd(root + "/commands/slash");
 await client.loadContextCmd(root + "/commands/contexts");
