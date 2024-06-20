@@ -11,6 +11,7 @@ import {
 } from "discord.js";
 import { Flags } from "#libs/classes/Flags";
 import { parsePerms } from "skyhelper-utils";
+import updateDailyQuests from "#handlers/updateDailyQuests";
 
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
@@ -23,7 +24,9 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
     await message.channel.send(t("common.bot.intro"));
     return;
   }
-
+  if (message.channelId === "1154255451077226527") {
+    updateDailyQuests(message);
+  }
   // Prefix
   const prefix = client.config.PREFIX;
   if (!message.content.startsWith(prefix)) return;
