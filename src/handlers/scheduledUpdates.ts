@@ -2,7 +2,7 @@ import { buildShardEmbed, getDailyEventTimes, getTimesEmbed } from "#handlers";
 import type { GuildSchema } from "#libs";
 import { getTranslator, langKeys } from "#src/i18n";
 import type { SkyHelper } from "#structures";
-import { type WebhookMessageCreateOptions, time, roleMention, Webhook } from "discord.js";
+import { type WebhookMessageCreateOptions, time, roleMention, WebhookClient } from "discord.js";
 import moment from "moment";
 
 /**
@@ -47,40 +47,38 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
       const event = rmd[type];
       const { webhook, default_role } = rmd;
       if (!event?.active) return;
-
-      const wb = await client.fetchWebhook(webhook.id!, webhook.token ?? undefined).catch(() => {});
-      if (!wb) return;
+      if (!webhook.id || !webhook.token) return;
+      const wb = new WebhookClient({ token: webhook.token, id: webhook.id }, { allowedMentions: { parse: ["roles"] } });
 
       const roleid = event?.role ?? default_role ?? "";
       const role = roleid && t("reminders.ROLE_MENTION", { ROLE: roleMention(roleid) });
 
       let response = null;
-      if (event.active) response = getResponse(type, t, role);
       if (type === "eden") {
         response = `${role} ${t("reminders.EDEN_RESET")}`;
       }
       // TODO
       /* if (type === "dailies" && dailies.active) response = getDailiesResponse(type, role); */
-      if (type === "reset") {
+      else if (type === "reset") {
         response = `${role}${t("reminders.DAILY_RESET")}`;
+      } else {
+        response = getResponse(type, t, role);
       }
       if (!response) return;
-      if (event.last_messageId) await wb.deleteMessage(event.last_messageId).catch(() => {});
-      const msg = await wb
-        .send({
-          // @ts-expect-error
-          username: t("reminders.TITLE", { TYPE: t("times-embed." + type.toUpperCase()) }),
-          avatarURL: client.user.displayAvatarURL(),
-          content: response,
-          allowedMentions: {
-            parse: ["roles"],
-          },
+      wb.send({
+        // @ts-expect-error
+        username: t("reminders.TITLE", { TYPE: t("times-embed." + type === "reset" ? "DAILY" : type.toUpperCase()) }),
+        avatarURL: client.user.displayAvatarURL(),
+        content: response,
+      })
+        .then((msg) => {
+          guild.reminders[type].last_messageId = msg?.id || undefined;
+          guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
         })
         .catch((err) => {
           client.logger.error(guild.data.name + ": ", err);
         });
-      guild.reminders[type]!.last_messageId = msg?.id || undefined;
-      await guild.save();
+      if (event.last_messageId) wb.deleteMessage(event.last_messageId).catch(() => {});
     } catch (err) {
       client.logger.error(err);
     }
@@ -134,51 +132,36 @@ const update = async (
   client: SkyHelper,
   response: (t: ReturnType<typeof getTranslator>) => Promise<WebhookMessageCreateOptions>,
 ): Promise<void> => {
-  const batchSize = 10; // Process guilds in batches of 10 to reduce load
-  for (let i = 0; i < data.length; i += batchSize) {
-    const batch = data.slice(i, i + batchSize);
-    await Promise.all(
-      batch.map(async (guild) => {
-        const event = guild[type];
-        if (!event.webhook.id) return;
-
-        const webhook = await client.fetchWebhook(event.webhook.id, event.webhook.token ?? undefined).catch((e) => e);
-
-        if (!(webhook instanceof Webhook)) {
-          if (webhook.message === "Unknown Webhook") {
-            guild[type].webhook.id = null;
-            guild[type].active = false;
-            guild[type].messageId = "";
-            guild[type].webhook.token = null;
-            await guild.save();
+  data.forEach(async (guild) => {
+    const event = guild[type];
+    if (!event.webhook.id) return;
+    const webhook = new WebhookClient(
+      { token: event.webhook.token!, id: event.webhook.id },
+      { allowedMentions: { parse: ["everyone"] } },
+    );
+    const t = getTranslator(guild.language?.value ?? "en-US");
+    const now = moment();
+    webhook
+      .editMessage(event.messageId, {
+        content: t("shards-embed.CONTENT", { TIME: time(now.toDate(), "R") }),
+        ...(await response(t)),
+      })
+      .catch((e) => {
+        if (e.message === "Unknown Message" || e.message === "Unknown Webhook") {
+          if (e.code === 10008) {
+            webhook.delete().catch(() => {});
+            client.logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
+          }
+          if (e.code === 10015) {
             client.logger.error(`Live ${type} disabled for ${guild.data.name}, webhook not found!`);
             return;
           }
-          client.logger.error(`AutoUpdate[${type}] Error Fetching Webhook for the Guild: ${guild.data.name}:`, webhook);
-          return;
+          guild[type].webhook.id = null;
+          guild[type].active = false;
+          guild[type].messageId = "";
+          guild[type].webhook.token = null;
+          guild.save().catch((er) => client.logger.error("Error Saving to Database" + ` ${type}[Guild: ${guild.data.name}]`, er));
         }
-
-        const t = getTranslator(guild.language?.value ?? "en-US");
-        try {
-          const now = moment();
-          await webhook.editMessage(event.messageId, {
-            content: t("shards-embed.CONTENT", { TIME: time(now.toDate(), "R") }),
-            ...(await response(t)),
-          });
-        } catch (e: any) {
-          if (e.message === "Unknown Message") {
-            guild[type].webhook.id = null;
-            guild[type].active = false;
-            guild[type].messageId = "";
-            guild[type].webhook.token = null;
-            await guild.save();
-            await webhook.delete().catch(() => {});
-            client.logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
-          } else {
-            client.logger.error(`AutoUpdate[${type}] for G: ${guild.data.name}:`, e);
-          }
-        }
-      }),
-    );
-  }
+      });
+  });
 };
