@@ -2,8 +2,7 @@ import type { PrefixCommand, SkyHelper } from "#structures";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { Type } from "@sapphire/type";
 import { EmbedBuilder, codeBlock } from "discord.js";
-// @ts-ignore
-// eslint-disable-next-line
+
 import * as d from "discord.js";
 import { postToHaste } from "skyhelper-utils";
 import util from "node:util";
@@ -54,7 +53,7 @@ async function buildSuccessResponse(output: any, client: SkyHelper, type: string
   } else {
     embOutput = await postToHaste(output);
   }
-  const embed = new EmbedBuilder()
+  const embed = new d.EmbedBuilder()
     .setAuthor({ name: "📤 Output" })
     .setDescription(`**Input**\n\n` + codeBlock(input) + "\n**Output**\n\n" + embOutput)
     .addFields({
