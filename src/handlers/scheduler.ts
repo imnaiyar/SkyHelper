@@ -62,5 +62,17 @@ export default (client: SkyHelper) => {
     },
     options,
   });
-};
 
+  // Edeb Reminders
+  new Jobs({
+    interval: "0 0 * * 0",
+    async callback() {
+      try {
+        await reminderSchedules(client, "eden");
+      } catch (err) {
+        client.logger.error(`"eden" Reminder Error: `, err);
+      }
+    },
+    options,
+  });
+};
