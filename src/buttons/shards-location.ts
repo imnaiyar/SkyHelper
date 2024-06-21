@@ -45,7 +45,7 @@ export default {
 
       const shardBtns = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
-          .setLabel(t("buttons.SHARD_LOCATION"))
+          .setLabel(t("buttons.SHARD_LOCATION.LOCATION"))
           .setCustomId("shardLocation-left")
           .setStyle(ButtonStyle.Primary)
           .setDisabled(page === 0),
