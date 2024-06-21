@@ -10,9 +10,10 @@ export default {
     const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
     const Art = await client.users.fetch("504605855539265537");
     let page = 0;
-    const total = shards_about.length - 1;
+    const datas = shards_about(t);
+    const total = datas.length - 1;
     const getResponse = () => {
-      const data = shards_about(t)[page];
+      const data = datas[page];
       const shardEmbed: APIEmbed = {
         title: data.description,
         color: parseInt("00ff00", 16),
