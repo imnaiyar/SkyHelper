@@ -6,16 +6,23 @@ export default {
     MEMBERS: 200000,
   },
   PREFIX: ".",
-  BOT_ICON: "https://cdn.imnaiyar.site/bot-icon.gif",
+
+  // Channel ID where quest updates are sent which bot will parse and save to be used later
+  QUEST_UPDATE_CHANNEL: "xxxxx",
+
+  BOT_ICON: "https://skyhelper.xyz/assets/img/boticon.png",
+
   SUPPORTED_LANG: ["en-US", "hi", "ru"],
 
   //  WEB_URL: 'http://localhost:5001',
   WEB_URL: "https://skyhelper.xyz",
   CDN_URL: "https://cdn.imnaiyar.site",
+
   DASHBOARD: {
     enabled: false,
     /* The URL of the dashboard */
     URL: "https://dash.skyhelper.xyz",
+
     /** Web URL requesting to the API*/
     WEB_URL: [
       "http://localhost:3000",
@@ -23,21 +30,12 @@ export default {
       "https://skyhelper.xyz",
       "https://dashboard.skyhelper.xyz",
       "https://preview.skyhelper.xyz",
-    ], // https://dash.skyhelper.xyz
+    ],
+
     port: "5000",
+
+    // USERS who can access UpdateTS/Quests/Events page
     ADMINS: ["851588007697580033"],
   },
   Support: "https://discord.com/invite/2rjCRKZsBb",
-
-  EMBED_COLORS: {
-    BOT_EMBED: "#48d4ca",
-    TRANSPARENT: "#303236",
-    SUCCESS: "#48d4ca",
-    ERROR: "#275457",
-    WARNING: "#275457",
-  },
-
-  // Do not touch this or modify this unless you know what you are doing
-  shardSequence: ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"],
-  realmSequence: ["prairie", "forest", "valley", "wasteland", "vault"],
 };

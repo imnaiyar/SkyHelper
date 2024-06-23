@@ -24,7 +24,7 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
     await message.channel.send(t("common.bot.intro"));
     return;
   }
-  if (message.channelId === "1154255451077226527") {
+  if (message.channelId === "1254408573321089064") {
     updateDailyQuests(message);
   }
   // Prefix

@@ -3,7 +3,10 @@ import { LimitedCollection } from "discord.js";
 import { DailyQuest } from "#libs";
 export interface DailyQuestsSchema extends Document {
   quests: DailyQuest[];
-  rotating_candles?: DailyQuest;
+  last_updated: String;
+  last_message?: String;
+  rotating_candles: DailyQuest;
+  seasonal_candles?: DailyQuest;
 }
 const questSchema = {
   title: String,
@@ -19,6 +22,8 @@ const questSchema = {
 const cache = new LimitedCollection<string, DailyQuestsSchema>({ maxSize: 1 });
 const Schema = new mongoose.Schema<DailyQuestsSchema>({
   quests: [questSchema],
+  last_message: String,
+  last_updated: String,
   rotating_candles: questSchema,
 });
 

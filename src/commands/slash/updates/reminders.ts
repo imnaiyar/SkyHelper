@@ -74,11 +74,19 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
     return new EmbedBuilder()
       .setAuthor({ name: t("commands.REMINDERS.RESPONSES.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
       .setTitle(interaction.guild.name)
+      .addFields(
+        { name: `**•** ${t("times-embed.GEYSER")} ${getActive(geyser)}`, value: " ", inline: true },
+        { name: `**•** ${t("times-embed.GRANDMA")} ${getActive(grandma)}`, value: " ", inline: true },
+        { name: `**•** ${t("times-embed.TURTLE")} ${getActive(turtle)}`, value: " ", inline: true },
+        { name: `**•** ${t("times-embed.DAILY")} ${getActive(reset)}`, value: " ", inline: true },
+        { name: `**•** ${t("times-embed.EDEN")} ${getActive(eden)}`, value: " ", inline: true },
+        { name: `**•** ~~Daily Quests~~ ${getActive(dailies)} (WIP)`, value: " ", inline: true },
+      )
       .setDescription(
-        `${t("commands.REMINDERS.RESPONSES.DES_TITLE")}\n${t("commands.REMINDERS.RESPONSES.CHANNEL", { CHANNEL: (await getChannel())?.toString() })}\n${t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE", { ROLE: reminders.default_role ? roleMention(reminders.default_role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE") })}\n${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}: ${status}\n- ${t("times-embed.GEYSER")} ${getActive(geyser)}             **•** ${t("times-embed.GRANDMA")} ${getActive(grandma)}\n- ${t("times-embed.TURTLE")} ${getActive(turtle)}               **•** ${t("times-embed.DAILY")} ${getActive(reset)}\n- ${t("times-embed.EDEN")} ${getActive(eden)}     **•** ~~ Daily Quests ~~ ${getActive(dailies)} (WIP)`,
+        `${t("commands.REMINDERS.RESPONSES.DES_TITLE")}\n${t("commands.REMINDERS.RESPONSES.CHANNEL", { CHANNEL: (await getChannel())?.toString() })}\n${t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE", { ROLE: reminders.default_role ? roleMention(reminders.default_role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE") })}\n${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}: ${status}`,
       )
       .setThumbnail(
-        "https://media.discordapp.net/attachments/1148740470047002729/1253783171602841681/Untitledvideo-MadewithClipchamp1-ezgif.com-crop.gif?ex=66771c12&is=6675ca92&hm=112f68bbb5f1a86d531f662c45af3c90cfa5acfcba59bf449e0e36680e2a3642&=&width=645&height=600",
+        "https://media.discordapp.net/attachments/1148740470047002729/1253795351127658547/output-onlinegiftools.gif?ex=667878ea&is=6677276a&hm=e09c6f1bd06860aaed32b95c29c9e6327a7f7805e843cb033b5cfd284db33fe8&=&width=515&height=515",
       );
   };
 

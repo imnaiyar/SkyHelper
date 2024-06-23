@@ -103,7 +103,7 @@
     "prettier-plugin-ejs": "^0.0.18",
     "source-map-support": "^0.5.21",
     "ts-jest": "^29.1.4",
-    "typescript": "^5.4.4"
+    "typescript": "5.4.4"
   },
   "trustedDependencies": [
     "@nestjs/core",

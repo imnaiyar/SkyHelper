@@ -8,3 +8,4 @@ export { default as dblStats } from "#handlers/dblStats";
 export { default as topggAutopost } from "#handlers/topggAutopost";
 export * from "#handlers/scheduledUpdates";
 export { default as scheduler } from "#handlers/scheduler";
+export * from "#handlers/dailyQuestEmbed";
