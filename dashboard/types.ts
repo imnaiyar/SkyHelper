@@ -17,6 +17,10 @@ export type ReminderFeature = {
     active: boolean;
     role: string | null;
   };
+  eden?: {
+    active: boolean;
+    role: string | null;
+  };
 };
 export type SpiritData = {
   name: string;

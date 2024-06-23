@@ -41,6 +41,7 @@ export class Reminders {
     settings.reminders.grandma = body.grandma;
     settings.reminders.turtle = body.turtle;
     settings.reminders.reset = body.reset;
+    settings.reminders.eden = body.eden;
 
     const channel = client.channels.cache.get(body.channel) as TextChannel;
     const updateWebhook = async (existingId?: string) => {

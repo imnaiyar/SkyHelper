@@ -10,7 +10,7 @@
       "VERSION": "Version",
       "UPTIME": "Uptime",
       "PING": "Websocket Ping",
-      "GUILD_SETTINGS": "Guild Settings",
+      "GUILD_SETTINGS": "Server Settings",
       "LANGUAGE": "Language",
       "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
       "NOT_SET": "None (you can set it via bot's dashboard)",
@@ -512,6 +512,15 @@
           "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
         }
       }
+    },
+    "DAILY_QUESTS": {
+      "name": "daily-quests",
+      "description": "get the daily quests",
+      "RESPONSES": {
+        "NO_DATA": "No data found for today's daily quests. Please try again later.",
+        "EMBED_AUTHOR": "Daily Quests",
+        "EMBED_DESCRIPTION": "Daily quests for today"
+      }
     }
   },
   "buttons": {
@@ -553,4 +562,3 @@
     }
   }
 }
-

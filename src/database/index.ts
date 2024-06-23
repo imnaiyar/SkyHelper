@@ -6,3 +6,4 @@ export * from "#schemas/TS";
 export * from "#schemas/User";
 export * from "#schemas/Event";
 export * from "#schemas/seasonsData";
+export * from "#schemas/dailyQuests";
