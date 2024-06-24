@@ -11,7 +11,7 @@ function MyButton() {
 
   return (
     <div>
-      <button onClick={handleClick} className={`${bttn.button_top} ${styles.counter}`}>
+      <button onClick={handleClick} className={`${bttn.button} ${bttn.button_top} ${styles.counter}`}>
         Clicked {count} times
       </button>
     </div>

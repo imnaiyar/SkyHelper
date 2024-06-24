@@ -1,4 +1,5 @@
-button {
+/* button.css */
+.button {
   /* Variables */
   --button_radius: 0.75em;
   --button_color: #e8e8e8;
@@ -22,12 +23,12 @@ button {
   background: linear-gradient(45deg, #FF5F6D, #FFC371);
 }
 
-button:hover .button_top {
+.button:hover .button_top {
   /* Pull the button upwards when hovered */
   transform: translateY(-0.33em);
 }
 
-button:active .button_top {
+.button:active .button_top {
   /* Push the button downwards when pressed */
   transform: translateY(0);
 }
