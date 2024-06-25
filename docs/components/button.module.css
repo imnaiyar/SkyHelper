@@ -23,12 +23,12 @@
   background: linear-gradient(45deg, #FF5F6D, #FFC371);
 }
 
-.button:hover {
+.button:hover .button_top {
   /* Pull the button upwards when hovered */
   transform: translateY(-0.33em);
 }
 
-.button:active {
+.button:active .button_top {
   /* Push the button downwards when pressed */
   transform: translateY(0);
 }
