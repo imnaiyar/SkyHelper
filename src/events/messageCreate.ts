@@ -1,8 +1,7 @@
-import type { SkyHelper } from "#structures";
+import type { Event } from "#structures";
 import {
   EmbedBuilder,
   type GuildChannelResolvable,
-  type Message,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -16,7 +15,7 @@ import updateDailyQuests from "#handlers/updateDailyQuests";
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 /** Message Handler */
-export default async (client: SkyHelper, message: Message): Promise<void> => {
+const messageHandler: Event<"messageCreate"> = async (client, message): Promise<void> => {
   if (message.author.bot) return;
   const t = await message.t();
   // Check for bot's mention
@@ -153,3 +152,5 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
     });
   }
 };
+
+export default messageHandler;

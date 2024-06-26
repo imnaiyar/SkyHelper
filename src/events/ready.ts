@@ -1,12 +1,12 @@
 import { getShardStatus, scheduler } from "#handlers";
 import moment from "moment-timezone";
 import { Flags } from "#libs";
-import { type SkyHelper } from "#structures";
+import type { Event } from "#structures";
 import { type ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
 import { UpdateEvent, UpdateTS, ShardsUtil as util } from "skyhelper-utils";
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
-export default async (client: SkyHelper): Promise<void> => {
+const readyHandler: Event<"ready"> = async (client): Promise<void> => {
   client.logger.log(`Logged in as ${client.user.tag}`, "BOT");
 
   client.classes.set("UpdateTS", UpdateTS);
@@ -95,6 +95,8 @@ export default async (client: SkyHelper): Promise<void> => {
     });
   }
 };
+
+export default readyHandler;
 
 function getActivity(): ActivityOptions {
   const status = getShardStatus(moment().tz("America/Los_Angeles"));
