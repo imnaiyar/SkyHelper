@@ -8,11 +8,10 @@ function MyButton() {
     setCount(count + 1);
   }
 
-  const { theme } = useTheme();
-
+  const { resolvedTheme } = useTheme();
   useEffect(() => {
-    document.documentElement.style.setProperty("--button_outline_color", theme === "dark" ? "#983636" : "#000000");
-  }, [theme]);
+    document.documentElement.style.setProperty("--button_outline_color", resolvedTheme === "dark" ? "#983636" : "#000000");
+  }, [resolvedTheme]);
 
   return (
     <div className={bttn.container}>
