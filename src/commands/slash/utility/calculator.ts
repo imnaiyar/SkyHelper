@@ -9,15 +9,15 @@ export default {
     await interaction.deferReply({
       ephemeral: interaction.options.getBoolean("hide") ?? false,
     });
-    const hasPass = interaction.options.getBoolean("season-pass")!;
-    const candles = interaction.options.getInteger("candles")!;
-    const dailies = interaction.options.getBoolean("dailies")!;
+    const hasPass = interaction.options.getBoolean("season-pass");
+    const candles = interaction.options.getInteger("candles", true);
+    const dailies = interaction.options.getBoolean("dailies", true);
     const now = moment().tz(client.timezone);
-    const end = moment.tz(sn.end, "MM-DD-YYYY", client.timezone);
+    const end = moment.tz(sn.end, "DD-MM-YYYY", client.timezone);
     // prettier-ignore
     if (now.isAfter(end)) return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.NOT_ACTIVE"));
     const userData = await client.database.getUserData(interaction.user);
-    if (hasPass !== undefined) {
+    if (hasPass) {
       userData.hasPass = hasPass;
       await userData.save();
     }
