@@ -2,6 +2,8 @@ import { dailyQuestEmbed } from "#handlers";
 import { SlashCommand } from "#structures";
 import moment from "moment-timezone";
 import { useTranslations as x } from "#handlers/useTranslation";
+import { APIActionRowComponent, APIButtonComponent, ActionRowBuilder } from "discord.js";
+import { ButtonBuilder } from "@discordjs/builders";
 export default {
   async execute(interaction, t, client) {
     await interaction.deferReply();
@@ -13,7 +15,20 @@ export default {
       return void (await interaction.followUp(t("commands.DAILY_QUESTS.RESPONSES.NO_DATA")));
     }
     const response = dailyQuestEmbed(data, 0);
-    await interaction.followUp(response);
+    const m = await interaction.followUp(response);
+    const collector = m.createMessageComponentCollector({ idle: 90_000 });
+    collector.on("end", async () => {
+      const components = m.components.map((row) => {
+        const r = ActionRowBuilder.from(row);
+        r.components.forEach((c) => {
+          if (c instanceof ButtonBuilder) {
+            c.setDisabled(true);
+          }
+        });
+        return r.toJSON();
+      });
+      await interaction.editReply({ components: components as APIActionRowComponent<APIButtonComponent>[] });
+    });
   },
   data: {
     name: "daily-quests",

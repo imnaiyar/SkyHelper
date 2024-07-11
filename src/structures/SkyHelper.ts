@@ -230,7 +230,7 @@ export class SkyHelper extends Client<true> {
     console.log(chalk.blueBright("\n\n<---------------------- Loading Buttons ----------------------->\n"));
     let added = 0;
     let failed = 0;
-    const files = recursiveReadDir(dir);
+    const files = recursiveReadDir(dir, ["sub"]);
     for (const filePath of files) {
       const file = path.basename(filePath);
 
