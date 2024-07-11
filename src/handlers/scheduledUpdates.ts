@@ -163,7 +163,6 @@ const update = async (
           }
           if (e.code === 10015) {
             client.logger.error(`Live ${type} disabled for ${guild.data.name}, webhook not found!`);
-            return;
           }
           guild[type].webhook.id = null;
           guild[type].active = false;
