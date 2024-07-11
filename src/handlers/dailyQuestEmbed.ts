@@ -1,5 +1,6 @@
 import { DailyQuestsSchema } from "#schemas/dailyQuests";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+import moment from "moment-timezone";
 
 export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
   const { quests, rotating_candles } = data;
@@ -23,23 +24,30 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
       })),
     ),
   );
+  const disabledSe =
+    data.seasonal_candles &&
+    moment()
+      .tz("America/Los_Angeles")
+      .startOf("day")
+      .isSame(moment.tz(data.seasonal_candles.date, "America/Los_Angeles").startOf("day"));
   const nextBtn = new ButtonBuilder()
-    .setCustomId("daily-quests-next" + (index + 1))
-    .setLabel((index === total - 1 ? quest.title.slice(0, 10) : quests[index + 1].title.slice(0, 10)) + " ▶️")
+    .setCustomId("daily-quests-next_" + (index + 1))
+    .setLabel(index === total - 1 ? `Quest ${total}` : `Quest ${index + 2}` + " ▶️")
     .setDisabled(index === total - 1)
     .setStyle(ButtonStyle.Primary);
   const prevBtn = new ButtonBuilder()
-    .setCustomId("daily-quests-prev" + (index - 1))
-    .setLabel("◀️ " + (index === 0 ? quest.title.slice(0, 10) : quests[index - 1].title.slice(0, 10)))
+    .setCustomId("daily-quests-prev_" + (index - 1))
+    .setLabel("◀️ " + (index === 0 ? `Quest 1` : `Quest ${index}`))
     .setDisabled(index === 0)
     .setStyle(ButtonStyle.Primary);
   const rotatingBtn = new ButtonBuilder()
-    .setCustomId("daily-quests-rotating")
+    .setCustomId("daily-quests-candles_rotating")
     .setLabel("Rotating Candles")
     .setStyle(ButtonStyle.Success);
   const seasonalBtn = new ButtonBuilder()
-    .setCustomId("daily-quests-seasonal")
+    .setCustomId("daily-quests-candles_seasonal")
     .setLabel("Seasonal Candles")
+    .setDisabled(disabledSe ? true : false)
     .setStyle(ButtonStyle.Success);
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(prevBtn, nextBtn, rotatingBtn);
   if (rotating_candles) row.addComponents(seasonalBtn);

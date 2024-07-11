@@ -14,6 +14,7 @@ import config from "#src/config";
 import { eventTimes } from "#libs/constants/index";
 import { getTimes } from "#handlers/getDailyEventTimes";
 import type { getTranslator } from "#src/i18n";
+import { dailyQuestEmbed } from "#handlers";
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = (title: string, description: string) => new EmbedBuilder().setTitle(title).setDescription(description);
@@ -287,6 +288,16 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
             ephemeral: true,
           });
       }
+    }
+
+    if (interaction.customId === "daily_quests_select") {
+      await interaction.deferUpdate();
+      const index = parseInt(interaction.values[0]);
+      const data = await client.database.getDailyQuests();
+      const response = dailyQuestEmbed(data, index);
+      await interaction.editReply({
+        ...response,
+      });
     }
   }
 };

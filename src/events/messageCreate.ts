@@ -16,15 +16,17 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 
 /** Message Handler */
 const messageHandler: Event<"messageCreate"> = async (client, message): Promise<void> => {
+  // Handle daily guides parsing
+  if (message.channelId === "1254408573321089064") {
+    updateDailyQuests(message);
+  }
+
   if (message.author.bot) return;
   const t = await message.t();
   // Check for bot's mention
   if (message.content.startsWith(`<@!${client.user.id}>`)) {
     await message.channel.send(t("common.bot.intro"));
     return;
-  }
-  if (message.channelId === "1254408573321089064") {
-    updateDailyQuests(message);
   }
   // Prefix
   const prefix = client.config.PREFIX;
