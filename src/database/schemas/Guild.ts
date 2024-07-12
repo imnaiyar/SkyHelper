@@ -132,3 +132,11 @@ export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSc
 export async function getActiveReminders(): Promise<GuildSchema[]> {
   return await Model.find({ "reminders.active": true });
 }
+
+/**
+ * Get guilds that has announcement channels setup
+ */
+ export async function getAnnouncementGuilds(): Promise<GuildSchema[]> {
+   const data = await Model.find({ "annoucement_channel": { $exists: true, $ne: null } });
+   return data;
+ }
