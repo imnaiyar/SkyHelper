@@ -1,4 +1,3 @@
-import * as d from "discord.js";
 import type { PrefixCommand } from "#structures";
 export default {
   data: {
