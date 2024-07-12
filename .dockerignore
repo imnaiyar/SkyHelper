@@ -24,3 +24,10 @@
 **/values.dev.yaml
 LICENSE
 README.md
+**/docs
+**/.github
+**/logs
+**/__tests__
+**/bunlockb
+**/ex.dockerfile
+**/jest.congif.js
