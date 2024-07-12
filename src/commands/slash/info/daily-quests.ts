@@ -2,7 +2,7 @@ import { dailyQuestEmbed } from "#handlers";
 import { SlashCommand } from "#structures";
 import moment from "moment-timezone";
 import { useTranslations as x } from "#handlers/useTranslation";
-import { APIActionRowComponent, APIButtonComponent, ActionRowBuilder } from "discord.js";
+import { APIActionRowComponent, APIButtonComponent, ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 import { ButtonBuilder } from "@discordjs/builders";
 export default {
   async execute(interaction, t, client) {
@@ -21,7 +21,7 @@ export default {
       const components = m.components.map((row) => {
         const r = ActionRowBuilder.from(row);
         r.components.forEach((c) => {
-          if (c instanceof ButtonBuilder) {
+          if (c instanceof ButtonBuilder || c instanceof StringSelectMenuBuilder) {
             c.setDisabled(true);
           }
         });
