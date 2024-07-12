@@ -9,10 +9,11 @@ import {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   APIStringSelectComponent,
+  ApplicationCommandOptionType,
 } from "discord.js";
 export default {
   async execute(interaction, t, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || undefined });
     const data = await client.database.getDailyQuests();
     const now = moment().tz(client.timezone).startOf("day");
     const last_updated = moment.tz(data.last_updated, client.timezone).startOf("day");
@@ -43,6 +44,15 @@ export default {
     name_localizations: x("commands.DAILY_QUESTS.name"),
     description: "Get the daily quests for today",
     description_localizations: x("commands.DAILY_QUESTS.description"),
+    options: [
+      {
+        name: "hide",
+        name_localizations: x("common.hide-options.name"),
+        description: "hide the response from others",
+        description_localizations: x("common.hide-options.description"),
+        type: ApplicationCommandOptionType.Boolean,
+      },
+    ],
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
