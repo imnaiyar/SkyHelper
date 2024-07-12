@@ -86,10 +86,11 @@ export async function getChangelog(interaction: ChatInputCommandInteraction) {
   const changes = [
     `### Daily Quests
 Added support for daily quests
-- \`${comMen("daily-quests")}\` command to check today's quests
-- Added support for daily quests reminder which can be setup by using \`${comMen("reminders")}\`
+- ${comMen("daily-quests")} command to check today's quests
+- Added support for daily quests reminder which can be setup by using ${comMen("reminders")}
 
-#### • Added eden reminders
+ • Added eden reminders
+
 -# Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
   ];
   const { client } = interaction;
