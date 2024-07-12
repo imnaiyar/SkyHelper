@@ -47,7 +47,7 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
   const seasonalBtn = new ButtonBuilder()
     .setCustomId("daily-quests-candles_seasonal")
     .setLabel("Seasonal Candles")
-    .setDisabled(disabledSe ? true : false)
+    .setDisabled(disabledSe === undefined ? true : disabledSe)
     .setStyle(ButtonStyle.Success);
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(prevBtn, nextBtn, rotatingBtn);
   if (rotating_candles) row.addComponents(seasonalBtn);

@@ -2,14 +2,19 @@ import { dailyQuestEmbed } from "#handlers";
 import { SlashCommand } from "#structures";
 import moment from "moment-timezone";
 import { useTranslations as x } from "#handlers/useTranslation";
-import { APIActionRowComponent, APIButtonComponent, ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
-import { ButtonBuilder } from "@discordjs/builders";
+import {
+  ButtonBuilder,
+  APIActionRowComponent,
+  APIButtonComponent,
+  ActionRowBuilder,
+  StringSelectMenuBuilder,
+  APIStringSelectComponent,
+} from "discord.js";
 export default {
   async execute(interaction, t, client) {
     await interaction.deferReply();
     const data = await client.database.getDailyQuests();
     const now = moment().tz(client.timezone).startOf("day");
-    console.log(data);
     const last_updated = moment.tz(data.last_updated, client.timezone).startOf("day");
     if (!data.last_updated || !now.isSame(last_updated) || !data.quests.length) {
       return void (await interaction.followUp(t("commands.DAILY_QUESTS.RESPONSES.NO_DATA")));
@@ -27,9 +32,12 @@ export default {
         });
         return r.toJSON();
       });
-      await interaction.editReply({ components: components as APIActionRowComponent<APIButtonComponent>[] });
+      await interaction.editReply({
+        components: components as APIActionRowComponent<APIButtonComponent | APIStringSelectComponent>[],
+      });
     });
   },
+
   data: {
     name: "daily-quests",
     name_localizations: x("commands.DAILY_QUESTS.name"),

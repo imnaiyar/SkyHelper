@@ -52,8 +52,15 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
   const { reminders } = settings;
   const { geyser, grandma, turtle, reset, dailies, eden, webhook } = reminders;
 
-  const typesEnum = { geyser, grandma, turtle, reset, eden };
-  const strEnums = { geyser: "Geyser", grandma: "Grandma", turtle: "Turtle", reset: "Daily Reset", eden: "Eden Reset" };
+  const typesEnum = { geyser, grandma, turtle, reset, eden, dailies };
+  const strEnums = {
+    geyser: "Geyser",
+    grandma: "Grandma",
+    turtle: "Turtle",
+    reset: "Daily Reset",
+    eden: "Eden Reset",
+    dailies: "Daily Quests",
+  };
   let status = "🔴 Inactive (No Channels Selected)";
   let wb: Webhook | null = null;
 
@@ -75,12 +82,12 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
       .setAuthor({ name: t("commands.REMINDERS.RESPONSES.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
       .setTitle(interaction.guild.name)
       .addFields(
-        { name: `**•** ${t("times-embed.GEYSER")} ${getActive(geyser)}`, value: " ", inline: true },
-        { name: `**•** ${t("times-embed.GRANDMA")} ${getActive(grandma)}`, value: " ", inline: true },
-        { name: `**•** ${t("times-embed.TURTLE")} ${getActive(turtle)}`, value: " ", inline: true },
-        { name: `**•** ${t("times-embed.DAILY")} ${getActive(reset)}`, value: " ", inline: true },
-        { name: `**•** ${t("times-embed.EDEN")} ${getActive(eden)}`, value: " ", inline: true },
-        { name: `**•** ~~Daily Quests~~ ${getActive(dailies)} (WIP)`, value: " ", inline: true },
+        { name: `**•** ${t("times-embed.GEYSER")} ${getActive(geyser)}`, value: "\u200B", inline: true },
+        { name: `**•** ${t("times-embed.GRANDMA")} ${getActive(grandma)}`, value: "\u200B", inline: true },
+        { name: `**•** ${t("times-embed.TURTLE")} ${getActive(turtle)}`, value: "\u200B", inline: true },
+        { name: `**•** ${t("times-embed.DAILY")} ${getActive(reset)}`, value: "\u200B", inline: true },
+        { name: `**•** ${t("times-embed.EDEN")} ${getActive(eden)}`, value: "\u200B", inline: true },
+        { name: `**•** ${t("reminders.DAILY_QUESTS")} ${getActive(dailies)}`, value: "\u200B", inline: true },
       )
       .setDescription(
         `${t("commands.REMINDERS.RESPONSES.DES_TITLE")}\n${t("commands.REMINDERS.RESPONSES.CHANNEL", { CHANNEL: (await getChannel())?.toString() })}\n${t("commands.REMINDERS.RESPONSES.DEFAULT_ROLE", { ROLE: reminders.default_role ? roleMention(reminders.default_role) : t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.NONE") })}\n${t("commands.REMINDERS.RESPONSES.TYPE-DESCRIPTION.STATUS")}: ${status}`,
@@ -126,12 +133,12 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
         .setCustomId("reminders-enable-all")
         .setStyle(ButtonStyle.Success)
         .setLabel(t("commands.REMINDERS.RESPONSES.BTN_ENABLE_ALL"))
-        .setDisabled(geyser.active && grandma.active && turtle.active && reset.active && eden.active),
+        .setDisabled(geyser.active && grandma.active && turtle.active && reset.active && eden.active && dailies.active),
       new ButtonBuilder()
         .setCustomId("reminders-disable-all")
         .setStyle(ButtonStyle.Danger)
         .setLabel(t("commands.REMINDERS.RESPONSES.BTN_DISABLE_ALL"))
-        .setDisabled(!geyser.active && !grandma.active && !turtle.active && !reset.active && !eden.active),
+        .setDisabled(!geyser.active && !grandma.active && !turtle.active && !reset.active && !eden.active && !dailies.active),
       new ButtonBuilder()
         .setCustomId("reminders-default_role-remove")
         .setStyle(ButtonStyle.Danger)

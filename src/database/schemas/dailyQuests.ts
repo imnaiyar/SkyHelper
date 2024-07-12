@@ -3,8 +3,8 @@ import { LimitedCollection } from "discord.js";
 import { DailyQuest } from "#libs";
 export interface DailyQuestsSchema extends Document {
   quests: DailyQuest[];
-  last_updated: String;
-  last_message?: String;
+  last_updated: string;
+  last_message?: string;
   rotating_candles: DailyQuest;
   seasonal_candles?: DailyQuest;
 }

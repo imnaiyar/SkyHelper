@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import moment from "moment-timezone";
+import { reminderSchedules } from "./scheduledUpdates.js";
 
 const titleRegex = /(?:\*\*[^*]*\*\*|[^*])(?<=\*\*)(.*?)(?=\*\*| by)/g;
 const creditRegex = /by \w+/g;
@@ -61,5 +62,6 @@ export default async (message: Message) => {
     // ! This is where the reminder will be scheduled and sent
     data.last_updated = moment().tz(client.timezone).toISOString();
     await data.save();
+    await reminderSchedules(message.client, "dailies");
   }, 10_60_000); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
