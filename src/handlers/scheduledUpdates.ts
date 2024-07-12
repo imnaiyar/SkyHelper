@@ -1,4 +1,4 @@
-import { buildShardEmbed, getDailyEventTimes, getTimesEmbed } from "#handlers";
+import { buildShardEmbed, dailyQuestEmbed, getDailyEventTimes, getTimesEmbed } from "#handlers";
 import type { GuildSchema } from "#libs";
 import { getTranslator, langKeys } from "#src/i18n";
 import type { SkyHelper } from "#structures";
@@ -31,7 +31,7 @@ export async function eventSchedules(type: "shard" | "times", client: SkyHelper)
   }
 }
 
-type events = "geyser" | "grandma" | "turtle" | "dailies" | "eden" | "reset";
+type events = "geyser" | "grandma" | "turtle" | "dailies" | "eden" | "reset" | "dailies";
 /**
  * Sends the reminder to the each active guilds
  * @param client The bot client
@@ -39,6 +39,7 @@ type events = "geyser" | "grandma" | "turtle" | "dailies" | "eden" | "reset";
  */
 export async function reminderSchedules(client: SkyHelper, type: events): Promise<void> {
   const activeGuilds = await client.database.getActiveReminders();
+  const data = await client.database.getDailyQuests();
   activeGuilds.forEach(async (guild) => {
     const t = getTranslator(guild.language?.value ?? "en-US");
     try {
@@ -55,21 +56,27 @@ export async function reminderSchedules(client: SkyHelper, type: events): Promis
 
       let response = null;
       if (type === "eden") {
-        response = `${role} ${t("reminders.EDEN_RESET")}`;
-      }
-      // TODO
-      /* if (type === "dailies" && dailies.active) response = getDailiesResponse(type, role); */
-      else if (type === "reset") {
-        response = `${role}${t("reminders.DAILY_RESET")}`;
+        response = { content: `${role} ${t("reminders.EDEN_RESET")}` };
+      } else if (type === "reset") {
+        response = { content: `${role}${t("reminders.DAILY_RESET")}` };
+      } else if (type === "dailies") {
+        const d = dailyQuestEmbed(data, 0);
+        response = {
+          content: `${role}\u200B`,
+          ...d,
+        };
       } else {
-        response = getResponse(type, t, role);
+        response = { content: getResponse(type, t, role) };
       }
       if (!response) return;
       wb.send({
-        // @ts-expect-error
-        username: t("reminders.TITLE", { TYPE: t("times-embed." + (type === "reset" ? "DAILY" : type.toUpperCase())) }),
+        username:
+          type === "dailies"
+            ? t("reminders.DAILY_QUESTS")
+            : // @ts-expect-error
+              t("reminders.TITLE", { TYPE: t("times-embed." + (type === "reset" ? "DAILY" : type.toUpperCase())) }),
         avatarURL: client.user.displayAvatarURL(),
-        content: response,
+        ...response,
       })
         .then((msg) => {
           guild.reminders[type].last_messageId = msg?.id || undefined;
@@ -163,7 +170,6 @@ const update = async (
           }
           if (e.code === 10015) {
             client.logger.error(`Live ${type} disabled for ${guild.data.name}, webhook not found!`);
-            return;
           }
           guild[type].webhook.id = null;
           guild[type].active = false;

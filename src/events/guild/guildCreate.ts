@@ -1,9 +1,9 @@
-import type { SkyHelper } from "#structures";
-import { EmbedBuilder, type Guild, type TextChannel, WebhookClient } from "discord.js";
+import type { Event } from "#structures";
+import { EmbedBuilder, type TextChannel, WebhookClient } from "discord.js";
 import { dblStats, topggAutopost } from "#handlers";
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
-export default async (client: SkyHelper, guild: Guild): Promise<void> => {
+const guildAddHandler: Event<"guildCreate"> = async (client, guild): Promise<void> => {
   if (!guild.available) return;
   if (!guild.members.cache.has(guild.ownerId)) await guild.fetchOwner({ cache: true }).catch(() => {});
   client.logger.success(`Guild Joined: ${guild.name} Members: ${guild.memberCount}`);
@@ -117,3 +117,5 @@ export default async (client: SkyHelper, guild: Guild): Promise<void> => {
     embeds: [embed],
   });
 };
+
+export default guildAddHandler;

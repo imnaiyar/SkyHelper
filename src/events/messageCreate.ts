@@ -1,8 +1,7 @@
-import type { SkyHelper } from "#structures";
+import type { Event } from "#structures";
 import {
   EmbedBuilder,
   type GuildChannelResolvable,
-  type Message,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -11,11 +10,17 @@ import {
 } from "discord.js";
 import { Flags } from "#libs/classes/Flags";
 import { parsePerms } from "skyhelper-utils";
+import updateDailyQuests from "#handlers/updateDailyQuests";
 
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 /** Message Handler */
-export default async (client: SkyHelper, message: Message): Promise<void> => {
+const messageHandler: Event<"messageCreate"> = async (client, message): Promise<void> => {
+  // Handle daily guides parsing
+  if (message.channelId === "1261417856889786449") {
+    updateDailyQuests(message);
+  }
+
   if (message.author.bot) return;
   const t = await message.t();
   // Check for bot's mention
@@ -23,7 +28,6 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
     await message.channel.send(t("common.bot.intro"));
     return;
   }
-
   // Prefix
   const prefix = client.config.PREFIX;
   if (!message.content.startsWith(prefix)) return;
@@ -150,3 +154,5 @@ export default async (client: SkyHelper, message: Message): Promise<void> => {
     });
   }
 };
+
+export default messageHandler;

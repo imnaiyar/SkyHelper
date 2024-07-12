@@ -10,7 +10,7 @@
       "VERSION": "Version",
       "UPTIME": "Uptime",
       "PING": "Websocket Ping",
-      "GUILD_SETTINGS": "Guild Settings",
+      "GUILD_SETTINGS": "Server Settings",
       "LANGUAGE": "Language",
       "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
       "NOT_SET": "None (you can set it via bot's dashboard)",
@@ -127,6 +127,7 @@
     "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
     "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
     "TITLE": "{{TYPE}} Reminder",
+    "DAILY_QUESTS": "Daily Quests",
     "ERROR": "This is not working as expected",
     "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
   },
@@ -512,6 +513,16 @@
           "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
         }
       }
+    },
+    "DAILY_QUESTS": {
+      "name": "daily-quests",
+      "description": "get the daily quests",
+      "RESPONSES": {
+        "NO_DATA": "No data found for today's daily quests. Please try again later.",
+        "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
+        "EMBED_AUTHOR": "Daily Quests",
+        "EMBED_DESCRIPTION": "Daily quests for today"
+      }
     }
   },
   "buttons": {
@@ -553,4 +564,3 @@
     }
   }
 }
-

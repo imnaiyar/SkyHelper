@@ -58,6 +58,7 @@ export default class {
     } else {
       Logger.error(content, `${id}`);
     }
+    if (process.isBun) console.error(content, ex);
     if (webhookLogger) sendWebhook(id, content, ex);
     return id;
   }

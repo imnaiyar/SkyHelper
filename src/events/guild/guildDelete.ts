@@ -1,9 +1,9 @@
-import type { SkyHelper } from "#structures";
-import { EmbedBuilder, type Guild, type TextChannel, WebhookClient } from "discord.js";
+import type { Event } from "#structures";
+import { EmbedBuilder, type TextChannel, WebhookClient } from "discord.js";
 
 const webhookLogger = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
 
-export default async (client: SkyHelper, guild: Guild) => {
+const guildRemoveHandler: Event<"guildDelete"> = async (client, guild) => {
   if (!guild.available) return;
   client.logger.log(`Guild Left: ${guild.name} Members: ${guild.memberCount}`);
 
@@ -86,3 +86,5 @@ export default async (client: SkyHelper, guild: Guild) => {
     embeds: [embed],
   });
 };
+
+export default guildRemoveHandler;
