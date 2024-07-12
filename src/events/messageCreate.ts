@@ -17,7 +17,7 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 /** Message Handler */
 const messageHandler: Event<"messageCreate"> = async (client, message): Promise<void> => {
   // Handle daily guides parsing
-  if (message.channelId === "1254408573321089064") {
+  if (message.channelId === "1261417856889786449") {
     updateDailyQuests(message);
   }
 

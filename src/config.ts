@@ -19,7 +19,7 @@ export default {
   CDN_URL: "https://cdn.imnaiyar.site",
 
   DASHBOARD: {
-    enabled: false,
+    enabled: true,
     /* The URL of the dashboard */
     URL: "https://dash.skyhelper.xyz",
 
