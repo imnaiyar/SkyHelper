@@ -84,11 +84,13 @@ export async function getChangelog(interaction: ChatInputCommandInteraction) {
     return `</${com!.name}${sub ? ` ${sub}` : ""}:${com!.id}>`;
   };
   const changes = [
-    `### Localization
-- Bot now supports multiple languages. You can set your desired language by running /language set command for yourself or your server. Currently supported languages are: English, Hindi, Russian, Chinese (soon), this is an ongoing project and more languages will be made available as they are translated. You can help translate [here](https://docs.skyhelper.xyz/pages/translating)
-- Command ${comMen("shards-calendar")} and ${comMen("seasonal-calculator")} have been added.
-- Added a [dashboard](https://dash.skyhelper.xyz)
-Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
+    `### Daily Quests
+Added support for daily quests
+- \`${comMen("daily-quests")}\` command to check today's quests
+- Added support for daily quests reminder which can be setup by using \`${comMen("reminders")}\`
+
+#### • Added eden reminders
+-# Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
   ];
   const { client } = interaction;
   let page = 0;
