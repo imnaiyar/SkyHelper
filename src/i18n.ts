@@ -7,6 +7,7 @@ type NestedKeys<T> = {
 }[keyof T & (string | number)];
 export type langKeys = NestedKeys<typeof en>;
 
+// @ts-ignore
 await i18next.use(Backend).init({
   cleanCode: true,
   lng: "en-US",
