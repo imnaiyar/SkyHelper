@@ -6,6 +6,7 @@ type NestedKeys<T> = {
   [K in keyof T & (string | number)]: T[K] extends Record<string, any> ? `${K}` | `${K}.${NestedKeys<T[K]>}` : `${K}`;
 }[keyof T & (string | number)];
 export type langKeys = NestedKeys<typeof en>;
+
 await i18next.use(Backend).init({
   cleanCode: true,
   lng: "en-US",
