@@ -8,7 +8,7 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
   const quest = quests[index];
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: `Daily Quests (${index}/${total})`,
+      name: `Daily Quests (${index + 1}/${total})`,
       iconURL: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/72/Quest-icon.png",
     })
     .setTitle(quest.title)
