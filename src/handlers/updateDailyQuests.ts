@@ -13,12 +13,11 @@ let timer: NodeJS.Timeout | null = null;
 export default async (message: Message) => {
   // ? This may be used to trigger the reminders (as this is usually the last message of daily quests)
   if (message.content.includes("Shattering Shard Summary")) return;
-  if (message.content.includes("Event Ticket")) return;
   if (message.content === "**Daily Quests**" || message.content === "`**Daily Quest**") return;
   const client = message.client;
   const title = message.content
     ?.match(titleRegex)?.[0]
-    .replaceAll(/<:[^>]+>/g, "")
+    .replaceAll(/<a?:\w+:\d+>/g, "")
     .replaceAll(/[*_~]/g, "")
     .trim();
   const credit = creditRegex.exec(message.content)?.[0].slice(3);
