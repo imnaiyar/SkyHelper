@@ -4,13 +4,24 @@ import { initializeMongoose } from "#src/database/mongoose";
 const client = new SkyHelper();
 import { Dashboard } from "../dashboard/main.js";
 import chalk from "chalk";
-// Load everything
-// Change path if different
 
 declare global {
   namespace NodeJS {
     interface Process {
       isBun?: boolean;
+    }
+    interface ProcessEnv {
+      TOKEN: string
+      MONGO_CONNECTION: string
+      AUTH_TOKEN: string
+      TOPGG_TOKEN?: string
+      GUILD?: string
+      ERROR_LOGS?: string
+      READY_LOGS?: string
+      SUGGESTION?: string
+      CONTACT_US?: string
+      COMMANDS_USED?: string
+      BUG_REPORTS?: string
     }
   }
 }
