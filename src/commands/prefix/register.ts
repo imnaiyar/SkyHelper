@@ -4,6 +4,7 @@ export default {
     name: "register",
     description: "register slash commands",
     aliases: ["r", "rs"],
+    ownerOnly: true,
     category: "OWNER",
   },
   async execute({ message, args: _k, client }) {

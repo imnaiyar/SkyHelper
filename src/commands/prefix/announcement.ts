@@ -4,6 +4,7 @@ export default {
     name: "announce",
     description: "announce new release/updates to the subscribed channels",
     aliases: ["an"],
+    ownerOnly: true,
     category: "OWNER"
   },
   async execute({ message, client, args }) {

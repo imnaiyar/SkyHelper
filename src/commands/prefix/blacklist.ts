@@ -7,6 +7,7 @@ export default {
         name: "blacklist",
         description: "blacklist a guild or an user.",
         category: "OWNER",
+        ownerOnly: true,
         aliases: ["bl"]
     },
 
@@ -113,8 +114,7 @@ async function blacklistUser(user: User, message: Message) {
     return message.reply(`${user.username} is blacklisted.`);
 }
 
-async function removeUserBlacklist(user: User, message: Message
-) {
+async function removeUserBlacklist(user: User, message: Message) {
     if (!user) {
         return message.reply("Invalid User ID.");
     }
@@ -124,7 +124,7 @@ async function removeUserBlacklist(user: User, message: Message
     return message.reply(`${user.username} is removed from blacklist.`);
 }
 
-async function getBlacklistedGuild( message: Message) {
+async function getBlacklistedGuild(message: Message) {
     const blacklists = await Guild.find();
     const embed = new EmbedBuilder().setAuthor({ name: `Blacklisted Servers` });
     blacklists.forEach(g => {

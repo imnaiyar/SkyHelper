@@ -15,6 +15,7 @@ export default {
     name: "run",
     description: "runs commands on the console",
     category: "OWNER",
+    ownerOnly: true,
   },
   async execute({ message, args }) {
     await message.channel.send({
