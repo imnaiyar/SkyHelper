@@ -1,9 +1,9 @@
 import { EmbedBuilder, WebhookClient, codeBlock } from "discord.js";
 import config from "#src/config";
-import { v4 as genId } from "uuid";
 import util from "node:util";
 import { postToHaste } from "skyhelper-utils";
 import { Logger } from "@nestjs/common";
+import { captureException } from "@sentry/node";
 const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
 
 async function sendWebhook(id: string, content: any, err?: any): Promise<void> {
@@ -52,7 +52,7 @@ export default class {
    * @returns The error ID
    */
   static error(content: any, ex?: any) {
-    const id = genId();
+    const id = captureException(ex || content);
     if (ex) {
       Logger.error(ex, `${id} => ${content}`);
     } else {

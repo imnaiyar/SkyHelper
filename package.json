@@ -17,7 +17,8 @@
     "dev": "bun run src/index.ts",
     "commands": "node dist/src/libs/registerCommands.js",
     "bun-cmd": "bun run src/libs/registerCommands.ts",
-    "format": "npx prettier --write \"**/*.{js,css,ejs, ts}\""
+    "format": "npx prettier --write \"**/*.{js,css,ejs, ts}\"",
+    "upload-source-maps": "sentry-cli sourcemaps inject dist && sentry-cli sourcemaps upload dist --project node"
   },
   "author": "Naiyar Imam",
   "license": "MIT",
@@ -28,6 +29,8 @@
     "@nestjs/platform-express": "^10.3.8",
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
+    "@sentry/node": "^8.17.0",
+    "@sentry/profiling-node": "^8.17.0",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "cropify": "^1.0.9",
@@ -46,8 +49,7 @@
     "pino-pretty": "^10.2.0",
     "skyhelper-utils": "^1.2.5",
     "table": "^6.8.1",
-    "topgg-autoposter": "^2.0.2",
-    "uuid": "^9.0.1"
+    "topgg-autoposter": "^2.0.2"
   },
   "imports": {
     "#handlers": [
