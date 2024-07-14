@@ -153,7 +153,7 @@ const update = async (
     if (!event.webhook.id) return;
     const webhook = new WebhookClient(
       { token: event.webhook.token!, id: event.webhook.id },
-      { allowedMentions: { parse: ["everyone"] } },
+      { allowedMentions: { parse: ["roles"] } },
     );
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = moment();
