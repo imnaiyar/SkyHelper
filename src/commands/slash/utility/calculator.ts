@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, GuildMember } from "discord.js";
+import { ApplicationCommandOptionType, GuildMember, time } from "discord.js";
 import type { SlashCommand } from "#structures";
 import { SeasonCalculator, SeasonData as sn } from "#libs/index";
 import moment from "moment";
@@ -13,9 +13,13 @@ export default {
     const candles = interaction.options.getInteger("candles", true);
     const dailies = interaction.options.getBoolean("dailies", true);
     const now = moment().tz(client.timezone);
+    const start = moment.tz(sn.end, "DD-MM-YYYY", client.timezone);
     const end = moment.tz(sn.end, "DD-MM-YYYY", client.timezone);
     // prettier-ignore
     if (now.isAfter(end)) return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.NOT_ACTIVE"));
+    if (!sn.spiritsUpdated) {
+      return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.SPIRITS_NOT_UPDATED", { SEASON: `${sn.icon} ${sn.nams}`, START: `${time(start, "F")} (${time(start, "R")})`, END: `${time(start, "F")} (${time(start, "R")})`}))
+    }
     const userData = await client.database.getUserData(interaction.user);
     if (hasPass) {
       userData.hasPass = hasPass;

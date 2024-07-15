@@ -47,9 +47,10 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
 } as const;
 
 export const SeasonData = {
-  name: "Season of Nesting",
-  icon: "<:SONesting:1229963758680670291>",
-  start: "15-04-2024",
-  end: "30-06-2024",
+  name: "Season of Duet",
+  icon: "<:SODuet:1262310944332189768>",
+  start: "15-07-2024",
+  end: "29-09-2024",
   duration: 77,
+  spiritsUpdated: false
 } as const;

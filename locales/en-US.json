@@ -398,7 +398,8 @@
       "RESPONSES": {
         "NOT_ACTIVE": "No active season at the moment. Please run this command when a seson is active.",
         "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles",
-        "ENDS_IN": "Ends in {{DAYS}} days"
+        "ENDS_IN": "Ends in {{DAYS}} days",
+        "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
       }
     },
     "HELP": {
