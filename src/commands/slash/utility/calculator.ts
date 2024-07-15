@@ -18,7 +18,7 @@ export default {
     // prettier-ignore
     if (now.isAfter(end)) return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.NOT_ACTIVE"));
     if (!sn.spiritsUpdated) {
-      return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.SPIRITS_NOT_UPDATED", { SEASON: `${sn.icon} ${sn.name}`, START: `${time(start.toDate(), "F")} (${time(start.toDate(), "R")})`, END: `${time(start.toDate(), "F")} (${time(start.toDate(), "R")})`}))
+      return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.SPIRITS_NOT_UPDATED", { SEASON: `${sn.icon} ${sn.name}`, START: `${time(start.toDate(), "F")} (${time(start.toDate(), "R")})`, END: `${time(end.toDate(), "F")} (${time(end.toDate(), "R")})`}))
     }
     const userData = await client.database.getUserData(interaction.user);
     if (hasPass) {
