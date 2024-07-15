@@ -13,7 +13,7 @@ export default {
     const candles = interaction.options.getInteger("candles", true);
     const dailies = interaction.options.getBoolean("dailies", true);
     const now = moment().tz(client.timezone);
-    const start = moment.tz(sn.end, "DD-MM-YYYY", client.timezone);
+    const start = moment.tz(sn.start, "DD-MM-YYYY", client.timezone);
     const end = moment.tz(sn.end, "DD-MM-YYYY", client.timezone);
     // prettier-ignore
     if (now.isAfter(end)) return void await interaction.followUp(t("commands.SEASONAL_CALCULATOR.RESPONSES.NOT_ACTIVE"));
