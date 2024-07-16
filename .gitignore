@@ -13,3 +13,6 @@ coverage/
 Dockerfile
 docker-compose.debug.yml
 .b.env
+
+# Sentry Config File
+.sentryclirc

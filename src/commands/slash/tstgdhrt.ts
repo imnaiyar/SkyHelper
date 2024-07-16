@@ -9,8 +9,7 @@ export default {
   skipDeploy: true,
 
   async execute(interaction, _t, _client) {
-    await interaction.deferReply();
     // Intentional error to check sentry logging
-    await interaction.reply("Tested!");
+    await interaction.reply("");
   },
 } satisfies SlashCommand;
