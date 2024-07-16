@@ -3648,7 +3648,7 @@ export default <Record<string, SpiritsData>>{
     name: "Scarecrow Farmer",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
-    season: "ENchantment",
+    season: "Enchantment",
     ts: {
       eligible: true,
       returned: true,
