@@ -11,13 +11,15 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "npm run build && node dist/src/index.js",
-    "build": "tsc -p tsconfig.json",
+    "start": "npm run build:prod && node dist/src/index.js",
+    "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
+    "build:ci": "tsc -p tsconfig.json",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
     "dev": "bun run src/index.ts",
-    "commands": "node dist/src/libs/registerCommands.js",
-    "bun-cmd": "bun run src/libs/registerCommands.ts",
-    "format": "npx prettier --write \"**/*.{js,css,ejs, ts}\""
+    "commands:prod": "node dist/src/libs/registerCommands.js",
+    "commands:bun": "bun run dist/src/libs/registerCommands.js",
+    "format": "prettier --write \"**/*.{js,css,ejs, ts}\"",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist"
   },
   "author": "Naiyar Imam",
   "license": "MIT",
@@ -28,6 +30,9 @@
     "@nestjs/platform-express": "^10.3.8",
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
+    "@sentry/cli": "^2.32.2",
+    "@sentry/node": "^8.17.0",
+    "@sentry/profiling-node": "^8.17.0",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "cropify": "^1.0.9",
@@ -46,8 +51,7 @@
     "pino-pretty": "^10.2.0",
     "skyhelper-utils": "^1.2.5",
     "table": "^6.8.1",
-    "topgg-autoposter": "^2.0.2",
-    "uuid": "^9.0.1"
+    "topgg-autoposter": "^2.0.2"
   },
   "imports": {
     "#handlers": [
@@ -110,3 +114,4 @@
     "@sapphire/type"
   ]
 }
+

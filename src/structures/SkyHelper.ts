@@ -287,6 +287,7 @@ export class SkyHelper extends Client<true> {
   public async registerCommands(): Promise<void> {
     const toRegister: SlashCommand["data"] | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
     this.commands
+      .filter((cmd) => !cmd.skipDeploy)
       .map((cmd) => ({
         name: cmd.data.name,
         description: cmd.data.description,
