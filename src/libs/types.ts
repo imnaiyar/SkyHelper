@@ -112,33 +112,12 @@ interface Level {
   description?: string;
   image: string;
 }
-export interface SpiritsData {
+
+interface BaseSpiritData {
   name: string;
   type: string;
   realm?: string;
-  season?: string;
-  current?: boolean;
-  main?: {
-    description: string;
-    total?: string;
-    image: string;
-  };
-  ts?: {
-    eligible: boolean;
-    returned: boolean;
-    total?: string;
-    dates: string[];
-  };
-  tree?: {
-    by: string;
-    total: string;
-    image: string;
-  };
-  location?: {
-    by: string;
-    description?: string;
-    image: string;
-  };
+  icon?: string;
   emote?: {
     icon: string;
     level: Level[];
@@ -157,8 +136,39 @@ export interface SpiritsData {
     icon: string;
     level: Level[];
   };
-  cosmetics?: any;
 }
+
+export interface SeasonalSpiritData extends BaseSpiritData {
+  type: "Seasonal Spirit";
+  season: string;
+  current?: boolean;
+  ts: {
+    eligible: boolean;
+    returned: boolean;
+    total?: string;
+    dates: string[];
+  };
+  tree?: {
+    by: string;
+    total: string;
+    image: string;
+  };
+  location?: {
+    by: string;
+    description?: string;
+    image: string;
+  };
+}
+
+export interface RegularSpiritData extends BaseSpiritData {
+  type: "Regular Spirit";
+  main: {
+    description: string;
+    total?: string;
+    image: string;
+  };
+}
+export type SpiritsData = SeasonalSpiritData | RegularSpiritData;
 export interface SpiritItems {
   item: string;
   icon: string;

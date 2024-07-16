@@ -1,4 +1,4 @@
-import type { SpiritsData } from "#libs";
+import { SeasonalSpiritData, seasonsData, type SpiritsData } from "#libs";
 import type { SkyHelper } from "#structures";
 import {
   type APIActionRowComponent,
@@ -39,6 +39,9 @@ const getExpressionBtn = (data: SpiritsData, t: ReturnType<typeof getTranslator>
     )
     .setEmoji(icon)
     .setStyle(ButtonStyle.Primary);
+function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
+  return "ts" in data;
+}
 
 /**
  * Handle Spirit data and interactions
@@ -59,28 +62,34 @@ export class Spirits {
   public getEmbed(): EmbedBuilder {
     const data = this.data;
     const client = this.client;
-    const icon = data.emote?.icon ?? data.call?.icon ?? data.stance?.icon ?? data.action?.icon;
+    const icon =
+      data.emote?.icon ??
+      data.call?.icon ??
+      data.stance?.icon ??
+      data.action?.icon ??
+      data.icon ??
+      "<:spiritIcon:1206501060303130664>";
     const desc = `${this.t("commands.SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
       data.realm
         ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
         : ""
-    }${data.season ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
+    }${isSeasonal(data) && data.season ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
     const embed = new EmbedBuilder()
       .setTitle(`${icon} ${data.name}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`)
       .setDescription(desc)
       .setAuthor({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE") });
-    if (data.ts && !data.current) {
+    if ("ts" in data && !data.current) {
       embed.addFields({
         name: "TS Summary",
         value: !data.ts.eligible
           ? `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
               SEASON:
-                client.emojisMap.get("seasons")![data.season as string] +
+                Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
                 ` **__${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__`,
             })}`
           : data.ts.returned
-            ? `${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length } )}\n${data.ts.dates
+            ? `${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${data.ts.dates
                 .map((date) => {
                   let index;
                   const formatDate = date
@@ -98,7 +107,7 @@ export class Spirits {
       });
     }
 
-    if (data.main) {
+    if (!isSeasonal(data)) {
       embed.addFields({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.CREDIT"), value: " " });
       embed.setImage(`${config.CDN_URL}/${data.main.image}`);
     } else {
@@ -123,7 +132,7 @@ export class Spirits {
   public getButtons(): ActionRowBuilder<ButtonBuilder> {
     const row = new ActionRowBuilder<ButtonBuilder>();
     const data = this.data;
-    if (data.location) row.addComponents(lctnBtn);
+    if (isSeasonal(data) && data.location) row.addComponents(lctnBtn);
     // prettier-ignore
     if (data.emote || data.stance || data.action || data.call) row.addComponents(getExpressionBtn(data, this.t, (data.emote?.icon ?? data.call?.icon ?? data.stance?.icon ?? data.action?.icon) as string));
 
@@ -164,7 +173,10 @@ export class Spirits {
           // Handle Location Button
           case "spirit_location": {
             // prettier-ignore
-            const newRow = ActionRowBuilder.from(reply.components[index] as APIActionRowComponent<APIButtonComponent>) as ActionRowBuilder<ButtonBuilder>;
+            if (!isSeasonal(data)) return;
+            const newRow = ActionRowBuilder.from(
+              reply.components[index] as APIActionRowComponent<APIButtonComponent>,
+            ) as ActionRowBuilder<ButtonBuilder>;
             newRow.components[0] = treeBtn;
             newEmbed.spliceFields(-1, 1, {
               name: this.t("SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
@@ -185,7 +197,10 @@ export class Spirits {
           // Handle Tree Button
           case "spirit_tree": {
             // prettier-ignore
-            const newRow = ActionRowBuilder.from(reply.components[index] as APIActionRowComponent<APIButtonComponent>) as ActionRowBuilder<ButtonBuilder>;
+            if (!isSeasonal(data)) return;
+            const newRow = ActionRowBuilder.from(
+              reply.components[index] as APIActionRowComponent<APIButtonComponent>,
+            ) as ActionRowBuilder<ButtonBuilder>;
             newRow.components[0] = lctnBtn;
             newEmbed.spliceFields(-1, 1, {
               name: data.ts?.returned

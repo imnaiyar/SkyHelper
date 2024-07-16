@@ -1,10 +1,13 @@
 import getTS from "#handlers/getTS";
 import { useTranslations } from "#handlers/useTranslation";
-import { Spirits } from "#libs";
+import { SeasonalSpiritData, seasonsData, Spirits } from "#libs";
 import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs";
 import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 const x = useTranslations;
+function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
+  return "ts" in data;
+}
 export default {
   async execute(interaction, t, client) {
     const ts = await getTS();
@@ -21,6 +24,7 @@ export default {
     const visitingDates = `${time(ts.nextVisit.toDate(), "D")} - ${time(ts.nextVisit.clone().add(3, "days").endOf("day").toDate(), "D")}`;
     if (ts.value) {
       const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
+      if (!isSeasonal(spirit)) return;
       const emote = spirit.emote?.icon ?? spirit.call?.icon ?? spirit.stance?.icon ?? spirit.action?.icon;
       let description = ts.visiting
         ? t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING", {
@@ -35,7 +39,7 @@ export default {
           });
       description += `\n\n**${t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("SPIRITS.REALM_TITLE")}:** ${
         client.emojisMap.get("realms")![spirit.realm!]
-      } ${spirit.realm}\n**${t("SPIRITS.SEASON_TITLE")}:**${client.emojisMap.get("seasons")![spirit.season!]} Season of ${spirit.season!}`;
+      } ${spirit.realm}\n**${t("SPIRITS.SEASON_TITLE")}:**${Object.values(seasonsData).find((v) => v.icon === spirit.season)?.icon} Season of ${spirit.season!}`;
       const embed = new EmbedBuilder()
         .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: ts.spiritImage })
         .setDescription(description)

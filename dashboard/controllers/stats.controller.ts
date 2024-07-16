@@ -2,6 +2,10 @@ import { Controller, Get, Inject } from "@nestjs/common";
 import { SkyHelper as BotService } from "#structures";
 import type { BotStats, SpiritData } from "../types.js";
 import { parseEmoji } from "discord.js";
+import { SeasonalSpiritData, SpiritsData } from "#src/libs/types";
+function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
+  return "ts" in data;
+}
 @Controller("/stats")
 export class StatsController {
   // eslint-disable-next-line
@@ -24,7 +28,7 @@ export class StatsController {
   async getSpirits(): Promise<SpiritData[]> {
     const spirits = this.bot.spiritsData;
     const toReturn = Object.entries(spirits)
-      .filter(([, v]) => v.season)
+      .filter(([, v]) => isSeasonal(v) && v.season)
       .map(([k, v]) => {
         const emoji = v.call || v.emote || v.action || v.stance;
         const id = emoji && parseEmoji(emoji.icon)?.id;

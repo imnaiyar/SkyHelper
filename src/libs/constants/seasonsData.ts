@@ -12,11 +12,16 @@ export interface SeasonData {
 }
 
 export default {
+  duet: {
+    name: "Duet",
+    icon: "<:SODuet:1262310944332189768>",
+    active: true,
+    from: ["15-07-2024", "29-09-2024"],
+  },
   nesting: {
     name: "Nesting",
     realm: "Aviary Village",
     icon: "<:SONesting:1229963758680670291>",
-    active: true,
     from: ["15-04-2024", "30-06-2024"],
     quests: [
       {

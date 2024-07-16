@@ -224,7 +224,7 @@ export default <Record<string, SpiritsData>>{
   },
   laughing_light_catcher: {
     name: "Laughing Light Catcher",
-    type: "Regular Spirits",
+    type: "Regular Spirit",
     realm: "Daylight Prairie",
     main: {
       description: "Laughing Light Catcher Infographics by Ed.7",
@@ -980,13 +980,99 @@ export default <Record<string, SpiritsData>>{
     },
   },
   // Seasonal
+
+  // duet
+  cellistB: {
+    name: "The Cellist's Beggining",
+    icon: "<:CellistB:1262326135216406559>",
+    type: "Seasonal Spirit",
+    season: "Duet",
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "@tea11",
+      total: " ",
+      image: "duet-tree.jpg",
+    },
+    cosmetics: [{}],
+  },
+  pianistB: {
+    name: "The Pianists's Beggining",
+    icon: "<:PianistB:1262326115024769107>",
+    type: "Seasonal Spirit",
+    season: "Duet",
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "@tea11",
+      total: " ",
+      image: "duet-tree.jpg",
+    },
+    cosmetics: [{}],
+  },
+  musician_legacy: {
+    name: "The Musician's Legacy",
+    icon: "<:MusicianL:1262326097341714514>",
+    type: "Seasonal Spirit",
+    season: "Duet",
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "@tea11",
+      total: " ",
+      image: "duet-tree.jpg",
+    },
+    cosmetics: [{}],
+  },
+  cellistF: {
+    name: "The Cellist's Flourishing",
+    icon: "<:CellistF:1262326155508318380>",
+    type: "Seasonal Spirit",
+    season: "Duet",
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "@tea11",
+      total: " ",
+      image: "duet-tree.jpg",
+    },
+    cosmetics: [{}],
+  },
+  pianistF: {
+    name: "The Cellist's Flourishing",
+    icon: "<:PianistF:1262326075380334623>",
+    type: "Seasonal Spirit",
+    season: "Duet",
+    ts: {
+      eligible: false,
+      returned: false,
+      dates: [],
+    },
+    tree: {
+      by: "@tea11",
+      total: " ",
+      image: "duet-tree.jpg",
+    },
+    cosmetics: [{}],
+  },
   // nesting
   solarium: {
     name: "Nesting Solarium",
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Nesting",
-    current: true,
     ts: {
       eligible: false,
       returned: false,
@@ -1005,7 +1091,6 @@ export default <Record<string, SpiritsData>>{
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Nesting",
-    current: true,
     ts: {
       eligible: false,
       returned: false,
@@ -1024,7 +1109,6 @@ export default <Record<string, SpiritsData>>{
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Nesting",
-    current: true,
     ts: {
       eligible: false,
       returned: false,
@@ -1043,7 +1127,6 @@ export default <Record<string, SpiritsData>>{
     type: "Seasonal Spirit",
     realm: "Aviary Village",
     season: "Nesting",
-    current: true,
     ts: {
       eligible: false,
       returned: false,

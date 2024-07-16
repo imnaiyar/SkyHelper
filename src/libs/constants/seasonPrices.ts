@@ -19,7 +19,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 14 },
       { item: "Hair", icon: "<:PianistBHair:1262322985134461029>", price: 20 },
       { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 24 },
-      { item: "Small Blue Rug", icon: "<:SmallBlueRug:1262322964062277666>", price: 30},
+      { item: "Small Blue Rug", icon: "<:SmallBlueRug:1262322964062277666>", price: 30 },
       { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
     ],
   },
@@ -45,7 +45,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
   "The Pianist's Flourishing": {
     icon: "<:PianistF:1262326075380334623>",
     cosmetics: [
-      { item: "Blessing Nodes", icon: "<:BlessingNode:1238570665267691602>", price: 14 },
+      { item: "Blessing Nodes", icon: "<:BlessingNode:1238570665267691602>", price: 12 },
       { item: "Shoes", icon: "<:PianistFShoes:1262324120532549692>", price: 22 },
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 26 },
       { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
@@ -59,5 +59,5 @@ export const SeasonData = {
   start: "15-07-2024",
   end: "29-09-2024",
   duration: 77,
-  spiritsUpdated: true
+  spiritsUpdated: true,
 } as const;

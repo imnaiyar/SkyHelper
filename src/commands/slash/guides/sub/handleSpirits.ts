@@ -1,5 +1,5 @@
 import type { SeasonData } from "#libs/constants/seasonsData";
-import { Spirits } from "#libs";
+import { Spirits, SpiritsData, SeasonalSpiritData } from "#libs";
 import type { SkyHelper } from "#structures";
 import {
   ActionRowBuilder,
@@ -9,11 +9,17 @@ import {
   StringSelectMenuInteraction,
   type ChatInputCommandInteraction,
 } from "discord.js";
+
+function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
+  return "ts" in data;
+}
 export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRealm: SeasonData | string) {
   const client = int.client as SkyHelper;
   const t = await int.t();
   const spirits = Object.entries(client.spiritsData).filter(([, v]) => {
-    if (typeof seasonOrRealm !== "string") return v.season && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
+    if (typeof seasonOrRealm !== "string") {
+      return isSeasonal(v) && v.season && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
+    }
     return v.realm && v.realm.toLowerCase() === seasonOrRealm.toLowerCase();
   });
   let value = spirits[0][0];
@@ -29,7 +35,8 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
           spirits.map(([k, v]) => ({
             label: v.name,
             value: k.toString(),
-            emoji: v.action?.icon || v.call?.icon || v.emote?.icon || v.stance?.icon || (seasonOrRealm as SeasonData).icon,
+            emoji:
+              v.action?.icon || v.call?.icon || v.emote?.icon || v.stance?.icon || v.icon || (seasonOrRealm as SeasonData).icon,
             default: value === k,
           })),
         ),
