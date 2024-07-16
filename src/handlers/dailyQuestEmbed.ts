@@ -29,7 +29,8 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
     moment()
       .tz("America/Los_Angeles")
       .startOf("day")
-      .isSame(moment.tz(data.seasonal_candles.date, "America/Los_Angeles").startOf("day"));
+      .isSame(moment.tz(data.seasonal_candles.date, "America/Los_Angeles").startOf("day")) ? false : true;
+  
   const nextBtn = new ButtonBuilder()
     .setCustomId("daily-quests-next_" + (index + 1))
     .setLabel(index === total - 1 ? `Quest ${total}` : `Quest ${index + 2}` + " ▶️")
@@ -47,7 +48,7 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
   const seasonalBtn = new ButtonBuilder()
     .setCustomId("daily-quests-candles_seasonal")
     .setLabel("Seasonal Candles")
-    .setDisabled(disabledSe === undefined ? true : disabledSe)
+    .setDisabled(disabledSe)
     .setStyle(ButtonStyle.Success);
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(prevBtn, nextBtn, rotatingBtn);
   if (rotating_candles) row.addComponents(seasonalBtn);
