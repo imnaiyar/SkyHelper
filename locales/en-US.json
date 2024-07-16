@@ -236,7 +236,7 @@
           "SEASON": "**Season**: Season of {{SEASON}}",
           "FIELDS": {
             "SUMMARY_TITLE": "TS Summary",
-            "SUMMARY_DESC_NO_ELIGIBLE": "This spirit is not eligible to return as a TS yet, and will become eligible when the season after the ${{SEASON}} ends!",
+            "SUMMARY_DESC_NO_ELIGIBLE": "This spirit is not eligible to return as a TS yet, and will become eligible when the season after the {{SEASON}} ends!",
             "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}\n__Returned Dates__",
             "SUMMARY_DESC_NO_VISIT": "This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree."
           },
