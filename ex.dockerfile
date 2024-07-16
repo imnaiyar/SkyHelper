@@ -4,6 +4,7 @@ WORKDIR /root/skyhelper
 COPY ["package.json", "package-lock.json*"]
 
 # SECRETS
+ENV NODE_ENV=
 ENV TOKEN=
 ENV MONGO_CONNECTION=
 ENV TOPGG_TOKEN=

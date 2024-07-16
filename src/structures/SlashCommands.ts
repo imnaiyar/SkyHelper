@@ -29,6 +29,9 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
   /* Whether or not the command is owner only */
   ownerOnly?: boolean;
 
+  /* Whether the command should be skipped deploying */
+  skipDeploy?: boolean;
+
   /* Command cooldown */
   cooldown?: number;
 
