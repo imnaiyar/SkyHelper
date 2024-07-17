@@ -127,6 +127,7 @@
     "EDEN_RESET": "आई ऑफ ईडन अभी-अभी रीसेट हो चुका है, statues सारे रीसेट हो चुके है और इन्हें ACs के लिए फिर से save किए जा सकते है!",
     "DAILY_RESET": "स्काई की दुनिया रीसेट हो गई है और सारे quests रिफ्रेश हो गई है!",
     "TITLE": "{{TYPE}} रिमाइंडर",
+    "DAILY_QUESTS": "Daily Quests",
     "ERROR": "यह लगता है सही से काम नहीं कर रहा है",
     "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा"
   },
@@ -397,7 +398,8 @@
       "RESPONSES": {
         "NOT_ACTIVE": "अभी कोई भी सीजन एक्टिव नहीं है। कृपया जब कोई सीजन एक्टिव हो तब ये कमांड इस्तेमाल करें",
         "EMBED_DESCRIPTION": "**सीजन पास**: {{PASS}}\n**डेलीज**: {{DAILIES}}\n**जरूरी करेंसी**: {{REQUIRED}} कैंडल्स\n**पूरा पॉसिबल कैंडल्स**: {{OBTAINABLE}} कैंडल्स\n**कंपलीट करने में दिन**: {{DAYS}} दिन {{POSSIBLE}}\n**सीजन खत्म होने के बाद बच्चे हुए कैंडल्स**: {{REMAINING}} कैंडल्स",
-        "ENDS_IN": "{{DAYS}} दिन में खत्म होगा"
+        "ENDS_IN": "{{DAYS}} दिन में खत्म होगा",
+        "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
       }
     },
     "HELP": {
@@ -511,6 +513,16 @@
           "SUCCESS_REMOVED": "{{LANGUAGE}} को {{CATEGORY}} से हटा दिया गया है!"
         }
       }
+    },
+    "DAILY_QUESTS": {
+      "name": "daily-quests",
+      "description": "get the daily quests",
+      "RESPONSES": {
+        "NO_DATA": "No data found for today's daily quests. Please try again later.\n-# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated",
+        "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
+        "EMBED_AUTHOR": "Daily Quests",
+        "EMBED_DESCRIPTION": "Daily quests for today"
+      }
     }
   },
   "buttons": {
@@ -552,4 +564,3 @@
     }
   }
 }
-
