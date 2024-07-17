@@ -165,6 +165,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
       await int.deferReply({ ephemeral: true });
       const ts = await int.t();
       await int.editReply(ts("common.errors.NOT-ALLOWED"));
+      return;
     }
     try {
       await int.deferReply({ ephemeral: true });
