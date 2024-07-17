@@ -19,7 +19,7 @@ export default async (message: Message) => {
     ?.match(titleRegex)?.[0]
     .replaceAll(/<a?:\w+:\d+>/g, "")
     .replaceAll(/[*_~]/g, "")
-    .trim();
+    .trim() || "[Quest Title Error]: Unknown";
   const credit = creditRegex.exec(message.content)?.[0].slice(3);
   const images = message.attachments.map((attachment) => attachment.url);
   const data = await client.database.getDailyQuests();
