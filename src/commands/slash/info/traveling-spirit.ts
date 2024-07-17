@@ -1,13 +1,11 @@
 import getTS from "#handlers/getTS";
 import { useTranslations } from "#handlers/useTranslation";
-import { SeasonalSpiritData, seasonsData, Spirits } from "#libs";
+import { seasonsData, Spirits } from "#libs";
 import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs";
 import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 const x = useTranslations;
-function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
-  return "ts" in data;
-}
+const isSeasonal = (data: SpiritsData) => "ts" in data;
 export default {
   async execute(interaction, t, client) {
     const ts = await getTS();

@@ -31,7 +31,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
     const quest = quests[page - 1];
     const emojiUrl = int.client.emojis.cache.get(discordJs.parseEmoji(season.icon)!.id!)?.imageURL();
     const embed = new discordJs.EmbedBuilder()
-      .setAuthor({ name: t("commands.GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { EASON: season.name }), iconURL: emojiUrl })
+      .setAuthor({ name: t("commands.GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { SEASON: season.name }), iconURL: emojiUrl })
       .setTitle(`${season.icon} ${quest.title}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name}#${quest.title.split(" ").join("_")}`)
       .setFooter({ text: "SkyHelper", iconURL: int.client.user.displayAvatarURL() });

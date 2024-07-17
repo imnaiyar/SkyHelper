@@ -3,6 +3,7 @@ import { SkyHelper as BotService } from "#structures";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import type { EventData, TSData } from "../types.js";
 import { formatDate, parseDate } from "../utils/formatDate.js";
+import { DailyQuestsSchema } from "#src/database/index";
 @Controller("/update")
 export class UpdateController {
   // @ts-ignore
@@ -61,5 +62,11 @@ export class UpdateController {
     Object.assign(data, values);
     await data.save();
     return body;
+  }
+  // TODO
+  @Get("quests")
+  async getQuests(): Promise<DailyQuestsSchema> {
+    const data = await this.bot.database.getDailyQuests();
+    return data;
   }
 }

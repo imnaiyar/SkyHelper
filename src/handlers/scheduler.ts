@@ -1,9 +1,9 @@
 import { Jobs } from "#libs";
 import { eventSchedules, reminderSchedules } from "#handlers";
 import type { SkyHelper } from "#structures";
-
+import { ScheduleOptions } from "node-cron";
 export default (client: SkyHelper) => {
-  const options = {
+  const options: ScheduleOptions = {
     timezone: client.timezone,
   };
 
@@ -17,7 +17,10 @@ export default (client: SkyHelper) => {
         client.logger.error("AutoShard:", err);
       }
     },
-    options,
+    options: {
+      ...options,
+      name: "Shards Job",
+    },
   });
 
   // SkyTimes
@@ -30,7 +33,10 @@ export default (client: SkyHelper) => {
         client.logger.error("AutoTimes:", err);
       }
     },
-    options,
+    options: {
+      ...options,
+      name: "SkyTimes Job",
+    },
   });
 
   // reminders
@@ -46,7 +52,10 @@ export default (client: SkyHelper) => {
           client.logger.error(`${type} Reminder Error: `, err);
         }
       },
-      options,
+      options: {
+        ...options,
+        name: "Reminders (Common) Job",
+      },
     });
   }
 
@@ -60,10 +69,13 @@ export default (client: SkyHelper) => {
         client.logger.error(`"reset" Reminder Error: `, err);
       }
     },
-    options,
+    options: {
+      ...options,
+      name: "Reset Reminder Job",
+    },
   });
 
-  // Edeb Reminders
+  // Eden Reminders
   new Jobs({
     interval: "0 0 * * 0",
     async callback() {
@@ -73,6 +85,9 @@ export default (client: SkyHelper) => {
         client.logger.error(`"eden" Reminder Error: `, err);
       }
     },
-    options,
+    options: {
+      ...options,
+      name: "Eden Job",
+    },
   });
 };

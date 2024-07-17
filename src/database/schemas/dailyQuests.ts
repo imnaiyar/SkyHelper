@@ -25,7 +25,7 @@ const Schema = new mongoose.Schema<DailyQuestsSchema>({
   last_message: String,
   last_updated: String,
   rotating_candles: questSchema,
-  seasonal_candles: questSchema
+  seasonal_candles: questSchema,
 });
 
 const Model = mongoose.model<DailyQuestsSchema>("quests", Schema);
