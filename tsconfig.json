@@ -40,6 +40,6 @@
       "#libs": ["./src/libs/index.js"]
     }
   },
-  "include": ["src", "dashboard"],
-  "exclude": ["node_modules", "__tests__"]
+  "include": ["src", "dashboard", "__tests__"],
+  "exclude": ["node_modules"]
 }

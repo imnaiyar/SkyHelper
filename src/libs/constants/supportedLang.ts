@@ -14,4 +14,9 @@ export const supportedLang = [
     value: "ru",
     flag: "🇷🇺",
   },
+  {
+    name: "Japanese (日本語)",
+    value: "ja",
+    flag: "🇯🇵",
+  },
 ] as const;
