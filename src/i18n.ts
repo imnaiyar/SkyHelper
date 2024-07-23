@@ -19,11 +19,11 @@ await i18next.use(Backend).init({
     escapeValue: false,
   },
   returnEmptyString: false,
-  preload: ["en-US", "hi", "ru"],
-  supportedLngs: ["en-US", "hi", "ru"],
+  preload: ["en-US", "hi", "ru", "ja"],
+  supportedLngs: ["en-US", "hi", "ru", "ja"],
   saveMissing: true,
   missingKeyHandler: (_lngs, _ns, _key, _fallbackValue) => {
-         throw new Error(`Translation key invalid: ${_key}`); 
+    throw new Error(`Translation key invalid: ${_key}`);
   },
 });
 export const getTranslator =

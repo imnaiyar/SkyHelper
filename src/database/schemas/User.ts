@@ -5,6 +5,7 @@ import { type User, LimitedCollection } from "discord.js";
 interface UserSchema extends Document {
   _id: string;
   data: {
+    id: string;
     username: string;
     createdAt: Date;
   };
@@ -20,6 +21,7 @@ const cache = new LimitedCollection<string, UserSchema>({ maxSize: config.CACHE_
 const Schema = new mongoose.Schema<UserSchema>({
   _id: String,
   data: {
+    id: String,
     username: String,
     createdAt: Date,
   },
@@ -46,6 +48,7 @@ export async function getUser(user: User): Promise<UserSchema> {
     userData = new Model({
       _id: user.id,
       data: {
+        id: user.id,
         username: user.username,
         createdAt: user.createdAt,
       },
