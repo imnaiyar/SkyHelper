@@ -35,9 +35,7 @@ await initializeMongoose();
 console.log(chalk.blueBright("\n\n<------------------------ Dashboard --------------------------->\n"));
 if (client.config.DASHBOARD.enabled) Dashboard(client);
 // Catching unhandle rejections
-process.on("unhandledRejection", (err) => {
-  client.logger.error(err);
-});
-process.on("uncaughtException", (err) => client.logger.error(err));
+process.on("unhandledRejection", client.logger.error);
+process.on("uncaughtException", client.logger.error);
 // Login
 client.login(process.env.TOKEN);

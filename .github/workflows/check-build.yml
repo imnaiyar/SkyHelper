@@ -2,7 +2,12 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "dashboard/**"
+      - "locales/**"
   pull_request:
 
 jobs:
