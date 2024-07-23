@@ -82,9 +82,9 @@ export default {
       }
     }
     if (sub === "remove") {
-      const settings = await client.database.getSettings(interaction.guild!);
+      const settings = type === "server" ? await client.database.getSettings(interaction.guild!) : null;
       const user_settings = await client.database.getUser(interaction.user);
-      const lang = (type === "server" ? settings : user_settings)["language"];
+      const lang = (type === "server" ? settings! : user_settings)["language"];
       const formattedLang = lang && `${lang.name} (${lang.flag} ${lang.value})`;
       if (!lang?.value) {
         return void (await interaction.followUp(
@@ -95,9 +95,9 @@ export default {
       }
       switch (type) {
         case "server": {
-          settings.language = undefined;
+          settings!.language = undefined;
           const ts = getTranslator(user_settings.language?.value ?? "en-US");
-          await settings.save();
+          await settings!.save();
           return void (await interaction.followUp(
             ts("commands.LANGUAGE.options.RESPONSES.SUCCESS_REMOVED", {
               LANGUAGE: formattedLang,
@@ -107,7 +107,7 @@ export default {
         }
         case "user": {
           user_settings.language = undefined;
-          const ts = getTranslator(settings.language?.value ?? "en-US");
+          const ts = getTranslator(settings?.language?.value ?? "en-US");
           await user_settings.save();
           return void (await interaction.followUp(
             ts("commands.LANGUAGE.options.RESPONSES.SUCCESS_REMOVED", {
