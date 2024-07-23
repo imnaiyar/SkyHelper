@@ -1,11 +1,10 @@
 #!/bin/bash
 
-COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-
-if [[ $COMMIT_MESSAGE =~ "docs:" ]]; then
-  echo "Deploy keyword found in commit message. Proceeding with deployment."
-  exit 1  
+# Check for changes in the ./docs folder between the previous commit and the current commit
+if git diff HEAD^ HEAD --quiet -- .; then
+  echo "No changes in the docs folder. Skipping deployment."
+  exit 0
 else
-  echo "Deploy keyword not found in commit message. Skipping deployment."
-  exit 0  
+  echo "Changes found in the docs folder. Proceeding with deployment."
+  exit 1
 fi
