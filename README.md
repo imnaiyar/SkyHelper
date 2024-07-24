@@ -1,4 +1,5 @@
 ### Progress
+
 [![Crowdin](https://badges.crowdin.net/skyhelper/localized.svg)](https://crowdin.com/project/skyhelper)
 
 <h1 align="center">
@@ -10,7 +11,8 @@
 </h1>
 
 <p align="center">A Sky COTL Discord Bot</p>
-<p align="center"><img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/github/stars/imnaiyar/SkyHelper"/> <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper"> <img alt="GitHub License" src="https://img.shields.io/github/license/imnaiyar/SkyHelper">
+<p align="center"><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/> <br />
+ <img src="https://img.shields.io/github/stars/imnaiyar/SkyHelper"/> <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper"> <img alt="GitHub License" src="https://img.shields.io/github/license/imnaiyar/SkyHelper">
  <img alt="GitHub package.json dependency version (subfolder of monorepo)" src="https://img.shields.io/github/package-json/dependency-version/imnaiyar/SkyHelper/discord.js">
  <a href="https://github.com/imnaiyar/skyhelper/actions"><img src="https://github.com/imnaiyar/skyhelper/actions/workflows/test.yml/badge.svg" alt="Tests status" /></a>
  <a href="https://github.com/imnaiyar/skyhelper/actions"><img src="https://github.com/imnaiyar/skyhelper/actions/workflows/check-build.yml/badge.svg" alt="Build status" /></a>
@@ -34,6 +36,7 @@
 <br>
 
 ### Features
+
 - 🌋 Shards
 - 🗓 Shards calendar
 - 🧮 Seasonal currency calculator
@@ -42,7 +45,6 @@
 - 🟢 Live Updates
 - 🈯️ Supports mulitple language ([help us](https://docs.skyhelper.xyz/pages/translating) support more)
 - and much more...
-
 
 ## Building the bot
 
