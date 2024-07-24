@@ -11,12 +11,13 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
       name: `Daily Quests (${index + 1}/${total})`,
       iconURL: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/72/Quest-icon.png",
     })
+    .setDescription(
+      `${quest.images[0].by ? `© ${quest.images[0].by}` : ""}\n${quest.images[0].source ? `Source: ${quest.images[0].source}` : ""}`,
+    )
     .setTitle(quest.title)
     .setFooter({ text: `Page ${index + 1}/${total}` });
   if (quest.images.length) embed.setImage(quest.images[0].url);
 
-  // prettier-ignore
-  if (quest.description) embed.setDescription(`© ${quest.images[0].by}\n${quest.images[0].source ? `Source: ${quest.images[0].source}` : ""}`);
   const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder().setCustomId("daily_quests_select").addOptions(
       quests.map((q, i) => ({
