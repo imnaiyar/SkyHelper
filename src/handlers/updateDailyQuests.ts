@@ -37,7 +37,7 @@ export default async (message: Message) => {
       source,
     })),
   };
-  console.log(guide);
+
   if (message.content.includes("Rotating Treasure Candle Locations")) data.rotating_candles = guide;
   else if (message.content.includes("Seasonal Candle Locations")) data.seasonal_candles = guide;
   else if (message.content.includes("by")) data.quests.push(guide);
