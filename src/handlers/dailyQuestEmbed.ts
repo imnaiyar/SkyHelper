@@ -14,7 +14,9 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
     .setTitle(quest.title)
     .setFooter({ text: `Page ${index + 1}/${total}` });
   if (quest.images.length) embed.setImage(quest.images[0].url);
-  if (quest.description) embed.setDescription(quest.description);
+
+  // prettier-ignore
+  if (quest.description) embed.setDescription(`© ${quest.images[0].by}\n${quest.images[0].source ? `Source: ${quest.images[0].source}` : ""}`);
   const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder().setCustomId("daily_quests_select").addOptions(
       quests.map((q, i) => ({
@@ -29,8 +31,10 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
     moment()
       .tz("America/Los_Angeles")
       .startOf("day")
-      .isSame(moment.tz(data.seasonal_candles.date, "America/Los_Angeles").startOf("day")) ? false : true;
-  
+      .isSame(moment.tz(data.seasonal_candles.date, "America/Los_Angeles").startOf("day"))
+      ? false
+      : true;
+
   const nextBtn = new ButtonBuilder()
     .setCustomId("daily-quests-next_" + (index + 1))
     .setLabel(index === total - 1 ? `Quest ${total}` : `Quest ${index + 2}` + " ▶️")
