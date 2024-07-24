@@ -251,6 +251,10 @@ export interface DailyQuest {
   /* Image guide for the quest (if any) */
   images: {
     url: string;
+
+    /* Credit for the guide */
     by: string;
+    /* Source of the guide */
+    source?: string;
   }[];
 }

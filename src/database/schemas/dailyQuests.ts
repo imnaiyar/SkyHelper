@@ -16,6 +16,7 @@ const questSchema = {
     {
       url: String,
       by: String,
+      source: String,
     },
   ],
 };
