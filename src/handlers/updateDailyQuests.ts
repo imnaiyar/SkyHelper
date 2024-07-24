@@ -24,8 +24,7 @@ export default async (message: Message) => {
       .match(titleRegex)?.[0]
       .replaceAll(/[*_~]/g, "")
       .trim() || "[Quest Title Error]: Unknown";
-  const credit = creditRegex.exec(message.content.replaceAll(linkRegex, ""))?.[0].slice(3);
-
+  const credit = message.content.replaceAll(linkRegex, "").trim().match(creditRegex)?.[0].slice(3);
   const source = linkRegex.exec(message.content)?.[0];
   const images = message.attachments.map((attachment) => attachment.url);
   const data = await client.database.getDailyQuests();
@@ -38,6 +37,7 @@ export default async (message: Message) => {
       source,
     })),
   };
+  console.log(guide);
   if (message.content.includes("Rotating Treasure Candle Locations")) data.rotating_candles = guide;
   else if (message.content.includes("Seasonal Candle Locations")) data.seasonal_candles = guide;
   else if (message.content.includes("by")) data.quests.push(guide);
