@@ -15,7 +15,7 @@ async function sendWebhook(id: string, content: any, err?: any): Promise<void> {
     name: "Description",
     value: `${content?.message || content || err?.message || "NA"}`,
   });
-  const fullErr = await postToHaste(util.inspect(err ?? content, { depth: null }));
+  const fullErr = await postToHaste(util.inspect(err ?? content, { depth: null })).catch(() => {});
   webhookLogger
     ?.send({ username: "Error Log", avatarURL: config.BOT_ICON, embeds: [embed], content: `Error ID: \`${id}\`\n${fullErr}` })
     .catch(() => {});
