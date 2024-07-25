@@ -18,10 +18,10 @@ export default {
     const now = moment().tz(client.timezone).startOf("day");
     const last_updated = moment.tz(data.last_updated, client.timezone).startOf("day");
     if (!data.last_updated || !now.isSame(last_updated) || !data.quests.length) {
-      return void (await interaction.followUp(t("commands.DAILY_QUESTS.RESPONSES.NO_DATA")));
+      return void (await interaction.editReply(t("commands.DAILY_QUESTS.RESPONSES.NO_DATA")));
     }
     const response = dailyQuestEmbed(data, 0);
-    const m = await interaction.followUp(response);
+    const m = await interaction.editReply(response);
     const collector = m.createMessageComponentCollector({ idle: 90_000 });
     collector.on("end", async () => {
       const components = m.components.map((row) => {
