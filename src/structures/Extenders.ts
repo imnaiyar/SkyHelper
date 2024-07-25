@@ -22,9 +22,9 @@ Message.prototype.t = async function() {
 };
 
 // TODO: Remove this when djs fixes this issue
-Object.defineProperty(PartialGroupDMChannel, "messages", {
+Object.defineProperty(PartialGroupDMChannel.prototype, "messages", {
   // prettier-ignore
-  get: function() {
+  get() {
     if (!this._messages) {
       // @ts-ignore
       this._messages = new DMMessageManager(this);
