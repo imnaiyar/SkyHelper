@@ -1,4 +1,4 @@
-import { BaseInteraction, Message } from "discord.js";
+import { BaseInteraction, DMMessageManager, Message, PartialGroupDMChannel } from "discord.js";
 import { getTranslator } from "#src/i18n";
 import { getSettings, getUser } from "#src/database/index";
 /* prettier-ignore */
@@ -20,3 +20,15 @@ Message.prototype.t = async function() {
   const uSettings = await getUser(user);
   return getTranslator(uSettings.language?.value || gSettings?.language?.value || "en-US");
 };
+
+// TODO: Remove this when djs fixes this issue
+Object.defineProperty(PartialGroupDMChannel, "messages", {
+  // prettier-ignore
+  get: function() {
+    if (!this._messages) {
+      // @ts-ignore
+      this._messages = new DMMessageManager(this);
+    }
+    return this._messages;
+  },
+});
