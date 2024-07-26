@@ -27,7 +27,7 @@ export default {
       {
         title: "Quest #1",
         description:
-          "Season is currently active.\n- **Start Date**: <t:1713164400:F>\n- **End Date**: <t:1719817140:F>\n- **Duration**: 77 Days\n\n```Relevant Links```\n- **Season of Nesting Price Calculations by Stoat** https://discord.com/channels/575762611111592007/575827924343848960/1229396846313738300\n\n```Quest #1 by theprincessraoni0713```",
+          "```Relevant Links```\n- **Season of Nesting Price Calculations by Stoat** https://discord.com/channels/575762611111592007/575827924343848960/1229396846313738300\n\n```Quest #1 by theprincessraoni0713```",
         image: "https://cdn.imnaiyar.site/Nesting_Quest_1_theprincessraoni0713.gif",
       },
     ],
