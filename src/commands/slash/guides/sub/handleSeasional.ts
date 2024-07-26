@@ -24,7 +24,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
   const quests = season.quests;
   const now = moment().tz(int.client.timezone).startOf("day");
   const start = moment.tz(season.from[0], "DD-MM-YYYY", int.client.timezone).startOf("day");
-  const end = moment.tz(season.from[1], "DD-MM-YYYY", int.client.timezone).startOf("day");
+  const end = moment.tz(season.from[1], "DD-MM-YYYY", int.client.timezone).endOf("day");
   const isActive = now.isSameOrAfter(start) && now.isSameOrBefore(end);
 
   const t = await int.t();
@@ -44,7 +44,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
     if (quest.description) {
       embed.setDescription(
         (isActive
-          ? `Season is currently active.\n- **Start Date**: ${discordJs.time(start.toDate(), "F")} (${discordJs.time(start.toDate(), "R")})\n- **End Date:** ${discordJs.time(end.toDate(), "F")} (${discordJs.time(end.toDate(), "R")})\n- **Duration**: ${end.diff(start, "days", true) + 1} days`
+          ? `Season is currently active.\n- **Start Date**: ${discordJs.time(start.toDate(), "F")} (${discordJs.time(start.toDate(), "R")})\n- **End Date:** ${discordJs.time(end.toDate(), "F")} (${discordJs.time(end.toDate(), "R")})\n- **Duration**: ${end.diff(start, "days", true)} days`
           : "") + quest.description,
       );
     }
