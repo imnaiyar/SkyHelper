@@ -17,6 +17,13 @@ export default {
     icon: "<:SODuet:1262310944332189768>",
     active: true,
     from: ["15-07-2024", "29-09-2024"],
+    quests: [
+      {
+        title: "Quest #1",
+        description:
+          "```Quest 1 by theprincessraoni0713```\n Video Guide: [Here](https://cdn.discordapp.com/attachments/1262378539907547178/1264926477896519771/RPReplay_Final1721623591.mov?ex=66a44355&is=66a2f1d5&hm=d43954e456e7dcc61d6091eaeb96d5209dd02a260c8c3e66af2e3c00625dfc0f&)",
+      },
+    ],
   },
   nesting: {
     name: "Nesting",

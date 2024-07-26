@@ -2,6 +2,7 @@ import { seasonsData } from "#libs";
 import type { SeasonData } from "#libs/constants/seasonsData";
 import * as discordJs from "discord.js";
 import { handleSpirits } from "./handleSpirits.js";
+import moment from "moment";
 
 export async function handleSeasional(interaction: discordJs.ChatInputCommandInteraction) {
   const value = interaction.options.getString("season")!;
@@ -21,8 +22,13 @@ export async function handleSeasional(interaction: discordJs.ChatInputCommandInt
 
 async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: SeasonData) {
   const quests = season.quests;
+  const now = moment().tz(int.client.timezone).startOf("day");
+  const start = moment.tz(season.from[0], "DD-MM-YYYY", int.client.timezone).startOf("day");
+  const end = moment.tz(season.from[1], "DD-MM-YYYY", int.client.timezone).startOf("day");
+  const isActive = now.isSameOrAfter(start) && now.isSameOrBefore(end);
+
   const t = await int.t();
-  if (!quests) {
+  if (!quests?.length) {
     return void int.editReply({ content: t("commands.GUIDES.RESPONSES.NO_QUEST", { SEASON: `${season.icon} ${season.name}` }) });
   }
   const total = quests.length;
@@ -35,7 +41,13 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
       .setTitle(`${season.icon} ${quest.title}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name}#${quest.title.split(" ").join("_")}`)
       .setFooter({ text: "SkyHelper", iconURL: int.client.user.displayAvatarURL() });
-    if (quest.description) embed.setDescription(quest.description);
+    if (quest.description) {
+      embed.setDescription(
+        (isActive
+          ? `Season is currently active.\n- **Start Date**: ${discordJs.time(start.toDate(), "F")} (${discordJs.time(start.toDate(), "R")})\n- **End Date:** ${discordJs.time(end.toDate(), "F")} (${discordJs.time(end.toDate(), "R")})\n- **Duration**: ${end.diff(start, "days", true) + 1} days`
+          : "") + quest.description,
+      );
+    }
     if (quest.image) embed.setImage(quest.image);
     const select = new discordJs.ActionRowBuilder<discordJs.StringSelectMenuBuilder>().addComponents(
       new discordJs.StringSelectMenuBuilder()
