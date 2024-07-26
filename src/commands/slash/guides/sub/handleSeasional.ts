@@ -44,7 +44,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
     if (quest.description) {
       embed.setDescription(
         (isActive
-          ? `Season is currently active.\n- **Start Date**: ${discordJs.time(start.toDate(), "F")} (${discordJs.time(start.toDate(), "R")})\n- **End Date:** ${discordJs.time(end.toDate(), "F")} (${discordJs.time(end.toDate(), "R")})\n- **Duration**: ${end.diff(start, "days", true)} days`
+          ? `Season is currently active.\n- **Start Date**: ${discordJs.time(start.toDate(), "F")} (${discordJs.time(start.toDate(), "R")})\n- **End Date:** ${discordJs.time(end.toDate(), "F")} (${discordJs.time(end.toDate(), "R")})\n- **Duration**: ${end.diff(start, "days", false)} days`
           : "") + quest.description,
       );
     }
