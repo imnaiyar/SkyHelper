@@ -54,7 +54,7 @@
 git clone https://github.com/imnaiyar/SkyHelper
 ```
 
-- Rename `example.env` to `.env` and fill all the required fields.
+- Rename `example.env` to `.env` and fill all the required fields. (We have CLI to streamline this process. Run `npm run setup` and it'll setup the .env file for you)
 - Install the required deps by running `npm i`
 - Run `npm run build` to build the project
 - Run `npm run commands` to register the slash commands.

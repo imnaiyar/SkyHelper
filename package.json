@@ -19,7 +19,8 @@
     "commands:prod": "node dist/src/libs/registerCommands.js",
     "commands:bun": "bun run src/libs/registerCommands.ts",
     "format": "prettier --write \"**/*.{js,css,ejs, ts}\"",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
+    "setup": "node scripts/env-cli.js"
   },
   "author": "Naiyar Imam",
   "license": "MIT",
