@@ -90,7 +90,7 @@ export default (
                 TIME: time(status.end.unix(), "t"),
               })
             : status.active
-              ? t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", {
+              ? t("shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", {
                   DURATION: status.duration,
                   TIME: time(status.end.unix(), "t"),
                 })

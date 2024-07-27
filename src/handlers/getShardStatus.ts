@@ -23,6 +23,7 @@ export default (date: moment.Moment): ShardsCountdown | "No Shard" => {
   };
   for (let i = 0; i < timings.length; i++) {
     const eventTiming = timings[i];
+    // Active
     if (present.isBetween(eventTiming.start, eventTiming.end)) {
       toReturn = {
         index: i + 1,
@@ -32,6 +33,7 @@ export default (date: moment.Moment): ShardsCountdown | "No Shard" => {
         duration: moment.duration(eventTiming.end.diff(present)).format("d[d] h[h] m[m] s[s]"),
       };
       break;
+      // Yet to fall
     } else if (present.isBefore(eventTiming.start)) {
       toReturn = {
         index: i + 1,
@@ -41,6 +43,7 @@ export default (date: moment.Moment): ShardsCountdown | "No Shard" => {
         duration: moment.duration(eventTiming.start.diff(present)).format("d[d] h[h] m[m] s[s]"),
       };
       break;
+      // All ended
     } else if (i === timings.length - 1 && present.isAfter(eventTiming.end)) {
       toReturn = {
         ended: true,
