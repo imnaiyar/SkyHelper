@@ -96,7 +96,7 @@ export default (
             .map((s, i) => {
               const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
               // prettier-ignore
-              if (s.ended) return prefix + `~~${time(s.start.unix(), "T")} - ${time(s.end.unix(), "t")}~~ (${t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})`;
+              if (s.ended) return prefix + `~~${time(s.start.unix(), "T")} - ${time(s.end.unix(), "t")} (${t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
               // prettier-ignore
               if (s.active) return prefix + `~~${time(s.start.unix(), "T")}~~ - ${time(s.end.unix(), "t")} (${t("shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
               return (
