@@ -78,17 +78,16 @@
       "STATUS": {
         "LABEL": "Status",
         "VALUE": {
-          "ENDED": "All Shards Ended",
-          "ACTIVE": "{{INDEX}} shard is currently active",
-          "EXPECTED": "{{INDEX}} shard has not fallen yet"
+          "ENDED": "All shards ended {{DURATION}} ago",
+          "ACTIVE": "{{INDEX}} shard is currently active and ends in {{DURATION}}",
+          "EXPECTED": "{{INDEX}} shard lands in {{DURATION}}"
         }
       },
       "COUNTDOWN": {
-        "LABEL": "Countdown",
         "VALUE": {
-          "ENDED": "{{DURATION}} ago ( at {{TIME}})",
-          "ACTIVE": "Ends in {{DURATION}} (at {{TIME}})",
-          "EXPECTED": "Falls in {{DURATION}} (at {{TIME}})"
+          "ENDED": "Ended {{DURATION}} ago",
+          "ACTIVE": "Ends in {{DURATION}}",
+          "EXPECTED": "Falls in {{DURATION}}"
         }
       }
     },

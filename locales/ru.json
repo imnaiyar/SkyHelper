@@ -2,7 +2,22 @@
   "common": {
     "bot": {
       "name": "SkyHelper",
-      "intro": "Это я..."
+      "intro": "Это я...",
+      "EMBED_TITLE": "Информация о боте",
+      "TOTAL_SERVER": "Всего серверов",
+      "TOTAL_USERS": "Всего пользователей",
+      "LATENCY": "Задержка",
+      "VERSION": "Версия",
+      "UPTIME": "Время работы",
+      "PING": "Websocket пинг",
+      "GUILD_SETTINGS": "Настройки гильдии",
+      "LANGUAGE": "Язык",
+      "ANNOUNCEMENT_CHANNEL": "Канал объявлений",
+      "NOT_SET": "Нет (вы можете установить его через панель управления бота)",
+      "USER_SETTINGS": "Настройки пользователя",
+      "INVITE": "Пригласить",
+      "SUPPORT": "Сервер поддержки",
+      "DASHBOARD": "Панель управления"
     },
     "NO-WB-PERM-BOT": "У меня нет разрешения `Manage Webhooks` в {{CHANNEL}}. Пожалуйста, убедитесь, что в канале не произошло отмены прав, и если это так, пожалуйста, предоставьте мне необходимые права в указанном канале, прежде чем выполнять команду снова.",
     "SELECT_EXPIRED": "Время действия меню истекло!",
@@ -63,17 +78,16 @@
       "STATUS": {
         "LABEL": "Статус",
         "VALUE": {
-          "ENDED": "Все осколки Закончены",
-          "ACTIVE": "{{INDEX}} Осколок в настоящее время активен",
-          "EXPECTED": "{{INDEX}} Осколок еще не упал"
+          "ENDED": "Все осколки закончились {{DURATION}} назад",
+          "ACTIVE": "{{INDEX}} осколок сейчас активен и закончится через {{DURATION}}",
+          "EXPECTED": "Осколок {{INDEX}} приземлится через {{DURATION}}"
         }
       },
       "COUNTDOWN": {
-        "LABEL": "Обратный отсчет",
         "VALUE": {
-          "ENDED": "{{DURATION}} назад ( в {{TIME}})",
-          "ACTIVE": "Заканчивается через {{DURATION}} (в {{TIME}})",
-          "EXPECTED": "Падает через {{DURATION}} (в {{TIME}})"
+          "ENDED": "Закончился {{DURATION}} назад",
+          "ACTIVE": "Закончится через {{DURATION}}",
+          "EXPECTED": "Упадёт через {{DURATION}}"
         }
       }
     },
@@ -84,11 +98,24 @@
   "times-embed": {
     "COUNTDOWN": "В {{TIME}} (через {{DURATION}}",
     "FOOTER": "Информация о событиях (обновление каждые 2 минуты)",
+    "EVENT_INACTIVE": "Нет активных событий",
+    "EDEN_RESET": "В {{DATE}} (через {{DURATION}})",
+    "EMBED_TITLE": "Время событий",
+    "EMBED_AUTHOR": "SkyTimes",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "Starts In",
+    "ENDS": "Ends In",
+    "TS_VISITING": "**Сейчас посещает:** {{TS_NAME}}\n**Уход:** {{DATE}} (через {{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}}} прибудет {{DATE}} (через {{DURATION}})",
+    "TS_UPDATED": "Еще не обновлено",
+    "TS_UNKNOWN": "Неизвестный дух",
     "GEYSER": "Гейзер",
     "GRANDMA": "Бабушка",
     "TURTLE": "Черепаха",
     "DAILY": "Обновление дня",
     "EDEN": "Сброс Эдема",
+    "TS_TITLE": "Странствующий дух",
+    "EVENT_TITLE": "Специальное событие (Дни ...)",
     "ACTIVE": "**Продолжение:** Заканчивается в {{DURATION}} (через {{TIME}})",
     "NEXT-OCC": "Следующее появление: {{TIME}}",
     "NEXT": "**Следующее:** В {{TIME}} (через {{DURATION}})",
@@ -99,8 +126,26 @@
     "EDEN_RESET": "Око Эдема только что было обновлены, статуи были обновлены и снова могут быть сохранены!",
     "DAILY_RESET": "Мир Скай только что обновился, и ежедневные квесты были обновлены!",
     "TITLE": "{{TYPE}} Напоминание",
+    "DAILY_QUESTS": "Daily Quests",
     "ERROR": "Это не работает так, как ожидалось",
     "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})"
+  },
+  "REALMS": {
+    "ISLE": "Isle of Dawn",
+    "PRAIRIE": "Daylight Prairie",
+    "FOREST": "Hidden Forest",
+    "VALLEY": "Valley of Triumph",
+    "WASTELAND": "Golden Wasteland",
+    "VAULT": "Vault of Knowledge",
+    "EDEN": "Eye of Eden"
+  },
+  "SPIRITS": {
+    "SEASON_TITLE": "Season",
+    "UNKNOWN": "Unknown Spirit",
+    "REALM_TITLE": "Realm",
+    "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
+    "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
+    "LOCATION_TITLE": "Location by {{CREDIT}}"
   },
   "commands": {
     "GUIDES": {
@@ -174,7 +219,28 @@
         "description": "поиск духа"
       },
       "RESPONSES": {
-        "NO_DATA": "Для {{VALUE}} не найдено данных! Если вы считаете, что это ошибка, пожалуйста, сообщите нам об этом через {{COMMAND}}"
+        "NO_DATA": "Для {{VALUE}} не найдено данных! Если вы считаете, что это ошибка, пожалуйста, сообщите нам об этом через {{COMMAND}}",
+        "BUTTONS": {
+          "TREE": "Friendship Tree",
+          "LOCATION": "Location",
+          "ACTION": "Friendship Action",
+          "CALL": "Call",
+          "STANCE": "Stance",
+          "EMOTE": "Emote"
+        },
+        "EMBED": {
+          "AUTHOR": "Spirit Summary",
+          "TYPE": "**Type**: {{SPIRIT_TYPE}}",
+          "REALM": "**Realm**: {{REALM}}",
+          "SEASON": "**Season**: Season of {{SEASON}}",
+          "FIELDS": {
+            "SUMMARY_TITLE": "TS Summary",
+            "SUMMARY_DESC_NO_ELIGIBLE": "This spirit is not eligible to return as a TS yet, and will become eligible when the season after the {{SEASON}} ends!",
+            "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}\n__Returned Dates__",
+            "SUMMARY_DESC_NO_VISIT": "This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree."
+          },
+          "CREDIT": "Infographic by Ed.7"
+        }
       }
     },
     "SHARDS_CALENDAR": {
@@ -222,7 +288,8 @@
         "NO_DATA": "Упс! Похоже, данные ДП не были найдены, повторите попытку позже.",
         "VISITING": "{{SPIRIT}} в настоящее время посещает царства Sky. Они отправятся в {{TIME}} (через {{DURATION}})",
         "EXPECTED": "{{SPIRIT}} посетит царства Неба в {{DATE}} (через {{DURATION}})",
-        "EMBED_AUTHOR": "Путешествующий дух # Резюме{{INDEX}}!"
+        "EMBED_AUTHOR": "Путешествующий дух # Резюме{{INDEX}}!",
+        "VISITING_TITLE": "Visiting Dates:"
       }
     },
     "REMINDERS": {
@@ -258,6 +325,7 @@
         "CHANNEL_UPDATE": "Обновлен канал напоминаний!",
         "ALL_ACTIVE": "Все напоминания включены!",
         "ALL_DISABLED": "Все напоминания отключены!",
+        "DEFAULT_ROLE_UPDATE": "Default role updated!",
         "DEFAULT_ROLE_REMOVE": "Роль по умолчанию удалена!"
       }
     },
@@ -284,7 +352,7 @@
         "NOT_GUILD": "Эта команда может быть использована только на сервере",
         "ALREADY_CONFIGURED": "{{TYPE}} уже настроен в {{CHANNEL}} для этого сообщения {{MESSAGE}}.",
         "INVALID_CHANNEL": "{{CHANNEL}} не является текстовым каналом. Пожалуйста, укажите действующий текстовый канал",
-        "CONFIGURED": "{{TYPE}} настроен для {{CHANNEL}. Это сообщение {{MESSAGE}} будет обновляться каждые 5 минут с подробной информацией об осколках.",
+        "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
         "ALREADY_DISABLED": "{{TYPE}} уже отключен для этого сервера",
         "DISABLED": "{{TYPE}} отключен"
       }
@@ -328,7 +396,9 @@
       },
       "RESPONSES": {
         "NOT_ACTIVE": "На данный момент активного сезона нет. Пожалуйста, запустите эту команду, когда сезон будет активен.",
-        "EMBED_DESCRIPTION": "**Сезонный пропуск**: {{PASS}}\n**Ежедневные задания*: {{DAILIES}} \n**Требуемая валюта:**{{REQUIRED}} Свечей\n**Достижимые свечи:** {{OBTAINABLE}} Свечей\n**Дни на выполнение:**{{DAYS}} Дни {{POSSIBLE}} \n**Остаток свечей в конце сезона:** {{REMAINING}} Свечей"
+        "EMBED_DESCRIPTION": "**Сезонный пропуск**: {{PASS}}\n**Ежедневные задания*: {{DAILIES}} \n**Требуемая валюта:**{{REQUIRED}} Свечей\n**Достижимые свечи:** {{OBTAINABLE}} Свечей\n**Дни на выполнение:**{{DAYS}} Дни {{POSSIBLE}} \n**Остаток свечей в конце сезона:** {{REMAINING}} Свечей",
+        "ENDS_IN": "Ends in {{DAYS}} days",
+        "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
       }
     },
     "HELP": {
@@ -341,7 +411,8 @@
         }
       },
       "RESPONSES": {
-        "NOT_FOUND": "Нет такой команды или устаревшая команда",
+        "MESSAGE_APP_DESC": "Message App Command",
+        "USER_APP_DESC": "User App Command",
         "REQUESTED_BY": "Запрошено {{USER}}",
         "FOOTER_SINGLE": "Команда помощи",
         "FOOTER": "для получения подробной информации выполните команду /help <command>. | Страница {{PAGE}}/{{TOTAL}}",
@@ -385,7 +456,7 @@
         },
         "BOTINFO": {
           "name": "информация о боте",
-          "description": "получить информацию о боте"
+          "description": "get the bot's info and configure settings"
         },
         "CONTACT-US": {
           "name": "свяжитесь с нами",
@@ -398,32 +469,96 @@
         "DATE_NOT_EXIST": "{{DATE}} не существует, пожалуйста, укажите действительную дату.",
         "SUGGESTION_TITLE": "Название",
         "TITLE_PLACEHOLDER": "Название для предложения",
+        "SUGGESTION_MODAL_TITLE": "Contact Us",
         "SUGGESTION": "Предложения/Отчеты об ошибках/Прочее",
         "SUGGESTION_PLACEHOLDER": "Объясните вкратце.",
         "RECIEVED": "Ваше сообщение получено. Вот предварительный просмотр!"
       }
     },
     "LANGUAGE": {
-      "name": "изменить-язык",
-      "description": "установите предпочтительный язык для ответа бота",
+      "name": "language",
+      "description": "manage preferred language for the bot's response",
       "options": {
-        "TYPE": {
-          "name": "type",
-          "description": "на каком уровне установить язык?",
+        "CATEGORY": {
+          "name": "category",
+          "description": "select a category to set the laguage for",
           "choices": {
-            "GUILD": "Сервер",
-            "USER": "Пользователь"
+            "GUILD": "Server",
+            "USER": "User"
           }
         },
         "LANGUAGES": {
           "name": "языки",
           "description": "выбрать язык"
         },
+        "SUB": {
+          "SET": {
+            "name": "set",
+            "description": "set your/server language for the bot"
+          },
+          "REMOVE": {
+            "name": "remove",
+            "description": "remove a set language",
+            "options": {
+              "description": "select a category type to remove"
+            }
+          }
+        },
         "RESPONSES": {
           "NO-PERM": "У вас нет прав ({{PERMISSION}}) на установку языка сервера",
           "SUCCESS": "Язык {{TYPE}} успешно установлен в {{Language}}, В некоторых местах вы все еще можете увидеть английский язык, поскольку невозможно перевести все. \n\nПожалуйста, загляните в {{LINK}} и помогите нам добавить больше поддерживаемых языков.\n\nПримечание: настройки языка пользователя будут иметь приоритет над настройками сервера (если таковые имеются).",
-          "ALREADY_SET": "{{TYPE}} версия языка уже установлена в {{LANGUAGE}}"
+          "ALREADY_SET": "{{TYPE}} версия языка уже установлена в {{LANGUAGE}}",
+          "ALREADY_NOT_SET": "There's already no language set for {{CATEGORY}}.",
+          "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
         }
+      }
+    },
+    "DAILY_QUESTS": {
+      "name": "daily-quests",
+      "description": "get the daily quests",
+      "RESPONSES": {
+        "NO_DATA": "No data found for today's daily quests. Please try again later.\n-# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated",
+        "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
+        "EMBED_AUTHOR": "Daily Quests",
+        "EMBED_DESCRIPTION": "Daily quests for today"
+      }
+    }
+  },
+  "buttons": {
+    "ABOUT_SHARDS": {
+      "CREDIT": "All about shards by {{CREDIT}}",
+      "WHAT_ARE": "What are shards?",
+      "TIMING": "How do I know when a shard comes?",
+      "REWARDS": "What are the rewards?"
+    },
+    "SHARD_LOCATION": {
+      "L_CREDIT": "Shard Location by {{CREDIT}}",
+      "D_CREDIT": "Shard data by {{CREDIT}}",
+      "LOCATION": "Location",
+      "DATA": "Data"
+    },
+    "SHARD_TIMELINE": {
+      "MUSIC_CREDIT": "Sky changes and Shard music by {{CREDIT}}",
+      "TIMESTAMP_CREDIT": "Shard Timestamp by {{CREDIT}}",
+      "COLOR": {
+        "LABEL": "Early Sky Change",
+        "VALUE": "Sky color changes at: {{TIME}}"
+      },
+      "GATE": {
+        "LABEL": "Gate Shard",
+        "VALUE": "Shards crystal on gate appears at: {{TIME}}"
+      },
+      "LANDS": {
+        "LABEL": "Shard Landing",
+        "VALUE": "Shard Lands at: {{TIME}}"
+      },
+      "ENDS": {
+        "LABEL": "End of Shard",
+        "VALUE": "Shard ends at: {{TIME}}"
+      },
+      "MUSIC": {
+        "LABEL": "Shard Music",
+        "VALUE": "{{MUSIC}} will play during this shard."
       }
     }
   }

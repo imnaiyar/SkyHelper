@@ -100,14 +100,21 @@ export default readyHandler;
 
 function getActivity(): ActivityOptions {
   const status = getShardStatus(moment().tz("America/Los_Angeles"));
-  const shardStatus =
-    status === "No Shard"
-      ? "😟 No shard today"
-      : status.ended
-        ? "😟 All shards ended for today"
-        : status.active
-          ? `🌋 ${status.index}${util.getSuffix(status.index!)} shard ends in ${status.duration}`
-          : `🌋 ${status.index}${util.getSuffix(status.index!)} shard lands in ${status.duration}`;
+  let shardStatus = "";
+
+  if (status === "No Shard") {
+    shardStatus = "😟 No shard today";
+  } else {
+    const isActive = status.find((s) => s.active);
+    const allEnded = status.every((s) => s.ended);
+    const yetToFall = status.find((s) => !s.active && !s.ended);
+    const getIndex = (i: number) => i.toString() + util.getSuffix(i);
+    shardStatus = allEnded
+      ? "😟 All shards ended for today"
+      : isActive
+        ? `🌋 ${getIndex(isActive.index)} shard ends in ${isActive.duration}`
+        : `🌋 ${getIndex(yetToFall!.index)} shard lands in ${yetToFall!.duration}`;
+  }
 
   const activities: ActivityOptions[] = [
     {

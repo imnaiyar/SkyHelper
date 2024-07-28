@@ -33,7 +33,7 @@ await client.loadButtons(root + "/buttons");
 await client.loadPrefix(root + "/commands/prefix");
 await initializeMongoose();
 console.log(chalk.blueBright("\n\n<------------------------ Dashboard --------------------------->\n"));
-if (client.config.DASHBOARD.enabled) Dashboard(client);
+if (client.config.DASHBOARD.enabled && process.env.NODE_ENV !== "development") Dashboard(client);
 // Catching unhandle rejections
 process.on("unhandledRejection", client.logger.error);
 process.on("uncaughtException", client.logger.error);

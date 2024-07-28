@@ -78,17 +78,16 @@
       "STATUS": {
         "LABEL": "状態",
         "VALUE": {
-          "ENDED": "すべてのシャードが終了",
-          "ACTIVE": "{{INDEX}}番目のシャードが現在アクティブ",
-          "EXPECTED": "{{INDEX}}番目のシャードはまだ落下していません"
+          "ENDED": "すべてのシャードが{{DURATION}} 前に終了",
+          "ACTIVE": "{{INDEX}} 番目のシャードが現在アクティブで、{{DURATION}} 後に終了",
+          "EXPECTED": "{{INDEX}}番目のシャードが{{DURATION}}後に着地"
         }
       },
       "COUNTDOWN": {
-        "LABEL": "カウントダウン",
         "VALUE": {
-          "ENDED": "{{DURATION}}前（{{TIME}}に）",
-          "ACTIVE": "{{DURATION}}後に終了（{{TIME}}に）",
-          "EXPECTED": "{{DURATION}}後に落下（{{TIME}}に）"
+          "ENDED": "{{DURATION}}前に終了",
+          "ACTIVE": "{{DURATION}}後に終了",
+          "EXPECTED": "{{DURATION}}後に落下"
         }
       }
     },
