@@ -20,7 +20,6 @@ export default (
 } => {
   const { currentShard, currentRealm } = utils.shardsIndex(date);
   const info = shardsInfo[currentRealm][currentShard];
-  const buttonsToAdd: ButtonBuilder[] = [];
   const today = moment().tz("America/Los_Angeles").startOf("day");
   const formatted = date.isSame(today, "day") ? t("shards-embed.TODAY") : date.format("Do MMMM YYYY");
   const status = getCountdown(date);
@@ -50,7 +49,6 @@ export default (
     );
   }
   const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-    ...buttonsToAdd,
     new ButtonBuilder()
       .setLabel(t("shards-embed.BUTTON1"))
       .setCustomId(`shards-timeline_${date.format("YYYY-MM-DD")}`)
@@ -69,41 +67,51 @@ export default (
       .setDescription(`**${t("shards-embed.NO-SHARD")}**`)
       .setColor("#9fb686");
   } else {
-    const index = status.index?.toString() + utils.getSuffix(status.index as number);
+    const isActive = status.find((s) => s.active);
+    const allEnded = status.every((s) => s.ended);
+    const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
     result
       .addFields(
         { name: t("shards-embed.FIELDS.TYPE.LABEL"), value: `${info.type} (${info.rewards})`, inline: true },
         { name: t("shards-embed.FIELDS.LOCATION.LABEL"), value: `${info.area}`, inline: true },
         {
           name: t("shards-embed.FIELDS.STATUS.LABEL"),
-          value: status.ended
-            ? t("shards-embed.FIELDS.STATUS.VALUE.ENDED")
-            : status.active
-              ? t("shards-embed.FIELDS.STATUS.VALUE.ACTIVE", { INDEX: index })
-              : t("shards-embed.FIELDS.STATUS.VALUE.EXPECTED", { INDEX: index }),
+          value: allEnded
+            ? t("shards-embed.FIELDS.STATUS.VALUE.ENDED", {
+                DURATION: status
+                  .slice()
+                  .reverse()
+                  .find((s) => s.ended)?.duration,
+              })
+            : isActive
+              ? t("shards-embed.FIELDS.STATUS.VALUE.ACTIVE", { INDEX: getIndex(isActive.index), DURATION: isActive.duration })
+              : t("shards-embed.FIELDS.STATUS.VALUE.EXPECTED", {
+                  INDEX: getIndex(status.find((s) => !s.active && !s.ended)!.index),
+                  DURATION: status.find((s) => !s.active && !s.ended)!.duration,
+                }),
         },
         {
-          name: t("shards-embed.FIELDS.COUNTDOWN.LABEL"),
-          value: status.ended
-            ? t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", {
-                DURATION: status.duration,
-                TIME: time(status.end.unix(), "t"),
-              })
-            : status.active
-              ? t("shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", {
-                  DURATION: status.duration,
-                  TIME: time(status.end.unix(), "t"),
-                })
-              : t("shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", {
-                  DURATION: status.duration,
-                  TIME: time(status.start.unix(), "T"),
-                }),
+          name: t("shards-embed.BUTTON1"),
+          value: status
+            .map((s, i) => {
+              const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
+              // prettier-ignore
+              if (s.ended) return prefix + `~~${time(s.start.unix(), "T")} - ${time(s.end.unix(), "t")}~~ (${t("shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})`;
+              // prettier-ignore
+              if (s.active) return prefix + `~~${time(s.start.unix(), "T")}~~ - ${time(s.end.unix(), "t")} (${t("shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
+              return (
+                prefix +
+                `${time(s.start.unix(), "T")} - ${time(s.end.unix(), "t")} (${t("shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
+              );
+            })
+            .join("\n"),
           inline: true,
         },
       )
       .setColor(info.colors as ColorResolvable)
       .setThumbnail(info.image);
   }
+
   return {
     embeds: [result],
     components: navBtns ? [actionRow, navBtns] : [actionRow],

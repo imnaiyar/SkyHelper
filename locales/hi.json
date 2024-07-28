@@ -78,17 +78,16 @@
       "STATUS": {
         "LABEL": "स्टेटस",
         "VALUE": {
-          "ENDED": "सारा shards खत्म हो चुका है।",
-          "ACTIVE": "{{INDEX}} shard अभी एक्टिव है",
-          "EXPECTED": "{{INDEX}} shard अभी गिरा नहीं है"
+          "ENDED": "सभी शार्ड्स {{DURATION}} पहले ख़तम हो चुकें हैं",
+          "ACTIVE": "{{INDEX}} शार्ड अभी एक्टिव है और {{DURATION}} में ख़तम होगा",
+          "EXPECTED": "{{INDEX}} शार्ड {{DURATION}} में लैंड होगा"
         }
       },
       "COUNTDOWN": {
-        "LABEL": "काउंटडाऊं",
         "VALUE": {
-          "ENDED": "{{DURATION}} पहले ({{TIME}} बजे)",
-          "ACTIVE": "{{DURATION}} में खत्म होगा ({{TIME}} बजे)",
-          "EXPECTED": "{{DURATION}} में गिरे गा ({{TIME}} बजे)"
+          "ENDED": "{{DURATION}} पहले ख़तम हो गया",
+          "ACTIVE": "{{DURATION}} में ख़तम होगा",
+          "EXPECTED": "{{DURATION}} में लैंड होगा"
         }
       }
     },
@@ -564,3 +563,4 @@
     }
   }
 }
+

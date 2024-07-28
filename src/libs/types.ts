@@ -24,7 +24,7 @@ export enum IntegrationTypes {
 
 export interface ShardsCountdown {
   // The shard index
-  index?: number;
+  index: number;
 
   // Whether if the shard is ready
   active?: boolean;
