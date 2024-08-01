@@ -6,7 +6,7 @@ import { type WebhookMessageCreateOptions, time, roleMention, WebhookClient } fr
 import moment from "moment";
 
 /**
- *
+ * Updates Shards/Times Embeds
  * @param type Type of the event
  * @param client The bot client
  */
@@ -32,6 +32,7 @@ export async function eventSchedules(type: "shard" | "times", client: SkyHelper)
 }
 
 type events = "geyser" | "grandma" | "turtle" | "dailies" | "eden" | "reset" | "dailies";
+
 /**
  * Sends the reminder to the each active guilds
  * @param client The bot client

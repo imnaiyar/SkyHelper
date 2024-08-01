@@ -1,4 +1,4 @@
-import { BaseInteraction, DMMessageManager, Message, PartialGroupDMChannel } from "discord.js";
+import { BaseInteraction, DMMessageManager, Message, MessageManager, PartialGroupDMChannel } from "discord.js";
 import { getTranslator } from "#src/i18n";
 import { getSettings, getUser } from "#src/database/index";
 /* prettier-ignore */
@@ -27,7 +27,7 @@ Object.defineProperty(PartialGroupDMChannel.prototype, "messages", {
   get() {
     if (!this._messages) {
       // @ts-ignore
-      this._messages = new DMMessageManager(this);
+      this._messages = new MessageManager(this);
     }
     return this._messages;
   },

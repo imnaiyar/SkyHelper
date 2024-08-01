@@ -1,9 +1,7 @@
-import config from "#src/config";
 import mongoose from "mongoose";
-import FixedSizeMap from "fixedsize-map";
-import { Guild } from "discord.js";
+import { Guild, Collection, Snowflake } from "discord.js";
 import type { GuildSchema } from "#libs";
-const cache = new FixedSizeMap<string, GuildSchema>(config.CACHE_SIZE.GUILDS);
+const cache = new Collection<Snowflake, GuildSchema>();
 
 const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,
@@ -82,6 +80,18 @@ const Schema = new mongoose.Schema<GuildSchema>({
 });
 
 const Model = mongoose.model("guild", Schema);
+export { Model as GuildModel };
+
+/**
+ * Method to cache all document on restart to reduce load
+ */
+
+export const cacheAllGuildDocuments = async () => {
+  const data = await Model.find();
+  for (const d of data) {
+    cache.set(d._id, d);
+  }
+};
 
 /**
  * Get a guild's settings
@@ -110,16 +120,17 @@ export async function getSettings(guild: Guild): Promise<GuildSchema> {
 
     await guildData.save();
   }
-  cache.add(guild.id, guildData);
+  cache.set(guild.id, guildData);
   return guildData;
 }
 
 /** Returns all guilds with the given active auto updates
  * @param type The type of the event to query for ("shard" | "times")
+ * @param force Whether to query directly to database (if `false`, returns from cache if it exists)
  * @example
  * await getActiveUpdate("shard")
  */
-export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSchema[]> {
+export async function getActiveUpdates(type: "shard" | "times", force?: boolean): Promise<GuildSchema[]> {
   if (type !== "shard" && type !== "times") throw new Error('Param "type" must be either "shard" or "times"');
   const query = type === "shard" ? { "autoShard.active": true } : { "autoTimes.active": true };
   const activeGuilds = await Model.find(query);
@@ -136,7 +147,7 @@ export async function getActiveReminders(): Promise<GuildSchema[]> {
 /**
  * Get guilds that has announcement channels setup
  */
- export async function getAnnouncementGuilds(): Promise<GuildSchema[]> {
-   const data = await Model.find({ "annoucement_channel": { $exists: true, $ne: null } });
-   return data;
- }
+export async function getAnnouncementGuilds(): Promise<GuildSchema[]> {
+  const data = await Model.find({ annoucement_channel: { $exists: true, $ne: null } });
+  return data;
+}
