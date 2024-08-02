@@ -5,7 +5,7 @@ import getEvent from "#handlers/getSpecialEvent";
 import moment from "moment-timezone";
 import "moment-duration-format";
 
-export default (offset: number): Times => {
+export function getDailyEventTimes(offset: number): Times {
   const now = moment().tz("America/Los_Angeles");
   const start = now.clone().startOf("day").add(offset, "minutes");
   const end = start.clone().add(15, "minute");
@@ -28,7 +28,7 @@ export default (offset: number): Times => {
       duration: moment.duration(start.diff(now)).format("d[d] h[h] m[m] s[s]"),
     };
   }
-};
+}
 
 export const getEdenTimes = (): Times => {
   const now = moment().tz("America/Los_Angeles");
@@ -49,7 +49,6 @@ export const getEdenTimes = (): Times => {
   };
 };
 
-import { getDailyEventTimes } from "#handlers";
 import { getTS } from "#handlers";
 import type { getTranslator } from "#src/i18n";
 /**
