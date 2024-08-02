@@ -1,4 +1,4 @@
-import { BaseInteraction, DMMessageManager, Message, MessageManager, PartialGroupDMChannel } from "discord.js";
+import { BaseInteraction, Message, MessageManager, PartialGroupDMChannel } from "discord.js";
 import { getTranslator } from "#src/i18n";
 import { getSettings, getUser } from "#src/database/index";
 /* prettier-ignore */
