@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
-import { InfoBox } from "./components/InfoBox";
-import { WarningBox } from "./components/WarningBox";
 import { Counter } from "./components/counters";
 const BaseUrl = "http://localhost:8080";
 const config: DocsThemeConfig = {
@@ -55,8 +53,6 @@ const config: DocsThemeConfig = {
     );
   },
   components: {
-    InfoBox,
-    WarningBox,
     Counter,
   },
 };
