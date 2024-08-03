@@ -27,8 +27,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd skyhelper
             git pull
-            docker stop skyhelper
-            docker rm skyhelper
-            docker build -t skyhelper .
-            docker run -d --name skyhelper -p 5000:5000 --restart always skyhelper
+            npm i
+            pnpm build:prod
+            pm2 restart 4
           EOF
