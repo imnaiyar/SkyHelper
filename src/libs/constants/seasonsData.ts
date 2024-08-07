@@ -40,7 +40,7 @@ export default {
     ],
   },
   nine_colored_deer: {
-    name: "Nine-Colore Deer",
+    name: "Nine-Colored Deer",
     realm: "Crescent Oasis, Vault of Knowledge",
     icon: "<:ninecoloreddeer:1197412132657053746>",
     from: ["15-01-2024", "31-03-2024"],
