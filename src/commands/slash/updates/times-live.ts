@@ -4,6 +4,7 @@ import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
 import { useTranslations as x } from "#handlers/useTranslation";
+import { getTranslator } from "#src/i18n";
 export default {
   async execute(interaction, t, client) {
     await interaction.deferReply({ ephemeral: true });
@@ -59,8 +60,9 @@ export default {
       const wb = await client.createWebhook(channel as TextChannel, "For live SkyTimes Update");
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
+      const _t = getTranslator((await client.database.getSettings(interaction.guild)).language?.value || "en-US");
       const result = {
-        embeds: [await getTimesEmbed(client, t, t("times-embed.FOOTER"))],
+        embeds: [await getTimesEmbed(client, _t, _t("times-embed.FOOTER"))],
       };
       const msg = await wb.send({
         username: "SkyTimes Updates",
@@ -167,4 +169,3 @@ export default {
     userPermissions: ["ManageGuild"],
   },
 } satisfies SlashCommand;
-

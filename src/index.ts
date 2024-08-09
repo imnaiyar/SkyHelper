@@ -18,7 +18,7 @@ Sentry.init({
   ],
   environment: process.env.NODE_ENV,
 
-  tracesSampleRate: 1.0, 
+  tracesSampleRate: 1.0,
   profilesSampleRate: 1.0,
 });
 
