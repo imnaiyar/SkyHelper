@@ -1,4 +1,4 @@
-import { getShardStatus, scheduler } from "#handlers";
+import { getShardStatus, scheduler as _schedular } from "#handlers";
 import moment from "moment-timezone";
 import { Flags } from "#libs";
 import type { Event } from "#structures";
