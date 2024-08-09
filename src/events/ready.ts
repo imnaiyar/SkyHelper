@@ -56,7 +56,7 @@ const readyHandler: Event<"ready"> = async (client): Promise<void> => {
   });
 
   // Registers Jobs
-  scheduler(client);
+  /*  scheduler(client); */
 
   const readyalertemb = new EmbedBuilder()
     .addFields(

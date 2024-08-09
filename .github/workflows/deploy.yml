@@ -4,15 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "src/**"
-      - "dashboard/**"
-      - "locales/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')" # Skip CI
+    if: "!contains(github.event.head_commit.message, 'skip-ci')"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,10 +21,10 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
-            export PATH=$PATH:/root/.nvm/versions/node/v20.14.0/bin
             cd skyhelper
             git pull
-            npm i --dev
-            pnpm build:prod
-            pm2 restart 4
+            docker stop skyhelper
+            docker rm skyhelper
+            docker build -t skyhelper .
+            docker run -d --name skyhelper -p 5000:5000 --restart always skyhelper
           EOF
