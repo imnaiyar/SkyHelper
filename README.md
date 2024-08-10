@@ -60,6 +60,9 @@ git clone https://github.com/imnaiyar/SkyHelper
 - Run `npm run commands` to register the slash commands.
 - Run `npm start` to start the project
 
+> [!IMPORTANT]
+> If you plan to use live updates/Reminders feature, you'll have to also host/run [skyhelper-jobs](https://github.com/imnaiyar/skyhelper-jobs) as cron jobs to send the reminders/updates are hosted on a different process to reduce the load on the main bot. Intructions to set it up is given on the repo's README
+
 ## Dashboard
 
 Only backend is hosted with the bot, front-end is a closed-source, unless you can build your own front-end, it's better if you disable it before running the bot
