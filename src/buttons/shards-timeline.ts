@@ -9,8 +9,7 @@ import {
   time,
 } from "discord.js";
 import moment from "moment-timezone";
-import { ShardsUtil as utils } from "skyhelper-utils";
-import { shardsTimelines } from "#libs/constants/index";
+import { ShardsUtil as utils, shardsTimeline } from "skyhelper-utils";
 export default {
   data: {
     name: "shards-timeline",
@@ -23,7 +22,7 @@ export default {
     const date = utils.getDate(shardDate) as moment.Moment;
     const { currentShard } = utils.shardsIndex(date);
     let page = 0;
-    const datas = shardsTimelines(date)[currentShard];
+    const datas = shardsTimeline(date)[currentShard];
     const total = datas.length - 1;
     const getResponse = () => {
       const data = datas[page];
@@ -109,4 +108,3 @@ export default {
     });
   },
 } satisfies Button;
-

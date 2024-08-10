@@ -1,6 +1,4 @@
-import { getShardStatus } from "#handlers";
 import { ContextTypes, IntegrationTypes } from "#libs/types";
-import { shardsInfo, shardsTimelines } from "#libs/constants/index";
 import type { SlashCommand } from "#structures";
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuInteraction, time } from "discord.js";
 import {
@@ -11,7 +9,7 @@ import {
   StringSelectMenuBuilder,
 } from "discord.js";
 import moment from "moment-timezone";
-import { ShardsUtil as utils } from "skyhelper-utils";
+import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "skyhelper-utils";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   cooldown: 15,
@@ -110,8 +108,8 @@ export default {
       const fields: APIEmbedField[] = [];
       toDisplay.forEach((d) => {
         const { currentRealm, currentShard } = utils.shardsIndex(d);
-        const timelines = shardsTimelines(d)[currentShard];
-        const noShard = getShardStatus(d);
+        const timelines = shardsTimeline(d)[currentShard];
+        const noShard = utils.getStatus(d);
         const info = shardsInfo[currentRealm][currentShard];
         fields.push({
           name: d.isSame(now, "day")
@@ -221,4 +219,3 @@ const getDates = (date: moment.Moment): moment.Moment[] => {
   }
   return dates;
 };
-

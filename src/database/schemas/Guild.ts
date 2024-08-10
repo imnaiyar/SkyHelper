@@ -124,24 +124,11 @@ export async function getSettings(guild: Guild): Promise<GuildSchema> {
   return guildData;
 }
 
-/** Returns all guilds with the given active auto updates
- * @param type The type of the event to query for ("shard" | "times")
- * @param force Whether to query directly to database (if `false`, returns from cache if it exists)
- * @example
- * await getActiveUpdate("shard")
- */
-export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSchema[]> {
-  if (type !== "shard" && type !== "times") throw new Error('Param "type" must be either "shard" or "times"');
-  const query = type === "shard" ? { "autoShard.active": true } : { "autoTimes.active": true };
-  const activeGuilds = await Model.find(query);
-  return activeGuilds;
-}
-
 /**
- * Returns all the guilds with active reminders
+ * Returns all the guilds with active daily quest reminders
  */
-export async function getActiveReminders(): Promise<GuildSchema[]> {
-  return await Model.find({ "reminders.active": true });
+export async function getQuestActiveReminders(): Promise<GuildSchema[]> {
+  return await Model.find({ "reminders.dailies.active": true });
 }
 
 /**

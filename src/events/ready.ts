@@ -1,4 +1,3 @@
-import { getShardStatus, scheduler as _schedular } from "#handlers";
 import moment from "moment-timezone";
 import { Flags } from "#libs";
 import type { Event } from "#structures";
@@ -99,7 +98,7 @@ const readyHandler: Event<"ready"> = async (client): Promise<void> => {
 export default readyHandler;
 
 function getActivity(): ActivityOptions {
-  const status = getShardStatus(moment().tz("America/Los_Angeles"));
+  const status = util.getStatus(moment().tz("America/Los_Angeles"));
   let shardStatus = "";
 
   if (status === "No Shard") {

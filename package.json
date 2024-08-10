@@ -50,7 +50,7 @@
     "node-cron": "^3.0.3",
     "pino": "^8.15.0",
     "pino-pretty": "^10.2.0",
-    "skyhelper-utils": "^1.2.5",
+    "skyhelper-utils": "^1.2.10",
     "table": "^6.8.1",
     "topgg-autoposter": "^2.0.2"
   },
