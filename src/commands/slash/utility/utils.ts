@@ -1,5 +1,6 @@
 import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SkyHelper, SlashCommand } from "#structures";
+import os from "node:os";
 import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
@@ -145,14 +146,17 @@ async function handleInfo(
       {
         name: t("common.bot.GUILD_SETTINGS"),
         value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
+        inline: true,
       },
       {
         name: t("common.bot.USER_SETTINGS"),
         value: `**${t("common.bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
+        inline: true,
       },
     );
   }
 
+  embed.addFields({ name: "Process Info", value: getProcessInfo() });
   const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setURL("https://discord.com/oauth2/authorize?client_id=1121541967730450574")
@@ -177,3 +181,28 @@ function timeformat(timeInSeconds: number) {
   );
 }
 
+const getProcessInfo = () => {
+  const memoryUsage = process.memoryUsage();
+  const heapTotal = (memoryUsage.heapTotal / 1024 / 1024).toFixed(2);
+  const heapUsed = (memoryUsage.heapUsed / 1024 / 1024).toFixed(2);
+  const rss = (memoryUsage.rss / 1024 / 1024).toFixed(2);
+  const external = (memoryUsage.external / 1024 / 1024).toFixed(2);
+  const arrayBuffers = (memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2);
+  const processUptime = timeformat(process.uptime());
+  const systemUptime = timeformat(os.uptime());
+  const ramUsage = (os.totalmem() - os.freemem()) / 1024 / 1024 / 1024;
+  const totalRam = os.totalmem() / 1024 / 1024 / 1024;
+  const cpuUsage = process.cpuUsage();
+  return `- **Heap Total:** ${heapTotal} MB
+- **Heap Used:** ${heapUsed} MB
+- **RSS:** ${rss} MB
+- **External:** ${external} MB
+- **Array Buffers:** ${arrayBuffers} MB
+- **Process Uptime:** ${processUptime}
+- **System Uptime:** ${systemUptime}
+- **RAM Usage:** ${ramUsage.toFixed(2)} GB / ${totalRam.toFixed(2)} GB
+- **CPU Usage:**
+  - **User:** ${(cpuUsage.user / 1000).toFixed(2)} ms
+  - **System:** ${(cpuUsage.system / 1000).toFixed(2)} ms
+  `;
+};

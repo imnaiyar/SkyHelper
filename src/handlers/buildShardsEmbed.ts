@@ -1,8 +1,6 @@
-import { shardsInfo } from "#libs/constants/index";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type ColorResolvable, EmbedBuilder, time } from "discord.js";
 import moment from "moment-timezone";
-import { ShardsUtil as utils } from "skyhelper-utils";
-import getCountdown from "#handlers/getShardStatus";
+import { ShardsUtil as utils, shardsInfo } from "skyhelper-utils";
 import type { getTranslator } from "#src/i18n";
 /**
  * @param date The date for which the shards embed is to be built
@@ -22,7 +20,7 @@ export default (
   const info = shardsInfo[currentRealm][currentShard];
   const today = moment().tz("America/Los_Angeles").startOf("day");
   const formatted = date.isSame(today, "day") ? t("shards-embed.TODAY") : date.format("Do MMMM YYYY");
-  const status = getCountdown(date);
+  const status = utils.getStatus(date);
   const result = new EmbedBuilder()
     .setAuthor({
       name: t("shards-embed.AUTHOR"),
