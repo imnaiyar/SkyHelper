@@ -141,22 +141,22 @@ async function handleInfo(
     );
   if (interaction.inCachedGuild()) {
     const settings = await client.database.getSettings(interaction.guild);
-    const user_settings = await client.database.getUser(interaction.user);
-    embed.addFields(
-      {
-        name: t("common.bot.GUILD_SETTINGS"),
-        value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
-        inline: true,
-      },
-      {
-        name: t("common.bot.USER_SETTINGS"),
-        value: `**${t("common.bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
-        inline: true,
-      },
-    );
+    embed.addFields({
+      name: t("common.bot.GUILD_SETTINGS") + ` (\`${interaction.guild.name}\`)`,
+      value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
+      inline: true,
+    });
   }
+  const user_settings = await client.database.getUser(interaction.user);
 
-  embed.addFields({ name: "Process Info", value: getProcessInfo() });
+  embed.addFields(
+    {
+      name: t("common.bot.USER_SETTINGS") + ` (\`${interaction.user.displayName}\`)`,
+      value: `**${t("common.bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
+      inline: true,
+    },
+    { name: "Process Info", value: getProcessInfo() },
+  );
   const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setURL("https://discord.com/oauth2/authorize?client_id=1121541967730450574")

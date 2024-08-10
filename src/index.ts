@@ -1,5 +1,3 @@
-import * as Sentry from "@sentry/node";
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import "dotenv/config";
 import { SkyHelper } from "#structures";
 import { initializeMongoose } from "#src/database/mongoose";
@@ -8,19 +6,25 @@ import { Dashboard } from "../dashboard/main.js";
 import chalk from "chalk";
 
 // Init Sentry
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  integrations: [
-    nodeProfilingIntegration(),
-    Sentry.rewriteFramesIntegration({
-      root: global.__dirname,
-    }),
-  ],
-  environment: process.env.NODE_ENV,
+if (!process.isBun) {
+  console.log(chalk.blueBright("\n\n<------------------------ Initiaizing Sentry --------------------------->\n"));
+  const Sentry = await import("@sentry/node");
+  const { nodeProfilingIntegration } = await import("@sentry/profiling-node");
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+      nodeProfilingIntegration(),
+      Sentry.rewriteFramesIntegration({
+        root: global.__dirname,
+      }),
+    ],
+    environment: process.env.NODE_ENV,
 
-  tracesSampleRate: 1.0,
-  profilesSampleRate: 1.0,
-});
+    tracesSampleRate: 1.0,
+    profilesSampleRate: 1.0,
+  });
+  console.log("Sentry Initialized");
+}
 
 const root = process.isBun ? "src" : "dist/src";
 await client.loadEvents(root + "/events");

@@ -55,6 +55,14 @@ const config: DocsThemeConfig = {
   components: {
     Counter,
   },
+  sidebar: {
+    toggleButton: true,
+    autoCollapse: true,
+    defaultMenuCollapseLevel: 0,
+  },
+  toc: {
+    backToTop: true,
+  },
 };
 
 export default config;
