@@ -1,8 +1,6 @@
 FROM node:lts
 WORKDIR /root/skyhelper
 
-RUN npm install -g pnpm
-
 COPY package.json pnpm-lock.yaml ./
 
 # SECRETS
@@ -21,8 +19,10 @@ ENV COMMANDS_USED=
 ENV CONTACT_US=
 ENV BUG_REPORTS=
 
-RUN pnpm install --frozen-lockfile
+RUN npm install -g pnpm
+
+RUN pnpm install --frozen-lockfile --production=false
 
 COPY . .
 EXPOSE 5000
-CMD [ "npm", "start" ]
+CMD [ "pnpm", "start" ]
