@@ -131,7 +131,11 @@ interface Cosmetic {
 
   /* Seasonal price, if any */
   spPrice?: string;
+  
+  /* Any extra notes about this cosmetic */
+  notes?: string[]
 }
+
 interface BaseSpiritData {
   name: string;
   /* Spirits preview image link */
