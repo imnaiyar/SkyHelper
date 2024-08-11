@@ -77,6 +77,8 @@ export default {
       if (d.price) desc += `- **Cost**: ${d.price}\n`;
       if (d.spPrice) desc += `- **Season Cost**: ${d.spPrice}\n`;
       if (d.isSP) desc += `- This item was season pass exclusive\n`;
+      if (d.notes?.length) desc += '\n**Notes**:\n' + d.notes.map((n) => `- -# ${n}`).join("\n");
+      
       desc += `\n**${d.images[imageIndex - 1].description}**${imageTotal > 1 ? ` (${imageIndex}/${imageTotal})` : ""}`;
       embed.setDescription(desc).setImage(d.images[imageIndex - 1].image);
       return { embeds: [embed], components: [stringSelect, btns] };
