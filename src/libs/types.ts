@@ -113,8 +113,29 @@ interface Level {
   image: string;
 }
 
+interface Cosmetic {
+  /* Name of the cosmetic */
+  name: string;
+
+  /* Emoji icon of the cosmetic */
+  icon: string;
+
+  /* Link to the cosmetic images (preview) */
+  images: { description: string; image: string }[];
+
+  /* Cosmetic Cost (absent for items that are unlocked via season pass and the spirit has yet to return as a TS)*/
+  price?: string;
+
+  /* If this was season pass exclusive */
+  isSP?: boolean;
+
+  /* Seasonal price, if any */
+  spPrice?: string;
+}
 interface BaseSpiritData {
   name: string;
+  /* Spirits preview image link */
+  image?: string;
   type: string;
   realm?: string;
   icon?: string;
@@ -136,6 +157,7 @@ interface BaseSpiritData {
     icon: string;
     level: Level[];
   };
+  cosmetics?: Cosmetic[];
 }
 
 export interface SeasonalSpiritData extends BaseSpiritData {

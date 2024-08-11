@@ -5,7 +5,7 @@ import type { SpiritsData } from "#libs/types";
  * @example
  * const data = spiritsData["backflipping_champion"];
  */
-export default <Record<string, SpiritsData>>{
+const spiritsData: Record<string, SpiritsData> = {
   // Isle
   candlemaker: {
     name: "Pointing Candlemaker",
@@ -997,7 +997,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [{}],
   },
   pianistB: {
     name: "The Pianists's Beggining",
@@ -1014,7 +1013,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [{}],
   },
   musician_legacy: {
     name: "The Musician's Legacy",
@@ -1031,7 +1029,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [{}],
   },
   cellistF: {
     name: "The Cellist's Flourishing",
@@ -1048,7 +1045,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [{}],
   },
   pianistF: {
     name: "The Cellist's Flourishing",
@@ -1065,7 +1061,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [{}],
   },
   // nesting
   solarium: {
@@ -1083,7 +1078,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Solarium_Tree_Mimi.jpg",
     },
-    cosmetics: [{}],
   },
 
   loft: {
@@ -1101,7 +1095,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Loft_Tree_Mimi.jpg",
     },
-    cosmetics: [{}],
   },
 
   atrium: {
@@ -1119,7 +1112,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Atrium_Tree_Mimi.jpg",
     },
-    cosmetics: [{}],
   },
 
   nook: {
@@ -1137,7 +1129,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Nook_Tree_Mimi.jpg",
     },
-    cosmetics: [{}],
   },
   // nine colored deer
   hunter: {
@@ -1160,7 +1151,7 @@ export default <Record<string, SpiritsData>>{
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:hunter:1197413131736064052>",
       level: [
@@ -1203,7 +1194,7 @@ export default <Record<string, SpiritsData>>{
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:princess:1197413108717731840>",
       level: [
@@ -1246,7 +1237,7 @@ export default <Record<string, SpiritsData>>{
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:feudallord:1197413178330578964>",
       level: [
@@ -1281,7 +1272,7 @@ export default <Record<string, SpiritsData>>{
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:herbgatherer:1197413154938957885>",
       level: [
@@ -1320,7 +1311,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Forgotten_Haven_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [{}],
   },
   abandoned_refuge: {
     name: "Echo Of An Abandoned Refuge",
@@ -1336,7 +1326,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Abandoned_Refuge_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [{}],
   },
   lost_village: {
     name: "Memory Of A Lost Village",
@@ -1352,7 +1341,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Lost_Village_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [{}],
   },
   deserted_oasis: {
     name: "Vestige Of A Deserted Oasis",
@@ -1368,7 +1356,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Deserted_Oasis_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [{}],
   },
 
   // moments
@@ -1391,7 +1378,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    cosmetics: [{}],
+
     call: {
       title: "Nightbird Call",
       icon: "<:nightbird:1130948807396429884>",
@@ -1417,7 +1404,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:monk:1130948859674243185>",
       level: [
@@ -1459,7 +1446,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:geologist:1130948834365816973>",
       level: [
@@ -1501,7 +1488,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:ranger:1130948781026844692>",
       level: [
@@ -1537,7 +1524,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:oddball:1131583444116308072>",
       level: [
@@ -1579,7 +1566,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:achiever:1131583465649876992>",
       level: [
@@ -1621,7 +1608,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:mope:1131583421529989211>",
       level: [
@@ -1663,7 +1650,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:tumbling:1131583486940164126>",
       level: [
@@ -1707,7 +1694,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    cosmetics: [{}],
+
     stance: {
       title: "Injured Stance",
       icon: "<:wounded:1131584200735211710>",
@@ -1733,7 +1720,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:pleading:1131584152332935331>",
       level: [
@@ -1775,7 +1762,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:Bereft:1131584129054560396>",
       level: [
@@ -1817,7 +1804,7 @@ export default <Record<string, SpiritsData>>{
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:tiptoe:1131584176882192455>",
       level: [
@@ -1861,7 +1848,7 @@ export default <Record<string, SpiritsData>>{
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:warriorlove:1131584753036963882>",
       level: [
@@ -1903,7 +1890,7 @@ export default <Record<string, SpiritsData>>{
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:seedofhope:1131584732887523388>",
       level: [
@@ -1945,7 +1932,7 @@ export default <Record<string, SpiritsData>>{
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:wayfarer:1131584710192144606>",
       level: [
@@ -1987,7 +1974,7 @@ export default <Record<string, SpiritsData>>{
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:miner:1131584687454818404>",
       level: [
@@ -2026,7 +2013,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Ancient_Darkness_Dark_Plant_Seasonal_Chart_NyR.png",
     },
-    cosmetics: [{}],
   },
   dark_dragon: {
     name: "Ancient Darkness (Dragon)",
@@ -2042,7 +2028,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Ancient_Darkness_Dragon_Seasonal_chart_NyR.png",
     },
-    cosmetics: [{}],
   },
   light_manta: {
     name: "Ancient Light (Manta)",
@@ -2058,7 +2043,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Ancient_Light_Manta_Seasonal_Chart_NyR.png",
     },
-    cosmetics: [{}],
   },
   light_jelly: {
     name: "Ancient Light (Jellyfish)",
@@ -2074,7 +2058,6 @@ export default <Record<string, SpiritsData>>{
       total: " ",
       image: "Ancient_Light_Jellyfish_Seasonal_Chart_NyR.png",
     },
-    cosmetics: [{}],
   },
 
   // Performance
@@ -2097,7 +2080,7 @@ export default <Record<string, SpiritsData>>{
       by: "SkyZed",
       image: "Modest_Dancer_Location_SkyZed.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:modest:1131586528540381194>",
       level: [
@@ -2131,7 +2114,7 @@ export default <Record<string, SpiritsData>>{
       by: "SkyZed",
       image: "Mellow_Musician_Location_SkyZed.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:mellow:1131586502149816411>",
       level: [
@@ -2173,7 +2156,7 @@ export default <Record<string, SpiritsData>>{
       by: "SkyZed",
       image: "Frantic_Stagehand_Location_SkyZed.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:stagehand:1131586475226562670>",
       level: [
@@ -2207,7 +2190,7 @@ export default <Record<string, SpiritsData>>{
       by: "SkyZed",
       image: "Storyteller_Location_SkyZed.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:storyteller:1131586451885260831>",
       level: [
@@ -2251,7 +2234,7 @@ export default <Record<string, SpiritsData>>{
       by: "SkyZed",
       image: "Ceasing_comodore_Location_SkyZed.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:commodore:1131587707315949608>",
       level: [
@@ -2293,7 +2276,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Cackling_Cannoneer_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:cannoneer:1131587675061747854>",
       level: [
@@ -2335,7 +2318,7 @@ export default <Record<string, SpiritsData>>{
       by: "SkyZed",
       image: "Bumbling_boatswain_Location_SkyZed.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:boatswain:1131587645219295382>",
       level: [
@@ -2377,7 +2360,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Anxious_Angler_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:angler:1131587623165632594>",
       level: [
@@ -2421,7 +2404,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Tinkering_Chimesmith_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     stance: {
       title: "Tinker Stance",
       icon: "<:chimesmith:1131589172822544435>",
@@ -2447,7 +2430,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Lively_Navigator_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:navigator:1131589125636632596>",
       level: [
@@ -2489,7 +2472,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Light_Whisper_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     call: {
       title: "Baby Manta Call",
       icon: "<:lightwhisperer:1131589102626672761>",
@@ -2515,7 +2498,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Talented_Builder_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:builder:1131589149464481812>",
       level: [
@@ -2559,7 +2542,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Stretching_Lamplighter_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:lamplighter:1131590417360625675>",
       level: [
@@ -2601,7 +2584,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Star_Collector_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:starcollector:1131590394874962040>",
       level: [
@@ -2643,7 +2626,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Sneezing_Geographer_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:geographer:1131590372502548660>",
       level: [
@@ -2685,7 +2668,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Slouching_Soldier_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:slouching:1131590352038531143>",
       level: [
@@ -2727,7 +2710,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Gloating_Narcissist_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:narcissist:1131590328714010684>",
       level: [
@@ -2769,7 +2752,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Beckoning_Ruler_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:ruler:1131590308430348369>",
       level: [
@@ -2813,7 +2796,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Scolding_Student_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:student:1131591495993016421>",
       level: [
@@ -2855,7 +2838,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Scaredy_Cadet_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:cadet:1131591467429793962>",
       level: [
@@ -2897,7 +2880,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Daydreaming_Forester_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:forester:1131591420239675402>",
       level: [
@@ -2939,7 +2922,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Marching_Adventurer_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:adventurer:1131591445057372272>",
       level: [
@@ -2981,7 +2964,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Chuckling_Scout_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:scout:1131591393282904084>",
       level: [
@@ -3023,7 +3006,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Baffled_Botanist_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:botanist:1131591369492795503>",
       level: [
@@ -3067,7 +3050,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Spinning_Mentor_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:mentor:1131645203548209162>",
       level: [
@@ -3109,7 +3092,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Peeking_Postman_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:postman:1131645181926584341>",
       level: [
@@ -3151,7 +3134,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Dancing_Performer_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:dancing:1131645163383574569>",
       level: [
@@ -3193,7 +3176,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Bearhug_Hermit_Location_Clement.png.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:hermit:1131645142898581535>",
       level: [
@@ -3229,7 +3212,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Prophet_of_Fire_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:fireprophet:1131649539682603008>",
       level: [
@@ -3271,7 +3254,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Prophet_of_Air_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:airprophet:1131649484347154433>",
       level: [
@@ -3313,7 +3296,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Prophet_of_Earth_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:earthprophet:1131649510045646908>",
       level: [
@@ -3355,7 +3338,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Prophet_of_Water_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:waterprophet:1131649574465974302>",
       level: [
@@ -3399,7 +3382,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Timid_Bookworm_Location.png",
     },
-    cosmetics: [{}],
+
     stance: {
       title: "Timid Stance",
       icon: "<:bookworm:1131649753420140595>",
@@ -3425,7 +3408,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Rallying_Thrillseeker_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:rallying:1131649722042564758>",
       level: [
@@ -3467,7 +3450,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "jelly_Whisperer_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     call: {
       title: "Jellyfish Call",
       icon: "<:jellywhisperer:1131649695807176895>",
@@ -3493,7 +3476,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Hiking_Grouch_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:grouch:1131649666954575982>",
       level: [
@@ -3535,7 +3518,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Grateful_Shell_Collector_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:shellcollector:1131649635153363024>",
       level: [
@@ -3577,7 +3560,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Spirit_-_Chill_Sunbather_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:sunbather:1131649605336047676>",
       level: [
@@ -3621,7 +3604,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "05_Season_of_Enchantment_-_Snoozing_Carpenter.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:carpenter:1131649953505230848>",
       level: [
@@ -3663,7 +3646,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Scarecrow_Farmer_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:scarecrow:1131649929492828180>",
       level: [
@@ -3705,7 +3688,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Playfighting_Herbalist_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:herbalist:1131649901814624276>",
       level: [
@@ -3739,7 +3722,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Nodding_Muralist_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:muralist:1131649861377339452>",
       level: [
@@ -3781,7 +3764,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Indifferent_Alchemist_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:alchemist:1131649811439947796>",
       level: [
@@ -3823,7 +3806,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Crab_Walker_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:crabwalker:1131649778434981908>",
       level: [
@@ -3867,7 +3850,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Troupe_Juggler_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:troupejuggler:1131650191754268854>",
       level: [
@@ -3909,7 +3892,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Troupe_Greeter_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:troupegreeter:1131650161655943228>",
       level: [
@@ -3951,7 +3934,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Thoughtful_Director_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:thoughtfuldirector:1131650086422728795>",
       level: [
@@ -3993,7 +3976,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Respectful_Pianist_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:respectfulpianist:1131650056206942300>",
       level: [
@@ -4035,7 +4018,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Spin_Dancer_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:spindancer:1131650001571946616>",
       level: [
@@ -4077,7 +4060,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Admiring_Actor_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:actor:1131649977710555136>",
       level: [
@@ -4121,7 +4104,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Wise_Grandparent_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     stance: {
       title: "Wise Stance",
       icon: "<:wisegrandparent:1131650518792536125>",
@@ -4147,7 +4130,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Sparkler_Parent_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:sparklerparent:1131650491923837018>",
       level: [
@@ -4189,7 +4172,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Pleaful_Parent_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:pleafulparent:1131650465076101212>",
       level: [
@@ -4231,7 +4214,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Haitousle_Teen_Location_Clement.webp",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:hairtousle:1131650432180175008>",
       level: [
@@ -4265,7 +4248,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Confetti_Cousin_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:confettiCousin:1131650251216920656>",
       level: [
@@ -4307,7 +4290,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Boogie_Kid_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:boogiekid:1131650220317478923>",
       level: [
@@ -4351,7 +4334,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Twirling_Champion_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:twirlingChampion:1153511535499550771>",
       level: [
@@ -4393,7 +4376,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Shushing_Light_Scholar_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:shushingscholar:1153511408537980969>",
       level: [
@@ -4435,7 +4418,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Puggyback_Lightseeker_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:piggyback:1153511511701065738>",
       level: [
@@ -4469,7 +4452,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "02_HF_Seasonal_Spirit_-_Laidback_Pioneer.png",
     },
-    cosmetics: [{}],
+
     stance: {
       title: "Laidback Stance",
       icon: "<:laidbackPioneer:1153511482949107765>",
@@ -4496,7 +4479,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "DoubleFive_Light_Catcher_Location_Clement.png",
     },
-    cosmetics: [{}],
+
     action: {
       icon: "<:doublefiveCatcher:1153511455132496032>",
       level: [
@@ -4530,7 +4513,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Crab_Whisperer_Location_Clement.jpg",
     },
-    cosmetics: [{}],
+
     call: {
       title: "Crab Call",
       icon: "<:crabWhisperer:1153511432349032508>",
@@ -4541,6 +4524,7 @@ export default <Record<string, SpiritsData>>{
   // Gratitude
   stretching: {
     name: "Stretching Guru",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/46/Gratitude-Spirit-Stretching-Guru.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Gratitude",
@@ -4558,7 +4542,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Stretching_Guru_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:stretchingGuru:1153511673949343805>",
       level: [
@@ -4580,9 +4564,44 @@ export default <Record<string, SpiritsData>>{
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Hair",
+        images: [
+          {
+            description: "The Hair",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/43/SoG2-2019_Hat.png",
+          },
+        ],
+        icon: "<:StretchingHair:1272175411849203763>",
+        price: "26 <:RegularCandle:1207793250895794226>",
+        spPrice: "<:GratitudeSC:1272164085815054337>",
+      },
+      {
+        name: "Cape",
+        images: [
+          {
+            description: "The Cape (Front)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e3/Gratitude_cape_prairie_front.png",
+          },
+          {
+            description: "The Cape (Interior)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8f/Gratitude_cape_prairie_inner.png",
+          },
+          {
+            description: "THe Cape (Back)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7b/Cape1-Season_of_Gratitude_2019.png",
+          },
+        ],
+        icon: "<:StretchingCape:1272175400071594086>",
+        price: "65 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+    ],
   },
   sassy: {
     name: "Sassy Drifter",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5d/Gratitude-Spirit-Sassy-Drifter.png",
     type: "Seasonal Spirit",
     realm: "Isle of Dawn",
     season: "Gratitude",
@@ -4607,15 +4626,54 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Sassy_Drifter_Location.jpg",
     },
-    cosmetics: [{}],
+
     stance: {
       title: "Sassy Stance",
       icon: "<:sassyDrifter:1153511651522396322>",
       image: "Sassy_Stance.gif",
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        icon: "<:SassyMask:1272172108193075326>",
+        images: [
+          {
+            description: "The Mask (Front)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/db/SoG2-2019_Cat_Mask.png",
+          },
+          {
+            description: "The Mask (Side)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f5/Sassy-Drifter-Mask-side.png",
+          },
+        ],
+        isSP: true,
+        price: "48 <:RegularCandle:1207793250895794226>",
+      },
+      {
+        name: "Hair",
+        icon: "<:SassyHair:1272172095169626163>",
+        images: [
+          {
+            description: "The Hair (Front)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/01/Sassy-Drifter-Hair-front.png",
+          },
+          {
+            description: "The Hair (Side)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1c/Hair40-SeasonOfGratitude_2019.png",
+          },
+          {
+            description: "The Hair (Back)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e3/Sassy-Drifter-Hair-back.png",
+          },
+        ],
+        price: "26 <:RegularCandle:1207793250895794226>",
+        spPrice: "6 <:GratitudeSC:1272164085815054337>",
+      },
+    ],
   },
   saluting: {
     name: "Saluting Protector",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/82/Gratitude-Spirit-Saluting-Protector.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Gratitude",
@@ -4634,7 +4692,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Saluting_Performer_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:salutingProtector:1153511628596334723>",
       level: [
@@ -4656,11 +4714,50 @@ export default <Record<string, SpiritsData>>{
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        icon: "<:SalutingMask:1272167717390254182>",
+        images: [
+          {
+            description: "The Mask",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/eb/Mask17-Seasonal_SoG_2019.png",
+          },
+        ],
+        isSP: true,
+        price: "42 <:RegularCandle:1207793250895794226>",
+      },
+      {
+        name: "Cape",
+        icon: "<:SalutingCape:1272167679687528520>",
+        images: [
+          {
+            description: "The Cape (Front)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/87/Gratitude_cape_white_front.png",
+          },
+          {
+            description: "The Cape (Interior)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/36/Cape2-Season_of_Gratitude_2019.png",
+          },
+          {
+            description: "The Cape (Back)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/92/Gratitude_cape_white_back.png",
+          },
+          {
+            description: "The Cape (Exterior)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/69/Saluting-Protector-Cape-Exterior.png",
+          },
+        ],
+        price: "75 <:RegularCandle:1207793250895794226>",
+        spPrice: "54 <:GratitudeSC:1272164085815054337>",
+      },
+    ],
   },
   provoking: {
     name: "Provoking Performer",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/25/Gratitude-Spirit-Provoking-Performer.png",
     season: "Gratitude",
     ts: {
       eligible: true,
@@ -4676,7 +4773,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Provoking_Performer_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:provokingProtector:1153511606475554906>",
       level: [
@@ -4698,10 +4795,37 @@ export default <Record<string, SpiritsData>>{
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        images: [
+          {
+            description: "THe Mask",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/42/Mask18-Seasonal_SoG_2019.png",
+          },
+        ],
+        icon: "<:PerformerMask:1272165997440270386>",
+        isSP: true,
+        price: "42 <:RegularCandle:1207793250895794226>",
+      },
+      {
+        name: "Hair",
+        images: [
+          {
+            description: "The Hair",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/05/Hair41-SeasonOfGratitude_2019.png",
+          },
+        ],
+        price: "34 <:RegularCandle:1207793250895794226>",
+        spPrice: "36 <:GratitudeSC:1272164085815054337>",
+        icon: "<:PerformerHair:1272165874937368626>",
+      },
+    ],
   },
   leaping: {
     name: "Leaping Dancer",
     type: "Seasonal Spirit",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/ae/Gratitude-Spirit-Leaping-Dancer.png",
     realm: "Valley of Triumph",
     season: "Gratitude",
     ts: {
@@ -4719,7 +4843,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Leaping_Dancer_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:leepingDancer:1153511583532716032>",
       level: [
@@ -4741,10 +4865,50 @@ export default <Record<string, SpiritsData>>{
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        images: [
+          {
+            description: "The Mask (Front)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/fd/Mask19-Seasonal_SoG_2019.png",
+          },
+          {
+            description: "The Mask (Side)",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f9/Leaping-Dancer-Mask-side.png",
+          },
+        ],
+        price: "54 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        icon: "<:LeapingMask:1272162395581841408>",
+      },
+      {
+        name: "Instrument",
+        images: [
+          {
+            description: "The Instrument",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c9/Gratitude-Leaping-Dancer-Small-Bell.png",
+          },
+          {
+            description: "Playing the Instrument",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8f/Instrument-Small_Bell-Seasonal.png",
+          },
+          {
+            description: "Instrument on a player's back",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/43/Gratitude_sm_bell_on_back.png",
+          },
+        ],
+        price: "40 <:RegularCandle:1207793250895794226>",
+        icon: "<:LeapingInstrument:1272162378565288037>",
+        spPrice: "10 <:GratitudeSC:1272164085815054337>",
+      },
+    ],
   },
   shaman: {
     name: "Greeting Shaman",
     type: "Seasonal Spirit",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3e/Gratitude-Spirit-Greeting-Shaman.png",
     realm: "Vault of Knowledge",
     season: "Gratitude",
     ts: {
@@ -4762,7 +4926,7 @@ export default <Record<string, SpiritsData>>{
       by: "Clement",
       image: "Greeting_Shaman_Location.png",
     },
-    cosmetics: [{}],
+
     emote: {
       icon: "<:greetingShaman:1153511559490965664>",
       level: [
@@ -4784,5 +4948,42 @@ export default <Record<string, SpiritsData>>{
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        images: [
+          {
+            description: "The Mask",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b7/Mask16-Seasonal_SoG_2019.png",
+          },
+        ],
+        isSP: true,
+        icon: "<:ShamanMask:1272141932579127357>",
+        price: "54 <:RegularCandle:1207793250895794226>",
+      },
+      {
+        name: "Instrument",
+        images: [
+          {
+            description: "The Instrument",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/18/Gratitude-Greeting-Shaman-Large_bell.png",
+          },
+          {
+            description: "Playing the Instrument",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4d/Instrument-Large_Bell-Seasonal.png",
+          },
+          {
+            description: "Instrument on the Back",
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2c/Gratitude_lg_bell_on_back.png",
+          },
+        ],
+        icon: "<:ShamanInstrument:1272141953798242327>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        spPrice: "18 <:GratitudeSC:1272164085815054337>",
+      },
+    ],
   },
 };
+
+export default spiritsData;

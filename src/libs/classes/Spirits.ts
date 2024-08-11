@@ -22,6 +22,14 @@ const lctnBtn = new ButtonBuilder().setCustomId("spirit_location").setLabel("Loc
 // Define Friendship Tree button
 const treeBtn = new ButtonBuilder().setCustomId("spirit_tree").setStyle(ButtonStyle.Secondary).setLabel("Friendship Tree");
 
+// Define Cosmetic Button
+const cosmeticBtn = (icon: string, value: string) =>
+  new ButtonBuilder()
+    .setCustomId("spirit_cosmetic-" + value)
+    .setEmoji(icon)
+    .setStyle(ButtonStyle.Secondary)
+    .setLabel("Cosmetic(s)");
+
 const getBackBtn = (emote: string, id: string): ButtonBuilder =>
   new ButtonBuilder().setCustomId(id).setEmoji(emote).setStyle(ButtonStyle.Success);
 
@@ -136,7 +144,13 @@ export class Spirits {
     // prettier-ignore
     if (data.emote || data.stance || data.action || data.call) row.addComponents(getExpressionBtn(data, this.t, (data.emote?.icon ?? data.call?.icon ?? data.stance?.icon ?? data.action?.icon) as string));
 
-    // TODO: Add cosmetics and cosmetics buttons
+    if (data.cosmetics?.length) {
+      const [value] = Object.entries(this.client.spiritsData).find(
+        ([, v]) => v.name.toLowerCase() === this.data.name.toLowerCase(),
+      )!;
+      row.addComponents(cosmeticBtn(data.cosmetics[Math.floor(Math.random() * data.cosmetics.length)].icon, value));
+    }
+
     return row;
   }
 
@@ -153,11 +167,13 @@ export class Spirits {
       const reply = await interaction.fetchReply();
 
       const collector = reply.createMessageComponentCollector({
-        filter: (i) => customIDs.includes(i.customId),
         idle: 60_000,
       }) as InteractionCollector<ButtonInteraction>;
 
       collector.on("collect", async (int: ButtonInteraction): Promise<void> => {
+        // Do not move this to filter (need the idle to reset even if an unknown custom id button is clicked)
+        if (!customIDs.includes(int.customId)) return;
+
         const ts = await interaction.t();
         if (int.user.id !== interaction.user.id) {
           await int.reply({

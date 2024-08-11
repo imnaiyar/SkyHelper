@@ -45,7 +45,7 @@ async function buildSuccessResponse(output: any, client: SkyHelper, type: string
   embeds: EmbedBuilder[];
 }> {
   // Token protection
-  output = util.inspect(output, { depth: depth }).replaceAll(client.token, "~~REDACTED~~");
+  output = (typeof output !== "string" ? util.inspect(output, { depth: depth }) : output).replaceAll(client.token, "~~REDACTED~~");
   let embOutput;
 
   if (!haste && output.length <= 2048) {
