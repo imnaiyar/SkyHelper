@@ -139,5 +139,13 @@ declare module "discord.js" {
      * @param user
      */
     checkAdmin(user: UserSession): Promise<void>;
+
+    /**
+     * Resolves an application command into a mention
+     * @param command The command to mention
+     * @param sub Subcoomand if it's subcommand mention
+     * @returns The command mentions
+     */
+    mentionCommand(command: ApplicationCommand, sub?: string): string;
   }
 }
