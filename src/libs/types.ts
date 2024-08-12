@@ -113,9 +113,13 @@ interface Level {
   image: string;
 }
 
+type CosmeticTypes = "Cape" | "Mask" | "Instrument" | "Prop" | "Face Accessory" | "Hair" | "Hair Accessory";
 interface Cosmetic {
   /* Name of the cosmetic */
   name: string;
+
+  /* Type of this cosmetic */
+  type?: CosmeticTypes;
 
   /* Emoji icon of the cosmetic */
   icon: string;
@@ -131,9 +135,9 @@ interface Cosmetic {
 
   /* Seasonal price, if any */
   spPrice?: string;
-  
+
   /* Any extra notes about this cosmetic */
-  notes?: string[]
+  notes?: string[];
 }
 
 interface BaseSpiritData {
