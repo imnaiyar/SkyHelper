@@ -22,6 +22,13 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
     }
     return v.realm && v.realm.toLowerCase() === seasonOrRealm.toLowerCase();
   });
+  if (!spirits.length) {
+    return await int.editReply(
+      "Something went wrong! No spirits found for this season. If you think it's wrong, do let us know via" +
+        " " +
+        client.mentionCommand(await client.getCommand("utils"), "contact-us"),
+    );
+  }
   let value = spirits[0][0];
   const placehoder = typeof seasonOrRealm === "string" ? `${seasonOrRealm} Spirits` : `Season of ${seasonOrRealm.name}`;
   let sprtCltr: InteractionCollector<ButtonInteraction> | undefined;

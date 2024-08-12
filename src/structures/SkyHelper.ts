@@ -403,4 +403,18 @@ export class SkyHelper extends Client<true> {
       throw new HttpException("Missing access", HttpStatus.UNAUTHORIZED);
     }
   }
+
+  /**
+   * Resolves an application command into a mention
+   * @param command The command to mention
+   * @param sub Subcoomand if it's subcommand mention
+   * @returns The command mentions
+   */
+  public mentionCommand(command: ApplicationCommand, sub?: string) {
+    if (sub) {
+      const option = command.options.find((o) => o.type === 1 && o.name === sub);
+      if (!option) throw new Error(`THe provided command doesn't have any subcommand option with the name ${sub}`);
+    }
+    return `</${command.name}${sub ? ` ${sub}` : ""}:${command.id}`;
+  }
 }

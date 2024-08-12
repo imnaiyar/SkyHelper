@@ -598,8 +598,8 @@ export default {
     icon: "<:belonging:1130958323823423509>",
     from: ["18-11-2019", "12-01-2020"],
   },
-  lightseeker: {
-    name: "Lightseeker",
+  lightseekers: {
+    name: "Lightseekers",
     icon: "<:lightseekers:1130958300293365870>",
     from: ["23-09-2019", "10-11-2019"],
   },
