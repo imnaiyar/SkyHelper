@@ -54,7 +54,6 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
       embeds: [manager.getEmbed()],
       ...(btns.components?.length ? { components: [row, manager.getButtons()] } : { components: [row] }),
     });
-    sprtCltr = await manager.handleInt(int);
     return msg;
   };
   const message = await getUpdate(int);

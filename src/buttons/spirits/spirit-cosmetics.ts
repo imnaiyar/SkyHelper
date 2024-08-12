@@ -54,7 +54,9 @@ export default {
         new ButtonBuilder()
           .setCustomId("cosmetics_back")
           .setLabel("Back")
-          .setEmoji(data.call?.icon || data.action?.icon || data.emote?.icon || data.stance?.icon || "")
+          .setEmoji(
+            data.call?.icon || data.action?.icon || data.emote?.icon || data.stance?.icon || "<:spiritIcon:1206501060303130664>",
+          )
           .setStyle(ButtonStyle.Danger),
 
         ...(imageTotal > 1
@@ -77,7 +79,7 @@ export default {
       if (d.price) desc += `- **Cost**: ${d.price}\n`;
       if (d.spPrice) desc += `- **Season Cost**: ${d.spPrice}\n`;
       if (d.isSP) desc += `- This item was season pass exclusive\n`;
-      if (d.notes?.length) desc += "\n**Notes**:\n" + d.notes.map((n) => `- -# ${n}`).join("\n") + "\n";
+      if (d.notes?.length) desc += "\n**Notes**:\n" + d.notes.map((n) => `-# - ${n}`).join("\n") + "\n";
 
       desc += `\n**${d.images[imageIndex - 1].description}**${imageTotal > 1 ? ` (${imageIndex}/${imageTotal})` : ""}`;
       embed.setDescription(desc).setImage(d.images[imageIndex - 1].image);

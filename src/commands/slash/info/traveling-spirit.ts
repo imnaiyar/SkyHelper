@@ -54,7 +54,6 @@ export default {
         .setImage("https://cdn.imnaiyar.site/" + spirit.tree!.image);
       const manager = new Spirits(spirit, t, client);
       await interaction.followUp({ embeds: [embed], components: [manager.getButtons()] });
-      manager.handleInt(interaction).catch((err) => client.logger.error(err));
     } else {
       let description = ts.visiting
         ? t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING", {

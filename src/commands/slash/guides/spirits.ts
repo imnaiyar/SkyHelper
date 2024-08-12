@@ -25,7 +25,6 @@ export default {
       embeds: [manager.getEmbed()],
       ...(btns.components?.length && { components: [btns] }),
     });
-    manager.handleInt(interaction).catch((err) => client.logger.error(err));
   },
 
   async autocomplete(interaction, client) {
