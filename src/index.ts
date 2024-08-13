@@ -4,8 +4,7 @@ import { initializeMongoose } from "#src/database/mongoose";
 const client = new SkyHelper();
 import { Dashboard } from "../dashboard/main.js";
 import chalk from "chalk";
-// Intentional error
-console.log(client.nonexistentproperty)
+
 // Init Sentry
 if (!process.isBun) {
   console.log(chalk.blueBright("\n\n<------------------------ Initiaizing Sentry --------------------------->\n"));
