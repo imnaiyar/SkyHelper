@@ -113,7 +113,7 @@ interface Level {
   image: string;
 }
 
-type CosmeticTypes = "Cape" | "Mask" | "Instrument" | "Prop" | "Face Accessory" | "Hair" | "Hair Accessory";
+type CosmeticTypes = "Cape" | "Mask" | "Instrument" | "Prop" | "Face Accessory" | "Hair" | "Hair Accessory" | "Music Sheet" | "Outfit";
 interface Cosmetic {
   /* Name of the cosmetic */
   name: string;

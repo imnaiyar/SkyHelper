@@ -1,5 +1,7 @@
 import { Button } from "#structures";
+
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+
 
 export default {
   data: {
@@ -42,7 +44,7 @@ export default {
           ),
       );
       const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        ...(imageTotal > 1
+        ...(imageTotal && imageTotal > 1
           ? [
               new ButtonBuilder()
                 .setCustomId("cosmetic_image_prev")
@@ -59,7 +61,7 @@ export default {
           )
           .setStyle(ButtonStyle.Danger),
 
-        ...(imageTotal > 1
+        ...(imageTotal && imageTotal > 1
           ? [
               new ButtonBuilder()
                 .setCustomId(`cosmetic_image_next`)
@@ -82,8 +84,11 @@ export default {
       if (d.isSP) desc += `- This item was season pass exclusive\n`;
       if (d.notes?.length) desc += "\n**Notes**:\n" + d.notes.map((n) => `-# - ${n}`).join("\n") + "\n";
 
-      desc += `\n**${d.images[imageIndex - 1].description}**${imageTotal > 1 ? ` (${imageIndex}/${imageTotal})` : ""}`;
-      embed.setDescription(desc).setImage(d.images[imageIndex - 1].image);
+      if (imageTotal) {
+        desc += `\n**${d.images[imageIndex - 1].description}**${imageTotal > 1 ? ` (${imageIndex}/${imageTotal})` : ""}`;
+        embed.setDescription(desc);
+        embed.setImage(d.images[imageIndex - 1].image);
+      }
       return { embeds: [embed], components: [stringSelect, btns] };
     };
     const reply = await interaction.editReply(getResponse());
