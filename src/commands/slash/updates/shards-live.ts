@@ -168,4 +168,3 @@ export default {
     userPermissions: ["ManageGuild"],
   },
 } satisfies SlashCommand;
-

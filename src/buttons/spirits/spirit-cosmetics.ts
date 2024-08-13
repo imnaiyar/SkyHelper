@@ -2,7 +2,6 @@ import { Button } from "#structures";
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 
-
 export default {
   data: {
     name: "spirit_cosmetic",

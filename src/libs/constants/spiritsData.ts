@@ -3789,6 +3789,7 @@ const spiritsData: Record<string, SpiritsData> = {
   },
   crab_walker: {
     name: "Crab Walker",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/54/Enchantment-Spirit-Crab-Walker.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Enchantment",
@@ -3806,7 +3807,6 @@ const spiritsData: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Crab_Walker_Location_Clement.jpg",
     },
-
     emote: {
       icon: "<:crabwalker:1131649778434981908>",
       level: [
@@ -3828,6 +3828,49 @@ const spiritsData: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:CrabWalkerHair:1272232776225259594>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/39/Season_of_enchantment_hair_crabwalk_v2.png/revision/latest/scale-to-width-down/500?cb=20210725155004",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "12 <:EnchantmentCandle:1272859574159802400>",
+        notes: [
+          "Note that this item is considered a Hair, not a Hair Accessory, and as such it can not be worn over other Hairstyles",
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:CrabWalkerCape:1272232767484203009>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/bc/Season_of_enchantment_cape_crab_front_v2.png",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e3/Season_of_enchantment_cape_crab_open_v2.png",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a5/Season_of_enchantment_cape_crab_back_v2.png",
+          },
+        ],
+        price: "60 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+    ],
   },
 
   // Rhythm
@@ -3880,15 +3923,16 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "Front",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Season_of_rhythm_pants_valley_juggle_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Season_of_rhythm_pants_valley_juggle_v2.png",
           },
           {
             description: "Back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3d/Troupe-Juggler-Outfit-Back.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3d/Troupe-Juggler-Outfit-Back.png",
           },
-          ],
+        ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        spPrice: "60 <:RythmCandle:1272754526008381510>"
+        spPrice: "60 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Hair",
@@ -3897,11 +3941,12 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Hair",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/70/Season_of_rhythm_hair_valley_juggle_v2.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/70/Season_of_rhythm_hair_valley_juggle_v2.png",
+          },
+        ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "12 <:RythmCandle:1272754526008381510>"
+        spPrice: "12 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Cape",
@@ -3910,23 +3955,26 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "Front",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1d/Season_of_rhythm_cape_valley_juggle_front_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1d/Season_of_rhythm_cape_valley_juggle_front_v2.png",
           },
           {
             description: "Interior",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3f/Season_of_rhythm_cape_valley_juggle_open_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3f/Season_of_rhythm_cape_valley_juggle_open_v2.png",
           },
           {
             description: "Back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7f/Season_of_rhythm_cape_valley_juggle_back_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7f/Season_of_rhythm_cape_valley_juggle_back_v2.png",
           },
           {
             description: "Exterior",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/97/Troupe-Juggler-Cape-Exterior.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/97/Troupe-Juggler-Cape-Exterior.png",
           },
-          ],
+        ],
         price: "75 <:RegularCandle:1207793250895794226>",
-        isSP: true
+        isSP: true,
       },
       {
         name: "Stone brazier",
@@ -3935,17 +3983,19 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Prop",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f8/Summer_prop_lantern_out.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f8/Summer_prop_lantern_out.png",
           },
           {
             description: "On player's back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/aa/Summer_prop_lantern_on_back.png"
-          }
-          ],
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/aa/Summer_prop_lantern_on_back.png",
+          },
+        ],
         price: "15 <:regularHeart:1207793247792013474>",
-        notes: ["This item was not available during the Season of Rhythm. Instead, it was added to the Troupe Juggler's Friend Tree during their first visit as a Traveling Spirit on September 16, 2021, in conjunction with Days of Summer"]
-      }
-      ]
+        notes: [
+          "This item was not available during the Season of Rhythm. Instead, it was added to the Troupe Juggler's Friend Tree during their first visit as a Traveling Spirit on September 16, 2021, in conjunction with Days of Summer",
+        ],
+      },
+    ],
   },
   greeter: {
     name: "Troupe Greeter",
@@ -3995,16 +4045,17 @@ const spiritsData: Record<string, SpiritsData> = {
         icon: "<:TroupeGreeterOutfit:1272777108137054279>",
         images: [
           {
-           description: "Front",
-           image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Season_of_rhythm_pants_isle_welcome_v2.png"
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Season_of_rhythm_pants_isle_welcome_v2.png",
           },
           {
             description: "Back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0f/Troupe-Greeter-Outfit-Back.png"
-          }
-          ],
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0f/Troupe-Greeter-Outfit-Back.png",
+          },
+        ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        isSP: true
+        isSP: true,
       },
       {
         name: "Mask",
@@ -4013,13 +4064,14 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Mask",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/71/Season_of_rhythm_mask_isle_welcome_v2.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/71/Season_of_rhythm_mask_isle_welcome_v2.png",
+          },
+        ],
         price: "48 <:RegularCandle:1207793250895794226>",
-        spPrice: "30 <:RythmCandle:1272754526008381510>"
-      }
-      ]
+        spPrice: "30 <:RythmCandle:1272754526008381510>",
+      },
+    ],
   },
   director: {
     name: "Thoughtful Director",
@@ -4070,15 +4122,16 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "Front",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/03/Season_of_rhythm_mask_vault_think_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/03/Season_of_rhythm_mask_vault_think_v2.png",
           },
           {
             description: "Side",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a6/Thoughtful-Director-Mask-side.png"
-          }
-          ],
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a6/Thoughtful-Director-Mask-side.png",
+          },
+        ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        isSP: true
+        isSP: true,
       },
       {
         name: "Cape",
@@ -4087,23 +4140,27 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "Front",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8b/Season_of_rhythm_cape_vault_think_front_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8b/Season_of_rhythm_cape_vault_think_front_v2.png",
           },
           {
             description: "Interior",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/68/Season_of_rhythm_cape_vault_think_open_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/68/Season_of_rhythm_cape_vault_think_open_v2.png",
           },
           {
             description: "Back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/54/Season_of_rhythm_cape_vault_think_back_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/54/Season_of_rhythm_cape_vault_think_back_v2.png",
           },
           {
             description: "Exterior",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/82/Thoughtful-Director-Cape-back-exterior.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/82/Thoughtful-Director-Cape-back-exterior.png",
+          },
+        ],
         price: "75 <:RegularCandle:1207793250895794226>",
-        isSP: true
+        isSP: true,
       },
       {
         name: "Xylophone",
@@ -4112,22 +4169,28 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Xylophone",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c4/Rhythm-Thoughtful-Director-xylophone.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c4/Rhythm-Thoughtful-Director-xylophone.png",
           },
           {
             description: "On player's back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2e/Season_of_rhythm_instrument_vault_thinking_on_back_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2e/Season_of_rhythm_instrument_vault_thinking_on_back_v2.png",
           },
           {
             description: "Playing the instrument",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a0/Season_of_rhythm_instrument_vault_thinking_playing_v2.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a0/Season_of_rhythm_instrument_vault_thinking_playing_v2.png",
+          },
+        ],
         price: "65 <:RegularCandle:1207793250895794226>",
         spPrice: "54 <:RythmCandle:1272754526008381510>",
-        notes: ["In Harmony Hall, the Xylophone can be found on the back wall, behind and to the left of the front counter, next to the alcove containing the two pianos", "It is one of the highest-pitched Instrument available in the game, along with the Winter Piano"]
-      }
-      ]
+        notes: [
+          "In Harmony Hall, the Xylophone can be found on the back wall, behind and to the left of the front counter, next to the alcove containing the two pianos",
+          "It is one of the highest-pitched Instrument available in the game, along with the Winter Piano",
+        ],
+      },
+    ],
   },
   pianist: {
     name: "Respectful Pianist",
@@ -4178,11 +4241,12 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Mask",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e4/Season_of_rhythm_mask_wasteland_respect_v2.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e4/Season_of_rhythm_mask_wasteland_respect_v2.png",
+          },
+        ],
         price: "48 <:RegularCandle:1207793250895794226>",
-        spPrice: "68 <:RythmCandle:1272754526008381510>"
+        spPrice: "68 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Hair",
@@ -4191,11 +4255,12 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Hair",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1e/Season_of_rhythm_hair_wasteland_respect_v2.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1e/Season_of_rhythm_hair_wasteland_respect_v2.png",
+          },
+        ],
         price: "26 <:RegularCandle:1207793250895794226>",
-        spPrice: "14 <:RythmCandle:1272754526008381510>"
+        spPrice: "14 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Winter Piano",
@@ -4204,22 +4269,26 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Winter Piano",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f6/Rhythm-Respectul-Pianist-Piano.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f6/Rhythm-Respectul-Pianist-Piano.png",
           },
           {
             description: "Playing the Piano",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/50/Season_of_rhythm_instrument_wasteland_respect_playing_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/50/Season_of_rhythm_instrument_wasteland_respect_playing_v2.png",
           },
           {
             description: "On player's back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d7/Season_of_rhythm_instrument_wasteland_respect_on_back_v2.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d7/Season_of_rhythm_instrument_wasteland_respect_on_back_v2.png",
+          },
+        ],
         price: "75 <:RegularCandle:1207793250895794226>",
         isSP: true,
-        notes: ["In Harmony Hall, the Winter Piano can be found on the back wall, behind and to the left of the front counter, in an alcove below the standard Piano"]
-      }
-      ]
+        notes: [
+          "In Harmony Hall, the Winter Piano can be found on the back wall, behind and to the left of the front counter, in an alcove below the standard Piano",
+        ],
+      },
+    ],
   },
   spin_dancer: {
     name: "Festival Spin Dancer",
@@ -4270,15 +4339,16 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "Front",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f7/Season_of_rhythm_pants_prairie_dance_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f7/Season_of_rhythm_pants_prairie_dance_v2.png",
           },
           {
             description: "Back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a0/Festival-Spin-Dancer-Outfit-Back.png"
-          }
-          ],
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a0/Festival-Spin-Dancer-Outfit-Back.png",
+          },
+        ],
         price: "65 <:RegularCandle:1207793250895794226>",
-        isSP: true
+        isSP: true,
       },
       {
         name: "Hair",
@@ -4287,19 +4357,20 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "Front",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/11/Season_of_rhythm_hair_prairie_dance_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/11/Season_of_rhythm_hair_prairie_dance_v2.png",
           },
           {
             description: "Side",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a1/Festival-Spin-Dancer-Hair-side.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a1/Festival-Spin-Dancer-Hair-side.png",
           },
           {
             description: "Back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3c/Festival-Spin-Dancer-Hair-back.png"
-          }
-          ],
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3c/Festival-Spin-Dancer-Hair-back.png",
+          },
+        ],
         price: "34 <:RegularCandle:1207793250895794226>",
-        spPrice: "36 <:RythmCandle:1272754526008381510>"
+        spPrice: "36 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Purple Flag",
@@ -4308,17 +4379,20 @@ const spiritsData: Record<string, SpiritsData> = {
         images: [
           {
             description: "The Flag",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5f/Festival_spin_dancers_flag.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5f/Festival_spin_dancers_flag.png",
           },
           {
             description: "On player's back",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4e/Festival-Spin-Dancer-Prop-on-back.png"
-          }
-          ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4e/Festival-Spin-Dancer-Prop-on-back.png",
+          },
+        ],
         price: "30 <:RegularCandle:1207793250895794226>",
-        notes: ["This item was not available during the Season of Rhythm. Instead, it was added to the Festival Spin Dancer's Friend Tree during their second visit as a Traveling Spirit on October 14, 2021"]
-      }
-      ]
+        notes: [
+          "This item was not available during the Season of Rhythm. Instead, it was added to the Festival Spin Dancer's Friend Tree during their second visit as a Traveling Spirit on October 14, 2021",
+        ],
+      },
+    ],
   },
   actor: {
     name: "Admiring Actor",
@@ -4367,42 +4441,43 @@ const spiritsData: Record<string, SpiritsData> = {
         type: "Outfit",
         icon: "<:ActorOutfit:1272753382892769381>",
         images: [
-           {
+          {
             description: "The Outfit (Front)",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c7/Season_of_rhythm_pants_forest_kisses_v2.png"
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c7/Season_of_rhythm_pants_forest_kisses_v2.png",
           },
           {
             description: "The Outfit (Back)",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/04/Admiring-Actor-Outfit-Back.png"
+            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/04/Admiring-Actor-Outfit-Back.png",
           },
-          ],
+        ],
         price: "65 <:RegularCandle:1207793250895794226>",
-        spPrice: "42 <:RythmCandle:1272754526008381510>"
+        spPrice: "42 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Mask",
         type: "Mask",
-        icon: "<:ActorMask:1272753373862695014>", 
+        icon: "<:ActorMask:1272753373862695014>",
         images: [
           {
             description: "The Mask",
-            image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d1/Season_of_rhythm_mask_forest_kisses_v2.png"
-          }
-      ],
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d1/Season_of_rhythm_mask_forest_kisses_v2.png",
+          },
+        ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        isSP: true
-  },
+        isSP: true,
+      },
       {
         name: "Music Sheet #6",
         type: "Music Sheet",
         icon: "<:ActorSheet:1272753357269766226>",
         images: [],
         price: "15 <:RegularCandle:1207793250895794226>",
-        isSP: true
-      }
-      ],
+        isSP: true,
+      },
+    ],
   },
-  
 
   // Belonging
   wise_grandparent: {

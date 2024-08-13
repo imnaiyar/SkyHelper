@@ -53,4 +53,3 @@ export default {
   category: "Info",
   cooldown: 20,
 } satisfies SlashCommand;
-

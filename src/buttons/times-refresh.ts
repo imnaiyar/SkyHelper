@@ -6,7 +6,7 @@ export default {
     name: "times-refresh",
   },
   async execute(interaction, _t, client) {
-    await interaction.deferUpdate()
+    await interaction.deferUpdate();
     const embed = await getTimesEmbed(client, _t);
     await interaction.editReply({ embeds: [embed] });
   },
