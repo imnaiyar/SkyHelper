@@ -1,15 +1,18 @@
 name: Deploy
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types:
-      - completed
+  push:
+    branches:
+      - feat/spiritsCosmetics
+    paths:
+      - "src/**"
+      - "dashboard/**"
+      - "locales/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'feat/spiritsCosmetics' && github.event.workflow_run.event == 'push' }}
+    if: "!contains(github.event.head_commit.message, '[skip ci]')" # Skip CI
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
