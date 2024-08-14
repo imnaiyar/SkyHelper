@@ -71,6 +71,7 @@ const data: Record<string, SpiritsData> = {
   },
   jellywhisperer: {
     name: "Jelly Whisperer",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/43/Sanctuary-Spirit-Jelly-Whisperer.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Sanctuary",
@@ -94,6 +95,72 @@ const data: Record<string, SpiritsData> = {
       icon: "<:jellywhisperer:1131649695807176895>",
       image: "Jellyfish_Call-1.mp4",
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        type: "Outfit",
+        icon: "<:JellyWOutfit:1273364757734363241>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b2/Season_of_sanctuary_pants_jelly_v2.png/revision/latest/scale-to-width-down/400?cb=20230627175307",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/78/Jelly-Whisperer-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225195851",
+          },
+        ],
+        price: "65 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Jellyfish Hair",
+        type: "Hair",
+        icon: "<:JellyWHair:1273364744849592420>",
+        images: [
+          {
+            description: "The hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/08/Season_of_sanctuary_hair_jelly_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224416",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "14 <:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Prop",
+        type: "Prop",
+        icon: "<:JellyWProp:1273364730257473608>",
+        images: [
+          {
+            description: "The prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/84/Jelly_whisperers_beach_umbrella.png/revision/latest/scale-to-width-down/400?cb=20220902224619",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/00/Jelly_whisperers_beach_umbrella_on_back.png/revision/latest/scale-to-width-down/400?cb=20230526222120",
+          },
+        ],
+        price: "15 <:regularHeart:1207793247792013474>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces and protects players who stand under it from polluted rain",
+          "Note that it cannot be held in hand while walking (unlike the umbrellas from the <:laidbackPioneer:1153511482949107765> Laidback Pioneer, the Days of Summer event, or the Season of Lightseekers Ultimate Prop)",
+          "This item was not available during the Season of Sanctuary. Instead, it was added to the Jelly Whisperer's Friendship Tree during their first visit as a Traveling Spirit on November 25, 2021",
+        ],
+      },
+      {
+        name: "Music Shett #14",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "6 <:SanctuaryCandle:1273332588190240778>",
+      },
+    ],
   },
   grouch: {
     name: "Hiking Grouch",
