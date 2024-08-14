@@ -3,8 +3,9 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   spinning_mentor: {
     name: "Spinning Mentor",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2b/Dreams-Spirit-Spinning-Mentor.png",
     type: "Seasonal Spirit",
-    realm: "Valley of Triumoh",
+    realm: "Valley of Triumph",
     season: "Dreams",
     ts: {
       eligible: true,
@@ -20,7 +21,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Spinning_Mentor_Location_Clement.png",
     },
-
     emote: {
       icon: "<:mentor:1131645203548209162>",
       level: [
@@ -42,6 +42,60 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:MentorMask:1273189554429628497>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/ed/Dreams_mask_spinning_v2.png/revision/latest/scale-to-width-down/500?cb=20240814071503",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "54 <:DreamsCandle:1273190033855221831>",
+      },
+      {
+        name: "Hair",
+        icon: "<:MentorHair:1273189539074015285>",
+        type: "Hair",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/ab/Dreams_hair_spinning_v2.png/revision/latest/scale-to-width-down/600?cb=20210727194552",
+          },
+        ],
+        price: "44 <:RegularCandle:1207793250895794226>",
+        spPrice: "13 <:DreamsCandle:1273190033855221831>",
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:MentorCape:1273189522288676916>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/ab/Dreams_cape_spinning_front_v2.png/revision/latest/scale-to-width-down/500?cb=20210727194542",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1b/Dreams_cape_spinning_open_v2.png/revision/latest/scale-to-width-down/500?cb=20210727194538",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4f/Dreams_cape_spinning_back_v2.png/revision/latest/scale-to-width-down/500?cb=20210727194540",
+          },
+        ],
+        price: "70 <:DreamsCandle:1273190033855221831>",
+        isSP: true,
+      },
+    ],
   },
   postman: {
     name: "Peeking Postman",
