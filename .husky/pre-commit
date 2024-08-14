@@ -1,0 +1,1 @@
+echo "Preparing Commit...Starting linting and tests" && pnpm format && pnpm test

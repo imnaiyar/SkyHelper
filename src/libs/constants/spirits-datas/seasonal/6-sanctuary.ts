@@ -324,4 +324,3 @@ const data: Record<string, SpiritsData> = {
 };
 
 export default data;
-
