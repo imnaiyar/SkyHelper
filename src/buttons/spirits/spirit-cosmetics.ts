@@ -1,6 +1,6 @@
 import { Button } from "#structures";
 
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, parseEmoji, StringSelectMenuBuilder } from "discord.js";
 
 export default {
   data: {
@@ -77,7 +77,9 @@ export default {
           `https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${(d.type ? d.type : d.name).split(" ").join("_")}`,
         )
         .setAuthor({ name: `${data.name} Cosmetics (${index}/${total})`, iconURL: data.image });
-
+      const emojiId = parseEmoji(d.icon)?.id,
+        emojiUrl = emojiId ? client.rest.cdn.emoji(emojiId) : null;
+      embed.setThumbnail(emojiUrl);
       let desc = "";
       if (d.type) desc += `- **Type**: ${d.type}\n`;
       if (d.price) desc += `- **Cost**: ${d.price}\n`;
