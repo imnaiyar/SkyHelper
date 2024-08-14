@@ -45,6 +45,7 @@ const data: Record<string, SpiritsData> = {
   },
   scarecrow_farmer: {
     name: "Scarecrow Farmer",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a1/Enchantment-Spirit-Scarecrow-Farmer.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Enchantment",
@@ -62,7 +63,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Scarecrow_Farmer_Location_Clement.png",
     },
-
     emote: {
       icon: "<:scarecrow:1131649929492828180>",
       level: [
@@ -84,6 +84,49 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:FarmerMask:1273177460858425364>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/04/Season_of_enchantment_mask_scare_v2.png/revision/latest/scale-to-width-down/500?cb=20240723014129",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:FarmerHair:1273177427216171148>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1d/Season_of_enchantment_hair_scare_v2.png/revision/latest/scale-to-width-down/500?cb=20240723020609",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/47/Scarecrow-Farmer-Hair-side.png/revision/latest/scale-to-width-down/500?cb=20240723024714",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f2/Scarecrow-Farmer-Hair-back.png/revision/latest/scale-to-width-down/500?cb=20240723024712",
+          },
+        ],
+        price: "34 <:RegularCandle:1207793250895794226>",
+        spPrice: "30 <:EnchantmentCandle:1272859574159802400>",
+        notes: [
+          "Note that this item is considered a Hair, not a Hair Accessory, and as such it can not be worn over other Hairstyles",
+        ],
+      },
+    ],
   },
   herbalist: {
     name: "Playfighting Herbalist",
