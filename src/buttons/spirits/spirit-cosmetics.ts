@@ -73,7 +73,9 @@ export default {
 
       const embed = new EmbedBuilder()
         .setTitle(`${d.icon} ${d.type ? d.type : d.name}`)
-        .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${d.type ? d.type : d.name}`)
+        .setURL(
+          `https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${(d.type ? d.type : d.name).split(" ").join("_")}`,
+        )
         .setAuthor({ name: `${data.name} Cosmetics (${index}/${total})`, iconURL: data.image });
 
       let desc = "";
