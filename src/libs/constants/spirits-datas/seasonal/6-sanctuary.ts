@@ -29,6 +29,7 @@ const data: Record<string, SpiritsData> = {
   },
   rallying_thrillseeker: {
     name: "Rallying Thrillseeker",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c0/Sanctuary-Spirit-Rallying-Thrillseeker.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Sanctuary",
@@ -68,6 +69,41 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        type: "Outfit",
+        icon: "<:RallyingThrillOutfit:1273367854581940339>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/38/Season_of_sanctuary_pants_rally_v2.png/revision/latest/scale-to-width-down/400?cb=20230627175504",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c7/Rallying-Thrillseeker-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225200548",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        spPrice: "36 <:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:RallyingThrillHair:1273367839323193476>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/95/Season_of_sanctuary_hair_rally_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224418",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "10 <:SanctuaryCandle:1273332588190240778>",
+      },
+    ],
   },
   jellywhisperer: {
     name: "Jelly Whisperer",
