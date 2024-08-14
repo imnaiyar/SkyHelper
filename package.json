@@ -20,7 +20,8 @@
     "commands:bun": "bun run src/libs/registerCommands.ts",
     "format": "prettier --write \"**/*.{js,css,ejs, ts}\"",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
-    "setup": "node scripts/env-cli.js"
+    "setup": "node scripts/env-cli.js",
+    "prepare": "husky"
   },
   "author": "Naiyar Imam",
   "license": "MIT",
@@ -87,6 +88,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@nestjs/schematics": "^10.1.1",
     "@nestjs/testing": "^10.3.8",
     "@types/cors": "^2.8.17",
@@ -103,6 +106,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^46.8.2",
+    "husky": "^9.1.4",
     "jest": "^29.7.0",
     "prettier": "^3.0.3",
     "prettier-plugin-ejs": "^0.0.18",
@@ -115,4 +119,3 @@
     "@sapphire/type"
   ]
 }
-

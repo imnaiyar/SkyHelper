@@ -181,6 +181,7 @@ const data: Record<string, SpiritsData> = {
   },
   sunbather: {
     name: "Chill Sunbather",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d5/Sanctuary-Spirit-Chill-Sunbather.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Sanctuary",
@@ -198,7 +199,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Spirit_-_Chill_Sunbather_Location_Clement.png",
     },
-
     emote: {
       icon: "<:sunbather:1131649605336047676>",
       level: [
@@ -220,7 +220,108 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Sunglass",
+        type: "Face Accessory",
+        icon: "<:SunbatherGlass:1273331806661247112>",
+        images: [
+          {
+            description: "The Sunglass",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5b/Season_of_sanctuary_mask_chill_v2.png/revision/latest/scale-to-width-down/400?cb=20240119025421",
+          },
+          {
+            description: "Yellow/Orange tint example",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/ee/Chill-Sunbather-Glasses-Tint.png/revision/latest/scale-to-width-down/400?cb=20230525015859",
+          },
+        ],
+        price: "66 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        notes: [
+          "In the [0.21.0](https://sky-children-of-the-light.fandom.com/wiki/Update:Live_0.21.0_(215710)) Patch, a toggle was added to apply an orange/yellow tint to the game",
+        ],
+      },
+      {
+        name: "Sunhat",
+        type: "Hair Accessory",
+        icon: "<:SunbatherHat:1273331790672691250>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/49/Season_of_sanctuary_hair_chill_v2.png/revision/latest/scale-to-width-down/400?cb=20240119081750",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b0/Chill-Sunbather-Hat-Crab.png/revision/latest/scale-to-width-down/400?cb=20240119082018",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/24/Chill-Sunbather-Hair-Accessory-back.png/revision/latest/scale-to-width-down/400?cb=20240119082238",
+          },
+        ],
+        price: "44 <:RegularCandle:1207793250895794226>",
+        spPrice: "54 <:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:SunbatherCape:1273331778152828981>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d1/Season_of_sanctuary_cape_chill_front_v2.png/revision/latest/scale-to-width-down/400?cb=20240104022633",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/6e/Season_of_sanctuary_cape_chill_open_v2.png/revision/latest/scale-to-width-down/400?cb=20240104022525",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3a/Season_of_sanctuary_cape_chill_back_v2.png/revision/latest/scale-to-width-down/400?cb=20240102220413",
+          },
+          {
+            description: "Exterior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e6/Chill-Sunbather-Cape-back-exterior.png/revision/latest/scale-to-width-down/400?cb=20240119092915",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        spPrice: "76 <:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Beach-lounge Prop",
+        type: "Prop",
+        icon: "<:SunbatherProp:1273331763019649096>",
+        images: [
+          {
+            description: "THe Prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/92/Prop_beach_lounger.png/revision/latest/scale-to-width-down/400?cb=20220902224555",
+          },
+          {
+            description: "On Player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4f/Chill-Sunbather-Prop-on-back.png/revision/latest/scale-to-width-down/400?cb=20240103194115",
+          },
+        ],
+        price: "20 <:RegularCandle:1207793250895794226>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces",
+          "Unlike most other chairs, this item does not offer the ability to Chat with other players - it is purely cosmetic and does not offer any functionality",
+          "This item was not available during the Season of Sanctuary. Instead, it was added to the Chill Sunbather's Friendship Tree during their first visit as a Traveling Spirit on August 19, 2021, in conjunction with Days of Summer",
+        ],
+      },
+    ],
   },
 };
 
 export default data;
+
