@@ -163,6 +163,7 @@ const data: Record<string, SpiritsData> = {
   },
   alchemist: {
     name: "Indifferent Alchemist",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/26/Enchantment-Spirit-Indifferent-Alchemist.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Enchantment",
@@ -180,7 +181,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Indifferent_Alchemist_Location_Clement.jpg",
     },
-
     emote: {
       icon: "<:alchemist:1131649811439947796>",
       level: [
@@ -202,6 +202,68 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:AlchemistMask:1273165134964985928>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/38/Season_of_enchantment_mask_indifferent_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152355",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:AlchemistHair:1273165045047758849>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/77/Season_of_enchantment_hair_indifferent_v2.png/revision/latest/scale-to-width-down/500?cb=20240305214516",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "48 <:EnchantmentCandle:1272859574159802400>",
+        notes: [
+          "Note that this item is considered a Hair, not a Hair Accessory, and as such it can not be worn over other Hairstyles",
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:AlchemistCape:1273165030980059260>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/22/Season_of_enchantment_cape_indifferent_front_v2.png",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/14/Season_of_enchantment_cape_indifferent_open_v2.png",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/17/Season_of_enchantment_cape_indifferent_back_v2.png",
+          },
+          {
+            description: "Exterior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/84/Indifferent-Alchemist-Cape-exterior.png",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+    ],
   },
   crab_walker: {
     name: "Crab Walker",

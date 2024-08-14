@@ -140,7 +140,7 @@ interface Cosmetic {
   price?: string;
 
   /* If this was season pass exclusive */
-  isSP?: boolean;
+  isSP?: true;
 
   /* Seasonal price, if any */
   spPrice?: string;
