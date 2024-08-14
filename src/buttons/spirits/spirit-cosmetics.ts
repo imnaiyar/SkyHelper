@@ -79,6 +79,7 @@ export default {
         .setAuthor({ name: `${data.name} Cosmetics (${index}/${total})`, iconURL: data.image });
       const emojiId = parseEmoji(d.icon)?.id,
         emojiUrl = emojiId ? client.rest.cdn.emoji(emojiId) : null;
+
       embed.setThumbnail(emojiUrl);
       let desc = "";
 

@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "npm run build:prod && node dist/src/index.js",
-    "build:prod": "tsc -p tsconfig.json && npm --env-file=.env run sentry:sourcemaps --update-env",
+    "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build:ci": "tsc -p tsconfig.json",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
     "dev": "bun run src/index.ts",
