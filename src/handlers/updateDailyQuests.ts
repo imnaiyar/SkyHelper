@@ -51,5 +51,5 @@ export default async (message: Message) => {
     data.last_updated = moment().tz(client.timezone).startOf("day").toISOString();
     await data.save();
     await dailyQuestRemindersSchedules(message.client);
-  }, 10_60_000); // Ten minute timeout, assuming all the quests are posted within 10 minutes
+  }, 10 * 60_000); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
