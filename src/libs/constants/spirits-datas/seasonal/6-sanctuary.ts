@@ -139,6 +139,8 @@ const data: Record<string, SpiritsData> = {
   },
   shell_collector: {
     name: "Gratefull Shell Collector",
+    image:
+      "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/fa/Sanctuary-Spirit-Grateful-Shell-Collector.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Sanctuary",
@@ -156,7 +158,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Grateful_Shell_Collector_Location_Clement.png",
     },
-
     emote: {
       icon: "<:shellcollector:1131649635153363024>",
       level: [
@@ -178,6 +179,78 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:ShellCollectorHair:1273346893107171358>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/bb/Season_of_sanctuary_hair_grateful_v2.png/revision/latest/scale-to-width-down/400?cb=20240220204645",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2d/Grateful-Shell-Collector-Hair-side.png/revision/latest/scale-to-width-down/400?cb=20240222072923",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/39/Grateful-Shell-Collector-Hair-back.png/revision/latest/scale-to-width-down/400?cb=20240222072922",
+          },
+        ],
+        price: "34 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:ShellCollectorCape:1273346873712967812>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0d/Season_of_sanctuary_cape_grateful_front_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224358",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/84/Season_of_sanctuary_cape_grateful_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224400",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/86/Season_of_sanctuary_cape_grateful_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224357",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        spPrice: "<:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Wooden deck chair",
+        type: "Prop",
+        icon: "<:ShellCollectorProp:1273346861327057018>",
+        images: [
+          {
+            description: "The Prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b0/Summer_prop_chairs.png/revision/latest/scale-to-width-down/400?cb=20220902224531",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/82/Summer_prop_chairs_on_back.png/revision/latest/scale-to-width-down/400?cb=20230526210048",
+          },
+        ],
+        price: "45 <:RegularCandle:1207793250895794226>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces, and functions as a two-player Chat item",
+          "This item was not available during the Season of Sanctuary. It was first introduced in conjunction with the Days of Summer, when the Grateful Shell Collector first returned as a Traveling Spirit on September 30th, 2021",
+        ],
+      },
+    ],
   },
   sunbather: {
     name: "Chill Sunbather",
