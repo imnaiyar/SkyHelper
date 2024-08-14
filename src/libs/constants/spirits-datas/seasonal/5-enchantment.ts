@@ -121,6 +121,7 @@ const data: Record<string, SpiritsData> = {
   },
   muralist: {
     name: "Nodding Muralist",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8e/Enchantment-Spirit-Nodding-Muralist.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Enchantment",
@@ -138,7 +139,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Nodding_Muralist_Location_Clement.png",
     },
-
     emote: {
       icon: "<:muralist:1131649861377339452>",
       level: [
@@ -160,6 +160,36 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:MuralistMask:1273168859859259413>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2a/Season_of_enchantment_mask_nodding_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152356",
+          },
+        ],
+        price: "30 <:RegularCandle:1207793250895794226>",
+        spPrice: "6 <:EnchantmentCandle:1272859574159802400>",
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:MuralistHair:1273168844394860555>",
+        images: [
+          {
+            description: "THe Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/58/Season_of_enchantment_hair_nodding_v2.png/revision/latest/scale-to-width-down/500?cb=20240305065351",
+          },
+        ],
+        price: "34 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+    ],
   },
   alchemist: {
     name: "Indifferent Alchemist",
