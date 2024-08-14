@@ -122,7 +122,8 @@ type CosmeticTypes =
   | "Hair"
   | "Hair Accessory"
   | "Music Sheet"
-  | "Outfit";
+  | "Outfit"
+  | "Neck Accessory";
 interface Cosmetic {
   /* Name of the cosmetic */
   name: string;

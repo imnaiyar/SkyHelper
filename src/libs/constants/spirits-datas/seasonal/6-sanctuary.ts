@@ -97,6 +97,7 @@ const data: Record<string, SpiritsData> = {
   },
   grouch: {
     name: "Hiking Grouch",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/26/Sanctuary-Spirit-Hiking-Grouch.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Sanctuary",
@@ -114,7 +115,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Hiking_Grouch_Location_Clement.png",
     },
-
     emote: {
       icon: "<:grouch:1131649666954575982>",
       level: [
@@ -136,6 +136,77 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:GrouchMask:1273351554077823017>",
+        images: [
+          {
+            description: "The mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3e/Season_of_sanctuary_mask_grouch_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224422",
+          },
+        ],
+        price: "34 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Black Bowtie",
+        type: "Neck Accessory",
+        icon: "<:GrouchNecklace:1273351538055708784>",
+        images: [
+          {
+            description: "The bowtie",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9e/Season_of_sanctuary_sanctuary_grouch_bowtie_v2.png/revision/latest/scale-to-width-down/300?cb=20210725224427",
+          },
+        ],
+        price: "50 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:GrouchHair:1273351524990455920>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5a/Season_of_sanctuary_hair_grouch_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224415",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "42 <:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Beach chairs",
+        type: "Prop",
+        icon: "<:GrouchProp:1273351511774068818>",
+        images: [
+          {
+            description: "The prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/86/Summer_beach_chairs.png/revision/latest/scale-to-width-down/400?cb=20220902224517",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/18/Summer_beach_chairs_on_back.png/revision/latest/scale-to-width-down/400?cb=20230526224054",
+          },
+          {
+            description: "Sitting on the prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c9/Days_of_Summer_double_deck_chair.png/revision/latest/scale-to-width-down/400?cb=20210806160303",
+          },
+        ],
+        price: "16 <:regularHeart:1207793247792013474>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces, and allows two players to sit and chat at the same time",
+          "This item was not available during the Season of Sanctuary. Instead, it was first introduced as an event item for Days of Summer in August 2021 (costing the same 16 Heart). It was then added to the Hiking Grouch's Friendship Tree during their first return as a Traveling Spirit on February 17, 2022",
+        ],
+      },
+    ],
   },
   shell_collector: {
     name: "Gratefull Shell Collector",
