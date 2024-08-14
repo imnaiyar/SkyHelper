@@ -3,6 +3,7 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   carpenter: {
     name: "Snoozing Carpenter",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c4/Enchantment-Spirit-Snoozing-Carpenter.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Enchantment",
@@ -20,7 +21,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "05_Season_of_Enchantment_-_Snoozing_Carpenter.png",
     },
-
     emote: {
       icon: "<:carpenter:1131649953505230848>",
       level: [
@@ -42,6 +42,46 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:CarpenterHair:1273179072641368167>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/32/Season_of_enchantment_hair_doze_v2.png/revision/latest/scale-to-width-down/500?cb=20210725154937",
+          },
+        ],
+        price: "34 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Yellow-orange Cape",
+        type: "Cape",
+        icon: "<:CarpenterCape:1273179060209586187>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/71/Season_of_enchantment_cape_sleepy_front_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152338",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/99/Season_of_enchantment_cape_sleepy_open_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152340",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7d/Season_of_enchantment_cape_sleepy_back_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152337",
+          },
+        ],
+        price: "65 <:RegularCandle:1207793250895794226>",
+        spPrice: "36 <:EnchantmentCandle:1272859574159802400>",
+      },
+    ],
   },
   scarecrow_farmer: {
     name: "Scarecrow Farmer",
