@@ -123,10 +123,15 @@ export default {
           break;
         }
         case "cosmetics_back": {
-          collector.stop();
+          collector.stop("Cosmetic Back");
           await int.editReply(orgData);
         }
       }
+    });
+
+    collector.on("end", async (_col, reason) => {
+      if (reason === "Cosmetic Back") return;
+      await interaction.editReply(orgData).catch(() => {});
     });
   },
 } satisfies Button;

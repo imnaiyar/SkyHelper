@@ -44,13 +44,7 @@ export default {
 
     collector.on("end", async (_k, reason) => {
       if (reason === "Expression Back") return;
-      const msg = await interaction.fetchReply();
-      const components = msg.components.map((row) => {
-        const actionRow = ActionRowBuilder.from(row);
-        actionRow.components.forEach((com) => (com as unknown as any).setDisabled(true));
-        return actionRow;
-      }) as ActionRowBuilder<ButtonBuilder>[];
-      await interaction.editReply({ components });
+      await interaction.editReply(orgData).catch(() => {});
     });
   },
 } satisfies Button;
