@@ -28,6 +28,6 @@ jobs:
             cd skyhelper
             git pull
             export PATH=\$PATH:/root/.nvm/versions/node/v20.14.0/bin
-            pnpm build:prod
+            npm run build:prod
             pm2 restart 4
           EOF

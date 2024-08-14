@@ -81,7 +81,6 @@ export default {
         emojiUrl = emojiId ? client.rest.cdn.emoji(emojiId) : null;
       embed.setThumbnail(emojiUrl);
       let desc = "";
-
       if (d.type) desc += `- **Type**: ${d.type}\n`;
       if (d.price) desc += `- **Cost**: ${d.price}\n`;
       if (d.spPrice) desc += `- **Season Cost**: ${d.spPrice}\n`;
