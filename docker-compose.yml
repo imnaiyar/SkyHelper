@@ -1,10 +1,13 @@
-version: "3.4"
+version: "3.8"
 
 services:
-  skyhelper:
+  main:
     build:
       context: .
       dockerfile: ./Dockerfile
+    container_name: skyhelper
+    volumes:
+      - /root/mybot-data:/app/data
     environment:
       - TOKEN
       - MONGO_CONNECTION
