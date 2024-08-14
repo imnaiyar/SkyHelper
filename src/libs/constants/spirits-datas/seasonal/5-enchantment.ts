@@ -87,6 +87,8 @@ const data: Record<string, SpiritsData> = {
   },
   herbalist: {
     name: "Playfighting Herbalist",
+    image:
+      "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/11/Enchantment-Spirit-Playfighting-Herbalist.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Enchantment",
@@ -104,7 +106,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Playfighting_Herbalist_Location_Clement.jpg",
     },
-
     action: {
       icon: "<:herbalist:1131649901814624276>",
       level: [
@@ -118,6 +119,109 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:HerbalistMask:1273172966771003443>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/ce/Season_of_enchantment_mask_playfight_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152358",
+          },
+        ],
+        price: "30 <:RegularCandle:1207793250895794226>",
+        spPrice: "14 <:EnchantmentCandle:1272859574159802400>",
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:HerbalistHair:1273172856829907016>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a7/Season_of_enchantment_hair_playfight_v2.png/revision/latest/scale-to-width-down/500?cb=20240220064048",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/ae/Playfighting-Herbalist-Hair-side.png/revision/latest/scale-to-width-down/500?cb=20240222072928",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/63/Playfighting-Herbalist-Hair-back.png/revision/latest/scale-to-width-down/500?cb=20240222072934",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:HerbalistCape:1273172841952444417>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/51/Season_of_enchantment_cape_playflght_front_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152331",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/36/Season_of_enchantment_cape_playflght_open_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152335",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Season_of_enchantment_cape_playflght_back_v2.png/revision/latest/scale-to-width-down/500?cb=20210725152330",
+          },
+          {
+            description: "Exterior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a9/Playfighting-Herbalist-Cape-exterior.png/revision/latest/scale-to-width-down/500?cb=20240226194252",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        spPrice: "69 <:EnchantmentCandle:1272859574159802400>",
+      },
+      {
+        name: "Yellow Orb",
+        type: "Prop",
+        icon: "<:HerbalistProp:1273172827356401674>",
+        images: [
+          {
+            description: "The Prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Playfighting-herbalist-orb-prop.png/revision/latest/scale-to-width-down/500?cb=20220903025130",
+          },
+          {
+            description: "From a wide distance",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f7/Play_fighting_herbalist%E2%80%99s_orb.jpg/revision/latest/scale-to-width-down/500?cb=20211221153645",
+          },
+          {
+            description: "On Player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e9/Backpack_for_props.png/revision/latest/scale-to-width-down/50?cb=20240507043343",
+          },
+        ],
+        price: "20 <:RegularCandle:1207793250895794226>",
+        notes: [
+          "This item was not available during the Season of Enchantment. Instead, it was added to the Playfighting Herbalist's Friendship Tree during their first visit as a Traveling Spirit on October 28, 2021",
+        ],
+      },
+      {
+        name: "Musit Sheet #13",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "48 <:EnchantmentCandle:1272859574159802400>",
+      },
+    ],
   },
   muralist: {
     name: "Nodding Muralist",
