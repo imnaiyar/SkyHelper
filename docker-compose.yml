@@ -2,22 +2,22 @@ version: "3.4"
 
 services:
   skyhelper:
-    image: skyhelper
     build:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      TOKEN:
-      OPENAI_TOKEN:
-      MONGO_CONNECTION:
-      TOPGG_TOKEN:
-      DBL_TOKEN:
-      AUTH_TOKEN:
-      GUILD:
-      SUGGESTION:
-      READY_LOGS:
-      COMMANDS_USED:
-      CONTACT_US:
-      BUG_REPORTS:
+      - TOKEN
+      - MONGO_CONNECTION
+      - TOPGG_TOKEN
+      - DBL_TOKEN
+      - AUTH_TOKEN
+      - GUILD
+      - SUGGESTION
+      - READY_LOGS
+      - COMMANDS_USED
+      - CONTACT_US
+      - BUG_REPORTS
+      - SENTRY_DSN
+      - SENTRY_AUTH_TOKEN
     ports:
       - 5000:5000
