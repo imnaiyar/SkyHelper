@@ -25,9 +25,9 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
+            git pull
             export PATH=\$PATH:/root/.nvm/versions/node/v20.14.0/bin
             cd skyhelper
-            git pull
             pnpm build:prod
             pm2 restart 4
           EOF
