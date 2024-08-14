@@ -5,7 +5,7 @@ const client = new SkyHelper();
 import { Dashboard } from "../dashboard/main.js";
 import chalk from "chalk";
 
-//  Init Sentry
+// Init Sentry
 if (!process.isBun) {
   console.log(chalk.blueBright("\n\n<------------------------ Initiaizing Sentry --------------------------->\n"));
   const Sentry = await import("@sentry/node");
@@ -40,3 +40,4 @@ process.on("unhandledRejection", client.logger.error);
 process.on("uncaughtException", client.logger.error);
 // Login
 client.login(process.env.TOKEN);
+
