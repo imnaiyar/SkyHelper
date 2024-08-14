@@ -3,6 +3,7 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   bookworm: {
     name: "Timid Bookworm",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/51/Sanctuary-Spirit-Timid-Bookworm.png",
     type: "Seasonal Spirit",
     realm: "Daylight Prairie",
     season: "Sanctuary",
@@ -20,12 +21,74 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Timid_Bookworm_Location.png",
     },
-
     stance: {
       title: "Timid Stance",
       icon: "<:bookworm:1131649753420140595>",
       image: "Timid_Bookworm_Timid_Stance.gif",
     },
+    cosmetics: [
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:BookwormHair:1273369491832832082>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/84/Timid-Bookworm-Hair-Front.png/revision/latest/scale-to-width-down/400?cb=20240528200317",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Season_of_sanctuary_hair_timid_v2.png/revision/latest/scale-to-width-down/400?cb=20240528204158",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e2/Timid-Bookworm-Hair-Back.png/revision/latest/scale-to-width-down/400?cb=20240528205313",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        spPrice: "18 <:SanctuaryCandle:1273332588190240778>",
+      },
+      {
+        name: "Butterfly Cape",
+        type: "Cape",
+        icon: "<:BookwormCape:1273369479052787873>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/46/Season_of_sanctuary_cape_timid_front_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224404",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/33/Season_of_sanctuary_cape_timid_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224406",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7d/Season_of_sanctuary_cape_timid_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210725224402",
+          },
+          {
+            description: "Exterior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f1/Timid-Bookworm-Cape-exterior.png/revision/latest/scale-to-width-down/400?cb=20240227170638",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Music Sheet #15",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+    ],
   },
   rallying_thrillseeker: {
     name: "Rallying Thrillseeker",
