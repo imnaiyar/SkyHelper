@@ -87,9 +87,9 @@ export default {
 
       if (imageTotal) {
         desc += `\n**${d.images[imageIndex - 1].description}**${imageTotal > 1 ? ` (${imageIndex}/${imageTotal})` : ""}`;
-        embed.setDescription(desc);
         embed.setImage(d.images[imageIndex - 1].image);
       }
+      embed.setDescription(desc);
       return { embeds: [embed], components: [stringSelect, btns] };
     };
     const reply = await interaction.editReply(getResponse());
