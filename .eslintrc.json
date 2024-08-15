@@ -6,9 +6,8 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "ecmaVersion": 2023,
+    "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "jsdoc", "import"],
   "rules": {
