@@ -7,8 +7,11 @@ export default {
   },
   PREFIX: ".",
 
-  // Channel ID where quest updates are sent which bot will parse and save to be used later
-  QUEST_UPDATE_CHANNEL: "xxxxx",
+  /** Channel ID where quest updates are sent which bot will parse and save to be used later */
+  QUEST_UPDATE_CHANNEL: {
+    CHANNEL_ID: "896941858620600390", // sky-infographics
+    GUILD_ID: "710502237717266491", // (QAR Server) This is not used, only included for documenting
+  },
 
   BOT_ICON: "https://skyhelper.xyz/assets/img/boticon.png",
 
