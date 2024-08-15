@@ -126,34 +126,46 @@ type CosmeticTypes =
   | "Outfit"
   | "Neck Accessory";
 interface Cosmetic {
-  /* Name of the cosmetic */
+  /** Name of the cosmetic */
   name: string;
 
-  /* Type of this cosmetic */
+  /** Type of this cosmetic */
   type?: CosmeticTypes;
 
-  /* Emoji icon of the cosmetic */
+  /** Emoji icon of the cosmetic */
   icon: string;
 
-  /* Link to the cosmetic images (preview) */
-  images: { description: string; image: string }[];
+  /** Link to the cosmetic images (preview) */
+  images: {
+    /** Description of the image (to display on the embed) */
+    description: string;
 
-  /* Cosmetic Cost (absent for items that are unlocked via season pass and the spirit has yet to return as a TS)*/
+    /** The image's link */
+    image: string;
+  }[];
+
+  /** Cosmetic Cost (absent for items that are unlocked via season pass and the spirit has yet to return as a TS)*/
   price?: string;
 
-  /* If this was season pass exclusive */
-  isSP?: true;
+  /** If this was season pass exclusive */
+  isSP?: boolean;
 
-  /* Seasonal price, if any */
+  /** Seasonal price, if any */
   spPrice?: string;
 
-  /* Any extra notes about this cosmetic */
+  /** Any extra notes about this cosmetic */
   notes?: string[];
+
+  /**
+   * Whether to skip including in the friendship tree calculations
+   *  ! NOTE: This is for the future in case I decide to incorporate progress tracking
+   */
+  skipTree?: boolean;
 }
 
 interface BaseSpiritData {
   name: string;
-  /* Spirits preview image link */
+  /** Spirits preview image link */
   image?: string;
   type: string;
   realm?: string;

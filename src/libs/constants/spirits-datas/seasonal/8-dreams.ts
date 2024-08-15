@@ -99,6 +99,7 @@ const data: Record<string, SpiritsData> = {
   },
   postman: {
     name: "Peeking Postman",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8a/Dreams-Spirit-Peeking-Postman.png",
     type: "Seasonal Spirit",
     realm: "Valley of triumph",
     season: "Dreams",
@@ -138,9 +139,95 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        type: "Outfit",
+        icon: "<:PostmanOutfit:1273654355521831064>",
+        price: "70 <:RegularCandle:1207793250895794226> (Together with shoe)",
+        spPrice: "21 <:DreamsCandle:1273190033855221831>",
+        notes: ["In the 0.24.5 Patch, the boots attached to the Outfit were removed and became a separate cosmetic item"],
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5e/Dreams_pants_peeking_v2.png/revision/latest/scale-to-width-down/400?cb=20240223021209",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/68/Peeking-Postman-Outfit-back.png/revision/latest/scale-to-width-down/400?cb=20240223021435",
+          },
+        ],
+      },
+      {
+        name: "Shoes",
+        type: "Outfit",
+        icon: "<:PostmanShoe:1273654337989644309>",
+        price: "Included with the outfit",
+        skipTree: true, // Skips the inclusion in friendhip tree calculations as this is included with the outfit
+        images: [
+          {
+            description: "The Shoes",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d9/Peeking-Postman-Shoes.png/revision/latest/scale-to-width-down/400?cb=20240223021433",
+          },
+        ],
+        notes: [
+          "In the 0.24.5 Patch, the boots were removed from the Peeking Postman's outfit and became a separate cosmetic item",
+        ],
+      },
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:PostmanMask:1273654324374802442>",
+        price: "54 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7e/Dreams_mask_peeking_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194601",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:PostmanCape:1273654311779303585>",
+        price: "65 <:RegularCandle:1207793250895794226>",
+        spPrice: "27 <:DreamsCandle:1273190033855221831>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2f/Dreams_cape_peeking_front_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194535",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c9/Dreams_cape_peeking_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194537",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d5/Dreams_cape_peeking_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194533",
+          },
+        ],
+      },
+      {
+        name: "Music Sheet #18",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "12 <:DreamsCandle:1273190033855221831>",
+        images: [],
+      },
+    ],
   },
   dancing_performer: {
     name: "Dancing Performer",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9a/Dreams-Spirit-Dancing-Performer.png",
     type: "Seasonal Spirit",
     realm: "Valley of Triumph",
     season: "Dreams",
@@ -180,6 +267,105 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:DancingPerformerMask:1273651363909210193>",
+        price: "48 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/64/Dreams_mask_dancing_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194559",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:DancingPerformerHair:1273651350579712060>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        notes: [
+          "Note that this item is considered a Hair, not a Hair Accessory, and as such it can not be worn over other Hairstyles",
+        ],
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3b/Dreams_hair_dancing_v2.png/revision/latest/scale-to-width-down/400?cb=20240329225647",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/06/Dancing-Performer-Hair-side.png/revision/latest/scale-to-width-down/400?cb=20240329230101",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/49/Dancing-Performer-Hair-back.png/revision/latest/scale-to-width-down/400?cb=20240329225815",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:DancingPerformerCape:1273651337724432385>",
+        price: "75 <:RegularCandle:1207793250895794226>",
+        spPrice: "27 <:DreamsCandle:1273190033855221831>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/6d/Dreams_cape_dancing_front_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194529",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/88/Dreams_cape_dancing_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194531",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2b/Dreams_cape_dancing_back_v2.png/revision/latest/scale-to-width-down/400?cb=20240407232124",
+          },
+          {
+            description: "Exterior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0d/Dancing-Performer-Cape-exterior.png/revision/latest/scale-to-width-down/400?cb=20240317195246",
+          },
+        ],
+      },
+      {
+        name: "Lute",
+        type: "Instrument",
+        icon: "<:DancingPerformerInstrument:1273651325946695710>",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        notes: [
+          "In Harmony Hall, the Lute can be found in the left room with all the other stringed Instruments. It is the third Instrument from the left",
+        ],
+        images: [
+          {
+            description: "The Instrument",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/61/Dreams-Dancing-Performer-Guitar.png/revision/latest/scale-to-width-down/400?cb=20220520151436",
+          },
+          {
+            description: "Playing the lute",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/23/Dreams_instrument_dancing_lute_v2.png/revision/latest/scale-to-width-down/400?cb=20240407234146",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7e/Dreams_instrument_dancing_lute_on_back_v2.png/revision/latest/scale-to-width-down/400?cb=20240407231951",
+          },
+        ],
+      },
+    ],
   },
   hermit: {
     name: "Bearhug Hermit",
@@ -215,6 +401,73 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        type: "Outfit",
+        icon: "<:HermisOutfit:1273648642951086082>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0f/Dreams_pants_bearhug_v2.png/revision/latest/scale-to-width-down/400?cb=20240803214301",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f4/Bearhug-Hermit-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225195448",
+          },
+        ],
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Red Horns",
+        type: "Face Accessory",
+        icon: "<:HermitFaceAccessory:1273648626756882542>",
+        images: [
+          {
+            description: "The Accessory",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/19/Dreams_headpiece_bearhug_v2.png/revision/latest/scale-to-width-down/400?cb=20210727194554",
+          },
+        ],
+        price: "42 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:HermitHair:1273648604635992085>",
+        price: "50 <:RegularCandle:1207793250895794226>",
+        spPrice: "29 <:DreamsCandle:1273190033855221831>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9e/Bearhug-Hermit-Hair-front.png/revision/latest/scale-to-width-down/400?cb=20240221070100",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c7/Dreams_hair_bearhug_v2.png/revision/latest/scale-to-width-down/400?cb=20240221065549",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/34/Bearhug-Hermit-Hair-back.png/revision/latest/scale-to-width-down/400?cb=20240221065823",
+          },
+        ],
+      },
+      {
+        name: "Music Sheet #19",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        price: "15 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [],
+      },
+    ],
   },
 };
 
