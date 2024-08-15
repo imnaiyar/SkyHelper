@@ -118,6 +118,7 @@ type CosmeticTypes =
   | "Mask"
   | "Instrument"
   | "Prop"
+  | "Props"
   | "Face Accessory"
   | "Hair"
   | "Hair Accessory"

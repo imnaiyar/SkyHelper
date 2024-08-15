@@ -3,6 +3,7 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   fireprophet: {
     name: "Prophet of Fire",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b7/Prophecy-Spirit-Prophet-of-Fire.png",
     type: "Seasonal Spirit",
     realm: "Isle of Dawn",
     season: "Prophecy",
@@ -42,9 +43,111 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        icon: "<:FirePOutfit:1273630782677716992>",
+        type: "Outfit",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Prophecy-Prophet_of_Fire_Leggings.png/revision/latest/scale-to-width-down/$00?cb=20240811194621",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f5/Prophet-of-Fire-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225200830",
+          },
+        ],
+        price: "75 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Mask",
+        icon: "<:FirePMask:1273630768379461643>",
+        type: "Mask",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/6e/Prophecy-Prophet_of_Fire_Mask.png/revision/latest/scale-to-width-down/400?cb=20210725225609",
+          },
+        ],
+        price: "54 <:RegularCandle:1207793250895794226>",
+        spPrice: "29 <:ProphecyCandle:1273522988637224980>",
+      },
+      {
+        name: "Hair",
+        icon: "<:FirePHair:1273630749945233462>",
+        type: "Hair",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/87/Prophecy-Prophet_of_Fire_Hair.png/revision/latest/scale-to-width-down/400?cb=20210725225204",
+          },
+        ],
+        price: "44 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Fire Cauldron",
+        icon: "<:FirePProp1:1273630736577986671>",
+        type: "Props",
+        images: [
+          {
+            description: "The Cauldron",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d9/Fire_prophet%3Fs_cauldron_.png/revision/latest/scale-to-width-down/400?cb=20220902231159",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e6/Fire_prophets_cauldron_on_back.png/revision/latest/scale-to-width-down/400?cb=20230526222113",
+          },
+        ],
+        price: "13 <:regularHeart:1207793247792013474>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces. When lit, its flame will recharge the player's wings",
+          "This item was not available during the Season of Prophecy. Instead, it was introduced during the Prophet of Fire's first visit as a Traveling Spirit on December 9, 2021",
+        ],
+      },
+      {
+        name: "Fire element sticker",
+        icon: "<:FirePProp2:1273630722443448401>",
+        type: "Props",
+        images: [
+          {
+            description: "The sticker",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/81/SoProphecy-Prophet-of-Fire-Prop-Sticker-image-Ed.png/revision/latest/scale-to-width-down/400?cb=20230803171021",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e9/Backpack_for_props.png/revision/latest/scale-to-width-down/400?cb=20240507043343",
+          },
+        ],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        notes: [
+          " It is a placeable Prop that can be used to decorate Shared Spaces. This item is purely cosmetic and does not offer any functionality",
+          "This item was not available during the Season of Prophecy. Instead, it was first introduced during the Prophet of Fire's second visit as a Traveling Spirit on August 3, 2023",
+        ],
+      },
+      {
+        name: "Music Sheet #17",
+        icon: "<:MusicIcon:1262323496852131882>",
+        type: "Music Sheet",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+    ],
   },
   airprophet: {
     name: "Prophet of Air",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f5/Prophecy-Spirit-Prophet-of-Air.png",
     type: "Seasonal Spirit",
     realm: "Isle of Dawn",
     season: "Prophecy",
@@ -62,7 +165,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Prophet_of_Air_Location_Clement.png",
     },
-
     emote: {
       icon: "<:airprophet:1131649484347154433>",
       level: [
@@ -84,9 +186,75 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:AirPMask:1273628410681491486>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4a/Prophecy-Prophet_of_Air_Mask.png/revision/latest/scale-to-width-down/400?cb=20210725225556",
+          },
+        ],
+        price: "54 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:AirPHair:1273628398584856576>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Prophecy-Prophet_of_Air_Hair.png/revision/latest/scale-to-width-down/400?cb=20210725225219",
+          },
+        ],
+        price: "44 <:RegularCandle:1207793250895794226>",
+        spPrice: "13 <:ProphecyCandle:1273522988637224980>",
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:AirPCape:1273628384521355404>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/cc/Prophecy-Prophet_of_Air_Cape.png/revision/latest/scale-to-width-down/400?cb=20210725225725",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d4/Prophecy_cape_air_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210725225846",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/ae/Prophecy_cape_air_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210725225845",
+          },
+        ],
+        price: "75 <:RegularCandle:1207793250895794226>",
+        spPrice: "29 <:ProphecyCandle:1273522988637224980>",
+      },
+      {
+        name: "Air element sticker",
+        type: "Prop",
+        icon: "<:AirPProp:1273628371330535529>",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces. This item is purely cosmetic and does not offer any functionality",
+          "This item was not available during the Season of Prophecy. Instead, it was first introduced during the Prophet of Air's first visit as a Traveling Spirit on May 12, 2022",
+        ],
+      },
+    ],
   },
   earthprophet: {
     name: "Prophet of Earth",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8a/Prophecy-Spirit-Prophet-of-Earth.png",
     type: "Seasonal Spirit",
     realm: "Isle of Dawn",
     season: "Prophecy",
@@ -104,7 +272,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Prophet_of_Earth_Location_Clement.png",
     },
-
     emote: {
       icon: "<:earthprophet:1131649510045646908>",
       level: [
@@ -126,6 +293,92 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:EarthPMask:1273533393333649459>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b3/Prophecy-Prophet_of_Earth_Mask.png/revision/latest/scale-to-width-down/400?cb=20210725225543",
+          },
+        ],
+        price: "44 <:ProphecyCandle:1273522988637224980>",
+        isSP: true,
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:EarthPHair:1273533341794304093>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/58/Prophecy-Prophet_of_Earth_Hair.png/revision/latest/scale-to-width-down/400?cb=20240111234228",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/74/Prophecy-Prophet-of-Earth-Hair-Side.png/revision/latest/scale-to-width-down/400?cb=20240111234351",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9d/Prophecy-Prophet-of-Earth-Hair-Back.png/revision/latest/scale-to-width-down/400?cb=20240111234426",
+          },
+        ],
+        price: "44 <:ProphecyCandle:1273522988637224980>",
+        spPrice: "",
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:EarthPCape:1273533329412456529>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/26/Prophecy-Prophet_of_Earth_cape.png/revision/latest/scale-to-width-down/400?cb=20210725225733",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/51/Prophecy_cape_earth_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210725225850",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/80/Prophecy_cape_earth_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210725225848",
+          },
+        ],
+        price: "75 <:RegularCandle:1207793250895794226>",
+        spPrice: "",
+      },
+      {
+        name: "Earth element sticker",
+        type: "Prop",
+        icon: "<:EarthPProp:1273533314434863174>",
+        images: [
+          {
+            description: "The Sticker",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/75/Prophet_of_earth_prop.png/revision/latest/scale-to-width-down/400?cb=20220901055209",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e9/Backpack_for_props.png/revision/latest/scale-to-width-down/400?cb=20240507043343",
+          },
+        ],
+        price: "15 <:ProphecyCandle:1273522988637224980>",
+        notes: [
+          " It is a placeable Prop that can be used to decorate Shared Spaces. This item is purely cosmetic and does not offer any functionality",
+          "This item was not available during the Season of Prophecy. Instead, it was first introduced during the Prophet of Earth's first (official) visit as a Traveling Spirit on February 3, 2022.",
+        ],
+      },
+    ],
   },
   waterprophet: {
     name: "Prophet of Water",
@@ -222,7 +475,7 @@ const data: Record<string, SpiritsData> = {
         isSP: true,
       },
       {
-        name: "Water symbol",
+        name: "Water sticker",
         type: "Prop",
         icon: "<:WaterPProp:1273523001572458516>",
         images: [
