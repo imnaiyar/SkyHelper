@@ -183,6 +183,7 @@ const data: Record<string, SpiritsData> = {
   },
   hermit: {
     name: "Bearhug Hermit",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/31/Dreams-Spirit-Bearhug-Hermit.png",
     type: "Seasonal Spirit",
     realm: "Valley of Triumph",
     season: "Dreams",
