@@ -507,40 +507,10 @@ export default {
     from: ["13-07-2020", "21-09-2020"],
     quests: [
       {
-        title: "Quest #1",
-        description: "```Season of Sanctuary Quest #1 by Aladdin```",
+        title: "Quest #1 - #6",
+        description: "```Complete Treasure Quest Guide by Clement```",
         image:
-          "https://media.discordapp.net/attachments/867638574571323424/1139564383970787429/BellQuest1_20200908_153240817_1.mp4",
-      },
-      {
-        title: "Quest #2",
-        description: "```Season of Sanctuary Quest #2 by Aladdin```",
-        image:
-          "https://media.discordapp.net/attachments/867638574571323424/1139564380917338142/BellQuest2_20200908_153341995_1.mp4",
-      },
-      {
-        title: "Quest #3",
-        description: "```Season of Sanctuary Quest #3 by Aladdin```",
-        image:
-          "https://media.discordapp.net/attachments/867638574571323424/1139564381680718005/BellQuest3_20200908_153113449_1.mp4",
-      },
-      {
-        title: "Quest #4",
-        description: "```Season of Sanctuary Quest #4 by Aladdin```",
-        image:
-          "https://media.discordapp.net/attachments/867638574571323424/1139564383194845234/BellQuest4_20200908_153437991_1.mp4",
-      },
-      {
-        title: "Quest #5",
-        description: "```Season of Sanctuary Quest #6 by Aladdin```",
-        image:
-          "https://media.discordapp.net/attachments/867638574571323424/1139564382486003743/BellQuest5_20200908_153517182_1.mp4",
-      },
-      {
-        title: "Quest #6",
-        description: "```Season of Sanctuary Quest #6 by Aladdin```",
-        image:
-          "https://media.discordapp.net/attachments/867638574571323424/1139644885457182840/BellQuest_6_20200908_152835766_1.mp4",
+          "https://media.discordapp.net/attachments/739338445880557639/752837788608626778/Map_-_Treasure_Quests_Node_6.png?ex=66bf29d3&is=66bdd853&hm=0a7ac77d15ab131b8f0806811ed907b9ba44cd123749a5370a54ea6f4b95092d&=&format=webp&quality=lossless&width=960&height=1092",
       },
     ],
   },
