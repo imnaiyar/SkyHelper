@@ -49,7 +49,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "18 <:SanctuaryCandle:1273332588190240778>",
+        spPrice: "10 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Butterfly Cape",
@@ -150,7 +150,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        spPrice: "36 <:SanctuaryCandle:1273332588190240778>",
+        spPrice: "14 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Hair",
@@ -226,7 +226,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "14 <:SanctuaryCandle:1273332588190240778>",
+        spPrice: "8 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Prop",
@@ -343,7 +343,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "42 <:SanctuaryCandle:1273332588190240778>",
+        spPrice: "16 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Beach chairs",
@@ -463,7 +463,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        spPrice: "<:SanctuaryCandle:1273332588190240778>",
+        spPrice: "18 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Wooden deck chair",
@@ -575,7 +575,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "44 <:RegularCandle:1207793250895794226>",
-        spPrice: "54 <:SanctuaryCandle:1273332588190240778>",
+        spPrice: "20 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Cape",
@@ -604,7 +604,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        spPrice: "76 <:SanctuaryCandle:1273332588190240778>",
+        spPrice: "22 <:SanctuaryCandle:1273332588190240778>",
       },
       {
         name: "Beach-lounge Prop",

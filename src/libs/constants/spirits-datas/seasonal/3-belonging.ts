@@ -38,7 +38,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "48 <:RegularCandle:1207793250895794226>",
-        spPrice: "36 <:BelongingCandle:1272602132549341238>",
+        spPrice: "14 <:BelongingCandle:1272602132549341238>",
       },
       {
         name: "Golden-white Cape",
@@ -149,7 +149,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "34 <:RegularCandle:1207793250895794226>",
-        spPrice: "36 <:BelongingCandle:1272602132549341238>",
+        spPrice: "14 <:BelongingCandle:1272602132549341238>",
       },
       {
         name: "Pinwheel",
@@ -225,7 +225,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "48 <:BelongingCandle:1272602132549341238>",
+        spPrice: "18 <:BelongingCandle:1272602132549341238>",
       },
       {
         type: "Cape",
@@ -324,7 +324,8 @@ const data: Record<string, SpiritsData> = {
         isSP: true,
       },
       {
-        name: "Instrument",
+        name: "Ukulele",
+        type: "Instrument",
         icon: "<:HairtousleInstrument:1272607556065431552>",
         images: [
           {
@@ -343,7 +344,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        spPrice: "60 <:BelongingCandle:1272602132549341238>",
+        spPrice: "18 <:BelongingCandle:1272602132549341238>",
         notes: [
           "In Harmony Hall, the Ukulele can be found in the left room with all the other stringed Instruments. It is the second Instrument from the left.",
         ],
@@ -433,7 +434,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "60 <:RegularCandle:1207793250895794226>",
-        spPrice: "30 <:BelongingCandle:1272602132549341238>",
+        spPrice: "12 <:BelongingCandle:1272602132549341238>",
       },
     ],
   },
@@ -489,7 +490,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "30 <:RegularCandle:1207793250895794226>",
-        spPrice: "30 <:BelongingCandle:1272602132549341238>",
+        spPrice: "12 <:BelongingCandle:1272602132549341238>",
       },
       {
         name: "Outfit",

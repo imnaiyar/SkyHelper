@@ -129,6 +129,7 @@ const data: Record<string, SpiritsData> = {
   },
   waterprophet: {
     name: "Prophet of Water",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/cf/Prophecy-Spirit-Prophet-of-Water.png",
     type: "Seasonal Spirit",
     realm: "Isle of Dawn",
     season: "Prophecy",
@@ -146,7 +147,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Prophet_of_Water_Location_Clement.png",
     },
-
     emote: {
       icon: "<:waterprophet:1131649574465974302>",
       level: [
@@ -168,6 +168,82 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:WaterPMask:1273523160112824371>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/ea/Prophecy-Prophet_of_Water_Mask.png/revision/latest/scale-to-width-down/400?cb=20210725225528",
+          },
+        ],
+        price: "54 <:RegularCandle:1207793250895794226>",
+        spPrice: "27 <:ProphecyCandle:1273522988637224980>",
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:WaterPHair:1273523146439393323>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9a/Prophecy-Prophet_of_Water_Hair.png/revision/latest/scale-to-width-down/400?cb=20210725225242",
+          },
+        ],
+        price: "44 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:WaterPCape:1273523129422974976>",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/08/Prophecy-Prophet_of_Water_Cape.png/revision/latest/scale-to-width-down/400?cb=20210725225654",
+          },
+          {
+            description: "Interior",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/13/Prophecy_cape_water_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210725225854",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b5/Prophecy_cape_water_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210725225852",
+          },
+        ],
+        price: "75 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Water symbol",
+        type: "Prop",
+        icon: "<:WaterPProp:1273523001572458516>",
+        images: [
+          {
+            description: "The prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/69/SoProphecy-Prophet-of-Water-Prop-image-Morybel-0146.png/revision/latest/scale-to-width-down/400?cb=20221110160336",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e9/Backpack_for_props.png/revision/latest/scale-to-width-down/400?cb=20240507043343",
+          },
+        ],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces. This item is purely cosmetic and does not offer any functionality",
+          "This item was not available during the Season of Prophecy. Instead, it was first introduced during the Prophet of Water's second visit as a Traveling Spirit on November 10, 2022",
+        ],
+      },
+    ],
   },
 };
 

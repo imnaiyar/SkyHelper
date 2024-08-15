@@ -59,7 +59,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "70 <:RegularCandle:1207793250895794226>",
-        spPrice: "60 <:RythmCandle:1272754526008381510>",
+        spPrice: "18 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Hair",
@@ -196,7 +196,18 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "48 <:RegularCandle:1207793250895794226>",
-        spPrice: "30 <:RythmCandle:1272754526008381510>",
+        spPrice: "12 <:RythmCandle:1272754526008381510>",
+      },
+      {
+        name: "Music Sheet #4",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "8 <:RythmCandle:1272754526008381510>",
+        notes: [
+          "Prior to Patch 0.15.5, this was identified as Music Sheet #1. The pre-0.15.5 Music Sheet #4 is now labeled Music Sheet #2",
+        ],
       },
     ],
   },
@@ -311,7 +322,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "65 <:RegularCandle:1207793250895794226>",
-        spPrice: "54 <:RythmCandle:1272754526008381510>",
+        spPrice: "20 <:RythmCandle:1272754526008381510>",
         notes: [
           "In Harmony Hall, the Xylophone can be found on the back wall, behind and to the left of the front counter, next to the alcove containing the two pianos",
           "It is one of the highest-pitched Instrument available in the game, along with the Winter Piano",
@@ -373,7 +384,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "48 <:RegularCandle:1207793250895794226>",
-        spPrice: "68 <:RythmCandle:1272754526008381510>",
+        spPrice: "20 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Hair",
@@ -497,7 +508,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "34 <:RegularCandle:1207793250895794226>",
-        spPrice: "36 <:RythmCandle:1272754526008381510>",
+        spPrice: "14 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Purple Flag",
@@ -518,6 +529,14 @@ const data: Record<string, SpiritsData> = {
         notes: [
           "This item was not available during the Season of Rhythm. Instead, it was added to the Festival Spin Dancer's Friend Tree during their second visit as a Traveling Spirit on October 14, 2021",
         ],
+      },
+      {
+        name: "Music Sheet #5",
+        icon: "<:MusicIcon:1262323496852131882>",
+        type: "Music Sheet",
+        images: [],
+        price: "15 <:RegularCandle:1207793250895794226>",
+        isSP: true,
       },
     ],
   },
@@ -579,7 +598,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "65 <:RegularCandle:1207793250895794226>",
-        spPrice: "42 <:RythmCandle:1272754526008381510>",
+        spPrice: "16 <:RythmCandle:1272754526008381510>",
       },
       {
         name: "Mask",

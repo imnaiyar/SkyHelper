@@ -55,7 +55,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "54 <:DreamsCandle:1273190033855221831>",
+        spPrice: "23 <:DreamsCandle:1273190033855221831>",
       },
       {
         name: "Hair",

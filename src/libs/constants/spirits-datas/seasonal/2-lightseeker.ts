@@ -73,7 +73,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "34 <:RegularCandle:1207793250895794226>",
-        spPrice: "42 <:LightseekerCandle:1272236745035091998>",
+        spPrice: "16 <:LightseekerCandle:1272236745035091998>",
       },
       {
         name: "Instrument",
@@ -236,7 +236,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "26 <:RegularCandle:1207793250895794226>",
-        spPrice: "54 <:LightseekerCandle:1272236745035091998>",
+        spPrice: "20 <:LightseekerCandle:1272236745035091998>",
       },
       {
         name: "Cape",
@@ -313,7 +313,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "18 <:RegularCandle:1207793250895794226>",
-        spPrice: "24 <:LightseekerCandle:1272236745035091998>",
+        spPrice: "10 <:LightseekerCandle:1272236745035091998>",
       },
       {
         name: "Prop",
@@ -389,7 +389,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "24 <:RegularCandle:1207793250895794226>",
-        spPrice: "10 <:LightseekerCandle:1272236745035091998>",
+        spPrice: "6 <:LightseekerCandle:1272236745035091998>",
       },
       {
         name: "Hair",
@@ -491,7 +491,7 @@ const data: Record<string, SpiritsData> = {
           },
         ],
         price: "42 <:RegularCandle:1207793250895794226>",
-        spPrice: "60 <:LightseekerCandle:1272236745035091998>",
+        spPrice: "18 <:LightseekerCandle:1272236745035091998>",
         notes: [
           "Note that this item is considered a Hair, not a Hair Accessory, and as such it can not be worn over other Hairstyles",
         ],
