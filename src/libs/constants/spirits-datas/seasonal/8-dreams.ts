@@ -92,7 +92,7 @@ const data: Record<string, SpiritsData> = {
               "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4f/Dreams_cape_spinning_back_v2.png/revision/latest/scale-to-width-down/500?cb=20210727194540",
           },
         ],
-        price: "70 <:DreamsCandle:1273190033855221831>",
+        price: "70 <:RegularCandle:1207793250895794226>",
         isSP: true,
       },
     ],

@@ -95,7 +95,7 @@ describe("spiritsData", () => {
         ],
         icon: "<:ShamanInstrument:1272141953798242327>",
         price: "45 <:RegularCandle:1207793250895794226>",
-        spPrice: "18 <:GratitudeSC:1272164085815054337>",
+        isSP: true,
       },
     ]);
   });
