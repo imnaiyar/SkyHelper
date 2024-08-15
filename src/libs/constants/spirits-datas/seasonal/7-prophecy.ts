@@ -52,7 +52,7 @@ const data: Record<string, SpiritsData> = {
           {
             description: "Front",
             image:
-              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Prophecy-Prophet_of_Fire_Leggings.png/revision/latest/scale-to-width-down/$00?cb=20240811194621",
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/de/Prophecy-Prophet_of_Fire_Leggings.png/revision/latest/scale-to-width-down/400?cb=20240811194621",
           },
           {
             description: "Back",
