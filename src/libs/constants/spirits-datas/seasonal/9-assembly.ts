@@ -3,6 +3,7 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   scolding_student: {
     name: "Scolding Student",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/10/Assembly-Spirit-Scolding-Student.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Assembly",
@@ -20,7 +21,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Scolding_Student_Location_Clement.png",
     },
-
     emote: {
       icon: "<:student:1131591495993016421>",
       level: [
@@ -42,9 +42,64 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:StudenMask:1273881509014667305>",
+        price: "24 <:RegularCandle:1207793250895794226>",
+        spPrice: "10 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/cb/Assembly_mask_scolding_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192720",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:StudenHair:1273881494632403004>",
+        price: "50 <:RegularCandle:1207793250895794226>",
+        spPrice: "18 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3e/Assembly_hair_scolding_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192709",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:StudentCape:1273881483215372359>",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/dc/Assembly_cape_scolding_front_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192654",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e3/Assembly_cape_scolding_open_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192656",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/1a/Assembly_cape_scolding_back_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192652",
+          },
+        ],
+      },
+    ],
   },
   cadet: {
     name: "Scaredy Cadet",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0c/Assembly-Spirit-Scaredy-Cadet.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Assembly",
@@ -62,7 +117,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Scaredy_Cadet_Location_Clement.png",
     },
-
     emote: {
       icon: "<:cadet:1131591467429793962>",
       level: [
@@ -84,9 +138,71 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        icon: "<:CadetMask:1273870700729597974>",
+        type: "Mask",
+        price: "24 <:RegularCandle:1207793250895794226>",
+        spPrice: "5 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b6/Assembly_mask_scaredy_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192718",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:CadetHair:1273870678919217217>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/26/Assembly_hair_scaredy_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192707",
+          },
+        ],
+      },
+      {
+        name: "Hammock",
+        type: "Prop",
+        icon: "<:CadetProp:1273870663396102205>",
+        price: "55 <:RegularCandle:1207793250895794226>",
+        spPrice: "20 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Hammock",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/35/Assembly_prop_hammock_down.png/revision/latest/scale-to-width-down/400?cb=20220902225105",
+          },
+          {
+            description: "Hammock in use",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5c/Scaredy-Cadet-Hammock-Prop-Using.png/revision/latest/scale-to-width-down/400?cb=20240508145306",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/11/Assembly_prop_hammock_on_back.png/revision/latest/scale-to-width-down/400?cb=20210807183319",
+          },
+        ],
+      },
+      {
+        name: "Music Sheet #21",
+        icon: "<:MusicIcon:1262323496852131882>",
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "15 <:AssemblyCandle:1273826333897523250>",
+        images: [],
+      },
+    ],
   },
   foresterer: {
     name: "Daydream Forester",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/dc/Assembly-Spirit-Daydream-Forester.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Assembly",
@@ -104,7 +220,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Daydreaming_Forester_Location_Clement.png",
     },
-
     emote: {
       icon: "<:forester:1131591420239675402>",
       level: [
@@ -126,6 +241,54 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:ForesterMask:1273867569442586674>",
+        price: "24 <:RegularCandle:1207793250895794226>",
+        spPrice: "5 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/06/Assembly_mask_daydream_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192715",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        icon: "<:ForesterHair:1273867555303592048>",
+        type: "Hair",
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/25/Daydream-Forester-Hair-Front.png/revision/latest/scale-to-width-down/400?cb=20240315133842",
+          },
+          {
+            description: "Side",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/10/Daydream-Forester-Hair-Side.png/revision/latest/scale-to-width-down/400?cb=20240315133246",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e5/Daydream-Forester-Hair-Back.png/revision/latest/scale-to-width-down/400?cb=20240315133455",
+          },
+        ],
+        price: "44 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+      },
+      {
+        name: "Music Sheet #20",
+        icon: "<:MusicIcon:1262323496852131882>",
+        type: "Music Sheet",
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "15 <:AssemblyCandle:1273826333897523250>",
+        images: [],
+      },
+    ],
   },
   adventurer: {
     name: "Marching Adventurer",
