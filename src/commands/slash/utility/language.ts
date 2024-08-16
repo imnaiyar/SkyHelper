@@ -1,6 +1,6 @@
 import { getTranslator } from "#src/i18n";
 import { supportedLang } from "#src/libs/constants/supportedLang";
-import { IntegrationTypes } from "#src/libs/types";
+import { IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";

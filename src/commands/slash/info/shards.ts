@@ -1,6 +1,6 @@
 import { buildShardEmbed } from "#handlers";
 import { useTranslations as x } from "#handlers/useTranslation";
-import { ContextTypes, IntegrationTypes } from "#libs/types";
+import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";

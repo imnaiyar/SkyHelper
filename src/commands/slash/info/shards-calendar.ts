@@ -1,4 +1,4 @@
-import { ContextTypes, IntegrationTypes } from "#libs/types";
+import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuInteraction, time } from "discord.js";
 import {

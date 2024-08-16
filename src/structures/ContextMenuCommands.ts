@@ -4,7 +4,7 @@ import type {
   MessageContextMenuCommandInteraction,
   PermissionResolvable,
 } from "discord.js";
-import type { IntegrationTypes, ContextTypes } from "#libs/types";
+import type { IntegrationTypes, ContextTypes } from "#libs";
 import type { SkyHelper } from "#structures/SkyHelper";
 /* eslint-disable */
 

@@ -5,7 +5,7 @@ import type {
   RESTPostAPIChatInputApplicationCommandsJSONBody,
 } from "discord.js";
 
-import type { IntegrationTypes, ContextTypes } from "#libs/types";
+import type { IntegrationTypes, ContextTypes } from "#libs";
 import type { SkyHelper } from "#structures";
 import type { getTranslator } from "#src/i18n";
 /* eslint-disable */

@@ -1,4 +1,4 @@
-import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs/types";
+import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs";
 import { Spirits } from "#libs/classes/Spirits";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";

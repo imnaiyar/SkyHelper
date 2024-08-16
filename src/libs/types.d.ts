@@ -2,26 +2,6 @@ import moment from "moment-timezone";
 import { Document } from "mongoose";
 import type { ScheduleOptions } from "node-cron";
 
-/* eslint-disable */
-export enum ContextTypes {
-  /** Command can be used in guilds */
-  Guild = 0,
-
-  /** Command can be used in Bot's DM */
-  BotDM = 1,
-
-  /** Command can be used in other's DMs (Group DMs, DMs) */
-  PrivateChannels = 2,
-}
-
-export enum IntegrationTypes {
-  /** Command is for guild */
-  Guilds = 0,
-
-  /** Command is for User apps */
-  Users = 1,
-}
-
 export interface ShardsCountdown {
   // The shard index
   index: number;
