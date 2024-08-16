@@ -171,6 +171,7 @@ const data: Record<string, SpiritsData> = {
   },
   scout: {
     name: "Chuckling Scout",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b8/Assembly-Spirit-Chuckling-Scout.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Assembly",
@@ -188,7 +189,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Chuckling_Scout_Location_Clement.png",
     },
-
     emote: {
       icon: "<:scout:1131591393282904084>",
       level: [
@@ -210,6 +210,79 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        icon: "<:ScoutOutfit:1273848191304863859>",
+        type: "Outfit",
+        price: "65 <:RegularCandle:1207793250895794226> (Together with shoes)",
+        isSP: true,
+        notes: ["In the 0.22.0 Patch, the boots attached to the Outfit were removed and became a separate cosmetic item"],
+        images: [
+          {
+            description: "Front",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c6/Assembly_pants_chuckling_v2.png/revision/latest/scale-to-width-down/400?cb=20240303040359",
+          },
+          {
+            description: "Back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3b/Chuckling-Scout-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225195535",
+          },
+        ],
+      },
+      {
+        name: "Shoes",
+        type: "Outfit",
+        icon: "<:ScoutShoes:1273848176927047782>",
+        price: "Included with the outfit",
+        images: [
+          {
+            description: "The shoes",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/36/Chuckling-Scout-shoes.png/revision/latest/scale-to-width-down/400?cb=20230923181717",
+          },
+        ],
+        skipTree: true,
+        notes: ["In the 0.22.0 Patch, the boots were removed from the attached outfit and became a separate cosmetic item"],
+      },
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:ScoutMask:1273848170731802645>",
+        price: "36 <:RegularCandle:1207793250895794226>",
+        spPrice: "12 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/e0/Assembly_mask_chuckling_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192713",
+          },
+        ],
+      },
+      {
+        name: "Hoop",
+        type: "Prop",
+        icon: "<:ScoutProp:1273848341012152321>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        spPrice: "20 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/4d/Assembly_prop_hoop_down.png/revision/latest/scale-to-width-down/400?cb=20220902224909",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/51/Assembly_prop_hoop_on_back.png/revision/latest/scale-to-width-down/400?cb=20210807183323",
+          },
+        ],
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces. This item is purely cosmetic and does not offer any functionality",
+        ],
+      },
+    ],
   },
   botanist: {
     name: "Baffled Botanist",
