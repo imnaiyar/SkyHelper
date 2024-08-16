@@ -20,6 +20,7 @@ jobs:
         run: docker compose up -d --build
         env:
           TOKEN: ${{ secrets.TOKEN }}
+          NODE_ENV: production
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
           AUTH_TOKEN: ${{secrets.AUTH_TOKEN}}
           SENTRY_DSN: ${{secrets.SENTRY_DSN}}
