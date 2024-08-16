@@ -129,6 +129,7 @@ const data: Record<string, SpiritsData> = {
   },
   adventurer: {
     name: "Marching Adventurer",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/dd/Assembly-Spirit-Marching-Adventurer.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Assembly",
@@ -146,7 +147,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Marching_Adventurer_Location_Clement.png",
     },
-
     emote: {
       icon: "<:adventurer:1131591445057372272>",
       level: [
@@ -168,6 +168,58 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:AdventurerMask:1273862074652430437>",
+        price: "30 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/fd/Assembly_mask_marching_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192717",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:AdventurerHair:1273862060496650271>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        spPrice: "12 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/54/Assembly_hair_marching_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192706",
+          },
+        ],
+      },
+      {
+        name: "Prop",
+        type: "Prop",
+        icon: "<:AdventurerProp:1273862046852579368>",
+        price: "55 <:RegularCandle:1207793250895794226>",
+        spPrice: "22 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/30/Assembly_prop_torch_lit_2.png/revision/latest/scale-to-width-down/400?cb=20220902225003",
+          },
+          {
+            description: "On player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/91/Assembly_prop_torch_on_back.png/revision/latest/scale-to-width-down/400?cb=20210807183329",
+          },
+        ],
+        notes: [
+          "It is a placeable Prop that can be used to decorate Shared Spaces. When lit, its flame will recharge the player's wings",
+        ],
+      },
+    ],
   },
   scout: {
     name: "Chuckling Scout",
