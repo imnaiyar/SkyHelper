@@ -381,7 +381,7 @@ const data: Record<string, SpiritsData> = {
     tree: {
       by: "Clement",
       total: "190 :RegularCandle: 8 :RegularHeart: 2 :AC:",
-      image: "BearHug_Hermit_Tree_Clement.png",
+      image: "BearHug_Hermit_Tree_Clement.png.jpg",
     },
     location: {
       by: "Clement",
