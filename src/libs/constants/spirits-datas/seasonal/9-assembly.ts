@@ -213,6 +213,7 @@ const data: Record<string, SpiritsData> = {
   },
   botanist: {
     name: "Baffled Botanist",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/81/Assembly-Spirit-Baffled-Botanist.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Assembly",
@@ -230,7 +231,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Baffled_Botanist_Location_Clement.png",
     },
-
     emote: {
       icon: "<:botanist:1131591369492795503>",
       level: [
@@ -252,6 +252,60 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:BotanistMask:1273826071946723438>",
+        price: "24 <:RegularCandle:1207793250895794226>",
+        spPrice: "14 <:AssemblyCandle:1273826333897523250>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7b/Assembly_mask_baffled_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192712",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:BotanistHair:1273826065017606147>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/fa/Assembly_hair_baffled_v2.png/revision/latest/scale-to-width-down/400?cb=20210727192702",
+          },
+        ],
+      },
+      {
+        name: "Spotlight",
+        type: "Prop",
+        icon: "<:BotanistProp:1273826056331067433>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The prop",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/56/Baffled-botanist-spotlight-prop-closeup.png/revision/latest/scale-to-width-down/400?cb=20220901055616",
+          },
+          {
+            description: "The prom in use",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/67/Assembly_prop_lamp_down.png/revision/latest/scale-to-width-down/400?cb=20210807183324",
+          },
+          {
+            description: "On Player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f3/Assembly_prop_lamp_on_back.png/revision/latest/scale-to-width-down/400?cb=20210807183326",
+          },
+        ],
+      },
+    ],
   },
 };
 
