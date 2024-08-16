@@ -1,4 +1,4 @@
-import spiritsData from "../src/libs/constants/spirits-datas/index.js";
+import spiritsData from "../src/bot/libs/constants/spirits-datas/index.js";
 
 describe("spiritsData", () => {
   it("the object should contain correct data set", () => {
@@ -20,8 +20,10 @@ describe("spiritsData", () => {
       "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3e/Gratitude-Spirit-Greeting-Shaman.png",
     );
     expect(shaman.realm).toBe("Vault of Knowledge");
+
     // @ts-expect-error
     expect(shaman.season).toBe("Gratitude");
+
     // @ts-expect-error
     expect(shaman.ts).toEqual({
       eligible: true,
