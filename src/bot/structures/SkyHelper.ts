@@ -382,13 +382,13 @@ export class SkyHelper extends Client<true> {
    */
   public async checkPermissions(user: UserSession, guildID: string) {
     const guild = this.guilds.cache.get(guildID);
-    if (guild == null) throw new HttpException("Guild Not found", HttpStatus.NOT_FOUND);
+    if (!guild) throw new HttpException("Guild Not found", HttpStatus.NOT_FOUND);
 
     const userID = await getUserID(user.access_token);
-    const member = await guild?.members.fetch(userID);
+    const member = await guild?.members.fetch(userID).catch(() => null);
 
-    if (!member?.permissions.has("Administrator") && guild.ownerId !== member.id) {
-      throw new HttpException("Missing permissions", HttpStatus.BAD_REQUEST);
+    if (!member?.permissions.has("ManageGuild") && guild.ownerId !== member?.id) {
+      throw new HttpException("Missing permissions", HttpStatus.UNAUTHORIZED);
     }
   }
   /**
