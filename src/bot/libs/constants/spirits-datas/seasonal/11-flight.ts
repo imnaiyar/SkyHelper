@@ -71,6 +71,7 @@ const data: Record<string, SpiritsData> = {
   },
   light_whisperer: {
     name: "Light Whisperer",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/db/Flight-Spirit-Light-Whisperer.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Flight",
@@ -88,12 +89,89 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Light_Whisper_Location_Clement.png",
     },
-
     call: {
       title: "Baby Manta Call",
       icon: "<:lightwhisperer:1131589102626672761>",
       image: "Baby_Manta_Call-2.mp4",
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        type: "Outfit",
+        icon: "<:LightWOutfit:1274414949653020863>",
+        price: "65 <:RegularCandle:1207793250895794226>",
+        spPrice: "28 <:FlightCandle:1274063266389430312>",
+        images: [
+          {
+            description: "The Outfit (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/aa/Season_of_flight_pants_4_light_whisperer.png/revision/latest/scale-to-width-down/400?cb=20230626013918",
+          },
+          {
+            description: "The Outfit (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d7/Light-Whisperer-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225195908",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        icon: "<:LightWHair:1274414927410368603>",
+        type: "Hair",
+        price: "50 <:RegularCandle:1207793250895794226>",
+        spPrice: "22 <:FlightCandle:1274063266389430312>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/12/Season_of_flight_hair_4_light_whisperer_gs.png/revision/latest/scale-to-width-down/400?cb=20240226180026",
+          },
+        ],
+      },
+      {
+        name: "Bird Hair Accessory",
+        icon: "<:LightWHairAccessory:1274414909009952829>",
+        type: "Hair Accessory",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Accessory",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7d/Season_of_flight_headpiece_1_light_whisperer.png/revision/latest/scale-to-width-down/400?cb=20240226180056",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        icon: "<:LightWCape:1274414891612246147>",
+        type: "Cape",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "Cape (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9e/Season_of_flight_cape_light_whisperer_front.png/revision/latest/scale-to-width-down/400?cb=20210904224839",
+          },
+          {
+            description: "Cape (Interior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/17/Light-Whisperer-Cape-Interior.png/revision/latest/scale-to-width-down/400?cb=20240302121023",
+          },
+          {
+            description: "Cape (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d9/Season_of_flight_cape_light_whisperer_back.png/revision/latest/scale-to-width-down/400?cb=20210904224851",
+          },
+          {
+            description: "Cape (Exterior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/41/Light-Whisperer-Cape-exterior.png/revision/latest/scale-to-width-down/400?cb=20240226194250",
+          },
+        ],
+      },
+    ],
   },
   talented_builder: {
     name: "Talented Builder",
