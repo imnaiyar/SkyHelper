@@ -38,18 +38,24 @@ export class LiveShard {
         }
       }
     }
-    const channel = client.channels.cache.get(body.channel)! as TextChannel;
-    const wb2 = await channel.createWebhook({
-      name: "SkyHelper",
-      reason: "For Live SHards",
-    });
-    const m = await wb2.send({ username: "SkyHelper", avatarURL: client.user.displayAvatarURL(), ...response });
-    data.autoShard.messageId = m.id;
-    data.autoShard.active = true;
-    data.autoShard.webhook.id = wb2.id;
-    data.autoShard.webhook.token = wb2.token;
+    let channel,
+      wb2 = null;
+    if (body.channel) {
+      channel = client.channels.cache.get(body.channel)! as TextChannel;
+      wb2 = await channel.createWebhook({
+        name: "SkyHelper",
+        reason: "For Live Skytimes",
+      });
+    }
+    const m = await wb2?.send({ username: "SkyHelper", avatarURL: client.user.displayAvatarURL(), ...response });
+    data.autoTimes.messageId = m?.id || "";
+    data.autoTimes.active = wb2 ? true : false;
+    data.autoTimes.webhook = {
+      id: wb2?.id || null,
+      token: wb2?.token || null,
+    };
     await data.save();
-    return { channel: wb2.channelId };
+    return { channel: wb2?.channelId };
   }
   static async post(client: BotService, guildId: string) {
     const data = await getSettings(client, guildId);
