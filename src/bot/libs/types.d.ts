@@ -101,6 +101,7 @@ type CosmeticTypes =
   | "Props"
   | "Face Accessory"
   | "Hair"
+  | "Shoes"
   | "Hair Accessory"
   | "Music Sheet"
   | "Outfit"
