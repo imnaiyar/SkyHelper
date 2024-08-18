@@ -3,6 +3,7 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   commodore: {
     name: "Ceasing Commodore",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/99/Abyss-Spirit-Ceasing-Commodore.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Abyss",
@@ -20,7 +21,6 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Ceasing_comodore_Location_SkyZed.png",
     },
-
     emote: {
       icon: "<:commodore:1131587707315949608>",
       level: [
@@ -42,10 +42,70 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Maks",
+        type: "Mask",
+        icon: "<:CommodoreMask:1274648228528390245>",
+        price: "40 <:RegularCandle:1207793250895794226>",
+        spPrice: "8 <:AbyssCandle:1274639783397691446>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d9/SOAbyss-Ceasing-Commodore-mask-screenshot.png/revision/latest/scale-to-width-down/400?cb=20220217124024",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:CommodoreHair:1274648216155066431>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2b/SOAbyss-Ceasing-Commodore-hair.png/revision/latest/scale-to-width-down/400?cb=20220217121605",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:CommodoreCape:1274648212782977056>",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        spPrice: "20 <:AbyssCandle:1274639783397691446>",
+        images: [
+          {
+            description: "The Cape (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8e/SOAbyss-Ceasing-Commodore-Cape-front.png/revision/latest/scale-to-width-down/400?cb=20220308225824",
+          },
+          {
+            description: "The Cape (Interior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5e/SOAbyss-Ceasing-Commodore-Cape-front-butterfly.png/revision/latest/scale-to-width-down/400?cb=20220309011656",
+          },
+          {
+            description: "The Cape (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/71/SOAbyss-Ceasing-Commodore-Cape-back.png/revision/latest/scale-to-width-down/400?cb=20220309011537",
+          },
+          {
+            description: "The Cape (Exterior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7a/SOAbyss-Ceasing-Commodore-Cape-back-butterfly.png/revision/latest/scale-to-width-down/400?cb=20220309011830",
+          },
+        ],
+      },
+    ],
   },
   cannoneer: {
     name: "Cackling Cannoneer",
     type: "Seasonal Spirit",
+    image: "",
     realm: "Golden Wasteland",
     season: "Abyss",
     ts: {
@@ -62,7 +122,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Cackling_Cannoneer_Location_Clement.png",
     },
-
     emote: {
       icon: "<:cannoneer:1131587675061747854>",
       level: [
@@ -84,6 +143,73 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        icon: "<:CannoneerMask:1274645140300107777>",
+        price: "40 <:RegularCandle:1207793250895794226>",
+        type: "Mask",
+        spPrice: "16 <:AbyssCandle:1274639783397691446>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/ff/SOAbyss-Cackling-Cannoneer-mask-screenshot.png/revision/latest/scale-to-width-down/400?cb=20220217123906",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        icon: "<:CannoneerHair:1274645109928886373>",
+        type: "Hair",
+        price: "50 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/84/SOAbyss-Cackling-Cannoneer-Cape-hair.png/revision/latest/scale-to-width-down/400?cb=20220217122517",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        icon: "<:CannoneerCape:1274645100047237141>",
+        type: "Cape",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        spPrice: "26 <:AbyssCandle:1274639783397691446>",
+        images: [
+          {
+            description: "The Cape (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/63/SOAbyss-Cackling-Cannoneer-Cape-front.png/revision/latest/scale-to-width-down/400?cb=20220309012323",
+          },
+          {
+            description: "The Cape (Interior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/70/SOAbyss-Cackling-Cannoneer-Cape-front-butterfly.png/revision/latest/scale-to-width-down/400?cb=20220309012308",
+          },
+          {
+            description: "The Cape (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/50/SOAbyss-Cackling-Cannoneer-Cape-back.png/revision/latest/scale-to-width-down/400?cb=20220309012333",
+          },
+          {
+            description: "The Cape (Exterior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/cf/SOAbyss-Cackling-Cannoneer-Cape-back-butterfly.png/revision/latest/scale-to-width-down/400?cb=20220309012346",
+          },
+        ],
+      },
+      {
+        name: "Music Sheet #26",
+        icon: "<:MusicIcon:1262323496852131882>",
+        type: "Music Sheet",
+        price: "15 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [],
+      },
+    ],
   },
   boatswain: {
     name: "Bumbling Boatswain",
