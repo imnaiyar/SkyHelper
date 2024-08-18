@@ -129,6 +129,7 @@ const data: Record<string, SpiritsData> = {
   },
   angler: {
     name: "Anxious Angler",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5f/Abyss-Spirit-Anxious-Angler.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Abyss",
@@ -146,7 +147,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Anxious_Angler_Location_Clement.jpg",
     },
-
     emote: {
       icon: "<:angler:1131587623165632594>",
       level: [
@@ -168,6 +168,94 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        icon: "<:AnglerOutfit:1274639842877112343>",
+        type: "Outfit",
+        price: "65 <:RegularCandle:1207793250895794226>",
+        spPrice: "38 <:AnglerCape:1274639797599862884>",
+        images: [
+          {
+            description: "The Outfit (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2d/SOAbyss-Anxious-Angler-Cape-outfit.png/revision/latest/scale-to-width-down/400?cb=20230626014003",
+          },
+          {
+            description: "The Outfit (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8a/Anxious-Angler-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225195414",
+          },
+        ],
+      },
+      {
+        name: "Mask",
+        type: "Mask",
+        icon: "<:AnglerMask:1274639826548953118>",
+        price: "35 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/61/SOAbyss-Anxious-Angler-mask-screenshot.png/revision/latest/scale-to-width-down/400?cb=20240118224537",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:AnglerHair:1274639811319304253>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        spPrice: "14 <:AnglerCape:1274639797599862884>",
+        images: [
+          {
+            description: "THe Hair (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/ec/Anxious-Angler-Hair-front.png/revision/latest/scale-to-width-down/400?cb=20240118214155",
+          },
+          {
+            description: "The Hair (Side)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/63/SOAbyss-Anxious-Angler-hat-screenshot.png/revision/latest/scale-to-width-down/400?cb=20240118211145",
+          },
+          {
+            description: "The Hair (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9e/Anxious-Angler-Hair-back.png/revision/latest/scale-to-width-down/400?cb=20240118214151",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:AnglerCape:1274639797599862884>",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "Cape (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5f/SOAbyss-Anxious-Angler-Cape-front.png/revision/latest/scale-to-width-down/400?cb=20240121030538",
+          },
+          {
+            description: "Cape (Interior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/72/SOAbyss-Anxious-Angler-Cape-front-butterfly.png/revision/latest/scale-to-width-down/400?cb=20240121030610",
+          },
+          {
+            description: "Cape (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/bb/SOAbyss-Anxious-Angler-Cape-back.png/revision/latest/scale-to-width-down/400?cb=20240121035732",
+          },
+          {
+            description: "Cape (Exterior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/89/SOAbyss-Anxious-Angler-Cape-back-butterfly.png/revision/latest/scale-to-width-down/400?cb=20240121043056",
+          },
+        ],
+      },
+    ],
   },
 };
 
