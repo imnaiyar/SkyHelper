@@ -3,6 +3,7 @@ import type { SpiritsData } from "#libs/types";
 const data: Record<string, SpiritsData> = {
   chimesmith: {
     name: "Tinkering Chimesmith",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/51/Flight-Spirit-Tinkering-Chimesmith.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Flight",
@@ -20,12 +21,84 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Tinkering_Chimesmith_Location_Clement.png",
     },
-
     stance: {
       title: "Tinker Stance",
       icon: "<:chimesmith:1131589172822544435>",
       image: "Tinker_Stance_.gif",
     },
+    cosmetics: [
+      {
+        name: "Outfit",
+        icon: "<:ChimesmithOutfit:1274612006489690234>",
+        type: "Outfit",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "Outfit (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b3/Season_of_flight_pants_3_tinkering_chimesmith_gs.PNG/revision/latest/scale-to-width-down/400?cb=20230626013845",
+          },
+          {
+            description: "Outfit (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/6/62/Tinkering-Chimesmith-Outfit-Back.png/revision/latest/scale-to-width-down/400?cb=20240225200638",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:CHimesmithHair:1274611992287514664>",
+        price: "55 <:RegularCandle:1207793250895794226>",
+        spPrice: "28 <:FlightCandle:1274063266389430312>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/fa/Season_of_flight_hair_2_tinkering_chimesmith.png/revision/latest/scale-to-width-down/400?cb=20210904224802",
+          },
+        ],
+      },
+      {
+        name: "Hair Accessory",
+        type: "Hair Accessory",
+        icon: "<:ChimesmithHairAccessory:1274611979767644190>",
+        price: "35 <:RegularCandle:1207793250895794226>",
+        spPrice: "22 <:FlightCandle:1274063266389430312>",
+        images: [
+          {
+            description: "The Hair Accessory",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/7f/Season_of_flight_headpiece_3_tinkering_chimesmith.png/revision/latest/scale-to-width-down/400?cb=20220217123725",
+          },
+        ],
+      },
+      {
+        name: "Kalimba",
+        type: "Instrument",
+        icon: "<:ChimesmithInstrument:1274611965674918021>",
+        price: "75 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Instrument",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/89/Flight-Tinkering-Chimesmith-Kalimba.png/revision/latest/scale-to-width-down/400?cb=20220520151214",
+          },
+          {
+            description: "Playing the instrument",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/12/Season_of_flight_instrument_kalimba_playing.png/revision/latest/scale-to-width-down/400?cb=20210903185101",
+          },
+          {
+            description: "On Player's back",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/72/Season_of_flight_instrument_kalimba_on_back.png/revision/latest/scale-to-width-down/400?cb=20210903185103",
+          },
+        ],
+      },
+    ],
   },
   navigator: {
     name: "Lively Navigator",
@@ -88,7 +161,7 @@ const data: Record<string, SpiritsData> = {
         type: "Hair Accessory",
         icon: "<:NavigatorHairAccessory:1274608299882319882>",
         price: "45 <:RegularCandle:1207793250895794226>",
-        spPrice: "",
+        spPrice: "16 <:FlightCandle:1274063266389430312>",
         images: [
           {
             description: "The Hair Accessory",
@@ -126,7 +199,7 @@ const data: Record<string, SpiritsData> = {
         type: "Music Sheet",
         icon: "<:MusicIcon:1262323496852131882>",
         price: "15 <:RegularCandle:1207793250895794226>",
-        spPrice: "",
+        spPrice: "28 <:FlightCandle:1274063266389430312>",
         images: [],
       },
     ],
