@@ -41,7 +41,7 @@ export default {
       const embed = new EmbedBuilder()
         .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: ts.spiritImage })
         .setDescription(description)
-        .setTitle(emote! + " " + spirit.name)
+        .setTitle(emote! + " " + spirit.name + (spirit.extra ? ` (${spirit.extra})` : ""))
         .addFields({
           name: spirit.ts?.returned
             ? t("SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })

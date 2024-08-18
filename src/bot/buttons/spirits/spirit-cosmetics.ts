@@ -9,6 +9,7 @@ export default {
   async execute(interaction, _t, client) {
     const [, value] = interaction.customId.split("-");
     const data = client.spiritsData[value];
+    console.log(data.cosmetics, data.extra);
     if (!data || !data.cosmetics?.length) {
       return void (await interaction.reply({
         content: "No cosmetics found for this spirit, or something went wrong!",

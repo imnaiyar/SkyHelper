@@ -69,7 +69,7 @@ export class Spirits {
         : ""
     }${this.isSeasonal(data) && data.season ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
     const embed = new EmbedBuilder()
-      .setTitle(`${icon} ${data.name}`)
+      .setTitle(`${icon} ${data.name}${data.extra ? ` (${data.extra})` : ""}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`)
       .setDescription(desc)
       .setAuthor({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE") });
@@ -126,7 +126,10 @@ export class Spirits {
   public getButtons(): ActionRowBuilder<ButtonBuilder> {
     const row = new ActionRowBuilder<ButtonBuilder>();
     const data = this.data;
-    const [value] = Object.entries(this.client.spiritsData).find(([, v]) => v.name.toLowerCase() === data.name.toLowerCase())!;
+    const [value] = Object.entries(this.client.spiritsData).find(([, v]) => {
+      if (v.extra) return data.extra === v.extra && data.name === v.name;
+      return v.name === data.name;
+    })!;
     if (this.isSeasonal(data) && data.location) row.addComponents(lctnBtn(value));
     // prettier-ignore
     if (data.emote || data.stance || data.action || data.call) row.addComponents(getExpressionBtn(data, value, this.t, (data.emote?.icon ?? data.call?.icon ?? data.stance?.icon ?? data.action?.icon) as string));

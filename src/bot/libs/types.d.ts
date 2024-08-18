@@ -147,6 +147,9 @@ interface BaseSpiritData {
   name: string;
   /** Spirits preview image link */
   image?: string;
+
+  /** Any extra title to add (To be displayed on the embed) */
+  extra?: string;
   type: string;
   realm?: string;
   icon?: string;
