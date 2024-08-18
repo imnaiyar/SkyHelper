@@ -87,6 +87,7 @@ const data: Record<string, SpiritsData> = {
   },
   boatswain: {
     name: "Bumbling Boatswain",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/0c/Abyss-Spirit-Bumbling-Boatswain.png",
     type: "Seasonal Spirit",
     realm: "Golden Wasteland",
     season: "Abyss",
@@ -104,7 +105,6 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Bumbling_boatswain_Location_SkyZed.png",
     },
-
     emote: {
       icon: "<:boatswain:1131587645219295382>",
       level: [
@@ -126,6 +126,69 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        icon: "<:BoatswainMask:1274642431735894026>",
+        type: "Mask",
+        isSP: true,
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/97/SOAbyss-Bumbling-Boatswain-mask-screenshot.png/revision/latest/scale-to-width-down/400?cb=20220217123851",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:BoatswainHair:1274642418163253342>",
+        spPrice: "24 <:AbyssCandle:1274639783397691446>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d4/SOAbyss-Bumbling-Boatswain-Cape-hat-screenshot.png/revision/latest/scale-to-width-down/400?cb=20220418010253",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:BoatswainCape:1274642403671674890>",
+        isSP: true,
+        images: [
+          {
+            description: "The Cape (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/ca/SOAbyss-Bumbling-Boatswain-Cape-front.png/revision/latest/scale-to-width-down/400?cb=20220309012112",
+          },
+          {
+            description: "The Cape (Interior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/10/SOAbyss-Bumbling-Boatswain-Cape-butterfly.png/revision/latest/scale-to-width-down/400?cb=20220309012100",
+          },
+          {
+            description: "The Cape (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/45/SOAbyss-Bumbling-Boatswain-Cape-back.png/revision/latest/scale-to-width-down/400?cb=20220309012048",
+          },
+          {
+            description: "The Cape (Exterior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/99/SOAbyss-Bumbling-Boatswain-Cape-back-butterfly.png/revision/latest/scale-to-width-down/400?cb=20220309012038",
+          },
+        ],
+      },
+      {
+        name: "Music Sheet #27",
+        icon: "<:MusicIcon:1262323496852131882>",
+        type: "Music Sheet",
+        spPrice: "12 <:AbyssCandle:1274639783397691446>",
+        images: [],
+      },
+    ],
   },
   angler: {
     name: "Anxious Angler",
