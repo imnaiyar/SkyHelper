@@ -9,6 +9,7 @@ services:
     volumes:
       - /root/mybot-data:/app/data
     environment:
+      - NODE_ENV
       - TOKEN
       - MONGO_CONNECTION
       - TOPGG_TOKEN
@@ -17,6 +18,7 @@ services:
       - GUILD
       - SUGGESTION
       - READY_LOGS
+      - ERROR_LOGS
       - COMMANDS_USED
       - CONTACT_US
       - BUG_REPORTS
