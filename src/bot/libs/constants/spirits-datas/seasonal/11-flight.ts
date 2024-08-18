@@ -29,6 +29,7 @@ const data: Record<string, SpiritsData> = {
   },
   navigator: {
     name: "Lively Navigator",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9a/Flight-Spirit-Lively-Navigator.png",
     type: "Seasonal Spirit",
     realm: "Hidden Forest",
     season: "Flight",
@@ -46,7 +47,6 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Lively_Navigator_Location_Clement.jpg",
     },
-
     emote: {
       icon: "<:navigator:1131589125636632596>",
       level: [
@@ -68,6 +68,68 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Hair",
+        type: "Hair",
+        icon: "<:NavigatorHair:1274608312926736404>",
+        price: "55 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/d2/Season_of_flight_hair_3_lively_navigator_gs.png/revision/latest/scale-to-width-down/400?cb=20240303230316",
+          },
+        ],
+      },
+      {
+        name: "Hair Accessory",
+        type: "Hair Accessory",
+        icon: "<:NavigatorHairAccessory:1274608299882319882>",
+        price: "45 <:RegularCandle:1207793250895794226>",
+        spPrice: "",
+        images: [
+          {
+            description: "The Hair Accessory",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/2c/Season_of_flight_headpiece_2_lively_navigator.png/revision/latest/scale-to-width-down/400?cb=20220217123727",
+          },
+        ],
+      },
+      {
+        name: "Cape",
+        type: "Cape",
+        icon: "<:NavigatorCape:1274608289186975805>",
+        price: "70 <:RegularCandle:1207793250895794226>",
+        isSP: true,
+        images: [
+          {
+            description: "Cape (Front)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/d/da/Season_of_flight_cape_lively_navigator_front.png/revision/latest/scale-to-width-down/400?cb=20210903185116",
+          },
+          {
+            description: "Cape (Interior)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/82/Season_of_flight_cape_lively_navigator_open.png/revision/latest/scale-to-width-down/400?cb=20210903185115",
+          },
+          {
+            description: "Cape (Back)",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/5/5d/Season_of_flight_cape_lively_navigator_back.png/revision/latest/scale-to-width-down/400?cb=20210903185117",
+          },
+        ],
+      },
+      {
+        name: "Music Sheet #24",
+        type: "Music Sheet",
+        icon: "<:MusicIcon:1262323496852131882>",
+        price: "15 <:RegularCandle:1207793250895794226>",
+        spPrice: "",
+        images: [],
+      },
+    ],
   },
   light_whisperer: {
     name: "Light Whisperer",
