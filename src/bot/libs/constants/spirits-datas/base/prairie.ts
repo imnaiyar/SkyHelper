@@ -186,6 +186,7 @@ const data: Record<string, SpiritsData> = {
   waving_bellmaker: {
     name: "Waving Bellmaker",
     type: "Regular Spirit",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/48/Prairie-Spirit-Waving-Bellmaker.png",
     realm: "Daylight Prairie",
     main: {
       description: "Waving Bellmaker Infographics by Ed.7",
@@ -220,6 +221,34 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
+    cosmetics: [
+      {
+        name: "Mask",
+        icon: "<:WavingBellmakerMask:1275105123223339018>",
+        type: "Mask",
+        price: "5 <:regularHeart:1207793247792013474>",
+        images: [
+          {
+            description: "The Mask",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/2/27/Mask03.png/revision/latest/scale-to-width-down/400?cb=20210810231621",
+          },
+        ],
+      },
+      {
+        name: "Hair",
+        icon: "<:WavingBellmakerHair:1275105109579137119>",
+        type: "Hair",
+        price: "2 <:regularHeart:1207793247792013474>",
+        images: [
+          {
+            description: "The Hair",
+            image:
+              "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/92/Hair10-Small_Tuft.png/revision/latest/scale-to-width-down/400?cb=20240123035655",
+          },
+        ],
+      },
+    ],
   },
 };
 
