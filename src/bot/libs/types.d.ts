@@ -97,6 +97,7 @@ type CosmeticTypes =
   | "Cape"
   | "Mask"
   | "Instrument"
+  | "Instruments"
   | "Prop"
   | "Props"
   | "Face Accessory"
