@@ -31,7 +31,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Face Accessory",
         icon: "<:LevitatingAdeptFaceAccessory:1275333706919317524>",
@@ -100,7 +100,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:MeditatingMonasticHair:1275332560234483805>",
@@ -148,7 +148,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:memorywhisperer:1205914905275011123>",
       image: "Cosmic_Manta_Call-1.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:MemoryWhispererOutfit:1275330974841966663>",
@@ -224,7 +224,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:politescholar:1205914889650970644>",
       image: "Polite_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:PoliteScholarOutfit:1275329713564418112>",
@@ -283,7 +283,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:PrayingAcolyteHair:1275328153891635270>",

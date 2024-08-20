@@ -42,7 +42,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:TwirlingChampionMask:1272251658486943826>",
@@ -145,7 +145,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:SushingScholarMask:1272249646793621534>",
@@ -213,7 +213,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:PiggybackMask:1272247105985052773>",
@@ -290,7 +290,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:laidbackPioneer:1153511482949107765>",
       image: "Laidback_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:LaidbackMask:1272243663266906213>",
@@ -378,7 +378,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:DoubleFiveMask:1272238796733157397>",
@@ -468,7 +468,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:crabWhisperer:1153511432349032508>",
       image: "Crab_Call-1.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:CrabWhispererMask:1272233363809374360>",

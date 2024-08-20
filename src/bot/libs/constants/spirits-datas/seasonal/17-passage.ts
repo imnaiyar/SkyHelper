@@ -42,7 +42,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:OutcastOutfit:1274783081622012014>",
@@ -130,7 +130,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:OverachieverHair:1274780794350731264>",
@@ -228,7 +228,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:MopeOutfit:1274778986005925909>",
@@ -326,7 +326,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Earings",
         icon: "<:TroublemakerFaceAcessory:1274777276600291398>",

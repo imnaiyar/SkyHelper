@@ -43,7 +43,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Cap",
         icon: "<:LamplighterHat:1274006791457345546>",
@@ -133,7 +133,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Necktie",
         type: "Neck Accessory",
@@ -249,7 +249,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:GeographerHair:1274002607723122756>",
@@ -326,7 +326,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:SlouchingSoldierHair:1274000878898118677>",
@@ -421,7 +421,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -506,7 +506,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:RulerMask:1273997522138042478>",

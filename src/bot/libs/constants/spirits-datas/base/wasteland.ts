@@ -15,7 +15,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:courageoussoldier:1205914854456696892>",
       image: "Courageous_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:CourageousSoldierHair:1275326200587354172>",
@@ -118,7 +118,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:FaintingWarriorMask:1275325091399335946>",
@@ -187,7 +187,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:FrightenedRefugeeHair:1275323127001518090>",
@@ -259,7 +259,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:LookoutScoutMask:1275321552849600532>",
@@ -331,7 +331,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:SalutingCaptainHair:1275320401181933659>",
@@ -388,7 +388,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:stealthysurvivor:1205914765558423552>",
       image: "Sneaky_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:StealthySurvivorHair:1275318606296518726>",

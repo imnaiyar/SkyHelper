@@ -13,12 +13,12 @@ const lctnBtn = (value: string) =>
     .setStyle(ButtonStyle.Secondary);
 
 // Define Cosmetic Button
-const cosmeticBtn = (icon: string, value: string) =>
+const collectiblesBtn = (icon: string, value: string) =>
   new ButtonBuilder()
-    .setCustomId("spirit_cosmetic-" + value)
+    .setCustomId("spirit_collectible-" + value)
     .setEmoji(icon)
     .setStyle(ButtonStyle.Success)
-    .setLabel("Cosmetic(s)");
+    .setLabel("Collectible(s)");
 
 const getExpressionBtn = (data: SpiritsData, value: string, t: ReturnType<typeof getTranslator>, icon: string): ButtonBuilder =>
   new ButtonBuilder()
@@ -134,8 +134,8 @@ export class Spirits {
     // prettier-ignore
     if (data.emote || data.stance || data.action || data.call) row.addComponents(getExpressionBtn(data, value, this.t, (data.emote?.icon ?? data.call?.icon ?? data.stance?.icon ?? data.action?.icon) as string));
 
-    if (data.cosmetics?.length) {
-      row.addComponents(cosmeticBtn(data.cosmetics[Math.floor(Math.random() * data.cosmetics.length)].icon, value));
+    if (data.collectibles?.length) {
+      row.addComponents(collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)].icon, value));
     }
 
     return row;

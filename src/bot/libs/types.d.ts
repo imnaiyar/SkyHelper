@@ -93,7 +93,7 @@ interface Level {
   image: string;
 }
 
-type CosmeticTypes =
+type CollectibleTypes =
   | "Cape"
   | "Mask"
   | "Instrument"
@@ -107,7 +107,7 @@ type CosmeticTypes =
   | "Music Sheet"
   | "Outfit"
   | "Neck Accessory";
-interface Cosmetic {
+interface Collectible {
   /** Name of the cosmetic */
   name: string;
 
@@ -173,7 +173,7 @@ interface BaseSpiritData {
     icon: string;
     level: Level[];
   };
-  cosmetics?: Cosmetic[];
+  collectibles?: Collectible[];
 }
 
 export interface SeasonalSpiritData extends BaseSpiritData {
@@ -216,7 +216,7 @@ export interface SpiritItems {
 }
 export interface SeasonPrice {
   icon?: string;
-  cosmetics: SpiritItems[];
+  collectibles: SpiritItems[];
 }
 export interface LiveUpdates {
   active: boolean;

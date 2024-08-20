@@ -17,7 +17,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:CellistBPOutfit:1275059417934467103>",
@@ -99,7 +99,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:PianistBOutfit:1275056431938277497>",
@@ -201,7 +201,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Cello",
         icon: "<:MusiciansFCello:1275054178552516618>",
@@ -276,7 +276,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -383,7 +383,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "duet-tree.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:PianistFOutfit:1275051463835517049>",

@@ -6,7 +6,7 @@ import type { SeasonPrice } from "#libs/types";
 export const SeasonPrices: { [key: string]: SeasonPrice } = {
   "The Cellist's Beginnings": {
     icon: "<:CellistB:1262326135216406559>",
-    cosmetics: [
+    collectibles: [
       { item: "Hair", icon: "<:CellitBHair:1262322324963852308>", price: 20 },
       { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 26 },
       { item: "Outfit", icon: "<:CellitBOutfit:1262322298145341581>", price: 32 },
@@ -15,7 +15,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
   },
   "The Pianist's Beginnings": {
     icon: "<:PianistB:1262326115024769107>",
-    cosmetics: [
+    collectibles: [
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 14 },
       { item: "Hair", icon: "<:PianistBHair:1262322985134461029>", price: 20 },
       { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 24 },
@@ -25,7 +25,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
   },
   "The Musicians' Legacy": {
     icon: "<:MusicianL:1262326097341714514>",
-    cosmetics: [
+    collectibles: [
       { item: "Music Sheet #40", icon: "<:MusicIcon:1262323496852131882>", price: 14 },
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 24 },
       { item: "Instrument", icon: "<:MusiciansLInstrument:1262323472760049724>", price: 34 },
@@ -34,7 +34,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
   },
   "The Cellist's Flourishing": {
     icon: "<:CellistF:1262326155508318380>",
-    cosmetics: [
+    collectibles: [
       { item: "Small Pink Rug", icon: "<:SmallPinkRug:1262323794715082824>", price: 16 },
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 18 },
       { item: "Cape", icon: "<:CellistFCape:1262323774997659673>", price: 22 },
@@ -44,7 +44,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
   },
   "The Pianist's Flourishing": {
     icon: "<:PianistF:1262326075380334623>",
-    cosmetics: [
+    collectibles: [
       { item: "Blessing Nodes", icon: "<:BlessingNode:1238570665267691602>", price: 12 },
       { item: "Shoes", icon: "<:PianistFShoes:1262324120532549692>", price: 22 },
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 26 },

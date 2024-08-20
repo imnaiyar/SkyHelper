@@ -54,13 +54,13 @@ export default class {
     this.totalCurrency = Object.keys(prices)
       .map((k) => {
         const spirit = prices[k];
-        return spirit.cosmetics.reduce((acc, value) => acc + value.price, 0);
+        return spirit.collectibles.reduce((acc, value) => acc + value.price, 0);
       })
       .reduce((acc, num) => acc + num, 0);
     const candlesUsed = Object.keys(this.data.spirits)
       .map((k) => {
         const spirit = this.data.spirits[k];
-        return spirit.cosmetics.filter((sp) => sp.acquired).reduce((acc, value) => acc + value.price, 0);
+        return spirit.collectibles.filter((sp) => sp.acquired).reduce((acc, value) => acc + value.price, 0);
       })
       .reduce((acc, num) => acc + num, 0);
     this.requiredCurrency = this.totalCurrency - candlesUsed;
@@ -86,7 +86,9 @@ export default class {
       SpiritsProgress.push({
         title: spirit,
         icon: spiritData.icon,
-        items: spiritData.cosmetics.map((item) => item.icon + " " + (item.acquired ? item.item + " (✅)" : item.item + " (❌)")),
+        items: spiritData.collectibles.map(
+          (item) => item.icon + " " + (item.acquired ? item.item + " (✅)" : item.item + " (❌)"),
+        ),
       });
     }
     return SpiritsProgress;
@@ -128,7 +130,7 @@ export default class {
     const components: ActionRowBuilder<StringSelectMenuBuilder>[] = [];
     const spirits = Object.keys(this.data.spirits);
     spirits.forEach((spirit) => {
-      const items = this.data.spirits[spirit].cosmetics;
+      const items = this.data.spirits[spirit].collectibles;
       const row = new ActionRowBuilder<StringSelectMenuBuilder>();
       const menu = new StringSelectMenuBuilder()
         .setCustomId("calendar-" + spirit.split(" ").join("_"))
@@ -168,9 +170,9 @@ export default class {
     collector.on("collect", async (int) => {
       const spirit = int.customId.split("-")[1].split("_").join(" ");
       const values = int.values;
-      this.data.spirits[spirit].cosmetics.forEach((it) => (it.acquired = false));
+      this.data.spirits[spirit].collectibles.forEach((it) => (it.acquired = false));
       values.forEach((i) => {
-        this.data.spirits[spirit].cosmetics[parseInt(i)].acquired = true;
+        this.data.spirits[spirit].collectibles[parseInt(i)].acquired = true;
       });
       this.data.markModified("spirits");
       await this.data.save();
@@ -204,13 +206,13 @@ export default class {
       .setName(this.author instanceof GuildMember ? this.author.nickname ?? this.author.displayName : this.author.displayName)
       .setProgress(parseInt(this.progressLevel.toFixed()))
       .setSeason(this.season)
-      .setSeasonIcon(emojiURL as unknown as string)
       .setThumbnailImage(
         this.author.displayAvatarURL({
           forceStatic: true,
           extension: "png",
         }),
       );
+    if (emojiURL) card.setSeasonIcon(emojiURL);
     return await card.build();
   }
 }

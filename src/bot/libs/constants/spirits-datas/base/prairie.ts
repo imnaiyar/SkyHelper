@@ -31,7 +31,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:ApplaudingBellmakerHair:1275147506866716774>",
@@ -71,7 +71,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:birdwhisperer:1205914321897398332>",
       image: "Bird_Call-1.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:BirdWhispererHair:1275146482806161490>",
@@ -134,7 +134,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:ButterflyCharmerOutfit:1275144432378970132>",
@@ -248,7 +248,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Face Accessory",
         type: "Face Accessory",
@@ -294,7 +294,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:LaughingLightCatcherHair:1275142115927654501>",
@@ -377,7 +377,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:SlumberingShipwrightHair:1275141349930438676>",
@@ -441,7 +441,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:WavingBellmakerMask:1275105123223339018>",

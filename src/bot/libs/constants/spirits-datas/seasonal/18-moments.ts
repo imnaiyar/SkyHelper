@@ -26,7 +26,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:nightbird:1130948807396429884>",
       image: "Nightbird_Call.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -127,7 +127,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -221,7 +221,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Skull Jaw Accessory",
         icon: "<:GeologistFaceAccessory:1274804218535870657>",
@@ -311,7 +311,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:RangerMask:1274801809667657851>",

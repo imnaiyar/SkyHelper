@@ -26,7 +26,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:wisegrandparent:1131650518792536125>",
       image: "Wise_Stand.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Bearded Mask",
         type: "Mask",
@@ -124,7 +124,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -213,7 +213,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -309,7 +309,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Face Accessory",
         icon: "<:HairtousleHat:1272607540458426506>",
@@ -392,7 +392,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:ConfettiCousinHair:1272604132464656404>",
@@ -479,7 +479,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:BoogieMask:1272601546638753892>",

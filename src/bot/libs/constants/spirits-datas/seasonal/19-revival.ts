@@ -16,7 +16,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Forgotten_Haven_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Sandals",
         icon: "<:ForgottenHavenShoes:1274864741097148518>",
@@ -88,7 +88,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Abandoned_Refuge_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Shoes",
         type: "Shoes",
@@ -167,7 +167,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Lost_Village_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -244,7 +244,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Deserted_Oasis_Seasonal_Chart_Clement.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Shoes",
         type: "Shoes",

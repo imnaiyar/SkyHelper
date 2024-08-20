@@ -65,7 +65,7 @@ describe("spiritsData", () => {
       ],
     });
 
-    expect(shaman.cosmetics).toEqual([
+    expect(shaman.collectibles).toEqual([
       {
         name: "Mask",
         images: [

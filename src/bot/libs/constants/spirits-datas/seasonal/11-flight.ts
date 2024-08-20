@@ -26,7 +26,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:chimesmith:1131589172822544435>",
       image: "Tinker_Stance_.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:ChimesmithOutfit:1274612006489690234>",
@@ -141,7 +141,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         type: "Hair",
@@ -229,7 +229,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:lightwhisperer:1131589102626672761>",
       image: "Baby_Manta_Call-2.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -349,7 +349,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:BuilderOutfit:1274063253521039401>",
