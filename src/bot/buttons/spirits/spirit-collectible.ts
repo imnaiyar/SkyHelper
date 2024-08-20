@@ -11,7 +11,7 @@ export default {
     const data = client.spiritsData[value];
     if (!data || !data.collectibles?.length) {
       return void (await interaction.reply({
-        content: "No cosmetics found for this spirit, or something went wrong!",
+        content: "No collectibles found for this spirit, or something went wrong!",
         ephemeral: true,
       }));
     }
@@ -22,19 +22,19 @@ export default {
       files: interaction.message.attachments.map((a) => a.url),
       components: interaction.message.components,
     };
-    const cosmetics = data.collectibles;
+    const collectibles = data.collectibles;
     let index = 1;
     let imageIndex = 1;
-    const total = cosmetics.length;
+    const total = collectibles.length;
     const getResponse = () => {
-      const d = cosmetics[index - 1];
+      const d = collectibles[index - 1];
       const imageTotal = d.images.length;
       const stringSelect = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
         new StringSelectMenuBuilder()
-          .setCustomId("spirit_cosmetic_select")
-          .setPlaceholder("Cosmetics")
+          .setCustomId("spirit_collectibles_select")
+          .setPlaceholder("Collectibles")
           .setOptions(
-            cosmetics.map((c, i) => ({
+            collectibles.map((c, i) => ({
               label: c.name,
               value: i.toString(),
               emoji: c.icon,
@@ -46,14 +46,14 @@ export default {
         ...(imageTotal && imageTotal > 1
           ? [
               new ButtonBuilder()
-                .setCustomId("cosmetic_image_prev")
+                .setCustomId("collectible_image_prev")
                 .setLabel("◀️ " + d.images[imageIndex === 1 ? 0 : imageIndex - 2].description)
                 .setDisabled(imageIndex === 1)
                 .setStyle(ButtonStyle.Success),
             ]
           : []),
         new ButtonBuilder()
-          .setCustomId("cosmetics_back")
+          .setCustomId("collectibles_back")
           .setLabel("Back")
           .setEmoji(
             data.call?.icon || data.action?.icon || data.emote?.icon || data.stance?.icon || "<:spiritIcon:1206501060303130664>",
@@ -63,7 +63,7 @@ export default {
         ...(imageTotal && imageTotal > 1
           ? [
               new ButtonBuilder()
-                .setCustomId(`cosmetic_image_next`)
+                .setCustomId(`collectible_image_next`)
                 .setLabel(d.images[imageIndex >= imageTotal ? imageTotal - 1 : imageIndex].description + " ▶️")
                 .setDisabled(imageIndex === imageTotal)
                 .setStyle(ButtonStyle.Success),
@@ -76,7 +76,7 @@ export default {
         .setURL(
           `https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${(d.type ? d.type : d.name).split(" ").join("_")}`,
         )
-        .setAuthor({ name: `${data.name} Cosmetics (${index}/${total})`, iconURL: data.image });
+        .setAuthor({ name: `${data.name} Collectibles (${index}/${total})`, iconURL: data.image });
       const emojiId = parseEmoji(d.icon)?.id,
         emojiUrl = emojiId ? client.rest.cdn.emoji(emojiId) : null;
       embed.setThumbnail(emojiUrl);
@@ -98,39 +98,41 @@ export default {
     const reply = await interaction.editReply(getResponse());
     const collector = reply.createMessageComponentCollector({
       filter: (i) =>
-        ["spirit_cosmetic_select", "cosmetic_image_next", "cosmetics_back", "cosmetic_image_prev"].includes(i.customId),
+        ["spirit_collectibles_select", "collectible_image_next", "collectibles_back", "collectible_image_prev"].includes(
+          i.customId,
+        ),
       idle: 60_000,
     });
     collector.on("collect", async (int) => {
       const ID = int.customId;
       await int.deferUpdate();
       switch (ID) {
-        case "spirit_cosmetic_select": {
+        case "spirit_collectibles_select": {
           if (!int.isStringSelectMenu()) return;
           index = parseInt(int.values[0]) + 1;
           imageIndex = 1;
           await int.editReply(getResponse());
           break;
         }
-        case "cosmetic_image_next": {
+        case "collectible_image_next": {
           imageIndex++;
           await int.editReply(getResponse());
           break;
         }
-        case "cosmetic_image_prev": {
+        case "collectible_image_prev": {
           imageIndex--;
           await int.editReply(getResponse());
           break;
         }
-        case "cosmetics_back": {
-          collector.stop("Cosmetic Back");
+        case "collectibles_back": {
+          collector.stop("Collectible Back");
           await int.editReply(orgData);
         }
       }
     });
 
     collector.on("end", async (_col, reason) => {
-      if (reason === "Cosmetic Back") return;
+      if (reason === "Collectible Back") return;
       await interaction.editReply(orgData).catch(() => {});
     });
   },
