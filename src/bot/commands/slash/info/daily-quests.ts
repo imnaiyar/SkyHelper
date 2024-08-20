@@ -33,9 +33,11 @@ export default {
         });
         return r.toJSON();
       });
-      await interaction.editReply({
-        components: components as APIActionRowComponent<APIButtonComponent | APIStringSelectComponent>[],
-      });
+      await interaction
+        .editReply({
+          components: components as APIActionRowComponent<APIButtonComponent | APIStringSelectComponent>[],
+        })
+        .catch(() => {});
     });
   },
 
