@@ -108,16 +108,16 @@ type CollectibleTypes =
   | "Outfit"
   | "Neck Accessory";
 interface Collectible {
-  /** Name of the cosmetic */
+  /** Name of the collectible */
   name: string;
 
-  /** Type of this cosmetic */
+  /** Type of this collectible */
   type?: CosmeticTypes;
 
-  /** Emoji icon of the cosmetic */
+  /** Emoji icon of the collectible */
   icon: string;
 
-  /** Link to the cosmetic images (preview) */
+  /** Link to the collectible images (preview) */
   images: {
     /** Description of the image (to display on the embed) */
     description: string;
@@ -135,7 +135,7 @@ interface Collectible {
   /** Seasonal price, if any */
   spPrice?: string;
 
-  /** Any extra notes about this cosmetic */
+  /** Any extra notes about this collectible */
   notes?: string[];
 
   /**
