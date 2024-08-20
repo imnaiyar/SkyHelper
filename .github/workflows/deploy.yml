@@ -3,11 +3,13 @@ name: Deploy
 on:
   push:
     branches:
-      - feat/spiritsCosmetics
+      - main
     paths:
       - "src/**"
       - "dashboard/**"
       - "locales/**"
+      - "docker-compose.yml"
+      - "Dockerfile"
 
 jobs:
   deploy:
