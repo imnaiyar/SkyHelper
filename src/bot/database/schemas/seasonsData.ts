@@ -6,7 +6,7 @@ interface SpiritCosmetics extends SpiritItems {
   acquired: boolean;
 }
 interface UserSpirit extends SeasonPrice {
-  cosmetics: SpiritCosmetics[];
+  collectibles: SpiritCosmetics[];
 }
 export interface UserSpiritData extends Document {
   id: string;
@@ -41,7 +41,7 @@ export async function getUserData(user: User): Promise<UserSpiritData> {
       const spirit = SeasonPrices[k];
       pp[k] = {
         icon: spirit.icon,
-        cosmetics: spirit.cosmetics.map((c) => ({
+        collectibles: spirit.collectibles.map((c) => ({
           ...c,
           acquired: false,
         })),

@@ -43,7 +43,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:HunterOutfit:1275001325754515487>",
@@ -147,7 +147,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:PrincessOutfit:1274999375642493040>",
@@ -261,7 +261,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:FeudalLordMask:1274977689337466880>",
@@ -367,7 +367,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:HerbGathererOutfit:1274975350954135552>",

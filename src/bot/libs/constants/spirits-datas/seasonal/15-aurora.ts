@@ -42,7 +42,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:WarriorOLoveMask:1274733142569259059>",
@@ -150,7 +150,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:SeedOHopeMask:1274731389681537065>",
@@ -256,7 +256,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -362,7 +362,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",

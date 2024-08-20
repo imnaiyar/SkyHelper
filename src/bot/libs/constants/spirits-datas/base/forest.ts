@@ -31,7 +31,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Face Accessory",
         icon: "<:ApologeticLumberjackFaceGuard:1275290202771820554>",
@@ -100,7 +100,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:BlushingProspectorHair:1275288710170280078>",
@@ -182,7 +182,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:DismayedHunterHair:1275286585134288927>",
@@ -277,7 +277,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:HideNSeekPioneerOutfit:1275284864106758154>",
@@ -362,7 +362,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:PoutyPorterHair:1275282629184458846>",
@@ -468,7 +468,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:ShiveringTrailblazerOutfit:1275281575155601439>",
@@ -545,7 +545,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:TearfulLightMinerHair:1275280658972803102>",
@@ -585,7 +585,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:whalewhisperer:1205914501241765918>",
       image: "Whale_Call-1.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Music Sheet #2",
         type: "Music Sheet",

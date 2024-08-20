@@ -17,7 +17,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Solarium_Tree_Mimi.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Table",
         icon: "<:SolariumTable:1275032069012979875>",
@@ -120,7 +120,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Loft_Tree_Mimi.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Cape",
         icon: "<:LoftCape:1275027971392016507>",
@@ -238,7 +238,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Atrium_Tree_Mimi.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:AtriumHair:1275023717197414502>",
@@ -342,7 +342,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Nook_Tree_Mimi.jpg",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Pencil Hair Accessory",
         icon: "<:NookHeadpiece:1275020183877980180>",

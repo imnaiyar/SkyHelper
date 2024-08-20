@@ -4,12 +4,12 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, parseEmoji,
 
 export default {
   data: {
-    name: "spirit_cosmetic",
+    name: "spirit_collectible",
   },
   async execute(interaction, _t, client) {
     const [, value] = interaction.customId.split("-");
     const data = client.spiritsData[value];
-    if (!data || !data.cosmetics?.length) {
+    if (!data || !data.collectibles?.length) {
       return void (await interaction.reply({
         content: "No cosmetics found for this spirit, or something went wrong!",
         ephemeral: true,
@@ -22,7 +22,7 @@ export default {
       files: interaction.message.attachments.map((a) => a.url),
       components: interaction.message.components,
     };
-    const cosmetics = data.cosmetics;
+    const cosmetics = data.collectibles;
     let index = 1;
     let imageIndex = 1;
     const total = cosmetics.length;

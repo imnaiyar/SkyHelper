@@ -32,7 +32,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:PointingCandlemakerOutfit:1275100068000698490>",
@@ -96,7 +96,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:UsheringStargazerOutfit:1275099169698217985>",
@@ -155,7 +155,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Head guard face accessory",
         icon: "<:RejectingVoyagerFaceAccessory:1275097633840435272>",

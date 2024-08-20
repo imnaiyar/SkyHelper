@@ -42,7 +42,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -138,7 +138,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:CadetMask:1273870700729597974>",
@@ -241,7 +241,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -331,7 +331,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -425,7 +425,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:ScoutOutfit:1273848191304863859>",
@@ -540,7 +540,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",

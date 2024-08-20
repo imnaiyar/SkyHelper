@@ -26,7 +26,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:bookworm:1131649753420140595>",
       image: "Timid_Bookworm_Timid_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         type: "Hair",
@@ -132,7 +132,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -194,7 +194,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:jellywhisperer:1131649695807176895>",
       image: "Jellyfish_Call-1.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -302,7 +302,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -416,7 +416,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         type: "Hair",
@@ -530,7 +530,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Sunglass",
         type: "Face Accessory",

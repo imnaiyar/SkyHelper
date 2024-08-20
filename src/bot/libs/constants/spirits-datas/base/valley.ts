@@ -32,7 +32,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:BackflippingChampionMask:1275300301548552314>",
@@ -101,7 +101,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:BowingMedalistMask:1275299320396255252>",
@@ -170,7 +170,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         icon: "<:CheerfulSpectatorHair:1275297765273899018>",
@@ -232,7 +232,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:confidentsightseer:1205914692346712194>",
       image: "Confident_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         icon: "<:ConfidentSightseerOutfit:1275296900198694912>",
@@ -301,7 +301,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Cape - Tier 1",
         icon: "<:HandstandingThrillseekerCapeLvl1:1275295551134367797>",
@@ -367,7 +367,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:mantawhisperer:1205914655885889647>",
       image: "Manta_Call-1.mp4",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Music Sheet #3",
         icon: "<:MusicIcon:1262323496852131882>",
@@ -391,7 +391,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:proudvictor:1205914638747836538>",
       image: "Proud_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Non-Mask",
         icon: "<:ProudVictorMask:1275293009440673854>",

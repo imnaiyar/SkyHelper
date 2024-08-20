@@ -43,7 +43,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         images: [
@@ -111,7 +111,7 @@ const data: Record<string, SpiritsData> = {
       icon: "<:sassyDrifter:1153511651522396322>",
       image: "Sassy_Stance.gif",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:SassyMask:1272172108193075326>",
@@ -193,7 +193,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         icon: "<:SalutingMask:1272167717390254182>",
@@ -274,7 +274,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         images: [
@@ -344,7 +344,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         images: [
@@ -427,7 +427,7 @@ const data: Record<string, SpiritsData> = {
         },
       ],
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         images: [

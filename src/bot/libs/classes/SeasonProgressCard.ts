@@ -1,13 +1,19 @@
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 import { cropImage } from "cropify";
 import path from "node:path";
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-Bold.ttf"), "bold");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-ExtraBold.ttf"), "extrabold");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-ExtraLight.ttf"), "extralight");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-Light.ttf"), "light");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-Medium.ttf"), "medium");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-Regular.ttf"), "regular");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, "fonts/PlusJakartaSans-SemiBold.ttf"), "semibold");
+import { fileURLToPath } from "node:url";
+
+// Not using `import.meta.dirname` here because it is returning undefined in jest leading to tests being failed
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-Bold.ttf"), "bold");
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-ExtraBold.ttf"), "extrabold");
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-ExtraLight.ttf"), "extralight");
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-Light.ttf"), "light");
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-Medium.ttf"), "medium");
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-Regular.ttf"), "regular");
+GlobalFonts.registerFromPath(path.join(__dirname, "fonts/PlusJakartaSans-SemiBold.ttf"), "semibold");
 export default class {
   private progress = 1;
   private name = "NyR";

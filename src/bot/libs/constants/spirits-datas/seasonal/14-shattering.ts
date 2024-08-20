@@ -17,7 +17,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Ancient_Darkness_Dark_Plant_Seasonal_Chart_NyR.png",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Mask",
         type: "Mask",
@@ -97,7 +97,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Ancient_Darkness_Dragon_Seasonal_chart_NyR.png",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Hair",
         type: "Hair",
@@ -169,7 +169,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Ancient_Light_Manta_Seasonal_Chart_NyR.png",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Outfit",
         type: "Outfit",
@@ -254,7 +254,7 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Ancient_Light_Jellyfish_Seasonal_Chart_NyR.png",
     },
-    cosmetics: [
+    collectibles: [
       {
         name: "Cape",
         type: "Cape",
