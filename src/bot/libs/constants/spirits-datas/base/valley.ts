@@ -11,7 +11,8 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Backflipping-Champion-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:backflippingchampion:1205914746977779762>",
       level: [
         {
@@ -80,7 +81,8 @@ const data: Record<string, SpiritsData> = {
       description: "Bowing Medalist Infographics by Ed.7",
       image: "Bowing-Medalist-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:bowingmedalist:1205914729130885130> ",
       level: [
         {
@@ -149,7 +151,8 @@ const data: Record<string, SpiritsData> = {
       description: "Cheerful Spectator Infographics by Ed.7",
       image: "Cheerful-Spectator-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:cheerfulspectator:1205914711745626122>",
       level: [
         {
@@ -227,10 +230,10 @@ const data: Record<string, SpiritsData> = {
       description: "Confident Sightseer Infographics by Ed.7",
       image: "Confident-Sightseer-Guide-777-Ed.png",
     },
-    stance: {
-      title: "Confident Stance",
+    expression: {
+      type: "Stance",
       icon: "<:confidentsightseer:1205914692346712194>",
-      image: "Confident_Stance.gif",
+      level: [{ title: "Confident Stance", image: "Confident_Stance.gif" }],
     },
     collectibles: [
       {
@@ -280,7 +283,8 @@ const data: Record<string, SpiritsData> = {
       description: "Handstanding Thrillseeker Infographics by Ed.7",
       image: "Handstanding-Thrillseeker-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:handstandingthrillseeker:1205914674445422642>",
       level: [
         {
@@ -362,10 +366,10 @@ const data: Record<string, SpiritsData> = {
       description: "Manta Whisperer Infographics by Ed.7",
       image: "Manta-Whisperer-Guide-777-Ed.png",
     },
-    call: {
-      title: "Manta Call",
+    expression: {
+      type: "Call",
       icon: "<:mantawhisperer:1205914655885889647>",
-      image: "Manta_Call-1.mp4",
+      level: [{ title: "Manta Call", image: "Manta_Call-1.mp4" }],
     },
     collectibles: [
       {
@@ -386,10 +390,10 @@ const data: Record<string, SpiritsData> = {
       description: "Proud Victor Infographics by Ed.7",
       image: "Proud-Victor-Guide-777-Ed.webp",
     },
-    stance: {
-      title: "Proud Stance",
+    expression: {
+      type: "Stance",
       icon: "<:proudvictor:1205914638747836538>",
-      image: "Proud_Stance.gif",
+      level: [{ title: "Proud Stance", image: "Proud_Stance.gif" }],
     },
     collectibles: [
       {

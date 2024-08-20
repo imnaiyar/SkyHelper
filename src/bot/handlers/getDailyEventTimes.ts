@@ -90,7 +90,7 @@ export const getTimesEmbed = async (
     tsDesc = "Unknown!";
   } else {
     const spirit: SpiritsData = client.spiritsData[tsData.value as keyof typeof client.spiritsData];
-    const emote = spirit?.emote?.icon || spirit?.call?.icon || spirit?.stance?.icon || spirit?.action?.icon || "❓";
+    const emote = spirit.expression?.icon || "❓";
     const strVisiting = t("times-embed.TS_VISITING", {
       TS_NAME: `${emote} ${spirit?.name || t("times-embed.TS_UPDATED")}`,
       DATE: time(tsData.nextVisit.clone().add(3, "days").endOf("day").toDate(), "F"),

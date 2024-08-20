@@ -21,10 +21,10 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Timid_Bookworm_Location.png",
     },
-    stance: {
-      title: "Timid Stance",
+    expression: {
+      type: "Stance",
       icon: "<:bookworm:1131649753420140595>",
-      image: "Timid_Bookworm_Timid_Stance.gif",
+      level: [{ title: "Timid Stance", image: "Timid_Bookworm_Timid_Stance.gif" }],
     },
     collectibles: [
       {
@@ -111,7 +111,8 @@ const data: Record<string, SpiritsData> = {
       image: "Rallying_Thrillseeker_Location.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:rallying:1131649722042564758>",
       level: [
         {
@@ -189,10 +190,10 @@ const data: Record<string, SpiritsData> = {
       image: "jelly_Whisperer_Location_Clement.png",
     },
 
-    call: {
-      title: "Jellyfish Call",
+    expression: {
+      type: "Call",
       icon: "<:jellywhisperer:1131649695807176895>",
-      image: "Jellyfish_Call-1.mp4",
+      level: [{ title: "Jellyfish Call", image: "Jellyfish_Call-1.mp4" }],
     },
     collectibles: [
       {
@@ -281,7 +282,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Hiking_Grouch_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:grouch:1131649666954575982>",
       level: [
         {
@@ -395,7 +397,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Grateful_Shell_Collector_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:shellcollector:1131649635153363024>",
       level: [
         {
@@ -509,7 +512,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Spirit_-_Chill_Sunbather_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:sunbather:1131649605336047676>",
       level: [
         {

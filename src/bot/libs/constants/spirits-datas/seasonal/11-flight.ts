@@ -21,10 +21,10 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Tinkering_Chimesmith_Location_Clement.png",
     },
-    stance: {
-      title: "Tinker Stance",
+    expression: {
+      type: "Stance",
       icon: "<:chimesmith:1131589172822544435>",
-      image: "Tinker_Stance_.gif",
+      level: [{ title: "Tinker Stance", image: "Tinker_Stance_.gif" }],
     },
     collectibles: [
       {
@@ -120,7 +120,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Lively_Navigator_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:navigator:1131589125636632596>",
       level: [
         {
@@ -224,10 +225,10 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Light_Whisper_Location_Clement.png",
     },
-    call: {
-      title: "Baby Manta Call",
+    expression: {
+      type: "Call",
       icon: "<:lightwhisperer:1131589102626672761>",
-      image: "Baby_Manta_Call-2.mp4",
+      level: [{ title: "Baby Manta Call", image: "Baby_Manta_Call-2.mp4" }],
     },
     collectibles: [
       {
@@ -328,7 +329,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Talented_Builder_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:builder:1131589149464481812>",
       level: [
         {

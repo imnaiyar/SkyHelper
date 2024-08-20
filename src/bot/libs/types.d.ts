@@ -87,7 +87,7 @@ export interface EventType {
   duration: string;
   days: number;
 }
-interface Level {
+interface ExpressionLevel {
   title: string;
   description?: string;
   image: string;
@@ -145,34 +145,38 @@ interface Collectible {
   skipTree?: boolean;
 }
 
+type ExpressionType = "Emote" | "Stance" | "Call" | "Friend Action";
 interface BaseSpiritData {
+  /** Name of the spirit */
   name: string;
   /** Spirits preview image link */
   image?: string;
 
   /** Any extra title to add (To be displayed on the embed) */
   extra?: string;
+
+  /** Type of the spirit (seasonal, or regular) */
   type: string;
+
+  /** The realm where the spirit can be found, if any */
   realm?: string;
+
+  /** Icon of the spirit, if applied */
   icon?: string;
-  emote?: {
+
+  /** Expression of the spirit, if any */
+  expression?: {
+    /** Type of expression */
+    type: ExpressionType;
+
+    /** Icon of the expression */
     icon: string;
-    level: Level[];
+
+    /** Expression levels */
+    level: ExpressionLevel[];
   };
-  call?: {
-    title: string;
-    icon: string;
-    image: string;
-  };
-  stance?: {
-    title: string;
-    icon: string;
-    image: string;
-  };
-  action?: {
-    icon: string;
-    level: Level[];
-  };
+
+  /** Collectibles offered by this spirit */
   collectibles?: Collectible[];
 }
 

@@ -30,7 +30,7 @@ export class StatsController {
     const toReturn = Object.entries(spirits)
       .filter(([, v]) => isSeasonal(v) && v.season)
       .map(([k, v]) => {
-        const emoji = v.call || v.emote || v.action || v.stance;
+        const emoji = v.expression || { icon: "<:spiritIcon:1206501060303130664>" };
         const id = emoji && parseEmoji(emoji.icon)?.id;
         const url = id && this.bot.emojis.cache.get(id)?.imageURL();
         const t = { name: v.name, value: k, ...(url && { icon: url }) };

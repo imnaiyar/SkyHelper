@@ -11,7 +11,8 @@ const data: Record<string, SpiritsData> = {
       total: " ",
       image: "Pointing-Candlemaker-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:pointingcandlermaker:1205914230553976863>",
       level: [
         {
@@ -75,7 +76,8 @@ const data: Record<string, SpiritsData> = {
       description: "Ushering Stargazer Infographics by Ed.7",
       image: "Ushering-Stargazer-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:usheringstargazer:1205914276498513972>",
       level: [
         {
@@ -134,7 +136,8 @@ const data: Record<string, SpiritsData> = {
       description: "Rejecting Voyager Infographics by Ed.7",
       image: "Rejecting-Voyager-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:rejectingvoyager:1205914255178727425>",
       level: [
         {

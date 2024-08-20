@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Spinning_Mentor_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:mentor:1131645203548209162>",
       level: [
         {
@@ -118,7 +119,8 @@ const data: Record<string, SpiritsData> = {
       image: "Peeking_Postman_Location_Clement.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:postman:1131645181926584341>",
       level: [
         {
@@ -246,7 +248,8 @@ const data: Record<string, SpiritsData> = {
       image: "Dancing_Performer_Location_Clement.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:dancing:1131645163383574569>",
       level: [
         {
@@ -388,7 +391,8 @@ const data: Record<string, SpiritsData> = {
       image: "Bearhug_Hermit_Location_Clement.png.jpg",
     },
 
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:hermit:1131645142898581535>",
       level: [
         {

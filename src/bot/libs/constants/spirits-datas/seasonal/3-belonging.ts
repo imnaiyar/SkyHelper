@@ -21,10 +21,10 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Wise_Grandparent_Location_Clement.jpg",
     },
-    stance: {
-      title: "Wise Stance",
+    expression: {
+      type: "Stance",
       icon: "<:wisegrandparent:1131650518792536125>",
-      image: "Wise_Stand.gif",
+      level: [{ title: "Wise Stance", image: "Wise_Stand.gif" }],
     },
     collectibles: [
       {
@@ -103,7 +103,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Sparkler_Parent_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:sparklerparent:1131650491923837018>",
       level: [
         {
@@ -192,7 +193,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Pleaful_Parent_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:pleafulparent:1131650465076101212>",
       level: [
         {
@@ -296,7 +298,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Haitousle_Teen_Location_Clement.webp",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:hairtousle:1131650432180175008>",
       level: [
         {
@@ -371,7 +374,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Confetti_Cousin_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:confettiCousin:1131650251216920656>",
       level: [
         {
@@ -458,7 +462,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Boogie_Kid_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:boogiekid:1131650220317478923>",
       level: [
         {

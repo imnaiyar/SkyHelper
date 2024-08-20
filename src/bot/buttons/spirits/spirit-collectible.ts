@@ -55,9 +55,7 @@ export default {
         new ButtonBuilder()
           .setCustomId("collectibles_back")
           .setLabel("Back")
-          .setEmoji(
-            data.call?.icon || data.action?.icon || data.emote?.icon || data.stance?.icon || "<:spiritIcon:1206501060303130664>",
-          )
+          .setEmoji(data.expression?.icon || "<:spiritIcon:1206501060303130664>")
           .setStyle(ButtonStyle.Danger),
 
         ...(imageTotal && imageTotal > 1

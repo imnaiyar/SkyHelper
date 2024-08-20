@@ -10,10 +10,10 @@ const data: Record<string, SpiritsData> = {
       description: "Courageous Soldier Infographics by Ed.7",
       image: "Courageous-Soldier-Guide-777-Ed.png",
     },
-    stance: {
-      title: "Courageous Stance",
+    expression: {
+      type: "Stance",
       icon: "<:courageoussoldier:1205914854456696892>",
-      image: "Courageous_Stance.gif",
+      level: [{ title: "Courageous Stance", image: "Courageous_Stance.gif" }],
     },
     collectibles: [
       {
@@ -97,7 +97,8 @@ const data: Record<string, SpiritsData> = {
       description: "Fainting Warrior Infographics by Ed.7",
       image: "Fainting-Warrior-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:faintingwarrior:1205914837360840714>",
       level: [
         {
@@ -166,7 +167,8 @@ const data: Record<string, SpiritsData> = {
       description: "Frightened Refugee Infographics by Ed.7",
       image: "Frightened-Refugee-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:frightenedrefuge:1205914818134155294>",
       level: [
         {
@@ -238,7 +240,8 @@ const data: Record<string, SpiritsData> = {
       description: "Looking Scout Infographics by Ed.7",
       image: "Lookout-Scout-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:lookoutscout:1205914800161558550>",
       level: [
         {
@@ -310,7 +313,8 @@ const data: Record<string, SpiritsData> = {
       description: "Saluting Captain Infographics by Ed.7",
       image: "Saluting-Captain-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:salutingcaptian:1205914782998335649>",
       level: [
         {
@@ -383,10 +387,10 @@ const data: Record<string, SpiritsData> = {
       description: "Stealthy Survivor Infographics by Ed.7",
       image: "Stealthy-Survivor-Guide-777-Ed.png",
     },
-    stance: {
-      title: "Sneaky Stance",
+    expression: {
+      type: "Stance",
       icon: "<:stealthysurvivor:1205914765558423552>",
-      image: "Sneaky_Stance.gif",
+      level: [{ title: "Sneaky Stance", image: "Sneaky_Stance.gif" }],
     },
     collectibles: [
       {

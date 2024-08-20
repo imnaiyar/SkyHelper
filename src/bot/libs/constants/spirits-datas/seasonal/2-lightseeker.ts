@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Twirling_Champion_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:twirlingChampion:1153511535499550771>",
       level: [
         {
@@ -124,7 +125,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Shushing_Light_Scholar_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:shushingscholar:1153511408537980969>",
       level: [
         {
@@ -200,7 +202,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Puggyback_Lightseeker_Location_Clement.jpg",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:piggyback:1153511511701065738>",
       level: [
         {
@@ -285,10 +288,10 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "02_HF_Seasonal_Spirit_-_Laidback_Pioneer.png",
     },
-    stance: {
-      title: "Laidback Stance",
+    expression: {
+      type: "Stance",
       icon: "<:laidbackPioneer:1153511482949107765>",
-      image: "Laidback_Stance.gif",
+      level: [{ title: "Laidback Stance", image: "Laidback_Stance.gif" }],
     },
     collectibles: [
       {
@@ -365,7 +368,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "DoubleFive_Light_Catcher_Location_Clement.png",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:doublefiveCatcher:1153511455132496032>",
       level: [
         {
@@ -463,10 +467,10 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Crab_Whisperer_Location_Clement.jpg",
     },
-    call: {
-      title: "Crab Call",
+    expression: {
+      type: "Call",
       icon: "<:crabWhisperer:1153511432349032508>",
-      image: "Crab_Call-1.mp4",
+      level: [{ title: "Crab Call", image: "Crab_Call-1.mp4" }],
     },
     collectibles: [
       {

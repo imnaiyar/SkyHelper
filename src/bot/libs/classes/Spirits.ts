@@ -22,15 +22,13 @@ const collectiblesBtn = (icon: string, value: string) =>
 
 const getExpressionBtn = (data: SpiritsData, value: string, t: ReturnType<typeof getTranslator>, icon: string): ButtonBuilder =>
   new ButtonBuilder()
-    .setCustomId(
-      (data.call ? "spirit_emote-call" : data.stance ? "spirit_emote-stance" : "spirit_emote-expression") + `-${value}`,
-    )
+    .setCustomId("spirit_expression" + `-${value}`)
     .setLabel(
-      data.emote
+      data.expression!.type === "Emote"
         ? t("commands.SPIRITS.RESPONSES.BUTTONS.EMOTE")
-        : data.stance
+        : data.expression!.type === "Stance"
           ? t("commands.SPIRITS.RESPONSES.BUTTONS.STANCE")
-          : data.call
+          : data.expression!.type === "Call"
             ? t("commands.SPIRITS.RESPONSES.BUTTONS.CALL")
             : t("commands.SPIRITS.RESPONSES.BUTTONS.ACTION"),
     )
@@ -56,13 +54,7 @@ export class Spirits {
   public getEmbed(): EmbedBuilder {
     const data = this.data;
     const client = this.client;
-    const icon =
-      data.emote?.icon ??
-      data.call?.icon ??
-      data.stance?.icon ??
-      data.action?.icon ??
-      data.icon ??
-      "<:spiritIcon:1206501060303130664>";
+    const icon = data.expression?.icon ?? data.icon ?? "<:spiritIcon:1206501060303130664>";
     const desc = `${this.t("commands.SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
       data.realm
         ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
@@ -131,8 +123,8 @@ export class Spirits {
       return v.name === data.name;
     })!;
     if (this.isSeasonal(data) && data.location) row.addComponents(lctnBtn(value));
-    // prettier-ignore
-    if (data.emote || data.stance || data.action || data.call) row.addComponents(getExpressionBtn(data, value, this.t, (data.emote?.icon ?? data.call?.icon ?? data.stance?.icon ?? data.action?.icon) as string));
+
+    if (data.expression) row.addComponents(getExpressionBtn(data, value, this.t, data.expression.icon));
 
     if (data.collectibles?.length) {
       row.addComponents(collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)].icon, value));

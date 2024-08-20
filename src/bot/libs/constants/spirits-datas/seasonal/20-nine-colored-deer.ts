@@ -22,7 +22,8 @@ const data: Record<string, SpiritsData> = {
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:hunter:1197413131736064052>",
       level: [
         {
@@ -126,7 +127,8 @@ const data: Record<string, SpiritsData> = {
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:princess:1197413108717731840>",
       level: [
         {
@@ -248,7 +250,8 @@ const data: Record<string, SpiritsData> = {
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:feudallord:1197413178330578964>",
       level: [
         {
@@ -346,7 +349,8 @@ const data: Record<string, SpiritsData> = {
       description: "How to reach Crescent Oasis by Clement",
       image: "Deer_Spirits_Location_Em_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:herbgatherer:1197413154938957885>",
       level: [
         {
