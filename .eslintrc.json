@@ -6,9 +6,8 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "ecmaVersion": 2023,
+    "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "jsdoc", "import"],
   "rules": {
@@ -29,7 +28,7 @@
     "no-lonely-if": "error",
     "no-multi-spaces": "error",
     "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
-    "no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
+    "@typescript-eslint/no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
     "no-trailing-spaces": ["error"],
     "no-var": "error",
     "object-curly-spacing": ["error", "always"],

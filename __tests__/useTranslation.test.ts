@@ -1,5 +1,5 @@
-import { supportedLang } from "../src/libs/constants/supportedLang.js";
-import { useTranslations } from "../src/handlers/useTranslation.js";
+import { supportedLang } from "../src/bot/libs/constants/supportedLang.js";
+import { useTranslations } from "../src/bot/handlers/useTranslation.js";
 const l = supportedLang.map((lang) => lang.value);
 type Localizations = Partial<Record<(typeof l)[number], string>>;
 
@@ -31,4 +31,3 @@ describe("useTranslations", () => {
     }).toThrow(TypeError);
   });
 });
-

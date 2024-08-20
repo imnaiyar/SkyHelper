@@ -2,7 +2,7 @@
   "name": "skyhelper",
   "version": "6.1.2",
   "description": "A Bot for Sky: Children of the Light",
-  "main": "dist/src/index.js",
+  "main": "dist/bot/index.js",
   "type": "module",
   "keywords": [
     "SkyCoTL",
@@ -11,16 +11,17 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "npm run build:prod && node dist/src/index.js",
+    "start": "npm run build:prod && node dist/bot/index.js",
     "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build:ci": "tsc -p tsconfig.json",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
-    "dev": "bun run src/index.ts",
-    "commands:prod": "node dist/src/libs/registerCommands.js",
-    "commands:bun": "bun run src/libs/registerCommands.ts",
-    "format": "prettier --write \"**/*.{js,css,ejs, ts}\"",
+    "dev": "bun run src/bot/index.ts",
+    "commands:prod": "node dist/bot/libs/registerCommands.js",
+    "commands:bun": "bun run src/bot/libs/registerCommands.ts",
+    "format": "prettier --write src",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
-    "setup": "node scripts/env-cli.js"
+    "setup": "node scripts/env-cli.js",
+    "prepare": "husky"
   },
   "author": "Naiyar Imam",
   "license": "MIT",
@@ -55,38 +56,43 @@
     "topgg-autoposter": "^2.0.2"
   },
   "imports": {
+    "#bot/*": [
+      "./dist/bot/*.js"
+    ],
     "#handlers": [
-      "./dist/src/handlers/index.js"
+      "./dist/bot/handlers/index.js"
     ],
     "#handlers/*": [
-      "./dist/src/handlers/*.js"
-    ],
-    "#src/*": [
-      "./dist/src/*.js"
+      "./dist/bot/handlers/*.js"
     ],
     "#commands/*": [
-      "./dist/src/commands/*.js"
+      "./dist/bot/commands/*.js"
     ],
     "#root/*": [
       "./*"
     ],
     "#schemas/*": [
-      "./dist/src/database/schemas/*.js"
+      "./dist/bot/database/schemas/*.js"
     ],
     "#structures/*": [
-      "./dist/src/structures/*.js"
+      "./dist/bot/structures/*.js"
     ],
     "#structures": [
-      "./dist/src/structures/index.js"
+      "./dist/bot/structures/index.js"
     ],
     "#libs/*": [
-      "./dist/src/libs/*.js"
+      "./dist/bot/libs/*.js"
     ],
     "#libs": [
-      "./dist/src/libs/index.js"
+      "./dist/bot/libs/index.js"
+    ],
+    "#api/*": [
+      "./dist/api/*.js"
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@nestjs/schematics": "^10.1.1",
     "@nestjs/testing": "^10.3.8",
     "@types/cors": "^2.8.17",
@@ -103,7 +109,9 @@
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^46.8.2",
+    "husky": "^9.1.4",
     "jest": "^29.7.0",
+    "lint-staged": "^15.2.9",
     "prettier": "^3.0.3",
     "prettier-plugin-ejs": "^0.0.18",
     "source-map-support": "^0.5.21",

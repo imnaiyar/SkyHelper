@@ -15,7 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "rootDir": ".",
+    "rootDir": "src",
     "baseUrl": ".",
     "outDir": "dist",
     "strict": true,
@@ -28,18 +28,20 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
-      "#handlers": ["./src/handlers/index.js"],
-      "#handlers/*": ["./src/handlers/*.js"],
-      "#src/*": ["./src/*.js"],
-      "#commands/*": ["./src/commands/*.js"],
+      "#bot/*": ["src/bot/*.js"],
+      "#handlers": ["src/bot/handlers/index.js"],
+      "#handlers/*": ["src/bot/handlers/*.js"],
+      "#src/*": ["src/*.js"],
+      "#commands/*": ["src/bot/commands/*.js"],
       "#root/*": ["./*.js"],
-      "#schemas/*": ["./src/database/schemas/*.js"],
-      "#structures/*": ["./src/structures/*.js"],
-      "#structures": ["./src/structures/index.js"],
-      "#libs/*": ["./src/libs/*.js"],
-      "#libs": ["./src/libs/index.js"]
+      "#schemas/*": ["src/bot/database/schemas/*.js"],
+      "#structures/*": ["src/bot/structures/*.js"],
+      "#structures": ["src/bot/structures/index.js"],
+      "#libs/*": ["src/bot/libs/*.js"],
+      "#libs": ["src/bot/libs/index.js"],
+      "#api/*": ["src/api/*.js"]
     }
   },
-  "include": ["src", "dashboard", "__tests__"],
+  "include": ["src", "dashboard"],
   "exclude": ["node_modules"]
 }

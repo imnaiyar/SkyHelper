@@ -1,4 +1,4 @@
-import { getTranslator } from "../src/i18n.js";
+import { getTranslator } from "../src/bot/i18n.js";
 
 describe("getTranslator", () => {
   it("should return the translated string for a given key and language", () => {

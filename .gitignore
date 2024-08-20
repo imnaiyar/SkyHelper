@@ -2,7 +2,7 @@ config.js
 node_modules
 .env
 logs/
-src/commands/wip/
+bot/commands/wip/
 .env.ex
 test.js
 errors.toml
@@ -10,9 +10,9 @@ dist
 .vscode
 bun.lockb
 coverage/
-Dockerfile
 docker-compose.debug.yml
 .b.env
-
+__tests__/**.js
+__tests__/**.map
 # Sentry Config File
 .sentryclirc
