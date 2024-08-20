@@ -325,7 +325,7 @@ const data: Record<string, SpiritsData> = {
         type: "Instrument",
         notes: [
           "The IAP variant inspired by this item, the Fledgling Harp, was later introduced with Harmony Hall. The two harps have the same sound, but different visuals",
-          "In Harmony Hall, this Instrument can be found in the left-hand room, on the same wall as the guitars, sitting on a shelf behind the Contrabass",
+          "In Harmony Hall, this Instrument can be found in the left-hand room, on the same wall as the guitars, sitting on a shelf behind the <:FrightenedRefugeeInstrument:1275323117899743263> Contrabass",
         ],
         images: [
           {
