@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: skyhelper
+    restart: unless-stopped
     volumes:
       - /root/mybot-data:/app/data
     environment:
