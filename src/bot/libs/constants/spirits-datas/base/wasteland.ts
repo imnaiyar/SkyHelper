@@ -67,6 +67,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:CourageousSoldierCapeL2:1275326178726645822>",
         type: "Cape",
         price: "45 <:regularHeart:1207793247792013474>",
+        notes: ["The Tier 2 Cape (and the second Wing Buff that unlocks it) are not needed to complete the Vault Constellation"],
         images: [
           {
             description: "The Cape - Tier 2 (Front)",
