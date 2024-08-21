@@ -255,7 +255,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
         case "geyser":
           await interaction.followUp({
             embeds: [
-              buildEmbed(fulltimes.geyser, getTimes(0, t, "geyser"), t("times-embed.GEYSER"), "Clement").setImage(
+              buildEmbed(fulltimes.geyser, getTimes(0, 2, t, "geyser"), t("times-embed.GEYSER"), "Clement").setImage(
                 "https://media.discordapp.net/attachments/867638574571323424/1252998364941914243/Visit_Geyser_Clement.png?ex=66744129&is=6672efa9&hm=8d76d1767aca362d23547b1e3beb2b610f58e4fbec24b12af56fdc745f7074e8&",
               ),
             ],
@@ -265,7 +265,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
         case "grandma":
           await interaction.followUp({
             embeds: [
-              buildEmbed(fulltimes.grandma, getTimes(0, t, "grandma"), t("times-embed.GRANDMA"), "Clement").setImage(
+              buildEmbed(fulltimes.grandma, getTimes(0, 2, t, "grandma"), t("times-embed.GRANDMA"), "Clement").setImage(
                 "https://media.discordapp.net/attachments/867638574571323424/1252998366288416849/Visit_Grandma_Clement.png?ex=6674412a&is=6672efaa&hm=7228b695ec7008204fede2f3d6b4864a06a7cfa25a14ab4d7572957ee940044c&",
               ),
             ],
@@ -275,7 +275,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
         case "turtle":
           await interaction.followUp({
             embeds: [
-              buildEmbed(fulltimes.turtle, getTimes(0, t, "turtle"), t("times-embed.TURTLE"), "Velvet").setImage(
+              buildEmbed(fulltimes.turtle, getTimes(0, 2, t, "turtle"), t("times-embed.TURTLE"), "Velvet").setImage(
                 "https://media.discordapp.net/attachments/867638574571323424/1252998363205472316/Visit_Turtle_Velvet.jpg?ex=66744129&is=6672efa9&hm=8c189ff8501fc88810606b832addbea8a9a81eb7a7a6b17019ff1ced593e1ae8&",
               ),
             ],

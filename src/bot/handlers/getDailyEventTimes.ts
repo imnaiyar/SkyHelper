@@ -6,31 +6,7 @@ import moment from "moment-timezone";
 import "moment-duration-format";
 import { getTS } from "#handlers";
 import type { getTranslator } from "#bot/i18n";
-
-export function getDailyEventTimes(offset: number): Times {
-  const now = moment().tz("America/Los_Angeles");
-  const start = now.clone().startOf("day").add(offset, "minutes");
-  const end = start.clone().add(15, "minute");
-  while (start.isBefore(now) && end.isBefore(now)) {
-    start.add(2, "hours");
-    end.add(2, "hours");
-  }
-  if (now.isBetween(start, end)) {
-    return {
-      active: true,
-      startTime: start,
-      endTime: end,
-      nextTime: start.clone().add(2, "hours"),
-      duration: moment.duration(end.diff(now)).format("d[d] h[h] m[m] s[s]"),
-    };
-  } else {
-    return {
-      active: false,
-      nextTime: start,
-      duration: moment.duration(start.diff(now)).format("d[d] h[h] m[m] s[s]"),
-    };
-  }
-}
+import { getEventStatus } from "#utils";
 
 export const getEdenTimes = (): Times => {
   const now = moment().tz("America/Los_Angeles");
@@ -64,10 +40,10 @@ export const getTimesEmbed = async (
   t: ReturnType<typeof getTranslator>,
   text?: string,
 ): Promise<EmbedBuilder> => {
-  const geyser = getTimes(0, t, "Geyser");
-  const grandma = getTimes(30, t, "Grandma");
-  const turtle = getTimes(50, t, "Turtle");
-  const reset = getTimes(0, t, "Daily");
+  const geyser = getTimes(0, 2, t, "Geyser");
+  const grandma = getTimes(30, 2, t, "Grandma");
+  const turtle = getTimes(50, 2, t, "Turtle");
+  const reset = getTimes(0, 2, t, "Daily");
   const eden = t("times-embed.EDEN_RESET", {
     DATE: time(getEdenTimes().nextTime.toDate(), "F"),
     DURATION: getEdenTimes().duration,
@@ -151,10 +127,11 @@ export const getTimesEmbed = async (
 
 export function getTimes(
   offset: number,
+  interval: number,
   t: ReturnType<typeof getTranslator>,
   type: string,
 ): { title: string; description: string } {
-  const times = getDailyEventTimes(offset);
+  const times = getEventStatus(offset, interval);
   if (type.toLocaleLowerCase().includes("daily")) {
     const resetAt = moment().tz("America/Los_Angeles").startOf("day").add(1, "day");
     const duration = moment.duration(resetAt.diff(moment().tz("America/Los_Angeles"))).format("d[d] h[h] m[m] s[s]");
