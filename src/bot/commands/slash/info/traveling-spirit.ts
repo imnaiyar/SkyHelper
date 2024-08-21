@@ -23,7 +23,7 @@ export default {
     if (ts.value) {
       const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
       if (!isSeasonal(spirit)) return;
-      const emote = spirit.emote?.icon ?? spirit.call?.icon ?? spirit.stance?.icon ?? spirit.action?.icon;
+      const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
       let description = ts.visiting
         ? t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING", {
             SPIRIT: "↪",

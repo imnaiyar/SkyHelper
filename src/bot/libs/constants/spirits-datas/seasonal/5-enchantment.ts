@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "05_Season_of_Enchantment_-_Snoozing_Carpenter.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:carpenter:1131649953505230848>",
       level: [
         {
@@ -103,7 +104,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Scarecrow_Farmer_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:scarecrow:1131649929492828180>",
       level: [
         {
@@ -189,7 +191,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Playfighting_Herbalist_Location_Clement.jpg",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:herbalist:1131649901814624276>",
       level: [
         {
@@ -326,7 +329,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Nodding_Muralist_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:muralist:1131649861377339452>",
       level: [
         {
@@ -398,7 +402,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Indifferent_Alchemist_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:alchemist:1131649811439947796>",
       level: [
         {
@@ -502,7 +507,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Crab_Walker_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:crabwalker:1131649778434981908>",
       level: [
         {

@@ -10,7 +10,8 @@ const data: Record<string, SpiritsData> = {
       description: "Applauding Bellmaker Infographics by Ed.7",
       image: "Applauding-Bellmaker-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:applaudingbellmaker:1205914299814518784>",
       level: [
         {
@@ -66,10 +67,10 @@ const data: Record<string, SpiritsData> = {
       description: "Bird Whisperer Infographics by Ed.7",
       image: "Bird-Whisperer-Guide-777-Ed.webp",
     },
-    call: {
-      title: "Bird Call",
+    expression: {
+      type: "Call",
       icon: "<:birdwhisperer:1205914321897398332>",
-      image: "Bird_Call-1.mp4",
+      level: [{ title: "Bird Call", image: "Bird_Call-1.mp4" }],
     },
     collectibles: [
       {
@@ -113,7 +114,8 @@ const data: Record<string, SpiritsData> = {
       description: "Butterfly Charmer Infographics by Ed.7",
       image: "Butterfly-Charmer-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:butterflycharmer:1205914343519158302>",
       level: [
         {
@@ -208,7 +210,8 @@ const data: Record<string, SpiritsData> = {
       description: "Ceremonial Worshipper Infographics by Ed.7",
       image: "Ceremonial-Worshiper-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:ceremonialworshiper:1205914362733404181>",
       level: [
         {
@@ -227,7 +230,8 @@ const data: Record<string, SpiritsData> = {
       description: "Exhausted Dock Worker Infographics by Ed.7",
       image: "Exhausted-Dock-Worker-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:exhausteddockworker:1205914381519556708>",
       level: [
         {
@@ -273,7 +277,8 @@ const data: Record<string, SpiritsData> = {
       description: "Laughing Light Catcher Infographics by Ed.7",
       image: "Laughing-Light-Catcher-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:laughinglightcatcher:1205914422309290015>",
       level: [
         {
@@ -356,7 +361,8 @@ const data: Record<string, SpiritsData> = {
       description: "Slumbering Shipwright Infographics by Ed.7",
       image: "Slumbering-Shipwright-Guide-777-Ed.webp",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:slumberingshipwright:1205914400901308546>",
       level: [
         {
@@ -412,7 +418,8 @@ const data: Record<string, SpiritsData> = {
       description: "Waving Bellmaker Infographics by Ed.7",
       image: "Waving-Bellmaker-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:wavingbellmaker:1205914441330466889>",
       level: [
         {

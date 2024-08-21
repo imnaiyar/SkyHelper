@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Ceasing_comodore_Location_SkyZed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:commodore:1131587707315949608>",
       level: [
         {
@@ -122,7 +123,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Cackling_Cannoneer_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:cannoneer:1131587675061747854>",
       level: [
         {
@@ -231,7 +233,8 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Bumbling_boatswain_Location_SkyZed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:boatswain:1131587645219295382>",
       level: [
         {
@@ -336,7 +339,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Anxious_Angler_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:angler:1131587623165632594>",
       level: [
         {

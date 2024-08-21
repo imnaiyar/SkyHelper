@@ -21,29 +21,30 @@ describe("spiritsData", () => {
     );
     expect(shaman.realm).toBe("Vault of Knowledge");
 
-    // @ts-expect-error
+    // @ts-ignore
     expect(shaman.season).toBe("Gratitude");
 
-    // @ts-expect-error
+    // @ts-ignore
     expect(shaman.ts).toEqual({
       eligible: true,
       returned: true,
       total: "3",
       dates: ["May 26, 2022 (#62)", "July 23, 2020 (#14)", "July 03, 2023 (SV#3)"],
     });
-    // @ts-expect-error
+    // @ts-ignore
     expect(shaman.tree).toEqual({
       by: "Clement",
       total: "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image: "Greeting_Shaman_Tree.png",
     });
-    // @ts-expect-error
+    // @ts-ignore
     expect(shaman.location).toEqual({
       by: "Clement",
       image: "Greeting_Shaman_Location.png",
     });
 
-    expect(shaman.emote).toEqual({
+    expect(shaman.expression).toEqual({
+      type: "Emote",
       icon: "<:greetingShaman:1153511559490965664>",
       level: [
         {

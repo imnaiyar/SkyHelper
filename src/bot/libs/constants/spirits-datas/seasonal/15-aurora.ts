@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:warriorlove:1131584753036963882>",
       level: [
         {
@@ -129,7 +130,8 @@ const data: Record<string, SpiritsData> = {
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:seedofhope:1131584732887523388>",
       level: [
         {
@@ -235,7 +237,8 @@ const data: Record<string, SpiritsData> = {
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:wayfarer:1131584710192144606>",
       level: [
         {
@@ -341,7 +344,8 @@ const data: Record<string, SpiritsData> = {
       by: "Zed",
       image: "AURORA_Location_Zed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:miner:1131584687454818404>",
       level: [
         {

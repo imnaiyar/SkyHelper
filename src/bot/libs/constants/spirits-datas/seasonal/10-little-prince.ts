@@ -22,7 +22,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Stretching_Lamplighter_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:lamplighter:1131590417360625675>",
       level: [
         {
@@ -112,7 +113,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Star_Collector_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:starcollector:1131590394874962040>",
       level: [
         {
@@ -228,7 +230,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Sneezing_Geographer_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:geographer:1131590372502548660>",
       level: [
         {
@@ -305,7 +308,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Slouching_Soldier_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:slouching:1131590352038531143>",
       level: [
         {
@@ -400,7 +404,8 @@ const data: Record<string, SpiritsData> = {
       image: "Gloating_Narcissist_Location_Clement.jpg",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:narcissist:1131590328714010684>",
       level: [
         {
@@ -485,7 +490,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Beckoning_Ruler_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:ruler:1131590308430348369>",
       level: [
         {

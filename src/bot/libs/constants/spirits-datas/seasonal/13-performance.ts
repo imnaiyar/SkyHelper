@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Modest_Dancer_Location_SkyZed.jpg",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:modest:1131586528540381194>",
       level: [
         {
@@ -108,7 +109,8 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Mellow_Musician_Location_SkyZed.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:mellow:1131586502149816411>",
       level: [
         {
@@ -252,7 +254,8 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Frantic_Stagehand_Location_SkyZed.jpg",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:stagehand:1131586475226562670>",
       level: [
         {
@@ -342,7 +345,8 @@ const data: Record<string, SpiritsData> = {
       by: "SkyZed",
       image: "Storyteller_Location_SkyZed.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:storyteller:1131586451885260831>",
       level: [
         {

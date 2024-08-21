@@ -22,7 +22,8 @@ const data: Record<string, SpiritsData> = {
       image: "Prophet_of_Fire_Location_Clement.jpg",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:fireprophet:1131649539682603008>",
       level: [
         {
@@ -165,7 +166,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Prophet_of_Air_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:airprophet:1131649484347154433>",
       level: [
         {
@@ -272,7 +274,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Prophet_of_Earth_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:earthprophet:1131649510045646908>",
       level: [
         {
@@ -400,7 +403,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Prophet_of_Water_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:waterprophet:1131649574465974302>",
       level: [
         {

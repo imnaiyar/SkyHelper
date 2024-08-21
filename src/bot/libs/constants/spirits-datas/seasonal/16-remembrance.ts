@@ -21,10 +21,10 @@ const data: Record<string, SpiritsData> = {
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
 
-    stance: {
-      title: "Injured Stance",
+    expression: {
+      type: "Stance",
       icon: "<:wounded:1131584200735211710>",
-      image: "Injured_Stance.gif",
+      level: [{ title: "Injured Stance", image: "Injured_Stance.gif" }],
     },
   },
   pleading_child: {
@@ -47,7 +47,8 @@ const data: Record<string, SpiritsData> = {
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:pleading:1131584152332935331>",
       level: [
         {
@@ -151,7 +152,8 @@ const data: Record<string, SpiritsData> = {
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:Bereft:1131584129054560396>",
       level: [
         {
@@ -249,7 +251,8 @@ const data: Record<string, SpiritsData> = {
       by: "Mimi and Sam",
       image: "Remembrance_Spirits_Location_Mimi.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:tiptoe:1131584176882192455>",
       level: [
         {

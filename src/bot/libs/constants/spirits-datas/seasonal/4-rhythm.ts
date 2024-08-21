@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Troupe_Juggler_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:troupejuggler:1131650191754268854>",
       level: [
         {
@@ -144,7 +145,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Troupe_Greeter_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:troupegreeter:1131650161655943228>",
       level: [
         {
@@ -231,7 +233,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Thoughtful_Director_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:thoughtfuldirector:1131650086422728795>",
       level: [
         {
@@ -350,7 +353,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Respectful_Pianist_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:respectfulpianist:1131650056206942300>",
       level: [
         {
@@ -448,7 +452,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Spin_Dancer_Location.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:spindancer:1131650001571946616>",
       level: [
         {
@@ -560,7 +565,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Admiring_Actor_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:actor:1131649977710555136>",
       level: [
         {

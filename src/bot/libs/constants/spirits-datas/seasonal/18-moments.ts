@@ -21,10 +21,10 @@ const data: Record<string, SpiritsData> = {
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    call: {
-      title: "Nightbird Call",
+    expression: {
+      type: "Call",
       icon: "<:nightbird:1130948807396429884>",
-      image: "Nightbird_Call.mp4",
+      level: [{ title: "Nightbird Call", image: "Nightbird_Call.mp4" }],
     },
     collectibles: [
       {
@@ -106,7 +106,8 @@ const data: Record<string, SpiritsData> = {
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:monk:1130948859674243185>",
       level: [
         {
@@ -200,7 +201,8 @@ const data: Record<string, SpiritsData> = {
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:geologist:1130948834365816973>",
       level: [
         {
@@ -298,7 +300,8 @@ const data: Record<string, SpiritsData> = {
       by: "Mimi and Sam",
       image: "Moments_Spirits_Location_Mimi.jpg",
     },
-    action: {
+    expression: {
+      type: "Friend Action",
       icon: "<:ranger:1130948781026844692>",
       level: [
         {

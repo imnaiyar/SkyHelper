@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:oddball:1131583444116308072>",
       level: [
         {
@@ -109,7 +110,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:achiever:1131583465649876992>",
       level: [
         {
@@ -207,7 +209,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:mope:1131583421529989211>",
       level: [
         {
@@ -305,7 +308,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Passage_Spirits_Location_Clement.jpg",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:tumbling:1131583486940164126>",
       level: [
         {

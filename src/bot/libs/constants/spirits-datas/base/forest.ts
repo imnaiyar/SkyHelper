@@ -10,7 +10,8 @@ const data: Record<string, SpiritsData> = {
       description: "Apologetic Lumberjack Infographics by Ed.7",
       image: "Apologetic-Lumberjack-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:apologeticlumberjack:1205914460661751808>",
       level: [
         {
@@ -79,7 +80,8 @@ const data: Record<string, SpiritsData> = {
       description: "Blushing Prospector Infographics by Ed.7",
       image: "Blushing-Prospector-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:blushhingprosprector:1205914615259861132>",
       level: [
         {
@@ -161,7 +163,8 @@ const data: Record<string, SpiritsData> = {
       description: "Dismayed Hunter Infographics by Ed.7",
       image: "Dismayed-Hunter-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:dismayedhunter:1205914594724290650>",
       level: [
         {
@@ -266,7 +269,8 @@ const data: Record<string, SpiritsData> = {
       description: "Hide'n'seek Pioneer Infographics by Ed.7",
       image: "Hide-n-Seek-Pioneer-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:hidenseekpioneer:1205914575447527436>",
       level: [
         {
@@ -341,7 +345,8 @@ const data: Record<string, SpiritsData> = {
       description: "Pouty Porter Infographics by Ed.7",
       image: "Pouty-Porter-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:poutyporter:1205914557579788298>",
       level: [
         {
@@ -447,7 +452,8 @@ const data: Record<string, SpiritsData> = {
       description: "Shivering Trailblazer Infographics by Ed.7",
       image: "Shivering-Trailblazer-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:shiveringtrailblazer:1205914480601595954>",
       level: [
         {
@@ -516,7 +522,8 @@ const data: Record<string, SpiritsData> = {
       description: "Tearful Light Miner Infographics by Ed.7",
       image: "Tearful-Light-Miner-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:tearfullightminer:1205914519575076915>",
       level: [
         {
@@ -580,10 +587,10 @@ const data: Record<string, SpiritsData> = {
       description: "Whale Whisperer Infographics by Ed.7",
       image: "Whale_Call.mp4",
     },
-    call: {
-      title: "Whale Call",
+    expression: {
+      type: "Call",
       icon: "<:whalewhisperer:1205914501241765918>",
-      image: "Whale_Call-1.mp4",
+      level: [{ title: "Whale Call", image: "Whale_Call-1.mp4" }],
     },
     collectibles: [
       {

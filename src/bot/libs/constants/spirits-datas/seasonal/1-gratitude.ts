@@ -22,7 +22,8 @@ const data: Record<string, SpiritsData> = {
       image: "Stretching_Guru_Location.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:stretchingGuru:1153511673949343805>",
       level: [
         {
@@ -106,10 +107,10 @@ const data: Record<string, SpiritsData> = {
       image: "Sassy_Drifter_Location.jpg",
     },
 
-    stance: {
-      title: "Sassy Stance",
+    expression: {
+      type: "Stance",
       icon: "<:sassyDrifter:1153511651522396322>",
-      image: "Sassy_Stance.gif",
+      level: [{ title: "Sassy Stance", image: "Sassy_Stance.gif" }],
     },
     collectibles: [
       {
@@ -172,7 +173,8 @@ const data: Record<string, SpiritsData> = {
       image: "Saluting_Performer_Location.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:salutingProtector:1153511628596334723>",
       level: [
         {
@@ -253,7 +255,8 @@ const data: Record<string, SpiritsData> = {
       image: "Provoking_Performer_Location.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:provokingProtector:1153511606475554906>",
       level: [
         {
@@ -323,7 +326,8 @@ const data: Record<string, SpiritsData> = {
       image: "Leaping_Dancer_Location.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:leepingDancer:1153511583532716032>",
       level: [
         {
@@ -406,7 +410,8 @@ const data: Record<string, SpiritsData> = {
       image: "Greeting_Shaman_Location.png",
     },
 
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:greetingShaman:1153511559490965664>",
       level: [
         {

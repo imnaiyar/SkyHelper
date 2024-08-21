@@ -21,7 +21,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Scolding_Student_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:student:1131591495993016421>",
       level: [
         {
@@ -117,7 +118,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Scaredy_Cadet_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:cadet:1131591467429793962>",
       level: [
         {
@@ -220,7 +222,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Daydreaming_Forester_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:forester:1131591420239675402>",
       level: [
         {
@@ -310,7 +313,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Marching_Adventurer_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:adventurer:1131591445057372272>",
       level: [
         {
@@ -404,7 +408,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Chuckling_Scout_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:scout:1131591393282904084>",
       level: [
         {
@@ -519,7 +524,8 @@ const data: Record<string, SpiritsData> = {
       by: "Clement",
       image: "Baffled_Botanist_Location_Clement.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:botanist:1131591369492795503>",
       level: [
         {

@@ -10,7 +10,8 @@ const data: Record<string, SpiritsData> = {
       description: "Levitating Adept Infographics by Ed.7",
       image: "Levitating-Adept-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:levitatingadept:1205914962921525269>",
       level: [
         {
@@ -79,7 +80,8 @@ const data: Record<string, SpiritsData> = {
       description: "Meditating Monastic Infographics by Ed.7",
       image: "Meditating-Monastic-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:meditatingmonastic:1205914942193143808>",
       level: [
         {
@@ -143,10 +145,10 @@ const data: Record<string, SpiritsData> = {
       description: "Memory Whisperer Infographics by Ed.7",
       image: "Memory-Whisperer-Guide-777-Ed.png",
     },
-    call: {
-      title: "Cosmic Manta Call",
+    expression: {
+      type: "Call",
       icon: "<:memorywhisperer:1205914905275011123>",
-      image: "Cosmic_Manta_Call-1.mp4",
+      level: [{ title: "Cosmic Manta Call", image: "Cosmic_Manta_Call-1.mp4" }],
     },
     collectibles: [
       {
@@ -219,10 +221,10 @@ const data: Record<string, SpiritsData> = {
       description: "Polite Scholar Infographics by Ed.7",
       image: "Polite-Scholar-Guide-777-Ed.png",
     },
-    stance: {
-      title: "Polite Stance",
+    expression: {
+      type: "Stance",
       icon: "<:politescholar:1205914889650970644>",
-      image: "Polite_Stance.gif",
+      level: [{ title: "Polite Stance", image: "Polite_Stance.gif" }],
     },
     collectibles: [
       {
@@ -262,7 +264,8 @@ const data: Record<string, SpiritsData> = {
       description: "Praying Acolyte Infographics by Ed.7",
       image: "Praying-Acolyte-Guide-777-Ed.png",
     },
-    emote: {
+    expression: {
+      type: "Emote",
       icon: "<:prayinacolite:1205914871783235684>",
       level: [
         {

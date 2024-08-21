@@ -5,10 +5,10 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageEdit
 import type { getTranslator } from "#bot/i18n";
 export default {
   data: {
-    name: "spirit_emote",
+    name: "spirit_expression",
   },
   async execute(interaction, t, client) {
-    const [, type, value] = interaction.customId.split("-"),
+    const [, value] = interaction.customId.split("-"),
       data = client.spiritsData[value];
     if (!data) {
       return void (await interaction.reply({ content: "Something went wrong! No data found", ephemeral: true }));
@@ -21,7 +21,10 @@ export default {
         components: message.components,
         files: message.attachments.map((m) => m.url),
       },
-      response = type === "expression" ? getExpressionResponse(data, t) : getCommonResponse(type, data),
+      response =
+        data.expression!.type === "Stance" || data.expression?.type === "Call"
+          ? getCommonResponse(data)
+          : getExpressionResponse(data, t),
       reply = await interaction.editReply(response),
       collector = reply.createMessageComponentCollector({
         filter: (i) => ["spirit_exprsn_back", "emote_nav"].includes(i.customId.split("-")[0]),
@@ -49,47 +52,52 @@ export default {
   },
 } satisfies Button;
 
-const getCommonResponse = (type: string, data: SpiritsData): MessageEditOptions => {
-  if (type === "call") {
+const getCommonResponse = (data: SpiritsData): MessageEditOptions => {
+  // prettier-ignore
+  if (!data.expression) throw new Error(`Expected Spirit expression to be present, but recieved ${typeof data.expression} [${data.name}]`);
+  const expression = data.expression;
+  if (expression.type === "Call") {
     return {
-      content: `### ${data.call!.icon} [${
-        data.call!.title
+      content: `### ${expression.icon} [${
+        expression.level[0].title
       }](<https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#Call>)\n${
         data.name
       } call preview (Normal and Deep Call)\n**Sound ON** <a:sound_on:1207073334853107832>.`,
       embeds: [],
-      files: [`${config.CDN_URL}/${data.call!.image}`],
+      files: [`${config.CDN_URL}/${expression.level[0].image}`],
       // prettier-ignore
-      components: [new ActionRowBuilder().addComponents(getBackBtn(data.call!.icon)) as ActionRowBuilder<ButtonBuilder>],
+      components: [new ActionRowBuilder().addComponents(getBackBtn(expression.icon)) as ActionRowBuilder<ButtonBuilder>],
     };
   } else {
     const stanceEmbed = new EmbedBuilder()
-      .setTitle(`${data.stance!.icon} ${data.stance!.title}`)
+      .setTitle(`${expression.icon} ${expression.level[0].title}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#Stance`)
       .setDescription(`Stance preview (Standing, sitting, kneeling and laying).`)
-      .setImage(`${config.CDN_URL}/${data.stance!.image}`)
+      .setImage(`${config.CDN_URL}/${expression.level[0].image}`)
       .setAuthor({ name: `Stance - ${data.name}` });
     return {
       embeds: [stanceEmbed],
-      components: [new ActionRowBuilder<ButtonBuilder>().addComponents(getBackBtn(data.stance!.icon))],
+      components: [new ActionRowBuilder<ButtonBuilder>().addComponents(getBackBtn(expression.icon))],
     };
   }
 };
 
 const getExpressionResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator>, page: number = 1) => {
-  const exprsn = data.emote ? data.emote : data.action;
+  // prettier-ignore
+  if (!data.expression) throw new Error(`Expected Spirit expression to be present, but recieved ${typeof data.expression} [${data.name}]`);
+  const exprsn = data.expression;
   const total = exprsn!.level.length - 1;
 
   const emote = exprsn!.level[page - 1];
 
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: `${data.emote ? t("commands.SPIRITS.RESPONSES.BUTTONS.EMOTE") : t("commands.SPIRITS.RESPONSES.BUTTONS.ACTION")} - ${data.name}`,
+      name: `${exprsn.icon ? t("commands.SPIRITS.RESPONSES.BUTTONS.EMOTE") : t("commands.SPIRITS.RESPONSES.BUTTONS.ACTION")} - ${data.name}`,
     })
     .setTitle(`${exprsn!.icon} ${emote.title}`)
     .setURL(
       `https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${
-        data.emote ? "Expression" : "Friend_Action"
+        exprsn.type === "Emote" ? "Expression" : "Friend_Action"
       }`,
     )
     .setImage(`${config.CDN_URL}/${emote.image}`);

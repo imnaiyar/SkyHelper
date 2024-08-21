@@ -42,8 +42,7 @@ export async function handleSpirits(int: ChatInputCommandInteraction, seasonOrRe
           spirits.map(([k, v]) => ({
             label: v.name + (v.extra ? ` (${v.extra})` : ""),
             value: k.toString(),
-            emoji:
-              v.action?.icon || v.call?.icon || v.emote?.icon || v.stance?.icon || v.icon || (seasonOrRealm as SeasonData).icon,
+            emoji: v.expression?.icon || v.icon || (seasonOrRealm as SeasonData).icon,
             default: value === k,
           })),
         ),
