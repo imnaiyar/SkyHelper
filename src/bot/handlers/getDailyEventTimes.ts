@@ -4,6 +4,8 @@ import { EmbedBuilder, time } from "discord.js";
 import getEvent from "#handlers/getSpecialEvent";
 import moment from "moment-timezone";
 import "moment-duration-format";
+import { getTS } from "#handlers";
+import type { getTranslator } from "#bot/i18n";
 
 export function getDailyEventTimes(offset: number): Times {
   const now = moment().tz("America/Los_Angeles");
@@ -49,8 +51,6 @@ export const getEdenTimes = (): Times => {
   };
 };
 
-import { getTS } from "#handlers";
-import type { getTranslator } from "#bot/i18n";
 /**
  * Get Times Embed
  * @param client Bot client
