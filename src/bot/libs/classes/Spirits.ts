@@ -43,10 +43,7 @@ export class Spirits {
     private data: SpiritsData,
     private t: ReturnType<typeof getTranslator>,
     private client: SkyHelper,
-  ) {
-    this.data = data;
-    this.client = client;
-  }
+  ) {}
 
   /**
    * Get the embed for the spirit response

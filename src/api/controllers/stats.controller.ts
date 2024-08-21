@@ -8,7 +8,6 @@ function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
 }
 @Controller("/stats")
 export class StatsController {
-  // eslint-disable-next-line
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Get()

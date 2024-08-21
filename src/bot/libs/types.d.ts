@@ -161,7 +161,7 @@ interface BaseSpiritData {
   /** The realm where the spirit can be found, if any */
   realm?: string;
 
-  /** Icon of the spirit, if applied */
+  /** Icon that represents the spirit (only applied if the spirit doesn't have an expression) */
   icon?: string;
 
   /** Expression of the spirit, if any */
