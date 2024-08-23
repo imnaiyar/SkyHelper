@@ -11,7 +11,7 @@ import {
 import type { ContextMenuCommand, SkyHelper, SlashCommand, Event } from "#structures";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#bot/config";
-import { eventTimes } from "#libs/constants/index";
+import { eventTimes } from "#utils";
 import { getTimes } from "#handlers/getDailyEventTimes";
 import type { getTranslator } from "#bot/i18n";
 import { dailyQuestEmbed } from "#handlers";

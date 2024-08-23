@@ -300,3 +300,17 @@ export interface DailyQuest {
     source?: string;
   }[];
 }
+
+interface EventOffset {
+  /** Hour offset */
+  hours?: number;
+
+  /** Minutes offset */
+  minutes?: number;
+
+  /** Interval of the evnt occurence */
+  interval?: {
+    hours?: number;
+    minutes?: number;
+  };
+}
