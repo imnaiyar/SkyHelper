@@ -6,17 +6,24 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
   const { quests, rotating_candles } = data;
   const total = quests.length;
   const quest = quests[index];
+  let desc = `${quest.images[0].by ? `© ${quest.images[0].by}` : ""}\n${quest.images[0].source ? `Source: ${quest.images[0].source}` : ""}`;
   const embed = new EmbedBuilder()
     .setAuthor({
       name: `Daily Quests (${index + 1}/${total})`,
       iconURL: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/72/Quest-icon.png",
     })
-    .setDescription(
-      `${quest.images[0].by ? `© ${quest.images[0].by}` : ""}\n${quest.images[0].source ? `Source: ${quest.images[0].source}` : ""}`,
-    )
     .setTitle(quest.title)
     .setFooter({ text: `Page ${index + 1}/${total}` });
-  if (quest.images.length) embed.setImage(quest.images[0].url);
+  if (quest.images.length) {
+    const ext = quest.images[0].url.split("?")[0].split(".").pop();
+    if (ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext)) {
+      desc += `\n**Video Guide**:  [Link](${quest.images[0].url})`;
+    } else {
+      embed.setImage(quest.images[0].url);
+    }
+  }
+
+  embed.setDescription(desc);
 
   const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder().setCustomId("daily_quests_select").addOptions(
