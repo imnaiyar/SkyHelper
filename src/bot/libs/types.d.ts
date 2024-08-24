@@ -23,59 +23,61 @@ export interface ShardsCountdown {
 }
 
 export interface BaseTimes {
-  /* Whether the event is active or not */
+  /** Whether the event is active or not */
   active: boolean;
 
-  /* The time when the event starts */
+  /** The time when the event starts */
   nextTime: moment.Moment;
 
-  /* The countdown to the event */
+  /** This will be the countdown for when the event ends if it's active,
+   *  otherwise it'll be the countdown to the next occurence
+   */
   duration: string;
 }
 
 interface ActiveTimes extends BaseTimes {
   active: true;
-  /* The time when the event started if active */
+  /** The time when the event started if active */
   startTime: moment.Moment;
 
-  /* The time when the event ends if active */
+  /** The time when the event ends if active */
   endTime: moment.Moment;
 }
 interface NotActiveTimes extends BaseTimes {
   active: false;
-  /* The time when the event started if active */
+  /** The time when the event started if active */
   startTime?: moment.Moment;
 
-  /* The time when the event ends if active */
+  /** The time when the event ends if active */
   endTime?: moment.Moment;
 }
 export type Times = ActiveTimes | NotActiveTimes;
 
 export interface TSData extends Document {
-  // Name of the returning TS
+  /** Name of the returning TS */
   name: string;
 
-  /* The value of spirit in the spiritsData */
+  /** The value of spirit in the spiritsData */
   value: string;
 
-  /* Date of the visit */
+  /** Date of the visit */
   visitDate: string;
 
-  /* Link to the image of the spirit */
+  /** Link to the image of the spirit */
   spiritImage: string;
 
-  /* TS returning Index */
+  /** TS returning Index */
   index: number;
 }
 
 export interface EventData extends Document {
-  /* Start date of the event */
+  /** Start date of the event */
   startDate: string;
 
-  /* End date of the event */
+  /** End date of the event */
   endDate: string;
 
-  /* Name of the event */
+  /** Name of the event */
   name: string;
 }
 

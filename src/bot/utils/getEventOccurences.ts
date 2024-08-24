@@ -1,5 +1,7 @@
 import moment from "moment-timezone";
-import { eventData } from "#bot/libs/index";
+import { eventData, Times } from "#bot/libs/index";
+import eventTimes from "./eventTimes.js";
+import { getEventStatus } from "./getEventStatus.js";
 type EventKey = keyof typeof eventData;
 export const getOccurenceDay = (event: (typeof eventData)[EventKey]) => {
   const nextOccurrence = moment().tz("America/Los_Angeles").startOf("day").add(event.offset, "minutes"); // Start with the offset from the beginning of the day
@@ -37,12 +39,25 @@ export const getNextEventOccurrence = (eventName: EventKey): moment.Moment => {
   return nextOccurrence;
 };
 
-export const nextOccurrences = (() => {
-  const keys = Object.keys(eventData);
-  const occurences: Record<EventKey, moment.Moment> = {};
+export const eventOccurrences = () => {
+  const keys = Object.keys(eventData).sort((a, b) => eventData[a].index - eventData[b].index);
+  const occurences: [
+    EventKey,
+    { event: (typeof eventData)[EventKey]; nextOccurence: moment.Moment; allOccurences: string; status: Times },
+  ][] = [];
+
   for (const key of keys) {
-    occurences[key] = getNextEventOccurrence(key);
+    occurences.push([key, getEventDetails(key)]);
   }
   return occurences;
-})();
+};
 
+export const getEventDetails = (key: EventKey) => {
+  const nextOccurence = getNextEventOccurrence(key);
+  return {
+    event: eventData[key],
+    nextOccurence,
+    allOccurences: eventTimes(getOccurenceDay(eventData[key]), eventData[key].interval),
+    status: getEventStatus(eventData[key], nextOccurence),
+  };
+};

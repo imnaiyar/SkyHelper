@@ -62,7 +62,7 @@ export default {
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
       const _t = getTranslator((await client.database.getSettings(interaction.guild)).language?.value || "en-US");
       const result = {
-        embeds: [await getTimesEmbed(client, _t, _t("times-embed.FOOTER"))],
+        embeds: (await getTimesEmbed(client, _t, _t("times-embed.FOOTER"))).embeds,
       };
       const msg = await wb.send({
         username: "SkyTimes Updates",

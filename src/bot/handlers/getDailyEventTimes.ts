@@ -1,31 +1,12 @@
-import type { SpiritsData, Times } from "#libs/types";
+import type { SpiritsData } from "#libs/types";
 import type { SkyHelper } from "#structures";
-import { EmbedBuilder, time } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder, time } from "discord.js";
 import getEvent from "#handlers/getSpecialEvent";
-import moment from "moment-timezone";
 import "moment-duration-format";
 import { getTS } from "#handlers";
 import type { getTranslator } from "#bot/i18n";
-import { getEventStatus } from "#utils";
-
-export const getEdenTimes = (): Times => {
-  const now = moment().tz("America/Los_Angeles");
-  const currentDayOfWeek = now.day();
-  const daysToAdd = 0 - currentDayOfWeek;
-  const edenTargetTime = now.clone().startOf("day").add(daysToAdd, "days");
-  if (daysToAdd <= 0 || (daysToAdd === 0 && now.isAfter(edenTargetTime))) {
-    edenTargetTime.add(7, "days");
-  }
-  if (now.isSameOrAfter(edenTargetTime)) {
-    edenTargetTime.add(7, "days");
-  }
-  const dur = moment.duration(edenTargetTime.diff(now)).format("d[d] h[h] m[m] s[s]");
-  return {
-    active: false,
-    nextTime: edenTargetTime,
-    duration: dur,
-  };
-};
+import { eventOccurrences } from "#bot/utils/getEventOccurences";
+import { eventData } from "#bot/libs/index";
 
 /**
  * Get Times Embed
@@ -39,15 +20,7 @@ export const getTimesEmbed = async (
   client: SkyHelper,
   t: ReturnType<typeof getTranslator>,
   text?: string,
-): Promise<EmbedBuilder> => {
-  const geyser = getTimes(0, 2, t, "Geyser");
-  const grandma = getTimes(30, 2, t, "Grandma");
-  const turtle = getTimes(50, 2, t, "Turtle");
-  const reset = getTimes(0, 2, t, "Daily");
-  const eden = t("times-embed.EDEN_RESET", {
-    DATE: time(getEdenTimes().nextTime.toDate(), "F"),
-    DURATION: getEdenTimes().duration,
-  });
+): Promise<{ embeds: EmbedBuilder[]; components: ActionRowBuilder<StringSelectMenuBuilder | ButtonBuilder>[] }> => {
   const tsData = await getTS();
   const event = await getEvent();
   const eventDesc =
@@ -84,31 +57,20 @@ export const getTimesEmbed = async (
     .setTitle(t("times-embed.EMBED_TITLE"))
     .setColor("Random")
     .addFields(
-      {
-        name: t("times-embed.GEYSER"),
-        value: geyser.description,
-        inline: true,
-      },
-      {
-        name: t("times-embed.GRANDMA"),
-        value: grandma.description,
-        inline: true,
-      },
-      {
-        name: t("times-embed.TURTLE"),
-        value: turtle.description,
-        inline: true,
-      },
-      {
-        name: t("times-embed.DAILY"),
-        value: reset.description,
-        inline: true,
-      },
-      {
-        name: t("times-embed.EDEN"),
-        value: eden,
-        inline: true,
-      },
+      ...eventOccurrences().map(([_k, e]) => {
+        let desc = "";
+
+        if (e.status.active) {
+          desc += `${e.event.name} is currently active (at ${time(e.status.startTime.unix(), "T")}) and will end in ${e.status.duration} (at ${time(e.status.endTime.unix(), "T")})`;
+        } else {
+          desc += `Next Occurence: ${time(e.status.nextTime.unix(), "T")} (in ${e.status.duration})`;
+        }
+        return {
+          name: e.event.name,
+          value: desc,
+          inline: true,
+        };
+      }),
       {
         name: t("times-embed.TS_TITLE"),
         value: tsDesc,
@@ -122,45 +84,21 @@ export const getTimesEmbed = async (
     )
     .setTimestamp();
   if (text) embed.setFooter({ text: text, iconURL: client.user.displayAvatarURL() });
-  return embed;
+  const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+    new StringSelectMenuBuilder()
+      .setCustomId("skytimes-details")
+      .setPlaceholder("Detailed Timelines")
+      .setOptions(
+        Object.entries(eventData)
+          .filter(([, e]) => e.displayAllTimes)
+          .map(([k, e]) => ({
+            label: e.name.charAt(0).toUpperCase() + e.name.slice(1),
+            value: k,
+          })),
+      ),
+  );
+  const btn = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder().setCustomId("times-refresh").setEmoji("🔃").setStyle(ButtonStyle.Primary),
+  );
+  return { embeds: [embed], components: [row, btn] };
 };
-
-export function getTimes(
-  offset: number,
-  interval: number,
-  t: ReturnType<typeof getTranslator>,
-  type: string,
-): { title: string; description: string } {
-  const times = getEventStatus(offset, interval);
-  if (type.toLocaleLowerCase().includes("daily")) {
-    const resetAt = moment().tz("America/Los_Angeles").startOf("day").add(1, "day");
-    const duration = moment.duration(resetAt.diff(moment().tz("America/Los_Angeles"))).format("d[d] h[h] m[m] s[s]");
-    return {
-      title: type,
-      description: t("times-embed.COUNTDOWN", {
-        TIME: time(resetAt.unix(), "t"),
-        DURATION: duration,
-      }),
-    };
-  }
-  // TODO: Add emoji for active events
-
-  if (times.active) {
-    return {
-      title: type + " <a:uptime:1228956558113771580>",
-      description: `${t("times-embed.ACTIVE", {
-        TIME: time(times.endTime!.unix(), "t"),
-        DURATION: times.duration,
-      })}\n${t("times-embed.NEXT-OCC", {
-        TIME: time(times.nextTime.unix(), "t"),
-      })}`,
-    };
-  }
-  return {
-    title: type,
-    description: t("times-embed.NEXT", {
-      TIME: time(times.nextTime.unix(), "t"),
-      DURATION: times.duration,
-    }),
-  };
-}

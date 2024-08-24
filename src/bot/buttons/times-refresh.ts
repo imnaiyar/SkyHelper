@@ -7,7 +7,6 @@ export default {
   },
   async execute(interaction, _t, client) {
     await interaction.deferUpdate();
-    const embed = await getTimesEmbed(client, _t);
-    await interaction.editReply({ embeds: [embed] });
+    await interaction.editReply(await getTimesEmbed(client, _t));
   },
 } satisfies Button;

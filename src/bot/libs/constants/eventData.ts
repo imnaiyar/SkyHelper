@@ -10,13 +10,13 @@ interface EventData {
     /** The Offset of the event (in minutes) */
     offset: number;
 
-    /** Approximate duration of the event during which its active when it starts */
+    /** Approximate duration of the event during which its active after it starts (in minutes) */
     duration?: number;
 
     /** The interval at which the event occurs (in minutes) */
     interval?: number;
 
-    /** Whether to display all their occurrence times in the main embed */
+    /** Whether to display all their occurrence times in the embed */
     displayAllTimes?: boolean;
 
     /** The days on which the event occurs */
@@ -27,6 +27,9 @@ interface EventData {
       /** The day on which the event occurs */
       dayOfTheMonth?: number;
     };
+
+    /** Infographic related to the event, if any (Discord link)*/
+    infographic?: string;
   };
 }
 
@@ -38,6 +41,7 @@ export const eventData: EventData = {
     index: 0,
     duration: 10,
     offset: 5,
+    displayAllTimes: true,
     interval: getMinutes(2),
   },
   grandma: {
@@ -45,6 +49,7 @@ export const eventData: EventData = {
     index: 1,
     duration: 10,
     offset: 35,
+    displayAllTimes: true,
     interval: getMinutes(2),
   },
   turtle: {
@@ -52,6 +57,7 @@ export const eventData: EventData = {
     index: 2,
     duration: 10,
     offset: 50,
+    displayAllTimes: true,
     interval: getMinutes(2),
   },
   reset: {
@@ -70,7 +76,7 @@ export const eventData: EventData = {
   aurora: {
     name: "Aurora",
     index: 5,
-    offset: 0,
+    offset: getMinutes(2),
     duration: 50,
     displayAllTimes: true,
     interval: getMinutes(4),
@@ -79,20 +85,23 @@ export const eventData: EventData = {
     name: "Dream Skater",
     index: 6,
     duration: 15,
+    displayAllTimes: true,
     occursOn: { weekDays: [5, 6, 7] },
-    offset: getMinutes(1),
+    offset: getMinutes(1) + 5,
     interval: getMinutes(2),
   },
   "passage-quests": {
     name: "Passage Quests",
     index: 7,
     offset: 0,
+    displayAllTimes: true,
     interval: 15,
   },
   "nest-sunset": {
     name: "Nest Sunset",
     index: 8,
     offset: 40,
+    displayAllTimes: true,
     interval: getMinutes(1),
   },
   "fireworks-festival": {
@@ -107,12 +116,14 @@ export const eventData: EventData = {
     name: "Sanctuary Sunset",
     index: 10,
     offset: 50,
+    displayAllTimes: true,
     interval: getMinutes(2),
   },
   "fairy-ring": {
     name: "Fairy Ring",
     index: 11,
     offset: 50,
+    displayAllTimes: true,
     interval: 60,
   },
   "brook-rainbow": {
@@ -123,4 +134,3 @@ export const eventData: EventData = {
     interval: getMinutes(12),
   },
 };
-
