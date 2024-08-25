@@ -32,7 +32,7 @@ export default {
         await getSuggestion(interaction, t);
         break;
       case "timestamp":
-        await handleTimestamp(interaction);
+        await handleTimestamp(interaction, t);
     }
   },
   data: {

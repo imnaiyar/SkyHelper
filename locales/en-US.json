@@ -213,7 +213,8 @@
         "NO-SPIRITS": "Eden doesn't have any spirits, they do not like scary places.",
         "REALM-BUTTON-LABEL": "Different Areas",
         "INVALID-CHOICE": "Invalid choice or Guide yet to be updated",
-        "REALM_AREA_SELECT_PLACEHOLDER": "Choose an area."
+        "REALM_AREA_SELECT_PLACEHOLDER": "Choose an area.",
+        "INVALID_SEASON_VALUE": "Invalid Season! Couldn't find a season with the key `{{VALUE}}`"
       }
     },
     "SPIRITS": {
@@ -469,8 +470,8 @@
         }
       },
       "RESPONSES": {
-        "INVALID-FORMAT": "Invalid time format. Please provide time in `HH mm ss` format.",
-        "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`.\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
+        "INVALID-FORMAT": "Invalid time format. Please provide time in `HH mm ss` format. (e.g: `02 12 44`)",
+        "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City` (e.g, `America/Los_Angeles`).\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
         "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
         "SUGGESTION_TITLE": "Title",
         "TITLE_PLACEHOLDER": "Title for the suggestion",

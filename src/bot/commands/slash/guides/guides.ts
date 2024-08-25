@@ -5,12 +5,12 @@ import { handleSeasional } from "./sub/handleSeasional.js";
 import { handleRealms } from "./sub/handleRealms.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  async execute(interaction) {
+  async execute(interaction, t) {
     const sub = interaction.options.getSubcommand();
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
     switch (sub) {
       case "seasonal": {
-        await handleSeasional(interaction);
+        await handleSeasional(interaction, t);
         break;
       }
       case "realms": {
