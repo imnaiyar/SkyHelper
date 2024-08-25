@@ -1,4 +1,4 @@
-import { getTimesEmbed } from "#bot/handlers/buildEventsEmbed";
+import { getTimesEmbed } from "#bot/utils/buildEventsEmbed";
 import { useTranslations as x } from "#handlers/useTranslation";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";

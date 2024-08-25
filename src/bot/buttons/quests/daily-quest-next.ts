@@ -1,4 +1,4 @@
-import { dailyQuestEmbed } from "#handlers";
+import { dailyQuestEmbed } from "#utils";
 import { Button } from "#structures";
 import { checkQuestValidity } from "./sub/checkQuestValidit.js";
 

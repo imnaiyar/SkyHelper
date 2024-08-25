@@ -1,4 +1,4 @@
-import { dailyQuestEmbed } from "#handlers";
+import { dailyQuestEmbed } from "#utils";
 
 import { getTranslator } from "#bot/i18n";
 import type { SkyHelper } from "#structures";

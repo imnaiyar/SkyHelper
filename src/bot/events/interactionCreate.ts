@@ -13,7 +13,7 @@ import type { ContextMenuCommand, SkyHelper, SlashCommand, Event } from "#struct
 import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#bot/config";
 import type { getTranslator } from "#bot/i18n";
-import { dailyQuestEmbed } from "#handlers";
+import { dailyQuestEmbed } from "#utils";
 import { SkytimesUtils as skyutils } from "skyhelper-utils";
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
@@ -260,8 +260,12 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
         });
       }
       desc += `\n\n**${t("times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
+
+      if (event.infographic) {
+        desc += `\n\n© ${event.infographic.by}`;
+        embed.setImage(event.infographic.image);
+      }
       embed.setDescription(desc);
-      if (event.infographic) embed.setImage(event.infographic);
       return void interaction.reply({ embeds: [embed], ephemeral: true });
     }
 

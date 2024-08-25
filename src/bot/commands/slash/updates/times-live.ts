@@ -1,4 +1,4 @@
-import { getTimesEmbed } from "#handlers";
+import { getTimesEmbed } from "#utils";
 import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";

@@ -2,57 +2,6 @@ import moment from "moment-timezone";
 import { Document } from "mongoose";
 import type { ScheduleOptions } from "node-cron";
 
-export interface ShardsCountdown {
-  // The shard index
-  index: number;
-
-  // Whether if the shard is ready
-  active?: boolean;
-
-  // Whether if all shards are ended for the given date
-  ended?: boolean;
-
-  // The landing time for the given shard
-  start: moment.Moment;
-
-  // THe end time for the given shard
-  end: moment.Moment;
-
-  // THe countdown for the shard end/land
-  duration: string;
-}
-
-export interface BaseTimes {
-  /** Whether the event is active or not */
-  active: boolean;
-
-  /** The time when the event starts */
-  nextTime: moment.Moment;
-
-  /** This will be the countdown for when the event ends if it's active,
-   *  otherwise it'll be the countdown to the next occurence
-   */
-  duration: string;
-}
-
-interface ActiveTimes extends BaseTimes {
-  active: true;
-  /** The time when the event started if active */
-  startTime: moment.Moment;
-
-  /** The time when the event ends if active */
-  endTime: moment.Moment;
-}
-interface NotActiveTimes extends BaseTimes {
-  active: false;
-  /** The time when the event started if active */
-  startTime?: moment.Moment;
-
-  /** The time when the event ends if active */
-  endTime?: moment.Moment;
-}
-export type Times = ActiveTimes | NotActiveTimes;
-
 export interface TSData extends Document {
   /** Name of the returning TS */
   name: string;
@@ -301,18 +250,4 @@ export interface DailyQuest {
     /* Source of the guide */
     source?: string;
   }[];
-}
-
-interface EventOffset {
-  /** Hour offset */
-  hours?: number;
-
-  /** Minutes offset */
-  minutes?: number;
-
-  /** Interval of the evnt occurence */
-  interval?: {
-    hours?: number;
-    minutes?: number;
-  };
 }

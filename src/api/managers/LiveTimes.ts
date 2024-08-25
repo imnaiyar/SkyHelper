@@ -1,4 +1,4 @@
-import { getTimesEmbed } from "#handlers";
+import { getTimesEmbed } from "#utils";
 import { getTranslator } from "#bot/i18n";
 import type { SkyHelper as BotService } from "#structures";
 import getSettings from "../utils/getSettings.js";
