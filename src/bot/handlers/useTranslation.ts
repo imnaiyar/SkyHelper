@@ -1,5 +1,5 @@
 import type { langKeys } from "#bot/i18n";
-import { supportedLang } from "#libs/constants/supportedLang";
+import { supportedLang } from "../libs/constants/supportedLang.js";
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
