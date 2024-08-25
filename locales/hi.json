@@ -96,10 +96,8 @@
     "BUTTON3": "Shards के बारे में"
   },
   "times-embed": {
-    "COUNTDOWN": "{{TIME}} बजे ({{DURATION}} में)",
     "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
-    "EDEN_RESET": "{{DATE}} को ({{DURATION}} में)",
     "EMBED_TITLE": "इवेंट्स का समय",
     "EMBED_AUTHOR": "स्काइटाइम्स",
     "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
@@ -112,13 +110,20 @@
     "GEYSER": "गाइज़र",
     "GRANDMA": "ग्रांडमा",
     "TURTLE": "टर्टल",
-    "DAILY": "डेली रीसेट",
+    "AURORA": "Aurora's Concert",
+    "DREAM-SKATER": "Dream Skater",
+    "PASSAGE-QUESTS": "Passage Quests",
+    "NEST-SUNSET": "Nest Sunset",
+    "FIREWORKS-FESTIVAL": "Aviary Fireworks Festival",
+    "FAIRY-RING": "Fairy Ring",
+    "BROOK-RAINBOW": "Forest Brook Rainbow",
+    "DAILY-RESET": "Daily Reset",
     "EDEN": "ईडन रीसेट",
     "TS_TITLE": "ट्रैवलिंग स्पिरिट",
     "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
     "ACTIVE": "**अभी चल रहा है**: {{DURATION}} में खत्म होगा ({{TIME}} बजे)",
     "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
-    "NEXT": "**अगला:** {{TIME}} बजे ({{DURATION}} में)",
+    "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}",
     "TIMELINE": "टाइमलाइन"
   },
   "reminders": {
@@ -208,7 +213,8 @@
         "NO-SPIRITS": "ईडन में कोई स्पिरिट्स मायजूद नहीं हैं, उन्हें डरावनी जगह पसंद नहीं",
         "REALM-BUTTON-LABEL": "अलग अलग जगहें",
         "INVALID-CHOICE": "गलत चॉइस या फिर इसका गाइड उपलब्ध नही है",
-        "REALM_AREA_SELECT_PLACEHOLDER": "एक जगह चुनें"
+        "REALM_AREA_SELECT_PLACEHOLDER": "एक जगह चुनें",
+        "INVALID_SEASON_VALUE": "Invalid Season! Couldn't find a season with the key `{{VALUE}}`"
       }
     },
     "SPIRITS": {
@@ -563,4 +569,3 @@
     }
   }
 }
-
