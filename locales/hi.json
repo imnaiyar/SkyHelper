@@ -96,10 +96,8 @@
     "BUTTON3": "Shards के बारे में"
   },
   "times-embed": {
-    "COUNTDOWN": "{{TIME}} बजे ({{DURATION}} में)",
     "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
-    "EDEN_RESET": "{{DATE}} को ({{DURATION}} में)",
     "EMBED_TITLE": "इवेंट्स का समय",
     "EMBED_AUTHOR": "स्काइटाइम्स",
     "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
@@ -112,13 +110,20 @@
     "GEYSER": "गाइज़र",
     "GRANDMA": "ग्रांडमा",
     "TURTLE": "टर्टल",
-    "DAILY": "डेली रीसेट",
+    "AURORA": "अरोरा का कॉन्सर्ट",
+    "DREAM-SKATER": "ड्रीम स्केटर",
+    "PASSAGE-QUESTS": "पैसेज क्वेस्ट्स",
+    "NEST-SUNSET": "नेस्ट सूर्यास्त",
+    "FIREWORKS-FESTIVAL": "अवियरी आतिशबाजी महोत्सव",
+    "FAIRY-RING": "फेयरी रिंग",
+    "BROOK-RAINBOW": "फारेस्ट ब्रूक का इंद्रधनुष",
+    "DAILY-RESET": "दैनिक रीसेट",
     "EDEN": "ईडन रीसेट",
     "TS_TITLE": "ट्रैवलिंग स्पिरिट",
     "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
     "ACTIVE": "**अभी चल रहा है**: {{DURATION}} में खत्म होगा ({{TIME}} बजे)",
     "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
-    "NEXT": "**अगला:** {{TIME}} बजे ({{DURATION}} में)",
+    "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}",
     "TIMELINE": "टाइमलाइन"
   },
   "reminders": {
@@ -153,11 +158,11 @@
       "description": "विभिन्न गाइड्स",
       "options": {
         "SEASONAL": {
-          "name": "seasonal",
+          "name": "सीज़नल",
           "description": "विभिन्न seasonal गाइड्स",
           "options": {
             "season": {
-              "name": "season",
+              "name": "सीज़न",
               "description": "एक सीजन गाइड चुनें"
             },
             "type": {
@@ -178,13 +183,13 @@
               "name": "रीयल्म्स",
               "description": "एक स्पिरिट की फ्रेंडशिप ट्री या लोकेश सर्च करें",
               "choices": {
-                "isle": "↪️ Isle of Dawn",
-                "daylight": "↪️ Daylight Prairie",
-                "forest": "↪️ Hidden Forest",
-                "valley": "↪️ Valley of Triumph",
-                "wasteland": "↪️ Golden Wasteland",
-                "vault": "↪️ Vault of Knowledge",
-                "eden": "↪️ Eye of Eden"
+                "isle": "आईल ऑफ डाॅन",
+                "daylight": "डेलाइट प्रेयरी",
+                "forest": "हिडेन फॉरेस्ट",
+                "valley": "वैली ऑफ ट्रायंफ",
+                "wasteland": "गोल्डन वेस्टलैंड",
+                "vault": "वाल्ट ऑफ नावलेडज",
+                "eden": "आई ऑफ ईडन"
               }
             },
             "type": {
@@ -208,7 +213,8 @@
         "NO-SPIRITS": "ईडन में कोई स्पिरिट्स मायजूद नहीं हैं, उन्हें डरावनी जगह पसंद नहीं",
         "REALM-BUTTON-LABEL": "अलग अलग जगहें",
         "INVALID-CHOICE": "गलत चॉइस या फिर इसका गाइड उपलब्ध नही है",
-        "REALM_AREA_SELECT_PLACEHOLDER": "एक जगह चुनें"
+        "REALM_AREA_SELECT_PLACEHOLDER": "एक जगह चुनें",
+        "INVALID_SEASON_VALUE": "अमान्य सीज़न! `{{VALUE}}` कुंजी के साथ कोई सीज़न नहीं मिला"
       }
     },
     "SPIRITS": {
@@ -358,7 +364,7 @@
       }
     },
     "SKYTIMES_LIVE": {
-      "name": "skytimes-live",
+      "name": "स्काईटाइम्स-लाइव",
       "description": "लाइव स्काइटाइम्स के साथ ऑटो update होनें वाली मैसेज",
       "options": {
         "START": {
@@ -421,7 +427,7 @@
       }
     },
     "UTILS": {
-      "name": "utils",
+      "name": "यूटिल्स",
       "description": "यूटिलिटीज",
       "options": {
         "TIMESTAMP": {
@@ -455,7 +461,7 @@
           "description": "बोट का चेंजलॉग"
         },
         "BOTINFO": {
-          "name": "botinfo",
+          "name": "बॉट-जानकारी",
           "description": "बोट के कंफीग्र्ड सेटिंग्स और उसके बारे में जानकारी लें"
         },
         "CONTACT-US": {
@@ -563,4 +569,3 @@
     }
   }
 }
-
