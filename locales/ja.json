@@ -110,20 +110,20 @@
     "GEYSER": "間欠泉",
     "GRANDMA": "おばあちゃん",
     "TURTLE": "カメ",
-    "AURORA": "Aurora's Concert",
-    "DREAM-SKATER": "Dream Skater",
+    "AURORA": "オーロラのコンサート",
+    "DREAM-SKATER": "ドリームスケーター",
     "PASSAGE-QUESTS": "Passage Quests",
-    "NEST-SUNSET": "Nest Sunset",
-    "FIREWORKS-FESTIVAL": "Aviary Fireworks Festival",
-    "FAIRY-RING": "Fairy Ring",
-    "BROOK-RAINBOW": "Forest Brook Rainbow",
-    "DAILY-RESET": "Daily Reset",
+    "NEST-SUNSET": "ネストサンセット",
+    "FIREWORKS-FESTIVAL": "鳥小屋花火大会",
+    "FAIRY-RING": "妖精の指輪",
+    "BROOK-RAINBOW": "フォレストブルックレインボー",
+    "DAILY-RESET": "デイリーリセット",
     "EDEN": "エデンリセット",
     "TS_TITLE": "旅する精霊",
     "EVENT_TITLE": "特別イベント（...の日々）",
     "ACTIVE": "**進行中:** {{DURATION}}後に終了（{{TIME}}に）",
     "NEXT-OCC": "次の発生: {{TIME}}",
-    "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}",
+    "NEXT-OCC-IDLE": "次の発生: {{TIME}}",
     "TIMELINE": "タイムライン"
   },
   "reminders": {
@@ -214,7 +214,7 @@
         "REALM-BUTTON-LABEL": "異なるエリア",
         "INVALID-CHOICE": "無効な選択またはガイドがまだ更新されていません",
         "REALM_AREA_SELECT_PLACEHOLDER": "エリアを選択してください。",
-        "INVALID_SEASON_VALUE": "Invalid Season! Couldn't find a season with the key `{{VALUE}}`"
+        "INVALID_SEASON_VALUE": "無効なシーズンです! キー「{{VALUE}}」の季節が見つかりませんでした"
       }
     },
     "SPIRITS": {
