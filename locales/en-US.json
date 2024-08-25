@@ -104,7 +104,7 @@
     "STARTS": "Starts In",
     "ENDS": "Ends In",
     "TS_VISITING": "**Currently Visiting:** {{TS_NAME}}\n**Departure:** At {{DATE}} (in {{DURATION}})",
-    "TS_EXPECTED": "{{TS_NAME}}p arriving at {{DATE}} (in {{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
     "TS_UPDATED": "Yet to be updated",
     "TS_UNKNOWN": "Unknown Spirit",
     "GEYSER": "Geyser",
