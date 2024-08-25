@@ -31,12 +31,12 @@ jobs:
       - name: Check if 'locales' folder was changed
         id: locales_changed
         run: |
-          git diff --quiet HEAD~1 HEAD -- locales/ || echo "locales-changed=true" >> $GITHUB_ENV
+          git diff HEAD^ HEAD --quiet -- locales/ || echo "locales-changed=true" >> $GITHUB_ENV
 
       - name: Check if 'spirits-datas' folder was changed
         id: spirits_changed
         run: |
-          git diff --quiet HEAD~1 HEAD -- src/bot/libs/constants/spirits-datas/ || echo "spirits-changed=true" >> $GITHUB_ENV
+          git diff HEAD^ HEAD --quiet -- src/bot/libs/constants/spirits-datas/ || echo "spirits-changed=true" >> $GITHUB_ENV
 
       - name: Copy updated 'locales' folder if changed
         if: env.locales-changed == 'true'

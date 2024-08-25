@@ -105,7 +105,7 @@ const data: Record<string, SpiritsData> = {
     ],
   },
   light_scholar: {
-    name: "Sushing Light Scholar",
+    name: "Shushing Light Scholar",
     image:
       "https://static.wikia.nocookie.net/sky-children-of-the-light/images/a/a0/Lightseekers-Spirit-Shushing-Light-Scholar.png",
     type: "Seasonal Spirit",
