@@ -1,4 +1,5 @@
 import type { langKeys } from "#bot/i18n";
+import { supportedLang } from "#bot/libs/constants/supportedLang";
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -37,7 +38,10 @@ const allowed_langs = [
 ];
 
 const files = fs.readdirSync("locales");
-const languages = files.filter((f) => allowed_langs.includes(f.replace(".json", "")));
+// Only include allowed and supported langs
+const languages = files
+  .filter((f) => allowed_langs.includes(f.replace(".json", "")))
+  .filter((f) => supportedLang.some((l) => l.value === f.replace(".json", "")));
 const datas: Record<string, any> = {};
 for (const lg of languages) {
   const { default: translations } = await import(pathToFileURL(path.resolve("locales", lg)).href, { assert: { type: "json" } });
