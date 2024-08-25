@@ -1,4 +1,5 @@
-import { RegularSpiritData, SeasonalSpiritData, seasonsData, type SpiritsData } from "#libs";
+import { seasonsData } from "#libs";
+import type { SpiritsData, SeasonalSpiritData, RegularSpiritData } from "#libs/constants/spirits-datas/type";
 import type { SkyHelper } from "#structures";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, time } from "discord.js";
 import config from "#bot/config";

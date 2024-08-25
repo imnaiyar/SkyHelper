@@ -1,4 +1,4 @@
-import { SpiritsData } from "#bot/libs/types";
+import type { SpiritsData } from "../type.d.ts";
 import { readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "url";

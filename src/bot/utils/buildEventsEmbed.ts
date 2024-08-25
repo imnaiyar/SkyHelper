@@ -1,4 +1,4 @@
-import type { SpiritsData } from "#libs/types";
+import type { SpiritsData } from "../libs/constants/spirits-datas/type.d.ts";
 import type { SkyHelper } from "#structures";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder, time } from "discord.js";
 import getEvent from "#handlers/getSpecialEvent";
