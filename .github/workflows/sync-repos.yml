@@ -1,4 +1,4 @@
-name: Sync translations to skyhelper-jobs repo
+name: Sync repo to skyhelper-jobs repo (locales and spirits data)
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "locales/**"
+      - "src/bot/libs/constants/spirits-datas/**"
 
 jobs:
   sync:
@@ -27,9 +28,25 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Copy updated folder to target repo
+      - name: Check if 'locales' folder was changed
+        id: locales_changed
+        run: |
+          git diff --quiet HEAD~1 HEAD -- locales/ || echo "locales-changed=true" >> $GITHUB_ENV
+
+      - name: Check if 'spirits-datas' folder was changed
+        id: spirits_changed
+        run: |
+          git diff --quiet HEAD~1 HEAD -- src/bot/libs/constants/spirits-datas/ || echo "spirits-changed=true" >> $GITHUB_ENV
+
+      - name: Copy updated 'locales' folder if changed
+        if: env.locales-changed == 'true'
         run: |
           rsync -a --delete locales/ skyhelper-jobs/locales/
+
+      - name: Copy updated 'spirits-datas' folder if changed
+        if: env.spirits-changed == 'true'
+        run: |
+          rsync -a --delete src/bot/libs/constants/spirits-datas/ skyhelper-jobs/src/constants/spirits-datas/
 
       - name: Commit and push changes
         run: |

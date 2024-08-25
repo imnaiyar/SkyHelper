@@ -2,7 +2,7 @@ import { Controller, Get, Inject } from "@nestjs/common";
 import { SkyHelper as BotService } from "#structures";
 import type { BotStats, SpiritData } from "../types.js";
 import { parseEmoji } from "discord.js";
-import { SeasonalSpiritData, SpiritsData } from "#bot/libs/types";
+import type { SeasonalSpiritData, SpiritsData } from "#libs/constants/spirits-datas/type";
 function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
   return "ts" in data;
 }

@@ -1,7 +1,8 @@
 import { getTSStatus as getTS } from "#utils";
 import { useTranslations } from "#handlers/useTranslation";
 import { seasonsData, Spirits } from "#libs";
-import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs";
+import { ContextTypes, IntegrationTypes } from "#libs";
+import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 const x = useTranslations;

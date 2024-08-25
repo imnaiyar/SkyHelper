@@ -1,4 +1,4 @@
-import type { SpiritsData } from "#libs/types";
+import type { SpiritsData } from "../type.d.ts";
 
 const data: Record<string, SpiritsData> = {
   applauding_bellmaker: {

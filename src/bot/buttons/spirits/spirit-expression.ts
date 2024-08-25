@@ -1,5 +1,5 @@
 import config from "#bot/config";
-import { SpiritsData } from "#bot/libs/types";
+import { SpiritsData } from "#libs/constants/spirits-datas/type";
 import { Button } from "#structures";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageEditOptions } from "discord.js";
 import type { getTranslator } from "#bot/i18n";

@@ -1,4 +1,4 @@
-import type { SpiritsData } from "#libs/types";
+import type { SpiritsData } from "./type.d.ts";
 import realmsSData from "./base/index.js";
 import seasonalSData from "./seasonal/index.js";
 const spiritsData: Record<string, SpiritsData> = {
