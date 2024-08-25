@@ -1,3 +1,10 @@
+pull_request_title: "chore: New Crowdin Translations"
+pull_request_label:
+  - crowdin
+    translations
+commit_message: "chore: New translations %original_file_name% from Crowdin"
+
 files:
   - source: /locales/en-US.json
     translation: /locales/%two_letters_code%.json
+
