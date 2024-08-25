@@ -1,4 +1,4 @@
-import getTS from "#handlers/getTS";
+import { getTSStatus as getTS } from "#utils";
 import { useTranslations } from "#handlers/useTranslation";
 import { seasonsData, Spirits } from "#libs";
 import { ContextTypes, IntegrationTypes, type SpiritsData } from "#libs";

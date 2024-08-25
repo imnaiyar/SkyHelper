@@ -1,4 +1,4 @@
-import { buildShardEmbed } from "#handlers";
+import { buildShardEmbed } from "#utils";
 import moment from "moment";
 import getSettings from "../utils/getSettings.js";
 import type { TextChannel } from "discord.js";

@@ -1,4 +1,4 @@
-import { dailyQuestEmbed } from "#handlers";
+import { dailyQuestEmbed } from "#utils";
 import { SlashCommand } from "#structures";
 import moment from "moment-timezone";
 import { useTranslations as x } from "#handlers/useTranslation";

@@ -39,7 +39,8 @@
       "#structures": ["src/bot/structures/index.js"],
       "#libs/*": ["src/bot/libs/*.js"],
       "#libs": ["src/bot/libs/index.js"],
-      "#api/*": ["src/api/*.js"]
+      "#api/*": ["src/api/*.js"],
+      "#utils": ["src/bot/utils/index.js"]
     }
   },
   "include": ["src", "dashboard"],

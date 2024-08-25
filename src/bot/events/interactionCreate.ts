@@ -7,14 +7,14 @@ import {
   ButtonStyle,
   type ChatInputCommandInteraction,
   type ContextMenuCommandInteraction,
+  time,
 } from "discord.js";
 import type { ContextMenuCommand, SkyHelper, SlashCommand, Event } from "#structures";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#bot/config";
-import { eventTimes } from "#libs/constants/index";
-import { getTimes } from "#handlers/getDailyEventTimes";
 import type { getTranslator } from "#bot/i18n";
-import { dailyQuestEmbed } from "#handlers";
+import { dailyQuestEmbed } from "#utils";
+import { SkytimesUtils as skyutils } from "skyhelper-utils";
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = (title: string, description: string) => new EmbedBuilder().setTitle(title).setDescription(description);
@@ -240,54 +240,33 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   // Select Menus
   if (interaction.isStringSelectMenu()) {
     if (interaction.customId === "skytimes-details") {
-      const buildEmbed = (data: string, info: { title: string; description: string }, type: string, credit: string) => {
-        return new EmbedBuilder()
-          .setTitle(type + " Times")
-          .setDescription(`${info.description}\n\n${t("times-embed.TIMELINE")}\n` + data + `\n\n© ${credit}`)
-          .setColor("Random");
-      };
-      const fulltimes = eventTimes();
       const value = interaction.values[0];
-      await interaction.update({
-        components: interaction.message.components,
-      });
-      switch (value) {
-        case "geyser":
-          await interaction.followUp({
-            embeds: [
-              buildEmbed(fulltimes.geyser, getTimes(0, t, "geyser"), t("times-embed.GEYSER"), "Clement").setImage(
-                "https://media.discordapp.net/attachments/867638574571323424/1252998364941914243/Visit_Geyser_Clement.png?ex=66744129&is=6672efa9&hm=8d76d1767aca362d23547b1e3beb2b610f58e4fbec24b12af56fdc745f7074e8&",
-              ),
-            ],
-            ephemeral: true,
-          });
-          break;
-        case "grandma":
-          await interaction.followUp({
-            embeds: [
-              buildEmbed(fulltimes.grandma, getTimes(0, t, "grandma"), t("times-embed.GRANDMA"), "Clement").setImage(
-                "https://media.discordapp.net/attachments/867638574571323424/1252998366288416849/Visit_Grandma_Clement.png?ex=6674412a&is=6672efaa&hm=7228b695ec7008204fede2f3d6b4864a06a7cfa25a14ab4d7572957ee940044c&",
-              ),
-            ],
-            ephemeral: true,
-          });
-          break;
-        case "turtle":
-          await interaction.followUp({
-            embeds: [
-              buildEmbed(fulltimes.turtle, getTimes(0, t, "turtle"), t("times-embed.TURTLE"), "Velvet").setImage(
-                "https://media.discordapp.net/attachments/867638574571323424/1252998363205472316/Visit_Turtle_Velvet.jpg?ex=66744129&is=6672efa9&hm=8c189ff8501fc88810606b832addbea8a9a81eb7a7a6b17019ff1ced593e1ae8&",
-              ),
-            ],
-            ephemeral: true,
-          });
-          break;
-        default:
-          await interaction.followUp({
-            content: "Not a valid choice",
-            ephemeral: true,
-          });
+      const { event, allOccurences, status } = skyutils.getEventDetails(value);
+      const embed = new EmbedBuilder().setTitle(event.name + " Times").setFooter({ text: "SkyTimes" });
+      let desc = "";
+      if (status.active) {
+        desc += `${t("times-embed.ACTIVE", {
+          EVENT: event.name,
+          DURATION: status.duration,
+          ACTIVE_TIME: time(status.startTime.unix(), "t"),
+          END_TIME: time(status.endTime.unix(), "t"),
+        })}\n- -# ${t("times-embed.NEXT-OCC-IDLE", {
+          TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+        })}`;
+      } else {
+        desc += t("times-embed.NEXT-OCC", {
+          TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+          DURATION: status.duration,
+        });
       }
+      desc += `\n\n**${t("times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
+
+      if (event.infographic) {
+        desc += `\n\n© ${event.infographic.by}`;
+        embed.setImage(event.infographic.image);
+      }
+      embed.setDescription(desc);
+      return void interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
     if (interaction.customId === "daily_quests_select") {

@@ -1,4 +1,4 @@
-import { buildShardEmbed } from "#handlers";
+import { buildShardEmbed } from "#utils";
 import { useTranslations as x } from "#handlers/useTranslation";
 import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";

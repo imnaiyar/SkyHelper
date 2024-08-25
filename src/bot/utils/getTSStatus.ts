@@ -9,6 +9,10 @@ interface TSValue {
   duration: string;
   value?: string;
 }
+
+/**
+ * Returns TS status
+ */
 export default async (): Promise<TSValue | undefined> => {
   const timezone = "America/Los_Angeles";
   const data = await getTS();

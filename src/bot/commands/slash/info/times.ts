@@ -1,36 +1,12 @@
-import { getTimesEmbed } from "#handlers/getDailyEventTimes";
+import { getTimesEmbed } from "#bot/utils/buildEventsEmbed";
 import { useTranslations as x } from "#handlers/useTranslation";
 import type { SlashCommand } from "#structures";
-import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from "discord.js";
-import "moment-duration-format";
+import { ApplicationCommandOptionType } from "discord.js";
 export default {
   async execute(interaction, t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
 
-    const embed = await getTimesEmbed(client, t, t("common.bot.name"));
-    const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId("skytimes-details")
-        .setPlaceholder(t("commands.SKYTIMES.RESPONSES.SELECT_PLACEHOLDER"))
-        .addOptions([
-          {
-            label: t("times-embed.GEYSER"),
-            value: `geyser`,
-          },
-          {
-            label: t("times-embed.GRANDMA"),
-            value: `grandma`,
-          },
-          {
-            label: t("times-embed.TURTLE"),
-            value: `turtle`,
-          },
-        ]),
-    );
-    const btn = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder().setCustomId("times-refresh").setEmoji("🔃").setStyle(ButtonStyle.Primary),
-    );
-    await interaction.followUp({ embeds: [embed], components: [row, btn], fetchReply: true });
+    await interaction.followUp({ ...(await getTimesEmbed(client, t, t("common.bot.name"))), fetchReply: true });
   },
   data: {
     name: "skytimes",

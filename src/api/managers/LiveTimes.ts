@@ -1,4 +1,4 @@
-import { getTimesEmbed } from "#handlers";
+import { getTimesEmbed } from "#utils";
 import { getTranslator } from "#bot/i18n";
 import type { SkyHelper as BotService } from "#structures";
 import getSettings from "../utils/getSettings.js";
@@ -18,8 +18,7 @@ export class LiveTimes {
     const data = await getSettings(client, guildId);
     if (!data) return null;
     const t = getTranslator(data.language?.value ?? "en-US");
-    const embed = await getTimesEmbed(client, t);
-    const response: WebhookMessageCreateOptions = { embeds: [embed] };
+    const response: WebhookMessageCreateOptions = { ...(await getTimesEmbed(client, t)), components: undefined };
     if (data.autoTimes.webhook.id) {
       const wb = await client.fetchWebhook(data.autoTimes.webhook.id).catch(() => {});
       if (wb) {
