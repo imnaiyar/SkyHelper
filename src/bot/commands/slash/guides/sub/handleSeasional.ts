@@ -3,11 +3,15 @@ import type { SeasonData } from "#libs/constants/seasonsData";
 import * as discordJs from "discord.js";
 import { handleSpirits } from "./handleSpirits.js";
 import moment from "moment";
+import type { getTranslator } from "#bot/i18n";
 
-export async function handleSeasional(interaction: discordJs.ChatInputCommandInteraction) {
+export async function handleSeasional(interaction: discordJs.ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) {
   const value = interaction.options.getString("season")!;
   const type = interaction.options.getString("type")!;
   const season = seasonsData[value as keyof typeof seasonsData];
+  if (!season) {
+    return await interaction.editReply(t("commands.GUIDES.RESPONSES.INVALID_SEASON_VALUE", { VALUE: value }));
+  }
   switch (type) {
     case "quest": {
       await handleQuests(interaction, season);

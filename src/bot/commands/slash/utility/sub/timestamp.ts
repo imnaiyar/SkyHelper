@@ -1,13 +1,17 @@
+import type { getTranslator } from "#bot/i18n";
 import { ChatInputCommandInteraction, EmbedBuilder, type TimestampStylesString, time } from "discord.js";
 import moment from "moment-timezone";
 
-export async function handleTimestamp(interaction: ChatInputCommandInteraction): Promise<void> {
+export async function handleTimestamp(
+  interaction: ChatInputCommandInteraction,
+  t: ReturnType<typeof getTranslator>,
+): Promise<void> {
   const { options } = interaction;
 
   const Time = options.getString("time");
   if (!isTimeStringValid(Time!)) {
     return void (await interaction.reply({
-      content: "Invalid time format. Please provide time in `HH mm ss` format.",
+      content: t("commands.UTILS.RESPONSES.INVALID-FORMAT"),
       ephemeral: true,
     }));
   }
@@ -15,8 +19,7 @@ export async function handleTimestamp(interaction: ChatInputCommandInteraction):
   const timezone = options.getString("timezone") || "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
     return void (await interaction.reply({
-      content:
-        "Invalid timezone. Please provide a correct one. Use the format: `Continent/City`.\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
+      content: t("commands.UTILS.RESPONSES.INVALID-TIMEZONE"),
       ephemeral: true,
     }));
   }
