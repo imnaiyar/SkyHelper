@@ -96,10 +96,8 @@
     "BUTTON3": "シャードについて"
   },
   "times-embed": {
-    "COUNTDOWN": "{{TIME}}（{{DURATION}}後）",
     "FOOTER": "ライブSkyTimes（2分ごとに更新）",
     "EVENT_INACTIVE": "アクティブなイベントなし",
-    "EDEN_RESET": "{{DATE}}（{{DURATION}}後）",
     "EMBED_TITLE": "イベント時間",
     "EMBED_AUTHOR": "SkyTimes",
     "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
@@ -112,13 +110,20 @@
     "GEYSER": "間欠泉",
     "GRANDMA": "おばあちゃん",
     "TURTLE": "カメ",
-    "DAILY": "デイリーリセット",
+    "AURORA": "オーロラのコンサート",
+    "DREAM-SKATER": "ドリームスケーター",
+    "PASSAGE-QUESTS": "Passage Quests",
+    "NEST-SUNSET": "ネストサンセット",
+    "FIREWORKS-FESTIVAL": "鳥小屋花火大会",
+    "FAIRY-RING": "妖精の指輪",
+    "BROOK-RAINBOW": "フォレストブルックレインボー",
+    "DAILY-RESET": "デイリーリセット",
     "EDEN": "エデンリセット",
     "TS_TITLE": "旅する精霊",
     "EVENT_TITLE": "特別イベント（...の日々）",
     "ACTIVE": "**進行中:** {{DURATION}}後に終了（{{TIME}}に）",
     "NEXT-OCC": "次の発生: {{TIME}}",
-    "NEXT": "**次回:** {{TIME}}（{{DURATION}}後）",
+    "NEXT-OCC-IDLE": "次の発生: {{TIME}}",
     "TIMELINE": "タイムライン"
   },
   "reminders": {
@@ -208,7 +213,8 @@
         "NO-SPIRITS": "エデンには精霊がいません。彼らは怖い場所が好きではありません。",
         "REALM-BUTTON-LABEL": "異なるエリア",
         "INVALID-CHOICE": "無効な選択またはガイドがまだ更新されていません",
-        "REALM_AREA_SELECT_PLACEHOLDER": "エリアを選択してください。"
+        "REALM_AREA_SELECT_PLACEHOLDER": "エリアを選択してください。",
+        "INVALID_SEASON_VALUE": "無効なシーズンです! キー「{{VALUE}}」の季節が見つかりませんでした"
       }
     },
     "SPIRITS": {
