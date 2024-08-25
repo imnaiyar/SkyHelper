@@ -8,7 +8,7 @@ export class Flags {
   private content: string;
 
   /** Regex to match flags */
-  private flagRegex: RegExp;
+  private flagRegex: RegExp = /--([^\s]+(?:=[^\s]+)?)/g;
 
   /** Array of flags */
   public flags: string[];
@@ -19,7 +19,6 @@ export class Flags {
    */
   constructor(content: string) {
     this.content = content;
-    this.flagRegex = /--([^\s]+(?:=[^\s]+)?)/g;
     this.flags = this.getFlags();
   }
 
