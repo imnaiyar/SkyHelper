@@ -89,7 +89,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
         { name: `**•** ${t("times-embed.GEYSER")} ${getActive(geyser)}`, value: "\u200B", inline: true },
         { name: `**•** ${t("times-embed.GRANDMA")} ${getActive(grandma)}`, value: "\u200B", inline: true },
         { name: `**•** ${t("times-embed.TURTLE")} ${getActive(turtle)}`, value: "\u200B", inline: true },
-        { name: `**•** ${t("times-embed.DAILY")} ${getActive(reset)}`, value: "\u200B", inline: true },
+        { name: `**•** ${t("times-embed.DAILY-RESET")} ${getActive(reset)}`, value: "\u200B", inline: true },
         { name: `**•** ${t("times-embed.EDEN")} ${getActive(eden)}`, value: "\u200B", inline: true },
         { name: `**•** ${t("reminders.DAILY_QUESTS")} ${getActive(dailies)}`, value: "\u200B", inline: true },
       )

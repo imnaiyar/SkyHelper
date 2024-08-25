@@ -83,8 +83,8 @@ importers:
         specifier: ^10.2.0
         version: 10.3.1
       skyhelper-utils:
-        specifier: ^1.2.10
-        version: 1.2.10
+        specifier: ^1.2.16
+        version: 1.2.16
       table:
         specifier: ^6.8.1
         version: 6.8.2
@@ -499,9 +499,6 @@ packages:
   "@humanwhocodes/object-schema@2.0.3":
     resolution: { integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA== }
     deprecated: Use @eslint/object-schema instead
-
-  "@imnaiyar/utils@1.1.2":
-    resolution: { integrity: sha512-C8CA94DWlt9qrl6/G6XQZrvjCBgoToxIknmvYPVpSxe1aQ/AkW7NxCdV/MMSh9aSddWBY9244PVnwQ63h1yM2Q== }
 
   "@istanbuljs/load-nyc-config@1.1.0":
     resolution: { integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ== }
@@ -3380,8 +3377,8 @@ packages:
   sisteransi@1.0.5:
     resolution: { integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg== }
 
-  skyhelper-utils@1.2.10:
-    resolution: { integrity: sha512-psOeAdC7WoCqZ6pWnh/K0dGPjr6NElME9wNcpUPrV3hmbbctX5a4JCXShiFQyr2uLnA9qCSWM1IrNLRQjlWMjQ== }
+  skyhelper-utils@1.2.16:
+    resolution: { integrity: sha512-Kmq/0FPGwtGgPjHH7I1xn+j3lpL8D3ayBxga9DvJQ3X7hnJzGknFvRUVS9FEPLcic6x2/RPbQ9KRIarlLB1iSg== }
 
   slash@3.0.0:
     resolution: { integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q== }
@@ -3688,10 +3685,6 @@ packages:
   undici@6.13.0:
     resolution: { integrity: sha512-Q2rtqmZWrbP8nePMq7mOJIN98M0fYvSgV89vwl/BQRT4mDOeY2GXZngfGpcBBhtky3woM7G24wZV3Q304Bv6cw== }
     engines: { node: ">=18.0" }
-
-  undici@6.19.2:
-    resolution: { integrity: sha512-JfjKqIauur3Q6biAtHJ564e3bWa8VvT+7cSiOJHFbX4Erv6CLGDpg8z+Fmg/1OI/47RA+GI2QZaF48SSaLvyBA== }
-    engines: { node: ">=18.17" }
 
   unicorn-magic@0.1.0:
     resolution: { integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ== }
@@ -4281,16 +4274,6 @@ snapshots:
   "@humanwhocodes/module-importer@1.0.1": {}
 
   "@humanwhocodes/object-schema@2.0.3": {}
-
-  "@imnaiyar/utils@1.1.2":
-    dependencies:
-      "@napi-rs/canvas": 0.1.53
-      discord.js: 14.15.3
-      moment-timezone: 0.5.45
-      typescript: 5.5.4
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
 
   "@istanbuljs/load-nyc-config@1.1.0":
     dependencies:
@@ -7677,15 +7660,14 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  skyhelper-utils@1.2.10:
+  skyhelper-utils@1.2.16:
     dependencies:
-      "@imnaiyar/utils": 1.1.2
       "@napi-rs/canvas": 0.1.53
       discord.js: 14.15.3
       moment-duration-format: 2.3.2
       moment-timezone: 0.5.45
       typescript: 5.5.4
-      undici: 6.19.2
+      undici: 6.13.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -7997,8 +7979,6 @@ snapshots:
       "@fastify/busboy": 2.1.1
 
   undici@6.13.0: {}
-
-  undici@6.19.2: {}
 
   unicorn-magic@0.1.0: {}
 

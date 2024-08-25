@@ -74,7 +74,7 @@ export const eventData: EventData = {
     occursOn: { weekDays: [7] },
   },
   aurora: {
-    name: "Aurora",
+    name: "Aurora's concert",
     index: 5,
     offset: getMinutes(2),
     duration: 50,

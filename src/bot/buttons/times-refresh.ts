@@ -1,4 +1,4 @@
-import { getTimesEmbed } from "#handlers/getDailyEventTimes";
+import { getTimesEmbed } from "#bot/handlers/buildEventsEmbed";
 import type { Button } from "#structures";
 
 export default {

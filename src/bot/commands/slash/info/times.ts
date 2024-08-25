@@ -1,8 +1,7 @@
-import { getTimesEmbed } from "#handlers/getDailyEventTimes";
+import { getTimesEmbed } from "#bot/handlers/buildEventsEmbed";
 import { useTranslations as x } from "#handlers/useTranslation";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
-import "moment-duration-format";
 export default {
   async execute(interaction, t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });

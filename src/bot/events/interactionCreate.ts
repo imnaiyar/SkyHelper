@@ -12,10 +12,9 @@ import {
 import type { ContextMenuCommand, SkyHelper, SlashCommand, Event } from "#structures";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#bot/config";
-import { eventTimes } from "#utils";
 import type { getTranslator } from "#bot/i18n";
 import { dailyQuestEmbed } from "#handlers";
-import { getEventDetails } from "#bot/utils/getEventOccurences";
+import { SkytimesUtils as skyutils } from "skyhelper-utils";
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = (title: string, description: string) => new EmbedBuilder().setTitle(title).setDescription(description);
@@ -242,15 +241,25 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   if (interaction.isStringSelectMenu()) {
     if (interaction.customId === "skytimes-details") {
       const value = interaction.values[0];
-      const { event, allOccurences, status } = getEventDetails(value);
+      const { event, allOccurences, status } = skyutils.getEventDetails(value);
       const embed = new EmbedBuilder().setTitle(event.name + " Times").setFooter({ text: "SkyTimes" });
       let desc = "";
       if (status.active) {
-        desc += `${event.name} is currently active (at ${time(status.startTime.unix(), "T")}) and will end in ${status.duration} (at ${time(status.endTime.unix(), "T")})`;
+        desc += `${t("times-embed.ACTIVE", {
+          EVENT: event.name,
+          DURATION: status.duration,
+          ACTIVE_TIME: time(status.startTime.unix(), "t"),
+          END_TIME: time(status.endTime.unix(), "t"),
+        })}\n- -# ${t("times-embed.NEXT-OCC-IDLE", {
+          TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+        })}`;
       } else {
-        desc += `Next Occurence: ${time(status.nextTime.unix(), "T")} (in ${status.duration})`;
+        desc += t("times-embed.NEXT-OCC", {
+          TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+          DURATION: status.duration,
+        });
       }
-      desc += `\n\n**Timeline**\n${allOccurences.slice(0, 2000)}`;
+      desc += `\n\n**${t("times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
       embed.setDescription(desc);
       if (event.infographic) embed.setImage(event.infographic);
       return void interaction.reply({ embeds: [embed], ephemeral: true });

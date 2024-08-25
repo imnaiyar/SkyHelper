@@ -5,8 +5,7 @@ import getEvent from "#handlers/getSpecialEvent";
 import "moment-duration-format";
 import { getTS } from "#handlers";
 import type { getTranslator } from "#bot/i18n";
-import { eventOccurrences } from "#bot/utils/getEventOccurences";
-import { eventData } from "#bot/libs/index";
+import { eventData, SkytimesUtils as skyutils } from "skyhelper-utils";
 
 /**
  * Get Times Embed
@@ -22,18 +21,21 @@ export const getTimesEmbed = async (
   text?: string,
 ): Promise<{ embeds: EmbedBuilder[]; components: ActionRowBuilder<StringSelectMenuBuilder | ButtonBuilder>[] }> => {
   const tsData = await getTS();
-  const event = await getEvent();
+  const specialEvent = await getEvent();
+  // Special Events
   const eventDesc =
-    typeof event === "string"
+    typeof specialEvent === "string"
       ? t("times-embed.EVENT_INACTIVE")
       : t("times-embed.EVENT_ACTIVE", {
-          EVENT_NAME: event.name,
-          DATE1: time(event.start.unix(), "F"),
-          DATE2: time(event.end.unix(), "F"),
-          DAYS: event.days,
-          DURATION: event.duration,
-          STARTS_ENDS: event.active ? t("times-embed.ENDS") : t("times-embed.STARTS"),
+          EVENT_NAME: specialEvent.name,
+          DATE1: time(specialEvent.start.unix(), "F"),
+          DATE2: time(specialEvent.end.unix(), "F"),
+          DAYS: specialEvent.days,
+          DURATION: specialEvent.duration,
+          STARTS_ENDS: specialEvent.active ? t("times-embed.ENDS") : t("times-embed.STARTS"),
         });
+
+  // Traveling spirit
   let tsDesc: string;
   if (!tsData) {
     tsDesc = "Unknown!";
@@ -52,21 +54,34 @@ export const getTimesEmbed = async (
     });
     tsDesc = tsData.visiting ? strVisiting : strExpected;
   }
+
+  // Build the Embed
   const embed = new EmbedBuilder()
     .setAuthor({ name: t("times-embed.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
     .setTitle(t("times-embed.EMBED_TITLE"))
     .setColor("Random")
     .addFields(
-      ...eventOccurrences().map(([_k, e]) => {
+      // Add Basic Embeds
+      ...skyutils.allEventDetails().map(([k, { event, status }]) => {
         let desc = "";
-
-        if (e.status.active) {
-          desc += `${e.event.name} is currently active (at ${time(e.status.startTime.unix(), "T")}) and will end in ${e.status.duration} (at ${time(e.status.endTime.unix(), "T")})`;
+        if (status.active) {
+          desc += `${t("times-embed.ACTIVE", {
+            EVENT: event.name,
+            DURATION: status.duration,
+            ACTIVE_TIME: time(status.startTime.unix(), "t"),
+            END_TIME: time(status.endTime.unix(), "t"),
+          })}\n- -# ${t("times-embed.NEXT-OCC-IDLE", {
+            TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+          })}`;
         } else {
-          desc += `Next Occurence: ${time(e.status.nextTime.unix(), "T")} (in ${e.status.duration})`;
+          desc += t("times-embed.NEXT-OCC", {
+            TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+            DURATION: status.duration,
+          });
         }
         return {
-          name: e.event.name,
+          // @ts-ignore
+          name: t(`times-embed.${k.toString().toUpperCase()}`) + (status.active ? " <a:uptime:1228956558113771580>" : ""),
           value: desc,
           inline: true,
         };

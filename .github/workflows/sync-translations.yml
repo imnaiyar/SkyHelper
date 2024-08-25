@@ -1,0 +1,43 @@
+name: Sync translations to skyhelper-jobs repo
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "locales/**"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Clone the target repository
+        run: |
+          git clone https://imnaiyar:${{secrets.PERSONAL_TOKEN}}@github.com/imnaiyar/skyhelper-jobs.git skyhelper-jobs
+          cd skyhelper-jobs
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Copy updated folder to target repo
+        run: |
+          rsync -a --delete locales/ skyhelper-jobs/locales/
+
+      - name: Commit and push changes
+        run: |
+          cd skyhelper-jobs
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Sync changes from source repo"
+            git push
+          else
+            echo "No changes detected"
+          fi
