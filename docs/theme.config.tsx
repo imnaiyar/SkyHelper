@@ -1,7 +1,16 @@
 import { useRouter } from "next/router";
 import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import { Counter } from "./components/counters";
-const BaseUrl = "http://localhost:8080";
+const BaseUrl = "https://docs.skyhelper.xyz";
+import CollapsibleGallery from "./components/CollapsibleGallery";
+import Spoiler from "./components/Spoiler";
+
+/**
+ * Hide command option description that is common for many commands, so we inject it as a jsx element that we can use everywhere
+ * without defining it every time
+ */
+const BASE_HIDE = () => <>hides the response from others (makes it ephemeral, that only you can see)</>;
+
 const config: DocsThemeConfig = {
   logo: (
     <>
@@ -54,6 +63,9 @@ const config: DocsThemeConfig = {
   },
   components: {
     Counter,
+    BASE_HIDE,
+    CollapsibleGallery,
+    Spoiler,
   },
   sidebar: {
     toggleButton: true,
