@@ -1,4 +1,5 @@
-import { Callout } from "nextra/components";
+import { Callout, Cards, Card } from "nextra/components";
+import { RiSlashCommands2, RiTranslate2 } from "react-icons/ri";
 
 <h1 style={{ textAlign: "center" }}>
   <br />
@@ -15,133 +16,36 @@ import { Callout } from "nextra/components";
   SkyHelper
 </h1>
 
-<p style={{ textAlign: "center" }}>A Sky COTL Discord Bot</p>
-<div style={{ textAlign: "center" }}>
-  <img
-    src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"
-    style={{ display: "inline-block", margin: "4px" }}
-  />
-  <br />
-  <img src="https://img.shields.io/github/stars/imnaiyar/SkyHelper" style={{ display: "inline-block", margin: "4px" }} />
-  <img
-    alt="GitHub release (with filter)"
-    src="https://img.shields.io/github/v/release/imnaiyar/SkyHelper"
-    style={{ display: "inline-block", margin: "4px" }}
-  />
-  <img
-    alt="GitHub License"
-    src="https://img.shields.io/github/license/imnaiyar/SkyHelper"
-    style={{ display: "inline-block", margin: "4px" }}
-  />
-  <img
-    alt="GitHub package.json dependency version (subfolder of monorepo)"
-    src="https://img.shields.io/github/package-json/dependency-version/imnaiyar/SkyHelper/discord.js"
-    style={{ display: "inline-block", margin: "4px" }}
-  />
-  <a href="https://github.com/imnaiyar/skyhelper/actions">
-    <img
-      src="https://github.com/imnaiyar/skyhelper/actions/workflows/test.yml/badge.svg"
-      alt="Tests status"
-      style={{ display: "inline-block", margin: "4px" }}
-    />
-  </a>
-  <a href="https://github.com/imnaiyar/skyhelper/actions">
-    <img
-      src="https://github.com/imnaiyar/skyhelper/actions/workflows/check-build.yml/badge.svg"
-      alt="Build status"
-      style={{ display: "inline-block", margin: "4px" }}
-    />
-  </a>
-</div>
-<br />
+# SkyHelper - Your Sky: Children of the Light Companion Bot
 
-<span style={{ textAlign: "center" }}>
-  [Website](https://skyhelper.xyz) • [Dashboard](https://dash.skyhelper.xyz) • [Invite](https://skyhelper.xyz/invite) •
-  [Vote](https://skyhelper.xyz/vote) • [Credits](https://docs.skyhelper.xyz/credits) • [Support
-  Server](https://discord.com/invite/2rjCRKZsBb)
-</span>
+SkyHelper is a feature-rich Discord bot designed to enhance your Sky: Children of the Light experience. This documentation will guide you through everything you need to know to get started and utilize the bot's functionalities.
 
-<br />
+## Features
 
-### Features
+SkyHelper offers a variety of helpful features to streamline your Sky adventures:
 
-- 🌋 Shards
-- 🗓 Shards calendar
-- 🧮 Seasonal currency calculator
-- 🕑 In-game events times and countdowns
-- ⏰️ Reminders (Geyser, Grandma, etc...)
-- 🟢 Live Updates
-- 🈯️ Supports mulitple language ([help us](pages/translating) support more)
-- and much more...
-
-## Building the bot
-
-- Clone this repository by running
-
-```bash copy
-git clone https://github.com/imnaiyar/SkyHelper
-```
-
-- Rename `example.env` to `.env` and fill all the required fields. (We have CLI to streamline this process. Run `npm run setup` and it'll setup the .env file for you)
-- Install the required deps by running `pnpm install --frozen-lock`
-- Run `pnpm build:prod` to build the project
-- Run `pnpm commands:prod` to register the slash commands.
-- Run `pnpm start` to start the project
+- **Shards**: Track and manage your in-game Shards.
+- **Shards Calendar**: Stay updated on upcoming Shards events.
+- **Seasonal Currency Calculator**: Optimize your seasonal currency earnings.
+- **In-game Events**: Get real-time information on event times and countdowns.
+- **Reminders**: Set reminders for Geysers, Grandma visits, and other important in-game activities (requires additional setup).
+- **Live Updates**: Receive notifications for critical in-game updates.
+- **Multilingual Support**: Access features and information in multiple languages ([help us](/pages/translating) expand our language support!).
+- And Much More... SkyHelper is constantly being developed with new features in the pipeline.
 
 <Callout type="info">
-  If you plan to use live updates/Reminders feature, you'll have to also host/run
-  [skyhelper-jobs](https://github.com/imnaiyar/skyhelper-jobs) as cron jobs to send the reminders/updates are hosted on a
-  different process to reduce the load on the main bot. Intructions to set it up is given on the repo's README
+  **Disclaimer**: This bot is not affiliated with Sky: Children of the Light or thatgamecompany. It is a community-developed tool
+  designed to enhance your gameplay experience.
 </Callout>
-## Dashboard
 
-Only backend is hosted with the bot, front-end is a closed-source, unless you can build your own front-end, it's better if you disable it before running the bot
-`src > config.ts`
+These Docs will be further expanded upon in the following sections:
 
-```js
-DASHBOARD: {
-  enabled: false,
-  ...//
-}
-```
+- **Command Usage**: A comprehensive guide on using SkyHelper's various commands.
+- **Example Usage**: Practical examples showcasing how to leverage the bot's features effectively.
+- **Troubleshooting**: Tips and solutions for any issues you might encounter.
 
-### Endpoints
-
-Endpoints available for the dashboards are:-
-
-#### `GET /guilds/{guild}`
-
-Get guild info (`dashboard > types.ts > GuildInfo`)  
-Respond 404 or null if bot hasn't joined the guild
-
-#### `GET /guilds/{guild}/features/{feature}`
-
-Get Feature options (`dashboard > types.ts`)
-Respond 404 if not enabled
-
-#### `PATCH /guilds/{guild}/features/{feature}`
-
-Update feature options
-With custom body (defined in `dashboard > types.ts > Features[K]`)
-Respond updated feature options
-
-#### `POST /guilds/{guild}/features/{feature}`
-
-Enable a feature
-
-#### `DELETE /guilds/{guild}/features/{feature}`
-
-Disable a feature
-
-#### `GET /guilds/{guild}/roles`
-
-Get Roles of the guild
-Responds a list of Role Object (Same as discord documentation)
-
-#### `GET /guilds/{guild}/channels`
-
-Get Channels of the guild
-Responds a list of Guild Channel (Same as discord documentation)
-
-<br />
-<h6 style={{ textAlign: "center" }}>This bot is not affiliated with Sky: Children of the Light or thatgamecompany</h6>
+<Cards>
+  <Card title="Commands" icon={<RiSlashCommands2 />} href="/commands" />
+  <Card title="Translating the bot" icon={<RiTranslate2 />} href="/pages/translating" />
+  <Card title="Credits" href="/pages/credits" />
+</Cards>
