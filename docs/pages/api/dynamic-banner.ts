@@ -53,13 +53,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.font = "bold 100 shortb";
   ctx.fillStyle = "#bababa";
   ctx.textAlign = "left";
-  ctx.fillText(getIndex(mainTitle), 150, height / 3);
+  ctx.fillText(getIndex(mainTitle), 150, height / 3 + 30);
   /** =============== Main Title End ============= */
 
   /** ============ Add Descriptions if present ========= */
   if (description) {
     (ctx.font = "bold 30 open-sans"), (ctx.fillStyle = "#bababa"), (ctx.textAlign = "left");
-    ctx.fillText(getIndex(description), 120, height / 2);
+    ctx.fillText(getIndex(description), 120, height / 2 + 30);
   }
 
   /** =============== Draw A Rectangle Box to display website link ============= */
