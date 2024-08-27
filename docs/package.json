@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/imnaiyar/skyhelper#readme",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.54",
     "next": "^14.1.1",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
