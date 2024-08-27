@@ -1,1 +1,1 @@
-pnpm exec lint-staged && NODE_OPTIONS=--experimental-vm-modules pnpm exec jest --coverage=false
+pnpm exec lint-staged

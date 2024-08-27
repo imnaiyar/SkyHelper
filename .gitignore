@@ -16,3 +16,4 @@ __tests__/**.js
 __tests__/**.map
 # Sentry Config File
 .sentryclirc
+.vercel
