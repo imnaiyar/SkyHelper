@@ -55,9 +55,22 @@ const config: DocsThemeConfig = {
     return (
       <>
         <meta property="og:url" content={url} />
-        <meta property="og:title" content={frontMatter.title || "SkyHelper"} />
+        <meta property="og:title" content={frontMatter.title || "SkyHelper Docs"} />
         <link rel="icon" type="image/png" href="/boticon.svg" />
+
+        <meta property="og:type" content="website" />
         <meta property="og:description" content={frontMatter.description || "SkyHelper Docs"} />
+        <meta property="og:image" content={"/api/dynamic-banner?mainTitle=" + frontMatter.title || "Home" + "&path=" + asPath} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content={BaseUrl.replace(/(https?:\/\/|www\.)/, "")} />
+        <meta property="twitter:url" content={url} />
+        <meta name="twitter:title" content={frontMatter.title || "SkyHelper Docs"} />
+        <meta name="twitter:description" content={frontMatter.description || "SkyHelper Docs"} />
+        <meta
+          name="twitter:image"
+          content={"/api/dynamic-banner?" + "mainTitle=" + frontMatter.title || "Home" + "&path=" + asPath}
+        />
       </>
     );
   },
