@@ -4,7 +4,7 @@ import path from "node:path";
 
 const getIndex = (param: string | string[]) => (Array.isArray(param) ? param[0] : param);
 
-GlobalFonts.registerFromPath(path.join(process.cwd(), "public/ari.ttf"), "ariz2");
+GlobalFonts.registerFromPath(path.join(process.cwd(), "public/OpenSans-BoldItalic.ttf"), "open-sans");
 GlobalFonts.registerFromPath(path.join(process.cwd(), "public/ShortBaby-Mg2w.ttf"), "shortb");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -58,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   /** ============ Add Descriptions if present ========= */
   if (description) {
-    (ctx.font = "bold 30 shortb"), (ctx.fillStyle = "#bababa"), (ctx.textAlign = "left");
+    (ctx.font = "bold 30 open-sans"), (ctx.fillStyle = "#bababa"), (ctx.textAlign = "left");
     ctx.fillText(getIndex(description), 120, height / 2);
   }
 
@@ -88,7 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.fill();
 
   // Draw the website link text
-  ctx.font = "bold 25 ariz2";
+  ctx.font = "bold 25 open-sans";
   ctx.fillStyle = "#fff"; // White text
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
@@ -97,7 +97,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   /** =============== DBox End ============= */
 
   /** =============== Draw Page Path at bottom Lefft  ============= */
-  ctx.font = "bold 25 ariz2";
+  ctx.font = "bold 25 open-sans";
   ctx.fillStyle = "#fff";
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
