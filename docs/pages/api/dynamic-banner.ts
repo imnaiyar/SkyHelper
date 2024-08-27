@@ -1,6 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
+import path from "node:path";
+
 const getIndex = (param: string | string[]) => (Array.isArray(param) ? param[0] : param);
+
+GlobalFonts.registerFromPath(path.join(process.cwd(), "public/Arial.ttf"), "arial");
+GlobalFonts.registerFromPath(path.join(process.cwd(), "public/ShortBaby-Mg2w.ttf"), "shortb");
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { mainTitle = "Home", websiteName = "SkyHelper Docs", website = "docs.skyhelper.xyz", path = "/" } = req.query;
 
@@ -17,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   /** =============== Canvas Draw End ============= */
 
   /** =============== Draw Website Title ============= */
-  ctx.font = "bold 30 Arial";
+  ctx.font = "bold 30 shortb";
   ctx.fillStyle = "#bababa";
   ctx.textBaseline = "middle";
   const textX = 150;
@@ -38,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   /** =============== Logo End ============= */
 
   /** =============== Draw the main page title Text  ============= */
-  ctx.font = "bold 90 Arial";
+  ctx.font = "bold 100 shortb";
   ctx.fillStyle = "#bababa";
   ctx.textAlign = "left";
   ctx.fillText(getIndex(mainTitle), 150, height / 3);
@@ -70,7 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.fill();
 
   // Draw the website link text
-  ctx.font = "bold 25 Arial";
+  ctx.font = "bold 25 arial";
   ctx.fillStyle = "#fff"; // White text
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
@@ -79,7 +85,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   /** =============== DBox End ============= */
 
   /** =============== Draw Page Path at bottom Lefft  ============= */
-  ctx.font = "bold 25 Arial";
+  ctx.font = "bold 25 arial";
   ctx.fillStyle = "#fff";
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
