@@ -8,7 +8,13 @@ GlobalFonts.registerFromPath(path.join(process.cwd(), "public/Arial.ttf"), "aria
 GlobalFonts.registerFromPath(path.join(process.cwd(), "public/ShortBaby-Mg2w.ttf"), "shortb");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { mainTitle = "Home", websiteName = "SkyHelper Docs", website = "docs.skyhelper.xyz", path = "/" } = req.query;
+  const {
+    mainTitle = "Home",
+    websiteName = "SkyHelper Docs",
+    website = "docs.skyhelper.xyz",
+    path = "/",
+    description,
+  } = req.query;
 
   const width = 1200;
   const height = 630;
@@ -49,6 +55,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.textAlign = "left";
   ctx.fillText(getIndex(mainTitle), 150, height / 3);
   /** =============== Main Title End ============= */
+
+  /** ============ Add Descriptions if present ========= */
+  if (description) {
+    (ctx.font = "bold 30 shortb"), (ctx.fillStyle = "#bababa"), (ctx.textAlign = "left");
+    ctx.fillText(getIndex(description), 120, height / 2);
+  }
 
   /** =============== Draw A Rectangle Box to display website link ============= */
   const boxPadding = 60;

@@ -51,7 +51,6 @@ const config: DocsThemeConfig = {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
     const url = BaseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
-
     return (
       <>
         <meta property="og:url" content={url} />
@@ -60,7 +59,17 @@ const config: DocsThemeConfig = {
 
         <meta property="og:type" content="website" />
         <meta property="og:description" content={frontMatter.description || "SkyHelper Docs"} />
-        <meta property="og:image" content={"/api/dynamic-banner?mainTitle=" + frontMatter.title || "Home" + "&path=" + asPath} />
+        <meta
+          property="og:image"
+          content={
+            "/api/dynamic-banner?" +
+            "mainTitle=" +
+            (frontMatter.title || "Home") +
+            "&path=" +
+            asPath +
+            (frontMatter.description ? `&description=${frontMatter.description}` : "")
+          }
+        />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content={BaseUrl.replace(/(https?:\/\/|www\.)/, "")} />
@@ -69,7 +78,14 @@ const config: DocsThemeConfig = {
         <meta name="twitter:description" content={frontMatter.description || "SkyHelper Docs"} />
         <meta
           name="twitter:image"
-          content={"/api/dynamic-banner?" + "mainTitle=" + frontMatter.title || "Home" + "&path=" + asPath}
+          content={
+            "/api/dynamic-banner?" +
+            "mainTitle=" +
+            (frontMatter.title || "Home") +
+            "&path=" +
+            asPath +
+            (frontMatter.description ? `&description=${frontMatter.description}` : "")
+          }
         />
       </>
     );
