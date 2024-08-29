@@ -167,4 +167,5 @@ export default {
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },
+  category: "Updates",
 } satisfies SlashCommand;
