@@ -199,4 +199,5 @@ export default {
     integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
     contexts: [0, 1, 2],
   },
+  category: "Utility",
 } satisfies SlashCommand;

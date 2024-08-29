@@ -12,6 +12,9 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
+
+const BASE_DOC_URL = "https://docs.skyhelper.xyz";
+
 export default {
   async execute(interaction, t, client) {
     const command = interaction.options.getString("command");
@@ -215,6 +218,10 @@ function handleCommand(command: ApplicationCommand): EmbedBuilder {
       })
       .join("\n");
   }
+  const local_commands = command.client.commands.find((c) => c.data.name === command.name);
 
+  if (local_commands && local_commands.category) {
+    desc += `\n\n-# You can learn more about this command at our command documentations [here](${BASE_DOC_URL}/commands/${local_commands.category.toLowerCase()}#${command.name})`;
+  }
   return new EmbedBuilder().setTitle(title).setDescription(desc);
 }
