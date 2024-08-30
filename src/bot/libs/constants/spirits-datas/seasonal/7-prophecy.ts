@@ -263,12 +263,12 @@ const data: Record<string, SpiritsData> = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["May 15, 2023 (SV#2)", "February 03, 2022 (#54)"],
+      dates: ["August 29, 2024 (#121)", "May 15, 2023 (SV#2)", "February 03, 2022 (#54)"],
     },
     tree: {
-      by: "Clement",
-      total: "211 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image: "Prophet_of_Earth_Tree_Clement.jpg",
+      by: "alvenoir & io",
+      total: "206 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image: "Earth_Prophet_Price_Tree.png",
     },
     location: {
       by: "Clement",
