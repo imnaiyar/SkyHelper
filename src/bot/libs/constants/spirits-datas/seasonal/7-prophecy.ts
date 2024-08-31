@@ -155,7 +155,7 @@ const data: Record<string, SpiritsData> = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["May 15, 2023 (SV#2)", "May 12, 2022 (#61)"],
+      dates: [["May 15, 2023 (SV#2)", "May 21, 2023"], "May 12, 2022 (#61)"],
     },
     tree: {
       by: "Clement",
@@ -263,7 +263,7 @@ const data: Record<string, SpiritsData> = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["August 29, 2024 (#121)", "May 15, 2023 (SV#2)", "February 03, 2022 (#54)"],
+      dates: ["August 29, 2024 (#121)", ["May 15, 2023 (SV#2)", "May 21, 2023"], "February 03, 2022 (#54)"],
     },
     tree: {
       by: "alvenoir & io",
@@ -392,7 +392,7 @@ const data: Record<string, SpiritsData> = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["May 15, 2023 (SV#2)", "November 10, 2022 (#74)", "August 08, 2021 (#41)"],
+      dates: [["May 15, 2023 (SV#2)", "May 21, 2023"], "November 10, 2022 (#74)", "August 08, 2021 (#41)"],
     },
     tree: {
       by: "Clement",
