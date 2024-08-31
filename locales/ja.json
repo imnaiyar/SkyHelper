@@ -523,7 +523,7 @@
       "name": "デイリークエスト",
       "description": "デイリークエストを取得",
       "RESPONSES": {
-        "NO_DATA": "No data found for today's daily quests. Please try again later.\n\n-# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that.",
+        "NO_DATA": "今日のデイリークエストのデータは見つかりませんでした。後でもう一度試してください。\n\n-# 毎日のリセット後、クエストが更新されるまでに最大 30 分から 1 時間かかる場合があることに注意してください。記載されている期間はあくまで目安であり、場合によってはそれよりも長くかかる場合もあります。",
         "OUTDATED": "このクエストは古くなっています。クエストが更新されるまでお待ちください。",
         "EMBED_AUTHOR": "デイリークエスト",
         "EMBED_DESCRIPTION": "今日のデイリークエスト"
