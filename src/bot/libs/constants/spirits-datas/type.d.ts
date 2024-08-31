@@ -99,7 +99,13 @@ export interface SeasonalSpiritData extends BaseSpiritData {
     eligible: boolean;
     returned: boolean;
     total?: string;
-    dates: string[];
+
+    /**
+     * Should usually be a string in the array indicating their visit dates (end date is then calculated by adding 3 days to it).
+     * It should be array for Special visits with 1st element as their visit date and 2nd their departure.
+     * If an array, only the first element should contain the Special Visit tag (SV#1) as 2nd element is not parsed
+     */
+    dates: (string[] | string)[];
   };
   tree?: {
     by: string;

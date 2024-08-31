@@ -76,15 +76,26 @@ export class Spirits {
             ? `${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${data.ts.dates
                 .map((date) => {
                   let index;
-                  const formatDate = date
+                  // Check if the date is an array or a string
+                  // (it's array for special visits as their stay duration can be longer, 1st elemnt is the visit date and second their departure)
+                  const isArray = Array.isArray(date);
+
+                  // Only first element should have the SV tag (if an array) so use that to get it
+                  const formatDate = (isArray ? date[0] : date)
                     .replace(/\([^)]+\)/g, (match) => {
-                      index = match.trim();
+                      index = match
+                        .trim()
+                        .replaceAll("SV", "[SV](https://sky-children-of-the-light.fandom.com/wiki/Returning_Spirits)");
                       return "";
                     })
                     .trim();
                   const dateM = moment.tz(formatDate, "MMMM DD, YYYY", "America/Los_Angeles").startOf("day");
-                  const dateE = dateM.clone().add(3, "days").endOf("day");
-                  return `- ${time(dateM.toDate(), "D")} - ${time(dateE.toDate(), "D")} ${index}`;
+
+                  // Use the 2nd element in the array as the end date, or add 3 days to the start date
+                  const dateE = isArray
+                    ? moment.tz(date[1], "MMMM DD, YYYY", "America/Los_Angeles").endOf("day")
+                    : dateM.clone().add(3, "days").endOf("day");
+                  return `- ${time(dateM.toDate())} - ${time(dateE.toDate())} ${index}`;
                 })
                 .join("\n")}`
             : `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`,
