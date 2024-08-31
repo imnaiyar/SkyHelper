@@ -62,10 +62,10 @@ export class Spirits {
       .setTitle(`${icon} ${data.name}${data.extra ? ` (${data.extra})` : ""}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`)
       .setDescription(desc)
-      .setAuthor({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE") });
+      .setAuthor({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.AUTHOR") });
     if ("ts" in data && !data.current) {
       embed.addFields({
-        name: "TS Summary",
+        name: this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE"),
         value: !data.ts.eligible
           ? `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
               SEASON:
