@@ -43,7 +43,7 @@ jobs:
           cd jobs
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git commit -m "Sync: '${{env.COMMIT_MSG}}'" -m "Triggered by changes made in this commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+            git commit -m "Sync: $COMMIT_MSG" -m "Triggered by changes made in this commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
             git push
           else
             echo "No changes detected"
