@@ -97,8 +97,8 @@ const data: Record<string, SpiritsData> = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: ["August 01, 2024 (#119)"],
     },
     tree: {
       by: "Clement",

@@ -357,7 +357,7 @@ const data: Record<string, SpiritsData> = {
       eligible: true,
       returned: true,
       total: "3",
-      dates: ["July 01, 2022(#66)", "April 15, 2021(#33)", "February 14, 2020(#2)"],
+      dates: ["May 23, 2024 (#114)", "July 01, 2022(#66)", "April 15, 2021(#33)", "February 14, 2020(#2)"],
     },
     tree: {
       by: "Clement",
