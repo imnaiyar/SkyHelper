@@ -13,14 +13,16 @@ Commands that generally provide information.
 
 **Options**:
 
-- `[date]` - The date to get the shard info for (in format: `DD-MM-YYYY`, e.g., `22-07-2024`).
-- `[hide]` - <BASE_HIDE />
+| Option   | Description                                                                       |
+| -------- | --------------------------------------------------------------------------------- |
+| `[date]` | The date to get the shard info for (in format: `DD-MM-YYYY`, e.g., `22-07-2024`). |
+| `[hide]` | <BASE_HIDE />                                                                     |
 
 Provides information about the shard details for a given date, such as the shard type, location, timeline, and countdown to its occurrences.
 
 <Callout type="info">If you do not provide a date, the current date is used for retrieving shard info.</Callout>
 
-**Usage**:
+**Usage:**
 
 - `/shards` (returns shard info for the current date)
 - `/shards date:22-07-2024 hide:true` (returns shard info for the specified date)
@@ -40,7 +42,9 @@ Provides information about the shard details for a given date, such as the shard
 
 **Options**:
 
-- `[hide]` - <BASE_HIDE />
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
 
 Returns an embed with a calendar overview for shards for the current month. It provides basic details for each shard during the month, such as type, location, and timeline. The embed also includes select menus that allow users to adjust the date, month, and year displayed in the calendar.
 
@@ -49,7 +53,7 @@ Returns an embed with a calendar overview for shards for the current month. It p
   the display limit for select menu options.
 </Callout>
 
-**Usage**:
+**Usage:**
 
 - `/shards-calendar`
 
@@ -64,7 +68,9 @@ Returns an embed with a calendar overview for shards for the current month. It p
 
 **Options**:
 
-- `[hide]` - <BASE_HIDE />
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
 
 Provides the current date's daily quests, rotating candle locations, and seasonal candles (if a season is active), along with guides on completing them.
 
@@ -84,7 +90,7 @@ When they post a guide, the bot captures it, evaluates whether it's worth includ
   available for this command. Typically, there's a grace period of 1-2 hours, but this timeframe is not guaranteed.
 </Callout>
 
-**Usage**:
+**Usage:**
 
 - `/daily-quests`
 
@@ -111,13 +117,15 @@ When they post a guide, the bot captures it, evaluates whether it's worth includ
 
 **Options**:
 
-- `[hide]` - <BASE_HIDE />
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
 
 Provides upcoming occurrence times for various in-game events and their countdowns. Clicking the select menu for supported events will show all their occurrence times (not just the upcoming ones) throughout the day, along with related guides if available.
 
 <Callout type="info">There's also a refresh button to update the times.</Callout>
 
-**Usage**:
+**Usage:**
 
 - `/skytimes hide:true`
 
@@ -135,7 +143,9 @@ Provides upcoming occurrence times for various in-game events and their countdow
 
 **Options**:
 
-- `[hide]` - <BASE_HIDE />
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
 
 Provides the schedule for the upcoming traveling spirit.
 

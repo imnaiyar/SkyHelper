@@ -3,7 +3,7 @@ title: Updates Commands
 description: A comprehensive guide on live updates commands offered by SkyHelper bot
 ---
 
-import { Callout } from "nextra/components";
+import { Callout, Steps } from "nextra/components";
 import { ImFire } from "react-icons/im";
 import { CiWarning } from "react-icons/ci";
 
@@ -27,20 +27,18 @@ Almost all commands under this category are related to features providing live u
 
 **Subcommands**
 
-<br />
-<ul>
-<li>1. `start` - Start a [shards](/commands/informations#shards) live update</li>
+<Steps>
+### `start` - Start a [shards](/commands/informations#shards) live update
 
 **Options**
 
-- `<channel>` - The channel where the live update message should be sent
+| Option      | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `<channel>` | The channel where the live update message should be sent |
 
-  <br />
+### `stop` - Stop a shards live update
 
-<li>2. `stop` - Stop a shards live update</li>
-</ul>
-
-<br />
+</Steps>
 
 Starts a live updating message with shard details. Upon setup, the bot will create a webhook in the selected channel and send a message containing shard info using that webhook. The message will update every 5 minutes with current shard details.
 
@@ -63,20 +61,18 @@ Starts a live updating message with shard details. Upon setup, the bot will crea
 
 **Subcommands**
 
-<br />
-<ul>
-<li>1. `start` - Start a [skytimes](/commands/informations#skytimes) live update</li>
+<Steps>
+### `start` - Start a [skytimes](/commands/informations#skytimes) live update
 
 **Options**
 
-- `<channel>` - The channel where the live update message should be sent
+| Option      | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `<channel>` | The channel where the live update message should be sent |
 
-  <br />
+### `stop` - Stop a skytimes live update
 
-<li>2. `stop` - Stop a skytimes live update</li>
-</ul>
-
-<br />
+</Steps>
 
 Starts a live updating message with skytimes details. Upon setup, the bot will create a webhook in the selected channel and send a message containing skytimes info using that webhook. The message will update every 2 minutes with current skytimes details.
 
@@ -97,7 +93,7 @@ Starts a live updating message with skytimes details. Upon setup, the bot will c
 
 ## `/reminders`
 
-Set up reminders for various in-game events. Currently supported events include: Geyser, Grandma, Turtle, Daily Reset, Daily Quests, Eden/Weekly Resets. Sends a reminder to the chosen channel when a particular event occurs. You can also select a default role or specify roles for individual events to ping.
+Set up reminders for various in-game events. Currently supported events include: `Geyser`, `Grandma`, `Turtle`, `Daily Reset`, `Daily Quests`, `Eden/Weekly Resets`. Sends a reminder to the chosen channel when a particular event occurs. You can also select a default role or specify roles for individual events to ping.
 
 <Callout type="info">
   Currently, reminders for all event types are sent to the one channel chosen during setup. However, future updates may allow
