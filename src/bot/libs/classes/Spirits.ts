@@ -149,4 +149,30 @@ export class Spirits {
   isRegular(data: SpiritsData): data is RegularSpiritData {
     return "ts" in data;
   }
+
+  /**
+   * Returns sorted visit dates in descending order
+   * (Because my lazy ass put it in random order for some spirits)
+   * @param dates Areay of visit datas
+   */
+  private _sortDates(dates: (string | string[])[]) {
+    return dates.sort((a, b) => {
+      const aDate = moment
+        .tz((this.isArray(a) ? a[0] : a).replace(/\([^)]+\)/g, "").trim(), "MMMM DD, YYYY", "America/Los_Angeles")
+        .startOf("day");
+      const bDate = moment
+        .tz((this.isArray(b) ? b[0] : b).replace(/\([^)]+\)/g, "").trim(), "MMMM DD, YYYY", "America/Los_Angeles")
+        .startOf("day");
+      if (aDate.isAfter(bDate)) return 1;
+      else return -1;
+    });
+  }
+
+  /**
+   * Returns if given element is an array or not
+   * @param element
+   */
+  private isArray(element: string | string[]) {
+    return Array.isArray(element);
+  }
 }
