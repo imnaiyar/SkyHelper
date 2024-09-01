@@ -10,12 +10,12 @@ on:
       - "locales/**"
       - "docker-compose.yml"
       - "Dockerfile"
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: self-hosted
     environment: production
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - uses: actions/checkout@v4
       - name: Run Container
