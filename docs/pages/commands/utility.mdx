@@ -3,7 +3,8 @@ title: Utility Commands
 description: A comprehensive guide on utility commands offered by SkyHelper bot
 ---
 
-import { Callout } from "nextra/components";
+import { Callout, Steps } from "nextra/components";
+import { useMDXComponents } from "nextra/mdx";
 
 # Utility Commands
 
@@ -13,9 +14,11 @@ Utility commands to help you along your sky journey.
 
 **Options**:
 
-- `<candles>` - The amount of candles you currently have
-- `<dailies>` - Have you completed today's daily quests?
-- `[season-pass]` - Do you have the season pass?
+| Option          | Description                                      |
+| --------------- | ------------------------------------------------ |
+| `<candles>`     | The amount of candles you currently have         |
+| `<dailies>`     | Have you completed today's daily quests?         |
+| `[season-pass]` | Do you have the season pass? (defaults: `false`) |
 
 Helps you calculate the required candles to finish the season. Depending on the items you have already acquired and your current candle count, it tells you how many days until you finish the season or if it’s not possible.
 
@@ -33,7 +36,9 @@ Helps you calculate the required candles to finish the season. Depending on the 
 
 **Options**:
 
-- `[command]` - Get help for a specific command
+| Option      | Description                     |
+| ----------- | ------------------------------- |
+| `[command]` | Get help for a specific command |
 
 The bot's help menu.
 
@@ -46,51 +51,56 @@ The bot's help menu.
 
 **Subcommands**
 
-<br />
-<ul>
-<li>1. `timestamp` - Gives you a Discord-formatted UNIX timestamp for a given time/date</li>
+<Steps>
+### `timestamp` - Gives you a Discord-formatted UNIX timestamp for a given time/date
 
 **Options**
 
-- `<time>` - The time to convert to UNIX (format: `HH mm ss`, e.g., `04 32 44`)
+| Option       | Description                                                                                   |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| `<time>`     | The time to convert to UNIX (format: `HH mm ss`, e.g., `04 32 44`)                            |
+| `[timezone]` | The timezone to use for conversion (format: `Continent/City`, default: `America/Los_Angeles`) |
+| `[date]`     | The date to convert (format: `DD`)                                                            |
+| `[month]`    | The month to convert (format: `MM`)                                                           |
+| `[year]`     | The year to convert (format: `YYYY`)                                                          |
 
-  <Callout type="info">The format `HH:ss:mm` is not supported because for some reason Discord formats `:xx:` into a custom emoji format (`<:name:id>`) if it matches any emojis accessible to the user. This is a workaround to prevent that.</Callout>
-
-- `[timezone]` - The timezone to use for conversion (format: `Continent/City`, default: `America/Los_Angeles`)
-- `[date]` - The date to convert (format: `DD`)
-- `[month]` - The month to convert (format: `MM`)
-- `[year]` - The year to convert (format: `YYYY`)
+<Callout type="info">The format `HH:ss:mm` is not supported because for some reason Discord formats `:xx:` into a custom emoji format (`<:name:id>`) if it matches any emojis accessible to the user. This is a workaround to prevent that.</Callout>
 
 **Usage**:
 
 - `/utils timestamp time:02 07 44`
 - `/utils timestamp time:04 22 30 timezone:Asia/Kolkata`
 
-<li>2. `changelog` - Shows the bot's changelogs</li>
-<li>3. `botinfo` - General information about the bot and its configurations for users/servers</li>
-<li>4. `contact-us` - Reach out to us for any queries you might have with this command</li>
-</ul>
+### `changelog` - Shows the bot's changelogs
+
+### `botinfo` - General information about the bot and its configurations for users/servers
+
+### `contact-us` - Reach out to us for any queries you might have with this command
+
+</Steps>
 
 ## `/language`
 
 **Subcommands**
 
-<br />
-<ul>
-<li>1. `set` - Set a language for yourself or the server</li>
+<Steps>
+### `set` - Set a language for yourself or the server
 
 **Options**
 
-- `<category>` - The category to set the language for ("Server" | "User")
-- `<language>` - The language to set
+| Option       | Description                                            |
+| ------------ | ------------------------------------------------------ |
+| `<category>` | The category to set the language for (`Server`/`User`) |
+| `<language>` | The language to set                                    |
 
 <Callout type="info">[Help us](/pages/translating) support more languages by translating the bot.</Callout>
-<br />
 
-<li>2. `remove` - Remove a set language</li>
+### `remove` - Remove a set language
 
 **Options**
 
-- `<category>` - The category to remove the language for ("Server" | "User")
+| Option       | Description                                               |
+| ------------ | --------------------------------------------------------- |
+| `<category>` | The category to remove the language for (`Server`/`User`) |
 
-</ul>
+</Steps>

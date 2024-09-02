@@ -29,7 +29,7 @@ describe("spiritsData", () => {
       eligible: true,
       returned: true,
       total: "3",
-      dates: ["May 26, 2022 (#62)", "July 23, 2020 (#14)", "July 03, 2023 (SV#3)"],
+      dates: ["May 26, 2022 (#62)", "July 23, 2020 (#14)", ["July 03, 2023 (SV#3)", "July 16, 2023"]],
     });
     // @ts-ignore
     expect(shaman.tree).toEqual({

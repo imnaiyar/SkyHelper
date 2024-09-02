@@ -7,38 +7,43 @@ on:
     paths:
       - "locales/**"
       - "src/bot/libs/constants/spirits-datas/**"
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source repository
+      - name: Checkout this repo
         uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Checkout jobs repo
+        uses: actions/checkout@v4
+        with:
+          repository: "imnaiyar/skyhelper-jobs"
+          token: ${{secrets.PERSONAL_TOKEN}}
+          path: jobs
 
       - name: Set up Git user
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Clone the target repository
+      - name: Copy folders to the jobs repo
         run: |
-          git clone https://imnaiyar:${{secrets.PERSONAL_TOKEN}}@github.com/imnaiyar/skyhelper-jobs.git skyhelper-jobs
-          cd skyhelper-jobs
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Copy updated folder to target repo
-        run: |
-          rsync -a --delete locales/ skyhelper-jobs/locales/
-          rsync -a --delete src/bot/libs/constants/spirits-datas/ skyhelper-jobs/src/constants/spirits-datas/
+          rsync -a --delete source/locales/ jobs/locales/
+          rsync -a --delete source/src/bot/libs/constants/spirits-datas/ jobs/src/constants/spirits-datas/
 
       - name: Commit and push changes
+        env:
+          COMMIT_MSG: ${{github.event.head_commit.message}}
         run: |
-          cd skyhelper-jobs
+          cd jobs
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git commit -m "Sync changes from source repo '${{github.event.head_commit.message}}'" -m "Triggered by changes made in this commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+            git commit -m "Sync: '$COMMIT_MSG'" -m "Triggered by changes made in this commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
             git push
           else
             echo "No changes detected"

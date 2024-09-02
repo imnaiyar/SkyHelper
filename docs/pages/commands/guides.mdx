@@ -3,7 +3,7 @@ title: Guides Commands
 description: Commands that provide various guides to assist you in Sky
 ---
 
-import { Callout } from "nextra/components";
+import { Callout, Steps } from "nextra/components";
 
 # Guides Commands
 
@@ -16,14 +16,16 @@ This command offers two subcommands to access guides for different categories.
 ### Subcommands
 
 <br />
-<ul>
-<li>1. `seasonal` - Provides guides related to specific seasons.</li>
+<Steps>
+### `seasonal` - Provides guides related to specific seasons.
 
 **Options**:
 
-- `<season>` - The season you want the guide for.
-- `<type>` - The type of guide (e.g., quests, spirits).
-- `[hide]` - <BASE_HIDE />
+| Option     | Description                               |
+| ---------- | ----------------------------------------- |
+| `<season>` | The season you want the guide for.        |
+| `<type>`   | The type of guide (e.g., quests, spirits) |
+| `[hide]`   | <BASE_HIDE />                             |
 
 **Usage**:
 
@@ -41,13 +43,15 @@ This command offers two subcommands to access guides for different categories.
 
 <br />
 
-<li>2. `realms` - Provides guides related to specific realms.</li>
+### `realms` - Provides guides related to specific realms.
 
 **Options**:
 
-- `<realm>` - The realm you want the guide for.
-- `<type>` - The type of guide
-- `[hide]` - <BASE_HIDE />
+| Option    | Description                       |
+| --------- | --------------------------------- |
+| `<realm>` | The realm you want the guide for. |
+| `<type>`  | The type of guide                 |
+| `[hide]`  | <BASE_HIDE />                     |
 
 **Usage**:
 
@@ -63,7 +67,7 @@ This command offers two subcommands to access guides for different categories.
     { src: "/guides/realms-map.png", alt: "Realms Maps", caption: "Realms Maps Guides" },
   ]}
 />
-</ul>
+</Steps>
 
 <Callout type="info">The available options for `type` are: `summary`, `maps`, and `spirits`.</Callout>
 
@@ -75,8 +79,10 @@ Provides detailed guides for specific spirits, including their locations and the
 
 **Options**:
 
-- `<search>` - Search for a spirit guide by name.
-- `[hide]` - <BASE_HIDE />
+| Option     | Description                          |
+| ---------- | ------------------------------------ |
+| `<search>` | - Search for a spirit guide by name. |
+| `[hide]`   | <BASE_HIDE />                        |
 
 **Usage**:
 

@@ -10,7 +10,7 @@ const data: Record<string, SpiritsData> = {
     ts: {
       eligible: true,
       returned: true,
-      dates: ["July 06, 2023 (#91)", "April 14, 2022 (#59)"],
+      dates: ["August 15, 2024 (#120)", "July 06, 2023 (#91)", "April 14, 2022 (#59)"],
     },
     tree: {
       by: "Clement",
