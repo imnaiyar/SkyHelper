@@ -83,8 +83,8 @@ importers:
         specifier: ^10.2.0
         version: 10.3.1
       skyhelper-utils:
-        specifier: ^1.2.20
-        version: 1.2.20
+        specifier: ^1.2.21
+        version: 1.2.21
       table:
         specifier: ^6.8.1
         version: 6.8.2
@@ -3377,8 +3377,8 @@ packages:
   sisteransi@1.0.5:
     resolution: { integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg== }
 
-  skyhelper-utils@1.2.20:
-    resolution: { integrity: sha512-kvcTNx2Bs4mbjtkRBqbLgczPsPstJPwL0QVn+K4x7qp1cYKHiSjKh5PMsU7Yn9ZQ5MIyKXt0fRpNhMvilsj+uQ== }
+  skyhelper-utils@1.2.21:
+    resolution: { integrity: sha512-WrnATb0gIcH3PentG/YguYFd2wIxx8uUq+Nz5HXuWYokwzBz2dRNrHL5rj9P3TY3Hmgl97e2fupnTktxKhTYhA== }
 
   slash@3.0.0:
     resolution: { integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q== }
@@ -7660,7 +7660,7 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  skyhelper-utils@1.2.20:
+  skyhelper-utils@1.2.21:
     dependencies:
       "@napi-rs/canvas": 0.1.53
       discord.js: 14.15.3
