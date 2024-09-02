@@ -132,7 +132,7 @@
     "DAILY_RESET": "Мир Скай только что обновился, и ежедневные квесты были обновлены!",
     "TITLE": "{{TYPE}} Напоминание",
     "DAILY_QUESTS": "Ежедневные Задания",
-    "ERROR": "Это не работает так, как ожидалось",
+    "ERROR": "This is not working as expected!",
     "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})"
   },
   "REALMS": {
