@@ -524,7 +524,7 @@
       "name": "daily-quests",
       "description": "get the daily quests",
       "RESPONSES": {
-        "NO_DATA": "No data found for today's daily quests. Please try again later.\n\n-# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that.",
+        "NO_DATA": "No data found for today's daily quests. Please try again later.\n- -# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
         "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
         "EMBED_AUTHOR": "Daily Quests",
         "EMBED_DESCRIPTION": "Daily quests for today"
