@@ -38,7 +38,7 @@ const CollapsibleGallery = ({ headingText, images }: CollapsibleGalleryOptions) 
         }}
       >
         <div style={styles.galleryContainer}>
-          <Carousel autoPlay width="400px" showThumbs={false}>
+          <Carousel width="400px" showThumbs={false}>
             {images.map((image, index) => (
               <div key={index}>
                 <img src={image.src} alt={image.alt || `Image ${index + 1}`} />
