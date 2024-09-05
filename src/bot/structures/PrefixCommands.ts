@@ -19,7 +19,7 @@ export interface Validation {
   callback(msg: Message): boolean;
 }
 
-export interface Arg {
+export interface PrefixSubcommand {
   trigger: string;
   description: string;
 }
@@ -37,7 +37,10 @@ export type PrefixCommand = {
     /** Args of the command */
     args?: {
       required?: boolean;
-      args: Arg[];
+      /**Mininum args require */
+      minimum?: number;
+
+      subcommand?: PrefixSubcommand[];
     };
 
     /** Flags for the command */

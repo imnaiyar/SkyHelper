@@ -28,8 +28,9 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
     await message.channel.send(t("common.bot.intro"));
     return;
   }
+  const settings = message.inGuild() ? await client.database.getSettings(message.guild) : null;
   // Prefix
-  const prefix = client.config.PREFIX;
+  const prefix = (settings ? settings.prefix || null : null) || client.config.PREFIX;
   if (!message.content.startsWith(prefix)) return;
 
   // Flags
@@ -72,28 +73,36 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   }
 
   // Check if args are valid
-  if (command.data.args && command.data.args.required) {
-    if (args.length === 0) {
-      await message.reply(
-        t("common.errors.MESSAGE_NO_ARGS", {
-          ARGS: command.data.args.args.map((arg) => `\`${arg}\``).join(", "),
-        }),
-      );
-      return;
+  if (command.data.args) {
+    if (command.data.args.minimum) {
+      // prettier-ignore
+      if (args.length < command.data.args.minimum) return void (await message.reply(t("common.errors.MINIMUM_ARGS", { LIMIT: command.data.args.minimum })));
     }
+    if (command.data.args.subcommand) {
+      if (args.length === 0) {
+        await message.reply(
+          t("common.errors.MESSAGE_NO_ARGS", {
+            ARGS: command.data.args.subcommand.map((sub) => `\`${sub}\``).join(", "),
+          }),
+        );
+        return;
+      }
 
-    if (!command.data.args.args.find((arg) => arg.trigger === args[0])) {
-      message.reply({
-        content: t("common.errors.INVALID_ARGS"),
-        embeds: [
-          new EmbedBuilder()
-            .setAuthor({ name: `${command.data.name} Command`, iconURL: client.user.displayAvatarURL() })
-            .setTitle(`${command.data.name} Args`)
-            .setDescription(command.data.args.args.map((arg) => `**${prefix}${arg.trigger}\n ↪ ${arg.description}`).join("\n"))
-            .setColor("Random"),
-        ],
-      });
-      return;
+      if (!command.data.args.subcommand.find((sub) => sub.trigger === args[0])) {
+        message.reply({
+          content: t("common.errors.INVALID_ARGS"),
+          embeds: [
+            new EmbedBuilder()
+              .setAuthor({ name: `${command.data.name} Command`, iconURL: client.user.displayAvatarURL() })
+              .setTitle(`${command.data.name} Args`)
+              .setDescription(
+                command.data.args.subcommand.map((sub) => `**${prefix}${sub.trigger}\n ↪ ${sub.description}`).join("\n"),
+              )
+              .setColor("Random"),
+          ],
+        });
+        return;
+      }
     }
   }
 
