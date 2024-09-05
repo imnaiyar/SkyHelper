@@ -29,6 +29,7 @@
       "EMBED_TITLE": "ERROR",
       "MESSAGE_BOT_NO_PERM": "Hi, It seems you tried to use my command in a channel/server where I don't have {{PERMISSIONS}}. Please ask a server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: {{SERVER}}\n- Channel: {{CHANNEL}}\n- Command Used: `{{COMMAND}}`",
       "MESSAGE_NO_ARGS": "You didn't provide any arguments\n\n**Available Args**: {{ARGS}}!",
+      "MINIMUM_ARGS": "You need to provide minimum `{{LIMIT}}` args for this command",
       "INVALID_ARGS": "Invalid Arguments!",
       "NO_PERMS_USER": "You don't have necessary permission(s) ({{PERMISSIONS}}) to use this command.",
       "NOT_A_SERVER": "Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.",
