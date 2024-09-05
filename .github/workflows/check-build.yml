@@ -29,7 +29,7 @@ jobs:
           version: 9.4.0
 
       - name: Install dependencies
-        run: pnpm install --frozen-locfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build the project
         run: pnpm build:ci
