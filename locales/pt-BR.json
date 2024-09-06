@@ -29,6 +29,7 @@
       "EMBED_TITLE": "ERROR",
       "MESSAGE_BOT_NO_PERM": "Hi, It seems you tried to use my command in a channel/server where I don't have {{PERMISSIONS}}. Please ask a server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: {{SERVER}}\n- Channel: {{CHANNEL}}\n- Command Used: `{{COMMAND}}`",
       "MESSAGE_NO_ARGS": "You didn't provide any arguments\n\n**Available Args**: {{ARGS}}!",
+      "MINIMUM_ARGS": "You need to provide minimum `{{LIMIT}}` args for this command",
       "INVALID_ARGS": "Invalid Arguments!",
       "NO_PERMS_USER": "You don't have necessary permission(s) ({{PERMISSIONS}}) to use this command.",
       "NOT_A_SERVER": "Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.",
@@ -132,7 +133,7 @@
     "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
     "TITLE": "{{TYPE}} Reminder",
     "DAILY_QUESTS": "Daily Quests",
-    "ERROR": "This is not working as expected!",
+    "ERROR": "This is not working as expected",
     "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
   },
   "REALMS": {
@@ -523,7 +524,7 @@
       "name": "daily-quests",
       "description": "get the daily quests",
       "RESPONSES": {
-        "NO_DATA": "No data found for today's daily quests. Please try again later.\n\n-# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that.",
+        "NO_DATA": "No data found for today's daily quests. Please try again later.\n- -# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
         "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
         "EMBED_AUTHOR": "Daily Quests",
         "EMBED_DESCRIPTION": "Daily quests for today"
