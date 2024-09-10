@@ -53,7 +53,7 @@ export default {
             .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
         })
         .setImage("https://cdn.imnaiyar.site/" + spirit.tree!.image);
-      if (spirit.image) embed.setImage(spirit.image);
+      if (spirit.image) embed.setThumbnail(spirit.image);
       const manager = new Spirits(spirit, t, client);
       await interaction.followUp({ embeds: [embed], components: [manager.getButtons()] });
     } else {
