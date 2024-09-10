@@ -5,7 +5,6 @@ interface TSValue {
   name?: string;
   nextVisit: moment.Moment;
   index?: number;
-  spiritImage?: string;
   duration: string;
   value?: string;
 }
@@ -16,7 +15,7 @@ interface TSValue {
 export default async (): Promise<TSValue | undefined> => {
   const timezone = "America/Los_Angeles";
   const data = await getTS();
-  const { name, spiritImage, visitDate, index, value } = data;
+  const { name, visitDate, index, value } = data;
   const now = moment().tz(timezone);
   const lastVisitDate = moment.tz(visitDate, "DD-MM-YYYY", timezone).startOf("day");
   const lastDepartDate = lastVisitDate.clone().add("3", "day").endOf("day");
@@ -39,7 +38,6 @@ export default async (): Promise<TSValue | undefined> => {
       return {
         visiting: false,
         name: name,
-        spiritImage: spiritImage,
         index: index,
         nextVisit: nextVisitDay,
         value: value,
@@ -64,7 +62,6 @@ export default async (): Promise<TSValue | undefined> => {
         name: name,
         nextVisit: nextVisitDay,
         index: index,
-        spiritImage: spiritImage,
         duration: dur,
         value: value,
       };

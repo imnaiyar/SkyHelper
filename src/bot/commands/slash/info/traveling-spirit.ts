@@ -40,7 +40,7 @@ export default {
         client.emojisMap.get("realms")![spirit.realm!]
       } ${spirit.realm}\n**${t("SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`;
       const embed = new EmbedBuilder()
-        .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: ts.spiritImage })
+        .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: spirit.image })
         .setDescription(description)
         .setTitle(emote! + " " + spirit.name + (spirit.extra ? ` (${spirit.extra})` : ""))
         .addFields({
@@ -53,6 +53,7 @@ export default {
             .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
         })
         .setImage("https://cdn.imnaiyar.site/" + spirit.tree!.image);
+      if (spirit.image) embed.setImage(spirit.image);
       const manager = new Spirits(spirit, t, client);
       await interaction.followUp({ embeds: [embed], components: [manager.getButtons()] });
     } else {

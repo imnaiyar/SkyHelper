@@ -17,7 +17,6 @@ export class UpdateController {
     return {
       spirit: data.value,
       visitDate: parseDate(data.visitDate).toISOString(),
-      spiritImage: data.spiritImage,
       index: data.index.toString(),
     };
   }
@@ -30,7 +29,6 @@ export class UpdateController {
     const values = {
       name: spirit.name,
       value: body.spirit,
-      spiritImage: body.spiritImage,
       index: parseInt(body.index),
       visitDate: formatDate(new Date(body.visitDate)),
     };

@@ -6,7 +6,6 @@ const Schema = new mongoose.Schema({
   name: String,
   value: String,
   visitDate: String,
-  spiritImage: String,
   index: Number,
 });
 
@@ -21,7 +20,6 @@ export async function getTS(): Promise<TSData> {
       name: "Sassy Drifter",
       value: "sassy",
       visitData: "11-04-2024",
-      spiritImage: "https://cdn.imnaiyar.site/Sassy_Drifter_Tree.png",
       index: "111",
     });
 
