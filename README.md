@@ -28,7 +28,7 @@
   •
   <a href="https://skyhelper.xyz/vote">Vote</a>
   •
-  <a href="https://docs.skyhelper.xyz/pages/credits">Credits</a>
+  <a href="https://docs.skyhelper.xyz">Docs</a>
   •
   <a href="https://discord.com/invite/2rjCRKZsBb">Support Server</a>
 </p>
