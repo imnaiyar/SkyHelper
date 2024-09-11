@@ -41,7 +41,7 @@
 - ⏰️ Reminders (Geyser, Grandma, etc...)
 - 🟢 Live Updates
 - 🈯️ Supports mulitple language ([help us](https://docs.skyhelper.xyz/pages/translating) support more)
-- and much more...
+- [and much more...](https://docs.skyhelper.xyz/commands)
 
 ## Building the bot
 
