@@ -61,10 +61,23 @@ export class UpdateController {
     await data.save();
     return body;
   }
-  // TODO
+
   @Get("quests")
   async getQuests(): Promise<DailyQuestsSchema> {
     const data = await this.bot.database.getDailyQuests();
     return data;
+  }
+
+  @Patch("quests")
+  async patchQuests(@Req() req: AuthRequest, @Body() body: DailyQuestsSchema): Promise<DailyQuestsSchema> {
+    await this.bot.checkAdmin(req.session);
+    const questSettings = await this.bot.database.getDailyQuests();
+    questSettings.quests = body.quests;
+    questSettings.rotating_candles = body.rotating_candles;
+    questSettings.seasonal_candles = body.seasonal_candles;
+    questSettings.last_message = body.last_message;
+    questSettings.last_updated = body.last_updated;
+    await questSettings.save();
+    return questSettings;
   }
 }
