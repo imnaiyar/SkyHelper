@@ -1,5 +1,4 @@
 import { buildShardEmbed } from "#utils";
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
@@ -162,8 +161,8 @@ export default {
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
-    integration_types: [IntegrationTypes.Guilds],
-    contexts: [ContextTypes.Guild],
+    integration_types: [0],
+    contexts: [0],
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },

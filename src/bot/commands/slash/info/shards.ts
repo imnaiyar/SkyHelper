@@ -1,6 +1,5 @@
 import { buildShardEmbed } from "#utils";
 import { useTranslations as x } from "#handlers/useTranslation";
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
@@ -55,8 +54,8 @@ export default {
         required: false,
       },
     ],
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
   },
   category: "Info",
   cooldown: 30,

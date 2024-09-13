@@ -1,4 +1,4 @@
-import { PrefixCommand } from "#bot/structures/PrefixCommands";
+import type { PrefixCommand } from "#bot/structures/PrefixCommands";
 
 export default {
   data: {

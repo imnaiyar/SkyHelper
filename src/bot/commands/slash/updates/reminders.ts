@@ -1,8 +1,9 @@
-/*
-This code is a mess, when I wrote it, I didn't know what I was doing. Now that I do know what I am doing, I still can't optimize it as I didnt know what I was doing, so I have no idea what I did here. :>
-*/
+/**
+ * This code is a mess, when I wrote it, I didn't know what I was doing. Now that I do know what I am doing, I still can't optimize it as I didnt know what I was doing, so I have no idea what I did here. :>
+ * So this may need full rewrite
+ */
 
-import { ContextTypes, IntegrationTypes, type EventReminder, type GuildSchema } from "#libs";
+import { type EventReminder, type GuildSchema } from "#libs";
 import type { SlashCommand } from "#structures";
 import {
   Webhook,
@@ -19,6 +20,8 @@ import {
   type MessageActionRowComponentBuilder,
   ChannelSelectMenuInteraction,
   TextChannel,
+  ApplicationIntegrationType,
+  InteractionContextType,
 } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 import { getTranslator } from "#bot/i18n";
@@ -39,8 +42,8 @@ export default {
     name_localizations: x("commands.REMINDERS.name"),
     description: "Set up reminders",
     description_localizations: x("commands.REMINDERS.description"),
-    integration_types: [IntegrationTypes.Guilds],
-    contexts: [ContextTypes.Guild],
+    integration_types: [ApplicationIntegrationType.GuildInstall],
+    contexts: [InteractionContextType.Guild],
     botPermissions: ["ManageWebhooks"],
     userPermissions: ["ManageGuild"],
   },

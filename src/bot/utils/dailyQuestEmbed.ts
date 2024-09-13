@@ -1,4 +1,4 @@
-import { DailyQuestsSchema } from "#schemas/dailyQuests";
+import type { DailyQuestsSchema } from "#schemas/dailyQuests";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import moment from "moment-timezone";
 

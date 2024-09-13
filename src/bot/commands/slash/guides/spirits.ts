@@ -1,8 +1,7 @@
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import { Spirits } from "#libs/classes/Spirits";
 import type { SlashCommand } from "#structures";
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   async execute(interaction, t, client) {
@@ -62,8 +61,8 @@ export default {
         required: false,
       },
     ],
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
+    integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+    contexts: [0, 1, 2],
   },
   cooldown: 5,
   category: "Guides",

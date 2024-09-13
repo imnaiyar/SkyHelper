@@ -1,7 +1,6 @@
 import { getTSStatus as getTS } from "#utils";
 import { useTranslations } from "#handlers/useTranslation";
 import { seasonsData, Spirits } from "#libs";
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
@@ -40,7 +39,7 @@ export default {
         client.emojisMap.get("realms")![spirit.realm!]
       } ${spirit.realm}\n**${t("SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`;
       const embed = new EmbedBuilder()
-        .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: ts.spiritImage })
+        .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: spirit.image })
         .setDescription(description)
         .setTitle(emote! + " " + spirit.name + (spirit.extra ? ` (${spirit.extra})` : ""))
         .addFields({
@@ -53,6 +52,7 @@ export default {
             .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
         })
         .setImage("https://cdn.imnaiyar.site/" + spirit.tree!.image);
+      if (spirit.image) embed.setThumbnail(spirit.image);
       const manager = new Spirits(spirit, t, client);
       await interaction.followUp({ embeds: [embed], components: [manager.getButtons()] });
     } else {
@@ -79,8 +79,8 @@ export default {
     name_localizations: x("commands.TRAVELING-SPIRIT.name"),
     description: "get details about current/upcoming TS.",
     description_localizations: x("commands.TRAVELING-SPIRIT.description"),
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
   },
   cooldown: 20,
   category: "Info",

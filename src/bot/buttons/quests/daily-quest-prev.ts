@@ -1,5 +1,5 @@
 import { dailyQuestEmbed } from "#utils";
-import { Button } from "#structures";
+import type { Button } from "#structures";
 import { checkQuestValidity } from "./sub/checkQuestValidit.js";
 
 export default {

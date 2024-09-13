@@ -10,6 +10,7 @@ import { StatsController } from "./controllers/stats.controller.js";
 import { UpdateController } from "./controllers/update.controller.js";
 import { UsersController } from "./controllers/user.controller.js";
 import { GuildMiddleware } from "./middlewares/guild.middleware.js";
+import { UpdateMiddleware } from "./middlewares/update.middleware.js";
 export async function Dashboard(client: SkyHelper) {
   @Module({
     imports: [],
@@ -20,6 +21,7 @@ export async function Dashboard(client: SkyHelper) {
     configure(consumer: MiddlewareConsumer) {
       consumer.apply(AuthMiddleware).forRoutes("guilds", "update");
       consumer.apply(GuildMiddleware).forRoutes("guilds");
+      consumer.apply(UpdateMiddleware).forRoutes("update");
     }
   }
 

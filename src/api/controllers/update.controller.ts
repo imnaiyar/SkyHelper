@@ -3,7 +3,7 @@ import { SkyHelper as BotService } from "#structures";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import type { EventData, TSData } from "../types.js";
 import { formatDate, parseDate } from "../utils/formatDate.js";
-import { DailyQuestsSchema } from "#bot/database/index";
+import type { DailyQuestsSchema } from "#bot/database/index";
 @Controller("/update")
 export class UpdateController {
   // @ts-ignore
@@ -17,7 +17,6 @@ export class UpdateController {
     return {
       spirit: data.value,
       visitDate: parseDate(data.visitDate).toISOString(),
-      spiritImage: data.spiritImage,
       index: data.index.toString(),
     };
   }
@@ -30,7 +29,6 @@ export class UpdateController {
     const values = {
       name: spirit.name,
       value: body.spirit,
-      spiritImage: body.spiritImage,
       index: parseInt(body.index),
       visitDate: formatDate(new Date(body.visitDate)),
     };
@@ -63,10 +61,23 @@ export class UpdateController {
     await data.save();
     return body;
   }
-  // TODO
+
   @Get("quests")
   async getQuests(): Promise<DailyQuestsSchema> {
     const data = await this.bot.database.getDailyQuests();
     return data;
+  }
+
+  @Patch("quests")
+  async patchQuests(@Req() req: AuthRequest, @Body() body: DailyQuestsSchema): Promise<DailyQuestsSchema> {
+    await this.bot.checkAdmin(req.session);
+    const questSettings = await this.bot.database.getDailyQuests();
+    questSettings.quests = body.quests;
+    questSettings.rotating_candles = body.rotating_candles;
+    questSettings.seasonal_candles = body.seasonal_candles;
+    questSettings.last_message = body.last_message;
+    questSettings.last_updated = body.last_updated;
+    await questSettings.save();
+    return questSettings;
   }
 }

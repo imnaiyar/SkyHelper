@@ -1,7 +1,3 @@
-### Progress
-
-[![Crowdin](https://badges.crowdin.net/skyhelper/localized.svg)](https://crowdin.com/project/skyhelper)
-
 <h1 align="center">
   <br>
   <a href="https://github.com/imnaiyar/SkyHelper"><img src="https://skyhelper.xyz/assets/img/boticon.png" height="200" alt="SkyHelper"></a>
@@ -16,6 +12,7 @@
  <img alt="GitHub package.json dependency version (subfolder of monorepo)" src="https://img.shields.io/github/package-json/dependency-version/imnaiyar/SkyHelper/discord.js">
  <a href="https://github.com/imnaiyar/skyhelper/actions"><img src="https://github.com/imnaiyar/skyhelper/actions/workflows/test.yml/badge.svg" alt="Tests status" /></a>
  <a href="https://github.com/imnaiyar/skyhelper/actions"><img src="https://github.com/imnaiyar/skyhelper/actions/workflows/check-build.yml/badge.svg" alt="Build status" /></a>
+ <a href="https://crowdin.com/project/skyhelper"><img src="https://badges.crowdin.net/skyhelper/localized.svg" alt="Localisation" /></a>
  </p>
 <br>
 
@@ -28,7 +25,7 @@
   •
   <a href="https://skyhelper.xyz/vote">Vote</a>
   •
-  <a href="https://docs.skyhelper.xyz/pages/credits">Credits</a>
+  <a href="https://docs.skyhelper.xyz">Docs</a>
   •
   <a href="https://discord.com/invite/2rjCRKZsBb">Support Server</a>
 </p>
@@ -44,7 +41,7 @@
 - ⏰️ Reminders (Geyser, Grandma, etc...)
 - 🟢 Live Updates
 - 🈯️ Supports mulitple language ([help us](https://docs.skyhelper.xyz/pages/translating) support more)
-- and much more...
+- [and much more...](https://docs.skyhelper.xyz/commands)
 
 ## Building the bot
 

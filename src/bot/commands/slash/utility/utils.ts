@@ -1,4 +1,3 @@
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SkyHelper, SlashCommand } from "#structures";
 import os from "node:os";
 import {
@@ -40,8 +39,8 @@ export default {
     name_localizations: x("commands.UTILS.name"),
     description: "Utilities",
     description_localizations: x("commands.UTILS.description"),
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
     options: [
       {
         name: "timestamp",

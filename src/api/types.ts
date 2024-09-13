@@ -66,6 +66,5 @@ export interface EventData {
 export interface TSData {
   spirit: string;
   visitDate: string;
-  spiritImage: string;
   index: string;
 }

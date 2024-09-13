@@ -12,9 +12,6 @@ export interface TSData extends Document {
   /** Date of the visit */
   visitDate: string;
 
-  /** Link to the image of the spirit */
-  spiritImage: string;
-
   /** TS returning Index */
   index: number;
 }

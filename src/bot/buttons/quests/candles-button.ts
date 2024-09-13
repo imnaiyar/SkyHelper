@@ -1,4 +1,4 @@
-import { Button } from "#structures";
+import type { Button } from "#structures";
 import { EmbedBuilder } from "discord.js";
 import { checkQuestValidity } from "./sub/checkQuestValidit.js";
 
