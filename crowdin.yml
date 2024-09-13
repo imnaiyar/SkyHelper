@@ -1,7 +1,15 @@
 pull_request_label:
   - crowdin translations
-pull_request_title: 'chore: New Crowdin Translations'
-commit_message: 'chore: New translations %original_file_name% from Crowdin'
+pull_request_title: "chore: New Crowdin Translations"
+commit_message: "chore: New translations %original_file_name% from Crowdin"
 files:
   - source: /locales/en-US.json
     translation: /locales/%two_letters_code%.json
+    preserve_translations: true
+    export_languages:
+      - ja
+      - hi
+      - ru
+pre_translate:
+  apply_tm: 100
+  apply_mt: false
