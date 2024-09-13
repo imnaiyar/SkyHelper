@@ -3,8 +3,9 @@ import type {
   UserContextMenuCommandInteraction,
   MessageContextMenuCommandInteraction,
   PermissionResolvable,
+  ApplicationIntegrationType,
+  InteractionContextType,
 } from "discord.js";
-import type { IntegrationTypes, ContextTypes } from "#libs";
 import type { SkyHelper } from "#structures/SkyHelper";
 /* eslint-disable */
 
@@ -12,8 +13,8 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
   data: {
     name: string;
     type: T extends "UserContext" ? typeof ApplicationCommandType.User : typeof ApplicationCommandType.Message;
-    integration_types?: IntegrationTypes[];
-    contexts?: ContextTypes[];
+    integration_types?: ApplicationIntegrationType[];
+    contexts?: InteractionContextType[];
     userPermissions?: PermissionResolvable[];
     botPermissions?: PermissionResolvable[];
   };

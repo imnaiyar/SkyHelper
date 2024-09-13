@@ -1,8 +1,8 @@
-import { Button } from "#structures";
+import type { Button } from "#structures";
 import {
   ActionRowBuilder,
-  APIActionRowComponent,
-  APIButtonComponent,
+  type APIActionRowComponent,
+  type APIButtonComponent,
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,

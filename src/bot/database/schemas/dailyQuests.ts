@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import { LimitedCollection } from "discord.js";
-import { DailyQuest } from "#libs";
+import type { DailyQuest } from "#libs";
 export interface DailyQuestsSchema extends Document {
   quests: DailyQuest[];
   last_updated: string;

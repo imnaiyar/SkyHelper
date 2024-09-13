@@ -1,7 +1,6 @@
 import { getTSStatus as getTS } from "#utils";
 import { useTranslations } from "#handlers/useTranslation";
 import { seasonsData, Spirits } from "#libs";
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import type { SlashCommand } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
@@ -80,8 +79,8 @@ export default {
     name_localizations: x("commands.TRAVELING-SPIRIT.name"),
     description: "get details about current/upcoming TS.",
     description_localizations: x("commands.TRAVELING-SPIRIT.description"),
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.PrivateChannels, ContextTypes.Guild, ContextTypes.BotDM],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
   },
   cooldown: 20,
   category: "Info",

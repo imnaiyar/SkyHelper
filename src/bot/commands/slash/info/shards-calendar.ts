@@ -1,4 +1,3 @@
-import { ContextTypes, IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuInteraction, time } from "discord.js";
 import {
@@ -204,8 +203,8 @@ export default {
         required: false,
       },
     ],
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
-    contexts: [ContextTypes.BotDM, ContextTypes.Guild, ContextTypes.PrivateChannels],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
   },
 } satisfies SlashCommand;
 
