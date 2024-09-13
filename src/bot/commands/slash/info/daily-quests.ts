@@ -1,14 +1,14 @@
 import { dailyQuestEmbed } from "#utils";
-import { SlashCommand } from "#structures";
+import type { SlashCommand } from "#structures";
 import moment from "moment-timezone";
 import { useTranslations as x } from "#handlers/useTranslation";
 import {
   ButtonBuilder,
-  APIActionRowComponent,
-  APIButtonComponent,
+  type APIActionRowComponent,
+  type APIButtonComponent,
   ActionRowBuilder,
   StringSelectMenuBuilder,
-  APIStringSelectComponent,
+  type APIStringSelectComponent,
   ApplicationCommandOptionType,
 } from "discord.js";
 export default {

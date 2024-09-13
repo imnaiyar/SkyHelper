@@ -1,6 +1,6 @@
-export * from "#structures/Buttons";
-export * from "#structures/SlashCommands";
-export * from "#structures/PrefixCommands";
+export type * from "./Buttons.d.ts";
+export type * from "./SlashCommands.d.ts";
+export type * from "./PrefixCommands.d.ts";
 export * from "#structures/SkyHelper";
-export * from "#structures/ContextMenuCommands";
-export * from "#structures/Event";
+export type * from "./ContextMenuCommands.d.ts";
+export type * from "./Event.d.ts";

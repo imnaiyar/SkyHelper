@@ -1,4 +1,4 @@
-import { PrefixCommand } from "#structures";
+import type { PrefixCommand } from "#structures";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -66,7 +66,7 @@ export default {
     for (const { annoucement_channel } of data) {
       const channel = client.channels.cache.get(annoucement_channel!);
       if (!channel) continue;
-      if (!channel.isTextBased()) continue;
+      if (!channel.isSendable()) continue;
       await channel.send(text);
     }
     await modalSubmit.editReply({ content: "Announcement sent to all the announcement channels.", components: [] });

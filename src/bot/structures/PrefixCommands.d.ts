@@ -1,11 +1,11 @@
-import type { Message } from "discord.js";
+import type { Message, OmitPartialGroupDMChannel } from "discord.js";
 import type { Permission } from "skyhelper-utils/dist/utils/parsePerms.js";
 import type { Flags } from "#libs";
 import type { SkyHelper } from "#structures";
 /* eslint-disable */
 
 type MessageParams = {
-  message: Message;
+  message: OmitPartialGroupDMChannel<Message>;
   args: string[];
   flags: Flags;
   client: SkyHelper;
@@ -16,7 +16,7 @@ export interface Validation {
   message: string;
 
   /** Callback for the validation */
-  callback(msg: Message): boolean;
+  callback(msg: OmitPartialGroupDMChannel<Message>): boolean;
 }
 
 export interface PrefixSubcommand {

@@ -1,6 +1,5 @@
 import { getTranslator } from "#bot/i18n";
 import { supportedLang } from "#bot/libs/constants/supportedLang";
-import { IntegrationTypes } from "#libs";
 import type { SlashCommand } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
@@ -196,7 +195,7 @@ export default {
         ],
       },
     ],
-    integration_types: [IntegrationTypes.Guilds, IntegrationTypes.Users],
+    integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   category: "Utility",

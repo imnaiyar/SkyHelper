@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Guild, Collection, Snowflake } from "discord.js";
+import { Guild, Collection, type Snowflake } from "discord.js";
 import type { GuildSchema } from "#libs";
 const cache = new Collection<Snowflake, GuildSchema>();
 

@@ -8,6 +8,8 @@ import {
   type ChatInputCommandInteraction,
   type ContextMenuCommandInteraction,
   time,
+  CommandInteraction,
+  ChannelType,
 } from "discord.js";
 import type { ContextMenuCommand, SkyHelper, SlashCommand, Event } from "#structures";
 import { parsePerms, type Permission } from "skyhelper-utils";
@@ -26,6 +28,22 @@ const errorBtn = (label: string, errorId: string) =>
       .setStyle(ButtonStyle.Secondary),
   );
 
+const formatIfUserApp = (int: CommandInteraction) => {
+  // If it's in cached guild and also installed to user, it'll cantain both keys, so use `every` to check if it contains only user install key
+  const isUserApp = Object.keys(int.authorizingIntegrationOwners).every((k) => k === "1");
+  if (!isUserApp) return null;
+  const inGuild = int.inGuild();
+  const inDM = int.channel?.isDMBased();
+  return (
+    "User App " +
+    (inGuild
+      ? `(Guild: \`${int.guildId}\` )`
+      : inDM && int.channel?.type === ChannelType.DM
+        ? `(DM: ${int.channel.recipient?.username || "Unknown"} - \`${int.channel.recipient?.id || "Unknown"}\` | Channel: \`${int.channel.id}\`)`
+        : // TODO: Add owner when djs merges my pr
+          `(GroupDM | Owner: | Channel: \`${int.channel?.id || "Unknown"}\`)`)
+  );
+};
 const interactionHandler: Event<"interactionCreate"> = async (client, interaction): Promise<void> => {
   // Translator
   const t = await interaction.t();
@@ -43,7 +61,6 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
 
     const isChecked = await validateCommand(command, interaction, t);
     if (!isChecked) return;
-
     try {
       await command.execute(interaction, t, client);
       const embed = new EmbedBuilder()
@@ -56,22 +73,20 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
           },
           {
             name: `Server`,
-            value: `${
-              interaction.inGuild() ? interaction.guild?.name || "Possibly as an User App" : "In DMs"
-            } \`[${interaction.guild?.id}]\``,
+            value: formatIfUserApp(interaction) ?? `${interaction.guild?.name || "In DMs"} \`[${interaction.guild?.id}]\``,
           },
           {
             name: `Channel`,
-            value: `${
-              interaction.inGuild() ? interaction.channel?.name || "Possibly as an User App" : "In DMs"
-            } \`[${interaction.channel?.id}]\``,
+            value:
+              formatIfUserApp(interaction) ??
+              `${interaction.inGuild() ? interaction.channel?.name : "In DMs"} \`[${interaction.channel?.id}]\``,
           },
         )
         .setColor("Blurple")
         .setTimestamp();
 
       // Slash Commands
-      if (cLogger && !client.config.OWNER.includes(interaction.user.id) && process.env.COMMANDS_USED) {
+      if (cLogger && !config.OWNER.includes(interaction.user.id) && process.env.COMMANDS_USED) {
         cLogger.send({ username: "Command Logs", embeds: [embed] }).catch(() => {});
       }
     } catch (err) {
@@ -102,7 +117,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   if (interaction.isAutocomplete()) {
     const command = client.commands.get(interaction.commandName) as unknown as SlashCommand<true>;
 
-    if (!command) {
+    if (!command || !command.autocomplete) {
       await interaction.respond([
         {
           name: t("common.errors.autoCompleteCOMMAND_NOT_FOUND"),
@@ -112,15 +127,6 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       return;
     }
 
-    if (!command.autocomplete) {
-      await interaction.respond([
-        {
-          name: t("common.errors.autoCompleteCOMMAND_NOT_FOUND"),
-          value: "none",
-        },
-      ]);
-      return;
-    }
     try {
       await command.autocomplete(interaction, client);
     } catch (error) {

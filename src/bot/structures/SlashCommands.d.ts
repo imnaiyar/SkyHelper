@@ -5,7 +5,6 @@ import type {
   RESTPostAPIChatInputApplicationCommandsJSONBody,
 } from "discord.js";
 
-import type { IntegrationTypes, ContextTypes } from "#libs";
 import type { SkyHelper } from "#structures";
 import type { getTranslator } from "#bot/i18n";
 /* eslint-disable */
@@ -15,8 +14,6 @@ export interface SlashCommand<Autocomplete extends boolean = false> {
    * Slash Command API data
    */
   data: RESTPostAPIChatInputApplicationCommandsJSONBody & {
-    integration_types?: IntegrationTypes[];
-    contexts?: ContextTypes[];
     /** User permissions required to use this command */
     userPermissions?: PermissionResolvable[];
 

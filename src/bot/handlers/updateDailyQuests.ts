@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import moment from "moment-timezone";
 import { dailyQuestRemindersSchedules } from "./sendDailyQuestReminder.js";
-import { DailyQuest } from "#bot/libs/types";
+import type { DailyQuest } from "#bot/libs/types";
 
 const titleRegex = /(?:\*\*[^*]*\*\*|[^*])(?<=\*\*)(.*?)(?=\*\*| by)/g;
 const creditRegex = /by @?\w+/g;

@@ -1,4 +1,4 @@
-import { Button } from "#structures";
+import type { Button } from "#structures";
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, parseEmoji, StringSelectMenuBuilder } from "discord.js";
 

@@ -6,6 +6,7 @@ import {
   type Message,
   type ButtonInteraction,
   ComponentType,
+  type OmitPartialGroupDMChannel,
 } from "discord.js";
 import { exec } from "child_process";
 import util from "node:util";
@@ -31,7 +32,7 @@ export default {
   },
 } satisfies PrefixCommand;
 
-async function run(script: string, message: Message) {
+async function run(script: string, message: OmitPartialGroupDMChannel<Message>) {
   try {
     const { stdout } = await util.promisify(exec)(script, {
       maxBuffer: 10 * 1024 * 1024,
