@@ -1,11 +1,11 @@
 import { getTimesEmbed } from "#utils";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
 import { useTranslations as x } from "#handlers/useTranslation";
 import { getTranslator } from "#bot/i18n";
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.inCachedGuild()) {
       return void (await interaction.followUp(t("commands.SHARDS_LIVE.RESPONSES.NOT_GUILD")));
@@ -130,10 +130,10 @@ export default {
       }
     }
   },
-  data: {
-    name: "skytimes-live",
+  name: "skytimes-live",
+  description: "auto updating message with live skytimes details",
+  slash: {
     name_localizations: x("commands.SKYTIMES_LIVE.name"),
-    description: "auto updating message with live skytimes details",
     description_localizations: x("commands.SKYTIMES_LIVE.description"),
     options: [
       {
@@ -164,8 +164,8 @@ export default {
     ],
     integration_types: [0],
     contexts: [0],
-    botPermissions: ["ManageWebhooks"],
-    userPermissions: ["ManageGuild"],
   },
+  botPermissions: ["ManageWebhooks"],
+  userPermissions: ["ManageGuild"],
   category: "Updates",
-} satisfies SlashCommand;
+} satisfies Command;

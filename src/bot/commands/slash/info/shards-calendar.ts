@@ -1,4 +1,4 @@
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuInteraction, time } from "discord.js";
 import {
   type APIEmbedField,
@@ -13,7 +13,7 @@ import { useTranslations as x } from "#handlers/useTranslation";
 export default {
   cooldown: 15,
   category: "Info",
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     const reply = await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false, fetchReply: true });
     const shardsCmd = `</shards:${(await client.getCommand("shards")).id}>`;
     const now = moment().tz(client.timezone);
@@ -188,10 +188,11 @@ export default {
         .catch(() => {});
     });
   },
-  data: {
-    name: "shards-calendar",
+
+  name: "shards-calendar",
+  description: "Show the shards calendar",
+  slash: {
     name_localizations: x("commands.SHARDS_CALENDAR.name"),
-    description: "Show the shards calendar",
     description_localizations: x("commands.SHARDS_CALENDAR.description"),
     options: [
       {
@@ -206,7 +207,7 @@ export default {
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
-} satisfies SlashCommand;
+} satisfies Command;
 
 const getDates = (date: moment.Moment): moment.Moment[] => {
   const month = date.month() + 1;

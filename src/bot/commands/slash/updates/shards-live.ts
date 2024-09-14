@@ -1,11 +1,11 @@
 import { buildShardEmbed } from "#utils";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
 import { getTranslator } from "#bot/i18n";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  async execute(interaction, t) {
+  async interactionRun(interaction, t) {
     const client = interaction.client;
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.guild) {
@@ -129,10 +129,10 @@ export default {
       }
     }
   },
-  data: {
-    name: "shards-live",
+  name: "shards-live",
+  description: "auto updating message with live shards details",
+  slash: {
     name_localizations: x("commands.SHARDS_LIVE.name"),
-    description: "auto updating message with live shards details",
     description_localizations: x("commands.SHARDS_LIVE.description"),
     options: [
       {
@@ -163,8 +163,8 @@ export default {
     ],
     integration_types: [0],
     contexts: [0],
-    botPermissions: ["ManageWebhooks"],
-    userPermissions: ["ManageGuild"],
   },
+  botPermissions: ["ManageWebhooks"],
+  userPermissions: ["ManageGuild"],
   category: "Updates",
-} satisfies SlashCommand;
+} satisfies Command;

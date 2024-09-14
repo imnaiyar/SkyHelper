@@ -4,7 +4,7 @@
  */
 
 import { type EventReminder, type GuildSchema } from "#libs";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import {
   Webhook,
   ChatInputCommandInteraction,
@@ -26,7 +26,7 @@ import {
 import { useTranslations as x } from "#handlers/useTranslation";
 import { getTranslator } from "#bot/i18n";
 export default {
-  async execute(interaction, t) {
+  async interactionRun(interaction, t) {
     if (!interaction.inCachedGuild()) {
       return void (await interaction.reply(t("commands.REMINDERS.RESPONSES.USER_APP_ERROR")));
     }
@@ -37,18 +37,18 @@ export default {
 
     await handleSetup(interaction, t, settings);
   },
-  data: {
-    name: "reminders",
+  name: "reminders",
+  description: "Set up reminders",
+  slash: {
     name_localizations: x("commands.REMINDERS.name"),
-    description: "Set up reminders",
     description_localizations: x("commands.REMINDERS.description"),
     integration_types: [ApplicationIntegrationType.GuildInstall],
     contexts: [InteractionContextType.Guild],
-    botPermissions: ["ManageWebhooks"],
-    userPermissions: ["ManageGuild"],
   },
+  botPermissions: ["ManageWebhooks"],
+  userPermissions: ["ManageGuild"],
   category: "Updates",
-} satisfies SlashCommand;
+} satisfies Command;
 
 async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>, settings: GuildSchema) {
   const client = interaction.client;

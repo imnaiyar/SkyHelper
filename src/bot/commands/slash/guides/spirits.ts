@@ -1,10 +1,10 @@
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import { Spirits } from "#libs/classes/Spirits";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ApplicationCommandOptionType, ApplicationIntegrationType } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false });
     const value = interaction.options.getString("search");
     const data = client.spiritsData[value as keyof typeof client.spiritsData] as SpiritsData;
@@ -37,10 +37,10 @@ export default {
       }));
     await interaction.respond(data.slice(0, 25));
   },
-  data: {
-    name: "spirits",
+  name: "spirits",
+  description: "search for spirits",
+  slash: {
     name_localizations: x("commands.SPIRITS.name"),
-    description: "search for spirits",
     description_localizations: x("commands.SPIRITS.description"),
     options: [
       {
@@ -66,4 +66,4 @@ export default {
   },
   cooldown: 5,
   category: "Guides",
-} satisfies SlashCommand<true>;
+} satisfies Command<true>;

@@ -1,10 +1,10 @@
 import { getTranslator } from "#bot/i18n";
 import { supportedLang } from "#bot/libs/constants/supportedLang";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     const type = interaction.options.getString("category", true);
     const sub = interaction.options.getSubcommand();
     if (type === "server") {
@@ -118,10 +118,10 @@ export default {
       }
     }
   },
-  data: {
-    name: "language",
+  name: "language",
+  description: "manage preferred language for the bot's response",
+  slash: {
     name_localizations: x("commands.LANGUAGE.name"),
-    description: "manage preferred language for the bot's response",
     description_localizations: x("commands.LANGUAGE.description"),
     options: [
       {
@@ -199,4 +199,4 @@ export default {
     contexts: [0, 1, 2],
   },
   category: "Utility",
-} satisfies SlashCommand;
+} satisfies Command;

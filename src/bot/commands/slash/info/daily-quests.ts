@@ -1,5 +1,5 @@
 import { dailyQuestEmbed } from "#utils";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import moment from "moment-timezone";
 import { useTranslations as x } from "#handlers/useTranslation";
 import {
@@ -12,7 +12,7 @@ import {
   ApplicationCommandOptionType,
 } from "discord.js";
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || undefined });
     const data = await client.database.getDailyQuests();
     const now = moment().tz(client.timezone).startOf("day");
@@ -41,10 +41,10 @@ export default {
     });
   },
 
-  data: {
-    name: "daily-quests",
+  name: "daily-quests",
+  description: "Get the daily quests for today",
+  slash: {
     name_localizations: x("commands.DAILY_QUESTS.name"),
-    description: "Get the daily quests for today",
     description_localizations: x("commands.DAILY_QUESTS.description"),
     options: [
       {
@@ -60,4 +60,4 @@ export default {
   },
   category: "Info",
   cooldown: 15,
-} satisfies SlashCommand;
+} satisfies Command;

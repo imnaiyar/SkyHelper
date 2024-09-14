@@ -1,12 +1,12 @@
 import { buildShardEmbed } from "#utils";
 import { useTranslations as x } from "#handlers/useTranslation";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
 import { ShardsUtil } from "skyhelper-utils";
 
 export default {
-  async execute(interaction, t) {
+  async interactionRun(interaction, t) {
     const date = interaction.options.getString("date");
     const hide = interaction.options.getBoolean("hide") || false;
     const regex = /^\d{4,6}-\d{2}-\d{2}$/;
@@ -31,10 +31,10 @@ export default {
     await interaction.deferReply({ ephemeral: hide });
     await interaction.editReply(res);
   },
-  data: {
-    name: "shards",
+  name: "shards",
+  description: "Get the a specific shard information",
+  slash: {
     name_localizations: x("commands.SHARDS.name"),
-    description: "Get the a specific shard information",
     description_localizations: x("commands.SHARDS.description"),
     options: [
       {
@@ -59,4 +59,4 @@ export default {
   },
   category: "Info",
   cooldown: 30,
-} satisfies SlashCommand;
+} satisfies Command;

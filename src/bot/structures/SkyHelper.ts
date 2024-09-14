@@ -11,7 +11,7 @@ import {
   type Webhook,
   type ApplicationCommand,
 } from "discord.js";
-import type { SlashCommand, Button, PrefixCommand, ContextMenuCommand } from "#structures";
+import type { Button, ContextMenuCommand, Command } from "#structures";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { getUserID, type UserSession } from "#api/utils/discord";
 import config from "#bot/config";
@@ -36,10 +36,7 @@ export class SkyHelper extends Client<true> {
   public config = config;
 
   /** Collection of Slash Commands */
-  public commands = new Collection<string, SlashCommand>();
-
-  /** Collection of Prefix Commands */
-  public prefix = new Collection<string, PrefixCommand>();
+  public commands = new Collection<string, Command>();
 
   /** Collection of Context Menu Commands */
   public contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
@@ -163,8 +160,8 @@ export class SkyHelper extends Client<true> {
    * @param dir The command directory
    * TODO: Add validation for commands
    */
-  public async loadSlashCmd(dir: string): Promise<void> {
-    console.log(chalk.blueBright("\n\n<---------------------- Loading Slash -------------------------->\n"));
+  public async loadCommands(dir: string): Promise<void> {
+    console.log(chalk.blueBright("\n\n<-------------------- Loading Commands ------------------------>\n"));
     let added = 0;
     let failed = 0;
     const files = recursiveReadDir(dir, ["sub"]);
@@ -172,22 +169,22 @@ export class SkyHelper extends Client<true> {
       const file = path.basename(filePath);
       try {
         const { default: command } = (await import(pathToFileURL(filePath).href)) as {
-          default: SlashCommand;
+          default: Command;
         };
         if (typeof command !== "object") continue;
-        if (this.commands.has(command.data.name)) throw new Error("The command already exists");
+        if (this.commands.has(command.name)) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
-        this.commands.set(command.data.name, command);
-        this.logger.log(`Loaded ${command.data.name}`, "SLASH");
+        this.commands.set(command.name, command);
+        this.logger.log(`Loaded ${command.name}`, "COMMANDS");
         added++;
       } catch (err) {
         failed++;
-        Logger.error(`loadSlashCmds - ${file}`, err);
+        Logger.error(`loadCommands - ${file}`, err);
       }
     }
 
-    this.logger.log(`Loaded ${added} Slash Commands. Failed ${failed}`, "SLASH");
+    this.logger.log(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
   }
 
   /**
@@ -207,11 +204,11 @@ export class SkyHelper extends Client<true> {
           default: ContextMenuCommand<"MessageContext" | "UserContext">;
         };
         if (typeof command !== "object") continue;
-        if (this.contexts.has(command.data.name + command.data.type.toString())) throw new Error("The command already exists");
+        if (this.contexts.has(command.name + command.data.type.toString())) throw new Error("The command already exists");
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
-        this.contexts.set(command.data.name + command.data.type.toString(), command);
-        this.logger.log(`Loaded ${command.data.name}`, "CONTEXTS");
+        this.contexts.set(command.name + command.data.type.toString(), command);
+        this.logger.log(`Loaded ${command.name}`, "CONTEXTS");
         added++;
       } catch (err) {
         failed++;
@@ -252,52 +249,20 @@ export class SkyHelper extends Client<true> {
   }
 
   /**
-   * Load prefix command on startup
-   * @param dir
-   */
-  public async loadPrefix(dir: string): Promise<void> {
-    console.log(chalk.blueBright("\n\n<---------------------- Loading Prefix ------------------------->\n"));
-    let added = 0;
-    let failed = 0;
-    const files = recursiveReadDir(dir);
-    for (const filePath of files) {
-      const file = path.basename(filePath);
-      try {
-        const { default: command } = (await import(pathToFileURL(filePath).href)) as {
-          default: PrefixCommand;
-        };
-        if (typeof command !== "object") continue;
-        if (this.prefix.has(command.data.name)) throw new Error("The command already exists");
-        this.prefix.set(command.data.name, command);
-        command.data?.aliases?.forEach((al: string) => this.prefix.set(al, command));
-        this.logger.log(`Loaded ${command.data.name}`, "PREFIX");
-        added++;
-      } catch (err) {
-        failed++;
-        Logger.error(`${file}`, err);
-      }
-    }
-
-    this.logger.log(`Loaded ${added} Prefix Commands. Failed ${failed}`, "PREFIX");
-  }
-
-  /**
    * Register Slash Commands
    */
   public async registerCommands(): Promise<void> {
-    const toRegister: SlashCommand["data"] | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
+    const toRegister:
+      | Pick<Command, "name" | "description" | "slash" | "userPermissions">
+      | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
     this.commands
       .filter((cmd) => !cmd.skipDeploy)
       .map((cmd) => ({
-        name: cmd.data.name,
-        description: cmd.data.description,
+        name: cmd.name,
+        description: cmd.description,
         type: 1,
-        name_localizations: cmd.data.name_localizations,
-        description_localizations: cmd.data.description_localizations,
-        options: cmd.data?.options,
-        integration_types: cmd.data.integration_types,
-        ...(cmd.data.userPermissions && {
-          default_member_permissions: cmd.data.userPermissions
+        ...(cmd.userPermissions && {
+          default_member_permissions: cmd.userPermissions
             .reduce(
               (accumulator: bigint, permission) =>
                 accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
@@ -305,18 +270,15 @@ export class SkyHelper extends Client<true> {
             )
             .toString(),
         }),
-        contexts: cmd.data.contexts,
+        ...cmd.slash,
       }))
       .forEach((s) => toRegister.push(s));
 
     this.contexts
       .map((cmd) => ({
-        name: cmd.data.name,
-        type: cmd.data.type,
-        integration_types: cmd.data.integration_types,
-        contexts: cmd.data.contexts,
-        ...(cmd.data.userPermissions && {
-          default_member_permissions: cmd.data.userPermissions
+        name: cmd.name,
+        ...(cmd.userPermissions && {
+          default_member_permissions: cmd.userPermissions
             .reduce(
               (accumulator: bigint, permission) =>
                 accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
@@ -324,6 +286,7 @@ export class SkyHelper extends Client<true> {
             )
             .toString(),
         }),
+        ...cmd.data,
       }))
       .forEach((s) => toRegister.push(s));
     await this.rest.put(Routes.applicationCommands(this.user.id), {

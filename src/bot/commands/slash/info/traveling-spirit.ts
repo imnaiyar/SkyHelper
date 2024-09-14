@@ -2,12 +2,12 @@ import { getTSStatus as getTS } from "#utils";
 import { useTranslations } from "#handlers/useTranslation";
 import { seasonsData, Spirits } from "#libs";
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { EmbedBuilder, time } from "discord.js";
 const x = useTranslations;
 const isSeasonal = (data: SpiritsData) => "ts" in data;
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     const ts = await getTS();
 
     if (!ts) {
@@ -74,14 +74,15 @@ export default {
       await interaction.followUp({ embeds: [embed] });
     }
   },
-  data: {
-    name: "traveling-spirit",
+
+  name: "traveling-spirit",
+  description: "get details about current/upcoming TS.",
+  slash: {
     name_localizations: x("commands.TRAVELING-SPIRIT.name"),
-    description: "get details about current/upcoming TS.",
     description_localizations: x("commands.TRAVELING-SPIRIT.description"),
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   cooldown: 20,
   category: "Info",
-} satisfies SlashCommand;
+} satisfies Command;

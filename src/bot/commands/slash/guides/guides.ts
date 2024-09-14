@@ -1,11 +1,11 @@
 import { seasonsData } from "#libs/index";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { ApplicationCommandOptionType } from "discord.js";
 import { handleSeasional } from "./sub/handleSeasional.js";
 import { handleRealms } from "./sub/handleRealms.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  async execute(interaction, t) {
+  async interactionRun(interaction, t) {
     const sub = interaction.options.getSubcommand();
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
     switch (sub) {
@@ -36,12 +36,12 @@ export default {
       );
     }
   },
+  name: "guides",
+  description: "various guides",
   cooldown: 10,
   category: "Guides",
-  data: {
-    name: "guides",
+  slash: {
     name_localizations: x("commands.GUIDES.name"),
-    description: "various guides",
     description_localizations: x("commands.GUIDES.description"),
     options: [
       {
@@ -194,4 +194,4 @@ export default {
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
-} satisfies SlashCommand<true>;
+} satisfies Command<true>;

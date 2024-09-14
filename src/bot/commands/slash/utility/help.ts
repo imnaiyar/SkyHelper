@@ -1,4 +1,4 @@
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import {
   type APIApplicationCommandBasicOption,
   ActionRowBuilder,
@@ -15,7 +15,7 @@ import { useTranslations as x } from "#handlers/useTranslation";
 const BASE_DOC_URL = "https://docs.skyhelper.xyz";
 
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     const command = interaction.options.getString("command");
     const reply = await interaction.deferReply({
       ephemeral: command ? true : false,
@@ -160,10 +160,10 @@ export default {
       }));
     await interaction.respond(choices);
   },
-  data: {
-    name: "help",
+  name: "help",
+  description: "help menu",
+  slash: {
     name_localizations: x("commands.HELP.name"),
-    description: "help menu",
     description_localizations: x("commands.HELP.description"),
     options: [
       {
@@ -181,7 +181,7 @@ export default {
   },
   category: "Utility",
   cooldown: 10,
-} satisfies SlashCommand<true>;
+} satisfies Command<true>;
 
 function handleCommand(command: ApplicationCommand): EmbedBuilder {
   const name = command.name;

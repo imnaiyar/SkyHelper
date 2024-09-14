@@ -1,10 +1,10 @@
 import { ApplicationCommandOptionType, GuildMember, time } from "discord.js";
-import type { SlashCommand } from "#structures";
+import type { Command } from "#structures";
 import { SeasonCalculator, SeasonData as sn } from "#libs/index";
 import moment from "moment";
 import { useTranslations as x } from "#handlers/useTranslation";
 export default {
-  async execute(interaction, t, client) {
+  async interactionRun(interaction, t, client) {
     // const type = interaction.options.getString("type");
     await interaction.deferReply({
       ephemeral: interaction.options.getBoolean("hide") ?? false,
@@ -40,10 +40,10 @@ export default {
     );
     await calculator.handleInt(interaction);
   },
-  data: {
-    name: "seasonal-calculator",
+  name: "seasonal-calculator",
+  description: "calculate seasonal currencies",
+  slash: {
     name_localizations: x("commands.SEASONAL_CALCULATOR.name"),
-    description: "calculate seasonal currencies",
     description_localizations: x("commands.SEASONAL_CALCULATOR.description"),
     integration_types: [0, 1],
     contexts: [0, 1, 2],
@@ -76,4 +76,4 @@ export default {
   },
   cooldown: 10,
   category: "Utility",
-} satisfies SlashCommand;
+} satisfies Command;
