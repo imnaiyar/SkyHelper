@@ -1,4 +1,4 @@
-import type { PrefixCommand, SkyHelper } from "#structures";
+import type { Command, SkyHelper } from "#structures";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { Type } from "@sapphire/type";
 import { EmbedBuilder, codeBlock } from "discord.js";
@@ -7,16 +7,16 @@ import * as d from "discord.js";
 import { postToHaste } from "skyhelper-utils";
 import util from "node:util";
 export default {
-  data: {
-    name: "eval",
-    description: "Evaluate a JavaScript code",
+  name: "eval",
+  description: "Evaluate a JavaScript code",
+  ownerOnly: true,
+  prefix: {
     flags: ["a", "async", "haste", "depth", "silent", "s"],
-    ownerOnly: true,
     aliases: ["e", "ev"],
-    botPermissions: ["ViewChannel", "SendMessages"],
-    category: "OWNER",
   },
-  async execute({ message, args, flags }) {
+  botPermissions: ["ViewChannel", "SendMessages"],
+  category: "OWNER",
+  async messageRun({ message, args, flags }) {
     /* eslint-disable no-unused-vars */
     /* @ts-ignore */
     const { author, guild, member, channel, client } = message;
@@ -38,7 +38,7 @@ export default {
     if (flags.hasAny(["s", "silent"]) && !errored) return;
     message.channel.send(response);
   },
-} satisfies PrefixCommand;
+} satisfies Command;
 
 // prettier-ignore
 async function buildSuccessResponse(output: any, client: SkyHelper, type: string, time: any, haste: boolean, depth: number, input: any): Promise<{

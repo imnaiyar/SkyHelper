@@ -1,13 +1,14 @@
-import type { PrefixCommand } from "#structures";
+import type { Command } from "#structures";
 import { ButtonBuilder, EmbedBuilder, ActionRowBuilder, ButtonStyle, ComponentType } from "discord.js";
 export default {
-  data: {
-    name: "listserver",
+  name: "listserver",
+  description: "list servers",
+  prefix: {
     aliases: ["ls"],
-    description: "list servers",
-    ownerOnly: true,
+    usage: "[guildId | name]",
   },
-  async execute({ message, args, client }) {
+  ownerOnly: true,
+  async messageRun({ message, args, client }) {
     const { channel, author } = message;
 
     const match = args[0];
@@ -71,12 +72,12 @@ export default {
       }
       embed.addFields(fields);
 
-      const components = [];
-      components.push(
+      const comps = [];
+      comps.push(
         ButtonBuilder.from(buttonsRow.components[0]).setDisabled(currentPage === 1),
         ButtonBuilder.from(buttonsRow.components[1]).setDisabled(currentPage === totalPages),
       );
-      buttonsRow = new ActionRowBuilder<ButtonBuilder>().addComponents(components);
+      buttonsRow = new ActionRowBuilder<ButtonBuilder>().addComponents(comps);
       return embed;
     };
 
@@ -103,9 +104,9 @@ export default {
         case "prevBtn":
           if (currentPage > 1) {
             currentPage--;
-            const embed = await buildEmbed();
+            const emb = await buildEmbed();
             await sentMsg.edit({
-              embeds: [embed],
+              embeds: [emb],
               components: [buttonsRow],
             });
           }
@@ -114,9 +115,9 @@ export default {
         case "nxtBtn":
           if (currentPage < totalPages) {
             currentPage++;
-            const embed = await buildEmbed();
+            const emb = await buildEmbed();
             await sentMsg.edit({
-              embeds: [embed],
+              embeds: [emb],
               components: [buttonsRow],
             });
           }
@@ -128,4 +129,4 @@ export default {
       await sentMsg.edit({ components: [] });
     });
   },
-} satisfies PrefixCommand;
+} satisfies Command;

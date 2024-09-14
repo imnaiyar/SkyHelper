@@ -256,7 +256,7 @@ export class SkyHelper extends Client<true> {
       | Pick<Command, "name" | "description" | "slash" | "userPermissions">
       | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
     this.commands
-      .filter((cmd) => !cmd.skipDeploy)
+      .filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd)
       .map((cmd) => ({
         name: cmd.name,
         description: cmd.description,

@@ -1,4 +1,4 @@
-import type { SkyHelper, SlashCommand } from "#structures";
+import type { SkyHelper, Command } from "#structures";
 import os from "node:os";
 import {
   ActionRowBuilder,
@@ -16,7 +16,7 @@ import { getChangelog, getSuggestion } from "./sub/utility.js";
 import { getTranslator } from "#bot/i18n";
 
 export default {
-  async execute(interaction, t) {
+  async interactionRun(interaction, t) {
     const sub = interaction.options.getSubcommand();
     switch (sub) {
       case "changelog":
@@ -34,10 +34,10 @@ export default {
         await handleTimestamp(interaction, t);
     }
   },
-  data: {
-    name: "utils",
+  name: "utils",
+  description: "Utilities",
+  slash: {
     name_localizations: x("commands.UTILS.name"),
-    description: "Utilities",
     description_localizations: x("commands.UTILS.description"),
     integration_types: [0, 1],
     contexts: [0, 1, 2],
@@ -115,7 +115,7 @@ export default {
     ],
   },
   category: "Utility",
-} satisfies SlashCommand;
+} satisfies Command;
 
 async function handleInfo(
   interaction: ChatInputCommandInteraction,

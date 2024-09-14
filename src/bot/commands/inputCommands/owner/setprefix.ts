@@ -1,16 +1,15 @@
-import type { PrefixCommand } from "#bot/structures/PrefixCommands";
+import type { Command } from "#structures";
 
 export default {
-  data: {
-    name: "setprefix",
-    description: "set the prefix for this server",
+  name: "setprefix",
+  description: "set the prefix for this server",
+  prefix: {
     aliases: ["sp"],
-    args: {
-      minimum: 1,
-    },
-    userPermissions: ["ManageGuild"],
+    minimumArgs: 1,
+    usage: "<prefix>",
   },
-  async execute({ message: msg, args, client }) {
+  userPermissions: ["ManageGuild"],
+  async messageRun({ message: msg, args, client }) {
     if (!msg.inGuild()) return;
     const settings = await client.database.getSettings(msg.guild);
     const prefix = args[0];
@@ -19,4 +18,4 @@ export default {
     await settings.save();
     await msg.reply(`Prefix set to \`${prefix}\` for this server`);
   },
-} satisfies PrefixCommand;
+} satisfies Command;

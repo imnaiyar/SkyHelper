@@ -28,10 +28,9 @@ if (!process.isBun) {
 
 const root = process.isBun ? "src/bot" : "dist/bot";
 await client.loadEvents(root + "/events");
-await client.loadSlashCmd(root + "/commands/slash");
+await client.loadCommands(root + "/commands/inputCommands");
 await client.loadContextCmd(root + "/commands/contexts");
 await client.loadButtons(root + "/buttons");
-await client.loadPrefix(root + "/commands/prefix");
 await initializeMongoose();
 console.log(chalk.blueBright("\n\n<------------------------ Dashboard --------------------------->\n"));
 if (client.config.DASHBOARD.enabled && process.env.NODE_ENV !== "development") Dashboard(client);

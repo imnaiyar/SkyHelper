@@ -8,6 +8,7 @@ import type {
   RESTPostAPIContextMenuApplicationCommandsJSONBody,
 } from "discord.js";
 import type { SkyHelper } from "#structures/SkyHelper";
+import type { Validation } from "./Command.js";
 /* eslint-disable */
 
 export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> {
@@ -18,6 +19,7 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
   userPermissions?: PermissionResolvable[];
   botPermissions?: PermissionResolvable[];
   ownerOnly?: boolean;
+  validations?: Validation[];
   cooldown?: number;
 
   execute(

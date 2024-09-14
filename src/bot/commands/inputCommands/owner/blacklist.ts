@@ -1,17 +1,52 @@
 import Guild from "#schemas/guildBlackList";
-import { EmbedBuilder, type Message, type User } from "discord.js";
+import { EmbedBuilder, Message, type User } from "discord.js";
 import { getUser } from "#schemas/User";
-import type { SkyHelper, PrefixCommand } from "#structures";
+import type { SkyHelper, Command } from "#structures";
 export default {
-  data: {
-    name: "blacklist",
-    description: "blacklist a guild or an user.",
-    category: "OWNER",
-    ownerOnly: true,
+  name: "blacklist",
+  description: "blacklist a guild or an user.",
+  prefix: {
     aliases: ["bl"],
+    minimumArgs: 1,
+    usage: "g <id> Doing some shady stuff",
+    subcommands: [
+      {
+        trigger: "g <id> [reason]",
+        description: "Adds a guild to blacklist",
+      },
+      {
+        trigger: "rmg <id>",
+        description: "Removes a guild from blacklist",
+      },
+      {
+        trigger: "u <id> [reason]",
+        description: "Adds a user to blacklist",
+      },
+      {
+        trigger: "rmu <id>",
+        description: "Removes a user from blacklist",
+      },
+      {
+        trigger: "glist",
+        description: "Lists all blacklisted guilds",
+      },
+    ],
   },
+  validations: [
+    {
+      message: "ID must be provided with this subcommand",
+      callback(msg, messageOptions) {
+        if (!(msg instanceof Message) || !messageOptions?.args) return true;
+        const sub = messageOptions.args[0];
+        if (["g", "rmG", "u", "rmU"].includes(sub) && !messageOptions.args[1]) return false;
+        return true;
+      },
+    },
+  ],
+  category: "OWNER",
+  ownerOnly: true,
 
-  async execute({ message, args, client }) {
+  async messageRun({ message, args, client }) {
     const sub = args[0];
 
     if (args[1] && isNaN(parseInt(args[1]))) {
@@ -43,7 +78,7 @@ export default {
         break;
     }
   },
-} satisfies PrefixCommand;
+} satisfies Command;
 
 async function blacklistGuild(client: SkyHelper, message: Message, ID: string) {
   const guild = client.guilds.cache.get(ID);

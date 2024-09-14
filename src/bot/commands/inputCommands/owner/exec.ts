@@ -10,15 +10,13 @@ import {
 } from "discord.js";
 import { exec } from "child_process";
 import util from "node:util";
-import type { PrefixCommand, SkyHelper } from "#structures";
+import type { Command, SkyHelper } from "#structures";
 export default {
-  data: {
-    name: "run",
-    description: "runs commands on the console",
-    category: "OWNER",
-    ownerOnly: true,
-  },
-  async execute({ message, args }) {
+  name: "run",
+  description: "runs commands on the console",
+  category: "OWNER",
+  ownerOnly: true,
+  async messageRun({ message, args }) {
     await message.channel.send({
       embeds: [
         new EmbedBuilder().setTitle("Spawning Shell...").setDescription(`Executing command...`).setAuthor({
@@ -30,7 +28,7 @@ export default {
     const script = args.join(" ");
     await run(script, message);
   },
-} satisfies PrefixCommand;
+} satisfies Command;
 
 async function run(script: string, message: OmitPartialGroupDMChannel<Message>) {
   try {

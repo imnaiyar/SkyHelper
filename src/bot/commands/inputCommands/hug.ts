@@ -1,12 +1,14 @@
 import * as d from "discord.js";
-import type { PrefixCommand } from "#structures";
+import type { Command } from "#structures";
 export default {
-  data: {
-    name: "hug",
-    description: "hugs someone",
-    aliases: ["skyhug", "hg"],
+  name: "hug",
+  description: "hugs someone",
+  prefix: {
+    aliases: ["skyhug"],
+    minimumArgs: 1,
+    usage: "<ID|mention>",
   },
-  async execute({ message, args, client }) {
+  async messageRun({ message, args, client }) {
     const msg = message;
     const user = msg.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user) return void msg.reply("You need to mention someone to hug, you can't exactly hug air, can you?");
@@ -27,4 +29,4 @@ export default {
       ],
     });
   },
-} satisfies PrefixCommand;
+} satisfies Command;

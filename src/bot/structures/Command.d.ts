@@ -3,6 +3,9 @@ import type {
   AutocompleteInteraction,
   PermissionResolvable,
   RESTPostAPIChatInputApplicationCommandsJSONBody,
+  OmitPartialGroupDMChannel,
+  Message,
+  ContextMenuCommandInteraction,
 } from "discord.js";
 
 import type { SkyHelper } from "#structures";
@@ -19,8 +22,11 @@ export interface Validation {
   /** Message to display when validation fails */
   message: string;
 
-  /** Callback for the validation */
-  callback(msg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction): boolean;
+  /** Callback for the validation. messageOptions is only for prefix command */
+  callback(
+    msg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction | ContextMenuCommandInteraction,
+    messageOptions?: Omit<MessageParams, "message" | "client"> & { commandName: string },
+  ): boolean;
 }
 
 export interface PrefixSubcommand {

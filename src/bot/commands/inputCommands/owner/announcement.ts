@@ -1,4 +1,4 @@
-import type { PrefixCommand } from "#structures";
+import type { Command } from "#structures";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -9,14 +9,14 @@ import {
   TextInputStyle,
 } from "discord.js";
 export default {
-  data: {
-    name: "announce",
-    description: "announce new release/updates to the subscribed channels",
+  name: "announce",
+  description: "announce new release/updates to the subscribed channels",
+  prefix: {
     aliases: ["an", "as"],
-    ownerOnly: true,
-    category: "OWNER",
   },
-  async execute({ message, client }) {
+  ownerOnly: true,
+  category: "OWNER",
+  async messageRun({ message, client }) {
     const msg = await message.channel.send({
       content: "Please send the text you want to announce through the modal.",
       components: [
@@ -71,4 +71,4 @@ export default {
     }
     await modalSubmit.editReply({ content: "Announcement sent to all the announcement channels.", components: [] });
   },
-} satisfies PrefixCommand;
+} satisfies Command;

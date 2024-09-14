@@ -346,6 +346,15 @@ async function validateCommand(
     }
   }
 
+  // Handle Validations
+  if (command.validations) {
+    for (const validation of command.validations) {
+      if (!validation.callback(interaction)) {
+        await interaction.reply(validation.message);
+        return false;
+      }
+    }
+  }
   // Check cooldowns
   if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
     const { cooldowns } = client;

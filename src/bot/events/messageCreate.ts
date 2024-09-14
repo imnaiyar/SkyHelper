@@ -1,15 +1,7 @@
 import type { Event } from "#structures";
-import {
-  EmbedBuilder,
-  type GuildChannelResolvable,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  type GuildBasedChannel,
-  WebhookClient,
-} from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient, resolveColor } from "discord.js";
 import { Flags } from "#libs/classes/Flags";
-import { parsePerms } from "skyhelper-utils";
+import { parsePerms, type Permission } from "skyhelper-utils";
 import updateDailyQuests from "#handlers/updateDailyQuests";
 
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
@@ -38,24 +30,21 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   const msg = flags.removeFlags();
   const args = msg.slice(prefix.length).trim().split(/ +/g);
   const commandName = args.shift()!.toLowerCase();
-  const command = client.prefix.get(commandName);
-  if (!command) return;
+  const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
+  if (!command || !command.messageRun) return;
 
   // Check if command is 'OWNER' only.
-  if (command.data.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
+  if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
 
   // Check send permission(s);
-  if (
-    message.guild &&
-    !message.guild.members.me?.permissionsIn(message.channel as GuildChannelResolvable).has(["SendMessages", "ViewChannel"])
-  ) {
+  if (message.inGuild() && !message.guild.members.me?.permissionsIn(message.channel).has(["SendMessages", "ViewChannel"])) {
     message.author
       .send(
         t("common.errors.MESSAGE_BOT_NO_PERM", {
           PERMISSIONS: `${parsePerms("SendMessages")}/${parsePerms("ViewChannel")}`,
           SERVER: message.guild.name,
           CHANNEL: message.channel,
-          COMMAND: command.data.name,
+          COMMAND: command.name,
         }),
       )
       .catch(() => {});
@@ -63,53 +52,50 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   }
 
   // Check if the user has permissions to use the command.
-  if (message.guild && command.data.userPermissions && !message.member?.permissions.has(command.data.userPermissions)) {
+  if (message.guild && command.userPermissions && !message.member?.permissions.has(command.userPermissions)) {
     await message.reply(
       t("common.errors.NO_PERMS_USER", {
-        PERMISSIONS: parsePerms(command.data.userPermissions),
+        PERMISSIONS: parsePerms(command.userPermissions as Permission[]),
       }),
     );
     return;
   }
-
   // Check if args are valid
-  if (command.data.args) {
-    if (command.data.args.minimum) {
-      // prettier-ignore
-      if (args.length < command.data.args.minimum) return void (await message.reply(t("common.errors.MINIMUM_ARGS", { LIMIT: command.data.args.minimum })));
-    }
-    if (command.data.args.subcommand) {
-      if (args.length === 0) {
-        await message.reply(
-          t("common.errors.MESSAGE_NO_ARGS", {
-            ARGS: command.data.args.subcommand.map((sub) => `\`${sub}\``).join(", "),
-          }),
-        );
-        return;
-      }
+  if (
+    (command.prefix?.minimumArgs && args.length < command.prefix.minimumArgs) ||
+    (command.prefix?.subcommands && args[0] && !command.prefix.subcommands.find((sub) => sub.trigger.startsWith(args[0])))
+  ) {
+    await message.reply({
+      ...(args.length < (command.prefix.minimumArgs || 0) && {
+        content: t("common.errors.MINIMUM_ARGS", { LIMIT: command.prefix.minimumArgs }),
+      }),
 
-      if (!command.data.args.subcommand.find((sub) => sub.trigger === args[0])) {
-        message.reply({
-          content: t("common.errors.INVALID_ARGS"),
-          embeds: [
-            new EmbedBuilder()
-              .setAuthor({ name: `${command.data.name} Command`, iconURL: client.user.displayAvatarURL() })
-              .setTitle(`${command.data.name} Args`)
-              .setDescription(
-                command.data.args.subcommand.map((sub) => `**${prefix}${sub.trigger}\n ↪ ${sub.description}`).join("\n"),
-              )
-              .setColor("Random"),
-          ],
-        });
-        return;
-      }
-    }
+      embeds: [
+        {
+          title: t("common.errors.INVALID_USAGE"),
+          description:
+            (command.prefix.usage ? `Usage:\n**\`${prefix}${command.name} ${command.prefix.usage}\`**\n\n` : "") +
+            (command.prefix.subcommands
+              ? "**Subcommands:**\n" +
+                command.prefix.subcommands
+                  .map((sub) => `**\`${prefix}${command.name} ${sub.trigger}\`**\n ↪ ${sub.description}`)
+                  .join("\n")
+              : ""),
+          author: {
+            name: `${command.name} Command`,
+            icon_url: client.user.displayAvatarURL(),
+          },
+          color: resolveColor("Random"),
+        },
+      ],
+    });
+    return;
   }
 
   // Check for validations
   if (command.validations?.length) {
     for (const validation of command.validations) {
-      if (!validation.callback(message)) {
+      if (!validation.callback(message, { args, flags, commandName: command.name })) {
         await message.reply(validation.message);
         return;
       }
@@ -118,13 +104,13 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
 
   // Execute the command.
   try {
-    await command.execute({ message, args, flags, client });
+    await command.messageRun({ message, args, flags, client });
 
     // Send Logs
     const embed = new EmbedBuilder()
       .setTitle("New command used")
       .addFields(
-        { name: `Command`, value: `\`${command.data.name}\`` },
+        { name: `Command`, value: `\`${command.name}\`` },
         {
           name: `User`,
           value: `${message.author.username} \`[${message.author.id}]\``,
@@ -135,7 +121,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
         },
         {
           name: `Channel`,
-          value: `${(message.channel as GuildBasedChannel).name} \`[${message.channel?.id}]\``,
+          value: `${message.inGuild() ? message.channel.name : "In DMS"} \`[${message.channel.id}]\``,
         },
       )
       .setColor("Blurple")
