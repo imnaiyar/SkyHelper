@@ -1,24 +1,23 @@
-import { buildShardEmbed } from "#utils";
+import { getTimesEmbed } from "#utils";
 import type { Command } from "#structures";
 import { ApplicationCommandOptionType, ChannelType, EmbedBuilder, TextChannel } from "discord.js";
 import moment from "moment";
-import { getTranslator } from "#bot/i18n";
 import { useTranslations as x } from "#handlers/useTranslation";
+import { getTranslator } from "#bot/i18n";
 export default {
-  async interactionRun(interaction, t) {
-    const client = interaction.client;
+  async interactionRun(interaction, t, client) {
     await interaction.deferReply({ ephemeral: true });
-    if (!interaction.guild) {
+    if (!interaction.inCachedGuild()) {
       return void (await interaction.followUp(t("commands.SHARDS_LIVE.RESPONSES.NOT_GUILD")));
     }
     const sub = interaction.options.getSubcommand();
     const config = await client.database.getSettings(interaction.guild);
     if (sub === "start") {
-      if (config.autoShard.messageId && config.autoShard.webhook?.id) {
+      if (config.autoTimes.messageId && config.autoTimes.webhook?.id) {
         const wbh = await client
-          .fetchWebhook(config.autoShard.webhook.id, config.autoShard.webhook.token as unknown as string)
+          .fetchWebhook(config.autoTimes.webhook.id, config.autoTimes.webhook.token as unknown as string)
           .catch(() => {});
-        const ms = await wbh?.fetchMessage(config.autoShard.messageId).catch(() => {});
+        const ms = await wbh?.fetchMessage(config.autoTimes.messageId).catch(() => {});
         if (ms && wbh) {
           await interaction.followUp({
             embeds: [
@@ -27,7 +26,7 @@ export default {
                   t("commands.SHARDS_LIVE.RESPONSES.ALREADY_CONFIGURED", {
                     CHANNEL: `<#${wbh.channelId}>`,
                     MESSAGE: ms.url,
-                    TYPE: `"Live Shard"`,
+                    TYPE: `"Live SkyTimes"`,
                   }),
                 )
                 .setColor("Red"),
@@ -36,7 +35,7 @@ export default {
           return;
         }
       }
-      const channel = interaction.options.getChannel("channel")! as TextChannel;
+      const channel = interaction.options.getChannel("channel", true);
 
       /*
       This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case
@@ -45,7 +44,7 @@ export default {
         return void (await interaction.followUp({
           embeds: [
             new EmbedBuilder()
-              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel }))
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel.toString() }))
               .setColor("Red"),
           ],
         }));
@@ -53,25 +52,27 @@ export default {
       if (!channel.permissionsFor(interaction.guild.members.me!).has("ManageWebhooks")) {
         return void (await interaction.editReply({
           embeds: [
-            new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: channel.toString() })).setColor("Red"),
+            new EmbedBuilder().setDescription(t("common.errors.NO_PERMS_BOT", { CHANNEL: channel.toString() })).setColor("Red"),
           ],
         }));
       }
-      const wb = await client.createWebhook(channel, "For live Shards Update");
+      const wb = await client.createWebhook(channel as TextChannel, "For live SkyTimes Update");
       const currentDate = moment().tz(client.timezone);
       const updatedAt = Math.floor(currentDate.valueOf() / 1000);
-      const ts = getTranslator(config.language?.value ?? "en-us");
-      const result = buildShardEmbed(currentDate, ts, ts("shards-embed.FOOTER"), true);
+      const _t = getTranslator((await client.database.getSettings(interaction.guild)).language?.value || "en-US");
+      const result = {
+        embeds: (await getTimesEmbed(client, _t, _t("times-embed.FOOTER"))).embeds,
+      };
       const msg = await wb.send({
-        username: "Shards Updates",
+        username: "SkyTimes Updates",
         avatarURL: client.user.displayAvatarURL(),
         content: t("shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` }),
         ...result,
       });
-      config.autoShard.active = true;
-      config.autoShard.messageId = msg.id;
-      config.autoShard.webhook.id = wb.id;
-      config.autoShard.webhook.token = wb.token;
+      config.autoTimes.active = true;
+      config.autoTimes.messageId = msg.id;
+      config.autoTimes.webhook.id = wb.id;
+      config.autoTimes.webhook.token = wb.token;
       await config.save();
       await interaction.followUp({
         embeds: [
@@ -80,73 +81,73 @@ export default {
               t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", {
                 CHANNEL: channel.toString(),
                 MESSAGE: msg.url,
-                TYPE: `"Live Shard"`,
+                TYPE: `"Live SkyTimes"`,
               }),
             )
             .setColor("Green"),
         ],
       });
     } else if (sub === "stop") {
-      if (!config.autoShard.webhook.id || !config.autoShard.messageId) {
+      if (!config.autoTimes.webhook.id || !config.autoTimes.messageId) {
         return void (await interaction.followUp({
           embeds: [
             new EmbedBuilder()
-              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live Shard"` }))
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live SkyTimes"` }))
               .setColor("Red"),
           ],
         }));
       }
 
       const wbh = await client
-        .fetchWebhook(config.autoShard.webhook.id, config.autoShard.webhook.token as unknown as string)
+        .fetchWebhook(config.autoTimes.webhook.id, config.autoTimes.webhook.token as unknown as string)
         .catch(() => {});
       if (!wbh) {
         await interaction.followUp({
           embeds: [
             new EmbedBuilder()
-              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live Shard"` }))
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live SkyTimes"` }))
               .setColor("Red"),
           ],
         });
         return;
       }
       try {
-        await wbh.deleteMessage(config.autoShard.messageId).catch(() => {});
+        await wbh.deleteMessage(config.autoTimes.messageId).catch(() => {});
         await wbh.delete();
-        config.autoShard.active = false;
-        config.autoShard.webhook.id = null;
-        config.autoShard.webhook.token = null;
+        config.autoTimes.active = false;
+        config.autoTimes.webhook.id = null;
+        config.autoTimes.webhook.token = null;
 
         await interaction.followUp({
           embeds: [
             new EmbedBuilder()
-              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live Shard"` }))
+              .setDescription(t("commands.SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live SkyTimes"` }))
               .setColor("Red"),
           ],
         });
       } catch (err) {
-        client.logger.error("Failed to stop Shards Updates in " + interaction.guild.name, err);
+        client.logger.error("Failed to stop SkyTimes Updates in " + interaction.guild.name, err);
       }
     }
   },
-  name: "shards-live",
-  description: "auto updating message with live shards details",
+  name: "skytimes-live",
+  description: "auto updating message with live skytimes details",
   slash: {
-    name_localizations: x("commands.SHARDS_LIVE.name"),
-    description_localizations: x("commands.SHARDS_LIVE.description"),
+    name_localizations: x("commands.SKYTIMES_LIVE.name"),
+    description_localizations: x("commands.SKYTIMES_LIVE.description"),
     options: [
       {
         name: "start",
-        name_localizations: x("commands.SHARDS_LIVE.options.START.name"),
-        description: "configure auto shard",
-        description_localizations: x("commands.SHARDS_LIVE.options.START.description"),
+        name_localizations: x("commands.SKYTIMES_LIVE.options.START.name"),
+        description: "configure auto skytimes",
+        description_localizations: x("commands.SKYTIMES_LIVE.options.START.description"),
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "channel",
-            name_localizations: x("commands.SHARDS_LIVE.options.START.option.CHANNEL.name"),
-            description: "channel where shard details should be updated",
-            description_localizations: x("commands.SHARDS_LIVE.options.START.option.CHANNEL.description"),
+            name_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.name"),
+            description: "channel where skytimes details should be updated",
+            description_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.description"),
             type: ApplicationCommandOptionType.Channel,
             channel_types: [ChannelType.GuildText],
             required: true,
@@ -155,9 +156,9 @@ export default {
       },
       {
         name: "stop",
-        name_localizations: x("commands.SHARDS_LIVE.options.STOP.name"),
-        description: "stop auto shard",
-        description_localizations: x("commands.SHARDS_LIVE.options.STOP.description"),
+        name_localizations: x("commands.SKYTIMES_LIVE.options.STOP.name"),
+        description: "stop auto skytimes",
+        description_localizations: x("commands.SKYTIMES_LIVE.options.STOP.description"),
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
@@ -166,5 +167,5 @@ export default {
   },
   botPermissions: ["ManageWebhooks"],
   userPermissions: ["ManageGuild"],
-  category: "Updates",
+  category: "Admin",
 } satisfies Command;

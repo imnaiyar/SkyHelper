@@ -9,6 +9,7 @@ export default {
     usage: "<prefix>",
   },
   userPermissions: ["ManageGuild"],
+  category: "Admin",
   async messageRun({ message: msg, args, client }) {
     if (!msg.inGuild()) return;
     const settings = await client.database.getSettings(msg.guild);

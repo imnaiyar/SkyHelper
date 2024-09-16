@@ -47,7 +47,7 @@ export default {
   },
   botPermissions: ["ManageWebhooks"],
   userPermissions: ["ManageGuild"],
-  category: "Updates",
+  category: "Admin",
 } satisfies Command;
 
 async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>, settings: GuildSchema) {
