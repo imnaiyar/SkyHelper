@@ -1,38 +1,35 @@
 import { buildShardEmbed } from "#utils";
 import { useTranslations as x } from "#handlers/useTranslation";
 import type { Command } from "#structures";
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, type BaseMessageOptions } from "discord.js";
 import moment from "moment";
 import { ShardsUtil } from "skyhelper-utils";
+import type { getTranslator } from "#bot/i18n";
 
 export default {
   async interactionRun(interaction, t) {
     const date = interaction.options.getString("date");
     const hide = interaction.options.getBoolean("hide") || false;
-    const regex = /^\d{4,6}-\d{2}-\d{2}$/;
-    if (date && !regex.test(date)) {
-      interaction.reply({
-        content: t("commands.SHARDS.RESPONSES.INVALID_DATE"),
+    const shard = getShards(t, date);
+    if (typeof shard === "string") {
+      return void (await interaction.reply({
+        content: shard,
         ephemeral: true,
-      });
-      return;
-    }
-    const currentDate = ShardsUtil.getDate(date);
-    if (typeof currentDate === "string" && currentDate === "invalid") {
-      await interaction.reply({
-        content: t("commands.SHARDS.RESPONSES.DATE_NONEXIST"),
-        ephemeral: true,
-      });
-      return;
+      }));
     }
 
-    const res = buildShardEmbed(currentDate as moment.Moment, t, t("common.bot.name"));
-
-    await interaction.deferReply({ ephemeral: hide });
-    await interaction.editReply(res);
+    await interaction.reply({ ...shard, ephemeral: hide });
   },
+  async messageRun({ message, args, t }) {
+    await message.reply(getShards(t, args[0]));
+  },
+
   name: "shards",
   description: "Get the a specific shard information",
+  prefix: {
+    usage: "[date]",
+    aliases: ["shard"],
+  },
   slash: {
     name_localizations: x("commands.SHARDS.name"),
     description_localizations: x("commands.SHARDS.description"),
@@ -60,3 +57,15 @@ export default {
   category: "Info",
   cooldown: 30,
 } satisfies Command;
+
+const getShards = (t: ReturnType<typeof getTranslator>, date?: string | null): string | BaseMessageOptions => {
+  if (date && !/^\d{4,6}-\d{2}-\d{2}$/.test(date)) {
+    return t("commands.SHARDS.RESPONSES.INVALID_DATE");
+  }
+
+  const currentDate = ShardsUtil.getDate(date);
+  if (typeof currentDate === "string" && currentDate === "invalid") {
+    return t("commands.SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
+  }
+  return buildShardEmbed(currentDate as moment.Moment, t, t("common.bot.name"));
+};

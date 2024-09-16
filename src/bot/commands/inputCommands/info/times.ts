@@ -8,6 +8,9 @@ export default {
 
     await interaction.followUp({ ...(await getTimesEmbed(client, t, t("common.bot.name"))), fetchReply: true });
   },
+  async messageRun({ message, t, client }) {
+    await message.reply(await getTimesEmbed(client, t, t("common.bot.name")));
+  },
   name: "skytimes",
   description: "various in-game events countdown",
   slash: {
@@ -25,6 +28,9 @@ export default {
     ],
     integration_types: [0, 1],
     contexts: [0, 1, 2],
+  },
+  prefix: {
+    aliases: ["eventtimes", "sky-times", "skyt"],
   },
   category: "Info",
   cooldown: 20,

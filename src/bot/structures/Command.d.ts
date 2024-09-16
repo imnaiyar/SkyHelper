@@ -15,6 +15,7 @@ type MessageParams = {
   message: OmitPartialGroupDMChannel<Message>;
   args: string[];
   flags: Flags;
+  t: ReturnType<typeof getTranslator>;
   client: SkyHelper;
 };
 /** Structure of command validation */
@@ -25,7 +26,7 @@ export interface Validation {
   /** Callback for the validation. messageOptions is only for prefix command */
   callback(
     msg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction | ContextMenuCommandInteraction,
-    messageOptions?: Omit<MessageParams, "message" | "client"> & { commandName: string },
+    messageOptions?: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
   ): boolean;
 }
 

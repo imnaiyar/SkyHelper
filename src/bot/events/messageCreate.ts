@@ -1,5 +1,5 @@
 import type { Event } from "#structures";
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient, resolveColor } from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient, resolveColor, Collection } from "discord.js";
 import { Flags } from "#libs/classes/Flags";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import updateDailyQuests from "#handlers/updateDailyQuests";
@@ -102,9 +102,40 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
     }
   }
 
+  // Check cooldowns
+  if (command?.cooldown && !client.config.OWNER.includes(message.author.id)) {
+    const { cooldowns } = client;
+
+    if (!cooldowns.has(command.name)) {
+      cooldowns.set(command.name, new Collection());
+    }
+
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = command.cooldown * 1000;
+
+    if (timestamps?.has(message.author.id)) {
+      const expirationTime = (timestamps.get(message.author.id) as number) + cooldownAmount;
+
+      if (now < expirationTime) {
+        const expiredTimestamp = Math.round(expirationTime / 1000);
+        await message.reply({
+          content: t("common.errors.COOLDOWN", {
+            COMMAND: command.name,
+            TIME: `<t:${expiredTimestamp}:R>`,
+          }),
+        });
+        return;
+      }
+    }
+
+    timestamps?.set(message.author.id, now);
+    setTimeout(() => timestamps?.delete(message.author.id), cooldownAmount);
+  }
+
   // Execute the command.
   try {
-    await command.messageRun({ message, args, flags, client });
+    await command.messageRun({ message, args, flags, client, t });
 
     // Send Logs
     const embed = new EmbedBuilder()

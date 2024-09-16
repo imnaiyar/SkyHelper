@@ -10,11 +10,26 @@ import {
 import moment from "moment-timezone";
 import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "skyhelper-utils";
 import { useTranslations as x } from "#handlers/useTranslation";
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "Descember",
+] as const;
+
 export default {
   cooldown: 15,
   category: "Info",
   async interactionRun(interaction, t, client) {
-    const reply = await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false, fetchReply: true });
+    await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || false, fetchReply: true });
     const shardsCmd = `</shards:${(await client.getCommand("shards")).id}>`;
     const now = moment().tz(client.timezone);
     const date = 1;
@@ -60,20 +75,13 @@ export default {
         new StringSelectMenuBuilder()
           .setCustomId("calendar-month")
           .setPlaceholder(t("commands.SHARDS_CALENDAR.RESPONSES.MONTH_SELECT_PLACEHOLDER"))
-          .addOptions([
-            { label: "January", value: "1", default: month === 1 },
-            { label: "February", value: "2", default: month === 2 },
-            { label: "March", value: "3", default: month === 3 },
-            { label: "April", value: "4", default: month === 4 },
-            { label: "May", value: "5", default: month === 5 },
-            { label: "June", value: "6", default: month === 6 },
-            { label: "July", value: "7", default: month === 7 },
-            { label: "August", value: "8", default: month === 8 },
-            { label: "September", value: "9", default: month === 9 },
-            { label: "October", value: "10", default: month === 10 },
-            { label: "November", value: "11", default: month === 11 },
-            { label: "December", value: "12", default: month === 12 },
-          ]),
+          .addOptions(
+            months.map((m, i) => ({
+              label: m,
+              value: i + 1 + "",
+              default: month === i + 1,
+            })),
+          ),
       );
       const getYears = () => {
         const options: APISelectMenuOption[] = [];
@@ -134,8 +142,8 @@ export default {
         });
       return { embeds: [embed], components: [dateSelect, monthSelect, yearSelect, navBtn] };
     };
-    await interaction.followUp({ ...buildResponse(), fetchReply: true });
-    const collector = reply.createMessageComponentCollector({ idle: 60_000 });
+    const m = await interaction.editReply({ ...buildResponse() });
+    const collector = m.createMessageComponentCollector({ idle: 60_000 });
     collector.on("collect", async (i: ButtonInteraction | StringSelectMenuInteraction) => {
       const Id = i.customId;
 
