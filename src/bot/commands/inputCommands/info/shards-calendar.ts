@@ -34,9 +34,6 @@ const months = [
   "November",
   "Descember",
 ] as const;
-let index: number | null,
-  month: number | null,
-  year: number | null = null;
 export default {
   cooldown: 15,
   category: "Info",
@@ -86,7 +83,12 @@ const getDates = (date: moment.Moment): moment.Moment[] => {
   return dates;
 };
 
-const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper) => {
+type ResponseParams = {
+  index?: number;
+  month?: number;
+  year?: number;
+};
+const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper, { index, month, year }: ResponseParams = {}) => {
   const now = moment().tz("America/Los_Angeles");
   const date = 1;
   month ??= now.month() + 1;
@@ -138,7 +140,7 @@ const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper) =
       ),
   );
   const yOptions: APISelectMenuOption[] = [];
-  for (let i = year! - 5; i < year! + 5; i++) {
+  for (let i = year - 5; i < year + 5; i++) {
     yOptions.push({
       label: `${i}`,
       value: `${i}`,
@@ -153,12 +155,12 @@ const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper) =
   );
   const navBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
-      .setCustomId("calendar-nav-prev")
+      .setCustomId("calendar-nav-prev_" + index + "")
       .setEmoji("⬅️")
       .setStyle(ButtonStyle.Primary)
       .setDisabled(index === 0),
     new ButtonBuilder()
-      .setCustomId("calendar-nav-next")
+      .setCustomId("calendar-nav-next_" + index + "")
       .setEmoji("➡️")
       .setStyle(ButtonStyle.Primary)
       .setDisabled(index === totalPages - 1),
@@ -196,35 +198,32 @@ const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper) =
 
 const collectResponseComponents = (msg: Message, t: ReturnType<typeof getTranslator>, int?: ChatInputCommandInteraction) => {
   const collector = msg.createMessageComponentCollector({ idle: 60_000 });
+  let month = new Date().getMonth() + 1;
+  let year = new Date().getFullYear();
   collector.on("collect", async (i: ButtonInteraction | StringSelectMenuInteraction) => {
     const Id = i.customId;
-
     if (i.isButton()) {
-      if (Id === "calendar-nav-next") {
-        index!++;
-        await i.update({ ...buildResponse(t, i.client) });
+      const [id, ind] = Id.split("_");
+      if (id === "calendar-nav-next") {
+        await i.update({ ...buildResponse(t, i.client, { index: parseInt(ind) + 1, month, year }) });
       }
-      if (Id === "calendar-nav-prev") {
-        index!--;
-        await i.update({ ...buildResponse(t, i.client) });
+      if (id === "calendar-nav-prev") {
+        await i.update({ ...buildResponse(t, i.client, { index: parseInt(ind) - 1, month, year }) });
       }
     }
     if (i.isStringSelectMenu()) {
       const value = i.values[0];
       switch (Id) {
         case "calendar-dates":
-          index = parseInt(value);
-          await i.update({ ...buildResponse(t, i.client) });
+          await i.update({ ...buildResponse(t, i.client, { index: parseInt(value), month, year }) });
           break;
         case "calendar-month":
           month = parseInt(value);
-          index = 0;
-          await i.update({ ...buildResponse(t, i.client) });
+          await i.update({ ...buildResponse(t, i.client, { index: 0, month, year }) });
           break;
         case "calendar-year":
           year = parseInt(value);
-          index = 0;
-          await i.update({ ...buildResponse(t, i.client) });
+          await i.update({ ...buildResponse(t, i.client, { index: 0, month, year }) });
           break;
       }
     }
