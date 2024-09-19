@@ -52,7 +52,7 @@ export default {
   name: "shards-calendar",
   description: "Show the shards calendar",
   prefix: {
-    aliases: ["shards-cal", "shard-cal", "sc"],
+    aliases: ["shards-cal", "shard-cal", "sc", "nextshards", "next-shards"],
   },
   slash: {
     name_localizations: x("commands.SHARDS_CALENDAR.name"),
