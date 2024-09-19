@@ -50,6 +50,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
       .catch(() => {});
     return;
   }
+  if (command.prefix?.guildOnly && !message.inGuild()) return;
 
   // Check if the user has permissions to use the command.
   if (message.guild && command.userPermissions && !message.member?.permissions.has(command.userPermissions)) {

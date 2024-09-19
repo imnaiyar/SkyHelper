@@ -22,6 +22,7 @@ import {
   TextChannel,
   ApplicationIntegrationType,
   InteractionContextType,
+  Message,
 } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
 import { getTranslator } from "#bot/i18n";
@@ -37,6 +38,11 @@ export default {
 
     await handleSetup(interaction, t, settings);
   },
+  async messageRun({ message, client, t }) {
+    if (!message.inGuild()) return;
+    const settings = await client.database.getSettings(message.guild);
+    await handleSetup(message, t, settings);
+  },
   name: "reminders",
   description: "Set up reminders",
   slash: {
@@ -50,12 +56,12 @@ export default {
   category: "Admin",
 } satisfies Command;
 
-async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>, settings: GuildSchema) {
-  const client = interaction.client;
-
-  if (!interaction.inCachedGuild()) {
-    throw new Error(t("commands.REMINDERS.RESPONSES.NOT_CACHED"));
-  }
+async function handleSetup(
+  intOrMsg: ChatInputCommandInteraction<"cached"> | Message<true>,
+  t: ReturnType<typeof getTranslator>,
+  settings: GuildSchema,
+) {
+  const client = intOrMsg.client;
 
   const { reminders } = settings;
   const { geyser, grandma, turtle, reset, dailies, eden, webhook } = reminders;
@@ -88,7 +94,7 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
   const initialEmbed = async () => {
     return new EmbedBuilder()
       .setAuthor({ name: t("commands.REMINDERS.RESPONSES.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
-      .setTitle(interaction.guild.name)
+      .setTitle(intOrMsg.guild.name)
       .addFields(
         { name: `**•** ${t("times-embed.GEYSER")} ${getActive(geyser)}`, value: "\u200B", inline: true },
         { name: `**•** ${t("times-embed.GRANDMA")} ${getActive(grandma)}`, value: "\u200B", inline: true },
@@ -156,20 +162,23 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
 
     return [mainMenu, defaultRoleMenu, channelSelectMenu, toggleButtons];
   };
-
+  const reply = await (intOrMsg instanceof Message ? intOrMsg.reply : intOrMsg.editReply).bind(intOrMsg)({
+    embeds: [await initialEmbed()],
+    components: createActionRows(),
+  });
+  const editFunction =
+    intOrMsg instanceof ChatInputCommandInteraction ? intOrMsg.editReply.bind(intOrMsg) : reply.edit.bind(reply);
   const updateOriginal = async () => {
-    await interaction.editReply({ embeds: [await initialEmbed()], components: createActionRows() });
+    await editFunction({ embeds: [await initialEmbed()], components: createActionRows() });
   };
 
-  const reply = await interaction.editReply({ embeds: [await initialEmbed()], components: createActionRows() });
-
   const collector = reply.createMessageComponentCollector({
-    idle: 2 * 60 * 1000,
+    idle: 90_000,
   });
-
+  const user = intOrMsg instanceof Message ? intOrMsg.author : intOrMsg.user;
   collector.on("collect", async (int) => {
     const customId = int.customId;
-    if (int.user.id !== interaction.user.id) {
+    if (int.user.id !== user.id) {
       await int.deferReply({ ephemeral: true });
       const ts = await int.t();
       await int.editReply(ts("common.errors.NOT-ALLOWED"));
@@ -300,7 +309,9 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
   });
 
   collector.on("end", async () => {
-    const msg = await interaction.fetchReply().catch(() => {});
+    const msg = await (intOrMsg instanceof Message ? intOrMsg.fetch : intOrMsg.fetchReply)
+      .bind(intOrMsg)()
+      .catch(() => {});
     const components: ActionRowBuilder<MessageActionRowComponentBuilder>[] = [];
 
     msg?.components?.forEach((comp) => {
@@ -309,6 +320,6 @@ async function handleSetup(interaction: ChatInputCommandInteraction, t: ReturnTy
       components.push(btn);
     });
 
-    await interaction.editReply({ components }).catch(() => {});
+    await editFunction({ components }).catch(() => {});
   });
 }

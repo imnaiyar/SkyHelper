@@ -25,7 +25,11 @@ export interface Validation {
 
   /** Callback for the validation. messageOptions is only for prefix command */
   callback(
-    msg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction | ContextMenuCommandInteraction,
+    intOrMsg: OmitPartialGroupDMChannel<Message>,
+    messageOptions: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
+  ): boolean;
+  callback(
+    intOrMsg: ChatInputCommandInteraction | ContextMenuCommandInteraction,
     messageOptions?: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
   ): boolean;
 }
@@ -54,6 +58,9 @@ export interface Command<Autocomplete extends boolean = false> {
 
     /** Flags for the command */
     flags?: string[];
+
+    /** Whether this prefix command is only usable in a guild */
+    guildOnly?: boolean;
 
     /** Aliases for the command */
     aliases?: string[];

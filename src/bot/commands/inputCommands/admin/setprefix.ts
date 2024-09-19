@@ -7,6 +7,7 @@ export default {
     aliases: ["sp"],
     minimumArgs: 1,
     usage: "<prefix>",
+    guildOnly: true,
   },
   userPermissions: ["ManageGuild"],
   category: "Admin",
