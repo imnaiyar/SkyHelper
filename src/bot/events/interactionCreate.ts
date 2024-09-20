@@ -11,7 +11,7 @@ import {
   CommandInteraction,
   ChannelType,
 } from "discord.js";
-import type { ContextMenuCommand, SkyHelper, SlashCommand, Event } from "#structures";
+import type { ContextMenuCommand, SkyHelper, Command, Event } from "#structures";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#bot/config";
 import type { getTranslator } from "#bot/i18n";
@@ -51,7 +51,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   // Slash Commands
   if (interaction.isChatInputCommand()) {
     const command = client.commands.get(interaction.commandName);
-    if (!command) {
+    if (!command || !command.interactionRun) {
       await interaction.reply({
         content: t("common.errors.COMMAND_NOT_FOUND"),
         ephemeral: true,
@@ -62,7 +62,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     const isChecked = await validateCommand(command, interaction, t);
     if (!isChecked) return;
     try {
-      await command.execute(interaction, t, client);
+      await command.interactionRun(interaction, t, client);
       const embed = new EmbedBuilder()
         .setTitle("New command used")
         .addFields(
@@ -115,7 +115,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
 
   // Autocompletes
   if (interaction.isAutocomplete()) {
-    const command = client.commands.get(interaction.commandName) as unknown as SlashCommand<true>;
+    const command = client.commands.get(interaction.commandName) as unknown as Command<true> | undefined;
 
     if (!command || !command.autocomplete) {
       await interaction.respond([
@@ -289,7 +289,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
 
 /** Validates requirements for Slash and Context Menu commands */
 async function validateCommand(
-  command: SlashCommand | ContextMenuCommand<"UserContext" | "MessageContext">,
+  command: Command | ContextMenuCommand<"UserContext" | "MessageContext">,
   interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
   t: ReturnType<typeof getTranslator>,
 ): Promise<boolean> {
@@ -303,12 +303,12 @@ async function validateCommand(
     return false;
   }
   // Handle command user required permissions
-  if (command.data.userPermissions) {
+  if (command.userPermissions) {
     if (interaction.inGuild()) {
-      if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.data.userPermissions)) {
+      if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.userPermissions)) {
         await interaction.reply({
           content: t("common.errors.NO_PERMS_USER", {
-            PERMISSIONS: parsePerms([command.data.userPermissions as unknown as Permission]),
+            PERMISSIONS: parsePerms([command.userPermissions as unknown as Permission]),
           }),
           ephemeral: true,
         });
@@ -325,12 +325,12 @@ async function validateCommand(
   }
 
   // Handle bot's required permissions
-  if (command.data.botPermissions) {
+  if (command.botPermissions) {
     if (interaction.inGuild()) {
-      if (interaction.inCachedGuild() && !interaction.guild.members.me?.permissions.has(command.data.botPermissions)) {
+      if (interaction.inCachedGuild() && !interaction.guild.members.me?.permissions.has(command.botPermissions)) {
         await interaction.reply({
           content: t("common.errors.NO_PERMS_BOT", {
-            PERMISSIONS: parsePerms(command.data.botPermissions as unknown as Permission),
+            PERMISSIONS: parsePerms(command.botPermissions as unknown as Permission),
           }),
           ephemeral: true,
         });
@@ -346,16 +346,25 @@ async function validateCommand(
     }
   }
 
+  // Handle Validations
+  if (command.validations) {
+    for (const validation of command.validations) {
+      if (validation.type !== "message" && !validation.callback(interaction)) {
+        await interaction.reply(validation.message);
+        return false;
+      }
+    }
+  }
   // Check cooldowns
   if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
     const { cooldowns } = client;
 
-    if (!cooldowns.has(command.data.name)) {
-      cooldowns.set(command.data.name, new Collection());
+    if (!cooldowns.has(command.name)) {
+      cooldowns.set(command.name, new Collection());
     }
 
     const now = Date.now();
-    const timestamps = cooldowns.get(command.data.name);
+    const timestamps = cooldowns.get(command.name);
     const cooldownAmount = command.cooldown * 1000;
 
     if (timestamps?.has(interaction.user.id)) {

@@ -21,9 +21,6 @@ declare module "discord.js" {
     /** Collection of Slash Commands */
     commands: Collection<string, SlashCommand>;
 
-    /** Collection of Prefix Commands */
-    prefix: Collection<string, PrefixCommand>;
-
     /** Collection of Context Menu Commands */
     contexts: Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>;
 
@@ -84,7 +81,7 @@ declare module "discord.js" {
      * @param dir The command directory
      * TODO: Add validation for commands
      */
-    loadSlashCmd(dir: string): Promise<void>;
+    loadCommands(dir: string): Promise<void>;
 
     /**
      * Load context menu commands to client on startup
@@ -98,12 +95,6 @@ declare module "discord.js" {
      * @param dir The butoons directory
      */
     loadButtons(dir: string): Promise<void>;
-
-    /**
-     * Load prefix command on startup
-     * @param dir
-     */
-    loadPrefix(dir: string): Promise<void>;
 
     /**
      * Register Slash Commands

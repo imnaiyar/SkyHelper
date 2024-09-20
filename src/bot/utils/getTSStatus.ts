@@ -1,6 +1,6 @@
 import { getTS } from "#schemas/TS";
 import moment from "moment-timezone";
-interface TSValue {
+export interface TSValue {
   visiting: boolean;
   name?: string;
   nextVisit: moment.Moment;

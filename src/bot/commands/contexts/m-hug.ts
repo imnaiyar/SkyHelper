@@ -2,8 +2,8 @@ import type { ContextMenuCommand } from "#structures";
 import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 export default {
+  name: "Hug",
   data: {
-    name: "Hug",
     type: ApplicationCommandType.Message,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
