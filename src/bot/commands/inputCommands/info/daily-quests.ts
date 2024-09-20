@@ -70,7 +70,7 @@ const disableButtons = (m: Message, int?: ChatInputCommandInteraction): void => 
       });
       return r.toJSON();
     });
-    (int?.editReply ?? m.edit)({
+    (int?.editReply.bind(int) ?? m.edit.bind(m))({
       components: components as APIActionRowComponent<APIButtonComponent | APIStringSelectComponent>[],
     }).catch(() => {});
   });
