@@ -349,7 +349,7 @@ async function validateCommand(
   // Handle Validations
   if (command.validations) {
     for (const validation of command.validations) {
-      if (!validation.callback(interaction)) {
+      if (validation.type !== "message" && !validation.callback(interaction)) {
         await interaction.reply(validation.message);
         return false;
       }
