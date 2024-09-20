@@ -96,7 +96,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   // Check for validations
   if (command.validations?.length) {
     for (const validation of command.validations) {
-      if (!validation.callback(message, { args, flags, commandName: command.name })) {
+      if (validation.type !== "interaction" && !validation.callback(message, { args, flags, commandName: command.name })) {
         await message.reply(validation.message);
         return;
       }

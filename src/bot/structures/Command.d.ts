@@ -18,21 +18,43 @@ type MessageParams = {
   t: ReturnType<typeof getTranslator>;
   client: SkyHelper;
 };
+
 /** Structure of command validation */
-export interface Validation {
+export interface ValidationBase {
   /** Message to display when validation fails */
   message: string;
+}
 
-  /** Callback for the validation. messageOptions is only for prefix command */
+export interface MessageValidation extends ValidationBase {
+  /** Indicates this validation is for message-based commands */
+  type: "message";
+
+  /** Callback for the validation. */
   callback(
     intOrMsg: OmitPartialGroupDMChannel<Message>,
     messageOptions: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
   ): boolean;
+}
+
+export interface InteractionValidation extends ValidationBase {
+  /** Indicates this validation is for interaction-based commands */
+  type: "interaction";
+
+  /** Callback for the validation. */
+  callback(intOrMsg: ChatInputCommandInteraction | ContextMenuCommandInteraction): boolean;
+}
+
+export interface CommonValidation extends ValidationBase {
+  type: "both";
+
+  /** Callback for the validation. */
   callback(
-    intOrMsg: ChatInputCommandInteraction | ContextMenuCommandInteraction,
+    intOrMsg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction | ContextMenuCommandInteraction,
     messageOptions?: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
   ): boolean;
 }
+
+export type Validation = MessageValidation | InteractionValidation | CommonValidation;
 
 export interface PrefixSubcommand {
   trigger: string;
