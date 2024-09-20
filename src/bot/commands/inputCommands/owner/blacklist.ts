@@ -34,6 +34,7 @@ export default {
   },
   validations: [
     {
+      type: "message",
       message: "ID must be provided with this subcommand",
       callback(msg, messageOptions) {
         if (!(msg instanceof Message) || !messageOptions?.args) return true;
