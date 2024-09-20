@@ -13,6 +13,8 @@ export default {
   prefix: {
     flags: ["a", "async", "haste", "depth", "silent", "s"],
     aliases: ["e", "ev"],
+    usage: "<script>",
+    minimumArgs: 1,
   },
   botPermissions: ["ViewChannel", "SendMessages"],
   category: "OWNER",
