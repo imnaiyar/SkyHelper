@@ -1,7 +1,7 @@
 import { getTranslator } from "#bot/i18n";
 import * as schemas from "#bot/database/index";
 import type config from "#bot/config";
-import type { Button, ClassTypes, ContextMenuCommand, PrefixCommand, SlashCommand } from "#structures";
+import type { Button, ClassTypes, Command, ContextMenuCommand } from "#structures";
 import type { Collection } from "discord.js";
 import type { logger } from "#handlers";
 import type { spiritsData } from "#bot/libs/index";
@@ -19,7 +19,7 @@ declare module "discord.js" {
     config: typeof config;
 
     /** Collection of Slash Commands */
-    commands: Collection<string, SlashCommand>;
+    commands: Collection<string, Command>;
 
     /** Collection of Context Menu Commands */
     contexts: Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>;

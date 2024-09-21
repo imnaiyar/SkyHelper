@@ -217,7 +217,7 @@ function handleCommand(command: ApplicationCommand): EmbedBuilder {
       })
       .join("\n");
   }
-  const local_commands = command.client.commands.find((c) => c.data.name === command.name);
+  const local_commands = command.client.commands.find((c) => c.name === command.name);
 
   if (local_commands && local_commands.category) {
     desc += `\n\n-# You can learn more about this command at our command documentations [here](${BASE_DOC_URL}/commands/${local_commands.category.toLowerCase()}#${command.name})`;
