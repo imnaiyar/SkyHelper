@@ -1,5 +1,5 @@
 pull_request_label:
-  - crowdin translations
+  - crowdin
 pull_request_title: "chore: New Crowdin Translations"
 commit_message: "chore: New translations %original_file_name% from Crowdin"
 files:
