@@ -140,3 +140,10 @@ declare module "discord.js" {
     mentionCommand(command: ApplicationCommand, sub?: string): string;
   }
 }
+
+declare global {
+  interface Array {
+    /** Returns a random element from this array */
+    random(): this[number];
+  }
+}

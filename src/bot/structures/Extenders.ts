@@ -20,3 +20,8 @@ Message.prototype.t = async function() {
   const uSettings = await getUser(user);
   return getTranslator(uSettings.language?.value || gSettings?.language?.value || "en-US");
 };
+
+// Array
+Array.prototype.random = function () {
+  return this[Math.floor(Math.random() * this.length)];
+};
