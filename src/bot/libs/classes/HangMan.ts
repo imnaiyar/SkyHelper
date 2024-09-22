@@ -2,7 +2,7 @@ import { EmbedBuilder, type SendableChannels, type User } from "discord.js";
 import { setTimeout as wait } from "timers/promises";
 
 /** Hangman game manager */
-class Hangman {
+export class Hangman {
   /** Winner of this hangman game */
   public winner: null | User = null;
 
@@ -43,14 +43,14 @@ class Hangman {
     else this.word = "Hello";
   }
   public inititalize() {
-    this.alphabets = this.word.split("").map((w, i) => ({ guessed: false, alphabet: w, position: i }));
+    this.alphabets = this.word.split("").map((w, i) => ({ guessed: w === " " ? true : false, alphabet: w, position: i }));
     this.currentPlayer = this.players.random();
     if (this.mode === "double") this.startDoubleModeGame();
     else if (this.mode === "single") this.startSingleModeGame();
   }
   private async startDoubleModeGame() {
     this.channel.send(getHangmanResponse(HangmanResponseCodes.FirstRound, this.currentPlayer));
-
+    console.log(this.alphabets, this.word);
     await wait(3000);
     const collectResponse = async () => {
       await this.channel.send({ embeds: [this.getEmbed()] });
@@ -74,31 +74,42 @@ class Hangman {
           this.channel.send(
             getHangmanResponse(validate) + " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer),
           );
+          if (this.alphabets!.every((a) => a.guessed)) {
+            this.channel.send(getHangmanResponse(HangmanResponseCodes.Winner, this.winner, this.word));
+            await wait(2000);
+            return this.endGame();
+          }
           await wait(2000);
           return collectResponse();
         default: {
           this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
           this.channel.send(
-            getHangmanResponse(validate) + " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer),
+            getHangmanResponse(validate, res.content) + " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer),
           );
           await wait(3000);
           return collectResponse();
         }
       }
     };
+    collectResponse();
   }
   private startSingleModeGame() {}
 
   private validateAnswer(word: string) {
-    if (EnglishAlphabets.some((a) => a !== word) && word !== this.word) return HangmanResponseCodes.NotAnAlphabet;
+    if (!EnglishAlphabets.some((a) => a.toLowerCase() === word.toLowerCase()) && word.toLowerCase() !== this.word.toLowerCase()) {
+      return HangmanResponseCodes.NotAnAlphabet;
+    }
     if (this.guessedAlphabets.some((a) => a === word)) return HangmanResponseCodes.AlreadyGuessed;
     if (this.word === word) return HangmanResponseCodes.GuessedFullWord;
     this.guessedAlphabets.push(word as (typeof EnglishAlphabets)[number]);
+
     // prettier-ignore
     if (!this.alphabets) throw new Error("Alphabets not initialized, the game may have been started without proper initialization");
 
-    if (this.alphabets.some((a) => a.alphabet !== word)) return HangmanResponseCodes.WrongGuess;
-    this.alphabets.find((a) => a.alphabet === word)!.guessed = true;
+    if (!this.alphabets.some((a) => a.alphabet === word)) return HangmanResponseCodes.WrongGuess;
+    this.alphabets.forEach((alp) => {
+      if (alp.alphabet === word) alp.guessed = true;
+    });
     return HangmanResponseCodes.GuessSuccess;
   }
 
@@ -117,7 +128,7 @@ class Hangman {
     return new EmbedBuilder().setTitle(`It's ${this.currentPlayer} turn!`).setDescription(
       `Word: ${this.alphabets
         .map((a) => {
-          if (a.alphabet === " " || a.guessed) return a.alphabet;
+          if (a.guessed) return a.alphabet;
           else return "ℹ️";
         })
         .join(
@@ -191,7 +202,8 @@ const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: any[]) 
   [HangmanResponseCodes.GuessSuccess]: "Correct ✅! That was a correct guess!",
   [HangmanResponseCodes.WrongGuess]: "Oops! That was a wrong guess!",
   [HangmanResponseCodes.NextUp]: (user: User) => `Next turn is for ${user}`,
-  [HangmanResponseCodes.Winner]: (user: User) => `The winner of this game is ${user}`,
+  [HangmanResponseCodes.Winner]: (user: User, word: string) =>
+    `The winner of this game is ${user} 🎊. The correct word was ${word}`,
   [HangmanResponseCodes.NotInitialized]:
     "Something went wrong! CurrentPlayer is not initialized yet. Did you call `initialize()`?",
   [HangmanResponseCodes.FirstRound]: (user: User) =>
