@@ -5,11 +5,10 @@ export default {
   name: "hangman",
   description: "Hmmm",
   async messageRun({ message, args }) {
-    const part = message.mentions.users.first()!;
     const hangman = new Hangman(message.channel, {
-      players: [message.author, part],
-      mode: "double",
-      word: args.slice(1).join(" "),
+      players: [message.author],
+      mode: "single",
+      word: args.join(" "),
     });
     hangman.inititalize();
   },
