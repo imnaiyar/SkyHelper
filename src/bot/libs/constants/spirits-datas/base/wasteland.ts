@@ -232,7 +232,7 @@ const data: Record<string, SpiritsData> = {
     ],
   },
   lookout_scout: {
-    name: "Looking Scout",
+    name: "Lookout Scout",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/0/09/Wasteland-Spirit-Lookout-Scout.png",
     type: "Regular Spirit",
     realm: "Golden Wasteland",
