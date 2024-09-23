@@ -9,13 +9,13 @@ const data: Record<string, SpiritsData> = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: [["September 16, 2024 (SV#6)", "September 29, 2024"]],
     },
     tree: {
-      by: "NyR",
-      total: " ",
-      image: "Ancient_Darkness_Dark_Plant_Seasonal_Chart_NyR.png",
+      by: "June",
+      total: "208 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Darkness_Plant_by_June.png",
     },
     collectibles: [
       {
@@ -23,6 +23,7 @@ const data: Record<string, SpiritsData> = {
         type: "Mask",
         icon: "<:DarknessPlantMask:1274711537155706995>",
         isSP: true,
+        price: "50 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Mask",
@@ -36,6 +37,7 @@ const data: Record<string, SpiritsData> = {
         type: "Cape",
         icon: "<:DarknessPlantCape:1274711524144975912>",
         isSP: true,
+        price: "80 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Cape (Front)",
@@ -64,6 +66,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:DarknessPlantHairAccessory:1274712381901246464>",
         type: "Hair Accessory",
         spPrice: "27 <:ShatteringCandle:1274701104306847775>",
+        price: "45 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Accessory",
@@ -77,6 +80,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:MusicIcon:1262323496852131882>",
         type: "Music Sheet",
         spPrice: "35 <:ShatteringCandle:1274701104306847775>",
+        price: "15 <:RegularCandle:1207793250895794226>",
         images: [],
       },
     ],
@@ -89,13 +93,13 @@ const data: Record<string, SpiritsData> = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: [["September 16, 2024 (SV#6)", "September 29, 2024"]],
     },
     tree: {
-      by: "NyR",
-      total: " ",
-      image: "Ancient_Darkness_Dragon_Seasonal_chart_NyR.png",
+      by: "June",
+      total: "208 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Darkness_Dragon_by_June.png",
     },
     collectibles: [
       {
@@ -103,6 +107,7 @@ const data: Record<string, SpiritsData> = {
         type: "Hair",
         icon: "<:DarknessDragonHair:1274709061035626506>",
         spPrice: "42 <:ShatteringCandle:1274701104306847775>",
+        price: "70 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Hair",
@@ -116,6 +121,7 @@ const data: Record<string, SpiritsData> = {
         type: "Neck Accessory",
         icon: "<:DarknessDragonNeckAccessory:1274709074277044325>",
         spPrice: "35 <:ShatteringCandle:1274701104306847775>",
+        price: "70 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Accessory",
@@ -129,6 +135,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:DarknessDragonProp:1274709048746573954>",
         type: "Prop",
         isSP: true,
+        price: "50 <:RegularCandle:1207793250895794226>",
         notes: [
           "It is a held Prop that can be used to make a deep call",
           "It is not considered an Instrument since Music Sheets cannot be played with it, and it cannot be used to practice in the Harmony Hall's Rehearsal Room",
@@ -161,13 +168,13 @@ const data: Record<string, SpiritsData> = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: [["September 16, 2024 (SV#6)", "September 29, 2024"]],
     },
     tree: {
-      by: "NyR",
-      total: " ",
-      image: "Ancient_Light_Manta_Seasonal_Chart_NyR.png",
+      by: "June",
+      total: "238 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Light_Manta_by_June.png",
     },
     collectibles: [
       {
@@ -175,6 +182,7 @@ const data: Record<string, SpiritsData> = {
         type: "Outfit",
         icon: "<:AncientLightMantaOutfit:1274705693642854443>",
         isSP: true,
+        price: "75 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Outfit (Front)",
@@ -193,6 +201,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:AncientLightMantaHair:1274705681697603584>",
         type: "Hair",
         isSP: true,
+        price: "50 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Hair",
@@ -206,6 +215,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:AncientLightMantaCape:1274705668284223581>",
         type: "Cape",
         spPrice: "35 <:ShatteringCandle:1274701104306847775>",
+        price: "80 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Cape (Front)",
@@ -234,6 +244,7 @@ const data: Record<string, SpiritsData> = {
         icon: "<:MusicIcon:1262323496852131882>",
         type: "Music Sheet",
         spPrice: "27 <:ShatteringCandle:1274701104306847775>",
+        price: "15 <:RegularCandle:1207793250895794226>",
         images: [],
       },
     ],
@@ -246,13 +257,13 @@ const data: Record<string, SpiritsData> = {
     season: "Shattering",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: [["September 16, 2024 (SV#6)", "September 29, 2024"]],
     },
     tree: {
-      by: "NyR",
-      total: " ",
-      image: "Ancient_Light_Jellyfish_Seasonal_Chart_NyR.png",
+      by: "June",
+      total: "193 :RegularCandle: 0 :RegularHeart: 2 :AC:",
+      image: "Light_Jellyfish_by_June.png",
     },
     collectibles: [
       {
@@ -260,6 +271,7 @@ const data: Record<string, SpiritsData> = {
         type: "Cape",
         icon: "<:AncientLightJellyCape:1274701218500972565>",
         spPrice: "42 <:ShatteringCandle:1274701104306847775>",
+        price: "80 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Cape (Front)",
@@ -288,6 +300,7 @@ const data: Record<string, SpiritsData> = {
         type: "Hair",
         icon: "<:AncientLightJellyHair:1274701162389442560>",
         spPrice: "35 <:ShatteringCandle:1274701104306847775>",
+        price: "45 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Hair",
@@ -301,6 +314,7 @@ const data: Record<string, SpiritsData> = {
         type: "Hair Accessory",
         icon: "<:AncientLightJellyHAccessory:1274701176272851023>",
         isSP: true,
+        price: "50 <:RegularCandle:1207793250895794226>",
         images: [
           {
             description: "The Accessory",
