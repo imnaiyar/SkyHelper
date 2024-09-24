@@ -216,7 +216,7 @@ export class Hangman {
     const embed = new EmbedBuilder()
       .setTitle("SkyGame: Hangman")
       .setDescription(
-        `### Winner: ${this.winner} \`(${this.winner?.displayName})\`\n\n**Word to guess was**: ${this.word}\n\n**Stats:**\n${this._getPlayerStats()}`,
+        `### Winner: ${this.winner ? this.winner : "None"} \`(${this.winner?.displayName || ""})\`\n\n**Word to guess was**: ${this.word}\n\n**Stats:**\n${this._getPlayerStats()}`,
       )
       .setAuthor({ name: `SkyGame: Hangman | SkyHelper`, iconURL: this.channel.client.user.displayAvatarURL() });
     this._sendResponse({ embeds: [embed] });
