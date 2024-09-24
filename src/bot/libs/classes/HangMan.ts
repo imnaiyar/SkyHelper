@@ -25,10 +25,15 @@ export class Hangman {
   /** Players participating in this game */
   public players: User[];
 
+  /** Player stats for the game */
+  public playerStats: Map<string, PlayerStats> = new Map();
+
   /** The word for the game */
   public word: string;
 
   public alphabets: HangmanWords | null = null;
+
+  public alphabetLength: number | null = null;
 
   /** The english alphabets that has been guessed */
   private guessedAlphabets: (typeof EnglishAlphabets)[number][] = [];
@@ -44,7 +49,9 @@ export class Hangman {
     if (this.mode === "single" && option.players.length > 1) throw new Error("Only one player must be provided for single mode");
 
     this.players = option.players;
-
+    for (const player of this.players) {
+      this.playerStats.set(player.id, { incorrectGuesses: 0, correctGuesses: 0 });
+    }
     // prettier-ignore
     if (this.mode === "single" && option.totalLives) (this.totalLives = option.totalLives), (this.remainingLives = option.totalLives);
 
@@ -55,111 +62,107 @@ export class Hangman {
       this.word = hangmanWords.random();
     }
   }
-  public inititalize() {
+  public async inititalize() {
     this.alphabets = this.word.split("").map((w, i) => ({
       guessed: EnglishAlphabets.some((wo) => wo.toLowerCase() === w.toLowerCase()) ? false : true, // Make any non-english characters already guessed
       alphabet: w,
       position: i,
       guessedBy: null,
     }));
+
+    // @ts-ignore
+    this.alphabetLength = this.alphabets.filter((alp) => EnglishAlphabets.includes(alp.alphabet.toLowerCase())).length;
     this.currentPlayer = this.players.random();
-    if (this.mode === "double") this.startDoubleModeGame();
-    else if (this.mode === "single") this.startSingleModeGame();
+    if (this.mode === "double") {
+      await this._sendResponse(getHangmanResponse(HangmanResponseCodes.FirstRound, this.currentPlayer));
+    } else {
+      await this._sendResponse(getHangmanResponse(HangmanResponseCodes.SingleModeStart, this.totalLives));
+    }
+    this._collectResponse();
   }
-  private async startDoubleModeGame() {
-    this.sendResponse(getHangmanResponse(HangmanResponseCodes.FirstRound, this.currentPlayer));
-    await wait(3000);
-    const collectResponse = async () => {
-      await this.sendResponse({ embeds: [this.getEmbed()] });
-      const res = await this.getCollectorResponse();
-      if (res === "Timeout") {
-        this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
-        this.sendResponse(
-          getHangmanResponse(HangmanResponseCodes.Timeout) + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer),
+
+  private async _collectResponse(): Promise<any> {
+    await this._sendResponse({ embeds: [this._getEmbed()] });
+    const res = await this._getCollectorResponse();
+    if (res === "Timeout") {
+      if (this.mode === "double") this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
+      if (this.mode === "single") {
+        this.remainingLives--;
+        if (this.remainingLives <= 0) {
+          this._sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
+          await wait(2000);
+          return this._endGame();
+        }
+      }
+      this._sendResponse(
+        getHangmanResponse(HangmanResponseCodes.Timeout) +
+          (this.mode === "double" ? getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer) : ""),
+      );
+      return this._collectResponse();
+    }
+    const validate = this._validateAnswer(res.content.toLowerCase());
+    switch (validate) {
+      case HangmanResponseCodes.GuessedFullWord: {
+        this.winner = this.currentPlayer;
+        const unguessedWords = this.alphabets!.filter((a) => !a.guessed);
+        const stat = this.playerStats.get(this.currentPlayer!.id)!;
+        stat.correctGuesses += unguessedWords.length;
+        this.playerStats.set(this.currentPlayer!.id, stat);
+        this._sendResponse(getHangmanResponse(validate, this.winner, this.word));
+        await wait(2000);
+        return this._endGame();
+      }
+      case HangmanResponseCodes.GuessSuccess: {
+        this._sendResponse(
+          getHangmanResponse(validate) +
+            (this.mode === "double" ? " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer) : ""),
         );
-        return collectResponse();
-      }
-      const validate = this.validateAnswer(res.content.toLowerCase());
-      switch (validate) {
-        case HangmanResponseCodes.GuessedFullWord: {
+        const stat = this.playerStats.get(this.currentPlayer!.id)!;
+        stat.correctGuesses++;
+        this.playerStats.set(this.currentPlayer!.id, stat);
+        if (this.alphabets!.every((a) => a.guessed)) {
           this.winner = this.currentPlayer;
-          this.sendResponse(getHangmanResponse(validate, this.winner, this.word));
+          this._sendResponse(getHangmanResponse(HangmanResponseCodes.Winner, this.winner, this.word));
           await wait(2000);
-          return this.endGame();
+          return this._endGame();
         }
-        case HangmanResponseCodes.GuessSuccess:
-          this.sendResponse(
-            getHangmanResponse(validate) + " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer),
-          );
-          if (this.alphabets!.every((a) => a.guessed)) {
-            this.winner = this.currentPlayer;
-            this.sendResponse(getHangmanResponse(HangmanResponseCodes.Winner, this.winner, this.word));
-            await wait(2000);
-            return this.endGame();
-          }
-          await wait(2000);
-          return collectResponse();
-        default: {
-          this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
-          this.sendResponse(
-            getHangmanResponse(validate, res.content) + " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer),
-          );
-          await wait(3000);
-          return collectResponse();
-        }
+        await wait(2000);
+        return this._collectResponse();
       }
-    };
-    collectResponse();
-  }
-  private async startSingleModeGame() {
-    await this.sendResponse(getHangmanResponse(HangmanResponseCodes.SingleModeStart, this.totalLives));
-    await wait(3000);
-    const collectResponse = async () => {
-      await this.sendResponse({ embeds: [this.getEmbed()] });
-      const res = await this.getCollectorResponse();
-      if (res === "Timeout") {
-        this.sendResponse(getHangmanResponse(HangmanResponseCodes.Timeout));
-        return collectResponse();
-      }
-      const validate = this.validateAnswer(res.content.toLowerCase());
-      switch (validate) {
-        case HangmanResponseCodes.GuessedFullWord: {
-          this.winner = this.currentPlayer;
-          this.sendResponse(getHangmanResponse(validate, this.winner, this.word));
-          await wait(2000);
-          return this.endGame();
-        }
-        case HangmanResponseCodes.GuessSuccess:
-          this.sendResponse(getHangmanResponse(validate));
-          if (this.alphabets!.every((a) => a.guessed)) {
-            this.winner = this.currentPlayer;
-            this.sendResponse(getHangmanResponse(HangmanResponseCodes.Winner, this.winner, this.word));
-            await wait(2000);
-            return this.endGame();
-          }
-          await wait(2000);
-          return collectResponse();
-        default: {
-          this.sendResponse(getHangmanResponse(validate, res.content));
+      default: {
+        // Only switch for double mode games
+        if (this.mode === "double") this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
+        if (this.mode === "single") {
           this.remainingLives--;
-          await wait(3000);
-
-          // prettier-ignore
-          if (this.remainingLives <= 0) return this.sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
-          return collectResponse();
+          if (this.remainingLives <= 0) {
+            this._sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
+            await wait(2000);
+            return this._endGame();
+          }
         }
+        const stat = this.playerStats.get(this.currentPlayer!.id)!;
+        stat.correctGuesses--;
+        this.playerStats.set(this.currentPlayer!.id, stat);
+        this._sendResponse(getHangmanResponse(validate, res.content));
+        if (this.mode === "double") this._sendResponse(getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer));
+        await wait(3000);
+        return this._collectResponse();
       }
-    };
-    collectResponse();
+    }
   }
-
-  private validateAnswer(word: string) {
-    if (word.length > 1 && word !== this.word.toLowerCase()) return HangmanResponseCodes.WrongWordGuess;
-    if (!EnglishAlphabets.some((a) => a.toLowerCase() === word) && word !== this.word.toLowerCase()) {
+  private _validateAnswer(word: string) {
+    if (this.word.toLowerCase() === word) {
+      this.alphabets?.forEach((a) => {
+        if (!a.guessedBy || !a.guessed) (a.guessed = true), (a.guessedBy = this.currentPlayer!);
+      });
+      return HangmanResponseCodes.GuessedFullWord;
+    }
+    if (word.length > 1) return HangmanResponseCodes.WrongWordGuess;
+    if (!EnglishAlphabets.some((a) => a.toLowerCase() === word)) {
       return HangmanResponseCodes.NotAnAlphabet;
     }
     if (this.guessedAlphabets.some((a) => a.toLowerCase() === word)) return HangmanResponseCodes.AlreadyGuessed;
-    if (this.word.toLowerCase() === word) return HangmanResponseCodes.GuessedFullWord;
+
     this.guessedAlphabets.push(word as (typeof EnglishAlphabets)[number]);
 
     // prettier-ignore
@@ -172,7 +175,7 @@ export class Hangman {
     return HangmanResponseCodes.GuessSuccess;
   }
 
-  private async getCollectorResponse() {
+  private async _getCollectorResponse() {
     if (!this.currentPlayer) {
       throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
     }
@@ -182,7 +185,7 @@ export class Hangman {
     return col.first()!;
   }
 
-  private getEmbed() {
+  private _getEmbed() {
     if (!this.currentPlayer || !this.alphabets) throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
     let remaininglives: string | null = null;
     if (this.mode === "single") {
@@ -196,20 +199,43 @@ export class Hangman {
       }
     }
     return new EmbedBuilder().setDescription(
-      `## ${this.mode === "single" ? `${this.currentPlayer} is currently guessing!` : `It's ${this.currentPlayer} turn!`}\nWord: ${this.alphabets
+      `## ${this.mode === "single" ? `${this.currentPlayer} is currently guessing!` : `It's ${this.currentPlayer} turn!`}\nWord: **__${this.alphabets
         .map((a) => {
-          if (a.guessed) return a.alphabet;
+          if (a.guessed) return a.alphabet === " " ? a.alphabet : `${a.alphabet}`;
           else return "ℹ️";
         })
-        .join("")}\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
+        .join(
+          "",
+        )}__** (${this.alphabetLength!} alphabets excluding special characters)\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
         this.mode === "single" ? `\n\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : ""
       }\n\nRemaining Time: <a:30s:1287391044127952947>`,
     );
   }
 
-  private endGame() {}
+  private _endGame() {
+    const embed = new EmbedBuilder()
+      .setTitle("SkyGame: Hangman")
+      .setDescription(
+        `### Winner: ${this.winner} \`(${this.winner?.displayName})\`\n\n**Word to guess was**: ${this.word}\n\n**Stats:**\n${this._getPlayerStats()}`,
+      )
+      .setAuthor({ name: `SkyGame: Hangman | SkyHelper`, iconURL: this.channel.client.user.displayAvatarURL() });
+    this._sendResponse({ embeds: [embed] });
+  }
 
-  private async sendResponse(payload: string | MessageCreateOptions) {
+  private _getPlayerStats() {
+    return this.players
+      .map((player) => {
+        const stat = this.playerStats.get(player.id)!;
+        const correctGuesses = stat.correctGuesses;
+        const incorrectGuesses = stat.incorrectGuesses;
+        const correctPercent = (correctGuesses / this.alphabetLength!) * 100;
+        const incorrectPercent = (incorrectGuesses / this.alphabetLength!) * 100;
+        return `- ${player} - \`${player.displayName}\`: Correct Guesses: ${correctGuesses}/${this.alphabetLength!} (${correctPercent.toFixed(2)}%), Incorrect Guesses: ${incorrectGuesses} (${incorrectPercent.toFixed(2)})`;
+      })
+      .join("\n");
+  }
+
+  private async _sendResponse(payload: string | MessageCreateOptions) {
     const createPayload = typeof payload === "string" ? { content: payload } : payload;
     await this.channel.send({ ...createPayload, allowedMentions: { parse: ["users"] } });
   }
@@ -231,15 +257,14 @@ type HangmanWords = {
   guessedBy: User | null;
 }[];
 
-type SinglePlayerStat = {
-  livesRemaining: number;
-  guessedFirstWord: boolean;
-};
-
 // prettier-ignore
-const EnglishAlphabets = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
-"m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] as const;
+const EnglishAlphabets = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+  "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] as const;
 
+type PlayerStats = {
+  correctGuesses: number;
+  incorrectGuesses: number;
+};
 enum HangmanResponseCodes {
   Timeout,
   NotAnAlphabet,
@@ -259,7 +284,7 @@ enum HangmanResponseCodes {
 const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: any[]) => string)> = {
   [HangmanResponseCodes.Timeout]: `Timed-out! You took too long to answer.`,
   [HangmanResponseCodes.NotAnAlphabet]: "The given answer is not an English alphabet!",
-  [HangmanResponseCodes.AlreadyGuessed]: (letter: string) => `\`${letter}\` has already be guess.`,
+  [HangmanResponseCodes.AlreadyGuessed]: (letter: string) => `\`${letter}\` has already been guessed.`,
   [HangmanResponseCodes.GuessSuccess]: "Correct ✅! That was a correct guess!",
   [HangmanResponseCodes.WrongGuess]: "Oops! That was a wrong guess!",
   [HangmanResponseCodes.WrongWordGuess]: "Incorrect ❌! That was not the correct word.",

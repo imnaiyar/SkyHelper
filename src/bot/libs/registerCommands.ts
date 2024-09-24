@@ -5,7 +5,7 @@ const root = process.isBun ? "src/" : "dist/";
 client.on("ready", async () => {
   try {
     client.logger.success("Started refreshing application (/) commands.");
-    await client.loadCommands(root + "bot/commands/inoutCommands");
+    await client.loadCommands(root + "bot/commands/inputCommands");
     await client.loadContextCmd(root + "bot/commands/contexts");
     await client.registerCommands();
     await client.application.commands.fetch();

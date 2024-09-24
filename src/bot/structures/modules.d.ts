@@ -145,5 +145,8 @@ declare global {
   interface Array {
     /** Returns a random element from this array */
     random(): this[number];
+
+    /** Returns that last element from this array */
+    last(): this[number];
   }
 }
