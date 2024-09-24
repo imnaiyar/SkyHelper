@@ -202,7 +202,7 @@ export default {
             ...(mode === "single" ? { totalLives: maxLives } : {}),
           });
           await i.update({ components: [] });
-          await i.followUp({
+          const followUpMsg = await i.followUp({
             content: constants[mode as "single" | "double"],
             components: [
               new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -211,6 +211,16 @@ export default {
               ),
             ],
           });
+          const confirmation = await followUpMsg
+            .awaitMessageComponent({ time: 90_000, filter: (conInt) => conInt.user.id === i.user.id })
+            .catch(() => null);
+          if (!confirmation) {
+            await i.editReply({ message: followUpMsg, content: "Recieved no confirmation. Game cancelled!", components: [] });
+            return;
+          }
+          const id = confirmation.customId.split("_").last();
+          await confirmation.update({ content: id === "deny" ? "Game Cancelled!" : "Starting the game!", components: [] });
+          if (id === "deny") return;
           await setTimeout(2000);
           game.inititalize();
         }
