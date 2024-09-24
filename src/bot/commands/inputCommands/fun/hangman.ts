@@ -42,7 +42,7 @@ export default {
       },
     ],
   },
-  async interactionRun(interaction, _t, _client) {
+  async interactionRun(interaction, _t, client) {
     const mode = interaction.options.getString("mode", true);
     if (!interaction.channel || !interaction.channel.isSendable()) {
       return void (await interaction.reply({
@@ -51,6 +51,12 @@ export default {
       }));
     }
 
+    if (client.gameData.has(interaction.channel.id)) {
+      return void (await interaction.reply({
+        content: "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
+        ephemeral: true,
+      }));
+    }
     let word: string | null = null;
     let type: string = "random";
     let maxLives: number = 7;
@@ -221,6 +227,8 @@ export default {
           const id = confirmation.customId.split("_").last();
           await confirmation.update({ content: id === "deny" ? "Game Cancelled!" : "Starting the game!", components: [] });
           if (id === "deny") return;
+
+          client.gameData.set(interaction.channel.id, game);
           await setTimeout(2000);
           game.inititalize();
         }
