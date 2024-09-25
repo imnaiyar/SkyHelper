@@ -19,10 +19,10 @@ const config: DocsThemeConfig = {
     </>
   ),
   banner: {
-    key: "6.0.0-release",
+    key: "7.0.0-release",
     text: (
       <a href="/changelogs" target="_blank">
-        🎉 v6.0.0 is released. Read more →
+        🎉 v7.0.0 is released. Read more →
       </a>
     ),
   },
