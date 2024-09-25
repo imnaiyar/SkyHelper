@@ -82,6 +82,7 @@ export class Hangman {
     } else {
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.SingleModeStart, this.totalLives));
     }
+    await wait(3000);
     this._collectResponse();
     this._listenForStop();
   }
@@ -109,10 +110,6 @@ export class Hangman {
     switch (validate) {
       case HangmanResponseCodes.GuessedFullWord: {
         this.winner = this.currentPlayer;
-        const unguessedWords = this.alphabets!.filter((a) => !a.guessed);
-        const stat = this.playerStats.get(this.currentPlayer!.id)!;
-        stat.correctGuesses += unguessedWords.length;
-        this.playerStats.set(this.currentPlayer!.id, stat);
         this._sendResponse(getHangmanResponse(validate, this.winner, this.word));
         await wait(2000);
         return this._endGame();
@@ -122,9 +119,7 @@ export class Hangman {
           getHangmanResponse(validate) +
             (this.mode === "double" ? " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer) : ""),
         );
-        const stat = this.playerStats.get(this.currentPlayer!.id)!;
-        stat.correctGuesses++;
-        this.playerStats.set(this.currentPlayer!.id, stat);
+
         if (this.alphabets!.every((a) => a.guessed)) {
           this.winner = this.currentPlayer;
           this._sendResponse(getHangmanResponse(HangmanResponseCodes.Winner, this.winner, this.word));
@@ -159,6 +154,11 @@ export class Hangman {
   }
   private _validateAnswer(word: string) {
     if (this.word.toLowerCase() === word) {
+      // Add unguessed words to the player stats before marking them all guessed
+      const unguessedWords = this.alphabets!.filter((a) => !a.guessed);
+      const stat = this.playerStats.get(this.currentPlayer!.id)!;
+      stat.correctGuesses += unguessedWords.length;
+      this.playerStats.set(this.currentPlayer!.id, stat);
       this.alphabets?.forEach((a) => {
         if (!a.guessedBy || !a.guessed) (a.guessed = true), (a.guessedBy = this.currentPlayer!);
       });
@@ -179,6 +179,9 @@ export class Hangman {
     this.alphabets.forEach((alp) => {
       if (alp.alphabet.toLowerCase() === word) (alp.guessed = true), (alp.guessedBy = this.currentPlayer);
     });
+    const stat = this.playerStats.get(this.currentPlayer!.id)!;
+    stat.correctGuesses += this.alphabets.filter((a) => a.alphabet.toLowerCase() === word).length;
+    this.playerStats.set(this.currentPlayer!.id, stat);
     return HangmanResponseCodes.GuessSuccess;
   }
 
@@ -210,28 +213,37 @@ export class Hangman {
       }
     }
     return new EmbedBuilder().setTitle("Skygame: Hangman [BETA]").setDescription(
-      `## ${this.mode === "single" ? `${this.currentPlayer} is currently guessing!` : `It's ${this.currentPlayer} turn!`}\nWord: **__${this.alphabets
+      `## ${this.mode === "single" ? `${this.currentPlayer} is currently guessing!` : `It's ${this.currentPlayer} turn!`}\nWord: **${this.alphabets
         .map((a) => {
-          if (a.guessed) return a.alphabet === " " ? a.alphabet : `${a.alphabet}`;
-          else return "ℹ️";
+          if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : `${a.alphabet}`;
+          else return "◼️";
         })
         .join(
           "",
-        )}__** (${this.alphabetLength!} alphabets excluding special characters)\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
+        )}** (${this.alphabetLength!} alphabets excluding special characters)\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
         this.mode === "single" ? `\n\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : ""
       }\n\nRemaining Time: <a:30s:1287391044127952947>\n\n-# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
     );
   }
 
-  private async _endGame() {
+  private async _endGame(reason?: string) {
     if (this.winner) {
       const user = await this.channel.client.database.getUser(this.winner);
       // prettier-ignore
       if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
       user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
-      user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
       await user.save();
     }
+    if (!reason || reason !== "stopped-game") {
+      this.players.forEach(async (player) => {
+        const user = await this.channel.client.database.getUser(player);
+        // prettier-ignore
+        if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
+        user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
+        await user.save();
+      });
+    }
+
     const embed = new EmbedBuilder()
       .setTitle("SkyGame: Hangman")
       .setDescription(
@@ -239,6 +251,7 @@ export class Hangman {
       )
       .setAuthor({ name: `SkyGame: Hangman | SkyHelper`, iconURL: this.channel.client.user.displayAvatarURL() });
     this._sendResponse({ embeds: [embed] });
+    this.channel.client.gameData.delete(this.channel.id);
   }
 
   private _getPlayerStats() {
@@ -269,7 +282,7 @@ export class Hangman {
       }
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.EndmGame));
       col.stop();
-      return this._endGame();
+      return this._endGame("stopped-game");
     });
   }
 }
@@ -332,7 +345,7 @@ const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: any[]) 
   [HangmanResponseCodes.GuessedFullWord]: (user: User, word: string) =>
     `${user} has correctly guessed the word! Congrats 🎊. The word was \`${word}\`.`,
   [HangmanResponseCodes.SingleModeStart]: (lives: number) =>
-    `The game will start in 3s. You'll have ${lives} lives, each incorrect guess will cost you one live. Try to guess the word before you lives runs out. Good luck!`,
+    `The game will start soon. You'll have ${lives} lives, each incorrect guess will cost you one live. Try to guess the word before you lives runs out. Good luck!`,
   [HangmanResponseCodes.LivesExhausted]: (word: string) =>
     `Sorry! Looks like you have exhausted your lives. Better luck next time! \`${word}\` was the correct word.`,
   [HangmanResponseCodes.EndmGame]: `Stopped the game!`,

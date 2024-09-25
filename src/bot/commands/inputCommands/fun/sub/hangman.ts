@@ -14,9 +14,8 @@ import {
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
-import { setTimeout } from "timers/promises";
 const BASE =
-  "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel.";
+  "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {
   ["single"]: `${BASE}\n- Each wrong answer will cost lives. The embed will show how many live you have left. You'll loose if you fail to guess the word correctly before your lives runs out.`,
   ["double"]: `${BASE}\n- Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.`,
@@ -59,7 +58,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
         **Provide the following information:**
         ${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with.\n` : ""}${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n ${
           constants[mode as "single" | "double"] +
-          "\n- The Skygame feature is in BETA and will continue to evolve, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"
+          "\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"
         }`,
       color: 0x00ff00,
     };
@@ -196,7 +195,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
         await i.update({ components: [] });
 
         client.gameData.set(interaction.channel.id, game);
-        await setTimeout(2000);
+
         game.inititalize();
       }
     }

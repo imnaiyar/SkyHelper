@@ -99,7 +99,7 @@ export default {
             );
             const card = players.length && (await new LeaderboardCard({ usersData: players }).build());
             const embed: APIEmbed = {
-              title: "Hangman Leaderboard - " + (type === "server" ? "`Server`" : "`Global`"),
+              title: "Hangman Leaderboard - " + (type === "server" ? `\`Server (${interaction.guild?.name})\`` : "`Global`"),
               description:
                 `**Top 10 players in the hangman game - \`${btnType === "singleMode" ? "Single Mode" : "Double Mode"}\`**\n\n` +
                 (card ? "" : "Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!"),
