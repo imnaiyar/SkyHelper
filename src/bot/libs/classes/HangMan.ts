@@ -64,6 +64,7 @@ export class Hangman {
     } else {
       this.word = hangmanWords.random();
     }
+    this.initiator = option.gameInitator;
   }
   public async inititalize() {
     this.alphabets = this.word.split("").map((w, i) => ({
@@ -186,7 +187,11 @@ export class Hangman {
       throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
     }
     const curr = this.currentPlayer;
-    const col = await this.channel.awaitMessages({ time: 30_000, filter: (m) => m.author.id === curr.id, max: 1 });
+    const col = await this.channel.awaitMessages({
+      time: 30_000,
+      filter: (m) => m.author.id === curr.id && m.content.toLowerCase() !== ">stopgame",
+      max: 1,
+    });
     if (!col.size) return "Timeout";
     return col.first()!;
   }
@@ -256,11 +261,11 @@ export class Hangman {
       }
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.EndmGame));
       col.stop();
-      return this._endGame;
+      return this._endGame();
     });
   }
 }
-type HangmanOptionsBase = { mode?: "single" | "double"; players: User[]; totalLives?: number };
+type HangmanOptionsBase = { mode?: "single" | "double"; players: User[]; totalLives?: number; gameInitator: User };
 interface HangmanCustomModeOption extends HangmanOptionsBase {
   type?: "custom";
   word: string;
