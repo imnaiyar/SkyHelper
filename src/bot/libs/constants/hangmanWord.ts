@@ -34,5 +34,3 @@ export const hangmanWords = ["Ancestor Spirit", "Traveling Spirit", "Seasonal Sp
     ...(Object.entries(SummaryData).map(([, v]) => v["main"].title)),
     ...(Object.entries(seasonsData).map(([, v]) => v.name)),
   ];
-
-console.log(hangmanWords);

@@ -98,6 +98,9 @@ importers:
       "@commitlint/config-conventional":
         specifier: ^19.2.2
         version: 19.2.2
+      "@jest/globals":
+        specifier: ^29.7.0
+        version: 29.7.0
       "@nestjs/schematics":
         specifier: ^10.1.1
         version: 10.1.1(typescript@5.5.4)
@@ -4204,7 +4207,7 @@ snapshots:
       nopt: 5.0.0
       npmlog: 5.0.1
       rimraf: 3.0.2
-      semver: 7.6.2
+      semver: 7.6.3
       tar: 6.2.1
     transitivePeerDependencies:
       - encoding
