@@ -13,6 +13,7 @@ import {
 } from "discord.js";
 const suggWb = process.env.SUGGESTION ? new WebhookClient({ url: process.env.SUGGESTION }) : undefined;
 import pkg from "#root/package.json" assert { type: "json" };
+import setprefix from "../../admin/setprefix.js";
 const version = pkg.version;
 export async function getSuggestion(interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) {
   const client = interaction.client;
@@ -84,12 +85,19 @@ export async function getChangelog(interaction: ChatInputCommandInteraction) {
     return `</${com!.name}${sub ? ` ${sub}` : ""}:${com!.id}>`;
   };
   const changes = [
-    `### Daily Quests
-Added support for daily quests
-- ${comMen("daily-quests")} command to check today's quests
-- Added support for daily quests reminder which can be setup by using ${comMen("reminders")}
+    `### Skygame [BETA]
 
- • Added eden reminders
+- Introducing a new feature, Skygame. Hangman will be the first of these rolling out, slowly I might add more. This is in beta phase, so it may not work properly. Feedback appreciated
+
+**Collectible**
+
+- Added collectibles for spirits guide, you can now preview a spirits collectible, it's price and some additional informations
+
+**Added more in-game events time in ${comMen("skytimes")} command/features**
+
+- Added documentations for command to explain it's uses, with examples ([Docs](https://docs.skyhelper.xyz/commands))
+
+-# Re-added support for prefix, most commands will also work for prefix, some won't. Keep in mind that support for prefix will not be given (no help menu), users are still encouraged to use slash commands, prefix is being added as a legacy feature. Default prefix is \`sh!\` which server managers can change using \`sh!setprefix\` command
 
 -# Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
   ];
