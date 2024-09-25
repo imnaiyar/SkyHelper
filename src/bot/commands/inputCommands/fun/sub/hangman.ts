@@ -1,85 +1,20 @@
 import { Hangman } from "#bot/libs/classes/HangMan";
-import type { Command } from "#structures";
 import {
+  ChatInputCommandInteraction,
+  User,
+  MessageComponentInteraction,
+  type BaseMessageOptions,
+  type APIEmbed,
   ActionRowBuilder,
-  ApplicationCommandOptionType,
+  UserSelectMenuBuilder,
+  StringSelectMenuBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
-  MessageComponentInteraction,
   ModalBuilder,
-  StringSelectMenuBuilder,
   TextInputBuilder,
   TextInputStyle,
-  User,
-  UserSelectMenuBuilder,
-  type APIEmbed,
-  type BaseMessageOptions,
 } from "discord.js";
 import { setTimeout } from "timers/promises";
-export default {
-  name: "skygame",
-  description: "Various fun games based around Sky: CotL",
-  slash: {
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-    options: [
-      {
-        name: "hangman",
-        description: "Play a game of hangman based on sky-related words, or a custom word",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "mode",
-            description: "The mode of the game",
-            choices: [
-              { name: "Single Player", value: "single" },
-              { name: "Double Player", value: "double" },
-            ],
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "leaderboard",
-        description: "View the leaderboard for the skygames",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "game",
-            description: "The game to view the leaderboard for",
-            choices: [{ name: "Hangman", value: "hangman" }],
-            required: true,
-          },
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "leadoboard-type",
-            description: "Gloabal leaderboard or server specific (default: global)",
-            choices: [
-              { name: "Global", value: "global" },
-              { name: "Server", value: "server" },
-            ],
-            required: false,
-          },
-        ],
-      },
-    ],
-  },
-  async interactionRun(interaction, _t) {
-    const sub = interaction.options.getSubcommand(true);
-    switch (sub) {
-      case "hangman":
-        await handleHangman(interaction);
-        return;
-      case "leaderboard":
-        await interaction.reply("Leaderboard feature is not available yet (SOON).");
-        return;
-    }
-  },
-} satisfies Command;
-
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel.";
 const constants = {
@@ -87,7 +22,7 @@ const constants = {
   ["double"]: `${BASE}\n- Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.`,
 };
 
-const handleHangman = async (interaction: ChatInputCommandInteraction) => {
+export const handleHangman = async (interaction: ChatInputCommandInteraction) => {
   const { client } = interaction;
   const mode = interaction.options.getString("mode", true);
   if (!interaction.channel || !interaction.channel.isSendable()) {

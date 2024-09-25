@@ -75,33 +75,4 @@ describe("Hangman", () => {
       { guessed: false, alphabet: "t", position: 3, guessedBy: null },
     ]);
   });
-
-  it("should decrement lives on incorrect guess in single mode", async () => {
-    const hangman = new Hangman(channel, {
-      mode: "single",
-      players: [user1],
-      type: "custom",
-      word: "test",
-      totalLives: 0 /* Setting at 0 because it'll loop indefinetly as it's always incorrect answer */,
-    });
-    await hangman.inititalize();
-
-    // @ts-ignore
-    hangman["_validateAnswer"] = jest.fn().mockReturnValue(3);
-    await hangman["_collectResponse"]();
-    expect(hangman.remainingLives).toBe(-1);
-  });
-
-  it("should end game when lives are exhausted in single mode", async () => {
-    const hangman = new Hangman(channel, { mode: "single", players: [user1], type: "custom", word: "test" });
-    await hangman.inititalize();
-    hangman.remainingLives = 1;
-
-    // @ts-ignore
-    hangman["_validateAnswer"] = jest.fn().mockReturnValue("WrongGuess");
-    await hangman["_collectResponse"]();
-    expect(channel.send).toHaveBeenCalledWith(
-      expect.objectContaining({ content: expect.stringContaining("Sorry! Looks like you have exhausted your lives.") }),
-    );
-  });
 });

@@ -64,7 +64,7 @@ export class Hangman {
     } else {
       this.word = hangmanWords.random();
     }
-    this.initiator = option.gameInitator;
+    if (option.gameInitiator) this.initiator = option.gameInitiator;
   }
   public async inititalize() {
     this.alphabets = this.word.split("").map((w, i) => ({
@@ -223,7 +223,15 @@ export class Hangman {
     );
   }
 
-  private _endGame() {
+  private async _endGame() {
+    if (this.winner) {
+      const user = await this.channel.client.database.getUser(this.winner);
+      // prettier-ignore
+      if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
+      user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
+      user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
+      await user.save();
+    }
     const embed = new EmbedBuilder()
       .setTitle("SkyGame: Hangman")
       .setDescription(
@@ -265,7 +273,7 @@ export class Hangman {
     });
   }
 }
-type HangmanOptionsBase = { mode?: "single" | "double"; players: User[]; totalLives?: number; gameInitator: User };
+type HangmanOptionsBase = { mode?: "single" | "double"; players: User[]; totalLives?: number; gameInitiator?: User };
 interface HangmanCustomModeOption extends HangmanOptionsBase {
   type?: "custom";
   word: string;
