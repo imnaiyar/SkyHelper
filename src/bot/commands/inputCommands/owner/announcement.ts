@@ -67,7 +67,7 @@ export default {
       const channel = client.channels.cache.get(annoucement_channel!);
       if (!channel) continue;
       if (!channel.isSendable()) continue;
-      await channel.send(text);
+      await channel.send(text).catch(() => null);
     }
     await modalSubmit.editReply({ content: "Announcement sent to all the announcement channels.", components: [] });
   },
