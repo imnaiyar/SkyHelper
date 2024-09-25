@@ -191,7 +191,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
           players,
           ...(word ? { word } : {}),
           ...(mode === "single" ? { totalLives: maxLives } : {}),
-          gameInitator: interaction.user,
+          gameInitiator: interaction.user,
         });
         await i.update({ components: [] });
 
