@@ -31,6 +31,9 @@ export class Hangman {
   /** The word for the game */
   public word: string;
 
+  /** Original initiator of the game, used for managing the games, like stopping it mid interval  */
+  public initiator: User | null = null;
+
   public alphabets: HangmanWords | null = null;
 
   public alphabetLength: number | null = null;
@@ -79,6 +82,7 @@ export class Hangman {
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.SingleModeStart, this.totalLives));
     }
     this._collectResponse();
+    this._listenForStop();
   }
 
   private async _collectResponse(): Promise<any> {
@@ -130,6 +134,10 @@ export class Hangman {
         return this._collectResponse();
       }
       default: {
+        const stat = this.playerStats.get(this.currentPlayer!.id)!;
+        stat.incorrectGuesses++;
+        this.playerStats.set(this.currentPlayer!.id, stat);
+
         // Only switch for double mode games
         if (this.mode === "double") this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
         if (this.mode === "single") {
@@ -140,9 +148,7 @@ export class Hangman {
             return this._endGame();
           }
         }
-        const stat = this.playerStats.get(this.currentPlayer!.id)!;
-        stat.correctGuesses--;
-        this.playerStats.set(this.currentPlayer!.id, stat);
+
         this._sendResponse(getHangmanResponse(validate, res.content));
         if (this.mode === "double") this._sendResponse(getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer));
         await wait(3000);
@@ -198,7 +204,7 @@ export class Hangman {
         remaininglives += "<:gray_heart:1287689388758798396>";
       }
     }
-    return new EmbedBuilder().setDescription(
+    return new EmbedBuilder().setTitle("Skygame: Hangman [BETA]").setDescription(
       `## ${this.mode === "single" ? `${this.currentPlayer} is currently guessing!` : `It's ${this.currentPlayer} turn!`}\nWord: **__${this.alphabets
         .map((a) => {
           if (a.guessed) return a.alphabet === " " ? a.alphabet : `${a.alphabet}`;
@@ -208,7 +214,7 @@ export class Hangman {
           "",
         )}__** (${this.alphabetLength!} alphabets excluding special characters)\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
         this.mode === "single" ? `\n\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : ""
-      }\n\nRemaining Time: <a:30s:1287391044127952947>`,
+      }\n\nRemaining Time: <a:30s:1287391044127952947>\n\n-# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
     );
   }
 
@@ -237,7 +243,21 @@ export class Hangman {
 
   private async _sendResponse(payload: string | MessageCreateOptions) {
     const createPayload = typeof payload === "string" ? { content: payload } : payload;
-    await this.channel.send({ ...createPayload, allowedMentions: { parse: ["users"] } });
+    return await this.channel.send({ ...createPayload, allowedMentions: { parse: ["users"] } });
+  }
+
+  private _listenForStop() {
+    if (!this.initiator) return;
+    const col = this.channel.createMessageCollector({ filter: (m) => m.content.toLowerCase() === ">stopgame" });
+    const initiator = this.initiator;
+    col.on("collect", async (m) => {
+      if (m.author.id !== initiator.id) {
+        return await this._sendResponse("Only the game initiator can stop the game.");
+      }
+      await this._sendResponse(getHangmanResponse(HangmanResponseCodes.EndmGame));
+      col.stop();
+      return this._endGame;
+    });
   }
 }
 type HangmanOptionsBase = { mode?: "single" | "double"; players: User[]; totalLives?: number };
@@ -279,6 +299,7 @@ enum HangmanResponseCodes {
   WrongWordGuess,
   SingleModeStart,
   LivesExhausted,
+  EndmGame,
 }
 
 const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: any[]) => string)> = {
@@ -301,6 +322,7 @@ const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: any[]) 
     `The game will start in 3s. You'll have ${lives} lives, each incorrect guess will cost you one live. Try to guess the word before you lives runs out. Good luck!`,
   [HangmanResponseCodes.LivesExhausted]: (word: string) =>
     `Sorry! Looks like you have exhausted your lives. Better luck next time! \`${word}\` was the correct word.`,
+  [HangmanResponseCodes.EndmGame]: `Stopped the game!`,
 };
 const getHangmanResponse = (code: HangmanResponseCodes, ...args: any[]) => {
   const response = HangmanResponses[code];

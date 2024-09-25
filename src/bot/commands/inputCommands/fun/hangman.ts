@@ -221,7 +221,13 @@ export default {
             .awaitMessageComponent({ time: 90_000, filter: (conInt) => conInt.user.id === i.user.id })
             .catch(() => null);
           if (!confirmation) {
-            await i.editReply({ message: followUpMsg, content: "Recieved no confirmation. Game cancelled!", components: [] });
+            await i.editReply({
+              message:
+                followUpMsg +
+                "\n- The Skygame feature is in BETA and will continue to evolve, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>",
+              content: "Recieved no confirmation. Game cancelled!",
+              components: [],
+            });
             return;
           }
           const id = confirmation.customId.split("_").last();
@@ -238,7 +244,7 @@ export default {
 } satisfies Command;
 
 const BASE =
-  "Game starting! You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as wrong answer. If you think you know the full word, you can type it so (like `Ascended Candles`).";
+  "Game starting, here are some things that you can keep in mind during the game! You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel.";
 const constants = {
   ["single"]: `- ${BASE}\n- Each wrong answer will cost lives. The embed will show how many live you have left. You'll loose if you fail to guess the word correctly before your lives runs out.`,
   ["double"]: `- ${BASE}\n- Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.`,
