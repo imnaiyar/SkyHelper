@@ -90,9 +90,9 @@ export class Hangman {
   }
 
   private async _collectResponse(): Promise<any> {
-    if (this._stopped) return;
     await this._sendResponse({ embeds: [this._getEmbed()] });
     const res = await this._getCollectorResponse();
+    if (this._stopped) return;
     if (res === "Timeout") {
       if (this.mode === "double") this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
       if (this.mode === "single") {
