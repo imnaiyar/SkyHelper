@@ -187,6 +187,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
         if (!interaction.channel?.isSendable()) return;
         const game = new Hangman(interaction.channel, {
           mode: mode as "single" | "double",
+          type: type as "custom" | "random",
           players,
           ...(word ? { word } : {}),
           ...(mode === "single" ? { totalLives: maxLives } : {}),

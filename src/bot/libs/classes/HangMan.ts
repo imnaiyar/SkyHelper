@@ -2,8 +2,10 @@ import { EmbedBuilder, type SendableChannels, type User, type MessageCreateOptio
 import { setTimeout as wait } from "timers/promises";
 import { hangmanWords } from "../constants/hangmanWord.js";
 
+type ModeType = "single" | "double";
+type WordType = "random" | "custom";
 /** Hangman game manager */
-export class Hangman {
+export class Hangman<T extends ModeType, K extends WordType> {
   /** Winner of this hangman game */
   public winner: null | User = null;
 
@@ -45,11 +47,9 @@ export class Hangman {
   private _stopped: boolean = false;
   constructor(
     private readonly channel: SendableChannels,
-    option: HangmanOptions,
+    option: HangmanOptions<T, K>,
   ) {
     if (option.mode) this.mode = option.mode;
-
-    if (option.type && this.mode !== "single") this.type = option.type;
 
     if (this.mode === "single" && option.players.length > 1) throw new Error("Only one player must be provided for single mode");
 
@@ -58,11 +58,14 @@ export class Hangman {
       this.playerStats.set(player.id, { incorrectGuesses: 0, correctGuesses: 0 });
     }
     // prettier-ignore
-    if (this.mode === "single" && option.totalLives) (this.totalLives = option.totalLives), (this.remainingLives = option.totalLives);
+    if (this.mode === "single" && "totalLives" in option && option.totalLives) (this.totalLives = option.totalLives), (this.remainingLives = option.totalLives);
 
     if (option.type === "custom") {
-      if (!option.word) throw new Error("Option 'word' must be provided if the game type is set to 'custom'");
-      this.word = option.word;
+      if ("word" in option) {
+        this.word = option.word;
+      } else {
+        throw new Error("Word must be provided for custom type games");
+      }
     } else {
       this.word = hangmanWords.random();
     }
@@ -291,15 +294,17 @@ export class Hangman {
     });
   }
 }
-type HangmanOptionsBase = { mode?: "single" | "double"; players: User[]; totalLives?: number; gameInitiator?: User };
-interface HangmanCustomModeOption extends HangmanOptionsBase {
-  type?: "custom";
-  word: string;
+
+interface HangmanOptionsBase<T extends ModeType, K extends WordType> {
+  mode: T;
+  type: K;
+  players: User[];
+  gameInitiator?: User;
 }
-interface HangmanRandomModeOptions extends HangmanOptionsBase {
-  type?: "random";
-}
-type HangmanOptions = HangmanCustomModeOption | HangmanRandomModeOptions;
+
+type HangmanOptions<T extends ModeType, K extends WordType> = HangmanOptionsBase<T, K> &
+  (T extends "single" ? { totalLives?: number } : {}) &
+  (K extends "custom" ? { word: string } : {});
 
 type HangmanWords = {
   guessed: boolean;
