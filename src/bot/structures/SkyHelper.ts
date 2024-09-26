@@ -108,10 +108,6 @@ export class SkyHelper extends Client<true> {
         GuildMessageManager: 0,
         GuildTextThreadManager: 0,
         GuildInviteManager: 0,
-        GuildMemberManager: {
-          maxSize: 0,
-          keepOverLimit: (m) => m.id === m.client.user.id,
-        },
       }),
       sweepers: Options.DefaultSweeperSettings,
     });
