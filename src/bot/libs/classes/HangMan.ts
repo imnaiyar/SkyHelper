@@ -90,7 +90,7 @@ export class Hangman {
   }
 
   private async _collectResponse(): Promise<any> {
-    if (this._stop) return;
+    if (this._stopped) return;
     await this._sendResponse({ embeds: [this._getEmbed()] });
     const res = await this._getCollectorResponse();
     if (this._stopped) return;
