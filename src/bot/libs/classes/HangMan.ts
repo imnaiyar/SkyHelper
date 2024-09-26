@@ -41,6 +41,8 @@ export class Hangman {
   /** The english alphabets that has been guessed */
   private guessedAlphabets: (typeof EnglishAlphabets)[number][] = [];
 
+  /** Whether this game is stopped or not */
+  private _stopped: boolean = false;
   constructor(
     private readonly channel: SendableChannels,
     option: HangmanOptions,
@@ -88,6 +90,7 @@ export class Hangman {
   }
 
   private async _collectResponse(): Promise<any> {
+    if (this._stopped) return;
     await this._sendResponse({ embeds: [this._getEmbed()] });
     const res = await this._getCollectorResponse();
     if (res === "Timeout") {
@@ -280,6 +283,7 @@ export class Hangman {
       if (m.author.id !== initiator.id) {
         return await this._sendResponse("Only the game initiator can stop the game.");
       }
+      this._stopped = true;
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.EndmGame));
       col.stop();
       return this._endGame("stopped-game");
