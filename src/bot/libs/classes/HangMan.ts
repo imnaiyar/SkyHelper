@@ -64,7 +64,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       if ("word" in option) {
         this.word = option.word;
       } else {
-        throw new Error("Word must be provided for custom type games");
+        throw new Error("Option 'word' must be provided if the game type is set to 'custom'");
       }
     } else {
       this.word = hangmanWords.random();

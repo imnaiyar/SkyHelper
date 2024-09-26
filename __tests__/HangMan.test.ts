@@ -38,9 +38,10 @@ describe("Hangman", () => {
   });
 
   it("should initialize with single mode and random word", () => {
-    const hangman = new Hangman(channel, { mode: "single", players: [user1] });
+    const hangman = new Hangman(channel, { mode: "single", type: "random", players: [user1] });
     expect(hangman.mode).toBe("single");
     expect(hangman.players).toEqual([user1]);
+    expect(hangman.type).toBe("random");
     expect(hangman.totalLives).toBe(7);
     expect(hangman.remainingLives).toBe(7);
   });
@@ -54,7 +55,7 @@ describe("Hangman", () => {
 
   it("should throw error if more than one player is provided in single mode", () => {
     expect(() => {
-      new Hangman(channel, { mode: "single", players: [user1, user2] });
+      new Hangman(channel, { mode: "single", type: "random", players: [user1, user2] });
     }).toThrow("Only one player must be provided for single mode");
   });
 
