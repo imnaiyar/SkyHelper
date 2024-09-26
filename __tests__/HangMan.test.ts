@@ -1,5 +1,5 @@
 import { Hangman } from "../src/bot/libs/classes/HangMan";
-import { User, TextChannel } from "discord.js";
+import { User, TextChannel, Collection } from "discord.js";
 import { jest, describe, beforeEach, it, expect } from "@jest/globals";
 /* eslint-disable space-before-function-paren */
 // extenders for the <Array>.prototype.random() and <Array>.prototype.last() methods
@@ -30,6 +30,11 @@ describe("Hangman", () => {
         user: {
           displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/logo.png"),
         },
+        database: {
+          // @ts-ignore
+          getUser: jest.fn().mockResolvedValue({ save: jest.fn().mockResolvedValue({}) }),
+        },
+        gameData: new Collection(),
       },
     } as unknown as TextChannel;
 

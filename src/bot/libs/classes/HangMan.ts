@@ -1,6 +1,6 @@
 import { EmbedBuilder, type SendableChannels, type User, type MessageCreateOptions } from "discord.js";
 import { setTimeout as wait } from "timers/promises";
-import { hangmanWords } from "../constants/hangmanWord.js";
+import { hangmanWords, HangmanResponseCodes, getHangmanResponse, EnglishAlphabets } from "../constants/hangman.js";
 
 type ModeType = "single" | "double";
 type WordType = "random" | "custom";
@@ -313,55 +313,7 @@ type HangmanWords = {
   guessedBy: User | null;
 }[];
 
-// prettier-ignore
-const EnglishAlphabets = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
-  "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] as const;
-
 type PlayerStats = {
   correctGuesses: number;
   incorrectGuesses: number;
-};
-enum HangmanResponseCodes {
-  Timeout,
-  NotAnAlphabet,
-  AlreadyGuessed,
-  WrongGuess,
-  GuessSuccess,
-  NextUp,
-  Winner,
-  NotInitialized,
-  FirstRound,
-  GuessedFullWord,
-  WrongWordGuess,
-  SingleModeStart,
-  LivesExhausted,
-  EndmGame,
-}
-
-const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: any[]) => string)> = {
-  [HangmanResponseCodes.Timeout]: `Timed-out! You took too long to answer.`,
-  [HangmanResponseCodes.NotAnAlphabet]: "The given answer is not an English alphabet!",
-  [HangmanResponseCodes.AlreadyGuessed]: (letter: string) => `\`${letter}\` has already been guessed.`,
-  [HangmanResponseCodes.GuessSuccess]: "Correct ✅! That was a correct guess!",
-  [HangmanResponseCodes.WrongGuess]: "Oops! That was a wrong guess!",
-  [HangmanResponseCodes.WrongWordGuess]: "Incorrect ❌! That was not the correct word.",
-  [HangmanResponseCodes.NextUp]: (user: User) => `Next turn is for ${user}.`,
-  [HangmanResponseCodes.Winner]: (user: User, word: string) =>
-    `The winner of this game is ${user} 🎊. The correct word was \`${word}\`.`,
-  [HangmanResponseCodes.NotInitialized]:
-    "Something went wrong! CurrentPlayer is not initialized yet. Did you call `initialize()`?.",
-  [HangmanResponseCodes.FirstRound]: (user: User) =>
-    `${user} will start with the first round. The game will start in 3s, be ready!`,
-  [HangmanResponseCodes.GuessedFullWord]: (user: User, word: string) =>
-    `${user} has correctly guessed the word! Congrats 🎊. The word was \`${word}\`.`,
-  [HangmanResponseCodes.SingleModeStart]: (lives: number) =>
-    `The game will start soon. You'll have ${lives} lives, each incorrect guess will cost you one live. Try to guess the word before you lives runs out. Good luck!`,
-  [HangmanResponseCodes.LivesExhausted]: (word: string) =>
-    `Sorry! Looks like you have exhausted your lives. Better luck next time! \`${word}\` was the correct word.`,
-  [HangmanResponseCodes.EndmGame]: `Stopped the game!`,
-};
-const getHangmanResponse = (code: HangmanResponseCodes, ...args: any[]) => {
-  const response = HangmanResponses[code];
-  if (typeof response === "function") return response(...args);
-  return response;
 };
