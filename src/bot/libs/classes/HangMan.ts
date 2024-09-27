@@ -229,7 +229,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
           "",
         )}** (${this.alphabetLength!} alphabets excluding special characters)\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
         this.mode === "single" ? `\n\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : ""
-      }\n\nRemaining Time: <a:30s:1287391044127952947>\n\n-# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
+      }\n\nRemaining Time: <a:30sec:1288835107804676243>\n\n-# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
     );
   }
 

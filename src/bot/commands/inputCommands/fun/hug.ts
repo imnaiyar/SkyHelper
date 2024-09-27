@@ -17,6 +17,8 @@ export default {
         type: d.ApplicationCommandOptionType.User,
       },
     ],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
   },
   async messageRun({ message, args, client }) {
     const msg = message;

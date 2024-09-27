@@ -53,13 +53,15 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
     const embed: APIEmbed = {
       title: "Skygame: Hangman",
       description: `**Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}
-        **Word Type:** ${type === "custom" ? "Custom" : "Random"}
-        ${mode === "single" ? `**Max Lives:** ${maxLives}` : ""}
-        **Provide the following information:**
-        ${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with.\n` : ""}${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n ${
-          constants[mode as "single" | "double"] +
-          "\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"
-        }`,
+**Word Type:** ${type === "custom" ? "Custom" : "Random"}
+${mode === "single" ? `**Max Lives:** ${maxLives}` : ""}
+**Provide the following information:**
+${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)` : ""}
+${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.` : ""}
+${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n ${
+        constants[mode as "single" | "double"] +
+        "\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"
+      }`,
       color: 0x00ff00,
     };
 
