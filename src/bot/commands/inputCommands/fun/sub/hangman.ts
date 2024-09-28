@@ -27,7 +27,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
   if (
     !interaction.channel ||
     !interaction.channel.isSendable() ||
-    Object.keys(int.authorizingIntegrationOwners).every((k) => k === "1")
+    Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1")
   ) {
     return void (await interaction.reply({
       content: "This game can only be played in channels where I can send messages.",
