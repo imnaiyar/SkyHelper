@@ -24,7 +24,11 @@ const constants = {
 export const handleHangman = async (interaction: ChatInputCommandInteraction) => {
   const { client } = interaction;
   const mode = interaction.options.getString("mode", true);
-  if (!interaction.channel || !interaction.channel.isSendable()) {
+  if (
+    !interaction.channel ||
+    !interaction.channel.isSendable() ||
+    Object.keys(int.authorizingIntegrationOwners).every((k) => k === "1")
+  ) {
     return void (await interaction.reply({
       content: "This game can only be played in channels where I can send messages.",
       ephemeral: true,
