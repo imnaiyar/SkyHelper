@@ -40,6 +40,11 @@ describe("Hangman", () => {
 
     user1 = { id: "user1", displayName: "User1" } as User;
     user2 = { id: "user2", displayName: "User2" } as User;
+
+    for (const user of [user1, user2]) {
+      // @ts-ignore
+      user.displayAvatarURL = jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png");
+    }
   });
 
   it("should initialize with single mode and random word", () => {
@@ -47,8 +52,8 @@ describe("Hangman", () => {
     expect(hangman.mode).toBe("single");
     expect(hangman.players).toEqual([user1]);
     expect(hangman.type).toBe("random");
-    expect(hangman.totalLives).toBe(7);
-    expect(hangman.remainingLives).toBe(7);
+    expect(hangman.totalLives).toBe(6);
+    expect(hangman.remainingLives).toBe(6);
   });
 
   it("should initialize with double mode and custom word", () => {
