@@ -27,7 +27,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
   if (
     !interaction.channel ||
     !interaction.channel.isSendable() ||
-    Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1")
+    Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1") // Also don't run for only user Apps
   ) {
     return void (await interaction.reply({
       content: "This game can only be played in channels where I can send messages.",
@@ -43,7 +43,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
   }
   let word: string | null = null;
   let type: string = "random";
-  let maxLives: number = 7;
+  const maxLives: number = 6;
   let players: User[] = [interaction.user];
 
   const validateAndReply = async (int: MessageComponentInteraction, message: string, ephemeral = true) => {
@@ -62,10 +62,7 @@ ${mode === "single" ? `**Max Lives:** ${maxLives}` : ""}
 **Provide the following information:**
 ${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)` : ""}
 ${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.` : ""}
-${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n ${
-        constants[mode as "single" | "double"] +
-        "\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"
-      }`,
+${constants[mode as "single" | "double"] + "\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"}`,
       color: 0x00ff00,
     };
 
@@ -95,23 +92,6 @@ ${mode === "single" ? "- Optionally choose the maximum number of lives for 'sing
               { label: "Random", description: "Bot selects random words", value: "random", default: type === "random" },
               { label: "Custom", description: "Provide your own word", value: "custom", default: type === "custom" },
             ]),
-        ),
-      );
-    }
-
-    if (mode === "single") {
-      components.push(
-        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId("skygame_hangman_maxlives")
-            .setPlaceholder("Select max lives")
-            .addOptions(
-              Array.from({ length: 10 }, (_, i) => ({
-                label: i.toString(),
-                value: i.toString(),
-                default: i === maxLives,
-              })),
-            ),
         ),
       );
     }
@@ -149,10 +129,6 @@ ${mode === "single" ? "- Optionally choose the maximum number of lives for 'sing
         }
         type = value;
         if (value === "random") word = null;
-        return await i.update({ ...getResponse() });
-      }
-      if (action === "maxlives" && mode === "single") {
-        maxLives = parseInt(value);
         return await i.update({ ...getResponse() });
       }
     }
