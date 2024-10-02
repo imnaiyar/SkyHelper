@@ -1,4 +1,4 @@
-import { Hangman } from "#bot/libs/classes/HangMan";
+import { Hangman } from "#libs/classes/Hangman";
 import {
   ChatInputCommandInteraction,
   User,

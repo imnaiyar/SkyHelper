@@ -256,16 +256,16 @@ export class Hangman<T extends ModeType, K extends WordType> {
     if (this.winner) {
       const user = await this.channel.client.database.getUser(this.winner);
       // prettier-ignore
-      if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
-      user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
+      if (!user.hangman) user.hangman = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } ;
+      user.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
       await user.save();
     }
     if (!reason || reason !== "stopped-game") {
       this.players.forEach(async (player) => {
         const user = await this.channel.client.database.getUser(player);
         // prettier-ignore
-        if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
-        user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
+        if (!user.hangman) user.hangman = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } };
+        user.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
         await user.save();
       });
     }
