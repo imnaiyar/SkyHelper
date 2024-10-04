@@ -41,7 +41,7 @@
     "cropify": "^1.0.9",
     "discord.js": "14.16.2",
     "dotenv": "^16.3.1",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "i18next": "^23.11.5",
     "i18next-fs-backend": "^2.3.1",
     "moment": "^2.29.4",
