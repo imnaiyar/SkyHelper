@@ -3,7 +3,7 @@ title: Commands
 description: A comprehensive guide on all the commands offered by SkyHelper bot
 ---
 
-import { Cards, Card, Callout } from "nextra/components";
+import { Cards, Callout } from "nextra/components";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { HiMiniInformationCircle } from "react-icons/hi2";
 import { IoIosNotifications } from "react-icons/io";
@@ -35,8 +35,8 @@ These server-specific commands rely on server-level data and interactions, which
 ## Commands Category
 
 <Cards>
-  <Card title="Guides" icon={<FaMapMarkedAlt />} href="/commands/guides" />
-  <Card title="Informations" icon={<HiMiniInformationCircle />} href="/commands/info" />
-  <Card title="Admin" icon={<IoIosNotifications />} href="/commands/admin" />
-  <Card title="Utilities" icon={<IoCog />} href="/commands/utility" />
+  <Cards.Card title="Guides" icon={<FaMapMarkedAlt />} href="/commands/guides" />
+  <Cards.Card title="Informations" icon={<HiMiniInformationCircle />} href="/commands/info" />
+  <Cards.Card title="Admin" icon={<IoIosNotifications />} href="/commands/admin" />
+  <Cards.Card title="Utilities" icon={<IoCog />} href="/commands/utility" />
 </Cards>

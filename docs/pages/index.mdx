@@ -3,7 +3,7 @@ title: Home
 description: Documentations for SkyHelper bot
 ---
 
-import { Callout, Cards, Card } from "nextra/components";
+import { Callout, Cards } from "nextra/components";
 import { RiSlashCommands2, RiTranslate2 } from "react-icons/ri";
 
 <h1 style={{ textAlign: "center" }}>
@@ -50,7 +50,7 @@ These Docs will be further expanded upon in the following sections:
 - **Troubleshooting**: Tips and solutions for any issues you might encounter.
 
 <Cards>
-  <Card title="Commands" icon={<RiSlashCommands2 />} href="/commands" />
-  <Card title="Translating the bot" icon={<RiTranslate2 />} href="/pages/translating" />
-  <Card title="Credits" href="/pages/credits" />
+  <Cards.Card title="Commands" icon={<RiSlashCommands2 />} href="/commands" />
+  <Cards.Card title="Translating the bot" icon={<RiTranslate2 />} href="/pages/translating" />
+  <Cards.Card title="Credits" href="/pages/credits" />
 </Cards>
