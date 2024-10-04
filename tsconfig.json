@@ -22,10 +22,10 @@
     "strict": true,
     "noImplicitAny": true,
     "alwaysStrict": true,
-    "noUnusedLocals": true,
+    "strictNullChecks": true,
+
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noUnusedParameters": true,
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
