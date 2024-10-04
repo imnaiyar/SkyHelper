@@ -26,5 +26,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: ESLint
+        run: pnpm lint
+
       - name: Run tests
         run: pnpm test
