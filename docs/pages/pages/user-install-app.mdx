@@ -4,7 +4,7 @@ descriptions: Basic information about newly released user-apps
 ---
 
 import Image from "next/image";
-import { Steps, Cards, Card } from "nextra/components";
+import { Steps, Cards } from "nextra/components";
 import { RiSlashCommands2 } from "react-icons/ri";
 
 # User-installable App
@@ -35,5 +35,5 @@ Adding SkyHelper to your user account is quick and easy, similar to adding it to
 You can now access SkyHelper's commands anywhere, either through the `App Launcher` or by typing `/` in any chat.
 
 <Cards>
-  <Card title="Commands" icon={<RiSlashCommands2 />} href="/commands" />
+  <Cards.Card title="Commands" icon={<RiSlashCommands2 />} href="/commands" />
 </Cards>

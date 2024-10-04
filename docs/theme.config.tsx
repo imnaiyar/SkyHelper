@@ -20,7 +20,7 @@ const config: DocsThemeConfig = {
   ),
   banner: {
     key: "7.0.0-release",
-    text: (
+    content: (
       <a href="/changelogs" target="_blank">
         🎉 v7.0.0 is released. Read more →
       </a>
@@ -34,25 +34,16 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/imnaiyar/SkyHelper/tree/main/docs",
   footer: {
-    text: "SkyHelper Docs",
-  },
-  useNextSeoProps() {
-    const { asPath } = useRouter();
-    if (asPath === "/") {
-      return {
-        titleTemplate: "SkyHelper Docs",
-      };
-    }
-    return {
-      titleTemplate: "%s | SkyHelper",
-    };
+    content: "SkyHelper Docs",
   },
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
     const url = BaseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+    const headTitle = frontMatter.title === "Home" ? "SkyHelper Docs" : `${frontMatter.title} | SkyHelper`;
     return (
       <>
+        <title>{headTitle}</title>
         <meta property="og:url" content={url} />
         <meta property="og:title" content={frontMatter.title || "SkyHelper Docs"} />
         <link rel="icon" type="image/png" href="/boticon.svg" />
@@ -101,8 +92,11 @@ const config: DocsThemeConfig = {
     autoCollapse: true,
     defaultMenuCollapseLevel: 1,
   },
+  // do not display toc
   toc: {
-    backToTop: true,
+    component: function TableOfContents({ toc }) {
+      return null;
+    },
   },
 };
 
