@@ -62,6 +62,7 @@ export default {
       },
     ],
   },
+  botPermissions: ["SendMessage"],
   async interactionRun(interaction, _t, client) {
     const sub = interaction.options.getSubcommand(true);
     switch (sub) {
