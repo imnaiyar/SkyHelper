@@ -330,7 +330,7 @@ async function validateCommand(
       if (
         interaction.inCachedGuild() &&
         (!interaction.guild.members.me?.permissions.has(command.botPermissions) ||
-          !interaction.channel?.permissionsFor(interaction.client.user!).has(command.botPermissions))
+          !interaction.channel?.permissionsFor(interaction.client.user!)!.has(command.botPermissions))
       ) {
         await interaction.reply({
           content: t("common.errors.NO_PERMS_BOT", {
