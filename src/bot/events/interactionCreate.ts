@@ -327,7 +327,11 @@ async function validateCommand(
   // Handle bot's required permissions
   if (command.botPermissions) {
     if (interaction.inGuild()) {
-      if (interaction.inCachedGuild() && !interaction.guild.members.me?.permissions.has(command.botPermissions)) {
+      if (
+        interaction.inCachedGuild() &&
+        (!interaction.guild.members.me?.permissions.has(command.botPermissions) ||
+          !interaction.channel?.permissionsFor(interaction.client.user!)!.has(command.botPermissions))
+      ) {
         await interaction.reply({
           content: t("common.errors.NO_PERMS_BOT", {
             PERMISSIONS: parsePerms(command.botPermissions as unknown as Permission),
@@ -335,8 +339,7 @@ async function validateCommand(
           ephemeral: true,
         });
         return false;
-      }
-      if (!interaction.inCachedGuild()) {
+      } else {
         await interaction.reply({
           content: t("common.errors.NOT_A_SERVER"),
           ephemeral: true,
