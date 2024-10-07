@@ -45,7 +45,7 @@ const config: DocsThemeConfig = {
       <>
         <title>{headTitle}</title>
         <meta property="og:url" content={url} />
-        <meta property="og:title" content={frontMatter.title || "SkyHelper Docs"} />
+        <meta property="og:title" content={headTitle} />
         <link rel="icon" type="image/png" href="/boticon.svg" />
 
         <meta property="og:type" content="website" />
@@ -65,7 +65,7 @@ const config: DocsThemeConfig = {
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content={BaseUrl.replace(/(https?:\/\/|www\.)/, "")} />
         <meta property="twitter:url" content={url} />
-        <meta name="twitter:title" content={frontMatter.title || "SkyHelper Docs"} />
+        <meta name="twitter:title" content={headTitle} />
         <meta name="twitter:description" content={frontMatter.description || "SkyHelper Docs"} />
         <meta
           name="twitter:image"

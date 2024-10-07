@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.textBaseline = "middle";
   const textX = 150;
   const textY = 100;
-  ctx.fillText(getIndex(websiteName), textX, textY);
+  ctx.fillText(getIndex(sanitizeText(websiteName)), textX, textY);
   /** =============== Title End ============= */
 
   /** =============== Draw Website logo besides the Title ============= */
@@ -53,13 +53,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.font = "bold 100 shortb";
   ctx.fillStyle = "#bababa";
   ctx.textAlign = "left";
-  ctx.fillText(getIndex(mainTitle), 150, height / 3 + 30);
+  ctx.fillText(sanitizeText(getIndex(mainTitle)), 150, height / 3 + 30);
   /** =============== Main Title End ============= */
 
   /** ============ Add Descriptions if present ========= */
   if (description) {
     (ctx.font = "bold 30 open-sans"), (ctx.fillStyle = "#bababa"), (ctx.textAlign = "left");
-    ctx.fillText(getIndex(description), 120, height / 2 + 30);
+    ctx.fillText(sanitizeText(getIndex(description)), 120, height / 2 + 30);
   }
 
   /** =============== Draw A Rectangle Box to display website link ============= */
@@ -110,3 +110,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   res.send(canvas.toBuffer("image/png"));
 }
+
+const sanatizeText = (content: string) => content.replaceAll("%20", " ");
