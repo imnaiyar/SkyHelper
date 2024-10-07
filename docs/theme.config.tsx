@@ -40,7 +40,7 @@ const config: DocsThemeConfig = {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
     const url = BaseUrl + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
-    const headTitle = frontMatter.title === "Home" ? "SkyHelper Docs" : `${frontMatter.title} | SkyHelper`;
+    const headTitle = frontMatter.title === "Home" ? "SkyHelper Docs" : `${frontMatter.title} | SkyHelper Docs`;
     return (
       <>
         <title>{headTitle}</title>
