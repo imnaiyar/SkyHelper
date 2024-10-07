@@ -111,4 +111,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.send(canvas.toBuffer("image/png"));
 }
 
-const sanatizeText = (content: string) => content.replaceAll("%20", " ");
+const sanitizeText = (content: string) => content.replaceAll("%20", " ");
