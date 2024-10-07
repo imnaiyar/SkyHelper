@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ctx.textBaseline = "middle";
   const textX = 150;
   const textY = 100;
-  ctx.fillText(getIndex(sanitizeText(websiteName)), textX, textY);
+  ctx.fillText(sanitizeText(getIndex(websiteName)), textX, textY);
   /** =============== Title End ============= */
 
   /** =============== Draw Website logo besides the Title ============= */
