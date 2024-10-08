@@ -27,6 +27,7 @@
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
+    "@imnaiyar/framework": "^1.2.1",
     "@napi-rs/canvas": "^0.1.52",
     "@nestjs/common": "^10.3.8",
     "@nestjs/core": "^10.3.8",

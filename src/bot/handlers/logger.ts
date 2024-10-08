@@ -1,25 +1,13 @@
-import { EmbedBuilder, WebhookClient, codeBlock } from "discord.js";
-import config from "#bot/config";
-import util from "node:util";
-import { postToHaste } from "skyhelper-utils";
-import { Logger } from "@nestjs/common";
+import { CustomLogger } from "@imnaiyar/framework";
 import { captureException } from "@sentry/node";
-const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
-
-async function sendWebhook(id: string, content: any, err?: any): Promise<void> {
-  if (!content && !err) return;
-  const embed = new EmbedBuilder().setColor("Blue").setAuthor({ name: err?.name ?? "Error" });
-  const errString: string = err?.stack || err || content?.stack || content;
-  embed.setDescription(`${codeBlock("js", errString.toString().substring(0, 4000))}`);
-  embed.addFields({
-    name: "Description",
-    value: `${content?.message || content || err?.message || "NA"}`,
-  });
-  const fullErr = await postToHaste(util.inspect(err ?? content, { depth: null })).catch(() => {});
-  webhookLogger
-    ?.send({ username: "Error Log", avatarURL: config.BOT_ICON, embeds: [embed], content: `Error ID: \`${id}\`\n${fullErr}` })
-    .catch(() => {});
-}
+const logger = new CustomLogger({
+  env: process.env.NODE_ENV,
+  errorWebhook: process.env.ERROR_LOGS,
+  logToFile: true,
+  timestamp: true,
+  timezone: "Asia/Kolkata",
+  singleLineError: process.env.NODE_ENV === "production",
+});
 
 /**
  * Custom logger
@@ -29,21 +17,21 @@ export default class {
    * @param content
    */
   static success(content: string, message?: string) {
-    Logger.log(content, message);
+    logger.info(content, message);
   }
 
   /**
    * @param content
    */
   static log(content: string, message?: string) {
-    Logger.log(content, message);
+    logger.info(content, message);
   }
 
   /**
    * @param content
    */
   static warn(content: string, message: string) {
-    Logger.warn(content, message);
+    logger.warn(content, message);
   }
 
   /**
@@ -54,12 +42,11 @@ export default class {
   static error(content: any, ex?: any) {
     const id = captureException(ex || content);
     if (ex) {
-      Logger.error(ex, `${id} => ${content}`);
+      logger.error(content, ex, id);
     } else {
-      Logger.error(content, `${id}`);
+      logger.error(content, id);
     }
     if (process.isBun) console.error(content, ex);
-    if (webhookLogger) sendWebhook(id, content, ex);
     return id;
   }
 
@@ -67,6 +54,11 @@ export default class {
    * @param content
    */
   static debug(content: string) {
-    Logger.debug(content);
+    logger.debug(content);
+  }
+
+  static custom(content: string, type: string) {
+    logger.log({ level: { name: type, color: "\x1b[36m" } }, content);
   }
 }
+export { logger as CustomLogger };
