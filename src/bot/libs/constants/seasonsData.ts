@@ -20,8 +20,34 @@ export default {
     quests: [
       {
         title: "Quest #1",
+        description: "**Credits:**  by AL (alvenoir)",
+        image:
+          "https://cdn.discordapp.com/attachments/867638574571323424/1293206566891290778/SoD_Quest_1.png?ex=670687f8&is=67053678&hm=d8bf83fc1cb3c976fbcf37b8ba542d6c95ec2e6e89c7a1851cfceea7bc0d3c2a&",
+      },
+      {
+        title: "Quest #2",
+        description: "**Credits:**  by AL (alvenoir)",
+        image:
+          "https://cdn.discordapp.com/attachments/867638574571323424/1293206577179791532/SoD_Quest_2.png?ex=670687fa&is=6705367a&hm=2067fbe05cece5ea84cfe45d34eeee5bc31c3f42a836cba7dadadc680d01cf48&",
+      },
+      {
+        title: "Quest #3",
+        description: "**Credits:**  by AL (alvenoir)",
+        image:
+          "https://cdn.discordapp.com/attachments/867638574571323424/1293206572067197001/SoD_Quest_3.png?ex=670687f9&is=67053679&hm=054cb164c4fbf846c5b0af7b4e9770aa4442cabf24f538abf64a178daba54cd2&",
+      },
+      {
+        title: "Quest #4",
         description:
-          "```Quest 1 by theprincessraoni0713```\n Video Guide: [Here](https://cdn.discordapp.com/attachments/1262378539907547178/1264926477896519771/RPReplay_Final1721623591.mov?ex=66a44355&is=66a2f1d5&hm=d43954e456e7dcc61d6091eaeb96d5209dd02a260c8c3e66af2e3c00625dfc0f&)",
+          "**Credits:**  by AL (alvenoir)\n\nThe Compassionate Cellist’s IGC items become available after completing Quest 4:\nTiara – 85 <:RegularCandle:1207793250895794226> \nCello – 200 <:RegularCandle:1207793250895794226>\n:<:regularHeart:1207793247792013474> + Shared memory – FREE to claim",
+        image:
+          "https://cdn.discordapp.com/attachments/867638574571323424/1293206574504087563/SoD_Quest_4.png?ex=670687f9&is=67053679&hm=1717089db87dad35bd4a7f913fe169b0ef77f65942e06f08f0bf66e0d9dbdf7f&",
+      },
+      {
+        title: "Quest #5",
+        description: "**Credits:**  by AL (alvenoir)",
+        image:
+          "https://cdn.discordapp.com/attachments/867638574571323424/1293206569588228147/SoD_Quest_5.png?ex=670687f8&is=67053678&hm=cad92c004a710d785692eee4c7e6ea28aa46eb350ee0b0121aee19a6039a2e32&",
       },
     ],
   },
