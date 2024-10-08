@@ -24,6 +24,7 @@ import { table } from "table";
 import { pathToFileURL } from "node:url";
 import { Flags, spiritsData } from "#libs";
 import "./Extenders.js";
+import { CustomLogger } from "#bot/handlers/logger";
 export type ClassTypes = {
   UpdateTS: typeof UpdateTS;
   UpdateEvent: typeof UpdateEvent;
@@ -140,7 +141,8 @@ export class SkyHelper extends Client<true> {
       }
     }
 
-    this.logger.log(
+    CustomLogger.log(
+      { hideLevel: true, timestamp: false },
       `\n${table(clientEvents, {
         header: {
           alignment: "center",
@@ -149,10 +151,9 @@ export class SkyHelper extends Client<true> {
         singleLine: true,
         columns: [{ width: 25 }, { width: 5, alignment: "center" }],
       })}`,
-      "EVENTS",
     );
 
-    Logger.log(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
+    Logger.custom(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
   }
 
   /**
@@ -176,7 +177,7 @@ export class SkyHelper extends Client<true> {
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
         this.commands.set(command.name, command);
-        this.logger.log(`Loaded ${command.name}`, "COMMANDS");
+        this.logger.custom(`Loaded ${command.name}`, "COMMANDS");
         added++;
       } catch (err) {
         failed++;
@@ -184,7 +185,7 @@ export class SkyHelper extends Client<true> {
       }
     }
 
-    this.logger.log(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
+    this.logger.custom(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
   }
 
   /**
@@ -208,7 +209,7 @@ export class SkyHelper extends Client<true> {
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
         this.contexts.set(command.name + command.data.type.toString(), command);
-        this.logger.log(`Loaded ${command.name}`, "CONTEXTS");
+        this.logger.custom(`Loaded ${command.name}`, "CONTEXTS");
         added++;
       } catch (err) {
         failed++;
@@ -216,7 +217,7 @@ export class SkyHelper extends Client<true> {
       }
     }
 
-    this.logger.log(`Loaded ${added} Context Menu Commands. Failed ${failed}`, "CONTEXTS");
+    this.logger.custom(`Loaded ${added} Context Menu Commands. Failed ${failed}`, "CONTEXTS");
   }
 
   /**
@@ -238,14 +239,14 @@ export class SkyHelper extends Client<true> {
         if (typeof button !== "object") continue;
         if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         this.buttons.set(button.data.name, button);
-        this.logger.log(`Loaded ${button.data.name}`, "BUTTON");
+        this.logger.custom(`Loaded ${button.data.name}`, "BUTTON");
         added++;
       } catch (ex) {
         failed += 1;
         Logger.error(`${file}`, ex);
       }
     }
-    this.logger.log(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
+    this.logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
   }
 
   /**

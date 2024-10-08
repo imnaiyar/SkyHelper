@@ -35,6 +35,6 @@ export async function Dashboard(client: SkyHelper) {
   });
 
   await app.listen(config.DASHBOARD.port ?? 8080, () => {
-    logger.log("Dashboard started at port " + config.DASHBOARD.port, "DASHBOARD");
+    logger.custom("Dashboard started at port " + config.DASHBOARD.port, "DASHBOARD");
   });
 }
