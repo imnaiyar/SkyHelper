@@ -13,7 +13,7 @@ export interface SeasonData {
 
 export default {
   duet: {
-    name: "Duet",
+    name: "Duets",
     icon: "<:SODuet:1262310944332189768>",
     active: true,
     from: ["15-07-2024", "29-09-2024"],

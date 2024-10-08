@@ -54,7 +54,7 @@ export const SeasonPrices: { [key: string]: SeasonPrice } = {
 } as const;
 
 export const SeasonData = {
-  name: "Season of Duet",
+  name: "Season of Duets",
   icon: "<:SODuet:1262310944332189768>",
   start: "15-07-2024",
   end: "29-09-2024",
