@@ -339,7 +339,8 @@ async function validateCommand(
           ephemeral: true,
         });
         return false;
-      } else {
+      }
+      if (!interaction.inCachedGuild()) {
         await interaction.reply({
           content: t("common.errors.NOT_A_SERVER"),
           ephemeral: true,
