@@ -11,15 +11,15 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "npm run build:prod && node dist/bot/index.js",
+    "start": "npm run build:prod && node dist/bot/index.js --enable-source-maps",
     "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build:ci": "tsc -p tsconfig.json",
-    "lint": "eslint src",
+    "lint": "eslint --fix src",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
     "dev": "bun run src/bot/index.ts",
     "commands:prod": "node dist/bot/libs/registerCommands.js",
     "commands:bun": "bun run src/bot/libs/registerCommands.ts",
-    "format": "prettier --write src",
+    "format": "prettier --write --ignore-unknown src",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
     "setup": "node scripts/env-cli.js",
     "prepare": "husky"
