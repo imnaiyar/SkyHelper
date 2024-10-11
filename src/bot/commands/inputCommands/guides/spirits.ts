@@ -1,8 +1,6 @@
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import { Spirits } from "#libs/classes/Spirits";
 import type { Command } from "#structures";
-import { ApplicationCommandOptionType, ApplicationIntegrationType } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
 import { SPIRTIS_DATA } from "#bot/commands/commands-data/guide-commands";
 export default {
   async interactionRun(interaction, t, client) {

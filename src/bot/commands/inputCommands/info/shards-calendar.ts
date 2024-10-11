@@ -9,16 +9,9 @@ import {
   StringSelectMenuInteraction,
   time,
 } from "discord.js";
-import {
-  type APIEmbedField,
-  type APISelectMenuOption,
-  ActionRowBuilder,
-  ApplicationCommandOptionType,
-  StringSelectMenuBuilder,
-} from "discord.js";
+import { type APIEmbedField, type APISelectMenuOption, ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 import moment from "moment-timezone";
 import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "skyhelper-utils";
-import { useTranslations as x } from "#handlers/useTranslation";
 import type { getTranslator } from "#bot/i18n";
 import { SHARDS_CALENDAR_DATA } from "#bot/commands/commands-data/info-commands";
 const months = [

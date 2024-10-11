@@ -10,7 +10,6 @@ import {
   ButtonInteraction,
   EmbedBuilder,
 } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
 import { HELP_DATA } from "#bot/commands/commands-data/utility-commands";
 
 const BASE_DOC_URL = "https://docs.skyhelper.xyz";
