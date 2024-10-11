@@ -257,7 +257,7 @@ export class SkyHelper extends Client<true> {
       | Pick<Command, "name" | "description" | "slash" | "userPermissions">
       | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
     this.commands
-      .filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd)
+      .filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && !cmd.slash?.guilds)
       .map((cmd) => ({
         name: cmd.name,
         description: cmd.description,
@@ -276,6 +276,7 @@ export class SkyHelper extends Client<true> {
       .forEach((s) => toRegister.push(s));
 
     this.contexts
+      .filter((cmd) => !cmd.data.guilds)
       .map((cmd) => ({
         name: cmd.name,
         ...(cmd.userPermissions && {
@@ -295,6 +296,38 @@ export class SkyHelper extends Client<true> {
     });
 
     this.logger.success("Successfully registered interactions");
+
+    // Attempt to register any guild commands
+    const guilCommandsSlash = this.commands.filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && cmd.slash?.guilds);
+    const guilCommandsContext = this.contexts.filter((cmd) => cmd.data.guilds);
+    const guildCommands = [...guilCommandsSlash.values(), ...guilCommandsContext.values()];
+    if (!guildCommands.length) return;
+    console.log(chalk.blueBright("\n\n<------------ Attempting to register guild commands ----------->\n"));
+    await Promise.all(
+      guildCommands.map(async (cmd) => {
+        const guilds = "description" in cmd ? cmd.slash?.guilds! : cmd.data.guilds!;
+        for (const guild of guilds) {
+          await this.rest.post(Routes.applicationGuildCommands(this.user.id, guild), {
+            body: {
+              name: cmd.name,
+              ...("description" in cmd ? { description: cmd.description } : {}),
+              ...("type" in cmd ? { type: cmd.type } : { type: 1 }),
+              ...(cmd.userPermissions && {
+                default_member_permissions: cmd.userPermissions
+                  .reduce(
+                    (accumulator: bigint, permission) =>
+                      accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
+                    BigInt(0),
+                  )
+                  .toString(),
+              }),
+              ...("slash" in cmd ? cmd.slash : {}),
+            },
+          });
+          this.logger.custom(`Successfully registered "${cmd.name} "in ${guild}`, "GUILD COMMANDS");
+        }
+      }),
+    );
   }
 
   /**

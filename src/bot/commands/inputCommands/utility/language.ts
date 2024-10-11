@@ -1,8 +1,7 @@
 import { getTranslator } from "#bot/i18n";
 import { supportedLang } from "#bot/libs/constants/supportedLang";
 import type { Command } from "#structures";
-import { ApplicationCommandOptionType } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
+import { LANGUAGE_DATA } from "#bot/commands/commands-data/utility-commands";
 export default {
   async interactionRun(interaction, t, client) {
     const type = interaction.options.getString("category", true);
@@ -118,85 +117,5 @@ export default {
       }
     }
   },
-  name: "language",
-  description: "manage preferred language for the bot's response",
-  slash: {
-    name_localizations: x("commands.LANGUAGE.name"),
-    description_localizations: x("commands.LANGUAGE.description"),
-    options: [
-      {
-        name: "set",
-        name_localizations: x("commands.LANGUAGE.options.SUB.SET.name"),
-        description: "set your/server language for the bot",
-        description_localizations: x("commands.LANGUAGE.options.SUB.SET.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "category",
-            name_localizations: x("commands.LANGUAGE.options.CATEGORY.name"),
-            description: "select a category to set the laguage for",
-            description_localizations: x("commands.LANGUAGE.options.CATEGORY.description"),
-            type: ApplicationCommandOptionType.String,
-            choices: [
-              {
-                name: "Server",
-                name_localizations: x("commands.LANGUAGE.options.CATEGORY.choices.GUILD"),
-                value: "server",
-              },
-              {
-                name: "User",
-                name_localizations: x("commands.LANGUAGE.options.CATEGORY.choices.USER"),
-                value: "user",
-              },
-            ],
-            required: true,
-          },
-          {
-            name: "languages",
-            name_localizations: x("commands.LANGUAGE.options.LANGUAGES.name"),
-            description: "select a language",
-            description_localizations: x("commands.LANGUAGE.options.LANGUAGES.description"),
-            type: ApplicationCommandOptionType.String,
-            choices: supportedLang.map((lang) => ({
-              name: `${lang.flag} ${lang.name}`,
-              value: lang.value,
-            })),
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "remove",
-        name_localizations: x("commands.LANGUAGE.options.SUB.REMOVE.name"),
-        description: "remove a set language",
-        description_localizations: x("commands.LANGUAGE.options.SUB.REMOVE.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "category",
-            name_localizations: x("commands.LANGUAGE.options.CATEGORY.name"),
-            description: "select a category type to remove",
-            description_localizations: x("commands.LANGUAGE.options.CATEGORY.description"),
-            type: ApplicationCommandOptionType.String,
-            choices: [
-              {
-                name: "Server",
-                name_localizations: x("commands.LANGUAGE.options.CATEGORY.choices.GUILD"),
-                value: "server",
-              },
-              {
-                name: "User",
-                name_localizations: x("commands.LANGUAGE.options.CATEGORY.choices.USER"),
-                value: "user",
-              },
-            ],
-            required: true,
-          },
-        ],
-      },
-    ],
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-  },
-  category: "Utility",
+  ...LANGUAGE_DATA,
 } satisfies Command;

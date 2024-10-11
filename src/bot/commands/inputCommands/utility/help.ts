@@ -11,6 +11,7 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import { useTranslations as x } from "#handlers/useTranslation";
+import { HELP_DATA } from "#bot/commands/commands-data/utility-commands";
 
 const BASE_DOC_URL = "https://docs.skyhelper.xyz";
 
@@ -160,27 +161,7 @@ export default {
       }));
     await interaction.respond(choices);
   },
-  name: "help",
-  description: "help menu",
-  slash: {
-    name_localizations: x("commands.HELP.name"),
-    description_localizations: x("commands.HELP.description"),
-    options: [
-      {
-        name: "command",
-        name_localizations: x("commands.HELP.options.COMMAND.name"),
-        description: "help about a specific command",
-        description_localizations: x("commands.HELP.options.COMMAND.description"),
-        type: ApplicationCommandOptionType.String,
-        required: false,
-        autocomplete: true,
-      },
-    ],
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-  },
-  category: "Utility",
-  cooldown: 10,
+  ...HELP_DATA,
 } satisfies Command<true>;
 
 function handleCommand(command: ApplicationCommand): EmbedBuilder {

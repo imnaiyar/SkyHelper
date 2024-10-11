@@ -2,50 +2,9 @@ import Guild from "#schemas/guildBlackList";
 import { EmbedBuilder, Message, type User } from "discord.js";
 import { getUser } from "#schemas/User";
 import type { SkyHelper, Command } from "#structures";
+import { BLACKLIST_DATA } from "#bot/commands/commands-data/owner-commands";
 export default {
-  name: "blacklist",
-  description: "blacklist a guild or an user.",
-  prefix: {
-    aliases: ["bl"],
-    minimumArgs: 1,
-    usage: "g <id> Doing some shady stuff",
-    subcommands: [
-      {
-        trigger: "g <id> [reason]",
-        description: "Adds a guild to blacklist",
-      },
-      {
-        trigger: "rmg <id>",
-        description: "Removes a guild from blacklist",
-      },
-      {
-        trigger: "u <id> [reason]",
-        description: "Adds a user to blacklist",
-      },
-      {
-        trigger: "rmu <id>",
-        description: "Removes a user from blacklist",
-      },
-      {
-        trigger: "glist",
-        description: "Lists all blacklisted guilds",
-      },
-    ],
-  },
-  validations: [
-    {
-      type: "message",
-      message: "ID must be provided with this subcommand",
-      callback(msg, messageOptions) {
-        if (!(msg instanceof Message) || !messageOptions?.args) return true;
-        const sub = messageOptions.args[0];
-        if (["g", "rmG", "u", "rmU"].includes(sub) && !messageOptions.args[1]) return false;
-        return true;
-      },
-    },
-  ],
-  category: "OWNER",
-  ownerOnly: true,
+  ...BLACKLIST_DATA,
 
   async messageRun({ message, args, client }) {
     const sub = args[0];

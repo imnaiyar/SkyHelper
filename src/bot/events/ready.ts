@@ -6,7 +6,7 @@ import { UpdateEvent, UpdateTS, ShardsUtil as util } from "skyhelper-utils";
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 const readyHandler: Event<"ready"> = async (client): Promise<void> => {
-  client.logger.log(`Logged in as ${client.user.tag}`, "BOT");
+  client.logger.custom(`Logged in as ${client.user.tag}`, "BOT");
 
   client.classes.set("UpdateTS", UpdateTS);
   client.classes.set("UpdateEvent", UpdateEvent);

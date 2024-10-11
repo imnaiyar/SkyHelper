@@ -20,6 +20,7 @@ import moment from "moment-timezone";
 import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "skyhelper-utils";
 import { useTranslations as x } from "#handlers/useTranslation";
 import type { getTranslator } from "#bot/i18n";
+import { SHARDS_CALENDAR_DATA } from "#bot/commands/commands-data/info-commands";
 const months = [
   "January",
   "February",
@@ -49,27 +50,7 @@ export default {
     const m = await message.reply(buildResponse(t, client));
     collectResponseComponents(m, t);
   },
-  name: "shards-calendar",
-  description: "Show the shards calendar",
-  prefix: {
-    aliases: ["shards-cal", "shard-cal", "sc", "nextshards", "next-shards"],
-  },
-  slash: {
-    name_localizations: x("commands.SHARDS_CALENDAR.name"),
-    description_localizations: x("commands.SHARDS_CALENDAR.description"),
-    options: [
-      {
-        name: "hide",
-        name_localizations: x("common.hide-options.name"),
-        description: "hides the response",
-        description_localizations: x("common.hide-options.description"),
-        type: ApplicationCommandOptionType.Boolean,
-        required: false,
-      },
-    ],
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-  },
+  ...SHARDS_CALENDAR_DATA,
 } satisfies Command;
 
 const getDates = (date: moment.Moment): moment.Moment[] => {
