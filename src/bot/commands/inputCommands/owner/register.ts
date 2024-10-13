@@ -1,12 +1,7 @@
+import { REGISTER_DATA } from "#bot/commands/commands-data/owner-commands";
 import type { Command } from "#structures";
 export default {
-  name: "register",
-  description: "register slash commands",
-  ownerOnly: true,
-  category: "OWNER",
-  prefix: {
-    aliases: ["r", "rs"],
-  },
+  ...REGISTER_DATA,
   async messageRun({ message, args: _k, client }) {
     const root = process.isBun ? "src/bot" : "dist/bot";
     const m = await message.reply("Registering commands...");

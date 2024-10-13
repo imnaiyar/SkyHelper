@@ -3,8 +3,6 @@ import type {
   UserContextMenuCommandInteraction,
   MessageContextMenuCommandInteraction,
   PermissionResolvable,
-  ApplicationIntegrationType,
-  InteractionContextType,
   RESTPostAPIContextMenuApplicationCommandsJSONBody,
 } from "discord.js";
 import type { SkyHelper } from "#structures/SkyHelper";
@@ -15,6 +13,7 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
   name: string;
   data: Omit<RESTPostAPIContextMenuApplicationCommandsJSONBody, "name"> & {
     type: T extends "UserContext" ? ApplicationCommandType.User : ApplicationCommandType.Message;
+    guilds?: string[];
   };
   userPermissions?: PermissionResolvable[];
   botPermissions?: PermissionResolvable[];

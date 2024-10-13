@@ -6,21 +6,11 @@ import { EmbedBuilder, codeBlock } from "discord.js";
 import * as d from "discord.js";
 import { postToHaste } from "skyhelper-utils";
 import util from "node:util";
+import { EVAL_DATA } from "#bot/commands/commands-data/owner-commands";
 export default {
-  name: "eval",
-  description: "Evaluate a JavaScript code",
-  ownerOnly: true,
-  prefix: {
-    flags: ["a", "async", "haste", "depth", "silent", "s"],
-    aliases: ["e", "ev"],
-    usage: "<script>",
-    minimumArgs: 1,
-  },
-  botPermissions: ["ViewChannel", "SendMessages"],
-  category: "OWNER",
+  ...EVAL_DATA,
   async messageRun({ message, args, flags }) {
-    /* eslint-disable no-unused-vars */
-    /* @ts-ignore */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { author, guild, member, channel, client } = message;
     let code = args.join(" ");
     if (flags.hasAny(["a", "async"])) code = `(async () => { ${code} })()`;

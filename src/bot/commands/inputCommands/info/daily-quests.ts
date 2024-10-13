@@ -1,7 +1,6 @@
 import { dailyQuestEmbed } from "#utils";
 import type { Command, SkyHelper } from "#structures";
 import moment from "moment-timezone";
-import { useTranslations as x } from "#handlers/useTranslation";
 import {
   ButtonBuilder,
   type APIActionRowComponent,
@@ -9,12 +8,12 @@ import {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   type APIStringSelectComponent,
-  ApplicationCommandOptionType,
   type BaseMessageOptions,
   Message,
   ChatInputCommandInteraction,
 } from "discord.js";
 import type { getTranslator } from "#bot/i18n";
+import { DAILY_QUESTS_DATA } from "#bot/commands/commands-data/info-commands";
 export default {
   async interactionRun(interaction, t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") || undefined });
@@ -27,25 +26,7 @@ export default {
     const m = await message.reply(await getQuestResponse(message.client, t));
     disableButtons(m);
   },
-  name: "daily-quests",
-  description: "Get the daily quests for today",
-  slash: {
-    name_localizations: x("commands.DAILY_QUESTS.name"),
-    description_localizations: x("commands.DAILY_QUESTS.description"),
-    options: [
-      {
-        name: "hide",
-        name_localizations: x("common.hide-options.name"),
-        description: "hide the response from others",
-        description_localizations: x("common.hide-options.description"),
-        type: ApplicationCommandOptionType.Boolean,
-      },
-    ],
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-  },
-  category: "Info",
-  cooldown: 15,
+  ...DAILY_QUESTS_DATA,
 } satisfies Command;
 
 const getQuestResponse = async (client: SkyHelper, t: ReturnType<typeof getTranslator>): Promise<string | BaseMessageOptions> => {

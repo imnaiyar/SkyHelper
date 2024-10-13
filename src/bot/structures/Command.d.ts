@@ -91,7 +91,9 @@ export interface Command<Autocomplete extends boolean = false> {
    * Slash Command API data
    */
   slash?: Omit<RESTPostAPIChatInputApplicationCommandsJSONBody, "name" | "description"> & {
-    /** User permissions required to use this command */
+    /** Array of guild Ids this command will be deployed to,
+     * if present, the command in not deployed globally but only for the specified guilds */
+    guilds?: string[];
   };
   /* Command category */
   category?: string;

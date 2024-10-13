@@ -17,21 +17,24 @@ export default class {
    * @param content
    */
   static success(content: string, message?: string) {
-    logger.info(content, message);
+    if (message) logger.info(content, message);
+    else logger.info(content);
   }
 
   /**
    * @param content
    */
   static log(content: string, message?: string) {
-    logger.info(content, message);
+    if (message) logger.info(content, message);
+    else logger.info(content);
   }
 
   /**
    * @param content
    */
-  static warn(content: string, message: string) {
-    logger.warn(content, message);
+  static warn(content: string, message?: string) {
+    if (message) logger.warn(content, message);
+    else logger.warn(content);
   }
 
   /**

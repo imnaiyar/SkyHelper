@@ -1,3 +1,4 @@
+import { ANNOUNCEMENT_DATA } from "#bot/commands/commands-data/owner-commands";
 import type { Command } from "#structures";
 import {
   ActionRowBuilder,
@@ -9,13 +10,7 @@ import {
   TextInputStyle,
 } from "discord.js";
 export default {
-  name: "announce",
-  description: "announce new release/updates to the subscribed channels",
-  prefix: {
-    aliases: ["an", "as"],
-  },
-  ownerOnly: true,
-  category: "OWNER",
+  ...ANNOUNCEMENT_DATA,
   async messageRun({ message, client }) {
     const msg = await message.channel.send({
       content: "Please send the text you want to announce through the modal.",

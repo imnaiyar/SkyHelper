@@ -20,12 +20,10 @@ import {
   type MessageActionRowComponentBuilder,
   ChannelSelectMenuInteraction,
   TextChannel,
-  ApplicationIntegrationType,
-  InteractionContextType,
   Message,
 } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
 import { getTranslator } from "#bot/i18n";
+import { REMINDERS_DATA } from "#bot/commands/commands-data/admin-commands";
 export default {
   async interactionRun(interaction, t) {
     if (!interaction.inCachedGuild()) {
@@ -43,17 +41,7 @@ export default {
     const settings = await client.database.getSettings(message.guild);
     await handleSetup(message, t, settings);
   },
-  name: "reminders",
-  description: "Set up reminders",
-  slash: {
-    name_localizations: x("commands.REMINDERS.name"),
-    description_localizations: x("commands.REMINDERS.description"),
-    integration_types: [ApplicationIntegrationType.GuildInstall],
-    contexts: [InteractionContextType.Guild],
-  },
-  botPermissions: ["ManageWebhooks"],
-  userPermissions: ["ManageGuild"],
-  category: "Admin",
+  ...REMINDERS_DATA,
 } satisfies Command;
 
 async function handleSetup(

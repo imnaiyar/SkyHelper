@@ -1,16 +1,8 @@
+import { SET_PREFIX_DATA } from "#bot/commands/commands-data/admin-commands";
 import type { Command } from "#structures";
 
 export default {
-  name: "setprefix",
-  description: "set the prefix for this server",
-  prefix: {
-    aliases: ["sp"],
-    minimumArgs: 1,
-    usage: "<prefix>",
-    guildOnly: true,
-  },
-  userPermissions: ["ManageGuild"],
-  category: "Admin",
+  ...SET_PREFIX_DATA,
   async messageRun({ message: msg, args, client }) {
     if (!msg.inGuild()) return;
     const settings = await client.database.getSettings(msg.guild);
