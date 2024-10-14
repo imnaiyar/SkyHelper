@@ -61,7 +61,7 @@ async function handleInfo(
     const settings = await client.database.getSettings(interaction.guild);
     embed.addFields({
       name: t("common.bot.GUILD_SETTINGS") + ` (\`${interaction.guild.name}\`)`,
-      value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
+      value: `- **${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
       inline: true,
     });
   }
@@ -87,16 +87,14 @@ async function handleInfo(
 }
 
 function timeformat(timeInSeconds: number) {
-  const days = Math.floor((timeInSeconds % 31536000) / 86400);
-  const hours = Math.floor((timeInSeconds % 86400) / 3600);
-  const minutes = Math.floor((timeInSeconds % 3600) / 60);
-  const seconds = Math.round(timeInSeconds % 60);
-  return (
-    (days > 0 ? `${days} days, ` : "") +
-    (hours > 0 ? `${hours} hours, ` : "") +
-    (minutes > 0 ? `${minutes} minutes, ` : "") +
-    (seconds > 0 ? `${seconds} seconds` : "")
-  );
+  return ["d", "h", "m", "s"]
+    .map((v, i) => {
+      const value = [86400, 3600, 60, 1];
+      const time = Math.floor(timeInSeconds / value[i]);
+      timeInSeconds %= value[i];
+      return time ? `${time}${v}` : "";
+    })
+    .join(" ");
 }
 
 const getProcessInfo = () => {
