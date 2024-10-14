@@ -302,6 +302,7 @@ const data: Record<string, SpiritsData> = {
         name: "Music Sheet #42",
         type: "Music Sheet",
         icon: "<:MusicIcon:1262323496852131882>",
+        spPrice: "8 <:MusicIcon:1262323496852131882>",
         images: [],
       },
     ],

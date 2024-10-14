@@ -4,60 +4,55 @@ import type { SeasonPrice } from "#libs/types";
  * Spirit prices of the current season (For calculator)
  */
 export const SeasonPrices: { [key: string]: SeasonPrice } = {
-  "The Cellist's Beginnings": {
-    icon: "<:CellistB:1262326135216406559>",
+  "Comfort of Kindness": {
+    icon: "<:ComfortofKindnessCape:1295293399406084147>",
     collectibles: [
-      { item: "Hair", icon: "<:CellitBHair:1262322324963852308>", price: 20 },
-      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 26 },
-      { item: "Outfit", icon: "<:CellitBOutfit:1262322298145341581>", price: 32 },
-      { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
+      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 6 },
+      { item: "Hair", icon: "<:ComfortofKindnessHair:1295319528678490132>", price: 16 },
+      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 20 },
+      { item: "Bow tie", icon: "<:ComfortofKindnessNeckAccessory:1295319558441140244>", price: 24 },
+      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 32 },
+      { item: "Heart", icon: "<:MoominHeart:1295299241756852234>", price: 3, pass: true },
     ],
   },
-  "The Pianist's Beginnings": {
-    icon: "<:PianistB:1262326115024769107>",
+  "Sense of Self": {
+    icon: "<:SenseofSelfNeckAccessory:1295294042258673718>",
     collectibles: [
-      { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 14 },
-      { item: "Hair", icon: "<:PianistBHair:1262322985134461029>", price: 20 },
-      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 24 },
-      { item: "Small Blue Rug", icon: "<:SmallBlueRug:1262322964062277666>", price: 30 },
-      { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
+      { item: "Music Sheet #41", icon: "<:MusicIcon:1262323496852131882>", price: 12 },
+      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 18 },
+      { item: "Neck Accessory", icon: "<:SenseofSelfNeckAccessory:1295294042258673718>", price: 24 },
+      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 28 },
+      { item: "Heart", icon: "<:MoominHeart:1295299241756852234>", price: 3, pass: true },
     ],
   },
-  "The Musicians' Legacy": {
-    icon: "<:MusicianL:1262326097341714514>",
+  "Spirit of Adventure": {
+    icon: "<:SpiritofAdventureCape:1295294188375511082>",
     collectibles: [
-      { item: "Music Sheet #40", icon: "<:MusicIcon:1262323496852131882>", price: 14 },
-      { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 24 },
-      { item: "Instrument", icon: "<:MusiciansLInstrument:1262323472760049724>", price: 34 },
-      { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
-    ],
-  },
-  "The Cellist's Flourishing": {
-    icon: "<:CellistF:1262326155508318380>",
-    collectibles: [
-      { item: "Small Pink Rug", icon: "<:SmallPinkRug:1262323794715082824>", price: 16 },
-      { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 18 },
-      { item: "Cape", icon: "<:CellistFCape:1262323774997659673>", price: 22 },
-      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 24 },
-      { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
-    ],
-  },
-  "The Pianist's Flourishing": {
-    icon: "<:PianistF:1262326075380334623>",
-    collectibles: [
-      { item: "Blessing Nodes", icon: "<:BlessingNode:1238570665267691602>", price: 12 },
-      { item: "Shoes", icon: "<:PianistFShoes:1262324120532549692>", price: 22 },
+      { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 8 },
+      { item: "Harmonica", icon: "<:SpiritofAdventureHarmonica:1295314878956830741>", price: 20 },
       { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 26 },
-      { item: "Heart", icon: "<:DuetHeart:1262318647376871424>", price: 3, pass: true },
+      { item: "Cape", icon: "<:SpiritofAdventureCape:1295294188375511082>", price: 38 },
+      { item: "Heart", icon: "<:MoominHeart:1295299241756852234>", price: 3, pass: true },
+    ],
+  },
+  "Inspiration of Inclusion": {
+    icon: "<:InspirationofInclusionNeckAccess:1295294371876573325>",
+    collectibles: [
+      { item: "Grandfather Clock", icon: "<:InspirationofInclusionClockPropi:1295301238304538695>", price: 12 },
+      { item: "Blessing Node", icon: "<:BlessingNode:1238570665267691602>", price: 16 },
+      { item: "Painting", icon: "<:InspirationofInclusionPainting:1295301282659045447>", price: 20 },
+      { item: "Blessings Node", icon: "<:BlessingNode:1238570665267691602>", price: 26 },
+      { item: "Outfit", icon: "<:InspirationofInclusionOutfit:1295300513868419148>", price: 36 },
+      { item: "Heart", icon: "<:MoominHeart:1295299241756852234>", price: 3, pass: true },
     ],
   },
 } as const;
 
 export const SeasonData = {
-  name: "Season of Duets",
-  icon: "<:SODuet:1262310944332189768>",
-  start: "15-07-2024",
-  end: "29-09-2024",
+  name: "Season of Moomin",
+  icon: "<:SeasonofMoominIcon:1295323276612206602>",
+  start: "14-10-2024",
+  end: "29-12-2024",
   duration: 77,
-  spiritsUpdated: true,
+  spiritsUpdated: false,
 } as const;
