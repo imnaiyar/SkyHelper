@@ -118,7 +118,7 @@ type Seasons =
 
 type Realms =
   | "Isle of Dawn"
-  | "Daylight Parairie"
+  | "Daylight Prairie"
   | "Hidden Forest"
   | "Valley of Triumph"
   | "Golden Wasteland"
