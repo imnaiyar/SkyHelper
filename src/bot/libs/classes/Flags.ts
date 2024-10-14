@@ -77,7 +77,7 @@ export class Flags {
    * @returns Array of invalid flags or null
    */
   public invalidFlags(flags: string[]): string[] | null {
-    const invalidFlags = flags.filter((flag) => !flags.find((fl) => flag.startsWith(fl)));
+    const invalidFlags = flags.filter((flag) => !this.flags.find((fl) => fl.startsWith(flag)));
     return invalidFlags.length ? invalidFlags : null;
   }
 
