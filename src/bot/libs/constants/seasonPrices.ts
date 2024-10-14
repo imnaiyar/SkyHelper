@@ -54,5 +54,5 @@ export const SeasonData = {
   start: "14-10-2024",
   end: "29-12-2024",
   duration: 77,
-  spiritsUpdated: false,
+  spiritsUpdated: true,
 } as const;

@@ -113,7 +113,7 @@ type Seasons =
   | "Revival"
   | "Nine-Colored Deer"
   | "Nesting"
-  | "Duet"
+  | "Duets"
   | "Moomin";
 
 type Realms =
