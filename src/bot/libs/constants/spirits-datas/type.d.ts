@@ -23,7 +23,7 @@ interface Collectible {
   name: string;
 
   /** Type of this collectible */
-  type?: CosmeticTypes;
+  type?: CollectibleTypes;
 
   /** Emoji icon of the collectible */
   icon: string;
@@ -70,7 +70,7 @@ interface BaseSpiritData {
   type: string;
 
   /** The realm where the spirit can be found, if any */
-  realm?: string;
+  realm?: Realms;
 
   /** Icon that represents the spirit (only applied if the spirit doesn't have an expression) */
   icon?: string;
@@ -91,9 +91,42 @@ interface BaseSpiritData {
   collectibles?: Collectible[];
 }
 
+type Seasons =
+  | "Gratitude"
+  | "Lightseekers"
+  | "Belonging"
+  | "Rhythm"
+  | "Enchantment"
+  | "Sanctuary"
+  | "Prophecy"
+  | "Dreams"
+  | "Assembly"
+  | "The Little Prince"
+  | "Flight"
+  | "Abyss"
+  | "Performance"
+  | "Shattering"
+  | "Aurora"
+  | "Remembrance"
+  | "Passage"
+  | "Moments"
+  | "Revival"
+  | "Nine-Colored Deer"
+  | "Nesting"
+  | "Duets"
+  | "Moomin";
+
+type Realms =
+  | "Isle of Dawn"
+  | "Daylight Prairie"
+  | "Hidden Forest"
+  | "Valley of Triumph"
+  | "Golden Wasteland"
+  | "Vault of Knowledge"
+  | "Aviary Village";
 export interface SeasonalSpiritData extends BaseSpiritData {
   type: "Seasonal Spirit";
-  season: string;
+  season: Seasons;
   current?: boolean;
   ts: {
     eligible: boolean;

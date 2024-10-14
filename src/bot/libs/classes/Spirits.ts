@@ -93,7 +93,12 @@ export class Spirits {
           .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
           .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
       });
-      embed.setImage(`${config.CDN_URL}/${data.tree!.image}`);
+
+      // Allow usage of both cdn link and direct link
+      // TODO: Consider removing cdn as it is getting very expensive lol
+      let url = data.tree?.image;
+      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
+      embed.setImage(url);
     }
     return embed;
   }

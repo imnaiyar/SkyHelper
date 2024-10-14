@@ -102,7 +102,7 @@ const data: Record<string, SpiritsData> = {
     name: "Peeking Postman",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/8/8a/Dreams-Spirit-Peeking-Postman.png",
     type: "Seasonal Spirit",
-    realm: "Valley of triumph",
+    realm: "Valley of Triumph",
     season: "Dreams",
     ts: {
       eligible: true,
