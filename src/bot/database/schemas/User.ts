@@ -90,7 +90,7 @@ export const getGamesLeaderboard = async (_game: "hangman", guildMembers?: Guild
 
   const singleModeLeaderboard = users
     .filter((user) => (user.gameData?.hangman.singleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b.gameData?.hangman.singleMode.gamesPlayed || 0) - (a.gameData?.hangman.singleMode.gamesPlayed || 0))
+    .sort((a, b) => (b.gameData?.hangman.singleMode.gamesWon || 0) - (a.gameData?.hangman.singleMode.gamesWon || 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
@@ -101,7 +101,7 @@ export const getGamesLeaderboard = async (_game: "hangman", guildMembers?: Guild
 
   const doubleModeLeaderboard = users
     .filter((user) => (user.gameData?.hangman.doubleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b.gameData?.hangman.doubleMode.gamesPlayed || 0) - (a.gameData?.hangman.doubleMode.gamesPlayed || 0))
+    .sort((a, b) => (b.gameData?.hangman.doubleMode.gamesWon || 0) - (a.gameData?.hangman.doubleMode.gamesWon || 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
