@@ -71,7 +71,7 @@ export class Spirits {
           ? `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
               SEASON:
                 Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
-                ` **__${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__`,
+                ` **__${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
             })}`
           : data.ts.returned
             ? `${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${this._formatDates(data.ts.dates)}`

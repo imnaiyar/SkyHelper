@@ -8,6 +8,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Vault of Knowledge",
     icon: "<:ComfortofKindnessCape:1295293399406084147>",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/1/18/Comfort-of-Kindness-Shop.png",
+    current: true,
     ts: {
       eligible: false,
       returned: false,
@@ -127,6 +128,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Vault of Knowledge",
     icon: "<:SenseofSelfNeckAccessory:1295294042258673718>",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/92/Sense-of-Self-Shop.png",
+    current: true,
     ts: {
       eligible: false,
       returned: false,
@@ -194,6 +196,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Vault of Knowledge",
     icon: "<:SpiritofAdventureCape:1295294188375511082>",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/c/c6/Spirit-of-Adventure-Shop.png",
+    current: true,
     ts: {
       eligible: false,
       returned: false,
@@ -314,6 +317,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Vault of Knowledge",
     icon: "<:InspirationofInclusionNeckAccess:1295294371876573325>",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/77/Inspiration-of-Inclusion-Shop.png",
+    current: true,
     ts: {
       eligible: false,
       returned: false,
