@@ -3,11 +3,14 @@ import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClie
 import { Flags } from "#libs/classes/Flags";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import updateDailyQuests from "#handlers/updateDailyQuests";
+import * as Sentry from "@sentry/node";
 
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
 /** Message Handler */
 const messageHandler: Event<"messageCreate"> = async (client, message): Promise<void> => {
+  const scope = new Sentry.Scope();
+  scope.setUser({ id: message.author.id, username: message.author.username });
   // Handle daily guides parsing
   if (message.channelId === client.config.QUEST_UPDATE_CHANNEL.CHANNEL_ID) {
     updateDailyQuests(message);
@@ -32,7 +35,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   const commandName = args.shift()!.toLowerCase();
   const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
   if (!command || !command.messageRun) return;
-
+  scope.setExtra("command", command.name);
   // Check if command is 'OWNER' only.
   if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
 
@@ -162,7 +165,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
       Logger.send({ username: "Command Logs", embeds: [embed] }).catch(() => {});
     }
   } catch (error) {
-    const id = client.logger.error(error);
+    const id = client.logger.error(error, scope);
     const content = { content: t("common.errors.ERROR_ID", { ID: id }) };
     const embed = new EmbedBuilder()
       .setTitle(t("common.errors.EMBED_TITLE"))

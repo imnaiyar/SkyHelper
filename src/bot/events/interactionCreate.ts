@@ -11,6 +11,7 @@ import {
   CommandInteraction,
   ChannelType,
 } from "discord.js";
+import * as Sentry from "@sentry/node";
 import type { ContextMenuCommand, SkyHelper, Command, Event } from "#structures";
 import { parsePerms, type Permission } from "skyhelper-utils";
 import config from "#bot/config";
@@ -47,6 +48,8 @@ const formatIfUserApp = (int: CommandInteraction) => {
 const interactionHandler: Event<"interactionCreate"> = async (client, interaction): Promise<void> => {
   // Translator
   const t = await interaction.t();
+  const scope = new Sentry.Scope();
+  scope.setUser({ id: interaction.user.id, username: interaction.user.username });
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
@@ -58,6 +61,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       });
       return;
     }
+    scope.setTags({ command: interaction.toString(), commandType: "Slash" });
 
     const isChecked = await validateCommand(command, interaction, t);
     if (!isChecked) return;
@@ -90,7 +94,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
         cLogger.send({ username: "Command Logs", embeds: [embed] }).catch(() => {});
       }
     } catch (err) {
-      const errorId = client.logger.error(err);
+      const errorId = client.logger.error(err, scope);
       const content = {
         content: t("common.errors.ERROR_ID", { ID: errorId }),
       };
@@ -116,7 +120,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   // Autocompletes
   if (interaction.isAutocomplete()) {
     const command = client.commands.get(interaction.commandName) as unknown as Command<true> | undefined;
-
+    scope.setTags({ command: interaction.commandName, commandType: "Autocomplete" });
     if (!command || !command.autocomplete) {
       await interaction.respond([
         {
@@ -130,7 +134,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     try {
       await command.autocomplete(interaction, client);
     } catch (error) {
-      client.logger.error(error);
+      client.logger.error(error, scope);
       if (!interaction.responded) {
         await interaction.respond([
           {
@@ -152,12 +156,13 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       });
       return;
     }
+    scope.setTags({ command: interaction.commandName, commandType: "ContextMenu" });
     const isChecked = await validateCommand(command, interaction, t);
     if (!isChecked) return;
     try {
       await command.execute(interaction, client);
     } catch (err) {
-      const errorId = client.logger.error(err);
+      const errorId = client.logger.error(err, scope);
       const content = {
         content: t("common.errors.ERROR_ID", { ID: errorId }),
       };
@@ -182,11 +187,11 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   if (interaction.isButton()) {
     const button = client.buttons.find((btn) => interaction.customId.startsWith(btn.data.name));
     if (!button) return;
-
+    scope.setTags({ button: button.data.name, commandType: "Button", customId: interaction.customId });
     try {
       await button.execute(interaction, t, client);
     } catch (err) {
-      const errorId = client.logger.error(err);
+      const errorId = client.logger.error(err, scope);
       const content = {
         content: t("common.errors.ERROR_ID", { ID: errorId }),
       };

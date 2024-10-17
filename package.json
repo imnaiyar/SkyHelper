@@ -11,7 +11,7 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "npm run build:prod && node dist/bot/index.js --enable-source-maps",
+    "start": "npm run build:prod && NODE_OPTIONS=--enable-source-maps node dist/bot/index.js",
     "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build:ci": "tsc -p tsconfig.json",
     "lint": "eslint --fix src",
@@ -27,7 +27,7 @@
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
-    "@imnaiyar/framework": "^1.2.1",
+    "@imnaiyar/framework": "^1.2.2",
     "@napi-rs/canvas": "^0.1.52",
     "@nestjs/common": "^10.3.8",
     "@nestjs/core": "^10.3.8",
@@ -35,7 +35,7 @@
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
     "@sentry/cli": "^2.32.2",
-    "@sentry/node": "^8.17.0",
+    "@sentry/node": "^8.34.0",
     "@sentry/profiling-node": "^8.17.0",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",

@@ -1,5 +1,5 @@
 import { CustomLogger } from "@imnaiyar/framework";
-import { captureException } from "@sentry/node";
+import { captureException, Scope } from "@sentry/node";
 const logger = new CustomLogger({
   env: process.env.NODE_ENV,
   errorWebhook: process.env.ERROR_LOGS,
@@ -38,12 +38,27 @@ export default class {
   }
 
   /**
+   * @param err
+   * @param [scope=new Scope()]
+   */
+  static error(err: any, scope: Scope): string;
+
+  /**
+   * @param content
+   * @param ex
+   * @param [scope=new Scope()]
+   * @returns The error ID
+   */
+  static error(content: any, ex?: any, scope?: Scope): string;
+  /**
    * @param content
    * @param ex
    * @returns The error ID
    */
-  static error(content: any, ex?: any) {
-    const id = captureException(ex || content);
+  static error(content: any, err?: any, scope: Scope = new Scope()) {
+    const ex = err instanceof Scope ? undefined : err;
+    const sentryScope = err instanceof Scope ? err : scope;
+    const id = captureException(ex || content, sentryScope);
     if (ex) {
       logger.error(content, ex, id);
     } else {
