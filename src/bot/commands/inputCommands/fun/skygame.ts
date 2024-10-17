@@ -18,7 +18,7 @@ export default {
     const sub = interaction.options.getSubcommand(true);
     switch (sub) {
       case "hangman":
-        await handleHangman(interaction);
+        await handleHangman(interaction, _t);
         return;
       case "leaderboard":
         {

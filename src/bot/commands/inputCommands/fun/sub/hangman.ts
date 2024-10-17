@@ -1,4 +1,5 @@
 import { Hangman } from "#bot/libs/classes/HangMan";
+import type { getTranslator } from "#bot/i18n";
 import {
   ChatInputCommandInteraction,
   User,
@@ -21,7 +22,7 @@ const constants = {
   ["double"]: `${BASE}\n- Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.`,
 };
 
-export const handleHangman = async (interaction: ChatInputCommandInteraction) => {
+export const handleHangman = async (interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) => {
   const { client } = interaction;
   const mode = interaction.options.getString("mode", true);
   if (
@@ -30,14 +31,14 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
     Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1")
   ) {
     return void (await interaction.reply({
-      content: "This game can only be played in channels where I can send messages.",
+      content: t("hangman.NOT_PLAYABLE"),
       ephemeral: true,
     }));
   }
 
   if (client.gameData.has(interaction.channel.id)) {
     return void (await interaction.reply({
-      content: "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
+      content: t("hangman.GAME_ACTIVE"),
       ephemeral: true,
     }));
   }

@@ -154,6 +154,10 @@
     "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
     "LOCATION_TITLE": "Location by {{CREDIT}}"
   },
+  "hangman": {
+    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+  },
   "commands": {
     "GUIDES": {
       "name": "guides",
