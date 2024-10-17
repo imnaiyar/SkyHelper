@@ -48,11 +48,12 @@ export default async (message: Message) => {
   if (timer) clearTimeout(timer);
   timer = setTimeout(async () => {
     // ! This is where the reminder will be scheduled and sent
-    await data.save();
     const today = moment().tz(client.timezone).startOf("day");
     // Return if the reminders are already sent, prevent spam in case of some guides added way later
-    if (moment.tz(data.last_updated, client.timezone).startOf("day").isSame(today)) return;
+    if (!moment.tz(data.last_updated, client.timezone).startOf("day").isSame(today)) {
+      await dailyQuestRemindersSchedules(message.client);
+    }
     data.last_updated = today.toISOString();
-    await dailyQuestRemindersSchedules(message.client);
+    await data.save();
   }, 10 * 6e4); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
