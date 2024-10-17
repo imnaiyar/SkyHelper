@@ -1,5 +1,7 @@
 /**
- * This code is a mess, when I wrote it, I didn't know what I was doing. Now that I do know what I am doing, I still can't optimize it as I didnt know what I was doing, so I have no idea what I did here. :>
+ * This code is a mess, when I wrote it, I didn't know what I was doing.
+ * Now that I do know what I am doing, I still can't optimize it as I didnt know what I was doing,
+ * so I have no idea what I did here. :>
  * So this may need full rewrite
  */
 
