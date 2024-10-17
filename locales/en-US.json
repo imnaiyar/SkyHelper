@@ -154,6 +154,10 @@
     "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
     "LOCATION_TITLE": "Location by {{CREDIT}}"
   },
+  "hangman": {
+    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+  },
   "commands": {
     "GUIDES": {
       "name": "guides",
@@ -530,6 +534,47 @@
         "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
         "EMBED_AUTHOR": "Daily Quests",
         "EMBED_DESCRIPTION": "Daily quests for today"
+      }
+    },
+    "SKYGAME": {
+      "name": "skygame",
+      "description": "Various fun games based around Sky: CotL",
+      "SUB": {
+        "HANGMAN": {
+          "name": "hangman",
+          "description": "Play a game of hangman based on sky-related words, or a custom word",
+          "options": {
+            "mode": {
+              "name": "mode",
+              "description": "The mode of this game",
+              "choices": {
+                "single": "Single Player",
+                "double": "Double Player"
+              }
+            }
+          }
+        },
+        "LEADERBOARD": {
+          "name": "leaderboard",
+          "description": "View the leaderboard for the skygames",
+          "options": {
+            "game": {
+              "name": "game",
+              "description": "The game to view the leaderboard for",
+              "choices": {
+                "hangman": "Hangman"
+              }
+            },
+            "leaderboard-type": {
+              "name": "leaderboard-type",
+              "description": "Gloabal leaderboard or server specific (default: global)",
+              "choices": {
+                "global": "Global",
+                "server": "Server"
+              }
+            }
+          }
+        }
       }
     }
   },
