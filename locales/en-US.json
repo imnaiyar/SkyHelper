@@ -535,6 +535,47 @@
         "EMBED_AUTHOR": "Daily Quests",
         "EMBED_DESCRIPTION": "Daily quests for today"
       }
+    },
+    "SKYGAME": {
+      "name": "skygame",
+      "description": "Various fun games based around Sky: CotL",
+      "SUB": {
+        "HANGMAN": {
+          "name": "hangman",
+          "description": "Play a game of hangman based on sky-related words, or a custom word",
+          "options": {
+            "mode": {
+              "name": "mode",
+              "description": "The mode of this game",
+              "choices": {
+                "single": "Single Player",
+                "double": "Double Player"
+              }
+            }
+          }
+        },
+        "LEADERBOARD": {
+          "name": "leaderboard",
+          "description": "View the leaderboard for the skygames",
+          "options": {
+            "game": {
+              "name": "game",
+              "description": "The game to view the leaderboard for",
+              "choices": {
+                "hangman": "Hangman"
+              }
+            },
+            "leaderboard-type": {
+              "name": "leaderboard-type",
+              "description": "Gloabal leaderboard or server specific (default: global)",
+              "choices": {
+                "global": "Global",
+                "server": "Server"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "buttons": {
