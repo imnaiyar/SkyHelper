@@ -106,7 +106,7 @@ const data: Record<string, SpiritsData> = {
   cannoneer: {
     name: "Cackling Cannoneer",
     type: "Seasonal Spirit",
-    image: "",
+    image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/4/48/Abyss-Spirit-Cackling-Cannoneer.png",
     realm: "Golden Wasteland",
     season: "Abyss",
     ts: {
