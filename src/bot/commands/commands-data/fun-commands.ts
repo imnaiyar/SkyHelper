@@ -100,5 +100,5 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
     ],
   },
-  botPermissions: ["SendMessages"],
+  botPermissions: ["SendMessages", "ViewChannel"],
 };
