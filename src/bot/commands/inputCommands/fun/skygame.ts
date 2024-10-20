@@ -39,8 +39,7 @@ export default {
           const getCardResponse = async (): Promise<BaseMessageOptions> => {
             const players = await Promise.all(
               data[btnType].map(async (d, i): Promise<userData> => {
-                const member: GuildMember | User =
-                  type === "server" ? gMembers!.get(d.id)! : await client.users.fetch(d.id, { force: true });
+                const member: GuildMember | User = type === "server" ? gMembers!.get(d.id)! : await client.users.fetch(d.id);
                 return {
                   tag: member instanceof GuildMember ? member.user.username : member.username,
                   games: d.gamesPlayed!,
