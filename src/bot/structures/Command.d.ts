@@ -61,7 +61,7 @@ export interface PrefixSubcommand {
   description: string;
 }
 
-export interface Command<Autocomplete extends boolean = false> {
+interface CommandBase {
   /** Name of the command */
   name: string;
 
@@ -103,6 +103,9 @@ export interface Command<Autocomplete extends boolean = false> {
   /** Permissions bot requires for this command */
   botPermissions?: PermissionResolvable[];
 
+  /** If present, permissions will only be checked for subcomaands present in the array */
+  forSubs?: string[];
+
   /* Whether or not the command is owner only */
   ownerOnly?: boolean;
 
@@ -122,8 +125,12 @@ export interface Command<Autocomplete extends boolean = false> {
     client: SkyHelper,
   ) => Promise<void>;
 
-  /** Autocomplete callback if it exists */
-  autocomplete?: Autocomplete extends true ? (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void> : never;
-
   messageRun?: (options: MessageParams) => Promise<void>;
 }
+
+export type Command<Autocomplete extends boolean = false> = Autocomplete extends true
+  ? CommandBase & {
+      /** Autocomplete callback if it exists */
+      autocomplete: (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void>;
+    }
+  : CommandBase;
