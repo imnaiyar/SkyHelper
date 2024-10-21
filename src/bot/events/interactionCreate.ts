@@ -336,25 +336,27 @@ async function validateCommand(
       const sub = interaction.options.getSubcommand();
       toCheck = command.forSubs.includes(sub);
     }
-    if (toCheck && !interaction.inCachedGuild()) {
-      await interaction.reply({
-        content: t("common.errors.NOT_A_SERVER"),
-        ephemeral: true,
-      });
-      return false;
-    }
+    if (toCheck) {
+      if (!interaction.inCachedGuild()) {
+        await interaction.reply({
+          content: t("common.errors.NOT_A_SERVER"),
+          ephemeral: true,
+        });
+        return false;
+      }
 
-    const botPerms = interaction.guild!.members.me!.permissions;
+      const botPerms = interaction.guild.members.me!.permissions;
 
-    if (toCheck && !botPerms.has(command.botPermissions)) {
-      const missingPerms = botPerms.missing(command.botPermissions);
-      await interaction.reply({
-        content: t("common.errors.NO_PERMS_BOT", {
-          PERMISSIONS: parsePerms(missingPerms as Permission[]),
-        }),
-        ephemeral: true,
-      });
-      return false;
+      if (toCheck && !botPerms.has(command.botPermissions)) {
+        const missingPerms = botPerms.missing(command.botPermissions);
+        await interaction.reply({
+          content: t("common.errors.NO_PERMS_BOT", {
+            PERMISSIONS: parsePerms(missingPerms as Permission[]),
+          }),
+          ephemeral: true,
+        });
+        return false;
+      }
     }
   }
 
