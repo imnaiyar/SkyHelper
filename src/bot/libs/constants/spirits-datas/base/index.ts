@@ -1,6 +1,7 @@
 import type { SpiritsData } from "../type.d.ts";
 import { readdirSync } from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 let toExport: Record<string, SpiritsData> = {};
 import { fileURLToPath } from "url";
 
@@ -12,7 +13,7 @@ const paths = readdirSync(__dirname).filter(
 );
 
 for (const p of paths) {
-  const { default: data } = (await import(path.join(__dirname, p))) as {
+  const { default: data } = (await import(pathToFileURL(path.join(__dirname, p)).href)) as {
     default: Record<string, SpiritsData>;
   };
   toExport = { ...toExport, ...data };

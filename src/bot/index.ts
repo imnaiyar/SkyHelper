@@ -3,28 +3,26 @@ import { SkyHelper } from "#structures";
 import { initializeMongoose } from "#bot/database/mongoose";
 const client = new SkyHelper();
 import { Dashboard } from "../api/main.js";
+import * as Sentry from "@sentry/node";
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
+
 import chalk from "chalk";
+console.log(chalk.blueBright("\n\n<------------------------ Initiaizing Sentry --------------------------->\n"));
 
-// Init Sentry
-if (!process.isBun) {
-  console.log(chalk.blueBright("\n\n<------------------------ Initiaizing Sentry --------------------------->\n"));
-  const Sentry = await import("@sentry/node");
-  const { nodeProfilingIntegration } = await import("@sentry/profiling-node");
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    integrations: [
-      nodeProfilingIntegration(),
-      Sentry.rewriteFramesIntegration({
-        root: global.__dirname,
-      }),
-    ],
-    environment: process.env.NODE_ENV,
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [
+    nodeProfilingIntegration(),
+    Sentry.rewriteFramesIntegration({
+      root: global.__dirname,
+    }),
+  ],
+  environment: process.env.NODE_ENV,
 
-    tracesSampleRate: 1.0,
-    profilesSampleRate: 1.0,
-  });
-  console.log("Sentry Initialized");
-}
+  tracesSampleRate: 1.0,
+  profilesSampleRate: 1.0,
+});
+console.log("Sentry Initialized");
 
 const root = process.isBun ? "src/bot" : "dist/bot";
 await client.loadEvents(root + "/events");

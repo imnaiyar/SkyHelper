@@ -44,7 +44,7 @@ const languages = files
   .filter((f) => supportedLang.some((l) => l.value === f.replace(".json", "")));
 const datas: Record<string, any> = {};
 for (const lg of languages) {
-  const { default: translations } = await import(pathToFileURL(path.resolve("locales", lg)).href, { assert: { type: "json" } });
+  const { default: translations } = await import(pathToFileURL(path.resolve("locales", lg)).href, { with: { type: "json" } });
   datas[lg] = translations;
 }
 /**

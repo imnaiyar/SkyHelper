@@ -330,28 +330,31 @@ async function validateCommand(
   }
 
   // Handle bot's required permissions
-  if (command.botPermissions) {
-    if (interaction.inGuild()) {
-      if (
-        interaction.inCachedGuild() &&
-        (!interaction.guild.members.me?.permissions.has(command.botPermissions) ||
-          !interaction.channel?.permissionsFor(interaction.client.user!)!.has(command.botPermissions))
-      ) {
-        await interaction.reply({
-          content: t("common.errors.NO_PERMS_BOT", {
-            PERMISSIONS: parsePerms(command.botPermissions as unknown as Permission),
-          }),
-          ephemeral: true,
-        });
-        return false;
-      }
-      if (!interaction.inCachedGuild()) {
-        await interaction.reply({
-          content: t("common.errors.NOT_A_SERVER"),
-          ephemeral: true,
-        });
-        return false;
-      }
+  if (interaction.inGuild() && command.botPermissions) {
+    let toCheck = true;
+    if ("description" in command && command.forSubs && interaction.isChatInputCommand()) {
+      const sub = interaction.options.getSubcommand();
+      toCheck = command.forSubs.includes(sub);
+    }
+    if (toCheck && !interaction.inCachedGuild()) {
+      await interaction.reply({
+        content: t("common.errors.NOT_A_SERVER"),
+        ephemeral: true,
+      });
+      return false;
+    }
+
+    const botPerms = interaction.guild!.members.me!.permissions;
+
+    if (toCheck && !botPerms.has(command.botPermissions)) {
+      const missingPerms = botPerms.missing(command.botPermissions);
+      await interaction.reply({
+        content: t("common.errors.NO_PERMS_BOT", {
+          PERMISSIONS: parsePerms(missingPerms as Permission[]),
+        }),
+        ephemeral: true,
+      });
+      return false;
     }
   }
 
