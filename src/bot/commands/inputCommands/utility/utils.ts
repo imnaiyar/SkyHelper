@@ -8,7 +8,7 @@ import {
   ChatInputCommandInteraction,
   EmbedBuilder,
 } from "discord.js";
-import pkg from "#root/package.json" assert { type: "json" };
+import pkg from "#root/package.json" with { type: "json" };
 import { handleTimestamp } from "./sub/timestamp.js";
 import { getChangelog, getSuggestion } from "./sub/utility.js";
 import { getTranslator } from "#bot/i18n";

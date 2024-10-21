@@ -55,42 +55,18 @@
     "topgg-autoposter": "^2.0.2"
   },
   "imports": {
-    "#bot/*": [
-      "./dist/bot/*.js"
-    ],
-    "#handlers": [
-      "./dist/bot/handlers/index.js"
-    ],
-    "#handlers/*": [
-      "./dist/bot/handlers/*.js"
-    ],
-    "#commands/*": [
-      "./dist/bot/commands/*.js"
-    ],
-    "#root/*": [
-      "./*"
-    ],
-    "#schemas/*": [
-      "./dist/bot/database/schemas/*.js"
-    ],
-    "#structures/*": [
-      "./dist/bot/structures/*.js"
-    ],
-    "#structures": [
-      "./dist/bot/structures/index.js"
-    ],
-    "#libs/*": [
-      "./dist/bot/libs/*.js"
-    ],
-    "#libs": [
-      "./dist/bot/libs/index.js"
-    ],
-    "#api/*": [
-      "./dist/api/*.js"
-    ],
-    "#utils": [
-      "./dist/bot/utils/index.js"
-    ]
+    "#bot/*": "./dist/bot/*.js",
+    "#handlers": "./dist/bot/handlers/index.js",
+    "#handlers/*": "./dist/bot/handlers/*.js",
+    "#commands/*": "./dist/bot/commands/*.js",
+    "#root/*": "./*",
+    "#schemas/*": "./dist/bot/database/schemas/*.js",
+    "#structures/*": "./dist/bot/structures/*.js",
+    "#structures": "./dist/bot/structures/index.js",
+    "#libs/*": "./dist/bot/libs/*.js",
+    "#libs": "./dist/bot/libs/index.js",
+    "#api/*": "./dist/api/*.js",
+    "#utils": "./dist/bot/utils/index.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",

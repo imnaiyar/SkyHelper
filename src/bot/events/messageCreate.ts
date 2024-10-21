@@ -137,6 +137,24 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
     setTimeout(() => timestamps?.delete(message.author.id), cooldownAmount);
   }
 
+  // Check bot perms
+  if (message.inGuild() && command.botPermissions) {
+    let toCheck = true;
+    const perms = message.guild.members.me!.permissions;
+    const missing = perms.missing(command.botPermissions);
+    if (command.forSubs) {
+      toCheck = command.forSubs.includes(args[0]);
+    }
+    if (toCheck && !perms.has(command.botPermissions)) {
+      await message.reply(
+        t("common.errors.NO_PERMS_BOT", {
+          PERMISSIONS: parsePerms(missing as Permission[]),
+        }),
+      );
+      return;
+    }
+  }
+
   // Execute the command.
   try {
     await command.messageRun({ message, args, flags, client, t });
