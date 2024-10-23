@@ -2,7 +2,7 @@ pull_request_labels:
   - crowdin
   - translations
 
-pull_request_title: "chore: New Crowdin Translations"
+pull_request_title: "chore: new translations [crowdin]"
 commit_message: "chore: translate to %language%"
 append_commit_message: false
 files:
