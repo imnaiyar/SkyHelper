@@ -31,7 +31,7 @@
       "MESSAGE_NO_ARGS": "आपने कोई भी आर्गुमेंट नहीं provide किया!\n\n**मौजूदा आर्गुमेंट**: {{ARGS}}",
       "MINIMUM_ARGS": "आपको इस कमांड के लिए न्यूनतम `{{LIMIT}}` तर्क प्रदान करने की आवश्यकता है",
       "INVALID_ARGS": "गलत आर्गुमेंट!",
-      "INVALID_USAGE": "Invalid Usage!",
+      "INVALID_USAGE": "गलत इस्तेमाल!",
       "NO_PERMS_USER": "इस कमांड का उपयोग करने के लिए आपके पास आवश्यक अनुमति ({{PERMISSIONS}}) नहीं है।",
       "NOT_A_SERVER": "Oops! लगता है कि आपने यह कमांड किसी ऐसे सर्वर में चलाया है जहां मैं नहीं हूं या यूजर ऐप कमांड के रूप में। यह कमांड केवल उस सर्वर में उपयोग के लिए है जिसका मैं सदस्य हूं।",
       "NO_PERMS_BOT": "मेरे पास यह एक्शन करने के लिए आवश्यक अनुमति ({{PERMISSIONS}}) नहीं है। कृपया मुझे आवश्यक अनुमतियाँ देने के बाद कमांड चलाएँ।",
@@ -155,8 +155,8 @@
     "LOCATION_TITLE": "{{CREDIT}} के तरफ से लोकेशन"
   },
   "hangman": {
-    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
-    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+    "NOT_PLAYABLE": "यह खेल केवल उसी चैनल में खेल जा सकता है जहां पे मैं मैसेज सेंड कर सकता हूं। यह कमांड यूजर ऐप में उपलब्ध नही है, आप यह कमांड उन सर्वर्स में इस्तेमाल कर सकतें है जहां पे मैं सदस्य हूं या फिर मेरे DM में।",
+    "GAME_ACTIVE": "इस चैनल में पहले से ही एक खेल जारी है, कृपया उसकी समाप्ति का इंतजार करें। या यह कमांड किसी और चैनल में उसे करें।"
   },
   "commands": {
     "GUIDES": {
@@ -536,40 +536,40 @@
       }
     },
     "SKYGAME": {
-      "name": "skygame",
-      "description": "Various fun games based around Sky: CotL",
+      "name": "स्काईगेम",
+      "description": "SKY: COTL से सम्बंधित विभिन्न खेल",
       "SUB": {
         "HANGMAN": {
-          "name": "hangman",
-          "description": "Play a game of hangman based on sky-related words, or a custom word",
+          "name": "हैंगमैन",
+          "description": "Sky से सम्बंधित शब्द या कस्टम शब्द पे हैंगमैन खेल खेलें",
           "options": {
             "mode": {
-              "name": "mode",
-              "description": "The mode of this game",
+              "name": "मोड",
+              "description": "यह खेल का मोड",
               "choices": {
-                "single": "Single Player",
-                "double": "Double Player"
+                "single": "सिंगल खिलाड़ी",
+                "double": "डबल खिलाड़ी"
               }
             }
           }
         },
         "LEADERBOARD": {
-          "name": "leaderboard",
-          "description": "View the leaderboard for the skygames",
+          "name": "लीडरबोर्ड",
+          "description": "स्काईगेम्स की लीडरबोर्डस देखें",
           "options": {
             "game": {
-              "name": "game",
-              "description": "The game to view the leaderboard for",
+              "name": "खेल",
+              "description": "वह खेल जिसका लीडरबोर्ड है",
               "choices": {
-                "hangman": "Hangman"
+                "hangman": "हैंगमैन"
               }
             },
             "leaderboard-type": {
-              "name": "leaderboard-type",
-              "description": "Gloabal leaderboard or server specific (default: global)",
+              "name": "लीडरबोर्ड-टाइप",
+              "description": "वैश्विक लीडरबोर्ड या सर्वर विशिष्ट (डिफ़ॉल्ट: वैश्विक)",
               "choices": {
-                "global": "Global",
-                "server": "Server"
+                "global": "वैश्विक",
+                "server": "सर्वर"
               }
             }
           }
