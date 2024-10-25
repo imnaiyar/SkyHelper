@@ -1,6 +1,6 @@
 import { Injectable, type NestMiddleware } from "@nestjs/common";
 import type { Request, Response, NextFunction } from "express";
-import { verifyKeyMiddleware } from "../verifyKeyMiddleware.js";
+import { verifyKeyMiddleware } from "../utils/verifyKeyMiddleware.js";
 
 @Injectable()
 export class WebhookEventMiddleware implements NestMiddleware {
