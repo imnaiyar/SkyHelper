@@ -43,7 +43,8 @@ const guildAddHandler: Event<"guildCreate"> = async (client, guild): Promise<voi
 
   // updates bot info stats on support server.
   const channels = client.channels.cache.get("1158068842040414351") as TextChannel;
-  if (channels) {
+  // Update stats embed in support channel
+  if (channels && process.env.NODE_ENV === "production") {
     const botInfo = new EmbedBuilder()
       .setAuthor({
         name: "Bot's Information",

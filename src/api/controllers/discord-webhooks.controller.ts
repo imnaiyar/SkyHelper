@@ -1,5 +1,5 @@
 import type { SkyHelper as BotService } from "#bot/structures/SkyHelper";
-import { Body, Controller, Inject, Post, Req } from "@nestjs/common";
+import { Body, Controller, HttpCode, Inject, Post, Req } from "@nestjs/common";
 import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, WebhookClient } from "discord.js";
 enum WebhookTypes {
   PING,
@@ -28,18 +28,30 @@ export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Post()
+  @HttpCode(204)
   async handleWebhookEvent(@Body() body: WebhookPayload) {
+    // Ideally only this application authrization event will be sent as it's the only one that's subscribed, but return still for safety
     if (body.event.type !== "APPLICATION_AUTHORIZED") return;
     if (!body.event.data) return;
     const data = body.event.data;
-    if (!data.integration_type) return;
-    if (data.integration_type !== ApplicationIntegrationType.UserInstall) return;
     const { user } = data;
     const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
     if (!webhook) return;
+    let description = `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`;
+    description += `\n\n**Type:** \`${
+      "integration_type" in data
+        ? data.integration_type /* 0 will be false anyway, so no need to check explicitly */
+          ? "UserInstall"
+          : "GuildInstall"
+        : "Oauth2"
+    }\``;
+    description += `\n**Scopes:** \`${data.scopes}\``;
+    if (data.guild) {
+      description += `\n**Guild:** ${data.guild.name} (\`${data.guild.id}\`)`;
+    }
     const embed: APIEmbed = {
       title: "Application Authorized",
-      description: `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`,
+      description,
       color: 0x00ff00,
       timestamp: new Date(body.event.timestamp).toISOString(),
       author: {

@@ -43,7 +43,7 @@ await client.loadContextCmd(root + "/commands/contexts");
 await client.loadButtons(root + "/buttons");
 await initializeMongoose();
 console.log(chalk.blueBright(`\n\n<${"-".repeat(24)} Dashboard ${"-".repeat(26)}>\n`));
-if (client.config.DASHBOARD.enabled && process.env.NODE_ENV !== "development") Dashboard(client);
+if (client.config.DASHBOARD.enabled) Dashboard(client);
 // Catching unhandle rejections
 process.on("unhandledRejection", client.logger.error);
 process.on("uncaughtException", client.logger.error);
