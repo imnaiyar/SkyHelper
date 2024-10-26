@@ -1,6 +1,6 @@
 import type { SkyHelper as BotService } from "#bot/structures/SkyHelper";
 import { Body, Controller, Inject, Post, Req } from "@nestjs/common";
-import { type APIGuild, type APIUser, ApplicationIntegrationType, WebhookClient } from "discord.js";
+import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, WebhookClient } from "discord.js";
 enum WebhookTypes {
   PING,
   EVENT,
@@ -37,8 +37,26 @@ export class WebhookEventController {
     const { user } = data;
     const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
     if (!webhook) return;
+    const embed: APIEmbed = {
+      title: "Application Authorized",
+      description: `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`,
+      color: 0x00ff00,
+      timestamp: new Date(body.event.timestamp).toISOString(),
+      author: {
+        name: "User Authorized",
+        icon_url: user.avatar
+          ? this.bot.rest.cdn.avatar(user.id, user.avatar)
+          : this.bot.rest.cdn.defaultAvatar(Number(BigInt(user.id) >> 22n) % 6),
+      },
+      footer: {
+        text: user.id,
+      },
+      ...(user.banner && { image: { url: this.bot.rest.cdn.banner(user.id, user.banner) } }),
+    };
     webhook.send({
-      content: `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`,
+      embeds: [embed],
+      username: "User Install",
+      avatarURL: this.bot.user.displayAvatarURL(),
     });
     return;
   }
