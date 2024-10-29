@@ -1,6 +1,7 @@
 import type { SkyHelper as BotService } from "#bot/structures/SkyHelper";
-import { Body, Controller, HttpCode, Inject, Post, Req } from "@nestjs/common";
+import { Body, Controller, HttpCode, Inject, Post, Req, Res } from "@nestjs/common";
 import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, WebhookClient } from "discord.js";
+import type { Response } from "express";
 enum WebhookTypes {
   PING,
   EVENT,
@@ -28,8 +29,8 @@ export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Post()
-  @HttpCode(204)
-  async handleWebhookEvent(@Body() body: WebhookPayload) {
+  async handleWebhookEvent(@Body() body: WebhookPayload, @Res() res: Response) {
+    res.status(204).send();
     // Ideally only this application authrization event will be sent as it's the only one that's subscribed, but return still for safety
     if (body.event.type !== "APPLICATION_AUTHORIZED") return;
     if (!body.event.data) return;
@@ -37,6 +38,9 @@ export class WebhookEventController {
     const { user } = data;
     const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
     if (!webhook) return;
+
+    // TODO: Add a check for banned guilds here, as authorizing user is included in the payload so it's easier to inform
+
     let description = `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`;
     description += `\n\n**Type:** \`${
       "integration_type" in data
