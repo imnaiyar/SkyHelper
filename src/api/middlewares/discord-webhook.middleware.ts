@@ -2,7 +2,7 @@ import { Injectable, type NestMiddleware } from "@nestjs/common";
 import type { Request, Response, NextFunction } from "express";
 import crypto from "node:crypto";
 
-function hextToUni8(value: string) {
+function hextToUint8(value: string) {
   const matches = value.match(/.{1,2}/g);
   if (matches == null) {
     throw new Error("Value is not a valid hex string");
@@ -28,7 +28,7 @@ export class WebhookEventMiddleware implements NestMiddleware {
 
     const pubKey = await crypto.subtle.importKey(
       "raw",
-      hextToUni8(process.env.PUBLIC_KEY!),
+      hextToUint8(process.env.PUBLIC_KEY!),
       { name: "ED25519", namedCurve: "NODE-ED25519" },
       false,
       ["verify"],
@@ -38,7 +38,7 @@ export class WebhookEventMiddleware implements NestMiddleware {
     const isValid = await crypto.subtle.verify(
       { name: "ED25519" },
       pubKey,
-      hextToUni8(signature),
+      hextToUint8(signature),
       new TextEncoder().encode(timestamp + body),
     );
 
@@ -46,7 +46,8 @@ export class WebhookEventMiddleware implements NestMiddleware {
       return res.status(401).send("Invalid Signature");
     }
     const parsed = JSON.parse(body.toString("utf-8"));
-
+    
+    // If it's a ping, send a pong response
     if (parsed.type === 0) {
       res.status(201).json({ type: 0 });
       return;
