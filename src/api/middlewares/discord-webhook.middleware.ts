@@ -46,7 +46,8 @@ export class WebhookEventMiddleware implements NestMiddleware {
       return res.status(401).send("Invalid Signature");
     }
     const parsed = JSON.parse(body.toString("utf-8"));
-
+    
+    // If it's a ping, send a pong response
     if (parsed.type === 0) {
       res.status(201).json({ type: 0 });
       return;
