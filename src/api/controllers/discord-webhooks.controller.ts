@@ -82,7 +82,7 @@ export class WebhookEventController {
   private async _checkBlacklisted(guildId: string, inviterId: string): Promise<void> {
     const guild = this.bot.guilds.cache.get(guildId);
     if (!guild) return;
-    const blacklisted = await this.bot.database.guildBlackList.findOne({ Guild: guild.id }).catch(() => {});
+    const blacklisted = await this.bot.database.guildBlackList.findOne({ Guild: guild.id }).catch(() => null);
     if (!blacklisted) return;
     await this.bot.users
       .send(
