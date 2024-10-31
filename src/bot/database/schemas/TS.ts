@@ -10,7 +10,7 @@ const Schema = new mongoose.Schema({
 });
 
 const Model = mongoose.model<TSData>("TS", Schema);
-
+export { Model as TSModel };
 export async function getTS(): Promise<TSData> {
   const cached = cache.first();
   if (cached) return cached;

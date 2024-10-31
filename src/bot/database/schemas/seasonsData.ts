@@ -29,7 +29,7 @@ const Schema = new mongoose.Schema<UserSpiritData>({
 });
 
 const Model = mongoose.model<UserSpiritData>("userSeasonData", Schema);
-
+export { Model as UserSeasonModel };
 export async function getUserData(user: User): Promise<UserSpiritData> {
   if (!user) throw new Error("User not provided");
   const cached = cache.first();

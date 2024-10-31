@@ -1,4 +1,4 @@
-import { Hangman } from "#bot/libs/classes/HangMan";
+import { Hangman } from "#bot/libs/classes/Hangman";
 import type { getTranslator } from "#bot/i18n";
 
 import {
@@ -66,10 +66,12 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
   let description = `**Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}\n`;
   description += `**Word Type:** ${type === "custom" ? "Custom" : "Random"}\n`;
   description += `${mode === "single" ? `**Max Lives:** ${maxLives}\n` : ""}`;
-  description += `**Provide the following information:**\n`;
-  description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
-  description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
-  description += `${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n`;
+  if (mode === "double") {
+    description += `**Players:** ${players.map((p) => p.toString()).join(", ")}\n`;
+    description += `**Provide the following information:**\n`;
+    description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
+    description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
+  }
   description += `${constants[mode as "single" | "double"]}\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via <#1249436564652687475>`;
 
   const getResponse = (): BaseMessageOptions => {

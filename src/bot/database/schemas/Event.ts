@@ -9,7 +9,7 @@ const Schema = new mongoose.Schema({
 });
 
 const Model = mongoose.model<EventData>("Event", Schema);
-
+export { Model as EventModel };
 export async function getEvent(): Promise<EventData> {
   const cached = cache.first();
   if (cached) return cached;

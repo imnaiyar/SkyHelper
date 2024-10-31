@@ -9,7 +9,7 @@ export async function drawHangmanGallow(remainingLives: number, player: User) {
     totalLives = 6;
 
   // #region Bot Info
-  const botLogo = await loadImage("https://cdn.discordapp.com/avatars/1121541967730450574/a9c327444563b8f6dcec9316eba592eb.png");
+  const botLogo = await loadImage(player.client.user.displayAvatarURL({ extension: "png" }));
   const logoX = width - 200;
   const logoY = 20;
   const logoSize = 40;
@@ -53,7 +53,7 @@ export async function drawHangmanGallow(remainingLives: number, player: User) {
   // #region Head
   if (lifeStages >= 1) {
     // Use user's profile as head
-    const img = await loadImage(player.displayAvatarURL({ extension: "png" }));
+    const img = await loadImage(player.displayAvatarURL({ extension: "png" })).catch(() => null);
 
     ctx.beginPath();
     ctx.arc(250, 150, 30, 0, Math.PI * 2); // Circle around the profile
@@ -62,7 +62,7 @@ export async function drawHangmanGallow(remainingLives: number, player: User) {
 
     ctx.save();
     ctx.clip();
-    ctx.drawImage(img, 220, 120, 60, 60);
+    if (img) ctx.drawImage(img, 220, 120, 60, 60);
     ctx.restore();
   }
 

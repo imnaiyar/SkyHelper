@@ -82,11 +82,11 @@ export async function getUser(user: User): Promise<UserSchema> {
 export const getGamesLeaderboard = async (_game: "hangman", guildMembers?: GuildMember[]) => {
   const query = guildMembers ? { _id: { $in: guildMembers.map((m) => m.id) } } : {};
 
-  const users = await Model.find(query);
+  const users = await Model.find({ ...query, hangman: { $exists: true } });
 
   const singleModeLeaderboard = users
-    .filter((user) => (user.gameData?.hangman.singleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b.gameData?.hangman.singleMode.gamesWon || 0) - (a.gameData?.hangman.singleMode.gamesWon || 0))
+    .filter((user) => (user.hangman?.singleMode.gamesPlayed || 0) > 0)
+    .sort((a, b) => (b.hangman?.singleMode.gamesWon || 0) - (a.hangman?.singleMode.gamesWon || 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
@@ -96,8 +96,8 @@ export const getGamesLeaderboard = async (_game: "hangman", guildMembers?: Guild
     }));
 
   const doubleModeLeaderboard = users
-    .filter((user) => (user.gameData?.hangman.doubleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b.gameData?.hangman.doubleMode.gamesWon || 0) - (a.gameData?.hangman.doubleMode.gamesWon || 0))
+    .filter((user) => (user.hangman?.doubleMode.gamesPlayed || 0) > 0)
+    .sort((a, b) => (b.hangman?.doubleMode.gamesWon || 0) - (a.hangman?.doubleMode.gamesWon || 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,

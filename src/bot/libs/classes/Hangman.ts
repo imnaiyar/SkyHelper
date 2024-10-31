@@ -245,7 +245,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       const attach = new AttachmentBuilder(await drawHangmanGallow(this.remainingLives, this.currentPlayer), {
         name: "hangmanGallow.png",
       });
-      embed.setImage("attachment://hangmanGallow.png");
+      embed.setThumbnail("attachment://hangmanGallow.png");
       files = [attach];
     }
     return { embeds: [embed], ...(files ? { files } : {}) };
@@ -269,14 +269,21 @@ export class Hangman<T extends ModeType, K extends WordType> {
         await user.save();
       });
     }
-
+    let files: AttachmentBuilder[] = [];
     const embed = new EmbedBuilder()
       .setTitle("SkyGame: Hangman")
       .setDescription(
         `### Winner: ${this.winner ? this.winner : "None"} \`(${this.winner?.displayName || ""})\`\n\n**Word to guess was**: ${this.word}\n\n**Stats:**\n${this._getPlayerStats()}`,
       )
       .setAuthor({ name: `SkyGame: Hangman | SkyHelper`, iconURL: this.channel.client.user.displayAvatarURL() });
-    this._sendResponse({ embeds: [embed] });
+    if (this.mode === "single") {
+      const attach = new AttachmentBuilder(await drawHangmanGallow(this.remainingLives, this.currentPlayer!), {
+        name: "hangmanGallow.png",
+      });
+      embed.setImage("attachment://hangmanGallow.png");
+      files = [attach];
+    }
+    this._sendResponse({ embeds: [embed], files });
     this.channel.client.gameData.delete(this.channel.id);
   }
 
