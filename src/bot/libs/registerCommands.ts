@@ -1,4 +1,4 @@
-await import("dotenv/config");
+import "dotenv/config";
 import { SkyHelper } from "#structures";
 const client = new SkyHelper();
 const root = process.isBun ? "src/" : "dist/";
@@ -12,10 +12,10 @@ client.on("ready", async () => {
     client.logger.success(`Registered ${client.application.commands.cache.size} commands`);
 
     client.logger.success("Successfully reloaded application (/) commands.");
-    client.destroy();
+    process.exit(0);
   } catch (error) {
     client.logger.error(error);
-    client.destroy();
+    process.exit(1);
   }
 });
 client.login(process.env.TOKEN);

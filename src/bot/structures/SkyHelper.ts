@@ -24,6 +24,7 @@ import { table } from "table";
 import { pathToFileURL } from "node:url";
 import { Flags, spiritsData } from "#libs";
 import "./Extenders.js";
+import { CustomLogger } from "#bot/handlers/logger";
 export type ClassTypes = {
   UpdateTS: typeof UpdateTS;
   UpdateEvent: typeof UpdateEvent;
@@ -140,7 +141,8 @@ export class SkyHelper extends Client<true> {
       }
     }
 
-    this.logger.log(
+    CustomLogger.log(
+      { hideLevel: true, timestamp: false },
       `\n${table(clientEvents, {
         header: {
           alignment: "center",
@@ -149,10 +151,9 @@ export class SkyHelper extends Client<true> {
         singleLine: true,
         columns: [{ width: 25 }, { width: 5, alignment: "center" }],
       })}`,
-      "EVENTS",
     );
 
-    Logger.log(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
+    Logger.custom(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
   }
 
   /**
@@ -176,7 +177,7 @@ export class SkyHelper extends Client<true> {
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
         this.commands.set(command.name, command);
-        this.logger.log(`Loaded ${command.name}`, "COMMANDS");
+        this.logger.custom(`Loaded ${command.name}`, "COMMANDS");
         added++;
       } catch (err) {
         failed++;
@@ -184,7 +185,7 @@ export class SkyHelper extends Client<true> {
       }
     }
 
-    this.logger.log(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
+    this.logger.custom(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
   }
 
   /**
@@ -208,7 +209,7 @@ export class SkyHelper extends Client<true> {
         // const vld = cmdValidation(command, file);
         // if (!vld) return;
         this.contexts.set(command.name + command.data.type.toString(), command);
-        this.logger.log(`Loaded ${command.name}`, "CONTEXTS");
+        this.logger.custom(`Loaded ${command.name}`, "CONTEXTS");
         added++;
       } catch (err) {
         failed++;
@@ -216,7 +217,7 @@ export class SkyHelper extends Client<true> {
       }
     }
 
-    this.logger.log(`Loaded ${added} Context Menu Commands. Failed ${failed}`, "CONTEXTS");
+    this.logger.custom(`Loaded ${added} Context Menu Commands. Failed ${failed}`, "CONTEXTS");
   }
 
   /**
@@ -238,14 +239,14 @@ export class SkyHelper extends Client<true> {
         if (typeof button !== "object") continue;
         if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
         this.buttons.set(button.data.name, button);
-        this.logger.log(`Loaded ${button.data.name}`, "BUTTON");
+        this.logger.custom(`Loaded ${button.data.name}`, "BUTTON");
         added++;
       } catch (ex) {
         failed += 1;
         Logger.error(`${file}`, ex);
       }
     }
-    this.logger.log(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
+    this.logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
   }
 
   /**
@@ -256,7 +257,7 @@ export class SkyHelper extends Client<true> {
       | Pick<Command, "name" | "description" | "slash" | "userPermissions">
       | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
     this.commands
-      .filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd)
+      .filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && !cmd.slash?.guilds)
       .map((cmd) => ({
         name: cmd.name,
         description: cmd.description,
@@ -275,6 +276,7 @@ export class SkyHelper extends Client<true> {
       .forEach((s) => toRegister.push(s));
 
     this.contexts
+      .filter((cmd) => !cmd.data.guilds)
       .map((cmd) => ({
         name: cmd.name,
         ...(cmd.userPermissions && {
@@ -294,6 +296,38 @@ export class SkyHelper extends Client<true> {
     });
 
     this.logger.success("Successfully registered interactions");
+
+    // Attempt to register any guild commands
+    const guilCommandsSlash = this.commands.filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && cmd.slash?.guilds);
+    const guilCommandsContext = this.contexts.filter((cmd) => cmd.data.guilds);
+    const guildCommands = [...guilCommandsSlash.values(), ...guilCommandsContext.values()];
+    if (!guildCommands.length) return;
+    console.log(chalk.blueBright("\n\n<------------ Attempting to register guild commands ----------->\n"));
+    await Promise.all(
+      guildCommands.map(async (cmd) => {
+        const guilds = "description" in cmd ? cmd.slash?.guilds! : cmd.data.guilds!;
+        for (const guild of guilds) {
+          await this.rest.post(Routes.applicationGuildCommands(this.user.id, guild), {
+            body: {
+              name: cmd.name,
+              ...("description" in cmd ? { description: cmd.description } : {}),
+              ...("type" in cmd ? { type: cmd.type } : { type: 1 }),
+              ...(cmd.userPermissions && {
+                default_member_permissions: cmd.userPermissions
+                  .reduce(
+                    (accumulator: bigint, permission) =>
+                      accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
+                    BigInt(0),
+                  )
+                  .toString(),
+              }),
+              ...("slash" in cmd ? cmd.slash : {}),
+            },
+          });
+          this.logger.custom(`Successfully registered "${cmd.name} "in ${guild}`, "GUILD COMMANDS");
+        }
+      }),
+    );
   }
 
   /**
@@ -378,6 +412,6 @@ export class SkyHelper extends Client<true> {
       const option = command.options.find((o) => o.type === 1 && o.name === sub);
       if (!option) throw new Error(`THe provided command doesn't have any subcommand option with the name ${sub}`);
     }
-    return `</${command.name}${sub ? ` ${sub}` : ""}:${command.id}`;
+    return `</${command.name}${sub ? ` ${sub}` : ""}:${command.id}>`;
   }
 }

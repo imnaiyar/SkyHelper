@@ -13,7 +13,7 @@ let timer: NodeJS.Timeout | null = null;
  */
 export default async (message: Message) => {
   // ? This may be used to trigger the reminders (as this is usually the last message of daily quests)
-  if (message.content.includes("Shattering Shard Summary")) return;
+  if (/Shattering Shard Summary/i.test(message.content)) return;
 
   // prettier-ignore
   if (message.content === "**Daily Quests**" || message.content === "`**Daily Quest**" || /^\*?\*?daily quests?\*?\*? by/i.test(message.content)) return;
@@ -38,8 +38,8 @@ export default async (message: Message) => {
     })),
   };
 
-  if (message.content.includes("Rotating Treasure Candle Locations")) data.rotating_candles = guide;
-  else if (message.content.includes("Seasonal Candle Locations")) data.seasonal_candles = guide;
+  if (/Rotating Treasure Candle/i.test(message.content)) data.rotating_candles = guide;
+  else if (/Seasonal Candle/i.test(message.content)) data.seasonal_candles = guide;
   else if (message.content.includes("by")) data.quests.push(guide);
 
   const d = data.quests.filter((q) => moment.tz(q.date, client.timezone).isSame(moment().tz(client.timezone).startOf("day")));
@@ -48,8 +48,12 @@ export default async (message: Message) => {
   if (timer) clearTimeout(timer);
   timer = setTimeout(async () => {
     // ! This is where the reminder will be scheduled and sent
-    data.last_updated = moment().tz(client.timezone).startOf("day").toISOString();
+    const today = moment().tz(client.timezone).startOf("day");
+    // Return if the reminders are already sent, prevent spam in case of some guides added way later
+    if (!moment.tz(data.last_updated, client.timezone).startOf("day").isSame(today)) {
+      await dailyQuestRemindersSchedules(message.client);
+    }
+    data.last_updated = today.toISOString();
     await data.save();
-    await dailyQuestRemindersSchedules(message.client);
-  }, 10 * 60_000); // Ten minute timeout, assuming all the quests are posted within 10 minutes
+  }, 10 * 6e4); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };

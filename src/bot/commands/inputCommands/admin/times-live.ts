@@ -1,7 +1,7 @@
 import type { Command } from "#structures";
-import { ApplicationCommandOptionType, ChannelType, TextChannel } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
+import { TextChannel } from "discord.js";
 import { handleLive } from "./sub/handle-live.js";
+import { TIMES_LIVE_DATA } from "#bot/commands/commands-data/admin-commands";
 export default {
   async interactionRun(interaction, t) {
     const client = interaction.client;
@@ -34,56 +34,5 @@ export default {
       client.logger.error("Failed to stop Skytimes Updates in " + message.guild.name, err);
     }
   },
-  name: "skytimes-live",
-  description: "auto updating message with live skytimes details",
-  slash: {
-    name_localizations: x("commands.SKYTIMES_LIVE.name"),
-    description_localizations: x("commands.SKYTIMES_LIVE.description"),
-    options: [
-      {
-        name: "start",
-        name_localizations: x("commands.SKYTIMES_LIVE.options.START.name"),
-        description: "configure auto skytimes",
-        description_localizations: x("commands.SKYTIMES_LIVE.options.START.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "channel",
-            name_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.name"),
-            description: "channel where skytimes details should be updated",
-            description_localizations: x("commands.SKYTIMES_LIVE.options.START.option.CHANNEL.description"),
-            type: ApplicationCommandOptionType.Channel,
-            channel_types: [ChannelType.GuildText],
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "stop",
-        name_localizations: x("commands.SKYTIMES_LIVE.options.STOP.name"),
-        description: "stop auto skytimes",
-        description_localizations: x("commands.SKYTIMES_LIVE.options.STOP.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-    ],
-    integration_types: [0],
-    contexts: [0],
-  },
-  prefix: {
-    usage: "<sub> [#channel]",
-    minimumArgs: 1,
-    subcommands: [
-      {
-        trigger: "start <#channel>",
-        description: "starts live-skytimes in the given channel",
-      },
-      {
-        trigger: "stop",
-        description: "stop live skytimes",
-      },
-    ],
-  },
-  botPermissions: ["ManageWebhooks"],
-  userPermissions: ["ManageGuild"],
-  category: "Admin",
+  ...TIMES_LIVE_DATA,
 } satisfies Command;

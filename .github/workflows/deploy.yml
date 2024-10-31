@@ -24,8 +24,8 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           NODE_ENV: production
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
-          AUTH_TOKEN: ${{secrets.AUTH_TOKEN}}
           SENTRY_DSN: ${{secrets.SENTRY_DSN}}
+          PUBLIC_KEY: ${{secrets.PUBLIC_KEY}}
           DBL_TOKEN: ${{secrets.DBL_TOKEN}}
           BUG_REPORTS: ${{secrets.BUG_REPORTS}}
           COMMANDS_USED: ${{secrets.COMMANDS_USED}}

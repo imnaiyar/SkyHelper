@@ -13,9 +13,9 @@ services:
       - NODE_ENV
       - TOKEN
       - MONGO_CONNECTION
+      - PUBLIC_KEY
       - TOPGG_TOKEN
       - DBL_TOKEN
-      - AUTH_TOKEN
       - GUILD
       - SUGGESTION
       - READY_LOGS

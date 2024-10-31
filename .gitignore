@@ -7,7 +7,6 @@ bot/commands/wip/
 test.js
 errors.toml
 dist
-.vscode
 bun.lockb
 coverage/
 docker-compose.debug.yml

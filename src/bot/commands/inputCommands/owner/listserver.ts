@@ -1,13 +1,8 @@
+import { LIST_SERVERS_DATA } from "#bot/commands/commands-data/owner-commands";
 import type { Command } from "#structures";
 import { ButtonBuilder, EmbedBuilder, ActionRowBuilder, ButtonStyle, ComponentType } from "discord.js";
 export default {
-  name: "listserver",
-  description: "list servers",
-  prefix: {
-    aliases: ["ls"],
-    usage: "[guildId | name]",
-  },
-  ownerOnly: true,
+  ...LIST_SERVERS_DATA,
   async messageRun({ message, args, client }) {
     const { channel, author } = message;
 

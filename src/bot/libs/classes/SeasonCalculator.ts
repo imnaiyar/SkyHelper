@@ -199,9 +199,12 @@ export default class {
     });
   }
   public async buildCard(): Promise<Buffer> {
-    const emojiURL = this.author.client.emojis.cache
-      .get(parseEmoji(this.seasonIcon)?.id as unknown as string)
-      ?.imageURL({ extension: "png" });
+    const { id } = parseEmoji(this.seasonIcon)!;
+    const emojiURL = id
+      ? this.author.client.emojis.cache.get(id)?.imageURL() ||
+        (await this.author.client.application.emojis.fetch(id).catch(() => null))?.imageURL()
+      : null;
+
     const card = new SeasonProgressCard()
       .setName(this.author instanceof GuildMember ? this.author.nickname ?? this.author.displayName : this.author.displayName)
       .setProgress(parseInt(this.progressLevel.toFixed()))

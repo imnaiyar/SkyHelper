@@ -28,7 +28,7 @@ const guildRemoveHandler: Event<"guildDelete"> = async (client, guild) => {
   }
   // updates bot info stats on support server.
   const channels = client.channels.cache.get("1158068842040414351") as TextChannel;
-  if (channels) {
+  if (channels && process.env.NODE_ENV === "production") {
     const botInfo = new EmbedBuilder()
       .setAuthor({
         name: "Bot's Information",

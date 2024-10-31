@@ -35,7 +35,7 @@ export default {
       "https://preview.skyhelper.xyz",
     ],
 
-    port: "5000",
+    port: process.env.NODE_ENV === "production" ? 5000 : 5001,
 
     // USERS who can access UpdateTS/Quests/Events page
     ADMINS: ["851588007697580033"],

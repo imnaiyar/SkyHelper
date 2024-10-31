@@ -1,25 +1,8 @@
 import * as d from "discord.js";
 import type { Command } from "#structures";
+import { HUG_DATA } from "#bot/commands/commands-data/fun-commands";
 export default {
-  name: "hug",
-  description: "sky hug someone",
-  prefix: {
-    aliases: ["skyhug"],
-    minimumArgs: 1,
-    usage: "<ID|mention>",
-  },
-  slash: {
-    options: [
-      {
-        name: "user",
-        description: "the user to hug",
-        required: true,
-        type: d.ApplicationCommandOptionType.User,
-      },
-    ],
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-  },
+  ...HUG_DATA,
   async messageRun({ message, args, client }) {
     const msg = message;
     const user = msg.mentions.users.first() || (await client.users.fetch(args[0]).catch(() => undefined));

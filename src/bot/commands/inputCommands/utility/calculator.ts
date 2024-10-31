@@ -1,8 +1,8 @@
-import { ApplicationCommandOptionType, GuildMember, time } from "discord.js";
+import { type GuildMember, time } from "discord.js";
 import type { Command } from "#structures";
 import { SeasonCalculator, SeasonData as sn } from "#libs/index";
 import moment from "moment";
-import { useTranslations as x } from "#handlers/useTranslation";
+import { SEASON_CALCULATOR_DATA } from "#bot/commands/commands-data/utility-commands";
 export default {
   async interactionRun(interaction, t, client) {
     // const type = interaction.options.getString("type");
@@ -40,40 +40,5 @@ export default {
     );
     await calculator.handleInt(interaction);
   },
-  name: "seasonal-calculator",
-  description: "calculate seasonal currencies",
-  slash: {
-    name_localizations: x("commands.SEASONAL_CALCULATOR.name"),
-    description_localizations: x("commands.SEASONAL_CALCULATOR.description"),
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-    options: [
-      {
-        name: "candles",
-        name_localizations: x("commands.SEASONAL_CALCULATOR.options.CANDLES.name"),
-        description: "amount of candles you have?",
-        description_localizations: x("commands.SEASONAL_CALCULATOR.options.CANDLES.description"),
-        required: true,
-        type: ApplicationCommandOptionType.Integer,
-      },
-      {
-        name: "dailies",
-        name_localizations: x("commands.SEASONAL_CALCULATOR.options.DAILIES.name"),
-        description: "did you do your dailies today?",
-        description_localizations: x("commands.SEASONAL_CALCULATOR.options.DAILIES.description"),
-        required: true,
-        type: ApplicationCommandOptionType.Boolean,
-      },
-      {
-        name: "season-pass",
-        name_localizations: x("commands.SEASONAL_CALCULATOR.options.SEASON_PASS.name"),
-        description: "do you have the season pass?",
-        description_localizations: x("commands.SEASONAL_CALCULATOR.options.SEASON_PASS.description"),
-        required: false,
-        type: ApplicationCommandOptionType.Boolean,
-      },
-    ],
-  },
-  cooldown: 10,
-  category: "Utility",
+  ...SEASON_CALCULATOR_DATA,
 } satisfies Command;

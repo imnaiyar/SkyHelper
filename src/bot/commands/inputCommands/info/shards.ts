@@ -1,10 +1,10 @@
 import { buildShardEmbed } from "#utils";
-import { useTranslations as x } from "#handlers/useTranslation";
 import type { Command } from "#structures";
-import { ApplicationCommandOptionType, type BaseMessageOptions } from "discord.js";
+import { type BaseMessageOptions } from "discord.js";
 import moment from "moment";
 import { ShardsUtil } from "skyhelper-utils";
 import type { getTranslator } from "#bot/i18n";
+import { SHARDS_DATA } from "#bot/commands/commands-data/info-commands";
 
 export default {
   async interactionRun(interaction, t) {
@@ -24,38 +24,7 @@ export default {
     await message.reply(getShards(t, args[0]));
   },
 
-  name: "shards",
-  description: "Get the a specific shard information",
-  prefix: {
-    usage: "[date]",
-    aliases: ["shard"],
-  },
-  slash: {
-    name_localizations: x("commands.SHARDS.name"),
-    description_localizations: x("commands.SHARDS.description"),
-    options: [
-      {
-        name: "date",
-        name_localizations: x("commands.SHARDS.options.DATE.name"),
-        description: "The date to get the shard information",
-        description_localizations: x("commands.SHARDS.options.DATE.description"),
-        type: ApplicationCommandOptionType.String,
-        required: false,
-      },
-      {
-        name: "hide",
-        name_localizations: x("common.hide-options.name"),
-        description: "Hide the shard response",
-        description_localizations: x("common.hide-options.description"),
-        type: ApplicationCommandOptionType.Boolean,
-        required: false,
-      },
-    ],
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-  },
-  category: "Info",
-  cooldown: 30,
+  ...SHARDS_DATA,
 } satisfies Command;
 
 const getShards = (t: ReturnType<typeof getTranslator>, date?: string | null): string | BaseMessageOptions => {

@@ -8,7 +8,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Aviary Village",
     season: "Nesting",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -111,7 +111,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Aviary Village",
     season: "Nesting",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -229,7 +229,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Aviary Village",
     season: "Nesting",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },
@@ -333,7 +333,7 @@ const data: Record<string, SpiritsData> = {
     realm: "Aviary Village",
     season: "Nesting",
     ts: {
-      eligible: false,
+      eligible: true,
       returned: false,
       dates: [],
     },

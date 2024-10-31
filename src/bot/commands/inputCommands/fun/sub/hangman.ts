@@ -1,4 +1,6 @@
-import { Hangman } from "#libs/classes/Hangman";
+import { Hangman } from "#bot/libs/classes/HangMan";
+import type { getTranslator } from "#bot/i18n";
+
 import {
   ChatInputCommandInteraction,
   User,
@@ -14,6 +16,7 @@ import {
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
+import { parsePerms, type Permission } from "skyhelper-utils";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {
@@ -21,7 +24,7 @@ const constants = {
   ["double"]: `${BASE}\n- Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.`,
 };
 
-export const handleHangman = async (interaction: ChatInputCommandInteraction) => {
+export const handleHangman = async (interaction: ChatInputCommandInteraction, t: ReturnType<typeof getTranslator>) => {
   const { client } = interaction;
   const mode = interaction.options.getString("mode", true);
   if (
@@ -30,14 +33,22 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
     Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1") // Also don't run for only user Apps
   ) {
     return void (await interaction.reply({
-      content: "This game can only be played in channels where I can send messages.",
+      content: t("hangman.NOT_PLAYABLE"),
       ephemeral: true,
     }));
   }
-
+  const botPermsInChannel = interaction.inCachedGuild() ? interaction.channel.permissionsFor(client.user) : undefined;
+  if (!botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
+    return void (await interaction.reply({
+      content: t("common.errors.NO_PERMS_BOT", {
+        PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
+      }),
+      ephemeral: true,
+    }));
+  }
   if (client.gameData.has(interaction.channel.id)) {
     return void (await interaction.reply({
-      content: "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
+      content: t("hangman.GAME_ACTIVE"),
       ephemeral: true,
     }));
   }
@@ -52,17 +63,19 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction) =>
   };
 
   const getCompletedStatus = (completed: boolean) => (completed ? "✅" : "❌");
+  let description = `**Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}\n`;
+  description += `**Word Type:** ${type === "custom" ? "Custom" : "Random"}\n`;
+  description += `${mode === "single" ? `**Max Lives:** ${maxLives}\n` : ""}`;
+  description += `**Provide the following information:**\n`;
+  description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
+  description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
+  description += `${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n`;
+  description += `${constants[mode as "single" | "double"]}\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via <#1249436564652687475>`;
 
   const getResponse = (): BaseMessageOptions => {
     const embed: APIEmbed = {
       title: "Skygame: Hangman",
-      description: `**Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}
-**Word Type:** ${type === "custom" ? "Custom" : "Random"}
-${mode === "single" ? `**Max Lives:** ${maxLives}` : ""}
-**Provide the following information:**
-${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)` : ""}
-${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.` : ""}
-${constants[mode as "single" | "double"] + "\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via </utils contact-us:1249436564652687475>"}`,
+      description,
       color: 0x00ff00,
     };
 
@@ -179,7 +192,7 @@ ${constants[mode as "single" | "double"] + "\n- The Skygame feature is in BETA, 
 
         client.gameData.set(interaction.channel.id, game);
 
-        game.inititalize();
+        await game.inititalize();
       }
     }
   });

@@ -6,7 +6,7 @@ const data: Record<string, SpiritsData> = {
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/b/b7/The-Cellists-Beginnings-Shop.png",
     icon: "<:CellistB:1262326135216406559>",
     type: "Seasonal Spirit",
-    season: "Duet",
+    season: "Duets",
     ts: {
       eligible: false,
       returned: false,
@@ -88,7 +88,7 @@ const data: Record<string, SpiritsData> = {
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/3a/The-Pianists-Beginnings-Shop.png",
     icon: "<:PianistB:1262326115024769107>",
     type: "Seasonal Spirit",
-    season: "Duet",
+    season: "Duets",
     ts: {
       eligible: false,
       returned: false,
@@ -190,7 +190,7 @@ const data: Record<string, SpiritsData> = {
     icon: "<:MusicianL:1262326097341714514>",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/ed/The-Musicians-Legacy-Shop.png",
     type: "Seasonal Spirit",
-    season: "Duet",
+    season: "Duets",
     ts: {
       eligible: false,
       returned: false,
@@ -265,7 +265,7 @@ const data: Record<string, SpiritsData> = {
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/e/ea/The-Cellists-Flourishing-Shop.png",
     icon: "<:CellistF:1262326155508318380>",
     type: "Seasonal Spirit",
-    season: "Duet",
+    season: "Duets",
     ts: {
       eligible: false,
       returned: false,
@@ -372,7 +372,7 @@ const data: Record<string, SpiritsData> = {
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/9/9b/The-Pianists-Flourishing-Shop.png",
     icon: "<:PianistF:1262326075380334623>",
     type: "Seasonal Spirit",
-    season: "Duet",
+    season: "Duets",
     ts: {
       eligible: false,
       returned: false,

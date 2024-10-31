@@ -1,6 +1,5 @@
 import type { Command } from "#structures";
 import {
-  ApplicationCommandOptionType,
   AttachmentBuilder,
   GuildMember,
   resolveColor,
@@ -12,62 +11,14 @@ import {
 } from "discord.js";
 import { handleHangman } from "./sub/hangman.js";
 import { LeaderboardCard, type userData } from "skyhelper-utils";
+import { SKY_GAME_DATA } from "#bot/commands/commands-data/fun-commands";
 export default {
-  name: "skygame",
-  description: "Various fun games based around Sky: CotL",
-  slash: {
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-    options: [
-      {
-        name: "hangman",
-        description: "Play a game of hangman based on sky-related words, or a custom word",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "mode",
-            description: "The mode of the game",
-            choices: [
-              { name: "Single Player", value: "single" },
-              { name: "Double Player", value: "double" },
-            ],
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "leaderboard",
-        description: "View the leaderboard for the skygames",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "game",
-            description: "The game to view the leaderboard for",
-            choices: [{ name: "Hangman", value: "hangman" }],
-            required: true,
-          },
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "leaderboard-type",
-            description: "Gloabal leaderboard or server specific (default: global)",
-            choices: [
-              { name: "Global", value: "global" },
-              { name: "Server", value: "server" },
-            ],
-            required: false,
-          },
-        ],
-      },
-    ],
-  },
-  botPermissions: ["SendMessages"],
+  ...SKY_GAME_DATA,
   async interactionRun(interaction, _t, client) {
     const sub = interaction.options.getSubcommand(true);
     switch (sub) {
       case "hangman":
-        await handleHangman(interaction);
+        await handleHangman(interaction, _t);
         return;
       case "leaderboard":
         {

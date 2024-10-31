@@ -1,7 +1,7 @@
 import type { Command } from "#structures";
-import { ApplicationCommandOptionType, ChannelType, TextChannel } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
+import { TextChannel } from "discord.js";
 import { handleLive } from "./sub/handle-live.js";
+import { SHARDS_LIVE_DATA } from "#bot/commands/commands-data/admin-commands";
 export default {
   async interactionRun(interaction, t) {
     const client = interaction.client;
@@ -31,56 +31,5 @@ export default {
     const config = await client.database.getSettings(message.guild);
     await message.reply(await handleLive(client, "Shards", sub, config, t, channel as TextChannel));
   },
-  name: "shards-live",
-  description: "auto updating message with live shards details",
-  slash: {
-    name_localizations: x("commands.SHARDS_LIVE.name"),
-    description_localizations: x("commands.SHARDS_LIVE.description"),
-    options: [
-      {
-        name: "start",
-        name_localizations: x("commands.SHARDS_LIVE.options.START.name"),
-        description: "start live shards",
-        description_localizations: x("commands.SHARDS_LIVE.options.START.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "channel",
-            name_localizations: x("commands.SHARDS_LIVE.options.START.option.CHANNEL.name"),
-            description: "channel where shard details should be updated",
-            description_localizations: x("commands.SHARDS_LIVE.options.START.option.CHANNEL.description"),
-            type: ApplicationCommandOptionType.Channel,
-            channel_types: [ChannelType.GuildText],
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "stop",
-        name_localizations: x("commands.SHARDS_LIVE.options.STOP.name"),
-        description: "stop live shard",
-        description_localizations: x("commands.SHARDS_LIVE.options.STOP.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-    ],
-    integration_types: [0],
-    contexts: [0],
-  },
-  prefix: {
-    usage: "<sub> [#channel]",
-    minimumArgs: 1,
-    subcommands: [
-      {
-        trigger: "start <#channel>",
-        description: "starts live-shards in the given channel",
-      },
-      {
-        trigger: "stop",
-        description: "stop live shards",
-      },
-    ],
-  },
-  botPermissions: ["ManageWebhooks"],
-  userPermissions: ["ManageGuild"],
-  category: "Admin",
+  ...SHARDS_LIVE_DATA,
 } satisfies Command;

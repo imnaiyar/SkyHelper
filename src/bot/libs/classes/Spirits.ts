@@ -71,7 +71,7 @@ export class Spirits {
           ? `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
               SEASON:
                 Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
-                ` **__${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__`,
+                ` **__${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
             })}`
           : data.ts.returned
             ? `${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${this._formatDates(data.ts.dates)}`
@@ -93,7 +93,12 @@ export class Spirits {
           .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
           .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
       });
-      embed.setImage(`${config.CDN_URL}/${data.tree!.image}`);
+
+      // Allow usage of both cdn link and direct link
+      // TODO: Consider removing cdn as it is getting very expensive lol
+      let url = data.tree?.image;
+      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
+      embed.setImage(url);
     }
     return embed;
   }

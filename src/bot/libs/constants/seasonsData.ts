@@ -12,10 +12,16 @@ export interface SeasonData {
 }
 
 export default {
+  moomin: {
+    name: "Moomin",
+    icon: "<:SeasonofMoominIcon:1295323276612206602>",
+    active: true,
+    from: ["14-10-2024", "29-12-2024"],
+    quests: [],
+  },
   duet: {
     name: "Duets",
     icon: "<:SODuet:1262310944332189768>",
-    active: true,
     from: ["15-07-2024", "29-09-2024"],
     quests: [
       {

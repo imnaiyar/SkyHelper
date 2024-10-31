@@ -11,11 +11,9 @@ import {
 import { exec } from "child_process";
 import util from "node:util";
 import type { Command, SkyHelper } from "#structures";
+import { EXEC_DATA } from "#bot/commands/commands-data/owner-commands";
 export default {
-  name: "run",
-  description: "runs commands on the console",
-  category: "OWNER",
-  ownerOnly: true,
+  ...EXEC_DATA,
   async messageRun({ message, args }) {
     await message.channel.send({
       embeds: [

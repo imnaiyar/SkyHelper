@@ -11,15 +11,15 @@
     "Sky: Children of the Light"
   ],
   "scripts": {
-    "start": "npm run build:prod && node dist/bot/index.js",
+    "start": "npm run build:prod && NODE_OPTIONS=--enable-source-maps node dist/bot/index.js",
     "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build:ci": "tsc -p tsconfig.json",
-    "lint": "eslint src",
+    "lint": "eslint --fix src",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
     "dev": "bun run src/bot/index.ts",
     "commands:prod": "node dist/bot/libs/registerCommands.js",
     "commands:bun": "bun run src/bot/libs/registerCommands.ts",
-    "format": "prettier --write src",
+    "format": "prettier --write --ignore-unknown src",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
     "setup": "node scripts/env-cli.js",
     "prepare": "husky"
@@ -27,6 +27,7 @@
   "author": "Naiyar Imam",
   "license": "MIT",
   "dependencies": {
+    "@imnaiyar/framework": "^1.2.2",
     "@napi-rs/canvas": "^0.1.52",
     "@nestjs/common": "^10.3.8",
     "@nestjs/core": "^10.3.8",
@@ -34,7 +35,7 @@
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/type": "^2.4.4",
     "@sentry/cli": "^2.32.2",
-    "@sentry/node": "^8.17.0",
+    "@sentry/node": "^8.34.0",
     "@sentry/profiling-node": "^8.17.0",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
@@ -49,47 +50,23 @@
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.5.0",
     "node-cron": "^3.0.3",
-    "skyhelper-utils": "^1.3.1",
+    "skyhelper-utils": "^1.3.4",
     "table": "^6.8.1",
     "topgg-autoposter": "^2.0.2"
   },
   "imports": {
-    "#bot/*": [
-      "./dist/bot/*.js"
-    ],
-    "#handlers": [
-      "./dist/bot/handlers/index.js"
-    ],
-    "#handlers/*": [
-      "./dist/bot/handlers/*.js"
-    ],
-    "#commands/*": [
-      "./dist/bot/commands/*.js"
-    ],
-    "#root/*": [
-      "./*"
-    ],
-    "#schemas/*": [
-      "./dist/bot/database/schemas/*.js"
-    ],
-    "#structures/*": [
-      "./dist/bot/structures/*.js"
-    ],
-    "#structures": [
-      "./dist/bot/structures/index.js"
-    ],
-    "#libs/*": [
-      "./dist/bot/libs/*.js"
-    ],
-    "#libs": [
-      "./dist/bot/libs/index.js"
-    ],
-    "#api/*": [
-      "./dist/api/*.js"
-    ],
-    "#utils": [
-      "./dist/bot/utils/index.js"
-    ]
+    "#bot/*": "./dist/bot/*.js",
+    "#handlers": "./dist/bot/handlers/index.js",
+    "#handlers/*": "./dist/bot/handlers/*.js",
+    "#commands/*": "./dist/bot/commands/*.js",
+    "#root/*": "./*",
+    "#schemas/*": "./dist/bot/database/schemas/*.js",
+    "#structures/*": "./dist/bot/structures/*.js",
+    "#structures": "./dist/bot/structures/index.js",
+    "#libs/*": "./dist/bot/libs/*.js",
+    "#libs": "./dist/bot/libs/index.js",
+    "#api/*": "./dist/api/*.js",
+    "#utils": "./dist/bot/utils/index.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",

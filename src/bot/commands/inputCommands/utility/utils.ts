@@ -2,18 +2,17 @@ import type { SkyHelper, Command } from "#structures";
 import os from "node:os";
 import {
   ActionRowBuilder,
-  ApplicationCommandOptionType,
   ButtonBuilder,
   ButtonStyle,
   channelMention,
   ChatInputCommandInteraction,
   EmbedBuilder,
 } from "discord.js";
-import { useTranslations as x } from "#handlers/useTranslation";
-import pkg from "#root/package.json" assert { type: "json" };
+import pkg from "#root/package.json" with { type: "json" };
 import { handleTimestamp } from "./sub/timestamp.js";
 import { getChangelog, getSuggestion } from "./sub/utility.js";
 import { getTranslator } from "#bot/i18n";
+import { UTILS_DATA } from "#bot/commands/commands-data/utility-commands";
 
 export default {
   async interactionRun(interaction, t) {
@@ -34,87 +33,7 @@ export default {
         await handleTimestamp(interaction, t);
     }
   },
-  name: "utils",
-  description: "Utilities",
-  slash: {
-    name_localizations: x("commands.UTILS.name"),
-    description_localizations: x("commands.UTILS.description"),
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-    options: [
-      {
-        name: "timestamp",
-        name_localizations: x("commands.UTILS.options.TIMESTAMP.name"),
-        description: "get unix timestamp for the given date",
-        description_localizations: x("commands.UTILS.options.TIMESTAMP.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "time",
-            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIME.name"),
-            description: "The time to convert (format: HH mm ss)",
-            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIME.description"),
-            type: ApplicationCommandOptionType.String,
-            required: true,
-          },
-          {
-            name: "timezone",
-            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIMEZONE.name"),
-            description: "Your timezone in the format: Continent/City",
-            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.TIMEZONE.description"),
-            type: ApplicationCommandOptionType.String,
-            required: false,
-          },
-          {
-            name: "date",
-            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.DATE.name"),
-            description: "The date to convert (format: DD)",
-            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.DATE.description"),
-            type: ApplicationCommandOptionType.Integer,
-            required: false,
-          },
-          {
-            name: "month",
-            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.MONTH.name"),
-            description: "The month to convert (format: MM)",
-            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.MONTH.description"),
-            type: ApplicationCommandOptionType.Integer,
-            required: false,
-          },
-          {
-            name: "year",
-            name_localizations: x("commands.UTILS.options.TIMESTAMP.options.YEAR.name"),
-            description: "The year to convert (format: YYYY)",
-            description_localizations: x("commands.UTILS.options.TIMESTAMP.options.YEAR.description"),
-            type: ApplicationCommandOptionType.Integer,
-            required: false,
-          },
-        ],
-      },
-      {
-        name: "changelog",
-        name_localizations: x("commands.UTILS.options.CHANGELOG.name"),
-        description: "bot's changelog",
-        description_localizations: x("commands.UTILS.options.CHANGELOG.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-      {
-        name: "botinfo",
-        name_localizations: x("commands.UTILS.options.BOTINFO.name"),
-        description: "get the bot's info",
-        description_localizations: x("commands.UTILS.options.BOTINFO.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-      {
-        name: "contact-us",
-        name_localizations: x("commands.UTILS.options.CONTACT-US.name"),
-        description: "for suggestions/bug reports/contacting us or just anything",
-        description_localizations: x("commands.UTILS.options.CONTACT-US.description"),
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-    ],
-  },
-  category: "Utility",
+  ...UTILS_DATA,
 } satisfies Command;
 
 async function handleInfo(
@@ -142,7 +61,7 @@ async function handleInfo(
     const settings = await client.database.getSettings(interaction.guild);
     embed.addFields({
       name: t("common.bot.GUILD_SETTINGS") + ` (\`${interaction.guild.name}\`)`,
-      value: `**${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n**${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}`,
+      value: `- **${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
       inline: true,
     });
   }
@@ -168,16 +87,14 @@ async function handleInfo(
 }
 
 function timeformat(timeInSeconds: number) {
-  const days = Math.floor((timeInSeconds % 31536000) / 86400);
-  const hours = Math.floor((timeInSeconds % 86400) / 3600);
-  const minutes = Math.floor((timeInSeconds % 3600) / 60);
-  const seconds = Math.round(timeInSeconds % 60);
-  return (
-    (days > 0 ? `${days} days, ` : "") +
-    (hours > 0 ? `${hours} hours, ` : "") +
-    (minutes > 0 ? `${minutes} minutes, ` : "") +
-    (seconds > 0 ? `${seconds} seconds` : "")
-  );
+  return ["d", "h", "m", "s"]
+    .map((v, i) => {
+      const value = [86400, 3600, 60, 1];
+      const time = Math.floor(timeInSeconds / value[i]);
+      timeInSeconds %= value[i];
+      return time ? `${time}${v}` : "";
+    })
+    .join(" ");
 }
 
 const getProcessInfo = () => {
