@@ -28,7 +28,7 @@ describe("Hangman", () => {
       }),
       client: {
         user: {
-          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/logo.png"),
+          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png"),
         },
         database: {
           // @ts-ignore
@@ -37,9 +37,26 @@ describe("Hangman", () => {
         gameData: new Collection(),
       },
     } as unknown as TextChannel;
-
-    user1 = { id: "user1", displayName: "User1" } as User;
-    user2 = { id: "user2", displayName: "User2" } as User;
+    // @ts-ignore
+    user1 = {
+      id: "user1",
+      displayName: "User1",
+      client: {
+        user: {
+          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png"),
+        },
+      },
+    } as User;
+    // @ts-ignore
+    user2 = {
+      id: "user2",
+      displayName: "User2",
+      client: {
+        user: {
+          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png"),
+        },
+      },
+    } as User;
 
     for (const user of [user1, user2]) {
       // @ts-ignore
