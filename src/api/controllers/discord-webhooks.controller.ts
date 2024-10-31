@@ -1,6 +1,6 @@
 import type { SkyHelper as BotService } from "#bot/structures/SkyHelper";
-import { Body, Controller, HttpCode, Inject, Post, Req, Res } from "@nestjs/common";
-import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, WebhookClient } from "discord.js";
+import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
+import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, MessageFlags, WebhookClient } from "discord.js";
 import type { Response } from "express";
 enum WebhookTypes {
   PING,
@@ -74,6 +74,48 @@ export class WebhookEventController {
       username: "User Install",
       avatarURL: this.bot.user.displayAvatarURL(),
     });
+    if (data.guild) this._checkBlacklisted(data.guild.id, user.id);
+
     return;
+  }
+
+  private async _checkBlacklisted(guildId: string, inviterId: string): Promise<void> {
+    const guild = this.bot.guilds.cache.get(guildId);
+    if (!guild) return;
+    const blacklisted = await this.bot.database.guildBlackList.findOne({ Guild: guild.id }).catch(() => {});
+    if (!blacklisted) return;
+    await this.bot.users
+      .send(
+        inviterId,
+        `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.Reason || "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
+      )
+      .catch(() => {});
+    await guild.leave();
+    const embed: APIEmbed = {
+      author: { name: "Blacklisted Server" },
+      description: "Someone tried to invite me to a blacklisted server.",
+      fields: [
+        {
+          name: "Blacklisted Guild Name",
+          value: guild.name + " " + `(${guild.id})`,
+        },
+        {
+          name: "Reason",
+          value: blacklisted.Reason || "No reason provided",
+        },
+        {
+          name: "Blacklisted Date",
+          value: `${blacklisted.Date || "Unknown"}`,
+        },
+      ],
+    };
+    const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
+    if (!webhook) return;
+    webhook.send({
+      username: "Blacklist Server",
+      avatarURL: this.bot.user.displayAvatarURL(),
+      embeds: [embed],
+      flags: MessageFlags.SuppressEmbeds,
+    });
   }
 }
