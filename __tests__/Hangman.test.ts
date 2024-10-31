@@ -1,4 +1,4 @@
-import { Hangman } from "../src/bot/libs/classes/HangMan";
+import { Hangman } from "../src/bot/libs/classes/Hangman";
 import { User, TextChannel, Collection } from "discord.js";
 import { jest, describe, beforeEach, it, expect } from "@jest/globals";
 /* eslint-disable space-before-function-paren */
@@ -28,7 +28,7 @@ describe("Hangman", () => {
       }),
       client: {
         user: {
-          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/logo.png"),
+          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png"),
         },
         database: {
           // @ts-ignore
@@ -37,9 +37,31 @@ describe("Hangman", () => {
         gameData: new Collection(),
       },
     } as unknown as TextChannel;
+    // @ts-ignore
+    user1 = {
+      id: "user1",
+      displayName: "User1",
+      client: {
+        user: {
+          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png"),
+        },
+      },
+    } as User;
+    // @ts-ignore
+    user2 = {
+      id: "user2",
+      displayName: "User2",
+      client: {
+        user: {
+          displayAvatarURL: jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png"),
+        },
+      },
+    } as User;
 
-    user1 = { id: "user1", displayName: "User1" } as User;
-    user2 = { id: "user2", displayName: "User2" } as User;
+    for (const user of [user1, user2]) {
+      // @ts-ignore
+      user.displayAvatarURL = jest.fn().mockReturnValue("https://skyhelper.xyz/assets/img/boticon.png");
+    }
   });
 
   it("should initialize with single mode and random word", () => {
@@ -47,8 +69,8 @@ describe("Hangman", () => {
     expect(hangman.mode).toBe("single");
     expect(hangman.players).toEqual([user1]);
     expect(hangman.type).toBe("random");
-    expect(hangman.totalLives).toBe(7);
-    expect(hangman.remainingLives).toBe(7);
+    expect(hangman.totalLives).toBe(6);
+    expect(hangman.remainingLives).toBe(6);
   });
 
   it("should initialize with double mode and custom word", () => {

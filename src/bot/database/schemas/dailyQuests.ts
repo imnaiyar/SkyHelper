@@ -30,7 +30,7 @@ const Schema = new mongoose.Schema<DailyQuestsSchema>({
 });
 
 const Model = mongoose.model<DailyQuestsSchema>("quests", Schema);
-
+export { Model as QuestsModel };
 export async function getDailyQuests(): Promise<DailyQuestsSchema> {
   const cached = cache.first();
   if (cached) return cached;
