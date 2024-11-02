@@ -28,7 +28,7 @@ jobs:
           pull_request_title: "chore: new translations [crowdin]"
           pull_request_base_branch_name: "main"
           pull_request_labels: crowdin, translations
-          commit_message: "chore: translate to translations"
+          commit_message: "chore: translations"
           github_user_name: "github-actions[bot]"
           github_user_email: "github-actions[bot]@users.noreply.github.com"
           download_translations_args: "-l hi -l ja -l ru"
