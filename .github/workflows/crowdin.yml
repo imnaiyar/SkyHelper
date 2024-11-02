@@ -2,7 +2,7 @@ name: Crowdin Action
 
 on:
   schedule:
-    - cron: "0 * * * *" # Run every hour
+    - cron: "0 0 * * *" # Run every hour
   workflow_dispatch:
 
 jobs:
@@ -25,16 +25,9 @@ jobs:
           download_translations: true
           localization_branch_name: crowdin_translate
           create_pull_request: true
-          pull_request_title: "chore: new translations [crowdin]"
-          pull_request_base_branch_name: "main"
-          pull_request_labels: crowdin, translations
-          commit_message: "chore: translations"
           github_user_name: "github-actions[bot]"
           github_user_email: "github-actions[bot]@users.noreply.github.com"
-          download_translations_args: "-l hi -l ja -l ru"
           config: crowdin.yml
-          source: /locales/en-US.json
-          translation: /locales/%two_letters_code%.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
