@@ -32,6 +32,9 @@ jobs:
           github_user_name: "github-actions[bot]"
           github_user_email: "github-actions[bot]@users.noreply.github.com"
           download_translations_args: "-l hi -l ja -l ru"
+          config: crowdin.yml
+          source: /locales/en-US.json
+          translation: /locales/%two_letters_code%.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
