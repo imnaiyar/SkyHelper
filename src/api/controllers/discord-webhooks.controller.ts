@@ -53,7 +53,7 @@ export class WebhookEventController {
     if (data.guild) {
       description += `\n**Guild:** ${data.guild.name} (\`${data.guild.id}\`)`;
     }
-    if (data.integration_types === 0) {
+    if (data.integration_type === 0) {
       const appl = await this.bot.application.fetch();
       description += `\nTotal Authorized: ${appl.approximateUserInstallCount}`;
     }
