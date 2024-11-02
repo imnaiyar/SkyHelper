@@ -39,8 +39,6 @@ export class WebhookEventController {
     const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
     if (!webhook) return;
 
-    // TODO: Add a check for banned guilds here, as authorizing user is included in the payload so it's easier to inform
-
     let description = `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`;
     description += `\n\n**Type:** \`${
       "integration_type" in data
