@@ -5,6 +5,7 @@
       "intro": "That's me...",
       "EMBED_TITLE": "Bot Info",
       "TOTAL_SERVER": "Total Servers",
+      "TOTAL_AUTHORIZED": "Total User Installs",
       "TOTAL_USERS": "Total Users",
       "LATENCY": "Latency",
       "VERSION": "Version",
@@ -134,7 +135,7 @@
     "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
     "TITLE": "{{TYPE}} Reminder",
     "DAILY_QUESTS": "Daily Quests",
-    "ERROR": "This is not working as expected",
+    "ERROR": "This is not working as expected!",
     "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
   },
   "REALMS": {
@@ -282,7 +283,7 @@
         }
       },
       "RESPONSES": {
-        "INVALID_DATE": "Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**",
+        "INVALID_DATE": "Invalid date format. Please use the YYYY-MM-DD format (e.g, `2024-09-13`). Max input : **275760-09-12**",
         "DATE_NONEXIST": "{{DATE}} does not exist, please provide a valid date."
       }
     },

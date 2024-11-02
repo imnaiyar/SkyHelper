@@ -1,576 +1,576 @@
 {
   "common": {
     "bot": {
-      "name": "स्काई हेल्पर",
-      "intro": "यह में हूं...",
-      "EMBED_TITLE": "बोट इन्फो",
-      "TOTAL_SERVER": "कुल सर्वर",
-      "TOTAL_AUTHORIZED": "कुल यूज़र इंस्टॉल",
-      "TOTAL_USERS": "कुल यूजर्स",
-      "LATENCY": "लेटेंसी",
-      "VERSION": "वर्शन",
-      "UPTIME": "अपटाइम",
-      "PING": "वेबसॉक्केट पिंग",
-      "GUILD_SETTINGS": "सर्वर सेटिंग्स",
-      "LANGUAGE": "भाषा",
-      "ANNOUNCEMENT_CHANNEL": "घोषणा चैनल",
-      "NOT_SET": "कोई नहीं (आप यह बोट के डैशबोर्ड से सेट कर सकतें हैं)",
-      "USER_SETTINGS": "यूजर्स सेटिंग्स",
-      "INVITE": "इन्वाइट",
-      "SUPPORT": "सुप्पोर्ट सर्वर",
-      "DASHBOARD": "डैशबोर्ड"
+      "name": "SkyHelper",
+      "intro": "That's me...",
+      "EMBED_TITLE": "Bot Info",
+      "TOTAL_SERVER": "Total Servers",
+      "TOTAL_AUTHORIZED": "Total User Installs",
+      "TOTAL_USERS": "Total Users",
+      "LATENCY": "Latency",
+      "VERSION": "Version",
+      "UPTIME": "Uptime",
+      "PING": "Websocket Ping",
+      "GUILD_SETTINGS": "Server Settings",
+      "LANGUAGE": "Language",
+      "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
+      "NOT_SET": "None (you can set it via bot's dashboard)",
+      "USER_SETTINGS": "User Settings",
+      "INVITE": "Invite",
+      "SUPPORT": "Support Server",
+      "DASHBOARD": "Dashboard"
     },
-    "NO-WB-PERM-BOT": "मेरे पास `Manage Webhooks` की अनुमती {{CHANNEL}} में नहीं है. कृपया सुनिश्चित करें कि कोई चैनल स्तर की अनुमति ओवरराइड नहीं है और यदि है, तो कृपया कमांड को दोबारा use करने से पहले मुझे उक्त चैनल में आवश्यक अनुमतियां प्रदान करें।",
-    "SELECT_EXPIRED": "यह मेन्यू समाप्त हो चुका है।",
+    "NO-WB-PERM-BOT": "I do not have `Manage Webhooks` permission in {{CHANNEL}}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.",
+    "SELECT_EXPIRED": "Menu Expired!",
     "errors": {
-      "COMMAND_NOT_FOUND": "ऐसा कोई command नहीं है या यह outdated command है।",
-      "autoCompleteCOMMAND_NOT_FOUND": "इस विकल्प के लिए कोई विकल्प नहीं मिला.",
-      "AUTOCOMPLETE_ERROR": "Oops! विकल्पों की खोज करते समय एक Error उत्पन्न हुई।",
-      "ERROR_ID": "एरर ID: `{{ID}}`",
-      "EMBED_TITLE": "एरर",
-      "MESSAGE_BOT_NO_PERM": "लगता है आपने एक कमांड ऐसे सर्वर/चैनल में इस्तेमाल किया है जहां पे मुझे {{PERMISSIONS}} नहीं है। कमांड को इस्तेमाल करने से पहले कृपया सर्वर एडमिंस से गुजारिश करें कि मुझे ज़रूरी परमिशन दें।\n\nकहां से:\n- सर्वर: {{SERVER}}\n- चैनल: {{CHANNEL}}\n- कमांड: {{COMMAND}}",
-      "MESSAGE_NO_ARGS": "आपने कोई भी आर्गुमेंट नहीं provide किया!\n\n**मौजूदा आर्गुमेंट**: {{ARGS}}",
-      "MINIMUM_ARGS": "आपको इस कमांड के लिए न्यूनतम `{{LIMIT}}` तर्क प्रदान करने की आवश्यकता है",
-      "INVALID_ARGS": "गलत आर्गुमेंट!",
-      "INVALID_USAGE": "गलत इस्तेमाल!",
-      "NO_PERMS_USER": "इस कमांड का उपयोग करने के लिए आपके पास आवश्यक अनुमति ({{PERMISSIONS}}) नहीं है।",
-      "NOT_A_SERVER": "Oops! लगता है कि आपने यह कमांड किसी ऐसे सर्वर में चलाया है जहां मैं नहीं हूं या यूजर ऐप कमांड के रूप में। यह कमांड केवल उस सर्वर में उपयोग के लिए है जिसका मैं सदस्य हूं।",
-      "NO_PERMS_BOT": "मेरे पास यह एक्शन करने के लिए आवश्यक अनुमति ({{PERMISSIONS}}) नहीं है। कृपया मुझे आवश्यक अनुमतियाँ देने के बाद कमांड चलाएँ।",
-      "COOLDOWN": "कृपया प्रतीक्षा करें, आप {{COMMAND}} के लिए कूलडाउन पर हैं। आप इसे {{TIME}} के बाद दोबारा उपयोग कर सकते हैं|",
-      "EMBED_DESCRIPTION": "यह कमांड को execute करते समय एक एरर उत्पन्न हुई | कृपया बग रिपोर्ट करते समय एरर ID शामिल करें",
-      "BUTTON_LABEL": "रिपोर्ट बग",
-      "NOT-ALLOWED": "आप दूसरों का generate किया हुआ मेन्यू इस्तेमाल नहीं कर सकते |",
+      "COMMAND_NOT_FOUND": "No such command or outdated command",
+      "autoCompleteCOMMAND_NOT_FOUND": "No choices for this option was found.",
+      "AUTOCOMPLETE_ERROR": "Oops! An error occured while searching for the choices.",
+      "ERROR_ID": "Error ID: `{{ID}}`",
+      "EMBED_TITLE": "ERROR",
+      "MESSAGE_BOT_NO_PERM": "Hi, It seems you tried to use my command in a channel/server where I don't have {{PERMISSIONS}}. Please ask a server admin to grant me necessary permissions before trying to use my commands.\n\nFrom :-\n- Server: {{SERVER}}\n- Channel: {{CHANNEL}}\n- Command Used: `{{COMMAND}}`",
+      "MESSAGE_NO_ARGS": "You didn't provide any arguments\n\n**Available Args**: {{ARGS}}!",
+      "MINIMUM_ARGS": "You need to provide minimum `{{LIMIT}}` args for this command",
+      "INVALID_ARGS": "Invalid Arguments!",
+      "INVALID_USAGE": "Invalid Usage!",
+      "NO_PERMS_USER": "You don't have necessary permission(s) ({{PERMISSIONS}}) to use this command.",
+      "NOT_A_SERVER": "Oops! Looks like you ran this command in a server where I'm not in or as an User App command. This command is only meant to be used in a server I am a member of.",
+      "NO_PERMS_BOT": "I do not have the required permission(s) ({{PERMISSIONS}}) to perform this action. Please run the command again after granting me the necessary permission(s).",
+      "COOLDOWN": "Please wait, you are on a cooldown for {{COMMAND}}. You can use it again {{TIME}}",
+      "EMBED_DESCRIPTION": "An error occurred while executing this command. Please include the error ID while submiting the bug report",
+      "BUTTON_LABEL": "Report Bug",
+      "NOT-ALLOWED": "You cannot use menu(s) generated by others!",
       "ERROR_MODAL": {
-        "SUCCESS": "आपका सबमिशन सफलतापूर्वक प्राप्त हो गया!",
-        "TITLE": "बग रिपोर्ट",
+        "SUCCESS": "Your submission was received successfully!",
+        "TITLE": "Bug Report",
         "FIELDS": {
           "COMMAN_USED": {
-            "LABEL": "कमांड का नाम",
-            "PLACEHOLDER": "वो कमांड जिससे यह एरर produce हुआ|"
+            "LABEL": "Name of the command.",
+            "PLACEHOLDER": "The command that produced the said error."
           },
           "WHAT_HAPPENED": {
-            "LABEL": "बताएं क्या हुआ?",
-            "PLACEHOLDER": "डिटेल्स में बताएं कि क्या हुआ। आप किस परिणाम की आशा कर रहे थे?"
+            "LABEL": "Explain what happened?",
+            "PLACEHOLDER": "Explain in brief what happened. What outcome were you hoping?"
           },
           "ERROR_ID": {
-            "LABEL": "एरर ID"
+            "LABEL": "Error ID"
           }
         }
       }
     },
     "hide-options": {
-      "name": "छिपाए",
-      "description": "रेस्पॉन्स को छिपाए"
+      "name": "hide",
+      "description": "hide the response"
     }
   },
   "shards-embed": {
-    "TODAY": "आज",
-    "AUTHOR": "Shards इन्फो",
-    "FOOTER": "लाइव Shards (हर 5 मिनट में अपडेट)",
-    "CONTENT": "आखरी अपडेट: {{TIME}}",
-    "NO-SHARD": "इस दिन कोई shard नहीं है।",
+    "TODAY": "Today",
+    "AUTHOR": "Shards Info",
+    "FOOTER": "Live Shard (updates every 5 min.)",
+    "CONTENT": "Last Updated: {{TIME}}",
+    "NO-SHARD": "It's a no shard day.",
     "FIELDS": {
       "TYPE": {
-        "LABEL": "Shard टाइप",
+        "LABEL": "Shard Type",
         "VALUE": "{{VALUE}}"
       },
       "LOCATION": {
-        "LABEL": "जगह",
+        "LABEL": "Location",
         "VALUE": "{{VALUE}}"
       },
       "STATUS": {
-        "LABEL": "स्टेटस",
+        "LABEL": "Status",
         "VALUE": {
-          "ENDED": "सभी शार्ड्स {{DURATION}} पहले ख़तम हो चुकें हैं",
-          "ACTIVE": "{{INDEX}} शार्ड अभी एक्टिव है और {{DURATION}} में ख़तम होगा",
-          "EXPECTED": "{{INDEX}} शार्ड {{DURATION}} में लैंड होगा"
+          "ENDED": "All shards ended {{DURATION}} ago",
+          "ACTIVE": "{{INDEX}} shard is currently active and ends in {{DURATION}}",
+          "EXPECTED": "{{INDEX}} shard lands in {{DURATION}}"
         }
       },
       "COUNTDOWN": {
         "VALUE": {
-          "ENDED": "{{DURATION}} पहले ख़तम हो गया",
-          "ACTIVE": "{{DURATION}} में ख़तम होगा",
-          "EXPECTED": "{{DURATION}} में लैंड होगा"
+          "ENDED": "Ended {{DURATION}} ago",
+          "ACTIVE": "Ends in {{DURATION}}",
+          "EXPECTED": "Falls in {{DURATION}}"
         }
       }
     },
-    "BUTTON1": "टाइमलाइन",
-    "BUTTON2": "जगह",
-    "BUTTON3": "Shards के बारे में"
+    "BUTTON1": "Timeline",
+    "BUTTON2": "Location",
+    "BUTTON3": "About Shards"
   },
   "times-embed": {
-    "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
-    "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
-    "EMBED_TITLE": "इवेंट्स का समय",
-    "EMBED_AUTHOR": "स्काइटाइम्स",
-    "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
-    "STARTS": "शुरू होगा",
-    "ENDS": "ख़तम होगा",
-    "TS_VISITING": "**अभी विजिट में**: {{TS_NAME}}\n**वापिस जाएंगे**: {{DATE}} को ({{DURATION}} में)",
-    "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
-    "TS_UPDATED": "अभी अपडेट होने को है",
-    "TS_UNKNOWN": "अनजान स्पिरिट",
-    "GEYSER": "गाइज़र",
-    "GRANDMA": "ग्रांडमा",
-    "TURTLE": "टर्टल",
-    "AURORA": "अरोरा का कॉन्सर्ट",
-    "DREAM-SKATER": "ड्रीम स्केटर",
-    "PASSAGE-QUESTS": "पैसेज क्वेस्ट्स",
-    "NEST-SUNSET": "नेस्ट सूर्यास्त",
-    "FIREWORKS-FESTIVAL": "अवियरी आतिशबाजी महोत्सव",
-    "FAIRY-RING": "फेयरी रिंग",
-    "BROOK-RAINBOW": "फारेस्ट ब्रूक का इंद्रधनुष",
-    "DAILY-RESET": "दैनिक रीसेट",
-    "EDEN": "ईडन रीसेट",
-    "TS_TITLE": "ट्रैवलिंग स्पिरिट",
-    "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
-    "ACTIVE": "**अभी चल रहा है**: {{DURATION}} में खत्म होगा ({{TIME}} बजे)",
-    "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
-    "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}",
-    "TIMELINE": "टाइमलाइन"
+    "FOOTER": "Live SkyTimes (updates every 2 min.)",
+    "EVENT_INACTIVE": "No Active Events",
+    "EMBED_TITLE": "Event Times",
+    "EMBED_AUTHOR": "SkyTimes",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "Starts In",
+    "ENDS": "Ends In",
+    "TS_VISITING": "**Currently Visiting:** {{TS_NAME}}\n**Departure:** At {{DATE}} (in {{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
+    "TS_UPDATED": "Yet to be updated",
+    "TS_UNKNOWN": "Unknown Spirit",
+    "GEYSER": "Geyser",
+    "GRANDMA": "Grandma",
+    "TURTLE": "Turtle/Sanctuary Sunset",
+    "AURORA": "Aurora's Concert",
+    "DREAM-SKATER": "Dream Skater",
+    "PASSAGE-QUESTS": "Passage Quests",
+    "NEST-SUNSET": "Nest Sunset",
+    "FIREWORKS-FESTIVAL": "Aviary Fireworks Festival",
+    "FAIRY-RING": "Fairy Ring",
+    "BROOK-RAINBOW": "Forest Brook Rainbow",
+    "DAILY-RESET": "Daily Reset",
+    "EDEN": "Eden/Weekly Reset",
+    "TS_TITLE": "Traveling Spirit",
+    "EVENT_TITLE": "Special Event (Days of ...)",
+    "ACTIVE": "{{EVENT}} is currently active (at {{ACTIVE_TIME}}) and will end in {{DURATION}} (at {{END_TIME}})",
+    "NEXT-OCC": "Next Occurence: {{TIME}} (in {{DURATION}})",
+    "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}",
+    "TIMELINE": "Timeline"
   },
   "reminders": {
-    "ROLE_MENTION": "हेय, {{ROLE}}",
-    "EDEN_RESET": "आई ऑफ ईडन अभी-अभी रीसेट हो चुका है, statues सारे रीसेट हो चुके है और इन्हें ACs के लिए फिर से save किए जा सकते है!",
-    "DAILY_RESET": "स्काई की दुनिया रीसेट हो गई है और सारे quests रिफ्रेश हो गई है!",
-    "TITLE": "{{TYPE}} रिमाइंडर",
-    "DAILY_QUESTS": "डेली क्वेस्ट्स",
-    "ERROR": "यह लगता है सही से काम नहीं कर रहा है",
-    "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा"
+    "ROLE_MENTION": "Hey, {{ROLE}}",
+    "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
+    "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
+    "TITLE": "{{TYPE}} Reminder",
+    "DAILY_QUESTS": "Daily Quests",
+    "ERROR": "This is not working as expected!",
+    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
   },
   "REALMS": {
-    "ISLE": "आईल ऑफ डाॅन",
-    "PRAIRIE": "डेलाइट प्रेयरी",
-    "FOREST": "हिडेन फॉरेस्ट",
-    "VALLEY": "वैली ऑफ ट्रायंफ",
-    "WASTELAND": "गोल्डन वेस्टलैंड",
-    "VAULT": "वाल्ट ऑफ नावलेडज",
-    "EDEN": "आई ऑफ ईडन"
+    "ISLE": "Isle of Dawn",
+    "PRAIRIE": "Daylight Prairie",
+    "FOREST": "Hidden Forest",
+    "VALLEY": "Valley of Triumph",
+    "WASTELAND": "Golden Wasteland",
+    "VAULT": "Vault of Knowledge",
+    "EDEN": "Eye of Eden"
   },
   "SPIRITS": {
-    "SEASON_TITLE": "सीजन",
-    "UNKNOWN": "अनजान स्पिरिट",
-    "REALM_TITLE": "रेलम",
-    "TREE_TITLE": "{{CREDIT}} के तरफ से फ्रेंडशिप ट्री (पिछला विजिट का)",
-    "SEASONAL_CHART": "{{CREDIT}} के तरफ से सीजनल चार्ट",
-    "LOCATION_TITLE": "{{CREDIT}} के तरफ से लोकेशन"
+    "SEASON_TITLE": "Season",
+    "UNKNOWN": "Unknown Spirit",
+    "REALM_TITLE": "Realm",
+    "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
+    "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
+    "LOCATION_TITLE": "Location by {{CREDIT}}"
   },
   "hangman": {
-    "NOT_PLAYABLE": "यह खेल केवल उसी चैनल में खेल जा सकता है जहां पे मैं मैसेज सेंड कर सकता हूं। यह कमांड यूजर ऐप में उपलब्ध नही है, आप यह कमांड उन सर्वर्स में इस्तेमाल कर सकतें है जहां पे मैं सदस्य हूं या फिर मेरे DM में।",
-    "GAME_ACTIVE": "इस चैनल में पहले से ही एक खेल जारी है, कृपया उसकी समाप्ति का इंतजार करें। या यह कमांड किसी और चैनल में उसे करें।"
+    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
   },
   "commands": {
     "GUIDES": {
-      "name": "गाइड्स",
-      "description": "विभिन्न गाइड्स",
+      "name": "guides",
+      "description": "various guides",
       "options": {
         "SEASONAL": {
-          "name": "सीज़नल",
-          "description": "विभिन्न seasonal गाइड्स",
+          "name": "seasonal",
+          "description": "various seasonal guides",
           "options": {
             "season": {
-              "name": "सीज़न",
-              "description": "एक सीजन गाइड चुनें"
+              "name": "season",
+              "description": "select a season for the guide"
             },
             "type": {
-              "name": "टाइप",
-              "description": "क्वेस्ट, या स्पिरिट गाइड्स",
+              "name": "type",
+              "description": "quest, or spirits guides",
               "choices": {
-                "quests": "↪️ क्वेस्ट",
-                "spirits": "↪️ स्पिरिट्स"
+                "quests": "↪️ Quests",
+                "spirits": "↪️ Spirits"
               }
             }
           }
         },
         "REALMS": {
-          "name": "रीयल्म्स",
-          "description": "विभिन्न रीयल्म्स गाइड्स",
+          "name": "realms",
+          "description": "various realms guides",
           "options": {
             "realms": {
-              "name": "रीयल्म्स",
-              "description": "एक स्पिरिट की फ्रेंडशिप ट्री या लोकेश सर्च करें",
+              "name": "realms",
+              "description": "directly search for a base spirit`s tree/location",
               "choices": {
-                "isle": "आईल ऑफ डाॅन",
-                "daylight": "डेलाइट प्रेयरी",
-                "forest": "हिडेन फॉरेस्ट",
-                "valley": "वैली ऑफ ट्रायंफ",
-                "wasteland": "गोल्डन वेस्टलैंड",
-                "vault": "वाल्ट ऑफ नावलेडज",
-                "eden": "आई ऑफ ईडन"
+                "isle": "↪️ Isle of Dawn",
+                "daylight": "↪️ Daylight Prairie",
+                "forest": "↪️ Hidden Forest",
+                "valley": "↪️ Valley of Triumph",
+                "wasteland": "↪️ Golden Wasteland",
+                "vault": "↪️ Vault of Knowledge",
+                "eden": "↪️ Eye of Eden"
               }
             },
             "type": {
-              "name": "टाइप",
-              "description": "सम्मरी, मैप्स या स्पिरिट गाइड्स",
+              "name": "type",
+              "description": "summary, maps or spirits guides",
               "choices": {
-                "realm": "↪️ रीयलम सम्मरी",
-                "maps": "↪️ मैप्स",
-                "spirits": "↪️ स्पिरिट्स"
+                "realm": "↪️ Realm Summary",
+                "maps": "↪️ Maps",
+                "spirits": "↪️ Spirits"
               }
             }
           }
         }
       },
       "RESPONSES": {
-        "NO_QUEST": "{{SEASON}} के लिए कोई क्वेस्ट मौजूद नहीं है",
-        "QUEST_EMBED_AUTHOR": "सीजन ऑफ {{SEASON}} क्वेस्ट",
-        "QUEST_SELECT_PLACEHOLDER": "एक क्वेस्ट चुनें",
-        "SPIRIT_SELECT_PLACEHOLDER": "सीजन ऑफ {{SEASON}}",
-        "REALM_SELECT_PLACEHOLDER": "{{REALM}} स्पिरिट्स",
-        "NO-SPIRITS": "ईडन में कोई स्पिरिट्स मायजूद नहीं हैं, उन्हें डरावनी जगह पसंद नहीं",
-        "REALM-BUTTON-LABEL": "अलग अलग जगहें",
-        "INVALID-CHOICE": "गलत चॉइस या फिर इसका गाइड उपलब्ध नही है",
-        "REALM_AREA_SELECT_PLACEHOLDER": "एक जगह चुनें",
-        "INVALID_SEASON_VALUE": "अमान्य सीज़न! `{{VALUE}}` कुंजी के साथ कोई सीज़न नहीं मिला"
+        "NO_QUEST": "No quest available for {{SEASON}}",
+        "QUEST_EMBED_AUTHOR": "Season of {{SEASON}} Quests",
+        "QUEST_SELECT_PLACEHOLDER": "Choose a quest",
+        "SPIRIT_SELECT_PLACEHOLDER": "Season of {{SEASON}}",
+        "REALM_SELECT_PLACEHOLDER": "{{REALM}} Spirits",
+        "NO-SPIRITS": "Eden doesn't have any spirits, they do not like scary places.",
+        "REALM-BUTTON-LABEL": "Different Areas",
+        "INVALID-CHOICE": "Invalid choice or Guide yet to be updated",
+        "REALM_AREA_SELECT_PLACEHOLDER": "Choose an area.",
+        "INVALID_SEASON_VALUE": "Invalid Season! Couldn't find a season with the key `{{VALUE}}`"
       }
     },
     "SPIRITS": {
-      "name": "स्पिरिट्स",
-      "description": "स्पिरिट्स खोजे",
+      "name": "spirits",
+      "description": "search for spirits",
       "options": {
-        "name": "खोजें",
-        "description": "एक स्पिरिट खोजें"
+        "name": "search",
+        "description": "search for a spirit"
       },
       "RESPONSES": {
-        "NO_DATA": "{{VALUE}} के लिए कोई डाटा उपलब्ध नहीं है! अगर आपको लगता है कि ये कोई गलती है, कृपया हमें {{COMMAND}} से आगाह करें।",
+        "NO_DATA": "No data found for {{VALUE}}! If you think this is an error, please let us know via {{COMMAND}}",
         "BUTTONS": {
-          "TREE": "फ्रेंडशिप ट्री",
-          "LOCATION": "लोकेशन",
-          "ACTION": "फ्रेंडशिप एक्शन",
-          "CALL": "कॉल",
-          "STANCE": "स्टेंस",
-          "EMOTE": "एमोट"
+          "TREE": "Friendship Tree",
+          "LOCATION": "Location",
+          "ACTION": "Friendship Action",
+          "CALL": "Call",
+          "STANCE": "Stance",
+          "EMOTE": "Emote"
         },
         "EMBED": {
-          "AUTHOR": "स्पिरिट सांचेप",
-          "TYPE": "**टाइप**: {{SPIRIT_TYPE}}",
-          "REALM": "**रेलम**: {{REALM}}",
-          "SEASON": "**सीजन**: {{SEASON}} का सीजन",
+          "AUTHOR": "Spirit Summary",
+          "TYPE": "**Type**: {{SPIRIT_TYPE}}",
+          "REALM": "**Realm**: {{REALM}}",
+          "SEASON": "**Season**: Season of {{SEASON}}",
           "FIELDS": {
-            "SUMMARY_TITLE": "TS संचेप",
-            "SUMMARY_DESC_NO_ELIGIBLE": "यह स्पिरिट अभी TS के तौर पे लौटने के लिए योग्य नही है और {{SEASON}} के बाद वाले सीज़न के ख़त्म होने पर योग्य होगा!",
-            "SUMMARY_DESC_RETURNED": "कुल विजिट्स:: {{VISITS}}\n__विजिट्स के तारीख__",
-            "SUMMARY_DESC_NO_VISIT": "यह स्पिरिट अभी लाॅटें नहिं हैं, जब वे वापस आएंगे, तो वे सीज़न के दौरान दी जाने वाली वही वस्तुएं पेश करेंगे, लेकिन एक पुनर्गठित फ्रेंडशिप ट्री के रूप में।"
+            "SUMMARY_TITLE": "TS Summary",
+            "SUMMARY_DESC_NO_ELIGIBLE": "This spirit is not eligible to return as a TS yet, and will become eligible when the season after the {{SEASON}} ends!",
+            "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}\n__Returned Dates__",
+            "SUMMARY_DESC_NO_VISIT": "This spirit has not returned yet, when they do return, they'll offer the same items offered during the season but in a restructured friendship tree."
           },
-          "CREDIT": "Ed.7 के तरफ से इंफोग्राफ़िक"
+          "CREDIT": "Infographic by Ed.7"
         }
       }
     },
     "SHARDS_CALENDAR": {
-      "name": "शार्डस-कैलेंडर",
-      "description": "शार्ड कैलेंडर दिखाएं",
+      "name": "shards-calendar",
+      "description": "Show the shards calendar",
       "RESPONSES": {
-        "DATE_SELECT_PLACEHOLDER": "एक तारिख सीमा को चुनें",
-        "MONTH_SELECT_PLACEHOLDER": "एक महीना चुनें",
-        "YEAR_SELECT_PLACEHOLDER": "एक वर्ष चुनें",
+        "DATE_SELECT_PLACEHOLDER": "Select a date range",
+        "MONTH_SELECT_PLACEHOLDER": "Select a month",
+        "YEAR_SELECT_PLACEHOLDER": "Select a year",
         "INFO": {
-          "NO_SHARD": "कोई शार्ड नहीं",
-          "SHARD-INFO": "**जानकारी:** {{INFO}}, {{AREA}} में",
-          "SHARD-TIMES": "**समय:** {{TIME}}"
+          "NO_SHARD": "No Shard",
+          "SHARD-INFO": "**Info:** {{INFO}} in {{AREA}}",
+          "SHARD-TIMES": "**Times:** {{TIME}}"
         },
-        "EMBED_AUTHOR": "{{MONTH}}, {{YEAR}} का शार्ड कैलेंडर",
-        "EMBED_DESCRIPTION": "डीटेल में shard की जानकारी के लिए {{shardsCmd}} use करे",
-        "EMBED_FOOTER": "पन्ना {{INDEX}}/{{TOTAL}}"
+        "EMBED_AUTHOR": "Shards Calender of {{MONTH}}, {{YEAR}}",
+        "EMBED_DESCRIPTION": "For detailed shard info, use {{shardsCmd}}",
+        "EMBED_FOOTER": "Page {{INDEX}}/{{TOTAL}}"
       }
     },
     "SHARDS": {
-      "name": "शार्ड",
-      "description": "एक स्पेसिफिक शार्ड की जानकारी प्राप्त करें",
+      "name": "shards",
+      "description": "Get the a specific shard information",
       "options": {
         "DATE": {
-          "name": "तारिक",
-          "description": "शार्ड जानकारी प्राप्त करने की तिथि"
+          "name": "date",
+          "description": "The date to get the shard information"
         }
       },
       "RESPONSES": {
-        "INVALID_DATE": "गलत तारिक फॉर्मेट: कृपया YYYY-MM-DD फॉर्मेट use करें (e.g `2024-09-13`)। अधिकतम इनपुट: **275760-09-12**",
-        "DATE_NONEXIST": "यह {{DATE}} एक्जिस्ट नहीं करता है, कृपया सही तारिख दें।"
+        "INVALID_DATE": "Invalid date format. Please use the YYYY-MM-DD format (e.g, `2024-09-13`). Max input : **275760-09-12**",
+        "DATE_NONEXIST": "{{DATE}} does not exist, please provide a valid date."
       }
     },
     "SKYTIMES": {
-      "name": "स्काइटाइम्स",
-      "description": "विभिन्न इन-गेम इवेंट्स काउंटडाऊं",
+      "name": "skytimes",
+      "description": "various in-game events countdown",
       "RESPONSES": {
-        "SELECT_PLACEHOLDER": "डीटेल्स टाइम्स"
+        "SELECT_PLACEHOLDER": "Detailed Times"
       }
     },
     "TRAVELING-SPIRIT": {
-      "name": "ट्रैवलिंग-स्पायरिट",
-      "description": "वर्तमान/आगामी TS के बारे में डीटेल्स प्राप्त करें",
+      "name": "traveling-spirit",
+      "description": "get details about current/upcoming TS.",
       "RESPONSES": {
-        "NO_DATA": "Oops! ऐसा लगता है कि कोई TS डेटा नहीं मिला, कृपया बाद में पुनः प्रयास करें।",
-        "VISITING": "{{SPIRIT}} अभी स्काई के दौरे पे है! वो {{TIME}} पे चले जाएंगे ({{DURATION}} में)",
-        "EXPECTED": "{{SPIRIT}} {{DATE}} को स्काई के दौरे पे आएंगे ({{DURATION}} में)",
-        "EMBED_AUTHOR": "ट्रैवलिंग स्पिरिट #{{INDEX}} सम्मरी",
-        "VISITING_TITLE": "व्यसिटिंग डेट्स:"
+        "NO_DATA": "Oops! It seems no TS data was found, please try again later.",
+        "VISITING": "{{SPIRIT}} is currently visiting the realms of Sky. They will depart at {{TIME}} (in {{DURATION}})",
+        "EXPECTED": "{{SPIRIT}} will be visiting the realms of Sky on {{DATE}} (in {{DURATION}})",
+        "EMBED_AUTHOR": "Traveling spirit #{{INDEX}} summary!",
+        "VISITING_TITLE": "Visiting Dates:"
       }
     },
     "REMINDERS": {
-      "name": "रिमाइंडर",
-      "description": "रिमाइंडर सेट करें",
+      "name": "reminders",
+      "description": "set up reminders",
       "RESPONSES": {
-        "USER_APP_ERROR": "कृपया यह कमांड उस सर्वर में उसे करें जहां का मै सदस्य हूं!",
-        "NOT_CACHED": "यह सर्वर cached नहीं hai! कृपया bot devs को संपर्क करें",
-        "INACITVE_NO_CHANNEL": "🔴 इनएक्टिव (कोई चैनल चयनित नहीं है)",
-        "INACTIVE": "🔴 इनएक्टिव",
-        "ACTIVE": "🟢 एक्टिव",
-        "EMBED_AUTHOR": "स्कीहेलपर रिमाइंडर",
-        "DES_TITLE": "**रिमाइंडर सेटिंग्स**",
-        "CHANNEL": "चैनल: {{CHANNEL}}",
-        "DEFAULT_ROLE": "डिफ़ाल्ट रोल: {{ROLE}}",
-        "TYPE_SELECT_PLACEHOLDER": "एडिट करने के लिए एक रिमाइंडर टाइप चुनें!",
-        "ROLE_SELECT_PLACEHOLDER": "पिंग करने के लिए एक डिफ़ाल्ट रोल चुनें",
-        "CHANNEL_SELECT_PLACEHOLDER": "रिमाइंडर चैनल एडिट करें!",
-        "BTN_ENABLE_ALL": "सारा इनेबल करें",
-        "BTN_DISABLE_ALL": "सारा डिसेबल करें",
-        "BTN_DISABLE_DEFAULT_ROLE": "डिफ़ाल्ट रोल हटाएं",
+        "USER_APP_ERROR": "Please run this command in a server I am a member of!",
+        "NOT_CACHED": "Not a cached server. Please contact the bot dev(s)",
+        "INACITVE_NO_CHANNEL": "🔴 Inactive (No Channels Selected)",
+        "INACTIVE": "🔴 Inactive",
+        "ACTIVE": "🟢 Active",
+        "EMBED_AUTHOR": "SkyHelper Reminders",
+        "DES_TITLE": "**Reminder Settings**",
+        "CHANNEL": "Channel: {{CHANNEL}}",
+        "DEFAULT_ROLE": "Default Role: {{ROLE}}",
+        "TYPE_SELECT_PLACEHOLDER": "Chose a type to edit!",
+        "ROLE_SELECT_PLACEHOLDER": "Select a default role to ping!",
+        "CHANNEL_SELECT_PLACEHOLDER": "Edit the reminders channel!",
+        "BTN_ENABLE_ALL": "Enable All",
+        "BTN_DISABLE_ALL": "Disable All",
+        "BTN_DISABLE_DEFAULT_ROLE": "Remove Default Role",
         "TYPE-DESCRIPTION": {
-          "STATUS": "स्टेटस",
-          "ACTIVE": "एक्टिव",
-          "INACTIVE": "इनएक्टिव",
-          "ROLE": "रोल",
-          "NONE": "कोई नही",
-          "BTN_ENABLE": "इनेबल",
-          "BTN_DISABLE": "डिसेबल",
-          "BTN_REMOVE_ROLE": "रोल हटाएं",
-          "ROLE_TYPE_SELECT_PLACEHOLDER": "पिंग करने के लिए एक रोल चुने"
+          "STATUS": "Status",
+          "ACTIVE": "Active",
+          "INACTIVE": "Inactive",
+          "ROLE": "Role",
+          "NONE": "None",
+          "BTN_ENABLE": "Enable",
+          "BTN_DISABLE": "Disable",
+          "BTN_REMOVE_ROLE": "Remove Role",
+          "ROLE_TYPE_SELECT_PLACEHOLDER": "Choose a role to ping"
         },
-        "CHANNEL_UPDATE": "रिमाइंडर चैनल उड़ते हो गया!",
-        "ALL_ACTIVE": "सारा रिमाइंडर(s) इनेबल हो चुका है!",
-        "ALL_DISABLED": "सारा रिमाइंडर(s) डिसेबल हो चुका!",
-        "DEFAULT_ROLE_UPDATE": "डिफ़ॉल्ट रोल अपडेट हो गया!",
-        "DEFAULT_ROLE_REMOVE": "डिफ़ाल्ट रोल हट चुका है!"
+        "CHANNEL_UPDATE": "Reminders channel updated!",
+        "ALL_ACTIVE": "All reminders are enabled!",
+        "ALL_DISABLED": "All reminders are disabled!",
+        "DEFAULT_ROLE_UPDATE": "Default role updated!",
+        "DEFAULT_ROLE_REMOVE": "Default role removed!"
       }
     },
     "SHARDS_LIVE": {
-      "name": "शार्ड-लाइव",
-      "description": "लाइव शार्ड डीटेल्स के साथ स्वत: अपडेट होने वाला संदेश",
+      "name": "shards-live",
+      "description": "auto updating message with live shards details",
       "options": {
         "START": {
-          "name": "स्टार्ट",
-          "description": "ऑटो शार्ड को कंफिगर करें",
+          "name": "start",
+          "description": "configure auto shard",
           "option": {
             "CHANNEL": {
-              "name": "चैनल",
-              "description": "चैनल जहां पे शार्ड डीटेल्स भेजा जाएगा"
+              "name": "channel",
+              "description": "channel where shard details should be updated"
             }
           }
         },
         "STOP": {
-          "name": "स्टॉप",
-          "description": "ऑटो शरद को रोकें"
+          "name": "stop",
+          "description": "stop auto shard"
         }
       },
       "RESPONSES": {
-        "NOT_GUILD": "यह कमांड सिर्फ एक सर्वर में इस्तेमाल हो सकता है",
-        "ALREADY_CONFIGURED": "{{TYPE}} पहले से ही {{CHANNEL}} में इस मैसेज {{MESSAGE}} के लिए कंफिगर हो चुका है।",
-        "INVALID_CHANNEL": "{{CHANNEL}} एक टेक्स्ट चैनल नहीं है, कृपया एक सही टेक्स्ट चैनल चुनें",
-        "CONFIGURED": "{{TYPE}}, {{CHANNEL}} के लिए कॉन्फ़िगर हो चूका! यह {{MESSAGE}} जानकारी के साथ अपडेट होते रहेगा|",
-        "ALREADY_DISABLED": "{{TYPE}} पहले से ही इस सर्वर के लिए डिसेबल्ड है",
-        "DISABLED": "{{TYPE}} बंद हो चुका है"
+        "NOT_GUILD": "This command can only be used in a server",
+        "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
+        "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
+        "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
+        "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
+        "DISABLED": "{{TYPE}} is disabled"
       }
     },
     "SKYTIMES_LIVE": {
-      "name": "स्काईटाइम्स-लाइव",
-      "description": "लाइव स्काइटाइम्स के साथ ऑटो update होनें वाली मैसेज",
+      "name": "skytimes-live",
+      "description": "auto updating message with live skytimes details",
       "options": {
         "START": {
-          "name": "स्टार्ट",
-          "description": "ऑटो स्काइटाइम्स कंफिगर करें",
+          "name": "start",
+          "description": "configure auto skytimes",
           "option": {
             "CHANNEL": {
-              "name": "चैनल",
-              "description": "चैनल जहां पे स्काइटाइम्स डीटेल्स भेजें जाएंगे"
+              "name": "channel",
+              "description": "channel where skytimes details should be updated"
             }
           }
         },
         "STOP": {
-          "name": "स्टॉप",
-          "description": "ऑटो स्काइटाइम्स को रोकिएं"
+          "name": "stop",
+          "description": "stop auto skytimes"
         }
       }
     },
     "SEASONAL_CALCULATOR": {
-      "name": "सेंसन-कलकुलेटर",
-      "description": "सीजन करेंसी को कैलकुलेट करें",
+      "name": "seasonal-calculator",
+      "description": "calculate seasonal currencies",
       "options": {
         "CANDLES": {
-          "name": "कैंडल्स",
-          "description": "आपके पास कैंडल्स की संख्या कितनी है?"
+          "name": "candles",
+          "description": "amount of candles you have?"
         },
         "DAILIES": {
           "name": "dailies",
-          "description": "क्या आपने आज की डेली quests पूरी ki?"
+          "description": "did you do your dailies today?"
         },
         "SEASON_PASS": {
-          "name": "सीजन-पास",
-          "description": "क्या आपके पास सीजन pass है?"
+          "name": "season-pass",
+          "description": "do you have the season pass?"
         }
       },
       "RESPONSES": {
-        "NOT_ACTIVE": "अभी कोई भी सीजन एक्टिव नहीं है। कृपया जब कोई सीजन एक्टिव हो तब ये कमांड इस्तेमाल करें",
-        "EMBED_DESCRIPTION": "**सीजन पास**: {{PASS}}\n**डेलीज**: {{DAILIES}}\n**जरूरी करेंसी**: {{REQUIRED}} कैंडल्स\n**पूरा पॉसिबल कैंडल्स**: {{OBTAINABLE}} कैंडल्स\n**कंपलीट करने में दिन**: {{DAYS}} दिन {{POSSIBLE}}\n**सीजन खत्म होने के बाद बच्चे हुए कैंडल्स**: {{REMAINING}} कैंडल्स",
-        "ENDS_IN": "{{DAYS}} दिन में खत्म होगा",
-        "SPIRITS_NOT_UPDATED": "{{SEASON}} के स्पिरिट्स डाटा अभी अपडेट नही हुए हैं। कृपया थोड़ी देर बाद कोशिश करें।\n- सीज़न: {{SEASON}}\n- शुरू होगा: {{START}}\n- ख़त्म होगा: {{END}}"
+        "NOT_ACTIVE": "No active season at the moment. Please run this command when a seson is active.",
+        "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles",
+        "ENDS_IN": "Ends in {{DAYS}} days",
+        "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
       }
     },
     "HELP": {
-      "name": "हेल्प",
-      "description": "हेल्प मेनू",
+      "name": "help",
+      "description": "help menu",
       "options": {
         "COMMAND": {
-          "name": "कमांड",
-          "description": "एक कोई खास कमांड के लिए हेल्प"
+          "name": "command",
+          "description": "help about a specific command"
         }
       },
       "RESPONSES": {
-        "MESSAGE_APP_DESC": "मैसेज एप्प कमांड",
-        "USER_APP_DESC": "यूजर एप्प कमांड",
-        "REQUESTED_BY": "{{USER}} ने रिक्वेस्ट किया",
-        "FOOTER_SINGLE": "हेल्प कमांड",
-        "FOOTER": "डीटेल के लिए /हेल्प <command> को उसे करें| पन्ना {{PAGE}}/{{TOTAL}}",
-        "BTN-PREV": "पिछला",
-        "BTN-NEXT": "अगला"
+        "MESSAGE_APP_DESC": "Message App Command",
+        "USER_APP_DESC": "User App Command",
+        "REQUESTED_BY": "Requested by {{USER}}",
+        "FOOTER_SINGLE": "Help Command",
+        "FOOTER": "run /help <command> for details. | Page {{PAGE}}/{{TOTAL}}",
+        "BTN-PREV": "Prev",
+        "BTN-NEXT": "Next"
       }
     },
     "UTILS": {
-      "name": "यूटिल्स",
-      "description": "यूटिलिटीज",
+      "name": "utils",
+      "description": "Utilities",
       "options": {
         "TIMESTAMP": {
-          "name": "टाइमस्टम्प",
-          "description": "एक दिए हुए तारिख के लिए Unix टाइमस्टम्प प्राप्त करें",
+          "name": "timestamp",
+          "description": "get unix timestamp for the given date",
           "options": {
             "TIME": {
-              "name": "समय",
-              "description": "कन्वर्ट करने के लिए समय (फॉर्मेट: HH mm ss)"
+              "name": "time",
+              "description": "The time to convert (format: HH mm ss)"
             },
             "TIMEZONE": {
-              "name": "टाइमजोन",
-              "description": "Continent/City के फॉर्मेट में आपका टाइमजोन"
+              "name": "timezone",
+              "description": "Your timezone in the format: Continent/City"
             },
             "DATE": {
-              "name": "तारिख",
-              "description": "कन्वर्ट करने के लिए तारिख (फॉर्मेट: DD)"
+              "name": "date",
+              "description": "The date to convert (format: DD)"
             },
             "MONTH": {
-              "name": "महीना",
-              "description": "महीना कन्वर्ट करने के लिए (फॉर्मेट: MM)"
+              "name": "month",
+              "description": "The month to convert (format: MM)"
             },
             "YEAR": {
-              "name": "वर्ष",
-              "description": "वर्ष कन्वर्ट करने के लिए (फॉर्मेट: YYYY)"
+              "name": "year",
+              "description": "The year to convert (format: YYYY)"
             }
           }
         },
         "CHANGELOG": {
-          "name": "चेंजलॉग",
-          "description": "बोट का चेंजलॉग"
+          "name": "changelog",
+          "description": "bot's changelog"
         },
         "BOTINFO": {
-          "name": "बॉट-जानकारी",
-          "description": "बोट के कंफीग्र्ड सेटिंग्स और उसके बारे में जानकारी लें"
+          "name": "botinfo",
+          "description": "get the bot's info and configure settings"
         },
         "CONTACT-US": {
-          "name": "comtact-us",
-          "description": "कोई भी सुझाव/बग रिपोर्ट्स या फिर किसी और चीज़ के लिए हम संपर्क करें"
+          "name": "contact-us",
+          "description": "for suggestions/bug reports/contacting us or just anything"
         }
       },
       "RESPONSES": {
-        "INVALID-FORMAT": "समय का फॉर्मेट गलत है। कृपया इस `HH mm ss` फॉर्मेट मे समय दें।",
-        "INVALID-TIMEZONE": "टाइमजोन गलत है। कृपया इस `Continet/City` फॉर्मेट मे दें।\nयदि आपको अपना टाइमजोन पता नहीं है तो आप यहां से पता कर सकतें हैं: <https://timezonedb.com/time-zones>",
-        "DATE_NOT_EXIST": "{{DATE}} एक्जिस्ट नहीं करता है। कृपया सही तारिख दें।",
-        "SUGGESTION_TITLE": "टाइटल",
-        "TITLE_PLACEHOLDER": "सुझाव के लिए टाइटल",
-        "SUGGESTION_MODAL_TITLE": "हमें कॉन्टैक्ट करें",
-        "SUGGESTION": "सुझो/बग रिपोर्ट्स/अन्य",
-        "SUGGESTION_PLACEHOLDER": "संक्षेप में समझाइये।",
-        "RECIEVED": "आपका मैसेज हमे प्राप्त हो चुका है। यह एक preview है!"
+        "INVALID-FORMAT": "Invalid time format. Please provide time in `HH mm ss` format. (e.g: `02 12 44`)",
+        "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City` (e.g, `America/Los_Angeles`).\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
+        "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
+        "SUGGESTION_TITLE": "Title",
+        "TITLE_PLACEHOLDER": "Title for the suggestion",
+        "SUGGESTION_MODAL_TITLE": "Contact Us",
+        "SUGGESTION": "Suggestion/Bug Report/Others",
+        "SUGGESTION_PLACEHOLDER": "Explain in brief.",
+        "RECIEVED": "Your message is received. Here's a preview!"
       }
     },
     "LANGUAGE": {
-      "name": "भाषा",
-      "description": "अपनी पसंदीदा भाषा को बोट के रेस्पॉन्स के लिए चुने",
+      "name": "language",
+      "description": "manage preferred language for the bot's response",
       "options": {
         "CATEGORY": {
-          "name": "कैटेगिरी",
-          "description": "भाषा को चुनने के लिए एक कैटेगिरी चुने",
+          "name": "category",
+          "description": "select a category to set the laguage for",
           "choices": {
-            "GUILD": "सर्वर",
-            "USER": "यूजर"
+            "GUILD": "Server",
+            "USER": "User"
           }
         },
         "LANGUAGES": {
-          "name": "भाषाएं",
-          "description": "एक भाषा चुने"
+          "name": "languages",
+          "description": "select a language"
         },
         "SUB": {
           "SET": {
-            "name": "चुनें",
-            "description": "अपने/सर्वर के लिए भाषा चुने"
+            "name": "set",
+            "description": "set your/server language for the bot"
           },
           "REMOVE": {
-            "name": "हटाएं",
-            "description": "चुने हुए भाषा को हटाएं",
+            "name": "remove",
+            "description": "remove a set language",
             "options": {
-              "description": "हटाने के लिए एक कैटेगिरी चुनें"
+              "description": "select a category type to remove"
             }
           }
         },
         "RESPONSES": {
-          "NO-PERM": "आपको इस सर्वर की भाषा चुनने की अनुमति ({{PERMISSION}}) नहीं है!",
-          "SUCCESS": "{{TYPE}} के लिए {{Language}} सेट हो चुका है, आपको फिर भी कुछ जगहों पे अंग्रेजी भाषा दिखाई दे सकतीं है क्यूंकि हर एक रेस्पॉन्स का अनुवाद करना संभव नहीं है।\n\nकृपया इस बोट का अनुवाद करने में मदद करें। यह लिंक {{LINK}} पर जाएं और बोट को और भाषा को सुप्पोर्ट करने में मदद करें।\n\nनोट: User स्तर की भाषा सेटिंग्स को सर्वर सेटिंग्स (यदि कोई हो) पर प्राथमिकता दी जाएगी।",
-          "ALREADY_SET": "{{TYPE}} की भाषा सेटिंग पहले से ही {{LANGUAGE}} पे सेट है",
-          "ALREADY_NOT_SET": "{{CATEGORY}} के लिए पहले से ही कोई भाषा सेट नहीं है",
-          "SUCCESS_REMOVED": "{{LANGUAGE}} को {{CATEGORY}} से हटा दिया गया है!"
+          "NO-PERM": "You do not have permission(s) ({{PERMISSION}}) to set a server's language",
+          "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nPlease consider contrubuting to translation of this bot by visiting {{LINK}} and help us add more supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
+          "ALREADY_SET": "{{TYPE}} language setting is already set to {{LANGUAGE}}",
+          "ALREADY_NOT_SET": "There's already no language set for {{CATEGORY}}.",
+          "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
         }
       }
     },
     "DAILY_QUESTS": {
-      "name": "डेली-क्वेस्टस",
-      "description": "आज के डेली क्वेस्ट्स के बारे में जाने",
+      "name": "daily-quests",
+      "description": "get the daily quests",
       "RESPONSES": {
-        "NO_DATA": "अभी कोई क्वेस्ट्स उपलब्ध नहीं है|\n\n- -# कृपया ध्यान दें कि दैनिक रीसेट के बाद क्वेस्ट्स को अपडेट होने में 30 मिनट-1 घंटे तक का समय लग सकता है। दी गई समय-सीमा केवल एक अनुमान है, किसी-किसी दिन इससे अधिक समय भी लग सकता है। देखें कि यह कैसे काम करता है [यहां](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
-        "OUTDATED": "यह क्वेस्ट पुराना है। कृपया नए क्वेस्ट के अपडेट होने का इंतजार करें।",
-        "EMBED_AUTHOR": "डेली क्वेस्ट्स",
-        "EMBED_DESCRIPTION": "आज के लिए डेली क्वेस्ट्स"
+        "NO_DATA": "No data found for today's daily quests. Please try again later.\n- -# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
+        "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
+        "EMBED_AUTHOR": "Daily Quests",
+        "EMBED_DESCRIPTION": "Daily quests for today"
       }
     },
     "SKYGAME": {
-      "name": "स्काईगेम",
-      "description": "SKY: COTL से सम्बंधित विभिन्न खेल",
+      "name": "skygame",
+      "description": "Various fun games based around Sky: CotL",
       "SUB": {
         "HANGMAN": {
-          "name": "हैंगमैन",
-          "description": "Sky से सम्बंधित शब्द या कस्टम शब्द पे हैंगमैन खेल खेलें",
+          "name": "hangman",
+          "description": "Play a game of hangman based on sky-related words, or a custom word",
           "options": {
             "mode": {
-              "name": "मोड",
-              "description": "यह खेल का मोड",
+              "name": "mode",
+              "description": "The mode of this game",
               "choices": {
-                "single": "सिंगल खिलाड़ी",
-                "double": "डबल खिलाड़ी"
+                "single": "Single Player",
+                "double": "Double Player"
               }
             }
           }
         },
         "LEADERBOARD": {
-          "name": "लीडरबोर्ड",
-          "description": "स्काईगेम्स की लीडरबोर्डस देखें",
+          "name": "leaderboard",
+          "description": "View the leaderboard for the skygames",
           "options": {
             "game": {
-              "name": "खेल",
-              "description": "वह खेल जिसका लीडरबोर्ड है",
+              "name": "game",
+              "description": "The game to view the leaderboard for",
               "choices": {
-                "hangman": "हैंगमैन"
+                "hangman": "Hangman"
               }
             },
             "leaderboard-type": {
-              "name": "लीडरबोर्ड-टाइप",
-              "description": "वैश्विक लीडरबोर्ड या सर्वर विशिष्ट (डिफ़ॉल्ट: वैश्विक)",
+              "name": "leaderboard-type",
+              "description": "Gloabal leaderboard or server specific (default: global)",
               "choices": {
-                "global": "वैश्विक",
-                "server": "सर्वर"
+                "global": "Global",
+                "server": "Server"
               }
             }
           }
@@ -580,39 +580,39 @@
   },
   "buttons": {
     "ABOUT_SHARDS": {
-      "CREDIT": "{{CREDIT}} के तरफ से शार्ड बारे में",
-      "WHAT_ARE": "शार्ड क्या है?",
-      "TIMING": "मुझे कैसे पता चलेगा कि शार्ड कब आएगा?",
-      "REWARDS": "मुझे ईनाम में क्या मिलेगा?"
+      "CREDIT": "All about shards by {{CREDIT}}",
+      "WHAT_ARE": "What are shards?",
+      "TIMING": "How do I know when a shard comes?",
+      "REWARDS": "What are the rewards?"
     },
     "SHARD_LOCATION": {
-      "L_CREDIT": "{{CREDIT}} के तरफ से शार्ड का जगह",
-      "D_CREDIT": "{{CREDIT}} के तरफ से शार्ड का डाटा",
-      "LOCATION": "जगह",
-      "DATA": "डाटा"
+      "L_CREDIT": "Shard Location by {{CREDIT}}",
+      "D_CREDIT": "Shard data by {{CREDIT}}",
+      "LOCATION": "Location",
+      "DATA": "Data"
     },
     "SHARD_TIMELINE": {
-      "MUSIC_CREDIT": "{{CREDIT}} के तरफ से शार्ड म्यूजिक और आसमान में बदलाव के बारे में",
-      "TIMESTAMP_CREDIT": "{{CREDIT}} के तरफ से शार्ड का समय",
+      "MUSIC_CREDIT": "Sky changes and Shard music by {{CREDIT}}",
+      "TIMESTAMP_CREDIT": "Shard Timestamp by {{CREDIT}}",
       "COLOR": {
-        "LABEL": "पहला आसमानी बदलाव",
-        "VALUE": "{{TIME}} में आसमान का रंग बदलना"
+        "LABEL": "Early Sky Change",
+        "VALUE": "Sky color changes at: {{TIME}}"
       },
       "GATE": {
-        "LABEL": "दरवाज़े का शार्ड",
-        "VALUE": "{{TIME}} पे दरवाज़े पे शार्ड के क्रिस्टल"
+        "LABEL": "Gate Shard",
+        "VALUE": "Shards crystal on gate appears at: {{TIME}}"
       },
       "LANDS": {
-        "LABEL": "शार्ड लैंडिंग",
-        "VALUE": "शार्ड लैंड होता है: {{TIME}} पे"
+        "LABEL": "Shard Landing",
+        "VALUE": "Shard Lands at: {{TIME}}"
       },
       "ENDS": {
-        "LABEL": "शार्ड का खत्म होना",
-        "VALUE": "शार्ड खत्म होता है: {{TIME}} पे"
+        "LABEL": "End of Shard",
+        "VALUE": "Shard ends at: {{TIME}}"
       },
       "MUSIC": {
-        "LABEL": "शार्ड म्यूजिक",
-        "VALUE": "यह शार्ड के दौरान {{MUSIC}} म्यूजिक बजेगा।"
+        "LABEL": "Shard Music",
+        "VALUE": "{{MUSIC}} will play during this shard."
       }
     }
   }
