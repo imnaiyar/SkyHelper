@@ -28,9 +28,9 @@ jobs:
           pull_request_title: "chore: new translations [crowdin]"
           pull_request_base_branch_name: "main"
           pull_request_labels: crowdin, translations
-          commit_message: "chore: translate to %language%"
-          github_user_name: "github_actions[bot]"
-          github_user_email: "github_actions[bot]@users.noreply.github.com"
+          commit_message: "chore: translate to translations"
+          github_user_name: "github-actions[bot]"
+          github_user_email: "github-actions[bot]@users.noreply.github.com"
           config: crowdin.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
