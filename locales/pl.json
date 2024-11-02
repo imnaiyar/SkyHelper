@@ -5,6 +5,7 @@
       "intro": "That's me...",
       "EMBED_TITLE": "Bot Info",
       "TOTAL_SERVER": "Total Servers",
+      "TOTAL_AUTHORIZED": "Total User Installs",
       "TOTAL_USERS": "Total Users",
       "LATENCY": "Latency",
       "VERSION": "Version",
@@ -282,7 +283,7 @@
         }
       },
       "RESPONSES": {
-        "INVALID_DATE": "Invalid date format. Please use the YYYY-MM-DD format. Max input : **275760-09-12**",
+        "INVALID_DATE": "Invalid date format. Please use the YYYY-MM-DD format (e.g, `2024-09-13`). Max input : **275760-09-12**",
         "DATE_NONEXIST": "{{DATE}} does not exist, please provide a valid date."
       }
     },
