@@ -1,6 +1,7 @@
-import { EmbedBuilder, type SendableChannels, type User, type MessageCreateOptions } from "discord.js";
+import { EmbedBuilder, type SendableChannels, type User, type MessageCreateOptions, AttachmentBuilder } from "discord.js";
 import { setTimeout as wait } from "timers/promises";
 import { hangmanWords, HangmanResponseCodes, getHangmanResponse, EnglishAlphabets } from "../constants/hangman.js";
+import { drawHangmanGallow } from "./HangmanGallowImage.js";
 
 type ModeType = "single" | "double";
 type WordType = "random" | "custom";
@@ -16,7 +17,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   public type: "custom" | "random" = "random";
 
   /** Total lives of the player in single-mode game */
-  public totalLives: number = 7;
+  public totalLives: number = 6;
 
   /** Remaining lives of the player in single-mode game */
   public remainingLives: number = this.totalLives;
@@ -45,6 +46,8 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
   /** Whether this game is stopped or not */
   private _stopped: boolean = false;
+
+  // #region constructor
   constructor(
     private readonly channel: SendableChannels,
     option: HangmanOptions<T, K>,
@@ -71,6 +74,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     }
     if (option.gameInitiator) this.initiator = option.gameInitiator;
   }
+
   public async inititalize() {
     this.alphabets = this.word.split("").map((w, i) => ({
       guessed: EnglishAlphabets.some((wo) => wo.toLowerCase() === w.toLowerCase()) ? false : true, // Make any non-english characters already guessed
@@ -92,9 +96,10 @@ export class Hangman<T extends ModeType, K extends WordType> {
     this._listenForStop();
   }
 
+  // #region Collect Response
   private async _collectResponse(): Promise<any> {
     if (this._stopped) return;
-    await this._sendResponse({ embeds: [this._getEmbed()] });
+    await this._sendResponse(await this._getEmbedResponse());
     const res = await this._getCollectorResponse();
     if (this._stopped) return;
     if (res === "Timeout") {
@@ -159,6 +164,8 @@ export class Hangman<T extends ModeType, K extends WordType> {
       }
     }
   }
+
+  // #region validate
   private _validateAnswer(word: string) {
     if (this.word.toLowerCase() === word) {
       // Add unguessed words to the player stats before marking them all guessed
@@ -192,6 +199,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     return HangmanResponseCodes.GuessSuccess;
   }
 
+  // #region Collector response
   private async _getCollectorResponse() {
     if (!this.currentPlayer) {
       throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
@@ -206,7 +214,8 @@ export class Hangman<T extends ModeType, K extends WordType> {
     return col.first()!;
   }
 
-  private _getEmbed() {
+  // #region response embed
+  private async _getEmbedResponse() {
     if (!this.currentPlayer || !this.alphabets) throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
     let remaininglives: string | null = null;
     if (this.mode === "single") {
@@ -219,7 +228,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
         remaininglives += "<:gray_heart:1287689388758798396>";
       }
     }
-    return new EmbedBuilder().setTitle("Skygame: Hangman [BETA]").setDescription(
+    const embed = new EmbedBuilder().setTitle("Skygame: Hangman [BETA]").setDescription(
       `## ${this.mode === "single" ? `${this.currentPlayer} is currently guessing!` : `It's ${this.currentPlayer} turn!`}\nWord: **${this.alphabets
         .map((a) => {
           if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : `${a.alphabet}`;
@@ -231,33 +240,50 @@ export class Hangman<T extends ModeType, K extends WordType> {
         this.mode === "single" ? `\n\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : ""
       }\n\nRemaining Time: <a:30sec:1288835107804676243>\n\n-# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
     );
+    let files = null;
+    if (this.mode === "single") {
+      const attach = new AttachmentBuilder(await drawHangmanGallow(this.remainingLives, this.currentPlayer), {
+        name: "hangmanGallow.png",
+      });
+      embed.setThumbnail("attachment://hangmanGallow.png");
+      files = [attach];
+    }
+    return { embeds: [embed], ...(files ? { files } : {}) };
   }
 
+  // #region end game
   private async _endGame(reason?: string) {
     if (this.winner) {
       const user = await this.channel.client.database.getUser(this.winner);
       // prettier-ignore
-      if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
-      user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
+      if (!user.hangman) user.hangman = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } ;
+      user.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
       await user.save();
     }
     if (!reason || reason !== "stopped-game") {
       this.players.forEach(async (player) => {
         const user = await this.channel.client.database.getUser(player);
         // prettier-ignore
-        if (!user.gameData) user.gameData = { hangman: { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } };
-        user.gameData.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
+        if (!user.hangman) user.hangman = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } };
+        user.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
         await user.save();
       });
     }
-
+    let files: AttachmentBuilder[] = [];
     const embed = new EmbedBuilder()
       .setTitle("SkyGame: Hangman")
       .setDescription(
         `### Winner: ${this.winner ? this.winner : "None"} \`(${this.winner?.displayName || ""})\`\n\n**Word to guess was**: ${this.word}\n\n**Stats:**\n${this._getPlayerStats()}`,
       )
       .setAuthor({ name: `SkyGame: Hangman | SkyHelper`, iconURL: this.channel.client.user.displayAvatarURL() });
-    this._sendResponse({ embeds: [embed] });
+    if (this.mode === "single") {
+      const attach = new AttachmentBuilder(await drawHangmanGallow(this.remainingLives, this.currentPlayer!), {
+        name: "hangmanGallow.png",
+      });
+      embed.setImage("attachment://hangmanGallow.png");
+      files = [attach];
+    }
+    this._sendResponse({ embeds: [embed], files });
     this.channel.client.gameData.delete(this.channel.id);
   }
 

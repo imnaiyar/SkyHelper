@@ -1,5 +1,6 @@
-import { Hangman } from "#bot/libs/classes/HangMan";
+import { Hangman } from "#bot/libs/classes/Hangman";
 import type { getTranslator } from "#bot/i18n";
+
 import {
   ChatInputCommandInteraction,
   User,
@@ -29,7 +30,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
   if (
     !interaction.channel ||
     !interaction.channel.isSendable() ||
-    Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1")
+    Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1") // Also don't run for only user Apps
   ) {
     return void (await interaction.reply({
       content: t("hangman.NOT_PLAYABLE"),
@@ -53,7 +54,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
   }
   let word: string | null = null;
   let type: string = "random";
-  let maxLives: number = 7;
+  const maxLives: number = 6;
   let players: User[] = [interaction.user];
 
   const validateAndReply = async (int: MessageComponentInteraction, message: string, ephemeral = true) => {
@@ -65,10 +66,12 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
   let description = `**Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}\n`;
   description += `**Word Type:** ${type === "custom" ? "Custom" : "Random"}\n`;
   description += `${mode === "single" ? `**Max Lives:** ${maxLives}\n` : ""}`;
-  description += `**Provide the following information:**\n`;
-  description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
-  description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
-  description += `${mode === "single" ? "- Optionally choose the maximum number of lives for 'single' mode (max: 10).\n" : ""}\n\n`;
+  if (mode === "double") {
+    description += `**Players:** ${players.map((p) => p.toString()).join(", ")}\n`;
+    description += `**Provide the following information:**\n`;
+    description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
+    description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
+  }
   description += `${constants[mode as "single" | "double"]}\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via <#1249436564652687475>`;
 
   const getResponse = (): BaseMessageOptions => {
@@ -108,23 +111,6 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
       );
     }
 
-    if (mode === "single") {
-      components.push(
-        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId("skygame_hangman_maxlives")
-            .setPlaceholder("Select max lives")
-            .addOptions(
-              Array.from({ length: 10 }, (_, i) => ({
-                label: i.toString(),
-                value: i.toString(),
-                default: i === maxLives,
-              })),
-            ),
-        ),
-      );
-    }
-
     components.push(
       new ActionRowBuilder<ButtonBuilder>().addComponents(
         ...(mode === "double" && type === "custom"
@@ -158,10 +144,6 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
         }
         type = value;
         if (value === "random") word = null;
-        return await i.update({ ...getResponse() });
-      }
-      if (action === "maxlives" && mode === "single") {
-        maxLives = parseInt(value);
         return await i.update({ ...getResponse() });
       }
     }

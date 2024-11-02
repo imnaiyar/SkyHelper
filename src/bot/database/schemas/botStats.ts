@@ -19,6 +19,8 @@ const Schema = new mongoose.Schema<BotSchema>({
 
 const Model = mongoose.model("botStats", Schema);
 
+export { Model as BotStatsModel };
+
 export async function botSettings(client: SkyHelper): Promise<BotSchema> {
   let botData = await Model.findById(client.user.id);
   const commands = await client.application.commands.fetch();

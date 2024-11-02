@@ -5,7 +5,7 @@ export default {
     USERS: 200000,
     MEMBERS: 200000,
   },
-  PREFIX: "sh!",
+  PREFIX: process.env.NODE_ENV === "production" ? "sh!" : ",",
 
   /** Channel ID where quest updates are sent which bot will parse and save to be used later */
   QUEST_UPDATE_CHANNEL: {
@@ -35,7 +35,7 @@ export default {
       "https://preview.skyhelper.xyz",
     ],
 
-    port: "5000",
+    port: process.env.NODE_ENV === "production" ? 5000 : 5001,
 
     // USERS who can access UpdateTS/Quests/Events page
     ADMINS: ["851588007697580033"],

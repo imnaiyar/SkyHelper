@@ -41,11 +41,13 @@ async function handleInfo(
   t: ReturnType<typeof getTranslator>,
   time: number,
 ): Promise<void> {
-  const { client } = interaction as unknown as { client: SkyHelper };
+  const { client } = interaction;
   const guilds = client.guilds.cache.size;
   const users = client.guilds.cache.reduce((size, g) => size + g.memberCount, 0);
+  const appl = await client.application.fetch();
   let desc = "";
   desc += `<:servers:1243977429542764636> ${t("common.bot.TOTAL_SERVER")}: ${guilds}\n`;
+  desc += t("common.bot.TOTAL_AUTHORIZED") + ": " + appl.approximateUserInstallCount + "\n";
   desc += `<:users:1243977425725952161> ${t("common.bot.TOTAL_USERS")}: ${users}\n`;
   desc += `<a:uptime:1228956558113771580> ${t("common.bot.PING")}: ${client.ws.ping} ms\n`;
   desc += `<:latency:1243977421812924426> ${t("common.bot.LATENCY")}: ${time - interaction.createdTimestamp} ms\n`;

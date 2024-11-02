@@ -13,37 +13,11 @@ const guildAddHandler: Event<"guildCreate"> = async (client, guild): Promise<voi
   const { getSettings: registerGuild } = client.database;
   // Register guild on database
   registerGuild(guild);
-  const BlackList = client.database.guildBlackList;
-  // Check if joined guild is blacklisted
-  const data = await BlackList.findOne({ Guild: guild.id }).catch(() => {});
-  if (data) {
-    const owner = await client.users.fetch(guild.ownerId);
-    owner
-      .send(
-        `An attempt to invite me to your server was made, your server is blacklisted from inviting me for the reason \` ${data.Reason} \`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${client.config.Support}).`,
-      )
-      .catch(() => {});
-    await guild.leave();
-
-    const embed = new EmbedBuilder()
-      .setAuthor({ name: `Blacklisted Server` })
-      .setDescription(`Someone tried to invite me to a blacklisted server.`)
-      .addFields(
-        { name: "Blacklisted Guild Name", value: `${data.Name}` },
-        { name: "Reason", value: `${data.Reason}` },
-        { name: "Blacklisted Date", value: `${data?.Date || "Unknown"}` },
-      );
-    webhookLogger?.send({
-      username: "Blacklist Server",
-      avatarURL: client.user.displayAvatarURL(),
-      embeds: [embed],
-    });
-    return;
-  }
 
   // updates bot info stats on support server.
   const channels = client.channels.cache.get("1158068842040414351") as TextChannel;
-  if (channels) {
+  // Update stats embed in support channel
+  if (channels && process.env.NODE_ENV === "production") {
     const botInfo = new EmbedBuilder()
       .setAuthor({
         name: "Bot's Information",
