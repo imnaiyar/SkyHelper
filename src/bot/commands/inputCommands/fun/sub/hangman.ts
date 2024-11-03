@@ -38,7 +38,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
     }));
   }
   const botPermsInChannel = interaction.inCachedGuild() ? interaction.channel.permissionsFor(client.user) : undefined;
-  if (!botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
+  if (interaction.inCachedGuild() && !botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
     return void (await interaction.reply({
       content: t("common.errors.NO_PERMS_BOT", {
         PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
