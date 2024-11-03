@@ -42,40 +42,44 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction, t:
   await interaction.showModal(modal);
 
   const filter = (i: ModalSubmitInteraction) => i.customId === `suggestionModal-${interaction.id}`;
-  interaction
-    .awaitModalSubmit({ filter, time: 2 * 60000 })
-    .then((modalInt) => {
-      const ti = modalInt.fields.getTextInputValue("title");
-      const sugg = modalInt.fields.getTextInputValue("suggestion");
-      const embed = new EmbedBuilder()
-        .setAuthor({
-          name: `${modalInt.user.username} made a suggestion`,
-          iconURL: modalInt.user.displayAvatarURL(),
-        })
-        .addFields({ name: `Title`, value: ti }, { name: `Suggestion/Bug Report/ Others`, value: sugg })
-        .setFooter({
-          text: `SkyHelper`,
-          iconURL: client.user.displayAvatarURL(),
-        });
-      if (attachment) {
-        embed.setImage(attachment.url);
-      }
-      modalInt
-        .reply({
-          content: t("commands.UTILS.RESPONSES.RECIEVED"),
-          embeds: [embed],
-          ephemeral: true,
-        })
-        .then(() => {
-          embed.addFields({
-            name: "Server",
-            value: `${modalInt.guild?.name || "Unknown"} (${modalInt.guild?.id || "Unknown"})`,
-          });
-
-          suggWb?.send({ embeds: [embed] });
-        });
+  const modalInt = await interaction.awaitModalSubmit({ filter, time: 2 * 6e4 }).catch((err) => {
+    if (err.code === "InteractionCollectorError") {
+      interaction.followUp({ content: "Did not recieve any response. Cancelling...", ephemeral: true }).catch(() => {});
+      return null;
+    } else {
+      throw err;
+    }
+  });
+  if (!modalInt) return;
+  const ti = modalInt.fields.getTextInputValue("title");
+  const sugg = modalInt.fields.getTextInputValue("suggestion");
+  const embed = new EmbedBuilder()
+    .setAuthor({
+      name: `${modalInt.user.username} made a suggestion`,
+      iconURL: modalInt.user.displayAvatarURL(),
     })
-    .catch((err) => client.logger.error(err));
+    .addFields({ name: `Title`, value: ti }, { name: `Suggestion/Bug Report/ Others`, value: sugg })
+    .setFooter({
+      text: `SkyHelper`,
+      iconURL: client.user.displayAvatarURL(),
+    });
+  if (attachment) {
+    embed.setImage(attachment.url);
+  }
+  modalInt
+    .reply({
+      content: t("commands.UTILS.RESPONSES.RECIEVED"),
+      embeds: [embed],
+      ephemeral: true,
+    })
+    .then(() => {
+      embed.addFields({
+        name: "Server",
+        value: `${modalInt.guild?.name || "Unknown"} (${modalInt.guild?.id || "Unknown"})`,
+      });
+
+      suggWb?.send({ embeds: [embed] });
+    });
 }
 
 export async function getChangelog(interaction: ChatInputCommandInteraction) {
