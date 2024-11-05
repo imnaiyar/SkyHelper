@@ -5,7 +5,7 @@ type Localizations = Partial<Record<(typeof l)[number], string>>;
 
 describe("useTranslations", () => {
   it("should return the correct translation for a given key", () => {
-    const translations = useTranslations("common.bot.intro");
+    const translations = useTranslations("common:bot.intro");
 
     const translationsTyped: Localizations = translations;
     expect(translationsTyped).toBeDefined();
@@ -19,7 +19,7 @@ describe("useTranslations", () => {
 
   it("should return an empty object if the translation key is not found", () => {
     // @ts-expect-error
-    const translations = useTranslations("common.nonexistentKey");
+    const translations = useTranslations("common:nonexistentKey");
 
     expect(translations).toEqual({});
     expect(Object.keys(translations).length).toBe(0);
@@ -27,7 +27,7 @@ describe("useTranslations", () => {
 
   it("should throw an error if the translation value is not a string", () => {
     expect(() => {
-      useTranslations("common.bot");
+      useTranslations("common:bot");
     }).toThrow(TypeError);
   });
 });

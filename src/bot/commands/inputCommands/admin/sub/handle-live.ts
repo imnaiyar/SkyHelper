@@ -25,7 +25,7 @@ export const handleLive = async (
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                t("commands.SHARDS_LIVE.RESPONSES.ALREADY_CONFIGURED", {
+                t("commands:SHARDS_LIVE.RESPONSES.ALREADY_CONFIGURED", {
                   CHANNEL: `<#${wbh.channelId}>`,
                   MESSAGE: ms.url,
                   TYPE: `"Live ${type}"`,
@@ -44,14 +44,14 @@ export const handleLive = async (
       return {
         embeds: [
           new EmbedBuilder()
-            .setDescription(t("commands.SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel }))
+            .setDescription(t("commands:SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: channel }))
             .setColor("Red"),
         ],
       };
     }
     if (!channel.permissionsFor(channel.guild.members.me!).has("ManageWebhooks")) {
       return {
-        embeds: [new EmbedBuilder().setDescription(t("common.NO-WB-PERM-BOT", { CHANNEL: channel.toString() })).setColor("Red")],
+        embeds: [new EmbedBuilder().setDescription(t("common:NO-WB-PERM-BOT", { CHANNEL: channel.toString() })).setColor("Red")],
       };
     }
     const wb = await client.createWebhook(channel, `For live ${type} Update`);
@@ -60,12 +60,12 @@ export const handleLive = async (
     const ts = getTranslator(config.language?.value ?? "en-us");
     const result =
       type === "Shards"
-        ? buildShardEmbed(currentDate, ts, ts("shards-embed.FOOTER"), true)
-        : await getTimesEmbed(client, ts, ts("times-embed.FOOTER"));
+        ? buildShardEmbed(currentDate, ts, ts("features:shards-embed.FOOTER"), true)
+        : await getTimesEmbed(client, ts, ts("features:times-embed.FOOTER"));
     const msg = await wb.send({
       username: `${type} Updates`,
       avatarURL: client.user.displayAvatarURL(),
-      content: t("shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` }),
+      content: t("features:shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` }),
       ...result,
     });
     config[liveType] = {
@@ -78,7 +78,7 @@ export const handleLive = async (
       embeds: [
         new EmbedBuilder()
           .setDescription(
-            t("commands.SHARDS_LIVE.RESPONSES.CONFIGURED", {
+            t("commands:SHARDS_LIVE.RESPONSES.CONFIGURED", {
               CHANNEL: channel.toString(),
               MESSAGE: msg.url,
               TYPE: `"Live ${type}"`,
@@ -92,7 +92,7 @@ export const handleLive = async (
       return {
         embeds: [
           new EmbedBuilder()
-            .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }))
+            .setDescription(t("commands:SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }))
             .setColor("Red"),
         ],
       };
@@ -103,7 +103,7 @@ export const handleLive = async (
       return {
         embeds: [
           new EmbedBuilder()
-            .setDescription(t("commands.SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }))
+            .setDescription(t("commands:SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }))
             .setColor("Red"),
         ],
       };
@@ -115,7 +115,7 @@ export const handleLive = async (
     return {
       embeds: [
         new EmbedBuilder()
-          .setDescription(t("commands.SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live ${type}"` }))
+          .setDescription(t("commands:SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live ${type}"` }))
           .setColor("Red"),
       ],
     };

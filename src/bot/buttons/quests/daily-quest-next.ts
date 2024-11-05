@@ -13,7 +13,7 @@ export default {
     if (!isValid) {
       await interaction.editReply({ components: interaction.message.components });
       await interaction.followUp({
-        content: t("commands.DAILY_QUESTS.RESPONSES.OUTDATED"),
+        content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED"),
         ephemeral: true,
       });
       return;

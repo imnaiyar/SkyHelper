@@ -19,19 +19,19 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction, t:
   const attachment = interaction.options.getAttachment("attachment");
   const modal = new ModalBuilder()
     .setCustomId("suggestionModal" + `-${interaction.id}`)
-    .setTitle(t("commands.UTILS.RESPONSES.SUGGESTION_MODAL_TITLE"));
+    .setTitle(t("commands:UTILS.RESPONSES.SUGGESTION_MODAL_TITLE"));
 
   const fields = {
     title: new TextInputBuilder()
       .setCustomId("title")
-      .setLabel(t("commands.UTILS.RESPONSES.SUGGESTION_TITLE"))
-      .setPlaceholder(t("commands.UTILS.RESPONSES.TITLE_PLACEHOLDER"))
+      .setLabel(t("commands:UTILS.RESPONSES.SUGGESTION_TITLE"))
+      .setPlaceholder(t("commands:UTILS.RESPONSES.TITLE_PLACEHOLDER"))
       .setStyle(TextInputStyle.Short),
     suggestion: new TextInputBuilder()
       .setCustomId("suggestion")
-      .setLabel(t("commands.UTILS.RESPONSES.SUGGESTION"))
+      .setLabel(t("commands:UTILS.RESPONSES.SUGGESTION"))
       .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder(t("commands.UTILS.RESPONSES.SUGGESTION_PLACEHOLDER")),
+      .setPlaceholder(t("commands:UTILS.RESPONSES.SUGGESTION_PLACEHOLDER")),
   };
 
   const firstActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(fields.title);
@@ -68,7 +68,7 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction, t:
   }
   modalInt
     .reply({
-      content: t("commands.UTILS.RESPONSES.RECIEVED"),
+      content: t("commands:UTILS.RESPONSES.RECIEVED"),
       embeds: [embed],
       ephemeral: true,
     })

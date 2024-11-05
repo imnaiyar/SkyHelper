@@ -105,7 +105,7 @@ export default class {
         iconURL: emoji?.imageURL(),
       })
       .setDescription(
-        this.t("commands.SEASONAL_CALCULATOR.RESPONSES.EMBED_DESCRIPTION", {
+        this.t("commands:SEASONAL_CALCULATOR.RESPONSES.EMBED_DESCRIPTION", {
           PASS: this.data.hasPass ? "True" : "False",
           DAILIES: this.dailies ? "Completed" : "Not Done",
           REQUIRED: this.requiredCurrency.toFixed(0),
@@ -117,7 +117,7 @@ export default class {
       )
       .setTitle(
         `${this.seasonIcon} ${this.season} (${time(startDate.unix(), "D")} - ${time(endDate.unix(), "D")}) ( ${this.t(
-          "commands.SEASONAL_CALCULATOR.RESPONSES.ENDS_IN",
+          "commands:SEASONAL_CALCULATOR.RESPONSES.ENDS_IN",
           { DAYS: this.seasonEndsIn },
         )})`,
       )
@@ -187,7 +187,7 @@ export default class {
             new StringSelectMenuBuilder()
               .setCustomId("anyyyy")
               .setDisabled(true)
-              .setPlaceholder(this.t("common.SELECT_EXPIRED"))
+              .setPlaceholder(this.t("common:SELECT_EXPIRED"))
               .setOptions({
                 label: "hmm",
                 value: "hmm",
@@ -206,7 +206,7 @@ export default class {
       : null;
 
     const card = new SeasonProgressCard()
-      .setName(this.author instanceof GuildMember ? this.author.nickname ?? this.author.displayName : this.author.displayName)
+      .setName(this.author instanceof GuildMember ? (this.author.nickname ?? this.author.displayName) : this.author.displayName)
       .setProgress(parseInt(this.progressLevel.toFixed()))
       .setSeason(this.season)
       .setThumbnailImage(

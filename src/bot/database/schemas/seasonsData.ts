@@ -18,7 +18,6 @@ export interface UserSpiritData extends Document {
   };
 }
 
-// @ts-ignore
 const cache = new Collection<string, UserSpiritData>();
 const Schema = new mongoose.Schema<UserSpiritData>({
   id: String,

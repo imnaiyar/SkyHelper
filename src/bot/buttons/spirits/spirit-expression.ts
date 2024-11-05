@@ -92,7 +92,7 @@ const getExpressionResponse = (data: SpiritsData, t: ReturnType<typeof getTransl
 
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: `${exprsn.icon ? t("commands.SPIRITS.RESPONSES.BUTTONS.EMOTE") : t("commands.SPIRITS.RESPONSES.BUTTONS.ACTION")} - ${data.name}`,
+      name: `${exprsn.icon ? t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE") : t("commands:SPIRITS.RESPONSES.BUTTONS.ACTION")} - ${data.name}`,
     })
     .setTitle(`${exprsn!.icon} ${emote.title}`)
     .setURL(

@@ -11,7 +11,7 @@ export default {
     if (!data) {
       // prettier-ignore
       await interaction.editReply(
-        t("commands.SPIRITS.RESPONSES.NO_DATA", {
+        t("commands:SPIRITS.RESPONSES.NO_DATA", {
           VALUE: value,
           COMMAND: `</utils contact-us:${client.application.commands.cache.find((c) => c.name === "utils")!.id}>`,
         }),

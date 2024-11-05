@@ -1,0 +1,98 @@
+{
+  "shards-embed": {
+    "TODAY": "आज",
+    "AUTHOR": "Shards इन्फो",
+    "FOOTER": "लाइव Shards (हर 5 मिनट में अपडेट)",
+    "CONTENT": "आखरी अपडेट: {{TIME}}",
+    "NO-SHARD": "इस दिन कोई shard नहीं है।",
+    "FIELDS": {
+      "TYPE": {
+        "LABEL": "Shard टाइप",
+        "VALUE": "{{VALUE}}"
+      },
+      "LOCATION": {
+        "LABEL": "जगह",
+        "VALUE": "{{VALUE}}"
+      },
+      "STATUS": {
+        "LABEL": "स्टेटस",
+        "VALUE": {
+          "ENDED": "सभी शार्ड्स {{DURATION}} पहले ख़तम हो चुकें हैं",
+          "ACTIVE": "{{INDEX}} शार्ड अभी एक्टिव है और {{DURATION}} में ख़तम होगा",
+          "EXPECTED": "{{INDEX}} शार्ड {{DURATION}} में लैंड होगा"
+        }
+      },
+      "COUNTDOWN": {
+        "VALUE": {
+          "ENDED": "{{DURATION}} पहले ख़तम हो गया",
+          "ACTIVE": "{{DURATION}} में ख़तम होगा",
+          "EXPECTED": "{{DURATION}} में लैंड होगा"
+        }
+      }
+    },
+    "BUTTON1": "टाइमलाइन",
+    "BUTTON2": "जगह",
+    "BUTTON3": "Shards के बारे में"
+  },
+  "times-embed": {
+    "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
+    "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
+    "EMBED_TITLE": "इवेंट्स का समय",
+    "EMBED_AUTHOR": "स्काइटाइम्स",
+    "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
+    "STARTS": "शुरू होगा",
+    "ENDS": "ख़तम होगा",
+    "TS_VISITING": "**अभी विजिट में**: {{TS_NAME}}\n**वापिस जाएंगे**: {{DATE}} को ({{DURATION}} में)",
+    "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
+    "TS_UPDATED": "अभी अपडेट होने को है",
+    "TS_UNKNOWN": "अनजान स्पिरिट",
+    "GEYSER": "गाइज़र",
+    "GRANDMA": "ग्रांडमा",
+    "TURTLE": "टर्टल",
+    "AURORA": "अरोरा का कॉन्सर्ट",
+    "DREAM-SKATER": "ड्रीम स्केटर",
+    "PASSAGE-QUESTS": "पैसेज क्वेस्ट्स",
+    "NEST-SUNSET": "नेस्ट सूर्यास्त",
+    "FIREWORKS-FESTIVAL": "अवियरी आतिशबाजी महोत्सव",
+    "FAIRY-RING": "फेयरी रिंग",
+    "BROOK-RAINBOW": "फारेस्ट ब्रूक का इंद्रधनुष",
+    "DAILY-RESET": "दैनिक रीसेट",
+    "EDEN": "ईडन रीसेट",
+    "TS_TITLE": "ट्रैवलिंग स्पिरिट",
+    "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
+    "ACTIVE": "**अभी चल रहा है**: {{DURATION}} में खत्म होगा ({{TIME}} बजे)",
+    "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
+    "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}",
+    "TIMELINE": "टाइमलाइन"
+  },
+  "reminders": {
+    "ROLE_MENTION": "हेय, {{ROLE}}",
+    "EDEN_RESET": "आई ऑफ ईडन अभी-अभी रीसेट हो चुका है, statues सारे रीसेट हो चुके है और इन्हें ACs के लिए फिर से save किए जा सकते है!",
+    "DAILY_RESET": "स्काई की दुनिया रीसेट हो गई है और सारे quests रिफ्रेश हो गई है!",
+    "TITLE": "{{TYPE}} रिमाइंडर",
+    "DAILY_QUESTS": "डेली क्वेस्ट्स",
+    "ERROR": "यह लगता है सही से काम नहीं कर रहा है",
+    "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा"
+  },
+  "REALMS": {
+    "ISLE": "आईल ऑफ डाॅन",
+    "PRAIRIE": "डेलाइट प्रेयरी",
+    "FOREST": "हिडेन फॉरेस्ट",
+    "VALLEY": "वैली ऑफ ट्रायंफ",
+    "WASTELAND": "गोल्डन वेस्टलैंड",
+    "VAULT": "वाल्ट ऑफ नावलेडज",
+    "EDEN": "आई ऑफ ईडन"
+  },
+  "SPIRITS": {
+    "SEASON_TITLE": "सीजन",
+    "UNKNOWN": "अनजान स्पिरिट",
+    "REALM_TITLE": "रेलम",
+    "TREE_TITLE": "{{CREDIT}} के तरफ से फ्रेंडशिप ट्री (पिछला विजिट का)",
+    "SEASONAL_CHART": "{{CREDIT}} के तरफ से सीजनल चार्ट",
+    "LOCATION_TITLE": "{{CREDIT}} के तरफ से लोकेशन"
+  },
+  "hangman": {
+    "NOT_PLAYABLE": "यह खेल केवल उसी चैनल में खेल जा सकता है जहां पे मैं मैसेज सेंड कर सकता हूं। यह कमांड यूजर ऐप में उपलब्ध नही है, आप यह कमांड उन सर्वर्स में इस्तेमाल कर सकतें है जहां पे मैं सदस्य हूं या फिर मेरे DM में।",
+    "GAME_ACTIVE": "इस चैनल में पहले से ही एक खेल जारी है, कृपया उसकी समाप्ति का इंतजार करें। या यह कमांड किसी और चैनल में उसे करें।"
+  }
+}

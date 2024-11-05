@@ -46,24 +46,24 @@ async function handleInfo(
   const users = client.guilds.cache.reduce((size, g) => size + g.memberCount, 0);
   const appl = await client.application.fetch();
   let desc = "";
-  desc += `<:servers:1243977429542764636> ${t("common.bot.TOTAL_SERVER")}: ${guilds}\n`;
-  desc += t("common.bot.TOTAL_AUTHORIZED") + ": " + appl.approximateUserInstallCount + "\n";
-  desc += `<:users:1243977425725952161> ${t("common.bot.TOTAL_USERS")}: ${users}\n`;
-  desc += `<a:uptime:1228956558113771580> ${t("common.bot.PING")}: ${client.ws.ping} ms\n`;
-  desc += `<:latency:1243977421812924426> ${t("common.bot.LATENCY")}: ${time - interaction.createdTimestamp} ms\n`;
+  desc += `<:servers:1243977429542764636> ${t("common:bot.TOTAL_SERVER")}: ${guilds}\n`;
+  desc += t("common:bot.TOTAL_AUTHORIZED") + ": " + appl.approximateUserInstallCount + "\n";
+  desc += `<:users:1243977425725952161> ${t("common:bot.TOTAL_USERS")}: ${users}\n`;
+  desc += `<a:uptime:1228956558113771580> ${t("common:bot.PING")}: ${client.ws.ping} ms\n`;
+  desc += `<:latency:1243977421812924426> ${t("common:bot.LATENCY")}: ${time - interaction.createdTimestamp} ms\n`;
   desc += "\n";
   const embed = new EmbedBuilder()
-    .setAuthor({ name: t("common.bot.EMBED_TITLE"), iconURL: client.user.displayAvatarURL() })
+    .setAuthor({ name: t("common:bot.EMBED_TITLE"), iconURL: client.user.displayAvatarURL() })
     .setTitle(client.user.username)
     .setDescription(
       desc +
-        `**${t("common.bot.VERSION")}:** v${pkg.version}\n**${t("common.bot.UPTIME")}:** ${timeformat(client.uptime / 1000)}`,
+        `**${t("common:bot.VERSION")}:** v${pkg.version}\n**${t("common:bot.UPTIME")}:** ${timeformat(client.uptime / 1000)}`,
     );
   if (interaction.inCachedGuild()) {
     const settings = await client.database.getSettings(interaction.guild);
     embed.addFields({
-      name: t("common.bot.GUILD_SETTINGS") + ` (\`${interaction.guild.name}\`)`,
-      value: `- **${t("common.bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common.bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common.bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
+      name: t("common:bot.GUILD_SETTINGS") + ` (\`${interaction.guild.name}\`)`,
+      value: `- **${t("common:bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common:bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common:bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
       inline: true,
     });
   }
@@ -71,8 +71,8 @@ async function handleInfo(
 
   embed.addFields(
     {
-      name: t("common.bot.USER_SETTINGS") + ` (\`${interaction.user.displayName}\`)`,
-      value: `**${t("common.bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
+      name: t("common:bot.USER_SETTINGS") + ` (\`${interaction.user.displayName}\`)`,
+      value: `**${t("common:bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
       inline: true,
     },
     { name: "Process Info", value: getProcessInfo() },
@@ -80,10 +80,10 @@ async function handleInfo(
   const btns = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setURL("https://discord.com/oauth2/authorize?client_id=1121541967730450574")
-      .setLabel(t("common.bot.INVITE"))
+      .setLabel(t("common:bot.INVITE"))
       .setStyle(ButtonStyle.Link),
-    new ButtonBuilder().setURL(client.config.Support).setLabel(t("common.bot.SUPPORT")).setStyle(ButtonStyle.Link),
-    new ButtonBuilder().setURL(client.config.DASHBOARD.URL).setLabel(t("common.bot.DASHBOARD")).setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setURL(client.config.Support).setLabel(t("common:bot.SUPPORT")).setStyle(ButtonStyle.Link),
+    new ButtonBuilder().setURL(client.config.DASHBOARD.URL).setLabel(t("common:bot.DASHBOARD")).setStyle(ButtonStyle.Link),
   );
   await interaction.editReply({ embeds: [embed], components: [btns] });
 }

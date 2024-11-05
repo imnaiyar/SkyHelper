@@ -26,19 +26,19 @@ export default {
       const cmd = commands.find((c) => c.name === command);
       if (!cmd) {
         await interaction.followUp({
-          content: t("common.errors.COMMAND_NOT_FOUND"),
+          content: t("errors:COMMAND_NOT_FOUND"),
         });
         return;
       }
       const data = handleCommand(cmd);
       data.setAuthor({
-        name: t("commands.HELP.RESPONSES.REQUESTED_BY", {
+        name: t("commands:HELP.RESPONSES.REQUESTED_BY", {
           USER: interaction.user.username,
         }),
         iconURL: interaction.user.displayAvatarURL(),
       });
       data.setFooter({
-        text: t("commands.HELP.RESPONSES.FOOTER_SINGLE"),
+        text: t("commands:HELP.RESPONSES.FOOTER_SINGLE"),
         iconURL: client.user.displayAvatarURL(),
       });
       data.setColor("Random");
@@ -52,7 +52,7 @@ export default {
       if (cmd.type === ApplicationCommandType.Message || cmd.type === ApplicationCommandType.User) {
         totalCommands.push(
           `</${cmd.name}:${cmd.id}>  \`${
-            cmd.type === 3 ? t("commands.HELP.RESPONSES.MESSAGE_APP_DESC") : t("commands.HELP.RESPONSES.USER_APP_DESC")
+            cmd.type === 3 ? t("commands:HELP.RESPONSES.MESSAGE_APP_DESC") : t("commands:HELP.RESPONSES.USER_APP_DESC")
           }\`\n\n`,
         );
       } else if (cmd.options?.some((op) => op.type === 1 || op.type === ApplicationCommandOptionType.SubcommandGroup)) {
@@ -97,14 +97,14 @@ export default {
     const updateSlashMenu = async () => {
       const slashEmbed = new EmbedBuilder()
         .setAuthor({
-          name: t("commands.HELP.RESPONSES.REQUESTED_BY", {
+          name: t("commands:HELP.RESPONSES.REQUESTED_BY", {
             USER: interaction.user.username,
           }),
           iconURL: interaction.user.displayAvatarURL(),
         })
         .setColor("Gold")
         .setFooter({
-          text: t("commands.HELP.RESPONSES.FOOTER", {
+          text: t("commands:HELP.RESPONSES.FOOTER", {
             PAGE: page,
             TOTAL: totalPages,
           }),
@@ -117,12 +117,12 @@ export default {
       const hmBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId("prevBtn")
-          .setLabel(t("commands.HELP.RESPONSES.BTN-PREV"))
+          .setLabel(t("commands:HELP.RESPONSES.BTN-PREV"))
           .setStyle(2)
           .setDisabled(page === 1),
         new ButtonBuilder().setLabel("🏠").setCustomId("homeBtn").setStyle(3).setDisabled(true),
         new ButtonBuilder()
-          .setLabel(t("commands.HELP.RESPONSES.BTN-NEXT"))
+          .setLabel(t("commands:HELP.RESPONSES.BTN-NEXT"))
           .setCustomId("nextBtn")
           .setStyle(2)
           .setDisabled(page === totalPages),

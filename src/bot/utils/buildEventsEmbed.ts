@@ -25,14 +25,14 @@ export const getTimesEmbed = async (
   // Special Events
   const eventDesc =
     typeof specialEvent === "string"
-      ? t("times-embed.EVENT_INACTIVE")
-      : t("times-embed.EVENT_ACTIVE", {
+      ? t("features:times-embed.EVENT_INACTIVE")
+      : t("features:times-embed.EVENT_ACTIVE", {
           EVENT_NAME: specialEvent.name,
           DATE1: time(specialEvent.start.unix(), "F"),
           DATE2: time(specialEvent.end.unix(), "F"),
           DAYS: specialEvent.days,
           DURATION: specialEvent.duration,
-          STARTS_ENDS: specialEvent.active ? t("times-embed.ENDS") : t("times-embed.STARTS"),
+          STARTS_ENDS: specialEvent.active ? t("features:times-embed.ENDS") : t("features:times-embed.STARTS"),
         });
 
   // Traveling spirit
@@ -42,13 +42,13 @@ export const getTimesEmbed = async (
   } else {
     const spirit: SpiritsData = client.spiritsData[tsData.value as keyof typeof client.spiritsData];
     const emote = spirit?.expression?.icon || "❓";
-    const strVisiting = t("times-embed.TS_VISITING", {
-      TS_NAME: `${emote} ${spirit?.name || t("times-embed.TS_UPDATED")}`,
+    const strVisiting = t("features:times-embed.TS_VISITING", {
+      TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
       DATE: time(tsData.nextVisit.clone().add(3, "days").endOf("day").toDate(), "F"),
       DURATION: tsData.duration,
     });
-    const strExpected = t("times-embed.TS_EXPECTED", {
-      TS_NAME: `${emote} ${spirit?.name || t("times-embed.TS_UNKNOWN")}`,
+    const strExpected = t("features:times-embed.TS_EXPECTED", {
+      TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UNKNOWN")}`,
       DATE: time(tsData.nextVisit.toDate(), "F"),
       DURATION: tsData.duration,
     });
@@ -57,42 +57,43 @@ export const getTimesEmbed = async (
 
   // Build the Embed
   const embed = new EmbedBuilder()
-    .setAuthor({ name: t("times-embed.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
-    .setTitle(t("times-embed.EMBED_TITLE"))
+    .setAuthor({ name: t("features:times-embed.EMBED_AUTHOR"), iconURL: client.user.displayAvatarURL() })
+    .setTitle(t("features:times-embed.EMBED_TITLE"))
     .setColor("Random")
     .addFields(
       // Add Basic Embeds
       ...skyutils.allEventDetails().map(([k, { event, status }]) => {
         let desc = "";
         if (status.active) {
-          desc += `${t("times-embed.ACTIVE", {
+          desc += `${t("features:times-embed.ACTIVE", {
             EVENT: event.name,
             DURATION: status.duration,
             ACTIVE_TIME: time(status.startTime.unix(), "t"),
             END_TIME: time(status.endTime.unix(), "t"),
-          })}\n- -# ${t("times-embed.NEXT-OCC-IDLE", {
+          })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
             TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
           })}`;
         } else {
-          desc += t("times-embed.NEXT-OCC", {
+          desc += t("features:times-embed.NEXT-OCC", {
             TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
             DURATION: status.duration,
           });
         }
         return {
-          // @ts-ignore
-          name: t(`times-embed.${k.toString().toUpperCase()}`) + (status.active ? " <a:uptime:1228956558113771580>" : ""),
+          name:
+            // @ts-ignore
+            t(`features:times-embed.${k.toString().toUpperCase()}`) + (status.active ? " <a:uptime:1228956558113771580>" : ""),
           value: desc,
           inline: true,
         };
       }),
       {
-        name: t("times-embed.TS_TITLE"),
+        name: t("features:times-embed.TS_TITLE"),
         value: tsDesc,
         inline: true,
       },
       {
-        name: t("times-embed.EVENT_TITLE"),
+        name: t("features:times-embed.EVENT_TITLE"),
         value: eventDesc,
         inline: true,
       },

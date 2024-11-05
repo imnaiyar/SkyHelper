@@ -26,12 +26,12 @@ const getExpressionBtn = (data: SpiritsData, value: string, t: ReturnType<typeof
     .setCustomId("spirit_expression" + `-${value}`)
     .setLabel(
       data.expression!.type === "Emote"
-        ? t("commands.SPIRITS.RESPONSES.BUTTONS.EMOTE")
+        ? t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE")
         : data.expression!.type === "Stance"
-          ? t("commands.SPIRITS.RESPONSES.BUTTONS.STANCE")
+          ? t("commands:SPIRITS.RESPONSES.BUTTONS.STANCE")
           : data.expression!.type === "Call"
-            ? t("commands.SPIRITS.RESPONSES.BUTTONS.CALL")
-            : t("commands.SPIRITS.RESPONSES.BUTTONS.ACTION"),
+            ? t("commands:SPIRITS.RESPONSES.BUTTONS.CALL")
+            : t("commands:SPIRITS.RESPONSES.BUTTONS.ACTION"),
     )
     .setEmoji(icon)
     .setStyle(ButtonStyle.Primary);
@@ -53,41 +53,41 @@ export class Spirits {
     const data = this.data;
     const client = this.client;
     const icon = data.expression?.icon ?? data.icon ?? "<:spiritIcon:1206501060303130664>";
-    const desc = `${this.t("commands.SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
+    const desc = `${this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
       data.realm
-        ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
+        ? `\n${this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
         : ""
-    }${this.isSeasonal(data) && data.season ? `\n${this.t("commands.SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
+    }${this.isSeasonal(data) && data.season ? `\n${this.t("commands:SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
     const embed = new EmbedBuilder()
       .setTitle(`${icon} ${data.name}${data.extra ? ` (${data.extra})` : ""}`)
       .setURL(`https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`)
       .setDescription(desc)
-      .setAuthor({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.AUTHOR") });
+      .setAuthor({ name: this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR") });
     if (data.image) embed.setThumbnail(data.image);
     if ("ts" in data && !data.current) {
       embed.addFields({
-        name: this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE"),
+        name: this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE"),
         value: !data.ts.eligible
-          ? `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
+          ? `- ${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
               SEASON:
                 Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
-                ` **__${this.t("commands.GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
+                ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
             })}`
           : data.ts.returned
-            ? `${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${this._formatDates(data.ts.dates)}`
-            : `- ${this.t("commands.SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`,
+            ? `${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${this._formatDates(data.ts.dates)}`
+            : `- ${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`,
       });
     }
 
     if (!this.isSeasonal(data)) {
-      embed.addFields({ name: this.t("commands.SPIRITS.RESPONSES.EMBED.CREDIT"), value: " " });
+      embed.addFields({ name: this.t("commands:SPIRITS.RESPONSES.EMBED.CREDIT"), value: " " });
       embed.setImage(`${config.CDN_URL}/${data.main.image}`);
     } else {
       // For seasonal spirits
       embed.addFields({
         name: data.ts?.returned
-          ? this.t("SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-          : this.t("SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
+          ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
+          : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
         value: data
           .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
           .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")

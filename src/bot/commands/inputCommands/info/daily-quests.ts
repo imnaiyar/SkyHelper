@@ -34,7 +34,7 @@ const getQuestResponse = async (client: SkyHelper, t: ReturnType<typeof getTrans
   const now = moment().tz(client.timezone).startOf("day");
   const last_updated = moment.tz(data.last_updated, client.timezone).startOf("day");
   if (!data.last_updated || !now.isSame(last_updated) || !data.quests.length) {
-    return t("commands.DAILY_QUESTS.RESPONSES.NO_DATA");
+    return t("commands:DAILY_QUESTS.RESPONSES.NO_DATA");
   }
   return dailyQuestEmbed(data, 0);
 };

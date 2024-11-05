@@ -33,14 +33,14 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
     Object.keys(interaction.authorizingIntegrationOwners).every((k) => k === "1") // Also don't run for only user Apps
   ) {
     return void (await interaction.reply({
-      content: t("hangman.NOT_PLAYABLE"),
+      content: t("features:hangman.NOT_PLAYABLE"),
       ephemeral: true,
     }));
   }
   const botPermsInChannel = interaction.inCachedGuild() ? interaction.channel.permissionsFor(client.user) : undefined;
   if (interaction.inCachedGuild() && !botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
     return void (await interaction.reply({
-      content: t("common.errors.NO_PERMS_BOT", {
+      content: t("errors:NO_PERMS_BOT", {
         PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
       }),
       ephemeral: true,
@@ -48,7 +48,7 @@ export const handleHangman = async (interaction: ChatInputCommandInteraction, t:
   }
   if (client.gameData.has(interaction.channel.id)) {
     return void (await interaction.reply({
-      content: t("hangman.GAME_ACTIVE"),
+      content: t("features:hangman.GAME_ACTIVE"),
       ephemeral: true,
     }));
   }

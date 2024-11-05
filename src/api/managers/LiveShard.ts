@@ -20,7 +20,7 @@ export class LiveShard {
     if (!data) return null;
     const now = moment().tz(client.timezone);
     const t = getTranslator(data.language?.value ?? "en-US");
-    const response = buildShardEmbed(now, t, t("shards-embed.FOOTER"), true);
+    const response = buildShardEmbed(now, t, t("features:shards-embed.FOOTER"), true);
     if (data.autoShard.webhook.id) {
       const wb = await client.fetchWebhook(data.autoShard.webhook.id).catch(() => {});
       if (wb) {

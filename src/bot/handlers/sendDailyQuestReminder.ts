@@ -23,7 +23,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
       const wb = new WebhookClient({ token: webhook.token, id: webhook.id }, { allowedMentions: { parse: ["roles"] } });
 
       const roleid = event?.role ?? default_role ?? "";
-      const role = roleid && t("reminders.ROLE_MENTION", { ROLE: roleMention(roleid) });
+      const role = roleid && t("features:reminders.ROLE_MENTION", { ROLE: roleMention(roleid) });
 
       let response = null;
 
@@ -34,7 +34,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
       };
       if (!response) return;
       wb.send({
-        username: t("reminders.DAILY_QUESTS"),
+        username: t("features:reminders.DAILY_QUESTS"),
         avatarURL: client.user.displayAvatarURL(),
         ...response,
       })

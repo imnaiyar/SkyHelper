@@ -20,7 +20,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   const t = await message.t();
   // Check for bot's mention
   if (message.content.startsWith(`<@!${client.user.id}>`)) {
-    await message.channel.send(t("common.bot.intro"));
+    await message.channel.send(t("common:bot.intro"));
     return;
   }
   const settings = message.inGuild() ? await client.database.getSettings(message.guild) : null;
@@ -43,7 +43,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   if (message.inGuild() && !message.guild.members.me?.permissionsIn(message.channel).has(["SendMessages", "ViewChannel"])) {
     message.author
       .send(
-        t("common.errors.MESSAGE_BOT_NO_PERM", {
+        t("errors:MESSAGE_BOT_NO_PERM", {
           PERMISSIONS: `${parsePerms("SendMessages")}/${parsePerms("ViewChannel")}`,
           SERVER: message.guild.name,
           CHANNEL: message.channel,
@@ -58,7 +58,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   // Check if the user has permissions to use the command.
   if (message.guild && command.userPermissions && !message.member?.permissions.has(command.userPermissions)) {
     await message.reply(
-      t("common.errors.NO_PERMS_USER", {
+      t("errors:NO_PERMS_USER", {
         PERMISSIONS: parsePerms(command.userPermissions as Permission[]),
       }),
     );
@@ -71,12 +71,12 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   ) {
     await message.reply({
       ...(args.length < (command.prefix.minimumArgs || 0) && {
-        content: t("common.errors.MINIMUM_ARGS", { LIMIT: command.prefix.minimumArgs }),
+        content: t("errors:MINIMUM_ARGS", { LIMIT: command.prefix.minimumArgs }),
       }),
 
       embeds: [
         {
-          title: t("common.errors.INVALID_USAGE"),
+          title: t("errors:INVALID_USAGE"),
           description:
             (command.prefix.usage ? `Usage:\n**\`${prefix}${command.name} ${command.prefix.usage}\`**\n\n` : "") +
             (command.prefix.subcommands
@@ -124,7 +124,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1000);
         await message.reply({
-          content: t("common.errors.COOLDOWN", {
+          content: t("errors:COOLDOWN", {
             COMMAND: command.name,
             TIME: `<t:${expiredTimestamp}:R>`,
           }),
@@ -147,7 +147,7 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
     }
     if (toCheck && !perms.has(command.botPermissions)) {
       await message.reply(
-        t("common.errors.NO_PERMS_BOT", {
+        t("errors:NO_PERMS_BOT", {
           PERMISSIONS: parsePerms(missing as Permission[]),
         }),
       );
@@ -184,16 +184,11 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
     }
   } catch (error) {
     const id = client.logger.error(error, scope);
-    const content = { content: t("common.errors.ERROR_ID", { ID: id }) };
-    const embed = new EmbedBuilder()
-      .setTitle(t("common.errors.EMBED_TITLE"))
-      .setDescription(t("common.errors.EMBED_DESCRIPTION"));
+    const content = { content: t("errors:ERROR_ID", { ID: id }) };
+    const embed = new EmbedBuilder().setTitle(t("errors:EMBED_TITLE")).setDescription(t("errors:EMBED_DESCRIPTION"));
 
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder()
-        .setLabel(t("common.errors.BUTTON_LABEL"))
-        .setCustomId(`error-report_${id}`)
-        .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setLabel(t("errors:BUTTON_LABEL")).setCustomId(`error-report_${id}`).setStyle(ButtonStyle.Secondary),
     );
     await message.reply({
       ...content,

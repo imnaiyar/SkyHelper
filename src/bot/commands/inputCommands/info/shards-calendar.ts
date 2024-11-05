@@ -98,13 +98,13 @@ const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper, {
   const dateSelect = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId("calendar-dates")
-      .setPlaceholder(t("commands.SHARDS_CALENDAR.RESPONSES.DATE_SELECT_PLACEHOLDER"))
+      .setPlaceholder(t("commands:SHARDS_CALENDAR.RESPONSES.DATE_SELECT_PLACEHOLDER"))
       .addOptions(options),
   );
   const monthSelect = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId("calendar-month")
-      .setPlaceholder(t("commands.SHARDS_CALENDAR.RESPONSES.MONTH_SELECT_PLACEHOLDER"))
+      .setPlaceholder(t("commands:SHARDS_CALENDAR.RESPONSES.MONTH_SELECT_PLACEHOLDER"))
       .addOptions(
         months.map((m, i) => ({
           label: m,
@@ -124,7 +124,7 @@ const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper, {
   const yearSelect = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId("calendar-year")
-      .setPlaceholder(t("commands.SHARDS_CALENDAR.RESPONSES.YEAR_SELECT_PLACEHOLDER"))
+      .setPlaceholder(t("commands:SHARDS_CALENDAR.RESPONSES.YEAR_SELECT_PLACEHOLDER"))
       .addOptions(yOptions),
   );
   const navBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -147,24 +147,24 @@ const buildResponse = (t: ReturnType<typeof getTranslator>, client: SkyHelper, {
     const info = shardsInfo[currentRealm][currentShard];
     fields.push({
       name: d.isSame(now, "day")
-        ? time(d.unix(), "D") + ` (${t("shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
+        ? time(d.unix(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
         : time(d.unix(), "D"),
       value:
         typeof noShard === "string"
-          ? "↪ " + t("commands.SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `↪ ${t("commands.SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n↪ ${t("commands.SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${time(ti.start.unix(), "T")}`).join(" • ") })}\n\n`,
+          ? "↪ " + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
+          : `↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${time(ti.start.unix(), "T")}`).join(" • ") })}\n\n`,
     });
   });
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: t("commands.SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year }),
+      name: t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year }),
       iconURL: client.user.displayAvatarURL(),
     })
-    .setDescription(t("commands.SHARDS_CALENDAR.RESPONSES.EMBED_DESCRIPTION", { shardsCmd: `</shards:1142231977328648364>` }))
+    .setDescription(t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_DESCRIPTION", { shardsCmd: `</shards:1142231977328648364>` }))
     .setTitle(title)
     .addFields(fields)
     .setFooter({
-      text: t("commands.SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages }),
+      text: t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages }),
       iconURL: client.user.displayAvatarURL(),
     });
   return { embeds: [embed], components: [dateSelect, monthSelect, yearSelect, navBtn] };
@@ -208,9 +208,9 @@ const collectResponseComponents = (msg: Message, t: ReturnType<typeof getTransla
         const components = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
           new StringSelectMenuBuilder()
             .setCustomId("any")
-            .setPlaceholder(t("common.SELECT_EXPIRED"))
+            .setPlaceholder(t("common:SELECT_EXPIRED"))
             .setDisabled(true)
-            .addOptions([{ label: t("common.SELECT_EXPIRED"), value: "expired", default: true }]),
+            .addOptions([{ label: t("common:SELECT_EXPIRED"), value: "expired", default: true }]),
         );
         (int?.editReply ?? msg.edit)({ components: [components] }).catch(() => {});
       })
