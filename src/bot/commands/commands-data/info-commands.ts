@@ -7,14 +7,14 @@ export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   name: "daily-quests",
   description: "Get the daily quests for today",
   slash: {
-    name_localizations: x("commands.DAILY_QUESTS.name"),
-    description_localizations: x("commands.DAILY_QUESTS.description"),
+    name_localizations: x("commands:DAILY_QUESTS.name"),
+    description_localizations: x("commands:DAILY_QUESTS.description"),
     options: [
       {
         name: "hide",
-        name_localizations: x("common.hide-options.name"),
+        name_localizations: x("common:hide-options.name"),
         description: "hide the response from others",
-        description_localizations: x("common.hide-options.description"),
+        description_localizations: x("common:hide-options.description"),
         type: ApplicationCommandOptionType.Boolean,
       },
     ],
@@ -33,14 +33,14 @@ export const SHARDS_CALENDAR_DATA: Omit<Command, "interactionRun" | "messageRun"
     aliases: ["shards-cal", "shard-cal", "sc", "nextshards", "next-shards"],
   },
   slash: {
-    name_localizations: x("commands.SHARDS_CALENDAR.name"),
-    description_localizations: x("commands.SHARDS_CALENDAR.description"),
+    name_localizations: x("commands:SHARDS_CALENDAR.name"),
+    description_localizations: x("commands:SHARDS_CALENDAR.description"),
     options: [
       {
         name: "hide",
-        name_localizations: x("common.hide-options.name"),
+        name_localizations: x("common:hide-options.name"),
         description: "hides the response",
-        description_localizations: x("common.hide-options.description"),
+        description_localizations: x("common:hide-options.description"),
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
@@ -59,22 +59,22 @@ export const SHARDS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     aliases: ["shard"],
   },
   slash: {
-    name_localizations: x("commands.SHARDS.name"),
-    description_localizations: x("commands.SHARDS.description"),
+    name_localizations: x("commands:SHARDS.name"),
+    description_localizations: x("commands:SHARDS.description"),
     options: [
       {
         name: "date",
-        name_localizations: x("commands.SHARDS.options.DATE.name"),
+        name_localizations: x("commands:SHARDS.options.DATE.name"),
         description: "The date to get the shard information",
-        description_localizations: x("commands.SHARDS.options.DATE.description"),
+        description_localizations: x("commands:SHARDS.options.DATE.description"),
         type: ApplicationCommandOptionType.String,
         required: false,
       },
       {
         name: "hide",
-        name_localizations: x("common.hide-options.name"),
+        name_localizations: x("common:hide-options.name"),
         description: "Hide the shard response",
-        description_localizations: x("common.hide-options.description"),
+        description_localizations: x("common:hide-options.description"),
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
@@ -91,14 +91,14 @@ export const SKYTIMES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skytimes",
   description: "various in-game events countdown",
   slash: {
-    name_localizations: x("commands.SKYTIMES.name"),
-    description_localizations: x("commands.SKYTIMES.description"),
+    name_localizations: x("commands:SKYTIMES.name"),
+    description_localizations: x("commands:SKYTIMES.description"),
     options: [
       {
         name: "hide",
-        name_localizations: x("common.hide-options.name"),
+        name_localizations: x("common:hide-options.name"),
         description: "hides the response",
-        description_localizations: x("common.hide-options.description"),
+        description_localizations: x("common:hide-options.description"),
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
@@ -118,8 +118,8 @@ export const TRAVELING_SPIRITS_DATA: Omit<Command, "interactionRun" | "messageRu
   name: "traveling-spirit",
   description: "get details about current/upcoming TS.",
   slash: {
-    name_localizations: x("commands.TRAVELING-SPIRIT.name"),
-    description_localizations: x("commands.TRAVELING-SPIRIT.description"),
+    name_localizations: x("commands:TRAVELING-SPIRIT.name"),
+    description_localizations: x("commands:TRAVELING-SPIRIT.description"),
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },

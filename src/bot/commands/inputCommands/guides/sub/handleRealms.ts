@@ -33,7 +33,7 @@ export async function handleRealms(interaction: ChatInputCommandInteraction) {
     }
     case "spirits": {
       if (realm === "eden") {
-        await interaction.followUp({ content: t("commands.GUIDES.RESPONSES.NO-SPIRITS") });
+        await interaction.followUp({ content: t("commands:GUIDES.RESPONSES.NO-SPIRITS") });
         return;
       }
       await handleSpirits(interaction, realms[realm as keyof typeof realms]);
@@ -57,7 +57,7 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
 
   const rowFirst = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
-      .setLabel(t("commands.GUIDES.RESPONSES.REALM-BUTTON-LABEL"))
+      .setLabel(t("commands:GUIDES.RESPONSES.REALM-BUTTON-LABEL"))
       .setCustomId("areas")
       .setStyle(ButtonStyle.Primary),
   );
@@ -74,7 +74,7 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
     if (inter.user.id !== interaction.user.id) {
       await inter.deferReply({ ephemeral: true });
       const ts = await inter.t();
-      await inter.editReply({ content: ts("common.SELECT_EXPIRED") });
+      await inter.editReply({ content: ts("common:SELECT_EXPIRED") });
       return;
     }
     await inter.deferUpdate();
@@ -88,7 +88,7 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
           author,
           emoji,
           data.main.title,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
         );
         await inter.editReply(datas);
         break;
@@ -102,7 +102,7 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
           author,
           emoji,
           data.main.title,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
         );
         await inter.editReply(datas);
         break;
@@ -116,7 +116,7 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
           author,
           emoji,
           data.main.title,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
         );
         await inter.editReply(datas);
         break;
@@ -138,13 +138,13 @@ async function handleSummary(interaction: ChatInputCommandInteraction, realm: ke
           author,
           emoji,
           data.main.title,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
         );
         await inter.editReply(datas);
         break;
       }
       default:
-        await inter.editReply({ content: t("commands.GUIDES.RESPONSES.INVALID-CHOICE") });
+        await inter.editReply({ content: t("commands:GUIDES.RESPONSES.INVALID-CHOICE") });
     }
   });
 
@@ -173,7 +173,7 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
     author,
     undefined,
     data.realm,
-    t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+    t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
     true,
   );
   const msg = await interaction.followUp({
@@ -189,7 +189,7 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
     if (inter.user.id !== interaction.user.id) {
       await inter.deferReply({ ephemeral: true });
       const ts = await inter.t();
-      await inter.editReply({ content: ts("common.SELECT_EXPIRED") });
+      await inter.editReply({ content: ts("common:SELECT_EXPIRED") });
       return;
     }
     await inter.deferUpdate();
@@ -204,7 +204,7 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
           author,
           undefined,
           data.realm,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
           true,
         );
         await inter.editReply(datas);
@@ -219,7 +219,7 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
           author,
           undefined,
           data.realm,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
           true,
         );
         await inter.editReply(datas);
@@ -234,7 +234,7 @@ async function handleMaps(interaction: ChatInputCommandInteraction, realm: keyof
           author,
           undefined,
           data.realm,
-          t("commands.GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
           true,
         );
         await inter.editReply(datas);

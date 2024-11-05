@@ -7,7 +7,7 @@ export default {
     const client = interaction.client;
     await interaction.deferReply({ ephemeral: true });
     if (!interaction.guild) {
-      return void (await interaction.followUp(t("commands.SHARDS_LIVE.RESPONSES.NOT_GUILD")));
+      return void (await interaction.followUp(t("commands:SHARDS_LIVE.RESPONSES.NOT_GUILD")));
     }
     const sub = interaction.options.getSubcommand();
     const channel = sub === "start" ? (interaction.options.getChannel("channel", true) as TextChannel) : undefined;

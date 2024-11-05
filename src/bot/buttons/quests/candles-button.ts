@@ -15,7 +15,7 @@ export default {
     if (!d) return void (await interaction.editReply("No data found for this type of candles."));
     const isValid = checkQuestValidity(d.date);
     if (!isValid) {
-      return void (await interaction.editReply(t("commands.DAILY_QUESTS.RESPONSES.OUTDATED")));
+      return void (await interaction.editReply(t("commands:DAILY_QUESTS.RESPONSES.OUTDATED")));
     }
     const embed = new EmbedBuilder()
       .setTitle(title)

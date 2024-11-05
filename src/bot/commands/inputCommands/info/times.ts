@@ -5,10 +5,10 @@ export default {
   async interactionRun(interaction, t, client) {
     await interaction.deferReply({ ephemeral: interaction.options.getBoolean("hide") ?? false });
 
-    await interaction.followUp({ ...(await getTimesEmbed(client, t, t("common.bot.name"))), fetchReply: true });
+    await interaction.followUp({ ...(await getTimesEmbed(client, t, t("common:bot.name"))), fetchReply: true });
   },
   async messageRun({ message, t, client }) {
-    await message.reply(await getTimesEmbed(client, t, t("common.bot.name")));
+    await message.reply(await getTimesEmbed(client, t, t("common:bot.name")));
   },
   ...SKYTIMES_DATA,
 } satisfies Command;

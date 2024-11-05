@@ -10,7 +10,7 @@ export async function handleSeasional(interaction: discordJs.ChatInputCommandInt
   const type = interaction.options.getString("type")!;
   const season = seasonsData[value as keyof typeof seasonsData];
   if (!season) {
-    return await interaction.editReply(t("commands.GUIDES.RESPONSES.INVALID_SEASON_VALUE", { VALUE: value }));
+    return await interaction.editReply(t("commands:GUIDES.RESPONSES.INVALID_SEASON_VALUE", { VALUE: value }));
   }
   switch (type) {
     case "quest": {
@@ -33,7 +33,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
 
   const t = await int.t();
   if (!quests?.length) {
-    return void int.editReply({ content: t("commands.GUIDES.RESPONSES.NO_QUEST", { SEASON: `${season.icon} ${season.name}` }) });
+    return void int.editReply({ content: t("commands:GUIDES.RESPONSES.NO_QUEST", { SEASON: `${season.icon} ${season.name}` }) });
   }
   const total = quests.length;
   let page = 1;
@@ -41,7 +41,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
     const quest = quests[page - 1];
     const emojiUrl = int.client.emojis.cache.get(discordJs.parseEmoji(season.icon)!.id!)?.imageURL();
     const embed = new discordJs.EmbedBuilder()
-      .setAuthor({ name: t("commands.GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { SEASON: season.name }), iconURL: emojiUrl })
+      .setAuthor({ name: t("commands:GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { SEASON: season.name }), iconURL: emojiUrl })
       .setTitle(`${season.icon} ${quest.title}`)
       .setURL(
         `https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name.split(" ").join("_")}#${quest.title.split(" ").join("_")}`,
@@ -58,7 +58,7 @@ async function handleQuests(int: discordJs.ChatInputCommandInteraction, season: 
     const select = new discordJs.ActionRowBuilder<discordJs.StringSelectMenuBuilder>().addComponents(
       new discordJs.StringSelectMenuBuilder()
         .setCustomId("guide-season-select")
-        .setPlaceholder(t("commands.GUIDES.RESPONSES.QUEST_SELECT_PLACEHOLDER"))
+        .setPlaceholder(t("commands:GUIDES.RESPONSES.QUEST_SELECT_PLACEHOLDER"))
         .setOptions(
           quests.map((q, i) => ({
             label: q.title,

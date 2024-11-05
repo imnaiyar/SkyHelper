@@ -22,35 +22,35 @@ export default {
 const getTSResponse = async (client: SkyHelper, t: ReturnType<typeof getTranslator>): Promise<BaseMessageOptions | string> => {
   const ts = await getTS();
 
-  if (!ts) return t("commands.TRAVELING-SPIRIT.RESPONSES.NO_DATA");
+  if (!ts) return t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA");
 
   const visitingDates = `${time(ts.nextVisit.toDate(), "D")} - ${time(ts.nextVisit.clone().add(3, "days").endOf("day").toDate(), "D")}`;
   if (ts.value) {
     const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
-    if (!isSeasonal(spirit)) return t("commands.TRAVELING-SPIRIT.RESPONSES.NO_DATA");
+    if (!isSeasonal(spirit)) return t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA");
     const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
     let description = ts.visiting
-      ? t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING", {
+      ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
           TIME: time(ts.nextVisit.clone().add(3, "days").endOf("day").toDate(), "F"),
           DURATION: ts.duration,
         })
-      : t("commands.TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
+      : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
           SPIRIT: "↪",
           DATE: time(ts.nextVisit.toDate(), "F"),
           DURATION: ts.duration,
         });
-    description += `\n\n**${t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("SPIRITS.REALM_TITLE")}:** ${
+    description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
       client.emojisMap.get("realms")![spirit.realm!]
-    } ${spirit.realm}\n**${t("SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`;
+    } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`;
     const embed = new EmbedBuilder()
-      .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: spirit.image })
+      .setAuthor({ name: t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }), iconURL: spirit.image })
       .setDescription(description)
       .setTitle(emote! + " " + spirit.name + (spirit.extra ? ` (${spirit.extra})` : ""))
       .addFields({
         name: spirit.ts?.returned
-          ? t("SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
-          : t("SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by }),
+          ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
+          : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by }),
         value: spirit
           .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
           .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
@@ -62,19 +62,19 @@ const getTSResponse = async (client: SkyHelper, t: ReturnType<typeof getTranslat
     return { embeds: [embed], components: [manager.getButtons()] };
   } else {
     let description = ts.visiting
-      ? t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING", {
-          SPIRIT: t("SPIRITS.UNKNOWN"),
+      ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
+          SPIRIT: t("features:SPIRITS.UNKNOWN"),
           TIME: time(ts.nextVisit.clone().add(3, "days").endOf("day").toDate(), "F"),
           DURATION: ts.duration,
         })
-      : t("commands.TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
-          SPIRIT: t("SPIRITS.UNKNOWN"),
+      : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
+          SPIRIT: t("features:SPIRITS.UNKNOWN"),
           DATE: time(ts.nextVisit.toDate(), "F"),
           DURATION: ts.duration,
         });
-    description += `\n\n**${t("commands.TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;
+    description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;
     const embed = new EmbedBuilder()
-      .setAuthor({ name: t("commands.TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" }) })
+      .setAuthor({ name: t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" }) })
       .setDescription(description);
     return { embeds: [embed] };
   }

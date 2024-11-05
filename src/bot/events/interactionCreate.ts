@@ -56,7 +56,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     const command = client.commands.get(interaction.commandName);
     if (!command || !command.interactionRun) {
       await interaction.reply({
-        content: t("common.errors.COMMAND_NOT_FOUND"),
+        content: t("errors:COMMAND_NOT_FOUND"),
         ephemeral: true,
       });
       return;
@@ -96,20 +96,20 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     } catch (err) {
       const errorId = client.logger.error(err, scope);
       const content = {
-        content: t("common.errors.ERROR_ID", { ID: errorId }),
+        content: t("errors:ERROR_ID", { ID: errorId }),
       };
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
           ...content,
-          embeds: [errorEmbed(t("common.errors.EMBED_TITLE"), t("common.errors.EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("common.errors.BUTTON_LABEL"), errorId)],
+          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
         });
         return;
       } else {
         await interaction.reply({
           ...content,
-          embeds: [errorEmbed(t("common.errors.EMBED_TITLE"), t("common.errors.EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("common.errors.BUTTON_LABEL"), errorId)],
+          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
           ephemeral: true,
         });
         return;
@@ -124,7 +124,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     if (!command || !command.autocomplete) {
       await interaction.respond([
         {
-          name: t("common.errors.autoCompleteCOMMAND_NOT_FOUND"),
+          name: t("errors:autoCompleteCOMMAND_NOT_FOUND"),
           value: "none",
         },
       ]);
@@ -138,7 +138,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       if (!interaction.responded) {
         await interaction.respond([
           {
-            name: t("common.errors.AUTOCOMPLETE_ERROR"),
+            name: t("errors:AUTOCOMPLETE_ERROR"),
             value: "none",
           },
         ]);
@@ -151,7 +151,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     const command = client.contexts.get(interaction.commandName + interaction.commandType.toString());
     if (!command) {
       await interaction.reply({
-        content: t("common.errors.COMMAND_NOT_FOUND"),
+        content: t("errors:COMMAND_NOT_FOUND"),
         ephemeral: true,
       });
       return;
@@ -164,19 +164,19 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     } catch (err) {
       const errorId = client.logger.error(err, scope);
       const content = {
-        content: t("common.errors.ERROR_ID", { ID: errorId }),
+        content: t("errors:ERROR_ID", { ID: errorId }),
       };
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
           ...content,
-          embeds: [errorEmbed(t("common.errors.EMBED_TITLE"), t("common.errors.EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("common.errors.BUTTON_LABEL"), errorId)],
+          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
         });
       } else {
         await interaction.reply({
           ...content,
-          embeds: [errorEmbed(t("common.errors.EMBED_TITLE"), t("common.errors.EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("common.errors.BUTTON_LABEL"), errorId)],
+          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
           ephemeral: true,
         });
       }
@@ -193,19 +193,19 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     } catch (err) {
       const errorId = client.logger.error(err, scope);
       const content = {
-        content: t("common.errors.ERROR_ID", { ID: errorId }),
+        content: t("errors:ERROR_ID", { ID: errorId }),
       };
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
           ...content,
-          embeds: [errorEmbed(t("common.errors.EMBED_TITLE"), t("common.errors.EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("common.errors.BUTTON_LABEL"), errorId)],
+          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
         });
       } else {
         await interaction.reply({
           ...content,
-          embeds: [errorEmbed(t("common.errors.EMBED_TITLE"), t("common.errors.EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("common.errors.BUTTON_LABEL"), errorId)],
+          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
           ephemeral: true,
         });
       }
@@ -216,7 +216,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   if (interaction.isModalSubmit()) {
     if (interaction.customId === "errorModal") {
       await interaction.reply({
-        content: t("common.errors.ERROR_MODAL.SUCCESS"),
+        content: t("errors:ERROR_MODAL.SUCCESS"),
         ephemeral: true,
       });
       const commandUsed = interaction.fields.getTextInputValue("commandUsed");
@@ -256,21 +256,21 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       const embed = new EmbedBuilder().setTitle(event.name + " Times").setFooter({ text: "SkyTimes" });
       let desc = "";
       if (status.active) {
-        desc += `${t("times-embed.ACTIVE", {
+        desc += `${t("features:times-embed.ACTIVE", {
           EVENT: event.name,
           DURATION: status.duration,
           ACTIVE_TIME: time(status.startTime.unix(), "t"),
           END_TIME: time(status.endTime.unix(), "t"),
-        })}\n- -# ${t("times-embed.NEXT-OCC-IDLE", {
+        })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
           TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
         })}`;
       } else {
-        desc += t("times-embed.NEXT-OCC", {
+        desc += t("features:times-embed.NEXT-OCC", {
           TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
           DURATION: status.duration,
         });
       }
-      desc += `\n\n**${t("times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
+      desc += `\n\n**${t("features:times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
 
       if (event.infographic) {
         desc += `\n\n© ${event.infographic.by}`;
@@ -312,7 +312,7 @@ async function validateCommand(
     if (interaction.inGuild()) {
       if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.userPermissions)) {
         await interaction.reply({
-          content: t("common.errors.NO_PERMS_USER", {
+          content: t("errors:NO_PERMS_USER", {
             PERMISSIONS: parsePerms([command.userPermissions as unknown as Permission]),
           }),
           ephemeral: true,
@@ -321,7 +321,7 @@ async function validateCommand(
       }
       if (!interaction.inCachedGuild()) {
         await interaction.reply({
-          content: t("common.errors.NOT_A_SERVER"),
+          content: t("errors:NOT_A_SERVER"),
           ephemeral: true,
         });
         return false;
@@ -339,7 +339,7 @@ async function validateCommand(
     if (toCheck) {
       if (!interaction.inCachedGuild()) {
         await interaction.reply({
-          content: t("common.errors.NOT_A_SERVER"),
+          content: t("errors:NOT_A_SERVER"),
           ephemeral: true,
         });
         return false;
@@ -350,7 +350,7 @@ async function validateCommand(
       if (toCheck && !botPerms.has(command.botPermissions)) {
         const missingPerms = botPerms.missing(command.botPermissions);
         await interaction.reply({
-          content: t("common.errors.NO_PERMS_BOT", {
+          content: t("errors:NO_PERMS_BOT", {
             PERMISSIONS: parsePerms(missingPerms as Permission[]),
           }),
           ephemeral: true,
@@ -387,7 +387,7 @@ async function validateCommand(
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1000);
         await interaction.reply({
-          content: t("common.errors.COOLDOWN", {
+          content: t("errors:COOLDOWN", {
             COMMAND: `</${interaction.commandName}:${interaction.commandId}>`,
             TIME: `<t:${expiredTimestamp}:R>`,
           }),

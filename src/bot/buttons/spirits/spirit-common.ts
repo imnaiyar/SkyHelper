@@ -36,15 +36,15 @@ export default {
       type === "tree"
         ? {
             name: data.ts?.returned
-              ? t("SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-              : t("SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
+              ? t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
+              : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
             value: data
               .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
               .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
               .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
           }
         : {
-            name: t("SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
+            name: t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
             value: data.location?.description || " ",
           },
     );

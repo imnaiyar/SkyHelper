@@ -6,8 +6,6 @@ import { formatDate, parseDate } from "../utils/formatDate.js";
 import type { DailyQuestsSchema } from "#bot/database/index";
 @Controller("/update")
 export class UpdateController {
-  // @ts-ignore
-  // eslint-disable-next-line
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   // TS

@@ -22,7 +22,7 @@ export default {
           icon_url: "https://cdn.discordapp.com/attachments/888067672028377108/1125069603664560308/PngItem_4734983.png",
         },
         author: {
-          name: t("buttons.ABOUT_SHARDS.CREDIT", { CREDIT: `Art (${Art.username})` }),
+          name: t("buttons:ABOUT_SHARDS.CREDIT", { CREDIT: `Art (${Art.username})` }),
           icon_url: Art.displayAvatarURL(),
         },
         image: {
@@ -79,17 +79,17 @@ export default {
 
 const shards_about = (t: ReturnType<typeof getTranslator>) => [
   {
-    description: t("buttons.ABOUT_SHARDS.WHAT_ARE"),
+    description: t("buttons:ABOUT_SHARDS.WHAT_ARE"),
     image:
       "https://media.discordapp.net/attachments/585339436322259003/998518823231688724/I_watch_you_when_u_sleep_20220718171142.png",
   },
   {
-    description: t("buttons.ABOUT_SHARDS.TIMING"),
+    description: t("buttons:ABOUT_SHARDS.TIMING"),
     image:
       "https://media.discordapp.net/attachments/585339436322259003/998518823869231164/I_watch_you_when_u_sleep_20220718171208.png",
   },
   {
-    description: t("buttons.ABOUT_SHARDS.REWARDS"),
+    description: t("buttons:ABOUT_SHARDS.REWARDS"),
     image:
       "https://media.discordapp.net/attachments/585339436322259003/998518824443846696/I_watch_you_when_u_sleep_20220718171215.png",
   },

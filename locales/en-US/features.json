@@ -1,0 +1,98 @@
+{
+  "shards-embed": {
+    "TODAY": "Today",
+    "AUTHOR": "Shards Info",
+    "FOOTER": "Live Shard (updates every 5 min.)",
+    "CONTENT": "Last Updated: {{TIME}}",
+    "NO-SHARD": "It's a no shard day.",
+    "FIELDS": {
+      "TYPE": {
+        "LABEL": "Shard Type",
+        "VALUE": "{{VALUE}}"
+      },
+      "LOCATION": {
+        "LABEL": "Location",
+        "VALUE": "{{VALUE}}"
+      },
+      "STATUS": {
+        "LABEL": "Status",
+        "VALUE": {
+          "ENDED": "All shards ended {{DURATION}} ago",
+          "ACTIVE": "{{INDEX}} shard is currently active and ends in {{DURATION}}",
+          "EXPECTED": "{{INDEX}} shard lands in {{DURATION}}"
+        }
+      },
+      "COUNTDOWN": {
+        "VALUE": {
+          "ENDED": "Ended {{DURATION}} ago",
+          "ACTIVE": "Ends in {{DURATION}}",
+          "EXPECTED": "Falls in {{DURATION}}"
+        }
+      }
+    },
+    "BUTTON1": "Timeline",
+    "BUTTON2": "Location",
+    "BUTTON3": "About Shards"
+  },
+  "times-embed": {
+    "FOOTER": "Live SkyTimes (updates every 2 min.)",
+    "EVENT_INACTIVE": "No Active Events",
+    "EMBED_TITLE": "Event Times",
+    "EMBED_AUTHOR": "SkyTimes",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "Starts In",
+    "ENDS": "Ends In",
+    "TS_VISITING": "**Currently Visiting:** {{TS_NAME}}\n**Departure:** At {{DATE}} (in {{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
+    "TS_UPDATED": "Yet to be updated",
+    "TS_UNKNOWN": "Unknown Spirit",
+    "GEYSER": "Geyser",
+    "GRANDMA": "Grandma",
+    "TURTLE": "Turtle/Sanctuary Sunset",
+    "AURORA": "Aurora's Concert",
+    "DREAM-SKATER": "Dream Skater",
+    "PASSAGE-QUESTS": "Passage Quests",
+    "NEST-SUNSET": "Nest Sunset",
+    "FIREWORKS-FESTIVAL": "Aviary Fireworks Festival",
+    "FAIRY-RING": "Fairy Ring",
+    "BROOK-RAINBOW": "Forest Brook Rainbow",
+    "DAILY-RESET": "Daily Reset",
+    "EDEN": "Eden/Weekly Reset",
+    "TS_TITLE": "Traveling Spirit",
+    "EVENT_TITLE": "Special Event (Days of ...)",
+    "ACTIVE": "{{EVENT}} is currently active (at {{ACTIVE_TIME}}) and will end in {{DURATION}} (at {{END_TIME}})",
+    "NEXT-OCC": "Next Occurence: {{TIME}} (in {{DURATION}})",
+    "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}",
+    "TIMELINE": "Timeline"
+  },
+  "reminders": {
+    "ROLE_MENTION": "Hey, {{ROLE}}",
+    "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
+    "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
+    "TITLE": "{{TYPE}} Reminder",
+    "DAILY_QUESTS": "Daily Quests",
+    "ERROR": "This is not working as expected!",
+    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
+  },
+  "REALMS": {
+    "ISLE": "Isle of Dawn",
+    "PRAIRIE": "Daylight Prairie",
+    "FOREST": "Hidden Forest",
+    "VALLEY": "Valley of Triumph",
+    "WASTELAND": "Golden Wasteland",
+    "VAULT": "Vault of Knowledge",
+    "EDEN": "Eye of Eden"
+  },
+  "SPIRITS": {
+    "SEASON_TITLE": "Season",
+    "UNKNOWN": "Unknown Spirit",
+    "REALM_TITLE": "Realm",
+    "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
+    "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
+    "LOCATION_TITLE": "Location by {{CREDIT}}"
+  },
+  "hangman": {
+    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+  }
+}

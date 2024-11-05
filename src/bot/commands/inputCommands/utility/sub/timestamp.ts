@@ -11,7 +11,7 @@ export async function handleTimestamp(
   const Time = options.getString("time");
   if (!isTimeStringValid(Time!)) {
     return void (await interaction.reply({
-      content: t("commands.UTILS.RESPONSES.INVALID-FORMAT"),
+      content: t("commands:UTILS.RESPONSES.INVALID-FORMAT"),
       ephemeral: true,
     }));
   }
@@ -19,7 +19,7 @@ export async function handleTimestamp(
   const timezone = options.getString("timezone") || "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
     return void (await interaction.reply({
-      content: t("commands.UTILS.RESPONSES.INVALID-TIMEZONE"),
+      content: t("commands:UTILS.RESPONSES.INVALID-TIMEZONE"),
       ephemeral: true,
     }));
   }

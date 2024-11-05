@@ -29,12 +29,12 @@ export default {
 
 const getShards = (t: ReturnType<typeof getTranslator>, date?: string | null): string | BaseMessageOptions => {
   if (date && !/^\d{4,6}-\d{2}-\d{2}$/.test(date)) {
-    return t("commands.SHARDS.RESPONSES.INVALID_DATE");
+    return t("commands:SHARDS.RESPONSES.INVALID_DATE");
   }
 
   const currentDate = ShardsUtil.getDate(date);
   if (typeof currentDate === "string" && currentDate === "invalid") {
-    return t("commands.SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
+    return t("commands:SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
   }
-  return buildShardEmbed(currentDate as moment.Moment, t, t("common.bot.name"));
+  return buildShardEmbed(currentDate as moment.Moment, t, t("common:bot.name"));
 };
