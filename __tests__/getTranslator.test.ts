@@ -11,7 +11,7 @@ describe("getTranslator", () => {
   it("should throw an error if translation key is not found", () => {
     const translator = getTranslator("en-US");
     // @ts-expect-error
-    expect(() => translator("common:nonexistentKey")).toThrow("Translation key invalid: common:nonexistentKey");
+    expect(() => translator("common:nonexistentKey")).toThrow("Translation key invalid: nonexistentKey");
   });
 
   it("should return the translated string with interpolation values", () => {
