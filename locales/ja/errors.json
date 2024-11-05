@@ -1,0 +1,36 @@
+{
+  "COMMAND_NOT_FOUND": "そのようなコマンドはないか、古いコマンドです",
+  "autoCompleteCOMMAND_NOT_FOUND": "このオプションの選択肢が見つかりませんでした。",
+  "AUTOCOMPLETE_ERROR": "おっと！選択肢を検索中にエラーが発生しました。",
+  "ERROR_ID": "エラーID: `{{ID}}`",
+  "EMBED_TITLE": "エラー",
+  "MESSAGE_BOT_NO_PERM": "こんにちは、私に{{PERMISSIONS}}がないチャンネル/サーバーでコマンドを使用しようとしたようです。コマンドを使用する前に、サーバー管理者に必要な権限を付与するようお願いしてください。\n\n発生場所：\n- サーバー: {{SERVER}}\n- チャンネル: {{CHANNEL}}\n- 使用されたコマンド: `{{COMMAND}}`",
+  "MESSAGE_NO_ARGS": "引数が提供されていません\n\n**利用可能な引数**: {{ARGS}}!",
+  "MINIMUM_ARGS": "このコマンドには最低`{{LIMIT}}`引数を指定する必要があります。",
+  "INVALID_ARGS": "無効な引数です！",
+  "INVALID_USAGE": "Invalid Usage!",
+  "NO_PERMS_USER": "このコマンドを使用するための必要な権限（{{PERMISSIONS}}）がありません。",
+  "NOT_A_SERVER": "おっと！私がいないサーバーまたはユーザーアプリコマンドとしてこのコマンドを実行したようです。このコマンドは私がメンバーであるサーバーでのみ使用できます。",
+  "NO_PERMS_BOT": "この操作を実行するために必要な権限（{{PERMISSIONS}}）がありません。必要な権限を付与した後、コマンドを再実行してください。",
+  "COOLDOWN": "お待ちください。{{COMMAND}}のクールダウン中です。{{TIME}}後に再度使用できます",
+  "EMBED_DESCRIPTION": "このコマンドの実行中にエラーが発生しました。バグレポートを提出する際にはエラーIDを含めてください",
+  "BUTTON_LABEL": "バグを報告",
+  "NOT-ALLOWED": "他の人が生成したメニューは使用できません！",
+  "ERROR_MODAL": {
+    "SUCCESS": "送信が正常に受け付けられました！",
+    "TITLE": "バグレポート",
+    "FIELDS": {
+      "COMMAN_USED": {
+        "LABEL": "コマンドの名前",
+        "PLACEHOLDER": "該当のエラーを引き起こしたコマンド"
+      },
+      "WHAT_HAPPENED": {
+        "LABEL": "何が起こったか説明してください",
+        "PLACEHOLDER": "簡潔に何が起こったかを説明してください。どのような結果を期待していましたか？"
+      },
+      "ERROR_ID": {
+        "LABEL": "エラーID"
+      }
+    }
+  }
+}

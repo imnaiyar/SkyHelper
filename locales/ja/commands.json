@@ -1,0 +1,419 @@
+{
+  "GUIDES": {
+    "name": "ガイド",
+    "description": "様々なガイド",
+    "options": {
+      "SEASONAL": {
+        "name": "シーズン",
+        "description": "様々なシーズンガイド",
+        "options": {
+          "season": {
+            "name": "シーズン",
+            "description": "ガイドのシーズンを選択"
+          },
+          "type": {
+            "name": "タイプ",
+            "description": "クエストまたは精霊のガイド",
+            "choices": {
+              "quests": "↪️ クエスト",
+              "spirits": "↪️ 精霊"
+            }
+          }
+        }
+      },
+      "REALMS": {
+        "name": "領域",
+        "description": "様々な領域ガイド",
+        "options": {
+          "realms": {
+            "name": "領域",
+            "description": "基本精霊のツリー/場所を直接検索",
+            "choices": {
+              "isle": "↪️ 夜明けの島",
+              "daylight": "↪️ 光の草原",
+              "forest": "↪️ 雨林",
+              "valley": "↪️ 勝利の谷",
+              "wasteland": "↪️ 黄金の廃墟",
+              "vault": "↪️ 知識の書庫",
+              "eden": "↪️ エデンの目"
+            }
+          },
+          "type": {
+            "name": "タイプ",
+            "description": "概要、マップまたは精霊ガイド",
+            "choices": {
+              "realm": "↪️ 領域概要",
+              "maps": "↪️ マップ",
+              "spirits": "↪️ 精霊"
+            }
+          }
+        }
+      }
+    },
+    "RESPONSES": {
+      "NO_QUEST": "{{SEASON}}のクエストはありません",
+      "QUEST_EMBED_AUTHOR": "{{SEASON}}シーズンのクエスト",
+      "QUEST_SELECT_PLACEHOLDER": "クエストを選択",
+      "SPIRIT_SELECT_PLACEHOLDER": "{{SEASON}}シーズン",
+      "REALM_SELECT_PLACEHOLDER": "{{REALM}}の精霊",
+      "NO-SPIRITS": "エデンには精霊がいません。彼らは怖い場所が好きではありません。",
+      "REALM-BUTTON-LABEL": "異なるエリア",
+      "INVALID-CHOICE": "無効な選択またはガイドがまだ更新されていません",
+      "REALM_AREA_SELECT_PLACEHOLDER": "エリアを選択してください。",
+      "INVALID_SEASON_VALUE": "無効なシーズンです! キー「{{VALUE}}」の季節が見つかりませんでした"
+    }
+  },
+  "SPIRITS": {
+    "name": "精霊",
+    "description": "精霊を検索",
+    "options": {
+      "name": "検索",
+      "description": "精霊を検索"
+    },
+    "RESPONSES": {
+      "NO_DATA": "{{VALUE}}のデータが見つかりません！これがエラーだと思われる場合は、{{COMMAND}}を通じてお知らせください",
+      "BUTTONS": {
+        "TREE": "友好ツリー",
+        "LOCATION": "場所",
+        "ACTION": "友好アクション",
+        "CALL": "呼び出し",
+        "STANCE": "姿勢",
+        "EMOTE": "エモート"
+      },
+      "EMBED": {
+        "AUTHOR": "精霊概要",
+        "TYPE": "**タイプ**: {{SPIRIT_TYPE}}",
+        "REALM": "**領域**: {{REALM}}",
+        "SEASON": "**シーズン**: {{SEASON}}シーズン",
+        "FIELDS": {
+          "SUMMARY_TITLE": "TS概要",
+          "SUMMARY_DESC_NO_ELIGIBLE": "この精霊はまだTSとして戻る資格がありません。{{SEASON}}の次のシーズンが終わると資格を得ます！",
+          "SUMMARY_DESC_RETURNED": "総訪問回数: {{VISITS}}\n__戻った日付__",
+          "SUMMARY_DESC_NO_VISIT": "この精霊はまだ戻っていません。戻ってきたときには、シーズン中に提供されたのと同じアイテムを再構成された友好ツリーで提供します。"
+        },
+        "CREDIT": "インフォグラフィック by Ed.7"
+      }
+    }
+  },
+  "SHARDS_CALENDAR": {
+    "name": "シャードカレンダー",
+    "description": "シャードカレンダーを表示",
+    "RESPONSES": {
+      "DATE_SELECT_PLACEHOLDER": "日付範囲を選択",
+      "MONTH_SELECT_PLACEHOLDER": "月を選択",
+      "YEAR_SELECT_PLACEHOLDER": "年を選択",
+      "INFO": {
+        "NO_SHARD": "シャードなし",
+        "SHARD-INFO": "**情報:** {{AREA}}の{{INFO}}",
+        "SHARD-TIMES": "**時間:** {{TIME}}"
+      },
+      "EMBED_AUTHOR": "{{YEAR}}年{{MONTH}}のシャードカレンダー",
+      "EMBED_DESCRIPTION": "詳細なシャード情報は{{shardsCmd}}を使用してください",
+      "EMBED_FOOTER": "ページ {{INDEX}}/{{TOTAL}}"
+    }
+  },
+  "SHARDS": {
+    "name": "シャード",
+    "description": "特定のシャード情報を取得",
+    "options": {
+      "DATE": {
+        "name": "日付",
+        "description": "シャード情報を取得する日付"
+      }
+    },
+    "RESPONSES": {
+      "INVALID_DATE": "無効な日付形式です。YYYY-MM-DD形式を使用してください。最大入力：**275760-09-12**",
+      "DATE_NONEXIST": "{{DATE}}は存在しません。有効な日付を入力してください。"
+    }
+  },
+  "SKYTIMES": {
+    "name": "スカイタイムズ",
+    "description": "様々なゲーム内イベントのカウントダウン",
+    "RESPONSES": {
+      "SELECT_PLACEHOLDER": "詳細な時間"
+    }
+  },
+  "TRAVELING-SPIRIT": {
+    "name": "旅する精霊",
+    "description": "現在/upcoming TSの詳細を取得。",
+    "RESPONSES": {
+      "NO_DATA": "おっと！TSデータが見つかりませんでした。後でもう一度お試しください。",
+      "VISITING": "{{SPIRIT}}が現在Skyの領域を訪れています。{{TIME}}（{{DURATION}}後）に出発します",
+      "EXPECTED": "{{SPIRIT}}は{{DATE}}（{{DURATION}}後）にSkyの領域を訪れる予定です",
+      "EMBED_AUTHOR": "旅する精霊 #{{INDEX}} 概要！",
+      "VISITING_TITLE": "訪問日："
+    }
+  },
+  "REMINDERS": {
+    "name": "リマインダー",
+    "description": "リマインダーを設定",
+    "RESPONSES": {
+      "USER_APP_ERROR": "私がメンバーであるサーバーでこのコマンドを実行してください！",
+      "NOT_CACHED": "キャッシュされていないサーバーです。ボット開発者に連絡してください",
+      "INACITVE_NO_CHANNEL": "🔴 非アクティブ（チャンネルが選択されていません）",
+      "INACTIVE": "🔴 非アクティブ",
+      "ACTIVE": "🟢 アクティブ",
+      "EMBED_AUTHOR": "SkyHelperリマインダー",
+      "DES_TITLE": "**リマインダー設定**",
+      "CHANNEL": "チャンネル: {{CHANNEL}}",
+      "DEFAULT_ROLE": "デフォルトロール: {{ROLE}}",
+      "TYPE_SELECT_PLACEHOLDER": "編集するタイプを選択！",
+      "ROLE_SELECT_PLACEHOLDER": "メンション用のデフォルトロールを選択！",
+      "CHANNEL_SELECT_PLACEHOLDER": "リマインダーチャンネルを編集！",
+      "BTN_ENABLE_ALL": "すべて有効化",
+      "BTN_DISABLE_ALL": "すべて無効化",
+      "BTN_DISABLE_DEFAULT_ROLE": "デフォルトロールを削除",
+      "TYPE-DESCRIPTION": {
+        "STATUS": "ステータス",
+        "ACTIVE": "アクティブ",
+        "INACTIVE": "非アクティブ",
+        "ROLE": "ロール",
+        "NONE": "なし",
+        "BTN_ENABLE": "有効化",
+        "BTN_DISABLE": "無効化",
+        "BTN_REMOVE_ROLE": "ロール削除",
+        "ROLE_TYPE_SELECT_PLACEHOLDER": "メンション用のロールを選択"
+      },
+      "CHANNEL_UPDATE": "リマインダーチャンネルが更新されました！",
+      "ALL_ACTIVE": "すべてのリマインダーが有効化されました！",
+      "ALL_DISABLED": "すべてのリマインダーが無効化されました！",
+      "DEFAULT_ROLE_UPDATE": "デフォルトロールが更新されました！",
+      "DEFAULT_ROLE_REMOVE": "デフォルトロールが削除されました！"
+    }
+  },
+  "SHARDS_LIVE": {
+    "name": "シャードライブ",
+    "description": "ライブシャード詳細の自動更新メッセージ",
+    "options": {
+      "START": {
+        "name": "開始",
+        "description": "自動シャードを設定",
+        "option": {
+          "CHANNEL": {
+            "name": "チャンネル",
+            "description": "シャード詳細を更新するチャンネル"
+          }
+        }
+      },
+      "STOP": {
+        "name": "停止",
+        "description": "自動シャードを停止"
+      }
+    },
+    "RESPONSES": {
+      "NOT_GUILD": "このコマンドはサーバーでのみ使用できます",
+      "ALREADY_CONFIGURED": "{{TYPE}}は既に{{CHANNEL}}のこのメッセージ{{MESSAGE}}で設定されています。",
+      "INVALID_CHANNEL": "{{CHANNEL}}はテキストチャンネルではありません。有効なテキストチャンネルを指定してください",
+      "CONFIGURED": "{{CHANNEL}}の{{TYPE}}が設定されました。このメッセージ{{MESSAGE}}は関連する詳細で更新されます。",
+      "ALREADY_DISABLED": "{{TYPE}}は既にこのサーバーで無効化されています",
+      "DISABLED": "{{TYPE}}が無効化されました"
+    }
+  },
+  "SKYTIMES_LIVE": {
+    "name": "スカイタイムズライブ",
+    "description": "ライブスカイタイムズ詳細の自動更新メッセージ",
+    "options": {
+      "START": {
+        "name": "開始",
+        "description": "自動スカイタイムズを設定",
+        "option": {
+          "CHANNEL": {
+            "name": "チャンネル",
+            "description": "スカイタイムズ詳細を更新するチャンネル"
+          }
+        }
+      },
+      "STOP": {
+        "name": "停止",
+        "description": "自動スカイタイムズを停止"
+      }
+    }
+  },
+  "SEASONAL_CALCULATOR": {
+    "name": "シーズン計算機",
+    "description": "シーズン通貨を計算",
+    "options": {
+      "CANDLES": {
+        "name": "キャンドル",
+        "description": "あなたが持っているキャンドルの量は？"
+      },
+      "DAILIES": {
+        "name": "デイリー",
+        "description": "今日のデイリーをこなしましたか？"
+      },
+      "SEASON_PASS": {
+        "name": "シーズンパス",
+        "description": "シーズンパスを持っていますか？"
+      }
+    },
+    "RESPONSES": {
+      "NOT_ACTIVE": "現在アクティブなシーズンはありません。シーズンがアクティブな時にこのコマンドを実行してください。",
+      "EMBED_DESCRIPTION": "**シーズンパス**: {{PASS}}\n**デイリー**: {{DAILIES}} \n**必要な通貨:**{{REQUIRED}} キャンドル\n**獲得可能なキャンドル:** {{OBTAINABLE}} キャンドル\n**完了までの日数:**{{DAYS}} 日 {{POSSIBLE}} \n**シーズン終了時の残りキャンドル:** {{REMAINING}} キャンドル",
+      "ENDS_IN": "{{DAYS}}日後に終了",
+      "SPIRITS_NOT_UPDATED": "{{SEASON}}の精霊データはまだ更新されていません。後でもう一度お試しください。\n- シーズン: {{SEASON}}\n- 開始: {{START}}\n- 終了: {{END}}"
+    }
+  },
+  "HELP": {
+    "name": "ヘルプ",
+    "description": "ヘルプメニュー",
+    "options": {
+      "COMMAND": {
+        "name": "コマンド",
+        "description": "特定のコマンドに関するヘルプ"
+      }
+    },
+    "RESPONSES": {
+      "MESSAGE_APP_DESC": "メッセージアプリコマンド",
+      "USER_APP_DESC": "ユーザーアプリコマンド",
+      "REQUESTED_BY": "{{USER}}からのリクエスト",
+      "FOOTER_SINGLE": "ヘルプコマンド",
+      "FOOTER": "詳細は /help <command> を実行してください。 | ページ {{PAGE}}/{{TOTAL}}",
+      "BTN-PREV": "前へ",
+      "BTN-NEXT": "次へ"
+    }
+  },
+  "UTILS": {
+    "name": "ユーティリティ",
+    "description": "ユーティリティ",
+    "options": {
+      "TIMESTAMP": {
+        "name": "タイムスタンプ",
+        "description": "指定された日付のUNIXタイムスタンプを取得",
+        "options": {
+          "TIME": {
+            "name": "時間",
+            "description": "変換する時間（形式：HH mm ss）"
+          },
+          "TIMEZONE": {
+            "name": "タイムゾーン",
+            "description": "あなたのタイムゾーン（形式：大陸/都市）"
+          },
+          "DATE": {
+            "name": "日付",
+            "description": "変換する日付（形式：DD）"
+          },
+          "MONTH": {
+            "name": "月",
+            "description": "変換する月（形式：MM）"
+          },
+          "YEAR": {
+            "name": "年",
+            "description": "変換する年（形式：YYYY）"
+          }
+        }
+      },
+      "CHANGELOG": {
+        "name": "変更履歴",
+        "description": "ボットの変更履歴"
+      },
+      "BOTINFO": {
+        "name": "ボット情報",
+        "description": "ボットの情報を取得し、設定を行う"
+      },
+      "CONTACT-US": {
+        "name": "お問い合わせ",
+        "description": "提案/バグ報告/連絡、またはその他何でも"
+      }
+    },
+    "RESPONSES": {
+      "INVALID-FORMAT": "無効な時間形式です。時間を `HH mm ss` 形式で入力してください。",
+      "INVALID-TIMEZONE": "無効なタイムゾーンです。正しいものを入力してください。形式：`大陸/都市`\nタイムゾーンが不明な場合は、このリンクを使用して確認してください：<https://timezonedb.com/time-zones>",
+      "DATE_NOT_EXIST": "{{DATE}} は存在しません。有効な日付を入力してください。",
+      "SUGGESTION_TITLE": "タイトル",
+      "TITLE_PLACEHOLDER": "提案のタイトル",
+      "SUGGESTION_MODAL_TITLE": "お問い合わせ",
+      "SUGGESTION": "提案/バグ報告/その他",
+      "SUGGESTION_PLACEHOLDER": "簡潔に説明してください。",
+      "RECIEVED": "あなたのメッセージを受け取りました。プレビューはこちらです！"
+    }
+  },
+  "LANGUAGE": {
+    "name": "言語",
+    "description": "ボットの応答に使用する言語を管理",
+    "options": {
+      "CATEGORY": {
+        "name": "カテゴリ",
+        "description": "言語を設定するカテゴリを選択",
+        "choices": {
+          "GUILD": "サーバー",
+          "USER": "ユーザー"
+        }
+      },
+      "LANGUAGES": {
+        "name": "言語",
+        "description": "言語を選択"
+      },
+      "SUB": {
+        "SET": {
+          "name": "設定",
+          "description": "あなた/サーバーのボット用言語を設定"
+        },
+        "REMOVE": {
+          "name": "削除",
+          "description": "設定された言語を削除",
+          "options": {
+            "description": "削除するカテゴリタイプを選択"
+          }
+        }
+      },
+      "RESPONSES": {
+        "NO-PERM": "サーバーの言語を設定する権限（{{PERMISSION}}）がありません",
+        "SUCCESS": "{{TYPE}}の言語が{{Language}}に正常に設定されました。すべてを翻訳することは不可能なため、一部の場所では英語が表示される場合があります。\n\n{{LINK}}にアクセスして、このボットの翻訳に貢献し、さらに多くのサポート言語を追加するのにご協力ください。\n\n注意：ユーザーレベルの言語設定は、サーバー設定（ある場合）よりも優先されます。",
+        "ALREADY_SET": "{{TYPE}}の言語設定は既に{{LANGUAGE}}に設定されています",
+        "ALREADY_NOT_SET": "{{CATEGORY}}の言語設定は既に設定されていません。",
+        "SUCCESS_REMOVED": "{{CATEGORY}}から{{LANGUAGE}}を正常に削除しました！"
+      }
+    }
+  },
+  "DAILY_QUESTS": {
+    "name": "デイリークエスト",
+    "description": "デイリークエストを取得",
+    "RESPONSES": {
+      "NO_DATA": "今日のデイリークエストのデータは見つかりませんでした。後でもう一度試してください。\n- -# 毎日のリセット後、クエストが更新されるまでに最大 30 分から 1 時間かかる場合があることに注意してください。記載されている期間はあくまで目安であり、場合によってはそれよりも長くかかる場合もあります。その仕組みを [こちら](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>) でご覧ください。",
+      "OUTDATED": "このクエストは古くなっています。クエストが更新されるまでお待ちください。",
+      "EMBED_AUTHOR": "デイリークエスト",
+      "EMBED_DESCRIPTION": "今日のデイリークエスト"
+    }
+  },
+  "SKYGAME": {
+    "name": "skygame",
+    "description": "Various fun games based around Sky: CotL",
+    "SUB": {
+      "HANGMAN": {
+        "name": "hangman",
+        "description": "Play a game of hangman based on sky-related words, or a custom word",
+        "options": {
+          "mode": {
+            "name": "mode",
+            "description": "The mode of this game",
+            "choices": {
+              "single": "Single Player",
+              "double": "Double Player"
+            }
+          }
+        }
+      },
+      "LEADERBOARD": {
+        "name": "leaderboard",
+        "description": "View the leaderboard for the skygames",
+        "options": {
+          "game": {
+            "name": "game",
+            "description": "The game to view the leaderboard for",
+            "choices": {
+              "hangman": "Hangman"
+            }
+          },
+          "leaderboard-type": {
+            "name": "leaderboard-type",
+            "description": "Gloabal leaderboard or server specific (default: global)",
+            "choices": {
+              "global": "Global",
+              "server": "Server"
+            }
+          }
+        }
+      }
+    }
+  }
+}
