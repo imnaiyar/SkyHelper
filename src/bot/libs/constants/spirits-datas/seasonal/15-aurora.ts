@@ -9,17 +9,19 @@ const data: Record<string, SpiritsData> = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: ["November 07, 2024 (#126)"],
     },
     tree: {
-      by: "Clement",
-      total: " ",
-      image: "Warrior_of_Love_Seasonal_Chart_Clement.jpg",
+      by: "Alvenoir",
+      total: "178 :RegularCandle: 13 :RegularHeart: 2 :AC:",
+      image:
+        "https://cdn.discordapp.com/attachments/867638574571323424/1304094797392384000/Image_7-2.jpg?ex=672e246c&is=672cd2ec&hm=d7f2b0bf25fbf4afe49f90cd0ccece68c133f751c27b8ee495005f0088f1f16a&",
     },
     location: {
-      by: "Zed",
-      image: "AURORA_Location_Zed.png",
+      by: "io (sky.io)",
+      image:
+        "https://cdn.discordapp.com/attachments/867638574571323424/1304097329762013204/WoL_TS_Template.png?ex=672e26c8&is=672cd548&hm=424ef6510f6b3ad44d7b12ad82fb02b1a94dfc8db99b4080848e9c8a28b0a0de&",
     },
     expression: {
       type: "Emote",
