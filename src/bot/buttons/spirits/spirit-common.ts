@@ -48,7 +48,9 @@ export default {
             value: data.location?.description || " ",
           },
     );
-    embed.setImage(client.config.CDN_URL + "/" + (type === "tree" ? data.tree!.image : data.location!.image));
+    let url = type === "tree" ? data.tree!.image : data.location!.image;
+    if (url!.startsWith("https://")) url = client.config.CDN_URL + "/" + url;
+    embed.setImage(url);
     await interaction.editReply({
       embeds: [embed],
       components: [...(index === 1 ? [message.components[0]] : []), newRow],
