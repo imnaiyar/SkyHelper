@@ -49,7 +49,7 @@ export default {
           },
     );
     let url = type === "tree" ? data.tree!.image : data.location!.image;
-    if (url!.startsWith("https://")) url = client.config.CDN_URL + "/" + url;
+    if (!url!.startsWith("https://")) url = client.config.CDN_URL + "/" + url;
     embed.setImage(url);
     await interaction.editReply({
       embeds: [embed],
