@@ -1,6 +1,6 @@
 import { supportedLang } from "../src/bot/libs/constants/supportedLang";
 import { useTranslations } from "../src/bot/handlers/useTranslation.js";
-import { LocalizationMap } from "discord.js";
+import type { LocalizationMap } from "discord.js";
 const l = supportedLang.map((lang) => lang.value);
 
 describe("useTranslations", () => {
