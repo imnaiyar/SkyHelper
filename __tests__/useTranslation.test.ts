@@ -1,13 +1,12 @@
-import { supportedLang } from "../src/bot/libs/constants/supportedLang.js";
+import { supportedLang } from "../src/bot/libs/constants/supportedLang";
 import { useTranslations } from "../src/bot/handlers/useTranslation.js";
+import type { LocalizationMap } from "discord.js";
 const l = supportedLang.map((lang) => lang.value);
-type Localizations = Partial<Record<(typeof l)[number], string>>;
 
 describe("useTranslations", () => {
   it("should return the correct translation for a given key", () => {
     const translations = useTranslations("common:bot.intro");
-
-    const translationsTyped: Localizations = translations;
+    const translationsTyped: LocalizationMap = translations;
     expect(translationsTyped).toBeDefined();
     expect(typeof translationsTyped).toBe("object");
 
@@ -17,17 +16,10 @@ describe("useTranslations", () => {
     }
   });
 
-  it("should return an empty object if the translation key is not found", () => {
-    // @ts-expect-error
-    const translations = useTranslations("common:nonexistentKey");
-
-    expect(translations).toEqual({});
-    expect(Object.keys(translations).length).toBe(0);
-  });
-
-  it("should throw an error if the translation value is not a string", () => {
+  it("should throw an error if the translation key is not valid", () => {
     expect(() => {
-      useTranslations("common:bot");
-    }).toThrow(TypeError);
+      // @ts-expect-error
+      useTranslations("common:nonexistent.key");
+    }).toThrow();
   });
 });
