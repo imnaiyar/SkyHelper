@@ -10,6 +10,51 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     name_localizations: x("commands:REMINDERS.name"),
     description_localizations: x("commands:REMINDERS.description"),
     integration_types: [ApplicationIntegrationType.GuildInstall],
+    options: [
+      {
+        name: "type",
+        description: "type of the reminder to manage",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+        choices: [
+          {
+            name: "Grandma",
+            value: "grandma",
+          },
+          {
+            name: "Geyser",
+            value: "geyser",
+          },
+          {
+            name: "Turtle",
+            value: "turtle",
+          },
+          {
+            name: "Eden Reset",
+            value: "eden",
+          },
+          {
+            name: "Daily Quests",
+            value: "dailies",
+          },
+          {
+            name: "Daily Reset",
+            value: "daily-reset",
+          },
+        ],
+      },
+      {
+        name: "channel",
+        description: "channel to send the reminder (leave empty to disable)",
+        type: ApplicationCommandOptionType.Channel,
+        channel_types: [ChannelType.GuildText],
+      },
+      {
+        name: "role",
+        description: "role to ping for the reminder (leave empty to disable)",
+        type: ApplicationCommandOptionType.Role,
+      },
+    ],
     contexts: [InteractionContextType.Guild],
   },
   botPermissions: ["ManageWebhooks"],

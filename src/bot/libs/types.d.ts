@@ -56,9 +56,16 @@ export interface LiveUpdates {
 }
 export interface EventReminder {
   active: boolean;
+  webhook: {
+    id: string | null;
+    token: string | null;
+    channelId: string | null;
+  };
   last_messageId?: string;
   role: string | null;
 }
+
+/** Represents the reminders data */
 export interface Reminders {
   active: boolean;
   default_role: string | null;
@@ -68,14 +75,11 @@ export interface Reminders {
   geyser: EventReminder;
   reset: EventReminder;
   eden: EventReminder;
-  webhook: {
-    id: string | null;
-    token: string | null;
-    channelId: string | null;
-  };
 }
 export interface GuildSchema extends Document {
   _id: string;
+
+  /** Data associated with the guild */
   data: {
     name: string;
     region: string;
@@ -84,16 +88,30 @@ export interface GuildSchema extends Document {
     leftAt: Date;
     bots: number;
   };
-  annoucement_channel: string | null;
+
+  /** Announcement channel for the guild where the bot;s announcement will be sent */
+  announcement_channel: string | null;
+
+  /** If the bot is subscribed to beta features */
   beta: boolean;
+
+  /** Bot's prefix for the guild */
   prefix: string;
+
+  /** Language setting for the guild */
   language?: {
     name: string;
     value: string;
     flag?: string;
   };
+
+  /** Reminders settings for the guild */
   reminders: Reminders;
+
+  /** AutoShard settings */
   autoShard: LiveUpdates;
+
+  /** AutoTimes settings */
   autoTimes: LiveUpdates;
 }
 

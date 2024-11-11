@@ -2,6 +2,17 @@ import mongoose from "mongoose";
 import { Guild, Collection, type Snowflake } from "discord.js";
 import type { GuildSchema } from "#libs";
 const cache = new Collection<Snowflake, GuildSchema>();
+const BASE_REMINDERS = {
+  active: { type: Boolean, default: false },
+  last_messageId: { type: String, default: null },
+  webhook: {
+    token: String,
+    id: String,
+    channelId: String,
+  },
+  role: { type: String, default: null },
+};
+const REMINDERS_MAP = ["dailies", "grandma", "turtle", "eden", "reset", "geyser"] as const;
 
 const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,
@@ -15,7 +26,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
     bots: { type: Number, default: 0 },
   },
   beta: { type: Boolean, default: null },
-  annoucement_channel: { type: String, default: null },
+  announcement_channel: { type: String, default: null },
   language: {
     name: String,
     value: String,
@@ -24,42 +35,10 @@ const Schema = new mongoose.Schema<GuildSchema>({
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
-    default_role: { type: String, default: null },
-    dailies: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    grandma: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    turtle: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    eden: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    reset: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    geyser: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    webhook: {
-      token: String,
-      id: String,
-      channelId: String,
-    },
+    ...REMINDERS_MAP.reduce<Record<any, typeof BASE_REMINDERS>>((acc, key) => {
+      acc[key] = BASE_REMINDERS;
+      return acc;
+    }, {}),
   },
   autoShard: {
     active: Boolean,
