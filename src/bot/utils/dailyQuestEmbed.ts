@@ -6,7 +6,7 @@ export const dailyQuestEmbed = (data: DailyQuestsSchema, index: number) => {
   const { quests, rotating_candles } = data;
   const total = quests.length;
   const quest = quests[index];
-  let desc = `${quest.images[0].by ? `© ${quest.images[0].by}` : ""}\n${quest.images[0].source ? `Source: ${quest.images[0].source}` : ""}`;
+  let desc = `${quest.images[0]?.by ? `© ${quest.images[0].by}` : ""}\n${quest.images[0]?.source ? `Source: ${quest.images[0].source}` : ""}`;
   const embed = new EmbedBuilder()
     .setAuthor({
       name: `Daily Quests (${index + 1}/${total})`,
