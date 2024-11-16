@@ -11,9 +11,15 @@ import type { LocalizationMap } from "discord.js";
  * @returns localization data
  */
 export function useTranslations(key: LangKeys): LocalizationMap {
+  const isName = key.split(".").pop() === "name";
   const data: LocalizationMap = {};
   for (const { value } of supportedLang) {
-    data[value] = t(key, { lng: value });
+    const translation = t(key, { lng: value });
+    data[value] = isName
+      ? translation
+          .toLocaleLowerCase(value)
+          .replace(/ /g, "-") /* Attempt to strip spaces, and lowercase name for command/options names */
+      : translation;
   }
   return data;
 }
