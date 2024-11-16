@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Guild, Collection, type Snowflake } from "discord.js";
-import type { GuildSchema } from "#libs";
+import type { EventsKeys, GuildSchema } from "#libs";
 const cache = new Collection<Snowflake, GuildSchema>();
 const BASE_REMINDERS = {
   active: { type: Boolean, default: false },
@@ -35,7 +35,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
-    ...REMINDERS_MAP.reduce<Record<any, typeof BASE_REMINDERS>>((acc, key) => {
+    events: REMINDERS_MAP.reduce<Record<EventsKeys | any, typeof BASE_REMINDERS>>((acc, key) => {
       acc[key] = BASE_REMINDERS;
       return acc;
     }, {}),

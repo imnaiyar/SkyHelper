@@ -62,19 +62,15 @@ export interface EventReminder {
     channelId: string | null;
   };
   last_messageId?: string;
-  role: string | null;
+  role?: string | null;
 }
-
+export type EventsKeys = "dailies" | "grandma" | "turtle" | "geyser" | "reset" | "eden";
 /** Represents the reminders data */
 export interface Reminders {
   active: boolean;
-  default_role: string | null;
-  dailies: EventReminder;
-  grandma: EventReminder;
-  turtle: EventReminder;
-  geyser: EventReminder;
-  reset: EventReminder;
-  eden: EventReminder;
+  events: {
+    [key in EventsKeys]: EventReminder;
+  };
 }
 export interface GuildSchema extends Document {
   _id: string;
