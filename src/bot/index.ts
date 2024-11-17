@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { SkyHelper } from "#structures";
 import { initializeMongoose } from "#bot/database/mongoose";
 const client = new SkyHelper();
@@ -28,6 +27,8 @@ Sentry.init({
     }),
   ],
   environment: process.env.NODE_ENV,
+
+  release: process.env.SENTRY_RELEASE || "UNKNOWN",
 
   tracesSampleRate: 1.0,
   profilesSampleRate: 1.0,

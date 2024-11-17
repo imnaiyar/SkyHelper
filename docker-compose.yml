@@ -25,5 +25,7 @@ services:
       - BUG_REPORTS
       - SENTRY_DSN
       - SENTRY_AUTH_TOKEN
+      - SENTRY_RELEASE
+      - NODE_OPTIONS
     ports:
       - 5000:5000

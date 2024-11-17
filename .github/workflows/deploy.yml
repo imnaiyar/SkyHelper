@@ -23,8 +23,11 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
           NODE_ENV: production
+          NODE_OPTIONS: --enable-source-maps
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
           SENTRY_DSN: ${{secrets.SENTRY_DSN}}
+          SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
+          SENTRY_RELEASE: skyhelper@${{ github.sha }}
           PUBLIC_KEY: ${{secrets.PUBLIC_KEY}}
           DBL_TOKEN: ${{secrets.DBL_TOKEN}}
           BUG_REPORTS: ${{secrets.BUG_REPORTS}}
@@ -34,7 +37,6 @@ jobs:
           GUILD: ${{secrets.GUILD}}
           READY_LOGS: ${{secrets.READY_LOGS}}
           SUGGESTION: ${{secrets.SUGGESTION}}
-          SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
           TOPGG_TOKEN: ${{secrets.TOPGG_TOKEN}}
 
       - name: Cleanup Unused Images

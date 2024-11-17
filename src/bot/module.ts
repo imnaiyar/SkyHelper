@@ -8,6 +8,7 @@ declare global {
       NODE_ENV: "development" | "production";
       MONGO_CONNECTION: string;
       SENTRY_DSN: string;
+      SENTRY_RELEASE?: string;
       PUBLIC_KEY: string;
       AUTH_TOKEN: string;
       TOPGG_TOKEN?: string;
