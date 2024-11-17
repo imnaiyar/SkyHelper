@@ -1,58 +1,88 @@
 import { useTranslations as x } from "#bot/handlers/useTranslation";
 import type { Command } from "#bot/structures/Command";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, ChannelType, InteractionContextType } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, ChannelType, InteractionContextType, type APIApplicationCommandOption } from "discord.js";
 
 // #region Reminders
+const REMINDERS_TYPE_OPTION: APIApplicationCommandOption = {
+    name: "event-type",
+    description: "event type of the reminder",
+    type: ApplicationCommandOptionType.String,
+    required: true,
+    choices: [
+      {
+        name: "Grandma",
+        value: "grandma",
+      },
+      {
+        name: "Geyser",
+        value: "geyser",
+      },
+      {
+        name: "Turtle",
+        value: "turtle",
+      },
+      {
+        name: "Eden Reset",
+        value: "eden",
+      },
+      {
+        name: "Daily Quests",
+        value: "dailies",
+      },
+      {
+        name: "Daily Reset",
+        value: "daily-reset",
+      },
+    ],
+  };
 export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "reminders",
-  description: "Set up reminders",
+  description: "Manage reminders",
   slash: {
     name_localizations: x("commands:REMINDERS.name"),
     description_localizations: x("commands:REMINDERS.description"),
     integration_types: [ApplicationIntegrationType.GuildInstall],
     options: [
       {
-        name: "type",
-        description: "type of the reminder to manage",
-        type: ApplicationCommandOptionType.String,
-        required: true,
-        choices: [
+        name: "setup",
+        description: "setup reminders for a given event type",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          REMINDERS_TYPE_OPTION,
           {
-            name: "Grandma",
-            value: "grandma",
+            name: "channel",
+            description: "channel to send the reminder (leave empty to disable)",
+            type: ApplicationCommandOptionType.Channel,
+            required: true,
+            channel_types: [ChannelType.GuildText],
           },
           {
-            name: "Geyser",
-            value: "geyser",
-          },
-          {
-            name: "Turtle",
-            value: "turtle",
-          },
-          {
-            name: "Eden Reset",
-            value: "eden",
-          },
-          {
-            name: "Daily Quests",
-            value: "dailies",
-          },
-          {
-            name: "Daily Reset",
-            value: "daily-reset",
+            name: "role",
+            description: "role to ping for the reminder (leave empty to disable)",
+            type: ApplicationCommandOptionType.Role,
           },
         ],
       },
       {
-        name: "channel",
-        description: "channel to send the reminder (leave empty to disable)",
-        type: ApplicationCommandOptionType.Channel,
-        channel_types: [ChannelType.GuildText],
+        name: "role",
+        description: "setup role to ping for a given event type",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          REMINDERS_TYPE_OPTION,
+          {
+            name: "role",
+            description: "leave empty to remove the role",
+            type: ApplicationCommandOptionType.Role,
+          },
+        ],
       },
       {
-        name: "role",
-        description: "role to ping for the reminder (leave empty to disable)",
-        type: ApplicationCommandOptionType.Role,
+        name: "disable",
+        description: "disable reminders",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          REMINDERS_TYPE_OPTION,
+        ],
       },
     ],
     contexts: [InteractionContextType.Guild],
