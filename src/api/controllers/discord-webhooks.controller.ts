@@ -47,7 +47,7 @@ export class WebhookEventController {
           : "GuildInstall"
         : "Oauth2"
     }\``;
-    description += `\n**Scopes:** \`${data.scopes.map((sc) => `\`${sc}\``).join(" ")}\``;
+    description += `\n**Scopes:** ${data.scopes.map((sc) => `\`${sc}\``).join(" ")}`;
     if (data.guild) {
       description += `\n**Guild:** ${data.guild.name} (\`${data.guild.id}\`)`;
     }
