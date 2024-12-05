@@ -49,7 +49,7 @@
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.5.0",
     "node-cron": "^3.0.3",
-    "skyhelper-utils": "^1.3.5",
+    "skyhelper-utils": "^1.3.6",
     "table": "^6.8.1",
     "topgg-autoposter": "^2.0.2"
   },
