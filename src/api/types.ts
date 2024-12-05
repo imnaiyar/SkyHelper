@@ -1,25 +1,13 @@
+import type { EventsKeys } from "#bot/libs/types";
+
 export type ReminderFeature = {
-  channel?: string;
-  default_role?: string;
-  geyser?: {
-    active: boolean;
-    role: string | null;
-  };
-  grandma?: {
-    active: boolean;
-    role: string | null;
-  };
-  turtle?: {
-    active: boolean;
-    role: string | null;
-  };
-  reset?: {
-    active: boolean;
-    role: string | null;
-  };
-  eden?: {
-    active: boolean;
-    role: string | null;
+  active: boolean;
+  events: {
+    [key in EventsKeys]?: {
+      active: boolean;
+      channel?: string;
+      role?: string | null;
+    };
   };
 };
 export type SpiritData = {

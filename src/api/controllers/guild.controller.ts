@@ -27,7 +27,7 @@ export class GuildController {
       icon: data.icon,
       prefix: settings?.prefix,
       language: settings?.language?.value ?? "en-US",
-      announcement_channel: settings?.annoucement_channel ?? undefined,
+      announcement_channel: settings?.announcement_channel ?? undefined,
       beta: settings?.beta,
       enabledFeatures: actives,
     };
@@ -40,7 +40,7 @@ export class GuildController {
     if (!settings) return "null";
     settings.prefix = body.prefix ?? "";
     settings.beta = body.beta || false;
-    settings.annoucement_channel = body.announcement_channel ?? "";
+    settings.announcement_channel = body.announcement_channel ?? "";
     const language = supportedLang.find((l) => l.value === body.language);
     settings.language = language;
     await settings.save();
@@ -48,7 +48,7 @@ export class GuildController {
       prefix: settings.prefix,
       beta: settings.beta,
       language: settings.language?.value ?? "en-US",
-      announcement_channel: settings.annoucement_channel ?? undefined,
+      announcement_channel: settings.announcement_channel ?? undefined,
     };
   }
 
