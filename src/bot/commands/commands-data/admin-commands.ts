@@ -1,15 +1,92 @@
 import { useTranslations as x } from "#bot/handlers/useTranslation";
 import type { Command } from "#bot/structures/Command";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, ChannelType, InteractionContextType } from "discord.js";
+import {
+  ApplicationCommandOptionType,
+  ApplicationIntegrationType,
+  ChannelType,
+  InteractionContextType,
+  type APIApplicationCommandOption,
+} from "discord.js";
 
 // #region Reminders
+const REMINDERS_TYPE_OPTION: APIApplicationCommandOption = {
+  name: "event-type",
+  description: "event type of the reminder",
+  type: ApplicationCommandOptionType.String,
+  required: true,
+  choices: [
+    {
+      name: "Grandma",
+      value: "grandma",
+    },
+    {
+      name: "Geyser",
+      value: "geyser",
+    },
+    {
+      name: "Turtle",
+      value: "turtle",
+    },
+    {
+      name: "Eden Reset",
+      value: "eden",
+    },
+    {
+      name: "Daily Quests",
+      value: "dailies",
+    },
+    {
+      name: "Daily Reset",
+      value: "daily-reset",
+    },
+  ],
+};
 export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "reminders",
-  description: "Set up reminders",
+  description: "Manage reminders",
   slash: {
     name_localizations: x("commands:REMINDERS.name"),
     description_localizations: x("commands:REMINDERS.description"),
     integration_types: [ApplicationIntegrationType.GuildInstall],
+    options: [
+      {
+        name: "setup",
+        description: "setup reminders for a given event type",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          REMINDERS_TYPE_OPTION,
+          {
+            name: "channel",
+            description: "channel to send the reminder (leave empty to disable)",
+            type: ApplicationCommandOptionType.Channel,
+            required: true,
+            channel_types: [ChannelType.GuildText],
+          },
+          {
+            name: "role",
+            description: "role to ping for the reminder (leave empty to disable)",
+            type: ApplicationCommandOptionType.Role,
+          },
+        ],
+      },
+      {
+        name: "disable",
+        description: "disable reminders for a given event type",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [REMINDERS_TYPE_OPTION],
+      },
+      {
+        name: "disable-all",
+        description: "disable all reminders",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [REMINDERS_TYPE_OPTION],
+      },
+      {
+        name: "status",
+        description: "get the status of all reminders",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+    ],
     contexts: [InteractionContextType.Guild],
   },
   botPermissions: ["ManageWebhooks"],

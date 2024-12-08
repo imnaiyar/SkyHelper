@@ -1,4 +1,4 @@
-import type { SkyHelper, Command } from "#structures";
+import type { Command } from "#structures";
 import os from "node:os";
 import {
   ActionRowBuilder,
@@ -63,7 +63,7 @@ async function handleInfo(
     const settings = await client.database.getSettings(interaction.guild);
     embed.addFields({
       name: t("common:bot.GUILD_SETTINGS") + ` (\`${interaction.guild.name}\`)`,
-      value: `- **${t("common:bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common:bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? channelMention(settings.annoucement_channel) : t("common:bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
+      value: `- **${t("common:bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common:bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.announcement_channel ? channelMention(settings.announcement_channel) : t("common:bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
       inline: true,
     });
   }

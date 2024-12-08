@@ -3,6 +3,7 @@ import { dailyQuestEmbed } from "#utils";
 import { getTranslator } from "#bot/i18n";
 import type { SkyHelper } from "#structures";
 import { roleMention, WebhookClient } from "discord.js";
+import { RemindersUtils } from "#bot/utils/RemindersUtils";
 
 /**
  * Sends the daily quest reminder to the each subscribed guilds
@@ -16,8 +17,8 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
     try {
       const rmd = guild.reminders;
       if (!rmd?.active) return;
-      const event = rmd.dailies;
-      const { webhook, default_role } = rmd;
+      const event = rmd.events.dailies;
+      const { webhook, role: default_role } = event;
       if (!event?.active) return;
       if (!webhook.id || !webhook.token) return;
       const wb = new WebhookClient({ token: webhook.token, id: webhook.id }, { allowedMentions: { parse: ["roles"] } });
@@ -39,17 +40,13 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
         ...response,
       })
         .then((msg) => {
-          guild.reminders.dailies.last_messageId = msg?.id || undefined;
+          guild.reminders.events.dailies.last_messageId = msg?.id || undefined;
           guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
         })
         .catch((err) => {
           if (err.message === "Unknown Webhook") {
-            guild.reminders.webhook.id = null;
-            guild.reminders.active = false;
-            guild.reminders.webhook.token = null;
-            guild
-              .save()
-              .then(() => client.logger.error(`Reminders disabled for ${guild.data.name}, webhook not found!`))
+            RemindersUtils.disableEvent("dailies", guild, client)
+              ?.then(() => client.logger.error(`Reminders disabled for ${guild.data.name}, webhook not found!`))
               .catch((er) =>
                 client.logger.error("Error Saving to Database" + ` [Daily Quest]: [Guild: ${guild.data.name}]: `, er),
               );
