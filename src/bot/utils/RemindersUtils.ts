@@ -129,11 +129,11 @@ export class RemindersUtils {
    * Disables all reminder events for a given guild setting.
    *
    * This function performs the following steps:
-   * 1. Collects all unique webhooks from the reminder events.
-   * 2. Deletes each collected webhook using the provided client.
-   * 3. Sets all reminder events to inactive and clears their webhook and role information.
-   * 4. Sets the overall reminders active status to false.
-   * 5. Saves the updated guild setting.
+   * * Collects all unique webhooks from the reminder events.
+   * * Deletes each collected webhook using the provided client.
+   * * Sets all reminder events to inactive and clears their webhook and role information.
+   * * Sets the overall reminders active status to false.
+   * * Saves the updated guild setting.
    *
    * @param setting - The guild setting containing reminder events to be disabled.
    * @param client - The client instance used to delete webhooks.

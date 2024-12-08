@@ -58,8 +58,8 @@ export default {
     const text = modalSubmit.fields.getTextInputValue("announcement_text_input");
     const data = await client.database.getAnnouncementGuilds();
 
-    for (const { annoucement_channel } of data) {
-      const channel = client.channels.cache.get(annoucement_channel!);
+    for (const { announcement_channel } of data) {
+      const channel = client.channels.cache.get(announcement_channel!);
       if (!channel) continue;
       if (!channel.isSendable()) continue;
       await channel.send(text).catch(() => null);

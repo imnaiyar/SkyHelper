@@ -59,6 +59,7 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
             name: "channel",
             description: "channel to send the reminder (leave empty to disable)",
             type: ApplicationCommandOptionType.Channel,
+            required: true,
             channel_types: [ChannelType.GuildText],
           },
           {
@@ -69,17 +70,10 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         ],
       },
       {
-        name: "role",
-        description: "setup role to ping for a given event type",
+        name: "disable",
+        description: "disable reminders for a given event type",
         type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          REMINDERS_TYPE_OPTION,
-          {
-            name: "role",
-            description: "leave empty to remove the role",
-            type: ApplicationCommandOptionType.Role,
-          },
-        ],
+        options: [REMINDERS_TYPE_OPTION],
       },
       {
         name: "disable-all",

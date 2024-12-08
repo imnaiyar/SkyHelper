@@ -105,7 +105,7 @@ export class GuildController {
         response = await Shard.patch(this.bot, guild, body);
         break;
       case "reminders":
-        response = await Reminders.patch(this.bot, guild, body);
+        response = await Reminders.patch(this.bot, guild, body as Partial<Features["reminders"]>);
         break;
     }
     return response;

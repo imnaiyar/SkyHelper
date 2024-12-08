@@ -15,17 +15,8 @@ export default {
     const type = int.options.getString("event-type", true);
     switch (sub) {
       case "setup": {
-        const channel = int.options.getChannel("channel");
-        if (!channel) {
-          const event = settings.reminders.events[type as EventsKeys];
-          if (!event.active) {
-            resp = `Reminders for \`${type}\` is already already disabled.`;
-            break;
-          }
-          await utils.disableEvent(type as EventsKeys, settings, client);
-          resp = `Reminders for \`${type}\` have been disabled.`;
-          break;
-        }
+        const channel = int.options.getChannel("channel", true);
+
         if (channel.type !== ChannelType.GuildText) throw new Error("Channel must be a text channel");
         const role = int.options.getRole("role");
         const event = settings.reminders.events[type as EventsKeys];
@@ -36,13 +27,17 @@ export default {
         }
         const wb = await utils.checkBotsWb(channel, client);
         await utils.enableEventReminder(type as EventsKeys, settings, wb, role?.id || null);
-        resp = `Reminders for \`${type}\` have been set up in ${channel}.`;
+        resp = {
+          content: `Reminders for \`${type}\` have been set up in ${channel} ${role ? ` and ${role} will be notified when reminders are sent` : ""}.`,
+          allowedMentions: {
+            parse: [],
+          },
+        };
         break;
       }
-      case "role": {
-        const role = int.options.getRole("role");
-        settings.reminders.events[type as EventsKeys].role = role?.id || null;
-        resp = `Role to mention for \`${type}\` has been ${role ? "set to" + role : "disabled"}.`;
+      case "disable": {
+        await utils.disableEvent(type as EventsKeys, settings, client);
+        resp = `Reminders for \`${type}\` have been disabled.`;
         break;
       }
       case "disable-all": {

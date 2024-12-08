@@ -1,13 +1,10 @@
 import type { EventsKeys } from "#bot/libs/types";
 
 export type ReminderFeature = {
-  active: boolean;
-  events: {
-    [key in EventsKeys]?: {
-      active: boolean;
-      channel?: string;
-      role?: string | null;
-    };
+  [key in EventsKeys]?: {
+    active: boolean;
+    channel?: string;
+    role?: string | null;
   };
 };
 export type SpiritData = {
