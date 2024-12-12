@@ -51,7 +51,8 @@
     "node-cron": "^3.0.3",
     "skyhelper-utils": "^1.3.5",
     "table": "^6.8.1",
-    "topgg-autoposter": "^2.0.2"
+    "topgg-autoposter": "^2.0.2",
+    "zod": "^3.23.8"
   },
   "imports": {
     "#bot/*": "./dist/bot/*.js",
