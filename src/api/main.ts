@@ -14,7 +14,7 @@ import { UpdateMiddleware } from "./middlewares/update.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
 import * as express from "express";
-export async function Dashboard(client: SkyHelper) {
+export async function bootstrap(client: SkyHelper) {
   @Module({
     imports: [],
     controllers: [AppController, GuildController, StatsController, UpdateController, UsersController, WebhookEventController],
