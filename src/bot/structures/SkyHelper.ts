@@ -110,7 +110,17 @@ export class SkyHelper extends Client<true> {
         GuildTextThreadManager: 0,
         GuildInviteManager: 0,
       }),
-      sweepers: Options.DefaultSweeperSettings,
+      sweepers: {
+        ...Options.DefaultSweeperSettings,
+        users: {
+          interval: 36_00, // an hour
+          filter: () => (user) => user.id !== user.client.user.id,
+        },
+        guildMembers: {
+          interval: 36_00, // an hour
+          filter: () => (member) => member.id !== member.client.user.id,
+        },
+      },
     });
   }
 
