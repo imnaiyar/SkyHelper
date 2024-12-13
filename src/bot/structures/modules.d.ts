@@ -71,37 +71,6 @@ declare module "discord.js" {
     spiritsData: typeof spiritsData;
 
     /**
-     * Load all events from the specified directory
-     * @param directory
-     */
-    loadEvents(directory: string): Promise<void>;
-
-    /**
-     * Load slash command to client on startup
-     * @param dir The command directory
-     * TODO: Add validation for commands
-     */
-    loadCommands(dir: string): Promise<void>;
-
-    /**
-     * Load context menu commands to client on startup
-     * @param dir The command directory
-     * TODO: Add validation for commands
-     */
-    loadContextCmd(dir: string): Promise<void>;
-
-    /**
-     * Load buttons to client on startup
-     * @param dir The butoons directory
-     */
-    loadButtons(dir: string): Promise<void>;
-
-    /**
-     * Register Slash Commands
-     */
-    registerCommands(): Promise<void>;
-
-    /**
      * Get bot's invite
      */
     getInvite(): string;

@@ -18,6 +18,7 @@ import config from "#bot/config";
 import type { getTranslator } from "#bot/i18n";
 import { dailyQuestEmbed } from "#utils";
 import { SkytimesUtils as skyutils } from "skyhelper-utils";
+import { validateInteractions } from "#bot/utils/validators";
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = (title: string, description: string) => new EmbedBuilder().setTitle(title).setDescription(description);
@@ -63,8 +64,14 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
     }
     scope.setTags({ command: interaction.toString(), commandType: "Slash" });
 
-    const isChecked = await validateCommand(command, interaction, t);
-    if (!isChecked) return;
+    const validation = validateInteractions(command, interaction, t);
+    if (!validation.status) {
+      await interaction.reply({
+        content: validation.message,
+        ephemeral: true,
+      });
+      return;
+    }
     try {
       await command.interactionRun(interaction, t, client);
       const embed = new EmbedBuilder()
@@ -157,8 +164,14 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       return;
     }
     scope.setTags({ command: interaction.commandName, commandType: "ContextMenu" });
-    const isChecked = await validateCommand(command, interaction, t);
-    if (!isChecked) return;
+    const validation = validateInteractions(command, interaction, t);
+    if (!validation.status) {
+      await interaction.reply({
+        content: validation.message,
+        ephemeral: true,
+      });
+      return;
+    }
     try {
       await command.execute(interaction, client);
     } catch (err) {
@@ -292,115 +305,4 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
   }
 };
 
-/** Validates requirements for Slash and Context Menu commands */
-async function validateCommand(
-  command: Command | ContextMenuCommand<"UserContext" | "MessageContext">,
-  interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
-  t: ReturnType<typeof getTranslator>,
-): Promise<boolean> {
-  const client = interaction.client as SkyHelper;
-  // Handle owner commands
-  if (command.ownerOnly && !config.OWNER.includes(interaction.user.id)) {
-    await interaction.reply({
-      content: "This command is for owner(s) only.",
-      ephemeral: true,
-    });
-    return false;
-  }
-  // Handle command user required permissions
-  if (command.userPermissions) {
-    if (interaction.inGuild()) {
-      if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.userPermissions)) {
-        await interaction.reply({
-          content: t("errors:NO_PERMS_USER", {
-            PERMISSIONS: parsePerms([command.userPermissions as unknown as Permission]),
-          }),
-          ephemeral: true,
-        });
-        return false;
-      }
-      if (!interaction.inCachedGuild()) {
-        await interaction.reply({
-          content: t("errors:NOT_A_SERVER"),
-          ephemeral: true,
-        });
-        return false;
-      }
-    }
-  }
-
-  // Handle bot's required permissions
-  if (interaction.inGuild() && command.botPermissions) {
-    let toCheck = true;
-    if ("description" in command && command.forSubs && interaction.isChatInputCommand()) {
-      const sub = interaction.options.getSubcommand();
-      toCheck = command.forSubs.includes(sub);
-    }
-    if (toCheck) {
-      if (!interaction.inCachedGuild()) {
-        await interaction.reply({
-          content: t("errors:NOT_A_SERVER"),
-          ephemeral: true,
-        });
-        return false;
-      }
-
-      const botPerms = interaction.guild.members.me!.permissions;
-
-      if (toCheck && !botPerms.has(command.botPermissions)) {
-        const missingPerms = botPerms.missing(command.botPermissions);
-        await interaction.reply({
-          content: t("errors:NO_PERMS_BOT", {
-            PERMISSIONS: parsePerms(missingPerms as Permission[]),
-          }),
-          ephemeral: true,
-        });
-        return false;
-      }
-    }
-  }
-
-  // Handle Validations
-  if (command.validations) {
-    for (const validation of command.validations) {
-      if (validation.type !== "message" && !validation.callback(interaction)) {
-        await interaction.reply(validation.message);
-        return false;
-      }
-    }
-  }
-  // Check cooldowns
-  if (command?.cooldown && !client.config.OWNER.includes(interaction.user.id)) {
-    const { cooldowns } = client;
-
-    if (!cooldowns.has(command.name)) {
-      cooldowns.set(command.name, new Collection());
-    }
-
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = command.cooldown * 1000;
-
-    if (timestamps?.has(interaction.user.id)) {
-      const expirationTime = (timestamps.get(interaction.user.id) as number) + cooldownAmount;
-
-      if (now < expirationTime) {
-        const expiredTimestamp = Math.round(expirationTime / 1000);
-        await interaction.reply({
-          content: t("errors:COOLDOWN", {
-            COMMAND: `</${interaction.commandName}:${interaction.commandId}>`,
-            TIME: `<t:${expiredTimestamp}:R>`,
-          }),
-          ephemeral: true,
-        });
-        return false;
-      }
-    }
-
-    timestamps?.set(interaction.user.id, now);
-    setTimeout(() => timestamps?.delete(interaction.user.id), cooldownAmount);
-  }
-
-  return true;
-}
 export default interactionHandler;

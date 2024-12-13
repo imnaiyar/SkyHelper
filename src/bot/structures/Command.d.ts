@@ -117,20 +117,36 @@ interface CommandBase {
 
   /* Command cooldown */
   cooldown?: number;
-
-  /** The callback function to run when the command is used */
-  interactionRun?: (
-    interaction: ChatInputCommandInteraction,
-    t: ReturnType<typeof getTranslator>,
-    client: SkyHelper,
-  ) => Promise<void>;
-
-  messageRun?: (options: MessageParams) => Promise<void>;
 }
 
-export type Command<Autocomplete extends boolean = false> = Autocomplete extends true
+export type Command<Autocomplete extends boolean = false> = (Autocomplete extends true
   ? CommandBase & {
       /** Autocomplete callback if it exists */
       autocomplete: (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void>;
     }
-  : CommandBase;
+  : CommandBase) &
+  (
+    | {
+        /** The callback function to run when the command is used */
+        interactionRun: (
+          interaction: ChatInputCommandInteraction,
+          t: ReturnType<typeof getTranslator>,
+          client: SkyHelper,
+        ) => Promise<void>;
+
+        messageRun: (options: MessageParams) => Promise<void>;
+      }
+    | {
+        /** The callback function to run when the command is used */
+        interactionRun: (
+          interaction: ChatInputCommandInteraction,
+          t: ReturnType<typeof getTranslator>,
+          client: SkyHelper,
+        ) => Promise<void>;
+        messageRun?: never;
+      }
+    | {
+        messageRun: (options: MessageParams) => Promise<void>;
+        interactionRun?: never;
+      }
+  );
