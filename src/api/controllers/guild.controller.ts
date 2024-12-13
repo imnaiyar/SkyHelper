@@ -4,15 +4,23 @@ import { SkyHelper as BotService } from "#structures";
 import { LiveTimes as Times, LiveShard as Shard, Reminders } from "../managers/index.js";
 import { ChannelType } from "discord.js";
 import getSettings from "../utils/getSettings.js";
-import type { Features, GuildInfo } from "../types.js";
+import { GuildInfoSchema, ReminderFeatureSchema, type Features, type GuildInfo } from "../types.js";
 import { supportedLang } from "#bot/libs/constants/supportedLang";
+import { z } from "zod";
+import { ZodValidator } from "../pipes/zod-validator.pipe.js";
+const GuildIDPredicate = new ZodValidator(
+  z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID"),
+  "Invalid 'guild' Param",
+);
+const FeaturePredicate = new ZodValidator(z.enum(["shards-live", "times-live", "reminders"]), "Invalid 'feature' Param");
+
 @Controller("/guilds/:guild")
 export class GuildController {
   // eslint-disable-next-line
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Get()
-  async getGuild(@Param("guild") guild: string): Promise<GuildInfo | "null"> {
+  async getGuild(@Param("guild", GuildIDPredicate) guild: string): Promise<GuildInfo | "null"> {
     const data = this.bot.guilds.cache.get(guild);
 
     if (data == null) return "null";
@@ -32,9 +40,11 @@ export class GuildController {
       enabledFeatures: actives,
     };
   }
-
   @Patch()
-  async updateGuild(@Param("guild") guild: string, @Body() body: GuildInfo): Promise<GuildInfo | "null"> {
+  async updateGuild(
+    @Param("guild", GuildIDPredicate) guild: string,
+    @Body(new ZodValidator(GuildInfoSchema)) body: GuildInfo,
+  ): Promise<GuildInfo | "null"> {
     const g = this.bot.guilds.cache.get(guild);
     const settings = g && (await this.bot.database.getSettings(g));
     if (!settings) return "null";
@@ -54,8 +64,8 @@ export class GuildController {
 
   @Get("/features/:feature")
   async getFeature(
-    @Param("guild") guild: string,
-    @Param("feature") feature: string,
+    @Param("guild", GuildIDPredicate) guild: string,
+    @Param("feature", FeaturePredicate) feature: string,
   ): Promise<Features[keyof Features] | null | undefined> {
     let response;
     switch (feature) {
@@ -72,7 +82,11 @@ export class GuildController {
   }
 
   @Post("/features/:feature")
-  async enableFeature(@Req() req: AuthRequest, @Param("guild") guild: string, @Param("feature") feature: string) {
+  async enableFeature(
+    @Req() req: AuthRequest,
+    @Param("guild", GuildIDPredicate) guild: string,
+    @Param("feature", FeaturePredicate) feature: string,
+  ) {
     await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
@@ -91,9 +105,10 @@ export class GuildController {
   @Patch("/features/:feature")
   async updateFeature(
     @Req() req: AuthRequest,
-    @Param("guild") guild: string,
-    @Param("feature") feature: string,
-    @Body() body: Partial<Features[keyof Features]>,
+    @Param("guild", GuildIDPredicate) guild: string,
+    @Param("feature", FeaturePredicate) feature: string,
+    @Body(new ZodValidator(z.union([ReminderFeatureSchema, z.object({ channel: z.string().optional() })])))
+    body: Partial<Features[keyof Features]>,
   ) {
     await this.bot.checkPermissions(req.session, guild);
     let response;
@@ -112,7 +127,11 @@ export class GuildController {
   }
 
   @Delete("/features/:feature")
-  async disableFeature(@Param("guild") guild: string, @Param("feature") feature: string, @Req() req: AuthRequest) {
+  async disableFeature(
+    @Param("guild", GuildIDPredicate) guild: string,
+    @Param("feature", FeaturePredicate) feature: string,
+    @Req() req: AuthRequest,
+  ) {
     await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
@@ -129,7 +148,7 @@ export class GuildController {
   }
 
   @Get("/channels")
-  async getChannels(@Param("guild") guild: string) {
+  async getChannels(@Param("guild", GuildIDPredicate) guild: string) {
     const g = this.bot.guilds.cache.get(guild);
     const channels = await g?.channels.fetch();
     if (!g || channels == null) return null;
@@ -142,7 +161,7 @@ export class GuildController {
   }
 
   @Get("/roles")
-  async getRoles(@Param("guild") guild: string) {
+  async getRoles(@Param("guild", GuildIDPredicate) guild: string) {
     const roles = await this.bot.guilds.cache.get(guild)?.roles.fetch();
     if (roles == null) return null;
 

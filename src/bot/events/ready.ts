@@ -3,21 +3,27 @@ import { Flags } from "#libs";
 import type { Event } from "#structures";
 import { type ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
 import { UpdateEvent, UpdateTS, ShardsUtil as util } from "skyhelper-utils";
+import { bootstrap } from "../../api/main.js";
+import chalk from "chalk";
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
 
 const readyHandler: Event<"ready"> = async (client): Promise<void> => {
   client.logger.custom(`Logged in as ${client.user.tag}`, "BOT");
 
+  // Enable Dashboard
+  console.log(chalk.blueBright(`\n\n<${"-".repeat(24)} Dashboard ${"-".repeat(26)}>\n`));
+  if (client.config.DASHBOARD.enabled) bootstrap(client);
+
+  // Populate client caches
   client.classes.set("UpdateTS", UpdateTS);
   client.classes.set("UpdateEvent", UpdateEvent);
   client.classes.set("Flags", Flags);
 
-  // TODO: Add Website
-  // TODO: Add Presence
   setInterval(() => {
     client.user.setActivity(getActivity());
   }, 2 * 60_000);
 
+  // Fetch application for eval purposes
   await client.application.fetch();
   await client.application.commands.fetch();
 
@@ -53,9 +59,6 @@ const readyHandler: Event<"ready"> = async (client): Promise<void> => {
     Lightseekers: "<:lightseekers:1130958300293365870>",
     Gratitude: "<:gratitude:1130958261349261435>",
   });
-
-  // Registers Jobs
-  /*  scheduler(client); */
 
   const readyalertemb = new EmbedBuilder()
     .addFields(

@@ -1,7 +1,6 @@
 import { SkyHelper } from "#structures";
 import { initializeMongoose } from "#bot/database/mongoose";
 const client = new SkyHelper();
-import { Dashboard } from "../api/main.js";
 import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
@@ -43,8 +42,7 @@ await client.loadCommands(root + "/commands/inputCommands");
 await client.loadContextCmd(root + "/commands/contexts");
 await client.loadButtons(root + "/buttons");
 await initializeMongoose();
-console.log(chalk.blueBright(`\n\n<${"-".repeat(24)} Dashboard ${"-".repeat(26)}>\n`));
-if (client.config.DASHBOARD.enabled) Dashboard(client);
+
 // Catching unhandle rejections
 process.on("unhandledRejection", client.logger.error);
 process.on("uncaughtException", client.logger.error);
