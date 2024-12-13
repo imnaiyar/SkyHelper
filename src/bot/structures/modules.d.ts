@@ -70,6 +70,8 @@ declare module "discord.js" {
     /** All the Sky: SCOTL spirits data */
     spiritsData: typeof spiritsData;
 
+    loadModules: Promise<void>;
+
     /**
      * Get bot's invite
      */
