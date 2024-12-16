@@ -8,9 +8,8 @@ import type {
   Message,
   MessageCreateOptions,
   OmitPartialGroupDMChannel,
-  PermissionFlags,
 } from "discord.js";
-import { Collection, PermissionFlagsBits, resolveColor } from "discord.js";
+import { Collection, resolveColor } from "discord.js";
 import { parsePerms, type Permission } from "skyhelper-utils";
 
 export function validateEnv() {

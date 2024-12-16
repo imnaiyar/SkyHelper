@@ -9,7 +9,15 @@ import type {
 } from "discord.js";
 
 import type { SkyHelper } from "#structures";
-import type { getTranslator } from "#bot/i18n";
+import type { getTranslator, LangKeys } from "#bot/i18n";
+
+export type OverrideLocalizations<T> = T extends (infer U)[]
+  ? OverrideLocalizations<U>[]
+  : T extends object
+    ? {
+        [K in keyof T]: K extends "description_localizations" | "name_localizations" ? LangKeys : OverrideLocalizations<T[K]>; // Recursively process nested objects
+      }
+    : T;
 
 type MessageParams = {
   message: OmitPartialGroupDMChannel<Message>;
@@ -90,7 +98,7 @@ interface CommandBase {
   /**
    * Slash Command API data
    */
-  slash?: Omit<RESTPostAPIChatInputApplicationCommandsJSONBody, "name" | "description"> & {
+  slash?: Omit<OverrideLocalizations<RESTPostAPIChatInputApplicationCommandsJSONBody>, "name" | "description"> & {
     /** Array of guild Ids this command will be deployed to,
      * if present, the command in not deployed globally but only for the specified guilds */
     guilds?: string[];

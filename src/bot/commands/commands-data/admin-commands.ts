@@ -7,8 +7,8 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "reminders",
   description: "Set up reminders",
   slash: {
-    name_localizations: x("commands:REMINDERS.name"),
-    description_localizations: x("commands:REMINDERS.description"),
+    name_localizations: "commands:REMINDERS.name",
+    description_localizations: "commands:REMINDERS.description",
     integration_types: [ApplicationIntegrationType.GuildInstall],
     contexts: [InteractionContextType.Guild],
   },
@@ -36,21 +36,21 @@ export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
   name: "shards-live",
   description: "auto updating message with live shards details",
   slash: {
-    name_localizations: x("commands:SHARDS_LIVE.name"),
-    description_localizations: x("commands:SHARDS_LIVE.description"),
+    name_localizations: "commands:SHARDS_LIVE.name",
+    description_localizations: "commands:SHARDS_LIVE.description",
     options: [
       {
         name: "start",
-        name_localizations: x("commands:SHARDS_LIVE.options.START.name"),
+        name_localizations: "commands:SHARDS_LIVE.options.START.name",
         description: "start live shards",
-        description_localizations: x("commands:SHARDS_LIVE.options.START.description"),
+        description_localizations: "commands:SHARDS_LIVE.options.START.description",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "channel",
-            name_localizations: x("commands:SHARDS_LIVE.options.START.option.CHANNEL.name"),
+            name_localizations: "commands:SHARDS_LIVE.options.START.option.CHANNEL.name",
             description: "channel where shard details should be updated",
-            description_localizations: x("commands:SHARDS_LIVE.options.START.option.CHANNEL.description"),
+            description_localizations: "commands:SHARDS_LIVE.options.START.option.CHANNEL.description",
             type: ApplicationCommandOptionType.Channel,
             channel_types: [ChannelType.GuildText],
             required: true,
@@ -59,9 +59,9 @@ export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
       },
       {
         name: "stop",
-        name_localizations: x("commands:SHARDS_LIVE.options.STOP.name"),
+        name_localizations: "commands:SHARDS_LIVE.options.STOP.name",
         description: "stop live shard",
-        description_localizations: x("commands:SHARDS_LIVE.options.STOP.description"),
+        description_localizations: "commands:SHARDS_LIVE.options.STOP.description",
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
@@ -92,21 +92,21 @@ export const TIMES_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skytimes-live",
   description: "auto updating message with live skytimes details",
   slash: {
-    name_localizations: x("commands:SKYTIMES_LIVE.name"),
-    description_localizations: x("commands:SKYTIMES_LIVE.description"),
+    name_localizations: "commands:SKYTIMES_LIVE.name",
+    description_localizations: "commands:SKYTIMES_LIVE.description",
     options: [
       {
         name: "start",
-        name_localizations: x("commands:SKYTIMES_LIVE.options.START.name"),
+        name_localizations: "commands:SKYTIMES_LIVE.options.START.name",
         description: "configure auto skytimes",
-        description_localizations: x("commands:SKYTIMES_LIVE.options.START.description"),
+        description_localizations: "commands:SKYTIMES_LIVE.options.START.description",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "channel",
-            name_localizations: x("commands:SKYTIMES_LIVE.options.START.option.CHANNEL.name"),
+            name_localizations: "commands:SKYTIMES_LIVE.options.START.option.CHANNEL.name",
             description: "channel where skytimes details should be updated",
-            description_localizations: x("commands:SKYTIMES_LIVE.options.START.option.CHANNEL.description"),
+            description_localizations: "commands:SKYTIMES_LIVE.options.START.option.CHANNEL.description",
             type: ApplicationCommandOptionType.Channel,
             channel_types: [ChannelType.GuildText],
             required: true,
@@ -115,9 +115,9 @@ export const TIMES_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
       {
         name: "stop",
-        name_localizations: x("commands:SKYTIMES_LIVE.options.STOP.name"),
+        name_localizations: "commands:SKYTIMES_LIVE.options.STOP.name",
         description: "stop auto skytimes",
-        description_localizations: x("commands:SKYTIMES_LIVE.options.STOP.description"),
+        description_localizations: "commands:SKYTIMES_LIVE.options.STOP.description",
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],

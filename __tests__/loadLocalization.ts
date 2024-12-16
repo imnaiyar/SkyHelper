@@ -1,11 +1,11 @@
-import { supportedLang } from "../src/bot/libs/constants/supportedLang";
-import { useTranslations } from "../src/bot/handlers/useTranslation.js";
+import { supportedLang } from "../src/bot/libs/constants/supportedLang.js";
+import { loadLocalization } from "../src/bot/utils/loaders.js";
 import type { LocalizationMap } from "discord.js";
 const l = supportedLang.map((lang) => lang.value);
 
 describe("useTranslations", () => {
   it("should return the correct translation for a given key", () => {
-    const translations = useTranslations("common:bot.intro");
+    const translations = loadLocalization("common:bot.intro");
     const translationsTyped: LocalizationMap = translations;
     expect(translationsTyped).toBeDefined();
     expect(typeof translationsTyped).toBe("object");

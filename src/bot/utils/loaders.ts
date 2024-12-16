@@ -1,4 +1,4 @@
-import { Collection } from "discord.js";
+import { Collection, type LocalizationMap } from "discord.js";
 import { recursiveReadDir } from "skyhelper-utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -6,6 +6,12 @@ import logger from "#handlers/logger";
 import type { SkyHelper, Button, ContextMenuCommand, Command } from "#structures";
 import { CustomLogger } from "#handlers/logger";
 import { table } from "table";
+
+// import i18next initialization file to ensure it's initialized before calling the below function
+import "../i18n.js";
+import type { LangKeys } from "../i18n.js";
+import { t } from "i18next";
+import { supportedLang } from "../libs/constants/supportedLang.js";
 
 /**
  * Loads all the commands
@@ -46,7 +52,7 @@ export async function loadContextCmd() {
   const contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir("dist/commands/contexts", ["sub"]);
+  const files = recursiveReadDir("dist/bot/commands/contexts", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -140,4 +146,23 @@ export async function loadEvents(client: SkyHelper) {
   );
 
   logger.custom(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
+}
+
+/**
+ * Get API compatible localization data for all the available (and allowed) languages
+ * @param key translation keys
+ * @returns localization data
+ */
+export function loadLocalization(key: LangKeys): LocalizationMap {
+  const isName = key.split(".").pop() === "name"; // If the localization is for command/options name
+  const data: LocalizationMap = {};
+  for (const { value } of supportedLang) {
+    const translation = t(key, { lng: value });
+    data[value] = isName
+      ? translation
+          .toLocaleLowerCase(value)
+          .replace(/ /g, "-") /* Attempt to strip spaces, and lowercase name for command/options names */
+      : translation;
+  }
+  return data;
 }

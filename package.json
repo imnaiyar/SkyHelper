@@ -18,7 +18,7 @@
     "build:dev": "tsc -p tsconfig.json --watch",
     "lint": "eslint --fix src",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
-    "commands": "node dist/bot/libs/registerCommands.js",
+    "commands": "node --env-file=.env dist/bot/libs/registerCommands.js",
     "format": "prettier --write --ignore-unknown src",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
     "setup": "node scripts/env-cli.js",

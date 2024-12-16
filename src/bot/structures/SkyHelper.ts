@@ -3,8 +3,6 @@ import {
   GatewayIntentBits,
   Partials,
   Collection,
-  PermissionFlagsBits,
-  Routes,
   Options,
   type OAuth2Scopes,
   type TextChannel,
