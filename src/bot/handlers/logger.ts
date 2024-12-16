@@ -64,7 +64,7 @@ export default class {
     } else {
       logger.error(content, id);
     }
-    if (process.isBun) console.error(content, ex);
+    if (process.NODE_ENV === "development") console.error(content, ex);
     return id;
   }
 
