@@ -1,8 +1,5 @@
 declare global {
   namespace NodeJS {
-    interface Process {
-      isBun?: boolean;
-    }
     interface ProcessEnv {
       TOKEN: string;
       NODE_ENV: "development" | "production";

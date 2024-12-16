@@ -120,8 +120,7 @@ export async function loadEvents(client: SkyHelper) {
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
-      const ext = process.isBun ? ".ts" : ".js";
-      const eventName = path.basename(file, ext);
+      const eventName = path.basename(file, ".js");
       const { default: event } = await import(pathToFileURL(filePath).href);
 
       client.on(eventName, event.bind(null, client));
