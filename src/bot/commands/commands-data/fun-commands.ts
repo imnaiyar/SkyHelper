@@ -1,6 +1,5 @@
 import type { Command } from "#bot/structures/Command";
 import { ApplicationCommandOptionType } from "discord.js";
-import { useTranslations as x } from "#bot/handlers/useTranslation";
 
 // #region Hug
 export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {

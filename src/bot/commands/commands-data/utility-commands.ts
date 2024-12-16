@@ -1,4 +1,3 @@
-import { useTranslations as x } from "#bot/handlers/useTranslation";
 import { supportedLang } from "#bot/libs/constants/supportedLang";
 import type { Command } from "#bot/structures/Command";
 import { ApplicationCommandOptionType } from "discord.js";

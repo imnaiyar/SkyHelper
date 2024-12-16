@@ -1,4 +1,3 @@
-import { useTranslations as x } from "#bot/handlers/useTranslation";
 import type { Command } from "#bot/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, ChannelType, InteractionContextType } from "discord.js";
 
