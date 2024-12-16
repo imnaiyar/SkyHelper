@@ -18,7 +18,7 @@ const config = {
       "ts-jest",
       {
         useESM: true,
-        isolateModules: true,
+        isolatedModules: true,
       },
     ],
   },
