@@ -1,6 +1,8 @@
 import type { Command, ContextMenuCommand, OverrideLocalizations } from "#structures";
 import { PermissionFlagsBits, type RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import { loadLocalization } from "./loaders.js";
+/* TODO: Do a better job of naming variables, 
+something to think about in the future */
 
 /**
  * Parses command and replace localizations to LocalicationMap and returns API compatible data
@@ -10,7 +12,7 @@ import { loadLocalization } from "./loaders.js";
 export function parseCommands(command: Command | ContextMenuCommand<"UserContext" | "MessageContext">) {
   const cmd: Record<string, any> = {
     name: command.name,
-    ...("description" in command ? { description: command.description } : {}),
+    ...("description" in command && { description: command.description }),
     ...(command.userPermissions && {
       default_member_permissions: command.userPermissions
         .reduce(
@@ -32,8 +34,8 @@ export function parseCommands(command: Command | ContextMenuCommand<"UserContext
     if (command.slash.name_localizations) {
       cmd.name_localizations = loadLocalization(command.slash.name_localizations);
     }
-    if ("options" in command.slash) {
-      cmd.options = parseOptions(command.slash.options!);
+    if (command.slash.options) {
+      cmd.options = parseOptions(command.slash.options);
     }
   }
 
