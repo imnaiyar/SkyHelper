@@ -2,9 +2,8 @@ import { Collection, type LocalizationMap } from "discord.js";
 import { recursiveReadDir } from "skyhelper-utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import logger from "#handlers/logger";
+import logger, { CustomLogger } from "../handlers/logger.js";
 import type { SkyHelper, Button, ContextMenuCommand, Command } from "#structures";
-import { CustomLogger } from "#handlers/logger";
 import { table } from "table";
 
 // import i18next initialization file to ensure it's initialized before calling the below function
