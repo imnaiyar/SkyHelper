@@ -1,9 +1,9 @@
 import type { Event } from "#structures";
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient, resolveColor, Collection } from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient } from "discord.js";
 import { Flags } from "#libs/classes/Flags";
-import { parsePerms, type Permission } from "skyhelper-utils";
 import updateDailyQuests from "#handlers/updateDailyQuests";
 import * as Sentry from "@sentry/node";
+import { validateMessage } from "#bot/utils/validators";
 
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
@@ -39,120 +39,12 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   // Check if command is 'OWNER' only.
   if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
 
-  // Check send permission(s);
-  if (message.inGuild() && !message.guild.members.me?.permissionsIn(message.channel).has(["SendMessages", "ViewChannel"])) {
-    message.author
-      .send(
-        t("errors:MESSAGE_BOT_NO_PERM", {
-          PERMISSIONS: `${parsePerms("SendMessages")}/${parsePerms("ViewChannel")}`,
-          SERVER: message.guild.name,
-          CHANNEL: message.channel,
-          COMMAND: command.name,
-        }),
-      )
-      .catch(() => {});
+  const validation = validateMessage(command, message, args, prefix, flags, t);
+  if (!validation.status) {
+    if (validation.message) {
+      await message.reply(validation.message);
+    }
     return;
-  }
-  if (command.prefix?.guildOnly && !message.inGuild()) return;
-
-  // Check if the user has permissions to use the command.
-  if (message.guild && command.userPermissions && !message.member?.permissions.has(command.userPermissions)) {
-    await message.reply(
-      t("errors:NO_PERMS_USER", {
-        PERMISSIONS: parsePerms(command.userPermissions as Permission[]),
-      }),
-    );
-    return;
-  }
-  // Check if args are valid
-  if (
-    (command.prefix?.minimumArgs && args.length < command.prefix.minimumArgs) ||
-    (command.prefix?.subcommands && args[0] && !command.prefix.subcommands.find((sub) => sub.trigger.startsWith(args[0])))
-  ) {
-    await message.reply({
-      ...(args.length < (command.prefix.minimumArgs || 0) && {
-        content: t("errors:MINIMUM_ARGS", { LIMIT: command.prefix.minimumArgs }),
-      }),
-
-      embeds: [
-        {
-          title: t("errors:INVALID_USAGE"),
-          description:
-            (command.prefix.usage ? `Usage:\n**\`${prefix}${command.name} ${command.prefix.usage}\`**\n\n` : "") +
-            (command.prefix.subcommands
-              ? "**Subcommands:**\n" +
-                command.prefix.subcommands
-                  .map((sub) => `**\`${prefix}${command.name} ${sub.trigger}\`**\n ↪ ${sub.description}`)
-                  .join("\n")
-              : ""),
-          author: {
-            name: `${command.name} Command`,
-            icon_url: client.user.displayAvatarURL(),
-          },
-          color: resolveColor("Random"),
-        },
-      ],
-    });
-    return;
-  }
-
-  // Check for validations
-  if (command.validations?.length) {
-    for (const validation of command.validations) {
-      if (validation.type !== "interaction" && !validation.callback(message, { args, flags, commandName: command.name })) {
-        await message.reply(validation.message);
-        return;
-      }
-    }
-  }
-
-  // Check cooldowns
-  if (command?.cooldown && !client.config.OWNER.includes(message.author.id)) {
-    const { cooldowns } = client;
-
-    if (!cooldowns.has(command.name)) {
-      cooldowns.set(command.name, new Collection());
-    }
-
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = command.cooldown * 1000;
-
-    if (timestamps?.has(message.author.id)) {
-      const expirationTime = (timestamps.get(message.author.id) as number) + cooldownAmount;
-
-      if (now < expirationTime) {
-        const expiredTimestamp = Math.round(expirationTime / 1000);
-        await message.reply({
-          content: t("errors:COOLDOWN", {
-            COMMAND: command.name,
-            TIME: `<t:${expiredTimestamp}:R>`,
-          }),
-        });
-        return;
-      }
-    }
-
-    timestamps?.set(message.author.id, now);
-    setTimeout(() => timestamps?.delete(message.author.id), cooldownAmount);
-  }
-
-  // Check bot perms
-  if (message.inGuild() && command.botPermissions) {
-    let toCheck = true;
-    const perms = message.guild.members.me!.permissions;
-    const missing = perms.missing(command.botPermissions);
-    if (command.forSubs) {
-      toCheck = command.forSubs.includes(args[0]);
-    }
-    if (toCheck && !perms.has(command.botPermissions)) {
-      await message.reply(
-        t("errors:NO_PERMS_BOT", {
-          PERMISSIONS: parsePerms(missing as Permission[]),
-        }),
-      );
-      return;
-    }
   }
 
   // Execute the command.

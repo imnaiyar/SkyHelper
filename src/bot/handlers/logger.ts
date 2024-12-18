@@ -64,15 +64,15 @@ export default class {
     } else {
       logger.error(content, id);
     }
-    if (process.isBun) console.error(content, ex);
+    if (process.env.NODE_ENV === "development") console.error(content, ex);
     return id;
   }
 
   /**
    * @param content
    */
-  static debug(content: string) {
-    logger.debug(content);
+  static debug(...content: any[]) {
+    logger.debug(...content);
   }
 
   static custom(content: string, type: string) {

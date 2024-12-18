@@ -6,12 +6,12 @@ import type {
   RESTPostAPIContextMenuApplicationCommandsJSONBody,
 } from "discord.js";
 import type { SkyHelper } from "#structures/SkyHelper";
-import type { Validation } from "./Command.js";
+import type { OverrideLocalizations, Validation } from "./Command.js";
 /* eslint-disable */
 
 export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> {
   name: string;
-  data: Omit<RESTPostAPIContextMenuApplicationCommandsJSONBody, "name"> & {
+  data: Omit<OverrideLocalizations<RESTPostAPIContextMenuApplicationCommandsJSONBody>, "name"> & {
     type: T extends "UserContext" ? ApplicationCommandType.User : ApplicationCommandType.Message;
     guilds?: string[];
   };

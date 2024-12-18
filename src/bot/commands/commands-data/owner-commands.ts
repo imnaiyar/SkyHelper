@@ -101,7 +101,7 @@ export const LIST_SERVERS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
 // #region Register
 export const REGISTER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "register",
-  description: "register slash commands",
+  description: "register data commands",
   ownerOnly: true,
   category: "OWNER",
   prefix: {
@@ -118,7 +118,7 @@ export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     minimumArgs: 2,
     usage: "<user|userId> <message>",
   },
-  slash: {
+  data: {
     options: [
       {
         name: "user",

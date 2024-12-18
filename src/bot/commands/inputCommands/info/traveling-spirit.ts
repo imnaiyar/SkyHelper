@@ -1,12 +1,10 @@
 import { getTSStatus as getTS } from "#utils";
-import { useTranslations } from "#handlers/useTranslation";
 import { seasonsData, Spirits } from "#libs";
 import type { SpiritsData } from "#libs/constants/spirits-datas/type";
 import type { Command, SkyHelper } from "#structures";
 import { EmbedBuilder, time, type BaseMessageOptions } from "discord.js";
 import type { getTranslator } from "#bot/i18n";
 import { TRAVELING_SPIRITS_DATA } from "#bot/commands/commands-data/info-commands";
-export const x = useTranslations;
 const isSeasonal = (data: SpiritsData) => "ts" in data;
 export default {
   async interactionRun(interaction, t, client) {

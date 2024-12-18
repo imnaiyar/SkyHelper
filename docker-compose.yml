@@ -12,6 +12,7 @@ services:
     environment:
       - NODE_ENV
       - TOKEN
+      - CLIENT_ID
       - MONGO_CONNECTION
       - PUBLIC_KEY
       - TOPGG_TOKEN

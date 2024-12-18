@@ -1,4 +1,3 @@
-import { useTranslations as x } from "#bot/handlers/useTranslation";
 import type { Command } from "#bot/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType } from "discord.js";
 
@@ -7,41 +6,41 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   description: "various guides",
   cooldown: 10,
   category: "Guides",
-  slash: {
-    name_localizations: x("commands:GUIDES.name"),
-    description_localizations: x("commands:GUIDES.description"),
+  data: {
+    name_localizations: "commands:GUIDES.name",
+    description_localizations: "commands:GUIDES.description",
     options: [
       {
         name: "seasonal",
         description: "various seasonal guides",
-        description_localizations: x("commands:GUIDES.options.SEASONAL.description"),
-        name_localizations: x("commands:GUIDES.options.SEASONAL.name"),
+        description_localizations: "commands:GUIDES.options.SEASONAL.description",
+        name_localizations: "commands:GUIDES.options.SEASONAL.name",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "season",
-            name_localizations: x("commands:GUIDES.options.SEASONAL.options.season.name"),
+            name_localizations: "commands:GUIDES.options.SEASONAL.options.season.name",
             description: "select a season for the guide",
-            description_localizations: x("commands:GUIDES.options.SEASONAL.options.season.description"),
+            description_localizations: "commands:GUIDES.options.SEASONAL.options.season.description",
             type: ApplicationCommandOptionType.String,
             required: true,
             autocomplete: true,
           },
           {
             name: "type",
-            name_localizations: x("commands:GUIDES.options.SEASONAL.options.type.name"),
+            name_localizations: "commands:GUIDES.options.SEASONAL.options.type.name",
             description: "quest, or spirits guides",
-            description_localizations: x("commands:GUIDES.options.SEASONAL.options.type.description"),
+            description_localizations: "commands:GUIDES.options.SEASONAL.options.type.description",
             type: ApplicationCommandOptionType.String,
             choices: [
               {
                 name: "↪️ Quests",
-                name_localizations: x("commands:GUIDES.options.SEASONAL.options.type.choices.quests"),
+                name_localizations: "commands:GUIDES.options.SEASONAL.options.type.choices.quests",
                 value: "quest",
               },
               {
                 name: "↪️ Spirits",
-                name_localizations: x("commands:GUIDES.options.SEASONAL.options.type.choices.spirits"),
+                name_localizations: "commands:GUIDES.options.SEASONAL.options.type.choices.spirits",
                 value: "spirits",
               },
             ],
@@ -49,9 +48,9 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
           {
             name: "hide",
-            name_localizations: x("common:hide-options.name"),
+            name_localizations: "common:hide-options.name",
             description: "hide the guides from others (default: false)",
-            description_localizations: x("common:hide-options.description"),
+            description_localizations: "common:hide-options.description",
             type: ApplicationCommandOptionType.Boolean,
             required: false,
           },
@@ -59,51 +58,51 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
       {
         name: "realms",
-        name_localizations: x("commands:GUIDES.options.REALMS.name"),
+        name_localizations: "commands:GUIDES.options.REALMS.name",
         description: "various realms guides",
-        description_localizations: x("commands:GUIDES.options.REALMS.description"),
+        description_localizations: "commands:GUIDES.options.REALMS.description",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "realm",
-            name_localizations: x("commands:GUIDES.options.REALMS.options.realms.name"),
+            name_localizations: "commands:GUIDES.options.REALMS.options.realms.name",
             description: "directly search for a base spirit`s tree/location",
-            description_localizations: x("commands:GUIDES.options.REALMS.options.realms.description"),
+            description_localizations: "commands:GUIDES.options.REALMS.options.realms.description",
             type: ApplicationCommandOptionType.String,
             choices: [
               {
                 name: "↪️ Isle of Dawn",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.isle"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.isle",
                 value: "isle",
               },
               {
                 name: "↪️ Daylight Prairie",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.daylight"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.daylight",
                 value: "prairie",
               },
               {
                 name: "↪️ Hidden Forest",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.forest"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.forest",
                 value: "forest",
               },
               {
                 name: "↪️ Valley of Triumph",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.valley"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.valley",
                 value: "valley",
               },
               {
                 name: "↪️ Golden Wasteland",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.wasteland"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.wasteland",
                 value: "wasteland",
               },
               {
                 name: "↪️ Vault of Knowledge",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.vault"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.vault",
                 value: "vault",
               },
               {
                 name: "↪️ Eye of Eden",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.realms.choices.eden"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.eden",
                 value: "eden",
               },
             ],
@@ -111,24 +110,24 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
           {
             name: "type",
-            name_localizations: x("commands:GUIDES.options.REALMS.options.type.name"),
+            name_localizations: "commands:GUIDES.options.REALMS.options.type.name",
             description: "summary, maps or spirits guides",
-            description_localizations: x("commands:GUIDES.options.REALMS.options.type.description"),
+            description_localizations: "commands:GUIDES.options.REALMS.options.type.description",
             type: ApplicationCommandOptionType.String,
             choices: [
               {
                 name: "↪️ Realm Summary",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.type.choices.realm"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.type.choices.realm",
                 value: "summary",
               },
               {
                 name: "↪️ Maps",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.type.choices.maps"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.type.choices.maps",
                 value: "maps",
               },
               {
                 name: "↪️ Spirits",
-                name_localizations: x("commands:GUIDES.options.REALMS.options.type.choices.spirits"),
+                name_localizations: "commands:GUIDES.options.REALMS.options.type.choices.spirits",
                 value: "spirits",
               },
             ],
@@ -136,9 +135,9 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
           {
             name: "hide",
-            name_localizations: x("common:hide-options.name"),
+            name_localizations: "common:hide-options.name",
             description: "hide the guides from others (default: false)",
-            description_localizations: x("common:hide-options.description"),
+            description_localizations: "common:hide-options.description",
             type: ApplicationCommandOptionType.Boolean,
             required: false,
           },
@@ -166,25 +165,25 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const SPIRTIS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "spirits",
   description: "search for spirits",
-  slash: {
-    name_localizations: x("commands:SPIRITS.name"),
-    description_localizations: x("commands:SPIRITS.description"),
+  data: {
+    name_localizations: "commands:SPIRITS.name",
+    description_localizations: "commands:SPIRITS.description",
     options: [
       {
         name: "search",
-        name_localizations: x("commands:SPIRITS.options.name"),
+        name_localizations: "commands:SPIRITS.options.name",
         type: ApplicationCommandOptionType.String,
         autocomplete: true,
         description: "search for a spirit",
-        description_localizations: x("commands:SPIRITS.options.description"),
+        description_localizations: "commands:SPIRITS.options.description",
         required: true,
       },
       {
         name: "hide",
-        name_localizations: x("common:hide-options.name"),
+        name_localizations: "common:hide-options.name",
         type: ApplicationCommandOptionType.Boolean,
         description: "Hide the response",
-        description_localizations: x("common:hide-options.description"),
+        description_localizations: "common:hide-options.description",
         required: false,
       },
     ],

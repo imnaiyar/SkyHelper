@@ -14,6 +14,7 @@ import { UpdateMiddleware } from "./middlewares/update.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
 import * as express from "express";
+import { Logger } from "./logger.service.js";
 export async function bootstrap(client: SkyHelper) {
   @Module({
     imports: [],
@@ -29,7 +30,9 @@ export async function bootstrap(client: SkyHelper) {
     }
   }
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new Logger(),
+  });
   app.enableCors({
     credentials: true,
     maxAge: 40,

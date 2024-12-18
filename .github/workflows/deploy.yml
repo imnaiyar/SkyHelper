@@ -25,6 +25,7 @@ jobs:
           NODE_ENV: production
           NODE_OPTIONS: --enable-source-maps
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
+          CLIENT_ID: ${{secrets.CLIENT_ID}}
           SENTRY_DSN: ${{secrets.SENTRY_DSN}}
           SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
           SENTRY_RELEASE: skyhelper@${{ github.sha }}

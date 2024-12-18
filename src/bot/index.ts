@@ -35,12 +35,7 @@ Sentry.init({
 
 console.log("\n\n");
 CustomLogger.log({ level: { name: "Sentry", color: "\x1b[36m" } }, "Sentry Initialized\n\n\n");
-
-const root = process.isBun ? "src/bot" : "dist/bot";
-await client.loadEvents(root + "/events");
-await client.loadCommands(root + "/commands/inputCommands");
-await client.loadContextCmd(root + "/commands/contexts");
-await client.loadButtons(root + "/buttons");
+await client.loadModules();
 await initializeMongoose();
 
 // Catching unhandle rejections

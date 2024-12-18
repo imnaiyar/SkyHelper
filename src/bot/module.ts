@@ -1,11 +1,9 @@
 declare global {
   namespace NodeJS {
-    interface Process {
-      isBun?: boolean;
-    }
     interface ProcessEnv {
       TOKEN: string;
       NODE_ENV: "development" | "production";
+      CLIENT_ID: string;
       MONGO_CONNECTION: string;
       SENTRY_DSN: string;
       SENTRY_RELEASE?: string;

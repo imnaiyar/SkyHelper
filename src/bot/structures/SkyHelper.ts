@@ -3,28 +3,23 @@ import {
   GatewayIntentBits,
   Partials,
   Collection,
-  PermissionFlagsBits,
-  Routes,
   Options,
   type OAuth2Scopes,
   type TextChannel,
   type Webhook,
   type ApplicationCommand,
 } from "discord.js";
-import type { Button, ContextMenuCommand, Command } from "#structures";
+import type { Button, ContextMenuCommand, Command } from "./index.js";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { getUserID, type UserSession } from "#api/utils/discord";
 import config from "#bot/config";
-import { UpdateEvent, UpdateTS, recursiveReadDir } from "skyhelper-utils";
+import { UpdateEvent, UpdateTS } from "skyhelper-utils";
 import { logger as Logger } from "#handlers";
-import path from "node:path";
 import chalk from "chalk";
 import * as schemas from "#bot/database/index";
-import { table } from "table";
-import { pathToFileURL } from "node:url";
 import { Flags, spiritsData } from "#libs";
 import "./Extenders.js";
-import { CustomLogger } from "#bot/handlers/logger";
+import { loadButtons, loadCommands, loadContextCmd, loadEvents } from "#bot/utils/loaders";
 export type ClassTypes = {
   UpdateTS: typeof UpdateTS;
   UpdateEvent: typeof UpdateEvent;
@@ -125,219 +120,17 @@ export class SkyHelper extends Client<true> {
   }
 
   /**
-   * Load all events from the specified directory
-   * @param directory
+   * Loads all the modules
    */
-  public async loadEvents(directory: string): Promise<void> {
+  public async loadModules() {
     console.log(chalk.blueBright("<---------------------- Loading Events ------------------------->"));
-    let success = 0;
-    let failed = 0;
-    const clientEvents: unknown[][] = [];
-    const files = recursiveReadDir(directory);
-
-    for (const filePath of files) {
-      const file = path.basename(filePath);
-      try {
-        const ext = process.isBun ? ".ts" : ".js";
-        const eventName = path.basename(file, ext);
-        const { default: event } = await import(pathToFileURL(filePath).href);
-
-        this.on(eventName, event.bind(null, this));
-        clientEvents.push([file, "✓"]);
-        success += 1;
-      } catch (ex) {
-        failed += 1;
-        Logger.error(`loadEvent - ${file}`, ex);
-      }
-    }
-
-    CustomLogger.log(
-      { hideLevel: true, timestamp: false },
-      `\n${table(clientEvents, {
-        header: {
-          alignment: "center",
-          content: "Client Events",
-        },
-        singleLine: true,
-        columns: [{ width: 25 }, { width: 5, alignment: "center" }],
-      })}`,
-    );
-
-    Logger.custom(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
-  }
-
-  /**
-   * Load slash command to client on startup
-   * @param dir The command directory
-   * TODO: Add validation for commands
-   */
-  public async loadCommands(dir: string): Promise<void> {
+    await loadEvents(this);
     console.log(chalk.blueBright("\n\n<-------------------- Loading Commands ------------------------>\n"));
-    let added = 0;
-    let failed = 0;
-    const files = recursiveReadDir(dir, ["sub"]);
-    for (const filePath of files) {
-      const file = path.basename(filePath);
-      try {
-        const { default: command } = (await import(pathToFileURL(filePath).href)) as {
-          default: Command;
-        };
-        if (typeof command !== "object") continue;
-        if (this.commands.has(command.name)) throw new Error("The command already exists");
-        // const vld = cmdValidation(command, file);
-        // if (!vld) return;
-        this.commands.set(command.name, command);
-        this.logger.custom(`Loaded ${command.name}`, "COMMANDS");
-        added++;
-      } catch (err) {
-        failed++;
-        Logger.error(`loadCommands - ${file}`, err);
-      }
-    }
-
-    this.logger.custom(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
-  }
-
-  /**
-   * Load context menu commands to client on startup
-   * @param dir The command directory
-   * TODO: Add validation for commands
-   */
-  public async loadContextCmd(dir: string): Promise<void> {
+    this.commands = await loadCommands();
     console.log(chalk.blueBright("\n\n<---------------------- Loading Contexts ----------------------->\n"));
-    let added = 0;
-    let failed = 0;
-    const files = recursiveReadDir(dir, ["sub"]);
-    for (const filePath of files) {
-      const file = path.basename(filePath);
-      try {
-        const { default: command } = (await import(pathToFileURL(filePath).href)) as {
-          default: ContextMenuCommand<"MessageContext" | "UserContext">;
-        };
-        if (typeof command !== "object") continue;
-        if (this.contexts.has(command.name + command.data.type.toString())) throw new Error("The command already exists");
-        // const vld = cmdValidation(command, file);
-        // if (!vld) return;
-        this.contexts.set(command.name + command.data.type.toString(), command);
-        this.logger.custom(`Loaded ${command.name}`, "CONTEXTS");
-        added++;
-      } catch (err) {
-        failed++;
-        Logger.error(`loaContextCmds - ${file}`, err);
-      }
-    }
-
-    this.logger.custom(`Loaded ${added} Context Menu Commands. Failed ${failed}`, "CONTEXTS");
-  }
-
-  /**
-   * Load buttons to client on startup
-   * @param dir The butoons directory
-   */
-  public async loadButtons(dir: string): Promise<void> {
+    this.contexts = await loadContextCmd();
     console.log(chalk.blueBright("\n\n<---------------------- Loading Buttons ----------------------->\n"));
-    let added = 0;
-    let failed = 0;
-    const files = recursiveReadDir(dir, ["sub"]);
-    for (const filePath of files) {
-      const file = path.basename(filePath);
-
-      try {
-        const { default: button } = (await import(pathToFileURL(filePath).href)) as {
-          default: Button;
-        };
-        if (typeof button !== "object") continue;
-        if (this.buttons.has(button.data.name)) throw new Error("The command already exists");
-        this.buttons.set(button.data.name, button);
-        this.logger.custom(`Loaded ${button.data.name}`, "BUTTON");
-        added++;
-      } catch (ex) {
-        failed += 1;
-        Logger.error(`${file}`, ex);
-      }
-    }
-    this.logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
-  }
-
-  /**
-   * Register Slash Commands
-   */
-  public async registerCommands(): Promise<void> {
-    const toRegister:
-      | Pick<Command, "name" | "description" | "slash" | "userPermissions">
-      | ContextMenuCommand<"MessageContext" | "UserContext">["data"][] = [];
-    this.commands
-      .filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && !cmd.slash?.guilds)
-      .map((cmd) => ({
-        name: cmd.name,
-        description: cmd.description,
-        type: 1,
-        ...(cmd.userPermissions && {
-          default_member_permissions: cmd.userPermissions
-            .reduce(
-              (accumulator: bigint, permission) =>
-                accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
-              BigInt(0),
-            )
-            .toString(),
-        }),
-        ...cmd.slash,
-      }))
-      .forEach((s) => toRegister.push(s));
-
-    this.contexts
-      .filter((cmd) => !cmd.data.guilds)
-      .map((cmd) => ({
-        name: cmd.name,
-        ...(cmd.userPermissions && {
-          default_member_permissions: cmd.userPermissions
-            .reduce(
-              (accumulator: bigint, permission) =>
-                accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
-              BigInt(0),
-            )
-            .toString(),
-        }),
-        ...cmd.data,
-      }))
-      .forEach((s) => toRegister.push(s));
-    await this.rest.put(Routes.applicationCommands(this.user.id), {
-      body: toRegister,
-    });
-
-    this.logger.success("Successfully registered interactions");
-
-    // Attempt to register any guild commands
-    const guilCommandsSlash = this.commands.filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && cmd.slash?.guilds);
-    const guilCommandsContext = this.contexts.filter((cmd) => cmd.data.guilds);
-    const guildCommands = [...guilCommandsSlash.values(), ...guilCommandsContext.values()];
-    if (!guildCommands.length) return;
-    console.log(chalk.blueBright("\n\n<------------ Attempting to register guild commands ----------->\n"));
-    await Promise.all(
-      guildCommands.map(async (cmd) => {
-        const guilds = "description" in cmd ? cmd.slash?.guilds! : cmd.data.guilds!;
-        for (const guild of guilds) {
-          await this.rest.post(Routes.applicationGuildCommands(this.user.id, guild), {
-            body: {
-              name: cmd.name,
-              ...("description" in cmd ? { description: cmd.description } : {}),
-              ...("type" in cmd ? { type: cmd.type } : { type: 1 }),
-              ...(cmd.userPermissions && {
-                default_member_permissions: cmd.userPermissions
-                  .reduce(
-                    (accumulator: bigint, permission) =>
-                      accumulator | PermissionFlagsBits[permission as unknown as keyof typeof PermissionFlagsBits],
-                    BigInt(0),
-                  )
-                  .toString(),
-              }),
-              ...("slash" in cmd ? cmd.slash : {}),
-            },
-          });
-          this.logger.custom(`Successfully registered "${cmd.name} "in ${guild}`, "GUILD COMMANDS");
-        }
-      }),
-    );
+    this.buttons = await loadButtons();
   }
 
   /**
