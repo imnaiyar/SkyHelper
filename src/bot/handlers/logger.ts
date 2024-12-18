@@ -71,8 +71,8 @@ export default class {
   /**
    * @param content
    */
-  static debug(content: string) {
-    logger.debug(content);
+  static debug(...content: any[]) {
+    logger.debug(...content);
   }
 
   static custom(content: string, type: string) {
