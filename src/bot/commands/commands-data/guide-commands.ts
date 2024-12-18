@@ -6,7 +6,7 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   description: "various guides",
   cooldown: 10,
   category: "Guides",
-  slash: {
+  data: {
     name_localizations: "commands:GUIDES.name",
     description_localizations: "commands:GUIDES.description",
     options: [
@@ -165,7 +165,7 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const SPIRTIS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "spirits",
   description: "search for spirits",
-  slash: {
+  data: {
     name_localizations: "commands:SPIRITS.name",
     description_localizations: "commands:SPIRITS.description",
     options: [

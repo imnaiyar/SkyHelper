@@ -98,7 +98,7 @@ interface CommandBase {
   /**
    * Slash Command API data
    */
-  slash?: Omit<OverrideLocalizations<RESTPostAPIChatInputApplicationCommandsJSONBody>, "name" | "description"> & {
+  data?: Omit<OverrideLocalizations<RESTPostAPIChatInputApplicationCommandsJSONBody>, "name" | "description"> & {
     /** Array of guild Ids this command will be deployed to,
      * if present, the command in not deployed globally but only for the specified guilds */
     guilds?: string[];

@@ -5,7 +5,7 @@ import { ApplicationCommandOptionType, ApplicationIntegrationType, ChannelType, 
 export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "reminders",
   description: "Set up reminders",
-  slash: {
+  data: {
     name_localizations: "commands:REMINDERS.name",
     description_localizations: "commands:REMINDERS.description",
     integration_types: [ApplicationIntegrationType.GuildInstall],
@@ -34,7 +34,7 @@ export const SET_PREFIX_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "shards-live",
   description: "auto updating message with live shards details",
-  slash: {
+  data: {
     name_localizations: "commands:SHARDS_LIVE.name",
     description_localizations: "commands:SHARDS_LIVE.description",
     options: [
@@ -90,7 +90,7 @@ export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
 export const TIMES_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skytimes-live",
   description: "auto updating message with live skytimes details",
-  slash: {
+  data: {
     name_localizations: "commands:SKYTIMES_LIVE.name",
     description_localizations: "commands:SKYTIMES_LIVE.description",
     options: [

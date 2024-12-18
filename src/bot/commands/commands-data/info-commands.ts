@@ -4,7 +4,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "daily-quests",
   description: "Get the daily quests for today",
-  slash: {
+  data: {
     name_localizations: "commands:DAILY_QUESTS.name",
     description_localizations: "commands:DAILY_QUESTS.description",
     options: [
@@ -30,7 +30,7 @@ export const SHARDS_CALENDAR_DATA: Omit<Command, "interactionRun" | "messageRun"
   prefix: {
     aliases: ["shards-cal", "shard-cal", "sc", "nextshards", "next-shards"],
   },
-  slash: {
+  data: {
     name_localizations: "commands:SHARDS_CALENDAR.name",
     description_localizations: "commands:SHARDS_CALENDAR.description",
     options: [
@@ -56,7 +56,7 @@ export const SHARDS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     usage: "[date]",
     aliases: ["shard"],
   },
-  slash: {
+  data: {
     name_localizations: "commands:SHARDS.name",
     description_localizations: "commands:SHARDS.description",
     options: [
@@ -88,7 +88,7 @@ export const SHARDS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const SKYTIMES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skytimes",
   description: "various in-game events countdown",
-  slash: {
+  data: {
     name_localizations: "commands:SKYTIMES.name",
     description_localizations: "commands:SKYTIMES.description",
     options: [
@@ -115,7 +115,7 @@ export const SKYTIMES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const TRAVELING_SPIRITS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "traveling-spirit",
   description: "get details about current/upcoming TS.",
-  slash: {
+  data: {
     name_localizations: "commands:TRAVELING-SPIRIT.name",
     description_localizations: "commands:TRAVELING-SPIRIT.description",
     integration_types: [0, 1],

@@ -6,7 +6,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 export const SEASON_CALCULATOR_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "seasonal-calculator",
   description: "calculate seasonal currencies",
-  slash: {
+  data: {
     name_localizations: "commands:SEASONAL_CALCULATOR.name",
     description_localizations: "commands:SEASONAL_CALCULATOR.description",
     integration_types: [0, 1],
@@ -46,7 +46,7 @@ export const SEASON_CALCULATOR_DATA: Omit<Command, "interactionRun" | "messageRu
 export const HELP_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "help",
   description: "help menu",
-  slash: {
+  data: {
     name_localizations: "commands:HELP.name",
     description_localizations: "commands:HELP.description",
     options: [
@@ -71,7 +71,7 @@ export const HELP_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const LANGUAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "language",
   description: "manage preferred language for the bot's response",
-  slash: {
+  data: {
     name_localizations: "commands:LANGUAGE.name",
     description_localizations: "commands:LANGUAGE.description",
     options: [
@@ -156,7 +156,7 @@ export const LANGUAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const UTILS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "utils",
   description: "Utilities",
-  slash: {
+  data: {
     name_localizations: "commands:UTILS.name",
     description_localizations: "commands:UTILS.description",
     integration_types: [0, 1],

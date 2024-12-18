@@ -10,7 +10,7 @@ export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     minimumArgs: 1,
     usage: "<ID|mention>",
   },
-  slash: {
+  data: {
     options: [
       {
         name: "user",
@@ -28,7 +28,7 @@ export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skygame",
   description: "Various fun games based around Sky: CotL",
-  slash: {
+  data: {
     name_localizations: "commands:SKYGAME.name",
     description_localizations: "commands:SKYGAME.description",
     integration_types: [0, 1],
