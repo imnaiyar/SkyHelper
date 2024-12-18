@@ -41,27 +41,27 @@ logger.success(`Successfully registered ${data.length} interactions`);
 const guilCommandsSlash = commands.filter((cmd) => !cmd.skipDeploy && "interactionRun" in cmd && cmd.data?.guilds);
 const guilCommandsContext = contexts.filter((cmd) => cmd.data.guilds);
 const guildCommands = [...guilCommandsSlash.values(), ...guilCommandsContext.values()];
-if (guildCommands.length) {
-  console.log(chalk.blueBright("\n\n<------------ Attempting to register guild commands ----------->\n"));
-  const guildCommandsMap = new Collection<string, RESTPutAPIApplicationGuildCommandsJSONBody>();
+if (!guildCommands.length) process.exit(0);
 
-  // Group guild commands by guild
-  for (const cmd of guildCommands) {
-    const guilds = cmd.data?.guilds;
+console.log(chalk.blueBright("\n\n<------------ Attempting to register guild commands ----------->\n"));
+const guildCommandsMap = new Collection<string, RESTPutAPIApplicationGuildCommandsJSONBody>();
 
-    if (!guilds) continue;
-    for (const guild of guilds) {
-      const cmds = guildCommandsMap.get(guild) || [];
-      cmds.push(parseCommands(cmd));
-      guildCommandsMap.set(guild, cmds);
-    }
+// Group guild commands by guild
+for (const cmd of guildCommands) {
+  const guilds = cmd.data?.guilds;
+
+  if (!guilds) continue;
+  for (const guild of guilds) {
+    const cmds = guildCommandsMap.get(guild) || [];
+    cmds.push(parseCommands(cmd));
+    guildCommandsMap.set(guild, cmds);
   }
-  await Promise.all(
-    guildCommandsMap.map(async (cmds, guildID) => {
-      await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildID), {
-        body: cmds,
-      });
-      logger.custom(`Successfully registered [${cmds.map((c) => c.name).join(", ")}] in ${guildID}`, "GUILD COMMANDS");
-    }),
-  );
 }
+await Promise.all(
+  guildCommandsMap.map(async (cmds, guildID) => {
+    await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildID), {
+      body: cmds,
+    });
+    logger.custom(`Successfully registered [${cmds.map((c) => c.name).join(", ")}] in ${guildID}`, "GUILD COMMANDS");
+  }),
+);
