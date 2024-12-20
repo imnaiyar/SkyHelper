@@ -1,36 +1,35 @@
 import { ApplicationRoleConnectionMetadataType, REST, Routes, type APIApplicationRoleConnectionMetadata } from "discord.js";
-import { version } from "os";
 
 const data: APIApplicationRoleConnectionMetadata[] = [
   {
     type: ApplicationRoleConnectionMetadataType.IntegerGreaterThanOrEqual,
-    name: "Wings",
+    name: "Max Wings",
     key: "wings",
-    description: "Hmmm",
+    description: "Max amount of wings tht can be collected by you.",
   },
   {
     type: ApplicationRoleConnectionMetadataType.DatetimeGreaterThanOrEqual,
-    name: "Playing Since",
+    name: "Sky Bday",
     key: "since",
-    description: "Hmmm",
+    description: "Playing Sky Since.",
   },
   {
     type: ApplicationRoleConnectionMetadataType.BooleanEqual,
-    name: "CR Runner",
+    name: "CR/WLs Runner",
     key: "cr",
-    description: "Hmmm",
+    description: "Likes to do CR/WLs Run.",
   },
   {
     type: ApplicationRoleConnectionMetadataType.BooleanEqual,
-    name: "WLs Runner",
-    key: "wls",
-    description: "Hmmm",
+    name: "Eden Runner",
+    key: "eden",
+    description: "Likes to do Eden Run.",
   },
   {
     type: ApplicationRoleConnectionMetadataType.BooleanEqual,
-    name: "Beuty Queen",
-    key: "beuty",
-    description: "Hmmm",
+    name: "Hangout With Friends",
+    key: "hangout",
+    description: "Likes to hangout with friends.",
   },
 ];
 

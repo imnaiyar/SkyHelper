@@ -22,10 +22,11 @@ interface UserSchema extends Document {
   linkedRole?: {
     username?: string;
     metadata?: {
-      wings?: number;
-      playingSince?: string;
-      wlr?: boolean;
-      cr?: boolean;
+      wings?: string;
+      since?: string;
+      wlr?: string;
+      cr?: string;
+      eden?: string;
     };
   };
 }
@@ -57,10 +58,11 @@ const Schema = new mongoose.Schema<UserSchema>({
   linkedRole: {
     username: String,
     metadata: {
-      wings: { type: Number, min: 1, max: 225 },
-      playingSince: String,
-      wlr: Boolean,
-      cr: Boolean,
+      wings: { type: String, min: 1, max: 225 },
+      since: String,
+      wlr: String,
+      cr: String,
+      eden: String,
     },
   },
 });
