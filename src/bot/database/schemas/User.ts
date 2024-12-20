@@ -19,6 +19,15 @@ interface UserSchema extends Document {
     singleMode: { gamesPlayed: number; gamesWon: number };
     doubleMode: { gamesPlayed: number; gamesWon: number };
   };
+  linkedRole?: {
+    username?: string;
+    metadata?: {
+      wings?: number;
+      playingSince?: string;
+      wlr?: boolean;
+      cr?: boolean;
+    };
+  };
 }
 
 const cache = new LimitedCollection<string, UserSchema>({ maxSize: config.CACHE_SIZE.USERS });
@@ -43,6 +52,15 @@ const Schema = new mongoose.Schema<UserSchema>({
     doubleMode: {
       gamesPlayed: { type: Number, default: 0 },
       gamesWon: { type: Number, default: 0 },
+    },
+  },
+  linkedRole: {
+    username: String,
+    metadata: {
+      wings: { type: Number, min: 1, max: 225 },
+      playingSince: String,
+      wlr: Boolean,
+      cr: Boolean,
     },
   },
 });
