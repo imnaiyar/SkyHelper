@@ -102,11 +102,11 @@ export class UsersController {
     return {
       username: res.platform_username ?? undefined,
       metadata: {
-        wings: Number(res.metadata.wings),
-        since: res.metadata.since as string | undefined,
-        cr: res.metadata.cr === "1",
-        eden: res.metadata.eden === "1",
-        hangout: res.metadata.hangout === "1",
+        wings: Number(res.metadata?.wings),
+        since: res.metadata?.since as string | undefined,
+        cr: "1" === res.metadata?.cr ?? "0",
+        eden: "1" === res.metadata?.eden ?? "0",
+        hangout: "1" === res.metadata?.hangout ?? "0",
       },
     };
   }
