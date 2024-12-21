@@ -23,7 +23,7 @@ export async function bootstrap(client: SkyHelper) {
   })
   class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-      consumer.apply(AuthMiddleware).forRoutes("guilds", "update");
+      consumer.apply(AuthMiddleware).forRoutes("guilds", "update", "users");
       consumer.apply(GuildMiddleware).forRoutes("guilds");
       consumer.apply(UpdateMiddleware).forRoutes("update");
       consumer.apply(WebhookEventMiddleware).forRoutes("webhook-event");
