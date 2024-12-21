@@ -14,11 +14,11 @@ The most simplified way to enable linked role connection with SkyHelper is by fo
 - **Step 4:** Under role settings, click `Link` option.
   <Image src="/linked-role/role-link-icon.png" alt="Link Role Icon" height={150} width={150} />
 - **Step 5:** Select `Add Requirement` and Select `SkyHelper` from the list.
-- **Step 6:** Save the changes. Do not enable any one of the options shown as in the image below. And you're done.
+- **Step 6:** Save the changes. And you're done.
 
   <Image src="/linked-role/connection-options.png" alt="Linked Role Options" height={300} width={300} />
 
-  A visual demonstration below:
+  <Callout type="warning">Do not enable any one of the options shown as in the above image.</Callout>A visual demonstration below:
 
 {" "}
 
@@ -35,7 +35,7 @@ You can read more on how to get the role here [here](/linked-role/how-to-link).
 When you enable an option, that means the user's must meet the requirements for that option to get the role. For example let's say
 you have enabled the `Max Wings` and set the requirement to 32 wings. When a user tries to get the role and while authenticating
 with the bot, they provide 31 as their max wings, they wouldn't be able to get the role as they didn't meet the threshold set by
-you.
+you. Due to how linked role connection works, we (the bot developer) cannot control if an admin can enable or disable the options requirement.
 
 How each option works if enabled:
 
@@ -43,7 +43,7 @@ How each option works if enabled:
 - **Sky Bday**: The user must be playing the game earlier than the no. of days set by you.
 - **CR Run/Eden/Hangout**: If any one of them is enabled, the user must have that as their preferences to get the role.
 
-In way, this can be way to control which users can get the role and have it behave the way you want.
+In a way, if you want advanced settings, this can be way to control which users can get the role and have it behave the way you want.
 
 <Callout type="info">
   All this info is provided by the user. When they try to get the role, Discord will redirect users to bot's dashboard where they
