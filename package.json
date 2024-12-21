@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "npm run build:prod && node dist/bot/index.js",
-    "dev": "node --env-file=.env dist/bot/index.js",
+    "dev": "tsx watch --env-file=.env src/bot/index.js",
     "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build:ci": "tsc -p tsconfig.json",
     "build:dev": "tsc -p tsconfig.json --watch",

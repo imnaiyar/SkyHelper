@@ -10,11 +10,11 @@ const RoleMetadataKeySchema = z.object({
   username: z.string().optional(),
   metadata: z
     .object({
-      wings: z.string().max(220).min(1).optional(),
+      wings: z.number().max(240).min(1).optional(),
       since: z.string().optional(),
-      eden: z.string().optional(),
-      cr: z.string().optional(),
-      hangout: z.string().optional(),
+      eden: z.boolean().optional(),
+      cr: z.boolean().optional(),
+      hangout: z.boolean().optional(),
     })
     .optional(),
 });
@@ -70,11 +70,11 @@ export class UsersController {
       platform_name: "Sky:CoTL Profile",
       platform_username: data.username,
       metadata: {
-        wings: data.metadata?.wings?.toString(),
+        wings: data.metadata?.wings,
         since: data.metadata?.since,
-        cr: data.metadata?.cr,
-        eden: data.metadata?.eden,
-        hangout: data.metadata?.hangout,
+        cr: data.metadata?.cr ? "1" : "0",
+        eden: data.metadata?.eden ? "1" : "0",
+        hangout: data.metadata?.hangout ? "1" : "0",
       },
     });
     await fetch(`https://discord.com/api/v10` + Routes.userApplicationRoleConnection(this.bot.user.id), {
@@ -101,7 +101,13 @@ export class UsersController {
     const res = (await b.json()) as RESTGetAPICurrentUserApplicationRoleConnectionResult;
     return {
       username: res.platform_username ?? undefined,
-      metadata: res.metadata,
+      metadata: {
+        wings: Number(res.metadata.wings),
+        since: res.metadata.since as string | undefined,
+        cr: res.metadata.cr === "1",
+        eden: res.metadata.eden === "1",
+        hangout: res.metadata.hangout === "1",
+      },
     };
   }
 }
