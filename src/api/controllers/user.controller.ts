@@ -98,15 +98,15 @@ export class UsersController {
       },
       method: "GET",
     });
-    const res = (await b.json()) as RESTGetAPICurrentUserApplicationRoleConnectionResult;
+    const res = await b.json();
     return {
       username: res.platform_username ?? undefined,
       metadata: {
         wings: Number(res.metadata?.wings),
         since: res.metadata?.since as string | undefined,
-        cr: "1" === res.metadata?.cr ?? "0",
-        eden: "1" === res.metadata?.eden ?? "0",
-        hangout: "1" === res.metadata?.hangout ?? "0",
+        cr: "1" === (res.metadata?.cr ?? "0"),
+        eden: "1" === (res.metadata?.eden ?? "0"),
+        hangout: "1" === (res.metadata?.hangout ?? "0"),
       },
     };
   }
