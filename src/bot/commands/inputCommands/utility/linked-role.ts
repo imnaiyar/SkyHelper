@@ -12,7 +12,9 @@ Due to the complicated nature of linked roles, it is difficult to explain everyt
 - [How you can enable linked roles in your server?](https://docs.skyhelper.xyz/linked-role/how-to-enable)
 - [How to get/link/update your sky profile with the bot?](https://docs.skyhelper.xyz/linked-role/how-to-link)
 
--# - If Linked Role connection is enabled for SkyHelper in this server, you can get it by navigating to <id:linked-role>.`;
+-# - If Linked Role connection is enabled for SkyHelper in this server, you can get it by navigating to <id:linked-role>.
+
+-# - PS: This is in beta, do let us know if you encounter any error/difficulty in using this feature.`;
 
     await interaction.reply({ content: text, ephemeral });
   },
