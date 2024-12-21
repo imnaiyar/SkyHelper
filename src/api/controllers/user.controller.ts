@@ -104,9 +104,9 @@ export class UsersController {
       metadata: {
         wings: Number(res.metadata?.wings),
         since: res.metadata?.since as string | undefined,
-        cr: "1" === (res.metadata?.cr ?? "0"),
-        eden: "1" === (res.metadata?.eden ?? "0"),
-        hangout: "1" === (res.metadata?.hangout ?? "0"),
+        cr: (res.metadata?.cr ?? "0") === "1",
+        eden: (res.metadata?.eden ?? "0") === "1",
+        hangout: (res.metadata?.hangout ?? "0") === "1",
       },
     };
   }
