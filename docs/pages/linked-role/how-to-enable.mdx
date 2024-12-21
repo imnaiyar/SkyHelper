@@ -1,0 +1,54 @@
+---
+title: How to Enable Linked Role
+description: A step-by-step guide on enabling Linked Role for your server
+---
+
+import Image from "next/image";
+import { Callout } from "nextra/components";
+
+The most simplified way to enable linked role connection with SkyHelper is by following these steps:
+
+- **Step 1:** Open your server settings dropdown.
+- **Step 2:** Navigate to the `Roles` tab.
+- **Step 3:** Create a new `Role` and give it a name or select an existing one.
+- **Step 4:** Under role settings, click `Link` option.
+  <Image src="/linked-role/role-link-icon.png" alt="Link Role Icon" height={150} width={150} />
+- **Step 5:** Select `Add Requirement` and Select `SkyHelper` from the list.
+- **Step 6:** Save the changes. And you're done.
+
+  <Image src="/linked-role/connection-options.png" alt="Linked Role Options" height={300} width={300} />
+
+  <Callout type="warning">Do not enable any one of the options shown as in the above image.</Callout>A visual demonstration below:
+
+{" "}
+
+<video width={500} height={500} controls preload="auto">
+  <source src="/linked-role/setup-role.mp4" type="video/mp4" />
+</video>
+
+You can read more on how to get the role here [here](/linked-role/how-to-link).
+
+# What does it mean to enable an option as shown in the image above?
+
+<Callout type="warning">We recommend not enabling any of the options if you don't want to complicate the process</Callout>
+
+When you enable an option, that means the user's must meet the requirements for that option to get the role. For example let's say
+you have enabled the `Max Wings` and set the requirement to 32 wings. When a user tries to get the role and while authenticating
+with the bot, they provide 31 as their max wings, they wouldn't be able to get the role as they didn't meet the threshold set by
+you. Due to how linked role connection works, we (the bot developer) cannot control if an admin can enable or disable the options requirement.
+
+How each option works if enabled:
+
+- **Max Wings:** The user must have the number of wings equal to or greater than the number set by you.
+- **Sky Bday**: The user must be playing the game earlier than the no. of days set by you.
+- **CR Run/Eden/Hangout**: If any one of them is enabled, the user must have that as their preferences to get the role.
+
+In a way, if you want advanced settings, this can be way to control which users can get the role and have it behave the way you want.
+
+<Callout type="info">
+  All this info is provided by the user. When they try to get the role, Discord will redirect users to bot's dashboard where they
+  will be authenticated with discord. Once that's done, users will be presented to provide their preferences and then that
+  preference is sent to discord. Discord will then validate and if it meets the requirements, users will be able to get the role.
+  Again that means user's can provide any value, even if you set a requirement, there's no way for us to validate if the provided
+  info was correct. You can update your Sky profile anytime by visiting [here](https://dash.skyhelper.xyz/user/linked-role).
+</Callout>

@@ -5,6 +5,7 @@ export default {
   pages: {
     title: "Pages",
   },
+  "linked-role": "Linked Role",
   changelogs: "Changelogs",
   "---": {
     type: "separator",
