@@ -1,6 +1,6 @@
 import { supportedLang } from "#bot/libs/constants/supportedLang";
 import type { Command } from "#bot/structures/Command";
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
 
 // #region SeasonCalculator
 export const SEASON_CALCULATOR_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -234,5 +234,26 @@ export const UTILS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
     ],
   },
+  category: "Utility",
+};
+
+// #region LinkedRole
+
+export const LINKED_ROLE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "linked-role",
+  description: "Link your sky profile with the bot",
+  data: {
+    integration_types: [ApplicationIntegrationType.GuildInstall],
+    contexts: [InteractionContextType.Guild],
+    options: [
+      {
+        name: "hide",
+        description: "Hide the response",
+        type: ApplicationCommandOptionType.Boolean,
+        required: false,
+      },
+    ],
+  },
+  cooldown: 40,
   category: "Utility",
 };
