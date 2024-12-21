@@ -1,5 +1,6 @@
 import { LINKED_ROLE_DATA } from "../../commands-data/utility-commands.js";
 import type { Command } from "#structures";
+import { MessageFlags } from "discord.js";
 
 export default {
   ...LINKED_ROLE_DATA,
@@ -16,6 +17,6 @@ Due to the complicated nature of linked roles, it is difficult to explain everyt
 
 -# - PS: This is in beta, do let us know if you encounter any error/difficulty in using this feature.`;
 
-    await interaction.reply({ content: text, ephemeral });
+    await interaction.reply({ content: text, ephemeral, flags: MessageFlags.SuppressEmbeds });
   },
 } satisfies Command;
