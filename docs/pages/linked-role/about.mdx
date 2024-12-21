@@ -1,0 +1,29 @@
+---
+title: About Linked Role
+description: A brief description about Linked Role connection
+---
+
+import Image from "next/image";
+import { Callout } from "nextra/components";
+
+Linked roles are a special type of role that allows users to acquire a role on their own if they meet specific requirements.
+
+For example, if your server requires users to have their Reddit account connected to obtain a role, any user with Reddit linked can automatically acquire the role through the `Linked Role` option in the server settings.
+
+The requirements can also be set for specific applications, provided they support linked roles. In our case, the SkyHelper bot supports linked role connections. To set this up, an admin must create a role and select `SkyHelper` as the connection for the role's requirements. You can find more details on how to set up linked roles for your server [here](/linked-role/how-to-enable).
+
+For an in-depth explanation of linked roles, check out Discord's article on the topic [here](https://support.discord.com/hc/en-us/articles/8063233404823).
+
+---
+
+### How Does It Work with SkyHelper?
+
+When you set up linked roles, the chosen connection (in this case, an application) can update a user's connection details. Discord then uses these details to display relevant information on the user’s profile.
+
+SkyHelper leverages this feature to show a brief Sky: COTL profile, as shown in the example below:
+
+<Image src="/linked-role/connection-on-profile.png" alt="Linked Role Example" height={300} width={300} />
+
+To use this feature, users first need to authenticate with SkyHelper. After authentication, they will be prompted to set their preferences. Once their preferences are set and they have acquired the role, their Sky CoTL profile will be visible within the server.
+
+Learn more about setting up linked roles for your server [here](/linked-role/how-to-link).
