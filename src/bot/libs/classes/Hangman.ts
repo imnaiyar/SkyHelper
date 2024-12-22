@@ -1,4 +1,11 @@
-import { EmbedBuilder, type SendableChannels, type User, type MessageCreateOptions, AttachmentBuilder } from "discord.js";
+import {
+  EmbedBuilder,
+  type SendableChannels,
+  type User,
+  type MessageCreateOptions,
+  AttachmentBuilder,
+  MessageCollector,
+} from "discord.js";
 import { setTimeout as wait } from "timers/promises";
 import { hangmanWords, HangmanResponseCodes, getHangmanResponse, EnglishAlphabets } from "../constants/hangman.js";
 import { drawHangmanGallow } from "./HangmanGallowImage.js";
@@ -46,6 +53,9 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
   /** Whether this game is stopped or not */
   private _stopped: boolean = false;
+
+  /** Collector listening for stop */
+  private _stopCollector: MessageCollector | null = null;
 
   // #region constructor
   constructor(
@@ -253,6 +263,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
   // #region end game
   private async _endGame(reason?: string) {
+    if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
     if (this.winner) {
       const user = await this.channel.client.database.getUser(this.winner);
       // prettier-ignore
@@ -307,15 +318,16 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
   private _listenForStop() {
     if (!this.initiator) return;
-    const col = this.channel.createMessageCollector({ filter: (m) => m.content.toLowerCase() === ">stopgame" });
+    this._stopCollector = this.channel.createMessageCollector({ filter: (m) => m.content.toLowerCase() === ">stopgame" });
     const initiator = this.initiator;
-    col.on("collect", async (m) => {
+    this._stopCollector.on("collect", async (m) => {
       if (m.author.id !== initiator.id) {
         return await this._sendResponse("Only the game initiator can stop the game.");
       }
       this._stopped = true;
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.EndmGame));
-      col.stop();
+      if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
+
       return this._endGame("stopped-game");
     });
   }

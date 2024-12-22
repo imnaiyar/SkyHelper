@@ -83,7 +83,7 @@ export async function getSuggestion(interaction: ChatInputCommandInteraction, t:
 }
 
 export async function getChangelog(interaction: ChatInputCommandInteraction) {
-  const comMen = (command: string, sub?: string) => {
+  const _comMen = (command: string, sub?: string) => {
     const com = interaction.client.application.commands.cache.find((cm) => cm.name === command);
     return `</${com!.name}${sub ? ` ${sub}` : ""}:${com!.id}>`;
   };
