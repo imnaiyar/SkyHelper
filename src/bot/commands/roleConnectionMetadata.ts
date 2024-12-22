@@ -5,31 +5,31 @@ const data: APIApplicationRoleConnectionMetadata[] = [
     type: ApplicationRoleConnectionMetadataType.IntegerGreaterThanOrEqual,
     name: "Max Wings",
     key: "wings",
-    description: "Max amount of wings tht can be collected by you.",
+    description: "Max wings must be greater than this",
   },
   {
     type: ApplicationRoleConnectionMetadataType.DatetimeGreaterThanOrEqual,
     name: "Sky Bday",
     key: "since",
-    description: "Playing Sky Since.",
+    description: "Must be playing sky for at least this many days",
   },
   {
     type: ApplicationRoleConnectionMetadataType.BooleanEqual,
     name: "CR/WLs Runner",
     key: "cr",
-    description: "Likes to do CR/WLs Run.",
+    description: "Must like to do CR/WLs Run",
   },
   {
     type: ApplicationRoleConnectionMetadataType.BooleanEqual,
     name: "Eden Runner",
     key: "eden",
-    description: "Likes to do Eden Run.",
+    description: "Must like to do Eden Run.",
   },
   {
     type: ApplicationRoleConnectionMetadataType.BooleanEqual,
     name: "Hangout With Friends",
     key: "hangout",
-    description: "Likes to hangout with friends.",
+    description: "Must like to hangout with friends",
   },
 ];
 
