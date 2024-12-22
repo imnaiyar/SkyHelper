@@ -11,7 +11,7 @@ import "../i18n.js";
 import type { LangKeys } from "../i18n.js";
 import { t } from "i18next";
 import { supportedLang } from "../libs/constants/supportedLang.js";
-
+const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
 /**
  * Loads all the commands
  * @returns Collection of commands keyed by it's name
@@ -20,7 +20,7 @@ export async function loadCommands() {
   const commands = new Collection<string, Command>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir("dist/bot/commands/inputCommands", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/commands/inputCommands", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -51,7 +51,7 @@ export async function loadContextCmd() {
   const contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir("dist/bot/commands/contexts", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/commands/contexts", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -83,7 +83,7 @@ export async function loadButtons() {
   const buttons = new Collection<string, Button>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir("dist/bot/buttons", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/buttons", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
 
@@ -114,12 +114,12 @@ export async function loadEvents(client: SkyHelper) {
   let success = 0;
   let failed = 0;
   const clientEvents: unknown[][] = [];
-  const files = recursiveReadDir("dist/bot/events");
+  const files = recursiveReadDir(baseDir + "bot/events");
 
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
-      const eventName = path.basename(file, ".js");
+      const eventName = path.basename(file, process.env.NODE_ENV === "development" ? ".ts" : ".js");
       const { default: event } = await import(pathToFileURL(filePath).href);
 
       client.on(eventName, event.bind(null, client));
