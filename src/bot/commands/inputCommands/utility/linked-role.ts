@@ -21,9 +21,7 @@ Due to the complicated nature of linked roles, it is difficult to explain everyt
       content: text,
       ephemeral,
       flags: MessageFlags.SuppressEmbeds,
-      files: [
-        "https://media.discordapp.net/attachments/867638574571323424/1320173986100940921/Screenshot_2024-12-22_005724.png?ex=6768a355&is=676751d5&hm=1796ee97edcc73e0cc53e669c883161e8ebde4f10b359a66d5385da9bce1413c&",
-      ],
+      files: ["https://docs.skyhelper.xyz/linked-role/connection-on-profile.png"],
     });
   },
 } satisfies Command;
