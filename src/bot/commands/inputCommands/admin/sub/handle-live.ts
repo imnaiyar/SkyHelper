@@ -49,11 +49,7 @@ export const handleLive = async (
         ],
       };
     }
-    if (!channel.permissionsFor(channel.guild.members.me!).has("ManageWebhooks")) {
-      return {
-        embeds: [new EmbedBuilder().setDescription(t("common:NO-WB-PERM-BOT", { CHANNEL: channel.toString() })).setColor("Red")],
-      };
-    }
+
     const wb = await client.createWebhook(channel, `For live ${type} Update`);
     const currentDate = moment().tz(client.timezone);
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);

@@ -61,12 +61,13 @@ export const BLACKLIST_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   validations: [
     {
       type: "message",
-      message: "ID must be provided with this subcommand",
-      callback(msg, messageOptions) {
-        if (!(msg instanceof Message) || !messageOptions?.args) return true;
+      callback(_msg, _t, messageOptions) {
+        if (messageOptions.args) return { status: true };
         const sub = messageOptions.args[0];
-        if (["g", "rmG", "u", "rmU"].includes(sub) && !messageOptions.args[1]) return false;
-        return true;
+        if (["g", "rmG", "u", "rmU"].includes(sub) && !messageOptions.args[1]) {
+          return { status: false, message: "Id must be provided with the subcommand" };
+        }
+        return { status: true };
       },
     },
   ],
@@ -134,18 +135,16 @@ export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   validations: [
     {
       type: "message",
-      message: "You need to provide a message to send",
-      callback(_msg, { args }) {
-        if (!args[1]) return false;
-        return true;
+      callback(_msg, _t, { args }) {
+        if (!args[1]) return { status: false, message: "You need to provide a message to send" };
+        return { status: true };
       },
     },
     {
       type: "message",
-      message: "You need to provide a valid user to send a message to",
-      callback(msg, { args }) {
-        if (!args[0] && !msg.mentions.users.first()) return false;
-        return true;
+      callback(msg, _t, { args }) {
+        if (!args[0] && !msg.mentions.users.first()) return { status: false, message: "You need to provide a user" };
+        return { status: true };
       },
     },
   ],

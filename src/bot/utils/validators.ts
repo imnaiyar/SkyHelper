@@ -12,6 +12,7 @@ import type {
 import { Collection, resolveColor } from "discord.js";
 import { parsePerms, type Permission } from "skyhelper-utils";
 
+// #region Env
 export function validateEnv() {
   if (!process.env.TOKEN) throw new Error("TOKEN is not provided in the environment variables");
   if (!process.env.MONGO_CONNECTION) throw new Error("MONGO_CONNECTION is not provided in the environment variables");
@@ -24,6 +25,7 @@ export function validateEnv() {
   }
 }
 
+// #region Interaction
 /**
  * Validates interactions if it passes a set of checks
  *
@@ -48,18 +50,18 @@ export function validateInteractions(
   // Handle command user required permissions
   if (command.userPermissions) {
     if (interaction.inGuild()) {
-      if (interaction.inCachedGuild() && !interaction.member.permissions.has(command.userPermissions)) {
+      if (!interaction.inCachedGuild()) {
+        return {
+          status: false,
+          message: t("errors:NOT_A_SERVER"),
+        };
+      }
+      if (!interaction.memberPermissions.has(command.userPermissions)) {
         return {
           status: false,
           message: t("errors:NO_PERMS_USER", {
             PERMISSIONS: parsePerms(command.userPermissions as Permission[]),
           }),
-        };
-      }
-      if (!interaction.inCachedGuild()) {
-        return {
-          status: false,
-          message: t("errors:NOT_A_SERVER"),
         };
       }
     }
@@ -80,7 +82,7 @@ export function validateInteractions(
         };
       }
 
-      const botPerms = interaction.guild.members.me!.permissions;
+      const botPerms = interaction.appPermissions;
 
       if (toCheck && !botPerms.has(command.botPermissions)) {
         const missingPerms = botPerms.missing(command.botPermissions);
@@ -97,11 +99,15 @@ export function validateInteractions(
   // Handle Validations
   if (command.validations) {
     for (const validation of command.validations) {
-      if (validation.type !== "message" && !validation.callback(interaction)) {
-        return {
-          status: false,
-          message: validation.message,
-        };
+      if (validation.type !== "message") {
+        // @ts-expect-error Mismatching between chatinput and context, don't wanna impl a complex solution so just ignore
+        const validated = validation.callback(interaction, t);
+        if (validated.status === false) {
+          return {
+            status: false,
+            message: validated.message,
+          };
+        }
       }
     }
   }
@@ -219,11 +225,14 @@ export function validateMessage(
   // Check for validations
   if (command.validations?.length) {
     for (const validation of command.validations) {
-      if (validation.type !== "interaction" && !validation.callback(message, { args, flags, commandName: command.name })) {
-        return {
-          status: false,
-          message: validation.message,
-        };
+      if (validation.type !== "interaction") {
+        const validated = validation.callback(message, t, { commandName: command.name, flags, args });
+        if (!validated.status) {
+          return {
+            status: false,
+            message: validated.message,
+          };
+        }
       }
     }
   }
