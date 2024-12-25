@@ -7,6 +7,10 @@ import {
   time,
   CommandInteraction,
   ChannelType,
+  InteractionType,
+  ApplicationCommandType,
+  type Interaction,
+  AutocompleteInteraction,
 } from "discord.js";
 import * as Sentry from "@sentry/node";
 import type { Command, Event } from "#structures";
@@ -14,6 +18,8 @@ import config from "#bot/config";
 import { dailyQuestEmbed } from "#utils";
 import { SkytimesUtils as skyutils } from "skyhelper-utils";
 import { validateInteractions } from "#bot/utils/validators";
+import moment from "moment-timezone";
+
 const cLogger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 const bLogger = process.env.BUG_REPORTS ? new WebhookClient({ url: process.env.BUG_REPORTS }) : undefined;
 const errorEmbed = (title: string, description: string) => new EmbedBuilder().setTitle(title).setDescription(description);
@@ -41,11 +47,40 @@ const formatIfUserApp = (int: CommandInteraction) => {
           `(GroupDM | Owner: | Channel: \`${int.channel?.id || "Unknown"}\`)`)
   );
 };
+
 const interactionHandler: Event<"interactionCreate"> = async (client, interaction): Promise<void> => {
   // Translator
   const t = await interaction.t();
   const scope = new Sentry.Scope();
   scope.setUser({ id: interaction.user.id, username: interaction.user.username });
+
+  // Add some contexts for sentry
+  scope.setContext("Metadata", {
+    guild: interaction.guild
+      ? { id: interaction.guildId, name: interaction.guild.name, owner: interaction.guild.ownerId }
+      : interaction.guildId,
+    channel: interaction.channel
+      ? {
+          id: interaction.channelId,
+          type: ChannelType[interaction.channel.type],
+          name: "name" in interaction.channel ? interaction.channel.name : null,
+        }
+      : interaction.channelId,
+    interaction: {
+      id: interaction.id,
+      type: InteractionType[interaction.type],
+      command: interaction.isCommand() ? interaction.commandName : null,
+      commandType: interaction.isCommand() ? ApplicationCommandType[interaction.commandType] : null,
+      customId: interaction.isMessageComponent() || interaction.isModalSubmit() ? interaction.customId : null,
+      constructorName: interaction.constructor.name,
+    },
+    user: {
+      id: interaction.user.id,
+      username: interaction.user.username,
+      displayName: interaction.user.displayName,
+    },
+    occurenceTime: moment.tz("Asia/Kolkata").format("YYYY-MM-DD HH:mm:ss"),
+  });
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
@@ -67,6 +102,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       });
       return;
     }
+
     try {
       await command.interactionRun(interaction, t, client);
       const embed = new EmbedBuilder()
@@ -97,25 +133,8 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       }
     } catch (err) {
       const errorId = client.logger.error(err, scope);
-      const content = {
-        content: t("errors:ERROR_ID", { ID: errorId }),
-      };
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({
-          ...content,
-          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
-        });
-        return;
-      } else {
-        await interaction.reply({
-          ...content,
-          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
-          ephemeral: true,
-        });
-        return;
-      }
+      await handleErrorResponse(interaction, errorId, t);
+      return;
     }
   }
 
@@ -171,23 +190,8 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       await command.execute(interaction, client);
     } catch (err) {
       const errorId = client.logger.error(err, scope);
-      const content = {
-        content: t("errors:ERROR_ID", { ID: errorId }),
-      };
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({
-          ...content,
-          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
-        });
-      } else {
-        await interaction.reply({
-          ...content,
-          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
-          ephemeral: true,
-        });
-      }
+      await handleErrorResponse(interaction, errorId, t);
+      return;
     }
   }
 
@@ -200,23 +204,8 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       await button.execute(interaction, t, client);
     } catch (err) {
       const errorId = client.logger.error(err, scope);
-      const content = {
-        content: t("errors:ERROR_ID", { ID: errorId }),
-      };
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({
-          ...content,
-          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
-        });
-      } else {
-        await interaction.reply({
-          ...content,
-          embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
-          components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
-          ephemeral: true,
-        });
-      }
+      await handleErrorResponse(interaction, errorId, t);
+      return;
     }
   }
 
@@ -301,3 +290,27 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
 };
 
 export default interactionHandler;
+
+async function handleErrorResponse(
+  int: Exclude<Interaction, AutocompleteInteraction>,
+  errorId: string,
+  t: ReturnType<typeof import("#bot/i18n").getTranslator>,
+) {
+  const content = {
+    content: t("errors:ERROR_ID", { ID: errorId }),
+  };
+  if (int.replied || int.deferred) {
+    await int.followUp({
+      ...content,
+      embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+      components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
+    });
+  } else {
+    await int.reply({
+      ...content,
+      embeds: [errorEmbed(t("errors:EMBED_TITLE"), t("errors:EMBED_DESCRIPTION"))],
+      components: [errorBtn(t("errors:BUTTON_LABEL"), errorId)],
+      ephemeral: true,
+    });
+  }
+}
