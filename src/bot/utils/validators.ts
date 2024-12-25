@@ -50,12 +50,6 @@ export function validateInteractions(
   // Handle command user required permissions
   if (command.userPermissions) {
     if (interaction.inGuild()) {
-      if (!interaction.inCachedGuild()) {
-        return {
-          status: false,
-          message: t("errors:NOT_A_SERVER"),
-        };
-      }
       if (!interaction.memberPermissions.has(command.userPermissions)) {
         return {
           status: false,
@@ -75,6 +69,7 @@ export function validateInteractions(
       toCheck = command.forSubs.includes(sub);
     }
     if (toCheck) {
+      // Not cached means bot is not added as a user and it'll not have any permissions
       if (!interaction.inCachedGuild()) {
         return {
           status: false,
