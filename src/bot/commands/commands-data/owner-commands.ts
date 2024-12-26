@@ -1,5 +1,5 @@
 import type { Command } from "#bot/structures/Command";
-import { ApplicationCommandOptionType, Message } from "discord.js";
+import { ApplicationCommandOptionType } from "discord.js";
 
 // #region Annoouncement
 export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -9,7 +9,11 @@ export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     aliases: ["an", "as"],
   },
   ownerOnly: true,
-  category: "OWNER",
+  category: "Owner",
+  userPermissions: ["Administrator"],
+  data: {
+    guilds: ["852141490105090059"],
+  },
 };
 
 // #region Eval
@@ -24,7 +28,7 @@ export const EVAL_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     minimumArgs: 1,
   },
   botPermissions: ["ViewChannel", "SendMessages"],
-  category: "OWNER",
+  category: "Owner",
 };
 
 // #region Blacklist
@@ -61,16 +65,17 @@ export const BLACKLIST_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   validations: [
     {
       type: "message",
-      message: "ID must be provided with this subcommand",
-      callback(msg, messageOptions) {
-        if (!(msg instanceof Message) || !messageOptions?.args) return true;
+      callback(_msg, _t, messageOptions) {
+        if (messageOptions.args) return { status: true };
         const sub = messageOptions.args[0];
-        if (["g", "rmG", "u", "rmU"].includes(sub) && !messageOptions.args[1]) return false;
-        return true;
+        if (["g", "rmG", "u", "rmU"].includes(sub) && !messageOptions.args[1]) {
+          return { status: false, message: "Id must be provided with the subcommand" };
+        }
+        return { status: true };
       },
     },
   ],
-  category: "OWNER",
+  category: "Owner",
   ownerOnly: true,
 };
 
@@ -83,7 +88,7 @@ export const EXEC_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     minimumArgs: 1,
     usage: "<command>",
   },
-  category: "OWNER",
+  category: "Owner",
   ownerOnly: true,
 };
 
@@ -96,6 +101,7 @@ export const LIST_SERVERS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     usage: "[guildId | name]",
   },
   ownerOnly: true,
+  category: "Owner",
 };
 
 // #region Register
@@ -103,7 +109,7 @@ export const REGISTER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "register",
   description: "register data commands",
   ownerOnly: true,
-  category: "OWNER",
+  category: "Owner",
   prefix: {
     aliases: ["r", "rs"],
   },
@@ -129,23 +135,21 @@ export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     ],
     guilds: ["852141490105090059"],
   },
-  category: "OWNER",
+  category: "Owner",
   userPermissions: ["Administrator"],
   validations: [
     {
       type: "message",
-      message: "You need to provide a message to send",
-      callback(_msg, { args }) {
-        if (!args[1]) return false;
-        return true;
+      callback(_msg, _t, { args }) {
+        if (!args[1]) return { status: false, message: "You need to provide a message to send" };
+        return { status: true };
       },
     },
     {
       type: "message",
-      message: "You need to provide a valid user to send a message to",
-      callback(msg, { args }) {
-        if (!args[0] && !msg.mentions.users.first()) return false;
-        return true;
+      callback(msg, _t, { args }) {
+        if (!args[0] && !msg.mentions.users.first()) return { status: false, message: "You need to provide a user" };
+        return { status: true };
       },
     },
   ],

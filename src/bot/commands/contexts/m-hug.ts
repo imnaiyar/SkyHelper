@@ -8,6 +8,7 @@ export default {
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
+  category: "Fun",
   async execute(interaction) {
     const user = interaction.targetMessage.author;
     await interaction.reply({

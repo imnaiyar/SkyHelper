@@ -1,5 +1,12 @@
 import type { Command } from "#bot/structures/Command";
-import { ApplicationCommandOptionType, ApplicationIntegrationType, ChannelType, InteractionContextType } from "discord.js";
+import {
+  ApplicationCommandOptionType,
+  ApplicationIntegrationType,
+  ChannelType,
+  InteractionContextType,
+  Message,
+  TextChannel,
+} from "discord.js";
 
 // #region Reminders
 export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -81,6 +88,29 @@ export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
       },
     ],
   },
+  validations: [
+    {
+      type: "both",
+      callback: (intOrMsg, t, opts) => {
+        if (!intOrMsg.guild) return { status: false, message: "Command is only available fo guild" };
+        let channel: TextChannel | null = null;
+        const sub = intOrMsg instanceof Message ? opts?.args[0] : intOrMsg.options.getSubcommand();
+        if (sub !== "start") return { status: true };
+        if (intOrMsg instanceof Message) {
+          channel = intOrMsg.mentions.channels.first() as TextChannel;
+        } else {
+          channel = intOrMsg.options.getChannel("channel") as TextChannel;
+        }
+        if (!channel.permissionsFor(intOrMsg.guild.members.me!).has("ManageWebhooks")) {
+          return {
+            status: false,
+            message: t("common:NO-WB-PERM-BOT", { CHANNEL: channel.toString() }),
+          };
+        }
+        return { status: true };
+      },
+    },
+  ],
   botPermissions: ["ManageWebhooks"],
   userPermissions: ["ManageGuild"],
   category: "Admin",
@@ -137,6 +167,29 @@ export const TIMES_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
     ],
   },
+  validations: [
+    {
+      type: "both",
+      callback: (intOrMsg, t, opts) => {
+        if (!intOrMsg.guild) return { status: false, message: "Command is only available fo guild" };
+        let channel: TextChannel | null = null;
+        const sub = intOrMsg instanceof Message ? opts?.args[0] : intOrMsg.options.getSubcommand();
+        if (sub !== "start") return { status: true };
+        if (intOrMsg instanceof Message) {
+          channel = intOrMsg.mentions.channels.first() as TextChannel;
+        } else {
+          channel = intOrMsg.options.getChannel("channel") as TextChannel;
+        }
+        if (!channel.permissionsFor(intOrMsg.guild.members.me!).has("ManageWebhooks")) {
+          return {
+            status: false,
+            message: t("common:NO-WB-PERM-BOT", { CHANNEL: channel.toString() }),
+          };
+        }
+        return { status: true };
+      },
+    },
+  ],
   botPermissions: ["ManageWebhooks"],
   userPermissions: ["ManageGuild"],
   category: "Admin",

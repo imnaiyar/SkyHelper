@@ -1,5 +1,5 @@
 export default {
-  OWNER: ["851588007697580033", "617989475078897675", "616511099659091978"],
+  OWNER: ["851588007697580033", "616511099659091978"],
   CACHE_SIZE: {
     GUILDS: 500,
     USERS: 200000,
@@ -16,6 +16,9 @@ export default {
   BOT_ICON: "https://skyhelper.xyz/assets/img/boticon.png",
 
   SUPPORTED_LANG: ["en-US", "hi", "ru"],
+
+  // URLS
+  DOCS_URL: "https://docs.skyhelper.xyz",
 
   //  WEB_URL: 'http://localhost:5001',
   WEB_URL: "https://skyhelper.xyz",

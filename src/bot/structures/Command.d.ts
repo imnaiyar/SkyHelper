@@ -6,10 +6,12 @@ import type {
   OmitPartialGroupDMChannel,
   Message,
   ContextMenuCommandInteraction,
+  MessageCreateOptions,
 } from "discord.js";
 
 import type { SkyHelper } from "#structures";
 import type { getTranslator, LangKeys } from "#bot/i18n";
+import type { Category } from "./Category.ts";
 
 export type OverrideLocalizations<T> = T extends (infer U)[]
   ? OverrideLocalizations<U>[]
@@ -27,10 +29,17 @@ type MessageParams = {
   client: SkyHelper;
 };
 
+type ValidationReturn = { status: true } | { status: false; message: string };
 /** Structure of command validation */
 export interface ValidationBase {
-  /** Message to display when validation fails */
-  message: string;
+  type: "both";
+
+  /** Callback for the validation. */
+  callback(
+    intOrMsg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction,
+    t: ReturnType<typeof getTranslator>,
+    messageOptions?: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
+  ): ValidationReturn;
 }
 
 export interface MessageValidation extends ValidationBase {
@@ -40,29 +49,23 @@ export interface MessageValidation extends ValidationBase {
   /** Callback for the validation. */
   callback(
     intOrMsg: OmitPartialGroupDMChannel<Message>,
+    t: ReturnType<typeof getTranslator>,
     messageOptions: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
-  ): boolean;
+  ): ValidationReturn;
 }
 
-export interface InteractionValidation extends ValidationBase {
+export interface InteractionValidation<IsContext extends boolean = false> extends ValidationBase {
   /** Indicates this validation is for interaction-based commands */
   type: "interaction";
 
   /** Callback for the validation. */
-  callback(intOrMsg: ChatInputCommandInteraction | ContextMenuCommandInteraction): boolean;
-}
-
-export interface CommonValidation extends ValidationBase {
-  type: "both";
-
-  /** Callback for the validation. */
   callback(
-    intOrMsg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction | ContextMenuCommandInteraction,
-    messageOptions?: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
-  ): boolean;
+    intOrMsg: IsContext extends true ? ContextMenuCommandInteraction : ChatInputCommandInteraction,
+    t: ReturnType<typeof getTranslator>,
+  ): ValidationReturn;
 }
 
-export type Validation = MessageValidation | InteractionValidation | CommonValidation;
+export type Validation = MessageValidation | InteractionValidation | ValidationBase;
 
 export interface PrefixSubcommand {
   trigger: string;
@@ -104,7 +107,7 @@ interface CommandBase {
     guilds?: string[];
   };
   /* Command category */
-  category?: string;
+  category: (typeof Category)[number]["name"];
 
   userPermissions?: PermissionResolvable[];
 

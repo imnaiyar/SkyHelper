@@ -46,6 +46,8 @@ export const SHARDS_CALENDAR_DATA: Omit<Command, "interactionRun" | "messageRun"
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
+  category: "Info",
+  cooldown: 15,
 };
 
 // #region Shards
