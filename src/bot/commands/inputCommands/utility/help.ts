@@ -102,12 +102,19 @@ export default {
 
   async autocomplete(interaction, client) {
     const value = interaction.options.getFocused();
-    const commands = client.application.commands.cache.map((cmd) => cmd.name);
+    const commands = client.application.commands.cache.map((c) => c);
+    const guildCommands = interaction.inCachedGuild() ? [...(await interaction.guild.commands.fetch()).values()] : [];
+    commands.push(...guildCommands);
     const choices = commands
-      .filter((cmd) => cmd.includes(value))
+      .filter((cmd) =>
+        (client.commands.get(cmd.name) || client.contexts.get(cmd.name + cmd.type))?.category === "Owner"
+          ? client.config.OWNER.includes(interaction.user.id)
+          : true,
+      )
+      .filter((cmd) => cmd.name.includes(value))
       .map((cmd) => ({
-        name: cmd,
-        value: cmd,
+        name: cmd.name,
+        value: cmd.name,
       }));
     await interaction.respond(choices);
   },

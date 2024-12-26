@@ -18,7 +18,9 @@ export async function handleSingleCmd(
   commandName: string,
 ) {
   const commands = interaction.client.application.commands.cache;
-  const cmd = commands.find((c) => c.name === commandName);
+  const cmd =
+    commands.find((c) => c.name === commandName) ||
+    (interaction.inCachedGuild() ? (await interaction.guild.commands.fetch()).find((c) => c.name == commandName) : undefined);
   if (!cmd) {
     await interaction.followUp({
       content: t("errors:COMMAND_NOT_FOUND"),
