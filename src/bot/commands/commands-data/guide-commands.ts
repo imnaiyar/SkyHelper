@@ -5,7 +5,7 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "guides",
   description: "various guides",
   cooldown: 10,
-  category: "Guides",
+  category: "Guide",
   data: {
     name_localizations: "commands:GUIDES.name",
     description_localizations: "commands:GUIDES.description",
@@ -191,5 +191,5 @@ export const SPIRTIS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     contexts: [0, 1, 2],
   },
   cooldown: 5,
-  category: "Guides",
+  category: "Guide",
 };

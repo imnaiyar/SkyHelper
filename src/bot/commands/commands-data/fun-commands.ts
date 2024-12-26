@@ -22,6 +22,7 @@ export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
+  category: "Fun",
 };
 
 // #region SkyGame
@@ -101,4 +102,5 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   },
   botPermissions: ["SendMessages", "ViewChannel"],
   forSubs: ["hangman"],
+  category: "Fun",
 };

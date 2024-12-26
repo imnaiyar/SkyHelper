@@ -26,11 +26,9 @@ const months = [
   "September",
   "October",
   "November",
-  "Descember",
+  "December",
 ] as const;
 export default {
-  cooldown: 15,
-  category: "Info",
   async interactionRun(interaction, t, client) {
     const m = await interaction.reply({
       ...buildResponse(t, client),

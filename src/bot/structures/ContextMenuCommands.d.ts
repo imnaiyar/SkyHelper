@@ -7,6 +7,7 @@ import type {
 } from "discord.js";
 import type { SkyHelper } from "#structures/SkyHelper";
 import type { InteractionValidation, OverrideLocalizations } from "./Command.js";
+import type { Category } from "./Category.ts";
 /* eslint-disable */
 
 export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> {
@@ -20,6 +21,7 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
   ownerOnly?: boolean;
   validations?: InteractionValidation<true>[];
   cooldown?: number;
+  category: (typeof Category)[number]["name"];
 
   execute(
     interaction: T extends "UserContext" ? UserContextMenuCommandInteraction : MessageContextMenuCommandInteraction,

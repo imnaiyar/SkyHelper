@@ -1,5 +1,5 @@
 import type { Command } from "#bot/structures/Command";
-import { ApplicationCommandOptionType, Message } from "discord.js";
+import { ApplicationCommandOptionType } from "discord.js";
 
 // #region Annoouncement
 export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -9,7 +9,11 @@ export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     aliases: ["an", "as"],
   },
   ownerOnly: true,
-  category: "OWNER",
+  category: "Owner",
+  userPermissions: ["Administrator"],
+  data: {
+    guilds: ["852141490105090059"],
+  },
 };
 
 // #region Eval
@@ -24,7 +28,7 @@ export const EVAL_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     minimumArgs: 1,
   },
   botPermissions: ["ViewChannel", "SendMessages"],
-  category: "OWNER",
+  category: "Owner",
 };
 
 // #region Blacklist
@@ -71,7 +75,7 @@ export const BLACKLIST_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
     },
   ],
-  category: "OWNER",
+  category: "Owner",
   ownerOnly: true,
 };
 
@@ -84,7 +88,7 @@ export const EXEC_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     minimumArgs: 1,
     usage: "<command>",
   },
-  category: "OWNER",
+  category: "Owner",
   ownerOnly: true,
 };
 
@@ -97,6 +101,7 @@ export const LIST_SERVERS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     usage: "[guildId | name]",
   },
   ownerOnly: true,
+  category: "Owner",
 };
 
 // #region Register
@@ -104,7 +109,7 @@ export const REGISTER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "register",
   description: "register data commands",
   ownerOnly: true,
-  category: "OWNER",
+  category: "Owner",
   prefix: {
     aliases: ["r", "rs"],
   },
@@ -130,7 +135,7 @@ export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     ],
     guilds: ["852141490105090059"],
   },
-  category: "OWNER",
+  category: "Owner",
   userPermissions: ["Administrator"],
   validations: [
     {

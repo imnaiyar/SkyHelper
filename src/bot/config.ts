@@ -17,6 +17,9 @@ export default {
 
   SUPPORTED_LANG: ["en-US", "hi", "ru"],
 
+  // URLS
+  DOCS_URL: "https://docs.skyhelper.xyz",
+
   //  WEB_URL: 'http://localhost:5001',
   WEB_URL: "https://skyhelper.xyz",
   CDN_URL: "https://cdn.imnaiyar.site",

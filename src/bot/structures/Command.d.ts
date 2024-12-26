@@ -11,6 +11,7 @@ import type {
 
 import type { SkyHelper } from "#structures";
 import type { getTranslator, LangKeys } from "#bot/i18n";
+import type { Category } from "./Category.ts";
 
 export type OverrideLocalizations<T> = T extends (infer U)[]
   ? OverrideLocalizations<U>[]
@@ -106,7 +107,7 @@ interface CommandBase {
     guilds?: string[];
   };
   /* Command category */
-  category?: string;
+  category: (typeof Category)[number]["name"];
 
   userPermissions?: PermissionResolvable[];
 
