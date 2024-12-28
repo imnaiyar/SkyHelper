@@ -42,9 +42,21 @@ export interface SpiritItems {
   canSkip?: boolean;
   pass?: boolean;
 }
+type Node = NodeItem[];
+
+type NodeItem = {
+  node: number;
+  icon: string;
+  name: string;
+  position: "center" | "left" | "right";
+  price?: number;
+  exclusive?: boolean;
+  acquired: boolean;
+};
+
 export interface SeasonPrice {
   icon?: string;
-  collectibles: SpiritItems[];
+  collectibles: NodeItem[];
 }
 export interface LiveUpdates {
   active: boolean;

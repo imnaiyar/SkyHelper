@@ -26,6 +26,7 @@
 
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
@@ -44,6 +45,6 @@
       "#utils": ["src/bot/utils/index.js"]
     }
   },
-  "include": ["src", "dashboard"],
+  "include": ["src/**/*", "dashboard"],
   "exclude": ["node_modules"]
 }
