@@ -70,6 +70,7 @@ const interactionHandler: Event<"interactionCreate"> = async (client, interactio
       id: interaction.id,
       type: InteractionType[interaction.type],
       command: interaction.isCommand() ? interaction.commandName : null,
+      fullCommand: interaction.isChatInputCommand() ? interaction.toString() : null,
       commandType: interaction.isCommand() ? ApplicationCommandType[interaction.commandType] : null,
       customId: interaction.isMessageComponent() || interaction.isModalSubmit() ? interaction.customId : null,
       constructorName: interaction.constructor.name,

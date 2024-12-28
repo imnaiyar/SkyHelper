@@ -1,9 +1,10 @@
 import type { Event } from "#structures";
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient } from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient, ChannelType } from "discord.js";
 import { Flags } from "#libs/classes/Flags";
 import updateDailyQuests from "#handlers/updateDailyQuests";
 import * as Sentry from "@sentry/node";
 import { validateMessage } from "#bot/utils/validators";
+import moment from "moment-timezone";
 
 const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.COMMANDS_USED }) : undefined;
 
@@ -11,6 +12,28 @@ const Logger = process.env.COMMANDS_USED ? new WebhookClient({ url: process.env.
 const messageHandler: Event<"messageCreate"> = async (client, message): Promise<void> => {
   const scope = new Sentry.Scope();
   scope.setUser({ id: message.author.id, username: message.author.username });
+  const context = {
+    guild: message.guild ? { id: message.guildId, name: message.guild.name, owner: message.guild.ownerId } : message.guildId,
+    channel: message.channel
+      ? {
+          id: message.channelId,
+          type: ChannelType[message.channel.type],
+          name: "name" in message.channel ? message.channel.name : null,
+        }
+      : message.channelId,
+    message: {
+      id: message.id,
+      content: message.content,
+      command: "", // To be added later
+    },
+    author: {
+      id: message.author.id,
+      username: message.author.username,
+      displayName: message.author.displayName,
+    },
+    occurenceTime: moment.tz("Asia/Kolkata").format("YYYY-MM-DD HH:mm:ss"),
+  };
+  // Add some contexts
   // Handle daily guides parsing
   if (message.channelId === client.config.QUEST_UPDATE_CHANNEL.CHANNEL_ID) {
     updateDailyQuests(message);
@@ -35,6 +58,9 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
   const commandName = args.shift()!.toLowerCase();
   const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
   if (!command || !command.messageRun) return;
+
+  context["message"]["command"] = command.name;
+
   scope.setExtra("command", command.name);
   // Check if command is 'OWNER' only.
   if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
@@ -75,6 +101,8 @@ const messageHandler: Event<"messageCreate"> = async (client, message): Promise<
       Logger.send({ username: "Command Logs", embeds: [embed] }).catch(() => {});
     }
   } catch (error) {
+    scope.setContext("Metadata", context);
+
     const id = client.logger.error(error, scope);
     const content = { content: t("errors:ERROR_ID", { ID: id }) };
     const embed = new EmbedBuilder().setTitle(t("errors:EMBED_TITLE")).setDescription(t("errors:EMBED_DESCRIPTION"));
