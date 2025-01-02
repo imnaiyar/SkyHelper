@@ -134,12 +134,17 @@ const data: Record<string, SpiritsData> = {
     ts: {
       eligible: true,
       returned: true,
-      dates: [["August 07, 2023 (SV#4)", "August 13, 2023"], "March 03, 2022 (#56)", "December 24, 2020 (#25)"],
+      dates: [
+        "January 2, 2025 (#130)",
+        ["August 07, 2023 (SV#4)", "August 13, 2023"],
+        "March 03, 2022 (#56)",
+        "December 24, 2020 (#25)",
+      ],
     },
     tree: {
       by: "Clement",
       total: "146 :RegularCandle: 13 :RegularHeart: 2 :AC:",
-      image: "Troupe_Greeter_Tree_Clement.png,jpg",
+      image: "Troupe_Greeter_Location_Clement.jpg",
     },
     location: {
       by: "Clement",
