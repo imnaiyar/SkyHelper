@@ -20,6 +20,9 @@ export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     contexts: [0, 1, 2],
   },
   category: "Info",
+  prefix: {
+    aliases: ["quests", "quest"],
+  },
   cooldown: 15,
 };
 
