@@ -24,6 +24,13 @@ jobs:
               - 'packages/skyhelper/**'
             jobs:
               - 'packages/skyhelper-jobs/**'
+  log:
+    runs-on: ubuntu-latest
+    needs: changes
+    steps:
+      - run: 'echo "SkyHelper: ${{ needs.changes.outputs.skyhelper }}"'
+      - run: 'echo "Jobs: ${{ needs.changes.outputs.jobs }}"'
+
   deploy_skyhelper:
     if: needs.changes.outputs.skyhelper == true
     runs-on: self-hosted
