@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build --filter=skyhelper",
+    "build": "turbo build --filter=!./packages/docs/ --filter=...[origin/main]",
     "lint": "turbo lint",
-    "test": "turbo test"
+    "test": "turbo test",
+    "update": "pnpm --recursive update --interactive"
   },
   "keywords": [],
   "author": "",
