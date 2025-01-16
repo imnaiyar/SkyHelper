@@ -25,6 +25,7 @@ jobs:
             jobs:
               - 'packages/skyhelper-jobs/**'
   deploy_skyhelper:
+    needs: changes
     if: needs.changes.outputs.skyhelper == 'true'
     runs-on: ubuntu-latest
     environment: production
@@ -56,6 +57,7 @@ jobs:
       #   run: docker image prune -f
 
   deploy_skyhelper_jobs:
+    needs: changes
     if: needs.changes.outputs.jobs == 'true'
     runs-on: ubuntu-latest
     environment: production
