@@ -1,4 +1,4 @@
-import spiritsData from "./spirits-datas/index.js";
+import spiritsData from "@skyhelperbot/constants/spirits-datas";
 import { SummaryData } from "./realmsData.js";
 import seasonsData from "./seasonsData.js";
 import type { User } from "discord.js";

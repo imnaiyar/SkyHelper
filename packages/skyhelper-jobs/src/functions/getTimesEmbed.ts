@@ -1,13 +1,13 @@
 import moment from "moment-timezone";
 import "moment-duration-format";
 import type { getTranslator } from "./getTranslator.js";
-import { getSpecialEventDB } from "#src/database/getSpecialEventDB.js";
-import type { SpiritsData } from "../constants/spirits-datas/type.d.ts";
-import { APIEmbed } from "discord-api-types/v10";
-import spiritsData from "#src/constants/spirits-datas/index.js";
-import getTS from "#src/utils/getTS.js";
+import { getSpecialEventDB } from "@/database/getSpecialEventDB.js";
+import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
+import { type APIEmbed } from "discord-api-types/v10";
+import spiritsData from "@skyhelperbot/constants/spirits-datas";
+import getTS from "@/utils/getTS.js";
 import { SkytimesUtils as skyutils } from "skyhelper-utils";
-import { resolveColor } from "#src/utils/resolveColor.js";
+import { resolveColor } from "@/utils/resolveColor.js";
 import { time } from "@discordjs/builders";
 /**
  * Get Times Embed

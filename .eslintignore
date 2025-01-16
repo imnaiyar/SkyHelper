@@ -1,5 +1,4 @@
-node_modules/
-logs/
-website/
-web/
-jest.config.js
+**/node_modules
+**/logs
+**/website
+**/jest.config.js

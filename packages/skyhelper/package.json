@@ -37,6 +37,7 @@
     "@sentry/cli": "^2.32.2",
     "@sentry/node": "^8.34.0",
     "@sentry/profiling-node": "^8.17.0",
+    "@skyhelperbot/constants": "workspace:^",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "cropify": "^1.0.9",

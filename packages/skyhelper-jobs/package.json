@@ -5,9 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start:bun": "bun run src/index.ts",
-    "start": "npm run build && node --env-file=.env ."
+    "build": "tsc --noEmit",
+    "start": "bun run src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -34,18 +33,11 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4"
   },
-  "imports": {
-    "#src/*": [
-      "./dist/*"
-    ],
-    "#root": [
-      "./"
-    ]
-  },
   "dependencies": {
     "@discordjs/builders": "^1.8.2",
     "@discordjs/rest": "^2.3.0",
     "@imnaiyar/framework": "1.2.0",
+    "@skyhelperbot/constants": "workspace:^",
     "@types/node-cron": "^3.0.11",
     "i18next": "^23.12.2",
     "i18next-fs-backend": "^2.3.1",

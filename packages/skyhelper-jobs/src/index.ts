@@ -1,6 +1,6 @@
-import { initializeMongoose } from "./database/connect.js";
-import { reminderSchedules } from "./functions/sendReminders.js";
-import { eventSchedules } from "./functions/updateShardOrTimes.js";
+import { initializeMongoose } from "@/database/connect.js";
+import { reminderSchedules } from "@/functions/sendReminders.js";
+import { eventSchedules } from "@/functions/updateShardOrTimes.js";
 import { logger } from "./structures/Logger.js";
 import cron from "node-cron";
 await initializeMongoose();

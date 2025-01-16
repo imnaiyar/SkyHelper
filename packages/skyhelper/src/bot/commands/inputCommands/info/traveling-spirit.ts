@@ -1,6 +1,6 @@
 import { getTSStatus as getTS } from "#utils";
 import { seasonsData, Spirits } from "#libs";
-import type { SpiritsData } from "#libs/constants/spirits-datas/type";
+import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import type { Command, SkyHelper } from "#structures";
 import { EmbedBuilder, time, type BaseMessageOptions } from "discord.js";
 import type { getTranslator } from "#bot/i18n";

@@ -1,11 +1,11 @@
-import { getActiveReminders } from "#src/database/getGuildDBValues.js";
-import { Webhook } from "#src/structures/Webhook.js";
+import { getActiveReminders } from "@/database/getGuildDBValues.js";
+import { Webhook } from "@/structures/Webhook.js";
 import { roleMention } from "@discordjs/builders";
-import { getTranslator, LangKeys } from "./getTranslator.js";
-import { logger } from "#src/structures/Logger.js";
+import { getTranslator, type LangKeys } from "./getTranslator.js";
+import { logger } from "@/structures/Logger.js";
 import { SkytimesUtils as skyutils } from "skyhelper-utils";
-import { resolveColor } from "../utils/resolveColor.js";
-import { GuildSchema } from "#src/types.js";
+import { resolveColor } from "@/utils/resolveColor.js";
+import type { GuildSchema } from "@/types";
 import { throttleRequests } from "./throttleRequests.js";
 
 type Events = "geyser" | "grandma" | "turtle" | "eden" | "reset";

@@ -29,6 +29,12 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
 
+  packages/constants:
+    dependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
   packages/docs:
     dependencies:
       "@napi-rs/canvas":
@@ -98,6 +104,9 @@ importers:
       "@sentry/profiling-node":
         specifier: ^8.17.0
         version: 8.34.0
+      "@skyhelperbot/constants":
+        specifier: workspace:^
+        version: link:../constants
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -228,6 +237,9 @@ importers:
       "@imnaiyar/framework":
         specifier: 1.2.0
         version: 1.2.0
+      "@skyhelperbot/constants":
+        specifier: workspace:^
+        version: link:../constants
       "@types/node-cron":
         specifier: ^3.0.11
         version: 3.0.11

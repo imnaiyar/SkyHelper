@@ -1,0 +1,23 @@
+{
+  "name": "@skyhelperbot/constants",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "files": [
+    "locales",
+    "dist"
+  ],
+  "exports": {
+    "./locales/*": "./locales/*",
+    "./spirits-datas": "./dist/spirits-datas/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.7.3"
+  }
+}

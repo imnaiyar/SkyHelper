@@ -17,7 +17,8 @@ import { UpdateEvent, UpdateTS } from "skyhelper-utils";
 import { logger as Logger } from "#handlers";
 import chalk from "chalk";
 import * as schemas from "#bot/database/index";
-import { Flags, spiritsData } from "#libs";
+import { Flags } from "#libs";
+import spiritsData from "@skyhelperbot/constants/spirits-datas";
 import "./Extenders.js";
 import { loadButtons, loadCommands, loadContextCmd, loadEvents } from "#bot/utils/loaders";
 export type ClassTypes = {

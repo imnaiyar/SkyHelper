@@ -1,8 +1,14 @@
 import moment from "moment-timezone";
 import { ShardsUtil as utils, shardsInfo } from "skyhelper-utils";
-import type { getTranslator } from "#src/functions/getTranslator.js";
-import { APIActionRowComponent, APIButtonComponent, APIEmbed, ButtonStyle, ComponentType } from "discord-api-types/v10";
-import { resolveColor } from "#src/utils/resolveColor.js";
+import type { getTranslator } from "@/functions/getTranslator.js";
+import {
+  type APIActionRowComponent,
+  type APIButtonComponent,
+  type APIEmbed,
+  ButtonStyle,
+  ComponentType,
+} from "discord-api-types/v10";
+import { resolveColor } from "@/utils/resolveColor.js";
 /**
  * @param date The date for which the shards embed is to be built
  * @param footer The footer text for the embed

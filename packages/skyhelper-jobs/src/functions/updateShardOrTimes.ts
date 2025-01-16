@@ -1,12 +1,12 @@
 import moment from "moment-timezone";
-import { getTranslator } from "./getTranslator.js";
-import { Webhook, WebhookMessageCreateOptions } from "#src/structures/Webhook.js";
-import { getActiveUpdates } from "#src/database/getGuildDBValues.js";
-import getShardsEmbed from "./getShardsEmbed.js";
-import { getTimesEmbed } from "./getTimesEmbed.js";
-import { GuildSchema } from "#src/types.js";
-import { logger } from "#src/structures/Logger.js";
-import { throttleRequests } from "./throttleRequests.js";
+import { getTranslator } from "./getTranslator";
+import { Webhook, type WebhookMessageCreateOptions } from "@/structures/Webhook";
+import { getActiveUpdates } from "@/database/getGuildDBValues";
+import getShardsEmbed from "./getShardsEmbed";
+import { getTimesEmbed } from "./getTimesEmbed";
+import type { GuildSchema } from "@/types";
+import { logger } from "@/structures/Logger";
+import { throttleRequests } from "./throttleRequests";
 import { DiscordAPIError } from "@discordjs/rest";
 
 /**

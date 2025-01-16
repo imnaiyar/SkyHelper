@@ -1,11 +1,10 @@
 import i18next from "i18next";
 import Backend, { type FsBackendOptions } from "i18next-fs-backend";
-import type common from "#root/locales/en-US/common.json";
-import type errors from "#root/locales/en-US/errors.json";
-import type commands from "#root/locales/en-US/commands.json";
-import type features from "#root/locales/en-US/features.json";
-import type buttons from "#root/locales/en-US/buttons.json";
-
+import type common from "@skyhelperbot/constants/locales/en-US/common.json";
+import type errors from "@skyhelperbot/constants/locales/en-US/errors.json";
+import type commands from "@skyhelperbot/constants/locales/en-US/commands.json";
+import type features from "@skyhelperbot/constants/locales/en-US/features.json";
+import type buttons from "@skyhelperbot/constants/locales/en-US/buttons.json";
 type AllNamespaces = {
   common: typeof common;
   errors: typeof errors;
@@ -28,7 +27,7 @@ await i18next.use(Backend).init<FsBackendOptions>({
   ns: ["common", "errors", "commands", "features", "buttons"],
   defaultNS: "common",
   backend: {
-    loadPath: "locales/{{lng}}/{{ns}}.json",
+    loadPath: "node_modules/@skyhelperbot/constants/locales/{{lng}}/{{ns}}.json",
   },
   interpolation: {
     escapeValue: false,

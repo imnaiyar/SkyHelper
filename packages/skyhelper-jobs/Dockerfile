@@ -4,6 +4,9 @@ WORKDIR /root/skyhelper-jobs
 
 COPY package.json bun.lockb ./
 
+# Replace the workspace dependencies with the latest version
+RUN sed -i 's/"workspace:[^"]*"/"latest"/g' package.json
+
 RUN bun install --frozen-lockfile
 
 COPY . .

@@ -1,5 +1,5 @@
 import config from "#bot/config";
-import type { SpiritsData } from "#libs/constants/spirits-datas/type";
+import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { type Button } from "#structures";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, type MessageEditOptions } from "discord.js";
 import type { getTranslator } from "#bot/i18n";

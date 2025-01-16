@@ -1,4 +1,4 @@
-import { GuildSchema } from "#src/types.js";
+import type { GuildSchema } from "@/types";
 import mongoose from "mongoose";
 const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,

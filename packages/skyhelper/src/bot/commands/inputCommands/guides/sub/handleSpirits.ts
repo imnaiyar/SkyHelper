@@ -1,6 +1,6 @@
 import type { SeasonData } from "#libs/constants/seasonsData";
 import { Spirits } from "#libs";
-import type { SpiritsData, SeasonalSpiritData } from "#libs/constants/spirits-datas/type";
+import type { SpiritsData, SeasonalSpiritData } from "@skyhelperbot/constants/spirits-datas";
 import type { SkyHelper } from "#structures";
 import {
   ActionRowBuilder,

@@ -1,4 +1,4 @@
-import type { SpiritsData } from "#libs/constants/spirits-datas/type";
+import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { Spirits } from "#libs/classes/Spirits";
 import type { Command } from "#structures";
 import { SPIRTIS_DATA } from "#bot/commands/commands-data/guide-commands";

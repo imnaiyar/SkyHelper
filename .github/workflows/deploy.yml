@@ -27,7 +27,7 @@ jobs:
   deploy_skyhelper:
     needs: changes
     if: needs.changes.outputs.skyhelper == 'true'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: production
     steps:
       - uses: actions/checkout@v4
@@ -53,13 +53,13 @@ jobs:
           SUGGESTION: ${{secrets.SUGGESTION}}
           TOPGG_TOKEN: ${{secrets.TOPGG_TOKEN}}
 
-      # - name: Cleanup Unused Images
-      #   run: docker image prune -f
+      - name: Cleanup Unused Images
+        run: docker image prune -f
 
   deploy_skyhelper_jobs:
     needs: changes
     if: needs.changes.outputs.jobs == 'true'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: production
     steps:
       - uses: actions/checkout@v4
@@ -71,5 +71,5 @@ jobs:
           ERROR_WEBHOOK: $${{secrets.ERROR_LOGS}}
           NODE_ENV: production
 
-      # - name: Cleanup Unused Images
-      #   run: docker image prune -f
+      - name: Cleanup Unused Images
+        run: docker image prune -f

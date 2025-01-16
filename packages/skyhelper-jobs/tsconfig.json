@@ -1,26 +1,28 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    // Enable latest features
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
     "allowJs": true,
-    "checkJs": true,
-    "rootDir": "src",
     "outDir": "dist",
+    "rootDir": "src",
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+
+    // Best practices
     "strict": true,
-    "noImplicitAny": true,
-    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Some stricter flags (disabled by default)
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "moduleResolution": "NodeNext",
-    "skipLibCheck": true,
-    "baseUrl": ".",
+    "noPropertyAccessFromIndexSignature": false,
     "paths": {
-      "#src/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
-  },
-  "include": ["src"],
-  "exclude": ["node_modules/"]
+  }
 }

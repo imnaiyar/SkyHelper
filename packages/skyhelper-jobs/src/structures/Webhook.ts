@@ -1,4 +1,11 @@
-import { APIAllowedMentions, APIEmbed, APIMessage, APIMessageComponent, APIWebhook, Routes } from "discord-api-types/v10";
+import {
+  type APIAllowedMentions,
+  type APIEmbed,
+  type APIMessage,
+  type APIMessageComponent,
+  type APIWebhook,
+  Routes,
+} from "discord-api-types/v10";
 import { makeURLSearchParams, REST } from "@discordjs/rest";
 import { logger } from "./Logger.js";
 const api = new REST().setToken(process.env.TOKEN);
@@ -15,7 +22,7 @@ const retraibleErrors = [
   "UND_ERR_CONNECT_TIMEOUT", // Connection timed out
   "ECONNREFUSED", // Connection refused
   "ConnectionRefused",
-  "ConnectTimeout"
+  "ConnectTimeout",
 ];
 class Webhook {
   private id: string;

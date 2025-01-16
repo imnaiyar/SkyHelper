@@ -1,4 +1,4 @@
-import { getTSDB } from "#src/database/getTSDB.js";
+import { getTSDB } from "@/database/getTSDB";
 import moment from "moment-timezone";
 interface TSValue {
   visiting: boolean;

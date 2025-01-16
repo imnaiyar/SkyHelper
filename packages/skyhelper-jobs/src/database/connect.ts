@@ -1,4 +1,4 @@
-import { logger } from "#src/structures/Logger.js";
+import { logger } from "@/structures/Logger";
 import mongoose from "mongoose";
 export async function initializeMongoose(): Promise<mongoose.Connection> {
   logger.log({ timestamp: false, hideLevel: true }, "\n\n<------------------------ Connecting --------------------------->\n");
