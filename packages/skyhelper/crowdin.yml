@@ -1,0 +1,26 @@
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"base_path": "."
+
+"preserve_hierarchy": true
+
+pull_request_labels:
+  - crowdin
+  - translations
+
+pull_request_title: "chore: new translations [crowdin]"
+commit_message: "chore: translate to %language%"
+append_commit_message: false
+files:
+  - source: /locales/en-US/*.json
+    translation: /locales/%two_letters_code%/%original_file_name%
+    preserve_translations: true
+
+pre_translate:
+  apply_tm: 100
+  apply_mt: false
+
+export_languages:
+  - ja
+  - hi
+  - ru
