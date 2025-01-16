@@ -2,8 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - chore/monorepo
+    branches: [chore/monorepo]
     paths:
       - "packages/skyhelper/**"
       - "packages/skyhelper-jobs/**"
