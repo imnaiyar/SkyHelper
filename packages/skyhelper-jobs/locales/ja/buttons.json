@@ -1,0 +1,38 @@
+{
+  "ABOUT_SHARDS": {
+    "CREDIT": "シャードについてすべて by {{CREDIT}}",
+    "WHAT_ARE": "シャードとは何ですか？",
+    "TIMING": "シャードがいつ来るかどうやって知りますか？",
+    "REWARDS": "報酬は何ですか？"
+  },
+  "SHARD_LOCATION": {
+    "L_CREDIT": "シャードの場所 by {{CREDIT}}",
+    "D_CREDIT": "シャードデータ by {{CREDIT}}",
+    "LOCATION": "場所",
+    "DATA": "データ"
+  },
+  "SHARD_TIMELINE": {
+    "MUSIC_CREDIT": "空の変化とシャード音楽 by {{CREDIT}}",
+    "TIMESTAMP_CREDIT": "シャードタイムスタンプ by {{CREDIT}}",
+    "COLOR": {
+      "LABEL": "早期空の変化",
+      "VALUE": "空の色が変化する時間: {{TIME}}"
+    },
+    "GATE": {
+      "LABEL": "ゲートシャード",
+      "VALUE": "ゲートにシャードクリスタルが現れる時間: {{TIME}}"
+    },
+    "LANDS": {
+      "LABEL": "シャード着地",
+      "VALUE": "シャードが着地する時間: {{TIME}}"
+    },
+    "ENDS": {
+      "LABEL": "シャード終了",
+      "VALUE": "シャードが終了する時間: {{TIME}}"
+    },
+    "MUSIC": {
+      "LABEL": "シャード音楽",
+      "VALUE": "このシャード中に{{MUSIC}}が再生されます。"
+    }
+  }
+}

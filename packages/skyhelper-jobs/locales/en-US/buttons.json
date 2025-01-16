@@ -1,0 +1,38 @@
+{
+  "ABOUT_SHARDS": {
+    "CREDIT": "All about shards by {{CREDIT}}",
+    "WHAT_ARE": "What are shards?",
+    "TIMING": "How do I know when a shard comes?",
+    "REWARDS": "What are the rewards?"
+  },
+  "SHARD_LOCATION": {
+    "L_CREDIT": "Shard Location by {{CREDIT}}",
+    "D_CREDIT": "Shard data by {{CREDIT}}",
+    "LOCATION": "Location",
+    "DATA": "Data"
+  },
+  "SHARD_TIMELINE": {
+    "MUSIC_CREDIT": "Sky changes and Shard music by {{CREDIT}}",
+    "TIMESTAMP_CREDIT": "Shard Timestamp by {{CREDIT}}",
+    "COLOR": {
+      "LABEL": "Early Sky Change",
+      "VALUE": "Sky color changes at: {{TIME}}"
+    },
+    "GATE": {
+      "LABEL": "Gate Shard",
+      "VALUE": "Shards crystal on gate appears at: {{TIME}}"
+    },
+    "LANDS": {
+      "LABEL": "Shard Landing",
+      "VALUE": "Shard Lands at: {{TIME}}"
+    },
+    "ENDS": {
+      "LABEL": "End of Shard",
+      "VALUE": "Shard ends at: {{TIME}}"
+    },
+    "MUSIC": {
+      "LABEL": "Shard Music",
+      "VALUE": "{{MUSIC}} will play during this shard."
+    }
+  }
+}

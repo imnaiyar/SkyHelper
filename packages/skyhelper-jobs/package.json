@@ -1,0 +1,59 @@
+{
+  "name": "skyhelper-jobs",
+  "version": "1.0.2",
+  "description": "Run cron jobs (scheduled reminders) for SkyHelper bot",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start:bun": "bun run src/index.ts",
+    "start": "npm run build && node --env-file=.env ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imnaiyar/skyhelper-jobs.git"
+  },
+  "keywords": [
+    "SkyCotL",
+    "SkyChildrenOfTheLight"
+  ],
+  "author": "NyR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imnaiyar/skyhelper-jobs/issues"
+  },
+  "homepage": "https://github.com/imnaiyar/skyhelper-jobs#readme",
+  "devDependencies": {
+    "@types/moment-duration-format": "^2.2.6",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "discord-api-types": "^0.37.93",
+    "eslint": "8.57.0",
+    "eslint-plugin-jsdoc": "^48.9.3",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "imports": {
+    "#src/*": [
+      "./dist/*"
+    ],
+    "#root": [
+      "./"
+    ]
+  },
+  "dependencies": {
+    "@discordjs/builders": "^1.8.2",
+    "@discordjs/rest": "^2.3.0",
+    "@imnaiyar/framework": "1.2.0",
+    "@types/node-cron": "^3.0.11",
+    "i18next": "^23.12.2",
+    "i18next-fs-backend": "^2.3.1",
+    "moment-duration-format": "^2.3.2",
+    "moment-timezone": "^0.5.45",
+    "mongoose": "^8.5.1",
+    "node-cron": "^3.0.3",
+    "skyhelper-utils": "^1.2.21"
+  }
+}

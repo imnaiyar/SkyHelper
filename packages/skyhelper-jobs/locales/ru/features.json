@@ -1,0 +1,98 @@
+{
+  "shards-embed": {
+    "TODAY": "Сегодня",
+    "AUTHOR": "Информация об осколках",
+    "FOOTER": "Осколок в данный момент (обновление каждые 5 минут)",
+    "CONTENT": "Последнее обновление: {{TIME}}",
+    "NO-SHARD": "Сегодня день без осколков.",
+    "FIELDS": {
+      "TYPE": {
+        "LABEL": "Тип осколка",
+        "VALUE": "{{VALUE}}"
+      },
+      "LOCATION": {
+        "LABEL": "Расположение",
+        "VALUE": "{{VALUE}}"
+      },
+      "STATUS": {
+        "LABEL": "Статус",
+        "VALUE": {
+          "ENDED": "Все осколки закончились {{DURATION}} назад",
+          "ACTIVE": "{{INDEX}} осколок сейчас активен и закончится через {{DURATION}}",
+          "EXPECTED": "Осколок {{INDEX}} приземлится через {{DURATION}}"
+        }
+      },
+      "COUNTDOWN": {
+        "VALUE": {
+          "ENDED": "Закончился {{DURATION}} назад",
+          "ACTIVE": "Закончится через {{DURATION}}",
+          "EXPECTED": "Упадёт через {{DURATION}}"
+        }
+      }
+    },
+    "BUTTON1": "Временная шкала",
+    "BUTTON2": "Расположение",
+    "BUTTON3": "Об осколках"
+  },
+  "times-embed": {
+    "FOOTER": "Информация о событиях (обновление каждые 2 минуты)",
+    "EVENT_INACTIVE": "Нет активных событий",
+    "EMBED_TITLE": "Время событий",
+    "EMBED_AUTHOR": "SkyTimes",
+    "EVENT_ACTIVE": "**Событие**: {{EVENT_NAME}}\n**Длительность**: {{DATE1}} – {{DATE2}}\n**Всего дней**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "Начнётся через",
+    "ENDS": "Завершится через",
+    "TS_VISITING": "**Сейчас посещает:** {{TS_NAME}}\n**Уход:** {{DATE}} (через {{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}}} прибудет {{DATE}} (через {{DURATION}})",
+    "TS_UPDATED": "Еще не обновлено",
+    "TS_UNKNOWN": "Неизвестный дух",
+    "GEYSER": "Гейзер",
+    "GRANDMA": "Бабушка",
+    "TURTLE": "Черепаха",
+    "AURORA": "Концерт Авроры",
+    "DREAM-SKATER": "Dream Skater",
+    "PASSAGE-QUESTS": "Passage Quests",
+    "NEST-SUNSET": "Nest Закат",
+    "FIREWORKS-FESTIVAL": "Aviary Фестиваль фейерверков",
+    "FAIRY-RING": "Fairy Ring",
+    "BROOK-RAINBOW": "Forest Brook Rainbow",
+    "DAILY-RESET": "Ежедневный сброс",
+    "EDEN": "Сброс Эдема",
+    "TS_TITLE": "Странствующий дух",
+    "EVENT_TITLE": "Специальное событие (Дни ...)",
+    "ACTIVE": "**Продолжение:** Заканчивается в {{DURATION}} (через {{TIME}})",
+    "NEXT-OCC": "Следующее появление: {{TIME}}",
+    "NEXT-OCC-IDLE": "Следующее Окружение: {{TIME}}",
+    "TIMELINE": "Временная шкала"
+  },
+  "reminders": {
+    "ROLE_MENTION": "Эй, {{ROLE}}",
+    "EDEN_RESET": "Око Эдема только что было обновлены, статуи были обновлены и снова могут быть сохранены!",
+    "DAILY_RESET": "Мир Скай только что обновился, и ежедневные квесты были обновлены!",
+    "TITLE": "{{TYPE}} Напоминание",
+    "DAILY_QUESTS": "Ежедневные Задания",
+    "ERROR": "Это не работает, как ожидалось!",
+    "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})"
+  },
+  "REALMS": {
+    "ISLE": "↪️ Isle of Dawn",
+    "PRAIRIE": "↪️ Daylight Prairie",
+    "FOREST": "↪️ Hidden Forest",
+    "VALLEY": "↪️ Valley of Triumph",
+    "WASTELAND": "↪️ Golden Wasteland",
+    "VAULT": "↪️ Vault of Knowledge",
+    "EDEN": "↪️ Eye of Eden"
+  },
+  "SPIRITS": {
+    "SEASON_TITLE": "Сезон",
+    "UNKNOWN": "Неизвестный дух",
+    "REALM_TITLE": "Державные",
+    "TREE_TITLE": "Дружественное дерево (последнее посещение) от {{CREDIT}}",
+    "SEASONAL_CHART": "Сезонная ценовая диаграмма от {{CREDIT}}",
+    "LOCATION_TITLE": "Расположение по {{CREDIT}}"
+  },
+  "hangman": {
+    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "bot": {
+    "name": "SkyHelper",
+    "intro": "それが私です...",
+    "EMBED_TITLE": "ボット情報",
+    "TOTAL_SERVER": "サーバー総数",
+    "TOTAL_AUTHORIZED": "Total User Installs",
+    "TOTAL_USERS": "ユーザー総数",
+    "LATENCY": "レイテンシー",
+    "VERSION": "バージョン",
+    "UPTIME": "稼働時間",
+    "PING": "ウェブソケットピング",
+    "GUILD_SETTINGS": "サーバー設定",
+    "LANGUAGE": "言語",
+    "ANNOUNCEMENT_CHANNEL": "アナウンスチャンネル",
+    "NOT_SET": "未設定（ボットのダッシュボードで設定可能）",
+    "USER_SETTINGS": "ユーザー設定",
+    "INVITE": "招待",
+    "SUPPORT": "サポートサーバー",
+    "DASHBOARD": "ダッシュボード"
+  },
+  "NO-WB-PERM-BOT": "{{CHANNEL}}で`ウェブフックの管理`権限がありません。チャンネルレベルの権限上書きがないことを確認し、ある場合は該当チャンネルで必要な権限を付与してからコマンドを再実行してください。",
+  "SELECT_EXPIRED": "メニューの有効期限が切れました！",
+  "hide-options": {
+    "name": "非表示",
+    "description": "応答を非表示にする"
+  }
+}

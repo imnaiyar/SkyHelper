@@ -1,0 +1,98 @@
+{
+  "shards-embed": {
+    "TODAY": "今日",
+    "AUTHOR": "シャード情報",
+    "FOOTER": "ライブシャード（5分ごとに更新）",
+    "CONTENT": "最終更新: {{TIME}}",
+    "NO-SHARD": "今日はシャードがありません。",
+    "FIELDS": {
+      "TYPE": {
+        "LABEL": "シャードタイプ",
+        "VALUE": "{{VALUE}}"
+      },
+      "LOCATION": {
+        "LABEL": "場所",
+        "VALUE": "{{VALUE}}"
+      },
+      "STATUS": {
+        "LABEL": "状態",
+        "VALUE": {
+          "ENDED": "すべてのシャードが{{DURATION}} 前に終了",
+          "ACTIVE": "{{INDEX}} 番目のシャードが現在アクティブで、{{DURATION}} 後に終了",
+          "EXPECTED": "{{INDEX}}番目のシャードが{{DURATION}}後に着地"
+        }
+      },
+      "COUNTDOWN": {
+        "VALUE": {
+          "ENDED": "{{DURATION}}前に終了",
+          "ACTIVE": "{{DURATION}}後に終了",
+          "EXPECTED": "{{DURATION}}後に落下"
+        }
+      }
+    },
+    "BUTTON1": "タイムライン",
+    "BUTTON2": "場所",
+    "BUTTON3": "シャードについて"
+  },
+  "times-embed": {
+    "FOOTER": "ライブSkyTimes（2分ごとに更新）",
+    "EVENT_INACTIVE": "アクティブなイベントなし",
+    "EMBED_TITLE": "イベント時間",
+    "EMBED_AUTHOR": "SkyTimes",
+    "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "開始まで",
+    "ENDS": "終了まで",
+    "TS_VISITING": "**現在訪問中:** {{TS_NAME}}\n**出発:** {{DATE}}（{{DURATION}}後）",
+    "TS_EXPECTED": "{{TS_NAME}} が {{DATE}}（{{DURATION}}後）に到着予定",
+    "TS_UPDATED": "まだ更新されていません",
+    "TS_UNKNOWN": "不明な精霊",
+    "GEYSER": "間欠泉",
+    "GRANDMA": "おばあちゃん",
+    "TURTLE": "カメ",
+    "AURORA": "オーロラのコンサート",
+    "DREAM-SKATER": "ドリームスケーター",
+    "PASSAGE-QUESTS": "Passage Quests",
+    "NEST-SUNSET": "ネストサンセット",
+    "FIREWORKS-FESTIVAL": "鳥小屋花火大会",
+    "FAIRY-RING": "妖精の指輪",
+    "BROOK-RAINBOW": "フォレストブルックレインボー",
+    "DAILY-RESET": "デイリーリセット",
+    "EDEN": "エデンリセット",
+    "TS_TITLE": "旅する精霊",
+    "EVENT_TITLE": "特別イベント（...の日々）",
+    "ACTIVE": "**進行中:** {{DURATION}}後に終了（{{TIME}}に）",
+    "NEXT-OCC": "次の発生: {{TIME}}",
+    "NEXT-OCC-IDLE": "次の発生: {{TIME}}",
+    "TIMELINE": "タイムライン"
+  },
+  "reminders": {
+    "ROLE_MENTION": "こんにちは、{{ROLE}}",
+    "EDEN_RESET": "エデンの目がリセットされました。像が更新され、再びACのために救済できます！",
+    "DAILY_RESET": "Skyの世界がリセットされ、デイリークエストが更新されました！",
+    "TITLE": "{{TYPE}}リマインダー",
+    "DAILY_QUESTS": "デイリークエスト",
+    "ERROR": "これは、予想どおりに動作していません!",
+    "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します"
+  },
+  "REALMS": {
+    "ISLE": "夜明けの島",
+    "PRAIRIE": "光の草原",
+    "FOREST": "雨林",
+    "VALLEY": "勝利の谷",
+    "WASTELAND": "黄金の廃墟",
+    "VAULT": "知識の書庫",
+    "EDEN": "エデンの目"
+  },
+  "SPIRITS": {
+    "SEASON_TITLE": "シーズン",
+    "UNKNOWN": "不明な精霊",
+    "REALM_TITLE": "領域",
+    "TREE_TITLE": "友好ツリー（最後の訪問）by {{CREDIT}}",
+    "SEASONAL_CHART": "シーズン価格チャート by {{CREDIT}}",
+    "LOCATION_TITLE": "場所 by {{CREDIT}}"
+  },
+  "hangman": {
+    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+  }
+}
