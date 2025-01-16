@@ -9,8 +9,23 @@ on:
   workflow_dispatch:
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      skyhelper: ${{ steps.filter.outputs.skyhelper }}
+      jobs: ${{ steps.filter.outputs.jobs }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            skyhelper:
+              - 'packages/skyhelper/**'
+            jobs:
+              - 'packages/skyhelper-jobs/**'
   deploy_skyhelper:
-    if: contains(github.event.head_commit.modified, 'packages/skyhelper/')
+    if: needs.changes.outputs.skyhelper == 'true'
     runs-on: self-hosted
     environment: production
     steps:
@@ -41,7 +56,7 @@ jobs:
         run: docker image prune -f
 
   deploy_skyhelper_jobs:
-    if: contains(github.event.head_commit.modified, 'packages/skyhelper-jobs/')
+    if: needs.changes.outputs.jobs == 'true'
     runs-on: self-hosted
     environment: production
     steps:
