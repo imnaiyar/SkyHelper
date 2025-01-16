@@ -26,6 +26,7 @@
   },
   "packageManager": "pnpm@9.4.0",
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "@octokit/action": "^7.0.0"
   }
 }

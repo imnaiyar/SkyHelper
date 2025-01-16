@@ -1,5 +1,5 @@
 {
-  "name": "skyhelper-jobs",
+  "name": "@skyhelperbot/jobs",
   "version": "1.0.2",
   "description": "Run cron jobs (scheduled reminders) for SkyHelper bot",
   "type": "module",

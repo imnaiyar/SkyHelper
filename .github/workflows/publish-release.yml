@@ -13,6 +13,16 @@ on:
           - minor
           - major
           - none
+      package:
+        description: "Specify the package to publish"
+        required: true
+        type: choice
+        options:
+          - "@skyhelperbot/utils"
+          - "@skyhelperbot/constants"
+          - "@skyhelperbot/jobs"
+          - "@skyhelperbot/docs"
+          - "skyhelper"
 
 jobs:
   build:
@@ -43,7 +53,7 @@ jobs:
         id: bump_version
         if: ${{ github.event.inputs.version_type != 'none' }}
         run: |
-          raw_version=$(npm version ${{ github.event.inputs.version_type }} -m "chore(release): bump version to %s")
+          raw_version=$(npm version ${{ github.event.inputs.version_type }} -m "chore(release): bump ${{ github.event.inputs.package }} to %s")
 
           new_version=${raw_version#v}
           echo "new_version=${new_version}" >> $GITHUB_ENV
@@ -58,22 +68,32 @@ jobs:
 
           git push origin HEAD --follow-tags
 
-      - name: Publish to NPM
-        run: npm publish --provenance
+      - name: Publish
+        if: contains(['@skyhelperbot/utils', '@skyhelperbot/constants'], ${{ github.event.inputs.package }})
+        run: pnpm --filter '${{ github.event.inputs.package }}' publish --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to JSR
-        run: npx jsr publish
+        if: ${{ github.event.inputs.package == '@skyhelperbot/utils' }}
+        run: cd packages/utils && npx jsr publish
+
+      - name: Run PR Processing Script
+        id: process-prs
+        run: node ./scripts/process-prs.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          new_version: ${{ env.new_version }}
+          package: ${{ github.event.inputs.package }}
 
       - name: Create GitHub release
         if: ${{ github.event.inputs.version_type != 'none' }}
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.new_version }}
-          name: v${{ env.new_version }}
+          tag_name: ${{github.event.inputs.package}}@${{ env.new_version }}
+          name: ${{github.event.inputs.package}}@${{ env.new_version }}
           draft: false
-          generate_release_notes: true
+          body: ${{ steps.process-prs.outputs.changelog }}
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
