@@ -1,0 +1,24 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["tsconfig.json"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "scripts/**", "package.json", "tsconfig.json"],
+      "outputs": ["dist/**"],
+      "outputLogs": "errors-only"
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["__tests__/**", "src/**", "jest.config.js", "package.json", "tsconfig.json"],
+      "outputLogs": "new-only"
+    },
+    "lint": {
+      "inputs": ["../../.eslintrc.json", "../../.eslintignore", "src/**", "package.json", "tsconfig.json"],
+      "outputLogs": "errors-only"
+    }
+  },
+  "remoteCache": {
+    "enabled": true
+  }
+}
