@@ -1,0 +1,169 @@
+---
+title: Info Commands
+description: A comprehensive guide on info commands offered by SkyHelper bot
+---
+
+import { Callout } from "nextra/components";
+
+# Information Commands
+
+Commands that generally provide information.
+
+## `/shards`
+
+**Options**:
+
+| Option   | Description                                                                       |
+| -------- | --------------------------------------------------------------------------------- |
+| `[date]` | The date to get the shard info for (in format: `DD-MM-YYYY`, e.g., `22-07-2024`). |
+| `[hide]` | <BASE_HIDE />                                                                     |
+
+Provides information about the shard details for a given date, such as the shard type, location, timeline, and countdown to its occurrences.
+
+<Callout type="info">If you do not provide a date, the current date is used for retrieving shard info.</Callout>
+
+**Usage:**
+
+- `/shards` (returns shard info for the current date)
+- `/shards date:22-07-2024 hide:true` (returns shard info for the specified date)
+
+<br />
+
+<CollapsibleGallery
+  headingText="Examples"
+  images={[
+    { src: "/info/shards-main.png", alt: "Shards", caption: "Shards Details" },
+    { src: "/info/shards-location-embed.png", alt: "Shards - Location", caption: "Showcasing shards location guide" },
+    { src: "/info/shards-timeline-embed.png", alt: "Shards - Timeline", caption: "Showcasing shards timeline guide" },
+  ]}
+/>
+
+## `/shards-calendar`
+
+**Options**:
+
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
+
+Returns an embed with a calendar overview for shards for the current month. It provides basic details for each shard during the month, such as type, location, and timeline. The embed also includes select menus that allow users to adjust the date, month, and year displayed in the calendar.
+
+<Callout type="info">
+  The options in the year select menu allow for selecting a year within ±5 years from the currently selected year. This is due to
+  the display limit for select menu options.
+</Callout>
+
+**Usage:**
+
+- `/shards-calendar`
+
+<br />
+
+<CollapsibleGallery
+  headingText="Examples"
+  images={[{ src: "/info/shards-calendar-main-embed.png", alt: "Shards Calendar", caption: "Shards Calendar" }]}
+/>
+
+## `/daily-quests`
+
+**Options**:
+
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
+
+Provides the current date's daily quests, rotating candle locations, and seasonal candles (if a season is active), along with guides on completing them.
+
+### How does this work?
+
+Creating the daily quests command was a bit tricky. While there are patterns to the daily quests, they aren't as consistent as the shard patterns. Additionally, some quests are exclusive to ongoing events or seasons, making full automation infeasible. Manually updating the guides daily wasn't an option either due to time constraints.
+
+**Solution**?
+
+The Sky: Children of the Light community is known for sharing helpful resources like infographics or in any other ways. One such community is the [Sky:CoTL Infographics Database](https://discord.gg/skyinfographicsdatabase) server. Their maintainers (like Clement and io) post daily quest guides there, which can be shared to servers via announcement channels.
+
+When they post a guide, the bot captures it, evaluates whether it's worth including (using some code magic <Spoiler>regex</Spoiler>), and then saves it. The bot then presents the information to users. Special thanks to Clement, io, and all the creators who help out by producing these infographics.
+
+<Callout type="info">
+  As this command is dependent on guides being published in the infographics server, it's important to note that Clement and io
+  are also human. Sometimes they may be busy and post guides later than usual or not post it at all. In such cases, the bot may
+  not have a guide available for this command. Typically, there's a grace period of 1-2 hours, but this timeframe is not
+  guaranteed.
+</Callout>
+
+**Usage:**
+
+- `/daily-quests`
+
+<br />
+
+<CollapsibleGallery
+  headingText="Examples"
+  images={[
+    { src: "/info/daily-quests-main.png", alt: "Daily Quests", caption: "Showcasing Daily Quests" },
+    {
+      src: "/info/daily-quests-rotating-candles.png",
+      alt: "Daily Quests - Rotating",
+      caption: "Showcasing Rotating Candles guides",
+    },
+    {
+      src: "/info/daily-quests-seasonal-candles.png",
+      alt: "Daily Quests - Seasonal",
+      caption: "Showcasing Seasonal Candles guides",
+    },
+  ]}
+/>
+
+## `/skytimes`
+
+**Options**:
+
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
+
+Provides upcoming occurrence times for various in-game events and their countdowns. Clicking the select menu for supported events will show all their occurrence times (not just the upcoming ones) throughout the day, along with related guides if available.
+
+<Callout type="info">There's also a refresh button to update the times.</Callout>
+
+**Usage:**
+
+- `/skytimes hide:true`
+
+<br />
+<CollapsibleGallery
+  headingText="Examples"
+  images={[
+    { src: "/info/skytimes-main-embed.png", alt: "Skytimes", caption: "Showcasing in-game event upcoming times" },
+    { src: "/info/skytimes-geyser-embed.png", alt: "Skytimes - Geyser", caption: "Geyser all occurences and guide" },
+    { src: "/info/skytimes-aurora-embed.png", alt: "Skytimes - Aurora", caption: "Auror's Concert scheduled times" },
+  ]}
+/>
+
+## `/traveling-spirit`
+
+**Options**:
+
+| Option   | Description   |
+| -------- | ------------- |
+| `[hide]` | <BASE_HIDE /> |
+
+Provides the schedule for the upcoming traveling spirit.
+
+<Callout type="info">
+  If the upcoming traveling spirit has been revealed (this is manually updated in the bot's database), the command also displays
+  detailed information about the spirit (similar to what's shown by the [`/spirits`](/commands/guides#spirits) command).
+</Callout>
+
+**Usage**:
+
+- `/traveling-spirit`
+
+<br />
+<CollapsibleGallery
+  headingText="Examples"
+  images={[
+    { src: "/info/traveling-spirit-unknown.png", alt: "Traveling Spirit (Unknown)", caption: "Traveling spirit when unknown" },
+    { src: "/info/traveling-spirit-known.png", alt: "Traveling Spirit (Known)", caption: "Traveling spirit when known" },
+  ]}
+/>

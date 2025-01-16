@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build",
+    "build": "turbo build --filter=skyhelper",
     "lint": "turbo lint",
     "test": "turbo test"
   },
