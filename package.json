@@ -8,12 +8,18 @@
     "build": "turbo build --filter=!./packages/docs/ --filter=...[origin/main]",
     "lint": "turbo lint",
     "test": "turbo test",
-    "update": "pnpm --recursive update --interactive"
+    "update": "pnpm --recursive update --interactive",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/node": "^22.10.7",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "turbo": "^2.3.3",
     "typescript": "^5.7.3"
   },

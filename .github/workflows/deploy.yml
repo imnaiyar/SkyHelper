@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - chore/monorepo
     paths:
       - "packages/skyhelper/**"
       - "packages/skyhelper-jobs/**"
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy SkyHelper Bot
-        run: cd packages/skyhelper && docker compose up -d --build
+        run: cd packages/skyhelper && echo "Bot will be deployed"
         env:
           TOKEN: ${{ secrets.TOKEN }}
           NODE_ENV: production
@@ -48,11 +48,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy SkyHelper Jobs
-        run: cd packages/skyhelper-jobs && docker compose up -d --build
+        run: cd packages/skyhelper-jobs && echo "Jobs will be deployed"
         env:
           TOKEN: ${{ secrets.TOKEN }}
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
-          ERROR_WEBHOOK: $${{secrets.ERROR_WEBHOOK}}
+          ERROR_WEBHOOK: $${{secrets.ERROR_LOGS}}
           NODE_ENV: production
 
       - name: Cleanup Unused Images

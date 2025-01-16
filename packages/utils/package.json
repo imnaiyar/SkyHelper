@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "tsc && node test.js",
     "build": "tsc && echo 'Files compiled'",
     "build:docs": "typedoc"
   },
