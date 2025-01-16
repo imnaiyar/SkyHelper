@@ -25,7 +25,7 @@ jobs:
             jobs:
               - 'packages/skyhelper-jobs/**'
   deploy_skyhelper:
-    if: needs.changes.outputs.skyhelper == 'true'
+    if: needs.changes.outputs.skyhelper == true
     runs-on: self-hosted
     environment: production
     steps:
@@ -56,7 +56,7 @@ jobs:
         run: docker image prune -f
 
   deploy_skyhelper_jobs:
-    if: needs.changes.outputs.jobs == 'true'
+    if: needs.changes.outputs.jobs == true
     runs-on: self-hosted
     environment: production
     steps:
