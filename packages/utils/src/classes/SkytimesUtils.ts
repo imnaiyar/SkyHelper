@@ -1,7 +1,7 @@
 import { Base, time } from "discord.js";
 import moment from "moment-timezone";
 import "moment-duration-format";
-import { eventData } from "../constants/eventDatas";
+import { eventData } from "../constants/eventDatas.js";
 
 type EventKey = keyof typeof eventData;
 /**

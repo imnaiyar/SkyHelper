@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { SkyHelper, SkyEvent, SpecialEventData } from "../typings";
+import type { SkyHelper, SkyEvent, SpecialEventData } from "../typings.js";
 
 /**
  * @class

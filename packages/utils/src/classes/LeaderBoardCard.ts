@@ -1,5 +1,5 @@
-import { createCanvas, loadImage, GlobalFonts, SKRSContext2D } from "@napi-rs/canvas";
-import { userData, colorsType, Background, LeaderboardOptions } from "../typings";
+import { createCanvas, loadImage, GlobalFonts, type SKRSContext2D } from "@napi-rs/canvas";
+import type { userData, colorsType, Background, LeaderboardOptions } from "../typings.js";
 import * as path from "node:path";
 
 /**
@@ -182,18 +182,18 @@ export class LeaderboardCard {
         ctx.globalAlpha = this.opacity;
         this.fillRoundRect(ctx, 0, Box_Y, canvas.width, 70, 15, true, false);
         ctx.globalAlpha = 1;
-       try {
-        const avatar = await loadImage(this.usersData[i].avatar);
-        ctx.clip();
-        ctx.drawImage(avatar, 0, Avatar_Y, 70, 70);
-       } catch (err) {
-         console.error("Failed to load avatar", err);
-       }
+        try {
+          const avatar = await loadImage(this.usersData[i].avatar);
+          ctx.clip();
+          ctx.drawImage(avatar, 0, Avatar_Y, 70, 70);
+        } catch (err) {
+          console.error("Failed to load avatar", err);
+        }
         ctx.shadowBlur = 10;
         ctx.shadowOffsetX = 8;
         ctx.shadowOffsetY = 6;
         ctx.shadowColor = "#0a0a0a";
-      
+
         ctx.fillStyle = this.colors.username;
         ctx.font = `bold 25px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
         ctx.textAlign = "left";
