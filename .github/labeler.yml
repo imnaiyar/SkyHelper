@@ -1,19 +1,19 @@
 package:utils:
-  - changed-files:
-      - any-glob-to-any-file: packages/utils/**
+- changed-files:
+  - any-glob-to-any-file: packages/utils/**
 
 package:skyhelper:
-  - changed-files:
-      - any-glob-to-any-file: packages/skyhelper/**
+- changed-files:
+  - any-glob-to-any-file: packages/skyhelper/**
 
 package:jobs:
-  - changed-files:
-      - any-glob-to-any-file: packages/jobs/**
+- changed-files:
+  - any-glob-to-any-file: packages/jobs/**
 
 package:docs:
-  - changed-files:
-      - any-glob-to-any-file: packages/docs/**
+- changed-files:
+  - any-glob-to-any-file: packages/docs/**
 
 package:constants:
-  - changed-files:
-      - any-glob-to-any-file: packages/constants/**
+- changed-files:
+  - any-glob-to-any-file: packages/constants/**
