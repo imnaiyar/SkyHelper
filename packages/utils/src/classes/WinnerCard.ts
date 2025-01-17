@@ -1,4 +1,4 @@
-import { createCanvas, loadImage, SKRSContext2D } from "@napi-rs/canvas";
+import { createCanvas, loadImage, type SKRSContext2D } from "@napi-rs/canvas";
 import { User, GuildMember, Client } from "discord.js";
 import { colors, fancyCount } from "./utils.js";
 import { join } from "path";
@@ -41,9 +41,9 @@ export class GameWinnerCard {
     return ctx;
   }
 
-  private changeFontSize(ctx: SKRSContext2D, size: string): SKRSContext2D {
+  private changeFontSize(ctx: SKRSContext2D, _size: string): SKRSContext2D {
     const fontArgs = ctx.font.split(" ");
-    ctx.font = `${size} ${fontArgs.slice(1).join(" ")}`; // / using the last part
+    ctx.font = `${_size} ${fontArgs.slice(1).join(" ")}`; // / using the last part
     return ctx;
   }
   async build(): Promise<Buffer> {

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "NodeNext",
     "rootDir": "src",
     "outDir": "dist",
     "noImplicitAny": true,
@@ -9,18 +9,13 @@
     "esModuleInterop": true,
     "noImplicitReturns": false,
     "experimentalDecorators": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "paths": {
-      "#lib/*": [
-        "./fonts/*"
-      ]
+      "#lib/*": ["./fonts/*"]
     },
-    "moduleResolution": "node"
+    "moduleResolution": "nodenext"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

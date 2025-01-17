@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import "moment-duration-format";
-import { ShardsCountdown } from "../typings";
-import { shardsTimeline, shardConfig } from "../constants";
+import type { ShardsCountdown } from "../typings.js";
+import { shardsTimeline, shardConfig } from "../constants/index.js";
 
 /**
  * Sequence of Shards pattern
@@ -71,10 +71,10 @@ export class ShardsUtil {
       remainder10 === 1 && remainder100 !== 11
         ? 1
         : remainder10 === 2 && remainder100 !== 12
-        ? 2
-        : remainder10 === 3 && remainder100 !== 13
-        ? 3
-        : 0
+          ? 2
+          : remainder10 === 3 && remainder100 !== 13
+            ? 3
+            : 0
     ];
   }
 

@@ -1,4 +1,4 @@
-import { TSData } from "../typings";
+import type { TSData } from "../typings.js";
 /**
  * @class
  * @classdesc A class to update traveling spirit details in the client constructor
