@@ -17,7 +17,7 @@ try {
       "changelog",
       `Full changelog: [v7.1.0...v${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/v7.1.0...${packageName}@${packageVersion})`,
     );
-    return;
+    process.exit(0);
   }
   const lastTimestamp = new Date(prevRelease.published_at).getTime();
   const prs = await octokit.pulls.list({
