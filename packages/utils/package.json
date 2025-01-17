@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imnaiyar/utils.git"
+    "url": "git+https://github.com/imnaiyar/skyhelper/packages/utils"
   },
   "keywords": [
     "SkyHelperUtils",
@@ -26,9 +26,9 @@
     "shared/**/*"
   ],
   "bugs": {
-    "url": "https://github.com/imnaiyar/utils/issues"
+    "url": "https://github.com/imnaiyar/skyhelper/issues"
   },
-  "homepage": "https://github.com/imnaiyar/utils#readme",
+  "homepage": "https://github.com/imnaiyar/skyhelper/packages/utils#readme",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.51",
     "discord.js": "^14.14.1",
