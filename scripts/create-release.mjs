@@ -57,7 +57,7 @@ try {
   }
 
   changelogString += `\n\nFull Changelog: [${prevRelease.tag_name}...${packageName}@${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion})`;
-  core.setOutput("changelog", changelogString.join("\n"));
+  core.setOutput("changelog", changelogString);
 } catch (error) {
   core.setFailed(error.message);
 }
