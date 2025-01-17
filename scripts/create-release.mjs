@@ -12,11 +12,16 @@ try {
   });
 
   const prevRelease = prevReleases.data.find((r) => !r.draft && r.name.includes(packageName));
+  // Get auto generated release note
+  const autoNotes = await octokit.repos.generateReleaseNotes({
+    repo,
+    owner,
+    tag_name: `${packageName}@${packageVersion}`,
+  });
+
+  // If no previous releae found with matching filter, output aut generated notes
   if (!prevRelease) {
-    core.setOutput(
-      "changelog",
-      `Full changelog: [v7.1.0...v${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/v7.1.0...${packageName}@${packageVersion})`,
-    );
+    core.setOutput("changelog", autoNotes.data.body);
     process.exit(0);
   }
   const lastTimestamp = new Date(prevRelease.published_at).getTime();
@@ -25,6 +30,8 @@ try {
     repo,
     state: "closed",
   });
+
+  // Filter prs by package name and merged after last release
   const changelog = prs.data
     .filter(
       (pr) =>
@@ -33,6 +40,8 @@ try {
         pr.labels.some((l) => packageName.includes(l.name.split(":")[0])),
     )
     .map((pr) => `- ${pr.title} [#${pr.number}] by @${pr.user.login}`);
+
+  // filter items and group prs by their scope
   const filtered = changelog.filter((item) => !item.split(":")[0].includes("chore"));
   const bugFixes = filtered.filter((item) => item.split(":")[0].includes("fix"));
   const features = filtered.filter((item) => item.split(":")[0].includes("feat"));
@@ -61,12 +70,7 @@ try {
 
   changelogString += `\n\nFull Changelog: [${prevRelease.tag_name}...${packageName}@${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion})`;
 
-  // Get auto generated release note for new contribs
-  const autoNotes = await octokit.repos.generateReleaseNotes({
-    repo,
-    owner,
-    tag_name: `${packageName}@${packageVersion}`,
-  });
+  // if new contribs, add a entry for that
   const contribIndex = autoNotes.data.body.indexOf("## New Contributors");
   if (contribIndex !== -1) changelogString += `\n\n${autoNotes.data.body.slice(contribIndex)}`;
 
