@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [chore/monorepo]
+    branches: [main]
   pull_request:
 
 jobs:

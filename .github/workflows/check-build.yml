@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - chore/monorepo
+      - main
     paths:
       - "packages/**"
   pull_request:
