@@ -13,10 +13,11 @@ try {
 
   const prevRelease = prevReleases.data.find((r) => !r.draft && r.name.includes(packageName));
   if (!prevRelease) {
-    return core.setOutput(
+    core.setOutput(
       "changelog",
       `Full changelog: [v7.1.0...v${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/v7.1.0...${packageName}@${packageVersion})`,
     );
+    return;
   }
   const lastTimestamp = new Date(prevRelease.published_at).getTime();
   const prs = await octokit.pulls.list({
@@ -30,8 +31,33 @@ try {
     )
     .map((pr) => `- ${pr.title} [#${pr.number}] by @${pr.user.login}`);
   const filtered = changelog.filter((item) => !item.split(":")[0].includes("chore"));
-  filtered.push(`\nFull changelog: [v\${prevRelease.tag_name}...${packageName}@${packageVersion}](`);
-  core.setOutput("changelog", filtered.join("\n"));
+  const bugFixes = filtered.filter((item) => item.split(":")[0].includes("fix"));
+  const features = filtered.filter((item) => item.split(":")[0].includes("feat"));
+  const refactors = filtered.filter((item) => item.split(":")[0].includes("refactor"));
+  const misc = filtered.filter(
+    (item) =>
+      !item.split(":")[0].includes("fix") && !item.split(":")[0].includes("feat") && !item.split(":")[0].includes("refactor"),
+  );
+  let changelogString = "# Changes";
+  if (features.length > 0) {
+    changelogString += "\n\n## Features\n- ";
+    changelogString += features.join("\n- ");
+  }
+  if (bugFixes.length > 0) {
+    changelogString += "\n\n## Bug Fixes\n- ";
+    changelogString += bugFixes.join("\n- ");
+  }
+  if (refactors.length > 0) {
+    changelogString += "\n\n## Refactors\n- ";
+    changelogString += refactors.join("\n- ");
+  }
+  if (misc.length > 0) {
+    changelogString += "\n\n## Miscellaneous\n- ";
+    changelogString += misc.join("\n- ");
+  }
+
+  changelogString += `\n\nFull Changelog: [${prevRelease.tag_name}...${packageName}@${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion})`;
+  core.setOutput("changelog", changelogString.join("\n"));
 } catch (error) {
   core.setFailed(error.message);
 }
