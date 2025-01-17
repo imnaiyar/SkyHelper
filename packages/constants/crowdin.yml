@@ -7,6 +7,7 @@
 pull_request_labels:
   - crowdin
   - translations
+  - package:constants
 
 pull_request_title: "chore: new translations [crowdin]"
 commit_message: "chore: translate to %language%"
