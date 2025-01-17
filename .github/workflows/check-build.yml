@@ -5,9 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "src/**"
-      - "dashboard/**"
-      - "locales/**"
+      - "packages/**"
   pull_request:
 
 jobs:
@@ -32,4 +30,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build the project
-        run: pnpm build:ci
+        run: pnpm build

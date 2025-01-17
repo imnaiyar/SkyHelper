@@ -1,0 +1,42 @@
+---
+title: Commands
+description: A comprehensive guide on all the commands offered by SkyHelper bot
+---
+
+import { Cards, Callout } from "nextra/components";
+import { FaMapMarkedAlt } from "react-icons/fa";
+import { HiMiniInformationCircle } from "react-icons/hi2";
+import { IoIosNotifications } from "react-icons/io";
+import { IoCog } from "react-icons/io5";
+
+# Commands
+
+Welcome to the comprehensive guide for all commands available in our Discord bot. This section will cover everything you need to know about using the bot's commands effectively, from getting started to advanced usage. You'll find detailed descriptions, usage instructions, and any prerequisites required for each command.
+
+## Getting Started
+
+Our commands are categorized for easy navigation. For instance, commands like `/shards` belong to the `Information` category, as they provide essential data related to shards. Each command is grouped by function, allowing you to quickly locate and explore the commands that suit your needs.
+
+For an in-depth look at each command, please refer to the relevant category pages. Each category includes detailed information about the commands it contains, along with examples and usage tips.
+
+<Callout type="info">
+**Reference**
+- Required: All (command) options enclosed in `<` `>` are required, e.g, `<date>`
+- Optional: Options enclosed with `[` `]` are optional, e.g, `[timezone]`
+
+</Callout >
+
+## User-Install App Commands
+
+Most commands are accessible in [user installations](pages/user-install-app), allowing you to use them directly by installing to bot to your user account. However, certain commands require the bot to be added to a server to function correctly. For example, commands like /shards-live and /reminders are server-specific and cannot operate in a private or direct message context or in a server the bot is not added as a member, as these commands rely on webhooks to function.
+
+These server-specific commands rely on server-level data and interactions, which is why they are not available in user-only installations.
+
+## Commands Category
+
+<Cards>
+  <Cards.Card title="Guides" icon={<FaMapMarkedAlt />} href="/commands/guides" />
+  <Cards.Card title="Informations" icon={<HiMiniInformationCircle />} href="/commands/info" />
+  <Cards.Card title="Admin" icon={<IoIosNotifications />} href="/commands/admin" />
+  <Cards.Card title="Utilities" icon={<IoCog />} href="/commands/utility" />
+</Cards>

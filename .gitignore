@@ -1,18 +1,6 @@
-config.js
-node_modules
-.env
-logs/
-bot/commands/wip/
-.env.ex
+**/node_modules
+**/.turbo
+**/logs
+**/coverage
+**/dist
 test.js
-errors.toml
-dist
-bun.lockb
-coverage/
-docker-compose.debug.yml
-.b.env
-__tests__/**.js
-__tests__/**.map
-# Sentry Config File
-.sentryclirc
-.vercel

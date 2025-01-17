@@ -1,0 +1,5 @@
+ex.dockerfile
+dist/
+.vscode/
+node_modules/
+.env

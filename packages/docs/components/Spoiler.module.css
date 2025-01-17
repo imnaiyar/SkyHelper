@@ -1,0 +1,14 @@
+.spoiler {
+  background-color: black;
+  color: transparent;
+  cursor: pointer;
+  padding: 0 0.2em;
+  border-radius: 3px;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.spoiler.revealed {
+  background-color: transparent;
+  color: inherit;
+}

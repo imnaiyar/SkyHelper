@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  main:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: skyhelper-jobs
+    environment:
+      - TOKEN
+      - MONGO_CONNECTION
+      - NODE_ENV
+      - ERROR_WEBHOOK
+    restart: always
+

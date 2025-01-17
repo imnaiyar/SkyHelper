@@ -1,0 +1,99 @@
+name: Publish Package to npmjs
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: "Specify the type of version bump"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - none
+      package:
+        description: "Specify the package to publish"
+        required: true
+        type: choice
+        options:
+          - "@skyhelperbot/utils"
+          - "@skyhelperbot/constants"
+          - "@skyhelperbot/jobs"
+          - "@skyhelperbot/docs"
+          - "skyhelper"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Setup git user
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Bump version and update jsr.json
+        id: bump_version
+        if: ${{ github.event.inputs.version_type != 'none' }}
+        run: |
+          raw_version=$(npm version ${{ github.event.inputs.version_type }} -m "chore(release): bump ${{ github.event.inputs.package }} to %s")
+
+          new_version=${raw_version#v}
+          echo "new_version=${new_version}" >> $GITHUB_ENV
+
+          echo "new_version=${new_version}" >> $GITHUB_ENV
+
+          # Update the version in jsr.json
+          jq ".version = \"${new_version}\"" jsr.json > tmp.json && mv tmp.json jsr.json
+
+          git add package.json package-lock.json jsr.json
+          git commit --amend --no-edit
+
+          git push origin HEAD --follow-tags
+
+      - name: Publish
+        if: contains(['@skyhelperbot/utils', '@skyhelperbot/constants'], ${{ github.event.inputs.package }})
+        run: pnpm --filter '${{ github.event.inputs.package }}' publish --provenance --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to JSR
+        if: ${{ github.event.inputs.package == '@skyhelperbot/utils' }}
+        run: cd packages/utils && npx jsr publish
+
+      - name: Run PR Processing Script
+        id: process-prs
+        run: node ./scripts/process-prs.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          new_version: ${{ env.new_version }}
+          package: ${{ github.event.inputs.package }}
+
+      - name: Create GitHub release
+        if: ${{ github.event.inputs.version_type != 'none' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{github.event.inputs.package}}@${{ env.new_version }}
+          name: ${{github.event.inputs.package}}@${{ env.new_version }}
+          draft: false
+          body: ${{ steps.process-prs.outputs.changelog }}
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
