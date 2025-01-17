@@ -11,4 +11,4 @@ RUN bun install
 
 COPY . .
 
-CMD ["bun", "run", "start:bun"]
+CMD ["bun", "run", "start"]
