@@ -70,7 +70,7 @@ jobs:
 
       - name: Publish
         if: contains(['@skyhelperbot/utils', '@skyhelperbot/constants'], ${{ github.event.inputs.package }})
-        run: pnpm --filter '${{ github.event.inputs.package }}' publish --provenance --no-git-checks
+        run: pnpm --filter '${{ github.event.inputs.package }}' publish --provenance --no-git-checks --access public --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
