@@ -76,7 +76,7 @@ jobs:
 
       - name: Run PR Processing Script
         id: process-prs
-        run: node ./scripts/process-prs.mjs
+        run: node ./scripts/create-release.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           new_version: ${{ env.new_version }}
