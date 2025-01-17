@@ -63,9 +63,6 @@ jobs:
 
           echo "new_version=${new_version}" >> $GITHUB_ENV
 
-          # Update the version in jsr.json
-          jq ".version = \"${new_version}\"" jsr.json > tmp.json && mv tmp.json jsr.json
-
           git add package.json package-lock.json jsr.json
           git commit --amend --no-edit
 
@@ -76,10 +73,6 @@ jobs:
         run: pnpm --filter '${{ github.event.inputs.package }}' publish --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish to JSR
-        if: ${{ github.event.inputs.package == '@skyhelperbot/utils' }}
-        run: cd packages/utils && npx jsr publish
 
       - name: Run PR Processing Script
         id: process-prs
