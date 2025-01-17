@@ -63,7 +63,7 @@ jobs:
 
           echo "new_version=${new_version}" >> $GITHUB_ENV
 
-          git add package.json package-lock.json jsr.json
+          git add .
           git commit --amend --no-edit
 
           git push origin HEAD --follow-tags
