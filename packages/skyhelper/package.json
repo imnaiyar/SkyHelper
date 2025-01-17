@@ -98,5 +98,10 @@
     "@nestjs/core",
     "@sapphire/type"
   ],
-  "packageManager": "pnpm@9.4.0"
+  "packageManager": "pnpm@9.4.0",
+  "pnpm": {
+    "overrides": {
+      "discord-api-types": "0.37.97"
+    }
+  }
 }

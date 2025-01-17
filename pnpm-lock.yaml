@@ -309,7 +309,7 @@ importers:
         specifier: ^0.1.51
         version: 0.1.58
       discord.js:
-        specifier: ^14.14.1
+        specifier: 14.16.2
         version: 14.16.2
       moment-duration-format:
         specifier: ^2.3.2
