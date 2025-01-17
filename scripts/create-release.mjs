@@ -37,7 +37,7 @@ try {
       (pr) =>
         pr.merged_at &&
         new Date(pr.created_at).getTime() > lastTimestamp &&
-        pr.labels.some((l) => packageName.includes(l.name.split(":")[0])),
+        pr.labels.some((l) => packageName.includes(l.name.split(":")[1])),
     )
     .map((pr) => `- ${pr.title} [#${pr.number}] by @${pr.user.login}`);
 
@@ -73,7 +73,7 @@ try {
     changelogString += misc.join("\n");
   }
 
-  changelogString += `\n\nFull Changelog: [${prevRelease.tag_name}...${packageName}@${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion})`;
+  changelogString += `\n\nFull Changelog: https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion}`;
 
   // if new contribs, add a entry for that
   const contribIndex = autoNotes.data.body.indexOf("## New Contributors");
