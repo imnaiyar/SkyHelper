@@ -64,7 +64,7 @@ jobs:
           echo "new_version=${new_version}" >> $GITHUB_ENV
 
           git add .
-          git commit --amend -m "chore(release): bump ${{ github.event.inputs.package }} to ${new_version}"
+          git commit -m "chore(release): bump ${{ github.event.inputs.package }} to ${new_version}"
 
           git push origin HEAD --follow-tags
 
