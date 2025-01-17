@@ -23,11 +23,14 @@ try {
   const prs = await octokit.pulls.list({
     owner,
     repo,
+    state: "closed",
   });
   const changelog = prs.data
     .filter(
       (pr) =>
-        new Date(pr.created_at).getTime() > lastTimestamp && pr.labels.some((l) => packageName.includes(l.name.split(":")[0])),
+        pr.merged_at &&
+        new Date(pr.created_at).getTime() > lastTimestamp &&
+        pr.labels.some((l) => packageName.includes(l.name.split(":")[0])),
     )
     .map((pr) => `- ${pr.title} [#${pr.number}] by @${pr.user.login}`);
   const filtered = changelog.filter((item) => !item.split(":")[0].includes("chore"));
@@ -40,23 +43,33 @@ try {
   );
   let changelogString = "# Changes";
   if (features.length > 0) {
-    changelogString += "\n\n## Features\n- ";
-    changelogString += features.join("\n- ");
+    changelogString += "\n\n## Features\n";
+    changelogString += features.join("\n");
   }
   if (bugFixes.length > 0) {
-    changelogString += "\n\n## Bug Fixes\n- ";
-    changelogString += bugFixes.join("\n- ");
+    changelogString += "\n\n## Bug Fixes\n";
+    changelogString += bugFixes.join("\n");
   }
   if (refactors.length > 0) {
-    changelogString += "\n\n## Refactors\n- ";
-    changelogString += refactors.join("\n- ");
+    changelogString += "\n\n## Refactors\n";
+    changelogString += refactors.join("\n");
   }
   if (misc.length > 0) {
-    changelogString += "\n\n## Miscellaneous\n- ";
-    changelogString += misc.join("\n- ");
+    changelogString += "\n\n## Miscellaneous\n";
+    changelogString += misc.join("\n");
   }
 
   changelogString += `\n\nFull Changelog: [${prevRelease.tag_name}...${packageName}@${packageVersion}](https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion})`;
+
+  // Get auto generated release note for new contribs
+  const autoNotes = await octokit.repos.generateReleaseNotes({
+    repo,
+    owner,
+    tag_name: `${packageName}@${packageVersion}`,
+  });
+  const contribIndex = autoNotes.data.body.indexOf("## New Contributors");
+  if (contribIndex !== -1) changelogString += `\n\n${autoNotes.data.body.slice(contribIndex)}`;
+
   core.setOutput("changelog", changelogString);
 } catch (error) {
   core.setFailed(error.message);
