@@ -1,4 +1,4 @@
-name: Publish Package to npmjs
+name: Release Package
 
 on:
   workflow_dispatch:
@@ -42,7 +42,9 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+        run: |
+          pnpm config set loglevel error
+          pnpm i --frozen-lockfile
 
       - name: Build the project
         run: pnpm run build
