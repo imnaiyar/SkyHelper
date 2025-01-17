@@ -64,7 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy SkyHelper Jobs
-        run: cd packages/skyhelper-jobs && docker compose up -d --build
+        run: cd packages/jobs && docker compose up -d --build
         env:
           TOKEN: ${{ secrets.TOKEN }}
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
