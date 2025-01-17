@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build --filter=!./packages/docs/ --filter=...[origin/main]",
+    "build": "turbo build --filter=!./packages/docs/",
+    "build:affected": "turbo build --filter=!./packages/docs/ --filter=...[origin/main]",
     "lint": "turbo lint",
     "test": "turbo test",
     "update": "pnpm --recursive update --interactive",

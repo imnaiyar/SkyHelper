@@ -52,7 +52,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Bump version and update jsr.json
+      - name: Bump version
         id: bump_version
         if: ${{ github.event.inputs.version_type != 'none' }}
         run: |
