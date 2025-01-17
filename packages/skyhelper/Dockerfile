@@ -8,7 +8,7 @@ RUN sed -i 's/"workspace:[^"]*"/"latest"/g' package.json
 
 RUN npm install -g pnpm
 
-RUN pnpm install --frozen-lockfile --production=false
+RUN pnpm install --production=false
 
 COPY . .
 EXPOSE 5000
