@@ -26,7 +26,7 @@ jobs:
               - 'packages/skyhelper-jobs/**'
   deploy_skyhelper:
     needs: changes
-    if: needs.changes.outputs.skyhelper == 'true'
+    if: needs.changes.outputs.skyhelper == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: self-hosted
     environment: production
     steps:
@@ -58,7 +58,7 @@ jobs:
 
   deploy_skyhelper_jobs:
     needs: changes
-    if: needs.changes.outputs.jobs == 'true'
+    if: needs.changes.outputs.jobs == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: self-hosted
     environment: production
     steps:
