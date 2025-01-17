@@ -9,7 +9,7 @@ import {
   time,
 } from "discord.js";
 import moment from "moment-timezone";
-import { ShardsUtil as utils, shardsTimeline } from "skyhelper-utils";
+import { ShardsUtil as utils, shardsTimeline } from "@skyhelperbot/utils";
 export default {
   data: {
     name: "shards-timeline",

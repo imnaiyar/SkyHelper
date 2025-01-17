@@ -16,7 +16,7 @@ import {
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
-import { parsePerms, type Permission } from "skyhelper-utils";
+import { parsePerms, type Permission } from "@skyhelperbot/utils";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {

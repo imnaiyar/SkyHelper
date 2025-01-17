@@ -10,7 +10,7 @@ import {
   type BaseMessageOptions,
 } from "discord.js";
 import { handleHangman } from "./sub/hangman.js";
-import { LeaderboardCard, type userData } from "skyhelper-utils";
+import { LeaderboardCard, type userData } from "@skyhelperbot/utils";
 import { SKY_GAME_DATA } from "#bot/commands/commands-data/fun-commands";
 export default {
   ...SKY_GAME_DATA,

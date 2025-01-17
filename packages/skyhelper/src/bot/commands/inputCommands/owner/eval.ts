@@ -4,7 +4,7 @@ import { Type } from "@sapphire/type";
 import { EmbedBuilder, codeBlock } from "discord.js";
 
 import * as d from "discord.js";
-import { postToHaste } from "skyhelper-utils";
+import { postToHaste } from "@skyhelperbot/utils";
 import util from "node:util";
 import { EVAL_DATA } from "#bot/commands/commands-data/owner-commands";
 export default {

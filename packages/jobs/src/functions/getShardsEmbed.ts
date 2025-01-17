@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { ShardsUtil as utils, shardsInfo } from "skyhelper-utils";
+import { ShardsUtil as utils, shardsInfo } from "@skyhelperbot/utils";
 import type { getTranslator } from "@/functions/getTranslator.js";
 import {
   type APIActionRowComponent,

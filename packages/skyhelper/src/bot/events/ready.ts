@@ -2,7 +2,7 @@ import moment from "moment-timezone";
 import { Flags } from "#libs";
 import type { Event } from "#structures";
 import { type ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
-import { UpdateEvent, UpdateTS, ShardsUtil as util } from "skyhelper-utils";
+import { UpdateEvent, UpdateTS, ShardsUtil as util } from "@skyhelperbot/utils";
 import { bootstrap } from "../../api/main.js";
 import chalk from "chalk";
 const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;

@@ -3,7 +3,7 @@ import { Webhook } from "@/structures/Webhook.js";
 import { roleMention } from "@discordjs/builders";
 import { getTranslator, type LangKeys } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
-import { SkytimesUtils as skyutils } from "skyhelper-utils";
+import { SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import { resolveColor } from "@/utils/resolveColor.js";
 import type { GuildSchema } from "@/types";
 import { throttleRequests } from "./throttleRequests.js";

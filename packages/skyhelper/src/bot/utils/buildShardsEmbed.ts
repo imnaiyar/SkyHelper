@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type ColorResolvable, EmbedBuilder, time } from "discord.js";
 import moment from "moment-timezone";
-import { ShardsUtil as utils, shardsInfo } from "skyhelper-utils";
+import { ShardsUtil as utils, shardsInfo } from "@skyhelperbot/utils";
 import type { getTranslator } from "#bot/i18n";
 /**
  * @param date The date for which the shards embed is to be built

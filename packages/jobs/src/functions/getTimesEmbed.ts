@@ -6,7 +6,7 @@ import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { type APIEmbed } from "discord-api-types/v10";
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
 import getTS from "@/utils/getTS.js";
-import { SkytimesUtils as skyutils } from "skyhelper-utils";
+import { SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import { resolveColor } from "@/utils/resolveColor.js";
 import { time } from "@discordjs/builders";
 /**

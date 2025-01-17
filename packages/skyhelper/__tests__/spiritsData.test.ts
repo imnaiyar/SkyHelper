@@ -1,4 +1,4 @@
-import spiritsData from "../src/bot/libs/constants/spirits-datas/index.js";
+import spiritsData from "@skyhelperbot/constants/spirits-datas";
 
 describe("spiritsData", () => {
   it("the object should contain correct data set", () => {

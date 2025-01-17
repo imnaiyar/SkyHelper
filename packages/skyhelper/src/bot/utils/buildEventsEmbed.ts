@@ -5,7 +5,7 @@ import getEvent from "#handlers/getSpecialEvent";
 import "moment-duration-format";
 import { getTS } from "#handlers";
 import type { getTranslator } from "#bot/i18n";
-import { eventData, SkytimesUtils as skyutils } from "skyhelper-utils";
+import { eventData, SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 
 /**
  * Get Times Embed

@@ -1,5 +1,5 @@
 import { Collection, type LocalizationMap } from "discord.js";
-import { recursiveReadDir } from "skyhelper-utils";
+import { recursiveReadDir } from "@skyhelperbot/utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import logger, { CustomLogger } from "../handlers/logger.js";

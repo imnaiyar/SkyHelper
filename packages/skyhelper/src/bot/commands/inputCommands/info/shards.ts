@@ -2,7 +2,7 @@ import { buildShardEmbed } from "#utils";
 import type { Command } from "#structures";
 import { type BaseMessageOptions } from "discord.js";
 import moment from "moment";
-import { ShardsUtil } from "skyhelper-utils";
+import { ShardsUtil } from "@skyhelperbot/utils";
 import type { getTranslator } from "#bot/i18n";
 import { SHARDS_DATA } from "#bot/commands/commands-data/info-commands";
 

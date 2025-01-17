@@ -13,7 +13,7 @@ import type { Button, ContextMenuCommand, Command } from "./index.js";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { getUserID, type UserSession } from "#api/utils/discord";
 import config from "#bot/config";
-import { UpdateEvent, UpdateTS } from "skyhelper-utils";
+import { UpdateEvent, UpdateTS } from "@skyhelperbot/utils";
 import { logger as Logger } from "#handlers";
 import chalk from "chalk";
 import * as schemas from "#bot/database/index";

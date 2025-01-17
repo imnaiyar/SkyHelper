@@ -10,7 +10,7 @@ import type {
   OmitPartialGroupDMChannel,
 } from "discord.js";
 import { Collection, resolveColor } from "discord.js";
-import { parsePerms, type Permission } from "skyhelper-utils";
+import { parsePerms, type Permission } from "@skyhelperbot/utils";
 
 // #region Env
 export function validateEnv() {

@@ -16,7 +16,7 @@ import * as Sentry from "@sentry/node";
 import type { Command, Event } from "#structures";
 import config from "#bot/config";
 import { dailyQuestEmbed } from "#utils";
-import { SkytimesUtils as skyutils } from "skyhelper-utils";
+import { SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import { validateInteractions } from "#bot/utils/validators";
 import moment from "moment-timezone";
 
