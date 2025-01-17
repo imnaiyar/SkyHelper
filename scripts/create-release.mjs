@@ -1,83 +1,85 @@
 import core from "@actions/core";
 import { Octokit } from "@octokit/action";
 
-const packageName = core.getInput("packageName");
+const packageName = process.env.package;
 const packageVersion = process.env.new_version;
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const octokit = new Octokit();
-try {
-  const prevReleases = await octokit.repos.listReleases({
-    owner,
-    repo,
-  });
 
-  const prevRelease = prevReleases.data.find((r) => !r.draft && r.name.includes(packageName));
-  // Get auto generated release note
-  const autoNotes = await octokit.repos.generateReleaseNotes({
-    repo,
+const packageMappings = {
+  "@skyhelperbot/utils": "package:utils",
+  "@skyhelperbot/docs": "package:docs",
+  "@skyhelperbot/jobs": "package:jobs",
+  "@skyhelperbot/constants": "package:constants",
+  skyhelper: "package:skyhelper",
+};
+
+const packageLabel = packageMappings[packageName];
+if (!packageLabel) {
+  core.setFailed(`Invalid package name: ${packageName}`);
+  process.exit(1);
+}
+
+try {
+  const { data: releases } = await octokit.repos.listReleases({ owner, repo });
+  const prevRelease = releases.find((r) => !r.draft && r.name.includes(packageName));
+  const { data: autoNotes } = await octokit.repos.generateReleaseNotes({
     owner,
+    repo,
     tag_name: `${packageName}@${packageVersion}`,
   });
 
-  // If no previous releae found with matching filter, output aut generated notes
   if (!prevRelease) {
-    core.setOutput("changelog", autoNotes.data.body);
+    core.setOutput("changelog", autoNotes.body);
     process.exit(0);
   }
+  console.log("Found previous release for: " + packageName + " with tag: " + prevRelease.tag_name);
+
   const lastTimestamp = new Date(prevRelease.published_at).getTime();
-  const prs = await octokit.pulls.list({
-    owner,
-    repo,
-    state: "closed",
+  const { data: prs } = await octokit.pulls.list({ owner, repo, state: "closed" });
+
+  const filteredPr = prs
+    .filter(
+      (pr) => pr.merged_at && new Date(pr.merged_at).getTime() > lastTimestamp && pr.labels.some((l) => l.name === packageLabel),
+    )
+    .map((pr) => {
+      const titleMatch = pr.title.match(/^(feat|fix|refactor|chore)(?:\([^)]*\))?/i);
+      return {
+        title: titleMatch?.[3] ?? pr.title,
+        number: pr.number,
+        user: pr.user.login,
+        scope: titleMatch?.[2] || null,
+        type: titleMatch?.[1] || "misc",
+      };
+    })
+    .filter((pr) => pr.type !== "chore");
+
+  console.log(`Found ${filteredPr.length} PRs for ${packageName}`);
+  if (filteredPr.length === 0) {
+    core.setOutput("changelog", autoNotes.body);
+    process.exit(0);
+  }
+
+  const grouped = { features: [], fixes: [], refactors: [], misc: [] };
+  filteredPr.forEach(({ title, number, user, type, scope }) => {
+    grouped[type === "feat" ? "features" : type === "fix" ? "fixes" : type === "refactor" ? "refactors" : "misc"].push(
+      `- ${scope ? `${scope}: ` : ""}${title} [#${number}] by @${user}`,
+    );
   });
 
-  // Filter prs by package name and merged after last release
-  const changelog = prs.data
-    .filter(
-      (pr) =>
-        pr.merged_at &&
-        new Date(pr.created_at).getTime() > lastTimestamp &&
-        pr.labels.some((l) => packageName.includes(l.name.split(":")[1])),
-    )
-    .map((pr) => `- ${pr.title} [#${pr.number}] by @${pr.user.login}`);
-
-  if (changelog.length === 0) {
-    core.setOutput("changelog", autoNotes.data.body);
-    process.exit(0);
-  }
-
-  // filter items and group prs by their scope
-  const filtered = changelog.filter((item) => !item.split(":")[0].includes("chore"));
-  const bugFixes = filtered.filter((item) => item.split(":")[0].includes("fix"));
-  const features = filtered.filter((item) => item.split(":")[0].includes("feat"));
-  const refactors = filtered.filter((item) => item.split(":")[0].includes("refactor"));
-  const misc = filtered.filter(
-    (item) =>
-      !item.split(":")[0].includes("fix") && !item.split(":")[0].includes("feat") && !item.split(":")[0].includes("refactor"),
-  );
   let changelogString = "# Changes";
-  if (features.length > 0) {
-    changelogString += "\n\n## Features\n";
-    changelogString += features.join("\n");
-  }
-  if (bugFixes.length > 0) {
-    changelogString += "\n\n## Bug Fixes\n";
-    changelogString += bugFixes.join("\n");
-  }
-  if (refactors.length > 0) {
-    changelogString += "\n\n## Refactors\n";
-    changelogString += refactors.join("\n");
-  }
-  if (misc.length > 0) {
-    changelogString += "\n\n## Miscellaneous\n";
-    changelogString += misc.join("\n");
+  for (const [key, items] of Object.entries(grouped)) {
+    if (items.length > 0) {
+      changelogString += `\n\n## ${key.charAt(0).toUpperCase() + key.slice(1)}\n` + items.join("\n");
+    }
   }
 
-  changelogString += `\n\nFull Changelog: https://github.com/imnaiyar/SkyHelper/compare/${prevRelease.tag_name}...${packageName}@${packageVersion}`;
+  changelogString += `\n\nFull Changelog: https://github.com/${owner}/${repo}/compare/${prevRelease.tag_name}...${packageName}@${packageVersion}`;
 
-  // if new contribs, add a entry for that
-  const contribIndex = autoNotes.data.body.indexOf("## New Contributors");
-  if (contribIndex !== -1) changelogString += `\n\n${autoNotes.data.body.slice(contribIndex)}`;
+  const contribIndex = autoNotes.body.indexOf("## New Contributors");
+  if (contribIndex !== -1) {
+    changelogString += `\n\n${autoNotes.body.slice(contribIndex)}`;
+  }
 
   core.setOutput("changelog", changelogString);
 } catch (error) {
