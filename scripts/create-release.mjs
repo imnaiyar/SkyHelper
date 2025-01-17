@@ -41,6 +41,11 @@ try {
     )
     .map((pr) => `- ${pr.title} [#${pr.number}] by @${pr.user.login}`);
 
+  if (changelog.length === 0) {
+    core.setOutput("changelog", autoNotes.data.body);
+    process.exit(0);
+  }
+
   // filter items and group prs by their scope
   const filtered = changelog.filter((item) => !item.split(":")[0].includes("chore"));
   const bugFixes = filtered.filter((item) => item.split(":")[0].includes("fix"));
