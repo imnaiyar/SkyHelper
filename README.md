@@ -41,5 +41,6 @@ This ia monorepo containing packages related to SkyHelper bot. Packages included
 
 # Contributing
 
+- Install dependencies `pnpm i --frozen-lockfile`
 - Build the project `pnpm run build`
 - Make changes and lint, test and commit
