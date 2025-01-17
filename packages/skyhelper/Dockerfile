@@ -11,7 +11,5 @@ RUN npm install -g pnpm
 RUN pnpm install --production=false
 
 COPY . .
-
-RUN pnpm 
 EXPOSE 5000
 CMD [ "pnpm", "start" ]
