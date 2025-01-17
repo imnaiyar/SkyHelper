@@ -59,12 +59,14 @@ try {
     core.setOutput("changelog", autoNotes.body);
     process.exit(0);
   }
-
+  const typeMappings = {
+    feat: "features",
+    fix: "fixes",
+    refactor: "refactors",
+  };
   const grouped = { features: [], fixes: [], refactors: [], misc: [] };
   filteredPr.forEach(({ title, number, user, type, scope }) => {
-    grouped[type === "feat" ? "features" : type === "fix" ? "fixes" : type === "refactor" ? "refactors" : "misc"].push(
-      `- ${scope ? `${scope}: ` : ""}${title} [#${number}] by @${user}`,
-    );
+    grouped[typeMappings[type] ?? "misc"].push(`- ${scope ? `${scope}: ` : ""}${title} [#${number}] by @${user}`);
   });
 
   let changelogString = "# Changes";
