@@ -9,9 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 let toExport: Record<string, SpiritsData> = {};
-const paths = readdirSync(__dirname).filter(
-  (file) => file.split(".")[0] !== "index" && (file.endsWith(".js") || file.endsWith(".ts")),
-);
+const paths = readdirSync(__dirname).filter((file) => file.split(".")[0] !== "index" && file.endsWith(".js"));
 
 for (const p of paths) {
   const { default: data } = (await import(pathToFileURL(path.join(__dirname, p)).href)) as {
