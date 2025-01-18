@@ -43,7 +43,12 @@
 - 🈯️ Supports mulitple language ([help us](https://docs.skyhelper.xyz/pages/translating) support more)
 - [and much more...](https://docs.skyhelper.xyz/commands)
 
-## Building the bot
+## Running the bot
+
+### Requirements
+
+- Docker
+- Node.js >v23
 
 - Clone this repository by running
 
@@ -51,14 +56,12 @@
 git clone https://github.com/imnaiyar/SkyHelper
 ```
 
-- Rename `example.env` to `.env` and fill all the required fields. (We have CLI to streamline this process. Run `npm run setup` and it'll setup the .env file for you)
-- Install the required deps by running `pnpm install --frozen-lock`
-- Run `pnpm build:prod` to build the project
-- Run `pnpm commands:prod` to register the slash commands.
-- Run `pnpm start` to start the project
+- Move to this directory `cd packages/skyhelper`
+- Rename `example.env` to `.env` and fill all the required fields. (We have CLI to streamline this process. Run `pnpm run setup` and it'll setup the .env file for you)
+- Run `docker compose up -d --build`
 
 > [!IMPORTANT]
-> If you plan to use live updates/Reminders feature, you'll have to also host/run [skyhelper-jobs](https://github.com/imnaiyar/skyhelper-jobs) as cron jobs to send the reminders/updates are hosted on a different process to reduce the load on the main bot. Intructions to set it up is given on the repo's README
+> If you plan to use live updates/Reminders feature, you'll have to also host/run [@skyhelperbot/jobs](../jobs/) as cron jobs to send the reminders/updates are hosted on a different process to reduce the load on the main bot. Intructions to set it up is given on the repo's README
 
 ## Dashboard
 
@@ -71,6 +74,9 @@ DASHBOARD: {
   ...//
 }
 ```
+
+> [!NOTE]
+> There are other benifits of having the api besides the dashboard, such as recieving updates when someone installs the bot to their user account. If you want such features, then you can keep the api running
 
 ### Endpoints
 

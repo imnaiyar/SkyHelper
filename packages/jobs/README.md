@@ -1,6 +1,6 @@
 # SkyHelper Jobs
 
-This is an add-on plugin that goes along with [SkyHelper](https://github.com/imnaiyar/SkyHelper) bot, that schedules and executes cron jobs related to the bot's functionalities, such as reminders and live updates. This plugin ensures the bot can handle scheduled tasks seamlessly and on different process than bot's so it doesn't interfere with it's performance.
+This is an add-on plugin that goes along with [SkyHelper](../skyhelper/) bot, that schedules and executes cron jobs related to the bot's functionalities, such as reminders and live updates. This plugin ensures the bot can handle scheduled tasks seamlessly and on different process than bot's so it doesn't interfere with it's performance.
 
 ## Why this?
 
@@ -11,11 +11,16 @@ Running cron jobs is not resources exhaustive itself, but sending reminders/live
 
 ## Runing the project
 
-- Clone the repo and install dependencies
+### Requirements
+
+- Docker
+- Bun
+
+- Clone the repo and move to this direcotry
 
 ```bash
-git clone https://github.com/imnaiyar/skyhelper-jobs
-bun install # or npm or yarn  or pnpm
+git clone https://github.com/imnaiyar/skyhelper
+cd packages/jobs
 ```
 
 - Make sure to rename `.env.example` and fill the required values.
@@ -23,7 +28,7 @@ bun install # or npm or yarn  or pnpm
 > [!IMPORTANT]  
 > Make sure that bot token and Mongo connection url is the same as the one you used to run the main bot
 
-- Start the project by running `bun run start:bun` (use `start` script if you are not using bun)
+- Run the project with docker `docker compose up -d --build`
 
 > [!WARNING]  
 > TODO: Lot's of the codes are cloned/duplicated from the main bot, find a way to effectively reuse it and reduce duplications
