@@ -7,6 +7,15 @@ on:
       - "packages/skyhelper/**"
       - "packages/skyhelper-jobs/**"
   workflow_dispatch:
+    inputs:
+      to_deploy:
+        description: "Specify the package to deploy"
+        required: true
+        type: choice
+        options:
+          - "skyhelper"
+          - "jobs"
+          - "both"
 
 jobs:
   changes:
@@ -26,7 +35,7 @@ jobs:
               - 'packages/skyhelper-jobs/**'
   deploy_skyhelper:
     needs: changes
-    if: needs.changes.outputs.skyhelper == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.changes.outputs.skyhelper == 'true' || github.event_name == 'workflow_dispatch' && contains(fromJSON('["skyhelper", "both"]'), github.event.inputs.to_deploy)
     runs-on: self-hosted
     environment: production
     steps:
@@ -58,7 +67,7 @@ jobs:
 
   deploy_skyhelper_jobs:
     needs: changes
-    if: needs.changes.outputs.jobs == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.changes.outputs.jobs == 'true' || github.event_name == 'workflow_dispatch' && contains(fromJSON('["jobs", "both"]'), github.event.inputs.to_deploy)
     runs-on: self-hosted
     environment: production
     steps:
