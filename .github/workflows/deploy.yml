@@ -4,8 +4,10 @@ on:
   push:
     branches: [main]
     paths:
-      - "packages/skyhelper/**"
-      - "packages/skyhelper-jobs/**"
+      - "packages/skyhelper/src/**"
+      - "packages/skyhelper/package.json"
+      - "packages/jobs/src/**"
+      - "packages/jobs/package.json"
   workflow_dispatch:
     inputs:
       to_deploy:
