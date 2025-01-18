@@ -5,20 +5,13 @@ const packageName = process.env.package;
 const packageVersion = process.env.new_version;
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const octokit = new Octokit();
-
-const packageMappings = {
-  "@skyhelperbot/utils": "package:utils",
-  "@skyhelperbot/docs": "package:docs",
-  "@skyhelperbot/jobs": "package:jobs",
-  "@skyhelperbot/constants": "package:constants",
-  skyhelper: "package:skyhelper",
-};
-
-const packageLabel = packageMappings[packageName];
-if (!packageLabel) {
-  core.setFailed(`Invalid package name: ${packageName}`);
+const packageRegex = /^@skyhelperbot\/(.+)$/;
+const match = packageName.match(packageRegex);
+if (!match && packageName !== "skyhelper") {
+  core.setFailed("Invalid package name");
   process.exit(1);
 }
+const packageLabel = `package:` + (match?.[1] ?? "skyhelper");
 
 try {
   const { data: releases } = await octokit.repos.listReleases({ owner, repo });
@@ -43,16 +36,17 @@ try {
       (pr) => pr.merged_at && new Date(pr.merged_at).getTime() > lastTimestamp && pr.labels.some((l) => l.name === packageLabel),
     )
     .map((pr) => {
-      const titleMatch = pr.title.match(/^(feat|fix|refactor|chore)(?:\([^)]*\))?/i);
+      const titleMatch = pr.title.match(/^(feat|fix|refactor|perf|types|docs|revert|style|test)(?:\([^)]*\))?/i);
+      if (!titleMatch) return null;
       return {
-        title: titleMatch?.[3] ?? pr.title,
+        title: titleMatch[3] ?? pr.title,
         number: pr.number,
         user: pr.user.login,
-        scope: titleMatch?.[2] || null,
-        type: titleMatch?.[1] || "misc",
+        scope: titleMatch[2] || null,
+        type: titleMatch[1] || "misc",
       };
     })
-    .filter((pr) => pr.type !== "chore");
+    .filter((pr) => pr.type !== null);
 
   console.log(`Found ${filteredPr.length} PRs for ${packageName}`);
   if (filteredPr.length === 0) {
@@ -63,15 +57,23 @@ try {
     feat: "features",
     fix: "fixes",
     refactor: "refactors",
+    perf: "performance",
+    types: "types",
+    docs: "documentation",
+    revert: "reverts",
+    style: "styling",
   };
-  const grouped = { features: [], fixes: [], refactors: [], misc: [] };
-  filteredPr.forEach(({ title, number, user, type, scope }) => {
-    grouped[typeMappings[type] ?? "misc"].push(`- ${scope ? `${scope}: ` : ""}${title} [#${number}] by @${user}`);
-  });
+
+  const grouped = filteredPr.reduce((acc, { title, number, user, type, scope }) => {
+    const key = typeMappings[type] ?? "misc";
+    acc[key] = acc[key] || [];
+    acc[key].push(`- ${scope ? `${scope}: ` : ""}${title} [#${number}] by @${user}`);
+    return acc;
+  }, {});
 
   let changelogString = "# Changes";
   for (const [key, items] of Object.entries(grouped)) {
-    if (items.length > 0) {
+    if (items.length) {
       changelogString += `\n\n## ${key.charAt(0).toUpperCase() + key.slice(1)}\n` + items.join("\n");
     }
   }
