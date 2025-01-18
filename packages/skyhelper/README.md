@@ -50,6 +50,7 @@
 - Docker
 - Node.js >v23
 
+### Running
 - Clone this repository by running
 
 ```js
