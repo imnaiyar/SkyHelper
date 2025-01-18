@@ -1,7 +1,7 @@
 {
   "bot": {
     "name": "SkyHelper",
-    "intro": "それが私です...",
+    "intro": "That's me...",
     "EMBED_TITLE": "ボット情報",
     "TOTAL_SERVER": "サーバー総数",
     "TOTAL_AUTHORIZED": "Total User Installs",
