@@ -34,10 +34,10 @@
 
 This ia monorepo containing packages related to SkyHelper bot. Packages included are:
 
-- [/docs](/packages/docs/)
-- [/skyhelper-utils](/packages/utils/)
-- [/skyhelper-jobs](/packages/skyhelper-jobs/)
-- [/skyhelper](/packages/skyhelper/)
+- [@skyhelperbot/docs](/packages/docs/) - Documentation for skyhelper bot
+- [@skyhelperbot/utils](/packages/utils/) - Package for utilities that is used by skyhelper bot
+- [@skyhelperbot/jobs](/packages/jobs/) - Cron jobs that runs the reminder features
+- [skyhelper](/packages/skyhelper/) - Repository for the skyhelper bot
 
 # Contributing
 
