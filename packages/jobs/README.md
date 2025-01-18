@@ -16,6 +16,7 @@ Running cron jobs is not resources exhaustive itself, but sending reminders/live
 - Docker
 - Bun
 
+### Running
 - Clone the repo and move to this direcotry
 
 ```bash
