@@ -37,6 +37,7 @@ This ia monorepo containing packages related to SkyHelper bot. Packages included
 - [@skyhelperbot/docs](/packages/docs/) - Documentation for skyhelper bot
 - [@skyhelperbot/utils](/packages/utils/) - Package for utilities that is used by skyhelper bot
 - [@skyhelperbot/jobs](/packages/jobs/) - Cron jobs that runs the reminder features
+- [@skyhelperbot/constants](/packages/constants/) - Package for constant datas that is used by variou skyhelper package (like lacalizations, spirit/realm datas, etc..)
 - [skyhelper](/packages/skyhelper/) - Repository for the skyhelper bot
 
 # Contributing
