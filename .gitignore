@@ -3,4 +3,5 @@
 **/logs
 **/coverage
 **/dist
+**/.env
 test.js
