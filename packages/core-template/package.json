@@ -1,0 +1,35 @@
+{
+  "name": "core-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/collection": "^2.1.1",
+    "@discordjs/core": "^2.0.1",
+    "@discordjs/rest": "^2.3.0",
+    "@discordjs/ws": "^2.0.1",
+    "@imnaiyar/framework": "^1.2.2",
+    "@napi-rs/canvas": "^0.1.65",
+    "@sapphire/discord-utilities": "^3.4.4",
+    "@sapphire/stopwatch": "^1.5.2",
+    "@sapphire/type": "^2.4.4",
+    "@sentry/cli": "^2.32.2",
+    "@sentry/node": "^8.34.0",
+    "@sentry/profiling-node": "^8.17.0",
+    "@skyhelperbot/constants": "workspace:^",
+    "@skyhelperbot/utils": "workspace:^",
+    "chalk": "^4.1.2",
+    "cropify": "^1.0.9",
+    "i18next": "^24.2.1",
+    "i18next-fs-backend": "^2.3.1",
+    "luxon": "^3.5.0",
+    "mongoose": "^8.9.5",
+    "zod": "^3.24.1"
+  }
+}

@@ -42,6 +42,72 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
 
+  packages/core-template:
+    dependencies:
+      "@discordjs/collection":
+        specifier: ^2.1.1
+        version: 2.1.1
+      "@discordjs/core":
+        specifier: ^2.0.1
+        version: 2.0.1
+      "@discordjs/rest":
+        specifier: ^2.3.0
+        version: 2.4.2
+      "@discordjs/ws":
+        specifier: ^2.0.1
+        version: 2.0.1
+      "@imnaiyar/framework":
+        specifier: ^1.2.2
+        version: 1.2.2
+      "@napi-rs/canvas":
+        specifier: ^0.1.65
+        version: 0.1.65
+      "@sapphire/discord-utilities":
+        specifier: ^3.4.4
+        version: 3.4.4
+      "@sapphire/stopwatch":
+        specifier: ^1.5.2
+        version: 1.5.2
+      "@sapphire/type":
+        specifier: ^2.4.4
+        version: 2.5.1
+      "@sentry/cli":
+        specifier: ^2.32.2
+        version: 2.37.0
+      "@sentry/node":
+        specifier: ^8.34.0
+        version: 8.34.0
+      "@sentry/profiling-node":
+        specifier: ^8.17.0
+        version: 8.34.0
+      "@skyhelperbot/constants":
+        specifier: workspace:^
+        version: link:../constants
+      "@skyhelperbot/utils":
+        specifier: workspace:^
+        version: link:../utils
+      chalk:
+        specifier: ^4.1.2
+        version: 4.1.2
+      cropify:
+        specifier: ^1.0.9
+        version: 1.0.9
+      i18next:
+        specifier: ^24.2.1
+        version: 24.2.1(typescript@5.7.3)
+      i18next-fs-backend:
+        specifier: ^2.3.1
+        version: 2.3.2
+      luxon:
+        specifier: ^3.5.0
+        version: 3.5.0
+      mongoose:
+        specifier: ^8.9.5
+        version: 8.9.5(socks@2.8.3)
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+
   packages/docs:
     dependencies:
       "@napi-rs/canvas":
@@ -636,6 +702,10 @@ packages:
     resolution: { integrity: sha512-LiSusze9Tc7qF03sLCujF5iZp7K+vRNEDBZ86FT9aQAv3vxMLihUvKvpsCWiQ2DJq1tVckopKm1rxomgNUc9hg== }
     engines: { node: ">=18" }
 
+  "@discordjs/core@2.0.1":
+    resolution: { integrity: sha512-tj//rnPhdniq+Clxq0tq5wI7QTMH4IgyXkUFI32+ashIRpFJ1+J1btNG3FA74oATFu2sYy/zT9CKLWW4jp2RGQ== }
+    engines: { node: ">=20" }
+
   "@discordjs/formatters@0.5.0":
     resolution: { integrity: sha512-98b3i+Y19RFq1Xke4NkVY46x8KjJQjldHUuEbCqMvp1F5Iq9HgnGpu91jOi/Ufazhty32eRsKnnzS8n4c+L93g== }
     engines: { node: ">=18" }
@@ -648,6 +718,10 @@ packages:
     resolution: { integrity: sha512-Xb2irDqNcq+O8F0/k/NaDp7+t091p+acb51iA4bCKfIn+WFWd6HrNvcsSbMMxIR9NjcMZS6NReTKygqiQN+ntw== }
     engines: { node: ">=18" }
 
+  "@discordjs/rest@2.4.2":
+    resolution: { integrity: sha512-9bOvXYLQd5IBg/kKGuEFq3cstVxAMJ6wMxO2U3wjrgO+lHv8oNCT+BBRpuzVQh7BoXKvk/gpajceGvQUiRoJ8g== }
+    engines: { node: ">=18" }
+
   "@discordjs/util@1.1.1":
     resolution: { integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g== }
     engines: { node: ">=18" }
@@ -655,6 +729,10 @@ packages:
   "@discordjs/ws@1.1.1":
     resolution: { integrity: sha512-PZ+vLpxGCRtmr2RMkqh8Zp+BenUaJqlS6xhgWKEZcgC/vfHLEzpHtKkB0sl3nZWpwtcKk6YWy+pU3okL2I97FA== }
     engines: { node: ">=16.11.0" }
+
+  "@discordjs/ws@2.0.1":
+    resolution: { integrity: sha512-5etVbXdwThIT5+KfU+uiBh358Ql58f2vf1W9B5ZXxaZuIlpiX/VC/G0Lr/xuEcs6cL+/HZtEIUf0p9dQfEDang== }
+    engines: { node: ">=20" }
 
   "@es-joy/jsdoccomment@0.41.0":
     resolution: { integrity: sha512-aKUhyn1QI5Ksbqcr3fFJj16p99QdjUxXAEuFst1Z47DRyoiMwivIH9MV/ARcJOCXVjPfjITciej8ZD2O/6qUmw== }
@@ -871,8 +949,20 @@ packages:
     cpu: [arm64]
     os: [android]
 
+  "@napi-rs/canvas-android-arm64@0.1.65":
+    resolution: { integrity: sha512-ZYwqFYEKcT5Zr8lbiaJNJj/poLaeK2TncolY914r+gD2TJNeP7ZqvE7A2SX/1C9MB4E3DQEwm3YhL3WEf0x3MQ== }
+    engines: { node: ">= 10" }
+    cpu: [arm64]
+    os: [android]
+
   "@napi-rs/canvas-darwin-arm64@0.1.58":
     resolution: { integrity: sha512-3AetouQtGTDldvIV9t7iZ6eZlwnn1r32GLr6zxmJmjDFQs5Ey1LYC7hYRYzRHx2fgU/slvwfMhgQjlH+T+vrlw== }
+    engines: { node: ">= 10" }
+    cpu: [arm64]
+    os: [darwin]
+
+  "@napi-rs/canvas-darwin-arm64@0.1.65":
+    resolution: { integrity: sha512-Pg1pfiJEyDIsX+V0QaJPRWvXbw5zmWAk3bivFCvt/5pwZb37/sT6E/RqPHT9NnqpDyKW6SriwY9ypjljysUA1Q== }
     engines: { node: ">= 10" }
     cpu: [arm64]
     os: [darwin]
@@ -883,8 +973,20 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  "@napi-rs/canvas-darwin-x64@0.1.65":
+    resolution: { integrity: sha512-3Tr+/HjdJN7Z/VKIcsxV2DvDIibZCExgfYTgljCkUSFuoI7iNkOE6Dc1Q6j212EB9PeO8KmfrViBqHYT6IwWkA== }
+    engines: { node: ">= 10" }
+    cpu: [x64]
+    os: [darwin]
+
   "@napi-rs/canvas-linux-arm-gnueabihf@0.1.58":
     resolution: { integrity: sha512-I0perR7XYeUFCASZJ3eMoCJz690PpZcq+9/kItOfqzH2+EO2I+MTn194p2YPHENzC+kybTUUucl9jyQDzRuZUg== }
+    engines: { node: ">= 10" }
+    cpu: [arm]
+    os: [linux]
+
+  "@napi-rs/canvas-linux-arm-gnueabihf@0.1.65":
+    resolution: { integrity: sha512-3KP+dYObH7CVkZMZWwk1WX9jRjL+EKdQtD43H8MOI+illf+dwqLlecdQ4d9bQRIxELKJ8dyPWY4fOp/Ngufrdg== }
     engines: { node: ">= 10" }
     cpu: [arm]
     os: [linux]
@@ -895,14 +997,38 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  "@napi-rs/canvas-linux-arm64-gnu@0.1.65":
+    resolution: { integrity: sha512-Ka3StKz7Dq7kjTF3nNJCq43UN/VlANS7qGE3dWkn1d+tQNsCRy/wRmyt1TUFzIjRqcTFMQNRbgYq84+53UBA0A== }
+    engines: { node: ">= 10" }
+    cpu: [arm64]
+    os: [linux]
+
   "@napi-rs/canvas-linux-arm64-musl@0.1.58":
     resolution: { integrity: sha512-CyPvv0CoZLn64t3zhgNy5Jd8QE5lKy+dcbkP/CT2XRNAJ8eulO1qr5gcKZBOhXkPFSHHjYcLHWuHK/6/KvggcQ== }
     engines: { node: ">= 10" }
     cpu: [arm64]
     os: [linux]
 
+  "@napi-rs/canvas-linux-arm64-musl@0.1.65":
+    resolution: { integrity: sha512-O4xMASm2JrmqYoiDyxVWi+z5C14H+oVEag2rZ5iIA67dhWqYZB+iO7wCFpBYRj31JPBR29FOsu6X9zL+DwBFdw== }
+    engines: { node: ">= 10" }
+    cpu: [arm64]
+    os: [linux]
+
+  "@napi-rs/canvas-linux-riscv64-gnu@0.1.65":
+    resolution: { integrity: sha512-dblWDaA59ZU8bPbkfM+riSke7sFbNZ70LEevUdI5rgiFEUzYUQlU34gSBzemTACj5rCWt1BYeu0GfkLSjNMBSw== }
+    engines: { node: ">= 10" }
+    cpu: [riscv64]
+    os: [linux]
+
   "@napi-rs/canvas-linux-x64-gnu@0.1.58":
     resolution: { integrity: sha512-lt1KsWrdB0SJ1fhxGW1y1aLv+Xy+7/qQ/80oh+nbstqLqziMRUYkLOmsIKiMlqvv3zETa6VUPofi8dZmCbNUOQ== }
+    engines: { node: ">= 10" }
+    cpu: [x64]
+    os: [linux]
+
+  "@napi-rs/canvas-linux-x64-gnu@0.1.65":
+    resolution: { integrity: sha512-wsp+atutw13OJXGU3DDkdngtBDoEg01IuK5xMe0L6VFPV8maGkh17CXze078OD5QJOc6kFyw3DDscMLOPF8+oA== }
     engines: { node: ">= 10" }
     cpu: [x64]
     os: [linux]
@@ -913,14 +1039,30 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  "@napi-rs/canvas-linux-x64-musl@0.1.65":
+    resolution: { integrity: sha512-odX+nN+IozWzhdj31INcHz3Iy9+EckNw+VqsZcaUxZOTu7/3FmktRNI6aC1qe5minZNv1m05YOS1FVf7fvmjlA== }
+    engines: { node: ">= 10" }
+    cpu: [x64]
+    os: [linux]
+
   "@napi-rs/canvas-win32-x64-msvc@0.1.58":
     resolution: { integrity: sha512-qyRhuEqyoSQTBRHLKvShfjueqVWWtsG2U3yaxAE9Yhkg0sx6lunH7fPPrFcIKxbQ4k8pAbmWebhi9xPVf6mYPQ== }
     engines: { node: ">= 10" }
     cpu: [x64]
     os: [win32]
 
+  "@napi-rs/canvas-win32-x64-msvc@0.1.65":
+    resolution: { integrity: sha512-RZQX3luWnlNWgdMnLMQ1hyfQraeAn9lnxWWVCHuUM4tAWEV8UDdeb7cMwmJW7eyt8kAosmjeHt3cylQMHOxGFg== }
+    engines: { node: ">= 10" }
+    cpu: [x64]
+    os: [win32]
+
   "@napi-rs/canvas@0.1.58":
     resolution: { integrity: sha512-XDeVEFbXfiiXeB9816rlbSZyOysJPaQTKYG7u/wL3GQhg4YznZkjq8vEsNvK6C+bJx29OV8INu9bmfXPaE4Drw== }
+    engines: { node: ">= 10" }
+
+  "@napi-rs/canvas@0.1.65":
+    resolution: { integrity: sha512-YcFhXQcp+b2d38zFOJNbpyPHnIL7KAEkhJQ+UeeKI5IpE9B8Cpf/M6RiHPQXSsSqnYbrfFylnW49dyh2oeSblQ== }
     engines: { node: ">= 10" }
 
   "@napi-rs/simple-git-android-arm-eabi@0.1.19":
@@ -1435,6 +1577,10 @@ packages:
 
   "@sapphire/async-queue@1.5.3":
     resolution: { integrity: sha512-x7zadcfJGxFka1Q3f8gCts1F0xMwCKbZweM85xECGI0hBTeIZJGGCrHgLggihBoprlQ/hBmDR5LKfIPqnmHM3w== }
+    engines: { node: ">=v14.0.0", npm: ">=7.0.0" }
+
+  "@sapphire/discord-utilities@3.4.4":
+    resolution: { integrity: sha512-P7bCL5U2s+U5oy9OFpC4lr4Y0bGoNrSCPu2bgxP9AaqK90hcwpoLWWKouvGgaY9tCbUZmaf8E98/SlZZoakhAQ== }
     engines: { node: ">=v14.0.0", npm: ">=7.0.0" }
 
   "@sapphire/shapeshift@4.0.0":
@@ -2728,6 +2874,9 @@ packages:
     resolution: { integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA== }
     engines: { node: ">=8" }
 
+  discord-api-types@0.37.116:
+    resolution: { integrity: sha512-g+BH/m0hyS/JzL+e0aM+z2o9UtwfyUZ0hqeyc+6sNwdMx+NtQkqULRV/oj9ynAefpRb+cpOjmWaYec4B1I0Hqg== }
+
   discord-api-types@0.37.83:
     resolution: { integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA== }
 
@@ -3367,6 +3516,14 @@ packages:
 
   i18next@23.16.2:
     resolution: { integrity: sha512-dFyxwLXxEQK32f6tITBMaRht25mZPJhQ0WbC0p3bO2mWBal9lABTMqSka5k+GLSRWLzeJBKDpH7BeIA9TZI7Jg== }
+
+  i18next@24.2.1:
+    resolution: { integrity: sha512-Q2wC1TjWcSikn1VAJg13UGIjc+okpFxQTxjVAymOnSA3RpttBQNMPf2ovcgoFVsV4QNxTfNZMAxorXZXsk4fBA== }
+    peerDependencies:
+      typescript: ^5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.4.24:
     resolution: { integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA== }
@@ -6103,6 +6260,18 @@ snapshots:
 
   "@discordjs/collection@2.1.1": {}
 
+  "@discordjs/core@2.0.1":
+    dependencies:
+      "@discordjs/rest": 2.4.2
+      "@discordjs/util": 1.1.1
+      "@discordjs/ws": 2.0.1
+      "@sapphire/snowflake": 3.5.3
+      "@vladfrangu/async_event_emitter": 2.4.6
+      discord-api-types: 0.37.116
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   "@discordjs/formatters@0.5.0":
     dependencies:
       discord-api-types: 0.37.97
@@ -6134,17 +6303,44 @@ snapshots:
       tslib: 2.8.0
       undici: 6.19.8
 
+  "@discordjs/rest@2.4.2":
+    dependencies:
+      "@discordjs/collection": 2.1.1
+      "@discordjs/util": 1.1.1
+      "@sapphire/async-queue": 1.5.3
+      "@sapphire/snowflake": 3.5.3
+      "@vladfrangu/async_event_emitter": 2.4.6
+      discord-api-types: 0.37.116
+      magic-bytes.js: 1.10.0
+      tslib: 2.8.0
+      undici: 6.19.8
+
   "@discordjs/util@1.1.1": {}
 
   "@discordjs/ws@1.1.1":
     dependencies:
       "@discordjs/collection": 2.1.1
-      "@discordjs/rest": 2.4.0
+      "@discordjs/rest": 2.4.2
       "@discordjs/util": 1.1.1
       "@sapphire/async-queue": 1.5.3
       "@types/ws": 8.5.12
       "@vladfrangu/async_event_emitter": 2.4.6
       discord-api-types: 0.37.83
+      tslib: 2.8.0
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  "@discordjs/ws@2.0.1":
+    dependencies:
+      "@discordjs/collection": 2.1.1
+      "@discordjs/rest": 2.4.2
+      "@discordjs/util": 1.1.1
+      "@sapphire/async-queue": 1.5.3
+      "@types/ws": 8.5.12
+      "@vladfrangu/async_event_emitter": 2.4.6
+      discord-api-types: 0.37.116
       tslib: 2.8.0
       ws: 8.18.0
     transitivePeerDependencies:
@@ -6516,28 +6712,58 @@ snapshots:
   "@napi-rs/canvas-android-arm64@0.1.58":
     optional: true
 
+  "@napi-rs/canvas-android-arm64@0.1.65":
+    optional: true
+
   "@napi-rs/canvas-darwin-arm64@0.1.58":
+    optional: true
+
+  "@napi-rs/canvas-darwin-arm64@0.1.65":
     optional: true
 
   "@napi-rs/canvas-darwin-x64@0.1.58":
     optional: true
 
+  "@napi-rs/canvas-darwin-x64@0.1.65":
+    optional: true
+
   "@napi-rs/canvas-linux-arm-gnueabihf@0.1.58":
+    optional: true
+
+  "@napi-rs/canvas-linux-arm-gnueabihf@0.1.65":
     optional: true
 
   "@napi-rs/canvas-linux-arm64-gnu@0.1.58":
     optional: true
 
+  "@napi-rs/canvas-linux-arm64-gnu@0.1.65":
+    optional: true
+
   "@napi-rs/canvas-linux-arm64-musl@0.1.58":
+    optional: true
+
+  "@napi-rs/canvas-linux-arm64-musl@0.1.65":
+    optional: true
+
+  "@napi-rs/canvas-linux-riscv64-gnu@0.1.65":
     optional: true
 
   "@napi-rs/canvas-linux-x64-gnu@0.1.58":
     optional: true
 
+  "@napi-rs/canvas-linux-x64-gnu@0.1.65":
+    optional: true
+
   "@napi-rs/canvas-linux-x64-musl@0.1.58":
     optional: true
 
+  "@napi-rs/canvas-linux-x64-musl@0.1.65":
+    optional: true
+
   "@napi-rs/canvas-win32-x64-msvc@0.1.58":
+    optional: true
+
+  "@napi-rs/canvas-win32-x64-msvc@0.1.65":
     optional: true
 
   "@napi-rs/canvas@0.1.58":
@@ -6551,6 +6777,19 @@ snapshots:
       "@napi-rs/canvas-linux-x64-gnu": 0.1.58
       "@napi-rs/canvas-linux-x64-musl": 0.1.58
       "@napi-rs/canvas-win32-x64-msvc": 0.1.58
+
+  "@napi-rs/canvas@0.1.65":
+    optionalDependencies:
+      "@napi-rs/canvas-android-arm64": 0.1.65
+      "@napi-rs/canvas-darwin-arm64": 0.1.65
+      "@napi-rs/canvas-darwin-x64": 0.1.65
+      "@napi-rs/canvas-linux-arm-gnueabihf": 0.1.65
+      "@napi-rs/canvas-linux-arm64-gnu": 0.1.65
+      "@napi-rs/canvas-linux-arm64-musl": 0.1.65
+      "@napi-rs/canvas-linux-riscv64-gnu": 0.1.65
+      "@napi-rs/canvas-linux-x64-gnu": 0.1.65
+      "@napi-rs/canvas-linux-x64-musl": 0.1.65
+      "@napi-rs/canvas-win32-x64-msvc": 0.1.65
 
   "@napi-rs/simple-git-android-arm-eabi@0.1.19":
     optional: true
@@ -7097,6 +7336,10 @@ snapshots:
   "@rtsao/scc@1.1.0": {}
 
   "@sapphire/async-queue@1.5.3": {}
+
+  "@sapphire/discord-utilities@3.4.4":
+    dependencies:
+      discord-api-types: 0.37.116
 
   "@sapphire/shapeshift@4.0.0":
     dependencies:
@@ -8335,7 +8578,7 @@ snapshots:
 
   cropify@1.0.9:
     dependencies:
-      "@napi-rs/canvas": 0.1.58
+      "@napi-rs/canvas": 0.1.65
 
   cross-env@7.0.3:
     dependencies:
@@ -8623,6 +8866,8 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
+  discord-api-types@0.37.116: {}
+
   discord-api-types@0.37.83: {}
 
   discord-api-types@0.37.97: {}
@@ -8632,7 +8877,7 @@ snapshots:
       "@discordjs/builders": 1.9.0
       "@discordjs/collection": 1.5.3
       "@discordjs/formatters": 0.5.0
-      "@discordjs/rest": 2.4.0
+      "@discordjs/rest": 2.4.2
       "@discordjs/util": 1.1.1
       "@discordjs/ws": 1.1.1
       "@sapphire/snowflake": 3.5.3
@@ -9568,6 +9813,12 @@ snapshots:
   i18next@23.16.2:
     dependencies:
       "@babel/runtime": 7.25.7
+
+  i18next@24.2.1(typescript@5.7.3):
+    dependencies:
+      "@babel/runtime": 7.25.7
+    optionalDependencies:
+      typescript: 5.7.3
 
   iconv-lite@0.4.24:
     dependencies:

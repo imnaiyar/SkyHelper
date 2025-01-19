@@ -9,7 +9,8 @@
   ],
   "exports": {
     "./locales/*": "./locales/*",
-    "./spirits-datas": "./dist/spirits-datas/index.js"
+    "./spirits-datas": "./dist/spirits-datas/index.js",
+    ".": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc"
