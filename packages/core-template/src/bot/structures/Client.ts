@@ -1,4 +1,4 @@
-import type { If } from "#bot/@types/utils";
+import type { If } from "../@types/utils.js";
 import { Collection } from "@discordjs/collection";
 import {
   Client,
@@ -9,6 +9,7 @@ import {
   type GatewayGuildCreateDispatch,
   type GatewayGuildCreateDispatchData,
 } from "@discordjs/core";
+import type { Command } from "./Command.js";
 
 export class SkyHelper<IsReady extends boolean = true> extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
@@ -21,4 +22,6 @@ export class SkyHelper<IsReady extends boolean = true> extends Client {
 
   /** Collection of channels available to the client */
   public channels: Collection<string, APIChannel> = new Collection();
+
+  public commands: Collection<string, Command> = new Collection();
 }

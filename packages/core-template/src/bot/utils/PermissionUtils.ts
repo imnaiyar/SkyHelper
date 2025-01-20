@@ -19,7 +19,9 @@ export class PermissionsUtil {
   /**
    * Flags of the permissions
    */
-  flags: (keyof typeof PermissionFlagsBits)[];
+  get flags() {
+    return this.resolveBitFlags(this.bitfield);
+  }
 
   /**
    *
@@ -27,7 +29,6 @@ export class PermissionsUtil {
    */
   constructor(readonly perms: PermissionsResolvable = 0n) {
     this.bitfield = this.resolveBitFields(perms);
-    this.flags = this.resolveBitFlags(this.bitfield);
   }
 
   /**
@@ -87,7 +88,6 @@ export class PermissionsUtil {
   remove(perms: PermissionsResolvable) {
     const bits = this.resolveBitFields(perms);
     this.bitfield &= ~bits;
-    this.flags = this.resolveBitFlags(this.bitfield);
     return this;
   }
 
@@ -97,7 +97,6 @@ export class PermissionsUtil {
   add(perms: PermissionsResolvable) {
     const bits = this.resolveBitFields(perms);
     this.bitfield |= bits;
-    this.flags = this.resolveBitFlags(this.bitfield);
     return this;
   }
 

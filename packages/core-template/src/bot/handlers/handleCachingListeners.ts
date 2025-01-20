@@ -1,8 +1,14 @@
-import type { SkyHelper } from "#bot/structures/Client";
+import type { SkyHelper } from "../structures/Client.js";
 import { GatewayDispatchEvents } from "@discordjs/core";
 
 /** Following are the events that are only listened so that the cache (that the bot relies on) is upto date. */
 export default (client: SkyHelper) => {
+  // client user
+  client.on(GatewayDispatchEvents.UserUpdate, ({ data: user }) => {
+    if (user.id !== client.user.id) return;
+    client.user = Object.assign(client.user, user);
+  });
+
   // #region Guild
   client.on(GatewayDispatchEvents.GuildUpdate, ({ data: guild }) => {
     const oldGuild = client.guilds.get(guild.id);

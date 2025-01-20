@@ -2,7 +2,6 @@ import { GatewayDispatchEvents } from "@discordjs/core";
 import type { Event } from "../structures/Event.js";
 
 const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = (client, { data: guild }) => {
-  console.log(client.unavailableGuilds.size);
   // Discord sends GUILD_CREATE for unavailable guilds when initially connecting
   // Do nothing if that's the case
   if (client.unavailableGuilds.has(guild.id)) {

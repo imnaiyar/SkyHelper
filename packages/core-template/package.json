@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "bun run src/bot/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -31,5 +33,9 @@
     "luxon": "^3.5.0",
     "mongoose": "^8.9.5",
     "zod": "^3.24.1"
+  },
+  "imports": {
+    "#bot/*": "./dist/bot/*.js",
+    "#api/*": "./dist/api/*.js"
   }
 }

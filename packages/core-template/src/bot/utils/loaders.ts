@@ -2,14 +2,15 @@ import { Collection } from "@discordjs/collection";
 import { recursiveReadDir } from "@skyhelperbot/utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { SkyHelper } from "#src/bot/structures/Client";
-import type { Event } from "#src/bot/structures/Event";
+import type { SkyHelper } from "#bot/structures/Client";
+import type { Event } from "#bot/structures/Event";
+import type { Command } from "#bot/structures/Command";
 const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
 /**
  * Loads all the commands
  * @returns Collection of commands keyed by it's name
  */
-/* export async function loadCommands() {
+export async function loadCommands() {
   const commands = new Collection<string, Command>();
   let added = 0;
   let failed = 0;
@@ -25,16 +26,16 @@ const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
       // const vld = cmdValidation(command, file);
       // if (!vld) return;
       commands.set(command.name, command);
-      logger.custom(`Loaded ${command.name}`, "COMMANDS");
+      console.log(`Loaded ${command.name}`, "COMMANDS");
       added++;
     } catch (err) {
       failed++;
-      logger.error(`loadCommands - ${file}`, err);
+      console.log(`loadCommands - ${file}`, err);
     }
   }
-  logger.custom(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
+  console.log(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
   return commands;
-} */
+}
 
 /**
  * Loads all context menu commands

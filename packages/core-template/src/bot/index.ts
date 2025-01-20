@@ -1,7 +1,7 @@
-import { GatewayDispatchEvents, GatewayIntentBits } from "@discordjs/core";
+import { GatewayIntentBits, type APIUser } from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { WebSocketManager } from "@discordjs/ws";
-import { loadEvents } from "./utils/loaders.js";
+import { loadCommands, loadEvents } from "./utils/loaders.js";
 import { SkyHelper } from "./structures/Client.js";
 import handleCachingListeners from "./handlers/handleCachingListeners.js";
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
@@ -12,8 +12,9 @@ const gateway = new WebSocketManager({
 });
 
 const client = new SkyHelper({ gateway, rest });
-
+client.user = (await rest.get("/users/@me")) as APIUser;
 await loadEvents(client);
+client.commands = await loadCommands();
 
 // Attach listeners for updating caches
 handleCachingListeners(client);
