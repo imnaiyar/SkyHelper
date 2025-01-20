@@ -31,7 +31,9 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["src/bot/*.js"],
-      "@/api/*": ["src/api/*.js"]
+      "@/api/*": ["src/api/*.js"],
+      "@/structures": ["src/bot/structures/index.js"],
+      "@/types/*": ["src/bot/@types/*.js"]
     }
   },
   "include": ["src"],
