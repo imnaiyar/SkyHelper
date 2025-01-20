@@ -1,3 +1,6 @@
+// Custom loader to resolve path aliases defined in tsconfig "paths" (it's a non-issue for Bun in dev, this is only for prod)
+// I don't like the way subpath import looks and don't wanna use any additional tools for it so... here we are
+
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL, URL } from "node:url";
