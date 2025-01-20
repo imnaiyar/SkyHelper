@@ -8,23 +8,16 @@ import type {
 } from "@discordjs/core";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import type { SkyHelper } from "./Client.ts";
-import type { Awaitable } from "../@types/utils.ts";
+import type { Awaitable, OverrideLocalizations } from "@/types/utils.ts";
 import type { getTranslator } from "@/i18n";
-import type { LangKeys } from "@/@types/i18n.ts";
-import type { PermissionsResolvable } from "../utils/PermissionUtils.ts";
-
-export type OverrideLocalizations<T> = T extends (infer U)[]
-  ? OverrideLocalizations<U>[]
-  : T extends object
-    ? {
-        [K in keyof T]: K extends "description_localizations" | "name_localizations" ? LangKeys : OverrideLocalizations<T[K]>; // Recursively process nested objects
-      }
-    : T;
+import type { PermissionsResolvable } from "@/utils/PermissionUtils";
+import type { MessageFlags } from "@/utils/MessageFlags";
+import type { Category } from "./Category.ts";
 
 type MessageParams = {
   message: APIMessage;
   args: string[];
-  flags: Flags;
+  flags: MessageFlags;
   t: ReturnType<typeof getTranslator>;
   client: SkyHelper;
 };
@@ -32,7 +25,7 @@ type MessageParams = {
 type ValidationReturn = { status: true } | { status: false; message: string };
 export interface MessageValidation {
   type: "message";
-  callback(opts: MessageParams): Awaitable<ValidationReturn>;
+  callback(opts: MessageParams & { commandName: string }): Awaitable<ValidationReturn>;
 }
 export interface InteractionValidation<IsContext extends boolean = false> {
   type: "interaction";
@@ -85,10 +78,10 @@ interface CommandBase {
   /* Command category */
   category: (typeof Category)[number]["name"];
 
-  userPermissions?: PermissionsResolvable[];
+  userPermissions?: PermissionsResolvable;
 
   /** Permissions bot requires for this command */
-  botPermissions?: PermissionResolvable[];
+  botPermissions?: PermissionsResolvable;
 
   /** If present, permissions will only be checked for subcomaands present in the array */
   forSubs?: string[];

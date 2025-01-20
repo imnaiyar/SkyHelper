@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "bun run src/bot/index.ts",
-    "start": "node --env-file=.env --import ./scripts/register-loader.mjs dist/bot/index.js"
+    "start": "node --env-file=.env dist/bot/index.js"
   },
   "author": "",
   "license": "ISC",

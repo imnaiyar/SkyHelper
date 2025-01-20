@@ -1,5 +1,5 @@
 import type { SkyHelper } from "@/structures/Client";
-import { PermissionFlagsBits, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
+import { PermissionFlagsBits, type APIGuild, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
 type StringPermissions = `${number}`;
 export type PermissionsResolvable =
@@ -100,6 +100,24 @@ export class PermissionsUtil {
     return this;
   }
 
+  /**
+   * Permissions that are missing from the passed permission resolvable
+   * @param perms
+   * @returns The missing permissions
+   */
+  missing(perms: PermissionsResolvable) {
+    const bits = this.resolveBitFields(perms);
+    const missingBits = bits & ~this.bitfield;
+    return this.resolveBitFlags(missingBits);
+  }
+
+  /**
+   * Get opermissions overwrites for a user or role in a channel including guild level and channel overrides
+   * @param userOrRole
+   * @param channel
+   * @param client
+   * @returns
+   */
   static overwriteFor(userOrRole: APIRole | APIGuildMember, channel: APITextChannel, client: SkyHelper): PermissionsUtil {
     const isRole = "permissions" in userOrRole;
     const everyonOverwrites = channel.permission_overwrites!.find((p) => p.id === channel.guild_id);
@@ -115,13 +133,7 @@ export class PermissionsUtil {
       }
       return perms;
     }
-    const perms = new PermissionsUtil(
-      userOrRole.roles.map((r) => {
-        const role = guild?.roles.find((ro) => ro.id === r);
-        if (!role) throw new Error("Role not found");
-        return role.permissions as `${number}`;
-      }),
-    );
+    const perms = this.permissionsFor(userOrRole as APIGuildMember, guild!);
     const roleOverwrites = channel
       .permission_overwrites!.map((p) => p.type === 0 && userOrRole.roles.includes(p.id) && p)
       .filter((p) => p !== false);
@@ -134,6 +146,24 @@ export class PermissionsUtil {
     }
     return perms;
   }
+
+  /**
+   * Get permissions for a guild member based on their roles
+   * @param member
+   * @param client
+   * @param guild
+   */
+  static permissionsFor(member: APIGuildMember | Omit<APIGuildMember, "user">, guild: APIGuild): PermissionsUtil {
+    const perms = new PermissionsUtil(
+      member.roles.map((r) => {
+        const role = guild.roles.find((ro) => ro.id === r);
+        if (!role) throw new Error("Role not found");
+        return role.permissions as `${number}`;
+      }),
+    );
+    return perms;
+  }
+
   /**
    * Returns permissions flags of this bitfield
    */

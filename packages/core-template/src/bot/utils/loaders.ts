@@ -2,9 +2,9 @@ import { Collection } from "@discordjs/collection";
 import { recursiveReadDir } from "@skyhelperbot/utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { SkyHelper } from "@/structures/Client";
-import type { Event } from "@/structures/Event";
-import type { Command } from "@/structures/Command";
+import type { SkyHelper, Event, Command, Button } from "@/structures";
+import logger from "@/handlers/logger";
+import type { ContextMenuCommand } from "@/structures/ContextMenuCommand";
 const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
 /**
  * Loads all the commands
@@ -14,7 +14,7 @@ export async function loadCommands() {
   const commands = new Collection<string, Command>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/commands/inputCommands", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/modules/inputCommands", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -26,14 +26,14 @@ export async function loadCommands() {
       // const vld = cmdValidation(command, file);
       // if (!vld) return;
       commands.set(command.name, command);
-      console.log(`Loaded ${command.name}`, "COMMANDS");
+      logger.custom(`Loaded ${command.name}`, "COMMANDS");
       added++;
     } catch (err) {
       failed++;
-      console.log(`loadCommands - ${file}`, err);
+      logger.error(`loadCommands - ${file}`, err);
     }
   }
-  console.log(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
+  logger.custom(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
   return commands;
 }
 
@@ -41,11 +41,11 @@ export async function loadCommands() {
  * Loads all context menu commands
  * @returns A collection of context menu commands keyed by it's name
  */
-/* export async function loadContextCmd() {
+export async function loadContextCmd() {
   const contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/commands/contexts", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/modules/contexts", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -67,17 +67,17 @@ export async function loadCommands() {
 
   logger.custom(`Loaded ${added} Context Menu Commands. Failed ${failed}`, "CONTEXTS");
   return contexts;
-} */
+}
 
 /**
  * Loads all the buttons
  * @returns A collection of buttons keyed by it's custom ID
  */
-/* export async function loadButtons() {
+export async function loadButtons() {
   const buttons = new Collection<string, Button>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/buttons", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/modules/buttons", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
 
@@ -97,7 +97,7 @@ export async function loadCommands() {
   }
   logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
   return buttons;
-} */
+}
 
 /**
  * Loads all the event modules
