@@ -1,4 +1,4 @@
-import type { Command } from "#bot/structures/Command";
+import type { Command } from "@/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType } from "@discordjs/core";
 
 export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {

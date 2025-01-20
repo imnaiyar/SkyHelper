@@ -2,8 +2,8 @@ import { GatewayIntentBits, type APIUser } from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { WebSocketManager } from "@discordjs/ws";
 import { loadCommands, loadEvents } from "./utils/loaders.js";
-import { SkyHelper } from "./structures/Client.js";
-import handleCachingListeners from "./handlers/handleCachingListeners.js";
+import { SkyHelper } from "@/structures/Client";
+import handleCachingListeners from "@/handlers/handleCachingListeners";
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
 const gateway = new WebSocketManager({
   intents: GatewayIntentBits.Guilds,

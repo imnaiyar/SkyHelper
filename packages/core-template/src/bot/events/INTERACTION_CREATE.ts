@@ -1,5 +1,5 @@
-import type { getTranslator } from "#bot/i18n";
-import type { Event } from "#bot/structures/Event";
+import type { getTranslator } from "@/i18n";
+import type { Event } from "@/structures/Event";
 import {
   ApplicationCommandType,
   InteractionType,

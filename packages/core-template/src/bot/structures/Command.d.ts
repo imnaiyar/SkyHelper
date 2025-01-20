@@ -9,8 +9,8 @@ import type {
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import type { SkyHelper } from "./Client.ts";
 import type { Awaitable } from "../@types/utils.ts";
-import type { getTranslator } from "#bot/i18n";
-import type { LangKeys } from "../@types/i18n.ts";
+import type { getTranslator } from "@/i18n";
+import type { LangKeys } from "@/@types/i18n.ts";
 import type { PermissionsResolvable } from "../utils/PermissionUtils.ts";
 
 export type OverrideLocalizations<T> = T extends (infer U)[]

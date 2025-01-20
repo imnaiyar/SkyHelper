@@ -1,4 +1,4 @@
-import type { Command } from "#bot/structures/Command";
+import type { Command } from "@/structures/Command";
 
 export default {
   name: "help",

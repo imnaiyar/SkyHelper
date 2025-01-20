@@ -1,4 +1,4 @@
-import type { Command } from "#bot/structures/Command";
+import type { Command } from "@/structures/Command";
 import { ApplicationCommandOptionType } from "@discordjs/core";
 
 // #region Annoouncement

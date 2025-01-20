@@ -1,4 +1,4 @@
-import type { SkyHelper } from "../structures/Client.js";
+import type { SkyHelper } from "@/structures/Client";
 import { GatewayDispatchEvents } from "@discordjs/core";
 
 /** Following are the events that are only listened so that the cache (that the bot relies on) is upto date. */

@@ -1,4 +1,4 @@
-import type { SkyHelper } from "#bot/structures/Client";
+import type { SkyHelper } from "@/structures/Client";
 import { PermissionFlagsBits, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
 type StringPermissions = `${number}`;

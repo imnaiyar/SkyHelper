@@ -1,4 +1,4 @@
-import type { Command } from "#bot/structures/Command";
+import type { Command } from "@/structures/Command";
 import { ApplicationCommandOptionType } from "@discordjs/core";
 // #region DailyQuests
 export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {

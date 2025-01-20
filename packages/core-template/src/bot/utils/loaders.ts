@@ -2,9 +2,9 @@ import { Collection } from "@discordjs/collection";
 import { recursiveReadDir } from "@skyhelperbot/utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { SkyHelper } from "#bot/structures/Client";
-import type { Event } from "#bot/structures/Event";
-import type { Command } from "#bot/structures/Command";
+import type { SkyHelper } from "@/structures/Client";
+import type { Event } from "@/structures/Event";
+import type { Command } from "@/structures/Command";
 const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
 /**
  * Loads all the commands

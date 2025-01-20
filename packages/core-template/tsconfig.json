@@ -30,8 +30,8 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
-      "#bot/*": ["src/bot/*.js"],
-      "#api/*": ["src/api/*.js"]
+      "@/*": ["src/bot/*.js"],
+      "@/api/*": ["src/api/*.js"]
     }
   },
   "include": ["src"],

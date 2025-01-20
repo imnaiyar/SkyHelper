@@ -1,5 +1,5 @@
-import type { Command } from "#bot/structures/Command";
-import { PermissionsUtil } from "#bot/utils/PermissionUtils";
+import type { Command } from "@/structures/Command";
+import { PermissionsUtil } from "@/utils/PermissionUtils";
 import {
   ApplicationCommandOptionType,
   ApplicationIntegrationType,

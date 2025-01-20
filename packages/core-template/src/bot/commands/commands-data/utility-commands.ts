@@ -1,5 +1,5 @@
 import { supportedLang } from "@skyhelperbot/constants";
-import type { Command } from "#bot/structures/Command";
+import type { Command } from "@/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "@discordjs/core";
 
 // #region SeasonCalculator
