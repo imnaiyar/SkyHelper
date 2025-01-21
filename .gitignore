@@ -4,4 +4,6 @@
 **/coverage
 **/dist
 **/.env
-test.js
+**/test.js
+**/test.mjs
+**/test.ts

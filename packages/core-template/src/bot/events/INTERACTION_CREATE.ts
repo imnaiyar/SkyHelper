@@ -1,7 +1,18 @@
 import { getTranslator } from "@/i18n";
 import type { Event } from "@/structures/Event";
 import { validateInteractions } from "@/utils/validators";
-import { InteractionType, Utils as IntUtils, MessageFlags, type GatewayDispatchEvents } from "@discordjs/core";
+import {
+  ChannelType,
+  InteractionType,
+  Utils as IntUtils,
+  MessageFlags,
+  type APIActionRowComponent,
+  type APIApplicationCommandDMInteraction,
+  type APIApplicationCommandInteraction,
+  type APIButtonComponent,
+  type APIEmbed,
+  type GatewayDispatchEvents,
+} from "@discordjs/core";
 import { InteractionOptionResolver } from "@sapphire/discord-utilities";
 
 const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async (client, { data: interaction, api }) => {
@@ -41,3 +52,40 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 };
 
 export default interactionHandler;
+
+function errorEmbed(title: string, description: string): APIEmbed {
+  return {
+    title,
+    description,
+  };
+}
+
+function errorBtn(label: string, erroId: string): APIActionRowComponent<APIButtonComponent> {
+  return {
+    type: 1,
+    components: [
+      {
+        type: 2,
+        style: 1,
+        label,
+        custom_id: erroId,
+      },
+    ],
+  };
+}
+
+function formatIfUserApp(int: APIApplicationCommandInteraction): string | null {
+  const isUserApp = Object.keys(int.authorizing_integration_owners).every((k) => k === "1");
+  if (!isUserApp) return null;
+  const inGuild = IntUtils.isApplicationCommandGuildInteraction(int);
+  const isDm = int.channel.type === ChannelType.DM && `DM - Channel: ${int.channel.id} | Owner: ${int.channel.recipients?.[0] ? `${int.channel.recipients[0].username} (${int.channel.recipients[0].id})` : "Unknown"}`;
+  const inGroupDM = int.channel.type === ChannelType.GroupDM;
+  return ("User App" + 
+    (inGuild ? `Guild: ${int.guild_id}` : 
+      isDm
+      inGroupDM ? `Group DM - ${int.channel} ${int.channel.id}` : 
+      `DM: ${(int as APIApplicationCommandDMInteraction).channel} (${int.channel.id}`)
+    )
+  )
+}
+
