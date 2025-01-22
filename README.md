@@ -46,5 +46,4 @@ This is a monorepo containing projects related to SkyHelper bot. Project include
 - Make changes and lint, test and commit
 
 
-For any issues or help, feel free to contact us.
-
+For any issues or help, feel free to contact me at discord server [here](https://discord.com/invite/2rjCRKZsBb)
