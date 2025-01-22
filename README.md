@@ -44,3 +44,7 @@ This is a monorepo containing projects related to SkyHelper bot. Project include
 - Install dependencies `pnpm i --frozen-lockfile`
 - Build the project `pnpm run build`
 - Make changes and lint, test and commit
+
+
+For any issues or help, feel free to contact us.
+
