@@ -57,6 +57,8 @@ jobs:
       - name: Bump version
         id: bump_version
         if: ${{ github.event.inputs.version_type != 'none' }}
+        env:
+         GH_TOKEN: ${{ github.token }}
         run: |
           raw_version=$(pnpm --filter '${{ github.event.inputs.package }}' exec pnpm version ${{ github.event.inputs.version_type }} --no-git-tag-version)
 
