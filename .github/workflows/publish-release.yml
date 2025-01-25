@@ -67,7 +67,7 @@ jobs:
           git add .
           git commit -m "chore(release): bump ${{ github.event.inputs.package }} to ${new_version}"
 
-          git push
+          git push --set-upstream origin release/${{ github.event.inputs.package }}-${new_version}
 
           gh pr create --base main --head release/${{ github.event.inputs.package }}-${new_version} --title "chore: release ${{ github.event.inputs.package }} v${new_version}" --body "Automated version bump for ${{ github.event.inputs.package }} v${new_version}"
 
