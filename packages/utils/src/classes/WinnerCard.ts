@@ -25,7 +25,7 @@ export class GameWinnerCard {
     this.total = total;
   }
   private path(strs: string): string {
-    return join(__dirname, strs);
+    return join(import.meta.dirname, strs);
   }
 
   private roundRect(ctx: SKRSContext2D, x: number, y: number, w: number, h: number, r: number): SKRSContext2D {
