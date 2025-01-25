@@ -68,8 +68,7 @@ jobs:
           git add .
           git commit -m "chore(release): bump ${{ github.event.inputs.package }} to ${new_version}"
 
-          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git
-          git push
+          git push https://${{ github.repository_owner }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}.git
 
       - name: Publish
         if: contains(['@skyhelperbot/utils', '@skyhelperbot/constants'], ${{ github.event.inputs.package }})
