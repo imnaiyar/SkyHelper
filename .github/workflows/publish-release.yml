@@ -25,10 +25,11 @@ on:
           - "skyhelper"
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +59,7 @@ jobs:
         id: bump_version
         if: ${{ github.event.inputs.version_type != 'none' }}
         env:
-         GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           raw_version=$(pnpm --filter '${{ github.event.inputs.package }}' exec pnpm version ${{ github.event.inputs.version_type }} --no-git-tag-version)
 
