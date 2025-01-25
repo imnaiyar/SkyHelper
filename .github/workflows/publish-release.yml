@@ -57,18 +57,19 @@ jobs:
       - name: Bump version
         id: bump_version
         if: ${{ github.event.inputs.version_type != 'none' }}
-        env:
-          PAT_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           raw_version=$(pnpm --filter '${{ github.event.inputs.package }}' exec pnpm version ${{ github.event.inputs.version_type }} --no-git-tag-version)
 
           new_version=${raw_version#v}
           echo "new_version=${new_version}" >> $GITHUB_ENV
 
+          git checkout -b release/${{ github.event.inputs.package }}-${new_version}
           git add .
           git commit -m "chore(release): bump ${{ github.event.inputs.package }} to ${new_version}"
 
-          git push https://${{ github.repository_owner }}:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}.git
+          git push
+
+          gh pr create --base main --head release/${{ github.event.inputs.package }}-${new_version} --title "chore: release ${{ github.event.inputs.package }} v${new_version}" --body "Automated version bump for ${{ github.event.inputs.package }} v${new_version}"
 
       - name: Publish
         if: contains(['@skyhelperbot/utils', '@skyhelperbot/constants'], ${{ github.event.inputs.package }})
