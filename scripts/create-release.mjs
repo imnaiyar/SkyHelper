@@ -87,5 +87,5 @@ try {
 
   core.setOutput("changelog", changelogString);
 } catch (error) {
-  core.setFailed(error.message);
+  core.setFailed(error);
 }
