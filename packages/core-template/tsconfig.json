@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "lib": ["ESNext", "DOM"],
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": true,
+
+    // Source maps
+    "sourceMap": true,
+    "inlineSources": true,
+    // Set `sourceRoot` to  "/" to strip the build path prefix
+    // from generated source code references.
+    // This improves issue grouping in Sentry.
+    "sourceRoot": "/",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "strict": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "paths": {
+      "@/api/*": ["src/api/*.js"],
+      "@/structures": ["src/bot/structures/index.js"],
+      "@/types/*": ["src/bot/@types/*.js"],
+      "@/*": ["src/bot/*.js"],
+      "@/config": ["src/config.js"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

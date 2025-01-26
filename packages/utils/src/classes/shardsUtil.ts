@@ -1,8 +1,7 @@
-import moment from "moment-timezone";
 import "moment-duration-format";
+import { DateTime } from "luxon";
 import type { ShardsCountdown } from "../typings.js";
 import { shardsTimeline, shardConfig } from "../constants/index.js";
-
 /**
  * Sequence of Shards pattern
  */
@@ -18,19 +17,20 @@ const realmSequence = ["prairie", "forest", "valley", "wasteland", "vault"] as c
  */
 export class ShardsUtil {
   /**
-   * @method getDate - get provided date in moment
+   * @method getDate - get provided date in luxon
    * @param  date - date to get in moment
    */
-  static getDate(date?: string | undefined | null): moment.Moment | string {
+  static getDate(date?: string | undefined | null): DateTime | string {
     const timezone = "America/Los_Angeles";
-    let currentDate: moment.Moment;
+    let currentDate: DateTime;
     try {
       if (date) {
-        currentDate = moment.tz(date, "Y-MM-DD", timezone).startOf("day");
+        const [year, month, day] = date.split("-").map(Number);
+        currentDate = DateTime.fromObject({ year, month, day }, { zone: timezone }).startOf("day");
       } else {
-        currentDate = moment().tz(timezone);
+        currentDate = DateTime.now().setZone(timezone).startOf("day");
       }
-      if (!currentDate.isValid()) {
+      if (!currentDate.isValid) {
         return "invalid";
       } else {
         return currentDate;
@@ -44,11 +44,11 @@ export class ShardsUtil {
    * Returns shards index for a given date
    * @param date
    */
-  static shardsIndex(date: moment.Moment): {
+  static shardsIndex(date: DateTime): {
     currentShard: (typeof shardSequence)[number];
     currentRealm: (typeof realmSequence)[number];
   } {
-    const dayOfMonth = date.date();
+    const dayOfMonth = date.day;
     const shardIndex = (dayOfMonth - 1) % shardSequence.length;
     const currentShard = shardSequence[shardIndex];
     const realmIndex = (dayOfMonth - 1) % realmSequence.length;
@@ -82,44 +82,44 @@ export class ShardsUtil {
    * Get all three shards status for a given date relative to the current time
    * @param date The date for which to get the status for
    */
-  static getStatus(date: moment.Moment): ShardsCountdown[] | "No Shard" {
+  static getStatus(date: DateTime): ShardsCountdown[] | "No Shard" {
     const timezone = "America/Los_Angeles";
     const { currentShard } = this.shardsIndex(date);
     const timings = shardsTimeline(date)[currentShard];
-    const present = moment().tz(timezone);
-    const isNoShard = shardConfig[currentShard].weekdays.includes(date.day());
+    const present = DateTime.now().setZone(timezone);
+    const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
     if (isNoShard) return "No Shard";
     const toReturn: ShardsCountdown[] = [];
     for (let i = 0; i < timings.length; i++) {
       const eventTiming = timings[i];
       // Active
-      if (present.isBetween(eventTiming.start, eventTiming.end)) {
+      if (present >= eventTiming.start && present <= eventTiming.end) {
         toReturn.push({
           index: i + 1,
           active: true,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: moment.duration(eventTiming.end.diff(present)).format("d[d] h[h] m[m] s[s]"),
+          duration: eventTiming.end.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
         // Yet to fall
-      } else if (present.isBefore(eventTiming.start)) {
+      } else if (present < eventTiming.start) {
         toReturn.push({
           index: i + 1,
           active: false,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: moment.duration(eventTiming.start.diff(present)).format("d[d] h[h] m[m] s[s]"),
+          duration: eventTiming.start.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
         // All ended
-      } else if (present.isAfter(eventTiming.end)) {
+      } else if (present > eventTiming.end) {
         toReturn.push({
           index: i + 1,
           ended: true,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: moment.duration(present.diff(eventTiming.end)).format("d[d] h[h] m[m] s[s]"),
+          duration: present.diff(eventTiming.end, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
       }

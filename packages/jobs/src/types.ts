@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import type { REMINDERS_KEY } from "./database/getGuildDBValues";
 
 export interface GuildSchema extends Document {
   _id: string;
@@ -35,20 +36,16 @@ export interface EventReminder {
   active: boolean;
   last_messageId?: string;
   role: string | null;
+  webhook: {
+    id: string;
+    token: string;
+    channelId: string;
+  } | null;
 }
 export interface Reminders {
   active: boolean;
   default_role: string | null;
-  dailies: EventReminder;
-  grandma: EventReminder;
-  turtle: EventReminder;
-  geyser: EventReminder;
-  reset: EventReminder;
-  eden: EventReminder;
-  webhook: {
-    id: string | null;
-    token: string | null;
-    channelId: string | null;
+  events: {
+    [k in (typeof REMINDERS_KEY)[number]]: EventReminder;
   };
 }
-

@@ -1,5 +1,3 @@
-import moment from "moment-timezone";
-import "moment-duration-format";
 import type { getTranslator } from "./getTranslator.js";
 import { getSpecialEventDB } from "@/database/getSpecialEventDB.js";
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
@@ -9,6 +7,7 @@ import getTS from "@/utils/getTS.js";
 import { SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import { resolveColor } from "@/utils/resolveColor.js";
 import { time } from "@discordjs/builders";
+import { DateTime } from "luxon";
 /**
  * Get Times Embed
  * @param client Bot client
@@ -25,8 +24,8 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
       ? t("features:times-embed.EVENT_INACTIVE")
       : t("features:times-embed.EVENT_ACTIVE", {
           EVENT_NAME: specialEvent.name,
-          DATE1: `<t:${specialEvent.start.unix()}:F>`,
-          DATE2: `<t:${specialEvent.end.unix()}:F>`,
+          DATE1: `<t:${specialEvent.start.toSeconds()}:F>`,
+          DATE2: `<t:${specialEvent.end.toSeconds()}:F>`,
           DAYS: specialEvent.days,
           DURATION: specialEvent.duration,
           STARTS_ENDS: specialEvent.active ? t("features:times-embed.ENDS") : t("features:times-embed.STARTS"),
@@ -39,12 +38,12 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
     const emote = spirit?.expression?.icon || "❓";
     const strVisiting = t("features:times-embed.TS_VISITING", {
       TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
-      DATE: `<t:${tsData.nextVisit.clone().add(3, "days").endOf("day").unix()}:F>`,
+      DATE: `<t:${tsData.nextVisit.plus({ days: 3 }).endOf("day").toSeconds()}:F>`,
       DURATION: tsData.duration,
     });
     const strExpected = t("features:times-embed.TS_EXPECTED", {
       TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UNKNOWN")}`,
-      DATE: `<t:${tsData.nextVisit.unix()}:F>`,
+      DATE: `<t:${tsData.nextVisit.toSeconds()}:F>`,
       DURATION: tsData.duration,
     });
     tsDesc = tsData.visiting ? strVisiting : strExpected;
@@ -61,14 +60,14 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
           desc += `${t("features:times-embed.ACTIVE", {
             EVENT: event.name,
             DURATION: status.duration,
-            ACTIVE_TIME: time(status.startTime.unix(), "t"),
-            END_TIME: time(status.endTime.unix(), "t"),
+            ACTIVE_TIME: time(status.startTime.toSeconds(), "t"),
+            END_TIME: time(status.endTime.toSeconds(), "t"),
           })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
-            TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+            TIME: time(status.nextTime.toSeconds(), event.occursOn ? "F" : "t"),
           })}`;
         } else {
           desc += t("features:times-embed.NEXT-OCC", {
-            TIME: time(status.nextTime.unix(), event.occursOn ? "F" : "t"),
+            TIME: time(status.nextTime.toSeconds(), event.occursOn ? "F" : "t"),
             DURATION: status.duration,
           });
         }
@@ -101,35 +100,36 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
 interface EventType {
   active: boolean;
   name: string;
-  start: moment.Moment;
-  end: moment.Moment;
+  start: DateTime;
+  end: DateTime;
   duration: string;
   days: number;
 }
 type T = EventType | string;
-const getSpecialEvent = async (): Promise<T> => {
+export const getSpecialEvent = async (): Promise<T> => {
   const data = await getSpecialEventDB();
   const { startDate, endDate, name } = data;
-  const now = moment().tz("America/Los_Angeles");
-  const start = moment.tz(startDate, "DD-MM-YYYY", "America/Los_Angeles").startOf("day");
-  const end = moment.tz(endDate, "DD-MM-YYYY", "America/Los_Angeles").endOf("day");
-  if (now.isBetween(start, end)) {
+  const now = DateTime.now().setZone("America/Los_Angeles");
+  const start = DateTime.fromFormat(startDate, "dd-MM-yyyy", { zone: "America/Los_Angeles" }).startOf("day");
+  const end = DateTime.fromFormat(endDate, "dd-MM-yyyy", { zone: "America/Los_Angeles" }).endOf("day");
+
+  if (now >= start && now <= end) {
     return {
       active: true,
       name: name,
       start: start,
       end: end,
-      duration: moment.duration(end.diff(now)).format("d[d] h[h] m[m] s[s]"),
-      days: moment.duration(end.diff(start)).days(),
+      duration: end.diff(now, ["days", "hours", "minutes", "seconds"]).toFormat("d[d] h[h] m[m] s[s]"),
+      days: end.diff(start, "days").days,
     };
-  } else if (now.isBefore(start)) {
+  } else if (now < start) {
     return {
       active: false,
       name: name,
       start: start,
       end: end,
-      duration: moment.duration(start.diff(now)).format("d[d] h[h] m[m] s[s]"),
-      days: moment.duration(end.diff(start)).days(),
+      duration: start.diff(now, ["days", "hours", "minutes", "seconds"]).toFormat("d[d] h[h] m[m] s[s]"),
+      days: end.diff(start, "days").days,
     };
   } else {
     return "No Events";

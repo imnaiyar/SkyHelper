@@ -10,8 +10,7 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "update": "pnpm --recursive update --interactive",
-    "prepare": "husky",
-    "create-package": "turbo gen create-package --args"
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,7 @@
 export const shardConfig = {
-  a: { type: "<:ShardBlue:1233057106903699497> Black Shard", colors: "#000000", weekdays: [6, 0] },
+  a: { type: "<:ShardBlue:1233057106903699497> Black Shard", colors: "#000000", weekdays: [6, 7] },
   A: { type: "<:ShardRed:1233057065799254106> Red Shard", colors: "#FF0000", weekdays: [2, 3] },
-  b: { type: "<:ShardBlue:1233057106903699497> Black Shard", colors: "#000000", weekdays: [0, 1] },
+  b: { type: "<:ShardBlue:1233057106903699497> Black Shard", colors: "#000000", weekdays: [7, 1] },
   B: { type: "<:ShardRed:1233057065799254106> Red Shard", colors: "#FF0000", weekdays: [3, 4] },
   C: { type: "<:ShardRed:1233057065799254106> Red Shard", colors: "#FF0000", weekdays: [1, 2] },
 };

@@ -1,5 +1,7 @@
 import type { GuildSchema } from "@/types";
 import mongoose from "mongoose";
+export const REMINDERS_KEY = ["eden", "ts", "dailies", "concert", "geyser", "grandma", "reset", "turtle"] as const;
+
 const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,
 
@@ -21,43 +23,22 @@ const Schema = new mongoose.Schema<GuildSchema>({
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
-    default_role: { type: String, default: null },
-    dailies: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    grandma: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    turtle: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    eden: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    reset: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    geyser: {
-      active: { type: Boolean, default: false },
-      last_messageId: { type: String, default: null },
-      role: { type: String, default: null },
-    },
-    webhook: {
-      token: String,
-      id: String,
-      channelId: String,
-    },
+    events: REMINDERS_KEY.reduce((acc, key) => {
+      // @ts-expect-error
+      acc[key] = {
+        active: { type: Boolean, default: false },
+        webhook: {
+          id: String,
+          token: String,
+          channelId: String,
+        },
+        last_messageId: String,
+        role: String,
+      };
+      return acc;
+    }, {}),
   },
+
   autoShard: {
     active: Boolean,
     messageId: String,

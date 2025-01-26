@@ -33,12 +33,16 @@
     "@napi-rs/canvas": "^0.1.51",
     "discord.js": "14.16.2",
     "moment-duration-format": "^2.3.2",
-    "moment-timezone": "^0.5.45",
     "typescript": "^5.4.3",
     "undici": "^7.2.3"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "@types/moment-duration-format": "^2.2.6",
+    "luxon": "^3.5.0",
     "mongoose": "^8.3.2"
+  },
+  "peerDependencies": {
+    "luxon": "^3.5.0"
   }
 }

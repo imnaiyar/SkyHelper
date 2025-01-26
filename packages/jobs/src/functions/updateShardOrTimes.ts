@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import { getTranslator } from "./getTranslator";
 import { Webhook, type WebhookMessageCreateOptions } from "@/structures/Webhook";
 import { getActiveUpdates } from "@/database/getGuildDBValues";
@@ -8,6 +7,7 @@ import type { GuildSchema } from "@/types";
 import { logger } from "@/structures/Logger";
 import { throttleRequests } from "./throttleRequests";
 import { DiscordAPIError } from "@discordjs/rest";
+import { DateTime } from "luxon";
 
 /**
  * Updates Shards/Times Embeds
@@ -15,7 +15,7 @@ import { DiscordAPIError } from "@discordjs/rest";
  * @param client The bot client
  */
 export async function eventSchedules(type: "shard" | "times"): Promise<void> {
-  const currentDate = moment().tz("America/Los_Angeles");
+  const currentDate = DateTime.now().setZone("America/Los_Angeles");
   switch (type) {
     case "times": {
       const response = async (_t: ReturnType<typeof getTranslator>): Promise<WebhookMessageCreateOptions> => {
@@ -52,10 +52,10 @@ const update = async (
     if (!event.webhook.id) return;
     const webhook = new Webhook({ token: event.webhook.token || undefined, id: event.webhook.id });
     const t = getTranslator(guild.language?.value ?? "en-US");
-    const now = moment();
+    const now = DateTime.now();
     const res = await webhook
       .editMessage(event.messageId, {
-        content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.unix()}:R>` }),
+        content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toSeconds()}:R>` }),
         ...(await response(t)),
       })
       .catch((e) => e);

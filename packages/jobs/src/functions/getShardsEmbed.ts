@@ -1,6 +1,6 @@
-import moment from "moment-timezone";
 import { ShardsUtil as utils, shardsInfo } from "@skyhelperbot/utils";
 import type { getTranslator } from "@/functions/getTranslator.js";
+import { DateTime } from "luxon";
 import {
   type APIActionRowComponent,
   type APIButtonComponent,
@@ -15,7 +15,7 @@ import { resolveColor } from "@/utils/resolveColor.js";
  * @param noBtn Whether to add buttons or not (for Scroll Buttons in Live Updates)
  */
 export default (
-  date: moment.Moment,
+  date: DateTime,
   t: ReturnType<typeof getTranslator>,
   footer: string,
   noBtn?: boolean,
@@ -25,8 +25,8 @@ export default (
 } => {
   const { currentShard, currentRealm } = utils.shardsIndex(date);
   const info = shardsInfo[currentRealm][currentShard];
-  const today = moment().tz("America/Los_Angeles").startOf("day");
-  const formatted = date.isSame(today, "day") ? t("features:shards-embed.TODAY") : date.format("Do MMMM YYYY");
+  const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
+  const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
   const status = utils.getStatus(date);
   let result: APIEmbed = {
     author: {
@@ -46,13 +46,13 @@ export default (
           {
             type: ComponentType.Button,
             emoji: { name: "left", id: "1207594669882613770" },
-            custom_id: `shards-scroll_${date.clone().subtract(1, "day").format("YYYY-MM-DD")}`,
+            custom_id: `shards-scroll_${date.minus({ days: 1 }).toISODate()}`,
             style: ButtonStyle.Primary,
           },
           {
             type: ComponentType.Button,
             emoji: { name: "right", id: "1207593237544435752" },
-            custom_id: `shards-scroll_${date.clone().add(1, "day").format("YYYY-MM-DD")}`,
+            custom_id: `shards-scroll_${date.plus({ days: 1 }).toISODate()}`,
             style: ButtonStyle.Primary,
           },
         ],
@@ -64,14 +64,14 @@ export default (
       {
         type: ComponentType.Button,
         label: t("features:shards-embed.BUTTON1"),
-        custom_id: `shards-timeline_${date.format("YYYY-MM-DD")}`,
+        custom_id: `shards-timeline_${date.toISODate()}`,
         disabled: status === "No Shard",
         style: ButtonStyle.Success,
       },
       {
         type: ComponentType.Button,
         label: t("features:shards-embed.BUTTON2"),
-        custom_id: `shards-location_${date.format("YYYY-MM-DD")}`,
+        custom_id: `shards-location_${date.toISODate()}`,
         disabled: status === "No Shard",
         style: ButtonStyle.Success,
       },
@@ -124,12 +124,12 @@ export default (
             .map((s, i) => {
               const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
               // prettier-ignore
-              if (s.ended) return prefix + `~~<t:${s.start.unix()}:T> - <t:${s.end.unix()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
+              if (s.ended) return prefix + `~~<t:${s.start.toSeconds()}:T> - <t:${s.end.toSeconds()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
               // prettier-ignore
-              if (s.active) return prefix + `~~<t:${s.start.unix()}:T>~~ - <t:${s.end.unix()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
+              if (s.active) return prefix + `~~<t:${s.start.toSeconds()}:T>~~ - <t:${s.end.toSeconds()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
               return (
                 prefix +
-                `<t:${s.start.unix()}:T> - <t:${s.end.unix()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
+                `<t:${s.start.toSeconds()}:T> - <t:${s.end.toSeconds()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
               );
             })
             .join("\n"),

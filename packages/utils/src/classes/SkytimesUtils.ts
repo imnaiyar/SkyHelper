@@ -1,46 +1,44 @@
-import { Base, time } from "discord.js";
-import moment from "moment-timezone";
-import "moment-duration-format";
 import { eventData } from "../constants/eventDatas.js";
+import { DateTime } from "luxon";
 
 type EventKey = keyof typeof eventData;
 /**
  * Utilities for skytimes
  */
 export class SkytimesUtils {
-  /** Get all occurences of an event for the given date
-   * @param eventTime The moment date for which to get all occurences
-   * @param interval The interval between the event occurence's
+  /** Get all occurrences of an event for the given date
+   * @param eventTime The DateTime for which to get all occurrences
+   * @param interval The interval between the event occurrences
    */
-  public static getAllTimes(eventTime: moment.Moment, interval?: number): string {
-    const clonedTime = eventTime.clone();
+  public static getAllTimes(eventTime: DateTime, interval?: number): string {
+    let clonedTime = eventTime;
     const timeBuilt = [];
-    while (eventTime.date() === clonedTime.date()) {
-      timeBuilt.push(time(clonedTime.toDate(), "t"));
-      clonedTime.add(interval || 0, "minutes");
+    while (eventTime.hasSame(clonedTime, "day")) {
+      timeBuilt.push(clonedTime.toFormat("t"));
+      clonedTime = clonedTime.plus({ minutes: interval || 0 });
     }
     return timeBuilt.join(" • ");
   }
 
   /**
-   * Get the date in moment on which the event will occur (if it's not a daily event)
+   * Get the date in DateTime on which the event will occur (if it's not a daily event)
    * @param event The event for which to get the date-time
    */
-  private static getOccurenceDay(event: (typeof eventData)[EventKey]) {
-    const nextOccurrence = moment().tz("America/Los_Angeles").startOf("day").add(event.offset, "minutes"); // Start with the offset from the beginning of the day
+  private static getOccurrenceDay(event: (typeof eventData)[EventKey]): DateTime {
+    let nextOccurrence = DateTime.now().setZone("America/Los_Angeles").startOf("day").plus({ minutes: event.offset }); // Start with the offset from the beginning of the day
 
     if (event.occursOn) {
       // If the event occurs on specific weekdays
       if (event.occursOn.weekDays) {
-        while (!event.occursOn.weekDays.includes(nextOccurrence.isoWeekday())) {
-          nextOccurrence.add(1, "day");
+        while (!event.occursOn.weekDays.includes(nextOccurrence.weekday)) {
+          nextOccurrence = nextOccurrence.plus({ days: 1 });
         }
       }
 
       // If the event occurs on a specific day of the month
       if (event.occursOn.dayOfTheMonth) {
-        while (nextOccurrence.date() !== event.occursOn.dayOfTheMonth) {
-          nextOccurrence.add(1, "day");
+        while (nextOccurrence.day !== event.occursOn.dayOfTheMonth) {
+          nextOccurrence = nextOccurrence.plus({ days: 1 });
         }
       }
     }
@@ -48,26 +46,26 @@ export class SkytimesUtils {
   }
 
   /**
-   * Get the next occurence of the event relative to now
+   * Get the next occurrence of the event relative to now
    * @param eventName The key of the event
    */
-  private static getNextEventOccurrence(eventName: EventKey): moment.Moment {
+  private static getNextEventOccurrence(eventName: EventKey): DateTime {
     const event = eventData[eventName];
-    if (!event) throw new Error("Unknow Event");
+    if (!event) throw new Error("Unknown Event");
 
-    const now = moment().tz("America/Los_Angeles"); // Current time
-    const nextOccurrence = this.getOccurenceDay(event);
+    const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
+    let nextOccurrence = this.getOccurrenceDay(event);
 
     // Loop to calculate the next occurrence based on the interval
-    while (nextOccurrence.isBefore(now)) {
-      nextOccurrence.add(event.interval || 0, "minutes");
+    while (nextOccurrence < now) {
+      nextOccurrence = nextOccurrence.plus({ minutes: event.interval || 0 });
     }
 
     return nextOccurrence;
   }
 
   /**
-   * Get the details about an event, their status, next occurence, al occurences for the day
+   * Get the details about an event, their status, next occurrence, all occurrences for the day
    * @param key The event key
    */
   public static getEventDetails(key: EventKey): EventDetails {
@@ -75,7 +73,7 @@ export class SkytimesUtils {
     return {
       event: eventData[key],
       nextOccurence,
-      allOccurences: this.getAllTimes(this.getOccurenceDay(eventData[key]), eventData[key].interval),
+      allOccurences: this.getAllTimes(this.getOccurrenceDay(eventData[key]), eventData[key].interval),
       status: this.getEventStatus(eventData[key], nextOccurence),
     };
   }
@@ -86,43 +84,42 @@ export class SkytimesUtils {
    */
   public static allEventDetails(): [EventKey, EventDetails][] {
     const keys = Object.keys(eventData).sort((a, b) => eventData[a].index - eventData[b].index);
-    const occurences: [EventKey, EventDetails][] = [];
+    const occurrences: [EventKey, EventDetails][] = [];
 
     for (const key of keys) {
-      occurences.push([key, this.getEventDetails(key)]);
+      occurrences.push([key, this.getEventDetails(key)]);
     }
-    return occurences;
+    return occurrences;
   }
 
   /**
    * Returns the event status of a given event
    * @param event The event to get the status for
-   * @param nextOccurence The next occurence of the event relative to "now"
+   * @param nextOccurrence The next occurrence of the event relative to "now"
    * @returns The event status (or null if there is no active duration)
    */
-  public static getEventStatus(event: (typeof eventData)[keyof typeof eventData], nextOccurence: moment.Moment): Times {
-    const now = moment().tz("America/Los_Angeles");
+  public static getEventStatus(event: (typeof eventData)[keyof typeof eventData], nextOccurrence: DateTime): Times {
+    const now = DateTime.now().setZone("America/Los_Angeles");
     const BASE: NotActiveTimes = {
       active: false,
-      nextTime: nextOccurence,
-      duration: moment.duration(nextOccurence.diff(now)).format("d[d] h[h] m[m] s[s]"),
+      nextTime: nextOccurrence,
+      duration: nextOccurrence.diff(now).toFormat("d'd' h'h' m'm' s's'"),
     };
     if (!event.duration) return BASE;
-    // Substract the interval because nextOccurence always calculates the next upcoming event
-    // So we substract the interval to get the last occurence, and add the active duration to it, and check if now is between those
-    const start = nextOccurence.clone().subtract(event.interval || 0, "minutes");
-    const end = start.clone().add(event.duration, "minutes");
+
+    // Subtract the interval because nextOccurrence always calculates the next upcoming event
+    // So we subtract the interval to get the last occurrence, and add the active duration to it, and check if now is between those
+    const start = nextOccurrence.minus({ minutes: event.interval || 0 });
+    const end = start.plus({ minutes: event.duration });
 
     // When active
-    if (now.isBetween(start, end)) {
+    if (now >= start && now <= end) {
       return {
         active: true,
         startTime: start,
         endTime: end,
-
-        // TODO: This maybe not needed as nextoccurence is inncluded in original object returned from `eventOccurence()`
-        nextTime: nextOccurence,
-        duration: moment.duration(end.diff(now)).format("d[d] h[h] m[m] s[s]"),
+        nextTime: nextOccurrence,
+        duration: end.diff(now).toFormat("d'd' h'h' m'm' s's'"),
       };
     } else {
       return BASE;
@@ -135,7 +132,7 @@ export interface BaseTimes {
   active: boolean;
 
   /** The time when the event starts */
-  nextTime: moment.Moment;
+  nextTime: DateTime;
 
   /** This will be the countdown for when the event ends if it's active,
    *  otherwise it'll be the countdown to the next occurence
@@ -146,24 +143,24 @@ export interface BaseTimes {
 export interface ActiveTimes extends BaseTimes {
   active: true;
   /** The time when the event started if active */
-  startTime: moment.Moment;
+  startTime: DateTime;
 
   /** The time when the event ends if active */
-  endTime: moment.Moment;
+  endTime: DateTime;
 }
 export interface NotActiveTimes extends BaseTimes {
   active: false;
   /** The time when the event started if active */
-  startTime?: moment.Moment;
+  startTime?: DateTime;
 
   /** The time when the event ends if active */
-  endTime?: moment.Moment;
+  endTime?: DateTime;
 }
 export type Times = ActiveTimes | NotActiveTimes;
 
 export interface EventDetails {
   event: (typeof eventData)[EventKey];
-  nextOccurence: moment.Moment;
+  nextOccurence: DateTime;
   allOccurences: string;
   status: Times;
 }
