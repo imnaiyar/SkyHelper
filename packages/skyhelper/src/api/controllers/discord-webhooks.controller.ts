@@ -1,7 +1,8 @@
-import type { SkyHelper as BotService } from "#bot/structures/SkyHelper";
+import type { SkyHelper as BotService } from "@/structures";
 import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
-import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, MessageFlags, WebhookClient } from "discord.js";
+import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, MessageFlags } from "@discordjs/core";
 import type { Response } from "express";
+import BlackList from "@/schemas/BlackList";
 enum WebhookTypes {
   PING,
   EVENT,
@@ -36,24 +37,25 @@ export class WebhookEventController {
     if (!body.event.data) return;
     const data = body.event.data;
     const { user } = data;
-    const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
+    if (data.guild) this._checkBlacklisted(data.guild.id, user.id);
+    const webhook = process.env.GUILD ? this.bot.utils.parseWebhookURL(process.env.GUILD) : undefined;
     if (!webhook) return;
 
     let description = `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`;
-    description += `\n\n**Type:** \`${
+    const type =
       "integration_type" in data
         ? data.integration_type /* 0 will be false anyway, so no need to check explicitly */
           ? "UserInstall"
           : "GuildInstall"
-        : "Oauth2"
-    }\``;
+        : "Oauth2";
+    description += `\n\n**Type:** \`${type}\``;
     description += `\n**Scopes:** ${data.scopes.map((sc) => `\`${sc}\``).join(" ")}`;
     if (data.guild) {
       description += `\n**Guild:** ${data.guild.name} (\`${data.guild.id}\`)`;
     }
     if (data.integration_type) {
-      const appl = await this.bot.application.fetch();
-      description += `\nTotal Authorized: ${appl.approximateUserInstallCount}`;
+      const appl = await this.bot.api.applications.getCurrent();
+      description += `\nTotal Authorized: ${appl.approximate_user_install_count}`;
     }
     const embed: APIEmbed = {
       title: "Application Authorized",
@@ -71,28 +73,27 @@ export class WebhookEventController {
       },
       ...(user.banner && { image: { url: this.bot.rest.cdn.banner(user.id, user.banner) } }),
     };
-    webhook.send({
+    await this.bot.api.webhooks.execute(webhook.id, webhook.token, {
       embeds: [embed],
-      username: "User Install",
-      avatarURL: this.bot.user.displayAvatarURL(),
+      username: type,
+      avatar_url: this.bot.utils.getUserAvatar(this.bot.user),
     });
-    if (data.guild) this._checkBlacklisted(data.guild.id, user.id);
 
     return;
   }
 
   private async _checkBlacklisted(guildId: string, inviterId: string): Promise<void> {
-    const guild = this.bot.guilds.cache.get(guildId);
+    const guild = this.bot.guilds.get(guildId);
     if (!guild) return;
-    const blacklisted = await this.bot.database.guildBlackList.findOne({ Guild: guild.id }).catch(() => null);
+    const blacklisted = await BlackList.findByIdAndUpdate(guild.id).catch(() => null);
     if (!blacklisted) return;
-    await this.bot.users
-      .send(
-        inviterId,
-        `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.Reason || "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
-      )
+    const channel = await this.bot.api.users.createDM(inviterId);
+    await this.bot.api.channels
+      .createMessage(channel.id, {
+        content: `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.reason || "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
+      })
       .catch(() => {});
-    await guild.leave();
+    await this.bot.api.guilds.delete(guild.id).catch(() => {});
     const embed: APIEmbed = {
       author: { name: "Blacklisted Server" },
       description: "Someone tried to invite me to a blacklisted server.",
@@ -103,7 +104,7 @@ export class WebhookEventController {
         },
         {
           name: "Reason",
-          value: blacklisted.Reason || "No reason provided",
+          value: blacklisted.reason || "No reason provided",
         },
         {
           name: "Blacklisted Date",
@@ -111,11 +112,11 @@ export class WebhookEventController {
         },
       ],
     };
-    const webhook = process.env.GUILD ? new WebhookClient({ url: process.env.GUILD }) : undefined;
+    const webhook = process.env.GUILD ? this.bot.utils.parseWebhookURL(process.env.GUILD) : undefined;
     if (!webhook) return;
-    webhook.send({
+    await this.bot.api.webhooks.execute(webhook.id, webhook.token, {
       username: "Blacklist Server",
-      avatarURL: this.bot.user.displayAvatarURL(),
+      avatar_url: this.bot.utils.getUserAvatar(this.bot.user),
       embeds: [embed],
       flags: MessageFlags.SuppressEmbeds,
     });

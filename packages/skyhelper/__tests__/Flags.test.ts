@@ -1,9 +1,9 @@
-import { Flags } from "../src/bot/libs/classes/Flags";
+import { MessageFlags } from "../src/bot/utils/classes/MessageFlags";
 
 describe("Flags", () => {
   it("should correctly parse flags from the content string", () => {
     const content = "--flag1=value1 --flag2=value2";
-    const flags = new Flags(content);
+    const flags = new MessageFlags(content);
     expect(flags.getFlags()).toEqual(["flag1=value1", "flag2=value2"]);
   });
 

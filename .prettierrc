@@ -5,7 +5,6 @@
   "semi": true,
   "singleQuote": false,
   "printWidth": 130,
-  "plugins": ["prettier-plugin-ejs"],
   "bracketSpacing": true,
   "arrowParens": "always",
   "endOfLine": "crlf"

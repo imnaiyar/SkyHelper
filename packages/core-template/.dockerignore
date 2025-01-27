@@ -1,7 +1,0 @@
-ex.dockerfile
-.vscode/
-.gitignore
-.env.example
-.env
-logs/
-.turbo/

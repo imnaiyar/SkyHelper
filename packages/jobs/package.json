@@ -24,7 +24,6 @@
   "homepage": "https://github.com/imnaiyar/skyhelper-jobs#readme",
   "devDependencies": {
     "@types/luxon": "^3.4.2",
-    "@types/moment-duration-format": "^2.2.6",
     "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
@@ -44,7 +43,6 @@
     "i18next": "^23.12.2",
     "i18next-fs-backend": "^2.3.1",
     "luxon": "^3.5.0",
-    "moment-duration-format": "^2.3.2",
     "mongoose": "^8.5.1",
     "node-cron": "^3.0.3"
   }

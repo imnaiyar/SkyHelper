@@ -1,8 +1,11 @@
 /* import type { GuildSchema } from "#libs"; */
 import getSettings from "../utils/getSettings.js";
-import type { TextChannel } from "discord.js";
-import type { SkyHelper as BotService } from "#structures";
+import type { SkyHelper as BotService } from "@/structures";
 import type { ReminderFeature } from "../types.js";
+import RemindersUtils from "@/utils/classes/RemindersUtils";
+import { REMINDERS_KEY } from "@/utils/constants";
+import { HttpException, HttpStatus } from "@nestjs/common";
+import type { GuildSchema } from "@/types/schemas";
 /* const payload = (r: GuildSchema["reminders"]) => ({
   channel: r.webhook.channelId ?? undefined,
   default_role: r.default_role ?? undefined,
@@ -12,79 +15,73 @@ import type { ReminderFeature } from "../types.js";
   reset: r.reset.active,
 }); */
 
+const formatReminders = (r: GuildSchema["reminders"]) => {
+  const obj = Object.entries(r.events).reduce(
+    (acc, [key, value]) => {
+      acc[key as (typeof REMINDERS_KEY)[number]] = {
+        active: value.active,
+        channelId: value.webhook?.channelId ?? null,
+        role: value.role ?? null,
+      };
+      return acc;
+    },
+    {} as Record<(typeof REMINDERS_KEY)[number], { active: boolean; channelId: string | null; role: string | null }>,
+  );
+  return obj;
+};
 export class Reminders {
-  static async get(client: BotService, guildId: string): Promise<ReminderFeature | null> {
+  static async get(client: BotService, guildId: string): Promise<ReminderFeature> {
     const settings = await getSettings(client, guildId);
-    if (settings?.reminders.webhook.id && !settings.reminders.webhook.channelId) {
-      const wb = await client.fetchWebhook(settings.reminders.webhook.id).catch(() => null);
-      if (wb) settings.reminders.webhook.channelId === wb.channelId;
-      await settings.save();
-    }
 
-    return settings?.reminders?.active
-      ? {
-          ...settings.reminders,
-          default_role: settings.reminders.default_role ?? undefined,
-          channel: settings.reminders.webhook.channelId ?? undefined,
-        }
-      : null;
+    return formatReminders(settings!.reminders);
   }
 
-  static async patch(client: BotService, guildId: string, body: any): Promise<ReminderFeature | null> {
+  static async patch(client: BotService, guildId: string, body: ReminderFeature): Promise<ReminderFeature | null> {
     const settings = await getSettings(client, guildId);
+    if (!settings) return null;
 
-    if (!settings) {
-      return null;
-    }
-    settings.reminders.geyser = body.geyser;
-    settings.reminders.default_role = body.default_role;
-    settings.reminders.grandma = body.grandma;
-    settings.reminders.turtle = body.turtle;
-    settings.reminders.reset = body.reset;
-    settings.reminders.eden = body.eden;
+    const utils = new RemindersUtils(client);
 
-    const channel = client.channels.cache.get(body.channel) as TextChannel;
-    const updateWebhook = async (existingId?: string) => {
-      if (existingId) {
-        const wb = await client.fetchWebhook(existingId).catch(() => {});
-        if (settings.reminders.webhook.channelId !== body.channel) {
-          wb && wb.delete().catch(() => {});
-        } else if (wb) {
-          return;
+    for (const [key, value] of Object.entries(body)) {
+      const event = settings.reminders.events[key as (typeof REMINDERS_KEY)[number]];
+      if (!event) continue;
+
+      event.active = value.active;
+
+      if (value.active) {
+        if (!value.channelId) {
+          throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
         }
-      }
-      if (channel) {
-        const webhook = await channel.createWebhook({
-          name: "SkyHelper Reminders",
-          reason: "For skytimes reminders",
-          avatar: client.user.displayAvatarURL(),
+        event.role = value.role ?? null;
+
+        if (event.webhook?.channelId === value.channelId) continue; // No change, skip
+
+        // If channel changed or webhook is missing, create a new one
+        const wb = await utils.createWebhookAfterChecks(value.channelId, {
+          name: "SkyHelper",
+          avatar: client.utils.getUserAvatar(client.user),
         });
-        settings.reminders.webhook = {
-          id: webhook.id,
-          token: webhook.token,
-          channelId: webhook.channelId,
-        };
+
+        if (!wb.token) throw new Error("Failed to create webhook, token is missing.");
+
+        if (event.webhook) {
+          await utils.deleteAfterChecks(event.webhook, [key], settings);
+        }
+
+        event.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
       } else {
-        settings.reminders.webhook = {
-          id: null,
-          token: null,
-          channelId: null,
-        };
+        if (event.webhook) {
+          // Disable since it can only be disabled in this scenario
+          await utils.deleteAfterChecks(event.webhook, [key], settings);
+        }
+        event.webhook = null;
+        event.role = null;
+        event.last_messageId = null;
+        event.active = false;
       }
-    };
-    if (settings.reminders.webhook?.id) {
-      await updateWebhook(settings.reminders.webhook.id);
-    } else {
-      await updateWebhook();
     }
-
     await settings.save();
-
-    return {
-      ...settings.reminders,
-      default_role: settings.reminders.default_role ?? undefined,
-      channel: settings.reminders.webhook.channelId ?? undefined,
-    };
+    return formatReminders(settings.reminders);
   }
 
   static async post(client: BotService, guildId: string) {
@@ -106,19 +103,7 @@ export class Reminders {
     if (!settings) {
       return "Success";
     }
-    if (!settings.reminders?.webhook?.id) {
-      settings.reminders.active = false;
-      await settings.save();
-      return "Success";
-    }
-    try {
-      (await client.fetchWebhook(settings.reminders.webhook.id)).delete();
-    } catch (error) {
-      console.error("Error deleting webhook:", error);
-    }
-
-    settings.reminders.active = false;
-    await settings.save();
+    await new RemindersUtils(client).disableAllReminders(settings);
 
     return "Success";
   }

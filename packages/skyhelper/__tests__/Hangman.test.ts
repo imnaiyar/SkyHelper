@@ -1,6 +1,7 @@
-import { Hangman } from "../src/bot/libs/classes/Hangman";
+import { Hangman } from "../src/bot/utils/classes/Hangman";
 import { User, TextChannel, Collection } from "discord.js";
 import { jest, describe, beforeEach, it, expect } from "@jest/globals";
+import { APITextChannel, APIUser } from "@discordjs/core";
 /* eslint-disable space-before-function-paren */
 // extenders for the <Array>.prototype.random() and <Array>.prototype.last() methods
 // @ts-ignore
@@ -13,9 +14,9 @@ Array.prototype.last = function () {
 };
 
 describe("Hangman", () => {
-  let channel: TextChannel;
-  let user1: User;
-  let user2: User;
+  let channel: APITextChannel;
+  let user1: APIUser;
+  let user2: APIUser;
 
   beforeEach(() => {
     channel = {
@@ -36,7 +37,7 @@ describe("Hangman", () => {
         },
         gameData: new Collection(),
       },
-    } as unknown as TextChannel;
+    } as unknown as APITextChannel;
     // @ts-ignore
     user1 = {
       id: "user1",

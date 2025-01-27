@@ -1,32 +1,32 @@
-import moment from "moment-timezone";
-import { Flags } from "#libs";
-import type { Event } from "#structures";
-import { type ActivityOptions, ActivityType, EmbedBuilder, WebhookClient } from "discord.js";
-import { UpdateEvent, UpdateTS, ShardsUtil as util } from "@skyhelperbot/utils";
-import { bootstrap } from "../../api/main.js";
+import { ActivityType, GatewayDispatchEvents, GatewayOpcodes, PresenceUpdateStatus, type APIEmbed } from "@discordjs/core";
+import type { Event } from "../structures/Event.js";
 import chalk from "chalk";
-const ready = process.env.READY_LOGS ? new WebhookClient({ url: process.env.READY_LOGS }) : undefined;
+import { bootstrap } from "@/api/main";
+import { ShardsUtil } from "@skyhelperbot/utils";
+import { DateTime } from "luxon";
 
-const readyHandler: Event<"ready"> = async (client): Promise<void> => {
-  client.logger.custom(`Logged in as ${client.user.tag}`, "BOT");
+const readyHandler: Event<GatewayDispatchEvents.Ready> = (client, { data }) => {
+  for (const guild of data.guilds) {
+    client.unavailableGuilds.add(guild.id);
+  }
+  client.logger.custom(`Logged in as ${client.user.username}`, "BOT");
 
   // Enable Dashboard
   console.log(chalk.blueBright(`\n\n<${"-".repeat(24)} Dashboard ${"-".repeat(26)}>\n`));
   if (client.config.DASHBOARD.enabled) bootstrap(client);
 
-  // Populate client caches
-  client.classes.set("UpdateTS", UpdateTS);
-  client.classes.set("UpdateEvent", UpdateEvent);
-  client.classes.set("Flags", Flags);
-
   setInterval(() => {
-    client.user.setActivity(getActivity());
+    client.gateway.send(0, {
+      op: GatewayOpcodes.PresenceUpdate,
+      d: {
+        activities: [getActivity()],
+        status: PresenceUpdateStatus.Online,
+        since: Date.now(),
+        afk: false,
+      },
+    });
   }, 2 * 60_000);
-
-  // Fetch application for eval purposes
-  await client.application.fetch();
-  await client.application.commands.fetch();
-
+  client.readTimestamp = Date.now();
   // Setting up additional datas
   client.emojisMap.set("realms", {
     "Isle of Dawn": "<:Isle:1150605424752590868>",
@@ -59,22 +59,13 @@ const readyHandler: Event<"ready"> = async (client): Promise<void> => {
     Lightseekers: "<:lightseekers:1130958300293365870>",
     Gratitude: "<:gratitude:1130958261349261435>",
   });
-
-  const readyalertemb = new EmbedBuilder()
-    .addFields(
+  const readyalertemb: APIEmbed = {
+    fields: [
       {
         name: "Bot Status",
-        value: `Total guilds: ${client.guilds.cache.size}\nTotal Users: ${client.guilds.cache.reduce(
-          (size, g) => size + g.memberCount,
-          0,
-        )}`,
+        value: `Total guilds: ${client.guilds.size}\nTotal Users: ${client.guilds.reduce((size, g) => size + g.member_count, 0)}`,
         inline: false,
       },
-      /* {
-        name: "Website",
-        value: text,
-        inline: false,
-      }, */
       {
         name: "Interactions",
         value: `Loaded Interactions`,
@@ -84,15 +75,17 @@ const readyHandler: Event<"ready"> = async (client): Promise<void> => {
         name: "Success",
         value: `SkyHelper is now online`,
       },
-    )
-    .setColor("Gold")
-    .setTimestamp();
+    ],
+    color: 0xffd700, // Gold color
+    timestamp: new Date().toISOString(),
+  };
 
   // Ready alert
+  const ready = process.env.READY_LOGS ? client.utils.parseWebhookURL(process.env.READY_LOGS) : null;
   if (ready) {
-    ready.send({
+    client.api.webhooks.execute(ready.id, ready.token, {
       username: "Ready",
-      avatarURL: client.user.displayAvatarURL(),
+      avatar_url: client.utils.getUserAvatar(client.user),
       embeds: [readyalertemb],
     });
   }
@@ -100,8 +93,8 @@ const readyHandler: Event<"ready"> = async (client): Promise<void> => {
 
 export default readyHandler;
 
-function getActivity(): ActivityOptions {
-  const status = util.getStatus(moment().tz("America/Los_Angeles"));
+function getActivity() {
+  const status = ShardsUtil.getStatus(DateTime.now().setZone("America/Los_Angeles"));
   let shardStatus = "";
 
   if (status === "No Shard") {
@@ -110,7 +103,7 @@ function getActivity(): ActivityOptions {
     const isActive = status.find((s) => s.active);
     const allEnded = status.every((s) => s.ended);
     const yetToFall = status.find((s) => !s.active && !s.ended);
-    const getIndex = (i: number) => i.toString() + util.getSuffix(i);
+    const getIndex = (i: number) => i.toString() + ShardsUtil.getSuffix(i);
     shardStatus = allEnded
       ? "😟 All shards ended for today"
       : isActive
@@ -118,7 +111,7 @@ function getActivity(): ActivityOptions {
         : `🌋 ${getIndex(yetToFall!.index)} shard lands in ${yetToFall!.duration}`;
   }
 
-  const activities: ActivityOptions[] = [
+  const activities = [
     {
       name: "Shards being menacing",
       type: ActivityType.Watching,

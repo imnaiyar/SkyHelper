@@ -1,7 +1,7 @@
 import { Inject, Injectable, type NestMiddleware } from "@nestjs/common";
 import { type UserSession } from "../utils/discord.js";
 import type { Request, Response, NextFunction } from "express";
-import { SkyHelper } from "#bot/structures/SkyHelper";
+import { SkyHelper } from "@/structures";
 
 export interface AuthRequest extends Request {
   session: UserSession;
