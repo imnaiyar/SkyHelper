@@ -26,6 +26,7 @@ const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { da
           active: false,
           webhook: null,
           role: null,
+          last_messageId: null,
         };
         disabledReminders.push(event);
       });

@@ -101,7 +101,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
             ...response,
           })
           .then((msg) => {
-            event.last_messageId = msg?.id || undefined;
+            event.last_messageId = msg?.id || null;
             guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
           })
           .catch((err) => {

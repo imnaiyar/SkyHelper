@@ -7,17 +7,14 @@ const ReminderFeatureBaseSchema = z.object({
 });
 
 export const ReminderFeatureSchema = z.object({
-  active: z.boolean(),
-  events: z.object({
-    eden: ReminderFeatureBaseSchema,
-    dailies: ReminderFeatureBaseSchema,
-    grandma: ReminderFeatureBaseSchema,
-    turtle: ReminderFeatureBaseSchema,
-    geyser: ReminderFeatureBaseSchema,
-    reset: ReminderFeatureBaseSchema,
-    aurora: ReminderFeatureBaseSchema,
-    ts: ReminderFeatureBaseSchema,
-  }),
+  eden: ReminderFeatureBaseSchema,
+  dailies: ReminderFeatureBaseSchema,
+  grandma: ReminderFeatureBaseSchema,
+  turtle: ReminderFeatureBaseSchema,
+  geyser: ReminderFeatureBaseSchema,
+  reset: ReminderFeatureBaseSchema,
+  aurora: ReminderFeatureBaseSchema,
+  ts: ReminderFeatureBaseSchema,
 });
 
 export type ReminderFeature = z.infer<typeof ReminderFeatureSchema>;
@@ -30,16 +27,14 @@ export const GuildInfoSchema = z.object({
   announcement_channel: z.string().optional(),
   beta: z.boolean().optional(),
   language: z.string().optional(),
-  enabledFeatures: z.array(z.enum(["shards-live", "times-live", "reminders"])).optional(),
+  enabledFeatures: z.array(z.enum(["reminders", "live-updates"])).optional(),
 });
 export type GuildInfo = z.infer<typeof GuildInfoSchema>;
 
 export const FeaturesSchema = z.object({
-  "shards-live": z.object({
-    channel: z.string().optional(),
-  }),
-  "times-live": z.object({
-    channel: z.string().optional(),
+  "live-updates": z.object({
+    shards: z.string().nullable(),
+    times: z.string().nullable(),
   }),
   reminders: ReminderFeatureSchema,
 });

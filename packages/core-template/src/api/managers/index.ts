@@ -1,3 +1,2 @@
-export * from "./LiveShard.js";
-export * from "./LiveTimes.js";
+export * from "./LiveUpdates.js";
 export * from "./Reminders.js";

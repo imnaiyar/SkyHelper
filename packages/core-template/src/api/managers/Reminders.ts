@@ -16,37 +16,33 @@ import type { GuildSchema } from "@/types/schemas";
 }); */
 
 const formatReminders = (r: GuildSchema["reminders"]) => {
-  const obj = {
-    active: r.active,
-    events: Object.entries(r.events).reduce(
-      (acc, [key, value]) => {
-        acc[key as (typeof REMINDERS_KEY)[number]] = {
-          active: value.active,
-          channelId: value.webhook?.channelId ?? null,
-          role: value.role ?? null,
-        };
-        return acc;
-      },
-      {} as Record<(typeof REMINDERS_KEY)[number], { active: boolean; channelId: string | null; role: string | null }>,
-    ),
-  };
+  const obj = Object.entries(r.events).reduce(
+    (acc, [key, value]) => {
+      acc[key as (typeof REMINDERS_KEY)[number]] = {
+        active: value.active,
+        channelId: value.webhook?.channelId ?? null,
+        role: value.role ?? null,
+      };
+      return acc;
+    },
+    {} as Record<(typeof REMINDERS_KEY)[number], { active: boolean; channelId: string | null; role: string | null }>,
+  );
   return obj;
 };
 export class Reminders {
-  static async get(client: BotService, guildId: string): Promise<ReminderFeature | null> {
+  static async get(client: BotService, guildId: string): Promise<ReminderFeature> {
     const settings = await getSettings(client, guildId);
 
-    return settings?.reminders?.active ? formatReminders(settings.reminders) : null;
+    return formatReminders(settings!.reminders);
   }
 
-  // TODO: this needs full revamp along with dashboard
   static async patch(client: BotService, guildId: string, body: ReminderFeature): Promise<ReminderFeature | null> {
     const settings = await getSettings(client, guildId);
     if (!settings) return null;
 
     const utils = new RemindersUtils(client);
 
-    for (const [key, value] of Object.entries(body.events)) {
+    for (const [key, value] of Object.entries(body)) {
       const event = settings.reminders.events[key as (typeof REMINDERS_KEY)[number]];
       if (!event) continue;
 
@@ -56,6 +52,7 @@ export class Reminders {
         if (!value.channelId) {
           throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
         }
+        event.role = value.role ?? null;
 
         if (event.webhook?.channelId === value.channelId) continue; // No change, skip
 
@@ -68,17 +65,21 @@ export class Reminders {
         if (!wb.token) throw new Error("Failed to create webhook, token is missing.");
 
         if (event.webhook) {
-          await utils.deleteAfterChecks(event.webhook, key, settings);
+          await utils.deleteAfterChecks(event.webhook, [key], settings);
         }
 
         event.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
-      } else if (event.webhook) {
-        // Disable since it can only be disabled in this scenario
-        await utils.deleteAfterChecks(event.webhook, key, settings);
+      } else {
+        if (event.webhook) {
+          // Disable since it can only be disabled in this scenario
+          await utils.deleteAfterChecks(event.webhook, [key], settings);
+        }
         event.webhook = null;
+        event.role = null;
+        event.last_messageId = null;
+        event.active = false;
       }
     }
-
     await settings.save();
     return formatReminders(settings.reminders);
   }

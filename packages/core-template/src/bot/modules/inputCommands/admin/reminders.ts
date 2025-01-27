@@ -54,6 +54,7 @@ export default {
             id: wb.id,
             token: wb.token!,
           },
+          last_messageId: null,
           role: role?.id ?? null,
         };
         await guildSettings.save();
@@ -77,7 +78,7 @@ export default {
             id: eventSettings.webhook!.id,
             token: eventSettings.webhook!.token!,
           },
-          event,
+          [event],
           guildSettings,
         );
         eventSettings.active = false;

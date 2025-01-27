@@ -17,11 +17,11 @@ export default class {
     return Object.values(settings.reminders.events).some((e) => e.active);
   }
 
-  private checkWebhookUsage(settings: GuildSchema, webhook: { id: string; token: string }, excludeKey: string) {
-    const keys = Object.keys(settings.reminders.events).filter((k) => k !== excludeKey);
+  private checkWebhookUsage(settings: GuildSchema, webhook: { id: string; token: string }, excludeKeys: string[]) {
+    const keys = Object.keys(settings.reminders.events).filter((k) => !excludeKeys.includes(k));
     const liveUse =
-      (excludeKey !== "autoShard" && settings.autoShard?.webhook?.id === webhook.id) ||
-      (excludeKey !== "autoTimes" && settings.autoTimes?.webhook?.id === webhook.id);
+      (!excludeKeys.includes("autoShard") && settings.autoShard?.webhook?.id === webhook.id) ||
+      (!excludeKeys.includes("autoTimes") && settings.autoTimes?.webhook?.id === webhook.id);
     return (
       keys.some((key) => settings.reminders.events[key as keyof GuildSchema["reminders"]["events"]].webhook?.id === webhook.id) ||
       liveUse
@@ -49,10 +49,10 @@ export default class {
    * @param excludeEvent The event to exclude from the checks
    * @param settings The guild Settings
    */
-  async deleteAfterChecks(webhook: { id: string; token: string }, excludeEvent: string, settings: GuildSchema) {
+  async deleteAfterChecks(webhook: { id: string; token: string }, excludeEvent: string[], settings: GuildSchema) {
     const inUse = this.checkWebhookUsage(settings, webhook, excludeEvent);
     if (!inUse) {
-      await this.client.api.webhooks.delete(webhook.id, { token: webhook.token });
+      await this.client.api.webhooks.delete(webhook.id, { token: webhook.token }).catch(() => {});
     }
   }
 
@@ -67,14 +67,14 @@ export default class {
       }
       event.active = false;
       event.webhook = null;
-      event.last_messageId = undefined;
+      event.last_messageId = null;
       event.role = null;
     }
     settings.reminders.active = false;
     await settings.save();
 
     for (const webhook of webhooks.values()) {
-      await this.deleteAfterChecks(webhook, "", settings);
+      await this.deleteAfterChecks(webhook, [], settings);
     }
   }
 }

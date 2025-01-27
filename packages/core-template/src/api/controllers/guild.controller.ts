@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Inject } from "@nestjs/common";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { SkyHelper as BotService } from "@/structures";
-import { LiveTimes as Times, LiveShard as Shard, Reminders } from "../managers/index.js";
+import { LiveUpdates as Updates, Reminders } from "../managers/index.js";
 import getSettings from "../utils/getSettings.js";
 import { GuildInfoSchema, ReminderFeatureSchema, type Features, type GuildInfo, type ReminderFeature } from "../types.js";
 import { supportedLang } from "@skyhelperbot/constants";
@@ -13,7 +13,7 @@ const GuildIDPredicate = new ZodValidator(
   z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID"),
   "Invalid 'guild' Param",
 );
-const FeaturePredicate = new ZodValidator(z.enum(["shards-live", "times-live", "reminders"]), "Invalid 'feature' Param");
+const FeaturePredicate = new ZodValidator(z.enum(["live-updates", "reminders"]), "Invalid 'feature' Param");
 
 @Controller("/guilds/:guild")
 export class GuildController {
@@ -25,7 +25,7 @@ export class GuildController {
 
     if (data == null) return "null";
     const settings = await getSettings(this.bot, guild);
-    const actives: Array<keyof Features> = ["reminders", "shards-live", "times-live"];
+    const actives: Array<keyof Features> = ["reminders", "live-updates"];
     return {
       id: data.id,
       name: data.name,
@@ -61,16 +61,13 @@ export class GuildController {
 
   @Get("/features/:feature")
   async getFeature(
-    @Param("guild", GuildIDPredicate) guild: string,
+    @Param("guild", GuildIDPredicate) guild: keyof Features,
     @Param("feature", FeaturePredicate) feature: string,
   ): Promise<Features[keyof Features] | null | undefined> {
     let response;
     switch (feature) {
-      case "times-live":
-        response = await Times.get(this.bot, guild);
-        break;
-      case "shards-live":
-        response = await Shard.get(this.bot, guild);
+      case "live-updates":
+        response = await Updates.get(this.bot, guild);
         break;
       case "reminders":
         response = await Reminders.get(this.bot, guild);
@@ -87,11 +84,8 @@ export class GuildController {
     await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
-      case "times-live":
-        response = await Times.post(this.bot, guild);
-        break;
-      case "shards-live":
-        response = await Shard.post(this.bot, guild);
+      case "live-updates":
+        response = await Updates.post(this.bot, guild);
         break;
       case "reminders":
         response = await Reminders.post(this.bot, guild);
@@ -104,17 +98,18 @@ export class GuildController {
     @Req() req: AuthRequest,
     @Param("guild", GuildIDPredicate) guild: string,
     @Param("feature", FeaturePredicate) feature: string,
-    @Body(new ZodValidator(z.union([ReminderFeatureSchema, z.object({ channel: z.string().optional() })])))
+    @Body(
+      new ZodValidator(
+        z.union([ReminderFeatureSchema, z.object({ times: z.string().nullable(), shards: z.string().nullable() })]),
+      ) as any,
+    )
     body: Partial<Features[keyof Features]>,
   ) {
     await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
-      case "times-live":
-        response = await Times.patch(this.bot, guild, body);
-        break;
-      case "shards-live":
-        response = await Shard.patch(this.bot, guild, body);
+      case "live-updates":
+        response = await Updates.patch(this.bot, guild, body);
         break;
       case "reminders":
         response = await Reminders.patch(this.bot, guild, body as ReminderFeature);
@@ -126,17 +121,14 @@ export class GuildController {
   @Delete("/features/:feature")
   async disableFeature(
     @Param("guild", GuildIDPredicate) guild: string,
-    @Param("feature", FeaturePredicate) feature: string,
+    @Param("feature", FeaturePredicate) feature: keyof Features,
     @Req() req: AuthRequest,
   ) {
     await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
-      case "times-live":
-        response = await Times.delete(this.bot, guild);
-        break;
-      case "shards-live":
-        response = await Shard.delete(this.bot, guild);
+      case "live-updates":
+        response = await Updates.delete(this.bot, guild);
         break;
       case "reminders":
         response = await Reminders.delete(this.bot, guild);
@@ -163,6 +155,6 @@ export class GuildController {
     const roles = this.bot.guilds.get(guild)?.roles;
     if (roles == null) return null;
 
-    return [...roles.values()];
+    return roles.filter((r) => !r.managed);
   }
 }

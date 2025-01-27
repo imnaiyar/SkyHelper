@@ -11,11 +11,11 @@
     "test": {
       "dependsOn": ["^build"],
       "inputs": ["__tests__/**", "src/**", "jest.config.js", "package.json", "tsconfig.json"],
-      "outputLogs": "new-only"
+      "outputLogs": "errors-only"
     },
     "lint": {
       "inputs": ["../../.eslintrc.json", "../../.eslintignore", "src/**", "package.json", "tsconfig.json"],
-      "outputLogs": "errors-only"
+      "outputLogs": "full"
     }
   },
   "remoteCache": {

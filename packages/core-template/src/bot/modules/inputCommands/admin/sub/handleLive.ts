@@ -79,7 +79,7 @@ export const handleLive = async (
     config[liveType] = {
       active: true,
       messageId: msg.id,
-      webhook: { id: wb.id, token: wb.token ?? null },
+      webhook: { id: wb.id, token: wb.token!, channelId: wb.channel_id },
     };
     await config.save();
     return {
@@ -106,8 +106,8 @@ export const handleLive = async (
       };
     }
     await client.api.webhooks.deleteMessage(liveData.webhook.id, liveData.webhook.token!, liveData.messageId).catch(() => {});
-    await new RemindersUtils(client).deleteAfterChecks(liveData.webhook as { id: string; token: string }, liveType, config);
-    config[liveType] = { active: false, webhook: { id: null, token: null }, messageId: "" };
+    await new RemindersUtils(client).deleteAfterChecks(liveData.webhook as { id: string; token: string }, [liveType], config);
+    config[liveType] = { active: false, webhook: { id: null, token: null, channelId: null }, messageId: "" };
 
     return {
       embeds: [

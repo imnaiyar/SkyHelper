@@ -3,7 +3,10 @@ import type { GatewayDispatchEvents } from "@discordjs/core";
 import { sendGuildLog, updateBotStatsMessage } from "./GUILD_CREATE.js";
 
 const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (client, { data: g }) => {
-  if (g.unavailable) return;
+  if (g.unavailable) {
+    client.unavailableGuilds.add(g.id);
+    return;
+  }
 
   const guild = { ...client.guilds.get(g.id)! };
 

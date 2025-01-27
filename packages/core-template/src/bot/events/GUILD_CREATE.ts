@@ -12,7 +12,14 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
   // Bot's member will always be present in the payload.
   // This data is updated with GUILD_MEMBER_UPDATE to ensure it's upto date
   // Client member is used for many things like checking permissions, etc
-  client.guilds.set(guild.id, { ...guild, clientMember });
+  client.guilds.set(guild.id, {
+    ...guild,
+    clientMember,
+    channels: guild.channels.map((c) => ({
+      ...c,
+      guild_id: guild.id,
+    })),
+  });
 
   // Popilate channels cache
   for (const channel of guild.channels) {

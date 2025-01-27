@@ -39,6 +39,7 @@ export interface LiveUpdates {
   webhook: {
     id: string | null;
     token: string | null;
+    channelId: string | null;
   };
 }
 export interface EventReminder {
@@ -48,7 +49,7 @@ export interface EventReminder {
     token: string;
     channelId: string;
   } | null;
-  last_messageId?: string;
+  last_messageId: string | null;
   role: string | null;
 }
 export interface Reminders {

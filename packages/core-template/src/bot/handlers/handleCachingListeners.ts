@@ -82,8 +82,14 @@ export default (client: SkyHelper) => {
   // #region Channel
   client.on(GatewayDispatchEvents.ChannelUpdate, ({ data: channel }) => {
     const oldChannel = client.channels.get(channel.id);
+    const guild = client.guilds.get(channel.guild_id)!;
+
     if (!oldChannel) return;
     client.channels.set(channel.id, Object.assign(oldChannel, channel));
+
+    const channelIndex = guild?.channels.findIndex((c) => c.id === channel.id);
+    if (channelIndex === -1) return;
+    guild!.channels[channelIndex] = Object.assign(guild.channels[channelIndex], channel);
   });
   client.on(GatewayDispatchEvents.ChannelDelete, ({ data: channel }) => {
     const guild = client.guilds.get(channel.guild_id);
@@ -95,8 +101,8 @@ export default (client: SkyHelper) => {
   });
   client.on(GatewayDispatchEvents.ChannelCreate, ({ data: channel }) => {
     const guild = client.guilds.get(channel.guild_id);
-    client.channels.set(channel.id, channel);
+    client.channels.set(channel.id, { ...channel, guild_id: channel.guild_id });
     if (!guild) return;
-    guild.channels.push(channel);
+    guild.channels.push({ ...channel, guild_id: channel.guild_id });
   });
 };
