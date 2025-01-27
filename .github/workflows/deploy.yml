@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy SkyHelper Bot
-        run: cd packages/skyhelper && docker compose up -d --build
+        run: cd packages/core-template && docker compose up -d --build
         env:
           TOKEN: ${{ secrets.TOKEN }}
           NODE_ENV: production

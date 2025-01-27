@@ -1,11 +1,9 @@
-version: "3.8"
-
 services:
   main:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: skyhelper
+    container_name: skyhelper-test
     restart: unless-stopped
     volumes:
       - /root/mybot-data:/app/data

@@ -31,7 +31,7 @@
   "homepage": "https://github.com/imnaiyar/skyhelper/packages/utils#readme",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.51",
-    "discord.js": "14.16.2",
+    "discord-api-types": "^0.37.93",
     "moment-duration-format": "^2.3.2",
     "typescript": "^5.4.3",
     "undici": "^7.2.3"

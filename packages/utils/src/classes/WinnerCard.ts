@@ -1,26 +1,28 @@
 import { createCanvas, loadImage, type SKRSContext2D } from "@napi-rs/canvas";
-import { User, GuildMember, Client } from "discord.js";
-import { colors, fancyCount } from "./utils.js";
+import { colors, fancyCount, getUserAvatar } from "./utils.js";
 import { join } from "path";
+import type { APIGuildMember, APIUser } from "discord-api-types/v10";
 const size = 100;
 
 // TODO: Integrate it with other game types
 export class GameWinnerCard {
   private name: string;
-  private client: Client;
   private thumbnail: string;
   private points: number;
   private total: number;
-  constructor(winner: User | GuildMember, wins: number, total: number, client: Client) {
-    if (winner instanceof User) {
-      this.name = winner?.displayName || winner?.globalName || winner?.username;
-      this.thumbnail = winner?.displayAvatarURL({ forceStatic: true, extension: "jpg" });
+  constructor(
+    winner: APIUser | APIGuildMember,
+    wins: number,
+    total: number,
+    readonly clientAvatar: string,
+  ) {
+    if ("user" in winner) {
+      this.name = winner.nick || winner.user?.global_name || winner?.user.username;
+      this.thumbnail = getUserAvatar(winner.user);
+    } else {
+      this.name = winner?.global_name || winner?.username;
+      this.thumbnail = getUserAvatar(winner);
     }
-    if (winner instanceof GuildMember) {
-      this.name = winner.user?.globalName || winner?.displayName || winner.user.username;
-      this.thumbnail = winner.user?.displayAvatarURL({ forceStatic: true, extension: "jpg" });
-    }
-    this.client = client;
     this.points = wins;
     this.total = total;
   }
@@ -125,13 +127,7 @@ export class GameWinnerCard {
     ctx.fillStyle = colors.grey;
     this.roundRect(ctx, w * 0.875, h * 0.6, h * 0.4, h * 0.4, h * 0.15).clip();
     ctx.fill();
-    ctx.drawImage(
-      await loadImage(this.client.user.displayAvatarURL({ forceStatic: true, extension: "jpg" })),
-      w * 0.875,
-      h * 0.6,
-      h * 0.4,
-      h * 0.4,
-    );
+    ctx.drawImage(await loadImage(this.clientAvatar), w * 0.875, h * 0.6, h * 0.4, h * 0.4);
 
     return canvas.toBuffer("image/png");
   }

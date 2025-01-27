@@ -5,10 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsx --env-file=.env src/bot/index.ts",
-    "start": "node --env-file=.env dist/bot/index.js",
-    "commands:dev": "tsx --env-file=.env src/bot/handlers/registerCommands.ts"
+    "commands:dev": "tsx --env-file=.env src/bot/handlers/registerCommands.ts",
+    "start": "npm run build:prod && node dist/bot/index.js",
+    "dev": "tsx --env-file=.env src/bot/index.js",
+    "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint --fix src && format",
+    "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
+    "commands": "node --env-file=.env dist/bot/libs/registerCommands.js",
+    "role-metadata": "node --env-file=.env dist/bot/commands/roleConnectionMetadata",
+    "format": "prettier --write --ignore-unknown src",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
+    "setup": "node scripts/env-cli.js"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +48,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "@types/luxon": "^3.4.2"
+    "@types/luxon": "^3.4.2",
+    "@types/mocha": "^10.0.6"
   }
 }

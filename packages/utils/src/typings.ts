@@ -1,4 +1,3 @@
-import { Client, Collection } from "discord.js";
 import type { DateTime } from "luxon";
 import { Document } from "mongoose";
 
@@ -45,9 +44,6 @@ export interface SkyEvent {
   eventStarts: DateTime;
   eventEnds: DateTime;
   eventDuration: string;
-}
-export interface SkyHelper extends Client {
-  skyEvents: Collection<string, SkyEvent>;
 }
 export interface TSData extends Document {
   name: string;
