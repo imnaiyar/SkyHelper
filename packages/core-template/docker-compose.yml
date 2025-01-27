@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: skyhelper-test
-    restart: unless-stopped
+    command: sleep infinity
     volumes:
       - /root/mybot-data:/app/data
     environment:

@@ -1,12 +1,12 @@
 FROM node:22.10.0
 WORKDIR /root/skyhelper
 
-RUN corepack enable pnpm && corepack install -g pnpm@latest-9
-
 COPY package.json ./
 
 # Replace the workspace dependencies with the latest version
 RUN sed -i 's/"workspace:[^"]*"/"latest"/g' package.json
+
+RUN npm install -g pnpm
 
 RUN pnpm install --production=false
 
