@@ -2,18 +2,22 @@ import { z } from "zod";
 
 const ReminderFeatureBaseSchema = z.object({
   active: z.boolean(),
+  channelId: z.string().nullable(),
   role: z.string().nullable(),
 });
 
 export const ReminderFeatureSchema = z.object({
-  channel: z.string().optional(),
-  default_role: z.string().optional(),
-  eden: ReminderFeatureBaseSchema.optional(),
-  dailies: ReminderFeatureBaseSchema.optional(),
-  grandma: ReminderFeatureBaseSchema.optional(),
-  turtle: ReminderFeatureBaseSchema.optional(),
-  geyser: ReminderFeatureBaseSchema.optional(),
-  reset: ReminderFeatureBaseSchema.optional(),
+  active: z.boolean(),
+  events: z.object({
+    eden: ReminderFeatureBaseSchema,
+    dailies: ReminderFeatureBaseSchema,
+    grandma: ReminderFeatureBaseSchema,
+    turtle: ReminderFeatureBaseSchema,
+    geyser: ReminderFeatureBaseSchema,
+    reset: ReminderFeatureBaseSchema,
+    aurora: ReminderFeatureBaseSchema,
+    ts: ReminderFeatureBaseSchema,
+  }),
 });
 
 export type ReminderFeature = z.infer<typeof ReminderFeatureSchema>;

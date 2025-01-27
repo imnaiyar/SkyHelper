@@ -21,6 +21,7 @@ export class LiveTimes {
     const data = await getSettings(client, guildId);
     if (!data) return null;
     const t = getTranslator(data.language?.value ?? "en-US");
+    const utils = new RemindersUtils(client);
     const response = { ...(await embeds.getTimesEmbed(client, t)), components: undefined };
     if (data.autoTimes.webhook.id) {
       const wb = await client.api.webhooks
@@ -42,7 +43,7 @@ export class LiveTimes {
           return { channel: wb.channel_id };
         } else {
           if (msg) await client.api.webhooks.deleteMessage(wb.id, wb.token!, msg.id).catch(() => {});
-          await new RemindersUtils(client).deleteAfterChecks(wb as Required<typeof wb>, "", data);
+          await utils.deleteAfterChecks(wb as Required<typeof wb>, "autoTimes", data);
         }
       }
     }
@@ -50,13 +51,13 @@ export class LiveTimes {
       wb2 = null;
     if (body.channel) {
       channel = client.channels.get(body.channel)! as APITextChannel;
-      wb2 = await client.api.channels.createWebhook(
+      wb2 = await utils.createWebhookAfterChecks(
         channel.id,
         {
           name: "SkyHelper",
           avatar: client.utils.getUserAvatar(client.user),
         },
-        { reason: "For Live Skytimes" },
+        "For SkyHelper Live Notifications",
       );
     }
     const m = await client.api.webhooks.execute(wb2!.id, wb2!.token!, {

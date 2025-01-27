@@ -4,6 +4,7 @@ import { SkyHelper } from "@/structures";
 import embeds from "@/utils/classes/Embeds";
 import { DateTime } from "luxon";
 import { ChannelType, type APITextChannel } from "@discordjs/core";
+import RemindersUtils from "@/utils/classes/RemindersUtils";
 
 export const handleLive = async (
   client: SkyHelper,
@@ -52,15 +53,15 @@ export const handleLive = async (
       };
     }
 
-    // TODO: Check if webhook exist by the client and only create if it doesn't
-    const wb = await client.api.channels.createWebhook(
+    const wb = await new RemindersUtils(client).createWebhookAfterChecks(
       channel.id,
       {
         name: "SkyHelper Live Notifications",
         avatar: client.utils.getUserAvatar(client.user),
       },
-      { reason: "For SkyHelper Live Notifications" },
+      "For SkyHelper Live Notifications",
     );
+
     const currentDate = DateTime.now().setZone(client.timezone);
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
     const ts = getTranslator(config.language?.value ?? "en-us");
@@ -104,22 +105,8 @@ export const handleLive = async (
         ],
       };
     }
-
-    const wbh = await client.api.webhooks
-      .get(liveData.webhook.id, { token: liveData.webhook.token ?? undefined })
-      .catch(() => {});
-    if (!wbh) {
-      return {
-        embeds: [
-          {
-            description: t("commands:SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }),
-            color: 0xff0000,
-          },
-        ],
-      };
-    }
-    await client.api.webhooks.deleteMessage(wbh.id, wbh.token!, liveData.messageId).catch(() => {});
-    await client.api.webhooks.delete(wbh.id, { token: wbh.token! }).catch(() => {});
+    await client.api.webhooks.deleteMessage(liveData.webhook.id, liveData.webhook.token!, liveData.messageId).catch(() => {});
+    await new RemindersUtils(client).deleteAfterChecks(liveData.webhook as { id: string; token: string }, liveType, config);
     config[liveType] = { active: false, webhook: { id: null, token: null }, messageId: "" };
 
     return {

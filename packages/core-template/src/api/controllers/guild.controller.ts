@@ -3,7 +3,7 @@ import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { SkyHelper as BotService } from "@/structures";
 import { LiveTimes as Times, LiveShard as Shard, Reminders } from "../managers/index.js";
 import getSettings from "../utils/getSettings.js";
-import { GuildInfoSchema, ReminderFeatureSchema, type Features, type GuildInfo } from "../types.js";
+import { GuildInfoSchema, ReminderFeatureSchema, type Features, type GuildInfo, type ReminderFeature } from "../types.js";
 import { supportedLang } from "@skyhelperbot/constants";
 import { z } from "zod";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
@@ -17,7 +17,6 @@ const FeaturePredicate = new ZodValidator(z.enum(["shards-live", "times-live", "
 
 @Controller("/guilds/:guild")
 export class GuildController {
-  // eslint-disable-next-line
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Get()
@@ -26,10 +25,7 @@ export class GuildController {
 
     if (data == null) return "null";
     const settings = await getSettings(this.bot, guild);
-    const actives: Array<keyof Features> = [];
-    if (settings?.reminders.active) actives.push("reminders");
-    if (settings?.autoTimes.active) actives.push("times-live");
-    if (settings?.autoShard.active) actives.push("shards-live");
+    const actives: Array<keyof Features> = ["reminders", "shards-live", "times-live"];
     return {
       id: data.id,
       name: data.name,
@@ -121,7 +117,7 @@ export class GuildController {
         response = await Shard.patch(this.bot, guild, body);
         break;
       case "reminders":
-        /* response = await Reminders.patch(this.bot, guild, body); */ // TODO: with reminders manager revamp
+        response = await Reminders.patch(this.bot, guild, body as ReminderFeature);
         break;
     }
     return response;
