@@ -38,7 +38,7 @@ const RemindersToSchedule = [
   ["geyser", "0 */2 * * *"],
   ["reset", "0 0 * * *"],
   ["eden", "0 0 * * 0"],
-  ["concert", "0 */2 * * *"],
+  ["aurora", "0 */2 * * *"],
   ["ts", "0 0 * * 4"],
 ] as const;
 

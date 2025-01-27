@@ -25,7 +25,7 @@ const getTSResponse = async (
 
   if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
 
-  const visitingDates = `${client.utils.time(ts.nextVisit.toSeconds(), "D")} - ${client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toSeconds(), "D")}`;
+  const visitingDates = `${client.utils.time(ts.nextVisit.toUnixInteger(), "D")} - ${client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "D")}`;
   if (ts.value) {
     const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
@@ -33,12 +33,12 @@ const getTSResponse = async (
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
-          TIME: client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toSeconds(), "F"),
+          TIME: client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
           DURATION: ts.duration,
         })
       : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
           SPIRIT: "↪",
-          DATE: client.utils.time(ts.nextVisit.toSeconds(), "F"),
+          DATE: client.utils.time(ts.nextVisit.toUnixInteger(), "F"),
           DURATION: ts.duration,
         });
     description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
@@ -73,12 +73,12 @@ const getTSResponse = async (
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: t("features:SPIRITS.UNKNOWN"),
-          TIME: client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toSeconds(), "F"),
+          TIME: client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
           DURATION: ts.duration,
         })
       : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
           SPIRIT: t("features:SPIRITS.UNKNOWN"),
-          DATE: client.utils.time(ts.nextVisit.toSeconds(), "F"),
+          DATE: client.utils.time(ts.nextVisit.toUnixInteger(), "F"),
           DURATION: ts.duration,
         });
     description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;

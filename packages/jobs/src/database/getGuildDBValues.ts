@@ -1,6 +1,6 @@
 import type { GuildSchema } from "@/types";
 import mongoose from "mongoose";
-export const REMINDERS_KEY = ["eden", "ts", "dailies", "concert", "geyser", "grandma", "reset", "turtle"] as const;
+export const REMINDERS_KEY = ["eden", "ts", "dailies", "aurora", "geyser", "grandma", "reset", "turtle"] as const;
 
 const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,

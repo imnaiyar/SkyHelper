@@ -21,7 +21,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     return;
   }
   const guild = message.guild_id ? client.guilds.get(message.guild_id) : null;
-  // TODO: Add sentry at last
+
   const channel = client.channels.get(message.channel_id) as APITextChannel | undefined;
   const userSettings = await client.schemas.getUser(message.author);
   const guildSettings = guild ? await client.schemas.getSettings(guild) : null;

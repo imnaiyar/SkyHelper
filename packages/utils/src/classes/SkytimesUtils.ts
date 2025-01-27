@@ -14,7 +14,7 @@ export class SkytimesUtils {
     let clonedTime = eventTime;
     const timeBuilt = [];
     while (eventTime.hasSame(clonedTime, "day")) {
-      timeBuilt.push(clonedTime.toFormat("t"));
+      timeBuilt.push(`<t:${clonedTime.toUnixInteger()}:t>`);
       clonedTime = clonedTime.plus({ minutes: interval || 0 });
     }
     return timeBuilt.join(" • ");

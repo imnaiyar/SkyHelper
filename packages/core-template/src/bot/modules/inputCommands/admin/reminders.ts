@@ -11,7 +11,7 @@ const RemindersEventsMap: Record<string, string> = {
   turtle: "Turtle",
   dailies: "Daily Quests",
   ts: "Traveling Spirit",
-  concert: "Aurora's Concert",
+  aurora: "Aurora's Concert",
   reset: "Daily Reset",
 };
 export default {

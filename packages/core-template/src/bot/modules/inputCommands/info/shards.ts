@@ -9,7 +9,7 @@ export default {
   async interactionRun({ t, helper, options }) {
     const date = options.getString("date");
     const hide = options.getBoolean("hide") || false;
-    const shard = getShards(t, date);
+    const shard = getShards(t, helper.user.id, date);
     if (typeof shard === "string") {
       return void (await helper.reply({
         content: shard,
@@ -23,7 +23,11 @@ export default {
   ...SHARDS_DATA,
 } satisfies Command;
 
-const getShards = (t: ReturnType<typeof getTranslator>, date?: string | null): APIInteractionResponseCallbackData | string => {
+const getShards = (
+  t: ReturnType<typeof getTranslator>,
+  user: string,
+  date?: string | null,
+): APIInteractionResponseCallbackData | string => {
   if (date && !/^\d{4,6}-\d{2}-\d{2}$/.test(date)) {
     return t("commands:SHARDS.RESPONSES.INVALID_DATE");
   }
@@ -32,5 +36,5 @@ const getShards = (t: ReturnType<typeof getTranslator>, date?: string | null): A
   if (typeof currentDate === "string") {
     return t("commands:SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
   }
-  return Embeds.buildShardEmbed(currentDate, t, t("common:bot.name"));
+  return Embeds.buildShardEmbed(currentDate, t, t("common:bot.name"), false, user);
 };

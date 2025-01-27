@@ -6,7 +6,7 @@ export default {
   data: {
     name: "shards-about",
   },
-  async execute(interaction, t, helper) {
+  async execute(_interaction, t, helper) {
     await helper.defer({ flags: 64 });
     const Art = await helper.client.api.users.get("504605855539265537");
     let page = 0;

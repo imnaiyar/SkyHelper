@@ -166,12 +166,12 @@ const buildResponse = (
     const info = shardsInfo[currentRealm][currentShard];
     fields.push({
       name: d.hasSame(now, "day")
-        ? client.utils.time(d.toSeconds(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
-        : client.utils.time(d.toSeconds(), "D"),
+        ? client.utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
+        : client.utils.time(d.toUnixInteger(), "D"),
       value:
         typeof noShard === "string"
           ? "↪ " + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${client.utils.time(ti.start.toSeconds(), "T")}`).join(" • ") })}\n\n`,
+          : `↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${client.utils.time(ti.start.toUnixInteger(), "T")}`).join(" • ") })}\n\n`,
     });
   });
   const embed: APIEmbed = {

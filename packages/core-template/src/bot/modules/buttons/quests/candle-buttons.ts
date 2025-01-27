@@ -10,7 +10,7 @@ export default {
     const client = helper.client;
     await helper.defer({ flags: 64 });
     const data = await client.schemas.getDailyQuests();
-    const type = client.utils.parseCustomId(interaction.data.custom_id).id.split("_")[1];
+    const { type } = client.utils.parseCustomId(interaction.data.custom_id);
     const d = type === "rotating" ? data.rotating_candles : data.seasonal_candles;
     const title = type === "rotating" ? "Rotating Candles Location" : "Seasonal Candles Location";
     if (!d) return void (await helper.editReply({ content: "No data found for this type of candles." }));

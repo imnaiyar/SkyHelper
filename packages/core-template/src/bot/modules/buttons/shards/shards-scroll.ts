@@ -7,7 +7,7 @@ export default {
     name: "shards-scroll",
   },
   async execute(interaction, t, helper) {
-    const date = helper.client.utils.parseCustomId(interaction.data.custom_id).id.split("_")[1];
+    const date = helper.client.utils.parseCustomId(interaction.data.custom_id).date;
     const givenDate = utils.getDate(date) as DateTime;
     await helper.deferUpdate();
     const res = embeds.buildShardEmbed(givenDate, t, "SkyHelper");

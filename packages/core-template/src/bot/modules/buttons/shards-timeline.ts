@@ -12,7 +12,7 @@ export default {
     await helper.defer({ flags: 64 });
     const Zhii = await client.api.users.get("650487047160725508");
     const Christian = await client.api.users.get("594485678625128466");
-    const shardDate = client.utils.parseCustomId(interaction.data.custom_id).id.split("_")[1];
+    const shardDate = client.utils.parseCustomId(interaction.data.custom_id).date;
     const date = utils.getDate(shardDate) as DateTime;
     const { currentShard } = utils.shardsIndex(date);
     let page = 0;
@@ -31,19 +31,19 @@ export default {
         fields: [
           {
             name: t("buttons:SHARD_TIMELINE.COLOR.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.COLOR.VALUE", { TIME: client.utils.time(data.earlySky.toSeconds(), "T") }),
+            value: t("buttons:SHARD_TIMELINE.COLOR.VALUE", { TIME: client.utils.time(data.earlySky.toUnixInteger(), "T") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.GATE.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.GATE.VALUE", { TIME: client.utils.time(data.gateShard.toSeconds(), "t") }),
+            value: t("buttons:SHARD_TIMELINE.GATE.VALUE", { TIME: client.utils.time(data.gateShard.toUnixInteger(), "t") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.LANDS.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.LANDS.VALUE", { TIME: client.utils.time(data.start.toSeconds(), "T") }),
+            value: t("buttons:SHARD_TIMELINE.LANDS.VALUE", { TIME: client.utils.time(data.start.toUnixInteger(), "T") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.ENDS.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.ENDS.VALUE", { TIME: client.utils.time(data.end.toSeconds(), "t") }),
+            value: t("buttons:SHARD_TIMELINE.ENDS.VALUE", { TIME: client.utils.time(data.end.toUnixInteger(), "t") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.MUSIC.LABEL"),

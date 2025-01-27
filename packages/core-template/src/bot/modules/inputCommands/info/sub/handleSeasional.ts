@@ -62,7 +62,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
       },
       description: quest.description
         ? (isActive
-            ? `Season is currently active.\n- **Start Date**: ${helper.client.utils.time(start.toSeconds(), "F")} (${helper.client.utils.time(start.toSeconds(), "R")})\n- **End Date:** ${helper.client.utils.time(end.toSeconds(), "F")} (${helper.client.utils.time(end.toSeconds(), "R")})\n- **Duration**: ${Math.round(end.diff(start, "days").days)} days`
+            ? `Season is currently active.\n- **Start Date**: ${helper.client.utils.time(start.toUnixInteger(), "F")} (${helper.client.utils.time(start.toUnixInteger(), "R")})\n- **End Date:** ${helper.client.utils.time(end.toUnixInteger(), "F")} (${helper.client.utils.time(end.toUnixInteger(), "R")})\n- **Duration**: ${Math.round(end.diff(start, "days").days)} days`
             : "") + quest.description
         : undefined,
       image: quest.image ? { url: quest.image } : undefined,

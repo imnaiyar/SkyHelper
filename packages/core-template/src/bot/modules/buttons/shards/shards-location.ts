@@ -13,7 +13,7 @@ export default {
     await helper.defer({ flags: 64 });
     const Gale = await client.api.users.get("473761854175576075");
     const Clement = await client.api.users.get("693802004018888714");
-    const shardDate = client.utils.parseCustomId(interaction.data.custom_id).id.split("_")[1];
+    const shardDate = client.utils.parseCustomId(interaction.data.custom_id).date;
     const date = utils.getDate(shardDate) as DateTime;
     const { currentShard, currentRealm } = utils.shardsIndex(date);
     let page = 0;

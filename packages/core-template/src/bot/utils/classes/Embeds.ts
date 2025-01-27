@@ -27,6 +27,7 @@ export default class {
     t: ReturnType<typeof import("@/i18n").getTranslator>,
     footer: string,
     noBtn?: boolean,
+    user?: string,
   ): {
     embeds: APIEmbed[];
     components: APIActionRowComponent<APIButtonComponent>[];
@@ -59,13 +60,13 @@ export default class {
           {
             type: ComponentType.Button,
             emoji: { id: "1207594669882613770", name: "left" },
-            custom_id: `shards-scroll_${date.minus({ days: 1 }).toISODate()}`,
+            custom_id: `shards-scroll;date:${date.minus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
             style: ButtonStyle.Primary,
           },
           {
             type: ComponentType.Button,
             emoji: { id: "1207593237544435752", name: "right" },
-            custom_id: `shards-scroll_${date.plus({ days: 1 }).toISODate()}`,
+            custom_id: `shards-scroll;date:${date.plus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
             style: ButtonStyle.Primary,
           },
         ],
@@ -77,14 +78,14 @@ export default class {
         {
           type: ComponentType.Button,
           label: t("features:shards-embed.BUTTON1"),
-          custom_id: `shards-timeline_${date.toISODate()}`,
+          custom_id: `shards-timeline;date:${date.toISODate()}`,
           disabled: status === "No Shard",
           style: ButtonStyle.Success,
         },
         {
           type: ComponentType.Button,
           label: t("features:shards-embed.BUTTON2"),
-          custom_id: `shards-location_${date.toISODate()}`,
+          custom_id: `shards-location;date:${date.toISODate()}`,
           disabled: status === "No Shard",
           style: ButtonStyle.Success,
         },
@@ -134,12 +135,12 @@ export default class {
             .map((s, i) => {
               const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
               // prettier-ignore
-              if (s.ended) return prefix + `~~${Utils.time(s.start.toSeconds(), "T")} - ${Utils.time(s.end.toSeconds(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
+              if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
               // prettier-ignore
-              if (s.active) return prefix + `~~${Utils.time(s.start.toSeconds(), "T")}~~ - ${Utils.time(s.end.toSeconds(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
+              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
               return (
                 prefix +
-                `${Utils.time(s.start.toSeconds(), "T")} - ${Utils.time(s.end.toSeconds(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
+                `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
               );
             })
             .join("\n"),
@@ -329,27 +330,27 @@ export default class {
 
     const nextBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-next_" + (index + 1),
+      custom_id: "daily-quests-scroll;index:" + (index + 1),
       label: index === total - 1 ? `Quest ${total}` : `Quest ${index + 2} ▶️`,
       disabled: index === total - 1,
       style: ButtonStyle.Primary,
     };
     const prevBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-prev_" + (index - 1),
+      custom_id: "daily-quests-scroll;index:" + (index - 1),
       label: "◀️ " + (index === 0 ? `Quest 1` : `Quest ${index}`),
       disabled: index === 0,
       style: ButtonStyle.Primary,
     };
     const rotatingBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-candles_rotating",
+      custom_id: "daily-quests-candles;type:rotating",
       label: "Rotating Candles",
       style: ButtonStyle.Success,
     };
     const seasonalBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-candles_seasonal",
+      custom_id: "daily-quests-candles;type:seasonal",
       label: "Seasonal Candles",
       disabled: disabledSe,
       style: ButtonStyle.Success,

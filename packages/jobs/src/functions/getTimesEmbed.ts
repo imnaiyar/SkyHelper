@@ -24,8 +24,8 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
       ? t("features:times-embed.EVENT_INACTIVE")
       : t("features:times-embed.EVENT_ACTIVE", {
           EVENT_NAME: specialEvent.name,
-          DATE1: `<t:${specialEvent.start.toSeconds()}:F>`,
-          DATE2: `<t:${specialEvent.end.toSeconds()}:F>`,
+          DATE1: `<t:${specialEvent.start.toUnixInteger()}:F>`,
+          DATE2: `<t:${specialEvent.end.toUnixInteger()}:F>`,
           DAYS: specialEvent.days,
           DURATION: specialEvent.duration,
           STARTS_ENDS: specialEvent.active ? t("features:times-embed.ENDS") : t("features:times-embed.STARTS"),
@@ -38,12 +38,12 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
     const emote = spirit?.expression?.icon || "❓";
     const strVisiting = t("features:times-embed.TS_VISITING", {
       TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
-      DATE: `<t:${tsData.nextVisit.plus({ days: 3 }).endOf("day").toSeconds()}:F>`,
+      DATE: `<t:${tsData.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:F>`,
       DURATION: tsData.duration,
     });
     const strExpected = t("features:times-embed.TS_EXPECTED", {
       TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UNKNOWN")}`,
-      DATE: `<t:${tsData.nextVisit.toSeconds()}:F>`,
+      DATE: `<t:${tsData.nextVisit.toUnixInteger()}:F>`,
       DURATION: tsData.duration,
     });
     tsDesc = tsData.visiting ? strVisiting : strExpected;
@@ -60,14 +60,14 @@ export const getTimesEmbed = async (t: ReturnType<typeof getTranslator>, text?: 
           desc += `${t("features:times-embed.ACTIVE", {
             EVENT: event.name,
             DURATION: status.duration,
-            ACTIVE_TIME: time(status.startTime.toSeconds(), "t"),
-            END_TIME: time(status.endTime.toSeconds(), "t"),
+            ACTIVE_TIME: time(status.startTime.toUnixInteger(), "t"),
+            END_TIME: time(status.endTime.toUnixInteger(), "t"),
           })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
-            TIME: time(status.nextTime.toSeconds(), event.occursOn ? "F" : "t"),
+            TIME: time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
           })}`;
         } else {
           desc += t("features:times-embed.NEXT-OCC", {
-            TIME: time(status.nextTime.toSeconds(), event.occursOn ? "F" : "t"),
+            TIME: time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
             DURATION: status.duration,
           });
         }

@@ -1,4 +1,4 @@
-import type { GatewayMessageCreateDispatchData } from "@discordjs/core";
+import { AllowedMentionsTypes, type GatewayMessageCreateDispatchData } from "@discordjs/core";
 import type { SkyHelper } from "@/structures";
 import embeds from "@/utils/classes/Embeds";
 import { getTranslator } from "@/i18n";
@@ -58,7 +58,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
     }
     data.last_updated = today.toISO()!;
     await data.save();
-  }, 10 * 6e4); // Ten minute timeout, assuming all the quests are posted within 10 minutes
+  }, 30_000); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
 
 // Send quests reminder
@@ -70,57 +70,59 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
 export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<void> {
   const activeGuilds = await client.schemas.getQuestActiveReminders();
   const data = await client.schemas.getDailyQuests();
-  activeGuilds.forEach(async (guild) => {
-    const t = getTranslator(guild.language?.value ?? "en-US");
-    try {
-      const rmd = guild.reminders;
-      if (!rmd?.active) return;
-      const event = rmd.events.dailies;
-      const { webhook } = event;
-      if (!event?.active) return;
-      if (!webhook?.id || !webhook?.token) return;
+  await Promise.all(
+    activeGuilds.map(async (guild) => {
+      const t = getTranslator(guild.language?.value ?? "en-US");
+      try {
+        const rmd = guild.reminders;
+        if (!rmd?.active) return;
+        const event = rmd.events.dailies;
+        const { webhook } = event;
+        if (!event?.active) return;
+        if (!webhook?.id || !webhook?.token) return;
 
-      const roleid = event?.role ?? "";
-      const role = roleid && t("features:reminders.ROLE_MENTION", { ROLE: `<@&${roleid}>` });
+        const roleid = event?.role ?? "";
+        const role = roleid && t("features:reminders.ROLE_MENTION", { ROLE: `<@&${roleid}>` });
 
-      let response = null;
+        let response = null;
 
-      const d = embeds.dailyQuestEmbed(data, 0);
-      response = {
-        content: `${role}\u200B`,
-        ...d,
-      };
-      if (!response) return;
-      client.api.webhooks
-        .execute(webhook.id, webhook.token, {
-          username: t("features:reminders.DAILY_QUESTS"),
-          avatar_url: client.utils.getUserAvatar(client.user),
-          allowed_mentions: { roles: [roleid] },
-          wait: true,
-          ...response,
-        })
-        .then((msg) => {
-          event.last_messageId = msg?.id || undefined;
-          guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
-        })
-        .catch((err) => {
-          if (err.message === "Unknown Webhook") {
-            event.active = false;
-            event.webhook = null;
-            guild
-              .save()
-              .then(() => client.logger.error(`Reminders disabled for ${guild.data.name}, webhook not found!`))
-              .catch((er) =>
-                client.logger.error("Error Saving to Database" + ` [Daily Quest]: [Guild: ${guild.data.name}]: `, er),
-              );
-          }
-          client.logger.error(guild.data.name + " Reminder Error: ", err);
-        });
-      if (event.last_messageId) {
-        client.api.webhooks.deleteMessage(webhook.id, webhook.token, event.last_messageId).catch(() => {});
+        const d = embeds.dailyQuestEmbed(data, 0);
+        response = {
+          content: `${role}\u200B`,
+          ...d,
+        };
+        if (!response) return;
+        client.api.webhooks
+          .execute(webhook.id, webhook.token, {
+            username: t("features:reminders.DAILY_QUESTS"),
+            avatar_url: client.utils.getUserAvatar(client.user),
+            allowed_mentions: { parse: [AllowedMentionsTypes.Role] },
+            wait: true,
+            ...response,
+          })
+          .then((msg) => {
+            event.last_messageId = msg?.id || undefined;
+            guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
+          })
+          .catch((err) => {
+            if (err.message === "Unknown Webhook") {
+              event.active = false;
+              event.webhook = null;
+              guild
+                .save()
+                .then(() => client.logger.error(`Reminders disabled for ${guild.data.name}, webhook not found!`))
+                .catch((er) =>
+                  client.logger.error("Error Saving to Database" + ` [Daily Quest]: [Guild: ${guild.data.name}]: `, er),
+                );
+            }
+            client.logger.error(guild.data.name + " Reminder Error: ", err);
+          });
+        if (event.last_messageId) {
+          client.api.webhooks.deleteMessage(webhook.id, webhook.token, event.last_messageId).catch(() => {});
+        }
+      } catch (err) {
+        client.logger.error(err);
       }
-    } catch (err) {
-      client.logger.error(err);
-    }
-  });
+    }),
+  );
 }

@@ -15,7 +15,7 @@ const eventChoices = [
   { name: "Eden/Weekly Reset", value: "eden" },
   { name: "Traveling Spirit", value: "ts" },
   { name: "Daily Quests", value: "dailies" },
-  { name: "Aurora's Concert", value: "concert" },
+  { name: "Aurora's Concert", value: "aurora" },
 ];
 // #region Reminders
 export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {

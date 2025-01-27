@@ -201,6 +201,8 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       return;
     }
   }
+
+  // #region Modal
   if (helper.isModalSubmit(interaction)) {
     if (interaction.data.custom_id === "errorModal") {
       await helper.reply({
@@ -239,7 +241,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     }
   }
 
-  // Select Menus
+  // #region Select Menus
   if (helper.isStringSelect(interaction)) {
     const id = Utils.parseCustomId(interaction.data.custom_id).id;
     if (id === "skytimes-details") {
@@ -256,14 +258,14 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         desc += `${t("features:times-embed.ACTIVE", {
           EVENT: event.name,
           DURATION: status.duration,
-          ACTIVE_TIME: Utils.time(status.startTime.toSeconds(), "t"),
-          END_TIME: Utils.time(status.endTime.toSeconds(), "t"),
+          ACTIVE_TIME: Utils.time(status.startTime.toUnixInteger(), "t"),
+          END_TIME: Utils.time(status.endTime.toUnixInteger(), "t"),
         })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
-          TIME: Utils.time(status.nextTime.toSeconds(), event.occursOn ? "F" : "t"),
+          TIME: Utils.time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
         })}`;
       } else {
         desc += t("features:times-embed.NEXT-OCC", {
-          TIME: Utils.time(status.nextTime.toSeconds(), event.occursOn ? "F" : "t"),
+          TIME: Utils.time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
           DURATION: status.duration,
         });
       }

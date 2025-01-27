@@ -50,22 +50,24 @@ async function sendGuildReminder(guild: GuildSchema, type: Events) {
       response = getResponse(type, t);
     }
     if (!response) return;
-    let toSend: any = {
-      embeds: [
-        {
-          author: { name: "SkyHelper Reminders", icon_url: "https://skyhelper.xyz/assets/img/boticon.png" },
-          title: t("features:reminders.TITLE", {
-            // @ts-expect-error
-            TYPE: t("features:times-embed." + (type === "reset" ? "DAILY-RESET" : type.toUpperCase())),
-          }),
-          description: response,
-          color: resolveColor("Random"),
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    };
+    let toSend: any = response;
 
-    if (type === "ts") toSend = response;
+    if (type !== "ts") {
+      toSend = {
+        embeds: [
+          {
+            author: { name: "SkyHelper Reminders", icon_url: "https://skyhelper.xyz/assets/img/boticon.png" },
+            title: t("features:reminders.TITLE", {
+              // @ts-expect-error
+              TYPE: t("features:times-embed." + (type === "reset" ? "DAILY-RESET" : type.toUpperCase())),
+            }),
+            description: response,
+            color: resolveColor("Random"),
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
+    }
     const msg = await wb
       .send({
         username: "SkyHelper",
@@ -120,9 +122,9 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string) {
       skytime = "Turtle";
       key = "turtle";
       break;
-    case "concert":
-      skytime = "Aurora's Concert";
-      key = "concert";
+    case "aurora":
+      skytime = "Aurora";
+      key = "aurora";
       break;
   }
   const { startTime, endTime, active } = skyutils.getEventDetails(key).status;
@@ -130,9 +132,9 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string) {
   return `${t("features:reminders.COMMON", {
     // @ts-expect-error
     TYPE: t("features:times-embed." + skytime?.toUpperCase()),
-    TIME: `<t:${startTime.toSeconds()}:t>`,
-    "TIME-END": `<t:${endTime.toSeconds()}:t>`,
-    "TIME-END-R": `<t:${endTime.toSeconds()}:R>`,
+    TIME: `<t:${startTime?.toUnixInteger()}:t>`,
+    "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
+    "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
   })}`;
 }
 const emojisMap = new Map();
@@ -173,7 +175,7 @@ const getTSResponse = async (t: ReturnType<typeof getTranslator>) => {
 
   if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
 
-  const visitingDates = `<t:${ts.nextVisit.toSeconds()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toSeconds()}:D>`;
+  const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
   if (ts.value) {
     const spirit: SpiritsData = spiritsData[ts.value as keyof typeof spiritsData];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
@@ -181,12 +183,12 @@ const getTSResponse = async (t: ReturnType<typeof getTranslator>) => {
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
-          TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toSeconds()}:F>`,
+          TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:F>`,
           DURATION: ts.duration,
         })
       : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
           SPIRIT: "↪",
-          DATE: `<t:${ts.nextVisit.toSeconds()}:F>`,
+          DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
           DURATION: ts.duration,
         });
     description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
@@ -223,12 +225,12 @@ const getTSResponse = async (t: ReturnType<typeof getTranslator>) => {
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: t("features:SPIRITS.UNKNOWN"),
-          TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toSeconds()}:F>`,
+          TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:F>`,
           DURATION: ts.duration,
         })
       : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
           SPIRIT: t("features:SPIRITS.UNKNOWN"),
-          DATE: `<t:${ts.nextVisit.toSeconds()}:F>`,
+          DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
           DURATION: ts.duration,
         });
     description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;

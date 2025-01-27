@@ -61,7 +61,7 @@ export interface Reminders {
     reset: EventReminder;
     eden: EventReminder;
     ts: EventReminder;
-    concert: EventReminder;
+    aurora: EventReminder;
   };
 }
 export interface GuildSchema extends Document {

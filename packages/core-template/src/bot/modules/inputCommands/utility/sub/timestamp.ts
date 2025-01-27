@@ -46,8 +46,8 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
 
   const getFormat = (type?: TimestampStyles) => {
     return type
-      ? `${client.utils.time(timestamp.toSeconds(), type)} (\`<t:${timestamp.toSeconds()}:${type}>\`)`
-      : `${client.utils.time(timestamp.toSeconds())} (\`<t:${timestamp.toSeconds()}>\`)`;
+      ? `${client.utils.time(timestamp.toUnixInteger(), type)} (\`<t:${timestamp.toUnixInteger()}:${type}>\`)`
+      : `${client.utils.time(timestamp.toUnixInteger())} (\`<t:${timestamp.toUnixInteger()}>\`)`;
   };
   const result: APIEmbed = {
     author: { name: "Unix Time Conversion" },
@@ -65,7 +65,7 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
 
   const offset1 = `\nOffset: \` ${offsetString} \``;
   return void (await helper.reply({
-    content: `${offset1}\nTimestamp: \`${timestamp.toSeconds()}\``,
+    content: `${offset1}\nTimestamp: \`${timestamp.toUnixInteger()}\``,
     embeds: [result],
     flags: 64,
   }));
