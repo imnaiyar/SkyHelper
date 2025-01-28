@@ -38,7 +38,7 @@
     "FOOTER": "ライブSkyTimes（2分ごとに更新）",
     "EVENT_INACTIVE": "アクティブなイベントなし",
     "EMBED_TITLE": "イベント時間",
-    "EMBED_AUTHOR": "SkyTimes",
+    "EMBED_AUTHOR": "スカイタイムズ",
     "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "開始まで",
     "ENDS": "終了まで",
@@ -51,7 +51,7 @@
     "TURTLE": "カメ",
     "AURORA": "オーロラのコンサート",
     "DREAM-SKATER": "ドリームスケーター",
-    "PASSAGE-QUESTS": "Passage Quests",
+    "PASSAGE-QUESTS": "通過クエスト",
     "NEST-SUNSET": "ネストサンセット",
     "FIREWORKS-FESTIVAL": "鳥小屋花火大会",
     "FAIRY-RING": "妖精の指輪",
@@ -71,6 +71,7 @@
     "DAILY_RESET": "Skyの世界がリセットされ、デイリークエストが更新されました！",
     "TITLE": "{{TYPE}}リマインダー",
     "DAILY_QUESTS": "デイリークエスト",
+    "CONCERT": "オーロラのコンサート",
     "ERROR": "これは、予想どおりに動作していません!",
     "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します"
   },
@@ -92,7 +93,8 @@
     "LOCATION_TITLE": "場所 by {{CREDIT}}"
   },
   "hangman": {
-    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
-    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+    "NOT_PLAYABLE": "このゲームは、メッセージを送信できるチャンネルでのみ再生できます。 このコマンドはユーザーアプリコンテキストからアクセスできます。 私がDMのメンバーまたはメンバーであるサーバーでコマンドを実行することを確認してください。",
+    "GAME_ACTIVE": "このチャンネルではすでにゲームが実行されています。ゲームが終了するまでお待ちください。または別のチャンネルで実行してください！",
+    "DOUBLE_MODE_GUILD": "ダブルモードは私がメンバーになっているサーバーでのみプレイできます。"
   }
 }

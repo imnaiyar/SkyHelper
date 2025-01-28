@@ -377,39 +377,39 @@
   },
   "SKYGAME": {
     "name": "skygame",
-    "description": "Various fun games based around Sky: CotL",
+    "description": "空をベースにした様々な楽しいゲーム: CotL",
     "SUB": {
       "HANGMAN": {
-        "name": "hangman",
-        "description": "Play a game of hangman based on sky-related words, or a custom word",
+        "name": "ハングマン",
+        "description": "空に関連した単語、またはカスタム単語に基づいてハングマンのゲームをプレイする",
         "options": {
           "mode": {
-            "name": "mode",
-            "description": "The mode of this game",
+            "name": "モード",
+            "description": "このゲームのモード",
             "choices": {
-              "single": "Single Player",
-              "double": "Double Player"
+              "single": "シングルプレーヤー",
+              "double": "ダブル プレイヤー"
             }
           }
         }
       },
       "LEADERBOARD": {
-        "name": "leaderboard",
-        "description": "View the leaderboard for the skygames",
+        "name": "ランキング",
+        "description": "スカイゲームのリーダーボードを表示",
         "options": {
           "game": {
-            "name": "game",
-            "description": "The game to view the leaderboard for",
+            "name": "ゲーム",
+            "description": "リーダーボードを表示するゲーム",
             "choices": {
-              "hangman": "Hangman"
+              "hangman": "単語推測ゲーム"
             }
           },
           "leaderboard-type": {
-            "name": "leaderboard-type",
-            "description": "Gloabal leaderboard or server specific (default: global)",
+            "name": "リーダーボードタイプ",
+            "description": "Gloabal リーダーボードまたはサーバー固有（デフォルト：グローバル）",
             "choices": {
-              "global": "Global",
-              "server": "Server"
+              "global": "グローバル",
+              "server": "サーバー"
             }
           }
         }
