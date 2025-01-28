@@ -5,8 +5,8 @@ import { resolveColor } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 
 const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (client, { data: guild }) => {
-  console.log(guild.id, guild.unavailable, "create");
-  if (guild.unavailable) return;
+  if (guild.unavailable) return; // this will never be sent to create event, but still ig
+
   // #region Populate Cache
   const clientMember = guild.members.find((m) => m.user.id === client.user.id)!;
 
@@ -28,7 +28,7 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
     client.channels.set(channel.id, { ...channel, guild_id: guild.id });
   }
 
-  // Discord sends GUILD_CREATE for unavailable guilds when initially connecting
+  // Discord sends GUILD_CREATE for unavailable guilds when initially connecting or when an unavailable guild becomes available
   // Do nothing if that's the case
   if (client.unavailableGuilds.has(guild.id)) {
     client.unavailableGuilds.delete(guild.id);

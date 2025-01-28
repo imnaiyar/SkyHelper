@@ -11,6 +11,8 @@ import type { LocalizationMap } from "@discordjs/core";
 import type { LangKeys } from "@/types/i18n";
 import { supportedLang } from "@skyhelperbot/constants";
 const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
+
+// #region commands
 /**
  * Loads all the commands
  * @returns Collection of commands keyed by it's name
@@ -42,6 +44,7 @@ export async function loadCommands() {
   return commands;
 }
 
+// #region contexts
 /**
  * Loads all context menu commands
  * @returns A collection of context menu commands keyed by it's name
@@ -74,6 +77,7 @@ export async function loadContextCmd() {
   return contexts;
 }
 
+// #region buttons
 /**
  * Loads all the buttons
  * @returns A collection of buttons keyed by it's custom ID
@@ -104,6 +108,7 @@ export async function loadButtons() {
   return buttons;
 }
 
+// #region events
 /**
  * Loads all the event modules
  *
@@ -119,7 +124,7 @@ export async function loadEvents(client: SkyHelper) {
     try {
       const eventName = path.basename(file, process.env.NODE_ENV === "development" ? ".ts" : ".js");
       const { default: event } = (await import(pathToFileURL(filePath).href)) as { default: Event };
-      client[eventName === "READY" ? "once" : "on"](eventName, event.bind(null, client));
+      client[eventName === "ready" ? "once" : "on"](eventName, event.bind(null, client));
       console.log(`Loaded ${eventName}`);
       success += 1;
     } catch (ex) {

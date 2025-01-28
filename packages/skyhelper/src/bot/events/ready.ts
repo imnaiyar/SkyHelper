@@ -6,9 +6,6 @@ import { ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 
 const readyHandler: Event<GatewayDispatchEvents.Ready> = (client, { data }) => {
-  for (const guild of data.guilds) {
-    client.unavailableGuilds.add(guild.id);
-  }
   client.logger.custom(`Logged in as ${client.user.username}`, "BOT");
 
   // Enable Dashboard
@@ -26,7 +23,10 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = (client, { data }) => {
       },
     });
   }, 2 * 60_000);
+  // mark client ready;
   client.readTimestamp = Date.now();
+  client.ready = true;
+
   // Setting up additional datas
   client.emojisMap.set("realms", {
     "Isle of Dawn": "<:Isle:1150605424752590868>",
@@ -59,6 +59,8 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = (client, { data }) => {
     Lightseekers: "<:lightseekers:1130958300293365870>",
     Gratitude: "<:gratitude:1130958261349261435>",
   });
+
+  // send ready log
   const readyalertemb: APIEmbed = {
     fields: [
       {

@@ -36,6 +36,7 @@ export class SkyHelper extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
   public unavailableGuilds: Set<string> = new Set();
 
+  public ready: boolean = false;
   /** Whether client is waiting to recieve all guilds */
   public waitingForGuilds = false;
 

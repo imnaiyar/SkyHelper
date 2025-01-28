@@ -45,7 +45,16 @@ const client = new SkyHelper({ gateway, rest });
 
 // fetch bot user
 client.user = (await rest.get("/users/@me")) as APIUser;
-client.on(GatewayDispatchEvents.Ready, console.log());
+
+client.on(GatewayDispatchEvents.Ready, (packet) => {
+  // add to unavailble guilds
+  for (const guild of packet.data.guilds) {
+    client.unavailableGuilds.add(guild.id);
+  }
+
+  if (!client.ready) client.emit("ready", packet);
+});
+
 // fetch bot's command
 client.applicationCommands = await client.api.applicationCommands
   .getGlobalCommands(client.user.id)
