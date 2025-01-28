@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint --fix src"
+    "start": "next start"
   },
   "repository": {
     "type": "git",

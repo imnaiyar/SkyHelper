@@ -23,7 +23,7 @@ export default {
 
 const getHugResponse = (requester: APIUser, user: APIUser) => {
   return {
-    content: `A sky hug for <@${user}>`,
+    content: `A sky hug for <@${user.username}>`,
     embeds: [
       {
         author: {
