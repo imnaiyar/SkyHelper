@@ -16,7 +16,7 @@
     "dev": "tsx --env-file=.env src/bot/index.js",
     "build:prod": "tsc -p tsconfig.json && npm run sentry:sourcemaps",
     "build": "tsc -p tsconfig.json",
-    "lint": "eslint --fix src && format",
+    "lint": "eslint --fix src",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --import ./scripts/register-loader.mjs\" jest",
     "commands": "node --env-file=.env dist/bot/libs/registerCommands.js",
     "role-metadata": "node --env-file=.env dist/bot/commands/roleConnectionMetadata",

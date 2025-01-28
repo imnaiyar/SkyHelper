@@ -15,7 +15,7 @@
     },
     "lint": {
       "inputs": ["../../.eslintrc.json", "../../.eslintignore", "src/**", "package.json", "tsconfig.json"],
-      "outputLogs": "errors-only"
+      "outputLogs": "full"
     }
   },
   "remoteCache": {

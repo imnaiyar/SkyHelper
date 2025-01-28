@@ -1,4 +1,4 @@
-import { GatewayIntentBits, type APIUser } from "@discordjs/core";
+import { GatewayDispatchEvents, GatewayIntentBits, type APIUser } from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { WebSocketManager, WebSocketShardEvents } from "@discordjs/ws";
 import { SkyHelper } from "@/structures";
@@ -23,7 +23,6 @@ const gateway = new WebSocketManager({
 });
 
 validateEnv();
-
 // initialize sentry
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -46,7 +45,7 @@ const client = new SkyHelper({ gateway, rest });
 
 // fetch bot user
 client.user = (await rest.get("/users/@me")) as APIUser;
-
+client.on(GatewayDispatchEvents.Ready, console.log());
 // fetch bot's command
 client.applicationCommands = await client.api.applicationCommands
   .getGlobalCommands(client.user.id)

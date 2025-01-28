@@ -5,6 +5,7 @@ import { resolveColor } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 
 const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (client, { data: guild }) => {
+  console.log(guild.id, guild.unavailable, "create");
   if (guild.unavailable) return;
   // #region Populate Cache
   const clientMember = guild.members.find((m) => m.user.id === client.user.id)!;
