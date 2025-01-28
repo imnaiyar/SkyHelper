@@ -8,8 +8,8 @@ const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (clie
     client.unavailableGuilds.add(g.id);
     return;
   }
-
-  const guild = { ...client.guilds.get(g.id)! };
+  const guild = client.guilds.get(g.id);
+  if (!guild) throw new Error(`Recieved Guild Delete for uncached guild: ${g.id}`);
 
   // Delete guild from cache
   client.guilds.delete(g.id);
@@ -22,7 +22,7 @@ const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (clie
   client.logger.custom(`Guild: ${guild.name} (${guild.id}); Members: ${guild.member_count}`, "Guild Left");
 
   // Delete from db
-  await client.schemas.GuildModel.deleteOne({ id: g.id });
+  await client.schemas.GuildModel.deleteOne({ _id: g.id });
 
   await updateBotStatsMessage(client);
 
