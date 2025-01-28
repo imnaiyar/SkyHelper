@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
-    "@types/moment-duration-format": "^2.2.6",
     "luxon": "^3.5.0",
     "mongoose": "^8.3.2"
   },

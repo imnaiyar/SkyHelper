@@ -1,4 +1,3 @@
-import "moment-duration-format";
 import { DateTime } from "luxon";
 import type { ShardsCountdown } from "../typings.js";
 import { shardsTimeline, shardConfig } from "../constants/index.js";
