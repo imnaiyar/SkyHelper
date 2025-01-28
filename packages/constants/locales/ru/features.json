@@ -71,6 +71,7 @@
     "DAILY_RESET": "Мир Скай только что обновился, и ежедневные квесты были обновлены!",
     "TITLE": "{{TYPE}} Напоминание",
     "DAILY_QUESTS": "Ежедневные Задания",
+    "CONCERT": "Aurora's Concert",
     "ERROR": "Это не работает, как ожидалось!",
     "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})"
   },
@@ -93,6 +94,7 @@
   },
   "hangman": {
     "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
-    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
+    "DOUBLE_MODE_GUILD": "Double mode can only be played in servers I'm a member of."
   }
 }

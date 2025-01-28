@@ -71,6 +71,7 @@
     "DAILY_RESET": "Skyの世界がリセットされ、デイリークエストが更新されました！",
     "TITLE": "{{TYPE}}リマインダー",
     "DAILY_QUESTS": "デイリークエスト",
+    "CONCERT": "Aurora's Concert",
     "ERROR": "これは、予想どおりに動作していません!",
     "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します"
   },
@@ -93,6 +94,7 @@
   },
   "hangman": {
     "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
-    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
+    "DOUBLE_MODE_GUILD": "Double mode can only be played in servers I'm a member of."
   }
 }
