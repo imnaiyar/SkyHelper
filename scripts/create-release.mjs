@@ -67,7 +67,7 @@ try {
   const grouped = filteredPr.reduce((acc, { title, number, user, type, scope }) => {
     const key = typeMappings[type] ?? "misc";
     acc[key] = acc[key] || [];
-    acc[key].push(`- ${scope ? `${scope}: ` : ""}${title} [#${number}] by @${user}`);
+    acc[key].push(`- ${scope ? `${scope}: ` : ""}${title} (#${number}) by @${user}`);
     return acc;
   }, {});
 
