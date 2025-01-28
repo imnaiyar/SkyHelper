@@ -93,7 +93,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           t,
         });
         // Log the interaction
-        if (interactionLogWebhook) {
+        if (interactionLogWebhook && !client.config.OWNER.includes(helper.user.id)) {
           await api.webhooks.execute(interactionLogWebhook.id, interactionLogWebhook.token, {
             embeds: [buildInteractionLog(interaction, client, options)],
           });
