@@ -81,7 +81,7 @@ async function handleModal(helper: InteractionHelper) {
 
   if (!modalSubmit) return;
   const modalHelper = new InteractionHelper(modalSubmit, helper.client);
-  await modalHelper.deferUpdate();
+  await modalHelper.defer();
   const text = modalSubmit.data.components[0].components[0].value;
   const data = await helper.client.schemas.getAnnouncementGuilds();
 
@@ -91,5 +91,5 @@ async function handleModal(helper: InteractionHelper) {
     if (!SendableChannels.includes(channel.type)) continue;
     await helper.client.api.channels.createMessage(channel.id, { content: text }).catch(() => null);
   }
-  await modalHelper.editReply({ content: "Announcement sent to all the announcement channels.", components: [] });
+  await modalHelper.editReply({ content: "Announcement sent to all the announcement channels.", components: [] }).catch(() => {});
 }
