@@ -38,7 +38,7 @@
     "FOOTER": "Информация о событиях (обновление каждые 2 минуты)",
     "EVENT_INACTIVE": "Нет активных событий",
     "EMBED_TITLE": "Время событий",
-    "EMBED_AUTHOR": "SkyTimes",
+    "EMBED_AUTHOR": "События",
     "EVENT_ACTIVE": "**Событие**: {{EVENT_NAME}}\n**Длительность**: {{DATE1}} – {{DATE2}}\n**Всего дней**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Начнётся через",
     "ENDS": "Завершится через",
@@ -50,12 +50,12 @@
     "GRANDMA": "Бабушка",
     "TURTLE": "Черепаха",
     "AURORA": "Концерт Авроры",
-    "DREAM-SKATER": "Dream Skater",
-    "PASSAGE-QUESTS": "Passage Quests",
+    "DREAM-SKATER": "Скат Мечты",
+    "PASSAGE-QUESTS": "Проходные задания",
     "NEST-SUNSET": "Nest Закат",
     "FIREWORKS-FESTIVAL": "Aviary Фестиваль фейерверков",
-    "FAIRY-RING": "Fairy Ring",
-    "BROOK-RAINBOW": "Forest Brook Rainbow",
+    "FAIRY-RING": "Ведьмин круг",
+    "BROOK-RAINBOW": "Лесная радуга",
     "DAILY-RESET": "Ежедневный сброс",
     "EDEN": "Сброс Эдема",
     "TS_TITLE": "Странствующий дух",
@@ -71,6 +71,7 @@
     "DAILY_RESET": "Мир Скай только что обновился, и ежедневные квесты были обновлены!",
     "TITLE": "{{TYPE}} Напоминание",
     "DAILY_QUESTS": "Ежедневные Задания",
+    "CONCERT": "Концерт Авроры",
     "ERROR": "Это не работает, как ожидалось!",
     "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})"
   },
@@ -92,7 +93,8 @@
     "LOCATION_TITLE": "Расположение по {{CREDIT}}"
   },
   "hangman": {
-    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
-    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!"
+    "NOT_PLAYABLE": "Эта игра может быть сыграна только в тех каналах, где я могу отправлять сообщения. Эта команда доступна в контексте пользовательского приложения, убедитесь, что вы запускаете команду на сервере, который я являюсь членом или в моей ЛС.",
+    "GAME_ACTIVE": "На этом канале уже запущена игра, пожалуйста, дождитесь завершения игры. Или запуститесь в другом канале!",
+    "DOUBLE_MODE_GUILD": "Двойной режим может быть воспроизведен только на серверах, на которых я являюсь участником."
   }
 }

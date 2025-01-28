@@ -1,7 +1,7 @@
 {
   "GUIDES": {
-    "name": "руководства",
-    "description": "различные руководства",
+    "name": "guides",
+    "description": "various guides",
     "options": {
       "SEASONAL": {
         "name": "сезонный",
@@ -76,7 +76,7 @@
         "TREE": "Дерево дружбы",
         "LOCATION": "Расположение",
         "ACTION": "Дружественное действие",
-        "CALL": "Call",
+        "CALL": "Позвоните",
         "STANCE": "Стойка",
         "EMOTE": "Эмоция"
       },
@@ -336,7 +336,7 @@
         "description": "выберите категорию, для которой нужно установить лагуну",
         "choices": {
           "GUILD": "Сервер",
-          "USER": "User"
+          "USER": "Пользователь"
         }
       },
       "LANGUAGES": {
@@ -349,7 +349,7 @@
           "description": "установить ваш язык для бота"
         },
         "REMOVE": {
-          "name": "remove",
+          "name": "удалить",
           "description": "удалить выбранный язык",
           "options": {
             "description": "выберите тип категории для удаления"
@@ -377,39 +377,39 @@
   },
   "SKYGAME": {
     "name": "skygame",
-    "description": "Various fun games based around Sky: CotL",
+    "description": "Различные веселые игры на основе Sky: CotL",
     "SUB": {
       "HANGMAN": {
-        "name": "hangman",
-        "description": "Play a game of hangman based on sky-related words, or a custom word",
+        "name": "виселица",
+        "description": "Сыграйте игру в висячек, основанную на словах, связанных с небом или на собственном слове",
         "options": {
           "mode": {
-            "name": "mode",
-            "description": "The mode of this game",
+            "name": "режим",
+            "description": "Режим этой игры",
             "choices": {
-              "single": "Single Player",
-              "double": "Double Player"
+              "single": "Одиночная игра",
+              "double": "Двойной игрок"
             }
           }
         }
       },
       "LEADERBOARD": {
         "name": "leaderboard",
-        "description": "View the leaderboard for the skygames",
+        "description": "Просмотреть таблицу лидеров для skygames",
         "options": {
           "game": {
-            "name": "game",
-            "description": "The game to view the leaderboard for",
+            "name": "игра",
+            "description": "Игра для просмотра таблицы лидеров",
             "choices": {
-              "hangman": "Hangman"
+              "hangman": "Вешатель"
             }
           },
           "leaderboard-type": {
             "name": "leaderboard-type",
-            "description": "Gloabal leaderboard or server specific (default: global)",
+            "description": "Gloabal таблица лидеров или сервер конкретных (по умолчанию: глобальная)",
             "choices": {
-              "global": "Global",
-              "server": "Server"
+              "global": "Глобальный",
+              "server": "Сервер"
             }
           }
         }
