@@ -75,7 +75,7 @@ jobs:
           gh pr create --base main --head release/${{ github.event.inputs.package }}-${new_version} --title "chore: release ${{ github.event.inputs.package }} v${new_version}" --body "Automated version bump for ${{ github.event.inputs.package }} v${new_version}"
 
       - name: Publish
-        if: contains(fromJSON('['@skyhelperbot/utils', '@skyhelperbot/constants']'), ${{ github.event.inputs.package }})
+        if: contains(fromJSON('["@skyhelperbot/utils", "@skyhelperbot/constants"]'), github.event.inputs.package)
         run: pnpm --filter '${{ github.event.inputs.package }}' publish --provenance --no-git-checks --access public --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
