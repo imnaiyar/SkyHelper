@@ -12,10 +12,10 @@ if (!match && packageName !== "skyhelper") {
   process.exit(1);
 }
 const packageLabel = `package:` + (match?.[1] ?? "skyhelper");
-
+console.log("Package Label: ", packageLabel);
 try {
   const { data: releases } = await octokit.repos.listReleases({ owner, repo });
-  const prevRelease = releases.find((r) => !r.draft && r.name.includes(packageName));
+  const prevRelease = releases.find((r) => !r.draft && r.name.startsWith(packageName));
   const { data: autoNotes } = await octokit.repos.generateReleaseNotes({
     owner,
     repo,
