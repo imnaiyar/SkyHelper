@@ -20,12 +20,10 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     await updateDailyQuests(message, client);
     return;
   }
+  if (message.author.bot) return;
   const guild = message.guild_id ? client.guilds.get(message.guild_id) : null;
 
   const channel = client.channels.get(message.channel_id) as APITextChannel | undefined;
-  const userSettings = await client.schemas.getUser(message.author);
-  const guildSettings = guild ? await client.schemas.getSettings(guild) : null;
-  const t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
   // context for sentry
   const scope = new Sentry.Scope();
   scope.setUser({ id: message.author.id, username: message.author.username });
@@ -50,75 +48,86 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     },
     occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy-MM-dd HH:mm:ss"),
   };
-  if (message.author.bot) return;
-
-  // Check for bot's mention
-  if (message.content.startsWith(`<@!${client.user.id}>`)) {
-    api.channels
-      .createMessage(message.channel_id, {
-        content: t("common:bot.intro"),
-      })
-      .catch(() => {});
-    return;
-  }
-
-  // Prefix
-  const prefix = (guildSettings ? guildSettings.prefix || null : null) || client.config.PREFIX;
-
-  if (!message.content.startsWith(prefix)) return;
-
-  // Flags
-  const flags = new MessageFlags(message.content);
-  const msg = flags.removeFlags();
-  const args = msg.slice(prefix.length).trim().split(/ +/g);
-  const commandName = args.shift()!.toLowerCase();
-  const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
-  if (!command || !command.messageRun) return;
-
-  context["message"]["command"] = command.name;
-
-  scope.setExtra("command", command.name);
-
-  // Check if command is 'OWNER' only.
-  if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
-  const validation = await validateMessage({ command, message, args, flags, t, client, prefix });
-  if (!validation.status) {
-    if (validation.message) {
-      await api.channels.createMessage(message.channel_id, validation.message);
-    }
-    return;
-  }
 
   try {
-    await command.messageRun({ message, args, flags, t, client }, api);
+    // Check for bot's mention
+    if (message.content.startsWith(`<@!${client.user.id}>`)) {
+      api.channels
+        .createMessage(message.channel_id, {
+          content: "Hello there!...",
+          message_reference: {
+            message_id: message.id,
+          },
+          allowed_mentions: { replied_user: false },
+        })
+        .catch(() => {});
+      return;
+    }
+    const guildSettings = guild ? await client.schemas.getSettings(guild) : null;
+    // Prefix
+    const prefix = (guildSettings ? guildSettings.prefix || null : null) || client.config.PREFIX;
+
+    if (!message.content.startsWith(prefix)) return;
+
+    // Flags
+    const flags = new MessageFlags(message.content);
+    const msg = flags.removeFlags();
+    const args = msg.slice(prefix.length).trim().split(/ +/g);
+    const commandName = args.shift()!.toLowerCase();
+    const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
+    if (!command || !command.messageRun) return;
+
+    const userSettings = await client.schemas.getUser(message.author);
+    const t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
+
+    context["message"]["command"] = command.name;
+
+    scope.setExtra("command", command.name);
+
+    // Check if command is 'OWNER' only.
+    if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
+    const validation = await validateMessage({ command, message, args, flags, t, client, prefix });
+    if (!validation.status) {
+      if (validation.message) {
+        await api.channels.createMessage(message.channel_id, validation.message);
+      }
+      return;
+    }
+
+    try {
+      await command.messageRun({ message, args, flags, t, client }, api);
+    } catch (error) {
+      scope.setContext("Metadat", context);
+      const id = client.logger.error(error, scope);
+      const embed: APIEmbed = {
+        title: t("errors:EMBED_TITLE"),
+        description: t("errors:EMBED_DESCRIPTION"),
+      };
+
+      const row: APIActionRowComponent<APIButtonComponent> = {
+        type: 1,
+        components: [
+          {
+            type: ComponentType.Button,
+            label: t("errors:BUTTON_LABEL"),
+            custom_id: `error-report_${id}`,
+            style: 2,
+          },
+        ],
+      };
+      await api.channels.createMessage(message.channel_id, {
+        content: t("errors:ERROR_ID", { ID: id }),
+        embeds: [embed],
+        components: [row],
+        message_reference: {
+          message_id: message.id,
+        },
+      });
+      return;
+    }
   } catch (error) {
     scope.setContext("Metadat", context);
-    const id = client.logger.error(error, scope);
-    const embed: APIEmbed = {
-      title: t("errors:EMBED_TITLE"),
-      description: t("errors:EMBED_DESCRIPTION"),
-    };
-
-    const row: APIActionRowComponent<APIButtonComponent> = {
-      type: 1,
-      components: [
-        {
-          type: ComponentType.Button,
-          label: t("errors:BUTTON_LABEL"),
-          custom_id: `error-report_${id}`,
-          style: 2,
-        },
-      ],
-    };
-    await api.channels.createMessage(message.channel_id, {
-      content: t("errors:ERROR_ID", { ID: id }),
-      embeds: [embed],
-      components: [row],
-      message_reference: {
-        message_id: message.id,
-      },
-    });
-    return;
+    client.logger.error(error, scope);
   }
 };
 export default messageHandler;
