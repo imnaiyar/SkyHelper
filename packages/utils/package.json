@@ -32,7 +32,6 @@
   "dependencies": {
     "@napi-rs/canvas": "^0.1.51",
     "discord-api-types": "^0.37.93",
-    "moment-duration-format": "^2.3.2",
     "typescript": "^5.4.3",
     "undici": "^7.2.3"
   },
