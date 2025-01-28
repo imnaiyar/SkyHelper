@@ -13,7 +13,8 @@
     ".": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint --fix src"
   },
   "keywords": [],
   "author": "",
