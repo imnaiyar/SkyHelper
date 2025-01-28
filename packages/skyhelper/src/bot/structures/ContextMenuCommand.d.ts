@@ -10,6 +10,7 @@ import type { Category } from "./Category.ts";
 import { PermissionsResolvable } from "@/utils/classes/PermissionUtils";
 import type { OverrideLocalizations } from "@/types/utils";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 /* eslint-disable */
 
 export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> {
@@ -29,5 +30,6 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
     interaction: T extends "UserContext" ? APIUserApplicationCommandInteraction : APIMessageApplicationCommandInteraction,
     helper: InteractionHelper,
     t: ReturnType<typeof import("@/i18n").getTranslator>,
+    options: InteractionOptionResolver,
   ): Promise<void>;
 }

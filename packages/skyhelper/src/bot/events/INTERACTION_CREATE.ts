@@ -160,7 +160,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     }
 
     try {
-      await command.execute(interaction, helper, t);
+      await command.execute(interaction, helper, t, new InteractionOptionResolver(interaction));
     } catch (error) {
       const id = client.logger.error(error, scope);
       if (helper.deferred || helper.replied) {
