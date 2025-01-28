@@ -1,24 +1,6 @@
 import i18next from "i18next";
 import Backend, { type FsBackendOptions } from "i18next-fs-backend";
-import type common from "@skyhelperbot/constants/locales/en-US/common.json";
-import type errors from "@skyhelperbot/constants/locales/en-US/errors.json";
-import type commands from "@skyhelperbot/constants/locales/en-US/commands.json";
-import type features from "@skyhelperbot/constants/locales/en-US/features.json";
-import type buttons from "@skyhelperbot/constants/locales/en-US/buttons.json";
-type AllNamespaces = {
-  common: typeof common;
-  errors: typeof errors;
-  features: typeof features;
-  commands: typeof commands;
-  buttons: typeof buttons;
-};
-type NestedKeys<T> = {
-  [K in keyof T & (string | number)]: T[K] extends Record<string, any> ? `${K}` | `${K}.${NestedKeys<T[K]>}` : `${K}`;
-}[keyof T & (string | number)];
-
-export type LangKeys = {
-  [N in keyof AllNamespaces]: `${N}:${NestedKeys<AllNamespaces[N]>}`;
-}[keyof AllNamespaces];
+import type { LangKeys } from "./@types/i18n.js";
 
 await i18next.use(Backend).init<FsBackendOptions>({
   cleanCode: true,

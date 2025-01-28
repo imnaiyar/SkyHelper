@@ -1,7 +1,6 @@
 import { Controller, Get, Inject } from "@nestjs/common";
-import { SkyHelper as BotService } from "#structures";
+import { SkyHelper as BotService } from "@/structures";
 import type { BotStats, SpiritData } from "../types.js";
-import { parseEmoji } from "discord.js";
 import type { SeasonalSpiritData, SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
   return "ts" in data;
@@ -12,10 +11,10 @@ export class StatsController {
 
   @Get()
   async getGuild(): Promise<BotStats> {
-    const guilds = this.bot.guilds.cache.size;
-    const member = this.bot.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0);
-    const ping = this.bot.ws.ping;
-    const commands = (await this.bot.application.commands.fetch()).size + 4;
+    const guilds = this.bot.guilds.size;
+    const member = this.bot.guilds.reduce((acc, g) => acc + g.member_count, 0);
+    const ping = this.bot.ping;
+    const commands = this.bot.applicationCommands.size + 4;
     return {
       totalServers: guilds,
       totalMembers: member,
@@ -30,8 +29,8 @@ export class StatsController {
       .filter(([, v]) => isSeasonal(v) && v.season)
       .map(([k, v]) => {
         const emoji = v.expression || { icon: "<:spiritIcon:1206501060303130664>" };
-        const id = emoji && parseEmoji(emoji.icon)?.id;
-        const url = id && this.bot.emojis.cache.get(id)?.imageURL();
+        const id = emoji && this.bot.utils.parseEmoji(emoji.icon)?.id;
+        const url = id && this.bot.rest.cdn.emoji(id);
         const t = { name: v.name, value: k, ...(url && { icon: url }) };
         return t;
       });

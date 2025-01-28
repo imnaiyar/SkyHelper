@@ -1,72 +1,41 @@
 import type {
-  ChatInputCommandInteraction,
-  AutocompleteInteraction,
-  PermissionResolvable,
+  APIChatInputApplicationCommandInteraction,
+  APIApplicationCommandAutocompleteInteraction,
   RESTPostAPIChatInputApplicationCommandsJSONBody,
-  OmitPartialGroupDMChannel,
-  Message,
-  ContextMenuCommandInteraction,
-  MessageCreateOptions,
-} from "discord.js";
-
-import type { SkyHelper } from "#structures";
-import type { getTranslator, LangKeys } from "#bot/i18n";
+  APIContextMenuInteraction,
+  API,
+  GatewayMessageCreateDispatchData,
+} from "@discordjs/core";
+import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
+import type { SkyHelper } from "./Client.ts";
+import type { Awaitable, OverrideLocalizations } from "@/types/utils";
+import type { getTranslator } from "@/i18n";
+import type { PermissionsResolvable } from "@/utils/classes/PermissionUtils";
+import type { MessageFlags } from "@/utils/classes/MessageFlags";
 import type { Category } from "./Category.ts";
-
-export type OverrideLocalizations<T> = T extends (infer U)[]
-  ? OverrideLocalizations<U>[]
-  : T extends object
-    ? {
-        [K in keyof T]: K extends "description_localizations" | "name_localizations" ? LangKeys : OverrideLocalizations<T[K]>; // Recursively process nested objects
-      }
-    : T;
+import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 
 type MessageParams = {
-  message: OmitPartialGroupDMChannel<Message>;
+  message: GatewayMessageCreateDispatchData;
   args: string[];
-  flags: Flags;
+  flags: MessageFlags;
   t: ReturnType<typeof getTranslator>;
   client: SkyHelper;
 };
 
 type ValidationReturn = { status: true } | { status: false; message: string };
-/** Structure of command validation */
-export interface ValidationBase {
-  type: "both";
-
-  /** Callback for the validation. */
-  callback(
-    intOrMsg: OmitPartialGroupDMChannel<Message> | ChatInputCommandInteraction,
-    t: ReturnType<typeof getTranslator>,
-    messageOptions?: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
-  ): ValidationReturn;
-}
-
-export interface MessageValidation extends ValidationBase {
-  /** Indicates this validation is for message-based commands */
+export interface MessageValidation {
   type: "message";
-
-  /** Callback for the validation. */
-  callback(
-    intOrMsg: OmitPartialGroupDMChannel<Message>,
-    t: ReturnType<typeof getTranslator>,
-    messageOptions: Omit<MessageParams, "message" | "client" | "t"> & { commandName: string },
-  ): ValidationReturn;
+  callback(opts: MessageParams & { commandName: string }): Awaitable<ValidationReturn>;
 }
-
-export interface InteractionValidation<IsContext extends boolean = false> extends ValidationBase {
-  /** Indicates this validation is for interaction-based commands */
+export interface InteractionValidation<IsContext extends boolean = false> {
   type: "interaction";
-
   /** Callback for the validation. */
   callback(
-    intOrMsg: IsContext extends true ? ContextMenuCommandInteraction : ChatInputCommandInteraction,
-    t: ReturnType<typeof getTranslator>,
-  ): ValidationReturn;
+    opts: InteractionOptions<IsContext extends true ? APIContextMenuInteraction : APIChatInputApplicationCommandInteraction>,
+  ): Awaitable<ValidationReturn>;
 }
-
-export type Validation = MessageValidation | InteractionValidation | ValidationBase;
-
+export type Validation = MessageValidation | InteractionValidation;
 export interface PrefixSubcommand {
   trigger: string;
   description: string;
@@ -79,6 +48,7 @@ interface CommandBase {
   /** Description of the command */
   description: string;
 
+  /** Prefix command is legacy and is not support, this is only here for owner commands */
   prefix?: {
     /** Mininum args require */
     minimumArgs?: number;
@@ -109,10 +79,10 @@ interface CommandBase {
   /* Command category */
   category: (typeof Category)[number]["name"];
 
-  userPermissions?: PermissionResolvable[];
+  userPermissions?: PermissionsResolvable;
 
   /** Permissions bot requires for this command */
-  botPermissions?: PermissionResolvable[];
+  botPermissions?: PermissionsResolvable;
 
   /** If present, permissions will only be checked for subcomaands present in the array */
   forSubs?: string[];
@@ -129,35 +99,33 @@ interface CommandBase {
   /* Command cooldown */
   cooldown?: number;
 }
-
+type InteractionOptions<TType extends APIChatInputApplicationCommandInteraction | APIApplicationCommandAutocompleteInteraction> =
+  {
+    interaction: TType;
+    helper: InteractionHelper;
+    t: ReturnType<typeof getTranslator>;
+    options: InteractionOptionResolver;
+  };
 export type Command<Autocomplete extends boolean = false> = (Autocomplete extends true
   ? CommandBase & {
       /** Autocomplete callback if it exists */
-      autocomplete: (interaction: AutocompleteInteraction, client: SkyHelper) => Promise<void>;
+      autocomplete: (opt: InteractionOptions<APIApplicationCommandAutocompleteInteraction>) => Awaitable<void>;
     }
   : CommandBase) &
   (
     | {
         /** The callback function to run when the command is used */
-        interactionRun: (
-          interaction: ChatInputCommandInteraction,
-          t: ReturnType<typeof getTranslator>,
-          client: SkyHelper,
-        ) => Promise<void>;
+        interactionRun: (opt: InteractionOptions<APIChatInputApplicationCommandInteraction>) => Awaitable<void>;
 
-        messageRun: (options: MessageParams) => Promise<void>;
+        messageRun: (options: MessageParams, api: API) => Awaitable<void>;
       }
     | {
         /** The callback function to run when the command is used */
-        interactionRun: (
-          interaction: ChatInputCommandInteraction,
-          t: ReturnType<typeof getTranslator>,
-          client: SkyHelper,
-        ) => Promise<void>;
+        interactionRun: (opt: InteractionOptions<APIChatInputApplicationCommandInteraction>) => Awaitable<void>;
         messageRun?: never;
       }
     | {
-        messageRun: (options: MessageParams) => Promise<void>;
+        messageRun: (options: MessageParams, api: API) => Awaitable<void>;
         interactionRun?: never;
       }
   );

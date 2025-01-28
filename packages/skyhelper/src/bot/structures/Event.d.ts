@@ -1,5 +1,7 @@
-import type { ClientEvents } from "discord.js";
-import type { SkyHelper } from "./SkyHelper.ts";
-export interface Event<T extends keyof ClientEvents> {
-  (client: SkyHelper, ...args: ClientEvents[T]): Promise<void>;
+import type { MappedEvents } from "@discordjs/core";
+import type { SkyHelper } from "./Client.ts";
+import type { Awaitable } from "@/@types/utils.ts";
+
+export interface Event<TEvent extends keyof MappedEvents = keyof MappedEvents> {
+  (client: SkyHelper, ...args: MappedEvents[TEvent]): Awaitable<void>;
 }

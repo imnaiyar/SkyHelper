@@ -1,7 +1,7 @@
 import { NestFactory } from "@nestjs/core";
-import config from "../bot/config.js";
-import { logger } from "#handlers";
-import { SkyHelper } from "#structures";
+import config from "@/config";
+import logger from "@/handlers/logger";
+import { SkyHelper } from "@/structures";
 import { type MiddlewareConsumer, Module, type NestModule } from "@nestjs/common";
 import { AppController } from "./controllers/app.controller.js";
 import { GuildController } from "./controllers/guild.controller.js";

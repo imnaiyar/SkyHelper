@@ -1,11 +1,11 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Inject, Param, Patch, Req } from "@nestjs/common";
-import { SkyHelper as BotService } from "#structures";
+import { SkyHelper as BotService } from "@/structures";
 import type { UserInfo } from "../types.js";
-import { supportedLang } from "#bot/libs/constants/supportedLang";
+import { supportedLang } from "@skyhelperbot/constants";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { z } from "zod";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
-import { Routes, type RESTGetAPICurrentUserApplicationRoleConnectionResult } from "discord.js";
+import { Routes } from "@discordjs/core";
 const RoleMetadataKeySchema = z.object({
   username: z.string().optional(),
   metadata: z
@@ -29,9 +29,9 @@ export class UsersController {
 
   @Get(":user")
   async getUser(@Param("user", UserIDPredicate) userId: string): Promise<UserInfo> {
-    const user = await this.bot.users.fetch(userId).catch(() => null);
+    const user = await this.bot.api.users.get(userId).catch(() => null);
     if (!user) return { language: "en-US" };
-    const user_settings = await this.bot.database.getUser(user);
+    const user_settings = await this.bot.schemas.getUser(user);
     return {
       language: user_settings.language?.value || "en-US",
     };
@@ -42,9 +42,9 @@ export class UsersController {
     @Param("user", UserIDPredicate) userId: string,
     @Body(new ZodValidator(z.object({ language: z.string().optional() }))) data: UserInfo,
   ): Promise<UserInfo> {
-    const user = await this.bot.users.fetch(userId).catch(() => null);
+    const user = await this.bot.api.users.get(userId).catch(() => null);
     if (!user) return { language: "en-US" };
-    const user_settings = await this.bot.database.getUser(user);
+    const user_settings = await this.bot.schemas.getUser(user);
     const language = supportedLang.find((l) => l.value === data.language);
     user_settings.language = language;
     await user_settings.save();
@@ -62,9 +62,9 @@ export class UsersController {
     @Body(new ZodValidator(RoleMetadataKeySchema)) data: RoleMetadataKey,
     @Req() req: AuthRequest,
   ) {
-    const user = await this.bot.users.fetch(userId).catch(() => null);
+    const user = await this.bot.api.users.get(userId).catch(() => null);
     if (!user) throw new HttpException("User not founde", HttpStatus.NOT_FOUND);
-    const userData = await this.bot.database.getUser(user);
+    const userData = await this.bot.schemas.getUser(user);
 
     const body = JSON.stringify({
       platform_name: "Sky:CoTL Profile",

@@ -1,6 +1,6 @@
-import moment from "moment-timezone";
 import { ShardsUtil as utils, shardsInfo } from "@skyhelperbot/utils";
 import type { getTranslator } from "@/functions/getTranslator.js";
+import { DateTime } from "luxon";
 import {
   type APIActionRowComponent,
   type APIButtonComponent,
@@ -12,21 +12,19 @@ import { resolveColor } from "@/utils/resolveColor.js";
 /**
  * @param date The date for which the shards embed is to be built
  * @param footer The footer text for the embed
- * @param noBtn Whether to add buttons or not (for Scroll Buttons in Live Updates)
  */
 export default (
-  date: moment.Moment,
+  date: DateTime,
   t: ReturnType<typeof getTranslator>,
   footer: string,
-  noBtn?: boolean,
 ): {
   embeds: APIEmbed[];
   components: APIActionRowComponent<APIButtonComponent>[];
 } => {
   const { currentShard, currentRealm } = utils.shardsIndex(date);
   const info = shardsInfo[currentRealm][currentShard];
-  const today = moment().tz("America/Los_Angeles").startOf("day");
-  const formatted = date.isSame(today, "day") ? t("features:shards-embed.TODAY") : date.format("Do MMMM YYYY");
+  const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
+  const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
   const status = utils.getStatus(date);
   let result: APIEmbed = {
     author: {
@@ -38,25 +36,6 @@ export default (
     timestamp: new Date().toISOString(),
     footer: { text: footer, icon_url: "https://skyhelper.xyz/assets/img/boticon.png" },
   };
-  const navBtns: APIActionRowComponent<APIButtonComponent> | null = noBtn
-    ? null
-    : {
-        type: ComponentType.ActionRow,
-        components: [
-          {
-            type: ComponentType.Button,
-            emoji: { name: "left", id: "1207594669882613770" },
-            custom_id: `shards-scroll_${date.clone().subtract(1, "day").format("YYYY-MM-DD")}`,
-            style: ButtonStyle.Primary,
-          },
-          {
-            type: ComponentType.Button,
-            emoji: { name: "right", id: "1207593237544435752" },
-            custom_id: `shards-scroll_${date.clone().add(1, "day").format("YYYY-MM-DD")}`,
-            style: ButtonStyle.Primary,
-          },
-        ],
-      };
 
   const actionRow: APIActionRowComponent<APIButtonComponent> = {
     type: ComponentType.ActionRow,
@@ -64,14 +43,14 @@ export default (
       {
         type: ComponentType.Button,
         label: t("features:shards-embed.BUTTON1"),
-        custom_id: `shards-timeline_${date.format("YYYY-MM-DD")}`,
+        custom_id: `shards-timeline;date:${date.toISODate()}`,
         disabled: status === "No Shard",
         style: ButtonStyle.Success,
       },
       {
         type: ComponentType.Button,
         label: t("features:shards-embed.BUTTON2"),
-        custom_id: `shards-location_${date.format("YYYY-MM-DD")}`,
+        custom_id: `shards-location;date:${date.toISODate()}`,
         disabled: status === "No Shard",
         style: ButtonStyle.Success,
       },
@@ -124,12 +103,12 @@ export default (
             .map((s, i) => {
               const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
               // prettier-ignore
-              if (s.ended) return prefix + `~~<t:${s.start.unix()}:T> - <t:${s.end.unix()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
+              if (s.ended) return prefix + `~~<t:${s.start.toUnixInteger()}:T> - <t:${s.end.toUnixInteger()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
               // prettier-ignore
-              if (s.active) return prefix + `~~<t:${s.start.unix()}:T>~~ - <t:${s.end.unix()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
+              if (s.active) return prefix + `~~<t:${s.start.toUnixInteger()}:T>~~ - <t:${s.end.toUnixInteger()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
               return (
                 prefix +
-                `<t:${s.start.unix()}:T> - <t:${s.end.unix()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
+                `<t:${s.start.toUnixInteger()}:T> - <t:${s.end.toUnixInteger()}:t> (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
               );
             })
             .join("\n"),
@@ -143,6 +122,6 @@ export default (
 
   return {
     embeds: [result],
-    components: navBtns ? [actionRow, navBtns] : [actionRow],
+    components: [actionRow],
   };
 };

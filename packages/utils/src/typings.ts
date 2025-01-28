@@ -1,5 +1,4 @@
-import { Client, Collection } from "discord.js";
-import moment from "moment-timezone";
+import type { DateTime } from "luxon";
 import { Document } from "mongoose";
 
 /** Data of users provided for making a game leaderboard card */
@@ -42,12 +41,9 @@ export interface Background {
 export interface SkyEvent {
   eventActive: Boolean;
   eventName: string;
-  eventStarts: moment.Moment;
-  eventEnds: moment.Moment;
+  eventStarts: DateTime;
+  eventEnds: DateTime;
   eventDuration: string;
-}
-export interface SkyHelper extends Client {
-  skyEvents: Collection<string, SkyEvent>;
 }
 export interface TSData extends Document {
   name: string;
@@ -72,10 +68,10 @@ export interface ShardsCountdown {
   ended?: boolean;
 
   // The landing time for the given shard
-  start: moment.Moment;
+  start: DateTime;
 
   // THe end time for the given shard
-  end: moment.Moment;
+  end: DateTime;
 
   // THe countdown for the shard end/land
   duration: string;

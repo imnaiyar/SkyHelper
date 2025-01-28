@@ -1,11 +1,11 @@
-import moment from "moment-timezone";
+import type { DateTime } from "luxon";
 
 const shardSequence = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"] as const;
 export type TimelineType = {
-  readonly earlySky: moment.Moment;
-  readonly gateShard: moment.Moment;
-  readonly start: moment.Moment;
-  readonly end: moment.Moment;
+  readonly earlySky: DateTime;
+  readonly gateShard: DateTime;
+  readonly start: DateTime;
+  readonly end: DateTime;
   readonly shardMusic: string;
 };
 export type TimelineReturnType = Record<(typeof shardSequence)[number], [TimelineType, TimelineType, TimelineType]>;
@@ -16,7 +16,7 @@ export type TimelineReturnType = Record<(typeof shardSequence)[number], [Timelin
  * const timelines = shardsTimeline(moment())
  * const times = timelines[currentShard]
  */
-export const shardsTimeline = (currentDate: moment.Moment): TimelineReturnType => {
+export const shardsTimeline = (currentDate: DateTime): TimelineReturnType => {
   const getTimes = (
     earlySkyHours: number,
     earlySkyMinutes: number,
@@ -31,20 +31,10 @@ export const shardsTimeline = (currentDate: moment.Moment): TimelineReturnType =
     shardMusic: string,
   ): TimelineType => {
     return {
-      earlySky: currentDate
-        .clone()
-        .startOf("day")
-        .add(earlySkyHours, "hours")
-        .add(earlySkyMinutes, "minutes")
-        .add(earlySkySeconds, "seconds"),
-      gateShard: currentDate.clone().startOf("day").add(gateShardHours, "hours").add(gateShardMinutes, "minutes"),
-      start: currentDate
-        .clone()
-        .startOf("day")
-        .add(shardLandHours, "hours")
-        .add(shardLandMinutes, "minutes")
-        .add(shardLandSeconds, "seconds"),
-      end: currentDate.clone().startOf("day").add(shardEndHours, "hours").add(shardEndMinutes, "minutes"),
+      earlySky: currentDate.startOf("day").plus({ hours: earlySkyHours, minutes: earlySkyMinutes, seconds: earlySkySeconds }),
+      gateShard: currentDate.startOf("day").plus({ hours: gateShardHours, minutes: gateShardMinutes }),
+      start: currentDate.startOf("day").plus({ hours: shardLandHours, minutes: shardLandMinutes, seconds: shardLandSeconds }),
+      end: currentDate.startOf("day").plus({ hours: shardEndHours, minutes: shardEndMinutes }),
       shardMusic: shardMusic,
     } as const;
   };

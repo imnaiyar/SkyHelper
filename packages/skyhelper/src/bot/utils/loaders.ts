@@ -1,17 +1,18 @@
-import { Collection, type LocalizationMap } from "discord.js";
+import "@/i18n";
+import { t } from "i18next";
+import { Collection } from "@discordjs/collection";
 import { recursiveReadDir } from "@skyhelperbot/utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import logger, { CustomLogger } from "../handlers/logger.js";
-import type { SkyHelper, Button, ContextMenuCommand, Command } from "#structures";
-import { table } from "table";
-
-// import i18next initialization file to ensure it's initialized before calling the below function
-import "../i18n.js";
-import type { LangKeys } from "../i18n.js";
-import { t } from "i18next";
-import { supportedLang } from "../libs/constants/supportedLang.js";
+import type { SkyHelper, Event, Command, Button } from "@/structures";
+import logger from "@/handlers/logger";
+import type { ContextMenuCommand } from "@/structures/ContextMenuCommand";
+import type { LocalizationMap } from "@discordjs/core";
+import type { LangKeys } from "@/types/i18n";
+import { supportedLang } from "@skyhelperbot/constants";
 const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
+
+// #region commands
 /**
  * Loads all the commands
  * @returns Collection of commands keyed by it's name
@@ -20,7 +21,7 @@ export async function loadCommands() {
   const commands = new Collection<string, Command>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/commands/inputCommands", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/modules/inputCommands", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -43,6 +44,7 @@ export async function loadCommands() {
   return commands;
 }
 
+// #region contexts
 /**
  * Loads all context menu commands
  * @returns A collection of context menu commands keyed by it's name
@@ -51,7 +53,7 @@ export async function loadContextCmd() {
   const contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/commands/contexts", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/modules/contexts", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
@@ -75,6 +77,7 @@ export async function loadContextCmd() {
   return contexts;
 }
 
+// #region buttons
 /**
  * Loads all the buttons
  * @returns A collection of buttons keyed by it's custom ID
@@ -83,7 +86,7 @@ export async function loadButtons() {
   const buttons = new Collection<string, Button>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/buttons", ["sub"]);
+  const files = recursiveReadDir(baseDir + "bot/modules/buttons", ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
 
@@ -105,6 +108,7 @@ export async function loadButtons() {
   return buttons;
 }
 
+// #region events
 /**
  * Loads all the event modules
  *
@@ -113,37 +117,23 @@ export async function loadButtons() {
 export async function loadEvents(client: SkyHelper) {
   let success = 0;
   let failed = 0;
-  const clientEvents: unknown[][] = [];
   const files = recursiveReadDir(baseDir + "bot/events");
 
   for (const filePath of files) {
     const file = path.basename(filePath);
     try {
       const eventName = path.basename(file, process.env.NODE_ENV === "development" ? ".ts" : ".js");
-      const { default: event } = await import(pathToFileURL(filePath).href);
-
-      client.on(eventName, event.bind(null, client));
-      clientEvents.push([file, "✓"]);
+      const { default: event } = (await import(pathToFileURL(filePath).href)) as { default: Event };
+      client[eventName === "ready" ? "once" : "on"](eventName, event.bind(null, client));
+      console.log(`Loaded ${eventName}`);
       success += 1;
     } catch (ex) {
       failed += 1;
-      logger.error(`loadEvent - ${file}`, ex);
+      console.error(`loadEvent - ${file}`, ex);
     }
   }
 
-  CustomLogger.log(
-    { hideLevel: true, timestamp: false },
-    `\n${table(clientEvents, {
-      header: {
-        alignment: "center",
-        content: "Client Events",
-      },
-      singleLine: true,
-      columns: [{ width: 25 }, { width: 5, alignment: "center" }],
-    })}`,
-  );
-
-  logger.custom(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
+  console.log(`Loaded ${success + failed} events. Success (${success}) Failed (${failed})`, "EVENTS");
 }
 
 /**
@@ -157,9 +147,7 @@ export function loadLocalization(key: LangKeys): LocalizationMap {
   for (const { value } of supportedLang) {
     const translation = t(key, { lng: value });
     data[value] = isName
-      ? translation
-          .toLocaleLowerCase(value)
-          .replace(/ /g, "-") /* Attempt to strip spaces, and lowercase name for command/options names */
+      ? translation.toLocaleLowerCase(value).replace(/ /g, "-") // Attempt to strip spaces, and lowercase name for command/options names
       : translation;
   }
   return data;

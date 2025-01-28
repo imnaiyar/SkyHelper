@@ -1,11 +1,12 @@
-import type { Command, ContextMenuCommand, OverrideLocalizations } from "#structures";
+import type { Command, ContextMenuCommand } from "@/structures";
+
+import { loadLocalization } from "./loaders.js";
 import {
   PermissionFlagsBits,
   type APIApplicationCommandOption,
-  type APIApplicationCommandOptionChoice,
   type RESTPostAPIApplicationCommandsJSONBody,
-} from "discord.js";
-import { loadLocalization } from "./loaders.js";
+} from "@discordjs/core";
+import type { OverrideLocalizations } from "@/types/utils";
 
 /* Lot of ts-ignores here ik lol */
 
@@ -20,7 +21,7 @@ export function parseCommands(command: Command | ContextMenuCommand<"UserContext
     name: command.name,
     ...("description" in command && { description: command.description }),
     ...(command.userPermissions && {
-      default_member_permissions: command.userPermissions
+      default_member_permissions: (command.userPermissions as string[])
         .reduce(
           (accumulator: bigint, permission) => accumulator | PermissionFlagsBits[permission as keyof typeof PermissionFlagsBits],
           BigInt(0),

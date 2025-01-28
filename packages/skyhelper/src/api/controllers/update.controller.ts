@@ -1,9 +1,9 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Inject, Patch, Req } from "@nestjs/common";
-import { SkyHelper as BotService } from "#structures";
+import { SkyHelper as BotService } from "@/structures";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { EventDataSchema, TSDataSchema, type EventData, type TSData } from "../types.js";
 import { formatDate, parseDate } from "../utils/formatDate.js";
-import type { DailyQuestsSchema } from "#bot/database/index";
+import type { DailyQuestsSchema } from "@/types/schemas";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { z } from "zod";
 
@@ -35,7 +35,7 @@ export class UpdateController {
   // TS
   @Get("ts")
   async getTS(): Promise<TSData> {
-    const data = await this.bot.getTS();
+    const data = await this.bot.schemas.getTS();
     return {
       spirit: data.value,
       visitDate: parseDate(data.visitDate).toISOString(),
@@ -45,7 +45,7 @@ export class UpdateController {
   @Patch("ts")
   async updateTS(@Req() req: AuthRequest, @Body(new ZodValidator(TSDataSchema)) body: TSData): Promise<TSData> {
     await this.bot.checkAdmin(req.session);
-    const data = await this.bot.getTS();
+    const data = await this.bot.schemas.getTS();
     const spirit = this.bot.spiritsData[body.spirit];
     if (!spirit) throw new HttpException(`No spirit found for the given value "${body.spirit}"`, HttpStatus.NOT_FOUND);
     const values = {
@@ -62,7 +62,7 @@ export class UpdateController {
   // Events
   @Get("events")
   async getEvents(): Promise<EventData> {
-    const data = await this.bot.getEvent();
+    const data = await this.bot.schemas.getEvent();
     return {
       name: data.name,
       startDate: parseDate(data.startDate).toISOString(),
@@ -73,7 +73,7 @@ export class UpdateController {
   @Patch("events")
   async updateEvent(@Req() req: AuthRequest, @Body(new ZodValidator(EventDataSchema)) body: EventData): Promise<EventData> {
     await this.bot.checkAdmin(req.session);
-    const data = await this.bot.getEvent();
+    const data = await this.bot.schemas.getEvent();
     const values = {
       name: body.name,
       startDate: formatDate(new Date(body.startDate)),
@@ -86,7 +86,7 @@ export class UpdateController {
 
   @Get("quests")
   async getQuests(): Promise<DailyQuestsSchema> {
-    const data = await this.bot.database.getDailyQuests();
+    const data = await this.bot.schemas.getDailyQuests();
     return data;
   }
 
@@ -96,7 +96,7 @@ export class UpdateController {
     @Body(new ZodValidator(QuestsSchema)) body: z.infer<typeof QuestsSchema>,
   ): Promise<DailyQuestsSchema> {
     await this.bot.checkAdmin(req.session);
-    const questSettings = await this.bot.database.getDailyQuests();
+    const questSettings = await this.bot.schemas.getDailyQuests();
     questSettings.quests = body.quests;
     questSettings.rotating_candles = body.rotating_candles;
     questSettings.seasonal_candles = body.seasonal_candles;

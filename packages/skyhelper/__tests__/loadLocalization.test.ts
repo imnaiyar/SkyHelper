@@ -1,6 +1,6 @@
-import { supportedLang } from "../src/bot/libs/constants/supportedLang.js";
+import { supportedLang } from "@skyhelperbot/constants";
 import { loadLocalization } from "../src/bot/utils/loaders.js";
-import type { LocalizationMap } from "discord.js";
+import type { LocalizationMap } from "@discordjs/core";
 const l = supportedLang.map((lang) => lang.value);
 
 describe("useTranslations", () => {

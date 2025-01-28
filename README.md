@@ -45,5 +45,4 @@ This is a monorepo containing projects related to SkyHelper bot. Project include
 - Build the project `pnpm run build`
 - Make changes and lint, test and commit
 
-
 For any issues or help, feel free to contact me at discord server [here](https://discord.com/invite/2rjCRKZsBb)

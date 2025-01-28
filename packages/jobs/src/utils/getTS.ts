@@ -1,9 +1,9 @@
 import { getTSDB } from "@/database/getTSDB";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
 interface TSValue {
   visiting: boolean;
   name?: string;
-  nextVisit: moment.Moment;
+  nextVisit: DateTime;
   index?: number;
   spiritImage?: string;
   duration: string;
@@ -12,56 +12,58 @@ interface TSValue {
 export default async (): Promise<TSValue | undefined> => {
   const timezone = "America/Los_Angeles";
   const data = await getTSDB();
-  const { name, spiritImage, visitDate, index, value } = data;
-  const now = moment().tz(timezone);
-  const lastVisitDate = moment.tz(visitDate, "DD-MM-YYYY", timezone).startOf("day");
-  const lastDepartDate = lastVisitDate.clone().add("3", "day").endOf("day");
-  const nextDepartDate = lastDepartDate.clone();
-  while (now.isAfter(nextDepartDate)) {
-    nextDepartDate.add(14, "days");
+  const { name, visitDate, index, value } = data;
+  const now = DateTime.now().setZone(timezone);
+  const [day, month, year] = visitDate.split("-").map(Number);
+  const lastVisitDate = DateTime.fromObject({ day, month, year }, { zone: timezone }).startOf("day");
+  const lastDepartDate = lastVisitDate.plus({ days: 3 }).endOf("day");
+  let nextDepartDate = lastDepartDate;
+
+  while (now > nextDepartDate) {
+    nextDepartDate = nextDepartDate.plus({ days: 14 });
   }
-  const nextVisitDay = nextDepartDate.clone().subtract(3, "day").startOf("day");
-  if (now.isBefore(nextVisitDay)) {
-    const dur = moment.duration(nextVisitDay.diff(now)).format("d[d] h[h] m[m] s[s]");
-    if (nextVisitDay.isAfter(lastVisitDate)) {
+
+  const nextVisitDay = nextDepartDate.minus({ days: 3 }).startOf("day");
+
+  if (now < nextVisitDay) {
+    const duration = nextVisitDay.diffNow(["days", "hours", "minutes", "seconds"]).toFormat("d'd' h'h' m'm' s's'");
+    if (nextVisitDay > lastVisitDate) {
       return {
         visiting: false,
         nextVisit: nextVisitDay,
-        duration: dur,
+        duration: duration,
       };
     }
 
-    if (nextVisitDay.isSame(lastVisitDate)) {
+    if (nextVisitDay.equals(lastVisitDate)) {
       return {
         visiting: false,
         name: name,
-        spiritImage: spiritImage,
         index: index,
         nextVisit: nextVisitDay,
         value: value,
-        duration: dur,
+        duration: duration,
       };
     }
   }
 
-  if (now.isBetween(nextVisitDay, nextDepartDate)) {
-    const dur = moment.duration(nextDepartDate.diff(now)).format("d[d] h[h] m[m] s[s]");
-    if (lastDepartDate.isBefore(nextDepartDate)) {
+  if (now >= nextVisitDay && now <= nextDepartDate) {
+    const duration = nextDepartDate.diffNow(["days", "hours", "minutes", "seconds"]).toFormat("d'd' h'h' m'm' s's'");
+    if (lastDepartDate < nextDepartDate) {
       return {
         visiting: true,
         nextVisit: nextVisitDay,
-        duration: dur,
+        duration: duration,
       };
     }
 
-    if (lastDepartDate.isSame(nextDepartDate)) {
+    if (lastDepartDate.equals(nextDepartDate)) {
       return {
         visiting: true,
         name: name,
         nextVisit: nextVisitDay,
         index: index,
-        spiritImage: spiritImage,
-        duration: dur,
+        duration: duration,
         value: value,
       };
     }

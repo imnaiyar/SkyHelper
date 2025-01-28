@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
+    "lib": ["ESNext", "DOM"],
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": true,
 
@@ -29,21 +30,13 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
-      "#bot/*": ["src/bot/*.js"],
-      "#handlers": ["src/bot/handlers/index.js"],
-      "#handlers/*": ["src/bot/handlers/*.js"],
-      "#src/*": ["src/*.js"],
-      "#commands/*": ["src/bot/commands/*.js"],
-      "#root/*": ["./*.js"],
-      "#schemas/*": ["src/bot/database/schemas/*.js"],
-      "#structures/*": ["src/bot/structures/*.js"],
-      "#structures": ["src/bot/structures/index.js"],
-      "#libs/*": ["src/bot/libs/*.js"],
-      "#libs": ["src/bot/libs/index.js"],
-      "#api/*": ["src/api/*.js"],
-      "#utils": ["src/bot/utils/index.js"]
+      "@/api/*": ["src/api/*.js"],
+      "@/structures": ["src/bot/structures/index.js"],
+      "@/types/*": ["src/bot/@types/*.js"],
+      "@/*": ["src/bot/*.js"],
+      "@/config": ["src/config.js"]
     }
   },
-  "include": ["src", "dashboard"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
