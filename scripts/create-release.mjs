@@ -46,7 +46,7 @@ try {
         type: titleMatch[1] || "misc",
       };
     })
-    .filter((pr) => pr.type !== null);
+    .filter((pr) => pr !== null);
 
   console.log(`Found ${filteredPr.length} PRs for ${packageName}`);
   if (filteredPr.length === 0) {
