@@ -46,8 +46,8 @@ jobs:
         run: cd packages/skyhelper && docker compose up -d --build
         env:
           TOKEN: ${{ secrets.TOKEN }}
-          NODE_ENV: production
-          NODE_OPTIONS: --enable-source-maps
+          NODE_ENV: "production"
+          NODE_OPTIONS: "--enable-source-maps --import ./scripts/register-loader.mjs"
           MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
           CLIENT_ID: ${{secrets.CLIENT_ID}}
           SENTRY_DSN: ${{secrets.SENTRY_DSN}}
