@@ -1,6 +1,6 @@
 {
   "name": "skyhelper",
-  "version": "7.1.1",
+  "version": "7.2.0",
   "description": "A Bot for Sky: Children of the Light",
   "main": "dist/bot/index.js",
   "type": "module",
