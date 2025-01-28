@@ -9,7 +9,7 @@ const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (clie
     return;
   }
   const guild = client.guilds.get(g.id);
-  if (!guild) throw new Error(`Recieved Guild Delete for uncached guild: ${g.id}`);
+  if (!guild) return; // Sometimes you get the event for previously deleted guilds on restart. ignore
 
   // Delete guild from cache
   client.guilds.delete(g.id);
