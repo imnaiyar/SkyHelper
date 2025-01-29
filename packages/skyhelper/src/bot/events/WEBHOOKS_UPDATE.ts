@@ -6,7 +6,9 @@ import type { GuildSchema, LiveUpdates } from "@/types/schemas";
 const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { data: { channel_id, guild_id } }) => {
   const guild = client.guilds.get(guild_id)!;
   const guildSettings = await client.schemas.getSettings(guild);
-  const channelWebhooks = await client.api.channels.getWebhooks(channel_id);
+  const channelWebhooks = await client.api.channels.getWebhooks(channel_id).catch(() => null);
+
+  if (!channelWebhooks) return;
 
   // Get all event reminders with the same channelId
   const reminders = Object.entries(guildSettings.reminders.events).filter(
