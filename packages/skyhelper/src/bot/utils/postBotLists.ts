@@ -2,7 +2,7 @@ import type { SkyHelper } from "@/structures/Client";
 
 /** Post DBL and TopGG Stats */
 export async function postBotListStats(client: SkyHelper) {
-  const [topgg, dbl] = ["https://discordbotlist.com/api/v1", "https://top.gg/api"];
+  const [dbl, topgg] = ["https://discordbotlist.com/api/v1", "https://top.gg/api"];
   const guilds = client.guilds.size;
   const users = client.guilds.reduce((total, guild) => total + guild.member_count, 0);
   const [TopGGToken, DBLToken] = [process.env.TOPGG_TOKEN, process.env.DBL_TOKEN];
