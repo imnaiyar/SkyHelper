@@ -1,6 +1,7 @@
 import type { SkyHelper } from "@/structures/Client";
 import { PermissionFlagsBits, type APIGuild, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
+import logger from "@/handlers/logger";
 type StringPermissions = `${number}`;
 export type PermissionsResolvable =
   | bigint
@@ -58,7 +59,9 @@ export class PermissionsUtil {
         return PermissionFlagsBits[perms as PermissionFlags];
       }
     }
-    throw new Error("Recieved Unknown Permissions");
+    logger.warn("Recieved Unknown Permissions:", perms); // just warn, there maybe new permissions that maybe not handled by discord.js yet
+
+    return 0n; // return this, if any of the above case doesn't match. Ideally this should happen very rarely
   }
 
   /**
