@@ -125,6 +125,7 @@ export class PermissionsUtil {
     const isRole = "permissions" in userOrRole;
     const guild = client.guilds.get(channel.guild_id!);
     const perms = this.permissionsFor(userOrRole, guild!);
+    if (!isRole && guild!.owner_id === userOrRole.user.id) return this.all();
     if (perms.has("Administrator")) return this.all();
     const everyoneOverwrites = channel.permission_overwrites!.find((p) => p.id === channel.guild_id);
     if (isRole) {
@@ -161,8 +162,9 @@ export class PermissionsUtil {
    * @param client
    * @param guild
    */
-  static permissionsFor(memberOrRole: APIGuildMember | Omit<APIGuildMember, "user"> | APIRole, guild: APIGuild): PermissionsUtil {
+  static permissionsFor(memberOrRole: APIGuildMember | APIRole, guild: APIGuild): PermissionsUtil {
     const isRole = "position" in memberOrRole;
+    if (!isRole && guild.owner_id === memberOrRole.user.id) return this.all();
     const perms = new PermissionsUtil(
       isRole
         ? (memberOrRole.permissions as `${number}`)

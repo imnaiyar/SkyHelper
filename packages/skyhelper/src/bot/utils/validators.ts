@@ -204,7 +204,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
     message.guild_id &&
     command.userPermissions &&
     message.member &&
-    !PermissionsUtil.permissionsFor(message.member, guild!).has(command.userPermissions)
+    !PermissionsUtil.permissionsFor({ ...message.member, user: message.author }, guild!).has(command.userPermissions)
   ) {
     return {
       status: false,
