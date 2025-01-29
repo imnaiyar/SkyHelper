@@ -6,7 +6,7 @@ import { bootstrap } from "@/api/main";
 import { ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 
-const readyHandler: Event<GatewayDispatchEvents.Ready> = (client, { data }) => {
+const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client, { data }) => {
   client.logger.custom(`Logged in as ${client.user.username}`, "BOT");
 
   // Enable Dashboard
