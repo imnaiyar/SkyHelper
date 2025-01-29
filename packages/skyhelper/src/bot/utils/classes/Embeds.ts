@@ -285,7 +285,7 @@ export default class {
     const { quests, rotating_candles } = data;
     const total = quests.length;
     const quest = quests[index];
-    let desc = `${quest.images[0]?.by ? `© ${quest.images[0].by}` : ""}\n${quest.images[0]?.source ? `Source: ${quest.images[0].source}` : ""}`;
+    let desc = `${quest.images?.[0]?.by ? `© ${quest.images?.[0].by}` : ""}\n${quest.images?.[0]?.source ? `Source: ${quest.images?.[0].source}` : ""}`;
     const embed: APIEmbed = {
       author: {
         name: `Daily Quests (${index + 1}/${total})`,
@@ -294,7 +294,7 @@ export default class {
       title: quest.title,
       footer: { text: `Page ${index + 1}/${total}` },
     };
-    if (quest.images.length) {
+    if (quest.images?.length) {
       const ext = quest.images[0].url.split("?")[0].split(".").pop();
       if (ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext)) {
         desc += `\n**Video Guide**:  [Link](${quest.images[0].url})`;

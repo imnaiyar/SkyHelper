@@ -1,5 +1,6 @@
 import { ActivityType, GatewayDispatchEvents, GatewayOpcodes, PresenceUpdateStatus, type APIEmbed } from "@discordjs/core";
 import type { Event } from "../structures/Event.js";
+import { setTimeout as wait } from "node:timers/promises";
 import chalk from "chalk";
 import { bootstrap } from "@/api/main";
 import { ShardsUtil } from "@skyhelperbot/utils";
@@ -61,6 +62,7 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = (client, { data }) => {
   });
 
   // send ready log
+  await wait(3000); // wait 3s for guilds cache to fill;
   const readyalertemb: APIEmbed = {
     fields: [
       {
