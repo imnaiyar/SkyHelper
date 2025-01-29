@@ -59,7 +59,7 @@ export class PermissionsUtil {
         return PermissionFlagsBits[perms as PermissionFlags];
       }
     }
-    logger.warn("Recieved Unknown Permissions:", perms); // just warn, there maybe new permissions that maybe not handled by discord.js yet
+    logger.warn(`Recieved Unknown Permissions: ${perms}`); // just warn, there maybe new permissions that maybe not handled by discord.js yet
 
     return 0n; // return this, if any of the above case doesn't match. Ideally this should happen very rarely
   }
