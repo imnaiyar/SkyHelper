@@ -1,8 +1,16 @@
 services:
-  main:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+  skyhelper:
+    depends_on:
+      - build
     build:
       context: .
       dockerfile: ./Dockerfile
+      target: skyhelper
     container_name: skyhelper
     restart: unless-stopped
     volumes:
@@ -28,3 +36,17 @@ services:
       - NODE_OPTIONS
     ports:
       - 5000:5000
+  jobs:
+    depends_on:
+      - build
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: jobs
+    container_name: skyhelper-jobs
+    restart: unless-stopped
+    environment:
+      - TOKEN
+      - MONGO_CONNECTION
+      - NODE_ENV
+      - ERROR_WEBHOOK
