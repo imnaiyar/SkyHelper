@@ -62,7 +62,7 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client, { data }
   });
 
   // send ready log
-  await wait(3000); // wait 3s for guilds cache to fill;
+  await wait(5000); // wait 3s for guilds cache to fill;
   const readyalertemb: APIEmbed = {
     fields: [
       {

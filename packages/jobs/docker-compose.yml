@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: skyhelper-jobs
+    restart: unless-stopped
     environment:
       - TOKEN
       - MONGO_CONNECTION

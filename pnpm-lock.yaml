@@ -104,7 +104,7 @@ importers:
         specifier: ^2.3.0
         version: 2.4.0
       '@imnaiyar/framework':
-        specifier: 1.2.3
+        specifier: latest
         version: 1.2.3
       '@skyhelperbot/constants':
         specifier: workspace:^
@@ -177,7 +177,7 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       '@imnaiyar/framework':
-        specifier: ^1.2.3
+        specifier: latest
         version: 1.2.3
       '@napi-rs/canvas':
         specifier: ^0.1.65
