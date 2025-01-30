@@ -7,14 +7,14 @@ import { DateTime } from "luxon";
 export async function handleTimestamp(helper: InteractionHelper, options: InteractionOptionResolver): Promise<void> {
   const { client, t } = helper;
 
-  const Time = options.getString("time");
+  const Time = options.getString("time", true);
   if (!isTimeStringValid(Time!)) {
     return void (await helper.reply({
       content: t("commands:UTILS.RESPONSES.INVALID-FORMAT"),
       flags: 64,
     }));
   }
-
+  const [hour, minute, second] = Time.split(" ").map(Number);
   const timezone = options.getString("timezone") || "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
     return void (await helper.reply({
@@ -28,7 +28,7 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
   const month = options.getInteger("month") || currentDate.month;
   const year = options.getInteger("year") || currentDate.year;
   const fDate = `${day}-${month}-${year}`;
-  const timestamp = DateTime.fromObject({ day, month, year }, { zone: timezone });
+  const timestamp = DateTime.fromObject({ day, month, year, hour, minute, second }, { zone: timezone });
 
   if (!timestamp.isValid) {
     return void (await helper.reply({
