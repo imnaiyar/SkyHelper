@@ -2,7 +2,6 @@ import type { Command } from "@/structures";
 import os from "node:os";
 import { handleTimestamp } from "./sub/timestamp.js";
 import { getChangelog, getSuggestion } from "./sub/utils.js";
-import { getTranslator } from "@/i18n";
 import { UTILS_DATA } from "@/modules/commands-data/utility-commands";
 import { readFile } from "node:fs/promises";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
@@ -27,8 +26,22 @@ export default {
         await handleTimestamp(helper, options);
     }
   },
+  async autocomplete({ helper, options }) {
+    const sub = options.getSubcommand(true);
+    if (sub !== "timestamp") return;
+    const focused = options.getFocusedOption();
+    if (focused.name !== "timezone") return;
+    const timezones = Intl.supportedValuesOf("timeZone");
+    timezones.push("Asia/Kolkata");
+    helper.respond({
+      choices: timezones
+        .filter((tz) => tz.toLowerCase().includes((focused.value as string).toLowerCase()))
+        .map((tz) => ({ name: tz === "America/Los_Angeles" ? `${tz} (default)` : tz, value: tz }))
+        .slice(0, 25),
+    });
+  },
   ...UTILS_DATA,
-} satisfies Command;
+} satisfies Command<true>;
 
 async function handleInfo(helper: InteractionHelper, time: number): Promise<void> {
   const { client, t } = helper;
