@@ -38,7 +38,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.8.2",
     "@discordjs/rest": "^2.3.0",
-    "@imnaiyar/framework": "1.2.3",
+    "@imnaiyar/framework": "latest",
     "@skyhelperbot/constants": "workspace:^",
     "@skyhelperbot/utils": "workspace:^",
     "@types/node-cron": "^3.0.11",
