@@ -8,24 +8,28 @@ const handler: Event<GatewayDispatchEvents.MessageDelete> = async (client, { dat
   if (!message.guild_id) return;
   const guild = client.guilds.get(message.guild_id);
   if (!guild) return;
+
   const guildSettings = await client.schemas.getSettings(guild);
-  const hasActive = (["autoShard", "autoTimes"] as const)
-    .map((key) => [key, guildSettings[key]])
-    .find(([_k, v]) => (v as LiveUpdates).messageId === message.id);
+
+  const hasActive = (["autoShard", "autoTimes"] as const).find((key) => guildSettings[key].messageId === message.id);
+
   if (!hasActive) return;
-  const [key, value] = hasActive as ["autoShard" | "autoTimes", LiveUpdates];
-  await new RemindersUtils(client).deleteAfterChecks(
-    value.webhook as { id: string; token: string; channelId: string },
-    [key],
-    guildSettings,
-  );
-  guildSettings[key] = {
+
+  const utils = new RemindersUtils(client);
+  const liveUpdate = guildSettings[hasActive];
+
+  await utils
+    .deleteAfterChecks(liveUpdate.webhook as { id: string; token: string; channelId: string }, [hasActive], guildSettings)
+    .catch(() => {});
+
+  Object.assign(liveUpdate, {
     active: false,
     webhook: { id: null, token: null, channelId: null },
-    messageId: "null",
-  };
+    messageId: "",
+  });
+
   await guildSettings.save();
-  client.logger.error(`Event reminder ${key} was disabled due to message deletion for ${guild.name}`);
+  client.logger.warn(`Event reminder ${hasActive} was disabled due to message deletion for ${guild.name}`);
 };
 
 export default handler;

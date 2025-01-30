@@ -4,13 +4,13 @@ import type { SkyHelper as BotService } from "@/structures";
 import { getTranslator } from "@/i18n";
 import { DateTime } from "luxon";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
-import type { APIWebhook } from "@discordjs/core";
 
 export class LiveUpdates {
   static async get(client: BotService, guildId: string) {
     const settings = await getSettings(client, guildId);
     if (!settings) return { shards: null, times: null };
     const obj: Record<"shards" | "times", string | null> = { shards: null, times: null };
+
     for (const [v, key] of [
       ["shards", "autoShard"],
       ["times", "autoTimes"],
@@ -25,56 +25,85 @@ export class LiveUpdates {
   static async patch(client: BotService, guildId: string, body: any) {
     const data = await getSettings(client, guildId);
     if (!data) return null;
+
     const utils = new RemindersUtils(client);
     const now = DateTime.now().setZone(client.timezone);
     const t = getTranslator(data.language?.value ?? "en-US");
-    const wbs: Map<APIWebhook, ("autoTimes" | "autoShard")[]> = new Map();
-    for (const [v, key] of [
-      ["shards", "autoShard"],
-      ["times", "autoTimes"],
+
+    const webhooksToDelete = new Set<{ id: string; token: string }>();
+
+    for (const [key, bodyKey] of [
+      ["autoShard", "shards"],
+      ["autoTimes", "times"],
     ] as const) {
       const type = data[key];
-      const wb = type.webhook.id
-        ? await client.api.webhooks.get(type.webhook.id, { token: data[key].webhook.token! }).catch(() => null)
-        : null;
-      if (body[v] && body[v] !== wb?.channel_id) {
-        // prettier-ignore
-        if (data[key].messageId && wb) await client.api.webhooks.deleteMessage(wb.id, wb.token!, data[key].messageId).catch(() => {});
-        const response =
-          v === "times"
-            ? await embeds.getTimesEmbed(client, t)
-            : embeds.buildShardEmbed(now, t, t("features:shards-embed.FOOTER"), true);
-        const wb2 = await utils.createWebhookAfterChecks(
-          body[v],
+
+      if (body[bodyKey] === type.webhook.channelId) continue; // no changes, move to next loop
+
+      const isChanged = body[bodyKey] && body[bodyKey] !== type.webhook.channelId; // channel changed
+
+      // if there is channel in body, means its changed, not disabled
+      if (isChanged) {
+        const embed =
+          bodyKey === "shards"
+            ? embeds.buildShardEmbed(now, t, t("features:shards-embed.FOOTER"), true)
+            : await embeds.getTimesEmbed(client, t, t("features:times-embed.FOOTER"));
+
+        const newWebhook = await utils.createWebhookAfterChecks(
+          body[bodyKey],
           { name: "Live Updates", avatar: client.utils.getUserAvatar(client.user) },
           "For Live updates",
         );
-        const msg = await client.api.webhooks.execute(wb2.id, wb2.token!, {
-          ...response,
+
+        const msg = await client.api.webhooks.execute(newWebhook.id, newWebhook.token!, {
+          ...embed,
           wait: true,
-          username: `${v === "times" ? "Times" : "Shards"} Updates`,
+          username: `${bodyKey === "times" ? "Times" : "Shards"} Updates`,
           allowed_mentions: { parse: [] },
         });
-        if (wb) wbs.has(wb) ? wbs.get(wb)!.push(key) : wbs.set(wb, [key]);
-        data[key].messageId = msg.id;
-        data[key].active = true;
-        data[key].webhook = { id: wb2.id, token: wb2.token!, channelId: wb2.channel_id };
-      } else {
-        if (data[key].messageId && wb) {
-          await client.api.webhooks.deleteMessage(wb.id, wb.token!, data[key].messageId).catch(() => {});
+
+        // if there is an old webhook, add it for deletion
+        if (type.webhook.id && type.webhook.token) {
+          webhooksToDelete.add(type.webhook as { id: string; token: string });
         }
-        if (wb) wbs.has(wb) ? wbs.get(wb)!.push(key) : wbs.set(wb, [key]);
-        data[key].messageId = "";
-        data[key].webhook = { id: null, token: null, channelId: null };
-        data[key].active = false;
-      }
-      for (const webhook of wbs.keys()) {
-        await utils.deleteAfterChecks(webhook as Required<typeof webhook>, wbs.get(webhook)!, data);
+
+        Object.assign(type, {
+          active: true,
+          messageId: msg.id,
+          webhook: { id: newWebhook.id, token: newWebhook.token!, channelId: newWebhook.channel_id },
+        });
+
+        // this means no channel, hence disabled
+      } else {
+        if (type.webhook.id && type.webhook.token) {
+          // delete the message if it exists
+          if (type.messageId) {
+            await client.api.webhooks.deleteMessage(type.webhook.id, type.webhook.token, type.messageId).catch(() => {});
+          }
+
+          // add wb for deletion
+          webhooksToDelete.add(type.webhook as { id: string; token: string });
+        }
+
+        // update the data
+        Object.assign(type, {
+          messageId: "",
+          active: false,
+          webhook: { id: null, token: null, channelId: null },
+        });
       }
     }
+
     await data.save();
+
+    // Handle webhook deletions
+    for (const webhook of webhooksToDelete) {
+      await utils.deleteAfterChecks(webhook, [], data).catch(() => {});
+    }
+
     return { shards: data.autoShard.webhook.channelId, times: data.autoTimes.webhook.channelId };
   }
+
   static async post(client: BotService, guildId: string) {
     const data = await getSettings(client, guildId);
     if (!data) return null;
@@ -86,20 +115,31 @@ export class LiveUpdates {
   static async delete(client: BotService, guildId: string): Promise<any> {
     const data = await getSettings(client, guildId);
     if (!data || !data.autoShard.active) return "Success";
-    const wbs: Map<string, APIWebhook> = new Map();
+
+    const utils = new RemindersUtils(client);
+    const webhooksToDelete = new Map<string, { id: string; token: string }>();
+
     for (const key of ["autoShard", "autoTimes"] as const) {
-      data[key].active = false;
-      const web = data[key].webhook;
-      if (!web) continue;
-      const wb = await client.api.webhooks.get(web.id!, { token: web.token! });
-      if (data[key].messageId) await client.api.webhooks.deleteMessage(wb.id, wb.token!, data[key].messageId).catch(() => {});
-      if (!wbs.has(wb.id)) wbs.set(wb.id, wb);
-      data[key].webhook = { id: null, token: null, channelId: null };
-      data[key].messageId = "";
+      const { webhook, messageId } = data[key];
+
+      if (messageId && webhook?.id && webhook?.token) {
+        await client.api.webhooks.deleteMessage(webhook.id, webhook.token, messageId).catch(() => {});
+      }
+
+      if (webhook?.id) {
+        webhooksToDelete.set(webhook.id, webhook as { id: string; token: string });
+      }
+      Object.assign(data[key], {
+        active: false,
+        messageId: "",
+        webhook: { id: null, token: null, channelId: null },
+      });
     }
-    for (const wb of wbs.values()) {
-      await new RemindersUtils(client).deleteAfterChecks(wb as Required<typeof wb>, ["autoShard", "autoTimes"], data);
+
+    for (const webhook of webhooksToDelete.values()) {
+      await utils.deleteAfterChecks(webhook, ["autoShard", "autoTimes"], data);
     }
+
     await data.save();
     return { shards: null, times: null };
   }

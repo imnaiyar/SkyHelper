@@ -101,11 +101,10 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       } catch (error) {
         const id = client.logger.error(error, scope);
-        if (helper.deferred || helper.replied) {
-          await helper.followUp(getErrorResponse(id, t));
-        } else {
-          await helper.reply(getErrorResponse(id, t));
-        }
+        await helper
+          .reply(getErrorResponse(id, t))
+          .catch(() => helper.followUp(getErrorResponse(id, t)))
+          .catch(() => {});
         return;
       }
     }
@@ -164,11 +163,10 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         await command.execute(interaction, helper, t, new InteractionOptionResolver(interaction));
       } catch (error) {
         const id = client.logger.error(error, scope);
-        if (helper.deferred || helper.replied) {
-          await helper.followUp(getErrorResponse(id, t));
-        } else {
-          await helper.reply(getErrorResponse(id, t));
-        }
+        await helper
+          .reply(getErrorResponse(id, t))
+          .catch(() => helper.followUp(getErrorResponse(id, t)))
+          .catch(() => {});
         return;
       }
     }
@@ -194,11 +192,10 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         await button.execute(interaction, t, helper);
       } catch (err) {
         const errorId = client.logger.error(err, scope);
-        if (helper.deferred || helper.replied) {
-          await helper.followUp(getErrorResponse(errorId, t));
-        } else {
-          await helper.reply(getErrorResponse(errorId, t));
-        }
+        await helper
+          .reply(getErrorResponse(id, t))
+          .catch(() => helper.followUp(getErrorResponse(id, t)))
+          .catch(() => {});
         return;
       }
     }

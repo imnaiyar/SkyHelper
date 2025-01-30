@@ -41,7 +41,7 @@ export class Reminders {
     if (!settings) return null;
 
     const utils = new RemindersUtils(client);
-
+    const webhooksToDelete = new Set<{ id: string; token: string }>();
     for (const [key, value] of Object.entries(body)) {
       const event = settings.reminders.events[key as (typeof REMINDERS_KEY)[number]];
       if (!event) continue;
@@ -65,22 +65,29 @@ export class Reminders {
         if (!wb.token) throw new Error("Failed to create webhook, token is missing.");
 
         if (event.webhook) {
-          await utils.deleteAfterChecks(event.webhook, [key], settings);
+          webhooksToDelete.add(event.webhook);
         }
 
         event.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
       } else {
         if (event.webhook) {
-          // Disable since it can only be disabled in this scenario
-          await utils.deleteAfterChecks(event.webhook, [key], settings);
+          webhooksToDelete.add(event.webhook);
         }
-        event.webhook = null;
-        event.role = null;
-        event.last_messageId = null;
-        event.active = false;
+
+        Object.assign(event, {
+          webhook: null,
+          role: null,
+          last_messageId: null,
+          active: false,
+        });
       }
     }
     await settings.save();
+
+    for (const webhook of webhooksToDelete) {
+      await utils.deleteAfterChecks(webhook, [], settings).catch(() => {});
+    }
+
     return formatReminders(settings.reminders);
   }
 
