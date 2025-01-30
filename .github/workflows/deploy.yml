@@ -40,7 +40,7 @@ jobs:
         run: |
           # If both skyhelper and jobs have changed, deploy both. 
           # Otherwise, deploy based on the `workflow_dispatch` input or the changed paths
-          if [[ "${{github.event_name}}" === "workflow_dispatch" ]]; then
+          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
             echo "Deploy target set from workflow_dispatch input."
             echo "target=${{ github.event.inputs.to_deploy }}" >> $GITHUB_ENV
           elif [[ "${{ steps.filter.outputs.skyhelper }}" == "true" && "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
@@ -65,9 +65,9 @@ jobs:
         run: |
           echo "Deploying ${{ env.target }}..."
           if [[ "${{ env.target }}" == "both" ]]; then
-            docker-compose up -d --build
+            docker compose up -d --build
           else
-            docker-compose up -d --build ${{ env.target }}
+            docker compose up -d --build ${{ env.target }}
           fi
         env:
           TOKEN: ${{ secrets.TOKEN }}
