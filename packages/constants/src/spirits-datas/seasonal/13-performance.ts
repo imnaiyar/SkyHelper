@@ -333,17 +333,19 @@ const data: Record<string, SpiritsData> = {
     season: "Performance",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: ["January 30, 2025 (#132)"],
     },
     tree: {
-      by: " Clement",
-      total: " ",
-      image: "Forgetful_Storyteller_Seasonal_Chart_Clement.jpg",
+      by: "alvenoir",
+      total: "231 :NormalCandle: 13 :NormalHeart: 2 :AC:",
+      image:
+        "https://media.discordapp.net/attachments/739799482681655378/1334440332741447680/Image_6.jpeg?ex=679c89e8&is=679b3868&hm=a1f9ca00355a7a918af019e54dcbbbb40702278f3e1c0a758e7c62b200385fc6&",
     },
     location: {
-      by: "SkyZed",
-      image: "Storyteller_Location_SkyZed.jpg",
+      by: "Princess Raoni",
+      image:
+        "https://cdn.discordapp.com/attachments/739799482681655378/1334380694469738588/TS_Template_FS_Locationpng.png?ex=679c525d&is=679b00dd&hm=62b59087cf4ffeb70063cead8f132a44309ca062bc38bf83ed5b930bf442cf85&",
     },
     expression: {
       type: "Emote",
