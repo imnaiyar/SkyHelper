@@ -184,6 +184,7 @@ export const UTILS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
             description_localizations: "commands:UTILS.options.TIMESTAMP.options.TIMEZONE.description",
             type: ApplicationCommandOptionType.String,
             required: false,
+            autocomplete: true,
           },
           {
             name: "date",
