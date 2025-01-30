@@ -38,20 +38,22 @@ jobs:
       - name: Set target for deployment
         id: set_target
         run: |
-          # If both skyhelper and jobs have changed, deploy both. 
-          # Otherwise, deploy based on the `workflow_dispatch` input or the changed paths
-          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
+          # If it's a workflow_dispatch event, set the target from the input.
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "Deploy target set from workflow_dispatch input."
-            echo "target=${{ github.event.inputs.to_deploy }}" >> $GITHUB_ENV
+            echo "::set-output name=target::${{ github.event.inputs.to_deploy }}"
+          # If both skyhelper and jobs changed, deploy both.
           elif [[ "${{ steps.filter.outputs.skyhelper }}" == "true" && "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
             echo "Both packages changed, deploying both."
-            echo "target=both" >> $GITHUB_ENV
+            echo "::set-output name=target::both"
+          # If only skyhelper changed, deploy skyhelper.
           elif [[ "${{ steps.filter.outputs.skyhelper }}" == "true" ]]; then
             echo "Skyhelper package changed, deploying skyhelper."
-            echo "target=skyhelper" >> $GITHUB_ENV
+            echo "::set-output name=target::skyhelper"
+          # If only jobs changed, deploy jobs.
           elif [[ "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
             echo "Jobs package changed, deploying jobs."
-            echo "target=jobs" >> $GITHUB_ENV
+            echo "::set-output name=target::jobs"
           fi
 
   deploy:
@@ -63,11 +65,11 @@ jobs:
 
       - name: Deploy selected package
         run: |
-          echo "Deploying ${{ env.target }}..."
-          if [[ "${{ env.target }}" == "both" ]]; then
+          echo "Deploying ${{ needs.changes.outputs.target }}..."
+          if [[ "${{ needs.changes.outputs.target }}" == "both" ]]; then
             docker compose up -d --build
           else
-            docker compose up -d --build ${{ env.target }}
+            docker compose up -d --build ${{ needs.changes.outputs.target }}
           fi
         env:
           TOKEN: ${{ secrets.TOKEN }}
