@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imnaiyar/skyhelper.git"
+    "url": "git+https://github.com/imnaiyar/skyhelper.git",
+    "directory": "packages/docs"
   },
   "author": "NyR",
   "license": "MIT",

@@ -11,7 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imnaiyar/skyhelper-jobs.git"
+    "url": "git+https://github.com/imnaiyar/skyhelper.git",
+    "directory": "packages/jobs"
   },
   "keywords": [
     "SkyCotL",
@@ -20,9 +21,9 @@
   "author": "NyR",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/imnaiyar/skyhelper-jobs/issues"
+    "url": "https://github.com/imnaiyar/skyhelper/issues"
   },
-  "homepage": "https://github.com/imnaiyar/skyhelper-jobs#readme",
+  "homepage": "https://github.com/imnaiyar/skyhelper/jobs#readme",
   "devDependencies": {
     "@types/luxon": "^3.4.2",
     "@types/moment-duration-format": "^2.2.6",

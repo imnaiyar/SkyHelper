@@ -3,10 +3,38 @@ title: Fun Commands
 description: Information about fun commands that is offered by SkyHelper
 ---
 
-import { Callout } from "nextra/components";
+import { Callout, Steps } from "nextra/components";
 
 # Fun Commands
 
 ## `/skygame`
 
-TBD
+<Steps>
+### `hangman` - play a game of hangman based on words related to sky or one of your chosen words
+
+**Options**
+
+| Option   | Description                                                                          |
+| -------- | ------------------------------------------------------------------------------------ |
+| `<mode>` | The mode to play the game in. Available options are: `Single Playe`, `Double Double` |
+
+- Each player will have 30 seconds to guess. If they fail to do so, they'll lose the round.
+- For double player mode, you'll be further prompted to configure some additional settings for the game. Like choosing the players and word type (in case of custom word type, you'll have to provide the word).
+  - There are few things you must keep in mind for double mode:
+    - You can't chose a custom mode if you (one who ran the command) are one of the players.
+    - None of the players must be a bot.
+  - Each players will get their turn to guess the word, starting randomly. If a players guesses an alphabet currectly, they get to keep their turn, otherwise the round passes to the next player.
+  - If you think you know the full word, you can type it out completely (case insesitive) and win.
+  - Whoever guesses the word first wins the game.
+- For single player mode, you'll have 6 lives. Each incorrect guess or failing to answer withing time limit will cost lives.
+  - You'll lose the game if you run out of lives.
+
+### `leaderboard` - Get leaderboard of skygames
+
+**Options**
+| Option | Description |
+| -------- | ------------------------------------------------------------------------------------------------------ |
+| `<game>` | The game to get the leaderboard for |
+| `[leaderbord-type]` | The type of leaderboard to get. Available options are: `global`, `server` (default: global) |
+
+</Steps>

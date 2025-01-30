@@ -16,8 +16,17 @@
     "build": "tsc",
     "lint": "eslint --fix src"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imnaiyar/skyhelper.git",
+    "directory": "packages/constants"
+  },
+  "bugs": {
+    "url": "https://github.com/imnaiyar/skyhelper/issues"
+  },
+  "homepage": "https://github.com/imnaiyar/skyhelper/packages/constants#readme",
   "keywords": [],
-  "author": "",
+  "author": "NyR",
   "license": "ISC",
   "dependencies": {
     "discord-api-types": "^0.37.93",
