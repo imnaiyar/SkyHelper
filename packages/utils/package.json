@@ -12,7 +12,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imnaiyar/skyhelper/packages/utils"
+    "url": "git+https://github.com/imnaiyar/skyhelper.git",
+    "directory": "packages/utils"
   },
   "keywords": [
     "SkyHelperUtils",

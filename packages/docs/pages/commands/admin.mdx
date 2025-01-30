@@ -95,19 +95,39 @@ Starts a live updating message with skytimes details. Upon setup, the bot will c
 
 ## `/reminders`
 
-Set up reminders for various in-game events. Currently supported events include: `Geyser`, `Grandma`, `Turtle`, `Daily Reset`, `Daily Quests`, `Eden/Weekly Resets`. Sends a reminder to the chosen channel when a particular event occurs. You can also select a default role or specify roles for individual events to ping.
+Set up reminders for various in-game events. Currently supported events include: `Geyser`, `Grandma`, `Turtle`, `Daily Reset`, `Daily Quests`, `Eden/Weekly Resets`, `Traveling Spirit`, `Aurora's Concert`. Sends a reminder to the chosen channel when a particular event occurs. You can also select a role for individual events to ping.
+
+<Steps>
+
+### `configue` - Configue reminders
+
+**Options**
+
+| Option      | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| `<event>`   | The event for which you want to set up a reminder             |
+| `<channel>` | The channel where the reminder will be sent                   |
+| `[role]`    | The role to ping when the reminder is sent (This is optional) |
 
 <Callout type="info">
-  Currently, reminders for all event types are sent to the one channel chosen during setup. However, future updates may allow
-  channel selection for individual events.
+  If you need to change the channel or decide to add/remove roles to ping later, simply run the command again with your preffered
+  choices.
 </Callout>
 
 **Usage**:
 
-- `/reminders` (starts the process of setting up reminders)
+- `/reminders configue event:Geyser channel:#geyser-reminders role:@GeyserRole` (sets up a reminder for the Geyser event in the "geyser-reminders" channel, pinging the "GeyserRole" role)
+
+### `stop` - Stops reminders for the given event
+
+**Options**
+
+| Option    | Description                        |
+| --------- | ---------------------------------- |
+| `<event>` | The event to stop the reminder for |
+
+### `status` - Check the configured status of reminders in the server
+
+</Steps>
 
 <br />
-<CollapsibleGallery
-  headingText="Examples"
-  images={[{ src: "/updates/reminders-example.gif", alt: "Reminders", caption: "Reminders Showcase" }]}
-/>
