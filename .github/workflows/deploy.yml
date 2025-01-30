@@ -23,8 +23,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      skyhelper: ${{ steps.filter.outputs.skyhelper }}
-      jobs: ${{ steps.filter.outputs.jobs }}
+      target: ${{ steps.set_target.outputs.target }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
@@ -34,16 +33,42 @@ jobs:
             skyhelper:
               - 'packages/skyhelper/**'
             jobs:
-              - 'packages/skyhelper-jobs/**'
-  deploy_skyhelper:
+              - 'packages/jobs/**'
+
+      - name: Set target for deployment
+        id: set_target
+        run: |
+          # If both skyhelper and jobs have changed, deploy both. 
+          # Otherwise, deploy based on the `workflow_dispatch` input or the changed paths
+          if [[ "${{github.event_name}}" === "workflow_dispatch" ]]; then
+            echo "Deploy target set from workflow_dispatch input."
+            echo "target=${{ github.event.inputs.to_deploy }}" >> $GITHUB_ENV
+          if [[ "${{ steps.filter.outputs.skyhelper }}" == "true" && "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
+            echo "Both packages changed, deploying both."
+            echo "target=both" >> $GITHUB_ENV
+          elif [[ "${{ steps.filter.outputs.skyhelper }}" == "true" ]]; then
+            echo "Skyhelper package changed, deploying skyhelper."
+            echo "target=skyhelper" >> $GITHUB_ENV
+          elif [[ "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
+            echo "Jobs package changed, deploying jobs."
+            echo "target=jobs" >> $GITHUB_ENV
+          fi
+
+  deploy:
     needs: changes
-    if: needs.changes.outputs.skyhelper == 'true' || github.event_name == 'workflow_dispatch' && contains(fromJSON('["skyhelper", "both"]'), github.event.inputs.to_deploy)
     runs-on: self-hosted
     environment: production
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy SkyHelper Bot
-        run: cd packages/skyhelper && docker compose up -d --build
+
+      - name: Deploy selected package
+        run: |
+          echo "Deploying ${{ env.target }}..."
+          if [[ "${{ env.target }}" == "both" ]]; then
+            docker-compose up -d --build
+          else
+            docker-compose up -d --build ${{ env.target }}
+          fi
         env:
           TOKEN: ${{ secrets.TOKEN }}
           NODE_ENV: "production"
@@ -62,24 +87,7 @@ jobs:
           READY_LOGS: ${{secrets.READY_LOGS}}
           SUGGESTION: ${{secrets.SUGGESTION}}
           TOPGG_TOKEN: ${{secrets.TOPGG_TOKEN}}
-
-      - name: Cleanup Unused Images
-        run: docker image prune -f
-
-  deploy_skyhelper_jobs:
-    needs: changes
-    if: needs.changes.outputs.jobs == 'true' || github.event_name == 'workflow_dispatch' && contains(fromJSON('["jobs", "both"]'), github.event.inputs.to_deploy)
-    runs-on: self-hosted
-    environment: production
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy SkyHelper Jobs
-        run: cd packages/jobs && docker compose up -d --build
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
-          MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
           ERROR_WEBHOOK: $${{secrets.ERROR_LOGS}}
-          NODE_ENV: production
 
       - name: Cleanup Unused Images
         run: docker image prune -f
