@@ -13,10 +13,10 @@ Running cron jobs is not resources exhaustive itself, but sending reminders/live
 
 ### Requirements
 
-- Docker
 - Bun
 
 ### Running
+
 - Clone the repo and move to this direcotry
 
 ```bash
@@ -29,7 +29,7 @@ cd packages/jobs
 > [!IMPORTANT]  
 > Make sure that bot token and Mongo connection url is the same as the one you used to run the main bot
 
-- Run the project with docker `docker compose up -d --build`
+- Run the project with docker `bun run start`
 
 > [!WARNING]  
 > TODO: Lot's of the codes are cloned/duplicated from the main bot, find a way to effectively reuse it and reduce duplications

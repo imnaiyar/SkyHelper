@@ -39,6 +39,14 @@ This is a monorepo containing projects related to SkyHelper bot. Project include
 - [@skyhelperbot/constants](/packages/constants/) - Package for constant datas that is used by various skyhelper projects (like localizations, spirit/realm datas, etc..)
 - [skyhelper](/packages/skyhelper/) - Main repository for the skyhelper bot
 
+# Running the bot
+
+- Install dependencies by running `pnpm i --frozen-lockfile`
+- Build all the project `pnpm build`
+- Make sure to rename `.env.example` to `.env` of respective package and fill the required fields
+- The simplest way of running the bot is with Docker. If you want to deploy both `@skyhelperbot/jobs` and `skyhelper`, simply run `docker compose up -d --build` otherwise for running one of them, run `docker compose up -d --build <jobs or skyhelper>`.
+- Requirements for running either `jobs` or `skyhelper` is mentioned in their respective READMEs as well as running it withou Docker.
+
 # Contributing
 
 - Install dependencies `pnpm i --frozen-lockfile`

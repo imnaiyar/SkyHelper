@@ -44,10 +44,13 @@
 
 ### Requirements
 
-- Docker
+- Sentry (for issues tracking.)
+- PNPM
 - Node.js >v23
 
 ### Running
+
+Most simplified and easiest way is to do it with Docker, instructions of which is given in the monorepo README
 
 - Clone this repository by running
 
@@ -57,7 +60,8 @@ git clone https://github.com/imnaiyar/SkyHelper
 
 - Move to this directory `cd packages/skyhelper`
 - Rename `example.env` to `.env` and fill all the required fields. (We have CLI to streamline this process. Run `pnpm run setup` and it'll setup the .env file for you)
-- Run `docker compose up -d --build`
+- You can get your sentry auth token from you sentry project settings. You can learn [here](https://docs.sentry.io/concepts/key-terms/dsn-explainer/) how to get sentry DSN.
+- Run `pnpm build:prod` && afterwards `pnpm start`
 
 > [!IMPORTANT]
 > If you plan to use live updates/Reminders feature, you'll have to also host/run [@skyhelperbot/jobs](../jobs/) as cron jobs to send the reminders/updates are hosted on a different process to reduce the load on the main bot. Intructions to set it up is given on the repo's README
