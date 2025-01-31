@@ -1,20 +1,13 @@
 import type {
   APIBaseInteraction,
-  APIChannel,
-  APIGuild,
-  APIGuildMember,
-  APIInteractionGuildMember,
   APIMessageChannelSelectInteractionData,
   APIMessageComponentButtonInteraction,
-  APIMessageComponentInteraction,
   APIMessageMentionableSelectInteractionData,
   APIMessageRoleSelectInteractionData,
   APIMessageSelectMenuInteractionData,
   APIMessageStringSelectInteractionData,
   APIMessageUserSelectInteractionData,
-  APIUser,
   ComponentType,
-  GatewayGuildCreateDispatchData,
   InteractionType,
 } from "@discordjs/core";
 

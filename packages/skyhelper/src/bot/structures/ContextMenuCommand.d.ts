@@ -4,7 +4,6 @@ import type {
   APIUserApplicationCommandInteraction,
   APIMessageApplicationCommandInteraction,
 } from "@discordjs/core";
-import type { SkyHelper } from "./Client.ts";
 import type { InteractionValidation } from "./Command.js";
 import type { Category } from "./Category.ts";
 import { PermissionsResolvable } from "@/utils/classes/PermissionUtils";

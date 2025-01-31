@@ -3,15 +3,14 @@ import { hangmanWords, HangmanResponseCodes, getHangmanResponse, EnglishAlphabet
 import {
   AllowedMentionsTypes,
   type APIEmbed,
-  type APITextBasedChannel,
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
 } from "@discordjs/core";
 import { MessageCollector } from "./Collector.js";
 import type { SkyHelper } from "@/structures";
-import type { RawFile } from "@discordjs/rest";
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Array<T> {
     random(): this[number];
   }

@@ -1,14 +1,9 @@
 import type { SkyHelper } from "@/structures/Client";
 import type { ComponentInteractionMap, MessageComponentType } from "@/types/interactions";
-import type { If } from "@/types/utils";
 import {
   type APIChannel,
-  type APIInteraction,
   type APIMessage,
-  type APIMessageComponentInteraction,
   type APIModalSubmitInteraction,
-  ComponentType,
-  type GatewayInteractionCreateDispatch,
   type GatewayInteractionCreateDispatchData,
   type GatewayMessageCreateDispatchData,
   InteractionType,

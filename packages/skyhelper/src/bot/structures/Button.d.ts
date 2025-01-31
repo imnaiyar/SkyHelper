@@ -1,5 +1,4 @@
 import type { APIMessageComponentButtonInteraction } from "@discordjs/core";
-import type { SkyHelper } from "./Client.ts";
 import type { getTranslator } from "@/i18n";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 

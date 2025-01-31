@@ -4,7 +4,7 @@ import { Spirits } from "@/utils/classes/Spirits";
 import type { Command } from "@/structures";
 import { SPIRTIS_DATA } from "@/modules/commands-data/guide-commands";
 export default {
-  async interactionRun({ interaction, t, helper, options }) {
+  async interactionRun({ t, helper, options }) {
     await helper.defer({ flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined });
     const value = options.getString("search");
     const data = helper.client.spiritsData[value as keyof typeof helper.client.spiritsData] as SpiritsData;

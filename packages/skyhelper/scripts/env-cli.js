@@ -17,7 +17,7 @@ function generateEnvFile() {
     `Please provide the following information ${chalk.bgMagentaBright.white`(* means required)`} - right click in the console to paste:\n`,
   );
 
-  let envData = {};
+  const envData = {};
 
   function askDatabaseUrl() {
     rl.question(chalk.bold.cyanBright`Enter your MongoDB connection URL${chalk.red`*`}: `, (dbUrl) => {
@@ -59,8 +59,9 @@ function generateEnvFile() {
   function askWebhookErrors() {
     rl.question(chalk.bold.cyanBright`Enter the Webhook URL for error logs: [Hit enter to skip]`, (errLogs) => {
       const webhookUrlRegex = /^https:\/\/discord\.com\/api\/webhooks/;
-      if (!errLogs?.length) askWebhookJoinLeave();
-      else if (webhookUrlRegex.test(errLogs)) {
+      if (!errLogs?.length) {
+        askWebhookJoinLeave();
+      } else if (webhookUrlRegex.test(errLogs)) {
         envData["ERROR_LOGS"] = errLogs;
         askWebhookJoinLeave();
       } else {
@@ -73,8 +74,9 @@ function generateEnvFile() {
   function askWebhookJoinLeave() {
     rl.question(chalk.bold.cyanBright`Enter the Webhook URL for join/leave logs: [Hit enter to skip]`, (joinLeaveLogs) => {
       const webhookUrlRegex = /^https:\/\/discord\.com\/api\/webhooks/;
-      if (!joinLeaveLogs?.length) writeEnvFile();
-      else if (webhookUrlRegex.test(joinLeaveLogs)) {
+      if (!joinLeaveLogs?.length) {
+        writeEnvFile();
+      } else if (webhookUrlRegex.test(joinLeaveLogs)) {
         envData["JOIN_LEAVE_LOGS"] = joinLeaveLogs;
         writeEnvFile();
       } else {

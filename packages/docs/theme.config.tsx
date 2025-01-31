@@ -94,7 +94,7 @@ const config: DocsThemeConfig = {
   },
   // do not display toc
   toc: {
-    component: function TableOfContents({ toc }) {
+    component: function TableOfContents() {
       return null;
     },
   },

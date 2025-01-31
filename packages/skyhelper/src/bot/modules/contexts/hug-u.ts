@@ -9,7 +9,7 @@ export default {
     contexts: [0, 1, 2],
   },
   category: "Fun",
-  async execute(interaction, helper, t, options) {
+  async execute(_int, helper, _t, options) {
     const user = options.getTargetUser();
     await helper.reply({
       content: `A sky hug for <@${user.id}>`,

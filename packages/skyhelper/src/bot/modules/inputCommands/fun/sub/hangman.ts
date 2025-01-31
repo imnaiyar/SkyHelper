@@ -21,7 +21,6 @@ import {
 } from "@discordjs/core";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
-import type { SkyHelper } from "@/structures";
 import type { RawFile } from "@discordjs/rest";
 import type { HangmanStatsData } from "@/types/custom";
 const BASE =
