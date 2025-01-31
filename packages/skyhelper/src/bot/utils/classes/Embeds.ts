@@ -304,13 +304,14 @@ export default class {
     }
 
     embed.description = desc;
-
+    const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
+    const nowFormatted = now.toFormat("dd-MM-yyyy");
     const selectMenu: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
         {
           type: ComponentType.StringSelect,
-          custom_id: "daily_quests_select",
+          custom_id: Utils.encodeCustomId({ id: "daily_quests_select", date: nowFormatted }),
           options: quests.map((q, i) => ({
             label: q.title.slice(0, 50),
             value: i.toString(),
@@ -321,36 +322,33 @@ export default class {
     };
     const disabledSe =
       data.seasonal_candles &&
-      DateTime.now()
-        .setZone("America/Los_Angeles")
-        .startOf("day")
-        .equals(DateTime.fromISO(data.seasonal_candles.date, { zone: "America/Los_Angeles" }).startOf("day"))
+      now.equals(DateTime.fromISO(data.seasonal_candles.date, { zone: "America/Los_Angeles" }).startOf("day"))
         ? false
         : true;
 
     const nextBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-scroll;index:" + (index + 1),
+      custom_id: Utils.encodeCustomId({ id: "daily-quests-scroll", index: (index + 1).toString(), date: nowFormatted }),
       label: index === total - 1 ? `Quest ${total}` : `Quest ${index + 2} ▶️`,
       disabled: index === total - 1,
       style: ButtonStyle.Primary,
     };
     const prevBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-scroll;index:" + (index - 1),
+      custom_id: Utils.encodeCustomId({ id: "daily-quests-scroll", index: (index - 1).toString(), date: nowFormatted }),
       label: "◀️ " + (index === 0 ? `Quest 1` : `Quest ${index}`),
       disabled: index === 0,
       style: ButtonStyle.Primary,
     };
     const rotatingBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-candles;type:rotating",
+      custom_id: Utils.encodeCustomId({ id: "daily-quests-candles", type: "rotating", date: nowFormatted }),
       label: "Rotating Candles",
       style: ButtonStyle.Success,
     };
     const seasonalBtn: APIButtonComponent = {
       type: ComponentType.Button,
-      custom_id: "daily-quests-candles;type:seasonal",
+      custom_id: Utils.encodeCustomId({ id: "daily-quests-candles", type: "seasonal", date: nowFormatted }),
       label: "Seasonal Candles",
       disabled: disabledSe,
       style: ButtonStyle.Success,
