@@ -285,13 +285,15 @@ export default class {
     const { quests, rotating_candles } = data;
     const total = quests.length;
     const quest = quests[index];
+    const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
+    const nowFormatted = now.toFormat("dd-MM-yyyy");
     let desc = `${quest.images?.[0]?.by ? `© ${quest.images?.[0].by}` : ""}\n${quest.images?.[0]?.source ? `Source: ${quest.images?.[0].source}` : ""}`;
     const embed: APIEmbed = {
       author: {
         name: `Daily Quests (${index + 1}/${total})`,
         icon_url: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/7/72/Quest-icon.png",
       },
-      title: quest.title,
+      title: quest.title + `\n${nowFormatted}`,
       footer: { text: `Page ${index + 1}/${total}` },
     };
     if (quest.images?.length) {
@@ -304,8 +306,7 @@ export default class {
     }
 
     embed.description = desc;
-    const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
-    const nowFormatted = now.toFormat("dd-MM-yyyy");
+
     const selectMenu: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
@@ -329,14 +330,14 @@ export default class {
     const nextBtn: APIButtonComponent = {
       type: ComponentType.Button,
       custom_id: Utils.encodeCustomId({ id: "daily-quests-scroll", index: (index + 1).toString(), date: nowFormatted }),
-      label: index === total - 1 ? `Quest ${total}` : `Quest ${index + 2} ▶️`,
+      label: (index === total - 1 ? `Quest ${total}` : `Quest ${index + 2}`) + " ▶",
       disabled: index === total - 1,
       style: ButtonStyle.Primary,
     };
     const prevBtn: APIButtonComponent = {
       type: ComponentType.Button,
       custom_id: Utils.encodeCustomId({ id: "daily-quests-scroll", index: (index - 1).toString(), date: nowFormatted }),
-      label: "◀️ " + (index === 0 ? `Quest 1` : `Quest ${index}`),
+      label: "◀ " + (index === 0 ? `Quest 1` : `Quest ${index}`),
       disabled: index === 0,
       style: ButtonStyle.Primary,
     };
