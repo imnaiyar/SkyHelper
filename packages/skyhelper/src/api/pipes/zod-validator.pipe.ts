@@ -8,7 +8,7 @@ export class ZodValidator implements PipeTransform {
     private readonly message?: string,
   ) {}
 
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: any, _metadata: ArgumentMetadata) {
     const result = this.schema.safeParse(value);
     if (!result.success) {
       throw new BadRequestException({ message: this.message ?? "Bad Request", errors: result.error.issues });

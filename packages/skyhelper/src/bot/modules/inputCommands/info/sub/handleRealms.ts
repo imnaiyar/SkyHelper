@@ -1,5 +1,4 @@
 import { MapsData, SummaryData, getMaps, getSummary } from "@skyhelperbot/constants";
-import type { SkyHelper } from "@/structures";
 import { handleSpirits } from "./handleSpirits.js";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
@@ -192,6 +191,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
   const collector = helper.client.componentCollector({
     idle: 2_60_1000,
     filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    message: msg,
   });
 
   collector.on("collect", async (inter) => {

@@ -13,7 +13,7 @@ import { GuildMiddleware } from "./middlewares/guild.middleware.js";
 import { UpdateMiddleware } from "./middlewares/update.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
-import * as express from "express";
+import * as _express from "express";
 import { Logger } from "./logger.service.js";
 export async function bootstrap(client: SkyHelper) {
   @Module({

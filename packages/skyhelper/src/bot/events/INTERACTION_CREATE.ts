@@ -193,8 +193,8 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       } catch (err) {
         const errorId = client.logger.error(err, scope);
         await helper
-          .reply(getErrorResponse(id, t))
-          .catch(() => helper.followUp(getErrorResponse(id, t)))
+          .reply(getErrorResponse(errorId, t))
+          .catch(() => helper.followUp(getErrorResponse(errorId, t)))
           .catch(() => {});
         return;
       }

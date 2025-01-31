@@ -1,5 +1,4 @@
 import type { Event } from "@/structures";
-import type { LiveUpdates } from "@/types/schemas";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import type { GatewayDispatchEvents } from "@discordjs/core";
 

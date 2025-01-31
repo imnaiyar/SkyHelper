@@ -29,7 +29,7 @@ const months = [
   "December",
 ] as const;
 export default {
-  async interactionRun({ interaction, t, helper, options }) {
+  async interactionRun({ t, helper, options }) {
     const m = await helper.reply(
       {
         ...buildResponse(t, helper.client, helper.user.id),
