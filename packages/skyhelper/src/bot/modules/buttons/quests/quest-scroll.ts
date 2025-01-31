@@ -1,6 +1,6 @@
 import embeds from "@/utils/classes/Embeds";
 import type { Button } from "@/structures";
-import { checkQuestValidity } from "./sub/checkQuestValidation.js";
+import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 
 export default {
   data: {
@@ -10,9 +10,11 @@ export default {
     const client = helper.client;
     await helper.deferUpdate();
     const data = await client.schemas.getDailyQuests();
-    console.log(data.last_updated);
+
     const isValid = checkQuestValidity(data.last_updated);
-    if (!isValid) {
+    const { index, date } = client.utils.parseCustomId(interaction.data.custom_id);
+
+    if (!isValid || !checkQuestButtonValidToday(date)) {
       await helper.editReply({ components: interaction.message.components });
       await helper.followUp({
         content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED"),
@@ -20,7 +22,7 @@ export default {
       });
       return;
     }
-    const { index } = client.utils.parseCustomId(interaction.data.custom_id);
+
     const response = embeds.dailyQuestEmbed(data, parseInt(index));
     await helper.editReply(response);
   },
