@@ -1,7 +1,7 @@
 import type { Button } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 import type { APIEmbed } from "@discordjs/core";
-
+import { DateTime } from "luxon";
 export default {
   data: {
     name: "daily-quests-candles",
@@ -19,7 +19,7 @@ export default {
       return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
     }
     const embed: APIEmbed = {
-      title: title,
+      title: title + `\n${DateTime.now().setZone("America/Los_Angeles").toFormat("dd-MM-yyyy")}`,
       description: `${d.title}\n\nBy: ${d.images[0].by}`,
       image: {
         url: d.images[0].url,
