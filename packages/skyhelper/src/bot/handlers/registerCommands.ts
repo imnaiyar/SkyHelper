@@ -2,7 +2,12 @@ import { loadCommands, loadContextCmd } from "@/utils/loaders";
 import logger from "./logger.js";
 import chalk from "chalk";
 import { parseCommands } from "@/utils/parseCommands";
-import { Routes, type RESTPutAPIApplicationCommandsJSONBody, type RESTPutAPIApplicationCommandsResult } from "@discordjs/core";
+import {
+  ApplicationCommandType,
+  Routes,
+  type RESTPutAPIApplicationCommandsJSONBody,
+  type RESTPutAPIApplicationCommandsResult,
+} from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { Collection } from "@discordjs/collection";
 
@@ -27,7 +32,7 @@ contexts
 if (!process.env.CLIENT_ID) throw new Error("Cliend ID is missing from env");
 
 const data = (await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-  body: toRegister,
+  body: [...toRegister, { name: "launch", type: ApplicationCommandType.PrimaryEntryPoint }],
 })) as RESTPutAPIApplicationCommandsResult;
 
 logger.success(`Successfully registered ${data.length} interactions`);

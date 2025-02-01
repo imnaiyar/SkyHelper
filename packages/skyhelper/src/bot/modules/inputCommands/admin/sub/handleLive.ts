@@ -8,13 +8,13 @@ import RemindersUtils from "@/utils/classes/RemindersUtils";
 
 export const handleLive = async (
   client: SkyHelper,
-  type: "Shards" | "SkyTimes",
+  type: string,
   sub: string,
   config: GuildSchema,
   t: ReturnType<typeof getTranslator>,
   channel?: APITextChannel,
 ) => {
-  const liveType = type === "Shards" ? "autoShard" : "autoTimes";
+  const liveType = type === "shards" ? "autoShard" : "autoTimes";
   const liveData = config[liveType];
   if (sub === "start") {
     if (!channel) throw new Error("No channels provided");
@@ -27,7 +27,7 @@ export const handleLive = async (
         return {
           embeds: [
             {
-              description: t("commands:SHARDS_LIVE.RESPONSES.ALREADY_CONFIGURED", {
+              description: t("commands:LIVE_UPDATES.RESPONSES.ALREADY_CONFIGURED", {
                 CHANNEL: `<#${wbh.channel_id}>`,
                 MESSAGE: client.utils.messageUrl(ms, channel.guild_id),
                 TYPE: `"Live ${type}"`,
@@ -46,7 +46,7 @@ export const handleLive = async (
       return {
         embeds: [
           {
-            description: t("commands:SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<${channel.id}>` }),
+            description: t("commands:LIVE_UPDATES.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<${channel.id}>` }),
             color: 0xff0000,
           },
         ],
@@ -85,7 +85,7 @@ export const handleLive = async (
     return {
       embeds: [
         {
-          description: t("commands:SHARDS_LIVE.RESPONSES.CONFIGURED", {
+          description: t("commands:LIVE_UPDATES.RESPONSES.CONFIGURED", {
             CHANNEL: channel.toString(),
             MESSAGE: client.utils.messageUrl(msg, channel.guild_id),
             TYPE: `"Live ${type}"`,
@@ -99,7 +99,7 @@ export const handleLive = async (
       return {
         embeds: [
           {
-            description: t("commands:SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }),
+            description: t("commands:LIVE_UPDATES.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }),
             color: 0xff0000,
           },
         ],
@@ -112,7 +112,7 @@ export const handleLive = async (
     return {
       embeds: [
         {
-          description: t("commands:SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live ${type}"` }),
+          description: t("commands:LIVE_UPDATES.RESPONSES.DISABLED", { TYPE: `"Live ${type}"` }),
           color: 0xff0000,
         },
       ],

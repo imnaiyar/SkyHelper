@@ -181,13 +181,14 @@
       "DEFAULT_ROLE_REMOVE": "Default role removed!"
     }
   },
-  "SHARDS_LIVE": {
-    "name": "shards-live",
-    "description": "auto updating message with live shards details",
+  "LIVE_UPDATES": {
+    "name": "live",
+    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "group": "updates",
     "options": {
       "START": {
         "name": "start",
-        "description": "configure auto shard",
+        "description": "start live shards or skytimes update with auto updating message at regular interval",
         "option": {
           "CHANNEL": {
             "name": "channel",
@@ -197,7 +198,7 @@
       },
       "STOP": {
         "name": "stop",
-        "description": "stop auto shard"
+        "description": "stop live updates"
       }
     },
     "RESPONSES": {
