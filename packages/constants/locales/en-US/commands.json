@@ -185,6 +185,7 @@
     "name": "live",
     "description": "live shards or skytimes update with auto updating message at regular interval",
     "group": "updates",
+    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
     "options": {
       "START": {
         "name": "start",

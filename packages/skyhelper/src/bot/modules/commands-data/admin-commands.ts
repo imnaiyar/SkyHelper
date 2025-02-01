@@ -88,6 +88,7 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
       {
         name: "updates",
         name_localizations: "commands:LIVE_UPDATES.group",
+        description_localizations: "commands:LIVE_UPDATES.group-desc",
         description: "live updates",
         type: ApplicationCommandOptionType.SubcommandGroup,
         options: [
