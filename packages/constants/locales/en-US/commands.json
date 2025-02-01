@@ -192,7 +192,7 @@
         "option": {
           "CHANNEL": {
             "name": "channel",
-            "description": "channel where shard details should be updated"
+            "description": "channel where live updates should be updated"
           }
         }
       },
@@ -208,26 +208,6 @@
       "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
       "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
       "DISABLED": "{{TYPE}} is disabled"
-    }
-  },
-  "SKYTIMES_LIVE": {
-    "name": "skytimes-live",
-    "description": "auto updating message with live skytimes details",
-    "options": {
-      "START": {
-        "name": "start",
-        "description": "configure auto skytimes",
-        "option": {
-          "CHANNEL": {
-            "name": "channel",
-            "description": "channel where skytimes details should be updated"
-          }
-        }
-      },
-      "STOP": {
-        "name": "stop",
-        "description": "stop auto skytimes"
-      }
     }
   },
   "SEASONAL_CALCULATOR": {

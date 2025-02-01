@@ -46,7 +46,7 @@ export const handleLive = async (
       return {
         embeds: [
           {
-            description: t("commands:LIVE_UPDATES.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<${channel.id}>` }),
+            description: t("commands:LIVE_UPDATES.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<#${channel.id}>` }),
             color: 0xff0000,
           },
         ],
@@ -66,7 +66,7 @@ export const handleLive = async (
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
     const ts = getTranslator(config.language?.value ?? "en-us");
     const result =
-      type === "Shards"
+      type === "shards"
         ? embeds.buildShardEmbed(currentDate, ts, ts("features:shards-embed.FOOTER"), true)
         : await embeds.getTimesEmbed(client, ts, ts("features:times-embed.FOOTER"));
     const msg = await client.api.webhooks.execute(wb.id, wb.token!, {
@@ -86,7 +86,7 @@ export const handleLive = async (
       embeds: [
         {
           description: t("commands:LIVE_UPDATES.RESPONSES.CONFIGURED", {
-            CHANNEL: channel.toString(),
+            CHANNEL: `<#${channel.id}>`,
             MESSAGE: client.utils.messageUrl(msg, channel.guild_id),
             TYPE: `"Live ${type}"`,
           }),
