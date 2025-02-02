@@ -30,18 +30,6 @@ const createRelease = async (body) => {
     core.setFailed(error);
   }
 };
-const mergePr = () => {
-  const prNumber = process.env.pr_number;
-  octokit.pulls.merge({
-    owner,
-    repo,
-    pull_number: prNumber,
-    merge_method: "squash",
-    headers: {
-      authorization: `Bearer ${process.env.PAT}`,
-    },
-  });
-};
 const packageLabel = `package:` + (match?.[1] ?? "skyhelper");
 console.log("Package Label: ", packageLabel);
 try {
@@ -55,7 +43,6 @@ try {
 
   if (!prevRelease) {
     await createRelease(autoNotes.body);
-    mergePr();
     process.exit(0);
   }
   console.log("Found previous release for: " + packageName + " with tag: " + prevRelease.tag_name);
@@ -83,7 +70,6 @@ try {
   console.log(`Found ${filteredPr.length} PRs for ${packageName}`);
   if (filteredPr.length === 0) {
     await createRelease(autoNotes.body);
-    mergePr();
     process.exit(0);
   }
   const typeMappings = {
@@ -119,7 +105,6 @@ try {
   }
 
   await createRelease(changelogString);
-  mergePr();
 } catch (error) {
   core.setFailed(error);
 }

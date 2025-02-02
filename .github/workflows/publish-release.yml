@@ -72,9 +72,9 @@ jobs:
 
           git push --set-upstream origin release/${{ github.event.inputs.package }}-${new_version}
 
-            pr_url=$(gh pr create --base main --head release/${{ github.event.inputs.package }}-${new_version} --title "chore: release ${{ github.event.inputs.package }} v${new_version}" --body "Automated version bump for ${{ github.event.inputs.package }} v${new_version}")
-            pr_number=$(echo $pr_url | grep -o -E '[0-9]+$')
-            echo "pr_number=${pr_number}" >> $GITHUB_ENV
+          pr_url=$(gh pr create --base main --head release/${{ github.event.inputs.package }}-${new_version} --title "chore: release ${{ github.event.inputs.package }} v${new_version}" --body "Automated version bump for ${{ github.event.inputs.package }} v${new_version}")
+          pr_number=$(echo $pr_url | grep -o -E '[0-9]+$')
+          echo "pr_number=${pr_number}" >> $GITHUB_ENV
 
       - name: Publish
         if: contains(fromJSON('["@skyhelperbot/utils", "@skyhelperbot/constants"]'), github.event.inputs.package)
@@ -89,5 +89,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           new_version: ${{ env.new_version }}
           pr_number: ${{ env.pr_number }}
-          PAT: ${{ secrets.PERSONAL_TOKEN }}
           package: ${{ github.event.inputs.package }}
