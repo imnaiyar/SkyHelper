@@ -5,11 +5,11 @@ import {
   ApplicationCommandType,
   type APIApplicationCommand,
   type APIApplicationCommandBasicOption,
+  type APIApplicationCommandSubcommandOption,
   type APIEmbed,
 } from "@discordjs/core";
 import { resolveColor } from "@skyhelperbot/utils";
 
-// TODO: Refactor, lot's of code duplication here
 export async function handleSingleCmd(helper: InteractionHelper, commandName: string) {
   const { client, t } = helper;
   const commands = client.applicationCommands;
@@ -143,29 +143,11 @@ function format(command: APIApplicationCommand, t: ReturnType<typeof import("@/i
       if (o.type === ApplicationCommandOptionType.SubcommandGroup) {
         const formatted = [];
         for (const sub of o.options || []) {
-          formatted.push(
-            `**</${command.name} ${o.name} ${sub.name}:${command.id}>**  ${
-              sub.type === 1 && sub.options?.length
-                ? `${sub.options
-                    ?.map((m) => {
-                      return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
-                    })
-                    .join(", ")}`
-                : ""
-            }\n  ↪ ${sub.description}`,
-          );
+          formatted.push(formatSubCommand(sub, `${command.name} ${o.name}`, command.id));
         }
         return formatted;
       }
-      return `**</${command.name} ${o.name}:${command.id}>** ${
-        o.type === 1 && o.options?.length
-          ? `${o.options
-              ?.map((m) => {
-                return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
-              })
-              .join(", ")}`
-          : ""
-      }\n  ↪ ${o.description}`;
+      return formatSubCommand(o as APIApplicationCommandSubcommandOption, command.name, command.id);
     });
   }
 
@@ -180,4 +162,16 @@ function format(command: APIApplicationCommand, t: ReturnType<typeof import("@/i
           .join(", ")}`
       : ""
   }\n${command.description}`;
+}
+
+function formatSubCommand(option: APIApplicationCommandSubcommandOption, prefix: string, id: string) {
+  return `**</${prefix} ${option.name}:${id}>** ${
+    option.options?.length
+      ? `${option.options
+          .map((m) => {
+            return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
+          })
+          .join(", ")}`
+      : ""
+  }\n  ↪ ${option.description}`;
 }
