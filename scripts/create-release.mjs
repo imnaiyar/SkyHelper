@@ -90,7 +90,7 @@ try {
   const grouped = filteredPr.reduce((acc, { title, number, user, type, scope, breaking }) => {
     const key = typeMappings[type] ?? "misc";
     acc[key] = acc[key] || [];
-    acc[key].push(`- ${breaking ? `BREAKING CHANGE ` : ""}${scope ? `${scope}: ` : ""}${title} (#${number}) by @${user}`);
+    acc[key].push(`- ${scope ? `**${scope}**: ` : ""}${title} (#${number}) by @${user}${breaking ? " (BREAKING CHANGE)" : ""}`);
     return acc;
   }, {});
 
