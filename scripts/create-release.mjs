@@ -11,6 +11,37 @@ if (!match && packageName !== "skyhelper") {
   core.setFailed("Invalid package name");
   process.exit(1);
 }
+const createRelease = async (body) => {
+  try {
+    const { data: release } = await octokit.repos.createRelease({
+      owner,
+      repo,
+      tag_name: `${packageName}@${packageVersion}`,
+      name: `${packageName}@${packageVersion}`,
+      prerelease: false,
+      draft: false,
+      body,
+      headers: {
+        authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+    });
+    core.setOutput("release_id", release.id);
+  } catch (error) {
+    core.setFailed(error);
+  }
+};
+const mergePr = () => {
+  const prNumber = process.env.pr_number;
+  octokit.pulls.merge({
+    owner,
+    repo,
+    pull_number: prNumber,
+    merge_method: "squash",
+    headers: {
+      authorization: `Bearer ${process.env.PAT}`,
+    },
+  });
+};
 const packageLabel = `package:` + (match?.[1] ?? "skyhelper");
 console.log("Package Label: ", packageLabel);
 try {
@@ -23,7 +54,8 @@ try {
   });
 
   if (!prevRelease) {
-    core.setOutput("changelog", autoNotes.body);
+    await createRelease(autoNotes.body);
+    mergePr();
     process.exit(0);
   }
   console.log("Found previous release for: " + packageName + " with tag: " + prevRelease.tag_name);
@@ -50,7 +82,8 @@ try {
 
   console.log(`Found ${filteredPr.length} PRs for ${packageName}`);
   if (filteredPr.length === 0) {
-    core.setOutput("changelog", autoNotes.body);
+    await createRelease(autoNotes.body);
+    mergePr();
     process.exit(0);
   }
   const typeMappings = {
@@ -85,7 +118,8 @@ try {
     changelogString += `\n\n${autoNotes.body.slice(contribIndex)}`;
   }
 
-  core.setOutput("changelog", changelogString);
+  await createRelease(changelogString);
+  mergePr();
 } catch (error) {
   core.setFailed(error);
 }
