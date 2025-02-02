@@ -8,13 +8,13 @@ import RemindersUtils from "@/utils/classes/RemindersUtils";
 
 export const handleLive = async (
   client: SkyHelper,
-  type: "Shards" | "SkyTimes",
+  type: string,
   sub: string,
   config: GuildSchema,
   t: ReturnType<typeof getTranslator>,
   channel?: APITextChannel,
 ) => {
-  const liveType = type === "Shards" ? "autoShard" : "autoTimes";
+  const liveType = type === "shards" ? "autoShard" : "autoTimes";
   const liveData = config[liveType];
   if (sub === "start") {
     if (!channel) throw new Error("No channels provided");
@@ -27,7 +27,7 @@ export const handleLive = async (
         return {
           embeds: [
             {
-              description: t("commands:SHARDS_LIVE.RESPONSES.ALREADY_CONFIGURED", {
+              description: t("commands:LIVE_UPDATES.RESPONSES.ALREADY_CONFIGURED", {
                 CHANNEL: `<#${wbh.channel_id}>`,
                 MESSAGE: client.utils.messageUrl(ms, channel.guild_id),
                 TYPE: `"Live ${type}"`,
@@ -46,7 +46,7 @@ export const handleLive = async (
       return {
         embeds: [
           {
-            description: t("commands:SHARDS_LIVE.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<${channel.id}>` }),
+            description: t("commands:LIVE_UPDATES.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<#${channel.id}>` }),
             color: 0xff0000,
           },
         ],
@@ -66,7 +66,7 @@ export const handleLive = async (
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
     const ts = getTranslator(config.language?.value ?? "en-us");
     const result =
-      type === "Shards"
+      type === "shards"
         ? embeds.buildShardEmbed(currentDate, ts, ts("features:shards-embed.FOOTER"), true)
         : await embeds.getTimesEmbed(client, ts, ts("features:times-embed.FOOTER"));
     const msg = await client.api.webhooks.execute(wb.id, wb.token!, {
@@ -85,8 +85,8 @@ export const handleLive = async (
     return {
       embeds: [
         {
-          description: t("commands:SHARDS_LIVE.RESPONSES.CONFIGURED", {
-            CHANNEL: channel.toString(),
+          description: t("commands:LIVE_UPDATES.RESPONSES.CONFIGURED", {
+            CHANNEL: `<#${channel.id}>`,
             MESSAGE: client.utils.messageUrl(msg, channel.guild_id),
             TYPE: `"Live ${type}"`,
           }),
@@ -99,7 +99,7 @@ export const handleLive = async (
       return {
         embeds: [
           {
-            description: t("commands:SHARDS_LIVE.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }),
+            description: t("commands:LIVE_UPDATES.RESPONSES.ALREADY_DISABLED", { TYPE: `"Live ${type}"` }),
             color: 0xff0000,
           },
         ],
@@ -112,7 +112,7 @@ export const handleLive = async (
     return {
       embeds: [
         {
-          description: t("commands:SHARDS_LIVE.RESPONSES.DISABLED", { TYPE: `"Live ${type}"` }),
+          description: t("commands:LIVE_UPDATES.RESPONSES.DISABLED", { TYPE: `"Live ${type}"` }),
           color: 0xff0000,
         },
       ],

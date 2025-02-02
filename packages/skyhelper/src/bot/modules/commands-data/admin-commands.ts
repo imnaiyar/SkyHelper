@@ -80,38 +80,66 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   category: "Admin",
 };
 
-// #region ShardsLive
-export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
-  name: "shards-live",
-  description: "auto updating message with live shards details",
+export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "live",
+  description: "live shards or skytimes update with auto updating message at regular interval",
   data: {
-    name_localizations: "commands:SHARDS_LIVE.name",
-    description_localizations: "commands:SHARDS_LIVE.description",
     options: [
       {
-        name: "start",
-        name_localizations: "commands:SHARDS_LIVE.options.START.name",
-        description: "start live shards",
-        description_localizations: "commands:SHARDS_LIVE.options.START.description",
-        type: ApplicationCommandOptionType.Subcommand,
+        name: "updates",
+        name_localizations: "commands:LIVE_UPDATES.group",
+        description_localizations: "commands:LIVE_UPDATES.group-desc",
+        description: "live updates",
+        type: ApplicationCommandOptionType.SubcommandGroup,
         options: [
           {
-            name: "channel",
-            name_localizations: "commands:SHARDS_LIVE.options.START.option.CHANNEL.name",
-            description: "channel where shard details should be updated",
-            description_localizations: "commands:SHARDS_LIVE.options.START.option.CHANNEL.description",
-            type: ApplicationCommandOptionType.Channel,
-            channel_types: [ChannelType.GuildText],
-            required: true,
+            name: "start",
+            name_localizations: "commands:LIVE_UPDATES.options.START.name",
+            description: "start live shards or skytimes update with auto updating message at regular interval",
+            description_localizations: "commands:LIVE_UPDATES.options.START.description",
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+              {
+                name: "channel",
+                name_localizations: "commands:LIVE_UPDATES.options.START.option.CHANNEL.name",
+                description: "channel where shard details should be updated",
+                description_localizations: "commands:LIVE_UPDATES.options.START.option.CHANNEL.description",
+                type: ApplicationCommandOptionType.Channel,
+                channel_types: [ChannelType.GuildText],
+                required: true,
+              },
+              {
+                name: "type",
+                description: "type of live updates",
+                type: ApplicationCommandOptionType.String,
+                required: true,
+                choices: [
+                  { name: "Shards", value: "shards" },
+                  { name: "Skytimes", value: "skytimes" },
+                ],
+              },
+            ],
+          },
+          {
+            name: "stop",
+            name_localizations: "commands:LIVE_UPDATES.options.STOP.name",
+            description: "stop live shard",
+            description_localizations: "commands:LIVE_UPDATES.options.STOP.description",
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+              {
+                name: "type",
+                description: "type of live updates",
+                type: ApplicationCommandOptionType.String,
+                required: true,
+                choices: [
+                  { name: "Shards", value: "shards" },
+                  { name: "Skytimes", value: "skytimes" },
+                ],
+              },
+            ],
           },
         ],
-      },
-      {
-        name: "stop",
-        name_localizations: "commands:SHARDS_LIVE.options.STOP.name",
-        description: "stop live shard",
-        description_localizations: "commands:SHARDS_LIVE.options.STOP.description",
-        type: ApplicationCommandOptionType.Subcommand,
       },
     ],
     integration_types: [0],
@@ -144,84 +172,6 @@ export const SHARDS_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
         const channel = client.channels.get(ch.id) as APITextChannel;
         const sub = options.getSubcommand();
         if (sub !== "start") return { status: true };
-        if (!PermissionsUtil.overwriteFor(guild.clientMember, channel, client).has("ManageWebhooks")) {
-          return {
-            status: false,
-            message: t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${channel.id}>` }),
-          };
-        }
-        return { status: true };
-      },
-    },
-  ],
-  botPermissions: ["ManageWebhooks"],
-  userPermissions: ["ManageGuild"],
-  category: "Admin",
-};
-
-// #region TimesLive
-export const TIMES_LIVE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
-  name: "skytimes-live",
-  description: "auto updating message with live skytimes details",
-  data: {
-    name_localizations: "commands:SKYTIMES_LIVE.name",
-    description_localizations: "commands:SKYTIMES_LIVE.description",
-    options: [
-      {
-        name: "start",
-        name_localizations: "commands:SKYTIMES_LIVE.options.START.name",
-        description: "configure auto skytimes",
-        description_localizations: "commands:SKYTIMES_LIVE.options.START.description",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            name: "channel",
-            name_localizations: "commands:SKYTIMES_LIVE.options.START.option.CHANNEL.name",
-            description: "channel where skytimes details should be updated",
-            description_localizations: "commands:SKYTIMES_LIVE.options.START.option.CHANNEL.description",
-            type: ApplicationCommandOptionType.Channel,
-            channel_types: [ChannelType.GuildText],
-            required: true,
-          },
-        ],
-      },
-      {
-        name: "stop",
-        name_localizations: "commands:SKYTIMES_LIVE.options.STOP.name",
-        description: "stop auto skytimes",
-        description_localizations: "commands:SKYTIMES_LIVE.options.STOP.description",
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-    ],
-    integration_types: [0],
-    contexts: [0],
-  },
-  prefix: {
-    usage: "<sub> [#channel]",
-    minimumArgs: 1,
-    subcommands: [
-      {
-        trigger: "start <#channel>",
-        description: "starts live-skytimes in the given channel",
-      },
-      {
-        trigger: "stop",
-        description: "stop live skytimes",
-      },
-    ],
-  },
-  validations: [
-    {
-      type: "interaction",
-      callback: ({ interaction, options, t, helper: { client } }) => {
-        if (!interaction.guild_id) return { status: false, message: "Command is only available fo guild" };
-
-        const guild = client.guilds.get(interaction.guild_id);
-        if (!guild) return { status: false, message: "Guild not found" };
-
-        const ch = options.getChannel("channel");
-        if (!ch) return { status: true };
-        const channel = client.channels.get(ch.id) as APITextChannel;
         if (!PermissionsUtil.overwriteFor(guild.clientMember, channel, client).has("ManageWebhooks")) {
           return {
             status: false,

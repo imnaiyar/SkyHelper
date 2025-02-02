@@ -181,23 +181,25 @@
       "DEFAULT_ROLE_REMOVE": "Default role removed!"
     }
   },
-  "SHARDS_LIVE": {
-    "name": "shards-live",
-    "description": "auto updating message with live shards details",
+  "LIVE_UPDATES": {
+    "name": "live",
+    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "group": "updates",
+    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
     "options": {
       "START": {
         "name": "start",
-        "description": "configure auto shard",
+        "description": "start live shards or skytimes update with auto updating message at regular interval",
         "option": {
           "CHANNEL": {
             "name": "channel",
-            "description": "channel where shard details should be updated"
+            "description": "channel where live updates should be updated"
           }
         }
       },
       "STOP": {
         "name": "stop",
-        "description": "stop auto shard"
+        "description": "stop live updates"
       }
     },
     "RESPONSES": {
@@ -207,26 +209,6 @@
       "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
       "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
       "DISABLED": "{{TYPE}} is disabled"
-    }
-  },
-  "SKYTIMES_LIVE": {
-    "name": "skytimes-live",
-    "description": "auto updating message with live skytimes details",
-    "options": {
-      "START": {
-        "name": "start",
-        "description": "configure auto skytimes",
-        "option": {
-          "CHANNEL": {
-            "name": "channel",
-            "description": "channel where skytimes details should be updated"
-          }
-        }
-      },
-      "STOP": {
-        "name": "stop",
-        "description": "stop auto skytimes"
-      }
     }
   },
   "SEASONAL_CALCULATOR": {
