@@ -181,52 +181,34 @@
       "DEFAULT_ROLE_REMOVE": "デフォルトロールが削除されました！"
     }
   },
-  "SHARDS_LIVE": {
-    "name": "シャードライブ",
-    "description": "ライブシャード詳細の自動更新メッセージ",
+  "LIVE_UPDATES": {
+    "name": "live",
+    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "group": "updates",
+    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
     "options": {
       "START": {
-        "name": "開始",
-        "description": "自動シャードを設定",
+        "name": "start",
+        "description": "start live shards or skytimes update with auto updating message at regular interval",
         "option": {
           "CHANNEL": {
-            "name": "チャンネル",
-            "description": "シャード詳細を更新するチャンネル"
+            "name": "channel",
+            "description": "channel where live updates should be updated"
           }
         }
       },
       "STOP": {
-        "name": "停止",
-        "description": "自動シャードを停止"
+        "name": "stop",
+        "description": "stop live updates"
       }
     },
     "RESPONSES": {
-      "NOT_GUILD": "このコマンドはサーバーでのみ使用できます",
-      "ALREADY_CONFIGURED": "{{TYPE}}は既に{{CHANNEL}}のこのメッセージ{{MESSAGE}}で設定されています。",
-      "INVALID_CHANNEL": "{{CHANNEL}}はテキストチャンネルではありません。有効なテキストチャンネルを指定してください",
-      "CONFIGURED": "{{CHANNEL}}の{{TYPE}}が設定されました。このメッセージ{{MESSAGE}}は関連する詳細で更新されます。",
-      "ALREADY_DISABLED": "{{TYPE}}は既にこのサーバーで無効化されています",
-      "DISABLED": "{{TYPE}}が無効化されました"
-    }
-  },
-  "SKYTIMES_LIVE": {
-    "name": "スカイタイムズライブ",
-    "description": "ライブスカイタイムズ詳細の自動更新メッセージ",
-    "options": {
-      "START": {
-        "name": "開始",
-        "description": "自動スカイタイムズを設定",
-        "option": {
-          "CHANNEL": {
-            "name": "チャンネル",
-            "description": "スカイタイムズ詳細を更新するチャンネル"
-          }
-        }
-      },
-      "STOP": {
-        "name": "停止",
-        "description": "自動スカイタイムズを停止"
-      }
+      "NOT_GUILD": "This command can only be used in a server",
+      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
+      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
+      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
+      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
+      "DISABLED": "{{TYPE}} is disabled"
     }
   },
   "SEASONAL_CALCULATOR": {

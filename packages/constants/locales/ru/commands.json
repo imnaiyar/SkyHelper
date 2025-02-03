@@ -181,52 +181,34 @@
       "DEFAULT_ROLE_REMOVE": "Роль по умолчанию удалена!"
     }
   },
-  "SHARDS_LIVE": {
-    "name": "осколки-сейчас",
-    "description": "автоматическое обновление сообщения с информацией о осколках",
+  "LIVE_UPDATES": {
+    "name": "live",
+    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "group": "updates",
+    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
     "options": {
       "START": {
-        "name": "старт",
-        "description": "настроить автоматический осколок",
+        "name": "start",
+        "description": "start live shards or skytimes update with auto updating message at regular interval",
         "option": {
           "CHANNEL": {
-            "name": "канал",
-            "description": "канал, в котором надо обновлять информацию об осколках"
+            "name": "channel",
+            "description": "channel where live updates should be updated"
           }
         }
       },
       "STOP": {
-        "name": "стоп",
-        "description": "остановить информацию об осколках"
+        "name": "stop",
+        "description": "stop live updates"
       }
     },
     "RESPONSES": {
-      "NOT_GUILD": "Эта команда может быть использована только на сервере",
-      "ALREADY_CONFIGURED": "{{TYPE}} уже настроен в {{CHANNEL}} для этого сообщения {{MESSAGE}}.",
-      "INVALID_CHANNEL": "{{CHANNEL}} не является текстовым каналом. Пожалуйста, укажите действующий текстовый канал",
-      "CONFIGURED": "{{TYPE}} настроен для {{CHANNEL}}. Это сообщение {{MESSAGE}} будет дополнено соответствующей информацией.",
-      "ALREADY_DISABLED": "{{TYPE}} уже отключен для этого сервера",
-      "DISABLED": "{{TYPE}} отключен"
-    }
-  },
-  "SKYTIMES_LIVE": {
-    "name": "события-сейчас",
-    "description": "автоматическое обновление сообщения с информацией о происходящих событиях",
-    "options": {
-      "START": {
-        "name": "старт",
-        "description": "настроить автоматические события",
-        "option": {
-          "CHANNEL": {
-            "name": "канал",
-            "description": "канал, в котором следует обновлять информацию о происходящих событиях"
-          }
-        }
-      },
-      "STOP": {
-        "name": "стоп",
-        "description": "остановить автоматические события"
-      }
+      "NOT_GUILD": "This command can only be used in a server",
+      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
+      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
+      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
+      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
+      "DISABLED": "{{TYPE}} is disabled"
     }
   },
   "SEASONAL_CALCULATOR": {
