@@ -181,52 +181,34 @@
       "DEFAULT_ROLE_REMOVE": "डिफ़ाल्ट रोल हट चुका है!"
     }
   },
-  "SHARDS_LIVE": {
-    "name": "शार्ड-लाइव",
-    "description": "लाइव शार्ड डीटेल्स के साथ स्वत: अपडेट होने वाला संदेश",
+  "LIVE_UPDATES": {
+    "name": "live",
+    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "group": "updates",
+    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
     "options": {
       "START": {
-        "name": "स्टार्ट",
-        "description": "ऑटो शार्ड को कंफिगर करें",
+        "name": "start",
+        "description": "start live shards or skytimes update with auto updating message at regular interval",
         "option": {
           "CHANNEL": {
-            "name": "चैनल",
-            "description": "चैनल जहां पे शार्ड डीटेल्स भेजा जाएगा"
+            "name": "channel",
+            "description": "channel where live updates should be updated"
           }
         }
       },
       "STOP": {
-        "name": "स्टॉप",
-        "description": "ऑटो शरद को रोकें"
+        "name": "stop",
+        "description": "stop live updates"
       }
     },
     "RESPONSES": {
-      "NOT_GUILD": "यह कमांड सिर्फ एक सर्वर में इस्तेमाल हो सकता है",
-      "ALREADY_CONFIGURED": "{{TYPE}} पहले से ही {{CHANNEL}} में इस मैसेज {{MESSAGE}} के लिए कंफिगर हो चुका है।",
-      "INVALID_CHANNEL": "{{CHANNEL}} एक टेक्स्ट चैनल नहीं है, कृपया एक सही टेक्स्ट चैनल चुनें",
-      "CONFIGURED": "{{TYPE}}, {{CHANNEL}} के लिए कॉन्फ़िगर हो चूका! यह {{MESSAGE}} जानकारी के साथ अपडेट होते रहेगा|",
-      "ALREADY_DISABLED": "{{TYPE}} पहले से ही इस सर्वर के लिए डिसेबल्ड है",
-      "DISABLED": "{{TYPE}} बंद हो चुका है"
-    }
-  },
-  "SKYTIMES_LIVE": {
-    "name": "स्काईटाइम्स-लाइव",
-    "description": "लाइव स्काइटाइम्स के साथ ऑटो update होनें वाली मैसेज",
-    "options": {
-      "START": {
-        "name": "स्टार्ट",
-        "description": "ऑटो स्काइटाइम्स कंफिगर करें",
-        "option": {
-          "CHANNEL": {
-            "name": "चैनल",
-            "description": "चैनल जहां पे स्काइटाइम्स डीटेल्स भेजें जाएंगे"
-          }
-        }
-      },
-      "STOP": {
-        "name": "स्टॉप",
-        "description": "ऑटो स्काइटाइम्स को रोकिएं"
-      }
+      "NOT_GUILD": "This command can only be used in a server",
+      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
+      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
+      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
+      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
+      "DISABLED": "{{TYPE}} is disabled"
     }
   },
   "SEASONAL_CALCULATOR": {
