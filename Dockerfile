@@ -1,9 +1,7 @@
 # Build the monorepo
 FROM node:22.10.0 AS build
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
 
-RUN corepack enable
+RUN corepack enable && corepack install -g pnpm@latest-9
 WORKDIR /app
 COPY . .
 
@@ -22,10 +20,8 @@ FROM node:22.10.0 AS skyhelper
 
 ARG SENTRY_AUTH_TOKEN
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack install -g pnpm@latest-9
 
-RUN corepack enable
 WORKDIR /app
 COPY --from=build /app/sky-out .
 
