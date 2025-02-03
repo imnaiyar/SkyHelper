@@ -1,3 +1,7 @@
+import "./instrument.js"; // sentry
+
+CustomLogger.log({ level: { name: "Sentry", color: "\x1b[36m" } }, "Sentry Initialized\n\n\n");
+
 import { GatewayDispatchEvents, GatewayIntentBits, type APIUser } from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { WebSocketManager, WebSocketShardEvents } from "@discordjs/ws";
@@ -6,8 +10,6 @@ import handleCachingListeners from "@/handlers/handleCachingListeners";
 import { initializeMongoose } from "./schemas/connect.js";
 import { Collection } from "@discordjs/collection";
 import { validateEnv } from "./utils/validators.js";
-import * as Sentry from "@sentry/node";
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import { CustomLogger } from "./handlers/logger.js";
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
 const gateway = new WebSocketManager({
@@ -23,23 +25,8 @@ const gateway = new WebSocketManager({
 });
 
 validateEnv();
-// initialize sentry
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  integrations: [
-    nodeProfilingIntegration(),
-    Sentry.rewriteFramesIntegration({
-      root: global.__dirname,
-    }),
-  ],
-  environment: process.env.NODE_ENV,
-
-  tracesSampleRate: 1.0,
-  profilesSampleRate: 1.0,
-});
 
 console.log("\n\n");
-CustomLogger.log({ level: { name: "Sentry", color: "\x1b[36m" } }, "Sentry Initialized\n\n\n");
 
 const client = new SkyHelper({ gateway, rest });
 
