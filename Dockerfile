@@ -3,7 +3,11 @@ FROM node:22.10.0 AS build
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install latest corepack, see issue https://github.com/nodejs/corepack/issues/612
+RUN npm i -g corepack@latest
+
+RUN corepack enable
+
 WORKDIR /app
 COPY . .
 
@@ -25,7 +29,10 @@ ARG SENTRY_AUTH_TOKEN
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm i -g corepack@latest
+
+RUN corepack enable
+
 WORKDIR /app
 COPY --from=build /app/sky-out .
 
