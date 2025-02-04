@@ -14,7 +14,6 @@ export class GuildMiddleware implements NestMiddleware {
   async use(req: AuthRequest, _: Response, next: NextFunction) {
     const guildId = req.url.split("/")[1];
     await this.bot.checkPermissions(req.session, guildId);
-
     next();
   }
 }
