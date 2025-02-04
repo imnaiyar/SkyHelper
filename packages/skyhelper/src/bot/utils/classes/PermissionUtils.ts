@@ -2,6 +2,7 @@ import type { SkyHelper } from "@/structures/Client";
 import { PermissionFlagsBits, type APIGuild, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
 import logger from "@/handlers/logger";
+import { addBreadcrumb, captureException } from "@sentry/node";
 type StringPermissions = `${number}`;
 export type PermissionsResolvable =
   | bigint
@@ -59,7 +60,8 @@ export class PermissionsUtil {
         return PermissionFlagsBits[perms as PermissionFlags];
       }
     }
-    logger.warn(`Recieved Unknown Permissions: ${perms}`); // just warn, there maybe new permissions that maybe not handled by discord.js yet
+    captureException("Got unknown permissions: " + perms);
+    logger.warn(`Recieved Unknown Permissions: `, perms as string); // just warn, there maybe new permissions that maybe not handled by discord.js yet
 
     return 0n; // return this, if any of the above case doesn't match. Ideally this should happen very rarely
   }
@@ -125,6 +127,7 @@ export class PermissionsUtil {
     const isRole = "permissions" in userOrRole;
     const guild = client.guilds.get(channel.guild_id!);
     const perms = this.permissionsFor(userOrRole, guild!);
+    addBreadcrumb({ category: "Permission", message: "Resolving Permission Overwrite", data: { userOrRole, channel } });
     if (!isRole && guild!.owner_id === userOrRole.user.id) return this.all();
     if (perms.has("Administrator")) return this.all();
     const everyoneOverwrites = channel.permission_overwrites!.find((p) => p.id === channel.guild_id);
@@ -165,6 +168,7 @@ export class PermissionsUtil {
   static permissionsFor(memberOrRole: APIGuildMember | APIRole, guild: APIGuild): PermissionsUtil {
     const isRole = "position" in memberOrRole;
     if (!isRole && guild.owner_id === memberOrRole.user.id) return this.all();
+    addBreadcrumb({ category: "Permission", message: "Resolving Permission", data: { isRole, memberOrRole, guild } });
     const perms = new PermissionsUtil(
       isRole
         ? (memberOrRole.permissions as `${number}`)

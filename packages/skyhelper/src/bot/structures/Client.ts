@@ -31,6 +31,7 @@ import {
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { getUserID, type UserSession } from "@/api/utils/discord";
+import { addBreadcrumb, getCurrentScope } from "@sentry/node";
 
 export class SkyHelper extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
@@ -157,6 +158,13 @@ export class SkyHelper extends Client {
 
     const userID = await getUserID(user.access_token);
     const member = await this.api.guilds.getMember(guildID, userID);
+    getCurrentScope().setUser({ id: userID, username: member.user.username });
+    addBreadcrumb({
+      category: "user",
+      message: "Checking user permissions",
+      data: { userID, username: member.user.username, guildID, guildName: guild.name },
+      level: "info",
+    });
     const memberPerms = PermissionsUtil.permissionsFor(member, guild);
     if (!memberPerms.has("ManageGuild") && guild.owner_id !== member.user.id) {
       throw new HttpException("Missing permissions", HttpStatus.UNAUTHORIZED);
@@ -170,6 +178,12 @@ export class SkyHelper extends Client {
   public async checkAdmin(user: UserSession) {
     const userID = await getUserID(user.access_token);
     const u = await this.api.users.get(userID);
+    addBreadcrumb({
+      category: "user",
+      message: "Checking if user is admin",
+      data: { userID, username: u.username },
+      level: "info",
+    });
 
     if (!config.DASHBOARD.ADMINS.includes(u.id)) {
       throw new HttpException("Missing access", HttpStatus.UNAUTHORIZED);

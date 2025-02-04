@@ -39,6 +39,7 @@
     "@sapphire/discord-utilities": "^3.4.4",
     "@sapphire/type": "^2.4.4",
     "@sentry/cli": "^2.32.2",
+    "@sentry/nestjs": "^8.54.0",
     "@sentry/node": "^8.49.0",
     "@sentry/profiling-node": "^8.49.0",
     "@skyhelperbot/constants": "workspace:^",
