@@ -3,7 +3,9 @@ import type { APIGuild, APIGuildMember } from "@discordjs/core";
 import type { GuildSchema } from "@/types/schemas";
 import { LimitedCollection } from "@/utils/classes/LimitedCollection";
 import { REMINDERS_KEY } from "@/utils/constants";
-const cache = new LimitedCollection<string, GuildSchema>();
+import config from "@/config";
+const cache = new LimitedCollection<string, GuildSchema>({ maxSize: config.CACHE_SIZE.GUILDS });
+export { cache as guildSchemaCache };
 
 const Schema = new mongoose.Schema<GuildSchema>({
   _id: String,

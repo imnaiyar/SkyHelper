@@ -7,6 +7,7 @@ import type { UserSchema } from "@/types/schemas";
 import type { HangmanStatsData } from "@/types/custom";
 
 const cache = new LimitedCollection<string, UserSchema>({ maxSize: config.CACHE_SIZE.USERS });
+export { cache as userSchemaCache };
 
 const Schema = new mongoose.Schema<UserSchema>({
   _id: String,

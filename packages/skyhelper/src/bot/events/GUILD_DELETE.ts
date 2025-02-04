@@ -23,6 +23,8 @@ const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (clie
 
   // Delete from db
   await client.schemas.GuildModel.deleteOne({ _id: g.id });
+  // delete schema cache
+  client.schemas.guildSchemaCache.delete(g.id);
 
   await updateBotStatsMessage(client);
 
