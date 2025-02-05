@@ -276,7 +276,7 @@ function getMessageResponse(
     description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
     description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
   }
-  description += `${constants[mode as "single" | "double"]}\n- The Skygame feature is in BETA, there might be some icks and bug that may occur, send us your thoughts/feedback/suggestion via <#1249436564652687475>`;
+  description += `${constants[mode as "single" | "double"]}`;
 
   const embed: APIEmbed = {
     title: "Skygame: Hangman",
