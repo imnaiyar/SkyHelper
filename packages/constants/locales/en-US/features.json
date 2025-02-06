@@ -37,7 +37,7 @@
   "times-embed": {
     "FOOTER": "Live SkyTimes (updates every 2 min.)",
     "EVENT_INACTIVE": "No Active Events",
-    "EMBED_TITLE": "Event Times",
+    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
     "EMBED_AUTHOR": "SkyTimes",
     "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Starts In",
@@ -60,7 +60,7 @@
     "EDEN": "Eden/Weekly Reset",
     "TS_TITLE": "Traveling Spirit",
     "EVENT_TITLE": "Special Event (Days of ...)",
-    "ACTIVE": "{{EVENT}} is currently active (at {{ACTIVE_TIME}}) and will end in {{DURATION}} (at {{END_TIME}})",
+    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
     "NEXT-OCC": "Next Occurence: {{TIME}} (in {{DURATION}})",
     "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}",
     "TIMELINE": "Timeline"

@@ -1,10 +1,7 @@
 # Build the monorepo
-FROM node:22.10.0 AS build
+FROM node:22.13.0 AS build
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-
-# Install latest corepack, see issue https://github.com/nodejs/corepack/issues/612
-RUN npm i -g corepack@latest
 
 RUN corepack enable
 
@@ -22,14 +19,12 @@ RUN pnpm deploy --filter="./packages/skyhelper" sky-out
 RUN pnpm deploy --filter="@skyhelperbot/jobs" jobs-out
 
 # Run skyhelper image
-FROM node:22.10.0 AS skyhelper
+FROM node:22.13-alpine AS skyhelper
 
 ARG SENTRY_AUTH_TOKEN
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-
-RUN npm i -g corepack@latest
 
 RUN corepack enable
 
@@ -41,6 +36,8 @@ ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
 RUN pnpm build:prod
 
+RUN pnpm prune --prod
+
 EXPOSE 5000
 CMD [ "pnpm", "start" ]
 
@@ -49,4 +46,7 @@ FROM oven/bun:latest AS jobs
 
 WORKDIR /app
 COPY --from=build /app/jobs-out .
+
+RUN pnpm prune --prod
+
 CMD ["bun", "run", "start"]
