@@ -13,8 +13,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 RUN pnpm build
 
 # Deploy relevant packages
-RUN pnpm deploy --filter="./packages/skyhelper" sky-out
-RUN pnpm deploy --filter="@skyhelperbot/jobs" jobs-out
+RUN pnpm deploy --filter="./packages/skyhelper" sky-out --prod
+RUN pnpm deploy --filter="@skyhelperbot/jobs" jobs-out --prod
 
 # Run skyhelper image
 FROM node:22.13-alpine AS skyhelper
@@ -31,7 +31,6 @@ ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
 RUN pnpm build:prod
 
-RUN pnpm prune --prod
 
 EXPOSE 5000
 CMD [ "pnpm", "start" ]
