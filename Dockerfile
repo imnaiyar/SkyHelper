@@ -29,7 +29,7 @@ COPY --from=build /app/sky-out .
 # Build and upload sourcemaps to sentry
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
-RUN pnpm build:prod
+RUN pnpm run sentry:sourcemaps
 
 
 EXPOSE 5000

@@ -14,7 +14,6 @@
     "commands:dev": "tsx --env-file=.env src/bot/handlers/registerCommands.ts",
     "start": "node dist/bot/index.js",
     "dev": "tsx --env-file=.env src/bot/index.js",
-    "build:prod": "tsc -p tsconfig.json && pnpm run sentry:sourcemaps",
     "build": "tsc -p tsconfig.json",
     "lint": "eslint --fix src",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --import ./scripts/register-loader.mjs\" jest",
