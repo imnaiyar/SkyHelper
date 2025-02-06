@@ -2,6 +2,7 @@
 FROM node:22.13.0 AS build
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+RUN npm i -g corepack@latest
 
 RUN corepack enable
 
@@ -25,6 +26,8 @@ ARG SENTRY_AUTH_TOKEN
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+
+RUN npm i -g corepack@latest
 
 RUN corepack enable
 
