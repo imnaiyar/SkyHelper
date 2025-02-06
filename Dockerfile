@@ -1,7 +1,7 @@
 # Build the monorepo
 FROM node:22.13.0 AS build
 
-RUN npm i -g pnpm@10.0.0
+RUN npm i -g pnpm@9.4.0
 
 WORKDIR /app
 COPY . .
@@ -21,7 +21,7 @@ FROM node:22.13-alpine AS skyhelper
 
 ARG SENTRY_AUTH_TOKEN
 
-RUN npm i -g pnpm@10.0.0
+RUN npm i -g pnpm@9.4.0
 
 WORKDIR /app
 COPY --from=build /app/sky-out .
