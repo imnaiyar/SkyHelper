@@ -42,6 +42,4 @@ FROM oven/bun:latest AS jobs
 WORKDIR /app
 COPY --from=build /app/jobs-out .
 
-RUN pnpm prune --prod
-
 CMD ["bun", "run", "start"]
