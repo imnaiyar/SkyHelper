@@ -101,17 +101,11 @@ export default {
 
 async function getRemindersStatus(guildSettings: GuildSchema, guildName: string) {
   const title = `Reminders Status for ${guildName}`;
-  const description = `Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}`;
-  const fields = [];
+  let description = `Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}`;
+
   for (const [k, name] of Object.entries(RemindersEventsMap)) {
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
-    fields.push({
-      name,
-      value: `- Status: ${event?.active ? "Active" : "Inactive"}${event?.active ? `\n- Channel: <#${event.webhook?.channelId}>\n- Role: ${event.role ? `<@&${event.role}>` : "None"}` : ""}`,
-      inline: true,
-    });
+    description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
   }
-  // put zero width field to make it align
-  fields.push({ name: "\u200b", value: "\u200b", inline: true });
-  return { embeds: [{ title, description, fields }] };
+  return { embeds: [{ title, description }] };
 }

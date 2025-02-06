@@ -204,52 +204,36 @@ export default class {
       });
       tsDesc = tsData.visiting ? strVisiting : strExpected;
     }
+    let description = "";
+    for (const [k, { status }] of skyutils.allEventDetails()) {
+      // @ts-expect-error
+      let desc = `\`${t(`features:times-embed.${k.toString().toUpperCase()}`)}:\` `;
+      const nextTime = `<t:${status.nextTime.toUnixInteger()}:t> - <t:${status.nextTime.toUnixInteger()}:R>`;
+      if (status.active) {
+        desc += t("features:times-embed.ACTIVE", {
+          END_TIME: `t:<${status.endTime.toUnixInteger()}:R>`,
+          NEXT_TIME: nextTime,
+        });
+      } else {
+        desc += nextTime;
+      }
+      description += desc + "\n";
+    }
 
+    description += `\`${t("features:times-embed.TS_TITLE")}:\`\n${tsDesc}`;
+    description += `\n\`${t("features:times-embed.EVENT_TITLE")}:\`\n${eventDesc}`;
     // Build the Embed
     const embed: APIEmbed = {
       author: { name: t("features:times-embed.EMBED_AUTHOR"), icon_url: Utils.getUserAvatar(client.user) },
-      title: t("features:times-embed.EMBED_TITLE"),
+      title: t("features:times-embed.EMBED_TITLE", {
+        SKY_TIME: DateTime.now().setZone("America/Los_Angeles").toFormat("hh:mm a"),
+      }),
       color: resolveColor("Random"),
-      fields: [
-        ...skyutils.allEventDetails().map(([k, { event, status }]) => {
-          let desc = "";
-          if (status.active) {
-            desc += `${t("features:times-embed.ACTIVE", {
-              EVENT: event.name,
-              DURATION: status.duration,
-              ACTIVE_TIME: Utils.time(status.startTime.toUnixInteger(), "t"),
-              END_TIME: Utils.time(status.endTime.toUnixInteger(), "t"),
-            })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
-              TIME: Utils.time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
-            })}`;
-          } else {
-            desc += t("features:times-embed.NEXT-OCC", {
-              TIME: Utils.time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
-              DURATION: status.duration,
-            });
-          }
-          return {
-            name:
-              // @ts-expect-error because it doesn't match the key, but it is correct
-              t(`features:times-embed.${k.toString().toUpperCase()}`) + (status.active ? " <a:uptime:1228956558113771580>" : ""),
-            value: desc,
-            inline: true,
-          };
-        }),
-        {
-          name: t("features:times-embed.TS_TITLE"),
-          value: tsDesc,
-          inline: true,
-        },
-        {
-          name: t("features:times-embed.EVENT_TITLE"),
-          value: eventDesc,
-          inline: true,
-        },
-      ],
+      description,
       timestamp: new Date().toISOString(),
     };
-    if (text) embed.footer = { text: text, icon_url: Utils.getUserAvatar(client.user) };
+    if (text) embed.footer = { text, icon_url: Utils.getUserAvatar(client.user) };
+
     const row: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
