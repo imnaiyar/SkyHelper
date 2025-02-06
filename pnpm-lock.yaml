@@ -113,6 +113,9 @@ importers:
       '@skyhelperbot/utils':
         specifier: workspace:^
         version: link:../utils
+      discord-api-types:
+        specifier: ^0.37.93
+        version: 0.37.93
       i18next:
         specifier: ^23.12.2
         version: 23.16.2
@@ -147,9 +150,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.18.0
         version: 7.18.0(eslint@8.57.0)(typescript@5.7.3)
-      discord-api-types:
-        specifier: ^0.37.93
-        version: 0.37.97
       eslint:
         specifier: 8.57.0
         version: 8.57.0
@@ -2910,6 +2910,9 @@ packages:
 
   discord-api-types@0.37.116:
     resolution: {integrity: sha512-g+BH/m0hyS/JzL+e0aM+z2o9UtwfyUZ0hqeyc+6sNwdMx+NtQkqULRV/oj9ynAefpRb+cpOjmWaYec4B1I0Hqg==}
+
+  discord-api-types@0.37.93:
+    resolution: {integrity: sha512-M5jn0x3bcXk8EI2c6F6V6LeOWq10B/cJf+YJSyqNmg7z4bdXK+Z7g9zGJwHS0h9Bfgs0nun2LQISFOzwck7G9A==}
 
   discord-api-types@0.37.97:
     resolution: {integrity: sha512-No1BXPcVkyVD4ZVmbNgDKaBoqgeQ+FJpzZ8wqHkfmBnTZig1FcH3iPPersiK1TUIAzgClh2IvOuVUYfcWLQAOA==}
@@ -9008,6 +9011,8 @@ snapshots:
       path-type: 4.0.0
 
   discord-api-types@0.37.116: {}
+
+  discord-api-types@0.37.93: {}
 
   discord-api-types@0.37.97: {}
 
