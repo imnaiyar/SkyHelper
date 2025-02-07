@@ -81,7 +81,7 @@ export class GuildController {
     @Param("guild", GuildIDPredicate) guild: string,
     @Param("feature", FeaturePredicate) feature: string,
   ) {
-    await this.bot.checkPermissions(req.session, guild);
+    await this.bot.checkPermissions(req.user, guild);
     let response;
     switch (feature) {
       case "live-updates":
@@ -105,7 +105,7 @@ export class GuildController {
     )
     body: Partial<Features[keyof Features]>,
   ) {
-    await this.bot.checkPermissions(req.session, guild);
+    await this.bot.checkPermissions(req.user, guild);
     let response;
     switch (feature) {
       case "live-updates":
@@ -124,7 +124,7 @@ export class GuildController {
     @Param("feature", FeaturePredicate) feature: keyof Features,
     @Req() req: AuthRequest,
   ) {
-    await this.bot.checkPermissions(req.session, guild);
+    await this.bot.checkPermissions(req.user, guild);
     let response;
     switch (feature) {
       case "live-updates":

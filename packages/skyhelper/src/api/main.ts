@@ -6,7 +6,7 @@ import { type MiddlewareConsumer, Module, type NestModule } from "@nestjs/common
 import { AppController } from "./controllers/app.controller.js";
 import { GuildController } from "./controllers/guild.controller.js";
 import { AuthMiddleware } from "./middlewares/auth.middleware.js";
-import { StatsController } from "./controllers/stats.controller.js";
+import { BotController } from "./controllers/bot.controller.js";
 import { UpdateController } from "./controllers/update.controller.js";
 import { UsersController } from "./controllers/user.controller.js";
 import { GuildMiddleware } from "./middlewares/guild.middleware.js";
@@ -20,7 +20,7 @@ import { SentryModule, SentryGlobalFilter } from "@sentry/nestjs/setup";
 export async function bootstrap(client: SkyHelper) {
   @Module({
     imports: [SentryModule.forRoot()],
-    controllers: [AppController, GuildController, StatsController, UpdateController, UsersController, WebhookEventController],
+    controllers: [AppController, GuildController, BotController, UpdateController, UsersController, WebhookEventController],
     providers: [
       { provide: APP_FILTER, useValue: SentryGlobalFilter },
       { provide: "BotClient", useValue: client },

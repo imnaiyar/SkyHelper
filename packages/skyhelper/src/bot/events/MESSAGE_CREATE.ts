@@ -25,8 +25,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
 
   const channel = client.channels.get(message.channel_id) as APITextChannel | undefined;
   // context for sentry
-  const scope = new Sentry.Scope();
-  scope.setUser({ id: message.author.id, username: message.author.username });
+  Sentry.setUser({ id: message.author.id, username: message.author.username });
   const context = {
     guild: guild ? { id: guild.id, name: guild.name, owner: guild.owner_id } : message.guild_id,
     channel: channel
@@ -48,7 +47,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     },
     occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy-MM-dd HH:mm:ss"),
   };
-
+  Sentry.setContext("Metadata", context);
   try {
     // Check for bot's mention
     if (message.content.startsWith(`<@!${client.user.id}>`)) {
@@ -80,9 +79,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     const userSettings = await client.schemas.getUser(message.author);
     const t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
 
-    context["message"]["command"] = command.name;
-
-    scope.setExtra("command", command.name);
+    Sentry.setExtra("command", command.name);
 
     // Check if command is 'OWNER' only.
     if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
@@ -97,8 +94,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     try {
       await command.messageRun({ message, args, flags, t, client }, api);
     } catch (error) {
-      scope.setContext("Metadat", context);
-      const id = client.logger.error(error, scope);
+      const id = client.logger.error(error);
       const embed: APIEmbed = {
         title: t("errors:EMBED_TITLE"),
         description: t("errors:EMBED_DESCRIPTION"),
@@ -126,8 +122,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
       return;
     }
   } catch (error) {
-    scope.setContext("Metadat", context);
-    client.logger.error(error, scope);
+    client.logger.error(error);
   }
 };
 export default messageHandler;

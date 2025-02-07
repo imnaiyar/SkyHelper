@@ -1,7 +1,8 @@
 import { HttpStatus, HttpException } from "@nestjs/common";
 import { Injectable, type NestMiddleware } from "@nestjs/common";
-import type { UserSession } from "../utils/discord.js";
+import { getUser, type UserSession } from "../utils/discord.js";
 import type { Request, Response, NextFunction } from "express";
+import type { APIUser } from "@discordjs/core";
 
 function getToken(req: Request): UserSession {
   const data = req.headers.authorization as string | null;
@@ -18,11 +19,14 @@ function getToken(req: Request): UserSession {
 
 export interface AuthRequest extends Request {
   session: UserSession;
+  user: APIUser;
 }
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  use(req: AuthRequest, _: Response, next: NextFunction) {
-    (req.session = getToken(req)), next();
+  async use(req: AuthRequest, _: Response, next: NextFunction) {
+    req.session = getToken(req);
+    req.user = await getUser(req.session.access_token);
+    next();
   }
 }

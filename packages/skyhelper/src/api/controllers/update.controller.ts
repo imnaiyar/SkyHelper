@@ -43,7 +43,7 @@ export class UpdateController {
   }
   @Patch("ts")
   async updateTS(@Req() req: AuthRequest, @Body(new ZodValidator(TSDataSchema)) body: TSData): Promise<TSData> {
-    await this.bot.checkAdmin(req.session);
+    await this.bot.checkAdmin(req.user);
 
     const data = await this.bot.schemas.getTS();
     const spirit = this.bot.spiritsData[body.spirit];
@@ -72,7 +72,7 @@ export class UpdateController {
 
   @Patch("events")
   async updateEvent(@Req() req: AuthRequest, @Body(new ZodValidator(EventDataSchema)) body: EventData): Promise<EventData> {
-    await this.bot.checkAdmin(req.session);
+    await this.bot.checkAdmin(req.user);
     const data = await this.bot.schemas.getEvent();
     const values = {
       name: body.name,
@@ -95,7 +95,7 @@ export class UpdateController {
     @Req() req: AuthRequest,
     @Body(new ZodValidator(QuestsSchema)) body: z.infer<typeof QuestsSchema>,
   ): Promise<DailyQuestsSchema> {
-    await this.bot.checkAdmin(req.session);
+    await this.bot.checkAdmin(req.user);
     const questSettings = await this.bot.schemas.getDailyQuests();
     questSettings.quests = body.quests;
     questSettings.rotating_candles = body.rotating_candles;
