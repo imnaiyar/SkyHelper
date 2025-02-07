@@ -10,17 +10,9 @@ COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile 
 
-RUN pnpm build
-
-ARG DEPLOY_TARGET
-
-RUN if [ "$DEPLOY_TARGET" = "skyhelper" ] || [ "$DEPLOY_TARGET" = "both" ]; then \
+RUN pnpm build; \
     pnpm deploy --filter="./packages/skyhelper" sky-out --prod; \
-    fi
-
-RUN if [ "$DEPLOY_TARGET" = "jobs" ] || [ "$DEPLOY_TARGET" = "both" ]; then \
-    pnpm deploy --filter="@skyhelperbot/jobs" jobs-out --prod; \
-    fi
+    pnpm deploy --filter="@skyhelperbot/jobs" jobs-out --prod
 
 # Run skyhelper image
 FROM node:22.13-alpine AS skyhelper

@@ -1,5 +1,4 @@
 import type { Command } from "@/structures";
-import { Type } from "@sapphire/type";
 import * as d from "@discordjs/core";
 
 import { postToHaste, resolveColor } from "@skyhelperbot/utils";
@@ -31,7 +30,7 @@ export default {
       const start = performance.now();
       const output = await eval(code);
       const time = formatTime(performance.now() - start);
-      const type = new Type(output).toString();
+      const type = typeof output;
       response = await buildSuccessResponse(output, type, time, flags.has("haste"), depth, code);
     } catch (ex) {
       errored = true;
