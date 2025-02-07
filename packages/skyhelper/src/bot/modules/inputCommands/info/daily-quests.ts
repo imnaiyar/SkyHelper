@@ -8,8 +8,6 @@ import { MessageFlags, type APIActionRowComponent, type APIMessage, type APIMess
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 export default {
   async interactionRun({ t, helper, options }) {
-    throw new Error("hmm");
-
     await helper.defer({ flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined });
 
     const m = await helper.editReply(await getQuestResponse(helper.client, t));
