@@ -4,6 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build
+      args:
+        - DEPLOY_TARGET=${DEPLOY_TARGET}
+    environment:
+      - DEPLOY_TARGET
   skyhelper:
     depends_on:
       - build

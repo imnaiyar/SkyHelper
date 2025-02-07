@@ -2,7 +2,6 @@ import { Body, Controller, Get, HttpException, HttpStatus, Inject, Patch, Req } 
 import { SkyHelper as BotService } from "@/structures";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { EventDataSchema, TSDataSchema, type EventData, type TSData } from "../types.js";
-import { formatDate, parseDate } from "../utils/formatDate.js";
 import type { DailyQuestsSchema } from "@/types/schemas";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { z } from "zod";
@@ -38,13 +37,14 @@ export class UpdateController {
     const data = await this.bot.schemas.getTS();
     return {
       spirit: data.value,
-      visitDate: parseDate(data.visitDate).toISOString(),
+      visitDate: data.visitDate,
       index: data.index.toString(),
     };
   }
   @Patch("ts")
   async updateTS(@Req() req: AuthRequest, @Body(new ZodValidator(TSDataSchema)) body: TSData): Promise<TSData> {
     await this.bot.checkAdmin(req.session);
+
     const data = await this.bot.schemas.getTS();
     const spirit = this.bot.spiritsData[body.spirit];
     if (!spirit) throw new HttpException(`No spirit found for the given value "${body.spirit}"`, HttpStatus.NOT_FOUND);
@@ -52,7 +52,7 @@ export class UpdateController {
       name: spirit.name,
       value: body.spirit,
       index: parseInt(body.index),
-      visitDate: formatDate(new Date(body.visitDate)),
+      visitDate: body.visitDate,
     };
     Object.assign(data, values);
     await data.save();
@@ -65,8 +65,8 @@ export class UpdateController {
     const data = await this.bot.schemas.getEvent();
     return {
       name: data.name,
-      startDate: parseDate(data.startDate).toISOString(),
-      endDate: parseDate(data.endDate).toISOString(),
+      startDate: data.startDate,
+      endDate: data.endDate,
     };
   }
 
@@ -76,8 +76,8 @@ export class UpdateController {
     const data = await this.bot.schemas.getEvent();
     const values = {
       name: body.name,
-      startDate: formatDate(new Date(body.startDate)),
-      endDate: formatDate(new Date(body.endDate)),
+      startDate: body.startDate,
+      endDate: body.endDate,
     };
     Object.assign(data, values);
     await data.save();
