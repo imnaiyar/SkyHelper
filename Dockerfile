@@ -12,9 +12,15 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 RUN pnpm build
 
-# Deploy relevant packages
-RUN pnpm deploy --filter="./packages/skyhelper" sky-out --prod
-RUN pnpm deploy --filter="@skyhelperbot/jobs" jobs-out --prod
+ARG DEPLOY_TARGET
+
+RUN if [ "$DEPLOY_TARGET" = "skyhelper" ] || [ "$DEPLOY_TARGET" = "both" ]; then \
+    pnpm deploy --filter="./packages/skyhelper" sky-out --prod; \
+    fi
+
+RUN if [ "$DEPLOY_TARGET" = "jobs" ] || [ "$DEPLOY_TARGET" = "both" ]; then \
+    pnpm deploy --filter="@skyhelperbot/jobs" jobs-out --prod; \
+    fi
 
 # Run skyhelper image
 FROM node:22.13-alpine AS skyhelper
