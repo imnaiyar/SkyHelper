@@ -3,6 +3,7 @@ import { type UserSession } from "../utils/discord.js";
 import type { Request, Response, NextFunction } from "express";
 import { SkyHelper } from "@/structures";
 import type { APIUser } from "@discordjs/core";
+import { checkPermissions } from "../utils/checkPermissions.js";
 
 export interface AuthRequest extends Request {
   session: UserSession;
@@ -15,7 +16,7 @@ export class GuildMiddleware implements NestMiddleware {
 
   async use(req: AuthRequest, _: Response, next: NextFunction) {
     const guildId = req.url.split("/")[1];
-    await this.bot.checkPermissions(req.user, guildId);
+    await checkPermissions(req.user, guildId, this.bot);
     next();
   }
 }

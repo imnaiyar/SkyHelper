@@ -146,45 +146,4 @@ export class SkyHelper extends Client {
     console.log(chalk.blueBright("\n\n<---------------------- Loading Buttons ----------------------->\n"));
     this.buttons = await loadButtons();
   }
-
-  /**
-   * For Dashboard, validate user perms
-   * @param user
-   * @param guildID
-   */
-  public async checkPermissions(user: APIUser, guildID: string) {
-    const guild = this.guilds.get(guildID);
-    if (!guild) throw new HttpException("Guild Not found", HttpStatus.NOT_FOUND);
-
-    const member = await this.api.guilds.getMember(guildID, user.id);
-    Sentry.setUser({ id: user.id, username: member.user.username });
-    Sentry.addBreadcrumb({
-      category: "user",
-      message: "Checking user permissions",
-      data: { userID: user.id, username: member.user.username, guildID, guildName: guild.name },
-      level: "info",
-    });
-    const memberPerms = PermissionsUtil.permissionsFor(member, guild);
-    if (!memberPerms.has("ManageGuild") && guild.owner_id !== member.user.id) {
-      throw new HttpException("Missing permissions", HttpStatus.UNAUTHORIZED);
-    }
-  }
-
-  /**
-   * For Dashboard, validate dashboard admin
-   * @param user
-   */
-  public async checkAdmin(user: APIUser) {
-    const u = await this.api.users.get(user.id);
-    Sentry.addBreadcrumb({
-      category: "user",
-      message: "Checking if user is admin",
-      data: { userID: user.id, username: u.username },
-      level: "info",
-    });
-
-    if (!config.DASHBOARD.ADMINS.includes(u.id)) {
-      throw new HttpException("Missing access", HttpStatus.UNAUTHORIZED);
-    }
-  }
 }

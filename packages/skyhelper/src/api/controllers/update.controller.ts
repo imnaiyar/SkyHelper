@@ -1,6 +1,5 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Inject, Patch, Req } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Inject, Patch } from "@nestjs/common";
 import { SkyHelper as BotService } from "@/structures";
-import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { EventDataSchema, TSDataSchema, type EventData, type TSData } from "../types.js";
 import type { DailyQuestsSchema } from "@/types/schemas";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
@@ -42,9 +41,7 @@ export class UpdateController {
     };
   }
   @Patch("ts")
-  async updateTS(@Req() req: AuthRequest, @Body(new ZodValidator(TSDataSchema)) body: TSData): Promise<TSData> {
-    await this.bot.checkAdmin(req.user);
-
+  async updateTS(@Body(new ZodValidator(TSDataSchema)) body: TSData): Promise<TSData> {
     const data = await this.bot.schemas.getTS();
     const spirit = this.bot.spiritsData[body.spirit];
     if (!spirit) throw new HttpException(`No spirit found for the given value "${body.spirit}"`, HttpStatus.NOT_FOUND);
@@ -71,8 +68,7 @@ export class UpdateController {
   }
 
   @Patch("events")
-  async updateEvent(@Req() req: AuthRequest, @Body(new ZodValidator(EventDataSchema)) body: EventData): Promise<EventData> {
-    await this.bot.checkAdmin(req.user);
+  async updateEvent(@Body(new ZodValidator(EventDataSchema)) body: EventData): Promise<EventData> {
     const data = await this.bot.schemas.getEvent();
     const values = {
       name: body.name,
@@ -91,11 +87,7 @@ export class UpdateController {
   }
 
   @Patch("quests")
-  async patchQuests(
-    @Req() req: AuthRequest,
-    @Body(new ZodValidator(QuestsSchema)) body: z.infer<typeof QuestsSchema>,
-  ): Promise<DailyQuestsSchema> {
-    await this.bot.checkAdmin(req.user);
+  async patchQuests(@Body(new ZodValidator(QuestsSchema)) body: z.infer<typeof QuestsSchema>): Promise<DailyQuestsSchema> {
     const questSettings = await this.bot.schemas.getDailyQuests();
     questSettings.quests = body.quests;
     questSettings.rotating_candles = body.rotating_candles;
