@@ -38,33 +38,18 @@ export default class {
   }
 
   /**
-   * @param err
-   * @param [scope=new Scope()]
-   */
-  static error(err: any, scope: Scope): string;
-
-  /**
-   * @param content
-   * @param ex
-   * @param [scope=new Scope()]
-   * @returns The error ID
-   */
-  static error(content: any, ex?: any, scope?: Scope): string;
-  /**
    * @param content
    * @param ex
    * @returns The error ID
    */
-  static error(content: any, err?: any, scope: Scope = new Scope()) {
-    const ex = err instanceof Scope ? undefined : err;
-    const sentryScope = err instanceof Scope ? err : scope;
-    const id = captureException(ex || content, sentryScope);
-    if (ex) {
-      logger.error(content, ex, id);
+  static error(content: any, err?: any) {
+    const id = captureException(err || content);
+    if (err) {
+      logger.error(content, err, id);
     } else {
       logger.error(content, id);
     }
-    if (process.env.NODE_ENV === "development") console.error(content, ex);
+    if (process.env.NODE_ENV === "development") console.error(content, err);
     return id;
   }
 

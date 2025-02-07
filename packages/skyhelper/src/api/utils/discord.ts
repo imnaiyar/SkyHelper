@@ -1,3 +1,4 @@
+import type { APIUser } from "@discordjs/core";
 import { HttpException, HttpStatus } from "@nestjs/common";
 
 export type UserSession = {
@@ -5,7 +6,7 @@ export type UserSession = {
   token_type: "Bearer";
 };
 
-export async function getUserID(accessToken: string) {
+export async function getUser(accessToken: string) {
   const res = await fetch(`https://discord.com/api/v10/users/@me`, {
     method: "GET",
     headers: {
@@ -14,8 +15,6 @@ export async function getUserID(accessToken: string) {
   });
   if (!res.ok) throw new HttpException("Failed to get user data", HttpStatus.INTERNAL_SERVER_ERROR);
 
-  const user = (await res.json()) as {
-    id: string;
-  };
-  return user.id;
+  const user = (await res.json()) as APIUser;
+  return user;
 }

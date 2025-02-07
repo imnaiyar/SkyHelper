@@ -31,11 +31,10 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
   const helper = new InteractionHelper(interaction, client);
   const guild = interaction.guild_id ? client.guilds.get(interaction.guild_id) : null;
 
-  const scope = new Sentry.Scope();
-  scope.setUser({ id: helper.user.id, username: helper.user.username });
+  Sentry.setUser({ id: helper.user.id, username: helper.user.username });
 
   // Add some contexts for sentry
-  scope.setContext("Metadata", {
+  Sentry.setContext("Metadata", {
     guild: interaction.guild
       ? { id: interaction.guild.id, name: guild?.name || "Unknown", owner: guild?.owner_id || "Unknown" }
       : interaction.guild_id,
@@ -100,7 +99,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         }
         return;
       } catch (error) {
-        const id = client.logger.error(error, scope);
+        const id = client.logger.error(error);
         await helper
           .reply(getErrorResponse(id, t))
           .catch(() => helper.followUp(getErrorResponse(id, t)))
@@ -128,7 +127,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         await command.autocomplete({ interaction, options: new InteractionOptionResolver(interaction), helper, t });
         return;
       } catch (err) {
-        client.logger.error(err, scope);
+        client.logger.error(err);
         await helper.respond({
           choices: [
             {
@@ -162,7 +161,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       try {
         await command.execute(interaction, helper, t, new InteractionOptionResolver(interaction));
       } catch (error) {
-        const id = client.logger.error(error, scope);
+        const id = client.logger.error(error);
         await helper
           .reply(getErrorResponse(id, t))
           .catch(() => helper.followUp(getErrorResponse(id, t)))
@@ -191,7 +190,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       try {
         await button.execute(interaction, t, helper);
       } catch (err) {
-        const errorId = client.logger.error(err, scope);
+        const errorId = client.logger.error(err);
         await helper
           .reply(getErrorResponse(errorId, t))
           .catch(() => helper.followUp(getErrorResponse(errorId, t)))
@@ -301,7 +300,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       }
     }
   } catch (err) {
-    client.logger.error(err, scope);
+    client.logger.error(err);
   }
 };
 

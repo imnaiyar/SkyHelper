@@ -76,12 +76,7 @@ export class GuildController {
   }
 
   @Post("/features/:feature")
-  async enableFeature(
-    @Req() req: AuthRequest,
-    @Param("guild", GuildIDPredicate) guild: string,
-    @Param("feature", FeaturePredicate) feature: string,
-  ) {
-    await this.bot.checkPermissions(req.session, guild);
+  async enableFeature(@Param("guild", GuildIDPredicate) guild: string, @Param("feature", FeaturePredicate) feature: string) {
     let response;
     switch (feature) {
       case "live-updates":
@@ -95,7 +90,6 @@ export class GuildController {
 
   @Patch("/features/:feature")
   async updateFeature(
-    @Req() req: AuthRequest,
     @Param("guild", GuildIDPredicate) guild: string,
     @Param("feature", FeaturePredicate) feature: string,
     @Body(
@@ -105,7 +99,6 @@ export class GuildController {
     )
     body: Partial<Features[keyof Features]>,
   ) {
-    await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
       case "live-updates":
@@ -122,9 +115,7 @@ export class GuildController {
   async disableFeature(
     @Param("guild", GuildIDPredicate) guild: string,
     @Param("feature", FeaturePredicate) feature: keyof Features,
-    @Req() req: AuthRequest,
   ) {
-    await this.bot.checkPermissions(req.session, guild);
     let response;
     switch (feature) {
       case "live-updates":
