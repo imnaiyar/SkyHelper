@@ -8,12 +8,11 @@ export default {
   async interactionRun({ helper, options }) {
     const { client, t } = helper;
     const commandName = options.getString("command");
-    const reply = await helper.defer(
-      {
+    const reply = (
+      await helper.defer({
         flags: commandName ? 64 : undefined,
-      },
-      true,
-    );
+      })
+    ).resource!.message!;
     const commands = client.applicationCommands;
 
     if (commandName) {

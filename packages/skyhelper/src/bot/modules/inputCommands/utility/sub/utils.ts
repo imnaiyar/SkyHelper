@@ -150,7 +150,7 @@ This chosen profile will be displayed on their Discord profile.
       return { embeds: [embed] };
     }
   };
-  const msg = await helper.reply({ ...getEmbed(), flags: 64 }, true);
+  const msg = (await helper.reply({ ...getEmbed(), flags: 64 })).resource!.message!;
   if (!total) return;
   const collector = client.componentCollector({
     filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,

@@ -33,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@discordjs/collection": "^2.1.1",
-    "@discordjs/core": "^2.0.1",
+    "@discordjs/core": "3.0.0-dev.1739059974-af3ab2211",
     "@discordjs/rest": "^2.3.0",
     "@discordjs/ws": "^2.0.1",
     "@imnaiyar/framework": "latest",
