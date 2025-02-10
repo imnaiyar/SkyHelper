@@ -25,29 +25,6 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
 
   const channel = client.channels.get(message.channel_id) as APITextChannel | undefined;
   // context for sentry
-  Sentry.setUser({ id: message.author.id, username: message.author.username });
-  const context = {
-    guild: guild ? { id: guild.id, name: guild.name, owner: guild.owner_id } : message.guild_id,
-    channel: channel
-      ? {
-          id: channel.id,
-          type: ChannelType[channel.type],
-          name: channel.name,
-        }
-      : message.channel_id + " Probably in DM",
-    message: {
-      id: message.id,
-      content: message.content,
-      command: "", // To be added later
-    },
-    author: {
-      id: message.author.id,
-      username: message.author.username,
-      displayName: message.author.global_name || message.author.username,
-    },
-    occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy-MM-dd HH:mm:ss"),
-  };
-  Sentry.setContext("Metadata", context);
   try {
     // Check for bot's mention
     if (message.content.startsWith(`<@!${client.user.id}>`)) {
@@ -75,7 +52,30 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     const commandName = args.shift()!.toLowerCase();
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
     if (!command || !command.messageRun) return;
+    Sentry.setUser({ id: message.author.id, username: message.author.username });
 
+    const context = {
+      guild: guild ? { id: guild.id, name: guild.name, owner: guild.owner_id } : message.guild_id,
+      channel: channel
+        ? {
+            id: channel.id,
+            type: ChannelType[channel.type],
+            name: channel.name,
+          }
+        : message.channel_id + " Probably in DM",
+      message: {
+        id: message.id,
+        content: message.content,
+        command: "", // To be added later
+      },
+      author: {
+        id: message.author.id,
+        username: message.author.username,
+        displayName: message.author.global_name || message.author.username,
+      },
+      occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy-MM-dd HH:mm:ss"),
+    };
+    Sentry.setContext("Metadata", context);
     const userSettings = await client.schemas.getUser(message.author);
     const t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
 
