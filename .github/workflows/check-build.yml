@@ -28,4 +28,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build the project
-        run: pnpm run build
+        run: pnpm exec turbo run build --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"

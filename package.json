@@ -8,6 +8,8 @@
     "build": "turbo build --filter=!./packages/docs/",
     "build:affected": "turbo build --filter=!./packages/docs/ --filter=...[origin/main]",
     "lint": "turbo lint",
+    "lint:affected": "turbo lint --filter=...[origin/main]",
+    "test:affected": "turbo test --filter=...[origin/main]",
     "test": "turbo test",
     "update": "pnpm --recursive update --interactive",
     "prepare": "husky"
