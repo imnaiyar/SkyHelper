@@ -12,11 +12,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: 23
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -25,7 +25,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: ESLint
-        run: pnpm exec turbo run lint --affected
+        run: pnpm exec turbo run lint --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"
 
       - name: Run tests
-        run: pnpm exec turbo run test --affected
+        run: pnpm exec turbo run test --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"
