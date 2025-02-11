@@ -37,7 +37,7 @@
   "times-embed": {
     "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
-    "EMBED_TITLE": "इवेंट्स का समय",
+    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
     "EMBED_AUTHOR": "स्काइटाइम्स",
     "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
     "STARTS": "शुरू होगा",
@@ -60,7 +60,7 @@
     "EDEN": "ईडन रीसेट",
     "TS_TITLE": "ट्रैवलिंग स्पिरिट",
     "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
-    "ACTIVE": "**अभी चल रहा है**: {{DURATION}} में खत्म होगा ({{TIME}} बजे)",
+    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
     "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
     "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}",
     "TIMELINE": "टाइमलाइन"
