@@ -37,7 +37,7 @@
   "times-embed": {
     "FOOTER": "Информация о событиях (обновление каждые 2 минуты)",
     "EVENT_INACTIVE": "Нет активных событий",
-    "EMBED_TITLE": "Время событий",
+    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
     "EMBED_AUTHOR": "События",
     "EVENT_ACTIVE": "**Событие**: {{EVENT_NAME}}\n**Длительность**: {{DATE1}} – {{DATE2}}\n**Всего дней**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Начнётся через",
@@ -60,7 +60,7 @@
     "EDEN": "Сброс Эдема",
     "TS_TITLE": "Странствующий дух",
     "EVENT_TITLE": "Специальное событие (Дни ...)",
-    "ACTIVE": "**Продолжение:** Заканчивается в {{DURATION}} (через {{TIME}})",
+    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
     "NEXT-OCC": "Следующее появление: {{TIME}}",
     "NEXT-OCC-IDLE": "Следующее Окружение: {{TIME}}",
     "TIMELINE": "Временная шкала"

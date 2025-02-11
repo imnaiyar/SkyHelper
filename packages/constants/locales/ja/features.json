@@ -37,7 +37,7 @@
   "times-embed": {
     "FOOTER": "ライブSkyTimes（2分ごとに更新）",
     "EVENT_INACTIVE": "アクティブなイベントなし",
-    "EMBED_TITLE": "イベント時間",
+    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
     "EMBED_AUTHOR": "スカイタイムズ",
     "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "開始まで",
@@ -60,7 +60,7 @@
     "EDEN": "エデンリセット",
     "TS_TITLE": "旅する精霊",
     "EVENT_TITLE": "特別イベント（...の日々）",
-    "ACTIVE": "**進行中:** {{DURATION}}後に終了（{{TIME}}に）",
+    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
     "NEXT-OCC": "次の発生: {{TIME}}",
     "NEXT-OCC-IDLE": "次の発生: {{TIME}}",
     "TIMELINE": "タイムライン"
