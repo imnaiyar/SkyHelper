@@ -30,14 +30,11 @@ const months = [
 ] as const;
 export default {
   async interactionRun({ t, helper, options }) {
-    const m = await helper.reply(
-      {
-        ...buildResponse(t, helper.client, helper.user.id),
-        flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined,
-      },
-      true,
-    );
-    collectResponseComponents(m, t, helper);
+    const m = await helper.reply({
+      ...buildResponse(t, helper.client, helper.user.id),
+      flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined,
+    });
+    collectResponseComponents(m.resource!.message!, t, helper);
   },
   ...SHARDS_CALENDAR_DATA,
 } satisfies Command;

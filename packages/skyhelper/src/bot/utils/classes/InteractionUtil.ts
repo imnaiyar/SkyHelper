@@ -43,39 +43,28 @@ export class InteractionHelper {
     this.t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
   }
 
-  reply(data: ResponseData, fetchReply: true): Promise<APIMessage>;
-  reply(data: ResponseData, fetchReply?: false): Promise<void>;
-  reply(data: ResponseData, fetchReply?: boolean): Promise<void | APIMessage>;
-  async reply(data: ResponseData, fetchReply?: boolean): Promise<void | APIMessage> {
-    await this.api.interactions.reply(this.int.id, this.int.token, data);
+  async reply(data: ResponseData) {
+    const res = await this.api.interactions.reply(this.int.id, this.int.token, { ...data, with_response: true });
     this.replied = true;
-    if (fetchReply) {
-      return this.fetchReply();
-    }
+    return res;
   }
 
-  defer(data: APIInteractionResponseDeferredChannelMessageWithSource["data"], fetchReply: true): Promise<APIMessage>;
-  defer(data?: APIInteractionResponseDeferredChannelMessageWithSource["data"], fetchReply?: false): Promise<void>;
-  defer(data?: APIInteractionResponseDeferredChannelMessageWithSource["data"], fetchReply?: boolean): Promise<void | APIMessage>;
-  async defer(
-    data?: APIInteractionResponseDeferredChannelMessageWithSource["data"],
-    fetchReply?: boolean,
-  ): Promise<void | APIMessage> {
-    await this.api.interactions.defer(this.int.id, this.int.token, data);
+  async defer(data?: APIInteractionResponseDeferredChannelMessageWithSource["data"]) {
+    const res = await this.api.interactions.defer(this.int.id, this.int.token, { ...data, with_response: true });
     this.deferred = true;
-    if (fetchReply) {
-      return this.fetchReply();
-    }
+    return res;
   }
 
   async deferUpdate() {
-    await this.api.interactions.deferMessageUpdate(this.int.id, this.int.token);
+    const res = await this.api.interactions.deferMessageUpdate(this.int.id, this.int.token, { with_response: true });
     this.deferred = true;
+    return res;
   }
 
   async update(data: ResponseData) {
-    await this.api.interactions.updateMessage(this.int.id, this.int.token, data);
+    const res = await this.api.interactions.updateMessage(this.int.id, this.int.token, { ...data, with_response: true });
     this.replied = true;
+    return res;
   }
 
   async editReply(data: ResponseData, id: string = "@original") {

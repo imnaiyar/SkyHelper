@@ -113,7 +113,7 @@ export const handleHangman = async (
     return await compHelper.followUp({ content: message, flags: ephemeral ? 64 : undefined });
   };
 
-  const message = await helper.reply(getResponse(), true);
+  const message = (await helper.reply(getResponse())).resource!.message;
 
   const col = client.componentCollector({
     idle: 90_000,

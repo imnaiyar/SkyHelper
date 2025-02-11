@@ -15,7 +15,7 @@ export default {
         await getChangelog(helper);
         break;
       case "botinfo": {
-        const reply = await helper.defer({}, true);
+        const reply = (await helper.defer({})).resource!.message!;
         await handleInfo(helper, helper.client.utils.createdTimeStamp(reply.id));
         break;
       }
