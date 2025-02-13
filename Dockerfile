@@ -1,4 +1,3 @@
-# Build the monorepo
 FROM node:22.13.0 AS build
 
 RUN npm i -g pnpm@9.4.0
@@ -6,13 +5,12 @@ RUN npm i -g pnpm@9.4.0
 WORKDIR /app
 COPY . .
 
-# Cache to reduce build time
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile 
 
 RUN pnpm build; \
     pnpm deploy --filter="./packages/skyhelper" sky-out --prod; \
-    pnpm deploy --filter="@skyhelperbot/jobs" jobs-out --prod
+    pnpm deploy --filter="./packages/jobs" jobs-out --prod
 
 # Run skyhelper image
 FROM node:22.13-alpine AS skyhelper
@@ -24,7 +22,6 @@ RUN npm i -g pnpm@9.4.0
 WORKDIR /app
 COPY --from=build /app/sky-out .
 
-# Build and upload sourcemaps to sentry
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
 RUN pnpm run sentry:sourcemaps
