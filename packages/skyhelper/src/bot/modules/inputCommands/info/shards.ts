@@ -17,7 +17,7 @@ export default {
       }));
     }
 
-    await helper.reply({ ...shard, flags: hide ? MessageFlags.Ephemeral : undefined });
+    await helper.reply({ ...shard });
   },
 
   ...SHARDS_DATA,

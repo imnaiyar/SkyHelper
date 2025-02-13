@@ -15,6 +15,7 @@ import type { getTranslator } from "@/i18n";
 import { eventData, SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema } from "@/types/schemas";
+import { ComponentV2Type, type ContainerComponent } from "@/types/component-v2";
 
 export default class {
   /**
@@ -37,18 +38,15 @@ export default class {
     const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
     const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
     const status = utils.getStatus(date);
-    const result: APIEmbed = {
-      author: {
-        name: t("features:shards-embed.AUTHOR"),
-        icon_url:
-          "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925",
-      },
-      title: formatted,
-      timestamp: new Date().toISOString(),
-      footer: {
-        text: footer,
-        icon_url: "https://cdn.imnaiyar.site/bot-icon.gif",
-      },
+    const components: ContainerComponent = {
+      type: ComponentV2Type.CONTAINER,
+      components: [
+        {
+          type: ComponentV2Type.SEPARATOR,
+          divider: true,
+          spacing: 2,
+        },
+      ],
     };
 
     // TODO: Use encode id to include the date (and maybe user to), also would need to update jobs
@@ -84,13 +82,6 @@ export default class {
         },
         {
           type: ComponentType.Button,
-          label: t("features:shards-embed.BUTTON2"),
-          custom_id: `shards-location;date:${date.toISODate()}`,
-          disabled: status === "No Shard",
-          style: ButtonStyle.Success,
-        },
-        {
-          type: ComponentType.Button,
           label: t("features:shards-embed.BUTTON3"),
           custom_id: "shards-about",
           style: ButtonStyle.Success,
@@ -98,62 +89,101 @@ export default class {
       ],
     };
     if (status === "No Shard") {
-      result.image = {
-        url: "https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif",
-      };
-      result.description = `**${t("features:shards-embed.NO-SHARD")}**`;
-      result.color = resolveColor("#9fb686");
+      components.components.splice(0, 0, { type: ComponentV2Type.TEXT_DISPLAY, content: t("features:shards-embed.NO-SHARD") });
+      components.components.push(
+        { type: ComponentV2Type.TEXT_DISPLAY, content: `### ${t("features:shards-embed.AUTHOR")}\n${formatted}` },
+        {
+          type: ComponentV2Type.MEDIA_GALLERY,
+          items: [
+            {
+              media: {
+                url: "https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif",
+              },
+            },
+          ],
+        },
+        ...(navBtns ? [navBtns] : []),
+      );
+      components.accent_color = resolveColor("#9fb686");
     } else {
       const isActive = status.find((s) => s.active);
       const allEnded = status.every((s) => s.ended);
       const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
-      result.fields = [
-        { name: t("features:shards-embed.FIELDS.TYPE.LABEL"), value: `${info.type} (${info.rewards})`, inline: true },
-        { name: t("features:shards-embed.FIELDS.LOCATION.LABEL"), value: `${info.area}`, inline: true },
+      components.components.splice(0, 0, {
+        type: ComponentV2Type.SECTION,
+        components: [{ type: ComponentV2Type.TEXT_DISPLAY, content: `### ${t("features:shards-embed.AUTHOR")}\n${formatted}` }],
+        accessory: {
+          type: ComponentV2Type.THUMBNAIL,
+          media: { url: info.image },
+          description: info.type,
+        },
+      });
+      components.components.push(
         {
-          name: t("features:shards-embed.FIELDS.STATUS.LABEL"),
-          value: allEnded
-            ? t("features:shards-embed.FIELDS.STATUS.VALUE.ENDED", {
-                DURATION: status
-                  .slice()
-                  .reverse()
-                  .find((s) => s.ended)?.duration,
-              })
-            : isActive
-              ? t("features:shards-embed.FIELDS.STATUS.VALUE.ACTIVE", {
-                  INDEX: getIndex(isActive.index),
-                  DURATION: isActive.duration,
+          type: ComponentV2Type.TEXT_DISPLAY,
+          content: t("features:shards-embed.FIELDS.TYPE.LABEL") + `\n${info.type} (${info.rewards})`,
+        },
+        { type: ComponentV2Type.TEXT_DISPLAY, content: t("features:shards-embed.FIELDS.LOCATION.LABEL") + `\n${info.area}` },
+        {
+          type: ComponentV2Type.TEXT_DISPLAY,
+          content:
+            `**${t("features:shards-embed.FIELDS.STATUS.LABEL")}**` + "\n" + allEnded
+              ? t("features:shards-embed.FIELDS.STATUS.VALUE.ENDED", {
+                  DURATION: status
+                    .slice()
+                    .reverse()
+                    .find((s) => s.ended)?.duration,
                 })
-              : t("features:shards-embed.FIELDS.STATUS.VALUE.EXPECTED", {
-                  INDEX: getIndex(status.find((s) => !s.active && !s.ended)!.index),
-                  DURATION: status.find((s) => !s.active && !s.ended)!.duration,
-                }),
+              : isActive
+                ? t("features:shards-embed.FIELDS.STATUS.VALUE.ACTIVE", {
+                    INDEX: getIndex(isActive.index),
+                    DURATION: isActive.duration,
+                  })
+                : t("features:shards-embed.FIELDS.STATUS.VALUE.EXPECTED", {
+                    INDEX: getIndex(status.find((s) => !s.active && !s.ended)!.index),
+                    DURATION: status.find((s) => !s.active && !s.ended)!.duration,
+                  }),
         },
         {
-          name: t("features:shards-embed.BUTTON1"),
-          value: status
-            .map((s, i) => {
-              const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
-              // prettier-ignore
-              if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
-              // prettier-ignore
-              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
-              return (
-                prefix +
-                `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
-              );
-            })
-            .join("\n"),
-          inline: true,
+          type: ComponentV2Type.TEXT_DISPLAY,
+          content:
+            `**${t("features:shards-embed.BUTTON1")}**` +
+            "\n" +
+            status
+              .map((s, i) => {
+                const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
+                // prettier-ignore
+                if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
+                // prettier-ignore
+                if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
+                return (
+                  prefix +
+                  `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
+                );
+              })
+              .join("\n"),
         },
-      ];
-      result.color = resolveColor(info.colors as ColorResolvable);
-      result.thumbnail = { url: info.image };
+        {
+          type: ComponentV2Type.SEPARATOR,
+          divider: true,
+          spacing: 2,
+        },
+        {
+          type: ComponentV2Type.MEDIA_GALLERY,
+          items: info.locations.map((l) => ({
+            description: l.description,
+            media: { url: l.image },
+          })),
+        },
+        row,
+        ...(navBtns ? [navBtns] : []),
+      );
+      components.accent_color = resolveColor(info.colors as ColorResolvable);
     }
 
     return {
-      embeds: [result],
-      components: navBtns ? [row, navBtns] : [row],
+      components: [components],
+      flags: 32768 | 64,
     };
   }
 
