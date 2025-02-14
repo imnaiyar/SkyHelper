@@ -211,7 +211,7 @@ export default class {
       const nextTime = `<t:${status.nextTime.toUnixInteger()}:t> - <t:${status.nextTime.toUnixInteger()}:R>`;
       if (status.active) {
         desc += t("features:times-embed.ACTIVE", {
-          END_TIME: `t:<${status.endTime.toUnixInteger()}:R>`,
+          END_TIME: `<t:${status.endTime.toUnixInteger()}:R>`,
           NEXT_TIME: nextTime,
         });
       } else {
