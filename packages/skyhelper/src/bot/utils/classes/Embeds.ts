@@ -165,11 +165,10 @@ export default class {
       });
       tsDesc = tsData.visiting ? strVisiting : strExpected;
     }
+    const now = DateTime.now().setZone("America/Los_Angeles");
     const component = container(
       textDisplay(
-        `### ${t("features:times-embed.EMBED_TITLE", {
-          SKY_TIME: DateTime.now().setZone("America/Los_Angeles").toFormat("hh:mm a"),
-        })}`,
+        `### ${t("features:times-embed.EMBED_TITLE")}\n${emojis.tree_end}\`Sky Time:\` ${now.toFormat("hh:mm a")} | \`Local Time\`: <t:${now.toUnixInteger()}:t>`,
       ),
       separator(),
     );
