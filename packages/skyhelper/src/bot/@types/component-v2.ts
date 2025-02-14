@@ -74,17 +74,17 @@ export interface FileComponent extends BaseComponent {
   file: UnfurledMediaItem;
   spoiler?: boolean;
 }
-
+export type ContainerComponents = Array<
+  | APIActionRowComponent<APIButtonComponent>
+  | TextDisplayComponent
+  | SectionComponent
+  | MediaGalleryComponent
+  | SeparatorComponent
+  | FileComponent
+>;
 export interface ContainerComponent extends BaseComponent {
   type: ComponentV2Type.CONTAINER;
   accent_color?: number;
   spoiler?: boolean;
-  components: Array<
-    | APIActionRowComponent<APIButtonComponent>
-    | TextDisplayComponent
-    | SectionComponent
-    | MediaGalleryComponent
-    | SeparatorComponent
-    | FileComponent
-  >;
+  components: ContainerComponents;
 }

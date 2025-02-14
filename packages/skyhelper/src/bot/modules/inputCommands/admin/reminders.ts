@@ -4,6 +4,7 @@ import { ComponentV2Type, MessageV2Flags, type ContainerComponent } from "@/type
 import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
+import { container, separator, textDisplay } from "@/utils/v2";
 import type { APITextChannel } from "@discordjs/core";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
@@ -108,13 +109,6 @@ async function getRemindersStatus(guildSettings: GuildSchema, guildName: string)
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
     description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
   }
-  const component: ContainerComponent = {
-    type: ComponentV2Type.CONTAINER,
-    components: [
-      { type: ComponentV2Type.TEXT_DISPLAY, content: title },
-      { type: ComponentV2Type.SEPARATOR, divider: true, spacing: 2 },
-      { type: ComponentV2Type.TEXT_DISPLAY, content: description },
-    ],
-  };
+  const component: ContainerComponent = container(textDisplay(title), separator(), textDisplay(description));
   return { components: [component], flags: MessageV2Flags.IS_COMPONENTS_V2 | 64 }; // TODO: revert to use dapi version
 }

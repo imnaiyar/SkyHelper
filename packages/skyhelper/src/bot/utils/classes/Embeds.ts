@@ -1,4 +1,4 @@
-import { ShardsUtil as utils, shardsInfo, resolveColor, type ColorResolvable } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, shardsInfo } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
@@ -15,7 +15,9 @@ import type { getTranslator } from "@/i18n";
 import { eventData, SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema } from "@/types/schemas";
-import { ComponentV2Type, type ContainerComponent } from "@/types/component-v2";
+import { type ContainerComponent } from "@/types/component-v2";
+import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "../v2.js";
+import { emojis } from "../constants.js";
 
 export default class {
   /**
@@ -26,7 +28,6 @@ export default class {
   static buildShardEmbed(
     date: DateTime,
     t: ReturnType<typeof import("@/i18n").getTranslator>,
-    footer: string,
     noBtn?: boolean,
     user?: string,
   ): {
@@ -38,16 +39,8 @@ export default class {
     const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
     const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
     const status = utils.getStatus(date);
-    const components: ContainerComponent = {
-      type: ComponentV2Type.CONTAINER,
-      components: [
-        {
-          type: ComponentV2Type.SEPARATOR,
-          divider: true,
-          spacing: 2,
-        },
-      ],
-    };
+
+    const components: ContainerComponent = container(separator());
 
     // TODO: Use encode id to include the date (and maybe user to), also would need to update jobs
     let navBtns: APIActionRowComponent<APIButtonComponent> | null = null;
@@ -70,115 +63,56 @@ export default class {
         ],
       };
     }
-    const row: APIActionRowComponent<APIButtonComponent> = {
-      type: 1,
-      components: [
-        {
-          type: ComponentType.Button,
-          label: t("features:shards-embed.BUTTON1"),
-          custom_id: `shards-timeline;date:${date.toISODate()}`,
-          disabled: status === "No Shard",
-          style: ButtonStyle.Success,
-        },
-        {
-          type: ComponentType.Button,
-          label: t("features:shards-embed.BUTTON3"),
-          custom_id: "shards-about",
-          style: ButtonStyle.Success,
-        },
-      ],
-    };
     if (status === "No Shard") {
-      components.components.splice(0, 0, { type: ComponentV2Type.TEXT_DISPLAY, content: t("features:shards-embed.NO-SHARD") });
+      components.components.splice(0, 0, textDisplay(`-# ${t("features:shards-embed.AUTHOR")}\n${formatted}`));
       components.components.push(
-        { type: ComponentV2Type.TEXT_DISPLAY, content: `### ${t("features:shards-embed.AUTHOR")}\n${formatted}` },
-        {
-          type: ComponentV2Type.MEDIA_GALLERY,
-          items: [
-            {
-              media: {
-                url: "https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif",
-              },
-            },
-          ],
-        },
+        textDisplay(t("features:shards-embed.NO-SHARD")),
+        mediaGallery({
+          url: "https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif",
+        }),
         ...(navBtns ? [navBtns] : []),
       );
-      components.accent_color = resolveColor("#9fb686");
     } else {
-      const isActive = status.find((s) => s.active);
-      const allEnded = status.every((s) => s.ended);
       const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
-      components.components.splice(0, 0, {
-        type: ComponentV2Type.SECTION,
-        components: [{ type: ComponentV2Type.TEXT_DISPLAY, content: `### ${t("features:shards-embed.AUTHOR")}\n${formatted}` }],
-        accessory: {
-          type: ComponentV2Type.THUMBNAIL,
-          media: { url: info.image },
-          description: info.type,
-        },
-      });
+      components.components.splice(
+        0,
+        0,
+        section(
+          thumbnail(info.image, info.type),
+          `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${info.type} (${info.rewards})\n`,
+        ),
+      );
       components.components.push(
-        {
-          type: ComponentV2Type.TEXT_DISPLAY,
-          content: t("features:shards-embed.FIELDS.TYPE.LABEL") + `\n${info.type} (${info.rewards})`,
-        },
-        { type: ComponentV2Type.TEXT_DISPLAY, content: t("features:shards-embed.FIELDS.LOCATION.LABEL") + `\n${info.area}` },
-        {
-          type: ComponentV2Type.TEXT_DISPLAY,
-          content:
-            `**${t("features:shards-embed.FIELDS.STATUS.LABEL")}**` + "\n" + allEnded
-              ? t("features:shards-embed.FIELDS.STATUS.VALUE.ENDED", {
-                  DURATION: status
-                    .slice()
-                    .reverse()
-                    .find((s) => s.ended)?.duration,
-                })
-              : isActive
-                ? t("features:shards-embed.FIELDS.STATUS.VALUE.ACTIVE", {
-                    INDEX: getIndex(isActive.index),
-                    DURATION: isActive.duration,
-                  })
-                : t("features:shards-embed.FIELDS.STATUS.VALUE.EXPECTED", {
-                    INDEX: getIndex(status.find((s) => !s.active && !s.ended)!.index),
-                    DURATION: status.find((s) => !s.active && !s.ended)!.duration,
-                  }),
-        },
-        {
-          type: ComponentV2Type.TEXT_DISPLAY,
-          content:
-            `**${t("features:shards-embed.BUTTON1")}**` +
+        ...info.locations.map((l) =>
+          section(thumbnail(l.image, l.description), l.description + `\n${emojis.tree_end}${info.area}`),
+        ),
+        separator(),
+        section(
+          {
+            type: ComponentType.Button,
+            label: "Details",
+            custom_id: `shards-timeline;date:${date.toISODate()}`,
+            style: ButtonStyle.Secondary,
+          },
+          `**${t("features:shards-embed.BUTTON1")}**` +
             "\n" +
             status
-              .map((s, i) => {
-                const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
+              .map((s, i, arr) => {
+                const prefix = `${s.ended ? "-# " : ""}${i === arr.length - 1 ? emojis.tree_end : emojis.tree_top}**${getIndex(i + 1)} Shard:** `;
                 // prettier-ignore
-                if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
+                if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })})~~`;
                 // prettier-ignore
-                if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
+                if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: `<t:${s.end.toUnixInteger()}:>` })}) <a:uptime:1228956558113771580>`;
                 return (
                   prefix +
-                  `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
+                  `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: `<t:${s.start.toUnixInteger()}:R>` })})`
                 );
               })
               .join("\n"),
-        },
-        {
-          type: ComponentV2Type.SEPARATOR,
-          divider: true,
-          spacing: 2,
-        },
-        {
-          type: ComponentV2Type.MEDIA_GALLERY,
-          items: info.locations.map((l) => ({
-            description: l.description,
-            media: { url: l.image },
-          })),
-        },
-        row,
+        ),
+        separator(),
         ...(navBtns ? [navBtns] : []),
       );
-      components.accent_color = resolveColor(info.colors as ColorResolvable);
     }
 
     return {
@@ -195,11 +129,7 @@ export default class {
    * @param text text to include in the footer
    * @returns
    */
-  static async getTimesEmbed(
-    client: SkyHelper,
-    t: ReturnType<typeof getTranslator>,
-    text?: string,
-  ): Promise<{ embeds: APIEmbed[]; components: APIActionRowComponent<APIStringSelectComponent | APIButtonComponent>[] }> {
+  static async getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getTranslator>) {
     const tsData = await getTSData();
     const specialEvent = await getSpecialEvent();
     // Special Events
@@ -222,6 +152,7 @@ export default class {
     } else {
       const spirit: SpiritsData = client.spiritsData[tsData.value!];
       const emote = spirit?.expression?.icon || "❓";
+      // TODO: update tree emojis from localization in this for prod
       const strVisiting = t("features:times-embed.TS_VISITING", {
         TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
         DATE: Utils.time(tsData.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
@@ -234,6 +165,14 @@ export default class {
       });
       tsDesc = tsData.visiting ? strVisiting : strExpected;
     }
+    const component = container(
+      textDisplay(
+        `### ${t("features:times-embed.EMBED_TITLE", {
+          SKY_TIME: DateTime.now().setZone("America/Los_Angeles").toFormat("hh:mm a"),
+        })}`,
+      ),
+      separator(),
+    );
     let description = "";
     for (const [k, { status }] of skyutils.allEventDetails()) {
       // @ts-expect-error
@@ -249,21 +188,12 @@ export default class {
       }
       description += desc + "\n";
     }
-
-    description += `\`${t("features:times-embed.TS_TITLE")}:\`\n${tsDesc}`;
-    description += `\n\`${t("features:times-embed.EVENT_TITLE")}:\`\n${eventDesc}`;
-    // Build the Embed
-    const embed: APIEmbed = {
-      author: { name: t("features:times-embed.EMBED_AUTHOR"), icon_url: Utils.getUserAvatar(client.user) },
-      title: t("features:times-embed.EMBED_TITLE", {
-        SKY_TIME: DateTime.now().setZone("America/Los_Angeles").toFormat("hh:mm a"),
-      }),
-      color: resolveColor("Random"),
-      description,
-      timestamp: new Date().toISOString(),
-    };
-    if (text) embed.footer = { text, icon_url: Utils.getUserAvatar(client.user) };
-
+    component.components.push(
+      textDisplay(description),
+      separator(),
+      textDisplay(`**${t("features:times-embed.TS_TITLE")}:**\n${tsDesc}`),
+      textDisplay(`\n**${t("features:times-embed.EVENT_TITLE")}:**\n${eventDesc}`),
+    );
     const row: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
@@ -292,7 +222,7 @@ export default class {
         },
       ],
     };
-    return { embeds: [embed], components: [row, btn] };
+    return { components: [component, row, btn], flags: 32768 };
   }
 
   static dailyQuestEmbed(data: DailyQuestsSchema, index: number) {

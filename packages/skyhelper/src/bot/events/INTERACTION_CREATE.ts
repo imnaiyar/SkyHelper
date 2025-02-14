@@ -324,6 +324,7 @@ function getErrorResponse(id: string, t: ReturnType<typeof getTranslator>) {
         ],
       },
     ],
+    flags: 64,
   };
 }
 
