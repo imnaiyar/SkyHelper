@@ -36,5 +36,5 @@ const getShards = (
   if (typeof currentDate === "string") {
     return t("commands:SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
   }
-  return Embeds.buildShardEmbed(currentDate, t, t("common:bot.name"), false, user);
+  return Embeds.buildShardEmbed(currentDate, t, false, user);
 };

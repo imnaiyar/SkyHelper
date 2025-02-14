@@ -5,6 +5,7 @@ import embeds from "@/utils/classes/Embeds";
 import { DateTime } from "luxon";
 import { ChannelType, type APITextChannel } from "@discordjs/core";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
+import { textDisplay } from "@/utils/v2";
 
 export const handleLive = async (
   client: SkyHelper,
@@ -65,15 +66,12 @@ export const handleLive = async (
     const currentDate = DateTime.now().setZone(client.timezone);
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
     const ts = getTranslator(config.language?.value ?? "en-us");
-    const result =
-      type === "shards"
-        ? embeds.buildShardEmbed(currentDate, ts, ts("features:shards-embed.FOOTER"), true)
-        : await embeds.getTimesEmbed(client, ts, ts("features:times-embed.FOOTER"));
+    const result = type === "shards" ? embeds.buildShardEmbed(currentDate, ts, true) : await embeds.getTimesEmbed(client, ts);
     const msg = await client.api.webhooks.execute(wb.id, wb.token!, {
       username: `${type} Updates`,
       avatar_url: client.utils.getUserAvatar(client.user),
-      content: t("features:shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` }),
       ...result,
+      components: [textDisplay(t("features:shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` })), ...result.components],
       wait: true,
     });
     config[liveType] = {
