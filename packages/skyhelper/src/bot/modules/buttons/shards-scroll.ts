@@ -1,5 +1,5 @@
 import embeds from "@/utils/classes/Embeds";
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import { ShardsUtil as utils } from "@skyhelperbot/utils";
 import type { DateTime } from "luxon";
 export default {
@@ -13,4 +13,4 @@ export default {
     const res = embeds.buildShardEmbed(givenDate, t);
     await helper.editReply(res);
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

@@ -1,5 +1,5 @@
 import embed from "@/utils/classes/Embeds";
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 
 export default {
   data: {
@@ -7,6 +7,8 @@ export default {
   },
   async execute(_interaction, t, helper) {
     await helper.deferUpdate();
+    // TODO: remove before merge
+    // @ts-expect-error
     await helper.editReply(await embed.getTimesEmbed(helper.client, t));
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

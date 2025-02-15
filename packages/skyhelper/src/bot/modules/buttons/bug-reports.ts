@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import type { APIModalInteractionResponseCallbackData } from "@discordjs/core";
 
 /**
@@ -52,4 +52,4 @@ export default {
 
     await helper.launchModal(modal);
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

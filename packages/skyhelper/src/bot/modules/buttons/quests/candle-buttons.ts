@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 import type { APIEmbed } from "@discordjs/core";
 import { DateTime } from "luxon";
@@ -27,4 +27,4 @@ export default {
     };
     await helper.editReply({ embeds: [embed] });
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

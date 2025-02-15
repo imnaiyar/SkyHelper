@@ -1,10 +1,12 @@
-import { ShardsUtil as utils, shardsInfo } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
   type APIActionRowComponent,
   type APIButtonComponent,
   type APIEmbed,
+  type APISelectMenuComponent,
+  type APISelectMenuOption,
   type APIStringSelectComponent,
 } from "@discordjs/core";
 import { DateTime } from "luxon";
@@ -15,9 +17,9 @@ import type { getTranslator } from "@/i18n";
 import { eventData, SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema } from "@/types/schemas";
-import { type ContainerComponent } from "@/types/component-v2";
+import { MessageV2Flags, type ContainerComponent } from "@/types/component-v2";
 import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "../v2.js";
-import { emojis } from "../constants.js";
+import { CalendarMonths, emojis } from "../constants.js";
 
 export default class {
   /**
@@ -116,6 +118,8 @@ export default class {
     }
 
     return {
+      // TODO: skjjd
+      // @ts-expect-error
       components: [components],
       flags: 32768 | 64,
     };
@@ -304,4 +308,181 @@ export default class {
     if (rotating_candles) row.components.push(seasonalBtn);
     return { embeds: [embed], components: [selectMenu, row] };
   }
+
+  static buildCalendarResponse(
+    t: ReturnType<typeof getTranslator>,
+    client: SkyHelper,
+    userId: string,
+    { index, month, year }: ResponseParams = {},
+  ) {
+    const now = DateTime.now().setZone("America/Los_Angeles");
+    const date = 1;
+    month ??= now.month;
+    const monthStr = CalendarMonths[month - 1];
+    year ??= now.year;
+    const datesArray = getDates(now);
+
+    const setsOfDates = [];
+    for (let i = 0; i < datesArray.length; i += 5) {
+      setsOfDates.push(datesArray.slice(i, i + 5));
+    }
+
+    index ??= setsOfDates.findIndex((dates) => dates.some((d) => d.hasSame(now, "day")));
+    const toGet = DateTime.fromObject({ year, month, day: date }, { zone: "America/Los_Angeles" });
+    const dates = getDates(toGet);
+    const total = dates.length;
+    const totalPages = Math.ceil(total / 5);
+    const start = index * 5;
+    const end = start + 5;
+    const toDisplay = dates.slice(start, end);
+    const title = `${toDisplay[0].toFormat("DD")} - ${toDisplay[toDisplay.length - 1].toFormat("DD")}`;
+    const options: APISelectMenuOption[] = [];
+    for (let i = 0; i < totalPages; i++) {
+      const start2 = i * 5;
+      const end2 = start2 + 5;
+      const dat = dates.slice(start2, end2);
+      const label1 = dat[0].toFormat("d");
+      const label2 = dat[dat.length - 1].toFormat("d");
+      const label = `${label1}${utils.getSuffix(parseInt(label1))} - ${label2}${utils.getSuffix(parseInt(label2))}`;
+      const value = `${i}`;
+      options.push({ label, value, default: index === i });
+    }
+    const dateSelect: APIActionRowComponent<APISelectMenuComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 3,
+          custom_id: client.utils.encodeCustomId({
+            id: "shards-calendar-0",
+            type: "index",
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          placeholder: t("commands:SHARDS_CALENDAR.RESPONSES.DATE_SELECT_PLACEHOLDER"),
+          options: options,
+        },
+      ],
+    };
+    const monthSelect: APIActionRowComponent<APISelectMenuComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 3,
+          custom_id: client.utils.encodeCustomId({
+            id: "shards-calendar-1",
+            type: "month",
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          placeholder: t("commands:SHARDS_CALENDAR.RESPONSES.MONTH_SELECT_PLACEHOLDER"),
+          options: CalendarMonths.map((m, i) => ({
+            label: m,
+            value: (i + 1).toString(),
+            default: month === i + 1,
+          })),
+        },
+      ],
+    };
+    const yOptions: APISelectMenuOption[] = [];
+    for (let i = year - 5; i < year + 5; i++) {
+      yOptions.push({
+        label: `${i}`,
+        value: `${i}`,
+        default: i === year,
+      });
+    }
+    const yearSelect: APIActionRowComponent<APISelectMenuComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 3,
+          custom_id: client.utils.encodeCustomId({
+            id: "shards-calendar-2",
+            type: "year",
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          placeholder: t("commands:SHARDS_CALENDAR.RESPONSES.YEAR_SELECT_PLACEHOLDER"),
+          options: yOptions,
+        },
+      ],
+    };
+    const navBtn: APIActionRowComponent<APIButtonComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 2,
+          custom_id: client.utils.encodeCustomId({
+            id: `calendar-nav-2`,
+            index: (index - 1).toString(),
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          emoji: { name: "⬅️" },
+          style: 1,
+          disabled: index === 0,
+        },
+        {
+          type: 2,
+          custom_id: client.utils.encodeCustomId({
+            id: `calendar-nav-next`,
+            index: (index + 1).toString(),
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          emoji: { name: "➡️" },
+          style: 1,
+          disabled: index === totalPages - 1,
+        },
+      ],
+    };
+    let description = "";
+    toDisplay.forEach((d) => {
+      const { currentRealm, currentShard } = utils.shardsIndex(d);
+      const timelines = shardsTimeline(d)[currentShard];
+      const noShard = utils.getStatus(d);
+      const info = shardsInfo[currentRealm][currentShard];
+      description += `**${
+        d.hasSame(now, "day")
+          ? client.utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
+          : client.utils.time(d.toUnixInteger(), "D")
+      }**\n`;
+      description +=
+        typeof noShard === "string"
+          ? "↪ " + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
+          : `↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${client.utils.time(ti.start.toUnixInteger(), "T")}`).join(" • ") })}\n\n`;
+    });
+    const component = container(
+      textDisplay(
+        `-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year })}\n### ${title}\n${t(
+          "commands:SHARDS_CALENDAR.RESPONSES.EMBED_DESCRIPTION",
+          { shardsCmd: `</shards:1142231977328648364>` },
+        )}\n`,
+      ),
+      separator(),
+      textDisplay(
+        description + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`,
+      ),
+    );
+    return { components: [component, dateSelect, monthSelect, yearSelect, navBtn] };
+  }
 }
+function getDates(date: DateTime): DateTime[] {
+  const totalDays = date.daysInMonth!;
+  const dates: DateTime[] = [];
+  for (let i = 1; i <= totalDays; i++) {
+    dates.push(DateTime.fromObject({ year: date.year, month: date.month, day: i }, { zone: "America/Los_Angeles" }));
+  }
+  return dates;
+}
+
+type ResponseParams = {
+  index?: number;
+  month?: number;
+  year?: number;
+};

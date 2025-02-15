@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import {
   ButtonStyle,
@@ -158,4 +158,4 @@ export default {
       await helper.editReply(orgData).catch(() => {});
     });
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

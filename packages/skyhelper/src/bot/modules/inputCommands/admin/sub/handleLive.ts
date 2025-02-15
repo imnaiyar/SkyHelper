@@ -67,6 +67,8 @@ export const handleLive = async (
     const updatedAt = Math.floor(currentDate.valueOf() / 1000);
     const ts = getTranslator(config.language?.value ?? "en-us");
     const result = type === "shards" ? embeds.buildShardEmbed(currentDate, ts, true) : await embeds.getTimesEmbed(client, ts);
+    // TODO: Remove before merge
+    // @ts-expect-error
     const msg = await client.api.webhooks.execute(wb.id, wb.token!, {
       username: `${type} Updates`,
       avatar_url: client.utils.getUserAvatar(client.user),

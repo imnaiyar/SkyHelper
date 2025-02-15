@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { APIActionRowComponent, APIButtonComponent, APIEmbed } from "@discordjs/core";
 import { ShardsUtil as utils, shardsTimeline } from "@skyhelperbot/utils";
@@ -107,4 +107,4 @@ export default {
       helper.deleteReply().catch(() => {});
     });
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

@@ -4,7 +4,7 @@ import { Collection } from "@discordjs/collection";
 import { recursiveReadDir } from "@skyhelperbot/utils";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { SkyHelper, Event, Command, Button } from "@/structures";
+import type { SkyHelper, Event, Command, ComponentStructure } from "@/structures";
 import logger from "@/handlers/logger";
 import type { ContextMenuCommand } from "@/structures/ContextMenuCommand";
 import type { LocalizationMap } from "@discordjs/core";
@@ -82,29 +82,29 @@ export async function loadContextCmd() {
  * Loads all the buttons
  * @returns A collection of buttons keyed by it's custom ID
  */
-export async function loadButtons() {
-  const buttons = new Collection<string, Button>();
+export async function loadComponents<T extends "Select" | "Button">(type: T) {
+  const buttons = new Collection<string, ComponentStructure<T>>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/modules/buttons", ["sub"]);
+  const files = recursiveReadDir(baseDir + `bot/modules/${type === "Button" ? "buttons" : "selects"}`, ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
 
     try {
       const { default: button } = (await import(pathToFileURL(filePath).href)) as {
-        default: Button;
+        default: ComponentStructure<T>;
       };
       if (typeof button !== "object") continue;
       if (buttons.has(button.data.name)) throw new Error("The command already exists");
       buttons.set(button.data.name, button);
-      logger.custom(`Loaded ${button.data.name}`, "BUTTON");
+      logger.custom(`Loaded ${button.data.name}`, type);
       added++;
     } catch (ex) {
       failed += 1;
       logger.error(`${file}`, ex);
     }
   }
-  logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
+  logger.custom(`Loaded ${added} ${type}. Failed ${failed}`, type);
   return buttons;
 }
 

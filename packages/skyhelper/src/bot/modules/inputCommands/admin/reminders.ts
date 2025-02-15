@@ -93,6 +93,8 @@ export default {
         break;
       }
       case "status": {
+        // TODO: remove before merge
+        // @ts-expect-error
         await helper.reply(await getRemindersStatus(guildSettings, guild.name));
         break;
       }
