@@ -6,12 +6,12 @@
       "dependsOn": ["^build"],
       "inputs": ["src/**", "scripts/**", "package.json", "tsconfig.json"],
       "outputs": ["dist/**"],
-      "outputLogs": "errors-only"
+      "outputLogs": "full"
     },
     "test": {
       "dependsOn": ["^build"],
       "inputs": ["__tests__/**", "src/**", "jest.config.js", "package.json", "tsconfig.json"],
-      "outputLogs": "errors-only"
+      "outputLogs": "full"
     },
     "lint": {
       "inputs": ["../../.eslintrc.json", "../../.eslintignore", "src/**", "package.json", "tsconfig.json"],

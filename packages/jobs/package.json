@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsc",
     "start": "bun run src/index.ts",
     "lint": "eslint --fix src"
   },
