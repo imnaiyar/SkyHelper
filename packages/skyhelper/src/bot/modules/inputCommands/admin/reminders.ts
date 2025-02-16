@@ -1,8 +1,10 @@
 import { REMINDERS_DATA } from "@/modules/commands-data/admin-commands";
 import type { Command } from "@/structures";
+import { ComponentV2Type, MessageV2Flags, type ContainerComponent } from "@/types/component-v2";
 import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
+import { container, separator, textDisplay } from "@/utils/v2";
 import type { APITextChannel } from "@discordjs/core";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
@@ -18,7 +20,7 @@ export default {
   async interactionRun({ helper, options }) {
     const { client, t } = helper;
     const sub = options.getSubcommand(true);
-    const guild = helper.client.guilds.get(helper.int.guild_id || "");
+    const guild = helper.client.guilds.get(/* helper.int.guild_id  */ "852141490105090059"); // TODO: Revert before merge in prod;
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
     const checkClientPerms = async (ch: APITextChannel) => {
@@ -91,6 +93,8 @@ export default {
         break;
       }
       case "status": {
+        // TODO: remove before merge
+        // @ts-expect-error
         await helper.reply(await getRemindersStatus(guildSettings, guild.name));
         break;
       }
@@ -100,12 +104,13 @@ export default {
 } satisfies Command;
 
 async function getRemindersStatus(guildSettings: GuildSchema, guildName: string) {
-  const title = `Reminders Status for ${guildName}`;
+  const title = `### Reminders Status for ${guildName}`;
   let description = `Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}`;
 
   for (const [k, name] of Object.entries(RemindersEventsMap)) {
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
     description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
   }
-  return { embeds: [{ title, description }] };
+  const component: ContainerComponent = container(textDisplay(title), separator(), textDisplay(description));
+  return { components: [component], flags: MessageV2Flags.IS_COMPONENTS_V2 | 64 }; // TODO: revert to use dapi version
 }

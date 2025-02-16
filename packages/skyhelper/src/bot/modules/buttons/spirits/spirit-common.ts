@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import Utils from "@/utils/classes/Utils";
 import { ButtonStyle, type APIButtonComponent } from "@discordjs/core";
 
@@ -52,7 +52,7 @@ export default {
       components: [...(index === 1 ? [message.components![0]] : []), newRow],
     });
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;
 
 const commonBtn = (type: "location" | "tree", spirit: string, user: string): APIButtonComponent => ({
   type: 2,

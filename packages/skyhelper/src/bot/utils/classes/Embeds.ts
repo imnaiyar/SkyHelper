@@ -1,10 +1,12 @@
-import { ShardsUtil as utils, shardsInfo, resolveColor, type ColorResolvable } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
   type APIActionRowComponent,
   type APIButtonComponent,
   type APIEmbed,
+  type APISelectMenuComponent,
+  type APISelectMenuOption,
   type APIStringSelectComponent,
 } from "@discordjs/core";
 import { DateTime } from "luxon";
@@ -15,6 +17,9 @@ import type { getTranslator } from "@/i18n";
 import { eventData, SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema } from "@/types/schemas";
+import { MessageV2Flags, type ContainerComponent } from "@/types/component-v2";
+import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "../v2.js";
+import { CalendarMonths, emojis } from "../constants.js";
 
 export default class {
   /**
@@ -25,7 +30,6 @@ export default class {
   static buildShardEmbed(
     date: DateTime,
     t: ReturnType<typeof import("@/i18n").getTranslator>,
-    footer: string,
     noBtn?: boolean,
     user?: string,
   ): {
@@ -37,19 +41,8 @@ export default class {
     const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
     const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
     const status = utils.getStatus(date);
-    const result: APIEmbed = {
-      author: {
-        name: t("features:shards-embed.AUTHOR"),
-        icon_url:
-          "https://media.discordapp.net/attachments/888067672028377108/1124426967438082058/SOShattering-radiant-shards.jpg?width=862&height=925",
-      },
-      title: formatted,
-      timestamp: new Date().toISOString(),
-      footer: {
-        text: footer,
-        icon_url: "https://cdn.imnaiyar.site/bot-icon.gif",
-      },
-    };
+
+    const components: ContainerComponent = container(separator());
 
     // TODO: Use encode id to include the date (and maybe user to), also would need to update jobs
     let navBtns: APIActionRowComponent<APIButtonComponent> | null = null;
@@ -72,88 +65,63 @@ export default class {
         ],
       };
     }
-    const row: APIActionRowComponent<APIButtonComponent> = {
-      type: 1,
-      components: [
-        {
-          type: ComponentType.Button,
-          label: t("features:shards-embed.BUTTON1"),
-          custom_id: `shards-timeline;date:${date.toISODate()}`,
-          disabled: status === "No Shard",
-          style: ButtonStyle.Success,
-        },
-        {
-          type: ComponentType.Button,
-          label: t("features:shards-embed.BUTTON2"),
-          custom_id: `shards-location;date:${date.toISODate()}`,
-          disabled: status === "No Shard",
-          style: ButtonStyle.Success,
-        },
-        {
-          type: ComponentType.Button,
-          label: t("features:shards-embed.BUTTON3"),
-          custom_id: "shards-about",
-          style: ButtonStyle.Success,
-        },
-      ],
-    };
     if (status === "No Shard") {
-      result.image = {
-        url: "https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif",
-      };
-      result.description = `**${t("features:shards-embed.NO-SHARD")}**`;
-      result.color = resolveColor("#9fb686");
+      components.components.splice(0, 0, textDisplay(`-# ${t("features:shards-embed.AUTHOR")}\n${formatted}`));
+      components.components.push(
+        textDisplay(t("features:shards-embed.NO-SHARD")),
+        mediaGallery({
+          url: "https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif",
+        }),
+        ...(navBtns ? [navBtns] : []),
+      );
     } else {
-      const isActive = status.find((s) => s.active);
-      const allEnded = status.every((s) => s.ended);
       const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
-      result.fields = [
-        { name: t("features:shards-embed.FIELDS.TYPE.LABEL"), value: `${info.type} (${info.rewards})`, inline: true },
-        { name: t("features:shards-embed.FIELDS.LOCATION.LABEL"), value: `${info.area}`, inline: true },
-        {
-          name: t("features:shards-embed.FIELDS.STATUS.LABEL"),
-          value: allEnded
-            ? t("features:shards-embed.FIELDS.STATUS.VALUE.ENDED", {
-                DURATION: status
-                  .slice()
-                  .reverse()
-                  .find((s) => s.ended)?.duration,
+      components.components.splice(
+        0,
+        0,
+        section(
+          thumbnail(info.image, info.type),
+          `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${info.type} (${info.rewards})\n`,
+        ),
+      );
+      components.components.push(
+        ...info.locations.map((l) =>
+          section(thumbnail(l.image, l.description), l.description + `\n${emojis.tree_end}${info.area}`),
+        ),
+        separator(),
+        section(
+          {
+            type: ComponentType.Button,
+            label: "Details",
+            custom_id: `shards-timeline;date:${date.toISODate()}`,
+            style: ButtonStyle.Secondary,
+          },
+          `**${t("features:shards-embed.BUTTON1")}**` +
+            "\n" +
+            status
+              .map((s, i, arr) => {
+                const prefix = `${s.ended ? "-# " : ""}${i === arr.length - 1 ? emojis.tree_end : emojis.tree_top}**${getIndex(i + 1)} Shard:** `;
+                // prettier-ignore
+                if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })})~~`;
+                // prettier-ignore
+                if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: `<t:${s.end.toUnixInteger()}:>` })}) <a:uptime:1228956558113771580>`;
+                return (
+                  prefix +
+                  `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: `<t:${s.start.toUnixInteger()}:R>` })})`
+                );
               })
-            : isActive
-              ? t("features:shards-embed.FIELDS.STATUS.VALUE.ACTIVE", {
-                  INDEX: getIndex(isActive.index),
-                  DURATION: isActive.duration,
-                })
-              : t("features:shards-embed.FIELDS.STATUS.VALUE.EXPECTED", {
-                  INDEX: getIndex(status.find((s) => !s.active && !s.ended)!.index),
-                  DURATION: status.find((s) => !s.active && !s.ended)!.duration,
-                }),
-        },
-        {
-          name: t("features:shards-embed.BUTTON1"),
-          value: status
-            .map((s, i) => {
-              const prefix = "- **" + getIndex(i + 1) + " Shard:** ";
-              // prettier-ignore
-              if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: s.duration })})~~`;
-              // prettier-ignore
-              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: s.duration })}) <a:uptime:1228956558113771580>`;
-              return (
-                prefix +
-                `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: s.duration })})`
-              );
-            })
-            .join("\n"),
-          inline: true,
-        },
-      ];
-      result.color = resolveColor(info.colors as ColorResolvable);
-      result.thumbnail = { url: info.image };
+              .join("\n"),
+        ),
+        separator(),
+        ...(navBtns ? [navBtns] : []),
+      );
     }
 
     return {
-      embeds: [result],
-      components: navBtns ? [row, navBtns] : [row],
+      // TODO: skjjd
+      // @ts-expect-error
+      components: [components],
+      flags: 32768 | 64,
     };
   }
 
@@ -165,11 +133,7 @@ export default class {
    * @param text text to include in the footer
    * @returns
    */
-  static async getTimesEmbed(
-    client: SkyHelper,
-    t: ReturnType<typeof getTranslator>,
-    text?: string,
-  ): Promise<{ embeds: APIEmbed[]; components: APIActionRowComponent<APIStringSelectComponent | APIButtonComponent>[] }> {
+  static async getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getTranslator>) {
     const tsData = await getTSData();
     const specialEvent = await getSpecialEvent();
     // Special Events
@@ -192,6 +156,7 @@ export default class {
     } else {
       const spirit: SpiritsData = client.spiritsData[tsData.value!];
       const emote = spirit?.expression?.icon || "❓";
+      // TODO: update tree emojis from localization in this for prod
       const strVisiting = t("features:times-embed.TS_VISITING", {
         TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
         DATE: Utils.time(tsData.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
@@ -204,6 +169,13 @@ export default class {
       });
       tsDesc = tsData.visiting ? strVisiting : strExpected;
     }
+    const now = DateTime.now().setZone("America/Los_Angeles");
+    const component = container(
+      textDisplay(
+        `### ${t("features:times-embed.EMBED_TITLE")}\n${emojis.tree_end}\`Sky Time:\` ${now.toFormat("hh:mm a")} | \`Local Time\`: <t:${now.toUnixInteger()}:t>`,
+      ),
+      separator(),
+    );
     let description = "";
     for (const [k, { status }] of skyutils.allEventDetails()) {
       // @ts-expect-error
@@ -219,21 +191,12 @@ export default class {
       }
       description += desc + "\n";
     }
-
-    description += `\`${t("features:times-embed.TS_TITLE")}:\`\n${tsDesc}`;
-    description += `\n\`${t("features:times-embed.EVENT_TITLE")}:\`\n${eventDesc}`;
-    // Build the Embed
-    const embed: APIEmbed = {
-      author: { name: t("features:times-embed.EMBED_AUTHOR"), icon_url: Utils.getUserAvatar(client.user) },
-      title: t("features:times-embed.EMBED_TITLE", {
-        SKY_TIME: DateTime.now().setZone("America/Los_Angeles").toFormat("hh:mm a"),
-      }),
-      color: resolveColor("Random"),
-      description,
-      timestamp: new Date().toISOString(),
-    };
-    if (text) embed.footer = { text, icon_url: Utils.getUserAvatar(client.user) };
-
+    component.components.push(
+      textDisplay(description),
+      separator(),
+      textDisplay(`**${t("features:times-embed.TS_TITLE")}:**\n${tsDesc}`),
+      textDisplay(`\n**${t("features:times-embed.EVENT_TITLE")}:**\n${eventDesc}`),
+    );
     const row: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
@@ -262,7 +225,7 @@ export default class {
         },
       ],
     };
-    return { embeds: [embed], components: [row, btn] };
+    return { components: [component, row, btn], flags: 32768 };
   }
 
   static dailyQuestEmbed(data: DailyQuestsSchema, index: number) {
@@ -345,4 +308,181 @@ export default class {
     if (rotating_candles) row.components.push(seasonalBtn);
     return { embeds: [embed], components: [selectMenu, row] };
   }
+
+  static buildCalendarResponse(
+    t: ReturnType<typeof getTranslator>,
+    client: SkyHelper,
+    userId: string,
+    { index, month, year }: ResponseParams = {},
+  ) {
+    const now = DateTime.now().setZone("America/Los_Angeles");
+    const date = 1;
+    month ??= now.month;
+    const monthStr = CalendarMonths[month - 1];
+    year ??= now.year;
+    const datesArray = getDates(now);
+
+    const setsOfDates = [];
+    for (let i = 0; i < datesArray.length; i += 5) {
+      setsOfDates.push(datesArray.slice(i, i + 5));
+    }
+
+    index ??= setsOfDates.findIndex((dates) => dates.some((d) => d.hasSame(now, "day")));
+    const toGet = DateTime.fromObject({ year, month, day: date }, { zone: "America/Los_Angeles" });
+    const dates = getDates(toGet);
+    const total = dates.length;
+    const totalPages = Math.ceil(total / 5);
+    const start = index * 5;
+    const end = start + 5;
+    const toDisplay = dates.slice(start, end);
+    const title = `${toDisplay[0].toFormat("DD")} - ${toDisplay[toDisplay.length - 1].toFormat("DD")}`;
+    const options: APISelectMenuOption[] = [];
+    for (let i = 0; i < totalPages; i++) {
+      const start2 = i * 5;
+      const end2 = start2 + 5;
+      const dat = dates.slice(start2, end2);
+      const label1 = dat[0].toFormat("d");
+      const label2 = dat[dat.length - 1].toFormat("d");
+      const label = `${label1}${utils.getSuffix(parseInt(label1))} - ${label2}${utils.getSuffix(parseInt(label2))}`;
+      const value = `${i}`;
+      options.push({ label, value, default: index === i });
+    }
+    const dateSelect: APIActionRowComponent<APISelectMenuComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 3,
+          custom_id: client.utils.encodeCustomId({
+            id: "shards-calendar-0",
+            type: "index",
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          placeholder: t("commands:SHARDS_CALENDAR.RESPONSES.DATE_SELECT_PLACEHOLDER"),
+          options: options,
+        },
+      ],
+    };
+    const monthSelect: APIActionRowComponent<APISelectMenuComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 3,
+          custom_id: client.utils.encodeCustomId({
+            id: "shards-calendar-1",
+            type: "month",
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          placeholder: t("commands:SHARDS_CALENDAR.RESPONSES.MONTH_SELECT_PLACEHOLDER"),
+          options: CalendarMonths.map((m, i) => ({
+            label: m,
+            value: (i + 1).toString(),
+            default: month === i + 1,
+          })),
+        },
+      ],
+    };
+    const yOptions: APISelectMenuOption[] = [];
+    for (let i = year - 5; i < year + 5; i++) {
+      yOptions.push({
+        label: `${i}`,
+        value: `${i}`,
+        default: i === year,
+      });
+    }
+    const yearSelect: APIActionRowComponent<APISelectMenuComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 3,
+          custom_id: client.utils.encodeCustomId({
+            id: "shards-calendar-2",
+            type: "year",
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          placeholder: t("commands:SHARDS_CALENDAR.RESPONSES.YEAR_SELECT_PLACEHOLDER"),
+          options: yOptions,
+        },
+      ],
+    };
+    const navBtn: APIActionRowComponent<APIButtonComponent> = {
+      type: 1,
+      components: [
+        {
+          type: 2,
+          custom_id: client.utils.encodeCustomId({
+            id: `calendar-nav-2`,
+            index: (index - 1).toString(),
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          emoji: { name: "⬅️" },
+          style: 1,
+          disabled: index === 0,
+        },
+        {
+          type: 2,
+          custom_id: client.utils.encodeCustomId({
+            id: `calendar-nav-next`,
+            index: (index + 1).toString(),
+            user: userId,
+            month: month.toString(),
+            year: year.toString(),
+          }),
+          emoji: { name: "➡️" },
+          style: 1,
+          disabled: index === totalPages - 1,
+        },
+      ],
+    };
+    let description = "";
+    toDisplay.forEach((d) => {
+      const { currentRealm, currentShard } = utils.shardsIndex(d);
+      const timelines = shardsTimeline(d)[currentShard];
+      const noShard = utils.getStatus(d);
+      const info = shardsInfo[currentRealm][currentShard];
+      description += `**${
+        d.hasSame(now, "day")
+          ? client.utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
+          : client.utils.time(d.toUnixInteger(), "D")
+      }**\n`;
+      description +=
+        typeof noShard === "string"
+          ? "↪ " + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
+          : `↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n↪ ${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${client.utils.time(ti.start.toUnixInteger(), "T")}`).join(" • ") })}\n\n`;
+    });
+    const component = container(
+      textDisplay(
+        `-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year })}\n### ${title}\n${t(
+          "commands:SHARDS_CALENDAR.RESPONSES.EMBED_DESCRIPTION",
+          { shardsCmd: `</shards:1142231977328648364>` },
+        )}\n`,
+      ),
+      separator(),
+      textDisplay(
+        description + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`,
+      ),
+    );
+    return { components: [component, dateSelect, monthSelect, yearSelect, navBtn] };
+  }
 }
+function getDates(date: DateTime): DateTime[] {
+  const totalDays = date.daysInMonth!;
+  const dates: DateTime[] = [];
+  for (let i = 1; i <= totalDays; i++) {
+    dates.push(DateTime.fromObject({ year: date.year, month: date.month, day: i }, { zone: "America/Los_Angeles" }));
+  }
+  return dates;
+}
+
+type ResponseParams = {
+  index?: number;
+  month?: number;
+  year?: number;
+};

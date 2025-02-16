@@ -44,10 +44,7 @@ export class LiveUpdates {
 
       // if there is channel in body, means its changed, not disabled
       if (isChanged) {
-        const embed =
-          bodyKey === "shards"
-            ? embeds.buildShardEmbed(now, t, t("features:shards-embed.FOOTER"), true)
-            : await embeds.getTimesEmbed(client, t, t("features:times-embed.FOOTER"));
+        const embed = bodyKey === "shards" ? embeds.buildShardEmbed(now, t, true) : await embeds.getTimesEmbed(client, t);
 
         const newWebhook = await utils.createWebhookAfterChecks(
           body[bodyKey],
@@ -55,6 +52,7 @@ export class LiveUpdates {
           "For Live updates",
         );
 
+        // @ts-expect-error eqeq
         const msg = await client.api.webhooks.execute(newWebhook.id, newWebhook.token!, {
           ...embed,
           wait: true,

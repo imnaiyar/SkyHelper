@@ -1,5 +1,5 @@
 import embeds from "@/utils/classes/Embeds";
-import type { Button } from "@/structures";
+import type { ComponentStructure } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 
 export default {
@@ -26,4 +26,4 @@ export default {
     const response = embeds.dailyQuestEmbed(data, parseInt(index));
     await helper.editReply(response);
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;

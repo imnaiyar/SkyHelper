@@ -14,9 +14,9 @@ import {
 import type { Command } from "./Command.js";
 import chalk from "chalk";
 import { PermissionsUtil, type PermissionsResolvable } from "@/utils/classes/PermissionUtils";
-import { loadButtons, loadCommands, loadContextCmd, loadEvents } from "@/utils/loaders";
+import { loadComponents, loadCommands, loadContextCmd, loadEvents } from "@/utils/loaders";
 import type { ContextMenuCommand } from "./ContextMenuCommand.js";
-import type { Button } from "./Button.js";
+import type { ComponentStructure } from "./ComponentStructure.js";
 import * as schemas from "@/schemas/index";
 import Utils from "@/utils/classes/Utils";
 import logger from "@/handlers/logger";
@@ -29,9 +29,6 @@ import {
   type MessageCollectorOptions,
 } from "@/utils/classes/Collector";
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
-import { HttpException, HttpStatus } from "@nestjs/common";
-import { type UserSession } from "@/api/utils/discord";
-import * as Sentry from "@sentry/node";
 
 export class SkyHelper extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
@@ -57,7 +54,7 @@ export class SkyHelper extends Client {
 
   public contexts: Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">> = new Collection();
 
-  public buttons: Collection<string, Button> = new Collection();
+  public components: Collection<string, ComponentStructure<"Button" | "Select">> = new Collection();
 
   public utils = Utils;
 
@@ -144,6 +141,10 @@ export class SkyHelper extends Client {
     console.log(chalk.blueBright("\n\n<---------------------- Loading Contexts ----------------------->\n"));
     this.contexts = await loadContextCmd();
     console.log(chalk.blueBright("\n\n<---------------------- Loading Buttons ----------------------->\n"));
-    this.buttons = await loadButtons();
+    const buttons = await loadComponents("Button");
+    console.log(chalk.blueBright("\n\n<---------------------- Loading Selects ----------------------->\n"));
+    const selects = await loadComponents("Select");
+    // forgive me for using any
+    this.components = buttons.concat(selects as any);
   }
 }

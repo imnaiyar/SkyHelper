@@ -1,6 +1,6 @@
 import config from "@/config";
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
-import { type Button } from "@/structures";
+import { type ComponentStructure } from "@/structures";
 import type { getTranslator } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import {
@@ -66,7 +66,7 @@ export default {
       await helper.editReply(orgData).catch(() => {});
     });
   },
-} satisfies Button;
+} satisfies ComponentStructure<"Button">;
 
 const getCommonResponse = (data: SpiritsData, user: string): APIInteractionResponseCallbackData & { files?: RawFile[] } => {
   // prettier-ignore
