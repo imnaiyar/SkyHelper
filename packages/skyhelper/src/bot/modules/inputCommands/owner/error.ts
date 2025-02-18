@@ -7,6 +7,6 @@ export default {
   category: "Owner",
   prefix: { aliases: ["err"] },
   messageRun: () => {
-    throw new Error("Test error");
+    Promise.reject("This is a test reject");
   },
 } satisfies Command;
