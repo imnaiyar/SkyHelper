@@ -6,7 +6,7 @@ export default {
   ownerOnly: true,
   category: "Owner",
   prefix: { aliases: ["err"] },
-  messageRun: () => {
-    Promise.reject("This is a test reject");
+  messageRun: async () => {
+    await Promise.reject("Tesssssssssst Error");
   },
 } satisfies Command;
