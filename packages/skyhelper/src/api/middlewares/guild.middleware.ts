@@ -17,9 +17,15 @@ export class GuildMiddleware implements NestMiddleware {
 
   async use(req: AuthRequest, _: Response, next: NextFunction) {
     const guildId = req.url.split("/")[1];
-    const hasPerm = await checkPermissions(req.user, guildId, this.bot);
     const isAdmin = checkAdmin(req.user);
-    if (!hasPerm && !isAdmin) {
+    // return early for admins since admin might not be a member
+    if (isAdmin) {
+      next();
+      return;
+    }
+    const hasPerm = await checkPermissions(req.user, guildId, this.bot);
+
+    if (!hasPerm) {
       throw new HttpException("Missing permissions", HttpStatus.UNAUTHORIZED);
     }
     next();
