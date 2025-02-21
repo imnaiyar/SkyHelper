@@ -14,7 +14,6 @@ export function checkAdmin(user: APIUser) {
     level: "info",
   });
 
-  if (!config.DASHBOARD.ADMINS.includes(user.id)) {
-    throw new HttpException("Missing access", HttpStatus.UNAUTHORIZED);
-  }
+  if (!config.DASHBOARD.ADMINS.includes(user.id)) return false;
+  return true;
 }

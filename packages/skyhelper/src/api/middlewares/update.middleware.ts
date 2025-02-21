@@ -1,4 +1,4 @@
-import { Inject, Injectable, type NestMiddleware } from "@nestjs/common";
+import { Inject, Injectable, type NestMiddleware, HttpException, HttpStatus } from "@nestjs/common";
 import { type UserSession } from "../utils/discord.js";
 import type { Request, Response, NextFunction } from "express";
 import { SkyHelper } from "@/structures";
@@ -15,6 +15,11 @@ export class UpdateMiddleware implements NestMiddleware {
   constructor(@Inject("BotClient") private readonly bot: SkyHelper) {}
 
   async use(req: AuthRequest, _: Response, next: NextFunction) {
-    checkAdmin(req.user), next();
+    const isAdmin = checkAdmin(req.user);
+    if (!isAdmin) {
+      throw new HttpException("Missing access", HttpStatus.UNAUTHORIZED);
+    }
+
+    next();
   }
 }

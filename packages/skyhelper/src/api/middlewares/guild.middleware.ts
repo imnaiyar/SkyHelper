@@ -1,9 +1,10 @@
-import { Inject, Injectable, type NestMiddleware } from "@nestjs/common";
+import { Inject, Injectable, type NestMiddleware, HttpException, HttpStatus } from "@nestjs/common";
 import { type UserSession } from "../utils/discord.js";
 import type { Request, Response, NextFunction } from "express";
 import { SkyHelper } from "@/structures";
 import type { APIUser } from "@discordjs/core";
 import { checkPermissions } from "../utils/checkPermissions.js";
+import { checkAdmin } from "../utils/checkAdmin.js";
 
 export interface AuthRequest extends Request {
   session: UserSession;
@@ -16,7 +17,11 @@ export class GuildMiddleware implements NestMiddleware {
 
   async use(req: AuthRequest, _: Response, next: NextFunction) {
     const guildId = req.url.split("/")[1];
-    await checkPermissions(req.user, guildId, this.bot);
+    const hasPerm = await checkPermissions(req.user, guildId, this.bot);
+    const isAdmin = checkAdmin(req.user);
+    if (!hasPerm && !isAdmin) {
+      throw new HttpException("Missing permissions", HttpStatus.UNAUTHORIZED);
+    }
     next();
   }
 }
