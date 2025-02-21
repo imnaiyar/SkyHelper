@@ -21,7 +21,6 @@ export async function checkPermissions(user: APIUser, guildID: string, client: S
     level: "info",
   });
   const memberPerms = PermissionsUtil.permissionsFor(member, guild);
-  if (!memberPerms.has("ManageGuild") && guild.owner_id !== member.user.id) {
-    throw new HttpException("Missing permissions", HttpStatus.UNAUTHORIZED);
-  }
+  if (!memberPerms.has("ManageGuild") && guild.owner_id !== member.user.id) return false;
+  return true;
 }
