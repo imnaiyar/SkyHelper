@@ -1,5 +1,5 @@
 import { CustomLogger } from "@imnaiyar/framework";
-import { captureException } from "@sentry/node";
+import { captureException, Scope } from "@sentry/node";
 const logger = new CustomLogger({
   env: process.env.NODE_ENV as "development",
   errorWebhook: process.env.ERROR_LOGS,
