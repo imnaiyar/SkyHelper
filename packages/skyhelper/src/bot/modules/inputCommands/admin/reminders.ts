@@ -57,6 +57,8 @@ export default {
           last_messageId: null,
           role: role?.id ?? null,
         };
+        guildSettings.reminders.active = true;
+
         await guildSettings.save();
         await helper.reply({
           content: `Successfully configured ${RemindersEventsMap[event]} reminders in <#${channel.id}>${role ? ` with role <@&${role.id}>` : ""}.`,
