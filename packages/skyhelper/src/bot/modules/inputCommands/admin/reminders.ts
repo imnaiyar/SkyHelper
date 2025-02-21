@@ -86,6 +86,8 @@ export default {
         eventSettings.active = false;
         eventSettings.webhook = null;
         eventSettings.role = null;
+        const isAnyActive = RemindersUtils.checkActive(guildSettings);
+        if (!isAnyActive) guildSettings.reminders.active = false;
         await guildSettings.save();
         await helper.reply({
           content: `Successfully stopped ${RemindersEventsMap[event]} reminders`,
