@@ -2,7 +2,6 @@ import type { SkyHelper } from "@/structures/Client";
 import { PermissionFlagsBits, type APIGuild, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
 import logger from "@/handlers/logger";
-import { addBreadcrumb, captureException } from "@sentry/node";
 type StringPermissions = `${number}`;
 export type PermissionsResolvable =
   | bigint

@@ -291,14 +291,13 @@ function getRealmsRow(
         disabled: page - 1 === 0,
         style: ButtonStyle.Secondary,
       },
-      emoji
-        ? {
-            type: ComponentType.Button,
-            custom_id: Utils.encodeCustomId({ id: "realm", user }),
-            emoji: { name: emoji },
-            style: ButtonStyle.Success,
-          }
-        : undefined,
+      {
+        type: ComponentType.Button,
+        custom_id: Utils.encodeCustomId({ id: "realm", user }),
+        emoji: { name: emoji },
+        label: "Back",
+        style: ButtonStyle.Success,
+      },
       {
         type: ComponentType.Button,
         custom_id: Utils.encodeCustomId({ id: "forward", user }),
@@ -306,7 +305,7 @@ function getRealmsRow(
         disabled: page - 1 === total,
         style: ButtonStyle.Secondary,
       },
-    ].filter(Boolean) as APIButtonComponent[],
+    ],
   };
 
   const menu: APIActionRowComponent<APIStringSelectComponent> = {

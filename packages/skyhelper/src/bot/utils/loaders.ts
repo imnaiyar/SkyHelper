@@ -86,7 +86,7 @@ export async function loadButtons() {
   const buttons = new Collection<string, Button>();
   let added = 0;
   let failed = 0;
-  const files = recursiveReadDir(baseDir + "bot/modules/buttons", ["sub"]);
+  const files = recursiveReadDir(baseDir + `bot/modules/buttons`, ["sub"]);
   for (const filePath of files) {
     const file = path.basename(filePath);
 
@@ -97,14 +97,14 @@ export async function loadButtons() {
       if (typeof button !== "object") continue;
       if (buttons.has(button.data.name)) throw new Error("The command already exists");
       buttons.set(button.data.name, button);
-      logger.custom(`Loaded ${button.data.name}`, "BUTTON");
+      logger.custom(`Loaded ${button.data.name}`, "Button");
       added++;
     } catch (ex) {
       failed += 1;
       logger.error(`${file}`, ex);
     }
   }
-  logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
+  logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "Buttons");
   return buttons;
 }
 
