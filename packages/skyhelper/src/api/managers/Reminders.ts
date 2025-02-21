@@ -53,6 +53,7 @@ export class Reminders {
           throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
         }
         event.role = value.role ?? null;
+        settings.reminders.active = true; // mark reminder as active as at one event is active
 
         if (event.webhook?.channelId === value.channelId) continue; // No change, skip
 
@@ -82,6 +83,8 @@ export class Reminders {
         });
       }
     }
+    const isAnyActive = RemindersUtils.checkActive(settings);
+    if (!isAnyActive) settings.reminders.active = false;
     await settings.save();
 
     for (const webhook of webhooksToDelete) {
