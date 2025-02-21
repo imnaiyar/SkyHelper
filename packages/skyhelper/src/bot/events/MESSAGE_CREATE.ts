@@ -52,7 +52,8 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     const commandName = args.shift()!.toLowerCase();
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
     if (!command || !command.messageRun) return;
-    Sentry.setUser({ id: message.author.id, username: message.author.username });
+    const scope = new Sentry.Scope();
+    scope.setUser({ id: message.author.id, username: message.author.username });
 
     const context = {
       guild: guild ? { id: guild.id, name: guild.name, owner: guild.owner_id } : message.guild_id,
@@ -75,11 +76,11 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
       },
       occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy-MM-dd HH:mm:ss"),
     };
-    Sentry.setContext("Metadata", context);
+    scope.setContext("Metadata", context);
     const userSettings = await client.schemas.getUser(message.author);
     const t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
 
-    Sentry.setExtra("command", command.name);
+    scope.setExtra("command", command.name);
 
     // Check if command is 'OWNER' only.
     if (command.ownerOnly && !client.config.OWNER.includes(message.author.id)) return;
@@ -94,7 +95,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     try {
       await command.messageRun({ message, args, flags, t, client }, api);
     } catch (error) {
-      const id = client.logger.error(error);
+      const id = client.logger.error(error, scope);
       const embed: APIEmbed = {
         title: t("errors:EMBED_TITLE"),
         description: t("errors:EMBED_DESCRIPTION"),
