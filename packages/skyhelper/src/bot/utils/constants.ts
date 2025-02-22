@@ -7,6 +7,7 @@ export const emojis = {
   tree_middle: "<:tree_middle:1339963268969791550> ",
   tree_end: "<:tree_end:1339963241991901224>",
 };
+export const isProd = process.env.NODE_ENV === "production";
 
 export const CalendarMonths = [
   "January",
