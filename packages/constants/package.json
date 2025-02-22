@@ -18,13 +18,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imnaiyar/skyhelper.git",
+    "url": "https://github.com/imnaiyar/skyhelper.git",
     "directory": "packages/constants"
   },
   "bugs": {
     "url": "https://github.com/imnaiyar/skyhelper/issues"
   },
-  "homepage": "https://github.com/imnaiyar/skyhelper/packages/constants#readme",
+  "homepage": "https://github.com/imnaiyar/skyhelper/tree/main/packages/constants",
   "keywords": [],
   "author": "NyR",
   "license": "ISC",
