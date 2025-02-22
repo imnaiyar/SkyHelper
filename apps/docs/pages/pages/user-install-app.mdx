@@ -1,0 +1,39 @@
+---
+title: User-installable Apps
+descriptions: Basic information about newly released user-apps
+---
+
+import Image from "next/image";
+import { Steps, Cards } from "nextra/components";
+import { RiSlashCommands2 } from "react-icons/ri";
+
+# User-installable App
+
+Discord has recently introduced a feature that allows users to install bots directly to their user accounts. This enables you to access the bot's commands across all Discord contexts: direct messages (DMs), group DMs (GDMs), and even servers where the bot isn't a member.
+
+SkyHelper fully supports user installations, allowing you to use nearly all its commands seamlessly. However, some commands require the bot to be present in a server to function correctly. For details on which commands are server-specific, please refer to the [Commands](/commands) page.
+
+## How to Install SkyHelper
+
+Adding SkyHelper to your user account is quick and easy, similar to adding it to a server—though the process slightly differs. Follow these steps:
+
+<Steps>
+  {/* <!-- prettier-ignore --> */}
+  ### Open the bot's profile and click the "Add App" button, or you can use this [link](https://discord.com/oauth2/authorize?client_id=1121541967730450574) to get started.
+  <br />
+  <Image src="/user-install-add-app.png" alt="Add App (Visuals)" height={300} width={300} />
+  <br />
+  ### Click the "Try it now" button.
+  <br />
+  <Image src="/user-app-try-it.png" alt="Try it now (Visuals)" height={300} width={300} />
+  <br />
+  ### Authorize the bot, and you're all set.
+  <br />
+  <Image src="/user-app-authorize.png" alt="Authorize (Visuals)" height={300} width={300} />
+  <br />
+</Steps>
+You can now access SkyHelper's commands anywhere, either through the `App Launcher` or by typing `/` in any chat.
+
+<Cards>
+  <Cards.Card title="Commands" icon={<RiSlashCommands2 />} href="/commands" />
+</Cards>

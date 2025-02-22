@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build --filter=!./packages/docs/",
-    "build:affected": "turbo build --filter=!./packages/docs/ --filter=...[origin/main]",
+    "build": "turbo build --filter=!./apps/docs/",
+    "build:affected": "turbo build --filter=!./apps/docs/ --filter=...[origin/main]",
     "lint": "turbo lint",
     "lint:affected": "turbo lint --filter=...[origin/main]",
     "test:affected": "turbo test --filter=...[origin/main]",
