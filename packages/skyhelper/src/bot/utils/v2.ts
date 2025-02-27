@@ -27,10 +27,10 @@ export function container(
   };
 }
 
-export function textDisplay(content: string): APITextDisplayComponent {
+export function textDisplay(content: string, ...contents: string[]): APITextDisplayComponent {
   return {
     type: ComponentType.TextDisplay,
-    content,
+    content: [content, ...contents].join("\n"),
   };
 }
 
@@ -81,7 +81,7 @@ export function section(
   return {
     type: ComponentType.Section,
     accessory,
-    components: [content, ...contents].map(textDisplay),
+    components: [content, ...contents].map((c) => textDisplay(c)),
   };
 }
 

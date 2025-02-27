@@ -1,11 +1,11 @@
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { APIEmbed, APIMessageComponentSelectMenuInteraction } from "@discordjs/core";
-import { SkytimesUtils } from "@skyhelperbot/utils";
+import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 
 export async function handleSkyTimesSelect(interaction: APIMessageComponentSelectMenuInteraction, helper: InteractionHelper) {
   const value = interaction.data.values[0];
   const { t, client } = helper;
-  const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value);
+  const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value as EventKey);
   const embed: APIEmbed = {
     title: event.name + " Times",
     footer: {
