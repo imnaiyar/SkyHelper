@@ -3,11 +3,11 @@ import {
   type APIActionRowComponent,
   type APIButtonComponent,
   type APIContainerComponent,
-  type APIContainerInnerComponent,
+  type APIComponentInContainer,
   type APIFileComponent,
   type APIMediaGalleryComponent,
   type APIMediaGalleryItem,
-  type APIMessageActionRowComponent,
+  type APIComponentInMessageActionRow,
   type APISectionComponent,
   type APISeparatorComponent,
   type APITextDisplayComponent,
@@ -16,8 +16,8 @@ import {
 } from "@discordjs/core";
 
 export function container(
-  component: APIContainerInnerComponent | APIContainerInnerComponent[],
-  ...comps: APIContainerInnerComponent[]
+  component: APIComponentInContainer | APIComponentInContainer[],
+  ...comps: APIComponentInContainer[]
 ): APIContainerComponent {
   const components = Array.isArray(component) ? component : [component];
   components.push(...comps);
@@ -96,9 +96,9 @@ export function file(url: string, spoiler?: boolean): APIFileComponent {
 }
 
 export function row(
-  component: APIMessageActionRowComponent | APIMessageActionRowComponent[],
-  ...comps: APIMessageActionRowComponent[]
-): APIActionRowComponent<APIMessageActionRowComponent> {
+  component: APIComponentInMessageActionRow | APIComponentInMessageActionRow[],
+  ...comps: APIComponentInMessageActionRow[]
+): APIActionRowComponent<APIComponentInMessageActionRow> {
   const components = Array.isArray(component) ? component : [component];
   components.push(...comps);
   return {
