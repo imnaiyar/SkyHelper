@@ -13,7 +13,7 @@ import {
   type APIContainerComponent,
   type APIGuild,
   type APIGuildMember,
-  type APIMessageActionRowComponent,
+  type APIComponentInMessageActionRow,
   type APIModalInteractionResponseCallbackData,
   type APITextChannel,
   type APIUser,
@@ -190,7 +190,7 @@ export const handleHangman = async (
 };
 
 function createComponents(mode: string, type: string, players: APIUser[], word: string | null, helper: InteractionHelper) {
-  const components: APIActionRowComponent<APIMessageActionRowComponent>[] = [];
+  const components: APIActionRowComponent<APIComponentInMessageActionRow>[] = [];
   if (mode === "double") {
     components.push(
       {
