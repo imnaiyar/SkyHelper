@@ -3,9 +3,11 @@ import type { SpiritsData, SeasonalSpiritData, RegularSpiritData } from "@skyhel
 import type { SkyHelper } from "@/structures";
 import config from "@/config";
 import { getTranslator } from "@/i18n";
-import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIEmbed } from "@discordjs/core";
+import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIContainerComponent } from "@discordjs/core";
 import utils from "./Utils.js";
 import { DateTime } from "luxon";
+import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "../v2.js";
+import { emojis } from "../constants.js";
 
 // Define location Btn (Tree btn is defined/handled when location button is clicked)
 const lctnBtn = (spirit: string, user: string): APIButtonComponent => ({
@@ -57,61 +59,74 @@ export class Spirits {
   /**
    * Get the embed for the spirit response
    */
-  public getEmbed(): APIEmbed {
+  public getResponseEmbed(userid: string): APIContainerComponent {
     const data = this.data;
     const client = this.client;
     const icon = data.expression?.icon ?? data.icon ?? "<:spiritIcon:1206501060303130664>";
-    const desc = `${this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
+    const desc = `${emojis.tree_top}${this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
       data.realm
-        ? `\n${this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
+        ? `\n${emojis.tree_top}${this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
         : ""
-    }${this.isSeasonal(data) && data.season ? `\n${this.t("commands:SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
+    }${this.isSeasonal(data) && data.season ? `\n${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
+    const headerTitle = `-# ${this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR")}\n### [${icon} ${data.name}${
+      data.extra ? ` (${data.extra})` : ""
+    }](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`;
 
-    const embed: APIEmbed = {
-      title: `${icon} ${data.name}${data.extra ? ` (${data.extra})` : ""}`,
-      url: `https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}`,
-      description: desc,
-      author: { name: this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR") },
-      thumbnail: data.image ? { url: data.image } : undefined,
-      fields: [],
-      image: undefined,
-    };
+    const comp = container(
+      data.image ? section(thumbnail(data.image, data.name), headerTitle) : textDisplay(headerTitle),
+      separator(),
+      textDisplay(desc),
+    );
 
     if ("ts" in data && !data.current) {
-      embed.fields!.push({
-        name: this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE"),
-        value: !data.ts.eligible
-          ? `- ${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
-              SEASON:
-                Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
-                ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
-            })}`
-          : data.ts.returned
-            ? `${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${this._formatDates(data.ts.dates)}`
-            : `- ${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`,
-      });
+      comp.components.push(
+        textDisplay(
+          `**${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE")}**\n${
+            !data.ts.eligible
+              ? `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
+                  SEASON:
+                    Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
+                    ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
+                })}`
+              : data.ts.returned
+                ? `${emojis.tree_top}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${emojis.tree_end}${this.t(
+                    "commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_RETURNED_DATE",
+                  )}\n${this._formatDates(data.ts.dates)}`
+                : `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`
+          }`,
+        ),
+      );
     }
+    let text: string, imageUrl: string;
 
     if (!this.isSeasonal(data)) {
-      embed.fields!.push({ name: this.t("commands:SPIRITS.RESPONSES.EMBED.CREDIT"), value: " " });
-      embed.image = { url: `${config.CDN_URL}/${data.main.image}` };
+      text = this.t("commands:SPIRITS.RESPONSES.EMBED.CREDIT");
+      imageUrl = `${config.CDN_URL}/${data.main.image}`;
     } else {
-      embed.fields!.push({
-        name: data.ts?.returned
+      text =
+        "**" +
+        (data.ts?.returned
           ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-          : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
-        value: data
-          .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-          .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-          .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
-      });
+          : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })) +
+        "**";
+      text += `\n${emojis.tree_end}${data
+        .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+        .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+        .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`;
 
       let url = data.tree?.image;
       if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
-      embed.image = { url };
+      imageUrl = url;
     }
+    comp.components.push(
+      separator(),
+      textDisplay(text),
+      mediaGallery({ media: { url: imageUrl, height: 50, width: 50 } }),
+      separator(),
+      this.getButtons(userid),
+    );
 
-    return embed;
+    return comp;
   }
 
   /**
