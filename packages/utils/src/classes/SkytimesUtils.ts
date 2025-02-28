@@ -1,7 +1,6 @@
-import { eventData } from "../constants/eventDatas.js";
+import { eventData, type EventKey } from "../constants/eventDatas.js";
 import { DateTime } from "luxon";
 
-type EventKey = keyof typeof eventData;
 /**
  * Utilities for skytimes
  */
@@ -49,7 +48,7 @@ export class SkytimesUtils {
    * Get the next occurrence of the event relative to now
    * @param eventName The key of the event
    */
-  private static getNextEventOccurrence(eventName: EventKey): DateTime {
+  public static getNextEventOccurrence(eventName: EventKey): DateTime {
     const event = eventData[eventName];
     if (!event) throw new Error("Unknown Event");
 
@@ -83,7 +82,7 @@ export class SkytimesUtils {
    * @returns An array of event details
    */
   public static allEventDetails(): [EventKey, EventDetails][] {
-    const keys = Object.keys(eventData).sort((a, b) => eventData[a].index - eventData[b].index);
+    const keys = (Object.keys(eventData) as EventKey[]).sort((a, b) => eventData[a].index - eventData[b].index);
     const occurrences: [EventKey, EventDetails][] = [];
 
     for (const key of keys) {

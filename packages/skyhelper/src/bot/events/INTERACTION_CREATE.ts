@@ -18,7 +18,7 @@ import {
   type GatewayDispatchEvents,
 } from "@discordjs/core";
 import { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import { resolveColor, SkytimesUtils } from "@skyhelperbot/utils";
+import { resolveColor, SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import Embeds from "@/utils/classes/Embeds";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
@@ -244,7 +244,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       const id = Utils.parseCustomId(interaction.data.custom_id).id;
       if (id === "skytimes-details") {
         const value = interaction.data.values[0];
-        const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value);
+        const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value as EventKey);
         const embed: APIEmbed = {
           title: event.name + " Times",
           footer: {

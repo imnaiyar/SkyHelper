@@ -3,7 +3,9 @@ import type { Command } from "@/structures";
 import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
+import { getTSData } from "@/utils/getEventDatas";
 import type { APITextChannel } from "@discordjs/core";
+import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",
@@ -60,8 +62,15 @@ export default {
         guildSettings.reminders.active = true;
 
         await guildSettings.save();
+        const eventToGet = ["dailies", "reset"].includes(event) ? "daily-reset" : event;
+        let nextOccurence;
+        if (eventToGet === "ts") {
+          nextOccurence = (await getTSData())!.nextVisit;
+        } else {
+          nextOccurence = SkytimesUtils.getNextEventOccurrence(eventToGet as EventKey);
+        }
         await helper.reply({
-          content: `Successfully configured ${RemindersEventsMap[event]} reminders in <#${channel.id}>${role ? ` with role <@&${role.id}>` : ""}.`,
+          content: `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${channel.id}>${role ? ` with role <@&${role.id}>` : ""}.\n- -# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence.toUnixInteger()}:R>`,
           allowed_mentions: { parse: [] },
         });
         break;

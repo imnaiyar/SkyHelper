@@ -3,7 +3,7 @@ import { Webhook } from "@/structures/Webhook.js";
 import { roleMention } from "@discordjs/builders";
 import { getTranslator, type LangKeys } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
-import { SkytimesUtils as skyutils } from "@skyhelperbot/utils";
+import { SkytimesUtils as skyutils, type EventKey } from "@skyhelperbot/utils";
 import { resolveColor } from "@/utils/resolveColor.js";
 import type { GuildSchema } from "@/types";
 import { throttleRequests } from "./throttleRequests.js";
@@ -107,27 +107,9 @@ async function sendGuildReminder(guild: GuildSchema, type: Events) {
  * @returns The response to send
  */
 function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string) {
-  let skytime;
-  let key = "";
-  switch (type) {
-    case "grandma":
-      skytime = "Grandma";
-      key = "grandma";
-      break;
-    case "geyser":
-      skytime = "Geyser";
-      key = "geyser";
-      break;
-    case "turtle":
-      skytime = "Turtle";
-      key = "turtle";
-      break;
-    case "aurora":
-      skytime = "Aurora";
-      key = "aurora";
-      break;
-  }
-  const { startTime, endTime, active } = skyutils.getEventDetails(key).status;
+  const skytime = type.charAt(0).toUpperCase() + type.slice(1);
+
+  const { startTime, endTime, active } = skyutils.getEventDetails(type as EventKey).status;
   if (!active) return t("features:reminders.ERROR");
   return `${t("features:reminders.COMMON", {
     // @ts-expect-error
