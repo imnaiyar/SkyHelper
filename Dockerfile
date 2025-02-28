@@ -1,18 +1,29 @@
+# Base build image
 FROM node:22.13.0 AS build
 
 RUN npm i -g pnpm@9.4.0
 
 WORKDIR /app
-COPY . .
+ARG TURBO_TOKEN
+ARG TURBO_TEAM
+ENV TURBO_TEAM=${TURBO_TEAM}
+ENV TURBO_TOKEN=${TURBO_TOKEN}
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile 
+COPY package.json pnpm-lock.yaml .npmrc ./
+COPY pnpm-workspace.yaml ./
 
-RUN pnpm build; \
-    pnpm deploy --filter="./packages/skyhelper" sky-out --prod; \
+# Store it in virtual store
+RUN pnpm fetch
+
+ADD . ./
+
+RUN pnpm install -r --offline
+
+RUN pnpm build && \
+    pnpm deploy --filter="./packages/skyhelper" sky-out --prod && \
     pnpm deploy --filter="./packages/jobs" jobs-out --prod
 
-# Run skyhelper image
+# Skyhelper
 FROM node:22.13-alpine AS skyhelper
 
 ARG SENTRY_AUTH_TOKEN
@@ -26,11 +37,10 @@ ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
 RUN pnpm run sentry:sourcemaps
 
-
 EXPOSE 5000
 CMD [ "pnpm", "start" ]
 
-# Run the jobs image
+# Jobs
 FROM oven/bun:latest AS jobs
 
 WORKDIR /app
