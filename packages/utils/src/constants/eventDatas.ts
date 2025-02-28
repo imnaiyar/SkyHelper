@@ -1,47 +1,59 @@
 export interface EventData {
-  [key: string]: {
-    /** Name of the event */
-    name: string;
+  /** Name of the event */
+  name: string;
 
-    /** The index of the event to appear on the embed */
+  /** The index of the event to appear on the embed */
 
-    index: number;
+  index: number;
 
-    /** The Offset of the event (in minutes) */
-    offset: number;
+  /** The Offset of the event (in minutes) */
+  offset: number;
 
-    /** Approximate duration of the event during which its active after it starts (in minutes) */
-    duration?: number;
+  /** Approximate duration of the event during which its active after it starts (in minutes) */
+  duration?: number;
 
-    /** The interval at which the event occurs (in minutes) */
-    interval?: number;
+  /** The interval at which the event occurs (in minutes) */
+  interval?: number;
 
-    /** Whether to display all their occurrence times in the embed */
-    displayAllTimes?: boolean;
+  /** Whether to display all their occurrence times in the embed */
+  displayAllTimes?: boolean;
 
-    /** The days on which the event occurs */
-    occursOn?: {
-      /** Weekdays on which the event occurs */
-      weekDays?: number[];
+  /** The days on which the event occurs */
+  occursOn?: {
+    /** Weekdays on which the event occurs */
+    weekDays?: number[];
 
-      /** The day on which the event occurs */
-      dayOfTheMonth?: number;
-    };
+    /** The day on which the event occurs */
+    dayOfTheMonth?: number;
+  };
 
-    /** Infographic related to the event, if any (Discord link)*/
-    infographic?: {
-      /** Credit */
-      by: string;
+  /** Infographic related to the event, if any (Discord link)*/
+  infographic?: {
+    /** Credit */
+    by: string;
 
-      /** The guide */
-      image: string;
-    };
+    /** The guide */
+    image: string;
   };
 }
 
+export type EventKey =
+  | "geyser"
+  | "grandma"
+  | "turtle"
+  | "daily-reset"
+  | "eden"
+  | "aurora"
+  | "dream-skater"
+  | "passage-quests"
+  | "nest-sunset"
+  | "fireworks-festival"
+  | "fairy-ring"
+  | "brook-rainbow";
+
 const getMinutes = (hours: number) => hours * 60;
 
-export const eventData: EventData = {
+export const eventData: Record<EventKey, EventData> = {
   geyser: {
     name: "Geyser",
     index: 0,
