@@ -4,6 +4,12 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build
+      args:
+        TURBO_TEAM: ${TURBO_TEAM}
+        TURBO_TOKEN: ${TURBO_TOKEN}
+    environment:
+      - TURBO_TOKEN
+      - TURBO_TEAM
   skyhelper:
     depends_on:
       - build

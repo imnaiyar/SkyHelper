@@ -83,6 +83,8 @@ jobs:
           SUGGESTION: ${{ secrets.SUGGESTION }}
           TOPGG_TOKEN: ${{ secrets.TOPGG_TOKEN }}
           ERROR_WEBHOOK: ${{ secrets.ERROR_LOGS }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
       - name: Cleanup Unused Images
         run: docker image prune -f
