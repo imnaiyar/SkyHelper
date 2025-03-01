@@ -334,13 +334,14 @@ const data: Record<string, SpiritsData> = {
     season: "Aurora",
     ts: {
       eligible: true,
-      returned: false,
-      dates: [],
+      returned: true,
+      dates: ["February 27, 2025 (#134)"],
     },
     tree: {
-      by: "Clement",
+      by: "alvenoir",
       total: " ",
-      image: "Mindful_Miner_Seasonal_Chart_Clement.jpg",
+      image:
+        "https://cdn.discordapp.com/attachments/867638574571323424/1345307642683195456/Mindful_Miner_20250227160741.png?ex=67c412e0&is=67c2c160&hm=a08c62f4d0f5c97dfd9d1e094a0a2ea3bc819ea697246941a5225059928b70cc&",
     },
     location: {
       by: "Zed",
