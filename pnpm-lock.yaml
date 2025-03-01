@@ -287,8 +287,8 @@ importers:
         specifier: 0.37.119
         version: 0.37.119
       undici:
-        specifier: ^7.2.3
-        version: 7.3.0
+        specifier: ^7.4.0
+        version: 7.4.0
     devDependencies:
       '@types/luxon':
         specifier: ^3.4.2
@@ -598,6 +598,7 @@ packages:
   '@discordjs/core@3.0.0-dev.1739059974-af3ab2211':
     resolution: {integrity: sha512-jJxRjz+xFCMnLWciy6cZFFnQqLIF8n/RssiofVmpCyzeFIS4EZi2dyBdu/ztpH7rGpHJIMpqIiEsMxroRu3Rhw==}
     engines: {node: '>=22.12.0'}
+    deprecated: This version is deprecated. Please use a newer version.
 
   '@discordjs/formatters@0.5.0':
     resolution: {integrity: sha512-98b3i+Y19RFq1Xke4NkVY46x8KjJQjldHUuEbCqMvp1F5Iq9HgnGpu91jOi/Ufazhty32eRsKnnzS8n4c+L93g==}
@@ -2325,6 +2326,7 @@ packages:
   bson@6.10.1:
     resolution: {integrity: sha512-P92xmHDQjSKPLHqFxefqMxASNq/aWJMEZugpCjf+AF/pgcUpMMQCg7t7+ewko0/u8AapvF3luf/FoehddEK+sA==}
     engines: {node: '>=16.20.1'}
+    deprecated: a critical bug affecting only useBigInt64=true deserialization usage is fixed in bson@6.10.3
 
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -5544,8 +5546,8 @@ packages:
     resolution: {integrity: sha512-q/1rj5D0/zayJB2FraXdaWxbhWiNKDvu8naDT2dl1yTlvJp4BLtOcp2a5BvgGNQpYYJzau7tf1WgKv3b+7mqpQ==}
     engines: {node: '>=18.17'}
 
-  undici@7.3.0:
-    resolution: {integrity: sha512-Qy96NND4Dou5jKoSJ2gm8ax8AJM/Ey9o9mz7KN1bb9GP+G0l20Zw8afxTnY2f4b7hmhn/z8aC2kfArVQlAhFBw==}
+  undici@7.4.0:
+    resolution: {integrity: sha512-PUQM3/es3noM24oUn10u3kNNap0AbxESOmnssmW+dOi9yGwlUSi5nTNYl3bNbTkWOF8YZDkx2tCmj9OtQ3iGGw==}
     engines: {node: '>=20.18.1'}
 
   unicorn-magic@0.1.0:
@@ -12391,7 +12393,7 @@ snapshots:
 
   undici@6.21.1: {}
 
-  undici@7.3.0: {}
+  undici@7.4.0: {}
 
   unicorn-magic@0.1.0: {}
 
