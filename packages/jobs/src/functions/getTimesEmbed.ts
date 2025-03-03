@@ -102,8 +102,8 @@ export const getSpecialEvent = async (): Promise<T> => {
       name: name,
       start: start,
       end: end,
-      duration: end.diff(now, ["days", "hours", "minutes", "seconds"]).toFormat("d[d] h[h] m[m] s[s]"),
-      days: end.diff(start, "days").days,
+      duration: end.diff(now, ["days", "hours", "minutes", "seconds"]).toFormat("d'd' h'h' m'm' s's'"),
+      days: Math.ceil(end.diff(start, "days").days),
     };
   } else if (now < start) {
     return {
