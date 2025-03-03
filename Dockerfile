@@ -19,9 +19,15 @@ ADD . ./
 
 RUN pnpm install -r --offline
 
-RUN pnpm build && \
-    pnpm deploy --filter="./packages/skyhelper" sky-out --prod && \
-    pnpm deploy --filter="./packages/jobs" jobs-out --prod
+RUN pnpm build
+
+ARG TARGET
+
+RUN if [ "$TARGET" = "skyhelper" ]; then \
+        pnpm deploy --filter="./packages/skyhelper" sky-out --prod; \
+    elif [ "$TARGET" = "jobs" ]; then \
+        pnpm deploy --filter="./packages/jobs" jobs-out --prod; \
+    fi
 
 # Skyhelper
 FROM node:22.13-alpine AS skyhelper
@@ -35,7 +41,7 @@ COPY --from=build /app/sky-out .
 
 ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
-RUN pnpm run sentry:sourcemaps
+# RUN pnpm run sentry:sourcemaps
 
 EXPOSE 5000
 CMD [ "pnpm", "start" ]

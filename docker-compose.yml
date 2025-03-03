@@ -1,24 +1,14 @@
 services:
-  build:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: build
-      args:
-        TURBO_TEAM: ${TURBO_TEAM}
-        TURBO_TOKEN: ${TURBO_TOKEN}
-    environment:
-      - TURBO_TOKEN
-      - TURBO_TEAM
   skyhelper:
-    depends_on:
-      - build
     build:
       context: .
       dockerfile: ./Dockerfile
       target: skyhelper
       args:
         SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
+        TURBO_TEAM: ${TURBO_TEAM}
+        TURBO_TOKEN: ${TURBO_TOKEN}
+        TARGET: skyhelper
     container_name: skyhelper
     restart: unless-stopped
     volumes:
@@ -26,6 +16,8 @@ services:
     environment:
       - NODE_ENV
       - TOKEN
+      - TURBO_TOKEN
+      - TURBO_TEAM
       - CLIENT_ID
       - MONGO_CONNECTION
       - PUBLIC_KEY
@@ -45,12 +37,14 @@ services:
     ports:
       - 5000:5000
   jobs:
-    depends_on:
-      - build
     build:
       context: .
       dockerfile: ./Dockerfile
       target: jobs
+      args:
+        TURBO_TEAM: ${TURBO_TEAM}
+        TURBO_TOKEN: ${TURBO_TOKEN}
+        TARGET: jobs
     container_name: skyhelper-jobs
     restart: unless-stopped
     environment:
@@ -58,3 +52,5 @@ services:
       - MONGO_CONNECTION
       - NODE_ENV
       - ERROR_WEBHOOK
+      - TURBO_TEAM
+      - TURBO_TOKEN
