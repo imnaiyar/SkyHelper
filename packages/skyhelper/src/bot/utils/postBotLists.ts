@@ -6,8 +6,8 @@ export async function postBotListStats(client: SkyHelper) {
   const guilds = client.guilds.size;
   const users = client.guilds.reduce((total, guild) => total + guild.member_count, 0);
   const [TopGGToken, DBLToken] = [process.env.TOPGG_TOKEN, process.env.DBL_TOKEN];
-  // TODO: uncomment when topgg api is fixed
-  /* if (TopGGToken) await post(topgg, TopGGToken, { server_count: guilds, shard_count: 1 }, client); */
+
+  if (TopGGToken) await post(topgg, TopGGToken, { server_count: guilds, shard_count: 1 }, client);
   if (DBLToken) await post(dbl, DBLToken, { guilds, users }, client);
 }
 
