@@ -23,8 +23,5 @@ async function post(endpoint: string, token: string, stats: Record<string, numbe
 
   if (!response.ok) {
     client.logger.error(`Error Discord Bots: ${response.status}: ${response.statusText}`);
-    return response.text();
   }
-
-  return response.json();
 }
