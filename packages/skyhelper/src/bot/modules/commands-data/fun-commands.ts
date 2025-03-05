@@ -1,5 +1,5 @@
 import type { Command } from "@/structures/Command";
-import { ApplicationCommandOptionType } from "@discordjs/core";
+import { ApplicationCommandOptionType, InteractionContextType } from "@discordjs/core";
 
 // #region Hug
 export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -32,8 +32,8 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   data: {
     name_localizations: "commands:SKYGAME.name",
     description_localizations: "commands:SKYGAME.description",
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
+    integration_types: [0],
+    contexts: [InteractionContextType.Guild, InteractionContextType.BotDM],
     options: [
       {
         name: "hangman",
