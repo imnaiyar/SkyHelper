@@ -209,14 +209,12 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     ],
   };
   component.components.push(
-    textDisplay(description),
-    separator(),
     textDisplay(`**${t("features:times-embed.TS_TITLE")}:**\n${tsDesc}`),
     textDisplay(`\n**${t("features:times-embed.EVENT_TITLE")}:**\n${eventDesc}`),
-    separator(),
-    row,
   );
-  return { components: [component] };
+  return {
+    components: [component, container(textDisplay(description), separator(), row)],
+  };
 }
 
 export function dailyQuestEmbed(data: DailyQuestsSchema) {
@@ -344,15 +342,6 @@ export function buildCalendarResponse(
     .join("\n\n");
 
   const component = container(
-    textDisplay(
-      `-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year })}\n### ${title}\n${t(
-        "commands:SHARDS_CALENDAR.RESPONSES.EMBED_DESCRIPTION",
-        { shardsCmd: `</shards:1142231977328648364>` },
-      )}\n`,
-    ),
-    separator(),
-    textDisplay(description),
-    separator(),
     section(
       {
         type: 2,
@@ -365,10 +354,17 @@ export function buildCalendarResponse(
         label: "Change Month/Year",
         style: 2,
       },
-      `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`,
+      `-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year })}\n### ${title}\n${t(
+        "commands:SHARDS_CALENDAR.RESPONSES.EMBED_DESCRIPTION",
+        { shardsCmd: `</shards:1142231977328648364>` },
+      )}\n`,
+    ),
+    separator(),
+    textDisplay(
+      description + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`,
     ),
   );
-  return { components: [component, navBtn] };
+  return { components: [component, container(navBtn)] };
 }
 
 function getDates(date: DateTime): DateTime[] {

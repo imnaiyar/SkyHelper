@@ -63,11 +63,20 @@ export class Spirits {
     const data = this.data;
     const client = this.client;
     const icon = data.expression?.icon ?? data.icon ?? "<:spiritIcon:1206501060303130664>";
-    const desc = `${emojis.tree_top}${this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })}${
-      data.realm
-        ? `\n${emojis.tree_top}${this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: `${client.emojisMap.get("realms")![data.realm]} ${data.realm}` })}`
-        : ""
-    }${this.isSeasonal(data) && data.season ? `\n${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.SEASON", { SEASON: client.emojisMap.get("seasons")![data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}` })}` : ""}`;
+    // Spirit type
+    const description = [this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })];
+
+    // spirit realm
+    if (data.realm) description.push(this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: data.realm }));
+
+    // if seasonal, then the season
+    if (this.isSeasonal(data) && data.season) {
+      description.push(
+        client.emojisMap.get("seasons")![data.season] +
+          ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
+      );
+    }
+
     const headerTitle = `-# ${this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR")}\n### [${icon} ${data.name}${
       data.extra ? ` (${data.extra})` : ""
     }](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`;
@@ -75,7 +84,11 @@ export class Spirits {
     const comp = container(
       data.image ? section(thumbnail(data.image, data.name), headerTitle) : textDisplay(headerTitle),
       separator(),
-      textDisplay(desc),
+      textDisplay(
+        description
+          .map((d, i, arr) => (i === 0 ? emojis.tree_top : i === arr.length - 1 ? emojis.tree_end : emojis.tree_middle) + d)
+          .join("\n"),
+      ),
     );
 
     if ("ts" in data && !data.current) {
@@ -89,7 +102,7 @@ export class Spirits {
                     ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
                 })}`
               : data.ts.returned
-                ? `${emojis.tree_top}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${emojis.tree_end}${this.t(
+                ? `${emojis.tree_middle}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${emojis.tree_end}${this.t(
                     "commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_RETURNED_DATE",
                   )}\n${this._formatDates(data.ts.dates)}`
                 : `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`
