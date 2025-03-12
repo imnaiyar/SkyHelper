@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  discord-api-types: 0.37.119
+  discord-api-types: pr-1190
 
 importers:
 
@@ -92,8 +92,8 @@ importers:
   packages/constants:
     dependencies:
       discord-api-types:
-        specifier: 0.37.119
-        version: 0.37.119
+        specifier: pr-1190
+        version: 0.38.0-next-1740095508888
     devDependencies:
       typescript:
         specifier: ^5.7.3
@@ -117,8 +117,8 @@ importers:
         specifier: workspace:^
         version: link:../utils
       discord-api-types:
-        specifier: 0.37.119
-        version: 0.37.119
+        specifier: pr-1190
+        version: 0.38.0-next-1739718635626
       i18next:
         specifier: ^23.12.2
         version: 23.16.2
@@ -284,8 +284,8 @@ importers:
         specifier: ^0.1.51
         version: 0.1.58
       discord-api-types:
-        specifier: 0.37.119
-        version: 0.37.119
+        specifier: pr-1190
+        version: 0.38.0-next-1739718635626
       undici:
         specifier: ^7.4.0
         version: 7.4.0
@@ -2878,8 +2878,11 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  discord-api-types@0.37.119:
-    resolution: {integrity: sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==}
+  discord-api-types@0.38.0-next-1739718635626:
+    resolution: {integrity: sha512-ypUbZYP+uglWOwwzQl3Akhz9pzGf6gNB4qxPqPDFBFApdJQtKpkW1dmXytiBUtbslSRjsudPEaRk1y0/gS0psw==}
+
+  discord-api-types@0.38.0-next-1740095508888:
+    resolution: {integrity: sha512-J9ZpbCe8sO/TJIhjUdrfZmR+VPqD/x0WzkiAv4u6H/4Cazo0nE3lYU31wRFbaiXDKcw6+hUjkVVfp5dWLrGdNA==}
 
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
@@ -6150,7 +6153,7 @@ snapshots:
       '@discordjs/formatters': 0.5.0
       '@discordjs/util': 1.1.1
       '@sapphire/shapeshift': 4.0.0
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
       fast-deep-equal: 3.1.3
       ts-mixer: 6.0.4
       tslib: 2.8.0
@@ -6164,14 +6167,14 @@ snapshots:
       '@discordjs/ws': 2.0.1
       '@sapphire/snowflake': 3.5.5
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
   '@discordjs/formatters@0.5.0':
     dependencies:
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
 
   '@discordjs/rest@2.4.0':
     dependencies:
@@ -6180,7 +6183,7 @@ snapshots:
       '@sapphire/async-queue': 1.5.3
       '@sapphire/snowflake': 3.5.3
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
       magic-bytes.js: 1.10.0
       tslib: 2.8.0
       undici: 6.19.8
@@ -6192,7 +6195,7 @@ snapshots:
       '@sapphire/async-queue': 1.5.3
       '@sapphire/snowflake': 3.5.3
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
       magic-bytes.js: 1.10.0
       tslib: 2.8.0
       undici: 6.19.8
@@ -6207,7 +6210,7 @@ snapshots:
       '@sapphire/async-queue': 1.5.3
       '@types/ws': 8.5.12
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
       tslib: 2.8.0
       ws: 8.18.0
     transitivePeerDependencies:
@@ -7411,7 +7414,7 @@ snapshots:
 
   '@sapphire/discord-utilities@3.4.4':
     dependencies:
-      discord-api-types: 0.37.119
+      discord-api-types: 0.38.0-next-1740095508888
 
   '@sapphire/shapeshift@4.0.0':
     dependencies:
@@ -8873,7 +8876,9 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  discord-api-types@0.37.119: {}
+  discord-api-types@0.38.0-next-1739718635626: {}
+
+  discord-api-types@0.38.0-next-1740095508888: {}
 
   doctrine@2.1.0:
     dependencies:
