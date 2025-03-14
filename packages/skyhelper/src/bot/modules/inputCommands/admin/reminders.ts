@@ -4,13 +4,7 @@ import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
-import {
-  ChannelType,
-  MessageFlags,
-  type APIGuildForumChannel,
-  type APITextChannel,
-  type APIThreadChannel,
-} from "@discordjs/core";
+import { MessageFlags, type APIGuildForumChannel, type APITextChannel } from "@discordjs/core";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 const RemindersEventsMap: Record<string, string> = {
