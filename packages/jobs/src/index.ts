@@ -20,7 +20,7 @@ cron.schedule(
 
 // Shards job
 cron.schedule(
-  "*/1 * * * *",
+  "*/5 * * * *",
   async () => {
     try {
       await eventSchedules("shard");
