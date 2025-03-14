@@ -47,7 +47,7 @@ export default {
         const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
 
         // Check if channel is a valid channel type
-        if (!SendableChannels.includes(channel.type)) {
+        if (!SendableChannels.includes(ch.type)) {
           return void (await helper.reply({
             content: "Invalid channel type. Please provide a valid text channel or thread channel.",
             flags: MessageFlags.Ephemeral,
