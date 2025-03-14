@@ -1,3 +1,4 @@
+import type { APIGuildVoiceChannel, APITextChannel, APIThreadChannel } from "@discordjs/core";
 import type { DateTime } from "luxon";
 
 export interface EventType {

@@ -34,7 +34,7 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
             name: "channel",
             description: "channel where reminders should be sent",
             type: ApplicationCommandOptionType.Channel,
-            channel_types: [ChannelType.GuildText, ChannelType.PublicThread, ChannelType.GuildAnnouncement],
+            channel_types: [ChannelType.GuildText, ChannelType.PublicThread],
             required: true,
           },
           {

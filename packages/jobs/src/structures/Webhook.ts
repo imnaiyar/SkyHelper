@@ -9,7 +9,10 @@ import {
 import { makeURLSearchParams, REST } from "@discordjs/rest";
 import { logger } from "./Logger.js";
 const api = new REST().setToken(process.env.TOKEN);
-
+type WebhookExtraOptions = {
+  thread_id?: string;
+  retries: number;
+};
 /** Error codes for which the operation will be retried in case of incident */
 const retraibleErrors = [
   "ECONNRESET", // Forcefully closed connection
@@ -38,16 +41,19 @@ class Webhook {
    * @param retries Number of tries in case of connection errors
    * @returns The message created by the webhook
    */
-  async send(options: WebhookMessageCreateOptions, retries = 3): Promise<APIMessage> {
+  async send(
+    options: WebhookMessageCreateOptions,
+    { thread_id, retries }: WebhookExtraOptions = { retries: 3 },
+  ): Promise<APIMessage> {
     try {
       if (!this.token) this.token = (await this.getWebhook(this.id)).token;
-      const query = makeURLSearchParams({ wait: true });
+      const query = makeURLSearchParams({ wait: true, thread_id });
       return api.post(Routes.webhook(this.id, this.token), { body: { ...options }, query }) as Promise<APIMessage>;
     } catch (err: any) {
-      if (retries > 0 && retraibleErrors.includes(err.code)) {
+      if (retries! > 0 && retraibleErrors.includes(err.code)) {
         logger.warn(`Retrying webhook send... Attempts left: ${retries}`);
         await new Promise((r) => setTimeout(r, 2000));
-        return this.send(options, retries - 1);
+        return this.send(options, { retries: retries! - 1, thread_id });
       }
       throw err;
     }
@@ -59,16 +65,24 @@ class Webhook {
    * @param options Edit options
    * @returns The edited message
    */
-  async editMessage(messageId: string, options: WebhookEditMessageOptions, retries = 3) {
+  async editMessage(
+    messageId: string,
+    options: WebhookEditMessageOptions,
+    { thread_id, retries }: WebhookExtraOptions = { retries: 3 },
+  ): Promise<APIMessage> {
     try {
       if (!this.token) this.token = (await this.getWebhook(this.id)).token!;
       if (!messageId) throw new Error("Yout must provide message id to edit");
-      return api.patch(Routes.webhookMessage(this.id, this.token, messageId), { body: { ...options } });
+      const query = makeURLSearchParams({ thread_id });
+      return api.patch(Routes.webhookMessage(this.id, this.token, messageId), {
+        body: { ...options },
+        query,
+      }) as Promise<APIMessage>;
     } catch (err: any) {
-      if (retries > 0 && retraibleErrors.includes(err.code)) {
-        logger.warn(`Retrying webhook send... Attempts left: ${retries}`);
+      if (retries! > 0 && retraibleErrors.includes(err.code)) {
+        logger.warn(`Retrying webhook edit... Attempts left: ${retries}`);
         await new Promise((r) => setTimeout(r, 2000));
-        return this.send(options, retries - 1);
+        return this.editMessage(messageId, options, { retries: retries! - 1, thread_id });
       }
       throw err;
     }
@@ -79,10 +93,11 @@ class Webhook {
    * @param messageId The id of the message to delete
    * @returns
    */
-  async deleteMessage(messageId: string) {
+  async deleteMessage(messageId: string, thread_id?: string) {
     if (!this.token) this.token = (await this.getWebhook(this.id)).token!;
     if (!messageId) throw new Error("Yout must provide message id to delete");
-    return await api.delete(Routes.webhookMessage(this.id, this.token, messageId));
+    const query = makeURLSearchParams({ thread_id });
+    return await api.delete(Routes.webhookMessage(this.id, this.token, messageId), { query });
   }
 
   async getWebhook(id: string, token?: string): Promise<APIWebhook> {

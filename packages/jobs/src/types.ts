@@ -30,6 +30,7 @@ export interface LiveUpdates {
   webhook: {
     id: string | null;
     token: string | null;
+    threadId?: string;
   };
 }
 export interface EventReminder {
@@ -40,6 +41,7 @@ export interface EventReminder {
     id: string;
     token: string;
     channelId: string;
+    threadId?: string;
   } | null;
 }
 export interface Reminders {
