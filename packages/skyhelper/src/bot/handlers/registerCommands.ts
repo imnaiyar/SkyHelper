@@ -27,7 +27,7 @@ contexts
 if (!process.env.CLIENT_ID) throw new Error("Cliend ID is missing from env");
 
 const data = (await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-  body: [...toRegister, { name: "launch", type: 4 }],
+  body: toRegister,
 })) as RESTPutAPIApplicationCommandsResult;
 
 logger.success(`Successfully registered ${data.length} interactions`);
