@@ -31,6 +31,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
           id: String,
           token: String,
           channelId: String,
+          threadId: String,
         },
         last_messageId: String,
         role: String,
@@ -45,6 +46,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
     webhook: {
       id: String,
       token: String,
+      threadId: String,
     },
   },
   autoTimes: {
@@ -53,6 +55,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
     webhook: {
       id: String,
       token: String,
+      threadId: String,
     },
   },
 });

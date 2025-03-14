@@ -98,6 +98,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
             avatar_url: client.utils.getUserAvatar(client.user),
             allowed_mentions: { parse: [AllowedMentionsTypes.Role] },
             wait: true,
+            thread_id: webhook.threadId,
             ...response,
           })
           .then((msg) => {
@@ -118,7 +119,9 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
             client.logger.error(guild.data.name + " Reminder Error: ", err);
           });
         if (event.last_messageId) {
-          client.api.webhooks.deleteMessage(webhook.id, webhook.token, event.last_messageId).catch(() => {});
+          client.api.webhooks
+            .deleteMessage(webhook.id, webhook.token, event.last_messageId, { thread_id: webhook.threadId })
+            .catch(() => {});
         }
       } catch (err) {
         client.logger.error(err);

@@ -8,6 +8,7 @@ import { logger } from "@/structures/Logger";
 import { throttleRequests } from "./throttleRequests";
 import { DiscordAPIError } from "@discordjs/rest";
 import { DateTime } from "luxon";
+import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
 
 /**
  * Updates Shards/Times Embeds
@@ -54,14 +55,19 @@ const update = async (
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
     const res = await webhook
-      .editMessage(event.messageId, {
-        content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }),
-        ...(await response(t)),
-      })
+      .editMessage(
+        event.messageId,
+        {
+          content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }),
+          ...(await response(t)),
+        },
+        { thread_id: event.webhook.threadId, retries: 3 },
+      )
       .catch((e) => e);
     if (res instanceof DiscordAPIError && (res.message === "Unknown Message" || res.message === "Unknown Webhook")) {
       if (res.code === 10008) {
-        webhook.delete().catch(() => {});
+        // unknown message
+        deleteWebhookAfterChecks(webhook, guild, [type]);
         logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
       }
       if (res.code === 10015) {

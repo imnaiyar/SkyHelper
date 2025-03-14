@@ -40,6 +40,7 @@ export interface LiveUpdates {
     id: string | null;
     token: string | null;
     channelId: string | null;
+    threadId?: string;
   };
 }
 export interface EventReminder {
@@ -48,6 +49,7 @@ export interface EventReminder {
     id: string;
     token: string;
     channelId: string;
+    threadId?: string;
   } | null;
   last_messageId: string | null;
   role: string | null;

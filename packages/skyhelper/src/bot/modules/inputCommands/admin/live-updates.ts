@@ -1,7 +1,6 @@
 import type { Command } from "@/structures";
 import { handleLive } from "./sub/handleLive.js";
 import { LIVE_UPDATES_DATA } from "@/modules/commands-data/admin-commands";
-import type { APITextChannel } from "@discordjs/core";
 export default {
   async interactionRun({ interaction, t, helper, options }) {
     const client = helper.client;
@@ -12,7 +11,7 @@ export default {
     }
     const sub = options.getSubcommand(true);
     const type = options.getString("type", true);
-    const channel = sub === "start" ? (options.getChannel("channel", true) as unknown as APITextChannel) : undefined;
+    const channel = sub === "start" ? options.getChannel("channel", true) : undefined;
     const config = await client.schemas.getSettings(guild);
     try {
       await helper.editReply(await handleLive(client, type, sub, config, t, channel));

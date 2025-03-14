@@ -4,7 +4,8 @@ import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
-import type { APITextChannel } from "@discordjs/core";
+import { MessageFlags, type APIGuildForumChannel, type APITextChannel } from "@discordjs/core";
+import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
@@ -23,7 +24,7 @@ export default {
     const guild = helper.client.guilds.get(helper.int.guild_id || "");
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
-    const checkClientPerms = async (ch: APITextChannel) => {
+    const checkClientPerms = async (ch: APITextChannel | APIGuildForumChannel) => {
       const clientPerms = PermissionsUtil.overwriteFor(guild.clientMember, ch, client);
       if (!clientPerms.has("ManageWebhooks")) {
         await helper.reply({
@@ -36,7 +37,16 @@ export default {
     switch (sub) {
       case "configure": {
         const ch = options.getChannel("channel", true);
-        const channel = client.channels.get(ch.id)! as APITextChannel;
+        const isThread = "thread_metadata" in ch;
+        const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
+
+        // Check if channel is a valid channel type
+        if (!SendableChannels.includes(ch.type)) {
+          return void (await helper.reply({
+            content: "Invalid channel type. Please provide a valid text channel or thread channel.",
+            flags: MessageFlags.Ephemeral,
+          }));
+        }
         if (!(await checkClientPerms(channel))) return;
         const util = new RemindersUtils(client);
         const event = options.getString("event", true);
@@ -55,6 +65,7 @@ export default {
             channelId: wb.channel_id,
             id: wb.id,
             token: wb.token!,
+            threadId: isThread ? ch.id : undefined,
           },
           last_messageId: null,
           role: role?.id ?? null,
@@ -70,7 +81,7 @@ export default {
           nextOccurence = SkytimesUtils.getNextEventOccurrence(eventToGet as EventKey);
         }
         await helper.reply({
-          content: `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${channel.id}>${role ? ` with role <@&${role.id}>` : ""}.\n- -# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence.toUnixInteger()}:R>`,
+          content: `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${ch.id}>${role ? ` with role <@&${role.id}>` : ""}.\n- -# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence.toUnixInteger()}:R>`,
           allowed_mentions: { parse: [] },
         });
         break;
@@ -118,7 +129,7 @@ async function getRemindersStatus(guildSettings: GuildSchema, guildName: string)
 
   for (const [k, name] of Object.entries(RemindersEventsMap)) {
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
-    description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
+    description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.threadId ?? event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
   }
   return { embeds: [{ title, description }] };
 }
