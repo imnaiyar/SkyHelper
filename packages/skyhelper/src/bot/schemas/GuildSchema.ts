@@ -61,6 +61,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
       id: String,
       token: String,
       channelId: String,
+      threadId: String,
     },
   },
 });

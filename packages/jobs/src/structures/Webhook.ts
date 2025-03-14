@@ -28,8 +28,8 @@ const retraibleErrors = [
   "ConnectTimeout",
 ];
 class Webhook {
-  private id: string;
-  private token: string | undefined;
+  public id: string;
+  public token: string | undefined;
   constructor(data: WebhookData) {
     this.id = data.id;
     this.token = data.token;
@@ -74,6 +74,7 @@ class Webhook {
       if (!this.token) this.token = (await this.getWebhook(this.id)).token!;
       if (!messageId) throw new Error("Yout must provide message id to edit");
       const query = makeURLSearchParams({ thread_id });
+
       return api.patch(Routes.webhookMessage(this.id, this.token, messageId), {
         body: { ...options },
         query,

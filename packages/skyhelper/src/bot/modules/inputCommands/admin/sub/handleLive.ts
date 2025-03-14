@@ -3,8 +3,9 @@ import type { GuildSchema } from "@/types/schemas";
 import { SkyHelper } from "@/structures";
 import embeds from "@/utils/classes/Embeds";
 import { DateTime } from "luxon";
-import { ChannelType, type APITextChannel } from "@discordjs/core";
+import { type APIGuildForumChannel, type APIInteractionDataResolvedChannel, type APITextChannel } from "@discordjs/core";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
+import { SendableChannels } from "@skyhelperbot/constants";
 
 export const handleLive = async (
   client: SkyHelper,
@@ -12,24 +13,31 @@ export const handleLive = async (
   sub: string,
   config: GuildSchema,
   t: ReturnType<typeof getTranslator>,
-  channel?: APITextChannel,
+  resolvedChannel?: APIInteractionDataResolvedChannel,
 ) => {
   const liveType = type === "shards" ? "autoShard" : "autoTimes";
   const liveData = config[liveType];
   if (sub === "start") {
-    if (!channel) throw new Error("No channels provided");
+    if (!resolvedChannel) throw new Error("No channels provided");
+    const isThread = "thread_metadata" in resolvedChannel;
+    const channelToCreateWb = client.channels.get(isThread ? resolvedChannel.parent_id! : resolvedChannel.id) as
+      | APITextChannel
+      | APIGuildForumChannel;
+
     if (liveData.messageId && liveData.webhook?.id) {
       const wbh = await client.api.webhooks
         .get(liveData.webhook.id, { token: liveData.webhook.token ?? undefined })
         .catch(() => {});
-      const ms = await client.api.channels.getMessage(channel.id, liveData.messageId).catch(() => {});
+      const ms = await client.api.webhooks
+        .getMessage(liveData.webhook.id, liveData.webhook.token!, liveData.messageId, { thread_id: liveData.webhook.threadId })
+        .catch(() => {});
       if (ms && wbh) {
         return {
           embeds: [
             {
               description: t("commands:LIVE_UPDATES.RESPONSES.ALREADY_CONFIGURED", {
                 CHANNEL: `<#${wbh.channel_id}>`,
-                MESSAGE: client.utils.messageUrl(ms, channel.guild_id),
+                MESSAGE: client.utils.messageUrl(ms, channelToCreateWb.guild_id),
                 TYPE: `"Live ${type}"`,
               }),
               color: 0xff0000,
@@ -42,11 +50,11 @@ export const handleLive = async (
     /*
       This probably won't trigger ever since command option won't allow any other channel type, but putting it here just in case
       */
-    if (channel.type !== ChannelType.GuildText) {
+    if (!SendableChannels.includes(resolvedChannel.type)) {
       return {
         embeds: [
           {
-            description: t("commands:LIVE_UPDATES.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<#${channel.id}>` }),
+            description: t("commands:LIVE_UPDATES.RESPONSES.INVALID_CHANNEL", { CHANNEL: `<#${resolvedChannel.id}>` }),
             color: 0xff0000,
           },
         ],
@@ -54,7 +62,7 @@ export const handleLive = async (
     }
 
     const wb = await new RemindersUtils(client).createWebhookAfterChecks(
-      channel.id,
+      channelToCreateWb.id,
       {
         name: "SkyHelper Live Notifications",
         avatar: client.utils.getUserAvatar(client.user),
@@ -73,21 +81,22 @@ export const handleLive = async (
       username: `${type} Updates`,
       avatar_url: client.utils.getUserAvatar(client.user),
       content: t("features:shards-embed.CONTENT", { TIME: `<t:${updatedAt}:R>` }),
+      thread_id: isThread ? resolvedChannel.id : undefined,
       ...result,
       wait: true,
     });
     config[liveType] = {
       active: true,
       messageId: msg.id,
-      webhook: { id: wb.id, token: wb.token!, channelId: wb.channel_id },
+      webhook: { id: wb.id, token: wb.token!, channelId: wb.channel_id, threadId: isThread ? resolvedChannel.id : undefined },
     };
     await config.save();
     return {
       embeds: [
         {
           description: t("commands:LIVE_UPDATES.RESPONSES.CONFIGURED", {
-            CHANNEL: `<#${channel.id}>`,
-            MESSAGE: client.utils.messageUrl(msg, channel.guild_id),
+            CHANNEL: `<#${resolvedChannel.id}>`,
+            MESSAGE: client.utils.messageUrl(msg, channelToCreateWb.guild_id),
             TYPE: `"Live ${type}"`,
           }),
           color: 0x00ff00,
@@ -105,8 +114,11 @@ export const handleLive = async (
         ],
       };
     }
-    await client.api.webhooks.deleteMessage(liveData.webhook.id, liveData.webhook.token!, liveData.messageId).catch(() => {});
+    await client.api.webhooks
+      .deleteMessage(liveData.webhook.id, liveData.webhook.token!, liveData.messageId, { thread_id: liveData.webhook.threadId })
+      .catch(() => {});
     await new RemindersUtils(client).deleteAfterChecks(liveData.webhook as { id: string; token: string }, [liveType], config);
+
     config[liveType] = { active: false, webhook: { id: null, token: null, channelId: null }, messageId: "" };
 
     return {

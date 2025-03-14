@@ -43,7 +43,7 @@ export default {
     switch (sub) {
       case "configure": {
         const ch = options.getChannel("channel", true);
-        const isThread = "parent_id" in ch;
+        const isThread = "thread_metadata" in ch;
         const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
 
         // Check if channel is a valid channel type

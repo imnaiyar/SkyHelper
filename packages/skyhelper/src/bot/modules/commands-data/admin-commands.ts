@@ -1,10 +1,13 @@
-import type { Command } from "@/structures/Command";
+import type { Command, InteractionOptions, ValidationReturn } from "@/structures/Command";
+import type { Awaitable } from "@/types/utils";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import {
   ApplicationCommandOptionType,
   ApplicationIntegrationType,
   ChannelType,
   InteractionContextType,
+  type APIChatInputApplicationCommandInteraction,
+  type APIGuildForumChannel,
   type APITextChannel,
 } from "@discordjs/core";
 const eventChoices = [
@@ -17,6 +20,38 @@ const eventChoices = [
   { name: "Daily Quests", value: "dailies" },
   { name: "Aurora's Concert", value: "aurora" },
 ];
+
+const commonCallback = ({
+  interaction,
+  options,
+  t,
+  helper,
+}: InteractionOptions<APIChatInputApplicationCommandInteraction>): Awaitable<ValidationReturn> => {
+  const { client } = helper;
+  const commandName = interaction.data.name;
+  if (!["reminders", "live"].includes(commandName)) return { status: false, message: "Wrong Command" };
+
+  if (!interaction.guild_id) return { status: false, message: "Command is only available fo guild" };
+  const guild = client.guilds.get(interaction.guild_id);
+  if (!guild) return { status: false, message: "Guild not found" };
+  const ch = options.getChannel("channel");
+
+  if (!ch) return { status: true };
+  const isThread = "thread_metadata" in ch;
+
+  const resolvedChannel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
+
+  const sub = options.getSubcommand();
+  if (sub !== "start" && sub !== "configure") return { status: true };
+
+  if (!PermissionsUtil.overwriteFor(guild.clientMember, resolvedChannel, client).has("ManageWebhooks")) {
+    return {
+      status: false,
+      message: t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${resolvedChannel.id}>` }),
+    };
+  }
+  return { status: true };
+};
 // #region Reminders
 export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "reminders",
@@ -75,8 +110,13 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     integration_types: [ApplicationIntegrationType.GuildInstall],
     contexts: [InteractionContextType.Guild],
   },
-  botPermissions: ["ManageWebhooks"],
   userPermissions: ["ManageGuild"],
+  validations: [
+    {
+      type: "interaction",
+      callback: commonCallback,
+    },
+  ],
   category: "Admin",
 };
 
@@ -105,7 +145,7 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
                 description: "channel where shard details should be updated",
                 description_localizations: "commands:LIVE_UPDATES.options.START.option.CHANNEL.description",
                 type: ApplicationCommandOptionType.Channel,
-                channel_types: [ChannelType.GuildText],
+                channel_types: [ChannelType.GuildText, ChannelType.PublicThread],
                 required: true,
               },
               {
@@ -162,27 +202,9 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   validations: [
     {
       type: "interaction",
-      callback: ({ interaction, options, t, helper }) => {
-        const { client } = helper;
-        if (!interaction.guild_id) return { status: false, message: "Command is only available fo guild" };
-        const guild = client.guilds.get(interaction.guild_id);
-        if (!guild) return { status: false, message: "Guild not found" };
-        const ch = options.getChannel("channel");
-        if (!ch) return { status: true };
-        const channel = client.channels.get(ch.id) as APITextChannel;
-        const sub = options.getSubcommand();
-        if (sub !== "start") return { status: true };
-        if (!PermissionsUtil.overwriteFor(guild.clientMember, channel, client).has("ManageWebhooks")) {
-          return {
-            status: false,
-            message: t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${channel.id}>` }),
-          };
-        }
-        return { status: true };
-      },
+      callback: commonCallback,
     },
   ],
-  botPermissions: ["ManageWebhooks"],
   userPermissions: ["ManageGuild"],
   category: "Admin",
 };
