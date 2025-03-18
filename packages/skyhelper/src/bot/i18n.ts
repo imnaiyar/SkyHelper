@@ -24,5 +24,4 @@ await i18next.use(Backend).init<FsBackendOptions>({
 export const getTranslator =
   (lang: string) =>
   (key: LangKeys, options = {}) =>
-    // just overriding to the type to get rid of the error honestly
-    i18next.t(key as unknown as TemplateStringsArray, { ...options, lng: lang });
+    i18next.t(key, { ...options, lng: lang });
