@@ -1,7 +1,6 @@
 import i18next from "i18next";
 import Backend, { type FsBackendOptions } from "i18next-fs-backend";
 import type { LangKeys } from "./@types/i18n.js";
-
 await i18next.use(Backend).init<FsBackendOptions>({
   cleanCode: true,
   lng: "en-US",
@@ -25,4 +24,5 @@ await i18next.use(Backend).init<FsBackendOptions>({
 export const getTranslator =
   (lang: string) =>
   (key: LangKeys, options = {}) =>
-    i18next.t(key, { ...options, lng: lang });
+    // just overriding to the type to get rid of the error honestly
+    i18next.t(key as unknown as TemplateStringsArray, { ...options, lng: lang });
