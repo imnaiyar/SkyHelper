@@ -1,6 +1,6 @@
 import type { SkyHelper } from "@/structures";
 import type { IdResolvalble, ParsedCustomId, TimestampStyles } from "@/types/utils";
-import type { APIGuildMember, APIMessage, APIUser } from "@discordjs/core";
+import type { APIGuildMember, APIMessage, APIModalSubmitInteraction, APIUser, ModalSubmitComponent } from "@discordjs/core";
 import { CDN } from "@discordjs/rest";
 import { EmojiRegex, WebhookRegex } from "@sapphire/discord-utilities";
 
@@ -154,5 +154,18 @@ export default class {
     const comd = client.applicationCommands.find((cmd) => cmd.name === command);
     if (!comd) throw new Error(`Command ${command} not found`);
     return `</${command}${sub ? ` ${sub}` : ""}:${comd.id}`;
+  }
+
+  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: true): ModalSubmitComponent;
+  static getTextInput(
+    interaction: APIModalSubmitInteraction,
+    textinput: string,
+    required?: false,
+  ): ModalSubmitComponent | undefined;
+  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: boolean = false) {
+    const components = interaction.data.components.map((row) => row.components[0]); // Can only be one component per row
+    const comp = components.find((component) => component.custom_id === textinput);
+    if (required && !comp) throw new Error("Couldn't find the required text input");
+    return comp;
   }
 }

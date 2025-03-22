@@ -1,5 +1,6 @@
 import type { Command } from "@/structures/Command";
-import { ApplicationCommandOptionType } from "@discordjs/core";
+import type { OverrideLocalizations } from "@/types/utils";
+import { ApplicationCommandOptionType, type APIApplicationCommandStringOption } from "@discordjs/core";
 
 // #region Hug
 export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -26,6 +27,29 @@ export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 };
 
 // #region SkyGame
+const SKYGAME_MODE_OPTION: OverrideLocalizations<APIApplicationCommandStringOption>[] = [
+  {
+    type: ApplicationCommandOptionType.String,
+    name: "mode",
+    name_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.name",
+    description_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.description",
+    description: "The mode of the game",
+    choices: [
+      {
+        name: "Single Player",
+        value: "single",
+        name_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.choices.single",
+      },
+      {
+        name: "Double Player",
+        value: "double",
+        name_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.choices.double",
+      },
+    ],
+    required: true,
+  },
+];
+
 export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skygame",
   description: "Various fun games based around Sky: CotL",
@@ -41,28 +65,15 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         description_localizations: "commands:SKYGAME.SUB.HANGMAN.description",
         description: "Play a game of hangman based on sky-related words, or a custom word",
         type: ApplicationCommandOptionType.Subcommand,
-        options: [
-          {
-            type: ApplicationCommandOptionType.String,
-            name: "mode",
-            name_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.name",
-            description_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.description",
-            description: "The mode of the game",
-            choices: [
-              {
-                name: "Single Player",
-                value: "single",
-                name_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.choices.single",
-              },
-              {
-                name: "Double Player",
-                value: "double",
-                name_localizations: "commands:SKYGAME.SUB.HANGMAN.options.mode.choices.double",
-              },
-            ],
-            required: true,
-          },
-        ],
+        options: SKYGAME_MODE_OPTION,
+      },
+      {
+        name: "scrambled",
+        description: "Unscramble the word to win",
+        name_localizations: "commands:SKYGAME.SUB.SCRAMBLE.name",
+        description_localizations: "commands:SKYGAME.SUB.SCRAMBLE.description",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: SKYGAME_MODE_OPTION,
       },
       {
         name: "leaderboard",
@@ -82,6 +93,11 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
                 name: "Hangman",
                 value: "hangman",
                 name_localizations: "commands:SKYGAME.SUB.LEADERBOARD.options.game.choices.hangman",
+              },
+              {
+                name: "Scrambled",
+                value: "scrambled",
+                name_localizations: "commands:SKYGAME.SUB.SCRAMBLE.name",
               },
             ],
             required: true,

@@ -9,6 +9,7 @@ import {
 } from "@discordjs/core";
 import { MessageCollector } from "./Collector.js";
 import type { SkyHelper } from "@/structures";
+import { updateUserGameStats } from "../utils.js";
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Array<T> {
@@ -268,21 +269,16 @@ export class Hangman<T extends ModeType, K extends WordType> {
   // #region end game
   private async _endGame(reason?: string) {
     if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
-    if (this.winner) {
-      const user = await this.client.schemas.getUser(this.winner);
-      // prettier-ignore
-      if (!user.hangman) user.hangman = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } } ;
-      user.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesWon++;
-      await user.save();
-    }
+
     if (!reason || reason !== "stopped-game") {
-      this.players.forEach(async (player) => {
-        const user = await this.client.schemas.getUser(player);
-        // prettier-ignore
-        if (!user.hangman) user.hangman = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon:0 } };
-        user.hangman[this.mode === "single" ? "singleMode" : "doubleMode"].gamesPlayed++;
-        await user.save();
-      });
+      for (const player of this.players) {
+        updateUserGameStats(
+          player,
+          "hangman",
+          this.mode === "single" ? "singleMode" : "doubleMode",
+          player.id === this.winner?.id,
+        ).catch(this.client.logger.error);
+      }
     }
     const embed: APIEmbed = {
       title: "SkyGame: Hangman",
