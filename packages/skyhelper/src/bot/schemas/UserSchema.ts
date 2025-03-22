@@ -4,11 +4,20 @@ import type { APIUser, APIGuildMember } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
 import { LimitedCollection } from "@/utils/classes/LimitedCollection";
 import type { UserSchema } from "@/types/schemas";
-import type { HangmanStatsData } from "@/types/custom";
+import type { SkyGameStatsData } from "@/types/custom";
 
 const cache = new LimitedCollection<string, UserSchema>({ maxSize: config.CACHE_SIZE.USERS });
 export { cache as userSchemaCache };
-
+const gameModeSchema = new mongoose.Schema({
+  singleMode: {
+    gamesPlayed: { type: Number, default: 0 },
+    gamesWon: { type: Number, default: 0 },
+  },
+  doubleMode: {
+    gamesPlayed: { type: Number, default: 0 },
+    gamesWon: { type: Number, default: 0 },
+  },
+});
 const Schema = new mongoose.Schema<UserSchema>({
   _id: String,
   data: {
@@ -22,16 +31,8 @@ const Schema = new mongoose.Schema<UserSchema>({
     flag: String,
   },
   isBlacklisted: Boolean,
-  hangman: {
-    singleMode: {
-      gamesPlayed: { type: Number, default: 0 },
-      gamesWon: { type: Number, default: 0 },
-    },
-    doubleMode: {
-      gamesPlayed: { type: Number, default: 0 },
-      gamesWon: { type: Number, default: 0 },
-    },
-  },
+  hangman: gameModeSchema,
+  scrambled: gameModeSchema,
   linkedRole: {
     username: String,
     metadata: {
@@ -77,31 +78,34 @@ export async function getUser(user: APIUser): Promise<UserSchema> {
  * @param type Type of game to get leaderboard for
  * @param guildMembers Guild members for which to get leaderboard for
  */
-export const getGamesLeaderboard = async (_game: "hangman", guildMembers?: APIGuildMember[]): Promise<HangmanStatsData> => {
+export const getGamesLeaderboard = async (
+  _game: "hangman" | "scrambled",
+  guildMembers?: APIGuildMember[],
+): Promise<SkyGameStatsData> => {
   const query = guildMembers ? { _id: { $in: guildMembers.map((m) => m.user!.id) } } : {};
 
-  const users = await Model.find({ ...query, hangman: { $exists: true } });
+  const users = await Model.find({ ...query, [_game]: { $exists: true } });
 
   const singleModeLeaderboard = users
-    .filter((user) => (user.hangman?.singleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b.hangman?.singleMode.gamesWon || 0) - (a.hangman?.singleMode.gamesWon || 0))
+    .filter((user) => (user[_game]?.singleMode.gamesPlayed || 0) > 0)
+    .sort((a, b) => (b[_game]?.singleMode.gamesWon || 0) - (a[_game]?.singleMode.gamesWon || 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
       username: user.data.username,
-      gamesPlayed: user.hangman?.singleMode.gamesPlayed || 0,
-      gamesWon: user.hangman?.singleMode.gamesWon || 0,
+      gamesPlayed: user[_game]?.singleMode.gamesPlayed || 0,
+      gamesWon: user[_game]?.singleMode.gamesWon || 0,
     }));
 
   const doubleModeLeaderboard = users
-    .filter((user) => (user.hangman?.doubleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b.hangman?.doubleMode.gamesWon || 0) - (a.hangman?.doubleMode.gamesWon || 0))
+    .filter((user) => (user[_game]?.doubleMode.gamesPlayed || 0) > 0)
+    .sort((a, b) => (b[_game]?.doubleMode.gamesWon || 0) - (a[_game]?.doubleMode.gamesWon || 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
       username: user.data.username,
-      gamesPlayed: user.hangman?.doubleMode.gamesPlayed || 0,
-      gamesWon: user.hangman?.doubleMode.gamesWon || 0,
+      gamesPlayed: user[_game]?.doubleMode.gamesPlayed || 0,
+      gamesWon: user[_game]?.doubleMode.gamesWon || 0,
     }));
 
   return {

@@ -2,6 +2,7 @@ import type { Command } from "@/structures";
 import { getCardResponse, handleHangman } from "./sub/hangman.js";
 import { SKY_GAME_DATA } from "@/modules/commands-data/fun-commands";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import { handleSingleMode } from "./sub/scramble.js";
 
 export default {
   ...SKY_GAME_DATA,
@@ -12,10 +13,20 @@ export default {
       case "hangman":
         await handleHangman(helper, t, options);
         return;
+      case "scrambled": {
+        await helper.defer();
+        const mode = options.getString("mode", true);
+        if (mode === "single") {
+          await handleSingleMode(helper);
+          return;
+        }
+        return;
+      }
       case "leaderboard":
         {
           const guild = client.guilds.get(interaction.guild_id || "");
           const type = options.getString("leaderboard-type") || "global";
+          const game = options.getString("game", true) as "hangman" | "scrambled";
           if (type === "server" && !guild) {
             return void (await helper.reply({
               content: "Run this command in a server when `type` is set to `Server`",
@@ -26,11 +37,11 @@ export default {
           const gMembers =
             type === "server" ? await client.requestGuildMembers({ guild_id: guild!.id, limit: 0, query: "" }) : undefined;
           const data = await client.schemas.getGamesLeaderboard(
-            "hangman",
+            game,
             gMembers?.members.map((m) => m),
           );
           let btnType: "singleMode" | "doubleMode" = "doubleMode";
-          const getCard = () => getCardResponse(helper, data, btnType, gMembers!, guild!, type);
+          const getCard = () => getCardResponse(helper, data, btnType, gMembers!, guild!, type, game);
           const msg = await helper.editReply(await getCard());
           const col = client.componentCollector({
             idle: 6e4,

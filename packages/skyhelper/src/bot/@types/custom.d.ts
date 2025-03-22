@@ -31,7 +31,7 @@ export interface DailyQuest {
   }[];
 }
 
-export interface HangmanStatsData {
+export interface SkyGameStatsData {
   singleMode: {
     id: string;
     username: string;

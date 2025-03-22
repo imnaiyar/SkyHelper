@@ -376,6 +376,11 @@
           }
         }
       },
+
+      "SCRAMBLE": {
+        "name": "scrambled",
+        "description": "Unscramble the word to win"
+      },
       "LEADERBOARD": {
         "name": "leaderboard",
         "description": "View the leaderboard for the skygames",
