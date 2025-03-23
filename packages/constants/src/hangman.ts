@@ -1,6 +1,8 @@
 import spiritsData from "./seasonsData.js";
 import { SummaryData } from "./realmsData.js";
 import seasonsData from "./seasonsData.js";
+
+// TODO: Rename it to a more neutral name
 /* prettier-ignore */
 export const hangmanWords = ["Ancestor Spirit", "Traveling Spirit", "Seasonal Spirit", "Candle Cake", "Candles",
     "Ascended Candles", "Light", "Winged Light", "Wing Buff", "Candle Run", "Constellation Table",

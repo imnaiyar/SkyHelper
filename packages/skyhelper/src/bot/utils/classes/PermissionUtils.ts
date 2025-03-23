@@ -1,5 +1,14 @@
 import type { SkyHelper } from "@/structures/Client";
-import { PermissionFlagsBits, type APIGuild, type APIGuildMember, type APIRole, type APITextChannel } from "@discordjs/core";
+import {
+  PermissionFlagsBits,
+  type APIGuild,
+  type APIGuildForumChannel,
+  type APIGuildMember,
+  type APIGuildStageVoiceChannel,
+  type APIGuildVoiceChannel,
+  type APIRole,
+  type APITextChannel,
+} from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
 import logger from "@/handlers/logger";
 type StringPermissions = `${number}`;
@@ -121,7 +130,11 @@ export class PermissionsUtil {
    * @param client
    * @returns
    */
-  static overwriteFor(userOrRole: APIRole | APIGuildMember, channel: APITextChannel, client: SkyHelper): PermissionsUtil {
+  static overwriteFor(
+    userOrRole: APIRole | APIGuildMember,
+    channel: APITextChannel | APIGuildForumChannel | APIGuildVoiceChannel | APIGuildStageVoiceChannel,
+    client: SkyHelper,
+  ): PermissionsUtil {
     const isRole = "permissions" in userOrRole;
     const guild = client.guilds.get(channel.guild_id!);
     const perms = this.permissionsFor(userOrRole, guild!);

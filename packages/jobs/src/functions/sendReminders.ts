@@ -68,13 +68,17 @@ async function sendGuildReminder(guild: GuildSchema, type: Events) {
         ],
       };
     }
+
     const msg = await wb
-      .send({
-        username: "SkyHelper",
-        avatar_url: "https://skyhelper.xyz/assets/img/boticon.png",
-        content: roleM || "",
-        ...toSend,
-      })
+      .send(
+        {
+          username: "SkyHelper",
+          avatar_url: "https://skyhelper.xyz/assets/img/boticon.png",
+          content: roleM || "",
+          ...toSend,
+        },
+        { thread_id: webhook.threadId, retries: 3 },
+      )
       .catch((err) => {
         if (err.message === "Unknown Webhook") {
           return "Unknown Webhook";
@@ -82,7 +86,7 @@ async function sendGuildReminder(guild: GuildSchema, type: Events) {
           logger.error(guild.data.name + " Reminder Error: ", err);
         }
       });
-    if (last_messageId) await wb.deleteMessage(last_messageId).catch(() => {});
+    if (last_messageId) await wb.deleteMessage(last_messageId, webhook.threadId).catch(() => {});
     if (msg === "Unknown Webhook") {
       guild.reminders.events[type] = {
         webhook: null,

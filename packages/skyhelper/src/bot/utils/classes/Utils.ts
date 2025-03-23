@@ -168,4 +168,17 @@ export default class {
     if (required && !comp) throw new Error("Couldn't find the required text input");
     return comp;
   }
+
+  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: true): ModalSubmitComponent;
+  static getTextInput(
+    interaction: APIModalSubmitInteraction,
+    textinput: string,
+    required?: false,
+  ): ModalSubmitComponent | undefined;
+  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: boolean = false) {
+    const components = interaction.data.components.map((row) => row.components[0]); // Can only be one component per row
+    const comp = components.find((component) => component.custom_id === textinput);
+    if (required && !comp) throw new Error("Couldn't find the required text input");
+    return comp;
+  }
 }

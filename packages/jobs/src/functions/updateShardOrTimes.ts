@@ -14,6 +14,8 @@ const getEmbed = async (type?: "shards" | "times", query: { locale?: string; dat
     components: APIActionRowComponent<APIMessageActionRowComponent>[];
   };
 };
+import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
+
 /**
  * Updates Shards/Times Embeds
  * @param type Type of the event
@@ -69,7 +71,8 @@ const update = async (
       .catch((e) => e);
     if (res instanceof DiscordAPIError && (res.message === "Unknown Message" || res.message === "Unknown Webhook")) {
       if (res.code === 10008) {
-        webhook.delete().catch(() => {});
+        // unknown message
+        deleteWebhookAfterChecks(webhook, guild, [type]);
         logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
       }
       if (res.code === 10015) {

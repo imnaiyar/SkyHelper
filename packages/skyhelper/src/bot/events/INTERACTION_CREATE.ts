@@ -22,6 +22,9 @@ import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
+import Embeds from "@/utils/classes/Embeds";
+import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
+
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -185,12 +188,20 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region button
     if (helper.isButton(interaction)) {
-      const { id } = client.utils.parseCustomId(interaction.data.custom_id);
-      const button = client.buttons.find((btn) => id.startsWith(btn.data.name));
+      const parsed = client.utils.parseCustomId(interaction.data.custom_id);
+
+      // handle scrambled play again here
+      if (parsed.id === "scramble-play-single") {
+        await helper.defer();
+        await handleSingleMode(helper);
+        return;
+      }
+
+      const button = client.buttons.find((btn) => parsed.id.startsWith(btn.data.name));
 
       if (!button) return;
       try {
-        await button.execute(interaction, t, helper);
+        await button.execute(interaction, t, helper, parsed);
       } catch (err) {
         const errorId = client.logger.error(err, scope);
         await helper

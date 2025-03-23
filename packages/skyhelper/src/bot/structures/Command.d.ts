@@ -23,7 +23,7 @@ type MessageParams = {
   client: SkyHelper;
 };
 
-type ValidationReturn = { status: true } | { status: false; message: string };
+export type ValidationReturn = { status: true } | { status: false; message: string };
 export interface MessageValidation {
   type: "message";
   callback(opts: MessageParams & { commandName: string }): Awaitable<ValidationReturn>;

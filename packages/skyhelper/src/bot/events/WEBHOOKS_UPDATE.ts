@@ -13,7 +13,7 @@ const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { da
 
   const disabledEvents: string[] = [];
 
-  // grouo events with their keys
+  // group events with their keys
   const targets: [string, LiveUpdates | EventReminder][] = [
     ...Object.entries(guildSettings.reminders.events),
     ...(["autoShard", "autoTimes"] as const).map((key) => [key, guildSettings[key]] as [string, LiveUpdates]),

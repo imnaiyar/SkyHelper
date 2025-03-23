@@ -40,6 +40,7 @@ export interface LiveUpdates {
     id: string | null;
     token: string | null;
     channelId: string | null;
+    threadId?: string;
   };
 }
 export interface EventReminder {
@@ -48,6 +49,7 @@ export interface EventReminder {
     id: string;
     token: string;
     channelId: string;
+    threadId?: string;
   } | null;
   last_messageId: string | null;
   role: string | null;
@@ -135,6 +137,10 @@ export interface DailyQuestsSchema extends Document {
 }
 
 // #region User
+interface SkygameModeShchema {
+  singleMode: { gamesPlayed: number; gamesWon: number };
+  doubleMode: { gamesPlayed: number; gamesWon: number };
+}
 interface UserSchema extends Document {
   _id: string;
   data: {
@@ -148,10 +154,8 @@ interface UserSchema extends Document {
     flag?: string;
   };
   isBlacklisted: boolean;
-  hangman?: {
-    singleMode: { gamesPlayed: number; gamesWon: number };
-    doubleMode: { gamesPlayed: number; gamesWon: number };
-  };
+  hangman?: SkygameModeShchema;
+  scrambled?: SkygameModeShchema;
   linkedRole?: {
     username?: string;
     metadata?: {

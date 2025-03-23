@@ -22,9 +22,9 @@ import {
 import { SendableChannels } from "@skyhelperbot/constants";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import type { RawFile } from "@discordjs/rest";
-import type { HangmanStatsData } from "@/types/custom";
 import { emojis } from "@/utils/constants";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@/utils/v2";
+import type { SkyGameStatsData } from "@/types/custom";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {
@@ -57,47 +57,8 @@ export const handleHangman = async (
 ) => {
   const { client } = helper;
   const guild = client.guilds.get(helper.int.guild_id || "");
+
   const mode = options.getString("mode", true);
-
-  // check if it's double mode and interaction is in guild
-  if (mode === "double" && !guild) {
-    await helper.reply({
-      content: t("features:hangman.DOUBLE_MODE_GUILD"),
-      flags: 64,
-    });
-    return;
-  }
-
-  // check if it is run in valid channel
-  if (!helper.int.channel || !SendableChannels.includes(helper.int.channel.type)) {
-    return void (await helper.reply({
-      content: t("features:hangman.NOT_PLAYABLE"),
-      flags: 64,
-    }));
-  }
-
-  // check bot has necessary perms in the channel
-  const channel = guild && client.channels.get(helper.int.channel.id);
-  const botPermsInChannel = guild
-    ? PermissionsUtil.overwriteFor(guild.clientMember, channel as APITextChannel, client)
-    : undefined;
-  if (guild && !botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
-    return void (await helper.reply({
-      content: t("errors:NO_PERMS_BOT", {
-        PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
-      }),
-      flags: 64,
-    }));
-  }
-
-  // check if a game is active in the channel
-  if (client.gameData.has(helper.int.channel.id)) {
-    return void (await helper.reply({
-      content: t("features:hangman.GAME_ACTIVE"),
-      flags: 64,
-    }));
-  }
-
   // get game configs
   let word: string | null = null;
   let type: string = "random";
@@ -321,11 +282,12 @@ function getMessageResponse(
  */
 export const getCardResponse = async (
   helper: InteractionHelper,
-  data: HangmanStatsData,
+  data: SkyGameStatsData,
   btnType: "singleMode" | "doubleMode",
   guildMembers: { members: APIGuildMember[] },
   guild: APIGuild,
   type: string,
+  game: "hangman" | "scrambled",
 ): Promise<RESTPostAPIChannelMessageJSONBody & { files?: RawFile[] }> => {
   const { client } = helper;
   const players = await Promise.all(
@@ -348,25 +310,25 @@ export const getCardResponse = async (
       {
         type: 2,
         style: 1,
-        custom_id: client.utils.encodeCustomId({ id: "leaderboard_hangman", type: "singleMode", user: helper.user.id }),
+        custom_id: client.utils.encodeCustomId({ id: "leaderboard_skygame", type: "singleMode", user: helper.user.id }),
         label: "Single Mode",
         disabled: btnType === "singleMode",
       },
       {
         type: 2,
         style: 1,
-        custom_id: client.utils.encodeCustomId({ id: "leaderboard_hangman", type: "doubleMode", user: helper.user.id }),
+        custom_id: client.utils.encodeCustomId({ id: "leaderboard_skygame", type: "doubleMode", user: helper.user.id }),
         label: "Double Mode",
         disabled: btnType === "doubleMode",
       },
     ],
   };
   const comp = container(
-    textDisplay("Hangman Leaderboard - " + (type === "server" ? `\`Server (${guild!.name})\`` : "`Global`")),
+    textDisplay(`${game.charAt(0).toUpperCase() + game.slice(1)} Leaderboard - ` + (type === "server" ? `\`Server (${guild!.name})\`` : "`Global`")),
     separator(),
     card
       ? mediaGallery(
-          mediaGalleryItem("attachment://leaderboard.png", { description: "Top 10 players in the hangman game for " + type }),
+          mediaGalleryItem("attachment://leaderboard.png", { description: `Top 10 players in the  ${game} game for ` + type }),
         )
       : textDisplay("Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!"),
     btns,
