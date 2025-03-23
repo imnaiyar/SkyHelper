@@ -27,6 +27,7 @@ export { default as seasonsData, SeasonData } from "./seasonsData.js";
 export * from "./hangman.js";
 export * from "./seasonsData.js";
 export * from "./realmsData.js";
+export * from "./scramble.js";
 export const SendableChannels = [
   ChannelType.GuildText,
   ChannelType.PrivateThread,

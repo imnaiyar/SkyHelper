@@ -127,7 +127,7 @@ export class SkyHelper extends Client {
     return new Promise<APIMessage[]>((resolve, reject) => {
       collector.once("end", (collected, reason) => {
         const messages = collected;
-        if (messages) resolve(messages);
+        if (messages.length) resolve(messages);
         else reject(new Error(reason));
       });
     });
