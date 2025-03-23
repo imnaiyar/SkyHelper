@@ -15,9 +15,9 @@ describe("Hangman", () => {
         channels: {
           createMessage: jest.fn(),
         },
-        logger: {
-          error: jest.fn(),
-        },
+      },
+      logger: {
+        error: jest.fn(),
       },
       // @ts-expect-error
       awaitMessages: jest.fn().mockResolvedValue([{ content: "hi" }]),

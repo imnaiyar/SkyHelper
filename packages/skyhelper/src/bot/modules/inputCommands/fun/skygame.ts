@@ -2,13 +2,22 @@ import type { Command } from "@/structures";
 import { getCardResponse, handleHangman } from "./sub/hangman.js";
 import { SKY_GAME_DATA } from "@/modules/commands-data/fun-commands";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { handleSingleMode } from "./sub/scramble.js";
-
+import { handleSingleMode, handleDoubleMode } from "./sub/scramble.js";
+import { SendableChannels } from "@skyhelperbot/constants";
+import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
+import type { APITextChannel } from "@discordjs/core";
+import { type Permission, parsePerms } from "@skyhelperbot/utils";
+import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 export default {
   ...SKY_GAME_DATA,
   async interactionRun({ interaction, t, helper, options }) {
     const { client } = helper;
     const sub = options.getSubcommand(true);
+    if (sub !== "leaderboard") {
+      const check = await skygamePrecheck(helper, options);
+
+      if (!check) return;
+    }
     switch (sub) {
       case "hangman":
         await handleHangman(helper, t, options);
@@ -18,6 +27,11 @@ export default {
         const mode = options.getString("mode", true);
         if (mode === "single") {
           await handleSingleMode(helper);
+          return;
+        }
+
+        if (mode === "double") {
+          await handleDoubleMode(helper);
           return;
         }
         return;
@@ -59,3 +73,60 @@ export default {
     }
   },
 } satisfies Command;
+
+async function skygamePrecheck(helper: InteractionHelper, options: InteractionOptionResolver) {
+  const { client, t } = helper;
+
+  const guild = client.guilds.get(helper.int.guild_id || "");
+  const sub = options.getSubcommand(true);
+  const mode = options.getString("mode", true);
+
+  // check if it's double mode and interaction is in guild
+  if (mode === "double" && !guild) {
+    await helper.reply({
+      content: t("features:hangman.DOUBLE_MODE_GUILD"),
+      flags: 64,
+    });
+    return false;
+  }
+
+  // check if it's not run as an user app
+  const scrambleSingleModePreCheck = mode === "single" && sub === "scrambled";
+  if (
+    !scrambleSingleModePreCheck &&
+    (!helper.int.channel ||
+      !SendableChannels.includes(helper.int.channel.type) ||
+      Object.keys(helper.int.authorizing_integration_owners).every((k) => k === "1")) // Also don't run for only user Apps
+  ) {
+    await helper.reply({
+      content: t("features:hangman.NOT_PLAYABLE"),
+      flags: 64,
+    });
+    return false;
+  }
+
+  // check bot has necessary perms in the channel
+  const channel = guild && client.channels.get(helper.int.channel!.id);
+  const botPermsInChannel = guild
+    ? PermissionsUtil.overwriteFor(guild.clientMember, channel as APITextChannel, client)
+    : undefined;
+  if (!scrambleSingleModePreCheck && guild && !botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
+    await helper.reply({
+      content: t("errors:NO_PERMS_BOT", {
+        PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
+      }),
+      flags: 64,
+    });
+    return false;
+  }
+
+  // check if a game is active in the channel
+  if (client.gameData.has(helper.int.channel!.id)) {
+    await helper.reply({
+      content: t("features:hangman.GAME_ACTIVE"),
+      flags: 64,
+    });
+    return false;
+  }
+  return true;
+}

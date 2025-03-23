@@ -55,51 +55,8 @@ export const handleHangman = async (
 ) => {
   const { client } = helper;
   const guild = client.guilds.get(helper.int.guild_id || "");
+
   const mode = options.getString("mode", true);
-
-  // check if it's double mode and interaction is in guild
-  if (mode === "double" && !guild) {
-    await helper.reply({
-      content: t("features:hangman.DOUBLE_MODE_GUILD"),
-      flags: 64,
-    });
-    return;
-  }
-
-  // check if it's not run as an user app
-  if (
-    !helper.int.channel ||
-    !SendableChannels.includes(helper.int.channel.type) ||
-    Object.keys(helper.int.authorizing_integration_owners).every((k) => k === "1") // Also don't run for only user Apps
-  ) {
-    return void (await helper.reply({
-      content: t("features:hangman.NOT_PLAYABLE"),
-      flags: 64,
-    }));
-  }
-
-  // check bot has necessary perms in the channel
-  const channel = guild && client.channels.get(helper.int.channel.id);
-  const botPermsInChannel = guild
-    ? PermissionsUtil.overwriteFor(guild.clientMember, channel as APITextChannel, client)
-    : undefined;
-  if (guild && !botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
-    return void (await helper.reply({
-      content: t("errors:NO_PERMS_BOT", {
-        PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
-      }),
-      flags: 64,
-    }));
-  }
-
-  // check if a game is active in the channel
-  if (client.gameData.has(helper.int.channel.id)) {
-    return void (await helper.reply({
-      content: t("features:hangman.GAME_ACTIVE"),
-      flags: 64,
-    }));
-  }
-
   // get game configs
   let word: string | null = null;
   let type: string = "random";
