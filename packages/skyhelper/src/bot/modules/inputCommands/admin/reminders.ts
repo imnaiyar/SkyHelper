@@ -4,9 +4,9 @@ import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
-import { MessageFlags, type APIGuildForumChannel, type APITextChannel } from "@discordjs/core";
-import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
+import { container, textDisplay } from "@/utils/v2";
+import { MessageFlags, type APIContainerComponent, type APITextChannel } from "@discordjs/core";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",
@@ -124,12 +124,13 @@ export default {
 } satisfies Command;
 
 async function getRemindersStatus(guildSettings: GuildSchema, guildName: string) {
-  const title = `Reminders Status for ${guildName}`;
-  let description = `Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}`;
+  const title = `### Reminders Status for ${guildName}\nStatus: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}`;
+  let description = ``;
 
   for (const [k, name] of Object.entries(RemindersEventsMap)) {
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
     description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.threadId ?? event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
   }
-  return { embeds: [{ title, description }] };
+  const component: APIContainerComponent = container(textDisplay(description));
+  return { components: [container(textDisplay(title)), component], flags: MessageFlags.IsComponentsV2 };
 }
