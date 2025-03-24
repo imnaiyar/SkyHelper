@@ -226,12 +226,14 @@ export class Hangman<T extends ModeType, K extends WordType> {
       throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
     }
     const curr = this.currentPlayer;
-    const col = await this.client.awaitMessages({
-      timeout: 30_000,
-      filter: (m) => m.author.id === curr.id && m.content.toLowerCase() !== ">stopgame",
-      max: 1,
-      channel: this.channel,
-    });
+    const col = await this.client
+      .awaitMessages({
+        timeout: 30_000,
+        filter: (m) => m.author.id === curr.id && m.content.toLowerCase() !== ">stopgame",
+        max: 1,
+        channel: this.channel,
+      })
+      .catch(() => []);
     if (!col.length) return "Timeout";
     return col[0]!;
   }

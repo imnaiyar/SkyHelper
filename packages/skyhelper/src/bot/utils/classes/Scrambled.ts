@@ -194,14 +194,17 @@ export class Scrambled extends GameController {
 
     // show round results
     await this._sendResponse(await this._getRoundResultsEmbed());
-    this.currentWord = scrambleWord();
-    this.words.push(this.currentWord);
+
     await wait(3000);
 
     // check if completed all rounds
     if (this.currentRound >= this.totalRounds) {
       return this._endGame();
     }
+
+    this.currentWord = scrambleWord();
+
+    this.words.push(this.currentWord);
 
     // Start next round
     this._startRound();
