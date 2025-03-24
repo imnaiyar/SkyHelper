@@ -375,6 +375,10 @@
           }
         }
       },
+      "SCRAMBLE": {
+        "name": "scrambled",
+        "description": "Unscramble the word to win"
+      },
       "LEADERBOARD": {
         "name": "ランキング",
         "description": "スカイゲームのリーダーボードを表示",
