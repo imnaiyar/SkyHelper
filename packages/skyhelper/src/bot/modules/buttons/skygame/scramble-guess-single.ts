@@ -30,11 +30,15 @@ export default {
     };
     await helper.launchModal(modal);
 
-    const submitted = await helper.client.awaitModal({
-      timeout: 90_000,
-      filter: (i) =>
-        i.data.custom_id === "scramble-guess-modal;" + interaction.id && helper.user.id === (i.member?.user || i.user)!.id,
-    });
+    const submitted = await helper.client
+      .awaitModal({
+        timeout: 2 * 60_000,
+        filter: (i) =>
+          i.data.custom_id === "scramble-guess-modal;" + interaction.id && helper.user.id === (i.member?.user || i.user)!.id,
+      })
+      .catch(() => null);
+
+    if (!submitted) return;
 
     const modalHelper = new InteractionHelper(submitted, helper.client);
     const guessedCorrectly = Utils.getTextInput(submitted, "scramble-correct-word", true).value.trim().toLowerCase() === original;
