@@ -3,14 +3,16 @@ import { Webhook } from "@/structures/Webhook.js";
 import { roleMention } from "@discordjs/builders";
 import { getTranslator, type LangKeys } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
-import { SkytimesUtils as skyutils, type EventKey } from "@skyhelperbot/utils";
+import { SkytimesUtils, SkytimesUtils as skyutils, type EventKey } from "@skyhelperbot/utils";
 import { resolveColor } from "@/utils/resolveColor.js";
 import type { GuildSchema } from "@/types";
 import { throttleRequests } from "./throttleRequests.js";
-import getTS from "@/utils/getTS.js";
+import getTS, { type TSValue } from "@/utils/getTS.js";
 import spiritsData, { type SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { seasonsData } from "@skyhelperbot/constants";
 import type { APIEmbed } from "discord-api-types/v10";
+import { DateTime } from "luxon";
+import { checkReminderValid } from "./testRemindersWithOffset.js";
 
 type Events = (typeof REMINDERS_KEY)[number];
 
@@ -19,8 +21,33 @@ type Events = (typeof REMINDERS_KEY)[number];
  * @param type Type of the event
  */
 export async function reminderSchedules(type: Events): Promise<void> {
+  const now = DateTime.now();
+  const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
+
+  const ts = await getTS();
+
   const activeGuilds = await getActiveReminders();
-  await throttleRequests(activeGuilds, (data) => sendGuildReminder(data, type));
+
+  await throttleRequests(activeGuilds, (guild) => {
+    const t = getTranslator(guild.language?.value ?? "en-US");
+
+    const reminders = guild.reminders;
+    if (!reminders) return;
+    for (const key of REMINDERS_KEY) {
+      const event = reminders.events[key];
+      if (!event || !event.active || !event.webhook) continue;
+
+      const { webhook, role, last_messageId, offset } = event;
+
+      const isValid = checkReminderValid(now, eventDetails[key], offset ?? 0);
+
+      if (!isValid) continue;
+
+      try {
+        const wb = new Webhook({ token: webhook.token, id: webhook.id });
+      } catch (err) {}
+    }
+  });
 }
 
 async function sendGuildReminder(guild: GuildSchema, type: Events) {
@@ -156,9 +183,7 @@ emojisMap.set("seasons", {
   Gratitude: "<:gratitude:1130958261349261435>",
 });
 const isSeasonal = (data: SpiritsData) => "ts" in data;
-const getTSResponse = async (t: ReturnType<typeof getTranslator>) => {
-  const ts = await getTS();
-
+const getTSResponse = async (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
   if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
 
   const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
