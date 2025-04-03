@@ -5,6 +5,7 @@ import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
 import { MessageFlags, type APIGuildForumChannel, type APITextChannel } from "@discordjs/core";
+import { OverwrittenMimeTypes } from "@discordjs/rest";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 const RemindersEventsMap: Record<string, string> = {
@@ -39,6 +40,7 @@ export default {
         const ch = options.getChannel("channel", true);
         const isThread = "thread_metadata" in ch;
         const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
+        const offset = options.getNumber("offset") || 0;
 
         // Check if channel is a valid channel type
         if (!SendableChannels.includes(ch.type)) {
@@ -68,6 +70,7 @@ export default {
             threadId: isThread ? ch.id : undefined,
           },
           last_messageId: null,
+          offset,
           role: role?.id ?? null,
         };
         guildSettings.reminders.active = true;
@@ -81,7 +84,7 @@ export default {
           nextOccurence = SkytimesUtils.getNextEventOccurrence(eventToGet as EventKey);
         }
         await helper.reply({
-          content: `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${ch.id}>${role ? ` with role <@&${role.id}>` : ""}.\n- -# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence.toUnixInteger()}:R>`,
+          content: `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${ch.id}>${role ? ` with role <@&${role.id}>` : ""}.\n- -# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence.toUnixInteger()}:R>${offset > 0 ? " " + offset + " minutes earlier." : ""}`,
           allowed_mentions: { parse: [] },
         });
         break;
@@ -106,6 +109,8 @@ export default {
         eventSettings.active = false;
         eventSettings.webhook = null;
         eventSettings.role = null;
+        eventSettings.offset = null;
+
         const isAnyActive = RemindersUtils.checkActive(guildSettings);
         if (!isAnyActive) guildSettings.reminders.active = false;
         await guildSettings.save();
@@ -130,6 +135,7 @@ async function getRemindersStatus(guildSettings: GuildSchema, guildName: string)
   for (const [k, name] of Object.entries(RemindersEventsMap)) {
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
     description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.threadId ?? event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
+    description += event.offset ? "(Offset: " + event.offset + " minutes.)" : "";
   }
   return { embeds: [{ title, description }] };
 }
