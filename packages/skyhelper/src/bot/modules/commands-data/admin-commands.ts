@@ -87,8 +87,8 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
           {
             name: "offset",
-            description: "how many minutes before the event should the reminder must be sent.",
-            type: ApplicationCommandOptionType.Number,
+            description: "how many minutes before the event should the reminder be sent.",
+            type: ApplicationCommandOptionType.Integer,
             max_value: 15,
             min_value: 1,
             required: false,

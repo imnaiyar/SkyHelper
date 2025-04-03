@@ -40,7 +40,7 @@ export default {
         const ch = options.getChannel("channel", true);
         const isThread = "thread_metadata" in ch;
         const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
-        const offset = options.getNumber("offset") || 0;
+        const offset = options.getInteger("offset") || 0;
 
         // Check if channel is a valid channel type
         if (!SendableChannels.includes(ch.type)) {
