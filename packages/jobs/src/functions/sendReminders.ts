@@ -122,31 +122,45 @@ export async function reminderSchedules(): Promise<void> {
 function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails) {
   const skytime = type.charAt(0).toUpperCase() + type.slice(1);
 
-  const { startTime, endTime, nextTime, active } = details.status;
+  const {
+    status: { startTime, endTime, nextTime, active },
+    event,
+  } = details;
+  const start = active ? startTime! : nextTime;
+  let between: string | null = null;
+  if (event.duration) {
+    between = `<t:${start.toUnixInteger()}> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}>`;
+  }
   if (active) {
-    return t("features:reminders.COMMON", {
-      // @ts-expect-error
-      TYPE: t("features:times-embed." + skytime?.toUpperCase()),
-      TIME: `<t:${startTime?.toUnixInteger()}:t>`,
-      "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
-      "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
-    });
+    return (
+      t("features:reminders.COMMON", {
+        // @ts-expect-error
+        TYPE: t("features:times-embed." + skytime?.toUpperCase()),
+        TIME: `<t:${startTime?.toUnixInteger()}:t>`,
+        "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
+        "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
+      }) + (between ? `\n\n${between}` : "")
+    );
   } else {
     if (["eden", "reset"].includes(type)) {
-      return t("features:reminders.PRE-RESET", {
+      return (
+        t("features:reminders.PRE-RESET", {
+          // @ts-expect-error
+          TYPE: t("features:times-embed." + skytime?.toUpperCase()),
+          TIME: `<t:${nextTime.toUnixInteger()}:t>`,
+          "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
+        }) + (between ? `\n\n${between}` : "")
+      );
+    }
+
+    return (
+      t("features:reminders.PRE", {
         // @ts-expect-error
         TYPE: t("features:times-embed." + skytime?.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
-      });
-    }
-
-    return t("features:reminders.PRE", {
-      // @ts-expect-error
-      TYPE: t("features:times-embed." + skytime?.toUpperCase()),
-      TIME: `<t:${nextTime.toUnixInteger()}:t>`,
-      "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
-    });
+      }) + (between ? `\n\n${between}` : "")
+    );
   }
 }
 const emojisMap = new Map();
