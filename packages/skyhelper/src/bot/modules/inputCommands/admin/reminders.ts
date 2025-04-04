@@ -8,6 +8,7 @@ import { MessageFlags, type APIGuildForumChannel, type APITextChannel } from "@d
 import { OverwrittenMimeTypes } from "@discordjs/rest";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
+import { FixedOffsetZone } from "luxon";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",
@@ -130,12 +131,20 @@ export default {
 
 async function getRemindersStatus(guildSettings: GuildSchema, guildName: string) {
   const title = `Reminders Status for ${guildName}`;
-  let description = `Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}`;
+  let description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
 
+  const reminders: Array<string> = [];
   for (const [k, name] of Object.entries(RemindersEventsMap)) {
     const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
-    description += `\n\`${name}: \` ${event.webhook?.channelId ? `<#${event.webhook.threadId ?? event.webhook.channelId}>` : "Not Configured"}${event.role ? ` (\`Role: \`<@&${event.role}>)` : ""}`;
-    description += event.offset ? "(Offset: " + event.offset + " minutes.)" : "";
+    if (!event.active) {
+      reminders.push(`${name}: Inactive`);
+    } else {
+      let toPush = `${name}\n  - Channel: <#${event.webhook!.threadId ?? event.webhook!.channelId}>`;
+      if (event.role) toPush += `\n  - Role: <@&${event.role}>`;
+      if (event.offset) toPush += `\n  - Offset: \`${event.offset}\` minutes.`;
+      reminders.push(toPush);
+    }
   }
+  description += "- " + reminders.join("\n- ");
   return { embeds: [{ title, description }] };
 }
