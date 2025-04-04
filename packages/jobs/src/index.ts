@@ -37,7 +37,7 @@ cron.schedule(
   async () => {
     try {
       await reminderSchedules();
-      logger.info("Ran Shards Job");
+      logger.info("Ran Reminders Job");
     } catch (err) {
       logger.error("Reminders Job Error: ", err);
     }

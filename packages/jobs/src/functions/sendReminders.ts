@@ -40,7 +40,7 @@ export async function reminderSchedules(): Promise<void> {
       const details = eventDetails[key === "reset" ? "daily-reset" : key];
 
       if (!details) continue;
-      const isValid = checkReminderValid(now, eventDetails[key], offset ?? 0);
+      const isValid = checkReminderValid(now, details, offset ?? 0);
 
       if (!isValid) continue;
 
