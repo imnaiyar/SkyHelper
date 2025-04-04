@@ -19,7 +19,7 @@ export async function handleSingleMode(helper: InteractionHelper) {
 
   const embed: APIEmbed = {
     title: "SkyGame: Scrambled",
-    description: `Unscramble this word!\n\n### \`${scrambled}\`\n\n-# You have 30s to answer.`,
+    description: `Unscramble this word!\n\n### \`${scrambled}\`\n\n-# You have 1min to answer.`,
   };
   const button: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
@@ -37,7 +37,7 @@ export async function handleSingleMode(helper: InteractionHelper) {
     .awaitComponent({
       filter: (i) => (i.member?.user || i.user!).id === helper.user.id,
       message,
-      timeout: 30_000,
+      timeout: 60_000,
     })
     .catch(() => null);
 
