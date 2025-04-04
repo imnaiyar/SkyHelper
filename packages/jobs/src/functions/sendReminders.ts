@@ -37,7 +37,7 @@ export async function reminderSchedules(): Promise<void> {
       if (!event || !event.active || !event.webhook) continue;
 
       const { webhook, role, last_messageId, offset } = event;
-      const details = eventDetails[key];
+      const details = eventDetails[key === "reset" ? "daily-reset" : key];
 
       if (!details) continue;
       const isValid = checkReminderValid(now, eventDetails[key], offset ?? 0);
