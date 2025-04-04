@@ -129,7 +129,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
   const start = active ? startTime! : nextTime;
   let between: string | null = null;
   if (event.duration) {
-    between = `<t:${start.toUnixInteger()}> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}>`;
+    between = `<t:${start.toUnixInteger()}:T> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}:T>`;
   }
   if (active) {
     return (
@@ -139,7 +139,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
         TIME: `<t:${startTime?.toUnixInteger()}:t>`,
         "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
         "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
-      }) + (between ? `\n\n${between}` : "")
+      }) + (between ? `\n\nTimeline: ${between}` : "")
     );
   } else {
     if (["eden", "reset"].includes(type)) {
@@ -149,7 +149,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
           TYPE: t("features:times-embed." + skytime?.toUpperCase()),
           TIME: `<t:${nextTime.toUnixInteger()}:t>`,
           "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
-        }) + (between ? `\n\n${between}` : "")
+        }) + (between ? `\n\nTimeline ${between}` : "")
       );
     }
 
@@ -159,7 +159,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
         TYPE: t("features:times-embed." + skytime?.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
-      }) + (between ? `\n\n${between}` : "")
+      }) + (between ? `\n\nTimeline ${between}` : "")
     );
   }
 }
