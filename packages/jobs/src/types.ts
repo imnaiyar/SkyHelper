@@ -37,6 +37,7 @@ export interface EventReminder {
   active: boolean;
   last_messageId?: string;
   role: string | null;
+  offset?: number | null;
   webhook: {
     id: string;
     token: string;

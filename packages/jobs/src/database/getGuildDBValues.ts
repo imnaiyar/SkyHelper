@@ -34,6 +34,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
           threadId: String,
         },
         last_messageId: String,
+        offset: Number,
         role: String,
       };
       return acc;

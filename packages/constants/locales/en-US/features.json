@@ -73,7 +73,9 @@
     "DAILY_QUESTS": "Daily Quests",
     "CONCERT": "Aurora's Concert",
     "ERROR": "This is not working as expected!",
-    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})"
+    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})",
+    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} will start at {{TIME}} ({{TIME-R}})."
   },
   "REALMS": {
     "ISLE": "Isle of Dawn",

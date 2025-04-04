@@ -52,6 +52,7 @@ export interface EventReminder {
     threadId?: string;
   } | null;
   last_messageId: string | null;
+  offset?: number | null;
   role: string | null;
 }
 export interface Reminders {
