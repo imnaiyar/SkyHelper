@@ -6,6 +6,7 @@ import {
   ApplicationCommandType,
   ComponentType,
   InteractionType,
+  Utils,
   type APIApplicationCommandAutocompleteInteraction,
   type APIApplicationCommandInteraction,
   type APIChatInputApplicationCommandInteraction,
@@ -14,8 +15,8 @@ import {
   type APIInteraction,
   type APIInteractionResponseCallbackData,
   type APIInteractionResponseDeferredChannelMessageWithSource,
-  type APIMessage,
   type APIMessageComponentButtonInteraction,
+  type APIMessageComponentSelectMenuInteraction,
   type APIModalInteractionResponseCallbackData,
   type APIModalSubmitInteraction,
   type APIUser,
@@ -119,6 +120,9 @@ export class InteractionHelper {
 
   isModalSubmit(interaction: APIInteraction): interaction is APIModalSubmitInteraction {
     return interaction.type === InteractionType.ModalSubmit;
+  }
+  isSelect(interaction: APIInteraction): interaction is APIMessageComponentSelectMenuInteraction {
+    return interaction.type === InteractionType.MessageComponent && Utils.isMessageComponentSelectMenuInteraction(interaction);
   }
 
   isStringSelect(interaction: APIInteraction): interaction is ComponentInteractionMap[ComponentType.StringSelect] {

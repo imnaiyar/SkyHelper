@@ -3,7 +3,7 @@ import { ShardsUtil } from "@skyhelperbot/utils";
 import type { getTranslator } from "@/i18n";
 import { SHARDS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
-import Embeds from "@/utils/classes/Embeds";
+import { buildShardEmbed } from "@/utils/classes/Embeds";
 
 export default {
   async interactionRun({ t, helper, options }) {
@@ -17,7 +17,7 @@ export default {
       }));
     }
 
-    await helper.reply({ ...shard, flags: hide ? MessageFlags.Ephemeral : undefined });
+    await helper.reply({ ...shard, flags: MessageFlags.IsComponentsV2 | (hide ? MessageFlags.Ephemeral : 0) });
   },
 
   ...SHARDS_DATA,
@@ -36,5 +36,5 @@ const getShards = (
   if (typeof currentDate === "string") {
     return t("commands:SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
   }
-  return Embeds.buildShardEmbed(currentDate, t, t("common:bot.name"), false, user);
+  return buildShardEmbed(currentDate, t, false, user);
 };

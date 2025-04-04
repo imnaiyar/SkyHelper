@@ -1,6 +1,6 @@
-import { AllowedMentionsTypes, type GatewayMessageCreateDispatchData } from "@discordjs/core";
+import { AllowedMentionsTypes, MessageFlags, type GatewayMessageCreateDispatchData } from "@discordjs/core";
 import type { SkyHelper } from "@/structures";
-import embeds from "@/utils/classes/Embeds";
+import { dailyQuestEmbed } from "@/utils/classes/Embeds";
 import { getTranslator } from "@/i18n";
 import type { DailyQuest } from "@/types/custom";
 import { DateTime } from "luxon";
@@ -86,7 +86,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
 
         let response = null;
 
-        const d = embeds.dailyQuestEmbed(data, 0);
+        const d = dailyQuestEmbed(data);
         response = {
           content: `${role}\u200B`,
           ...d,
@@ -100,6 +100,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
             wait: true,
             thread_id: webhook.threadId,
             ...response,
+            flags: MessageFlags.IsComponentsV2,
           })
           .then((msg) => {
             event.last_messageId = msg?.id || null;
