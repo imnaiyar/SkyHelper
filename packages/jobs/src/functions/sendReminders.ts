@@ -20,7 +20,7 @@ type Events = (typeof REMINDERS_KEY)[number];
  * @param type Type of the event
  */
 export async function reminderSchedules(): Promise<void> {
-  const now = DateTime.now();
+  const now = DateTime.now().setZone("America/Los_Angeles");
   const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
 
   const ts = await getTS();
