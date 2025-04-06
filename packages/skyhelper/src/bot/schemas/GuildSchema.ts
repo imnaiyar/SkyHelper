@@ -40,6 +40,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
         },
         last_messageId: String,
         role: String,
+        offset: Number,
       };
       return acc;
     }, {}),

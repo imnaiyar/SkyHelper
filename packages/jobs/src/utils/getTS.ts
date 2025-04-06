@@ -1,6 +1,6 @@
 import { getTSDB } from "@/database/getTSDB";
 import { DateTime } from "luxon";
-interface TSValue {
+export interface TSValue {
   visiting: boolean;
   name?: string;
   nextVisit: DateTime;

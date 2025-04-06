@@ -31,32 +31,20 @@ cron.schedule(
   },
   { name: "Shards Job" },
 );
-const options = { timezone: "America/Los_Angeles" };
-const RemindersToSchedule = [
-  ["turtle", "50 */2 * * *"],
-  ["grandma", "30 */2 * * *"],
-  ["geyser", "0 */2 * * *"],
-  ["reset", "0 0 * * *"],
-  ["eden", "0 0 * * 0"],
-  ["aurora", "0 */2 * * *"],
-  ["ts", "0 0 * * 4"],
-] as const;
 
-for (const [name, interval] of RemindersToSchedule) {
-  const nameFormat = name.charAt(0).toUpperCase() + name.slice(1);
-  cron.schedule(
-    interval,
-    async () => {
-      try {
-        await reminderSchedules(name);
-        logger.info(`Ran ${nameFormat} Reminder Job`);
-      } catch (err) {
-        logger.error(`${nameFormat} R Error: `, err);
-      }
-    },
-    { ...options, name: nameFormat + " Reminder" },
-  );
-}
+cron.schedule(
+  "*/1 * * * *",
+  async () => {
+    try {
+      await reminderSchedules();
+      logger.info("Ran Reminders Job");
+    } catch (err) {
+      logger.error("Reminders Job Error: ", err);
+    }
+  },
+  { name: "Reminders Job", timezone: "America/Los_Angeles" },
+);
+
 logger.info("Logged in and Jobs have been started");
 
 // Catch any unknown errors
