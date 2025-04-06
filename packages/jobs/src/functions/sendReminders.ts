@@ -120,7 +120,7 @@ export async function reminderSchedules(): Promise<void> {
  * @returns The response to send
  */
 function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails) {
-  const skytime = type.charAt(0).toUpperCase() + type.slice(1);
+  const skytime = type === "reset" ? "Daily-Reset" : type.charAt(0).toUpperCase() + type.slice(1);
 
   const {
     status: { startTime, endTime, nextTime, active },
