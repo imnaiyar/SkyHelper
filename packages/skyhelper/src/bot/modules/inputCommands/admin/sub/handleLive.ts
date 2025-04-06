@@ -12,7 +12,6 @@ import {
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { textDisplay } from "@/utils/v2";
 import { SendableChannels } from "@skyhelperbot/constants";
-import { SendableChannels } from "@skyhelperbot/constants";
 
 export const handleLive = async (
   client: SkyHelper,
