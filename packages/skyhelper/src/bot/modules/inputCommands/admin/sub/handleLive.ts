@@ -4,13 +4,14 @@ import { SkyHelper } from "@/structures";
 import { getTimesEmbed, buildShardEmbed } from "@/utils/classes/Embeds";
 import { DateTime } from "luxon";
 import {
-  type APIGuildForumChannel,
   type APIInteractionDataResolvedChannel,
   MessageFlags,
   type APITextChannel,
+  type APIGuildForumChannel,
 } from "@discordjs/core";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { textDisplay } from "@/utils/v2";
+import { SendableChannels } from "@skyhelperbot/constants";
 import { SendableChannels } from "@skyhelperbot/constants";
 
 export const handleLive = async (

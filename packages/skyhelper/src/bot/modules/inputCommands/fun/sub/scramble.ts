@@ -5,7 +5,7 @@ import type {
   APIButtonComponent,
   APIEmbed,
   APIUser,
-  APIMessageActionRowComponent,
+  APIComponentInMessageActionRow,
   APITextChannel,
   APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
@@ -161,7 +161,7 @@ export async function handleDoubleMode(helper: InteractionHelper) {
     };
     const isButtonDisabled = players.length < 2 || players.some((p) => p.bot);
 
-    const comps: APIActionRowComponent<APIMessageActionRowComponent> = {
+    const comps: APIActionRowComponent<APIComponentInMessageActionRow> = {
       type: 1,
       components: [
         {

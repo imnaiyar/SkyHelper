@@ -5,7 +5,6 @@ import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
 import { MessageFlags, type APIGuildForumChannel, type APITextChannel, type APIContainerComponent } from "@discordjs/core";
-import { OverwrittenMimeTypes } from "@discordjs/rest";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
 import { container, textDisplay } from "@/utils/v2";
