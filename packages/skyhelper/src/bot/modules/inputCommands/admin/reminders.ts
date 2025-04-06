@@ -4,11 +4,11 @@ import type { GuildSchema } from "@/types/schemas";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
-import { MessageFlags, type APIGuildForumChannel, type APITextChannel } from "@discordjs/core";
+import { MessageFlags, type APIGuildForumChannel, type APITextChannel, type APIContainerComponent } from "@discordjs/core";
 import { OverwrittenMimeTypes } from "@discordjs/rest";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
-import { FixedOffsetZone } from "luxon";
+import { container, textDisplay } from "@/utils/v2";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",
@@ -146,5 +146,7 @@ async function getRemindersStatus(guildSettings: GuildSchema, guildName: string)
     }
   }
   description += "- " + reminders.join("\n- ");
-  return { embeds: [{ title, description }] };
+  const component: APIContainerComponent = container(textDisplay(description));
+
+  return { components: [container(textDisplay(title)), component], flags: MessageFlags.IsComponentsV2 };
 }

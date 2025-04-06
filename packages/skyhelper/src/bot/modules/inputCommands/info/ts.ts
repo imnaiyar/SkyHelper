@@ -5,7 +5,9 @@ import type { getTranslator } from "@/i18n";
 import { TRAVELING_SPIRITS_DATA } from "@/modules/commands-data/info-commands";
 import { getTSData } from "@/utils/getEventDatas";
 import { Spirits } from "@/utils/classes/Spirits";
-import type { APIEmbed, APIInteractionResponseCallbackData } from "@discordjs/core";
+import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
+import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@/utils/v2";
+import { emojis } from "@/utils/constants";
 const isSeasonal = (data: SpiritsData) => "ts" in data;
 export default {
   async interactionRun({ t, helper }) {
@@ -30,7 +32,7 @@ const getTSResponse = async (
     const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
     const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
-    let description = ts.visiting
+    const description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
           TIME: client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
@@ -41,34 +43,39 @@ const getTSResponse = async (
           DATE: client.utils.time(ts.nextVisit.toUnixInteger(), "F"),
           DURATION: ts.duration,
         });
-    description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
-      client.emojisMap.get("realms")![spirit.realm!]
-    } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`;
-    const embed: APIEmbed = {
-      author: {
-        name: t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }),
-        icon_url: spirit.image,
-      },
-      description: description,
-      title: emote! + " " + spirit.name + (spirit.extra ? ` (${spirit.extra})` : ""),
-      fields: [
-        {
-          name: spirit.ts?.returned
-            ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
-            : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by }),
-          value: spirit
-            .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-            .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-            .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
-        },
-      ],
-      image: {
-        url: "https://cdn.imnaiyar.site/" + spirit.tree!.image,
-      },
-      thumbnail: spirit.image ? { url: spirit.image } : undefined,
-    };
+    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${
+      spirit.name
+    }${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})`;
     const manager = new Spirits(spirit, t, client);
-    return { embeds: [embed], components: [manager.getButtons(userid)] };
+
+    // !NOTE: Keep this 9 components as location/tree button splice assuming this many components
+    // !Ideally there would be better way but i'm lazy to look at this
+    const component = container(
+      spirit.image ? section(thumbnail(spirit.image, spirit.name), headerContent) : textDisplay(headerContent),
+      separator(),
+      textDisplay(description),
+      textDisplay(
+        `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
+          client.emojisMap.get("realms")![spirit.realm!]
+        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
+      ),
+      separator(false, 1),
+      textDisplay(
+        `**${
+          spirit.ts?.returned
+            ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
+            : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
+        }**\n${emojis.tree_end}${spirit
+          .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+          .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+          .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`,
+      ),
+      mediaGallery({ media: { url: "https://cdn.imnaiyar.site/" + spirit.tree!.image } }),
+      separator(),
+      manager.getButtons(userid),
+    );
+
+    return { components: [component], flags: MessageFlags.IsComponentsV2 };
   } else {
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
@@ -82,12 +89,11 @@ const getTSResponse = async (
           DURATION: ts.duration,
         });
     description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;
-    const embed: APIEmbed = {
-      author: {
-        name: t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" }),
-      },
-      description: description,
-    };
-    return { embeds: [embed] };
+    const component = container(
+      textDisplay(`**${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" })}**`),
+      separator(),
+      textDisplay(description),
+    );
+    return { components: [component], flags: MessageFlags.IsComponentsV2 };
   }
 };

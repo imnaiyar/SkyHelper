@@ -1,6 +1,8 @@
 import type { Button } from "@/structures";
 import Utils from "@/utils/classes/Utils";
-import { ButtonStyle, type APIButtonComponent } from "@discordjs/core";
+import { emojis } from "@/utils/constants";
+import { mediaGallery, textDisplay } from "@/utils/v2";
+import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIContainerComponent } from "@discordjs/core";
 
 export default {
   data: {
@@ -16,40 +18,41 @@ export default {
     await helper.deferUpdate();
 
     const { user } = helper;
-    const message = interaction.message,
-      embed = { ...message.embeds[0] },
-      // Index for when the spirit embed/row is built from guides command (where the first row is select menu of spirits and not a button, we only need to change the buttons, specifically the first button)
-      index = message.components!.length > 1 ? 1 : 0,
-      newRow = { ...message.components![index] };
+    const message = interaction.message;
+    const components = [...message.components!] as APIContainerComponent[];
+    // Update the button row, 9th in the array
+    const buttonRow = { ...components[0].components[8] } as APIActionRowComponent<APIButtonComponent>;
 
-    // Change the first button in the row according to the selected type
-    newRow.components[0] = type === "tree" ? commonBtn("location", spirit, user.id) : commonBtn("tree", spirit, user.id);
+    buttonRow.components.splice(0, 1, commonBtn(type === "location" ? "tree" : "location", spirit, user.id));
+    components[0].components.splice(8, 1, buttonRow);
 
-    // Change the last field in the embed according to the selected type
-    embed.fields![embed.fields!.length - 1] =
+    // Update the the media gallery and text (6, 5th in array respec.)
+    const text =
       type === "tree"
-        ? {
-            name: data.ts?.returned
+        ? `**${
+            data.ts?.returned
               ? t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-              : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
-            value: data
-              .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-              .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-              .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
-            inline: false,
-          }
-        : {
-            name: t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
-            value: data.location?.description || " ",
-            inline: false,
-          };
-
+              : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })
+          }**\n${emojis.tree_end}${data
+            .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+            .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+            .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`
+        : `**${t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by })}**\n${
+            data.location?.description ? `${emojis.tree_end}${data.location.description}` : ""
+          }`;
     let url = type === "tree" ? data.tree!.image : data.location!.image;
     if (!url!.startsWith("https://")) url = client.config.CDN_URL + "/" + url;
-    embed.image = { url };
+    components[0].components.splice(
+      5,
+      2,
+      // Random id, as it is getting duplicated when going back and forth since the one from api gets modified ig, idk really
+      // But this fixes it so...
+      { ...textDisplay(text), id: 64 },
+      { ...mediaGallery({ media: { url }, description: "${type}" }), id: 75 },
+    );
+
     await helper.editReply({
-      embeds: [embed],
-      components: [...(index === 1 ? [message.components![0]] : []), newRow],
+      components,
     });
   },
 } satisfies Button;
@@ -58,5 +61,6 @@ const commonBtn = (type: "location" | "tree", spirit: string, user: string): API
   type: 2,
   custom_id: Utils.encodeCustomId({ id: `spirit_common`, type, spirit, user }),
   label: type === "location" ? "Location" : "Friendship Tree",
+  id: 27,
   style: ButtonStyle.Secondary,
 });

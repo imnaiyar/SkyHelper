@@ -115,8 +115,8 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         type: ApplicationCommandOptionType.Subcommand,
       },
     ],
-    integration_types: [ApplicationIntegrationType.GuildInstall],
-    contexts: [InteractionContextType.Guild],
+    integration_types: [ApplicationIntegrationType.GuildInstall, 1], // TODO: REVErt ths and contexts before metge
+    contexts: [InteractionContextType.Guild, 1, 2],
   },
   userPermissions: ["ManageGuild"],
   validations: [

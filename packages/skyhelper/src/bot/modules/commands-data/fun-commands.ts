@@ -1,6 +1,6 @@
 import type { Command } from "@/structures/Command";
 import type { OverrideLocalizations } from "@/types/utils";
-import { ApplicationCommandOptionType, type APIApplicationCommandStringOption } from "@discordjs/core";
+import { ApplicationCommandOptionType, InteractionContextType, type APIApplicationCommandStringOption } from "@discordjs/core";
 
 // #region Hug
 export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
