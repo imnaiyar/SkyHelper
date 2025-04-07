@@ -73,7 +73,9 @@
     "DAILY_QUESTS": "डेली क्वेस्ट्स",
     "CONCERT": "अरोड़ा का संगीत कार्यक्रम",
     "ERROR": "यह लगता है सही से काम नहीं कर रहा है",
-    "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा"
+    "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा",
+    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} will start at {{TIME}} ({{TIME-R}})."
   },
   "REALMS": {
     "ISLE": "आईल ऑफ डाॅन",
