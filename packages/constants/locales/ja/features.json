@@ -73,7 +73,9 @@
     "DAILY_QUESTS": "デイリークエスト",
     "CONCERT": "オーロラのコンサート",
     "ERROR": "これは、予想どおりに動作していません!",
-    "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します"
+    "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します",
+    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} will start at {{TIME}} ({{TIME-R}})."
   },
   "REALMS": {
     "ISLE": "夜明けの島",

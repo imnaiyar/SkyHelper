@@ -73,7 +73,9 @@
     "DAILY_QUESTS": "Ежедневные Задания",
     "CONCERT": "Концерт Авроры",
     "ERROR": "Это не работает, как ожидалось!",
-    "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})"
+    "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})",
+    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} will start at {{TIME}} ({{TIME-R}})."
   },
   "REALMS": {
     "ISLE": "↪️ Isle of Dawn",
