@@ -98,14 +98,12 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
 
 export async function getChangelog(helper: InteractionHelper) {
   const changes = [
-    `### Linked Role Connection
-Added linked role connection with the SkyHelper bot. Users can now connect their Sky: CoTL profile with the bot and get a role based on their preferences.
-This chosen profile will be displayed on their Discord profile.
-- Learn more about linked roles [here](https://docs.skyhelper.xyz/linked-role/about>).
-- Learn how to enable linked roles [here](https://docs.skyhelper.xyz/linked-role/how-to-enable).
-- Learn how to get linked roles [here](https://docs.skyhelper.xyz/linked-role/how-to-link).
+    `### Offsets in Reminders
+    Added support for offsets in ${helper.client.mentionCommand(helper.client, "reminders", "configure")}, allowing you to define offsets for specific event reminders. These offsets can range from 1 to 15 minutes, and reminders for the event will now be sent that many minutes before the event occurs.
+    
+    ### Added 'scrambled' to skygame
 
--# Read about more detailed/previous changelogs [here](https://docs.skyhelper.xyz/changelogs)`,
+-# Read about more detailed/previous changelogs [here](https://github.com/imnaiyar/SkyHelper/releases)`,
   ];
   const { client } = helper;
   let page = 0;
