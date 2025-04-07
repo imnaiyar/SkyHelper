@@ -99,7 +99,7 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
 export async function getChangelog(helper: InteractionHelper) {
   const changes = [
     `### Offsets in Reminders
-    Added support for offsets in ${helper.client.mentionCommand(helper.client, "reminders", "configure")}, allowing you to define offsets for specific event reminders. These offsets can range from 1 to 15 minutes, and reminders for the event will now be sent that many minutes before the event occurs.
+    Added support for offsets in ${helper.client.utils.mentionCommand(helper.client, "reminders", "configure")}, allowing you to define offsets for specific event reminders. These offsets can range from 1 to 15 minutes, and reminders for the event will now be sent that many minutes before the event occurs.
     
     ### Added 'scrambled' to skygame
 
