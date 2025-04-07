@@ -153,7 +153,7 @@ export default class {
   static mentionCommand(client: SkyHelper, command: string, sub?: string) {
     const comd = client.applicationCommands.find((cmd) => cmd.name === command);
     if (!comd) throw new Error(`Command ${command} not found`);
-    return `</${command}${sub ? ` ${sub}` : ""}:${comd.id}`;
+    return `</${command}${sub ? ` ${sub}` : ""}:${comd.id}>`;
   }
 
   static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: true): ModalSubmitComponent;
