@@ -3,7 +3,7 @@ import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuest
 import { MessageFlags } from "@discordjs/core";
 import { DateTime } from "luxon";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@/utils/v2";
-import { emojis } from "@/utils/constants";
+import { emojis } from "@skyhelperbot/constants";
 export default {
   data: {
     name: "daily-quests-candles",

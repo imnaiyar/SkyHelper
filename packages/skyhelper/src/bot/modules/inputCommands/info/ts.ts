@@ -1,4 +1,4 @@
-import { seasonsData } from "@skyhelperbot/constants";
+import { realms_emojis, seasonsData } from "@skyhelperbot/constants";
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import type { Command, SkyHelper } from "@/structures";
 import type { getTranslator } from "@/i18n";
@@ -7,7 +7,7 @@ import { getTSData } from "@/utils/getEventDatas";
 import { Spirits } from "@/utils/classes/Spirits";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
 import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@/utils/v2";
-import { emojis } from "@/utils/constants";
+import { emojis } from "@skyhelperbot/constants";
 const isSeasonal = (data: SpiritsData) => "ts" in data;
 export default {
   async interactionRun({ t, helper }) {
@@ -56,7 +56,7 @@ const getTSResponse = async (
       textDisplay(description),
       textDisplay(
         `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
-          client.emojisMap.get("realms")![spirit.realm!]
+          realms_emojis[spirit.realm!]
         } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
       ),
       separator(false, 1),

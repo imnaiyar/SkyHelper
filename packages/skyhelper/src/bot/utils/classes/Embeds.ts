@@ -17,7 +17,8 @@ import { eventData, SkytimesUtils as skyutils } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema } from "@/types/schemas";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "../v2.js";
-import { CalendarMonths, emojis } from "../constants.js";
+import { CalendarMonths } from "../constants.js";
+import { emojis } from "@skyhelperbot/constants";
 
 /**
  * @param date The date for which the shards embed is to be built

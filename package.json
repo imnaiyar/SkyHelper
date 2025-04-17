@@ -8,6 +8,7 @@
     "build": "turbo build --filter=!./apps/docs/",
     "build:affected": "turbo build --filter=!./apps/docs/ --filter=...[origin/main]",
     "bot:dev": "pnpm --filter skyhelper dev",
+    "jobs:dev": "pnpm --filter jobs dev",
     "bot": "pnpm --filter skyhelper start",
     "lint": "turbo lint",
     "lint:affected": "turbo lint --filter=...[origin/main]",

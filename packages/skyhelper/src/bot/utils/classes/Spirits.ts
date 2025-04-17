@@ -1,4 +1,4 @@
-import { seasonsData } from "@skyhelperbot/constants";
+import { season_emojis, seasonsData } from "@skyhelperbot/constants";
 import type { SpiritsData, SeasonalSpiritData, RegularSpiritData } from "@skyhelperbot/constants/spirits-datas";
 import type { SkyHelper } from "@/structures";
 import config from "@/config";
@@ -7,7 +7,7 @@ import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type 
 import utils from "./Utils.js";
 import { DateTime } from "luxon";
 import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "../v2.js";
-import { emojis } from "../constants.js";
+import { emojis } from "@skyhelperbot/constants";
 
 // Define location Btn (Tree btn is defined/handled when location button is clicked)
 const lctnBtn = (spirit: string, user: string): APIButtonComponent => ({
@@ -61,7 +61,6 @@ export class Spirits {
    */
   public getResponseEmbed(userid: string): APIContainerComponent {
     const data = this.data;
-    const client = this.client;
     const icon = data.expression?.icon ?? data.icon ?? "<:spiritIcon:1206501060303130664>";
     // Spirit type
     const description = [this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })];
@@ -72,8 +71,7 @@ export class Spirits {
     // if seasonal, then the season
     if (this.isSeasonal(data) && data.season) {
       description.push(
-        client.emojisMap.get("seasons")![data.season] +
-          ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
+        season_emojis[data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
       );
     }
 

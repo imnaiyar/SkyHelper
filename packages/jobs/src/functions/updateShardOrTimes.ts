@@ -8,11 +8,11 @@ import { DiscordAPIError } from "@discordjs/rest";
 import { DateTime } from "luxon";
 import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
 import { BASE_API } from "@/constants";
-import type { APIActionRowComponent, APIEmbed, APIMessageActionRowComponent, APIMessageComponent } from "discord-api-types/v10";
+import type { APIActionRowComponent, APIComponentInMessageActionRow, APIEmbed, APIMessageComponent } from "discord-api-types/v10";
 const getEmbed = async (type?: "shards" | "times", query: { locale?: string; date?: string; noBtn?: boolean } = {}) => {
   return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(JSON.stringify(query))}`).then((res) => res.json())) as {
     embeds: APIEmbed[];
-    components: APIActionRowComponent<APIMessageActionRowComponent>[];
+    components: APIActionRowComponent<APIComponentInMessageActionRow>[];
   };
 };
 /**

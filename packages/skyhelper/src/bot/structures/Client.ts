@@ -77,13 +77,6 @@ export class SkyHelper extends Client {
 
   public applicationCommands: Collection<string, APIApplicationCommand> = new Collection();
 
-  public emojisMap = new Collection<
-    string,
-    {
-      [key: string]: string;
-    }
-  >();
-
   public timezone = "America/Los_Angeles";
 
   /** Map of currently active Quiz game data */

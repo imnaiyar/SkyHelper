@@ -7,7 +7,7 @@ import { readFile } from "node:fs/promises";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { MessageFlags, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
 import { container, separator, textDisplay } from "@/utils/v2";
-import { emojis } from "@/utils/constants";
+import { emojis } from "@skyhelperbot/constants";
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res));
 export default {
   async interactionRun({ helper, options }) {

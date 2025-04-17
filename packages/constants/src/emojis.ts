@@ -1,0 +1,42 @@
+export const emojis = {
+  tree_top: "<:tree_top:1340954527762743392>",
+  tree_middle: "<:tree_middle:1339963268969791550> ",
+  tree_end: "<:tree_end:1339963241991901224>",
+};
+
+export const realms_emojis = {
+  "Isle of Dawn": "<:Isle:1150605424752590868>",
+  "Daylight Prairie": "<:Prairie:1150605405408473179>",
+  "Hidden Forest": "<:Forest:1150605383656800317>",
+  "Valley of Triumph": "<:Valley:1150605355777273908>",
+  "Golden Wasteland": "<:Wasteland:1150605333862027314>",
+  "Vault of Knowledge": "<:Vault:1150605308364861580>",
+  "Eye of Eden": "<:eden:1205960597456293969>",
+  "Aviary Village": "no_emoji",
+};
+
+export const season_emojis = {
+  Moomin: "<:SeasonofMoominIcon:1295323276612206602>",
+  Duets: "<:SeasonofDuetsicon:1362518877619359794>",
+  Nesting: "<:SeasonofNestingicon:1362518491260915976>",
+  "Nine-Colored Deer": "<:ninecoloreddeer:1197412132657053746>",
+  Revival: "<:revival:1163480957706321950>",
+  Moments: "<:moments:1130958731211985019>",
+  Passage: "<:passage:1130958698571911239>",
+  Remembrance: "<:remembrance:1130958673959719062>",
+  Aurora: "<:aurora:1130958641189621771>",
+  Shattering: "<:shattering:1130961257097334895>",
+  Performance: "<:performance:1130958595345895444>",
+  Abyss: "<:abyss:1130958569748045845>",
+  Flight: "<:flight:1130958544276045945>",
+  "The Little Prince": "<:littleprince:1130958521253502987>",
+  Assembly: "<:assembly:1130958465351811173>",
+  Dreams: "<:dreams:1130958442232815646>",
+  Prophecy: "<:prophecy:1130958414655279304>",
+  Sanctuary: "<:sanctuary:1130958391347515573>",
+  Enchantment: "<:enchantment:1130958367674867742>",
+  Rhythm: "<:rhythm:1130958345352777849>",
+  Belonging: "<:belonging:1130958323823423509>",
+  Lightseekers: "<:lightseekers:1130958300293365870>",
+  Gratitude: "<:gratitude:1130958261349261435>",
+};
