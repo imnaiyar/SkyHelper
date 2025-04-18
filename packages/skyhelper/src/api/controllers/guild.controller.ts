@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Inject } from "@nestjs/common";
-import type { AuthRequest } from "../middlewares/auth.middleware.js";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Inject } from "@nestjs/common";
 import { SkyHelper as BotService } from "@/structures";
 import { LiveUpdates as Updates, Reminders } from "../managers/index.js";
 import getSettings from "../utils/getSettings.js";

@@ -128,6 +128,7 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   category: "Admin",
 };
 
+// #region Liveupdates
 export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "live",
   description: "live shards or skytimes update with auto updating message at regular interval",
