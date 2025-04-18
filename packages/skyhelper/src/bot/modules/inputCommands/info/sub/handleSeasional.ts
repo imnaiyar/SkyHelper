@@ -6,11 +6,12 @@ import { DateTime } from "luxon";
 import {
   ButtonStyle,
   ComponentType,
+  MessageFlags,
   type APIActionRowComponent,
   type APIButtonComponent,
-  type APIEmbed,
   type APISelectMenuComponent,
 } from "@discordjs/core";
+import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 
 export async function handleSeasional(helper: InteractionHelper, options: InteractionOptionResolver) {
   const value = options.getString("season")!;
@@ -49,24 +50,25 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
   const getResponse = () => {
     const quest = quests[page - 1];
     const emojiUrl = helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(season.icon)!.id!);
-    const embed: APIEmbed = {
-      author: {
-        name: t("commands:GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { SEASON: season.name }),
-        icon_url: emojiUrl,
-      },
-      title: `${season.icon} ${quest.title}`,
-      url: `https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name.split(" ").join("_")}#${quest.title.split(" ").join("_")}`,
-      footer: {
-        text: "SkyHelper",
-        icon_url: helper.client.utils.getUserAvatar(helper.client.user),
-      },
-      description: quest.description
-        ? (isActive
+    const comp = container(
+      section(
+        thumbnail(emojiUrl, season.name),
+        `-# ${t("commands:GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { SEASON: season.name })}\n### [${season.icon} ${quest.title}](https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name
+          .split(" ")
+          .join("_")}#${quest.title.split(" ").join("_")})`,
+      ),
+      separator(),
+    );
+    if (quest.description) {
+      comp.components.push(
+        textDisplay(
+          (isActive
             ? `Season is currently active.\n- **Start Date**: ${helper.client.utils.time(start.toUnixInteger(), "F")} (${helper.client.utils.time(start.toUnixInteger(), "R")})\n- **End Date:** ${helper.client.utils.time(end.toUnixInteger(), "F")} (${helper.client.utils.time(end.toUnixInteger(), "R")})\n- **Duration**: ${Math.round(end.diff(start, "days").days)} days`
-            : "") + quest.description
-        : undefined,
-      image: quest.image ? { url: quest.image } : undefined,
-    };
+            : "") + quest.description,
+        ),
+      );
+    }
+    if (quest.image) comp.components.push(mediaGallery(mediaGalleryItem(quest.image, { description: quest.title })));
 
     const select: APIActionRowComponent<APISelectMenuComponent> = {
       type: ComponentType.ActionRow,
@@ -103,7 +105,8 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
         },
       ],
     };
-    return { embeds: [embed], components: [select, buttons] };
+    comp.components.push(separator(), select, buttons);
+    return { components: [comp], flags: MessageFlags.IsComponentsV2 };
   };
   const msg = await helper.editReply(getResponse());
   const collector = helper.client.componentCollector({

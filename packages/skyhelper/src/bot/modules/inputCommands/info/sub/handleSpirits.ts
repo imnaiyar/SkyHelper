@@ -2,7 +2,13 @@ import type { SeasonData } from "@skyhelperbot/constants";
 import { Spirits } from "@/utils/classes/Spirits";
 import type { SpiritsData, SeasonalSpiritData } from "@skyhelperbot/constants/spirits-datas";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { ComponentType, type APIActionRowComponent, type APIStringSelectComponent } from "@discordjs/core";
+import {
+  ComponentType,
+  MessageFlags,
+  type APIActionRowComponent,
+  type APIContainerComponent,
+  type APIStringSelectComponent,
+} from "@discordjs/core";
 
 function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
   return "ts" in data;
@@ -45,11 +51,11 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
         },
       ],
     };
-    const manager = new Spirits(data, t, client);
-    const btns = manager.getButtons(helper.user.id);
+    const component = new Spirits(data, t, client).getResponseEmbed(commandHelper.user.id);
+    component.components.push(row);
     const msg = await commandHelper.editReply({
-      embeds: [manager.getEmbed()],
-      ...(btns.components?.length ? { components: [row, manager.getButtons(helper.user.id)] } : { components: [row] }),
+      components: [component],
+      flags: MessageFlags.IsComponentsV2,
     });
     return msg;
   };
@@ -58,14 +64,22 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
     filter: (i) =>
       client.utils.parseCustomId(i.data.custom_id)!.id === "spirit-select-menu" &&
       helper.user.id === (i.member?.user || i.user)!.id,
-    componentType: ComponentType.StringSelect,
+    idle: 90_000,
     message,
   });
   collector.on("collect", async (stringInt) => {
     const strHelper = new InteractionHelper(stringInt, client);
+    if (!strHelper.isStringSelect(stringInt)) return;
     await strHelper.deferUpdate();
     value = stringInt.data.values[0];
 
     await getUpdate(strHelper);
+  });
+  collector.on("end", async () => {
+    const m = await helper.fetchReply().catch(() => {});
+    if (!m) return;
+    const components = [...m.components!] as APIContainerComponent[];
+    components[0].components.splice(9, 1);
+    await helper.editReply({ components });
   });
 }

@@ -3,17 +3,27 @@ import { Webhook } from "@/structures/Webhook.js";
 import { roleMention } from "@discordjs/builders";
 import { getTranslator, type LangKeys } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
-import { SkytimesUtils, type EventDetails } from "@skyhelperbot/utils";
-import { resolveColor } from "@/utils/resolveColor.js";
+import {
+  container,
+  mediaGallery,
+  section,
+  separator,
+  SkytimesUtils,
+  textDisplay,
+  thumbnail,
+  type EventDetails,
+} from "@skyhelperbot/utils";
 import { throttleRequests } from "./throttleRequests.js";
 import getTS, { type TSValue } from "@/utils/getTS.js";
 import spiritsData, { type SpiritsData } from "@skyhelperbot/constants/spirits-datas";
-import { seasonsData } from "@skyhelperbot/constants";
-import type { APIEmbed } from "discord-api-types/v10";
+import { emojis, realms_emojis, seasonsData } from "@skyhelperbot/constants";
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
+import { MessageFlags } from "discord-api-types/v10";
 
 type Events = (typeof REMINDERS_KEY)[number];
+
+// TODO: test reminders embeds first
 
 /**
  * Sends the reminder to the each active guilds
@@ -61,17 +71,18 @@ export async function reminderSchedules(): Promise<void> {
 
         if (key !== "ts") {
           toSend = {
-            embeds: [
-              {
-                author: { name: "SkyHelper Reminders", icon_url: "https://skyhelper.xyz/assets/img/boticon.png" },
-                title: t("features:reminders.TITLE", {
-                  // @ts-expect-error
-                  TYPE: t("features:times-embed." + (key === "reset" ? "DAILY-RESET" : key.toUpperCase())),
-                }),
-                description: response,
-                color: resolveColor("Random"),
-                timestamp: new Date().toISOString(),
-              },
+            components: [
+              container(
+                textDisplay(
+                  "-# SkyHelper Reminders\n" +
+                    `### ${t("features:reminders.TITLE", {
+                      // @ts-expect-error
+                      TYPE: t("features:times-embed." + (key === "reset" ? "DAILY-RESET" : key.toUpperCase())),
+                    })}`,
+                ),
+                separator(),
+                textDisplay(response as string),
+              ),
             ],
           };
         }
@@ -163,40 +174,10 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
     );
   }
 }
-const emojisMap = new Map();
-emojisMap.set("realms", {
-  "Isle of Dawn": "<:Isle:1150605424752590868>",
-  "Daylight Prairie": "<:Prairie:1150605405408473179>",
-  "Hidden Forest": "<:Forest:1150605383656800317>",
-  "Valley of Triumph": "<:Valley:1150605355777273908>",
-  "Golden Wasteland": "<:Wasteland:1150605333862027314>",
-  "Vault of Knowledge": "<:Vault:1150605308364861580>",
-  "Eye of Eden": "<:eden:1205960597456293969>",
-});
-emojisMap.set("seasons", {
-  "Nine-Colored Deer": "<:ninecoloreddeer:1197412132657053746>",
-  Revival: "<:revival:1163480957706321950>",
-  Moments: "<:moments:1130958731211985019>",
-  Passage: "<:passage:1130958698571911239>",
-  Remembrance: "<:remembrance:1130958673959719062>",
-  Aurora: "<:aurora:1130958641189621771>",
-  Shattering: "<:shattering:1130961257097334895>",
-  Performance: "<:performance:1130958595345895444>",
-  Abyss: "<:abyss:1130958569748045845>",
-  Flight: "<:flight:1130958544276045945>",
-  "The Little Prince": "<:littleprince:1130958521253502987>",
-  Assembly: "<:assembly:1130958465351811173>",
-  Dreams: "<:dreams:1130958442232815646>",
-  Prophecy: "<:prophecy:1130958414655279304>",
-  Sanctuary: "<:sanctuary:1130958391347515573>",
-  Enchantment: "<:enchantment:1130958367674867742>",
-  Rhythm: "<:rhythm:1130958345352777849>",
-  Belonging: "<:belonging:1130958323823423509>",
-  Lightseekers: "<:lightseekers:1130958300293365870>",
-  Gratitude: "<:gratitude:1130958261349261435>",
-});
 
 const isSeasonal = (data: SpiritsData) => "ts" in data;
+
+// TODO: Test this before merging
 const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
   if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
 
@@ -205,7 +186,7 @@ const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
     const spirit: SpiritsData = spiritsData[ts.value as keyof typeof spiritsData];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
     const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
-    let description = ts.visiting
+    const description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
           TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:F>`,
@@ -216,36 +197,36 @@ const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
           DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
           DURATION: ts.duration,
         });
-    description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
-      emojisMap.get("realms")![spirit.realm!]
-    } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`;
-    const embed: APIEmbed = {
-      author: {
-        name: t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index }),
-        icon_url: spirit.image,
-      },
-      description: description,
-      title: emote! + " " + spirit.name + (spirit.extra ? ` (${spirit.extra})` : ""),
-      fields: [
-        {
-          name: spirit.ts?.returned
+    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${
+      spirit.name
+    }${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})`;
+
+    // !NOTE: Keep this 9 components as location/tree button splice assuming this many components
+    // !Ideally there would be better way but i'm lazy to look at this
+    const component = container(
+      spirit.image ? section(thumbnail(spirit.image, spirit.name), headerContent) : textDisplay(headerContent),
+      separator(),
+      textDisplay(description),
+      textDisplay(
+        `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
+          realms_emojis[spirit.realm!]
+        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
+      ),
+      separator(false, 1),
+      textDisplay(
+        `**${
+          spirit.ts?.returned
             ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
-            : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by }),
-          value: spirit
-            .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-            .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-            .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>"),
-        },
-      ],
-      image: {
-        url: "https://cdn.imnaiyar.site/" + spirit.tree!.image,
-      },
-      thumbnail: spirit.image ? { url: spirit.image } : undefined,
-      footer: {
-        text: "Learn more about this spirit by runninng /spirits command",
-      },
-    };
-    return { embeds: [embed] };
+            : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
+        }**\n${emojis.tree_end}${spirit
+          .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+          .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+          .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`,
+      ),
+      mediaGallery({ media: { url: "https://cdn.imnaiyar.site/" + spirit.tree!.image } }),
+    );
+
+    return { components: [component], flags: MessageFlags.IsComponentsV2 };
   } else {
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
@@ -259,12 +240,11 @@ const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
           DURATION: ts.duration,
         });
     description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;
-    const embed: APIEmbed = {
-      author: {
-        name: t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" }),
-      },
-      description: description,
-    };
-    return { embeds: [embed] };
+    const component = container(
+      textDisplay(`**${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" })}**`),
+      separator(),
+      textDisplay(description),
+    );
+    return { components: [component], flags: MessageFlags.IsComponentsV2 };
   }
 };
