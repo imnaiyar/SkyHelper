@@ -8,6 +8,7 @@ export default {
   },
   async execute(_interaction, t, helper) {
     await helper.deferUpdate();
-    await helper.editReply({ ...(await getTimesEmbed(helper.client, t)), flags: MessageFlags.IsComponentsV2 });
+    // TODO: setting embeds empty for the messages using legacy embeds, remove after considerable time
+    await helper.editReply({ embeds: [], ...(await getTimesEmbed(helper.client, t)), flags: MessageFlags.IsComponentsV2 });
   },
 } satisfies Button;
