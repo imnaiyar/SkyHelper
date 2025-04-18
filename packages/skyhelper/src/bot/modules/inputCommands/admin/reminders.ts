@@ -21,7 +21,7 @@ export default {
   async interactionRun({ helper, options }) {
     const { client, t } = helper;
     const sub = options.getSubcommand(true);
-    const guild = helper.client.guilds.get("1142926822598774814");
+    const guild = helper.client.guilds.get(helper.int.guild_id || "");
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
     const checkClientPerms = async (ch: APITextChannel | APIGuildForumChannel) => {
