@@ -1,11 +1,11 @@
 import type { Button } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
-  MessageFlags,
   type APIActionRowComponent,
+  type APIButtonComponent,
+  type APIEmbed,
   type APIStringSelectComponent,
 } from "@discordjs/core";
 
@@ -35,15 +35,17 @@ export default {
     };
     const collectibles = data.collectibles;
     let index = 1;
+    let imageIndex = 1;
     const total = collectibles.length;
     const getResponse = () => {
       const d = collectibles[index - 1];
+      const imageTotal = d.images.length;
       const stringSelect: APIActionRowComponent<APIStringSelectComponent> = {
         type: ComponentType.ActionRow,
         components: [
           {
             type: ComponentType.StringSelect,
-            custom_id: helper.client.utils.encodeCustomId({ id: "spirit-collectibles-select", user: user.id }),
+            custom_id: helper.client.utils.encodeCustomId({ id: "spirit_collectibles_select", user: user.id }),
             placeholder: "Collectibles",
             options: collectibles.map((c, i) => ({
               label: c.name,
@@ -54,55 +56,71 @@ export default {
           },
         ],
       };
-      const comp = container(
-        section(
-          thumbnail(helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id), d.name),
-          `-# ${data.name} Collectibles (${index}/${total})\n### [${d.icon} ${d.name || d.type}](https://sky-children-of-the-light.fandom.com/wiki/${data.name
-            .split(" ")
-            .join("_")}#${(d.type ? d.type : d.name).split(" ").join("_")})`,
-        ),
-        separator(),
-        textDisplay(
-          [
-            d.type ? `- **Type**: ${d.type}` : "",
-            d.price ? `- **Cost**: ${d.price}` : "",
-            d.spPrice ? `- **Season Cost**: ${d.spPrice}` : "",
-            d.isSP ? `- This item was season pass exclusive` : "",
-            d.notes?.length ? "\n**Notes**:\n" + d.notes.map((n) => `-# - ${n}`).join("\n") + "\n" : "",
-          ]
-            .filter(Boolean)
-            .join("\n"),
-        ),
-        ...(d.images.length
-          ? [
-              separator(),
-              textDisplay("**Preview**"),
-              mediaGallery(d.images.map((img) => mediaGalleryItem(img.image, { description: img.description }))),
-            ]
-          : []),
-        separator(),
-        stringSelect,
-        {
-          type: 1,
-          components: [
-            {
-              type: ComponentType.Button,
-              custom_id: helper.client.utils.encodeCustomId({ id: "collectibles-back", user: user.id }),
-              label: "Back",
-              emoji: helper.client.utils.parseEmoji(data.expression?.icon || "<:spiritIcon:1206501060303130664>")!,
-              style: ButtonStyle.Danger,
-            },
-          ],
-        },
-      );
+      const btns: APIActionRowComponent<APIButtonComponent> = {
+        type: ComponentType.ActionRow,
+        components: [
+          ...(imageTotal && imageTotal > 1
+            ? [
+                {
+                  type: ComponentType.Button as const,
+                  custom_id: helper.client.utils.encodeCustomId({ id: "collectible_image_prev", user: user.id }),
+                  label: "◀️ " + d.images[imageIndex === 1 ? 0 : imageIndex - 2].description,
+                  disabled: imageIndex === 1,
+                  style: ButtonStyle.Success as const,
+                },
+              ]
+            : []),
+          {
+            type: ComponentType.Button as const,
+            custom_id: helper.client.utils.encodeCustomId({ id: "collectibles_back", user: user.id }),
+            label: "Back",
+            emoji: helper.client.utils.parseEmoji(data.expression?.icon || "<:spiritIcon:1206501060303130664>")!,
+            style: ButtonStyle.Danger as const,
+          },
+          ...(imageTotal && imageTotal > 1
+            ? [
+                {
+                  type: ComponentType.Button as const,
+                  custom_id: helper.client.utils.encodeCustomId({ id: "collectible_image_next", user: user.id }),
+                  label: d.images[imageIndex >= imageTotal ? imageTotal - 1 : imageIndex].description + " ▶️",
+                  disabled: imageIndex === imageTotal,
+                  style: ButtonStyle.Success as const,
+                },
+              ]
+            : []),
+        ],
+      };
 
-      return { components: [comp], flags: MessageFlags.IsComponentsV2 };
+      const embed: APIEmbed = {
+        title: `${d.icon} ${d.name || d.type}`,
+        url: `https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${(d.type ? d.type : d.name).split(" ").join("_")}`,
+        author: { name: `${data.name} Collectibles (${index}/${total})`, icon_url: data.image },
+        thumbnail: {
+          url: helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id),
+        },
+        description: [
+          d.type ? `- **Type**: ${d.type}` : "",
+          d.price ? `- **Cost**: ${d.price}` : "",
+          d.spPrice ? `- **Season Cost**: ${d.spPrice}` : "",
+          d.isSP ? `- This item was season pass exclusive` : "",
+          d.notes?.length ? "\n**Notes**:\n" + d.notes.map((n) => `-# - ${n}`).join("\n") + "\n" : "",
+          imageTotal
+            ? `\n**${d.images[imageIndex - 1].description}**${imageTotal > 1 ? ` (${imageIndex}/${imageTotal})` : ""}`
+            : "",
+        ]
+          .filter(Boolean)
+          .join("\n"),
+        ...(imageTotal && { image: { url: d.images[imageIndex - 1].image } }),
+      };
+
+      return { embeds: [embed], components: [stringSelect, btns] };
     };
     const message = await helper.editReply(getResponse());
     const collector = helper.client.componentCollector({
       filter: (i) =>
-        ["spirit-collectibles-select", "collectibles-back"].includes(helper.client.utils.parseCustomId(i.data.custom_id)!.id) &&
-        (i.member?.user || i.user)!.id === user.id,
+        ["spirit_collectibles_select", "collectible_image_next", "collectibles_back", "collectible_image_prev"].includes(
+          helper.client.utils.parseCustomId(i.data.custom_id)!.id,
+        ) && (i.member?.user || i.user)!.id === user.id,
       message,
       idle: 60_000,
     });
@@ -111,13 +129,24 @@ export default {
       const compHelper = new InteractionHelper(int, helper.client);
       await compHelper.deferUpdate();
       switch (ID) {
-        case "spirit-collectibles-select": {
+        case "spirit_collectibles_select": {
           if (!compHelper.isStringSelect(int)) return;
           index = parseInt(int.data.values[0]) + 1;
+          imageIndex = 1;
           await compHelper.editReply(getResponse());
           break;
         }
-        case "collectibles-back": {
+        case "collectible_image_next": {
+          imageIndex++;
+          await compHelper.editReply(getResponse());
+          break;
+        }
+        case "collectible_image_prev": {
+          imageIndex--;
+          await compHelper.editReply(getResponse());
+          break;
+        }
+        case "collectibles_back": {
           collector.stop("Collectible Back");
           await compHelper.editReply(orgData);
         }

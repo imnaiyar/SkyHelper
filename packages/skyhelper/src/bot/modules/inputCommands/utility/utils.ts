@@ -5,9 +5,7 @@ import { getChangelog, getSuggestion } from "./sub/utils.js";
 import { UTILS_DATA } from "@/modules/commands-data/utility-commands";
 import { readFile } from "node:fs/promises";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { MessageFlags, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
-import { container, separator, textDisplay } from "@skyhelperbot/utils";
-import { emojis } from "@skyhelperbot/constants";
+import type { APIActionRowComponent, APIButtonComponent, APIEmbed } from "@discordjs/core";
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res));
 export default {
   async interactionRun({ helper, options }) {
@@ -56,35 +54,36 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
   desc += `<:users:1243977425725952161> ${t("common:bot.TOTAL_USERS")}: ${users}\n`;
   desc += `<a:uptime:1228956558113771580> ${t("common:bot.PING")}: ${client.ping} ms\n`;
   desc += `<:latency:1243977421812924426> ${t("common:bot.LATENCY")}: ${time - client.utils.createdTimeStamp(helper.int.id)} ms\n`;
-
-  const component = container(
-    textDisplay(`-# ${t("common:bot.EMBED_TITLE")}`, client.user.username),
-    separator(),
-    textDisplay(
-      desc,
+  desc += "\n";
+  const embed: APIEmbed = {
+    author: {
+      name: t("common:bot.EMBED_TITLE"),
+      icon_url: client.utils.getUserAvatar(client.user),
+    },
+    title: client.user.username,
+    fields: [],
+    description:
+      desc +
       `**${t("common:bot.VERSION")}:** v${pkg.version}\n**${t("common:bot.UPTIME")}:** ${timeformat((Date.now() - client.readTimestamp) / 1000)}`,
-    ),
-    separator(),
-  );
+  };
   const guild = client.guilds.get(helper.int.guild_id || "");
   if (guild) {
     const settings = await client.schemas.getSettings(guild);
-    component.components.push(
-      textDisplay(
-        `**${t("common:bot.GUILD_SETTINGS")} (\`${guild.name}\`)**`,
-        `- **${t("common:bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common:bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? `<#${settings.annoucement_channel}>` : t("common:bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
-      ),
-    );
+    embed.fields?.push({
+      name: t("common:bot.GUILD_SETTINGS") + ` (\`${guild.name}\`)`,
+      value: `- **${t("common:bot.LANGUAGE")}**: ${settings.language?.value ? `${settings.language.name} (${settings.language.flag} \`${settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}\n- **${t("common:bot.ANNOUNCEMENT_CHANNEL")}**: ${settings.annoucement_channel ? `<#${settings.annoucement_channel}>` : t("common:bot.NOT_SET")}\n- Prefix: \`${settings.prefix || "sh!"}\``,
+      inline: true,
+    });
   }
   const user_settings = await client.schemas.getUser(helper.user);
 
-  component.components.push(
-    textDisplay(
-      `**${t("common:bot.USER_SETTINGS")} (\`${helper.user.global_name || helper.user.username}\`)**`,
-      `**${t("common:bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
-    ),
-    separator(),
-    textDisplay("**Process Info**", getProcessInfo()),
+  embed.fields?.push(
+    {
+      name: t("common:bot.USER_SETTINGS") + ` (\`${helper.user.global_name || helper.user.username}\`)`,
+      value: `**${t("common:bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
+      inline: true,
+    },
+    { name: "Process Info", value: getProcessInfo() },
   );
   const btns: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
@@ -109,8 +108,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
       },
     ],
   };
-  component.components.push(separator(), btns);
-  await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
+  await helper.editReply({ embeds: [embed], components: [btns] });
 }
 
 function timeformat(timeInSeconds: number) {
@@ -125,15 +123,27 @@ function timeformat(timeInSeconds: number) {
 }
 
 const getProcessInfo = () => {
-  // Bot ram
-  const botUsed = `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`;
-  const botUsage = `${((process.memoryUsage().heapUsed / os.totalmem()) * 100).toFixed(1)}%`;
-
-  // Overall ram
-  const overallUsed = `${((os.totalmem() - os.freemem()) / 1024 / 1024 / 1024).toFixed(2)} GB`;
-  const overallAvailable = `${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB`;
-  const overallUsage = `${Math.floor(((os.totalmem() - os.freemem()) / os.totalmem()) * 100)}%`;
-  const cpuUsage = `${(process.cpuUsage().user / 1024 / 1024).toFixed(2)} MB`;
-  const freeRam = `${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB`;
-  return `**Ram Usage**:\n${emojis.tree_middle} Bot: ${botUsed} (${botUsage})\n${emojis.tree_middle} Overall: ${overallUsed} / ${overallAvailable} (${overallUsage})\n${emojis.tree_end} Free: ${freeRam}\n**CPU Usage**: ${cpuUsage}`;
+  const memoryUsage = process.memoryUsage();
+  const heapTotal = (memoryUsage.heapTotal / 1024 / 1024).toFixed(2);
+  const heapUsed = (memoryUsage.heapUsed / 1024 / 1024).toFixed(2);
+  const rss = (memoryUsage.rss / 1024 / 1024).toFixed(2);
+  const external = (memoryUsage.external / 1024 / 1024).toFixed(2);
+  const arrayBuffers = (memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2);
+  const processUptime = timeformat(process.uptime());
+  const systemUptime = timeformat(os.uptime());
+  const ramUsage = (os.totalmem() - os.freemem()) / 1024 / 1024 / 1024;
+  const totalRam = os.totalmem() / 1024 / 1024 / 1024;
+  const cpuUsage = process.cpuUsage();
+  return `- **Heap Total:** ${heapTotal} MB
+- **Heap Used:** ${heapUsed} MB
+- **RSS:** ${rss} MB
+- **External:** ${external} MB
+- **Array Buffers:** ${arrayBuffers} MB
+- **Process Uptime:** ${processUptime}
+- **System Uptime:** ${systemUptime}
+- **RAM Usage:** ${ramUsage.toFixed(2)} GB / ${totalRam.toFixed(2)} GB
+- **CPU Usage:**
+  - **User:** ${(cpuUsage.user / 1000).toFixed(2)} ms
+  - **System:** ${(cpuUsage.system / 1000).toFixed(2)} ms
+  `;
 };

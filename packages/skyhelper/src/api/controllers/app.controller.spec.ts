@@ -6,10 +6,9 @@ describe("AppController", () => {
   let appController: AppController;
 
   beforeEach(async () => {
-    const client = {};
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [{ provide: "BotClient", useValue: client }],
+      providers: [],
     }).compile();
 
     appController = app.get<AppController>(AppController);

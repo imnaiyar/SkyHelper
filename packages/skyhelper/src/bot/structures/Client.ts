@@ -29,6 +29,9 @@ import {
   type MessageCollectorOptions,
 } from "@/utils/classes/Collector";
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
+import { HttpException, HttpStatus } from "@nestjs/common";
+import { type UserSession } from "@/api/utils/discord";
+import * as Sentry from "@sentry/node";
 
 export class SkyHelper extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
@@ -76,6 +79,13 @@ export class SkyHelper extends Client {
   public logger = logger;
 
   public applicationCommands: Collection<string, APIApplicationCommand> = new Collection();
+
+  public emojisMap = new Collection<
+    string,
+    {
+      [key: string]: string;
+    }
+  >();
 
   public timezone = "America/Los_Angeles";
 

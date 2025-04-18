@@ -19,9 +19,10 @@ export default {
       return;
     }
     const manager = new Spirits(data, t, helper.client);
+    const btns = manager.getButtons(helper.user.id);
     await helper.editReply({
-      components: [manager.getResponseEmbed(helper.user.id)],
-      flags: MessageFlags.IsComponentsV2,
+      embeds: [manager.getEmbed()],
+      ...(btns.components?.length && { components: [btns] }),
     });
   },
 

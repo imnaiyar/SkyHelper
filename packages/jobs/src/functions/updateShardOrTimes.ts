@@ -1,20 +1,15 @@
 import { getTranslator } from "./getTranslator";
 import { Webhook, type WebhookMessageCreateOptions } from "@/structures/Webhook";
 import { getActiveUpdates } from "@/database/getGuildDBValues";
+import getShardsEmbed from "./getShardsEmbed";
+import { getTimesEmbed } from "./getTimesEmbed";
 import type { GuildSchema } from "@/types";
 import { logger } from "@/structures/Logger";
 import { throttleRequests } from "./throttleRequests";
 import { DiscordAPIError } from "@discordjs/rest";
 import { DateTime } from "luxon";
 import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
-import { BASE_API } from "@/constants";
-import type { APIActionRowComponent, APIComponentInMessageActionRow, APIEmbed, APIMessageComponent } from "discord-api-types/v10";
-const getEmbed = async (type?: "shards" | "times", query: { locale?: string; date?: string; noBtn?: boolean } = {}) => {
-  return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(JSON.stringify(query))}`).then((res) => res.json())) as {
-    embeds: APIEmbed[];
-    components: APIActionRowComponent<APIComponentInMessageActionRow>[];
-  };
-};
+
 /**
  * Updates Shards/Times Embeds
  * @param type Type of the event
@@ -24,16 +19,17 @@ export async function eventSchedules(type: "shard" | "times"): Promise<void> {
   const currentDate = DateTime.now().setZone("America/Los_Angeles");
   switch (type) {
     case "times": {
-      const response = async (locale?: string): Promise<WebhookMessageCreateOptions> => {
-        return await getEmbed("times", { locale });
+      const response = async (_t: ReturnType<typeof getTranslator>): Promise<WebhookMessageCreateOptions> => {
+        const embed = await getTimesEmbed(_t);
+        return { embeds: [embed] };
       };
       const data = await getActiveUpdates("times");
       await update(data, "autoTimes", response);
       break;
     }
     case "shard": {
-      const response = async (locale?: string): Promise<WebhookMessageCreateOptions> =>
-        getEmbed("shards", { date: currentDate.toFormat("yyyy-MM-dd"), locale, noBtn: true });
+      const response = async (t: ReturnType<typeof getTranslator>): Promise<WebhookMessageCreateOptions> =>
+        getShardsEmbed(currentDate, t, t("features:shards-embed.FOOTER"));
       const data = await getActiveUpdates("shard");
       await update(data, "autoShard", response);
     }
@@ -50,7 +46,7 @@ export async function eventSchedules(type: "shard" | "times"): Promise<void> {
 const update = async (
   data: GuildSchema[],
   type: "autoShard" | "autoTimes",
-  response: (locale?: string) => Promise<WebhookMessageCreateOptions>,
+  response: (t: ReturnType<typeof getTranslator>) => Promise<WebhookMessageCreateOptions>,
 ): Promise<void> => {
   await throttleRequests(data, async (guild) => {
     const event = guild[type];
@@ -58,16 +54,12 @@ const update = async (
     const webhook = new Webhook({ token: event.webhook.token || undefined, id: event.webhook.id });
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
-    const d = await response(guild.language?.value ?? "en-US");
     const res = await webhook
       .editMessage(
         event.messageId,
         {
-          ...d,
-          components: [
-            { type: 10, content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }) },
-            ...(d.components as APIMessageComponent[]),
-          ],
+          content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }),
+          ...(await response(t)),
         },
         { thread_id: event.webhook.threadId, retries: 3 },
       )

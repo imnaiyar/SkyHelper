@@ -28,6 +28,39 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.readTimestamp = Date.now();
   client.ready = true;
 
+  // Setting up additional datas
+  client.emojisMap.set("realms", {
+    "Isle of Dawn": "<:Isle:1150605424752590868>",
+    "Daylight Prairie": "<:Prairie:1150605405408473179>",
+    "Hidden Forest": "<:Forest:1150605383656800317>",
+    "Valley of Triumph": "<:Valley:1150605355777273908>",
+    "Golden Wasteland": "<:Wasteland:1150605333862027314>",
+    "Vault of Knowledge": "<:Vault:1150605308364861580>",
+    "Eye of Eden": "<:eden:1205960597456293969>",
+  });
+  client.emojisMap.set("seasons", {
+    "Nine-Colored Deer": "<:ninecoloreddeer:1197412132657053746>",
+    Revival: "<:revival:1163480957706321950>",
+    Moments: "<:moments:1130958731211985019>",
+    Passage: "<:passage:1130958698571911239>",
+    Remembrance: "<:remembrance:1130958673959719062>",
+    Aurora: "<:aurora:1130958641189621771>",
+    Shattering: "<:shattering:1130961257097334895>",
+    Performance: "<:performance:1130958595345895444>",
+    Abyss: "<:abyss:1130958569748045845>",
+    Flight: "<:flight:1130958544276045945>",
+    "The Little Prince": "<:littleprince:1130958521253502987>",
+    Assembly: "<:assembly:1130958465351811173>",
+    Dreams: "<:dreams:1130958442232815646>",
+    Prophecy: "<:prophecy:1130958414655279304>",
+    Sanctuary: "<:sanctuary:1130958391347515573>",
+    Enchantment: "<:enchantment:1130958367674867742>",
+    Rhythm: "<:rhythm:1130958345352777849>",
+    Belonging: "<:belonging:1130958323823423509>",
+    Lightseekers: "<:lightseekers:1130958300293365870>",
+    Gratitude: "<:gratitude:1130958261349261435>",
+  });
+
   // send ready log
   await wait(5000); // wait 3s for guilds cache to fill;
   const readyalertemb: APIEmbed = {

@@ -1,28 +1,28 @@
 import { Hangman } from "@/utils/classes/Hangman";
 import type { getTranslator } from "@/i18n";
 
-import { LeaderboardCard, parsePerms, type Permission, type userData } from "@skyhelperbot/utils";
+import { LeaderboardCard, parsePerms, resolveColor, type Permission, type userData } from "@skyhelperbot/utils";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import {
   ButtonStyle,
-  MessageFlags,
   SelectMenuDefaultValueType,
   type APIActionRowComponent,
   type APIButtonComponent,
-  type APIContainerComponent,
+  type APIEmbed,
   type APIGuild,
   type APIGuildMember,
-  type APIComponentInMessageActionRow,
+  type APIMessageActionRowComponent,
+  type APIMessageComponentInteraction,
   type APIModalInteractionResponseCallbackData,
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
 } from "@discordjs/core";
+import { SendableChannels } from "@skyhelperbot/constants";
+import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import type { RawFile } from "@discordjs/rest";
 import type { SkyGameStatsData } from "@/types/custom";
-import { emojis } from "@skyhelperbot/constants";
-import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {
@@ -64,6 +64,12 @@ export const handleHangman = async (
   let players: APIUser[] = [helper.user];
   const getResponse = () => getMessageResponse(mode, type, word, players, helper, maxLives);
 
+  const validateAndReply = async (int: APIMessageComponentInteraction, message: string, ephemeral = true) => {
+    const compHelper = new InteractionHelper(int, client);
+    await compHelper.update(getResponse());
+    return await compHelper.followUp({ content: message, flags: ephemeral ? 64 : undefined });
+  };
+
   const message = (await helper.reply(getResponse())).resource!.message;
 
   const col = client.componentCollector({
@@ -79,6 +85,12 @@ export const handleHangman = async (
     if (compoHelper.isStringSelect(i)) {
       const value = i.data.values[0];
       if (action === "type") {
+        if (value === "custom" && players.some((p) => p.id === compoHelper.user.id)) {
+          return validateAndReply(
+            i,
+            "You can't change the word type to 'custom' when you are one of the player, either choose someone else, or continue",
+          );
+        }
         type = value;
         if (value === "random") word = null;
         return await compoHelper.update({ ...getResponse() });
@@ -87,6 +99,9 @@ export const handleHangman = async (
 
     if (compoHelper.isUserSelect(i)) {
       const resolved = Object.values(i.data.resolved.users);
+      if (type === "custom" && resolved.some((u) => u.id === compoHelper.user.id)) {
+        return validateAndReply(i, "You can't play with yourself when providing a custom word.");
+      }
 
       players = [...resolved];
       return await compoHelper.update({ ...getResponse() });
@@ -95,10 +110,7 @@ export const handleHangman = async (
     if (compoHelper.isButton(i)) {
       if (action === "word") {
         if (mode === "single") {
-          return await compoHelper.reply({
-            content: "Custom words are not allowed in single player mode.",
-            flags: MessageFlags.Ephemeral,
-          });
+          return validateAndReply(i, "Custom words are not allowed in single mode.");
         }
         await compoHelper.launchModal(modalComponent(i.id, word || ""));
 
@@ -126,30 +138,18 @@ export const handleHangman = async (
           },
           client,
         );
-        // remove the button row
-        const components = i.message.components! as APIContainerComponent[];
-        const rowCount = components[0].components.filter((c) => c.type === 1).length;
-
-        components[0].components.splice(-rowCount, rowCount);
-
-        await compoHelper.update({ components });
+        await compoHelper.update({ components: [] });
 
         client.gameData.set(helper.int.channel!.id, game);
 
         await game.inititalize();
-      }
-      if (action === "instructions") {
-        await compoHelper.reply({
-          components: [createGameInstrunctionEmbed(mode)],
-          flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral,
-        });
       }
     }
   });
 };
 
 function createComponents(mode: string, type: string, players: APIUser[], word: string | null, helper: InteractionHelper) {
-  const components: APIActionRowComponent<APIComponentInMessageActionRow>[] = [];
+  const components: APIActionRowComponent<APIMessageActionRowComponent>[] = [];
   if (mode === "double") {
     components.push(
       {
@@ -184,18 +184,10 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
   const disabled =
     (type === "custom" && !word) ||
     (mode === "double" && players.length !== 2) ||
-    (mode === "double" && players.some((p) => p.bot)) ||
-    (type === "custom" && players.some((p) => p.id === helper.user.id));
+    (mode === "double" && players.some((p) => p.bot));
   components.push({
     type: 1, // ActionRow
     components: [
-      {
-        type: 2, // Button
-        custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "start", user: helper.user.id }),
-        label: "Start Game",
-        style: disabled ? ButtonStyle.Danger : ButtonStyle.Success, // Success
-        disabled,
-      },
       ...(mode === "double" && type === "custom"
         ? [
             {
@@ -207,10 +199,15 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
           ] // Button
         : []),
       {
-        type: 2,
-        custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "instructions" }),
-        label: "Instructions",
-        style: ButtonStyle.Secondary,
+        type: 2, // Button
+        custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "start", user: helper.user.id }),
+        label: players.some((p) => p.bot)
+          ? "You can't play with a bot"
+          : mode === "double" && players.length < 2
+            ? "Select at least two players"
+            : "Start Game",
+        style: disabled ? ButtonStyle.Danger : ButtonStyle.Success, // Success
+        disabled,
       },
     ],
   });
@@ -227,50 +224,26 @@ function getMessageResponse(
   maxLives: number,
 ): RESTPostAPIChannelMessageJSONBody {
   const getCompletedStatus = (completed: boolean) => (completed ? "✅" : "❌");
-  const settings: string[] = [
-    `${emojis.tree_middle} **Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}`,
-    `${emojis.tree_middle} **Word Type:** ${type === "random" ? "Random" : "Custom"}`,
-    `${mode === "single" ? emojis.tree_middle : emojis.tree_end} **Players:** ${players.map((p) => `<@${p.id}>`).join(", ")}`,
-  ];
-  if (mode === "single") settings.push(`${emojis.tree_end} **Max Lives:** ${maxLives}`);
-  const requirements: string[] = [];
+  let description = `**Selected Mode:** ${mode === "single" ? "Single Player" : "Double Player"}\n`;
+  description += `**Word Type:** ${type === "custom" ? "Custom" : "Random"}\n`;
+  description += `${mode === "single" ? `**Max Lives:** ${maxLives}\n` : ""}`;
   if (mode === "double") {
-    if (players.some((p) => p.bot)) {
-      requirements.push("- ❌ Bot's cant't play (||duh!||). Please choose another user.");
-    } else {
-      requirements.push(
-        `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)`,
-      );
-    }
-
-    if (type === "custom") {
-      requirements.push(`- ${getCompletedStatus(!!word)} Provide a custom word.`);
-      if (players.some((p) => p.id === helper.user.id)) {
-        requirements.push(
-          "- ❌ You can't be one of the player if word type is `custom` (||Trying to be sneaky, are we?||). Please choose another user.",
-        );
-      }
-    }
+    description += `**Players:** ${players.map((p) => `<@${p.id}>`).join(", ")}\n`;
+    description += `**Provide the following information:**\n`;
+    description += `${mode === "double" ? `- ${getCompletedStatus(players.length === 2)} Mention the player you want to play with using the select menu below. (Min. 2 Players)\n` : ""}`;
+    description += `${type === "custom" ? `- ${getCompletedStatus(!!word)} Provide a custom word.\n` : ""}`;
   }
+  description += `${constants[mode as "single" | "double"]}`;
 
-  const comp = container(
-    section(
-      thumbnail(
-        "https://cdn.discordapp.com/attachments/867638574571323424/1341584782936768553/hangman.png?ex=67b687b1&is=67b53631&hm=fda4789028ff41867f448b90b4b0f50e096ef7ed48c54b0d8ef9b387b28f32b6&",
-      ),
-      "### Skygame: Hangman",
-      settings.join("\n"),
-    ),
-    separator(),
-  );
-  if (requirements.length) {
-    comp.components.push(textDisplay("**Provide the following information:**\n" + requirements.join("\n")), separator());
-  }
-  comp.components.push(...createComponents(mode, type, players, word, helper));
+  const embed: APIEmbed = {
+    title: "Skygame: Hangman",
+    description,
+    color: 0x00ff00,
+  };
 
   return {
-    components: [comp],
-    flags: MessageFlags.IsComponentsV2,
+    embeds: [embed],
+    components: createComponents(mode, type, players, word, helper),
   };
 }
 
@@ -297,11 +270,22 @@ export const getCardResponse = async (
         games: d.gamesPlayed!,
         score: d.gamesWon!,
         top: i + 1,
-        avatar: client.utils.getUserAvatar(member as APIGuildMember, guild?.id),
+        // @ts-expect-error heck it
+        avatar: client.utils.getUserAvatar(member, guild?.id),
       };
     }),
   );
   const card = players.length && (await new LeaderboardCard({ usersData: players }).build());
+  const embed: APIEmbed = {
+    title:
+      `${game.charAt(0).toUpperCase() + game.slice(1)} Leaderboard - ` +
+      (type === "server" ? `\`Server (${guild!.name})\`` : "`Global`"),
+    description:
+      `**Top 10 players in the ${game} game - \`${btnType === "singleMode" ? "Single Mode" : "Double Mode"}\`**\n\n` +
+      (card ? "" : "Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!"),
+    ...(card ? { image: { url: "attachment://leaderboard.png" } } : {}),
+    color: resolveColor("DarkAqua"),
+  };
   const btns: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
     components: [
@@ -321,32 +305,9 @@ export const getCardResponse = async (
       },
     ],
   };
-  const comp = container(
-    textDisplay(
-      `${game.charAt(0).toUpperCase() + game.slice(1)} Leaderboard - ` +
-        (type === "server" ? `\`Server (${guild!.name})\`` : "`Global`"),
-    ),
-    separator(),
-    card
-      ? mediaGallery(
-          mediaGalleryItem("attachment://leaderboard.png", {
-            description: `Top 10 players in the ${game} game for ` + (btnType === "doubleMode" ? "Double Mode" : "Single Mode"),
-          }),
-        )
-      : textDisplay("Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!"),
-    btns,
-  );
   let files: RawFile[] | undefined = undefined;
   if (card) {
     files = [{ data: card, name: "leaderboard.png" }];
   }
-  return { files, components: [comp], attachments: [], flags: MessageFlags.IsComponentsV2 };
+  return { embeds: [embed], files, components: [btns], attachments: [] };
 };
-
-function createGameInstrunctionEmbed(mode: string) {
-  return container(
-    textDisplay("### SkyGame Instructions\n-# How to Play"),
-    separator(),
-    textDisplay(constants[mode as "single" | "double"]),
-  );
-}
