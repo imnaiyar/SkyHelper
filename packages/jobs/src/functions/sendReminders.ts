@@ -62,7 +62,7 @@ export async function reminderSchedules(): Promise<void> {
         let response = null;
         if (key === "ts") {
           if (!ts) continue;
-          response = getTSResponse(ts, t);
+          response = getTSResponse(ts, t, roleM);
         } else {
           response = getResponse(key, t, details);
         }
@@ -72,6 +72,7 @@ export async function reminderSchedules(): Promise<void> {
         if (key !== "ts") {
           toSend = {
             components: [
+              ...(roleM ? [textDisplay(roleM)] : []),
               container(
                 textDisplay(
                   "-# SkyHelper Reminders\n" +
@@ -84,6 +85,7 @@ export async function reminderSchedules(): Promise<void> {
                 textDisplay(response as string),
               ),
             ],
+            flags: MessageFlags.IsComponentsV2,
           };
         }
         const msg = await wb
@@ -91,7 +93,6 @@ export async function reminderSchedules(): Promise<void> {
             {
               username: "SkyHelper",
               avatar_url: "https://skyhelper.xyz/assets/img/boticon.png",
-              content: roleM || "",
               ...toSend,
             },
             { thread_id: webhook.threadId, retries: 3 },
@@ -178,7 +179,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
 const isSeasonal = (data: SpiritsData) => "ts" in data;
 
 // TODO: Test this before merging
-const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
+const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>, roleM: string | null) => {
   if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
 
   const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
@@ -226,7 +227,7 @@ const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
       mediaGallery({ media: { url: "https://cdn.imnaiyar.site/" + spirit.tree!.image } }),
     );
 
-    return { components: [component], flags: MessageFlags.IsComponentsV2 };
+    return { components: [...(roleM ? [textDisplay(roleM)] : []), component], flags: MessageFlags.IsComponentsV2 };
   } else {
     let description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
@@ -245,6 +246,6 @@ const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>) => {
       separator(),
       textDisplay(description),
     );
-    return { components: [component], flags: MessageFlags.IsComponentsV2 };
+    return { components: [...(roleM ? [textDisplay(roleM)] : []), component], flags: MessageFlags.IsComponentsV2 };
   }
 };

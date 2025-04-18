@@ -4,6 +4,7 @@ import {
   type APIMessage,
   type APIMessageComponent,
   type APIWebhook,
+  MessageFlags,
   Routes,
 } from "discord-api-types/v10";
 import { makeURLSearchParams, REST } from "@discordjs/rest";
@@ -124,6 +125,7 @@ export type WebhookMessageCreateOptions = {
   username?: string;
   avatar_url?: string;
   allowed_mentions?: APIAllowedMentions;
+  flags?: MessageFlags;
 };
 
 export type WebhookEditMessageOptions = Omit<WebhookMessageCreateOptions, "username" | "avatar_url">;

@@ -108,7 +108,7 @@ export function buildShardEmbed(
               // prettier-ignore
               if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })})~~`;
               // prettier-ignore
-              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: `<t:${s.end.toUnixInteger()}:>` })}) <a:uptime:1228956558113771580>`;
+              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })}) <a:uptime:1228956558113771580>`;
               return (
                 prefix +
                 `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: `<t:${s.start.toUnixInteger()}:R>` })})`
