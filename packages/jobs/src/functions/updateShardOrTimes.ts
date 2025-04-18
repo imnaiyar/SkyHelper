@@ -8,10 +8,15 @@ import { DiscordAPIError } from "@discordjs/rest";
 import { DateTime } from "luxon";
 import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
 import { BASE_API } from "@/constants";
-import type { APIActionRowComponent, APIComponentInMessageActionRow, APIEmbed, APIMessageComponent } from "discord-api-types/v10";
+import {
+  MessageFlags,
+  type APIActionRowComponent,
+  type APIComponentInMessageActionRow,
+  type APIContainerComponent,
+  type APIMessageComponent,
+} from "discord-api-types/v10";
 const getEmbed = async (type?: "shards" | "times", query: { locale?: string; date?: string; noBtn?: boolean } = {}) => {
   return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(JSON.stringify(query))}`).then((res) => res.json())) as {
-    embeds: APIEmbed[];
     components: APIActionRowComponent<APIComponentInMessageActionRow>[];
   };
 };
@@ -59,6 +64,8 @@ const update = async (
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
     const d = await response(guild.language?.value ?? "en-US");
+    // removing navigation buttons as that complicates things
+    if (type === "autoShard") (d.components![0] as APIContainerComponent)!.components.splice(-2, 2);
     const res = await webhook
       .editMessage(
         event.messageId,
@@ -68,18 +75,21 @@ const update = async (
             { type: 10, content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }) },
             ...(d.components as APIMessageComponent[]),
           ],
+          flags: MessageFlags.IsComponentsV2,
         },
         { thread_id: event.webhook.threadId, retries: 3 },
       )
       .catch((e) => e);
+    // TODO: actually log other errors instead of just ignoring
     if (res instanceof DiscordAPIError && (res.message === "Unknown Message" || res.message === "Unknown Webhook")) {
       if (res.code === 10008) {
         // unknown message
         deleteWebhookAfterChecks(webhook, guild, [type]);
         logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
-      }
-      if (res.code === 10015) {
+      } else if (res.code === 10015) {
         logger.error(`Live ${type} disabled for ${guild.data.name}, webhook not found!`);
+      } else {
+        logger.error(`Live ${type}: ${guild.data.name} (${guild.id})`, res);
       }
       guild[type] = {
         active: false,
