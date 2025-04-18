@@ -39,12 +39,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.a,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Butterfly Fields, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1119162577126178846/01_Daylight_Prairie_-_Butterfly_Field.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Butterfly Fields, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1053249686422687784/dp-b_Butterfly_Field.png",
         },
       ],
@@ -56,12 +56,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.A,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Bird's Nest, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1109738791268257812/01_Daylight_Prairie_-_Birds_Nest.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Bird's Nest, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1044197796577824839/dp-r_Bird_Nest.png",
         },
       ],
@@ -73,12 +73,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.b,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Village Island/Koi Pond, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1115536957875945604/01_Daylight_Prairie_-_Village_Islands_and_Koi_Pond.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Village Island/Koi Pod, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1049635543421550652/dp-b_Village-Koi.png",
         },
       ],
@@ -90,11 +90,11 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.B,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Sanctuary Island, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1117348946390564934/IMG_4458.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Sanctuary Island, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1051464559065583637/dp-r_Sanctuary_Islands.png",
         },
       ],
@@ -106,12 +106,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.C,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Prairie Caves, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1124597919178313749/01_Daylight_Prairie_-_Prairie_Caves.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Prairie Caves, <:r5Prairie:1150596314883690607> Daylight Prairie**",
           image: "https://media.discordapp.net/attachments/1123347180988661902/1126113425286766702/dp-r_Caves.jpg",
         },
       ],
@@ -126,11 +126,11 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.a,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Forest Brook, <:r4Forest:1150596343354630235> Hidden Forest**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1117712849217781871/IMG_3543.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Forest Brook, <:r4Forest:1150596343354630235> Hidden Forest**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1051802895634399242/hf-b_Forest_Brook.png",
         },
       ],
@@ -142,12 +142,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.A,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Treehouse, <:r4Forest:1150596343354630235> Hidden Forest**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1111912764420665394/02_Hidden_Forest_-_Assembly_Treehouse.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Treehouse, <:r4Forest:1150596343354630235> Hidden Forest**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1046371999586451597/png_20221027_180854_0000.png",
         },
       ],
@@ -159,12 +159,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.b,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Broken Bridge/Boneyard, <:r4Forest:1150596343354630235> Hidden Forest**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1121336759633059890/02_Hidden_Forest_-_Broken_Bridge.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Broken Bridge/Boneyard, <:r4Forest:1150596343354630235> Hidden Forest**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1048189111145603072/hf-b_Boneyard.png",
         },
       ],
@@ -176,12 +176,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.B,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Elevated Clearing(Sunny Forest), <:r4Forest:1150596343354630235> Hidden Forest**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1119522919983349780/02_Hidden_Forest_-_Elevated_Clearing.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Elevated Clearing(Sunny Forest), <:r4Forest:1150596343354630235> Hidden Forest**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1053645676870897724/hf-r_Elevated_Clearing.png",
         },
       ],
@@ -193,12 +193,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.C,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Forest End, <:r4Forest:1150596343354630235> Hidden Forest**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1115899669847998526/02_Hidden_Forest_-_Forest_End.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Forest End, <:r4Forest:1150596343354630235> Hidden Forest**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1050078656015376496/hf-r_Forest_End.png",
         },
       ],
@@ -212,12 +212,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.a,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Ice Rink, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1116263531101306940/03_Valley_of_Triumph_-_Ice_Rink.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Ice Rink, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1050351219383730186/vt-b_Ice_Rink.png",
         },
       ],
@@ -229,12 +229,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.A,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Village of Dreams, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1114449712070799360/03_Valley_of_Triumph_-_Village_of_Dreams.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Village of Dreams, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1048546903702384721/vt-r_Village_of_Dreams.png",
         },
       ],
@@ -246,12 +246,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.b,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Ice Rink, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1116263531101306940/03_Valley_of_Triumph_-_Ice_Rink.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Ice Rink, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1050351219383730186/vt-b_Ice_Rink.png",
         },
       ],
@@ -263,12 +263,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.B,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Hermits Valley, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1110464646911115314/03_Valley_of_Triumph_-_Hermit_Valley.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Hermits Valley, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1055814361026936952/vt-r_Hermit_Valley.png",
         },
       ],
@@ -280,12 +280,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.C,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Village of Dreams, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1114449712070799360/03_Valley_of_Triumph_-_Village_of_Dreams.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Village of Dreams, <:r3Valley:1150596376930037850> Valley of Triumph**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1048546903702384721/vt-r_Village_of_Dreams.png",
         },
       ],
@@ -299,12 +299,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.a,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Broken Temple, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1125685677384806531/04_Golden_Wasteland_-_Broken_Temple.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: , Broken Temple <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1045297714474254396/gw-b_Broken_Temple.png",
         },
       ],
@@ -316,12 +316,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.A,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Crab Fields/Shipwreck, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1094518173262417990/04_Golden_Wasteland_-_Crab_Fields.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Crab Fields, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1050722076681568256/gw-r_Shipwreck.png",
         },
       ],
@@ -333,12 +333,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.b,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Battlefield, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1118435910615302164/04_Golden_Wasteland_-_Battlefield.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Battlefield, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1052530499668688957/gw-b_Battlefield.png",
         },
       ],
@@ -350,11 +350,11 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.B,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Forgotten Ark, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1112639178048548884/IMG_3148.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Forgotten Ark, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1069221627918827622/Forgotten_Ark_1.png",
         },
       ],
@@ -366,12 +366,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.C,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Graveyard, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1109015846753419294/04_Golden_Wasteland_-_Graveyard.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Graveyard, <:r2Wasteland:1150596423822356511> Golden Wasteland**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1043553879289253919/gw-r_Graveyard.png",
         },
       ],
@@ -385,11 +385,11 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.a,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1090896818604347392/IMG_1525.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1077178980051984455/vk-b_Starlight_Desert.png",
         },
       ],
@@ -401,12 +401,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.A,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Jellyfish Cove, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1089082330305544242/05_Vault_of_Knowledge_-_Jellyfish_Cove.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Jellyfish Cove, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1049290746190106694/vk-r_Starlight_Desert.png",
         },
       ],
@@ -418,11 +418,11 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.b,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1090896818604347392/IMG_1525.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1077178980051984455/vk-b_Starlight_Desert.png",
         },
       ],
@@ -434,12 +434,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.B,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Jellyfish Cove, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1089082330305544242/05_Vault_of_Knowledge_-_Jellyfish_Cove.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Jellyfish Cove, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1049290746190106694/vk-r_Starlight_Desert.png",
         },
       ],
@@ -451,12 +451,12 @@ export const shardsInfo: ShardsInfo = {
       ...shardConfig.C,
       locations: [
         {
-          description: "**Shard Location**",
+          description: "**Shard Location: Jellyfish Cove, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image:
             "https://media.discordapp.net/attachments/575827924343848960/1089082330305544242/05_Vault_of_Knowledge_-_Jellyfish_Cove.png",
         },
         {
-          description: "**Shard Data**",
+          description: "**Shard Data: Jellyfish Cove, <:r1Vault:1150596447679553636> Vault of Knowledge**",
           image: "https://media.discordapp.net/attachments/575827924343848960/1049290746190106694/vk-r_Starlight_Desert.png",
         },
       ],

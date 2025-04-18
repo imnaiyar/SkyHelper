@@ -28,7 +28,6 @@ export * from "./hangman.js";
 export * from "./seasonsData.js";
 export * from "./realmsData.js";
 export * from "./scramble.js";
-export * from "./emojis.js";
 export const SendableChannels = [
   ChannelType.GuildText,
   ChannelType.PrivateThread,

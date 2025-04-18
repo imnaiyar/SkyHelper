@@ -1,9 +1,7 @@
 import type { Button } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
-import { MessageFlags } from "@discordjs/core";
+import type { APIEmbed } from "@discordjs/core";
 import { DateTime } from "luxon";
-import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
-import { emojis } from "@skyhelperbot/constants";
 export default {
   data: {
     name: "daily-quests-candles",
@@ -20,15 +18,13 @@ export default {
     if (!isValid || !checkQuestButtonValidToday(date)) {
       return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
     }
-    const comp = container(
-      textDisplay(
-        `### ${title}\n${DateTime.now().setZone("America/Los_Angeles").toFormat("dd-MM-yyyy")}` +
-          `\n${emojis.tree_middle}By: ${d.images[0].by}\n${emojis.tree_end}Source: ${d.images[0].source || "Unknown"}`,
-      ),
-      separator(),
-      mediaGallery(mediaGalleryItem(d.images[0].url, { spoiler: true, description: d.title })),
-    );
-
-    await helper.editReply({ components: [comp], flags: MessageFlags.IsComponentsV2 });
+    const embed: APIEmbed = {
+      title: title + `\n${DateTime.now().setZone("America/Los_Angeles").toFormat("dd-MM-yyyy")}`,
+      description: `${d.title}\n\nBy: ${d.images[0].by}`,
+      image: {
+        url: d.images[0].url,
+      },
+    };
+    await helper.editReply({ embeds: [embed] });
   },
 } satisfies Button;

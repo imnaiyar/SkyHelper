@@ -2,35 +2,37 @@ import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import Utils from "@/utils/classes/Utils";
 import type {
   APIActionRowComponent,
+  APIButtonComponent,
   APIEmbed,
   APIUser,
-  APIComponentInMessageActionRow,
+  APIMessageActionRowComponent,
   APITextChannel,
   APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
 import { ComponentType, SelectMenuDefaultValueType, MessageFlags } from "@discordjs/core";
 import { updateUserGameStats } from "@/utils/utils";
+import { hangmanWords } from "@skyhelperbot/constants";
 import { Scrambled, scrambleWord } from "@/utils/classes/Scrambled";
-import { container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
 export async function handleSingleMode(helper: InteractionHelper) {
   const { original, scrambled } = scrambleWord();
 
-  const component = container(
-    textDisplay("### SkyGame: Scrambled"),
-    separator(),
-    textDisplay(`Unscramble this word!\n\n### \`${scrambled}\`\n\n-# You have 1min to answer.`),
-    separator(),
-    row({
-      type: 2,
-      style: 3,
-      label: "Type the unscrambled word",
-      custom_id: Utils.encodeCustomId({ id: "scramble-guess-single", user: helper.user.id }),
-    }),
-  );
-
-  const message = await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
-
+  const embed: APIEmbed = {
+    title: "SkyGame: Scrambled",
+    description: `Unscramble this word!\n\n### \`${scrambled}\`\n\n-# You have 1min to answer.`,
+  };
+  const button: APIActionRowComponent<APIButtonComponent> = {
+    type: 1,
+    components: [
+      {
+        type: 2,
+        style: 3,
+        label: "Type the unscrabled word",
+        custom_id: Utils.encodeCustomId({ id: "scramble-guess-single", user: helper.user.id }),
+      },
+    ],
+  };
+  const message = await helper.editReply({ embeds: [embed], components: [button] });
   const response = await helper.client
     .awaitComponent({
       filter: (i) => (i.member?.user || i.user!).id === helper.user.id,
@@ -41,26 +43,27 @@ export async function handleSingleMode(helper: InteractionHelper) {
 
   const result = `The correct word was \`${original}\`\n-# Scrambled: \`${scrambled}\``;
 
-  const playButton = container(
-    component.components
-      .toSpliced(
-        0,
-        1,
-        section(
-          {
-            type: 2,
-            label: "Play Again",
-            style: 2,
-            custom_id: "scramble-play-single",
-          },
-          `### SkyGame: Scrambled`,
-        ),
-      )
-      .toSpliced(2, 1, textDisplay(`### Timed-out!\n${result}`))
-      .toSpliced(-2, 2),
-  );
+  const playButton = {
+    type: 1,
+
+    components: [
+      {
+        type: 2,
+        label: "Play Again",
+        style: 2,
+        custom_id: "scramble-play-single",
+      },
+    ],
+  };
+
   if (!response) {
     await helper.editReply({
+      embeds: [
+        {
+          title: "SkyGame: Scrambled",
+          description: `### Timed-out!\n${result}`,
+        },
+      ],
       components: [playButton],
     });
     return;
@@ -97,6 +100,12 @@ export async function handleSingleMode(helper: InteractionHelper) {
 
   if (!submitted) {
     await helper.editReply({
+      embeds: [
+        {
+          title: "SkyGame: Scrambled",
+          description: `### Timed-out!\n${result}`,
+        },
+      ],
       components: [playButton],
     });
     return;
@@ -107,15 +116,13 @@ export async function handleSingleMode(helper: InteractionHelper) {
   const guessedCorrectly = Utils.getTextInput(submitted, "scramble-correct-word", true).value.trim().toLowerCase() === original;
 
   await modalHelper.update({
-    components: [
-      container(
-        playButton.components.toSpliced(
-          2,
-          1,
-          textDisplay(`You guessed ${guessedCorrectly ? "correctly ✅" : "incorrectly ❌"}!\n\n${result}`),
-        ),
-      ),
+    embeds: [
+      {
+        title: "SkyGame: Scrambled",
+        description: `You guessed ${guessedCorrectly ? "correctly ✅" : "incorrectly ❌"}!\n\n${result}`,
+      },
     ],
+    components: [playButton],
   });
 
   if (guessedCorrectly) {
@@ -154,7 +161,7 @@ export async function handleDoubleMode(helper: InteractionHelper) {
     };
     const isButtonDisabled = players.length < 2 || players.some((p) => p.bot);
 
-    const comps: APIActionRowComponent<APIComponentInMessageActionRow> = {
+    const comps: APIActionRowComponent<APIMessageActionRowComponent> = {
       type: 1,
       components: [
         {

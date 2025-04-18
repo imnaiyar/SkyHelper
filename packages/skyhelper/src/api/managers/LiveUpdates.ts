@@ -1,10 +1,9 @@
-import { getTimesEmbed, buildShardEmbed } from "@/utils/classes/Embeds";
+import embeds from "@/utils/classes/Embeds";
 import getSettings from "../utils/getSettings.js";
 import type { SkyHelper as BotService } from "@/structures";
 import { getTranslator } from "@/i18n";
 import { DateTime } from "luxon";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
-import { MessageFlags } from "@discordjs/core";
 
 export class LiveUpdates {
   static async get(client: BotService, guildId: string) {
@@ -45,16 +44,19 @@ export class LiveUpdates {
 
       // if there is channel in body, means its changed, not disabled
       if (isChanged) {
-        const embed = bodyKey === "shards" ? buildShardEmbed(now, t, true) : await getTimesEmbed(client, t);
+        const embed =
+          bodyKey === "shards"
+            ? embeds.buildShardEmbed(now, t, t("features:shards-embed.FOOTER"), true)
+            : await embeds.getTimesEmbed(client, t, t("features:times-embed.FOOTER"));
 
         const newWebhook = await utils.createWebhookAfterChecks(
           body[bodyKey],
           { name: "Live Updates", avatar: client.utils.getUserAvatar(client.user) },
           "For Live updates",
         );
+
         const msg = await client.api.webhooks.execute(newWebhook.id, newWebhook.token!, {
           ...embed,
-          flags: MessageFlags.IsComponentsV2,
           wait: true,
           username: `${bodyKey === "times" ? "Times" : "Shards"} Updates`,
           allowed_mentions: { parse: [] },

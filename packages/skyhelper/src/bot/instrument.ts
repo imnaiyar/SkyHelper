@@ -4,7 +4,12 @@ import { nestIntegration } from "@sentry/nestjs";
 // initialize sentry
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
-  integrations: [nodeProfilingIntegration(), Sentry.extraErrorDataIntegration({ depth: 9 }), nestIntegration()],
+  integrations: [
+    nodeProfilingIntegration(),
+    Sentry.extraErrorDataIntegration({ depth: 9 }),
+    // @ts-expect-error typings mismatch due to @sentry/nestjs using older peer of nestjs
+    nestIntegration(),
+  ],
   environment: process.env.NODE_ENV,
   tracesSampleRate: 1.0,
   profilesSampleRate: 1.0,

@@ -24,9 +24,9 @@
       },
       "COUNTDOWN": {
         "VALUE": {
-          "ENDED": "Ended {{DURATION}}",
-          "ACTIVE": "Ends {{DURATION}}",
-          "EXPECTED": "Falls {{DURATION}}"
+          "ENDED": "Ended {{DURATION}} ago",
+          "ACTIVE": "Ends in {{DURATION}}",
+          "EXPECTED": "Falls in {{DURATION}}"
         }
       }
     },
@@ -37,12 +37,12 @@
   "times-embed": {
     "FOOTER": "Live SkyTimes (updates every 2 min.)",
     "EVENT_INACTIVE": "No Active Events",
-    "EMBED_TITLE": "Event Times",
+    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
     "EMBED_AUTHOR": "SkyTimes",
     "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Starts In",
-    "ENDS": "Ends",
-    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
+    "ENDS": "Ends In",
+    "TS_VISITING": "**Currently Visiting:** {{TS_NAME}}\n**Departure:** At {{DATE}} (in {{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
     "TS_UPDATED": "Yet to be updated",
     "TS_UNKNOWN": "Unknown Spirit",

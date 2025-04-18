@@ -10,8 +10,7 @@ import type { ContextMenuCommand } from "@/structures/ContextMenuCommand";
 import type { LocalizationMap } from "@discordjs/core";
 import type { LangKeys } from "@/types/i18n";
 import { supportedLang } from "@skyhelperbot/constants";
-import { isProd } from "./constants.js";
-const baseDir = (isProd ? "dist/" : "src/") + "bot/";
+const baseDir = process.env.NODE_ENV === "development" ? "src/" : "dist/";
 
 // #region commands
 /**
@@ -22,8 +21,13 @@ export async function loadCommands() {
   const commands = new Collection<string, Command>();
   let added = 0;
   let failed = 0;
-  for await (const [filename, command] of loadStructures<Command>("modules/inputCommands", ["sub"])) {
+  const files = recursiveReadDir(baseDir + "bot/modules/inputCommands", ["sub"]);
+  for (const filePath of files) {
+    const file = path.basename(filePath);
     try {
+      const { default: command } = (await import(pathToFileURL(filePath).href)) as {
+        default: Command;
+      };
       if (typeof command !== "object") continue;
       if (commands.has(command.name)) throw new Error("The command already exists");
       // const vld = cmdValidation(command, file);
@@ -33,10 +37,9 @@ export async function loadCommands() {
       added++;
     } catch (err) {
       failed++;
-      logger.error(`loadCommands - ${filename}`, err);
+      logger.error(`loadCommands - ${file}`, err);
     }
   }
-
   logger.custom(`Loaded ${added} Commands. Failed ${failed}`, "COMMANDS");
   return commands;
 }
@@ -50,12 +53,13 @@ export async function loadContextCmd() {
   const contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
   let added = 0;
   let failed = 0;
-
-  for await (const [filename, command] of loadStructures<ContextMenuCommand<"MessageContext" | "UserContext">>(
-    "modules/contexts",
-    ["sub"],
-  )) {
+  const files = recursiveReadDir(baseDir + "bot/modules/contexts", ["sub"]);
+  for (const filePath of files) {
+    const file = path.basename(filePath);
     try {
+      const { default: command } = (await import(pathToFileURL(filePath).href)) as {
+        default: ContextMenuCommand<"MessageContext" | "UserContext">;
+      };
       if (typeof command !== "object") continue;
       if (contexts.has(command.name + command.data.type.toString())) throw new Error("The command already exists");
       // const vld = cmdValidation(command, file);
@@ -65,7 +69,7 @@ export async function loadContextCmd() {
       added++;
     } catch (err) {
       failed++;
-      logger.error(`loaContextCmds - ${filename}`, err);
+      logger.error(`loaContextCmds - ${file}`, err);
     }
   }
 
@@ -82,19 +86,25 @@ export async function loadButtons() {
   const buttons = new Collection<string, Button>();
   let added = 0;
   let failed = 0;
-  for await (const [filename, button] of loadStructures<Button>("modules/buttons", ["sub"])) {
+  const files = recursiveReadDir(baseDir + "bot/modules/buttons", ["sub"]);
+  for (const filePath of files) {
+    const file = path.basename(filePath);
+
     try {
+      const { default: button } = (await import(pathToFileURL(filePath).href)) as {
+        default: Button;
+      };
       if (typeof button !== "object") continue;
-      if (buttons.has(button.data.name)) throw new Error("The button already exists");
+      if (buttons.has(button.data.name)) throw new Error("The command already exists");
       buttons.set(button.data.name, button);
-      logger.custom(`Loaded ${button.data.name}`, "Button");
+      logger.custom(`Loaded ${button.data.name}`, "BUTTON");
       added++;
-    } catch (err) {
+    } catch (ex) {
       failed += 1;
-      logger.error(`${filename}`, err);
+      logger.error(`${file}`, ex);
     }
   }
-  logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "Buttons");
+  logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "BUTTONS");
   return buttons;
 }
 
@@ -107,18 +117,19 @@ export async function loadButtons() {
 export async function loadEvents(client: SkyHelper) {
   let success = 0;
   let failed = 0;
+  const files = recursiveReadDir(baseDir + "bot/events");
 
-  for await (const [filename, event] of loadStructures<Event>("events")) {
-    const eventName = filename.split(".").shift()!;
+  for (const filePath of files) {
+    const file = path.basename(filePath);
     try {
-      if (typeof event !== "function") continue;
-
+      const eventName = path.basename(file, process.env.NODE_ENV === "development" ? ".ts" : ".js");
+      const { default: event } = (await import(pathToFileURL(filePath).href)) as { default: Event };
       client[eventName === "ready" ? "once" : "on"](eventName, event.bind(null, client));
-      logger.custom(`Loaded ${eventName}`, "EVENTS");
-      success++;
-    } catch (err) {
-      failed++;
-      logger.error(`loadEvents - ${eventName}`, err);
+      console.log(`Loaded ${eventName}`);
+      success += 1;
+    } catch (ex) {
+      failed += 1;
+      console.error(`loadEvent - ${file}`, ex);
     }
   }
 
@@ -140,22 +151,4 @@ export function loadLocalization(key: LangKeys): LocalizationMap {
       : translation;
   }
   return data;
-}
-
-/**
- * Async generator that yields the structures from the specified directory
- * @param filepath The directory to load the structures from
- * @param skipPaths Paths to skip
- * @returns Iterator of `[filename, structure]`
- */
-async function* loadStructures<T>(
-  filepath: "modules/buttons" | "modules/contexts" | "modules/inputCommands" | "events",
-  skipPaths?: string[],
-) {
-  const files = recursiveReadDir(baseDir + filepath, skipPaths);
-  for (const file of files) {
-    const filename = path.basename(file);
-    const { default: structure } = (await import(pathToFileURL(file).href)) as { default: T };
-    yield [filename, structure] as const;
-  }
 }

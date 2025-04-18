@@ -11,6 +11,7 @@ import {
 } from "@discordjs/core";
 type PermissionFlags = keyof typeof PermissionFlagsBits;
 import logger from "@/handlers/logger";
+import { addBreadcrumb, captureException } from "@sentry/node";
 type StringPermissions = `${number}`;
 export type PermissionsResolvable =
   | bigint
