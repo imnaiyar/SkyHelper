@@ -18,9 +18,10 @@ import {
   type GatewayDispatchEvents,
 } from "@discordjs/core";
 import { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import { resolveColor, SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
+import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
-import Embeds from "@/utils/classes/Embeds";
+import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
+import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
@@ -211,102 +212,28 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region Modal
     if (helper.isModalSubmit(interaction)) {
-      if (interaction.data.custom_id === "errorModal") {
-        await helper.reply({
-          content: t("errors:ERROR_MODAL.SUCCESS"),
-          flags: 64,
-        });
-        const fields = interaction.data.components.map((c) => c.components[0]);
-        const commandUsed = fields.find((f) => f.custom_id === "commandUsed")?.value;
-        const whatHappened = fields.find((f) => f.custom_id === "whatHappened")?.value;
-        const errorId = fields.find((f) => f.custom_id === "errorId")?.value;
-        const embed: APIEmbed = {
-          title: "BUG REPORT",
-          fields: [
-            { name: "Command Used", value: `\`${commandUsed}\`` },
-            {
-              name: "User",
-              value: `${helper.user.username} \`[${helper.user.id}]\``,
-            },
-            {
-              name: "Server",
-              value: `${guild?.name} \`[${interaction.guild?.id}]\``,
-            },
-            { name: "What Happened", value: `${whatHappened}` },
-          ],
-          color: resolveColor("Blurple"),
-          timestamp: new Date().toISOString(),
-        };
-        const errorWb = process.env.BUG_REPORTS ? Utils.parseWebhookURL(process.env.BUG_REPORTS) : null;
-        if (errorWb) {
-          await api.webhooks.execute(errorWb.id, errorWb.token, {
-            username: "Bug Report",
-            content: `Error ID: \`${errorId}\``,
-            embeds: [embed],
-          });
-        }
+      const { id } = client.utils.parseCustomId(interaction.data.custom_id);
+      switch (id) {
+        case "errorModal":
+          await handleErrorModal(helper);
+          return;
+        case "shards-calendar-modal-date":
+          await handleShardsCalendarModal(helper);
+          return;
+        default:
+          return;
       }
     }
 
-    // #region Select Menus
-    if (helper.isStringSelect(interaction)) {
-      const id = Utils.parseCustomId(interaction.data.custom_id).id;
-      if (id === "skytimes-details") {
-        const value = interaction.data.values[0];
-        const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value as EventKey);
-        const embed: APIEmbed = {
-          title: event.name + " Times",
-          footer: {
-            text: "SkyTimes",
-          },
-        };
-        let desc = "";
-        if (status.active) {
-          desc += `${t("features:times-embed.ACTIVE", {
-            EVENT: event.name,
-            DURATION: status.duration,
-            ACTIVE_TIME: Utils.time(status.startTime.toUnixInteger(), "t"),
-            END_TIME: Utils.time(status.endTime.toUnixInteger(), "t"),
-          })}\n- -# ${t("features:times-embed.NEXT-OCC-IDLE", {
-            TIME: Utils.time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
-          })}`;
-        } else {
-          desc += t("features:times-embed.NEXT-OCC", {
-            TIME: Utils.time(status.nextTime.toUnixInteger(), event.occursOn ? "F" : "t"),
-            DURATION: status.duration,
-          });
-        }
-        desc += `\n\n**${t("features:times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
-
-        if (event.infographic) {
-          desc += `\n\n© ${event.infographic.by}`;
-          embed.image = { url: event.infographic.image };
-        }
-        embed.description = desc;
-        return void helper.reply({ embeds: [embed], flags: 64 });
-      }
-
-      if (id === "daily_quests_select") {
-        const { date } = Utils.parseCustomId(interaction.data.custom_id);
-        const [day, month, year] = date.split("-").map(Number);
-
-        const isValid = DateTime.now()
-          .setZone("America/Los_Angeles")
-          .hasSame(DateTime.fromObject({ day, month, year }, { zone: "America/Los_Angeles" }), "day");
-        if (!isValid) {
-          await helper.reply({
-            content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED"),
-            flags: 64,
-          });
+    // #region selects
+    if (helper.isSelect(interaction)) {
+      const { id } = client.utils.parseCustomId(interaction.data.custom_id);
+      switch (id) {
+        case "skytimes-details":
+          await handleSkyTimesSelect(interaction, helper);
           return;
-        }
-        await helper.deferUpdate();
-        const index = parseInt(interaction.data.values[0]);
-        const data = await client.schemas.getDailyQuests();
-        const response = Embeds.dailyQuestEmbed(data, index);
-        await helper.editReply({
-          ...response,
-        });
+        default:
+          return;
       }
     }
   } catch (err) {
@@ -334,6 +261,7 @@ function getErrorResponse(id: string, t: ReturnType<typeof getTranslator>) {
         ],
       },
     ],
+    flags: 64,
   };
 }
 

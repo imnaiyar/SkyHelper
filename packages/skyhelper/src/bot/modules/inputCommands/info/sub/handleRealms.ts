@@ -1,4 +1,4 @@
-import { MapsData, SummaryData, getMaps, getSummary } from "@skyhelperbot/constants";
+import { MapsData, SummaryData, getMaps, getSummary, realms_emojis } from "@skyhelperbot/constants";
 import { handleSpirits } from "./handleSpirits.js";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
@@ -49,7 +49,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   let page = 1;
   const total = data.areas.length - 1;
   const author = `Summary of ${data.main.title}`;
-  const emoji = client.emojisMap.get("realms")![realm];
+  const emoji = realms_emojis[data.main.title];
   const embed: APIEmbed = {
     title: `${emoji} ${data.main.title}`,
     url: `https://sky-children-of-the-light.fandom.com/wiki/${data.main.title.split(" ").join("_")}`,
@@ -291,14 +291,13 @@ function getRealmsRow(
         disabled: page - 1 === 0,
         style: ButtonStyle.Secondary,
       },
-      emoji
-        ? {
-            type: ComponentType.Button,
-            custom_id: Utils.encodeCustomId({ id: "realm", user }),
-            emoji: { name: emoji },
-            style: ButtonStyle.Success,
-          }
-        : undefined,
+      {
+        type: ComponentType.Button,
+        custom_id: Utils.encodeCustomId({ id: "realm", user }),
+        emoji: { name: emoji },
+        label: "Back",
+        style: ButtonStyle.Success,
+      },
       {
         type: ComponentType.Button,
         custom_id: Utils.encodeCustomId({ id: "forward", user }),
@@ -306,7 +305,7 @@ function getRealmsRow(
         disabled: page - 1 === total,
         style: ButtonStyle.Secondary,
       },
-    ].filter(Boolean) as APIButtonComponent[],
+    ],
   };
 
   const menu: APIActionRowComponent<APIStringSelectComponent> = {
