@@ -38,7 +38,7 @@
     "@discordjs/ws": "^2.0.1",
     "@imnaiyar/framework": "latest",
     "@napi-rs/canvas": "^0.1.65",
-    "@nestjs/common": "^11.0.6",
+    "@nestjs/common": "^11.0.16",
     "@nestjs/core": "^11.0.6",
     "@nestjs/platform-express": "^11.0.6",
     "@sapphire/discord-utilities": "^3.4.4",
