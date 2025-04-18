@@ -22,7 +22,7 @@ import {
 import type { RawFile } from "@discordjs/rest";
 import type { SkyGameStatsData } from "@/types/custom";
 import { emojis } from "@skyhelperbot/constants";
-import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@/utils/v2";
+import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {

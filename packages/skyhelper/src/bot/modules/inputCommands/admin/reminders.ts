@@ -6,8 +6,7 @@ import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { getTSData } from "@/utils/getEventDatas";
 import { MessageFlags, type APIGuildForumChannel, type APITextChannel, type APIContainerComponent } from "@discordjs/core";
 import { SendableChannels } from "@skyhelperbot/constants";
-import { SkytimesUtils, type EventKey } from "@skyhelperbot/utils";
-import { container, textDisplay } from "@/utils/v2";
+import { SkytimesUtils, type EventKey, container, textDisplay } from "@skyhelperbot/utils";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",
@@ -22,7 +21,7 @@ export default {
   async interactionRun({ helper, options }) {
     const { client, t } = helper;
     const sub = options.getSubcommand(true);
-    const guild = helper.client.guilds.get(helper.int.guild_id || "");
+    const guild = helper.client.guilds.get("1142926822598774814");
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
     const checkClientPerms = async (ch: APITextChannel | APIGuildForumChannel) => {

@@ -11,7 +11,7 @@ import {
   type APIButtonComponent,
   type APISelectMenuComponent,
 } from "@discordjs/core";
-import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@/utils/v2";
+import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 
 export async function handleSeasional(helper: InteractionHelper, options: InteractionOptionResolver) {
   const value = options.getString("season")!;

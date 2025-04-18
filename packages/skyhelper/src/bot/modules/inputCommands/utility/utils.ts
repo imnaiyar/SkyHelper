@@ -6,7 +6,7 @@ import { UTILS_DATA } from "@/modules/commands-data/utility-commands";
 import { readFile } from "node:fs/promises";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { MessageFlags, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
-import { container, separator, textDisplay } from "@/utils/v2";
+import { container, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res));
 export default {

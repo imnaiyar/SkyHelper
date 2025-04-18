@@ -2,7 +2,7 @@ import type { Button } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 import { MessageFlags } from "@discordjs/core";
 import { DateTime } from "luxon";
-import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@/utils/v2";
+import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 export default {
   data: {

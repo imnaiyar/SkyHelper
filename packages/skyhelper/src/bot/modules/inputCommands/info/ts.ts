@@ -6,7 +6,7 @@ import { TRAVELING_SPIRITS_DATA } from "@/modules/commands-data/info-commands";
 import { getTSData } from "@/utils/getEventDatas";
 import { Spirits } from "@/utils/classes/Spirits";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
-import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@/utils/v2";
+import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 const isSeasonal = (data: SpiritsData) => "ts" in data;
 export default {

@@ -10,7 +10,7 @@ import {
   type APIGuildForumChannel,
 } from "@discordjs/core";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
-import { textDisplay } from "@/utils/v2";
+import { textDisplay } from "@skyhelperbot/utils";
 import { SendableChannels } from "@skyhelperbot/constants";
 
 export const handleLive = async (

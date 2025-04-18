@@ -1,7 +1,7 @@
 import type { Button } from "@/structures";
 import Utils from "@/utils/classes/Utils";
 import { emojis } from "@skyhelperbot/constants";
-import { mediaGallery, textDisplay } from "@/utils/v2";
+import { mediaGallery, textDisplay } from "@skyhelperbot/utils";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIContainerComponent } from "@discordjs/core";
 
 export default {

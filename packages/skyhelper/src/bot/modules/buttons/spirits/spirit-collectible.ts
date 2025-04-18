@@ -1,6 +1,6 @@
 import type { Button } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@/utils/v2";
+import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,

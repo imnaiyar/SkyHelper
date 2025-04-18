@@ -4,7 +4,7 @@ import type { getTranslator } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ButtonStyle, ComponentType, type APIButtonComponent } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
-import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@/utils/v2";
+import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
 import config from "@/config";
 export default {
   data: {

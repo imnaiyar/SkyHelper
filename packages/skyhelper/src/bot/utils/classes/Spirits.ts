@@ -6,7 +6,7 @@ import { getTranslator } from "@/i18n";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIContainerComponent } from "@discordjs/core";
 import utils from "./Utils.js";
 import { DateTime } from "luxon";
-import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "../v2.js";
+import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 
 // Define location Btn (Tree btn is defined/handled when location button is clicked)

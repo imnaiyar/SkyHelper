@@ -80,13 +80,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       }
       const options = new InteractionOptionResolver(interaction);
-      /*  const validate = await validateInteractions({ command, interaction, options, helper, t });
+      const validate = await validateInteractions({ command, interaction, options, helper, t });
       if (!validate.status) {
         return void (await api.interactions.reply(interaction.id, interaction.token, {
           content: validate.message,
           flags: MessageFlags.Ephemeral,
         }));
-      } */ // TODO: enable validation before merge
+      }
       try {
         await command.interactionRun({
           interaction,
