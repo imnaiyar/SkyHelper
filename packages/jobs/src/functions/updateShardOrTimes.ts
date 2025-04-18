@@ -65,7 +65,9 @@ const update = async (
     const now = DateTime.now();
     const d = await response(guild.language?.value ?? "en-US");
     // removing navigation buttons as that complicates things
-    if (type === "autoShard") (d.components![0] as APIContainerComponent)!.components.splice(-2, 2);
+
+    if (type === "autoShard") (d.components![1] as APIContainerComponent)!.components.splice(-2, 2);
+
     const res = await webhook
       .editMessage(
         event.messageId,
