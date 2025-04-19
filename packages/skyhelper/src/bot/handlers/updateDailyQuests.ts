@@ -4,6 +4,7 @@ import { dailyQuestEmbed } from "@/utils/classes/Embeds";
 import { getTranslator } from "@/i18n";
 import type { DailyQuest } from "@/types/custom";
 import { DateTime } from "luxon";
+import { textDisplay } from "@skyhelperbot/utils";
 
 const titleRegex = /(?:\*\*[^*]*\*\*|[^*])(?<=\*\*)(.*?)(?=\*\*| by)/g;
 const creditRegex = /by @?\w+/g;
@@ -88,8 +89,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
 
         const d = dailyQuestEmbed(data);
         response = {
-          content: `${role}\u200B`,
-          ...d,
+          components: [...(role ? [textDisplay(`${role}\u200B`)] : []), ...d.components],
         };
         if (!response) return;
         client.api.webhooks
