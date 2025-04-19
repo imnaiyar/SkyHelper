@@ -88,7 +88,8 @@
         "FIELDS": {
           "SUMMARY_TITLE": "TS संचेप",
           "SUMMARY_DESC_NO_ELIGIBLE": "यह स्पिरिट अभी TS के तौर पे लौटने के लिए योग्य नही है और {{SEASON}} के बाद वाले सीज़न के ख़त्म होने पर योग्य होगा!",
-          "SUMMARY_DESC_RETURNED": "कुल विजिट्स:: {{VISITS}}\n__विजिट्स के तारीख__",
+          "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}",
+          "SUMMARY_RETURNED_DATE": "Returned Dates",
           "SUMMARY_DESC_NO_VISIT": "यह स्पिरिट अभी लाॅटें नहिं हैं, जब वे वापस आएंगे, तो वे सीज़न के दौरान दी जाने वाली वही वस्तुएं पेश करेंगे, लेकिन एक पुनर्गठित फ्रेंडशिप ट्री के रूप में।"
         },
         "CREDIT": "Ed.7 के तरफ से इंफोग्राफ़िक"

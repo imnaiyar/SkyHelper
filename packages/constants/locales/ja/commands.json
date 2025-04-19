@@ -88,7 +88,8 @@
         "FIELDS": {
           "SUMMARY_TITLE": "TS概要",
           "SUMMARY_DESC_NO_ELIGIBLE": "この精霊はまだTSとして戻る資格がありません。{{SEASON}}の次のシーズンが終わると資格を得ます！",
-          "SUMMARY_DESC_RETURNED": "総訪問回数: {{VISITS}}\n__戻った日付__",
+          "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}",
+          "SUMMARY_RETURNED_DATE": "Returned Dates",
           "SUMMARY_DESC_NO_VISIT": "この精霊はまだ戻っていません。戻ってきたときには、シーズン中に提供されたのと同じアイテムを再構成された友好ツリーで提供します。"
         },
         "CREDIT": "インフォグラフィック by Ed.7"

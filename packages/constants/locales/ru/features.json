@@ -24,9 +24,9 @@
       },
       "COUNTDOWN": {
         "VALUE": {
-          "ENDED": "Закончился {{DURATION}} назад",
-          "ACTIVE": "Закончится через {{DURATION}}",
-          "EXPECTED": "Упадёт через {{DURATION}}"
+          "ENDED": "Ended {{DURATION}}",
+          "ACTIVE": "Ends {{DURATION}}",
+          "EXPECTED": "Falls {{DURATION}}"
         }
       }
     },
@@ -37,12 +37,12 @@
   "times-embed": {
     "FOOTER": "Информация о событиях (обновление каждые 2 минуты)",
     "EVENT_INACTIVE": "Нет активных событий",
-    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
+    "EMBED_TITLE": "Event Times",
     "EMBED_AUTHOR": "События",
     "EVENT_ACTIVE": "**Событие**: {{EVENT_NAME}}\n**Длительность**: {{DATE1}} – {{DATE2}}\n**Всего дней**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Начнётся через",
-    "ENDS": "Завершится через",
-    "TS_VISITING": "**Сейчас посещает:** {{TS_NAME}}\n**Уход:** {{DATE}} (через {{DURATION}})",
+    "ENDS": "Ends",
+    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}}} прибудет {{DATE}} (через {{DURATION}})",
     "TS_UPDATED": "Еще не обновлено",
     "TS_UNKNOWN": "Неизвестный дух",
