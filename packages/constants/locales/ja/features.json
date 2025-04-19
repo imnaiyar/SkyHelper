@@ -24,9 +24,9 @@
       },
       "COUNTDOWN": {
         "VALUE": {
-          "ENDED": "{{DURATION}}前に終了",
-          "ACTIVE": "{{DURATION}}後に終了",
-          "EXPECTED": "{{DURATION}}後に落下"
+          "ENDED": "Ended {{DURATION}}",
+          "ACTIVE": "Ends {{DURATION}}",
+          "EXPECTED": "Falls {{DURATION}}"
         }
       }
     },
@@ -37,12 +37,12 @@
   "times-embed": {
     "FOOTER": "ライブSkyTimes（2分ごとに更新）",
     "EVENT_INACTIVE": "アクティブなイベントなし",
-    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
+    "EMBED_TITLE": "Event Times",
     "EMBED_AUTHOR": "スカイタイムズ",
     "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "開始まで",
-    "ENDS": "終了まで",
-    "TS_VISITING": "**現在訪問中:** {{TS_NAME}}\n**出発:** {{DATE}}（{{DURATION}}後）",
+    "ENDS": "Ends",
+    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}} が {{DATE}}（{{DURATION}}後）に到着予定",
     "TS_UPDATED": "まだ更新されていません",
     "TS_UNKNOWN": "不明な精霊",
