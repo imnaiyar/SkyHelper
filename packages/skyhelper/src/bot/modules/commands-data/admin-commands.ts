@@ -19,6 +19,7 @@ const eventChoices = [
   { name: "Traveling Spirit", value: "ts" },
   { name: "Daily Quests", value: "dailies" },
   { name: "Aurora's Concert", value: "aurora" },
+  { name: "Aviary Fireworks Festival", value: "fireworks-festival" },
 ];
 
 const commonCallback = ({

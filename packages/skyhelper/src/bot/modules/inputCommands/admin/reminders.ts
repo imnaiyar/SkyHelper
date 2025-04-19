@@ -16,6 +16,7 @@ const RemindersEventsMap: Record<string, string> = {
   ts: "Traveling Spirit",
   aurora: "Aurora's Concert",
   reset: "Daily Reset",
+  "fireworks-festival": "Aviary Fireworks Festival",
 };
 export default {
   async interactionRun({ helper, options }) {
