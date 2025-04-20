@@ -232,18 +232,20 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
   const total = quests.length;
   const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const nowFormatted = now.toFormat("dd-MM-yyyy");
-  const component = container(textDisplay(`### Daily Quests (${total})\n${nowFormatted}`), separator());
+  const component = container(textDisplay(`### Daily Quests (${total}) :: ${nowFormatted}`), separator());
   for (const quest of quests) {
-    const desc = `${emojis.tree_middle}© ${quest.images?.[0].by || "Unknown"}\n${emojis.tree_end}Source: ${quest.images?.[0].source || "Unknown"}`;
+    let quest_title = `${quest.title}`;
+
+    if (quest.images?.[0].source) quest_title = `[${quest_title}](${quest.images?.[0].source})`;
     if (quest.images?.length) {
       component.components.push(
         section(
           thumbnail(quest.images[0].url /* TODO: Verify this support video of large size */, quest.title, true),
-          `**${quest.title}**\n${desc}`,
+          `${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`,
         ),
       );
     } else {
-      component.components.push(textDisplay(`**${quest.title}**\n${desc}`));
+      component.components.push(textDisplay(`${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`));
     }
   }
   const disabledSe =
@@ -270,7 +272,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
     components: [rotatingBtn],
   };
   if (rotating_candles) row.components.push(seasonalBtn);
-  component.components.push(separator(), row);
+  component.components.push(row);
   return { components: [component] };
 }
 
