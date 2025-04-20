@@ -245,7 +245,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
         ),
       );
     } else {
-      component.components.push(textDisplay(`**${quest.title}**\n${desc}`));
+      component.components.push(textDisplay(`${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`));
     }
   }
   const disabledSe =
