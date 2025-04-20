@@ -241,7 +241,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
       component.components.push(
         section(
           thumbnail(quest.images[0].url /* TODO: Verify this support video of large size */, quest.title, true),
-          `${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}` /* zero-width space for little space between quests */,
+          `${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`,
         ),
       );
     } else {
