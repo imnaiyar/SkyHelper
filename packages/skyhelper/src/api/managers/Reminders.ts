@@ -22,10 +22,14 @@ const formatReminders = (r: GuildSchema["reminders"]) => {
         active: value.active,
         channelId: value.webhook?.channelId ?? null,
         role: value.role ?? null,
+        offset: value.offset ?? null,
       };
       return acc;
     },
-    {} as Record<(typeof REMINDERS_KEY)[number], { active: boolean; channelId: string | null; role: string | null }>,
+    {} as Record<
+      (typeof REMINDERS_KEY)[number],
+      { active: boolean; channelId: string | null; role: string | null; offset: number | null }
+    >,
   );
   return obj;
 };
@@ -53,6 +57,7 @@ export class Reminders {
           throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
         }
         event.role = value.role ?? null;
+        event.offset = value.offset ?? null;
         settings.reminders.active = true; // mark reminder as active as at one event is active
 
         if (event.webhook?.channelId === value.channelId) continue; // No change, skip
@@ -79,6 +84,7 @@ export class Reminders {
           webhook: null,
           role: null,
           last_messageId: null,
+          offset: null,
           active: false,
         });
       }

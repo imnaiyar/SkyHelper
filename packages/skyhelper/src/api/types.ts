@@ -4,6 +4,7 @@ const ReminderFeatureBaseSchema = z.object({
   active: z.boolean(),
   channelId: z.string().nullable(),
   role: z.string().nullable(),
+  offset: z.number().min(1).max(15).nullable(),
 });
 
 export const ReminderFeatureSchema = z.object({
