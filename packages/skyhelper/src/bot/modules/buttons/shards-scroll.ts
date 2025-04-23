@@ -13,6 +13,6 @@ export default {
     await helper.deferUpdate();
     const res = buildShardEmbed(givenDate, t);
 
-    await helper.editReply({ ...res, flags: MessageFlags.IsComponentsV2 });
+    await helper.editReply({ ...res, flags: MessageFlags.IsComponentsV2 }); // ideally the flag is not needed here since the message will already have it, but for older messages before the v2 component rewrite, it may cause error
   },
 } satisfies Button;
