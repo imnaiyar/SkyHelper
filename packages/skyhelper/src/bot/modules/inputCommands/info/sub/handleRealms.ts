@@ -5,13 +5,14 @@ import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import {
   ButtonStyle,
   ComponentType,
+  MessageFlags,
   type APIActionRowComponent,
   type APIButtonComponent,
-  type APIEmbed,
   type APIStringSelectComponent,
 } from "@discordjs/core";
 import type { ComponentInteractionMap } from "@/types/interactions";
 import Utils from "@/utils/classes/Utils";
+import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 const realms = {
   isle: "Isle of Dawn",
   prairie: "Daylight Prairie",
@@ -20,6 +21,13 @@ const realms = {
   wasteland: "Golden Wasteland",
   valley: "Valley of Triumph",
 };
+const expired_row = row({
+  type: ComponentType.StringSelect,
+  custom_id: "xxx",
+  placeholder: "Expired!",
+  options: [{ label: "hmm", value: "dd" }],
+  disabled: true,
+});
 export async function handleRealms(helper: InteractionHelper, options: InteractionOptionResolver) {
   const t = helper.t;
   const realm = options.getString("realm");
@@ -51,28 +59,24 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   const author = `Summary of ${data.main.title}`;
   const emoji = realms_emojis[data.main.title];
 
-  const embed: APIEmbed = {
-    title: `${emoji} ${data.main.title}`,
-    url: `https://sky-children-of-the-light.fandom.com/wiki/${data.main.title.split(" ").join("_")}`,
-    description: data.main.description,
-    author: { name: author },
-    image: { url: data.main?.image },
-  };
-
-  const rowFirst: APIActionRowComponent<APIButtonComponent> = {
-    type: ComponentType.ActionRow,
-    components: [
+  const component = container(
+    section(
       {
         type: ComponentType.Button,
         label: t("commands:GUIDES.RESPONSES.REALM-BUTTON-LABEL"),
         custom_id: client.utils.encodeCustomId({ id: "areas", user: helper.user.id }),
-        style: ButtonStyle.Primary,
+        style: ButtonStyle.Secondary,
       },
-    ],
-  };
+      `-# ${author}`,
+      `### [${emoji} ${data.main.title}](https://sky-children-of-the-light.fandom.com/wiki/${data.main.title.split(" ").join("_")})`,
+    ),
+    separator(),
+    section(thumbnail(data.main.image, data.main.title), data.main.description),
+  );
+
   const msg = await helper.editReply({
-    embeds: [embed],
-    components: [rowFirst],
+    components: [component],
+    flags: MessageFlags.IsComponentsV2,
   });
 
   const collector = client.componentCollector({
@@ -80,90 +84,53 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
     message: msg,
     filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
   });
+  const getCollectorResponse = () =>
+    getRealmsRow(
+      data.areas,
+      page,
+      total,
+      author,
+      emoji,
+      data.main.title,
+      t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+      helper.user.id,
+    );
 
   collector.on("collect", async (inter) => {
     const compoHelper = new InteractionHelper(inter, client);
     await compoHelper.deferUpdate();
     const componentID = client.utils.parseCustomId(inter.data.custom_id)!.id;
     switch (componentID) {
-      case "areas": {
-        const datas = getRealmsRow(
-          data.areas,
-          page,
-          total,
-          author,
-          emoji,
-          data.main.title,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-        );
-        await compoHelper.editReply(datas);
-        break;
-      }
-      case "back": {
+      case "areas":
+        break; // no need to do anything, just update the embed
+      case "back":
         page--;
-        const datas = getRealmsRow(
-          data.areas,
-          page,
-          total,
-          author,
-          emoji,
-          data.main.title,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-        );
-        await compoHelper.editReply(datas);
         break;
-      }
-      case "forward": {
+      case "forward":
         page++;
-        const datas = getRealmsRow(
-          data.areas,
-          page,
-          total,
-          author,
-          emoji,
-          data.main.title,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-        );
-        await compoHelper.editReply(datas);
         break;
-      }
-      case "realm": {
+      case "realm":
         page = 1;
         await compoHelper.editReply({
-          embeds: [embed],
-          components: [rowFirst],
+          components: [component],
         });
-        break;
-      }
-      case "area-menu": {
+        return;
+      case "area-menu":
         page = parseInt((inter as ComponentInteractionMap[ComponentType.StringSelect]).data.values[0].split("_")[1]) + 1;
-        const datas = getRealmsRow(
-          data.areas,
-          page,
-          total,
-          author,
-          emoji,
-          data.main.title,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-        );
-        await compoHelper.editReply(datas);
         break;
-      }
       default:
         await compoHelper.editReply({ content: t("commands:GUIDES.RESPONSES.INVALID-CHOICE") });
+        return;
     }
+
+    await compoHelper.editReply(getCollectorResponse());
   });
 
   collector.on("end", async () => {
-    helper
-      .editReply({
-        components: [],
-      })
-      .catch(() => {});
+    const res = getCollectorResponse();
+    const comp = res.components[0];
+    comp.components.splice(-2, 2, expired_row);
+    helper.editReply({ components: [comp] }).catch(() => {});
   });
 }
 
@@ -173,24 +140,23 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
   let page = 1;
   const total = data.maps.length - 1;
   const author = `Maps of ${data.realm}`;
-  const row = getRealmsRow(
-    data.maps,
-    page,
-    total,
-    author,
-    undefined,
-    data.realm,
-    t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-    helper.user.id,
-    true,
-  );
-  const msg = await helper.editReply({
-    content: data?.content,
-    ...row,
-  });
+  const getCollectorResponse = () =>
+    getRealmsRow(
+      data.maps,
+      page,
+      total,
+      author,
+      undefined,
+      data.realm,
+      t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
+      helper.user.id,
+      data.content,
+    );
+
+  const msg = await helper.editReply(getCollectorResponse());
 
   const collector = helper.client.componentCollector({
-    idle: 2_60_1000,
+    idle: 2 * 60_000,
     filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
     message: msg,
   });
@@ -200,55 +166,24 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
     await compoCol.deferUpdate();
     const componentID = helper.client.utils.parseCustomId(inter.data.custom_id)!.id;
     switch (componentID) {
-      case "back": {
+      case "back":
         page--;
-        const datas = getRealmsRow(
-          data.maps,
-          page,
-          total,
-          author,
-          undefined,
-          data.realm,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-          true,
-        );
-        await compoCol.editReply(datas);
         break;
-      }
-      case "forward": {
+      case "forward":
         page++;
-        const datas = getRealmsRow(
-          data.maps,
-          page,
-          total,
-          author,
-          undefined,
-          data.realm,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-          true,
-        );
-        await compoCol.editReply(datas);
         break;
-      }
-      case "area-menu": {
+      case "area-menu":
         page = parseInt((inter as ComponentInteractionMap[ComponentType.StringSelect]).data.values[0].split("_")[1]) + 1;
-        const datas = getRealmsRow(
-          data.maps,
-          page,
-          total,
-          author,
-          undefined,
-          data.realm,
-          t("commands:GUIDES.RESPONSES.REALM_AREA_SELECT_PLACEHOLDER"),
-          helper.user.id,
-          true,
-        );
-        await compoCol.editReply(datas);
         break;
-      }
     }
+
+    await compoCol.editReply(getCollectorResponse());
+  });
+  collector.on("end", () => {
+    const res = getCollectorResponse();
+    const comp = res.components[0];
+    comp.components.splice(-2, 2, expired_row);
+    helper.editReply({ components: [comp] }).catch(() => {});
   });
 }
 type SummaryDataType = (typeof SummaryData)[keyof typeof SummaryData]["areas"];
@@ -263,24 +198,9 @@ function getRealmsRow(
   realm: string,
   t: string,
   user: string,
-  map?: boolean,
+  content?: string,
 ) {
   const embed = data[page - 1];
-  const emb: APIEmbed = {
-    title: embed.title,
-    image: { url: embed.image },
-    author: { name: author },
-    footer: { text: `Page ${page}/${total + 1}` },
-    url: map
-      ? `https://sky-children-of-the-light.fandom.com/wiki/${realm.split(" ").join("_")}#Maps`
-      : `https://sky-children-of-the-light.fandom.com/wiki/${realm.split(" ").join("_")}#${embed.title.split(" ").join("_")}`,
-  };
-
-  if ("description" in embed) {
-    emb.description = embed.description;
-  }
-
-  const row: APIActionRowComponent<APIButtonComponent | APIStringSelectComponent>[] = [];
 
   const btns: APIActionRowComponent<APIButtonComponent> = {
     type: ComponentType.ActionRow,
@@ -327,6 +247,26 @@ function getRealmsRow(
     ],
   };
 
-  row.push(menu, btns);
-  return { embeds: [emb], components: row };
+  const component = container(
+    textDisplay(
+      `-# ${author}`,
+      `### [${embed.title}](${
+        content
+          ? `https://sky-children-of-the-light.fandom.com/wiki/${realm.split(" ").join("_")}#Maps`
+          : `https://sky-children-of-the-light.fandom.com/wiki/${realm.split(" ").join("_")}#${embed.title.split(" ").join("_")}`
+      })`,
+      content ?? "",
+    ),
+    separator(),
+    "description" in embed
+      ? section(thumbnail(embed.image, embed.title), embed.description)
+      : mediaGallery(mediaGalleryItem(embed.image, { description: embed.title })),
+    textDisplay(`-# Page ${page}/${total + 1}`),
+    separator(),
+    btns,
+    separator(),
+    menu,
+  );
+
+  return { components: [component], flags: MessageFlags.IsComponentsV2 };
 }

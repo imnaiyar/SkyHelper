@@ -3,7 +3,7 @@ export const MapsData = {
   maps_isle: {
     realm: "Isle of Dawn",
     content:
-      "**Isle of Dawn Comprehensive Maps by Clement**\n\nUpdated on: 14th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
+      "-# **Isle of Dawn Comprehensive Maps by Clement**\n-# Updated on: 14th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
     maps: [
       {
         title: "Main Area",
@@ -30,7 +30,7 @@ export const MapsData = {
   maps_prairie: {
     realm: "Daylight Prairie",
     content:
-      "**Daylight Prairie Comprehensive Maps by Clement**\n\nUpdated on: 24th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
+      "-# **Daylight Prairie Comprehensive Maps by Clement**\n-# Updated on: 24th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
     maps: [
       {
         title: "Social Area",
@@ -83,7 +83,7 @@ export const MapsData = {
   maps_forest: {
     realm: "Hidden Forest",
     content:
-      "**Hidden Forest Comprehensive Maps by Clement**\n\nUpdated on: 28th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
+      "-# **Hidden Forest Comprehensive Maps by Clement**\n-# Updated on: 28th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
     maps: [
       {
         title: "Social Area",
@@ -154,7 +154,7 @@ export const MapsData = {
   maps_valley: {
     realm: "Valley of Triumph",
     content:
-      "**Valley of Triumph Comprehensive Maps by Clement**\n\nUpdated on: 17th November 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
+      "-# **Valley of Triumph Comprehensive Maps by Clement**\n-# Updated on: 17th November 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
     maps: [
       {
         title: "Social Area and Slope",
@@ -201,7 +201,7 @@ export const MapsData = {
   maps_wasteland: {
     realm: "Golden Wasteland",
     content:
-      "**Golden Wasteland Comprehensive Maps by Clement**\n\nUpdated on: 18th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
+      "-# **Golden Wasteland Comprehensive Maps by Clement**\n-# Updated on: 18th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
     maps: [
       {
         title: "Social Area",
@@ -317,7 +317,7 @@ export const MapsData = {
   maps_eden: {
     realm: "Eye of Eden",
     content:
-      "**Comprehensive Map of Eden by Clement**\n\nUpdated on:- 13th May 2021 (Some areas may not depict true description as it has been updated many times since the guide was updated)",
+      "-# **Comprehensive Map of Eden by Clement**\n-# Updated on:- 13th May 2021 (Some areas may not depict true description as it has been updated many times since the guide was updated)",
     maps: [
       {
         title: "Entrance",

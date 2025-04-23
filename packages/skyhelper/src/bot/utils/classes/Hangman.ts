@@ -1,15 +1,18 @@
 import { setTimeout as wait } from "timers/promises";
-import { hangmanWords, HangmanResponseCodes, getHangmanResponse, EnglishAlphabets } from "@skyhelperbot/constants";
+import { hangmanWords, HangmanResponseCodes, getHangmanResponse, EnglishAlphabets, emojis } from "@skyhelperbot/constants";
 import {
   AllowedMentionsTypes,
+  ComponentType,
+  MessageFlags,
   type APIEmbed,
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
 } from "@discordjs/core";
-import { MessageCollector } from "./Collector.js";
+import { InteractionCollector } from "./Collector.js";
 import type { SkyHelper } from "@/structures";
 import { updateUserGameStats } from "../utils.js";
+import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Array<T> {
@@ -65,7 +68,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   private _stopped: boolean = false;
 
   /** Collector listening for stop */
-  private _stopCollector: MessageCollector | null = null;
+  private _stopCollector: InteractionCollector<ComponentType.Button> | null = null;
 
   // #region constructor
   constructor(
@@ -252,20 +255,27 @@ export class Hangman<T extends ModeType, K extends WordType> {
         remaininglives += "<:gray_heart:1287689388758798396>";
       }
     }
-    const embed: APIEmbed = {
-      title: "Skygame: Hangman [BETA]",
-      description: `## ${this.mode === "single" ? `<@${this.currentPlayer.id}> is currently guessing!` : `It's <@${this.currentPlayer.id}> turn!`}\nWord: **${this.alphabets
-        .map((a) => {
-          if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : `${a.alphabet}`;
-          else return "◼️";
-        })
-        .join(
-          "",
-        )}** (${this.alphabetLength!} alphabets excluding special characters)\n\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}${
-        this.mode === "single" ? `\n\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : ""
-      }\n\nRemaining Time: <a:30sec:1288835107804676243>\n\n-# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
-    };
-    return { embeds: [embed] };
+
+    const component = container(
+      section(
+        { label: "End Game", style: 4, custom_id: "hangman_end_game", type: 2 },
+        "-# Skygame: Hangman",
+        `## ${this.mode === "single" ? `<@${this.currentPlayer.id}> is currently guessing!` : `It's <@${this.currentPlayer.id}> turn!`}`,
+      ),
+      separator(),
+      textDisplay(
+        `Word: **${this.alphabets
+          .map((a) => {
+            if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : `${a.alphabet}`;
+            else return "◼️";
+          })
+          .join("")}** (${this.alphabetLength!} alphabets excluding special characters)`,
+        `\n**Guessed Alphabets:**\n > ${this.guessedAlphabets.map((g) => `\`${g.toUpperCase()}\``).join(", ")}`,
+        this.mode === "single" ? `\n**Remaining Lives(${this.remainingLives}):** ${remaininglives}` : "",
+        `Remaining Time: ${emojis["30s_timer"]}`,
+      ),
+    );
+    return { components: [component], flags: MessageFlags.IsComponentsV2 };
   }
 
   // #region end game
@@ -282,15 +292,18 @@ export class Hangman<T extends ModeType, K extends WordType> {
         ).catch(this.client.logger.error);
       }
     }
-    const embed: APIEmbed = {
-      title: "SkyGame: Hangman",
-      description: `### Winner: ${this.winner ? `<@${this.winner.id}>` : "None"} \`(${this.winner?.username || ""})\`\n\n**Word to guess was**: ${this.word}\n\n**Stats:**\n${this._getPlayerStats()}`,
-      author: {
-        name: "SkyGame: Hangman | SkyHelper",
-        icon_url: this.client.utils.getUserAvatar(this.client.user),
-      },
-    };
-    this._sendResponse({ embeds: [embed] });
+
+    const comp = container(
+      textDisplay(`-# SkyHelper`, "### Skygame: Hangman"),
+      separator(),
+      textDisplay(
+        `### Winner: ${this.winner ? `<@${this.winner.id}>` : "None"} \`(${this.winner?.username || ""})\``,
+        `**Word to guess was**: ${this.word}`,
+      ),
+      separator(),
+      textDisplay("**Stats:**", this._getPlayerStats()),
+    );
+    this._sendResponse({ components: [comp], flags: MessageFlags.IsComponentsV2 });
     this.client.gameData.delete(this.channel.id);
   }
 
@@ -319,17 +332,25 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
   private _listenForStop() {
     if (!this.initiator) return;
-    this._stopCollector = new MessageCollector(this.client, {
-      filter: (m) => m.content.toLowerCase() === ">stopgame",
+    this._stopCollector = new InteractionCollector(this.client, {
+      componentType: 2,
+      filter: (i) => i.data.custom_id === "hangman_end_game",
       channel: this.channel,
     });
     const initiator = this.initiator;
-    this._stopCollector.on("collect", async (m) => {
-      if (m.author.id !== initiator.id) {
-        return await this._sendResponse("Only the game initiator can stop the game.");
+    this._stopCollector.on("collect", async (i) => {
+      if ((i.member?.user || i.user!).id !== initiator.id) {
+        return await this.client.api.interactions.reply(i.id, i.token, {
+          content: "Only this game's initiator can end the game.",
+          flags: 64,
+        });
       }
       this._stopped = true;
-      await this._sendResponse(getHangmanResponse(HangmanResponseCodes.EndmGame));
+
+      await this.client.api.interactions.reply(i.id, i.token, {
+        content: "The game was stopped by the game initiator!",
+      });
+
       if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
 
       return this._endGame("stopped-game");

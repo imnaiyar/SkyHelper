@@ -48,13 +48,8 @@ const modalComponent = (id: string, word: string): APIModalInteractionResponseCa
     },
   ],
 });
-export const handleHangman = async (
-  helper: InteractionHelper,
-  t: ReturnType<typeof getTranslator>,
-  options: InteractionOptionResolver,
-) => {
+export const handleHangman = async (helper: InteractionHelper, options: InteractionOptionResolver) => {
   const { client } = helper;
-  const guild = client.guilds.get(helper.int.guild_id || "");
 
   const mode = options.getString("mode", true);
   // get game configs

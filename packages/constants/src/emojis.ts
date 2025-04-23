@@ -2,6 +2,11 @@ export const emojis = {
   tree_top: "<:tree_top:1340954527762743392>",
   tree_middle: "<:tree_middle:1339963268969791550> ",
   tree_end: "<:tree_end:1339963241991901224>",
+  down_chevron: "<:downchevron:1364607004194246736>",
+  left_chevron: "<:leftchevron:1364607874503802890>",
+  up_chevron: "<:upchevron:1364607855017070632>",
+  right_chevron: "<:rightchevron:1364607835211829431>",
+  "30s_timer": "<a:30sec:1288835107804676243>",
 };
 
 export const realms_emojis = {

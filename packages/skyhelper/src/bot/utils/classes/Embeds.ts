@@ -55,13 +55,13 @@ export function buildShardEmbed(
       components: [
         {
           type: ComponentType.Button,
-          emoji: { id: "1207594669882613770", name: "left" },
+          emoji: Utils.parseEmoji(emojis.left_chevron)!,
           custom_id: `shards-scroll;date:${date.minus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
           style: ButtonStyle.Primary,
         },
         {
           type: ComponentType.Button,
-          emoji: { id: "1207593237544435752", name: "right" },
+          emoji: Utils.parseEmoji(emojis.right_chevron)!,
           custom_id: `shards-scroll;date:${date.plus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
           style: ButtonStyle.Primary,
         },
@@ -96,7 +96,7 @@ export function buildShardEmbed(
       section(
         {
           type: ComponentType.Button,
-          label: "Details",
+          emoji: Utils.parseEmoji(emojis.down_chevron)!,
           custom_id: `shards-timeline;date:${date.toISODate()}`,
           style: ButtonStyle.Secondary,
         },
@@ -176,7 +176,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
       {
         type: ComponentType.Button,
         custom_id: "times-refresh",
-        emoji: { name: "🔃" },
+        emoji: { id: "1205464032182665239", animated: true },
         style: ButtonStyle.Secondary,
       },
       `### ${t("features:times-embed.EMBED_TITLE")}\n${emojis.tree_end}\`Sky Time:\` ${now.toFormat("hh:mm a")} | \`Local Time\`: <t:${now.toUnixInteger()}:t>`,
