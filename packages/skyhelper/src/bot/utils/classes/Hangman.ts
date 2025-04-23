@@ -258,7 +258,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
     const component = container(
       section(
-        { label: "End Game", style: 4, custom_id: "hangman_end_game", type: 2 },
+        { label: "End Game", style: 4, custom_id: "skygame_end_game", type: 2 },
         "-# Skygame: Hangman",
         `## ${this.mode === "single" ? `<@${this.currentPlayer.id}> is currently guessing!` : `It's <@${this.currentPlayer.id}> turn!`}`,
       ),
@@ -334,7 +334,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     if (!this.initiator) return;
     this._stopCollector = new InteractionCollector(this.client, {
       componentType: 2,
-      filter: (i) => i.data.custom_id === "hangman_end_game",
+      filter: (i) => i.data.custom_id === "skygame_end_game",
       channel: this.channel,
     });
     const initiator = this.initiator;

@@ -195,7 +195,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       }
 
-      if (parsed.id === "hangman_end_game" && !client.gameData.has(interaction.channel.id)) {
+      if (parsed.id === "skygame_end_game" && !client.gameData.has(interaction.channel.id)) {
         await helper.reply({ content: "It looks like this game has already ended!", flags: 64 });
         return;
       }
