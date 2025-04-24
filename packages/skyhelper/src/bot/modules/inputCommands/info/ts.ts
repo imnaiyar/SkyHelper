@@ -45,33 +45,41 @@ const getTSResponse = async (
         });
     const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${
       spirit.name
-    }${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})`;
+    }${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
     const manager = new Spirits(spirit, t, client);
 
-    // !NOTE: Keep this 9 components as location/tree button splice assuming this many components
-    // !Ideally there would be better way but i'm lazy to look at this
+    let lctn_link = spirit.location!.image;
+    if (!lctn_link.startsWith("https://")) lctn_link = "https://cdn.imnaiyar.site/" + lctn_link;
+    const totalCosts = spirit
+      .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+      .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+      .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")
+      .trim();
+
     const component = container(
       spirit.image ? section(thumbnail(spirit.image, spirit.name), headerContent) : textDisplay(headerContent),
-      separator(),
-      textDisplay(description),
+      separator(true, 1),
       textDisplay(
         `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
           realms_emojis[spirit.realm!]
         } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
       ),
-      separator(false, 1),
-      textDisplay(
-        `**${
+      separator(true, 1),
+      section(
+        thumbnail("https://cdn.imnaiyar.site/" + spirit.tree!.image),
+        `${emojis.right_chevron} ${
           spirit.ts?.returned
             ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
             : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
-        }**\n${emojis.tree_end}${spirit
-          .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-          .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-          .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`,
+        }`,
+        totalCosts ? `-# ${totalCosts}` : "",
       ),
-      mediaGallery({ media: { url: "https://cdn.imnaiyar.site/" + spirit.tree!.image } }),
-      separator(),
+      section(
+        thumbnail(lctn_link),
+        `${emojis.right_chevron} ${t("features:SPIRITS.LOCATION_TITLE", { CREDIT: spirit.location!.by })}`,
+        spirit.location!.description ? `-# ${emojis.tree_end}${spirit.location!.description}` : "",
+      ),
+      separator(true, 1),
       manager.getButtons(userid),
     );
 
