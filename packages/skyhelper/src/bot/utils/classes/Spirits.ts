@@ -9,14 +9,6 @@ import { DateTime } from "luxon";
 import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 
-// Define location Btn (Tree btn is defined/handled when location button is clicked)
-const lctnBtn = (spirit: string, user: string): APIButtonComponent => ({
-  type: 2,
-  custom_id: utils.encodeCustomId({ id: "spirit_common", type: "location", spirit, user }),
-  label: "Location",
-  style: ButtonStyle.Secondary,
-});
-
 const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonComponent => ({
   type: 2,
   custom_id: utils.encodeCustomId({ id: "spirit_collectible", spirit, user }),
@@ -108,34 +100,41 @@ export class Spirits {
         ),
       );
     }
-    let text: string, imageUrl: string;
+    comp.components.push(separator(true, 1));
 
     if (!this.isSeasonal(data)) {
-      text = this.t("commands:SPIRITS.RESPONSES.EMBED.CREDIT");
-      imageUrl = `${config.CDN_URL}/${data.main.image}`;
+      comp.components.push(
+        section(thumbnail(`${config.CDN_URL}/${data.main.image}`), this.t("commands:SPIRITS.RESPONSES.EMBED.CREDIT")),
+      );
     } else {
-      text =
-        "**" +
-        (data.ts?.returned
-          ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-          : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })) +
-        "**";
-      text += `\n${emojis.tree_end}${data
-        .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-        .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-        .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`;
-
       let url = data.tree?.image;
       if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
-      imageUrl = url;
+      if (url)
+        comp.components.push(
+          section(
+            thumbnail(url),
+            data.ts?.returned
+              ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
+              : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
+            `-# ${data
+              .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+              .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+              .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`,
+          ),
+        );
     }
-    comp.components.push(
-      separator(),
-      textDisplay(text),
-      mediaGallery({ media: { url: imageUrl, height: 50, width: 50 } }),
-      separator(),
-      this.getButtons(userid),
-    );
+    if ("location" in data) {
+      let url = data.location!.image;
+      if (!url!.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
+      comp.components.push(
+        section(
+          thumbnail(url),
+          this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
+          data.location.description ? `-# ${emojis.tree_end}${data.location.description}` : "",
+        ),
+      );
+    }
+    comp.components.push(separator(true, 1), this.getButtons(userid));
 
     return comp;
   }
@@ -150,7 +149,6 @@ export class Spirits {
       if (v.extra) return data.extra === v.extra && data.name === v.name;
       return v.name === data.name;
     })!;
-    if (this.isSeasonal(data) && data.location) components.push(lctnBtn(value, userid));
 
     if (data.expression) components.push(getExpressionBtn(data, value, this.t, data.expression.icon, userid));
 

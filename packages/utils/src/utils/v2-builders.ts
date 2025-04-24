@@ -81,7 +81,7 @@ export function section(
   return {
     type: ComponentType.Section,
     accessory,
-    components: [content, ...contents].map((c) => textDisplay(c)),
+    components: [textDisplay(content, ...contents)],
   };
 }
 
