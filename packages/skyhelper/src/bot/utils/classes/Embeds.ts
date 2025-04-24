@@ -55,13 +55,13 @@ export function buildShardEmbed(
       components: [
         {
           type: ComponentType.Button,
-          emoji: { id: "1207594669882613770", name: "left" },
+          emoji: Utils.parseEmoji(emojis.left_chevron)!,
           custom_id: `shards-scroll;date:${date.minus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
           style: ButtonStyle.Primary,
         },
         {
           type: ComponentType.Button,
-          emoji: { id: "1207593237544435752", name: "right" },
+          emoji: Utils.parseEmoji(emojis.right_chevron)!,
           custom_id: `shards-scroll;date:${date.plus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
           style: ButtonStyle.Primary,
         },
@@ -96,7 +96,7 @@ export function buildShardEmbed(
       section(
         {
           type: ComponentType.Button,
-          label: "Details",
+          emoji: Utils.parseEmoji(emojis.down_chevron)!,
           custom_id: `shards-timeline;date:${date.toISODate()}`,
           style: ButtonStyle.Secondary,
         },
@@ -176,7 +176,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
       {
         type: ComponentType.Button,
         custom_id: "times-refresh",
-        emoji: { name: "🔃" },
+        emoji: { id: "1205464032182665239", animated: true },
         style: ButtonStyle.Secondary,
       },
       `### ${t("features:times-embed.EMBED_TITLE")}\n${emojis.tree_end}\`Sky Time:\` ${now.toFormat("hh:mm a")} | \`Local Time\`: <t:${now.toUnixInteger()}:t>`,
@@ -233,14 +233,23 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
   const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const nowFormatted = now.toFormat("dd-MM-yyyy");
   const component = container(textDisplay(`### Daily Quests (${total}) :: ${nowFormatted}`), separator());
-  for (const quest of quests) {
+  for (const [index, quest] of quests.entries()) {
     let quest_title = `${quest.title}`;
 
     if (quest.images?.[0].source) quest_title = `[${quest_title}](${quest.images?.[0].source})`;
     if (quest.images?.length) {
+      const ext = quest.images[0].url.split("?")[0].split(".").pop();
+      const isVideo = ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext);
       component.components.push(
         section(
-          thumbnail(quest.images[0].url /* TODO: Verify this support video of large size */, quest.title, true),
+          isVideo
+            ? {
+                label: "Video",
+                custom_id: Utils.encodeCustomId({ id: "quest_video", index: index.toString(), date: nowFormatted }),
+                type: 2,
+                style: 2,
+              }
+            : thumbnail(quest.images[0].url, quest.title, true),
           `${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`,
         ),
       );
@@ -272,7 +281,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
     components: [rotatingBtn],
   };
   if (rotating_candles) row.components.push(seasonalBtn);
-  component.components.push(row);
+  component.components.push(separator(true, 1), row);
   return { components: [component] };
 }
 

@@ -10,7 +10,7 @@ import { type Permission, parsePerms } from "@skyhelperbot/utils";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 export default {
   ...SKY_GAME_DATA,
-  async interactionRun({ interaction, t, helper, options }) {
+  async interactionRun({ interaction, helper, options }) {
     const { client } = helper;
     const sub = options.getSubcommand(true);
     if (sub !== "leaderboard") {
@@ -20,7 +20,7 @@ export default {
     }
     switch (sub) {
       case "hangman":
-        await handleHangman(helper, t, options);
+        await handleHangman(helper, options);
         return;
       case "scrambled": {
         await helper.defer();

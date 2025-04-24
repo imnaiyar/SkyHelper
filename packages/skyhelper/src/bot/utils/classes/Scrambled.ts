@@ -1,15 +1,17 @@
 import { setTimeout as wait } from "timers/promises";
-import { hangmanWords, ScrambledResponseCodes, getScrambledResponse } from "@skyhelperbot/constants";
+import { hangmanWords, ScrambledResponseCodes, getScrambledResponse, emojis } from "@skyhelperbot/constants";
 import {
   AllowedMentionsTypes,
-  type APIEmbed,
+  ComponentType,
+  MessageFlags,
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
 } from "@discordjs/core";
 import type { SkyHelper } from "@/structures";
 import { updateUserGameStats } from "../utils.js";
-import { MessageCollector } from "./Collector.js";
+import { InteractionCollector } from "./Collector.js";
+import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
 /** Base class for game controllers */
 export abstract class GameController {
   /** Players participating in this game */
@@ -22,7 +24,7 @@ export abstract class GameController {
   protected _stopped: boolean = false;
 
   /** Collector listening for stop */
-  protected _stopCollector: MessageCollector | null = null;
+  protected _stopCollector: InteractionCollector<ComponentType.Button> | null = null;
 
   constructor(
     protected readonly channel: APITextChannel,
@@ -49,19 +51,27 @@ export abstract class GameController {
   }
 
   /** Set up listener for stopping the game */
-  protected _listenForStop(stopResponseCode: number): void {
+  protected _listenForStop(): void {
     if (!this.initiator) return;
-    this._stopCollector = new MessageCollector(this.client, {
-      filter: (m) => m.content.toLowerCase() === ">stopgame",
+    this._stopCollector = new InteractionCollector(this.client, {
+      componentType: 2,
+      filter: (i) => i.data.custom_id === "skygame_end_game",
       channel: this.channel,
     });
     const initiator = this.initiator;
-    this._stopCollector.on("collect", async (m) => {
-      if (m.author.id !== initiator.id) {
-        return await this._sendResponse("Only the game initiator can stop the game.");
+    this._stopCollector.on("collect", async (i) => {
+      if ((i.member?.user || i.user!).id !== initiator.id) {
+        return await this.client.api.interactions.reply(i.id, i.token, {
+          content: "Only this game's initiator can end the game.",
+          flags: 64,
+        });
       }
       this._stopped = true;
-      await this._sendResponse(getScrambledResponse(stopResponseCode));
+
+      await this.client.api.interactions.reply(i.id, i.token, {
+        content: "The game was stopped by the game initiator!",
+      });
+
       if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
 
       return this._endGame("stopped-game");
@@ -125,7 +135,7 @@ export class Scrambled extends GameController {
 
     // Start the first round
     this._startRound();
-    this._listenForStop(ScrambledResponseCodes.EndGame);
+    this._listenForStop();
   }
 
   private async _startRound(): Promise<void> {
@@ -211,23 +221,23 @@ export class Scrambled extends GameController {
   }
 
   private async _getRoundEmbedResponse(): Promise<RESTPostAPIChannelMessageJSONBody> {
-    const embed: APIEmbed = {
-      title: `Skygame: Scrambled - Round ${this.currentRound + 1}/${this.totalRounds}`,
-      description: `## Unscramble this word!
-      
-**Scrambled Word:** \`${this.currentWord.scrambled.toUpperCase()}\`
+    const comp = container(
+      section(
+        { label: "End Game", style: 4, custom_id: "skygame_end_game", type: 2 },
+        "-# SkyHelper",
+        `Skygame: Scrambled - Round ${this.currentRound + 1}/${this.totalRounds}`,
+      ),
+      separator(),
+      textDisplay(
+        "## Unscramble this word!",
+        `**Scrambled Word:** \`${this.currentWord.scrambled.toUpperCase()}\``,
+        `-# **Hint:** ${this._getHint(this.currentWord.original)}`,
+        "\nThe first player to correctly unscramble the word wins this round!",
+        "Remaining Time: <a:30sec:1288835107804676243>",
+      ),
+    );
 
-**Hint:** ${this._getHint(this.currentWord.original)}
-
-The first player to correctly unscramble the word wins this round!
-
-Remaining Time: <a:30sec:1288835107804676243>
-
--# The game initiator can stop the game anytime by typing \`>stopgame\`.`,
-      color: 0x3498db,
-    };
-
-    return { embeds: [embed] };
+    return { components: [comp], flags: MessageFlags.IsComponentsV2 };
   }
 
   private async _getRoundResultsEmbed(): Promise<RESTPostAPIChannelMessageJSONBody> {
@@ -238,20 +248,21 @@ Remaining Time: <a:30sec:1288835107804676243>
       })
       .join("\n");
 
-    const embed: APIEmbed = {
-      title: `Round ${this.currentRound}/${this.totalRounds} Results`,
-      description: `${this.roundWinner ? `**Winner:** <@${this.roundWinner.id}>` : "**No one** guessed the word correctly!"}
-      
-**Word:** ${this.currentWord.original}
-
-**Current Scores:**
-${scoreBoard}
-
-${this.currentRound < this.totalRounds ? `Next round starting in 3 seconds...` : `Final results coming up...`}`,
-      color: 0x2ecc71,
-    };
-
-    return { embeds: [embed] };
+    const comp = container(
+      textDisplay("-# SkyHelper", `### Round ${this.currentRound}/${this.totalRounds} Results`),
+      separator(),
+      textDisplay(
+        this.roundWinner ? `**Winner:** <@${this.roundWinner.id}>` : "**No one** guessed the word correctly!",
+        `**Word:** ${this.currentWord.original}`,
+      ),
+      separator(),
+      textDisplay(
+        "**Current Scores**",
+        scoreBoard,
+        this.currentRound < this.totalRounds ? `\n-# Next round starting in 3 seconds...` : `\n-# Final results coming up...`,
+      ),
+    );
+    return { components: [comp], flags: MessageFlags.IsComponentsV2 };
   }
 
   private _getHint(word: string): string {
@@ -315,37 +326,33 @@ ${this.currentRound < this.totalRounds ? `Next round starting in 3 seconds...` :
           }
         }
 
-        return `**Round ${i + 1}:** Word: ${word.original} - Winner: ${roundWinnerText}`;
+        return `-# ${emojis.right_chevron} **Round ${i + 1}:** Word: ${word.original} - Winner: ${roundWinnerText}`;
       })
       .join("\n");
 
     // Create final results embed
-    const embed: APIEmbed = {
-      title: "SkyGame: Scrambled - Final Results",
-      description: `### ${
-        winner
-          ? `Winner: <@${winner.id}> \`(${winner.username})\` with ${this.playerStats.get(winner.id)!.totalCorrect} correct guesses!`
-          : "It's a tie!"
-      }
-      
-**Final Scores:**
-${this.players
-  .map((player) => {
-    const stats = this.playerStats.get(player.id)!;
-    return `- <@${player.id}> - \`${player.username}\`: ${stats.totalCorrect}/${this.totalRounds} words`;
-  })
-  .join("\n")}
 
-**Round by Round Results:**
-${roundByRoundResults}`,
-      author: {
-        name: "SkyGame: Scrambled | SkyHelper",
-        icon_url: this.client.utils.getUserAvatar(this.client.user),
-      },
-      color: 0xf1c40f,
-    };
-
-    await this._sendResponse({ embeds: [embed] });
+    const comp = container(
+      textDisplay("-# SkyHelper", "### SkyGame: Scrambled - Final Results"),
+      separator(),
+      textDisplay(
+        `### ${
+          winner
+            ? `Winner: <@${winner.id}> \`(${winner.username})\` with ${this.playerStats.get(winner.id)!.totalCorrect} correct guesses!`
+            : "It's a tie!"
+        }`,
+        "**Final Scores**",
+        this.players
+          .map((player) => {
+            const stats = this.playerStats.get(player.id)!;
+            return `- <@${player.id}> - \`${player.username}\`: ${stats.totalCorrect}/${this.totalRounds} words`;
+          })
+          .join("\n"),
+      ),
+      separator(),
+      textDisplay("**Round by Round Results:**", roundByRoundResults),
+    );
+    await this._sendResponse({ components: [comp], flags: MessageFlags.IsComponentsV2 });
     this.client.gameData.delete(this.channel.id);
   }
 }
