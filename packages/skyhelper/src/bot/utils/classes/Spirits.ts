@@ -73,7 +73,7 @@ export class Spirits {
 
     const comp = container(
       data.image ? section(thumbnail(data.image, data.name), headerTitle) : textDisplay(headerTitle),
-      separator(),
+      separator(true, 1),
       textDisplay(
         description
           .map((d, i, arr) => (i === 0 ? emojis.tree_top : i === arr.length - 1 ? emojis.tree_end : emojis.tree_middle) + d)
@@ -83,6 +83,7 @@ export class Spirits {
 
     if ("ts" in data && !data.current) {
       comp.components.push(
+        separator(true, 1),
         textDisplay(
           `**${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE")}**\n${
             !data.ts.eligible
@@ -109,19 +110,24 @@ export class Spirits {
     } else {
       let url = data.tree?.image;
       if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
-      if (url)
+      if (url) {
+        const totalCosts = data
+          .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
+          .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
+          .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")
+          .trim();
         comp.components.push(
           section(
             thumbnail(url),
-            data.ts?.returned
-              ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-              : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by }),
-            `-# ${data
-              .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-              .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-              .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")}`,
+            emojis.right_chevron +
+              " " +
+              (data.ts?.returned
+                ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
+                : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })),
+            totalCosts ? `-# ${totalCosts}` : "",
           ),
         );
+      }
     }
     if ("location" in data) {
       let url = data.location!.image;
@@ -129,7 +135,7 @@ export class Spirits {
       comp.components.push(
         section(
           thumbnail(url),
-          this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
+          `${emojis.right_chevron} ${this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by })}`,
           data.location!.description ? `-# ${emojis.tree_end}${data.location!.description}` : "",
         ),
       );
