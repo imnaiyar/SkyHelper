@@ -130,7 +130,7 @@ export class Spirits {
         section(
           thumbnail(url),
           this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by }),
-          data.location.description ? `-# ${emojis.tree_end}${data.location.description}` : "",
+          data.location!.description ? `-# ${emojis.tree_end}${data.location!.description}` : "",
         ),
       );
     }
