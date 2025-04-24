@@ -233,14 +233,23 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
   const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const nowFormatted = now.toFormat("dd-MM-yyyy");
   const component = container(textDisplay(`### Daily Quests (${total}) :: ${nowFormatted}`), separator());
-  for (const quest of quests) {
+  for (const [index, quest] of quests.entries()) {
     let quest_title = `${quest.title}`;
 
     if (quest.images?.[0].source) quest_title = `[${quest_title}](${quest.images?.[0].source})`;
     if (quest.images?.length) {
+      const ext = quest.images[0].url.split("?")[0].split(".").pop();
+      const isVideo = ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext);
       component.components.push(
         section(
-          thumbnail(quest.images[0].url /* TODO: Verify this support video of large size */, quest.title, true),
+          isVideo
+            ? {
+                label: "Video",
+                custom_id: Utils.encodeCustomId({ id: "quest_video", index: index.toString(), date: nowFormatted }),
+                type: 2,
+                style: 2,
+              }
+            : thumbnail(quest.images[0].url, quest.title, true),
           `${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`,
         ),
       );
@@ -272,7 +281,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
     components: [rotatingBtn],
   };
   if (rotating_candles) row.components.push(seasonalBtn);
-  component.components.push(row);
+  component.components.push(separator(true, 1), row);
   return { components: [component] };
 }
 

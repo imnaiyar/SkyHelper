@@ -129,7 +129,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   collector.on("end", async () => {
     const res = getCollectorResponse();
     const comp = res.components[0];
-    comp.components.splice(-2, 2, expired_row);
+    comp.components.splice(-3, 3, expired_row);
     helper.editReply({ components: [comp] }).catch(() => {});
   });
 }
@@ -182,7 +182,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
   collector.on("end", () => {
     const res = getCollectorResponse();
     const comp = res.components[0];
-    comp.components.splice(-2, 2, expired_row);
+    comp.components.splice(-3, 3, expired_row);
     helper.editReply({ components: [comp] }).catch(() => {});
   });
 }
@@ -208,7 +208,7 @@ function getRealmsRow(
       {
         type: ComponentType.Button,
         custom_id: Utils.encodeCustomId({ id: "back", user }),
-        label: `⬅️ ${data[page - 2]?.title || data[page - 1].title}`,
+        label: `⬅ ${data[page - 2]?.title || data[page - 1].title}`,
         disabled: page - 1 === 0,
         style: ButtonStyle.Secondary,
       },
@@ -224,7 +224,7 @@ function getRealmsRow(
       {
         type: ComponentType.Button,
         custom_id: Utils.encodeCustomId({ id: "forward", user }),
-        label: `${data[page]?.title || data[page - 1].title} ➡️`,
+        label: `${data[page]?.title || data[page - 1].title} ➡`,
         disabled: page - 1 === total,
         style: ButtonStyle.Secondary,
       },
@@ -262,9 +262,9 @@ function getRealmsRow(
       ? section(thumbnail(embed.image, embed.title), embed.description)
       : mediaGallery(mediaGalleryItem(embed.image, { description: embed.title })),
     textDisplay(`-# Page ${page}/${total + 1}`),
-    separator(),
+    separator(true, 1),
     btns,
-    separator(),
+    separator(true, 1),
     menu,
   );
 
