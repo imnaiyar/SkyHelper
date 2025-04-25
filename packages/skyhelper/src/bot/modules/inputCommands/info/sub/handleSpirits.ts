@@ -52,9 +52,9 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
       ],
     };
     const component = new Spirits(data, t, client).getResponseEmbed(commandHelper.user.id);
-    component.components.push(row);
+
     const msg = await commandHelper.editReply({
-      components: [component],
+      components: [component, row],
       flags: MessageFlags.IsComponentsV2,
     });
     return msg;
