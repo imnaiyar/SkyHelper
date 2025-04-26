@@ -87,12 +87,10 @@ export function buildShardEmbed(
     comp2 = container(
       section(
         thumbnail(info.image, info.type),
-        `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${info.type} (${info.rewards})\n`,
+        `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${info.type} (${info.rewards})\n${emojis.tree_end} ${info.area}`,
       ),
     );
     comp1 = container(
-      info.locations.map((l) => section(thumbnail(l.image, l.description), l.description + `\n${emojis.tree_end}${info.area}`)),
-      separator(),
       section(
         {
           type: ComponentType.Button,
@@ -116,8 +114,9 @@ export function buildShardEmbed(
             })
             .join("\n"),
       ),
-      separator(),
-      ...(navBtns ? [navBtns] : []),
+      separator(true, 1),
+      ...info.locations.map((l) => section(thumbnail(l.image, l.description), l.description)),
+      ...(navBtns ? [separator(true, 1), navBtns] : []),
     );
   }
 

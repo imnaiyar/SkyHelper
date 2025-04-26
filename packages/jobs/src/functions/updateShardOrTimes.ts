@@ -8,18 +8,23 @@ import { DiscordAPIError } from "@discordjs/rest";
 import { DateTime } from "luxon";
 import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
 import { BASE_API } from "@/constants";
+
 import {
   MessageFlags,
   type APIActionRowComponent,
   type APIComponentInMessageActionRow,
-  type APIContainerComponent,
   type APIMessageComponent,
 } from "discord-api-types/v10";
-const getEmbed = async (type?: "shards" | "times", query: { locale?: string; date?: string; noBtn?: boolean } = {}) => {
-  return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(JSON.stringify(query))}`).then((res) => res.json())) as {
+
+const getEmbed = async (
+  type?: "shards" | "times",
+  query: { locale?: string; date?: string; noBtn?: "true" | "false" } = { locale: "en-US" },
+) => {
+  return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(query)}`).then((res) => res.json())) as {
     components: APIActionRowComponent<APIComponentInMessageActionRow>[];
   };
 };
+
 /**
  * Updates Shards/Times Embeds
  * @param type Type of the event
@@ -29,7 +34,7 @@ export async function eventSchedules(type: "shard" | "times"): Promise<void> {
   const currentDate = DateTime.now().setZone("America/Los_Angeles");
   switch (type) {
     case "times": {
-      const response = async (locale?: string): Promise<WebhookMessageCreateOptions> => {
+      const response = async (locale: string = "en-US"): Promise<WebhookMessageCreateOptions> => {
         return await getEmbed("times", { locale });
       };
       const data = await getActiveUpdates("times");
@@ -37,8 +42,9 @@ export async function eventSchedules(type: "shard" | "times"): Promise<void> {
       break;
     }
     case "shard": {
-      const response = async (locale?: string): Promise<WebhookMessageCreateOptions> =>
-        getEmbed("shards", { date: currentDate.toFormat("yyyy-MM-dd"), locale, noBtn: true });
+      const response = async (locale: string = "en-US"): Promise<WebhookMessageCreateOptions> =>
+        getEmbed("shards", { date: currentDate.toFormat("yyyy-MM-dd"), locale, noBtn: "true" });
+
       const data = await getActiveUpdates("shard");
       await update(data, "autoShard", response);
     }
@@ -64,9 +70,6 @@ const update = async (
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
     const d = await response(guild.language?.value ?? "en-US");
-    // removing navigation buttons as that complicates things
-
-    if (type === "autoShard") (d.components![1] as APIContainerComponent)!.components.splice(-2, 2);
 
     const res = await webhook
       .editMessage(

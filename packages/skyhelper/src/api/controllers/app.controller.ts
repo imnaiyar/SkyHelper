@@ -11,7 +11,7 @@ const GetShardsParams = z.object({
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in the format 'YYYY-MM-DD'")
     .optional(),
-  noBtn: z.boolean().optional(),
+  noBtn: z.enum(["true", "false"]).optional(),
   user: z.string().optional(),
   locale: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
 });
@@ -37,7 +37,7 @@ export class AppController {
     } else {
       shardDate = DateTime.now().setZone("America/Los_Angeles").startOf("day");
     }
-    return buildShardEmbed(shardDate, getTranslator(locale ?? "en-US"), noBtn, user);
+    return buildShardEmbed(shardDate, getTranslator(locale ?? "en-US"), noBtn === "true", user);
   }
 
   @Get("times-embed")
