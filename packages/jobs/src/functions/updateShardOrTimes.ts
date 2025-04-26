@@ -13,9 +13,9 @@ import {
   MessageFlags,
   type APIActionRowComponent,
   type APIComponentInMessageActionRow,
-  type APIContainerComponent,
   type APIMessageComponent,
 } from "discord-api-types/v10";
+
 const getEmbed = async (
   type?: "shards" | "times",
   query: { locale?: string; date?: string; noBtn?: "true" | "false" } = { locale: "en-US" },
@@ -24,6 +24,7 @@ const getEmbed = async (
     components: APIActionRowComponent<APIComponentInMessageActionRow>[];
   };
 };
+
 /**
  * Updates Shards/Times Embeds
  * @param type Type of the event
