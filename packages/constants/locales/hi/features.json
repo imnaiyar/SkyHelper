@@ -24,9 +24,9 @@
       },
       "COUNTDOWN": {
         "VALUE": {
-          "ENDED": "{{DURATION}} पहले ख़तम हो गया",
-          "ACTIVE": "{{DURATION}} में ख़तम होगा",
-          "EXPECTED": "{{DURATION}} में लैंड होगा"
+          "ENDED": "Ended {{DURATION}}",
+          "ACTIVE": "Ends {{DURATION}}",
+          "EXPECTED": "Falls {{DURATION}}"
         }
       }
     },
@@ -37,12 +37,12 @@
   "times-embed": {
     "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
-    "EMBED_TITLE": "Event Times - Current Sky Time: `{{SKY_TIME}}`",
+    "EMBED_TITLE": "Event Times",
     "EMBED_AUTHOR": "स्काइटाइम्स",
     "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
     "STARTS": "शुरू होगा",
-    "ENDS": "ख़तम होगा",
-    "TS_VISITING": "**अभी विजिट में**: {{TS_NAME}}\n**वापिस जाएंगे**: {{DATE}} को ({{DURATION}} में)",
+    "ENDS": "Ends",
+    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
     "TS_UPDATED": "अभी अपडेट होने को है",
     "TS_UNKNOWN": "अनजान स्पिरिट",
