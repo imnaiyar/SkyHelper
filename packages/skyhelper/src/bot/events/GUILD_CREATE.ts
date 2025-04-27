@@ -1,4 +1,4 @@
-import { GatewayDispatchEvents, type APIEmbed, type GatewayGuildCreateDispatchData } from "@discordjs/core";
+import { GatewayDispatchEvents, type APIEmbed, type GatewayGuildCreateDispatchData, type APIGuildMember } from "@discordjs/core";
 import type { Event } from "../structures/Event.js";
 import { postBotListStats } from "@/utils/postBotLists";
 import { resolveColor } from "@skyhelperbot/utils";
@@ -22,7 +22,7 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
     })),
   });
 
-  // Popilate channels cache
+  // Populate channels cache
   for (const channel of guild.channels) {
     // Guild ID is missing for channels recived via gateway ig
     client.channels.set(channel.id, { ...channel, guild_id: guild.id });
@@ -47,13 +47,13 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
   await postBotListStats(client);
 
   // Send a guild join Log
-  await sendGuildLog(guild, client);
+  await sendGuildLog({ ...guild, clientMember }, client);
 };
 
 export default guildCreateHandler;
 
 export async function sendGuildLog(
-  guild: GatewayGuildCreateDispatchData,
+  guild: GatewayGuildCreateDispatchData & { clientMember: APIGuildMember },
   client: SkyHelper,
   event: "Joined" | "Left" = "Joined",
 ) {
@@ -75,7 +75,7 @@ export async function sendGuildLog(
         name: "Name",
         value:
           guild.name +
-          `\nCreated At: ${client.utils.time(Math.floor(client.utils.getTimestampFromSnowflake(guild.id) / 1_000), "F")}`,
+          `\n- -# Created At: ${client.utils.time(Math.floor(client.utils.getTimestampFromSnowflake(guild.id) / 1_000), "F")}\n- -# Joined At: ${client.utils.time(new Date(guild.clientMember.joined_at), "F")}`,
         inline: true,
       },
       { name: "ID", value: guild.id, inline: true },
