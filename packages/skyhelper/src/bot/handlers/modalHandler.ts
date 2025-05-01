@@ -19,7 +19,7 @@ export async function handleShardsCalendarModal(helper: InteractionHelper) {
     return;
   }
 
-  const data = buildCalendarResponse(helper.t, helper.client, helper.user.id, { month, year });
+  const data = buildCalendarResponse(helper.t, helper.client, helper.user.id, { month, year, index: 0 });
   await helper.update({ ...data, flags: MessageFlags.IsComponentsV2 });
   return;
 }
