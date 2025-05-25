@@ -83,8 +83,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
       `**${t("common:bot.USER_SETTINGS")} (\`${helper.user.global_name || helper.user.username}\`)**`,
       `**${t("common:bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
     ),
-    separator(),
-    textDisplay("**Process Info**", getProcessInfo()),
+    ...(client.config.OWNER.includes(helper.user.id) ? [separator(), textDisplay("**Process Info**", getProcessInfo())] : []),
   );
   const btns: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
