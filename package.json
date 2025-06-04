@@ -36,7 +36,7 @@
   "packageManager": "pnpm@9.4.0",
   "pnpm": {
     "overrides": {
-      "discord-api-types": "pr-1190"
+      "discord-api-types": "0.38.10"
     }
   },
   "dependencies": {

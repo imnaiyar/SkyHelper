@@ -1,59 +1,54 @@
 import type { SkyHelper as BotService } from "@/structures";
 import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
-import { type APIEmbed, type APIGuild, type APIUser, ApplicationIntegrationType, MessageFlags } from "@discordjs/core";
+import {
+  type APIEmbed,
+  type APIGuild,
+  type APIUser,
+  ApplicationIntegrationType,
+  MessageFlags,
+  ApplicationWebhookEventType,
+  type APIWebhookEvent,
+} from "@discordjs/core";
 import type { Response } from "express";
 import BlackList from "@/schemas/BlackList";
-enum WebhookTypes {
-  PING,
-  EVENT,
-}
-interface ApplicationAuthorizedEventPaylaod {
-  integration_type?: ApplicationIntegrationType;
-  user: APIUser;
-  scopes: string[];
-  guild?: APIGuild;
-}
-type WebhookEvent = {
-  type: "APPLICATION_AUTHORIZED";
-  timestamp: string;
-  data?: ApplicationAuthorizedEventPaylaod;
-};
-type WebhookPayload = {
-  version: number;
-  application_id: string;
-  type: WebhookTypes;
-  event: WebhookEvent;
-};
+
 // Handles webhook events from discord
 @Controller("/webhook-event")
 export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Post()
-  async handleWebhookEvent(@Body() body: WebhookPayload, @Res() res: Response) {
+  async handleWebhookEvent(@Body() body: APIWebhookEvent, @Res() res: Response) {
     res.status(204).send();
     // Ideally only this application authrization event will be sent as it's the only one that's subscribed, but return still for safety
-    if (body.event.type !== "APPLICATION_AUTHORIZED") return;
+    if (
+      body.event.type !== ApplicationWebhookEventType.ApplicationAuthorized &&
+      body.event.type !== ApplicationWebhookEventType.ApplicationDeauthorized
+    )
+      return;
     if (!body.event.data) return;
     const data = body.event.data;
     const { user } = data;
-    if (data.guild) this._checkBlacklisted(data.guild.id, user.id);
     const webhook = process.env.GUILD ? this.bot.utils.parseWebhookURL(process.env.GUILD) : undefined;
+    if ("guild" in data && data.guild) this._checkBlacklisted(data.guild.id, user.id);
+    const isDeauthorized = body.event.type === ApplicationWebhookEventType.ApplicationDeauthorized;
     if (!webhook) return;
 
-    let description = `User ${user.username} - ${user.global_name} (\`${user.id}\`) has authorized the application`;
+    let description = `User ${user.username} - ${user.global_name} (\`${user.id}\`) has ${isDeauthorized ? "deauthorized" : "authorized"} the application`;
     const type =
       "integration_type" in data
         ? data.integration_type /* 0 will be false anyway, so no need to check explicitly */
           ? "UserInstall"
           : "GuildInstall"
         : "Oauth2";
-    description += `\n\n**Type:** \`${type}\``;
-    description += `\n**Scopes:** ${data.scopes.map((sc) => `\`${sc}\``).join(" ")}`;
-    if (data.guild) {
+    description += `\n\n**Type:** \`${isDeauthorized ? "Deauthorized" : type}\``;
+    if ("scopes" in data && data.scopes) {
+      description += `\n**Scopes:** ${data.scopes.map((sc) => `\`${sc}\``).join(" ")}`;
+    }
+    if ("guild" in data && data.guild) {
       description += `\n**Guild:** ${data.guild.name} (\`${data.guild.id}\`)`;
     }
-    if (data.integration_type) {
+    if (isDeauthorized || ("integration_type" in data && data.integration_type)) {
       const appl = await this.bot.api.applications.getCurrent();
       description += `\nTotal Authorized: ${appl.approximate_user_install_count}`;
     }
@@ -63,7 +58,7 @@ export class WebhookEventController {
       color: 0x00ff00,
       timestamp: new Date(body.event.timestamp).toISOString(),
       author: {
-        name: "User Authorized",
+        name: "User " + (isDeauthorized ? "Deauthorized" : "Install"),
         icon_url: user.avatar
           ? this.bot.rest.cdn.avatar(user.id, user.avatar)
           : this.bot.rest.cdn.defaultAvatar(Number(BigInt(user.id) >> 22n) % 6),
