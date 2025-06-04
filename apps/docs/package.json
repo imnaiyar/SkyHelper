@@ -20,6 +20,7 @@
   "homepage": "https://github.com/imnaiyar/skyhelper#readme",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.54",
+    "discord-api-types": "0.38.10",
     "next": "^14.2.26",
     "nextra": "^3.0.3",
     "nextra-theme-docs": "^3.0.3",
