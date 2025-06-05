@@ -12,6 +12,16 @@ import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
 import { MessageFlags } from "discord-api-types/v10";
 
+function sendDebugLogs(contents: string[]) {
+  if (!process.env.JOBS_DEBUG_LOGS) return;
+  const match = process.env.JOBS_DEBUG_LOGS.match(
+    /(?<url>^https:\/\/(?:(?:canary|ptb).)?discord(?:app)?.com\/api(?:\/v\d+)?\/webhooks\/(?<id>\d+)\/(?<token>[\w-]+)\/?$)/,
+  );
+  if (!match) return;
+  const wb = new Webhook({ id: match[2]!, token: match[3]! });
+  wb.send({ content: contents.join("\n") }, { retries: 0 }).catch(() => null);
+}
+
 type Events = (typeof REMINDERS_KEY)[number];
 
 // TODO: test reminders embeds first
@@ -45,18 +55,20 @@ export async function reminderSchedules(): Promise<void> {
       const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
 
       // some logs to debug what the hell is actually happening in prod, only do this for main guild, as to not fucking spam it ig
-      if (!isValid && guild.id === "852141490105090059") {
-        console.log("Key: ", key, "|| Guilds:", guild.data.name, "|| Valid:", isValid, "|| Offset:", offset);
-        console.log(
-          "Now: ",
-          now,
-          "|| NextOcc: ",
-          details?.nextOccurence ?? ts?.nextVisit,
-          "|| StartTime:",
-          details?.status.startTime,
+      if (!isValid && guild.id === "852141490105090059" && ["eden", "reset", "fireworks-festival"].includes(key)) {
+        const toSend: Array<string> = [];
+
+        toSend.push("Key: " + key + "|| Guilds:", guild.data.name + "|| Valid:" + isValid + "|| Offset:" + offset);
+        toSend.push(
+          "Now: " +
+            now +
+            "|| NextOcc: " +
+            (details?.nextOccurence ?? ts?.nextVisit) +
+            "|| StartTime:" +
+            details?.status.startTime,
         );
-        console.log("Diff: ", (details?.nextOccurence ?? ts!.nextVisit).diff(now, "minutes").toObject());
-        console.log("-------------------------------------------");
+        toSend.push("Diff: " + (details?.nextOccurence ?? ts!.nextVisit).diff(now, "minutes").toObject());
+        sendDebugLogs(toSend);
       }
 
       if (!isValid) continue;
