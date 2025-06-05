@@ -15,10 +15,13 @@ export class BotController {
     const member = this.bot.guilds.reduce((acc, g) => acc + g.member_count, 0);
     const ping = this.bot.ping;
     const commands = this.bot.applicationCommands.size + 4;
+    const application = await this.bot.api.applications.getCurrent();
+
     return {
       totalServers: guilds,
       totalMembers: member,
       ping: ping,
+      totalUserInstalls: application.approximate_user_install_count,
       commands: commands,
     };
   }
