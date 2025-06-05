@@ -21,7 +21,7 @@ export class BotController {
       totalServers: guilds,
       totalMembers: member,
       ping: ping,
-      totalUserInstalls: application.approximate_user_install_count,
+      totalUserInstalls: application.approximate_user_install_count || 1,
       commands: commands,
     };
   }
