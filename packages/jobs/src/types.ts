@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import type { REMINDERS_KEY } from "./database/getGuildDBValues";
+import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 
 export interface GuildSchema extends Document {
   _id: string;

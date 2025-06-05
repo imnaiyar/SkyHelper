@@ -3,7 +3,7 @@ import getSettings from "../utils/getSettings.js";
 import type { SkyHelper as BotService } from "@/structures";
 import type { ReminderFeature } from "../types.js";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
-import { REMINDERS_KEY } from "@/utils/constants";
+import { REMINDERS_KEY } from "@skyhelperbot/constants";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import type { GuildSchema } from "@/types/schemas";
 /* const payload = (r: GuildSchema["reminders"]) => ({

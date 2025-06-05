@@ -1,4 +1,4 @@
-import { getActiveReminders, REMINDERS_KEY } from "@/database/getGuildDBValues.js";
+import { getActiveReminders } from "@/database/getGuildDBValues.js";
 import { Webhook } from "@/structures/Webhook.js";
 import { roleMention } from "@discordjs/builders";
 import { getTranslator, type LangKeys } from "./getTranslator.js";
@@ -7,7 +7,7 @@ import { container, section, separator, SkytimesUtils, textDisplay, thumbnail, t
 import { throttleRequests } from "./throttleRequests.js";
 import getTS, { type TSValue } from "@/utils/getTS.js";
 import spiritsData, { type SpiritsData } from "@skyhelperbot/constants/spirits-datas";
-import { emojis, realms_emojis, seasonsData } from "@skyhelperbot/constants";
+import { emojis, realms_emojis, seasonsData, REMINDERS_KEY } from "@skyhelperbot/constants";
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
 import { MessageFlags } from "discord-api-types/v10";
@@ -22,9 +22,10 @@ type Events = (typeof REMINDERS_KEY)[number];
  */
 export async function reminderSchedules(): Promise<void> {
   const now = DateTime.now().setZone("America/Los_Angeles");
+  console.log(now);
   const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
 
-  const ts = await getTS();
+  const ts = await getTS()!;
 
   const activeGuilds = await getActiveReminders();
 
@@ -39,9 +40,24 @@ export async function reminderSchedules(): Promise<void> {
 
       const { webhook, role, last_messageId, offset } = event;
       const details = eventDetails[key === "reset" ? "daily-reset" : key];
+      if (!details && key !== "ts") continue; // details will not be available for 'ts', it is calculated separately
 
-      if (!details) continue;
-      const isValid = checkReminderValid(now, details, offset ?? 0);
+      const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
+
+      // some logs to debug what the hell is actually happening in prod, only do this for main guild, as to not fucking spam it ig
+      if (!isValid && guild.id === "852141490105090059") {
+        console.log("Key: ", key, "|| Guilds:", guild.data.name, "|| Valid:", isValid, "|| Offset:", offset);
+        console.log(
+          "Now: ",
+          now,
+          "|| NextOcc: ",
+          details?.nextOccurence ?? ts?.nextVisit,
+          "|| StartTime:",
+          details?.status.startTime,
+        );
+        console.log("Diff: ", (details?.nextOccurence ?? ts!.nextVisit).diff(now, "minutes").toObject());
+        console.log("-------------------------------------------");
+      }
 
       if (!isValid) continue;
 

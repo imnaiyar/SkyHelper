@@ -1,7 +1,7 @@
 import "./instrument.js"; // sentry
+CustomLogger.log({ level: { name: "Sentry", color: "\x1b[36m" } }, "Sentry Initialized\n\n");
 
-CustomLogger.log({ level: { name: "Sentry", color: "\x1b[36m" } }, "Sentry Initialized\n\n\n");
-
+import "./validate-env.js"; // validate env variables
 import { GatewayDispatchEvents, GatewayIntentBits, type APIUser } from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { WebSocketManager, WebSocketShardEvents } from "@discordjs/ws";
@@ -9,7 +9,6 @@ import { SkyHelper } from "@/structures";
 import handleCachingListeners from "@/handlers/handleCachingListeners";
 import { initializeMongoose } from "./schemas/connect.js";
 import { Collection } from "@discordjs/collection";
-import { validateEnv } from "./utils/validators.js";
 import { CustomLogger } from "./handlers/logger.js";
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
 const gateway = new WebSocketManager({
@@ -20,11 +19,9 @@ const gateway = new WebSocketManager({
     GatewayIntentBits.MessageContent |
     GatewayIntentBits.DirectMessages |
     GatewayIntentBits.GuildWebhooks,
-  token: process.env.TOKEN!,
+  token: process.env.TOKEN,
   rest,
 });
-
-validateEnv();
 
 console.log("\n\n");
 
