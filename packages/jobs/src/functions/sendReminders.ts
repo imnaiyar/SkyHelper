@@ -20,7 +20,7 @@ function sendDebugLogs(contents: string[]) {
   );
   if (!match) return;
   const wb = new Webhook({ id: match[2]!, token: match[3]! });
-  wb.send({ content: `\`\`\`\n${util.inspect(contents.join("\n"), { depth: null })}\`\`\`` }, { retries: 0 }).catch(() => null);
+  wb.send({ content: `\`\`\`\n${contents.join("\n")}\`\`\`` }, { retries: 0 }).catch(() => null);
 }
 
 type Events = (typeof REMINDERS_KEY)[number];
@@ -56,7 +56,14 @@ export async function reminderSchedules(): Promise<void> {
       const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
 
       // some logs to debug what the hell is actually happening in prod, only do this for main guild, as to not fucking spam it ig
-      if (!isValid && guild.id === "852141490105090059" && ["eden", "reset", "fireworks-festival"].includes(key)) {
+      const startTime = details?.nextOccurence.toMillis() || ts!.nextVisit.toMillis();
+      const diff = startTime - now.toMillis();
+      if (
+        !isValid &&
+        guild.id === "852141490105090059" &&
+        ["eden", "reset", "fireworks-festival"].includes(key) &&
+        diff < 15 * 6e4 /* if it is within 15 kin, only then send */
+      ) {
         const toSend: Array<string> = [];
 
         toSend.push("Key: " + key + "|| Guilds:", guild.data.name + "|| Valid:" + isValid + "|| Offset:" + offset);
@@ -68,7 +75,9 @@ export async function reminderSchedules(): Promise<void> {
             "|| StartTime:" +
             details?.status.startTime,
         );
-        toSend.push("Diff: " + (details?.nextOccurence ?? ts!.nextVisit).diff(now, "minutes").toObject());
+        toSend.push(
+          "Diff: " + util.inspect((details?.nextOccurence ?? ts!.nextVisit).diff(now, "minutes").toObject(), { depth: null }),
+        );
         sendDebugLogs(toSend);
       }
 
