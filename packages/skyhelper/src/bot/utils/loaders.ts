@@ -11,6 +11,8 @@ import type { LocalizationMap } from "@discordjs/core";
 import type { LangKeys } from "@/types/i18n";
 import { supportedLang } from "@skyhelperbot/constants";
 import { isProd } from "./constants.js";
+import { CommandPredicate } from "@/structures/predicates";
+import { z } from "zod/v4";
 const baseDir = (isProd ? "dist/" : "src/") + "bot/";
 
 // #region commands
@@ -26,8 +28,8 @@ export async function loadCommands() {
     try {
       if (typeof command !== "object") continue;
       if (commands.has(command.name)) throw new Error("The command already exists");
-      // const vld = cmdValidation(command, file);
-      // if (!vld) return;
+      const validate = CommandPredicate.safeParse(command);
+      if (!validate.success) throw new Error(z.prettifyError(validate.error));
       commands.set(command.name, command);
       logger.custom(`Loaded ${command.name}`, "COMMANDS");
       added++;
