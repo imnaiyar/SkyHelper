@@ -11,6 +11,7 @@ import { emojis, realms_emojis, seasonsData, REMINDERS_KEY } from "@skyhelperbot
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
 import { MessageFlags } from "discord-api-types/v10";
+import util from "node:util";
 
 function sendDebugLogs(contents: string[]) {
   if (!process.env.JOBS_DEBUG_LOGS) return;
@@ -19,7 +20,7 @@ function sendDebugLogs(contents: string[]) {
   );
   if (!match) return;
   const wb = new Webhook({ id: match[2]!, token: match[3]! });
-  wb.send({ content: contents.join("\n") }, { retries: 0 }).catch(() => null);
+  wb.send({ content: `\`\`\`\n${util.inspect(contents.join("\n"), { depth: null })}\`\`\`` }, { retries: 0 }).catch(() => null);
 }
 
 type Events = (typeof REMINDERS_KEY)[number];
