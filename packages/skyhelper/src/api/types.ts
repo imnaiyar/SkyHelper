@@ -59,7 +59,7 @@ export interface BotStats {
   totalMembers: number;
   ping: number;
   commands: number;
-  approximate_user_install_count: number;
+  totalUserInstalls: number;
 }
 
 export const EventDataSchema = z.object({
