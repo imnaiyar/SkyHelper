@@ -83,6 +83,7 @@ jobs:
           SUGGESTION: ${{ secrets.SUGGESTION }}
           TOPGG_TOKEN: ${{ secrets.TOPGG_TOKEN }}
           ERROR_WEBHOOK: ${{ secrets.ERROR_LOGS }}
+          JOBS_DEBUG_LOGS: ${{ secrets.JOBS_DEBUG_LOGS }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
           TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 

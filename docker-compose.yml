@@ -52,5 +52,6 @@ services:
       - MONGO_CONNECTION
       - NODE_ENV
       - ERROR_WEBHOOK
+      - JOBS_DEBUG_LOGS
       - TURBO_TEAM
       - TURBO_TOKEN
