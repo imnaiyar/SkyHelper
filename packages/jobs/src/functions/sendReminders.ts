@@ -55,7 +55,7 @@ export async function reminderSchedules(): Promise<void> {
       const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
 
       // some logs to debug what the hell is actually happening in prod, only do this for main guild, as to not fucking spam it ig
-      if (!isValid && guild.id === "852141490105090059") {
+      if (!isValid && guild.id === "852141490105090059" && ["eden", "reset", "fireworks-festival"].includes(key)) {
         const toSend: Array<string> = [];
 
         toSend.push("Key: " + key + "|| Guilds:", guild.data.name + "|| Valid:" + isValid + "|| Offset:" + offset);
