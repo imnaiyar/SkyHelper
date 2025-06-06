@@ -13,16 +13,6 @@ import { checkReminderValid } from "./checkReminderValid.js";
 import { MessageFlags } from "discord-api-types/v10";
 import util from "node:util";
 
-function sendDebugLogs(contents: string[]) {
-  if (!process.env.JOBS_DEBUG_LOGS) return;
-  const match = process.env.JOBS_DEBUG_LOGS.match(
-    /(?<url>^https:\/\/(?:(?:canary|ptb).)?discord(?:app)?.com\/api(?:\/v\d+)?\/webhooks\/(?<id>\d+)\/(?<token>[\w-]+)\/?$)/,
-  );
-  if (!match) return;
-  const wb = new Webhook({ id: match[2]!, token: match[3]! });
-  wb.send({ content: `\`\`\`\n${contents.join("\n")}\`\`\`` }, { retries: 0 }).catch(() => null);
-}
-
 type Events = (typeof REMINDERS_KEY)[number];
 
 // TODO: test reminders embeds first
@@ -33,7 +23,7 @@ type Events = (typeof REMINDERS_KEY)[number];
  */
 export async function reminderSchedules(): Promise<void> {
   const now = DateTime.now().setZone("America/Los_Angeles");
-  console.log(now);
+
   const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
 
   const ts = await getTS()!;
@@ -54,32 +44,6 @@ export async function reminderSchedules(): Promise<void> {
       if (!details && key !== "ts") continue; // details will not be available for 'ts', it is calculated separately
 
       const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
-
-      // some logs to debug what the hell is actually happening in prod, only do this for main guild, as to not fucking spam it ig
-      const startTime = details?.nextOccurence.toMillis() || ts!.nextVisit.toMillis();
-      const diff = startTime - now.toMillis();
-      if (
-        !isValid &&
-        guild.id === "852141490105090059" &&
-        ["eden", "reset", "fireworks-festival"].includes(key) &&
-        diff < 15 * 6e4 /* if it is within 15 kin, only then send */
-      ) {
-        const toSend: Array<string> = [];
-
-        toSend.push("Key: " + key + "|| Guilds:", guild.data.name + "|| Valid:" + isValid + "|| Offset:" + offset);
-        toSend.push(
-          "Now: " +
-            now +
-            "|| NextOcc: " +
-            (details?.nextOccurence ?? ts?.nextVisit) +
-            "|| StartTime:" +
-            details?.status.startTime,
-        );
-        toSend.push(
-          "Diff: " + util.inspect((details?.nextOccurence ?? ts!.nextVisit).diff(now, "minutes").toObject(), { depth: null }),
-        );
-        sendDebugLogs(toSend);
-      }
 
       if (!isValid) continue;
 
