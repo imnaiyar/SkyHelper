@@ -11,7 +11,6 @@ import { emojis, realms_emojis, seasonsData, REMINDERS_KEY } from "@skyhelperbot
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
 import { MessageFlags } from "discord-api-types/v10";
-import util from "node:util";
 
 type Events = (typeof REMINDERS_KEY)[number];
 
