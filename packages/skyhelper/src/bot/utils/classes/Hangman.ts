@@ -13,6 +13,7 @@ import { InteractionCollector } from "./Collector.js";
 import type { SkyHelper } from "@/structures";
 import { updateUserGameStats } from "../utils.js";
 import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { CustomId, store } from "../customId-store.js";
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Array<T> {
@@ -258,7 +259,12 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
     const component = container(
       section(
-        { label: "End Game", style: 4, custom_id: "skygame_end_game", type: 2 },
+        {
+          label: "End Game",
+          style: 4,
+          custom_id: store.serialize(CustomId.SkyGameEndGame, { user: null }),
+          type: 2,
+        },
         "-# Skygame: Hangman",
         `## ${this.mode === "single" ? `<@${this.currentPlayer.id}> is currently guessing!` : `It's <@${this.currentPlayer.id}> turn!`}`,
       ),
@@ -334,7 +340,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     if (!this.initiator) return;
     this._stopCollector = new InteractionCollector(this.client, {
       componentType: 2,
-      filter: (i) => i.data.custom_id === "skygame_end_game",
+      filter: (i) => store.deserialize(i.data.custom_id).id === CustomId.SkyGameEndGame,
       channel: this.channel,
     });
     const initiator = this.initiator;

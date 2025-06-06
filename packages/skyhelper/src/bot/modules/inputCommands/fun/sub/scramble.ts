@@ -12,15 +12,15 @@ import { ComponentType, SelectMenuDefaultValueType, MessageFlags } from "@discor
 import { updateUserGameStats } from "@/utils/utils";
 import { Scrambled, scrambleWord } from "@/utils/classes/Scrambled";
 import { container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
-import { CustomId } from "@/utils/customId-store";
+import { CustomId, store } from "@/utils/customId-store";
 
 export async function handleSingleMode(helper: InteractionHelper) {
   const { original, scrambled } = scrambleWord();
 
   const component = container(
-    textDisplay("### SkyGame: Scrambled"),
+    textDisplay("### SkyGame: Scrambled", `-# Player: <@${helper.user.id}>`),
     separator(),
-    textDisplay(`Unscramble this word!\n\n### \`${scrambled}\`\n\n-# You have 1min to answer.`),
+    textDisplay(`Unscramble this word!\n### \`${scrambled}\`\n\n-# You have 1min to answer.`),
     separator(),
     row({
       type: 2,
@@ -52,7 +52,7 @@ export async function handleSingleMode(helper: InteractionHelper) {
             type: 2,
             label: "Play Again",
             style: 2,
-            custom_id: "scramble-play-single",
+            custom_id: store.serialize(CustomId.SkyGamePlaySingle, { user: null }),
           },
           `### SkyGame: Scrambled`,
         ),

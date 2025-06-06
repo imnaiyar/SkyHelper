@@ -23,6 +23,7 @@ import { DateTime } from "luxon";
 import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
+import { CustomId } from "@/utils/customId-store";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -54,8 +55,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         ? formatCommandOptions(interaction, new InteractionOptionResolver(interaction))
         : null,
       commandType: helper.isCommand(interaction) ? ApplicationCommandType[interaction.data.type] : null,
-      // @ts-expect-error for custom id, too much checks just put it there
-      customId: interaction.data?.custom_id,
+      customId:
+        interaction.type === InteractionType.MessageComponent
+          ? {
+              id: CustomId[Utils.store.deserialize(interaction.data.custom_id).id],
+              data: Utils.store.deserialize(interaction.data.custom_id).data,
+            }
+          : null,
     },
     user: {
       id: helper.user.id,
@@ -262,7 +268,7 @@ function getErrorResponse(id: string, t: ReturnType<typeof getTranslator>) {
             type: 2,
             style: 1,
             label: t("errors:BUTTON_LABEL"),
-            custom_id: "error-report;error:" + id,
+            custom_id: Utils.store.serialize(CustomId.BugReports, { error: id, user: null }),
           },
         ],
       },

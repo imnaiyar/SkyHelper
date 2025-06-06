@@ -64,7 +64,10 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
 
   const col = client.componentCollector({
     idle: 90_000,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) =>
+      (i.member?.user || i.user)!.id === helper.user.id ||
+      // @ts-expect-error need extra check to get actions but yeah, loool
+      client.utils.store.deserialize(i.data.custom_id).data.action === "instructions",
     message,
   });
 
