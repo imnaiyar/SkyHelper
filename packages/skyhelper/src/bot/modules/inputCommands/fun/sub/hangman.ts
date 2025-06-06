@@ -1,7 +1,6 @@
 import { Hangman } from "@/utils/classes/Hangman";
-import type { getTranslator } from "@/i18n";
 
-import { LeaderboardCard, parsePerms, type Permission, type userData } from "@skyhelperbot/utils";
+import { LeaderboardCard, type userData } from "@skyhelperbot/utils";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import {

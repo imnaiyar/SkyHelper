@@ -4,7 +4,6 @@ import {
   AllowedMentionsTypes,
   ComponentType,
   MessageFlags,
-  type APIEmbed,
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
