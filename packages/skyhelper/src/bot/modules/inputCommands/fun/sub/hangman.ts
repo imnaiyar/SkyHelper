@@ -1,7 +1,6 @@
 import { Hangman } from "@/utils/classes/Hangman";
-import type { getTranslator } from "@/i18n";
 
-import { LeaderboardCard, parsePerms, type Permission, type userData } from "@skyhelperbot/utils";
+import { LeaderboardCard, type userData } from "@skyhelperbot/utils";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import {
@@ -23,6 +22,7 @@ import type { RawFile } from "@discordjs/rest";
 import type { SkyGameStatsData } from "@/types/custom";
 import { emojis } from "@skyhelperbot/constants";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { CustomId } from "@/utils/customId-store";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {
@@ -63,14 +63,18 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
 
   const col = client.componentCollector({
     idle: 90_000,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) =>
+      (i.member?.user || i.user)!.id === helper.user.id ||
+      // @ts-expect-error need extra check to get actions but yeah, loool
+      client.utils.store.deserialize(i.data.custom_id).data.action === "instructions",
     message,
   });
 
   col.on("collect", async (i) => {
     const compoHelper = new InteractionHelper(i, client);
-    const { action } = client.utils.parseCustomId(i.data.custom_id);
-
+    const { id, data } = client.utils.store.deserialize(i.data.custom_id);
+    if (id !== CustomId.SkyHagman) return;
+    const { action } = data;
     if (compoHelper.isStringSelect(i)) {
       const value = i.data.values[0];
       if (action === "type") {
@@ -152,7 +156,7 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
         components: [
           {
             type: 5, // UserSelectMenu
-            custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "user", user: helper.user.id }),
+            custom_id: helper.client.utils.store.serialize(CustomId.SkyHagman, { action: "user", user: helper.user.id }),
             placeholder: "Select players",
             default_values: players.map((p) => ({ id: p.id, type: SelectMenuDefaultValueType.User })),
             max_values: 2,
@@ -165,7 +169,7 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
         components: [
           {
             type: 3, // StringSelectMenu
-            custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "type", user: helper.user.id }),
+            custom_id: helper.client.utils.store.serialize(CustomId.SkyHagman, { action: "type", user: helper.user.id }),
             placeholder: "Select word type",
             options: [
               { label: "Random", description: "Bot selects random words", value: "random", default: type === "random" },
@@ -186,7 +190,7 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
     components: [
       {
         type: 2, // Button
-        custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "start", user: helper.user.id }),
+        custom_id: helper.client.utils.store.serialize(CustomId.SkyHagman, { action: "start", user: helper.user.id }),
         label: "Start Game",
         style: disabled ? ButtonStyle.Danger : ButtonStyle.Success, // Success
         disabled,
@@ -195,7 +199,7 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
         ? [
             {
               type: 2,
-              custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "word", user: helper.user.id }),
+              custom_id: helper.client.utils.store.serialize(CustomId.SkyHagman, { action: "word", user: helper.user.id }),
               label: "Provide Word",
               style: 1,
             },
@@ -203,7 +207,7 @@ function createComponents(mode: string, type: string, players: APIUser[], word: 
         : []),
       {
         type: 2,
-        custom_id: helper.client.utils.encodeCustomId({ id: "skygame_hangman", action: "instructions" }),
+        custom_id: helper.client.utils.store.serialize(CustomId.SkyHagman, { action: "instructions", user: null }),
         label: "Instructions",
         style: ButtonStyle.Secondary,
       },
@@ -303,14 +307,14 @@ export const getCardResponse = async (
       {
         type: 2,
         style: 1,
-        custom_id: client.utils.encodeCustomId({ id: "leaderboard_skygame", type: "singleMode", user: helper.user.id }),
+        custom_id: client.utils.store.serialize(CustomId.SkyGameLeaderboard, { type: "singleMode", user: helper.user.id }),
         label: "Single Mode",
         disabled: btnType === "singleMode",
       },
       {
         type: 2,
         style: 1,
-        custom_id: client.utils.encodeCustomId({ id: "leaderboard_skygame", type: "doubleMode", user: helper.user.id }),
+        custom_id: client.utils.store.serialize(CustomId.SkyGameLeaderboard, { type: "doubleMode", user: helper.user.id }),
         label: "Double Mode",
         disabled: btnType === "doubleMode",
       },

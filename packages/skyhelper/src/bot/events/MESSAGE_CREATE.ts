@@ -107,7 +107,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
           {
             type: ComponentType.Button,
             label: t("errors:BUTTON_LABEL"),
-            custom_id: `error-report_${id}`,
+            custom_id: client.utils.store.serialize(client.utils.customId.BugReports, { error: id, user: null }),
             style: 2,
           },
         ],

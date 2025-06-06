@@ -12,6 +12,7 @@ import type { SkyHelper } from "@/structures";
 import { updateUserGameStats } from "../utils.js";
 import { InteractionCollector } from "./Collector.js";
 import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { CustomId, store } from "../customId-store.js";
 /** Base class for game controllers */
 export abstract class GameController {
   /** Players participating in this game */
@@ -55,7 +56,7 @@ export abstract class GameController {
     if (!this.initiator) return;
     this._stopCollector = new InteractionCollector(this.client, {
       componentType: 2,
-      filter: (i) => i.data.custom_id === "skygame_end_game",
+      filter: (i) => store.deserialize(i.data.custom_id).id === CustomId.SkyGameEndGame,
       channel: this.channel,
     });
     const initiator = this.initiator;
@@ -223,7 +224,7 @@ export class Scrambled extends GameController {
   private async _getRoundEmbedResponse(): Promise<RESTPostAPIChannelMessageJSONBody> {
     const comp = container(
       section(
-        { label: "End Game", style: 4, custom_id: "skygame_end_game", type: 2 },
+        { label: "End Game", style: 4, custom_id: store.serialize(CustomId.SkyGameEndGame, { user: null }), type: 2 },
         "-# SkyHelper",
         `Skygame: Scrambled - Round ${this.currentRound + 1}/${this.totalRounds}`,
       ),
@@ -262,7 +263,7 @@ export class Scrambled extends GameController {
         this.currentRound < this.totalRounds ? `\n-# Next round starting in 3 seconds...` : `\n-# Final results coming up...`,
       ),
     );
-    return { components: [comp], flags: MessageFlags.IsComponentsV2 };
+    return { components: [comp], flags: MessageFlags.IsComponentsV2, allowed_mentions: { parse: [] } };
   }
 
   private _getHint(word: string): string {

@@ -201,6 +201,9 @@ importers:
       '@sapphire/discord-utilities':
         specifier: ^3.4.4
         version: 3.4.4
+      '@sapphire/string-store':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@sentry/cli':
         specifier: ^2.37.0
         version: 2.43.0
@@ -1424,6 +1427,10 @@ packages:
   '@sapphire/snowflake@3.5.5':
     resolution: {integrity: sha512-xzvBr1Q1c4lCe7i6sRnrofxeO1QTP/LKQ6A6qy0iB4x5yfiSfARMEQEghojzTNALDTcv8En04qYNIco9/K9eZQ==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+
+  '@sapphire/string-store@2.0.0':
+    resolution: {integrity: sha512-Ba6HQqzvtTu+8Ye4Vmd51lU2+L9C3KAWbvtIbkJlVEC9iKC98hAvDronE/qOgMDZfYI8KgT9dsLXtGuA8sFneQ==}
+    engines: {node: '>=v20', npm: '>=10'}
 
   '@sentry/cli-darwin@2.43.0':
     resolution: {integrity: sha512-0MYvRHJowXOMNY5W6XF4p9GQNH3LuQ+IHAQwVbZOsfwnEv8e20rf9BiPPzmJ9sIjZSWYR4yIqm6dBp6ABJFbGQ==}
@@ -7026,6 +7033,8 @@ snapshots:
       lodash: 4.17.21
 
   '@sapphire/snowflake@3.5.5': {}
+
+  '@sapphire/string-store@2.0.0': {}
 
   '@sentry/cli-darwin@2.43.0':
     optional: true

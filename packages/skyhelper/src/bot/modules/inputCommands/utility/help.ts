@@ -3,6 +3,7 @@ import { HELP_DATA } from "@/modules/commands-data/utility-commands";
 import { handleCategoryCommands, handleSingleCmd } from "./sub/help.js";
 import type { APIActionRowComponent, APIButtonComponent, APIEmbed, APIStringSelectComponent } from "@discordjs/core";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import { CustomId } from "@/utils/customId-store";
 
 export default {
   async interactionRun({ helper, options }) {
@@ -22,7 +23,7 @@ export default {
     let category: (typeof Category)[number] = Category.find((c) => c.name === "Admin")!;
 
     const collector = client.componentCollector({
-      filter: (i) => i.message.id === reply.id,
+      filter: (i) => (i.member?.user || i.user!).id === helper.user.id,
       idle: 2 * 60 * 1000,
       message: reply,
     });
@@ -58,21 +59,21 @@ export default {
         components: [
           {
             type: 2,
-            custom_id: client.utils.encodeCustomId({ id: "prevBtn", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "help-prev", user: helper.user.id }),
             label: t("commands:HELP.RESPONSES.BTN-PREV"),
             style: 2,
             disabled: page === 1,
           },
           {
             type: 2,
-            custom_id: client.utils.encodeCustomId({ id: "homeBtn", user: helper.user.id }),
+            custom_id: "zDL",
             label: "🏠",
             style: 3,
             disabled: true,
           },
           {
             type: 2,
-            custom_id: client.utils.encodeCustomId({ id: "nextBtn", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "next", user: helper.user.id }),
             label: t("commands:HELP.RESPONSES.BTN-NEXT"),
             style: 2,
             disabled: page === totalPages,
@@ -85,7 +86,7 @@ export default {
         components: [
           {
             type: 3,
-            custom_id: client.utils.encodeCustomId({ id: "help_category", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "helpcategory", user: helper.user.id }),
             placeholder: "Select a category",
             options: Category.filter(
               (c) =>
@@ -108,11 +109,12 @@ export default {
     await helper.followUp(await updateSlashMenu());
     collector.on("collect", async (int) => {
       const compHelper = new InteractionHelper(int, client);
-      const selectedChoice = client.utils.parseCustomId(int.data.custom_id).id;
-      if (selectedChoice === "nextBtn") {
+      const { id, data } = client.utils.store.deserialize(int.data.custom_id);
+      if (id !== CustomId.Default) return;
+      if (data.data === "next") {
         page++;
         await compHelper.update(await updateSlashMenu());
-      } else if (selectedChoice === "prevBtn") {
+      } else if (data.data === "help-prev") {
         if (page > 1) {
           page--;
           await compHelper.update(await updateSlashMenu());

@@ -1,20 +1,21 @@
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
-import { type Button } from "@/structures";
+import { defineButton } from "@/structures";
 import type { getTranslator } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ButtonStyle, ComponentType, type APIButtonComponent } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
 import config from "@/config";
-export default {
+import { CustomId } from "@/utils/customId-store";
+export default defineButton({
   data: {
     name: "spirit_expression",
   },
-  async execute(interaction, t, helper) {
+  id: CustomId.SpiritExpression,
+  async execute(interaction, t, helper, { spirit }) {
     const { client } = helper;
-    const { user } = helper;
-    const value = client.utils.parseCustomId(interaction.data.custom_id)!.spirit,
-      data = client.spiritsData[value];
+    const { user } = helper,
+      data = client.spiritsData[spirit];
     if (!data) {
       return void (await helper.reply({ content: "Something went wrong! No data found", flags: 64 }));
     }
@@ -29,7 +30,8 @@ export default {
       reply = await helper.editReply(getCommonResponse(data, t, user.id)),
       collector = client.componentCollector({
         filter: (i) =>
-          ["spirit_exprsn_back"].includes(client.utils.parseCustomId(i.data.custom_id)!.id) &&
+          // @ts-expect-error data is present, but wtv
+          ["spirit_exprsn_back"].includes(client.utils.store.deserialize(i.data.custom_id).data.data) &&
           user.id === (i.member?.user || i.user)!.id,
         idle: 90_000,
         message: reply,
@@ -38,8 +40,9 @@ export default {
     collector.on("collect", async (i) => {
       const compHelper = new InteractionHelper(i, client);
       if (!compHelper.isButton(i)) return;
-      const { id } = client.utils.parseCustomId(i.data.custom_id)!;
-      switch (id) {
+      const { id, data: v } = client.utils.store.deserialize(i.data.custom_id);
+      if (id !== CustomId.Default) return;
+      switch (v.data) {
         case "spirit_exprsn_back":
           await compHelper.update(orgData);
           collector.stop("Expression Back");
@@ -52,7 +55,7 @@ export default {
       await helper.editReply(orgData).catch(() => {});
     });
   },
-} satisfies Button;
+});
 
 const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator>, user: string) => {
   // prettier-ignore
@@ -78,7 +81,7 @@ const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator
 
 const getBackBtn = (emote: string, user: string): APIButtonComponent => ({
   type: ComponentType.Button,
-  custom_id: Utils.encodeCustomId({ id: "spirit_exprsn_back", user }),
+  custom_id: Utils.store.serialize(CustomId.Default, { data: "spirit_exprsn_back", user }),
   emoji: Utils.parseEmoji(emote)!,
   label: "Back",
   style: ButtonStyle.Danger,

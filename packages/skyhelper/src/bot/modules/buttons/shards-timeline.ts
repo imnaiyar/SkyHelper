@@ -1,18 +1,19 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import { CustomId } from "@/utils/customId-store";
 import type { APIActionRowComponent, APIButtonComponent, APIEmbed } from "@discordjs/core";
 import { ShardsUtil as utils, shardsTimeline } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
-export default {
+export default defineButton({
   data: {
     name: "shards-timeline",
   },
-  async execute(interaction, t, helper) {
+  id: CustomId.ShardsTimeline,
+  async execute(_interaction, t, helper, { date: shardDate }) {
     const { client } = helper;
     await helper.defer({ flags: 64 });
     const Zhii = await client.api.users.get("650487047160725508");
     const Christian = await client.api.users.get("594485678625128466");
-    const shardDate = client.utils.parseCustomId(interaction.data.custom_id).date;
     const date = utils.getDate(shardDate) as DateTime;
     const { currentShard } = utils.shardsIndex(date);
     let page = 0;
@@ -62,14 +63,14 @@ export default {
           {
             type: 2,
             emoji: { id: "1207594669882613770", name: "left" },
-            custom_id: "shardTimeline-left",
+            custom_id: client.utils.store.serialize(client.utils.customId.ShardsTimelineLeft, { user: helper.user.id }),
             style: 1,
             disabled: page === 0,
           },
           {
             type: 2,
             emoji: { id: "1207593237544435752", name: "right" },
-            custom_id: "shardTimeline-right",
+            custom_id: client.utils.store.serialize(client.utils.customId.ShardsTimelineRight, { user: helper.user.id }),
             style: 1,
             disabled: page === total,
           },
@@ -89,14 +90,14 @@ export default {
     });
 
     collector.on("collect", async (int) => {
-      const Id = client.utils.parseCustomId(int.data.custom_id).id;
+      const Id = client.utils.store.deserialize(int.data.custom_id).id;
       const compoHelper = new InteractionHelper(int, client);
       switch (Id) {
-        case "shardTimeline-left":
+        case client.utils.customId.ShardsTimelineLeft:
           page--;
           await compoHelper.update(getResponse());
           break;
-        case "shardTimeline-right":
+        case client.utils.customId.ShardsTimelineRight:
           page++;
           await compoHelper.update(getResponse());
           break;
@@ -107,4 +108,4 @@ export default {
       helper.deleteReply().catch(() => {});
     });
   },
-} satisfies Button;
+});

@@ -13,6 +13,7 @@ import {
 import type { ComponentInteractionMap } from "@/types/interactions";
 import Utils from "@/utils/classes/Utils";
 import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { CustomId } from "@/utils/customId-store";
 const realms = {
   isle: "Isle of Dawn",
   prairie: "Daylight Prairie",
@@ -64,7 +65,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
       {
         type: ComponentType.Button,
         label: t("commands:GUIDES.RESPONSES.REALM-BUTTON-LABEL"),
-        custom_id: client.utils.encodeCustomId({ id: "areas", user: helper.user.id }),
+        custom_id: client.utils.store.serialize(CustomId.RealmsBaseNav, { type: "areas", user: helper.user.id }),
         style: ButtonStyle.Secondary,
       },
       `-# ${author}`,
@@ -99,8 +100,13 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   collector.on("collect", async (inter) => {
     const compoHelper = new InteractionHelper(inter, client);
     await compoHelper.deferUpdate();
-    const componentID = client.utils.parseCustomId(inter.data.custom_id)!.id;
-    switch (componentID) {
+    const { id, data: value } = client.utils.store.deserialize(inter.data.custom_id);
+    if (id !== CustomId.RealmsBaseNav) {
+      await compoHelper.editReply({ content: t("commands:GUIDES.RESPONSES.INVALID-CHOICE") });
+      return;
+    }
+
+    switch (value.type) {
       case "areas":
         break; // no need to do anything, just update the embed
       case "back":
@@ -164,8 +170,13 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
   collector.on("collect", async (inter) => {
     const compoCol = new InteractionHelper(inter, helper.client);
     await compoCol.deferUpdate();
-    const componentID = helper.client.utils.parseCustomId(inter.data.custom_id)!.id;
-    switch (componentID) {
+    const { id, data: value } = Utils.store.deserialize(inter.data.custom_id);
+    if (id !== CustomId.RealmsBaseNav) {
+      await compoCol.editReply({ content: t("commands:GUIDES.RESPONSES.INVALID-CHOICE") });
+      return;
+    }
+
+    switch (value.type) {
       case "back":
         page--;
         break;
@@ -207,7 +218,7 @@ function getRealmsRow(
     components: [
       {
         type: ComponentType.Button,
-        custom_id: Utils.encodeCustomId({ id: "back", user }),
+        custom_id: Utils.store.serialize(CustomId.RealmsBaseNav, { type: "back", user }),
         label: `⬅ ${data[page - 2]?.title || data[page - 1].title}`,
         disabled: page - 1 === 0,
         style: ButtonStyle.Secondary,
@@ -215,7 +226,7 @@ function getRealmsRow(
       emoji
         ? {
             type: ComponentType.Button,
-            custom_id: Utils.encodeCustomId({ id: "realm", user }),
+            custom_id: Utils.store.serialize(CustomId.RealmsBaseNav, { type: "realm", user }),
             emoji: Utils.parseEmoji(emoji),
             label: "Back",
             style: ButtonStyle.Success,
@@ -223,7 +234,7 @@ function getRealmsRow(
         : undefined,
       {
         type: ComponentType.Button,
-        custom_id: Utils.encodeCustomId({ id: "forward", user }),
+        custom_id: Utils.store.serialize(CustomId.RealmsBaseNav, { type: "forward", user }),
         label: `${data[page]?.title || data[page - 1].title} ➡`,
         disabled: page - 1 === total,
         style: ButtonStyle.Secondary,
@@ -237,7 +248,7 @@ function getRealmsRow(
       {
         type: ComponentType.StringSelect,
         placeholder: t,
-        custom_id: Utils.encodeCustomId({ id: "area-menu", user }),
+        custom_id: Utils.store.serialize(CustomId.RealmsBaseNav, { type: "area-menu", user }),
         options: data.map((area, index) => ({
           label: area.title,
           default: area.title === embed.title,

@@ -56,13 +56,13 @@ export function buildShardEmbed(
         {
           type: ComponentType.Button,
           emoji: Utils.parseEmoji(emojis.left_chevron)!,
-          custom_id: `shards-scroll;date:${date.minus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
+          custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.minus({ days: 1 }).toISODate()!, user }),
           style: ButtonStyle.Primary,
         },
         {
           type: ComponentType.Button,
           emoji: Utils.parseEmoji(emojis.right_chevron)!,
-          custom_id: `shards-scroll;date:${date.plus({ days: 1 }).toISODate()}` + (user ? `;user:${user}` : ""),
+          custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.plus({ days: 1 }).toISODate()!, user }),
           style: ButtonStyle.Primary,
         },
       ],
@@ -95,7 +95,10 @@ export function buildShardEmbed(
         {
           type: ComponentType.Button,
           emoji: Utils.parseEmoji(emojis.down_chevron)!,
-          custom_id: `shards-timeline;date:${date.toISODate()}`,
+          custom_id: Utils.store.serialize(Utils.customId.ShardsTimeline, {
+            date: date.toISODate()!,
+            user,
+          }),
           style: ButtonStyle.Secondary,
         },
         `**${t("features:shards-embed.BUTTON1")}**` +
@@ -174,7 +177,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     section(
       {
         type: ComponentType.Button,
-        custom_id: "times-refresh",
+        custom_id: Utils.store.serialize(Utils.customId.TimesRefresh, { user: null }),
         emoji: { id: "1205464032182665239", animated: true },
         style: ButtonStyle.Secondary,
       },
@@ -206,7 +209,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     components: [
       {
         type: ComponentType.StringSelect,
-        custom_id: "skytimes-details",
+        custom_id: Utils.store.serialize(Utils.customId.TimesDetailsRow, { user: null }),
         placeholder: "Detailed Timelines",
         options: Object.entries(eventData)
           .filter(([, e]) => e.displayAllTimes)
@@ -244,7 +247,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
           isVideo
             ? {
                 label: "Video",
-                custom_id: Utils.encodeCustomId({ id: "quest_video", index: index.toString(), date: nowFormatted }),
+                custom_id: Utils.store.serialize(Utils.customId.QuestVideo, { index, date: nowFormatted, user: null }),
                 type: 2,
                 style: 2,
               }
@@ -264,13 +267,13 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
 
   const rotatingBtn: APIButtonComponent = {
     type: ComponentType.Button,
-    custom_id: Utils.encodeCustomId({ id: "daily-quests-candles", type: "rotating", date: nowFormatted }),
+    custom_id: Utils.store.serialize(Utils.customId.CandleButton, { type: "rotating", date: nowFormatted, user: null }),
     label: "Rotating Candles",
     style: ButtonStyle.Success,
   };
   const seasonalBtn: APIButtonComponent = {
     type: ComponentType.Button,
-    custom_id: Utils.encodeCustomId({ id: "daily-quests-candles", type: "seasonal", date: nowFormatted }),
+    custom_id: Utils.store.serialize(Utils.customId.CandleButton, { user: null, type: "seasonal", date: nowFormatted }),
     label: "Seasonal Candles",
     disabled: disabledSe,
     style: ButtonStyle.Success,
@@ -316,12 +319,11 @@ export function buildCalendarResponse(
     components: [
       {
         type: 2,
-        custom_id: client.utils.encodeCustomId({
-          id: `calendar-nav-2`,
-          index: (index - 1).toString(),
+        custom_id: Utils.store.serialize(Utils.customId.CalenderNav, {
+          index: index - 1,
           user: userId,
-          month: month.toString(),
-          year: year.toString(),
+          month: month,
+          year: year,
         }),
         emoji: { name: "⬅️" },
         style: 1,
@@ -329,12 +331,11 @@ export function buildCalendarResponse(
       },
       {
         type: 2,
-        custom_id: client.utils.encodeCustomId({
-          id: `calendar-nav-next`,
-          index: (index + 1).toString(),
+        custom_id: Utils.store.serialize(Utils.customId.CalenderNav, {
+          index: index + 1,
           user: userId,
-          month: month.toString(),
-          year: year.toString(),
+          month: month,
+          year: year,
         }),
         emoji: { name: "➡️" },
         style: 1,
@@ -365,10 +366,9 @@ export function buildCalendarResponse(
     section(
       {
         type: 2,
-        custom_id: Utils.encodeCustomId({
-          id: "shards-calendar-date-update",
-          month: month.toString(),
-          year: year.toString(),
+        custom_id: Utils.store.serialize(Utils.customId.CalendarDate, {
+          month: month,
+          year: year,
           user: userId,
         }),
         label: "Change Month/Year",

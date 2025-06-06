@@ -1,19 +1,18 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 import { MessageFlags } from "@discordjs/core";
-import { DateTime } from "luxon";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
-import { emojis } from "@skyhelperbot/constants";
-export default {
+import { CustomId } from "@/utils/customId-store";
+export default defineButton({
   data: {
     name: "quest_video",
   },
-  async execute(interaction, t, helper) {
+  id: CustomId.QuestVideo,
+  async execute(_interaction, t, helper, { index, date }) {
     const client = helper.client;
     await helper.defer({ flags: 64 });
     const data = await client.schemas.getDailyQuests();
-    const { index, date } = client.utils.parseCustomId(interaction.data.custom_id);
-    const d = data.quests[parseInt(index)];
+    const d = data.quests[index];
     if (!d) return void (await helper.editReply({ content: "No data found for this quest." }));
     const isValid = checkQuestValidity(d.date);
     if (!isValid || !checkQuestButtonValidToday(date)) {
@@ -29,4 +28,4 @@ export default {
 
     await helper.editReply({ components: [comp], flags: MessageFlags.IsComponentsV2 });
   },
-} satisfies Button;
+});

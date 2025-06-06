@@ -23,6 +23,7 @@ import { DateTime } from "luxon";
 import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
+import { CustomId } from "@/utils/customId-store";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -54,8 +55,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         ? formatCommandOptions(interaction, new InteractionOptionResolver(interaction))
         : null,
       commandType: helper.isCommand(interaction) ? ApplicationCommandType[interaction.data.type] : null,
-      // @ts-expect-error for custom id, too much checks just put it there
-      customId: interaction.data?.custom_id,
+      customId:
+        interaction.type === InteractionType.MessageComponent
+          ? {
+              id: CustomId[Utils.store.deserialize(interaction.data.custom_id).id],
+              data: Utils.store.deserialize(interaction.data.custom_id).data,
+            }
+          : null,
     },
     user: {
       id: helper.user.id,
@@ -175,8 +181,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // for component interactions check if it's allowed for the user
     if (IntUtils.isMessageComponentInteraction(interaction)) {
-      const parsed = client.utils.parseCustomId(interaction.data.custom_id);
-      if (parsed.user && parsed.user !== helper.user.id) {
+      const serialized = client.utils.store.deserialize(interaction.data.custom_id);
+
+      if (serialized.data.user && serialized.data.user !== helper.user.id) {
         return void (await helper.reply({
           content: t("errors:NOT-ALLOWED"),
           flags: MessageFlags.Ephemeral,
@@ -186,25 +193,25 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region button
     if (helper.isButton(interaction)) {
-      const parsed = client.utils.parseCustomId(interaction.data.custom_id);
+      const { id, data } = client.utils.store.deserialize(interaction.data.custom_id);
 
       // handle scrambled play again here
-      if (parsed.id === "scramble-play-single") {
+      if (id === client.utils.customId.SkyGamePlaySingle) {
         await helper.defer();
         await handleSingleMode(helper);
         return;
       }
 
-      if (parsed.id === "skygame_end_game" && !client.gameData.has(interaction.channel.id)) {
+      if (id === client.utils.customId.SkyGameEndGame && !client.gameData.has(interaction.channel.id)) {
         await helper.reply({ content: "It looks like this game has already ended!", flags: 64 });
         return;
       }
 
-      const button = client.buttons.find((btn) => parsed.id.startsWith(btn.data.name));
+      const button = client.buttons.find((btn) => btn.id === id);
 
       if (!button) return;
       try {
-        await button.execute(interaction, t, helper, parsed);
+        await button.execute(interaction, t, helper, data);
       } catch (err) {
         const errorId = client.logger.error(err, scope);
         await helper
@@ -232,9 +239,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region selects
     if (helper.isSelect(interaction)) {
-      const { id } = client.utils.parseCustomId(interaction.data.custom_id);
+      const { id } = client.utils.store.deserialize(interaction.data.custom_id);
       switch (id) {
-        case "skytimes-details":
+        case client.utils.customId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
           return;
         default:
@@ -261,7 +268,7 @@ function getErrorResponse(id: string, t: ReturnType<typeof getTranslator>) {
             type: 2,
             style: 1,
             label: t("errors:BUTTON_LABEL"),
-            custom_id: "error-report;error:" + id,
+            custom_id: Utils.store.serialize(CustomId.BugReports, { error: id, user: null }),
           },
         ],
       },

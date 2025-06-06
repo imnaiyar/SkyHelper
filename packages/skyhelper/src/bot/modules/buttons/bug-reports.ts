@@ -1,12 +1,11 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
+import { CustomId } from "@/utils/customId-store";
 import type { APIModalInteractionResponseCallbackData } from "@discordjs/core";
 
-/**
- * @type {import(''@structures/Buttons)}
- */
-export default {
+export default defineButton({
   data: { name: "error-report" },
-  async execute(interaction, t, helper) {
+  id: CustomId.BugReports,
+  async execute(_interaction, t, helper, { error }) {
     const modal: APIModalInteractionResponseCallbackData = {
       custom_id: "errorModal",
       title: t("errors:ERROR_MODAL.TITLE"),
@@ -43,7 +42,7 @@ export default {
               custom_id: "errorId",
               label: t("errors:ERROR_MODAL.FIELDS.ERROR_ID.LABEL"),
               style: 1,
-              value: helper.client.utils.parseCustomId(interaction.data.custom_id).error,
+              value: error,
             },
           ],
         },
@@ -52,4 +51,4 @@ export default {
 
     await helper.launchModal(modal);
   },
-} satisfies Button;
+});

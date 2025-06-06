@@ -3,8 +3,19 @@ import type { IdResolvalble, ParsedCustomId, TimestampStyles } from "@/types/uti
 import type { APIGuildMember, APIMessage, APIModalSubmitInteraction, APIUser, ModalSubmitComponent } from "@discordjs/core";
 import { CDN } from "@discordjs/rest";
 import { EmojiRegex, WebhookRegex } from "@sapphire/discord-utilities";
+import { CustomId, store } from "../customId-store.js";
 
 export default class {
+  /**
+   * Schema store of custom IDs
+   */
+  static store = store;
+
+  /**
+   * Enum of Custom IDs used in schema store
+   */
+  static customId = CustomId;
+
   /**
    * Returns the creation date of the given ID.
    *

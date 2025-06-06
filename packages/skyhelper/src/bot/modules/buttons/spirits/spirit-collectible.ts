@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import {
@@ -8,13 +8,14 @@ import {
   type APIActionRowComponent,
   type APIStringSelectComponent,
 } from "@discordjs/core";
+import { CustomId } from "@/utils/customId-store";
 
-export default {
+export default defineButton({
   data: {
     name: "spirit_collectible",
   },
-  async execute(interaction, _t, helper) {
-    const { spirit: value } = helper.client.utils.parseCustomId(interaction.data.custom_id);
+  id: CustomId.SpiritCollectible,
+  async execute(interaction, _t, helper, { spirit: value }) {
     const data = helper.client.spiritsData[value];
     if (!data || !data.collectibles?.length) {
       return void (await helper.reply({
@@ -43,7 +44,10 @@ export default {
         components: [
           {
             type: ComponentType.StringSelect,
-            custom_id: helper.client.utils.encodeCustomId({ id: "spirit-collectibles-select", user: user.id }),
+            custom_id: helper.client.utils.store.serialize(CustomId.Default, {
+              data: "spirit-collectibles-select",
+              user: user.id,
+            }),
             placeholder: "Collectibles",
             options: collectibles.map((c, i) => ({
               label: c.name,
@@ -87,7 +91,7 @@ export default {
           components: [
             {
               type: ComponentType.Button,
-              custom_id: helper.client.utils.encodeCustomId({ id: "collectibles-back", user: user.id }),
+              custom_id: helper.client.utils.store.serialize(CustomId.Default, { data: "collectibles-back", user: user.id }),
               label: "Back",
               emoji: helper.client.utils.parseEmoji(data.expression?.icon || "<:spiritIcon:1206501060303130664>")!,
               style: ButtonStyle.Danger,
@@ -101,16 +105,22 @@ export default {
     const message = await helper.editReply(getResponse());
     const collector = helper.client.componentCollector({
       filter: (i) =>
-        ["spirit-collectibles-select", "collectibles-back"].includes(helper.client.utils.parseCustomId(i.data.custom_id)!.id) &&
-        (i.member?.user || i.user)!.id === user.id,
+        ["spirit-collectibles-select", "collectibles-back"].includes(
+          // @ts-expect-error data is present but i dont wanna do check ll
+          helper.client.utils.store.deserialize(i.data.custom_id)!.data.data,
+        ) && (i.member?.user || i.user)!.id === user.id,
       message,
       idle: 60_000,
     });
     collector.on("collect", async (int) => {
-      const ID = helper.client.utils.parseCustomId(int.data.custom_id)!.id;
+      const { id, data: v } = helper.client.utils.store.deserialize(int.data.custom_id);
       const compHelper = new InteractionHelper(int, helper.client);
+      if (id !== CustomId.Default) {
+        await compHelper.editReply({ content: compHelper.t("commands:GUIDES.RESPONSES.INVALID-CHOICE") });
+        return;
+      }
       await compHelper.deferUpdate();
-      switch (ID) {
+      switch (v.data) {
         case "spirit-collectibles-select": {
           if (!compHelper.isStringSelect(int)) return;
           index = parseInt(int.data.values[0]) + 1;
@@ -129,4 +139,4 @@ export default {
       await helper.editReply(orgData).catch(() => {});
     });
   },
-} satisfies Button;
+});

@@ -9,6 +9,7 @@ import {
   type APIContainerComponent,
   type APIStringSelectComponent,
 } from "@discordjs/core";
+import { CustomId } from "@/utils/customId-store";
 
 function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
   return "ts" in data;
@@ -40,7 +41,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
       components: [
         {
           type: ComponentType.StringSelect,
-          custom_id: client.utils.encodeCustomId({ id: "spirit-select-menu", user: helper.user.id }),
+          custom_id: client.utils.store.serialize(CustomId.SeasonalSpiritRow, { user: helper.user.id }),
           placeholder: placehoder,
           options: spirits.map(([k, v]) => ({
             label: v.name + (v.extra ? ` (${v.extra})` : ""),
@@ -62,7 +63,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
   const message = await getUpdate(helper);
   const collector = client.componentCollector({
     filter: (i) =>
-      client.utils.parseCustomId(i.data.custom_id)!.id === "spirit-select-menu" &&
+      client.utils.store.deserialize(i.data.custom_id)!.id === CustomId.SeasonalSpiritRow &&
       helper.user.id === (i.member?.user || i.user)!.id,
     idle: 90_000,
     message,
