@@ -176,7 +176,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     // for component interactions check if it's allowed for the user
     if (IntUtils.isMessageComponentInteraction(interaction)) {
       const serialized = client.utils.store.deserialize(interaction.data.custom_id);
-      console.log(serialized);
+
       if (serialized.data.user && serialized.data.user !== helper.user.id) {
         return void (await helper.reply({
           content: t("errors:NOT-ALLOWED"),

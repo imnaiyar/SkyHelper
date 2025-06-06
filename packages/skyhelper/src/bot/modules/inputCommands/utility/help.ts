@@ -59,21 +59,21 @@ export default {
         components: [
           {
             type: 2,
-            custom_id: client.utils.store.serialize(CustomId.Default, { data: "prevBtn", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "help-prev", user: helper.user.id }),
             label: t("commands:HELP.RESPONSES.BTN-PREV"),
             style: 2,
             disabled: page === 1,
           },
           {
             type: 2,
-            custom_id: client.utils.store.serialize(CustomId.Default, { data: "homeBtn", user: helper.user.id }),
+            custom_id: "zDL",
             label: "🏠",
             style: 3,
             disabled: true,
           },
           {
             type: 2,
-            custom_id: client.utils.store.serialize(CustomId.Default, { data: "nextBtn", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "next", user: helper.user.id }),
             label: t("commands:HELP.RESPONSES.BTN-NEXT"),
             style: 2,
             disabled: page === totalPages,
@@ -86,7 +86,7 @@ export default {
         components: [
           {
             type: 3,
-            custom_id: client.utils.store.serialize(CustomId.Default, { data: "help_category", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "helpcategory", user: helper.user.id }),
             placeholder: "Select a category",
             options: Category.filter(
               (c) =>
@@ -111,10 +111,10 @@ export default {
       const compHelper = new InteractionHelper(int, client);
       const { id, data } = client.utils.store.deserialize(int.data.custom_id);
       if (id !== CustomId.Default) return;
-      if (data.data === "nextBtn") {
+      if (data.data === "next") {
         page++;
         await compHelper.update(await updateSlashMenu());
-      } else if (data.data === "prevBtn") {
+      } else if (data.data === "help-prev") {
         if (page > 1) {
           page--;
           await compHelper.update(await updateSlashMenu());
