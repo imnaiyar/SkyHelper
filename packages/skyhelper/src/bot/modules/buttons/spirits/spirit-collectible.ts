@@ -1,4 +1,4 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import {
@@ -8,13 +8,14 @@ import {
   type APIActionRowComponent,
   type APIStringSelectComponent,
 } from "@discordjs/core";
+import { CustomId } from "@/utils/customId-store";
 
-export default {
+export default defineButton({
   data: {
     name: "spirit_collectible",
   },
-  async execute(interaction, _t, helper) {
-    const { spirit: value } = helper.client.utils.parseCustomId(interaction.data.custom_id);
+  id: CustomId.SpiritCollectible,
+  async execute(interaction, _t, helper, { spirit: value }) {
     const data = helper.client.spiritsData[value];
     if (!data || !data.collectibles?.length) {
       return void (await helper.reply({
@@ -129,4 +130,4 @@ export default {
       await helper.editReply(orgData).catch(() => {});
     });
   },
-} satisfies Button;
+});

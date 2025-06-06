@@ -175,8 +175,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // for component interactions check if it's allowed for the user
     if (IntUtils.isMessageComponentInteraction(interaction)) {
-      const parsed = client.utils.parseCustomId(interaction.data.custom_id);
-      if (parsed.user && parsed.user !== helper.user.id) {
+      const serialized = client.utils.store.deserialize(interaction.data.custom_id);
+      console.log(serialized);
+      if (serialized.data.user && serialized.data.user !== helper.user.id) {
         return void (await helper.reply({
           content: t("errors:NOT-ALLOWED"),
           flags: MessageFlags.Ephemeral,
@@ -186,25 +187,25 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region button
     if (helper.isButton(interaction)) {
-      const parsed = client.utils.parseCustomId(interaction.data.custom_id);
+      const { id, data } = client.utils.store.deserialize(interaction.data.custom_id);
 
       // handle scrambled play again here
-      if (parsed.id === "scramble-play-single") {
+      if (id === client.utils.customId.SkyGamePlaySingle) {
         await helper.defer();
         await handleSingleMode(helper);
         return;
       }
 
-      if (parsed.id === "skygame_end_game" && !client.gameData.has(interaction.channel.id)) {
+      if (id === client.utils.customId.SkyGameEndGame && !client.gameData.has(interaction.channel.id)) {
         await helper.reply({ content: "It looks like this game has already ended!", flags: 64 });
         return;
       }
 
-      const button = client.buttons.find((btn) => parsed.id.startsWith(btn.data.name));
+      const button = client.buttons.find((btn) => btn.id === id);
 
       if (!button) return;
       try {
-        await button.execute(interaction, t, helper, parsed);
+        await button.execute(interaction, t, helper, data);
       } catch (err) {
         const errorId = client.logger.error(err, scope);
         await helper

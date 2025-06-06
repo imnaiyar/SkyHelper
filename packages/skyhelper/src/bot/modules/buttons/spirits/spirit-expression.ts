@@ -1,20 +1,21 @@
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
-import { type Button } from "@/structures";
+import { defineButton } from "@/structures";
 import type { getTranslator } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ButtonStyle, ComponentType, type APIButtonComponent } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
 import config from "@/config";
-export default {
+import { CustomId } from "@/utils/customId-store";
+export default defineButton({
   data: {
     name: "spirit_expression",
   },
-  async execute(interaction, t, helper) {
+  id: CustomId.SpiritExpression,
+  async execute(interaction, t, helper, { spirit }) {
     const { client } = helper;
-    const { user } = helper;
-    const value = client.utils.parseCustomId(interaction.data.custom_id)!.spirit,
-      data = client.spiritsData[value];
+    const { user } = helper,
+      data = client.spiritsData[spirit];
     if (!data) {
       return void (await helper.reply({ content: "Something went wrong! No data found", flags: 64 }));
     }
@@ -52,7 +53,7 @@ export default {
       await helper.editReply(orgData).catch(() => {});
     });
   },
-} satisfies Button;
+});
 
 const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator>, user: string) => {
   // prettier-ignore

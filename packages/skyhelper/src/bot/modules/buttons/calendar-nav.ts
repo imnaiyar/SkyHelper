@@ -1,20 +1,21 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
 import { buildCalendarResponse } from "@/utils/classes/Embeds";
+import { CustomId } from "@/utils/customId-store";
 import { MessageFlags } from "@discordjs/core";
 
-export default {
+export default defineButton({
   data: {
     name: "calendar-nav",
   },
-  async execute(interaction, t, helper) {
-    const { index, month, year } = helper.client.utils.parseCustomId(interaction.data.custom_id);
+  id: CustomId.CalenderNav,
+  async execute(_interaction, t, helper, { index, month, year }) {
     await helper.update({
       ...buildCalendarResponse(t, helper.client, helper.user.id, {
-        index: parseInt(index),
-        month: parseInt(month),
-        year: parseInt(year),
+        index: index,
+        month: month,
+        year: year,
       }),
       flags: MessageFlags.IsComponentsV2,
     });
   },
-} satisfies Button;
+});

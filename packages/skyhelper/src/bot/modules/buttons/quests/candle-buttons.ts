@@ -1,18 +1,19 @@
-import type { Button } from "@/structures";
+import { defineButton } from "@/structures";
 import { checkQuestValidity, checkQuestButtonValidToday } from "./sub/checkQuestValidation.js";
 import { MessageFlags } from "@discordjs/core";
 import { DateTime } from "luxon";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
-export default {
+import { CustomId } from "@/utils/customId-store";
+export default defineButton({
   data: {
     name: "daily-quests-candles",
   },
-  async execute(interaction, t, helper) {
+  id: CustomId.CandleButton,
+  async execute(_interaction, t, helper, { date, type }) {
     const client = helper.client;
     await helper.defer({ flags: 64 });
     const data = await client.schemas.getDailyQuests();
-    const { type, date } = client.utils.parseCustomId(interaction.data.custom_id);
     const d = type === "rotating" ? data.rotating_candles : data.seasonal_candles;
     const title = type === "rotating" ? "Rotating Candles Location" : "Seasonal Candles Location";
     if (!d) return void (await helper.editReply({ content: "No data found for this type of candles." }));
@@ -31,4 +32,4 @@ export default {
 
     await helper.editReply({ components: [comp], flags: MessageFlags.IsComponentsV2 });
   },
-} satisfies Button;
+});
