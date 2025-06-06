@@ -56,17 +56,13 @@ export function buildShardEmbed(
         {
           type: ComponentType.Button,
           emoji: Utils.parseEmoji(emojis.left_chevron)!,
-          custom_id: Utils.store
-            .serializeRaw(Utils.customId.ShardsScroll, { date: date.minus({ days: 1 }).toISODate()!, user })
-            .toString(),
+          custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.minus({ days: 1 }).toISODate()!, user }),
           style: ButtonStyle.Primary,
         },
         {
           type: ComponentType.Button,
           emoji: Utils.parseEmoji(emojis.right_chevron)!,
-          custom_id: Utils.store
-            .serializeRaw(Utils.customId.ShardsScroll, { date: date.plus({ days: 1 }).toISODate()!, user })
-            .toString(),
+          custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.plus({ days: 1 }).toISODate()!, user }),
           style: ButtonStyle.Primary,
         },
       ],
@@ -99,12 +95,10 @@ export function buildShardEmbed(
         {
           type: ComponentType.Button,
           emoji: Utils.parseEmoji(emojis.down_chevron)!,
-          custom_id: Utils.store
-            .serializeRaw(Utils.customId.ShardsTimeline, {
-              date: date.toISODate()!,
-              user,
-            })
-            .toString(),
+          custom_id: Utils.store.serialize(Utils.customId.ShardsTimeline, {
+            date: date.toISODate()!,
+            user,
+          }),
           style: ButtonStyle.Secondary,
         },
         `**${t("features:shards-embed.BUTTON1")}**` +
@@ -215,7 +209,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     components: [
       {
         type: ComponentType.StringSelect,
-        custom_id: "skytimes-details",
+        custom_id: Utils.store.serialize(Utils.customId.TimesDetailsRow, { user: null }),
         placeholder: "Detailed Timelines",
         options: Object.entries(eventData)
           .filter(([, e]) => e.displayAllTimes)

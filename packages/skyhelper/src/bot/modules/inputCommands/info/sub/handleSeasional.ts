@@ -12,6 +12,7 @@ import {
   type APISelectMenuComponent,
 } from "@discordjs/core";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { CustomId } from "@/utils/customId-store";
 
 export async function handleSeasional(helper: InteractionHelper, options: InteractionOptionResolver) {
   const value = options.getString("season")!;
@@ -75,7 +76,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
       components: [
         {
           type: ComponentType.StringSelect,
-          custom_id: helper.client.utils.encodeCustomId({ id: "guide-season-select", user: helper.user.id }),
+          custom_id: helper.client.utils.store.serialize(CustomId.SeasonalQuestSelect, { user: helper.user.id }),
           placeholder: t("commands:GUIDES.RESPONSES.QUEST_SELECT_PLACEHOLDER"),
           options: quests.map((q, i) => ({
             label: q.title,
@@ -91,14 +92,14 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
       components: [
         {
           type: ComponentType.Button,
-          custom_id: helper.client.utils.encodeCustomId({ id: (page - 1).toString(), user: helper.user.id }),
+          custom_id: helper.client.utils.store.serialize(CustomId.SeasonalQuestNav, { page: page - 1, user: helper.user.id }),
           label: "◀️ " + (page === 1 ? quest.title : quests[page - 2].title),
           disabled: page === 1,
           style: ButtonStyle.Secondary,
         },
         {
           type: ComponentType.Button,
-          custom_id: helper.client.utils.encodeCustomId({ id: (page + 1).toString(), user: helper.user.id }),
+          custom_id: helper.client.utils.store.serialize(CustomId.SeasonalQuestNav, { page: page + 1, user: helper.user.id }),
           label: page === total ? quest.title : quests[page].title + " ▶️",
           disabled: page === total,
           style: ButtonStyle.Secondary,
@@ -115,9 +116,13 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
     filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
   });
   collector.on("collect", async (compInt) => {
-    const id = helper.client.utils.parseCustomId(compInt.data.custom_id)!.id;
+    const { id, data } = helper.client.utils.store.deserialize(compInt.data.custom_id)!;
     const compHelper = new InteractionHelper(compInt, helper.client);
-    page = parseInt(id);
+    if (id !== CustomId.SeasonalQuestNav && id !== CustomId.SeasonalQuestSelect) {
+      await compHelper.reply({ content: helper.t("commands:GUIDES.RESPONSES.INVALID-CHOICE"), flags: 64 });
+      return;
+    }
+    if (id === CustomId.SeasonalQuestNav) page = data.page;
     if (compHelper.isStringSelect(compInt)) page = parseInt(compInt.data.values[0]);
     await compHelper.update(getResponse());
   });

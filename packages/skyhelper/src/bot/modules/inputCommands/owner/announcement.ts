@@ -1,6 +1,7 @@
 import { ANNOUNCEMENT_DATA } from "@/modules/commands-data/owner-commands";
 import type { Command } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import { CustomId } from "@/utils/customId-store";
 import {
   ComponentType,
   type APIMessageComponentButtonInteraction,
@@ -19,7 +20,10 @@ export default {
             {
               type: 2, // Button
               label: "Announcement Text",
-              custom_id: client.utils.encodeCustomId({ id: "announcement_text_button", user: message.author.id }),
+              custom_id: client.utils.store.serialize(CustomId.Default, {
+                data: "announcement_text_button",
+                user: message.author.id,
+              }),
               style: 2, // Secondary
             },
           ],
@@ -36,9 +40,7 @@ export default {
         message: msg,
       })
       .catch(() => null);
-    console.log(collected);
     if (!collected) return;
-    console.log("hmm");
     const helper = new InteractionHelper(collected, client);
     await handleModal(helper);
   },

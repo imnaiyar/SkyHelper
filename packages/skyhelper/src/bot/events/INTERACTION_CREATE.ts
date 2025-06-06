@@ -233,9 +233,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region selects
     if (helper.isSelect(interaction)) {
-      const { id } = client.utils.parseCustomId(interaction.data.custom_id);
+      const { id } = client.utils.store.deserialize(interaction.data.custom_id);
       switch (id) {
-        case "skytimes-details":
+        case client.utils.customId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
           return;
         default:

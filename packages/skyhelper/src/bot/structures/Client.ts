@@ -29,6 +29,7 @@ import {
   type MessageCollectorOptions,
 } from "@/utils/classes/Collector";
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
+import type { CustomId } from "@/utils/customId-store";
 
 export class SkyHelper extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
@@ -54,7 +55,7 @@ export class SkyHelper extends Client {
 
   public contexts: Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">> = new Collection();
 
-  public buttons: Collection<string, Button> = new Collection();
+  public buttons: Collection<string, Button<CustomId>> = new Collection();
 
   public utils = Utils;
 

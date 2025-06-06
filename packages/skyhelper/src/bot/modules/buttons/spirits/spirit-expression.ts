@@ -39,8 +39,9 @@ export default defineButton({
     collector.on("collect", async (i) => {
       const compHelper = new InteractionHelper(i, client);
       if (!compHelper.isButton(i)) return;
-      const { id } = client.utils.parseCustomId(i.data.custom_id)!;
-      switch (id) {
+      const { id, data: v } = client.utils.store.deserialize(i.data.custom_id);
+      if (id !== CustomId.Default) return;
+      switch (v.data) {
         case "spirit_exprsn_back":
           await compHelper.update(orgData);
           collector.stop("Expression Back");
@@ -79,7 +80,7 @@ const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator
 
 const getBackBtn = (emote: string, user: string): APIButtonComponent => ({
   type: ComponentType.Button,
-  custom_id: Utils.encodeCustomId({ id: "spirit_exprsn_back", user }),
+  custom_id: Utils.store.serialize(CustomId.Default, { data: "spirit_exprsn_back", user }),
   emoji: Utils.parseEmoji(emote)!,
   label: "Back",
   style: ButtonStyle.Danger,

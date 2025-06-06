@@ -12,6 +12,7 @@ import { ComponentType, SelectMenuDefaultValueType, MessageFlags } from "@discor
 import { updateUserGameStats } from "@/utils/utils";
 import { Scrambled, scrambleWord } from "@/utils/classes/Scrambled";
 import { container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { CustomId } from "@/utils/customId-store";
 
 export async function handleSingleMode(helper: InteractionHelper) {
   const { original, scrambled } = scrambleWord();
@@ -25,7 +26,7 @@ export async function handleSingleMode(helper: InteractionHelper) {
       type: 2,
       style: 3,
       label: "Type the unscrambled word",
-      custom_id: Utils.encodeCustomId({ id: "scramble-guess-single", user: helper.user.id }),
+      custom_id: Utils.store.serialize(CustomId.Default, { data: "scramble-guess-single", user: helper.user.id }),
     }),
   );
 
@@ -162,7 +163,7 @@ export async function handleDoubleMode(helper: InteractionHelper) {
           min_values: 2,
           max_values: 2,
           default_values: players.map((p) => ({ id: p.id, type: SelectMenuDefaultValueType.User })),
-          custom_id: "scrambled_players_select;user:" + helper.user.id,
+          custom_id: Utils.store.serialize(CustomId.Default, { data: "player-select", user: helper.user.id }),
           placeholder: "Select Players",
         },
       ],
@@ -179,7 +180,7 @@ export async function handleDoubleMode(helper: InteractionHelper) {
               type: 2,
               label: "Start",
               style: 3,
-              custom_id: "scrambled_start;user:" + helper.user.id,
+              custom_id: Utils.store.serialize(CustomId.Default, { data: "scramble-start", user: helper.user.id }),
               disabled: isButtonDisabled,
             },
           ],

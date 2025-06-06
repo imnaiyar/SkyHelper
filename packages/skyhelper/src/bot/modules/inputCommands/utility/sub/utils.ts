@@ -1,4 +1,5 @@
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import { CustomId } from "@/utils/customId-store";
 import {
   ComponentType,
   type APIActionRowComponent,
@@ -121,7 +122,7 @@ export async function getChangelog(helper: InteractionHelper) {
       components: [
         {
           type: 2,
-          custom_id: client.utils.encodeCustomId({ id: "chng-prev", user: helper.user.id }),
+          custom_id: client.utils.store.serialize(CustomId.Default, { data: "chng-prev", user: helper.user.id }),
           emoji: { id: "1207594669882613770" },
           style: 3, // Success style
           disabled: page === 0,
@@ -135,7 +136,7 @@ export async function getChangelog(helper: InteractionHelper) {
         },
         {
           type: 2,
-          custom_id: client.utils.encodeCustomId({ id: "chng-next", user: helper.user.id }),
+          custom_id: client.utils.store.serialize(CustomId.Default, { data: "chng-next", user: helper.user.id }),
           emoji: { id: "1207593237544435752" },
           style: 3, // Success style
           disabled: page === total,
@@ -158,12 +159,13 @@ export async function getChangelog(helper: InteractionHelper) {
   });
   collector.on("collect", async (int) => {
     const compHelper = new InteractionHelper(int, client);
-    const Id = client.utils.parseCustomId(int.data.custom_id).id;
-    if (Id === "chng-next") {
+    const { id, data } = client.utils.store.deserialize(int.data.custom_id);
+    if (id !== CustomId.Default) return;
+    if (data.data === "chng-next") {
       page++;
       await compHelper.update(getEmbed());
     }
-    if (Id === "chng-prev") {
+    if (data.data === "chng-prev") {
       page--;
       await compHelper.update(getEmbed());
     }

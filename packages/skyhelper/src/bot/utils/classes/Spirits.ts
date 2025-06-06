@@ -6,12 +6,13 @@ import { getTranslator } from "@/i18n";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIContainerComponent } from "@discordjs/core";
 import utils from "./Utils.js";
 import { DateTime } from "luxon";
-import { container, mediaGallery, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
+import { CustomId } from "../customId-store.js";
 
 const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonComponent => ({
   type: 2,
-  custom_id: utils.encodeCustomId({ id: "spirit_collectible", spirit, user }),
+  custom_id: utils.store.serialize(CustomId.SpiritCollectible, { spirit, user }),
   emoji: utils.parseEmoji(icon)!,
   style: ButtonStyle.Success,
   label: "Collectible(s)",
@@ -25,7 +26,7 @@ const getExpressionBtn = (
   user: string,
 ): APIButtonComponent => ({
   type: 2,
-  custom_id: utils.encodeCustomId({ id: "spirit_expression", spirit, user }),
+  custom_id: utils.store.serialize(CustomId.SpiritExpression, { spirit, user }),
   label:
     data.expression!.type === "Emote"
       ? t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE")

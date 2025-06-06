@@ -13,6 +13,7 @@ import { supportedLang } from "@skyhelperbot/constants";
 import { isProd } from "./constants.js";
 import { CommandPredicate } from "@/structures/predicates";
 import { z } from "zod/v4";
+import type { CustomId } from "./customId-store.js";
 const baseDir = (isProd ? "dist/" : "src/") + "bot/";
 
 // #region commands
@@ -81,10 +82,10 @@ export async function loadContextCmd() {
  * @returns A collection of buttons keyed by it's custom ID
  */
 export async function loadButtons() {
-  const buttons = new Collection<string, Button>();
+  const buttons = new Collection<string, Button<CustomId>>();
   let added = 0;
   let failed = 0;
-  for await (const [filename, button] of loadStructures<Button>("modules/buttons", ["sub"])) {
+  for await (const [filename, button] of loadStructures<Button<CustomId>>("modules/buttons", ["sub"])) {
     try {
       if (typeof button !== "object") continue;
       if (buttons.has(button.data.name)) throw new Error("The button already exists");

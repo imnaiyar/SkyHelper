@@ -15,6 +15,17 @@ export enum CustomId {
   SkyGameEndGame,
   ShardsTimelineLeft,
   ShardsTimelineRight,
+  TimesDetailsRow,
+  RealmsBaseNav,
+  SeasonalQuestSelect,
+  SeasonalQuestNav,
+  SeasonalSpiritRow,
+  /**
+   * This is mostly used where components is only handled by collectors, passing arbitrary data
+   */
+  Default,
+  SkyHagman,
+  SkyGameLeaderboard,
 }
 
 export const store = new SchemaStore()
@@ -31,4 +42,12 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.SkyGamePlaySingle).nullable("user", t.string))
   .add(new Schema(CustomId.SkyGameEndGame).string("user"))
   .add(new Schema(CustomId.ShardsTimelineLeft).nullable("user", t.string))
-  .add(new Schema(CustomId.ShardsTimelineRight).nullable("user", t.string));
+  .add(new Schema(CustomId.ShardsTimelineRight).nullable("user", t.string))
+  .add(new Schema(CustomId.TimesDetailsRow).nullable("user", t.string))
+  .add(new Schema(CustomId.RealmsBaseNav).string("user").string("type"))
+  .add(new Schema(CustomId.SeasonalQuestSelect).nullable("user", t.string))
+  .add(new Schema(CustomId.SeasonalQuestNav).uint4("page").nullable("user", t.string))
+  .add(new Schema(CustomId.SeasonalSpiritRow).nullable("user", t.string))
+  .add(new Schema(CustomId.Default).nullable("user", t.string).nullable("data", t.string))
+  .add(new Schema(CustomId.SkyHagman).string("action").nullable("user", t.string))
+  .add(new Schema(CustomId.SkyGameLeaderboard).string("type").nullable("user", t.string));

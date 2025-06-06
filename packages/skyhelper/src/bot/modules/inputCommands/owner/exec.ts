@@ -4,6 +4,7 @@ import type { Command, SkyHelper } from "@/structures";
 import { EXEC_DATA } from "@/modules/commands-data/owner-commands";
 import { ComponentType, type APIEmbed, type GatewayMessageCreateDispatchData } from "@discordjs/core";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import { CustomId } from "@/utils/customId-store";
 export default {
   ...EXEC_DATA,
   async messageRun({ message, args, client }) {
@@ -60,14 +61,14 @@ async function run(script: string, message: GatewayMessageCreateDispatchData, cl
         components: [
           {
             type: 2,
-            custom_id: client.utils.encodeCustomId({ id: "prv", user: message.author.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "prv", user: message.author.id }),
             emoji: { id: "1207594669882613770", name: "left" },
             style: 2,
             disabled: currentPage === 1 || totalPages === 1,
           },
           {
             type: 2,
-            custom_id: client.utils.encodeCustomId({ id: "nxt", user: message.author.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "nxt", user: message.author.id }),
             emoji: { id: "1207593237544435752", name: "right" },
             style: 2,
             disabled: currentPage === totalPages || totalPages === 1,
@@ -83,14 +84,16 @@ async function run(script: string, message: GatewayMessageCreateDispatchData, cl
 
     const collector = client.componentCollector({
       idle: 1 * 60 * 1000,
+      filter: (i) => (i.member?.user || i.user!).id === message.author.id,
       componentType: ComponentType.Button,
       message: msg,
     });
 
     collector.on("collect", async (int) => {
-      const id = client.utils.parseCustomId(int.data.custom_id).id;
+      const { id, data } = client.utils.store.deserialize(int.data.custom_id);
+      if (id !== CustomId.Default) return;
       const compHelper = new InteractionHelper(int, client);
-      switch (id) {
+      switch (data.data) {
         case "nxt":
           currentPage++;
           await compHelper.update(getResponse());
