@@ -136,8 +136,8 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
       ? // Event with no duration will point to next time when it just became active for 0 offsetted reminder,
         // dial back to reflect correct time
         // TODO: currenlty this works because only eden and reset is affected, in future,
-        //  if this includes any other events that also occures on specific days, rethink this approach
-        // possibly include previous occurence in details accounting for occurence day
+        //  if this includes any other events that also occurs on specific days, rethink this approach
+        // possibly include previous occurrence in details accounting for occurrence day
         nextTime.minus({
           minutes: event.interval || 0,
         })
