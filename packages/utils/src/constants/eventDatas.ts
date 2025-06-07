@@ -141,6 +141,7 @@ export const eventData: Record<EventKey, EventData> = {
     name: "Fireworks Festival",
     index: 9,
     offset: 0,
+    duration: 10,
     displayAllTimes: true,
     interval: getMinutes(4),
     occursOn: { dayOfTheMonth: 1 },

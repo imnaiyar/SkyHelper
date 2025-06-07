@@ -133,15 +133,23 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
   const start = active
     ? startTime!
     : offset === 0 && !event.duration
-      ? nextTime.minus({
+      ? // Event with no duration will point to next time when it just became active for 0 offsetted reminder,
+        // dial back to reflect correct time
+        // TODO: currenlty this works because only eden and reset is affected, in future,
+        //  if this includes any other events that also occures on specific days, rethink this approach
+        nextTime.minus({
           minutes: event.interval || 0,
-        }) /* Event with no duration will point to nextTime for 0 offsetted reminder, dial back to reflect correct time */
+        })
       : nextTime;
   let between: string | null = null;
   if (event.duration) {
     between = `Timeline: <t:${start.toUnixInteger()}:T> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}:T>`;
   }
   if (active || (offset === 0 && !event.duration)) {
+    if (["eden", "reset"].includes(type)) {
+      return t(`features:reminders.${type === "eden" ? "EDEN" : "DAILY"}_RESET`);
+    }
+
     return (
       t("features:reminders.COMMON", {
         // @ts-expect-error
