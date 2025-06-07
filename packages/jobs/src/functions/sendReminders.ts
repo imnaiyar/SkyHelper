@@ -56,7 +56,7 @@ export async function reminderSchedules(): Promise<void> {
           if (!ts) continue;
           response = getTSResponse(ts, t, roleM);
         } else {
-          response = getResponse(key, t, details, offset);
+          response = getResponse(key, t, details, offset || 0);
         }
         if (!response) continue;
         let toSend: any = response;
