@@ -137,6 +137,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
         // dial back to reflect correct time
         // TODO: currenlty this works because only eden and reset is affected, in future,
         //  if this includes any other events that also occures on specific days, rethink this approach
+        // possibly include previous occurence in details accounting for occurence day
         nextTime.minus({
           minutes: event.interval || 0,
         })
