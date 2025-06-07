@@ -55,13 +55,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         ? formatCommandOptions(interaction, new InteractionOptionResolver(interaction))
         : null,
       commandType: helper.isCommand(interaction) ? ApplicationCommandType[interaction.data.type] : null,
-      customId:
-        interaction.type === InteractionType.MessageComponent
-          ? {
-              id: CustomId[Utils.store.deserialize(interaction.data.custom_id).id],
-              data: Utils.store.deserialize(interaction.data.custom_id).data,
-            }
-          : null,
+      customId: interaction.type === InteractionType.MessageComponent ? interaction.data.custom_id : null,
     },
     user: {
       id: helper.user.id,
