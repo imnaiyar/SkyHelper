@@ -56,7 +56,7 @@ export async function reminderSchedules(): Promise<void> {
           if (!ts) continue;
           response = getTSResponse(ts, t, roleM);
         } else {
-          response = getResponse(key, t, details);
+          response = getResponse(key, t, details, offset);
         }
         if (!response) continue;
         let toSend: any = response;
@@ -123,14 +123,20 @@ export async function reminderSchedules(): Promise<void> {
  * @param role Role mention, if any
  * @returns The response to send
  */
-function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails) {
+function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails, offset: number) {
   const skytime = type === "reset" ? "Daily-Reset" : type;
 
   const {
     status: { startTime, endTime, nextTime, active },
     event,
   } = details;
-  const start = active ? startTime! : nextTime;
+  const start = active
+    ? startTime!
+    : offset === 0 && !event.duration
+      ? nextTime.minus({
+          minutes: event.interval || 0,
+        }) /* Event with no duration will point to nextTime for 0 offsetted reminder, dial back to reflect correct time */
+      : nextTime;
   let between: string | null = null;
   if (event.duration) {
     between = `Timeline: <t:${start.toUnixInteger()}:T> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}:T>`;
