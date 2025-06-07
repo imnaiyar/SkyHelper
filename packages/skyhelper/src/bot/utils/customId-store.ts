@@ -1,4 +1,4 @@
-import { SchemaStore, Schema, t, type UnwrapSchemaEntries } from "@sapphire/string-store";
+import { SchemaStore, Schema, t } from "@sapphire/string-store";
 
 export enum CustomId {
   CandleButton,
