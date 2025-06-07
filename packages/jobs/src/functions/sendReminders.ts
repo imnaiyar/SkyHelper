@@ -56,7 +56,7 @@ export async function reminderSchedules(): Promise<void> {
           if (!ts) continue;
           response = getTSResponse(ts, t, roleM);
         } else {
-          response = getResponse(key, t, details);
+          response = getResponse(key, t, details, offset || 0);
         }
         if (!response) continue;
         let toSend: any = response;
@@ -123,19 +123,34 @@ export async function reminderSchedules(): Promise<void> {
  * @param role Role mention, if any
  * @returns The response to send
  */
-function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails) {
+function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails, offset: number) {
   const skytime = type === "reset" ? "Daily-Reset" : type;
 
   const {
     status: { startTime, endTime, nextTime, active },
     event,
   } = details;
-  const start = active ? startTime! : nextTime;
+  const start = active
+    ? startTime!
+    : offset === 0 && !event.duration
+      ? // Event with no duration will point to next time when it just became active for 0 offsetted reminder,
+        // dial back to reflect correct time
+        // TODO: currently this works because only eden and reset is affected, in future,
+        //  if this includes any other events that also occurs on specific days, rethink this approach
+        // possibly include previous occurrence in details accounting for occurrence day
+        nextTime.minus({
+          minutes: event.interval || 0,
+        })
+      : nextTime;
   let between: string | null = null;
   if (event.duration) {
     between = `Timeline: <t:${start.toUnixInteger()}:T> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}:T>`;
   }
-  if (active) {
+  if (active || (offset === 0 && !event.duration)) {
+    if (["eden", "reset"].includes(type)) {
+      return t(`features:reminders.${type === "eden" ? "EDEN" : "DAILY"}_RESET`);
+    }
+
     return (
       t("features:reminders.COMMON", {
         // @ts-expect-error
