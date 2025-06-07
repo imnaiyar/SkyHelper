@@ -141,7 +141,7 @@ function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, d
   if (event.duration) {
     between = `Timeline: <t:${start.toUnixInteger()}:T> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}:T>`;
   }
-  if (active) {
+  if (active || (offset === 0 && !event.duration)) {
     return (
       t("features:reminders.COMMON", {
         // @ts-expect-error
