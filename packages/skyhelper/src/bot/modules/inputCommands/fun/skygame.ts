@@ -63,7 +63,9 @@ export default {
             message: msg,
           });
           col.on("collect", async (int) => {
-            btnType = client.utils.parseCustomId(int.data.custom_id).type as "singleMode" | "doubleMode";
+            const { id, data } = client.utils.store.deserialize(int.data.custom_id);
+            if (id !== client.utils.customId.SkyGameLeaderboard) return;
+            btnType = data.type as "singleMode" | "doubleMode";
             const compHelper = new InteractionHelper(int, client);
             await compHelper.deferUpdate();
             await compHelper.editReply(await getCard());
