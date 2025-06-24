@@ -1,6 +1,5 @@
 import { getActiveReminders } from "@/database/getGuildDBValues.js";
 import { Webhook } from "@/structures/Webhook.js";
-import { roleMention } from "@discordjs/builders";
 import { getTranslator, type LangKeys } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
 import { container, section, separator, SkytimesUtils, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
@@ -49,7 +48,7 @@ export async function reminderSchedules(): Promise<void> {
       try {
         const wb = new Webhook({ token: webhook.token, id: webhook.id });
 
-        const roleM = role && t("features:reminders.ROLE_MENTION", { ROLE: roleMention(role) });
+        const roleM = role && t("features:reminders.ROLE_MENTION", { ROLE: role === guild._id ? "@everyone" : `<@&${role}>` });
 
         let response = null;
         if (key === "ts") {
