@@ -3,12 +3,10 @@ import type {
   APIComponentInMessageActionRow,
   APIMessage,
   APIMessageComponent,
-  APIMessageTopLevelComponent,
   InteractionType,
   RESTPostAPIChannelMessageJSONBody,
 } from "discord-api-types/v10";
 import { store } from "./customId-store.js";
-import { row } from "@skyhelperbot/utils";
 import type { InteractionHelper } from "./classes/InteractionUtil.js";
 import type { InteractionCollector } from "./classes/Collector.js";
 // Replicate "lodash.get" function
@@ -53,11 +51,33 @@ type PaginatorOptions = {
    * * default: true
    */
   disableOnEnd?: boolean;
+
+  /**
+   * The page, paginator should start from
+   * * default: 0
+   */
+  startPage?: number;
+};
+
+type PaginatorExtraParams = {
+  /**
+   * Current index the paginator is on
+   */
+  index: number;
+
+  /**
+   * Total number of pages the paginator is handling
+   */
+  total_page: number;
 };
 export async function paginate<U, T extends U[]>(
   helper: InteractionHelper,
   data: T,
-  callback: (data: T, navBtns: APIActionRowComponent<APIComponentInMessageActionRow>) => RESTPostAPIChannelMessageJSONBody,
+  callback: (
+    data: T,
+    navBtns: APIActionRowComponent<APIComponentInMessageActionRow>,
+    extra: PaginatorExtraParams,
+  ) => RESTPostAPIChannelMessageJSONBody,
   options: PaginatorOptions = {},
 ): Promise<InteractionCollector<2, InteractionType.MessageComponent>> {
   const { client } = helper;
@@ -68,16 +88,17 @@ export async function paginate<U, T extends U[]>(
     user = null,
     idle = 6e4,
     disableOnEnd = true,
+    startPage = 0,
   } = options;
   const totalPages = Math.ceil(data.length / per_page);
-  let page = 0;
+  let page = startPage;
 
   const createPageContent = (): RESTPostAPIChannelMessageJSONBody => {
     const start = page * per_page;
     const end = start + per_page;
     const navBtns: APIActionRowComponent<APIComponentInMessageActionRow> = {
       type: 1,
-      id: 1, // for identification
+      id: 57, // for identification
       components: [
         {
           type: 2,
@@ -102,7 +123,7 @@ export async function paginate<U, T extends U[]>(
         },
       ],
     };
-    return callback(data.slice(start, end) as T, navBtns);
+    return callback(data.slice(start, end) as T, navBtns, { index: page, total_page: totalPages });
   };
 
   let message: APIMessage;
@@ -114,20 +135,17 @@ export async function paginate<U, T extends U[]>(
 
   const collector = client.componentCollector({
     message,
-    filter: (i) => {
-      const { id, data: d } = store.deserialize(i.data.custom_id);
-      if (id !== 19) return false;
-      if (!["nav_next", "xxyyzzkkll"].includes(d.data!)) return false;
-      if (user && (i.member?.user || i.user!).id !== user) return false; // Check if the interaction is from the specified user
-      return true;
-    },
+    filter: (i) => (user ? (i.member?.user || i.user!).id === user : true),
     idle,
     componentType: 2,
   });
 
   collector.on("collect", async (interaction) => {
     const { id, data: d } = store.deserialize(interaction.data.custom_id);
-    if (id !== 19) throw new Error("Invalid custom ID for paginator");
+    if (id !== 19) return;
+
+    if (!["nav_next", "xxyyzzkkll"].includes(d.data!)) return; // check for data here so that idle state can be reset even for other interaction
+
     if (d.data === "nav_next") {
       page = Math.min(page + 1, totalPages - 1);
     } else if (d.data === "xxyyzzkkll") {
@@ -136,7 +154,9 @@ export async function paginate<U, T extends U[]>(
     await client.api.interactions.updateMessage(interaction.id, interaction.token, createPageContent());
   });
 
-  collector.on("end", async () => {
+  collector.on("end", async (_r, reason) => {
+    if (reason === "no disable") return; // collector was stopped in some other place and like doesn't want it to disable the button or make changes to the message
+
     if (!disableOnEnd) return;
 
     const m = await helper.fetchReply().catch(() => null);
@@ -155,7 +175,7 @@ export async function paginate<U, T extends U[]>(
   // Recursively search for a row component with id: 1
   function findRowWithId(components: APIMessageComponent[]): APIActionRowComponent<APIComponentInMessageActionRow> | undefined {
     for (const comp of components) {
-      if (comp.type === 1 && comp.id === 1) return comp;
+      if (comp.type === 1 && comp.id === 57) return comp;
       if ("components" in comp) {
         const found = findRowWithId(comp.components);
         if (found) return found;

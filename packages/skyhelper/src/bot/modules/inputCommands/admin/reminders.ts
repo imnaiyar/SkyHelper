@@ -1,45 +1,17 @@
 import { REMINDERS_DATA } from "@/modules/commands-data/admin-commands";
 import type { Command } from "@/structures";
 import type { GuildSchema } from "@/types/schemas";
+import { handleRemindersStatus } from "@/utils/classes/Embeds";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { store } from "@/utils/customId-store";
 import { getTSData } from "@/utils/getEventDatas";
-import { paginate } from "@/utils/paginator";
-import {
-  MessageFlags,
-  type APIGuildForumChannel,
-  type APITextChannel,
-  type APIContainerComponent,
-  ComponentType,
-} from "@discordjs/core";
-import { REMINDERS_KEY, SendableChannels } from "@skyhelperbot/constants";
-import {
-  SkytimesUtils,
-  type EventKey,
-  container,
-  textDisplay,
-  row,
-  separator,
-  ShardsUtil,
-  section,
-  mediaGallery,
-  mediaGalleryItem,
-} from "@skyhelperbot/utils";
+import { MessageFlags, type APIGuildForumChannel, type APITextChannel, ComponentType } from "@discordjs/core";
+import { REMINDERS_KEY, SendableChannels, RemindersEventsMap } from "@skyhelperbot/constants";
+import { SkytimesUtils, type EventKey, textDisplay, row, separator, ShardsUtil, section } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
-const RemindersEventsMap: Record<string, string> = {
-  eden: "Eden/Weekly Reset",
-  geyser: "Geyser",
-  grandma: "Grandma",
-  turtle: "Turtle",
-  dailies: "Daily Quests",
-  ts: "Traveling Spirit",
-  aurora: "Aurora's Concert",
-  reset: "Daily Reset",
-  "fireworks-festival": "Aviary Fireworks Festival",
-  "shards-eruption": "Shards Eruption",
-};
+
 export default {
   async interactionRun({ helper, options }) {
     const { client, t } = helper;
@@ -164,42 +136,6 @@ export default {
   },
   ...REMINDERS_DATA,
 } satisfies Command;
-
-async function handleRemindersStatus(helper: InteractionHelper, guildSettings: GuildSchema, guildName: string) {
-  const title = `Reminders Status for ${guildName}`;
-  const description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
-
-  await paginate(
-    helper,
-    Object.entries(RemindersEventsMap),
-    (cdd, navBtns) => {
-      const cont = container(
-        mediaGallery(
-          mediaGalleryItem(
-            "https://cdn.discordapp.com/attachments/867638574571323424/1387495612198686720/1750625456415.png?ex=685d8d7c&is=685c3bfc&hm=b61db61319f75a54fa0e49363c99570ec31c0f1da058f8122930e28b65663048&",
-          ),
-        ),
-        textDisplay(title),
-        separator(),
-        textDisplay(description),
-      );
-      for (const [k, name] of cdd) {
-        const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
-        if (!event?.active) {
-          cont.components.push(textDisplay(`${name}: Inactive`));
-        } else {
-          let toPush = `${name}\n- Channel: <#${event.webhook!.threadId ?? event.webhook!.channelId}>`;
-          if (event.role) toPush += `\n- Role: <@&${event.role}>`;
-          if (event.offset) toPush += `\n- Offset: \`${event.offset}\` minutes.`;
-          if ("shard_type" in event) toPush += `\n- Shard Type: ${event.shard_type.join(", ")}`;
-          cont.components.push(textDisplay(toPush));
-        }
-      }
-      return { components: [cont, navBtns], flags: MessageFlags.IsComponentsV2 };
-    },
-    { per_page: 5 },
-  );
-}
 
 /**
  * Collect an addition response for shards eruption to choose which type of shard they want reminders for

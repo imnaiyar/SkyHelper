@@ -37,6 +37,19 @@ export const SendableChannels = [
   ChannelType.GuildVoice,
 ];
 
+export const RemindersEventsMap: Record<string, string> = {
+  eden: "Eden/Weekly Reset",
+  geyser: "Geyser",
+  grandma: "Grandma",
+  turtle: "Turtle",
+  dailies: "Daily Quests",
+  ts: "Traveling Spirit",
+  aurora: "Aurora's Concert",
+  reset: "Daily Reset",
+  "fireworks-festival": "Aviary Fireworks Festival",
+  "shards-eruption": "Shards Eruption",
+};
+
 export const REMINDERS_KEY = [
   "eden",
   "ts",

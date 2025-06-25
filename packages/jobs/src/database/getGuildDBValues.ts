@@ -23,30 +23,38 @@ const Schema = new mongoose.Schema<GuildSchema>({
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
-    events: REMINDERS_KEY.reduce((acc, key) => {
-      const schemaObj: any = {
-        active: { type: Boolean, default: false },
-        webhook: {
-          id: String,
-          token: String,
-          channelId: String,
-          threadId: String,
-        },
-        last_messageId: String,
-        role: String,
-        offset: Number,
-      };
-      if (key === "shards-eruption") {
-        schemaObj.shard_type = { type: [String], enum: ["black", "red"] };
-      }
-      // @ts-expect-error
-      acc[key] = {
-        type: new mongoose.Schema(schemaObj, { _id: false }),
-        default: null,
-      };
-      return acc;
-      return acc;
-    }, {}),
+    events: REMINDERS_KEY.reduce(
+      (acc, key) => {
+        const schemaObj: any = {
+          active: { type: Boolean, default: false },
+          webhook: {
+            type: new mongoose.Schema(
+              {
+                id: String,
+                token: String,
+                channelId: String,
+                threadId: String,
+              },
+              { _id: false },
+            ),
+            default: null,
+            required: false,
+          },
+          last_messageId: { type: String, default: null },
+          role: { type: String, default: null },
+          offset: { type: Number, default: 0 },
+        };
+        if (key === "shards-eruption") {
+          schemaObj.shard_type = { type: [String], enum: ["black", "red"], default: ["black", "red"] };
+        }
+        acc[key] = {
+          type: new mongoose.Schema(schemaObj, { _id: false }),
+          default: null,
+        };
+        return acc;
+      },
+      {} as Record<(typeof REMINDERS_KEY)[number], any>,
+    ),
   },
 
   autoShard: {

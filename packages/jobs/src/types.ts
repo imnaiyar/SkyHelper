@@ -38,7 +38,7 @@ export interface ReminderConfig {
   last_messageId?: string;
   role: string | null;
   offset?: number | null;
-  webhook: {
+  webhook?: {
     id: string;
     token: string;
     channelId: string;

@@ -2,6 +2,7 @@ import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "@skyhelperbot/u
 import {
   ButtonStyle,
   ComponentType,
+  MessageFlags,
   type APIActionRowComponent,
   type APIButtonComponent,
   type APIContainerComponent,
@@ -25,9 +26,12 @@ import {
   thumbnail,
 } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
-import type { DailyQuestsSchema } from "@/types/schemas";
+import type { DailyQuestsSchema, GuildSchema } from "@/types/schemas";
 import { CalendarMonths } from "../constants.js";
-import { emojis } from "@skyhelperbot/constants";
+import { emojis, RemindersEventsMap } from "@skyhelperbot/constants";
+import { paginate } from "../paginator.js";
+import RemindersUtils from "./RemindersUtils.js";
+import type { InteractionHelper } from "./InteractionUtil.js";
 
 /**
  * @param date The date for which the shards embed is to be built
@@ -385,6 +389,77 @@ export function buildCalendarResponse(
     ),
   );
   return { components: [component, container(navBtn)] };
+}
+
+export async function handleRemindersStatus(
+  helper: InteractionHelper,
+  guildSettings: GuildSchema,
+  guildName: string,
+  page: number = 0,
+) {
+  const title = `Reminders Status for ${guildName}`;
+  const description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
+
+  const paginator = await paginate(
+    helper,
+    Object.entries(RemindersEventsMap),
+    (cdd, navBtns, { index }) => {
+      const cont = container(
+        mediaGallery(
+          mediaGalleryItem(
+            "https://cdn.discordapp.com/attachments/1145711466171867227/1387513144108384418/1750625456415_copy_1020x200.png?ex=685d9dd0&is=685c4c50&hm=824d6fe85b2cc8e0ffd226de38bf9a813068f7542f39476f56c8a9bb9ef8529d&",
+          ),
+        ),
+        textDisplay(title),
+        separator(),
+        textDisplay(description),
+      );
+      for (const [k, name] of cdd) {
+        const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
+        let text = name;
+
+        if (!event?.active) text += " (Inactive)";
+        else text += " (Active)";
+        text = `**__${text}__**`;
+        text +=
+          `\n-# - Channel: ` +
+          ((event?.webhook?.threadId ?? event?.webhook?.channelId)
+            ? `<#${event.webhook.threadId ?? event.webhook.channelId}>`
+            : "None");
+
+        text += "\n-# - Role: " + (event?.role ? `<@&${event.role}>` : "None");
+
+        text += `\n-# - Offset: \`${event?.offset || 0}\` minutes.`;
+
+        text += event && "shard_type" in event ? `\n-# - Shard Type: ${event.shard_type.join(", ")}` : "";
+
+        cont.components.push(
+          section(
+            {
+              type: 2,
+              custom_id: helper.client.utils.store.serialize(helper.client.utils.customId.RemindersManage, {
+                key: k,
+                user: helper.user.id,
+                page: index,
+              }),
+              label: "Manage",
+              style: 2,
+            },
+            text,
+          ),
+          separator(false, 2),
+        );
+      }
+      return { components: [cont, navBtns], flags: MessageFlags.IsComponentsV2 };
+    },
+    { per_page: 4, startPage: page },
+  );
+
+  paginator.on("collect", (i) => {
+    const { id } = helper.client.utils.store.deserialize(i.data.custom_id);
+    // stop the paginator when message is changed, as this will be recreated
+    if (id === helper.client.utils.customId.RemindersManage) paginator.stop("no disable");
+  });
 }
 
 function getDates(date: DateTime): DateTime[] {

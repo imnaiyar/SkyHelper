@@ -1,6 +1,7 @@
 import type { SkyHelper } from "@/structures";
 import type { GuildSchema } from "@/types/schemas";
 import type { APIWebhook, RESTPostAPIChannelWebhookJSONBody } from "@discordjs/core";
+import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 
 export default class {
   constructor(private client: SkyHelper) {}
@@ -14,6 +15,11 @@ export default class {
 
   /** Check whether any of the reminder events are active or not */
   static checkActive(settings: GuildSchema) {
+    return Object.values(settings.reminders.events).some((e) => e?.active);
+  }
+
+  /** Check whether any of the reminder events are active or not */
+  public checkAnyActive(settings: GuildSchema) {
     return Object.values(settings.reminders.events).some((e) => e?.active);
   }
 
@@ -62,11 +68,11 @@ export default class {
     const webhooks = new Map<string, { id: string; token: string }>();
 
     // group common webhooks
-    for (let [, event] of events) {
+    for (const [k, event] of events) {
       if (!webhooks.has(event!.webhook!.id)) {
         webhooks.set(event!.webhook!.id, event!.webhook!);
       }
-      event = null;
+      settings.reminders.events[k as (typeof REMINDERS_KEY)[number]] = null;
     }
     settings.reminders.active = false;
     await settings.save();
