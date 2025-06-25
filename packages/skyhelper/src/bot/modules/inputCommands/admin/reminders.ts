@@ -118,8 +118,8 @@ export default {
         break;
       }
       case "stop": {
-        const event = options.getString("event", true);
-        let eventSettings = guildSettings.reminders.events[event as keyof GuildSchema["reminders"]["events"]];
+        const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
+        const eventSettings = guildSettings.reminders.events[event as keyof GuildSchema["reminders"]["events"]];
         if (!eventSettings?.active) {
           return void (await helper.editReply({
             content: `Reminders for ${RemindersEventsMap[event]} are already inactive`,
@@ -134,7 +134,7 @@ export default {
           [event],
           guildSettings,
         );
-        eventSettings = null;
+        guildSettings.reminders.events[event] = null;
 
         const isAnyActive = RemindersUtils.checkActive(guildSettings);
         if (!isAnyActive) guildSettings.reminders.active = false;

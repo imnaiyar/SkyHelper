@@ -62,7 +62,9 @@ export class Reminders {
 
       if (!value.active) {
         if (event?.webhook) webhooksToDelete.add(event.webhook);
-        event = null;
+
+        settings.reminders.events[key as (typeof REMINDERS_KEY)[number]] = null;
+
         continue;
       }
 

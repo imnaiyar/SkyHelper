@@ -1,6 +1,7 @@
 import type { Event } from "@/structures";
 import type { GatewayDispatchEvents } from "@discordjs/core";
 import type { EventReminder, LiveUpdates } from "@/types/schemas";
+import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 
 const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { data: { channel_id, guild_id } }) => {
   const guild = client.guilds.get(guild_id)!;
@@ -24,7 +25,7 @@ const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { da
   for (let [key, entry] of targets) {
     if (entry?.webhook?.id && entry.webhook.channelId === channel_id && !existingWebhookIds.has(entry.webhook.id)) {
       if ("messageId" in entry) entry = { active: false, messageId: "null", webhook: { id: null, token: null, channelId: null } };
-      else entry = null;
+      else guildSettings.reminders.events[key as (typeof REMINDERS_KEY)[number]] = null;
       disabledEvents.push(key);
     }
   }
