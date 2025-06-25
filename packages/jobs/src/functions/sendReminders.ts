@@ -1,20 +1,17 @@
 import { getActiveReminders } from "@/database/getGuildDBValues.js";
 import { Webhook } from "@/structures/Webhook.js";
-import { getTranslator, type LangKeys } from "./getTranslator.js";
+import { getTranslator } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
-import { container, section, separator, SkytimesUtils, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
+import { container, separator, SkytimesUtils, textDisplay } from "@skyhelperbot/utils";
 import { throttleRequests } from "./throttleRequests.js";
-import getTS, { type TSValue } from "@/utils/getTS.js";
-import spiritsData, { type SpiritsData } from "@skyhelperbot/constants/spirits-datas";
-import { emojis, realms_emojis, seasonsData, REMINDERS_KEY } from "@skyhelperbot/constants";
+import getTS from "@/utils/getTS.js";
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
-import { MessageFlags } from "discord-api-types/v10";
+import { MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
+import { getResponse, getShardReminderResponse, getTSResponse } from "./getResponses.js";
+import { REMINDERS_KEY } from "@skyhelperbot/constants";
 
-type Events = (typeof REMINDERS_KEY)[number];
-
-// TODO: test reminders embeds first
-
+const speciallyHandledReminders = ["ts", "shards-eruption"];
 /**
  * Sends the reminder to the each active guilds
  * @param type Type of the event
@@ -39,52 +36,62 @@ export async function reminderSchedules(): Promise<void> {
 
       const { webhook, role, last_messageId, offset } = event;
       const details = eventDetails[key === "reset" ? "daily-reset" : key];
-      if (!details && key !== "ts") continue; // details will not be available for 'ts', it is calculated separately
 
-      const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
+      if (!details && !speciallyHandledReminders.includes(key)) continue; // details will not be available for 'ts', it is calculated separately
 
-      if (!isValid) continue;
+      // Do not check validity for shards-eruption, it is handled separately
+      if (key !== "shards-eruption") {
+        const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
+
+        if (!isValid) continue;
+      }
 
       try {
         const wb = new Webhook({ token: webhook.token, id: webhook.id });
 
         const roleM = role && t("features:reminders.ROLE_MENTION", { ROLE: role === guild._id ? "@everyone" : `<@&${role}>` });
 
-        let response = null;
-        if (key === "ts") {
-          if (!ts) continue;
-          response = getTSResponse(ts, t, roleM);
-        } else {
-          response = getResponse(key, t, details, offset || 0);
-        }
-        if (!response) continue;
-        let toSend: any = response;
+        let response: RESTPostAPIChannelMessageJSONBody | null = null;
 
-        if (key !== "ts") {
-          toSend = {
-            components: [
-              ...(roleM ? [textDisplay(roleM)] : []),
-              container(
-                textDisplay(
-                  "-# SkyHelper Reminders\n" +
-                    `### ${t("features:reminders.TITLE", {
-                      // @ts-expect-error
-                      TYPE: t("features:times-embed." + (key === "reset" ? "DAILY-RESET" : key.toUpperCase())),
-                    })}`,
+        switch (key) {
+          case "shards-eruption": {
+            const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as Array<"red" | "black">);
+            const data = getShardReminderResponse(now, offset || 0, shard_type);
+            if (!data) continue;
+            response = { components: [...(roleM ? [textDisplay(roleM)] : []), data] };
+            break;
+          }
+          case "ts":
+            if (!ts) continue; // Skip if ts is not available
+            response = getTSResponse(ts, t);
+            break;
+          default: {
+            const data = getResponse(key, t, details, offset || 0);
+            response = {
+              components: [
+                container(
+                  textDisplay(
+                    "-# SkyHelper Reminders\n" +
+                      `### ${t("features:reminders.TITLE", {
+                        // @ts-expect-error
+                        TYPE: t("features:times-embed." + (key === "reset" ? "DAILY-RESET" : key.toUpperCase())),
+                      })}`,
+                  ),
+                  separator(),
+                  textDisplay(data as string),
                 ),
-                separator(),
-                textDisplay(response as string),
-              ),
-            ],
-            flags: MessageFlags.IsComponentsV2,
-          };
+              ],
+            };
+          }
         }
         const msg = await wb
           .send(
             {
               username: "SkyHelper",
               avatar_url: "https://skyhelper.xyz/assets/img/boticon.png",
-              ...toSend,
+              ...response,
+              components: [...(roleM ? [textDisplay(roleM)] : []), ...response.components!],
+              flags: MessageFlags.IsComponentsV2,
             },
             { thread_id: webhook.threadId, retries: 3 },
           )
@@ -109,149 +116,3 @@ export async function reminderSchedules(): Promise<void> {
     }
   });
 }
-
-/**
- * Get the response to send
- * @param type Type of the event
- * @param role Role mention, if any
- * @returns The response to send
- */
-function getResponse(type: Events, t: (key: LangKeys, options?: {}) => string, details: EventDetails, offset: number) {
-  const skytime = type === "reset" ? "Daily-Reset" : type;
-
-  const {
-    status: { startTime, endTime, nextTime, active },
-    event,
-  } = details;
-  const start = active
-    ? startTime!
-    : offset === 0 && !event.duration
-      ? // Event with no duration will point to next time when it just became active for 0 offsetted reminder,
-        // dial back to reflect correct time
-        // TODO: currently this works because only eden and reset is affected, in future,
-        //  if this includes any other events that also occurs on specific days, rethink this approach
-        // possibly include previous occurrence in details accounting for occurrence day
-        nextTime.minus({
-          minutes: event.interval || 0,
-        })
-      : nextTime;
-  let between: string | null = null;
-  if (event.duration) {
-    between = `Timeline: <t:${start.toUnixInteger()}:T> - <t:${start.plus({ minutes: event.duration }).toUnixInteger()}:T>`;
-  }
-  if (active || (offset === 0 && !event.duration)) {
-    if (["eden", "reset"].includes(type)) {
-      return t(`features:reminders.${type === "eden" ? "EDEN" : "DAILY"}_RESET`);
-    }
-
-    return (
-      t("features:reminders.COMMON", {
-        // @ts-expect-error
-        TYPE: t("features:times-embed." + skytime?.toUpperCase()),
-        TIME: `<t:${startTime?.toUnixInteger()}:t>`,
-        "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
-        "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
-      }) + (between ? `\n\n${between}` : "")
-    );
-  } else {
-    if (["eden", "reset"].includes(type)) {
-      return (
-        t("features:reminders.PRE-RESET", {
-          // @ts-expect-error
-          TYPE: t("features:times-embed." + skytime?.toUpperCase()),
-          TIME: `<t:${nextTime.toUnixInteger()}:t>`,
-          "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
-        }) + (between ? `\n\n${between}` : "")
-      );
-    }
-
-    return (
-      t("features:reminders.PRE", {
-        // @ts-expect-error
-        TYPE: t("features:times-embed." + skytime?.toUpperCase()),
-        TIME: `<t:${nextTime.toUnixInteger()}:t>`,
-        "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
-      }) + (between ? `\n\n${between}` : "")
-    );
-  }
-}
-
-const isSeasonal = (data: SpiritsData) => "ts" in data;
-
-// TODO: Test this before merging
-const getTSResponse = (ts: TSValue, t: ReturnType<typeof getTranslator>, roleM: string | null) => {
-  if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
-
-  const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
-  if (ts.value) {
-    const spirit: SpiritsData = spiritsData[ts.value as keyof typeof spiritsData];
-    if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
-    const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
-    const description = ts.visiting
-      ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
-          SPIRIT: "↪",
-          TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:F>`,
-          DURATION: ts.duration,
-        })
-      : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
-          SPIRIT: "↪",
-          DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
-          DURATION: ts.duration,
-        });
-    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${spirit.name}${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
-
-    let lctn_link = spirit.location!.image;
-    if (!lctn_link.startsWith("https://")) lctn_link = "https://cdn.imnaiyar.site/" + lctn_link;
-    const totalCosts = spirit
-      .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-      .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-      .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")
-      .trim();
-
-    const component = container(
-      spirit.image ? section(thumbnail(spirit.image, spirit.name), headerContent) : textDisplay(headerContent),
-      separator(true, 1),
-      textDisplay(
-        `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
-          realms_emojis[spirit.realm!]
-        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
-      ),
-      separator(true, 1),
-      section(
-        thumbnail("https://cdn.imnaiyar.site/" + spirit.tree!.image),
-        `${emojis.right_chevron} ${
-          spirit.ts?.returned
-            ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
-            : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
-        }`,
-        totalCosts ? `-# ${totalCosts}` : "",
-      ),
-      section(
-        thumbnail(lctn_link),
-        `${emojis.right_chevron} ${t("features:SPIRITS.LOCATION_TITLE", { CREDIT: spirit.location!.by })}`,
-        spirit.location!.description ? `-# ${emojis.tree_end}${spirit.location!.description}` : "",
-      ),
-    );
-
-    return { components: [...(roleM ? [textDisplay(roleM)] : []), component], flags: MessageFlags.IsComponentsV2 };
-  } else {
-    let description = ts.visiting
-      ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
-          SPIRIT: t("features:SPIRITS.UNKNOWN"),
-          TIME: `<t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:F>`,
-          DURATION: ts.duration,
-        })
-      : t("commands:TRAVELING-SPIRIT.RESPONSES.EXPECTED", {
-          SPIRIT: t("features:SPIRITS.UNKNOWN"),
-          DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
-          DURATION: ts.duration,
-        });
-    description += `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}`;
-    const component = container(
-      textDisplay(`**${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: "X" })}**`),
-      separator(),
-      textDisplay(description),
-    );
-    return { components: [...(roleM ? [textDisplay(roleM)] : []), component], flags: MessageFlags.IsComponentsV2 };
-  }
-};

@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import type { ShardsCountdown } from "../typings.js";
-import { shardsTimeline, shardConfig } from "../constants/index.js";
+import { shardsTimeline, shardConfig, shardsInfo } from "../constants/index.js";
 /**
  * Sequence of Shards pattern
  */
@@ -124,5 +124,34 @@ export class ShardsUtil {
       }
     }
     return toReturn;
+  }
+
+  /**
+   * Get the next occuring black/red shard from now for today's date;
+   * @param shardType The type of shard to get the next occuring shard for
+   */
+  static getNextShard(shardType?: ("black" | "red")[]) {
+    const timezone = "America/Los_Angeles";
+    const present = DateTime.now().setZone(timezone);
+    const currentDate = this.getDate();
+    if (typeof currentDate === "string") return null;
+    const { currentRealm, currentShard } = this.shardsIndex(currentDate);
+    const info = shardsInfo[currentRealm][currentShard];
+    const isNoShard = shardConfig[currentShard].weekdays.includes(present.weekday);
+    if (isNoShard) return null;
+    if (shardType && !shardType.some((s) => info.type.toLowerCase().includes(s))) return null;
+    const timings = shardsTimeline(currentDate)[currentShard];
+    for (const [i, eventTiming] of timings.entries()) {
+      if (present <= eventTiming.start) {
+        return {
+          index: i + 1,
+          start: eventTiming.start,
+          end: eventTiming.end,
+          duration: eventTiming.start.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
+          info,
+        };
+      }
+    }
+    return null;
   }
 }
