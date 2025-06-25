@@ -6,6 +6,7 @@ import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { store } from "@/utils/customId-store";
 import { getTSData } from "@/utils/getEventDatas";
+import { paginate } from "@/utils/paginator";
 import {
   MessageFlags,
   type APIGuildForumChannel,
@@ -14,7 +15,18 @@ import {
   ComponentType,
 } from "@discordjs/core";
 import { REMINDERS_KEY, SendableChannels } from "@skyhelperbot/constants";
-import { SkytimesUtils, type EventKey, container, textDisplay, row, separator, ShardsUtil, section } from "@skyhelperbot/utils";
+import {
+  SkytimesUtils,
+  type EventKey,
+  container,
+  textDisplay,
+  row,
+  separator,
+  ShardsUtil,
+  section,
+  mediaGallery,
+  mediaGalleryItem,
+} from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
@@ -145,7 +157,7 @@ export default {
         break;
       }
       case "status": {
-        await helper.editReply(await getRemindersStatus(guildSettings, guild.name));
+        await handleRemindersStatus(helper, guildSettings, guild.name);
         break;
       }
     }
@@ -153,27 +165,40 @@ export default {
   ...REMINDERS_DATA,
 } satisfies Command;
 
-async function getRemindersStatus(guildSettings: GuildSchema, guildName: string) {
+async function handleRemindersStatus(helper: InteractionHelper, guildSettings: GuildSchema, guildName: string) {
   const title = `Reminders Status for ${guildName}`;
-  let description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
+  const description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
 
-  const reminders: Array<string> = [];
-  for (const [k, name] of Object.entries(RemindersEventsMap)) {
-    const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
-    if (!event?.active) {
-      reminders.push(`${name}: Inactive`);
-    } else {
-      let toPush = `${name}\n  - Channel: <#${event.webhook!.threadId ?? event.webhook!.channelId}>`;
-      if (event.role) toPush += `\n  - Role: <@&${event.role}>`;
-      if (event.offset) toPush += `\n  - Offset: \`${event.offset}\` minutes.`;
-      if ("shard_type" in event) toPush += `\n  - Shard Type: ${event.shard_type.join(", ")}`;
-      reminders.push(toPush);
-    }
-  }
-  description += "- " + reminders.join("\n- ");
-  const component: APIContainerComponent = container(textDisplay(description));
-
-  return { components: [container(textDisplay(title)), component], flags: MessageFlags.IsComponentsV2 };
+  await paginate(
+    helper,
+    Object.entries(RemindersEventsMap),
+    (cdd, navBtns) => {
+      const cont = container(
+        mediaGallery(
+          mediaGalleryItem(
+            "https://cdn.discordapp.com/attachments/867638574571323424/1387495612198686720/1750625456415.png?ex=685d8d7c&is=685c3bfc&hm=b61db61319f75a54fa0e49363c99570ec31c0f1da058f8122930e28b65663048&",
+          ),
+        ),
+        textDisplay(title),
+        separator(),
+        textDisplay(description),
+      );
+      for (const [k, name] of cdd) {
+        const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
+        if (!event?.active) {
+          cont.components.push(textDisplay(`${name}: Inactive`));
+        } else {
+          let toPush = `${name}\n- Channel: <#${event.webhook!.threadId ?? event.webhook!.channelId}>`;
+          if (event.role) toPush += `\n- Role: <@&${event.role}>`;
+          if (event.offset) toPush += `\n- Offset: \`${event.offset}\` minutes.`;
+          if ("shard_type" in event) toPush += `\n- Shard Type: ${event.shard_type.join(", ")}`;
+          cont.components.push(textDisplay(toPush));
+        }
+      }
+      return { components: [cont, navBtns], flags: MessageFlags.IsComponentsV2 };
+    },
+    { per_page: 5 },
+  );
 }
 
 /**
