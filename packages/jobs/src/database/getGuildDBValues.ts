@@ -24,8 +24,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
   reminders: {
     active: { type: Boolean, default: false },
     events: REMINDERS_KEY.reduce((acc, key) => {
-      // @ts-expect-error
-      acc[key] = {
+      const schemaObj: any = {
         active: { type: Boolean, default: false },
         webhook: {
           id: String,
@@ -34,11 +33,18 @@ const Schema = new mongoose.Schema<GuildSchema>({
           threadId: String,
         },
         last_messageId: String,
-        offset: Number,
         role: String,
+        offset: Number,
       };
-      // @ts-ignore
-      if (key === "shards-eruption") acc[key].shard_type = { type: [String], enum: ["black", "red"] };
+      if (key === "shards-eruption") {
+        schemaObj.shard_type = { type: [String], enum: ["black", "red"] };
+      }
+      // @ts-expect-error
+      acc[key] = {
+        type: new mongoose.Schema(schemaObj, { _id: false }),
+        default: null,
+      };
+      return acc;
       return acc;
     }, {}),
   },
