@@ -14,7 +14,7 @@ import {
   ComponentType,
 } from "@discordjs/core";
 import { REMINDERS_KEY, SendableChannels } from "@skyhelperbot/constants";
-import { SkytimesUtils, type EventKey, container, textDisplay, row, separator, ShardsUtil } from "@skyhelperbot/utils";
+import { SkytimesUtils, type EventKey, container, textDisplay, row, separator, ShardsUtil, section } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
@@ -183,7 +183,6 @@ async function getRemindersStatus(guildSettings: GuildSchema, guildName: string)
  * @returns returns null or array of selected shard types
  */
 async function awaitShardTypeResponse(helper: InteractionHelper, settings: GuildSchema) {
-  const text = textDisplay("Please select the shard type for the eruption reminder:");
   const shard_type = settings.reminders.events["shards-eruption"]?.shard_type || [];
   const select = row({
     type: ComponentType.StringSelect,
@@ -205,13 +204,28 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
     max_values: 2,
   });
 
-  const message = await helper.editReply({ components: [text, separator(true, 1), select], flags: MessageFlags.IsComponentsV2 });
+  const message = await helper.editReply({
+    components: [
+      section(
+        {
+          type: 2,
+          custom_id: store.serialize(19, { data: "shard_type_skip", user: helper.user.id }),
+          label: "Skip!",
+          style: 4,
+        },
+        "Please select the shard type for the eruption reminder:",
+        "-# Note: Skipping this step when none of the options are selected will make it include both shard type",
+      ),
+      separator(true, 1),
+      select,
+    ],
+    flags: MessageFlags.IsComponentsV2,
+  });
 
   const response = await helper.client
     .awaitComponent({
       filter: (i) => (i.member?.user || i.user!).id === helper.user.id,
       message,
-      componentType: ComponentType.StringSelect,
       timeout: 6e4, // 1 min
     })
     .catch(() => {});
@@ -223,6 +237,7 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
 
   await helper.client.api.interactions.deferMessageUpdate(response.id, response.token);
 
+  if (response.data.component_type === 2) return shard_type.length ? shard_type : (["black", "red"] as Array<"black" | "red">);
   return response.data.values as ("black" | "red")[];
 }
 
