@@ -2,6 +2,7 @@ import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { CustomId } from "@/utils/customId-store";
 import {
   ComponentType,
+  MessageFlags,
   type APIActionRowComponent,
   type APIButtonComponent,
   type APIEmbed,
@@ -9,6 +10,7 @@ import {
   type APIModalSubmitInteraction,
 } from "@discordjs/core";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
+import { container, separator, textDisplay } from "@skyhelperbot/utils";
 import { readFile } from "node:fs/promises";
 
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res));
@@ -98,79 +100,34 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
 }
 
 export async function getChangelog(helper: InteractionHelper) {
-  const changes = [
-    `### Offsets in Reminders
-    Added support for offsets in ${helper.client.utils.mentionCommand(helper.client, "reminders", "configure")}, allowing you to define offsets for specific event reminders. These offsets can range from 1 to 15 minutes, and reminders for the event will now be sent that many minutes before the event occurs.
-    
-    ### Added 'scrambled' to skygame
+  await helper.defer();
+  const releases = await fetch("https://api.github.com/repos/imnaiyar/SkyHelper/releases").then((res) => res.json());
 
--# Read about more detailed/previous changelogs [here](https://github.com/imnaiyar/SkyHelper/releases)`,
-  ];
-  const { client } = helper;
-  let page = 0;
-  const total = changes.length - 1;
-  const getEmbed = () => {
-    const embed: APIEmbed = {
-      author: { name: `Changelog`, icon_url: client.utils.getUserAvatar(client.user) },
-      color: 0xffd700, // Gold color
-      title: `Changelog v${version}`,
-      description: changes[page],
-      footer: { text: `v${version} - Page ${page + 1}/${total + 1}` },
-    };
-    const btns: APIActionRowComponent<APIButtonComponent> = {
-      type: 1,
-      components: [
-        {
-          type: 2,
-          custom_id: client.utils.store.serialize(CustomId.Default, { data: "chng-prev", user: helper.user.id }),
-          emoji: { id: "1207594669882613770" },
-          style: 3, // Success style
-          disabled: page === 0,
-        },
-        {
-          type: 2,
-          emoji: { id: "1222364414037200948" },
-          style: 2, // Secondary style
-          custom_id: "sidbwkss",
-          disabled: true,
-        },
-        {
-          type: 2,
-          custom_id: client.utils.store.serialize(CustomId.Default, { data: "chng-next", user: helper.user.id }),
-          emoji: { id: "1207593237544435752" },
-          style: 3, // Success style
-          disabled: page === total,
-        },
-      ],
-    };
-    if (total) {
-      return { embeds: [embed], components: [btns] };
-    } else {
-      return { embeds: [embed] };
-    }
-  };
-  const msg = (await helper.reply({ ...getEmbed(), flags: 64 })).resource!.message!;
-  if (!total) return;
-  const collector = client.componentCollector({
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
-    idle: 3 * 60 * 1000,
-    componentType: ComponentType.Button,
-    message: msg,
-  });
-  collector.on("collect", async (int) => {
-    const compHelper = new InteractionHelper(int, client);
-    const { id, data } = client.utils.store.deserialize(int.data.custom_id);
-    if (id !== CustomId.Default) return;
-    if (data.data === "chng-next") {
-      page++;
-      await compHelper.update(getEmbed());
-    }
-    if (data.data === "chng-prev") {
-      page--;
-      await compHelper.update(getEmbed());
-    }
-  });
-  collector.on("end", async () => {
-    await helper.editReply({ components: [] });
-  });
+  const latest = releases.find((r: any) => r.tag_name === `skyhelper@${version}`);
+
+  if (!latest) {
+    await helper.editReply({
+      content: "Sorry! No changelog found for this version. Please try again later",
+    });
+    return;
+  }
+
+  const components = container(
+    textDisplay(`# Release \`v${version}\``, `-# Released on: ${helper.client.utils.time(new Date(latest.published_at), "d")}`),
+    separator(true, 1),
+    textDisplay(
+      (latest.body as string)
+        .replace(/by @\w+/g, "")
+        .replace(/\(#\d+\)/g, "")
+        .replace(/^\s*Full Changelog:.*$/gm, "")
+        .split("\n")
+        .map((line) => line.trimEnd())
+        .join("\n")
+        .replace(/\n{1,}/g, "\n")
+        .trim(),
+    ),
+    separator(true, 1),
+    textDisplay("-# See the full/previous releases on [GitHub](https://github.com/imnaiyar/SkyHelper/releases)"),
+  );
+  await helper.editReply({ components: [components], flags: MessageFlags.IsComponentsV2 });
 }
