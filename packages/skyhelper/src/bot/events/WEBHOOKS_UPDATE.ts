@@ -20,13 +20,11 @@ const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { da
   ];
 
   // map to check if any has been disabled
-  for (const [key, entry] of targets) {
-    if (entry.webhook?.id && entry.webhook.channelId === channel_id && !existingWebhookIds.has(entry.webhook.id)) {
-      entry.webhook = "messageId" in entry ? { id: null, token: null, channelId: null } : null;
-      if ("active" in entry) entry.active = false;
-      if ("last_messageId" in entry) entry.last_messageId = null;
-      if ("role" in entry) entry.role = null;
-      if ("messageId" in entry) entry.messageId = "null";
+  // eslint-disable-next-line prefer-const
+  for (let [key, entry] of targets) {
+    if (entry?.webhook?.id && entry.webhook.channelId === channel_id && !existingWebhookIds.has(entry.webhook.id)) {
+      if ("messageId" in entry) entry = { active: false, messageId: "null", webhook: { id: null, token: null, channelId: null } };
+      else entry = null;
       disabledEvents.push(key);
     }
   }

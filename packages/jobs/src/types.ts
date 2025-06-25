@@ -33,7 +33,7 @@ export interface LiveUpdates {
     threadId?: string;
   };
 }
-export interface EventReminder {
+export interface ReminderConfig {
   active: boolean;
   last_messageId?: string;
   role: string | null;
@@ -45,10 +45,15 @@ export interface EventReminder {
     threadId?: string;
   } | null;
 }
+
+type EventReminder = ReminderConfig | null;
+
 export interface Reminders {
   active: boolean;
   default_role: string | null;
   events: {
-    [k in (typeof REMINDERS_KEY)[number]]: EventReminder;
+    [k in (typeof REMINDERS_KEY)[number]]: k extends "shards-eruption"
+      ? (ReminderConfig & { shard_type: ("red" | "black")[] }) | null
+      : EventReminder;
   };
 }

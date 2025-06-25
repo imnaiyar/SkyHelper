@@ -26,6 +26,7 @@ export enum CustomId {
   Default,
   SkyHagman,
   SkyGameLeaderboard,
+  ShardsRemindersDetails,
 }
 
 export const store = new SchemaStore()
@@ -50,4 +51,5 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.SeasonalSpiritRow).nullable("user", t.string))
   .add(new Schema(CustomId.Default).nullable("user", t.string).nullable("data", t.string))
   .add(new Schema(CustomId.SkyHagman).string("action").nullable("user", t.string))
-  .add(new Schema(CustomId.SkyGameLeaderboard).string("type").nullable("user", t.string));
+  .add(new Schema(CustomId.SkyGameLeaderboard).string("type").nullable("user", t.string))
+  .add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", t.string));

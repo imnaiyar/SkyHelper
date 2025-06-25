@@ -75,9 +75,8 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
     activeGuilds.map(async (guild) => {
       const t = getTranslator(guild.language?.value ?? "en-US");
       try {
-        const rmd = guild.reminders;
-        if (!rmd?.active) return;
-        const event = rmd.events.dailies;
+        const event = guild.reminders.events.dailies;
+        if (!event?.active) return;
         const { webhook } = event;
         if (!event?.active) return;
         if (!webhook?.id || !webhook?.token) return;

@@ -19,16 +19,27 @@ const formatReminders = (r: GuildSchema["reminders"]) => {
   const obj = Object.entries(r.events).reduce(
     (acc, [key, value]) => {
       acc[key as (typeof REMINDERS_KEY)[number]] = {
-        active: value.active,
-        channelId: value.webhook?.channelId ?? null,
-        role: value.role ?? null,
-        offset: value.offset ?? null,
+        active: value?.active || false,
+        channelId: value?.webhook?.channelId ?? null,
+        role: value?.role ?? null,
+        offset: value?.offset ?? null,
       };
+
+      if (key === "shards-eruption") {
+        // @ts-expect-error id have patience to deal with this, it is just present
+        acc[key as (typeof REMINDERS_KEY)[number]].shard_type = value?.shard_type ?? null;
+      }
       return acc;
     },
     {} as Record<
       (typeof REMINDERS_KEY)[number],
-      { active: boolean; channelId: string | null; role: string | null; offset: number | null }
+      {
+        active: boolean;
+        channelId: string | null;
+        role: string | null;
+        offset: number | null;
+        shard_type?: ("black" | "red")[] | null;
+      }
     >,
   );
   return obj;
@@ -47,48 +58,48 @@ export class Reminders {
     const utils = new RemindersUtils(client);
     const webhooksToDelete = new Set<{ id: string; token: string }>();
     for (const [key, value] of Object.entries(body)) {
-      const event = settings.reminders.events[key as (typeof REMINDERS_KEY)[number]];
-      if (!event) continue;
+      let event = settings.reminders.events[key as (typeof REMINDERS_KEY)[number]];
 
-      event.active = value.active;
-
-      if (value.active) {
-        if (!value.channelId) {
-          throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
-        }
-        event.role = value.role ?? null;
-        event.offset = value.offset ?? null;
-        settings.reminders.active = true; // mark reminder as active as at one event is active
-
-        if (event.webhook?.channelId === value.channelId) continue; // No change, skip
-
-        // If channel changed or webhook is missing, create a new one
-        const wb = await utils.createWebhookAfterChecks(value.channelId, {
-          name: "SkyHelper",
-          avatar: client.utils.getUserAvatar(client.user),
-        });
-
-        if (!wb.token) throw new Error("Failed to create webhook, token is missing.");
-
-        if (event.webhook) {
-          webhooksToDelete.add(event.webhook);
-        }
-
-        event.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
-      } else {
-        if (event.webhook) {
-          webhooksToDelete.add(event.webhook);
-        }
-
-        Object.assign(event, {
-          webhook: null,
-          role: null,
-          last_messageId: null,
-          offset: null,
-          active: false,
-        });
+      if (!value.active) {
+        if (event?.webhook) webhooksToDelete.add(event.webhook);
+        event = null;
+        continue;
       }
+
+      if (!value.channelId) {
+        throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
+      }
+      if (!event) {
+        event = {
+          active: true,
+          webhook: null,
+          last_messageId: null,
+          role: null,
+          offset: null,
+        };
+      }
+
+      event.role = value.role ?? null;
+      event.offset = value.offset ?? null;
+      settings.reminders.active = true; // mark reminder as active as at one event is active
+
+      if (event.webhook?.channelId === value.channelId) continue; // No change, skip
+
+      // If channel changed or webhook is missing, create a new one
+      const wb = await utils.createWebhookAfterChecks(value.channelId, {
+        name: "SkyHelper",
+        avatar: client.utils.getUserAvatar(client.user),
+      });
+
+      if (!wb.token) throw new Error("Failed to create webhook, token is missing.");
+
+      if (event.webhook) {
+        webhooksToDelete.add(event.webhook);
+      }
+
+      event.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
     }
+
     const isAnyActive = RemindersUtils.checkActive(settings);
     if (!isAnyActive) settings.reminders.active = false;
     await settings.save();

@@ -8,7 +8,7 @@ export async function deleteWebhookAfterChecks(webhook: Webhook, schema: GuildSc
     (!excludeKeys.includes("autoShard") && schema.autoShard?.webhook?.id === webhook.id) ||
     (!excludeKeys.includes("autoTimes") && schema.autoTimes?.webhook?.id === webhook.id);
   const inUse =
-    keys.some((key) => schema.reminders.events[key as keyof GuildSchema["reminders"]["events"]].webhook?.id === webhook.id) ||
+    keys.some((key) => schema.reminders.events[key as keyof GuildSchema["reminders"]["events"]]?.webhook?.id === webhook.id) ||
     liveUse;
 
   if (!inUse) {

@@ -14,7 +14,7 @@ export default class {
 
   /** Check whether any of the reminder events are active or not */
   static checkActive(settings: GuildSchema) {
-    return Object.values(settings.reminders.events).some((e) => e.active);
+    return Object.values(settings.reminders.events).some((e) => e?.active);
   }
 
   private checkWebhookUsage(settings: GuildSchema, webhook: { id: string; token: string }, excludeKeys: string[]) {
@@ -23,8 +23,9 @@ export default class {
       (!excludeKeys.includes("autoShard") && settings.autoShard?.webhook?.id === webhook.id) ||
       (!excludeKeys.includes("autoTimes") && settings.autoTimes?.webhook?.id === webhook.id);
     return (
-      keys.some((key) => settings.reminders.events[key as keyof GuildSchema["reminders"]["events"]].webhook?.id === webhook.id) ||
-      liveUse
+      keys.some(
+        (key) => settings.reminders.events[key as keyof GuildSchema["reminders"]["events"]]?.webhook?.id === webhook.id,
+      ) || liveUse
     );
   }
 
@@ -57,18 +58,15 @@ export default class {
   }
 
   async disableAllReminders(settings: GuildSchema) {
-    const events = Object.entries(settings.reminders.events).filter(([, e]) => e.active && e.webhook?.id);
+    const events = Object.entries(settings.reminders.events).filter(([, e]) => e?.active && e?.webhook?.id);
     const webhooks = new Map<string, { id: string; token: string }>();
 
     // group common webhooks
-    for (const [, event] of events) {
-      if (!webhooks.has(event.webhook!.id)) {
-        webhooks.set(event.webhook!.id, event.webhook!);
+    for (let [, event] of events) {
+      if (!webhooks.has(event!.webhook!.id)) {
+        webhooks.set(event!.webhook!.id, event!.webhook!);
       }
-      event.active = false;
-      event.webhook = null;
-      event.last_messageId = null;
-      event.role = null;
+      event = null;
     }
     settings.reminders.active = false;
     await settings.save();

@@ -24,8 +24,9 @@ export class WebhookEventController {
     if (
       body.event.type !== ApplicationWebhookEventType.ApplicationAuthorized &&
       body.event.type !== ApplicationWebhookEventType.ApplicationDeauthorized
-    )
+    ) {
       return;
+    }
     if (!body.event.data) return;
     const data = body.event.data;
     const { user } = data;
