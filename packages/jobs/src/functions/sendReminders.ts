@@ -97,16 +97,10 @@ export async function reminderSchedules(): Promise<void> {
           });
         if (last_messageId) await wb.deleteMessage(last_messageId, webhook.threadId).catch(() => {});
         if (msg === "Unknown Webhook") {
-          guild.reminders.events[key] = {
-            webhook: null,
-            active: false,
-            last_messageId: undefined,
-            offset: null,
-            role: null,
-          };
+          guild.reminders.events[key] = null;
           logger.error(`Reminders disabled for ${guild.data.name}, webhook not found!`);
         } else if (msg) {
-          guild.reminders.events[key].last_messageId = msg.id;
+          guild.reminders.events[key]!.last_messageId = msg.id;
         }
         await guild.save().catch((err) => logger.error(guild.data.name + " Error saving Last Message Id: ", err));
       } catch (err) {

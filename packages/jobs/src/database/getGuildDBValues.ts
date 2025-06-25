@@ -37,6 +37,8 @@ const Schema = new mongoose.Schema<GuildSchema>({
         offset: Number,
         role: String,
       };
+      // @ts-ignore
+      if (key === "shards-eruption") acc[key].shard_type = { type: [String], enum: ["black", "red"] };
       return acc;
     }, {}),
   },

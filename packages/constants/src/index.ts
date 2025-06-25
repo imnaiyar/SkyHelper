@@ -47,4 +47,5 @@ export const REMINDERS_KEY = [
   "reset",
   "turtle",
   "fireworks-festival",
+  "shards-eruption",
 ] as const;

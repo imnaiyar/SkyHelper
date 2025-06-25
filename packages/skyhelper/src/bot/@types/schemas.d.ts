@@ -1,6 +1,7 @@
 import type { DateTime } from "luxon";
 import type { Document } from "mongoose";
 import type { DailyQuest } from "./custom.js";
+import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 
 // #region User
 export interface UserSchema extends Document {
@@ -43,7 +44,7 @@ export interface LiveUpdates {
     threadId?: string;
   };
 }
-export interface EventReminder {
+export interface ReminderConfig {
   active: boolean;
   webhook: {
     id: string;
@@ -55,18 +56,15 @@ export interface EventReminder {
   offset?: number | null;
   role: string | null;
 }
+
+type EventReminder = ReminderConfig | null;
 export interface Reminders {
   active: boolean;
+  default_role: string | null;
   events: {
-    dailies: EventReminder;
-    grandma: EventReminder;
-    turtle: EventReminder;
-    geyser: EventReminder;
-    reset: EventReminder;
-    eden: EventReminder;
-    ts: EventReminder;
-    aurora: EventReminder;
-    "fireworks-festival": EventReminder;
+    [k in (typeof REMINDERS_KEY)[number]]: k extends "shards-eruption"
+      ? (ReminderConfig & { shard_type: ("red" | "black")[] }) | null
+      : EventReminder;
   };
 }
 export interface GuildSchema extends Document {

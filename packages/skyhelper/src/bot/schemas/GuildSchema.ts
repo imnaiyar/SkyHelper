@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import type { APIGuild, APIGuildMember } from "@discordjs/core";
-import type { GuildSchema } from "@/types/schemas";
+import type { EventReminder, GuildSchema } from "@/types/schemas";
 import { LimitedCollection } from "@/utils/classes/LimitedCollection";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
 import config from "@/config";
@@ -28,22 +28,31 @@ const Schema = new mongoose.Schema<GuildSchema>({
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
-    events: REMINDERS_KEY.reduce((acc, key) => {
-      // @ts-expect-error
-      acc[key] = {
-        active: { type: Boolean, default: false },
-        webhook: {
-          id: String,
-          token: String,
-          channelId: String,
-          threadId: String,
-        },
-        last_messageId: String,
-        role: String,
-        offset: Number,
-      };
-      return acc;
-    }, {}),
+    events: REMINDERS_KEY.reduce(
+      (acc, key) => {
+        const schemaObj: any = {
+          active: { type: Boolean, default: false },
+          webhook: {
+            id: String,
+            token: String,
+            channelId: String,
+            threadId: String,
+          },
+          last_messageId: String,
+          role: String,
+          offset: Number,
+        };
+        if (key === "shards-eruption") {
+          schemaObj.shard_type = { type: [String], enum: ["black", "red"] };
+        }
+        acc[key] = {
+          type: new mongoose.Schema(schemaObj, { _id: false }),
+          default: null,
+        };
+        return acc;
+      },
+      {} as Record<(typeof REMINDERS_KEY)[number], any>,
+    ),
   },
   autoShard: {
     active: Boolean,

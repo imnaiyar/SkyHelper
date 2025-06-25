@@ -17,6 +17,7 @@ const eventChoices = [
   { name: "Daily Reset", value: "reset" },
   { name: "Eden/Weekly Reset", value: "eden" },
   { name: "Traveling Spirit", value: "ts" },
+  { name: "Shards Eruption", value: "shards-eruption" },
   { name: "Daily Quests", value: "dailies" },
   { name: "Aurora's Concert", value: "aurora" },
   { name: "Aviary Fireworks Festival", value: "fireworks-festival" },
