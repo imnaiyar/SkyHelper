@@ -6,6 +6,7 @@ import type { TSValue } from "@/utils/getTS";
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
 import { MessageFlags } from "discord-api-types/v10";
 import type { DateTime } from "luxon";
+import { Schema, SchemaStore, t as tt } from "@sapphire/string-store";
 
 /**
  * Get the response to send
@@ -165,7 +166,7 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
 };
 
 export function getShardReminderResponse(now: DateTime, offset: number = 0, shardType?: ("red" | "black")[]) {
-  const nextShard = ShardsUtil.getNextShard(shardType);
+  const nextShard = ShardsUtil.getNextShard(now, shardType);
   if (!nextShard) return null;
 
   // shards lands at 40th second but the job interval runs every minute,
@@ -178,14 +179,27 @@ export function getShardReminderResponse(now: DateTime, offset: number = 0, shar
 
   if (!(offsetted >= lowerBound.toMillis() && offsetted <= upperBound.toMillis())) return null;
 
-  const text = `${nextShard.index}${ShardsUtil.getSuffix(nextShard.index)} will fall at <t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`;
+  const text = `**${nextShard.index}${ShardsUtil.getSuffix(nextShard.index)} shard** will fall at <t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`;
   return container(
-    section(thumbnail(nextShard.info.image), text),
+    section(thumbnail(nextShard.info.image), text, emojis.tree_top + nextShard.info.type),
     separator(true, 1),
     section(
-      { type: 2, custom_id: "ss", label: "Shard Info", style: 2 },
-      `Shard: ${nextShard.info.area}`,
+      {
+        type: 2,
+        custom_id: store.serialize(CustomId.ShardsRemindersDetails, { date: nextShard.start.toFormat("dd-MM-yyyy"), user: null }),
+        label: "Shard Info",
+        style: 2,
+      },
+      `Location: ${nextShard.info.area}`,
       `Timeline: <t:${nextShard.start.toUnixInteger()}:T> - <t:${nextShard.end.toUnixInteger()}:T>`,
     ),
   );
 }
+
+// Doing this just so custom_id is properly created that can also be parsed by bot
+// ideal way would be move it to someplace common like /constants package, but some type issues going on there with this
+// TODO: unify this in common package
+enum CustomId {
+  ShardsRemindersDetails = 22,
+}
+const store = new SchemaStore().add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", tt.string));

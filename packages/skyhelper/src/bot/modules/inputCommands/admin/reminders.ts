@@ -14,7 +14,7 @@ import {
   ComponentType,
 } from "@discordjs/core";
 import { REMINDERS_KEY, SendableChannels } from "@skyhelperbot/constants";
-import { SkytimesUtils, type EventKey, container, textDisplay, row, separator } from "@skyhelperbot/utils";
+import { SkytimesUtils, type EventKey, container, textDisplay, row, separator, ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
@@ -99,18 +99,17 @@ export default {
 
         await guildSettings.save();
         const eventToGet = ["dailies", "reset"].includes(event) ? "daily-reset" : event;
-        let nextOccurence;
-        if (eventToGet === "ts") {
-          nextOccurence = (await getTSData())!.nextVisit;
-        } else if (eventToGet === "shards-eruption") {
-          nextOccurence = DateTime.now();
-        } else {
-          nextOccurence = SkytimesUtils.getNextEventOccurrence(eventToGet as EventKey);
-        }
+        const nextOccurence = await getRemindersNextOccurence(eventToGet, offset, shard_type);
         await helper.editReply({
           components: [
             textDisplay(
-              `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${ch.id}>${role ? ` with role <@&${role.id}>` : ""}.\n- -# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence.toUnixInteger()}:R>${offset > 0 ? " " + offset + " minutes earlier." : ""}`,
+              `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${ch.id}>${role ? ` with role <@&${role.id}>` : ""}.`,
+            ),
+            separator(true, 1),
+            textDisplay(
+              `-# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence}:R>`,
+              (offset ? `-# Offset: \`${offset}\` minutes\n` : "") +
+                (shard_type.length ? `-# Shard Type: ${shard_type.join(", ")}` : ""),
             ),
           ],
           allowed_mentions: { parse: [] },
@@ -225,4 +224,21 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
   await helper.client.api.interactions.deferMessageUpdate(response.id, response.token);
 
   return response.data.values as ("black" | "red")[];
+}
+
+async function getRemindersNextOccurence(
+  event: (typeof REMINDERS_KEY)[number] | "daily-reset",
+  offset: number,
+  shardType: ("red" | "black")[] = [],
+) {
+  let nextOccurence: DateTime;
+  if (event === "ts") {
+    nextOccurence = (await getTSData())!.nextVisit;
+  } else if (event === "shards-eruption") {
+    const nextShard = ShardsUtil.getNextShardFromNow(shardType);
+    nextOccurence = nextShard.start;
+  } else {
+    nextOccurence = SkytimesUtils.getNextEventOccurrence(event as EventKey);
+  }
+  return nextOccurence.minus({ minutes: offset }).toUnixInteger();
 }

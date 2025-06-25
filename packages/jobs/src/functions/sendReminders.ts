@@ -7,7 +7,7 @@ import { throttleRequests } from "./throttleRequests.js";
 import getTS from "@/utils/getTS.js";
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
-import { MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
+import { AllowedMentionsTypes, MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
 import { getResponse, getShardReminderResponse, getTSResponse } from "./getResponses.js";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
 
@@ -58,7 +58,7 @@ export async function reminderSchedules(): Promise<void> {
             const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as Array<"red" | "black">);
             const data = getShardReminderResponse(now, offset || 0, shard_type);
             if (!data) continue;
-            response = { components: [...(roleM ? [textDisplay(roleM)] : []), data] };
+            response = data;
             break;
           }
           case "ts":
@@ -92,6 +92,7 @@ export async function reminderSchedules(): Promise<void> {
               ...response,
               components: [...(roleM ? [textDisplay(roleM)] : []), ...response.components!],
               flags: MessageFlags.IsComponentsV2,
+              allowed_mentions: { parse: [AllowedMentionsTypes.Role, AllowedMentionsTypes.Everyone] },
             },
             { thread_id: webhook.threadId, retries: 3 },
           )

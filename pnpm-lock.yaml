@@ -110,6 +110,9 @@ importers:
       '@imnaiyar/framework':
         specifier: latest
         version: 1.2.3
+      '@sapphire/string-store':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@skyhelperbot/constants':
         specifier: workspace:^
         version: link:../constants

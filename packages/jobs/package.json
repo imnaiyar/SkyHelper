@@ -40,6 +40,7 @@
   "dependencies": {
     "@discordjs/rest": "^2.3.0",
     "@imnaiyar/framework": "latest",
+    "@sapphire/string-store": "^2.0.0",
     "@skyhelperbot/constants": "workspace:^",
     "@skyhelperbot/utils": "workspace:^",
     "discord-api-types": "0.38.10",
