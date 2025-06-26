@@ -180,8 +180,9 @@ export function getShardReminderResponse(now: DateTime, offset: number = 0, shar
   if (!(offsetted >= lowerBound.toMillis() && offsetted <= upperBound.toMillis())) return null;
 
   const text = `**${nextShard.index}${ShardsUtil.getSuffix(nextShard.index)} shard** will fall at <t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`;
+
   return container(
-    section(thumbnail(nextShard.info.image), text, emojis.tree_top + nextShard.info.type),
+    section(thumbnail(nextShard.info.image), text, emojis.tree_end + nextShard.info.type),
     separator(true, 1),
     section(
       {
