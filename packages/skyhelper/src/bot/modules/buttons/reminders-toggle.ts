@@ -16,7 +16,7 @@ import {
 } from "discord-api-types/v10";
 
 export default defineButton({
-  data: { name: "reminders-toggle" },
+  data: { name: "reminders-manage" },
   id: CustomId.RemindersManage,
   async execute(interaction, _t, helper, { key: event_key, page }) {
     const key = event_key as (typeof REMINDERS_KEY)[number];
@@ -146,7 +146,6 @@ export default defineButton({
         if (event?.webhook) await rem_helper.deleteAfterChecks(event.webhook, [key], settings);
         events[key] = null;
         if (!rem_helper.checkAnyActive(settings)) settings.reminders.active = false;
-        await settings.save();
       }
 
       if (compHelper.isChannelSelect(i)) {
