@@ -1,6 +1,6 @@
 import type { Event } from "@/structures";
 import type { GatewayDispatchEvents } from "@discordjs/core";
-import type { EventReminder, LiveUpdates } from "@/types/schemas";
+import type { LiveUpdates } from "@/types/schemas";
 import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 
 const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { data: { channel_id, guild_id } }) => {
@@ -15,7 +15,7 @@ const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { da
   const disabledEvents: string[] = [];
 
   // group events with their keys
-  const targets: [string, LiveUpdates | EventReminder][] = [
+  const targets = [
     ...Object.entries(guildSettings.reminders.events),
     ...(["autoShard", "autoTimes"] as const).map((key) => [key, guildSettings[key]] as [string, LiveUpdates]),
   ];
