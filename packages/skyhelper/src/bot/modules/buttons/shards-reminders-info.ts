@@ -16,6 +16,6 @@ export default defineButton({
         flags: MessageFlags.Ephemeral,
       }));
     }
-    await helper.reply(buildShardEmbed(shardDate, t, true));
+    await helper.reply({ ...buildShardEmbed(shardDate, t, true), flags: MessageFlags.IsComponentV2 | MessageFlags.Ephemeral });
   },
 });
