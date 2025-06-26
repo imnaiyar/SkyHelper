@@ -181,7 +181,7 @@ export function getShardReminderResponse(now: DateTime, offset: number = 0, shar
 
   const text = `**${nextShard.index}${ShardsUtil.getSuffix(nextShard.index)} shard** will fall at <t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`;
 
-  return container(
+  return [
     section(thumbnail(nextShard.info.image), text, emojis.tree_end + nextShard.info.type),
     separator(true, 1),
     section(
@@ -194,7 +194,7 @@ export function getShardReminderResponse(now: DateTime, offset: number = 0, shar
       `Location: ${nextShard.info.area}`,
       `Timeline: <t:${nextShard.start.toUnixInteger()}:T> - <t:${nextShard.end.toUnixInteger()}:T>`,
     ),
-  );
+  ];
 }
 
 // Doing this just so custom_id is properly created that can also be parsed by bot
