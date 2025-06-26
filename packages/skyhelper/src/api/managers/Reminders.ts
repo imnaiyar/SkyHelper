@@ -5,7 +5,7 @@ import type { ReminderFeature } from "../types.js";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
 import { HttpException, HttpStatus } from "@nestjs/common";
-import type { GuildSchema } from "@/types/schemas";
+import type { GuildSchema, ReminderConfigWithShards } from "@/types/schemas";
 /* const payload = (r: GuildSchema["reminders"]) => ({
   channel: r.webhook.channelId ?? undefined,
   default_role: r.default_role ?? undefined,
@@ -16,32 +16,21 @@ import type { GuildSchema } from "@/types/schemas";
 }); */
 
 const formatReminders = (r: GuildSchema["reminders"]) => {
-  const obj = Object.entries(r.events).reduce(
-    (acc, [key, value]) => {
-      acc[key as (typeof REMINDERS_KEY)[number]] = {
-        active: value?.active || false,
-        channelId: value?.webhook?.channelId ?? null,
-        role: value?.role ?? null,
-        offset: value?.offset ?? null,
-      };
+  const obj = Object.entries(r.events).reduce((acc, [key, value]) => {
+    // @ts-expect-error
+    acc[key as (typeof REMINDERS_KEY)[number]] = {
+      active: value?.active || false,
+      channelId: value?.webhook?.channelId ?? null,
+      role: value?.role ?? null,
+      offset: value?.offset ?? null,
+    };
 
-      if (key === "shards-eruption") {
-        // @ts-expect-error id have patience to deal with this, it is just present
-        acc[key as (typeof REMINDERS_KEY)[number]].shard_type = value?.shard_type ?? null;
-      }
-      return acc;
-    },
-    {} as Record<
-      (typeof REMINDERS_KEY)[number],
-      {
-        active: boolean;
-        channelId: string | null;
-        role: string | null;
-        offset: number | null;
-        shard_type?: ("black" | "red")[] | null;
-      }
-    >,
-  );
+    if (key === "shards-eruption") {
+      // @ts-expect-error id have patience to deal with this, it is just present
+      acc[key].shard_type = value?.shard_type ?? null;
+    }
+    return acc;
+  }, {} as ReminderFeature);
   return obj;
 };
 export class Reminders {
@@ -57,8 +46,9 @@ export class Reminders {
 
     const utils = new RemindersUtils(client);
     const webhooksToDelete = new Set<{ id: string; token: string }>();
-    for (const [key, value] of Object.entries(body)) {
-      let event = settings.reminders.events[key as (typeof REMINDERS_KEY)[number]];
+    for (const [k, value] of Object.entries(body)) {
+      const key = k as (typeof REMINDERS_KEY)[number];
+      const event = settings.reminders.events[key];
 
       if (!value.active) {
         if (event?.webhook) webhooksToDelete.add(event.webhook);
@@ -71,21 +61,22 @@ export class Reminders {
       if (!value.channelId) {
         throw new HttpException("ChannelId must be present for active events.", HttpStatus.BAD_REQUEST);
       }
-      if (!event) {
-        event = {
-          active: true,
-          webhook: null,
-          last_messageId: null,
-          role: null,
-          offset: null,
-        };
-      }
 
-      event.role = value.role ?? null;
-      event.offset = value.offset ?? null;
+      const data = {
+        active: true,
+        last_messageId: null,
+        ...event,
+        role: value.role ?? null,
+        offset: value.offset ?? null,
+      } as ReminderConfigWithShards;
+
+      if (key === "shards-eruption") data.shard_type = body["shards-eruption"].shard_type ?? ["red", "black"];
+
       settings.reminders.active = true; // mark reminder as active as at one event is active
 
-      if (event.webhook?.channelId === value.channelId) continue; // No change, skip
+      settings.reminders.events[key] = data;
+
+      if (data.webhook?.channelId === value.channelId) continue; // No change, skip
 
       // If channel changed or webhook is missing, create a new one
       const wb = await utils.createWebhookAfterChecks(value.channelId, {
@@ -95,11 +86,11 @@ export class Reminders {
 
       if (!wb.token) throw new Error("Failed to create webhook, token is missing.");
 
-      if (event.webhook) {
+      if (event?.webhook) {
         webhooksToDelete.add(event.webhook);
       }
 
-      event.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
+      settings.reminders.events[key]!.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
     }
 
     const isAnyActive = RemindersUtils.checkActive(settings);
