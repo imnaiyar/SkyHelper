@@ -46,7 +46,7 @@ export interface LiveUpdates {
 }
 export interface ReminderConfig {
   active: boolean;
-  webhook: {
+  webhook?: {
     id: string;
     token: string;
     channelId: string;

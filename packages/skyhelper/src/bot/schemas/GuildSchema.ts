@@ -33,17 +33,24 @@ const Schema = new mongoose.Schema<GuildSchema>({
         const schemaObj: any = {
           active: { type: Boolean, default: false },
           webhook: {
-            id: String,
-            token: String,
-            channelId: String,
-            threadId: String,
+            type: new mongoose.Schema(
+              {
+                id: String,
+                token: String,
+                channelId: String,
+                threadId: String,
+              },
+              { _id: false },
+            ),
+            default: null,
+            required: false,
           },
-          last_messageId: String,
-          role: String,
-          offset: Number,
+          last_messageId: { type: String, default: null },
+          role: { type: String, default: null },
+          offset: { type: Number, default: 0 },
         };
         if (key === "shards-eruption") {
-          schemaObj.shard_type = { type: [String], enum: ["black", "red"] };
+          schemaObj.shard_type = { type: [String], enum: ["black", "red"], default: ["black", "red"] };
         }
         acc[key] = {
           type: new mongoose.Schema(schemaObj, { _id: false }),

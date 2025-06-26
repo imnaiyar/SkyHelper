@@ -145,6 +145,8 @@ export class InteractionCollector<
     clearTimeout(this.timer);
     this.emit("end", this.collected, reason || "stopped");
     this.ended = true;
+
+    this.removeAllListeners();
   }
 }
 export interface MessageCollectorOptions extends CollectorOptions<APIMessage> {

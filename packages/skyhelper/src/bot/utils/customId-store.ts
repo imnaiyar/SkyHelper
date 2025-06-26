@@ -27,6 +27,7 @@ export enum CustomId {
   SkyHagman,
   SkyGameLeaderboard,
   ShardsRemindersDetails,
+  RemindersManage,
 }
 
 export const store = new SchemaStore()
@@ -52,4 +53,5 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.Default).nullable("user", t.string).nullable("data", t.string))
   .add(new Schema(CustomId.SkyHagman).string("action").nullable("user", t.string))
   .add(new Schema(CustomId.SkyGameLeaderboard).string("type").nullable("user", t.string))
-  .add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", t.string));
+  .add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", t.string))
+  .add(new Schema(CustomId.RemindersManage).string("key").uint8("page").string("user"));
