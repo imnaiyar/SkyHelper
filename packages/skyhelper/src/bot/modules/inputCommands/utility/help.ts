@@ -59,7 +59,7 @@ export default {
         components: [
           {
             type: 2,
-            custom_id: client.utils.store.serialize(CustomId.Default, { data: "help-prev", user: helper.user.id }),
+            custom_id: client.utils.store.serialize(CustomId.Default, { data: "xxyshdkesudjdsj", user: helper.user.id }),
             label: t("commands:HELP.RESPONSES.BTN-PREV"),
             style: 2,
             disabled: page === 1,
@@ -114,7 +114,7 @@ export default {
       if (data.data === "next") {
         page++;
         await compHelper.update(await updateSlashMenu());
-      } else if (data.data === "help-prev") {
+      } else if (data.data === "xxyshdkesudjdsj") {
         if (page > 1) {
           page--;
           await compHelper.update(await updateSlashMenu());
