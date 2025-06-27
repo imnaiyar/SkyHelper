@@ -91,6 +91,7 @@ export interface InteractionCollectorOptions<
   channel?: APIChannel;
   componentType?: TComponent;
   interactionType?: TType;
+  userId?: string;
 }
 
 export class InteractionCollector<
@@ -101,6 +102,7 @@ export class InteractionCollector<
   public channel: APIChannel | null = null;
   public interactionType: TType = InteractionType.MessageComponent as TType;
   public componentType: TComponent | null = null;
+  public userId: string | null = null;
   constructor(
     readonly client: SkyHelper,
     readonly options: InteractionCollectorOptions<TComponent, TType>,
@@ -110,6 +112,7 @@ export class InteractionCollector<
     if (options.channel) this.channel = options.channel;
     if (options.componentType) this.componentType = options.componentType;
     if (options.interactionType) this.interactionType = options.interactionType;
+    if (options.userId) this.userId = options.userId;
     client.addListener("INTERACTION_CREATE", this.listener);
   }
   override listener({ data: int }: ToEventProps<GatewayInteractionCreateDispatchData>) {
@@ -126,6 +129,8 @@ export class InteractionCollector<
     if (this.message && this.message.id !== int.message?.id) return;
 
     if (this.channel && this.channel.id !== int.channel?.id) return;
+
+    if (this.userId && (int.member?.user || int.user!).id !== this.userId) return;
     // @ts-expect-error
     const passesFilter = this.filter(int);
     if (!passesFilter) return;
