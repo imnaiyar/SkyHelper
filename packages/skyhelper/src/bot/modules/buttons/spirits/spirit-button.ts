@@ -2,6 +2,7 @@ import { defineButton } from "@/structures";
 import { Spirits } from "@/utils/classes/Spirits";
 import { CustomId } from "@/utils/customId-store";
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
+import { row } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
 
 export default defineButton({
@@ -21,9 +22,34 @@ export default defineButton({
     }
     const manager = new Spirits(data, t, helper.client);
 
-    await helper.update({
-      components: [manager.getResponseEmbed(helper.user.id)],
-      flags: MessageFlags.IsComponentsV2,
+    const message = await helper
+      .update({
+        components: [
+          manager.getResponseEmbed(helper.user.id),
+          row({
+            type: 2,
+            custom_id: helper.client.utils.store.serialize(CustomId.Default, {
+              user: helper.user.id,
+              data: "spirit-button-back",
+            }),
+            label: "Back",
+            style: 4,
+          }),
+        ],
+        flags: MessageFlags.IsComponentsV2,
+      })
+      .then((m) => m.resource!.message!);
+
+    const collector = helper.client.componentCollector({ idle: 60_000, message, userId: helper.user.id });
+
+    collector.on("collect", async (int) => {
+      const { id, data: d } = helper.client.utils.store.deserialize(int.data.custom_id);
+      if (id !== CustomId.Default || d.data !== "spirit-button-back") return;
+
+      await helper.client.api.interactions.updateMessage(int.id, int.token, {
+        components: interaction.message.components!,
+      });
+      collector.stop();
     });
   },
 });

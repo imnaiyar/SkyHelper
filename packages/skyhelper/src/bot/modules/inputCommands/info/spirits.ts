@@ -4,7 +4,7 @@ import { Spirits } from "@/utils/classes/Spirits";
 import type { Command } from "@/structures";
 import { SPIRTIS_DATA } from "@/modules/commands-data/guide-commands";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
 import { paginate } from "@/utils/paginator";
 import { CustomId, store } from "@/utils/customId-store";
@@ -49,16 +49,23 @@ async function handleSpiritList(helper: InteractionHelper) {
   const { user, client } = helper;
   const spirits = Object.entries(client.spiritsData);
   const appMojis = [...helper.client.applicationEmojis.values()];
-  const title = textDisplay("### List Of Spirits");
+  const title = [
+    mediaGallery(
+      mediaGalleryItem(
+        "https://cdn.discordapp.com/attachments/867638574571323424/1388104684841074769/70908119_385533342122318_574799647931891712_n_copy_2000x300.jpg?ex=685fc4ba&is=685e733a&hm=a8540d5c131920d0d35b23d5a71cee0a45149eca7a3827b96a258275277ec8d5&",
+      ),
+    ),
+    textDisplay("### List Of Spirits"),
+    separator(),
+  ] as const;
 
   await paginate(
     helper,
     spirits,
-    (data, navBtns, { index }) => {
+    (data, navBtns) => {
       const comp = container(
-        title,
-        separator(),
-        ...data.flatMap(([key, spirit]) => {
+        ...title,
+        ...data.flatMap(([key, spirit], i) => {
           const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] || "" : "";
           const realmIcon = spirit.realm ? realms_emojis[spirit.realm] || "" : "";
           let icon = appMojis.filter((e) => e.name.split("_").slice(0, -1).join("_") === key.replaceAll("-", ""));
@@ -76,14 +83,15 @@ async function handleSpiritList(helper: InteractionHelper) {
                 custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: key, user: null }),
                 style: 2,
               },
-              `${mapped[0]}${mapped[1]} **${spirit.name}**\n${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}`,
+              `${mapped[0]}${mapped[1]} **${spirit.name}${spirit.extra ? spirit.extra : ""}**`,
+              `${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ")}`,
             ),
-            separator(false),
+            ...(i === data.length - 1 ? [] : [separator(false)]),
           ];
         }),
       );
       return { components: [comp, navBtns], flags: MessageFlags.IsComponentsV2 };
     },
-    { per_page: 8 },
+    { per_page: 8, user: user.id },
   );
 }
