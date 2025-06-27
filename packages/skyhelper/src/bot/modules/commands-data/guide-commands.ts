@@ -175,6 +175,7 @@ export const SPIRTIS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         type: ApplicationCommandOptionType.String,
         autocomplete: true,
         description: "search for a spirit",
+        required: false,
         description_localizations: "commands:SPIRITS.options.description",
       },
       {

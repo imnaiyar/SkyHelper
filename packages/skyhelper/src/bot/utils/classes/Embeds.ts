@@ -399,7 +399,7 @@ export async function handleRemindersStatus(
 ) {
   const title = `Reminders Status for ${guildName}`;
   const description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
-
+  const appEmojis = [...helper.client.applicationEmojis.values()];
   const paginator = await paginate(
     helper,
     Object.entries(RemindersEventsMap),
@@ -416,11 +416,13 @@ export async function handleRemindersStatus(
       );
       for (const [k, name] of cdd) {
         const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
-        let text = name;
 
-        if (!event?.active) text += " (Inactive)";
-        else text += " (Active)";
-        text = `**__${text}__**`;
+        const eventEmojis = appEmojis
+          .filter((e) => e.name.startsWith(k.replaceAll("-", "")))
+          .sort((a, b) => Number(a.name.split("_").at(-1)) - Number(b.name.split("_").at(-1)))
+          .map((e) => `<${e.animated ? "a" : ""}:${e.name}:${e.id}>`);
+
+        let text = `${eventEmojis[0]}${eventEmojis[1]}  **${name}**\n${eventEmojis[2]}${eventEmojis[3]}  ${event?.active ? "Active" : "Inactive"}`;
         text +=
           `\n-# - Channel: ` +
           ((event?.webhook?.threadId ?? event?.webhook?.channelId)

@@ -4,6 +4,7 @@ import {
   Client,
   InteractionType,
   type APIApplicationCommand,
+  type APIApplicationEmoji,
   type APIChannel,
   type APIGuildMember,
   type APIMessage,
@@ -77,6 +78,8 @@ export class SkyHelper extends Client {
   public logger = logger;
 
   public applicationCommands: Collection<string, APIApplicationCommand> = new Collection();
+
+  public applicationEmojis: Collection<string, APIApplicationEmoji> = new Collection();
 
   public timezone = "America/Los_Angeles";
 

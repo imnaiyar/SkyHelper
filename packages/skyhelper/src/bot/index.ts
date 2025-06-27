@@ -44,6 +44,11 @@ client.applicationCommands = await client.api.applicationCommands
   .getGlobalCommands(client.user.id)
   .then((cmds) => new Collection(cmds.map((c) => [c.id, c])));
 
+// fetch bot's emojis
+client.applicationEmojis = await client.api.applications
+  .getEmojis(client.user.id)
+  .then((cmds) => new Collection(cmds.items.map((c) => [c.id, c])));
+
 await client.loadModules();
 
 // Connect mongoose
