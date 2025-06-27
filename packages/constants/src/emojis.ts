@@ -17,7 +17,7 @@ export const realms_emojis = {
   "Golden Wasteland": "<:Wasteland:1150605333862027314>",
   "Vault of Knowledge": "<:Vault:1150605308364861580>",
   "Eye of Eden": "<:eden:1205960597456293969>",
-  "Aviary Village": "no_emoji",
+  "Aviary Village": "<:aviary_map:1388112731886059632>",
 };
 
 export const season_emojis = {

@@ -83,7 +83,7 @@ async function handleSpiritList(helper: InteractionHelper) {
                 custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: key, user: null }),
                 style: 2,
               },
-              `${mapped[0]}${mapped[1]} **${spirit.name}${spirit.extra ? spirit.extra : ""}**`,
+              `${mapped[0]}${mapped[1]} **${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""}**`,
               `${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ")}`,
             ),
             ...(i === data.length - 1 ? [] : [separator(false)]),
