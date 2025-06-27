@@ -8,6 +8,7 @@ import { container, row, section, separator, textDisplay } from "@skyhelperbot/u
 import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
 import { paginate } from "@/utils/paginator";
 import { CustomId, store } from "@/utils/customId-store";
+
 export default {
   async interactionRun({ t, helper, options }) {
     await helper.defer({ flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined });
@@ -60,9 +61,9 @@ async function handleSpiritList(helper: InteractionHelper) {
         ...data.flatMap(([key, spirit]) => {
           const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] || "" : "";
           const realmIcon = spirit.realm ? realms_emojis[spirit.realm] || "" : "";
-          let icon = appMojis.filter((e) => e.name.startsWith(key.replaceAll("-", "")));
+          let icon = appMojis.filter((e) => e.name.split("_").slice(0, -1).join("_") === key.replaceAll("-", ""));
           if (icon.length === 0) {
-            icon = appMojis.filter((e) => e.name.startsWith("default_spirit")); // todo: name incorrect verify
+            icon = appMojis.filter((e) => e.name.startsWith("ts"));
           }
           const mapped = icon
             .sort((a, b) => Number(a.name.split("_").at(-1)) - Number(b.name.split("_").at(-1)))
