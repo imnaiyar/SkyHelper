@@ -11,3 +11,7 @@
 
 # Turborepo
 .turbo
+
+# Image schenanigans
+**/images
+**/split
