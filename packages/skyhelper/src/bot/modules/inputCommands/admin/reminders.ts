@@ -73,7 +73,7 @@ export default {
           },
           last_messageId: null,
           offset,
-          role: role?.id ?? null,
+          role: role ? [role.id] : null,
         };
 
         if (event === "shards-eruption") {

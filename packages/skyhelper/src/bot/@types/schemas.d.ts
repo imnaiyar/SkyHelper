@@ -54,7 +54,7 @@ export interface ReminderConfig {
   } | null;
   last_messageId: string | null;
   offset?: number | null;
-  role: string | null;
+  role: string[] | null;
 }
 
 type ReminderConfigWithShards = ReminderConfig & { shard_type: ("red" | "black")[] };

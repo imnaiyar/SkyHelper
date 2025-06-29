@@ -3,7 +3,7 @@ import { z } from "zod";
 const ReminderFeatureBaseSchema = z.object({
   active: z.boolean(),
   channelId: z.string().nullable(),
-  role: z.string().nullable(),
+  role: z.array(z.string()).nullable(),
   offset: z.number().min(1).max(15).nullable(),
 });
 
