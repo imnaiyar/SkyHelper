@@ -21,7 +21,7 @@ const formatReminders = (r: GuildSchema["reminders"]) => {
     acc[key as (typeof REMINDERS_KEY)[number]] = {
       active: value?.active || false,
       channelId: value?.webhook?.channelId ?? null,
-      role: value?.role ? value.role : null,
+      role: value?.role ?? null,
       offset: value?.offset ?? null,
     };
 

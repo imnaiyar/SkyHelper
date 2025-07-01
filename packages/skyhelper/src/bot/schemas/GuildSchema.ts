@@ -46,7 +46,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
             required: false,
           },
           last_messageId: { type: String, default: null },
-          role: { type: [String], default: null },
+          role: { type: String, default: null },
           offset: { type: Number, default: 0 },
         };
         if (key === "shards-eruption") {

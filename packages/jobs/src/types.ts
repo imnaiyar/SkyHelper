@@ -36,7 +36,7 @@ export interface LiveUpdates {
 export interface ReminderConfig {
   active: boolean;
   last_messageId?: string;
-  role: string[] | null;
+  role: string | null;
   offset?: number | null;
   webhook?: {
     id: string;

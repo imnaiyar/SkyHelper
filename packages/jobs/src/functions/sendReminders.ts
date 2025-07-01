@@ -49,11 +49,7 @@ export async function reminderSchedules(): Promise<void> {
       try {
         const wb = new Webhook({ token: webhook.token, id: webhook.id });
 
-        const roleM =
-          role &&
-          t("features:reminders.ROLE_MENTION", {
-            ROLE: role.map((r) => (r === guild._id ? "@everyone" : `<@&${r}>`)).join(", "),
-          });
+        const roleM = role && t("features:reminders.ROLE_MENTION", { ROLE: role === guild._id ? "@everyone" : `<@&${role}>` });
 
         let response: RESTPostAPIChannelMessageJSONBody | null = null;
 

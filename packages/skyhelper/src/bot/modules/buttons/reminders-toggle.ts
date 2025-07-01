@@ -74,11 +74,9 @@ export default defineButton({
           type: ComponentType.RoleSelect,
           custom_id: store.serialize(19, { data: "reminder_manage_role", user: helper.user.id }),
           placeholder: "Manage this reminder's role.",
-          max_values: 4,
+          max_values: 1,
           min_values: 0,
-          default_values: event?.role?.length
-            ? event.role.map((r) => ({ id: r, type: SelectMenuDefaultValueType.Role }))
-            : undefined,
+          default_values: event?.role ? [{ id: event.role, type: SelectMenuDefaultValueType.Role }] : undefined,
         }),
         row({
           type: ComponentType.StringSelect,
@@ -199,7 +197,7 @@ export default defineButton({
           shard_type: event && "shard_type" in event ? event?.shard_type : ["black", "red"],
           webhook: event?.webhook || undefined,
           ...events[key],
-          role: i.data.values.length ? i.data.values : null,
+          role: i.data.values[0] || null,
         };
       }
 
