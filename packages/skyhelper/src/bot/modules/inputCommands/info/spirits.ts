@@ -65,7 +65,7 @@ async function handleSpiritList(helper: InteractionHelper) {
     (data, navBtns) => {
       const comp = container(
         ...title,
-        ...data.flatMap(([key, spirit], i) => {
+        ...data.flatMap(([key, spirit]) => {
           const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] || "" : "";
           const realmIcon = spirit.realm ? realms_emojis[spirit.realm] || "" : "";
           let icon = appMojis.filter((e) => e.name.split("_").slice(0, -1).join("_") === key.replaceAll("-", ""));
@@ -86,12 +86,11 @@ async function handleSpiritList(helper: InteractionHelper) {
               `${mapped[0]}${mapped[1]} **${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
               `${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") || ""}`,
             ),
-            ...(i === data.length - 1 ? [] : [separator(false)]),
           ];
         }),
       );
       return { components: [comp, navBtns], flags: MessageFlags.IsComponentsV2 };
     },
-    { per_page: 8, user: user.id },
+    { per_page: 10, user: user.id },
   );
 }
