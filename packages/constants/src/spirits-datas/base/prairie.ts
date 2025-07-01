@@ -202,7 +202,7 @@ const data: Record<string, SpiritsData> = {
     ],
   },
   worshiper: {
-    name: "Ceremonial Worshipper",
+    name: "Ceremonial Worshiper",
     image: "https://static.wikia.nocookie.net/sky-children-of-the-light/images/3/32/Prairie-Spirit-Ceremonial-Worshiper.png",
     type: "Regular Spirit",
     realm: "Daylight Prairie",
