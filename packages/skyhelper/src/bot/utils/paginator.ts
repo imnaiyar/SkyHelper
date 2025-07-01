@@ -24,15 +24,27 @@ type PaginatorOptions = {
 
   /**
    * Label on the next button
-   * * default: "Next"
+   * * default: ">"
    */
   next_label?: string;
 
   /**
    * Label on the previous button
-   * * default: "Previous"
+   * * default: "<"
    */
   previous_label?: string;
+
+  /**
+   * Label on fast forward button
+   * * default: ">>"
+   */
+  fast_forward_label?: string;
+
+  /**
+   * Label on rewind button
+   * * default: "<<"
+   */
+  rewind_label?: string;
 
   /**
    * User ID to restrict pagination to.
@@ -83,8 +95,10 @@ export async function paginate<U, T extends U[]>(
   const { client } = helper;
   const {
     per_page = 10,
-    next_label = "Next",
-    previous_label = "Previous",
+    next_label = ">",
+    previous_label = "<",
+    fast_forward_label = ">>",
+    rewind_label = "<<",
     user = null,
     idle = 6e4,
     disableOnEnd = true,
@@ -96,33 +110,15 @@ export async function paginate<U, T extends U[]>(
   const createPageContent = (): RESTPostAPIChannelMessageJSONBody => {
     const start = page * per_page;
     const end = start + per_page;
-    const navBtns: APIActionRowComponent<APIComponentInMessageActionRow> = {
-      type: 1,
-      id: 57, // for identification
-      components: [
-        {
-          type: 2,
-          label: previous_label,
-          style: 2,
-          custom_id: store.serialize(19, { data: "xxyyzzkkll", user }),
-          disabled: page === 0,
-        },
-        {
-          type: 2,
-          label: `Page ${page + 1}/${totalPages}`,
-          style: 3,
-          custom_id: "dsvdf",
-          disabled: true,
-        },
-        {
-          type: 2,
-          label: next_label,
-          style: 2,
-          custom_id: store.serialize(19, { data: "nav_next", user }),
-          disabled: page === totalPages - 1,
-        },
-      ],
-    };
+    const navBtns: APIActionRowComponent<APIComponentInMessageActionRow> = createNavButtons(
+      page,
+      totalPages,
+      user,
+      next_label,
+      previous_label,
+      fast_forward_label,
+      rewind_label,
+    );
     return callback(data.slice(start, end) as T, navBtns, { index: page, total_page: totalPages });
   };
 
@@ -144,12 +140,22 @@ export async function paginate<U, T extends U[]>(
     const { id, data: d } = store.deserialize(interaction.data.custom_id);
     if (id !== 19) return;
 
-    if (!["nav_next", "xxyyzzkkll"].includes(d.data!)) return; // check for data here so that idle state can be reset even for other interaction
-
-    if (d.data === "nav_next") {
-      page = Math.min(page + 1, totalPages - 1);
-    } else if (d.data === "xxyyzzkkll") {
-      page = Math.max(page - 1, 0);
+    if (!["nav_next", "xxyyzzkkll", "start", "end"].includes(d.data!)) return; // check for data here so that idle state can be reset even for other interaction
+    switch (d.data) {
+      case "start":
+        page = 0;
+        break;
+      case "end":
+        page = totalPages - 1;
+        break;
+      case "nav_next":
+        page = Math.min(page + 1, totalPages - 1);
+        break;
+      case "xxyyzzkkll":
+        page = Math.max(page - 1, 0);
+        break;
+      default:
+        break;
     }
     await client.api.interactions.updateMessage(interaction.id, interaction.token, createPageContent());
   });
@@ -185,4 +191,56 @@ export async function paginate<U, T extends U[]>(
   }
 
   return collector;
+}
+
+function createNavButtons(
+  page: number,
+  totalPages: number,
+  user: string | null,
+  next_label: string,
+  previous_label: string,
+  fast_forward_label: string,
+  rewind_label: string,
+): APIActionRowComponent<APIComponentInMessageActionRow> {
+  return {
+    type: 1,
+    id: 57, // for identification
+    components: [
+      {
+        type: 2,
+        label: rewind_label,
+        custom_id: store.serialize(19, { data: "start", user }),
+        style: 2,
+        disabled: page === 0,
+      },
+      {
+        type: 2,
+        label: previous_label,
+        style: 1,
+        custom_id: store.serialize(19, { data: "xxyyzzkkll", user }),
+        disabled: page === 0,
+      },
+      {
+        type: 2,
+        label: `${page + 1}/${totalPages}`,
+        style: 4,
+        custom_id: "dsvdf",
+        disabled: true,
+      },
+      {
+        type: 2,
+        label: next_label,
+        style: 1,
+        custom_id: store.serialize(19, { data: "nav_next", user }),
+        disabled: page === totalPages - 1,
+      },
+      {
+        type: 2,
+        label: fast_forward_label,
+        custom_id: store.serialize(19, { data: "end", user }),
+        style: 2,
+        disabled: page === totalPages - 1,
+      },
+    ],
+  };
 }
