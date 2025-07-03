@@ -22,6 +22,7 @@ const RoleMetadataKeySchema = z.object({
 type RoleMetadataKey = z.infer<typeof RoleMetadataKeySchema>;
 
 const UserIDPredicate = new ZodValidator(z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID"), "Invalid 'user' Param");
+
 @Controller("/users")
 export class UsersController {
   // eslint-disable-next-line

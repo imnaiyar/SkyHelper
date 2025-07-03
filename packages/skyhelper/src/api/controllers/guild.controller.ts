@@ -8,16 +8,24 @@ import { z } from "zod";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { ChannelType, type APITextChannel } from "@discordjs/core";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, getSchemaPath } from "@nestjs/swagger";
+import { GuildInfoDto, ReminderFeatureDto } from "../types.dto.js";
 const GuildIDPredicate = new ZodValidator(
   z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID"),
   "Invalid 'guild' Param",
 );
+
+const GuilID = (name: string) => ApiParam({ name, type: String, description: "The ID of the guild", required: true });
+
 const FeaturePredicate = new ZodValidator(z.enum(["live-updates", "reminders"]), "Invalid 'feature' Param");
 
+@ApiBearerAuth("auth-token")
 @Controller("/guilds/:guild")
 export class GuildController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
+  @GuilID("guild")
+  @ApiResponse({ type: GuildInfoDto, description: "The basic guild info" })
   @Get()
   async getGuild(@Param("guild", GuildIDPredicate) guild: string): Promise<GuildInfo | "null"> {
     const data = this.bot.guilds.get(guild);
@@ -36,6 +44,19 @@ export class GuildController {
       enabledFeatures: actives,
     };
   }
+  @GuilID("guild")
+  @ApiBody({ type: GuildInfoDto, description: "The basic guild info" })
+  @ApiResponse({
+    schema: {
+      oneOf: [
+        { $ref: getSchemaPath(GuildInfoDto), description: "The update response" },
+        { type: "string", example: "null", description: "Guild not found" },
+      ],
+    },
+  })
+  @GuilID("guild")
+  @ApiBody({ type: GuildInfoDto, description: "The updated guild info" })
+  @ApiResponse({ schema: { oneOf: [{ $ref: getSchemaPath(GuildInfoDto) }, { type: "string", example: "null" }] } })
   @Patch()
   async updateGuild(
     @Param("guild", GuildIDPredicate) guild: string,
@@ -58,6 +79,13 @@ export class GuildController {
     };
   }
 
+  @GuilID("guild")
+  @ApiParam({ name: "feature", enum: ["live-updates", "reminders"] })
+  @ApiResponse({
+    status: 200,
+    description: "Returns the feature data if enabled, otherwise returns null or undefined",
+    type: Object,
+  })
   @Get("/features/:feature")
   async getFeature(
     @Param("guild", GuildIDPredicate) guild: keyof Features,
@@ -74,6 +102,16 @@ export class GuildController {
     return response;
   }
 
+  @GuilID("guild")
+  @ApiParam({ name: "feature", enum: ["live-updates", "reminders"] })
+  @ApiResponse({
+    schema: {
+      oneOf: [
+        { type: "string", example: "Success" },
+        { type: "string", example: "null" },
+      ],
+    },
+  })
   @Post("/features/:feature")
   async enableFeature(@Param("guild", GuildIDPredicate) guild: string, @Param("feature", FeaturePredicate) feature: string) {
     let response;
@@ -87,6 +125,18 @@ export class GuildController {
     return response;
   }
 
+  @ApiParam({ name: "feature", enum: ["live-updates", "reminders"] })
+  @ApiResponse({
+    schema: {
+      oneOf: [
+        { $ref: getSchemaPath(ReminderFeatureDto) },
+        { type: "object", properties: { times: { type: "string", nullable: true }, shards: { type: "string", nullable: true } } },
+        { type: "string", example: "null" },
+      ],
+    },
+    description: "Returns the updated feature data or null if not found",
+  })
+  @GuilID("guild")
   @Patch("/features/:feature")
   async updateFeature(
     @Param("guild", GuildIDPredicate) guild: string,
@@ -110,6 +160,17 @@ export class GuildController {
     return response;
   }
 
+  @GuilID("guild")
+  @ApiParam({ name: "feature", enum: ["live-updates", "reminders"] })
+  @ApiResponse({
+    schema: {
+      oneOf: [
+        { type: "string", example: "Success" },
+        { type: "string", example: "null" },
+      ],
+    },
+    description: "Returns success status or null if feature deletion failed",
+  })
   @Delete("/features/:feature")
   async disableFeature(
     @Param("guild", GuildIDPredicate) guild: string,
@@ -126,6 +187,19 @@ export class GuildController {
     return response;
   }
 
+  @GuilID("guild")
+  @ApiResponse({
+    schema: {
+      oneOf: [
+        {
+          type: "array",
+          description: "Array containing APITextChannel that bot has MangeWebhooks perms in",
+        },
+        { type: "null" },
+      ],
+    },
+    description: "Returns an array of guild text channels where the bot has appropriate permissions, or null if guild not found",
+  })
   @Get("/channels")
   async getChannels(@Param("guild", GuildIDPredicate) guild: string) {
     const g = this.bot.guilds.get(guild);
@@ -140,6 +214,19 @@ export class GuildController {
     ];
   }
 
+  @GuilID("guild")
+  @ApiResponse({
+    schema: {
+      oneOf: [
+        {
+          type: "array",
+          description: "Array containing non-managed guild roles",
+        },
+        { type: "null" },
+      ],
+    },
+    description: "Returns an array of non-managed guild roles, or null if guild not found",
+  })
   @Get("/roles")
   async getRoles(@Param("guild", GuildIDPredicate) guild: string) {
     const roles = this.bot.guilds.get(guild)?.roles;
