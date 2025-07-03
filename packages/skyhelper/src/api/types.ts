@@ -1,3 +1,5 @@
+import { SnowflakeRegex } from "@sapphire/discord-utilities";
+import { supportedLang } from "@skyhelperbot/constants";
 import { z } from "zod";
 
 const ReminderFeatureBaseSchema = z.object({
@@ -85,3 +87,18 @@ export const TSDataSchema = z.object({
 });
 
 export type TSData = z.infer<typeof TSDataSchema>;
+
+export const GetShardsParams = z.object({
+  date: z
+    .string()
+    .describe("The date for which to get the shards, in the format 'YYYY-MM-DD'")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in the format 'YYYY-MM-DD'")
+    .optional(),
+  noBtn: z.enum(["true", "false"]).optional(),
+  user: z.string().regex(SnowflakeRegex, "Must be a valid user Id.").optional(),
+  locale: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
+});
+
+export const GetTimesParams = z.object({
+  locale: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
+});

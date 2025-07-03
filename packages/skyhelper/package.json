@@ -19,7 +19,7 @@
   "scripts": {
     "commands:dev": "tsx --env-file=.env src/bot/handlers/registerCommands.ts",
     "start": "node dist/bot/index.js",
-    "dev": "tsx --env-file=.env src/bot/index.js",
+    "dev": "tsx --env-file=.env src/api/main.js",
     "build": "tsc -p tsconfig.json",
     "lint": "eslint --fix src",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --import ./scripts/register-loader.mjs\" jest",
@@ -41,6 +41,7 @@
     "@nestjs/common": "^11.0.6",
     "@nestjs/core": "^11.0.6",
     "@nestjs/platform-express": "^11.0.6",
+    "@nestjs/swagger": "^11.2.0",
     "@sapphire/discord-utilities": "^3.4.4",
     "@sapphire/string-store": "^2.0.0",
     "@sentry/cli": "^2.37.0",

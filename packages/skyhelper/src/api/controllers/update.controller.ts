@@ -4,6 +4,9 @@ import { EventDataSchema, TSDataSchema, type EventData, type TSData } from "../t
 import type { DailyQuestsSchema } from "@/types/schemas";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { z } from "zod";
+import { ApiBearerAuth, ApiBody, ApiResponse } from "@nestjs/swagger";
+import { EventDataDto, TSDataDto } from "../types.dto.js";
+import { createDtoFromZod } from "../createDto.js";
 
 const QuestSchema = z.object({
   title: z.string(),
@@ -26,6 +29,8 @@ const QuestsSchema = z.object({
   seasonal_candles: QuestSchema.optional(),
 });
 
+class QuestsDTO extends createDtoFromZod(QuestsSchema) {}
+@ApiBearerAuth("auth-token")
 @Controller("/update")
 export class UpdateController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
@@ -40,6 +45,9 @@ export class UpdateController {
       index: data.index.toString(),
     };
   }
+
+  @ApiBody({ type: TSDataDto, description: "The TS data to update" })
+  @ApiResponse({ status: 200, description: "Returns the updated TS data", type: TSDataDto })
   @Patch("ts")
   async updateTS(@Body(new ZodValidator(TSDataSchema)) body: TSData): Promise<TSData> {
     const data = await this.bot.schemas.getTS();
@@ -56,6 +64,7 @@ export class UpdateController {
     return body;
   }
 
+  @ApiResponse({ status: 200, description: "Returns the current special even data", type: EventDataDto })
   // Events
   @Get("events")
   async getEvents(): Promise<EventData> {
@@ -67,6 +76,8 @@ export class UpdateController {
     };
   }
 
+  @ApiBody({ type: EventDataDto, description: "The event data to update" })
+  @ApiResponse({ status: 200, description: "Returns the updated event data", type: EventDataDto })
   @Patch("events")
   async updateEvent(@Body(new ZodValidator(EventDataSchema)) body: EventData): Promise<EventData> {
     const data = await this.bot.schemas.getEvent();
@@ -80,12 +91,23 @@ export class UpdateController {
     return body;
   }
 
+  @ApiResponse({
+    status: 200,
+    description: "Returns the daily quests data",
+    type: QuestsDTO,
+  })
   @Get("quests")
   async getQuests(): Promise<DailyQuestsSchema> {
     const data = await this.bot.schemas.getDailyQuests();
     return data;
   }
 
+  @ApiBody({ type: QuestsDTO, description: "The daily quests data to update" })
+  @ApiResponse({
+    status: 200,
+    description: "Returns the updated daily quests data",
+    type: QuestsDTO,
+  })
   @Patch("quests")
   async patchQuests(@Body(new ZodValidator(QuestsSchema)) body: z.infer<typeof QuestsSchema>): Promise<DailyQuestsSchema> {
     const questSettings = await this.bot.schemas.getDailyQuests();

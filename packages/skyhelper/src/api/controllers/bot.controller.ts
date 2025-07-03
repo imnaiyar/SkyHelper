@@ -2,6 +2,7 @@ import { Controller, Get, Inject } from "@nestjs/common";
 import { SkyHelper as BotService } from "@/structures";
 import type { BotStats, SpiritData } from "../types.js";
 import type { SeasonalSpiritData, SpiritsData } from "@skyhelperbot/constants/spirits-datas";
+import { ApiResponse } from "@nestjs/swagger";
 function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
   return "ts" in data;
 }
@@ -9,6 +10,7 @@ function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
 export class BotController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
+  @ApiResponse({ status: 200, description: "Returns the bot statistics.", type: Object })
   @Get()
   async getGuild(): Promise<BotStats> {
     const guilds = this.bot.guilds.size;
@@ -25,6 +27,7 @@ export class BotController {
       commands: commands,
     };
   }
+  @ApiResponse({ status: 200, description: "Returns the bot spirits data.", type: [Object] })
   @Get("spirits")
   async getSpirits(): Promise<SpiritData[]> {
     const spirits = this.bot.spiritsData;
