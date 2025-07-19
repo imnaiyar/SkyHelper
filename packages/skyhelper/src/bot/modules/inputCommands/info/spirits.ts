@@ -91,6 +91,6 @@ async function handleSpiritList(helper: InteractionHelper) {
       );
       return { components: [comp, navBtns], flags: MessageFlags.IsComponentsV2 };
     },
-    { per_page: 10, user: user.id },
+    { per_page: 8, user: user.id },
   );
 }
