@@ -1,0 +1,884 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["App"]
+      }
+    },
+    "/shards-embed": {
+      "get": {
+        "operationId": "getShardsEmbed",
+        "parameters": [
+          {
+            "description": "The date for which to get the shards, in the format 'YYYY-MM-DD'",
+            "required": false,
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          {
+            "required": false,
+            "name": "noBtn",
+            "in": "query",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/noBtn"
+                }
+              ]
+            }
+          },
+          {
+            "description": "",
+            "required": false,
+            "name": "user",
+            "in": "query",
+            "schema": {
+              "pattern": "^(?<id>\\d{17,20})$",
+              "type": "string"
+            }
+          },
+          {
+            "required": false,
+            "name": "locale",
+            "in": "query",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/locale"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["App"]
+      }
+    },
+    "/times-embed": {
+      "get": {
+        "operationId": "getTimesEmbed",
+        "parameters": [
+          {
+            "required": false,
+            "name": "locale",
+            "in": "query",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/locale"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["App"]
+      }
+    },
+    "/guilds/{guild}": {
+      "get": {
+        "operationId": "getGuild",
+        "parameters": [
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "The basic guild info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuildInfoDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      },
+      "patch": {
+        "operationId": "updateGuild",
+        "parameters": [
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "The updated guild info",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuildInfoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GuildInfoDto",
+                      "description": "The update response"
+                    },
+                    {
+                      "type": "string",
+                      "example": "null",
+                      "description": "Guild not found"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      }
+    },
+    "/guilds/{guild}/features/{feature}": {
+      "get": {
+        "operationId": "getFeature",
+        "parameters": [
+          {
+            "name": "feature",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": ["live-updates", "reminders"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the feature data if enabled, otherwise returns null or undefined",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      },
+      "post": {
+        "operationId": "enableFeature",
+        "parameters": [
+          {
+            "name": "feature",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": ["live-updates", "reminders"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "example": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      },
+      "patch": {
+        "operationId": "updateFeature",
+        "parameters": [
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "feature",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": ["live-updates", "reminders"],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Returns the updated feature data or null if not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ReminderFeatureDto"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "times": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "shards": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    {
+                      "type": "string",
+                      "example": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      },
+      "delete": {
+        "operationId": "disableFeature",
+        "parameters": [
+          {
+            "name": "feature",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": ["live-updates", "reminders"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Returns success status or null if feature deletion failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "example": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      }
+    },
+    "/guilds/{guild}/channels": {
+      "get": {
+        "operationId": "getChannels",
+        "parameters": [
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Returns an array of guild text channels where the bot has appropriate permissions, or null if guild not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "description": "Array containing APITextChannel that bot has MangeWebhooks perms in"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      }
+    },
+    "/guilds/{guild}/roles": {
+      "get": {
+        "operationId": "getRoles",
+        "parameters": [
+          {
+            "name": "guild",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the guild",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Returns an array of non-managed guild roles, or null if guild not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "description": "Array containing non-managed guild roles"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Guild"]
+      }
+    },
+    "/stats": {
+      "get": {
+        "operationId": "getGuild",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the bot statistics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Bot"]
+      }
+    },
+    "/stats/spirits": {
+      "get": {
+        "operationId": "getSpirits",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the bot spirits data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Bot"]
+      }
+    },
+    "/update/ts": {
+      "get": {
+        "operationId": "getTS",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Update"]
+      },
+      "patch": {
+        "operationId": "updateTS",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "The TS data to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TSDataDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the updated TS data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TSDataDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Update"]
+      }
+    },
+    "/update/events": {
+      "get": {
+        "operationId": "getEvents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the current special even data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDataDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Update"]
+      },
+      "patch": {
+        "operationId": "updateEvent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "The event data to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventDataDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the updated event data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDataDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Update"]
+      }
+    },
+    "/update/quests": {
+      "get": {
+        "operationId": "getQuests",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the daily quests data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestsDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Update"]
+      },
+      "patch": {
+        "operationId": "patchQuests",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "The daily quests data to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the updated daily quests data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestsDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth-token": []
+          }
+        ],
+        "tags": ["Update"]
+      }
+    },
+    "/users/{user}": {
+      "get": {
+        "operationId": "getUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Users"]
+      },
+      "patch": {
+        "operationId": "updateUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Users"]
+      }
+    },
+    "/users/{user}/linked-role": {
+      "patch": {
+        "operationId": "updateUserRoleMetadata",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Users"]
+      },
+      "get": {
+        "operationId": "getUserRoleMetadata",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Users"]
+      }
+    }
+  },
+  "info": {
+    "title": "SkyHelper API",
+    "description": "API Documentation for SkyHelper",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "skyhelper",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "noBtn": {
+        "type": "string",
+        "enum": ["true", "false"]
+      },
+      "locale": {
+        "type": "string",
+        "enum": ["en-US", "hi", "ru", "ja"]
+      },
+      "GuildInfoDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "prefix": {
+            "type": "string",
+            "description": ""
+          },
+          "announcement_channel": {
+            "type": "string",
+            "description": ""
+          },
+          "beta": {
+            "type": "boolean"
+          },
+          "language": {
+            "type": "string",
+            "description": ""
+          },
+          "enabledFeatures": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["reminders", "live-updates"]
+            }
+          }
+        }
+      },
+      "TSDataDto": {
+        "type": "object",
+        "properties": {
+          "spirit": {
+            "type": "string",
+            "description": ""
+          },
+          "visitDate": {
+            "type": "string",
+            "description": "",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "index": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": ["spirit", "visitDate", "index"]
+      },
+      "EventDataDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "startDate": {
+            "type": "string",
+            "description": "",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          }
+        },
+        "required": ["name", "startDate", "endDate"]
+      },
+      "DynamicDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": ""
+          },
+          "date": {
+            "type": "string",
+            "description": ""
+          },
+          "description": {
+            "type": "string",
+            "description": ""
+          },
+          "images": {
+            "items": {
+              "type": "array"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["title", "date", "images"]
+      },
+      "QuestsDTO": {
+        "type": "object",
+        "properties": {
+          "quests": {
+            "items": {
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "last_updated": {
+            "type": "string",
+            "description": ""
+          },
+          "last_message": {
+            "type": "string",
+            "description": ""
+          },
+          "rotating_candles": {
+            "$ref": "#/components/schemas/DynamicDto"
+          },
+          "seasonal_candles": {
+            "$ref": "#/components/schemas/DynamicDto"
+          }
+        },
+        "required": ["quests", "last_updated", "rotating_candles"]
+      }
+    }
+  }
+}

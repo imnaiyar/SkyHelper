@@ -1,23 +1,14 @@
 import { Controller, Get, Query, Inject } from "@nestjs/common";
-import { z } from "zod";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { DateTime } from "luxon";
 import { getTimesEmbed, buildShardEmbed } from "@/utils/classes/Embeds";
 import { getTranslator } from "@/i18n";
 import type { SkyHelper } from "@/structures";
-import { supportedLang } from "@skyhelperbot/constants";
-const GetShardsParams = z.object({
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in the format 'YYYY-MM-DD'")
-    .optional(),
-  noBtn: z.enum(["true", "false"]).optional(),
-  user: z.string().optional(),
-  locale: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
-});
-const GetTimesParams = z.object({
-  locale: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
-});
+import { ApiQuery } from "@nestjs/swagger";
+import { GetShardsParamsDto, GetTimesParamsDto } from "../types.dto.js";
+import { GetShardsParams, GetTimesParams } from "../types.js";
+import type { z } from "zod";
+
 @Controller()
 export class AppController {
   constructor(@Inject("BotClient") private readonly bot: SkyHelper) {}
@@ -26,7 +17,7 @@ export class AppController {
     return "Hello World!";
   }
 
-  // Following are for getting scheduled jobs functions
+  @ApiQuery({ type: GetShardsParamsDto })
   @Get("shards-embed")
   async getShardsEmbed(@Query(new ZodValidator(GetShardsParams)) query: z.infer<typeof GetShardsParams>) {
     const { date, noBtn, user, locale } = query;
@@ -39,10 +30,11 @@ export class AppController {
     }
     return buildShardEmbed(shardDate, getTranslator(locale ?? "en-US"), noBtn === "true", user);
   }
-
+  @ApiQuery({ type: GetTimesParamsDto })
   @Get("times-embed")
   async getTimesEmbed(@Query(new ZodValidator(GetTimesParams)) query: z.infer<typeof GetTimesParams>) {
     const { locale } = query;
+
     return getTimesEmbed(this.bot, getTranslator(locale ?? "en-US"));
   }
 }
