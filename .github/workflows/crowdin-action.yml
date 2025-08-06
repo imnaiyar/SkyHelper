@@ -31,7 +31,7 @@ jobs:
           commit_message: "chore: translations"
           github_user_name: "github-actions[bot]"
           github_user_email: "github-actions[bot]@users.noreply.github.com"
-          download_translations_args: "-l hi -l ja -l ru"
+          download_translations_args: "-l hi -l ja -l ru -l es-ES"
           config: packages/constants/crowdin.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
