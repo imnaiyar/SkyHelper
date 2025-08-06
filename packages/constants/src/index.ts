@@ -21,6 +21,11 @@ export const supportedLang = [
     value: "ja",
     flag: "🇯🇵",
   },
+  {
+    name: "Spanish (Español)",
+    value: "es-ES",
+    flag: "🇪🇸",
+  },
 ] as const;
 
 export { default as seasonsData, SeasonData } from "./seasonsData.js";

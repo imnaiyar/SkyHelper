@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import Backend, { type FsBackendOptions } from "i18next-fs-backend";
+import { supportedLang } from "@skyhelperbot/constants";
 import type common from "@skyhelperbot/constants/locales/en-US/common.json";
 import type errors from "@skyhelperbot/constants/locales/en-US/errors.json";
 import type commands from "@skyhelperbot/constants/locales/en-US/commands.json";
@@ -12,6 +13,7 @@ type AllNamespaces = {
   commands: typeof commands;
   buttons: typeof buttons;
 };
+
 type NestedKeys<T> = {
   [K in keyof T & (string | number)]: T[K] extends Record<string, any> ? `${K}` | `${K}.${NestedKeys<T[K]>}` : `${K}`;
 }[keyof T & (string | number)];
@@ -33,8 +35,8 @@ await i18next.use(Backend).init<FsBackendOptions>({
     escapeValue: false,
   },
   returnEmptyString: false,
-  preload: ["en-US", "hi", "ru", "ja"],
-  supportedLngs: ["en-US", "hi", "ru", "ja"],
+  preload: supportedLang.map((l) => l.value),
+  supportedLngs: supportedLang.map((l) => l.value),
   saveMissing: true,
   missingKeyHandler: (_lngs, _ns, _key, _fallbackValue) => {
     throw new Error(`Translation key invalid: ${_key}`);
