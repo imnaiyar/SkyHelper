@@ -1,0 +1,406 @@
+{
+  "GUIDES": {
+    "name": "guias",
+    "description": "varias guías",
+    "options": {
+      "SEASONAL": {
+        "name": "temporadas",
+        "description": "varias guías de temporadas",
+        "options": {
+          "season": {
+            "name": "temporada",
+            "description": "selecciona una temporada"
+          },
+          "type": {
+            "name": "tipo",
+            "description": "guías de las misiones, o los espíritus",
+            "choices": {
+              "quests": "↪️Misiones",
+              "spirits": "↪️Espíritus"
+            }
+          }
+        }
+      },
+      "REALMS": {
+        "name": "reinos",
+        "description": "varias guías de los reinos",
+        "options": {
+          "realms": {
+            "name": "reinos",
+            "description": "buscar directamente el árbol/ubicación de un espíritu",
+            "choices": {
+              "isle": "↪️ Isla del amanecer",
+              "daylight": "↪️ Planicie de luz de día",
+              "forest": "↪️ Bosque escondido",
+              "valley": "↪️ Valle del triunfo",
+              "wasteland": "↪️ Páramo dorado",
+              "vault": "↪️ Bóveda del conocimiento",
+              "eden": "↪️ Ojo del Edén"
+            }
+          },
+          "type": {
+            "name": "tipo",
+            "description": "resumen, mapa, o guías de los espíritus",
+            "choices": {
+              "realm": "↪️ Resumen del reino",
+              "maps": "↪️ Mapa",
+              "spirits": "↪️ Espíritus"
+            }
+          }
+        }
+      }
+    },
+    "RESPONSES": {
+      "NO_QUEST": "No hay misiones disponibles para {{SEASON}}",
+      "QUEST_EMBED_AUTHOR": "Misiones de la temporada: {{SEASON}}",
+      "QUEST_SELECT_PLACEHOLDER": "Elige una misión",
+      "SPIRIT_SELECT_PLACEHOLDER": "Temporada de(l) {{SEASON}}",
+      "REALM_SELECT_PLACEHOLDER": "Espíritus en {{REALM}}",
+      "NO-SPIRITS": "El Edén no tiene espíritus, no son fans de los lugares peligrosos.",
+      "REALM-BUTTON-LABEL": "Áreas del reino",
+      "INVALID-CHOICE": "Opción inválida o Guia desactualizada",
+      "REALM_AREA_SELECT_PLACEHOLDER": "Escoge una área.",
+      "INVALID_SEASON_VALUE": "¡Temporada inválida! No pudimos encontrar una temporada con el nombre {{VALUE}}"
+    }
+  },
+  "SPIRITS": {
+    "name": "espíritus",
+    "description": "busca un espíritu",
+    "options": {
+      "name": "busca",
+      "description": "busca a un espíritu"
+    },
+    "RESPONSES": {
+      "NO_DATA": "No se ha encontrado la información {{VALUE}} Si crees que se trata de un error, puedes reportarlo por {{COMMAND}}",
+      "BUTTONS": {
+        "TREE": "Árbol de amistad",
+        "LOCATION": "Ubicación",
+        "ACTION": "Acción de amistad",
+        "CALL": "Honk",
+        "STANCE": "Postura",
+        "EMOTE": "Emote"
+      },
+      "EMBED": {
+        "AUTHOR": "Resumen del espíritu",
+        "TYPE": "**Tipo** {{SPIRIT_TYPE}}",
+        "REALM": "**Reino** {{REALM}}",
+        "SEASON": "**Temporada**: Temporada de(l) {{SEASON}}",
+        "FIELDS": {
+          "SUMMARY_TITLE": "Resumen del espíritu viajero",
+          "SUMMARY_DESC_NO_ELIGIBLE": "¡Este espíritu no es elegible para volver como un espíritu viajero por el momento, pero volverá a estarlo cuando la temporada después de(l) {{SEASON}} termine!",
+          "SUMMARY_DESC_RETURNED": "Total de visitas: {{VISITS}}",
+          "SUMMARY_RETURNED_DATE": "Fechas en las que visitó",
+          "SUMMARY_DESC_NO_VISIT": "Este espíritu no ha regresado, cuando lo haga, ofrecerá los mismos artículos que se ofrecían durante la temporada, pero en un árbol de la amistad reestructurado."
+        },
+        "CREDIT": "Infografía hecha por Ed.7"
+      }
+    }
+  },
+  "SHARDS_CALENDAR": {
+    "name": "calendario-de-fragmentos",
+    "description": "Muestra un calendario de los fragmentos",
+    "RESPONSES": {
+      "DATE_SELECT_PLACEHOLDER": "Selecciona un periodo de tiempo",
+      "MONTH_SELECT_PLACEHOLDER": "Elige un mes",
+      "YEAR_SELECT_PLACEHOLDER": "Elige un año",
+      "INFO": {
+        "NO_SHARD": "Sin fragmentos",
+        "SHARD-INFO": "**Info:** {{INFO}} en {{AREA}}",
+        "SHARD-TIMES": "**Horario** {{TIME}}"
+      },
+      "EMBED_AUTHOR": "Calendario de los fragmentos de {{MONTH}}, {{YEAR}}",
+      "EMBED_DESCRIPTION": "Para información detallada, usa {{shardsCmd}}",
+      "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}"
+    }
+  },
+  "SHARDS": {
+    "name": "fragmento",
+    "description": "Obtén información detallada de un fragmento",
+    "options": {
+      "DATE": {
+        "name": "fecha",
+        "description": "La fecha de la que necesitas información"
+      }
+    },
+    "RESPONSES": {
+      "INVALID_DATE": "Formato de fecha inválido. Por favor usa AAAA/MM/DD (e.g, `2024-09-13`). Fecha máxima válida **275760-09-12**",
+      "DATE_NONEXIST": "{{DATE}} no existe, por favor escoge una fecha válida."
+    }
+  },
+  "SKYTIMES": {
+    "name": "skytimes",
+    "description": "cuentas regresivas de varios eventos dentro del juego",
+    "RESPONSES": {
+      "SELECT_PLACEHOLDER": "Horario detallado"
+    }
+  },
+  "TRAVELING-SPIRIT": {
+    "name": "espíritu-viajero",
+    "description": "obtén detalles sobre el espíritu viajero actual/futuros.",
+    "RESPONSES": {
+      "NO_DATA": "¡Oops! Parece que no tenemos información sobre ese espíritu viajero, por favor, inténtalo de nuevo más tarde",
+      "VISITING": "{{SPIRIT}} está visitando los reinos de Sky. Sé irá a la(s) {{TIME}} (en {{DURATION}})",
+      "EXPECTED": "{{SPIRIT}} estará visitando los reinos de Sky él {{DATE}} (en {{DURATION}})",
+      "EMBED_AUTHOR": "¡Resumen del espíritu viajero #{{INDEX}}!",
+      "VISITING_TITLE": "Fecha de la visita:"
+    }
+  },
+  "REMINDERS": {
+    "name": "recordatorios",
+    "description": "configura los recordatorios",
+    "RESPONSES": {
+      "USER_APP_ERROR": "¡Por favor usa este comando en un servidor en el que sea miembro!",
+      "NOT_CACHED": "Este servidor no tiene caché. Ponte en contacto con el desarrollador(es) del bot",
+      "INACITVE_NO_CHANNEL": "🟢 Inactivo (No hay canales seleccionados)",
+      "INACTIVE": "🟢 Inactivo",
+      "ACTIVE": "🟢 Activo",
+      "EMBED_AUTHOR": "SkyHelper Recordatorios",
+      "DES_TITLE": "**Configuración de los recordatorios**",
+      "CHANNEL": "Canal: {{CHANNEL}}",
+      "DEFAULT_ROLE": "Rol predeterminado: {{ROLE}}",
+      "TYPE_SELECT_PLACEHOLDER": "¡Escoge una categoría para editar!",
+      "ROLE_SELECT_PLACEHOLDER": "¡Selecciona un rol predeterminado para el ping!",
+      "CHANNEL_SELECT_PLACEHOLDER": "¡Cambiar el canal de recordatorios!",
+      "BTN_ENABLE_ALL": "Activarlos todos",
+      "BTN_DISABLE_ALL": "Desactivarlos todos",
+      "BTN_DISABLE_DEFAULT_ROLE": "Eliminar el rol predeterminado",
+      "TYPE-DESCRIPTION": {
+        "STATUS": "Estado",
+        "ACTIVE": "Activo",
+        "INACTIVE": "Inactivo",
+        "ROLE": "Rol",
+        "NONE": "Ninguno",
+        "BTN_ENABLE": "Activar",
+        "BTN_DISABLE": "Desactivar",
+        "BTN_REMOVE_ROLE": "Elimina un rol",
+        "ROLE_TYPE_SELECT_PLACEHOLDER": "Escoge un rol al que notificar"
+      },
+      "CHANNEL_UPDATE": "Reminders channel updated!",
+      "ALL_ACTIVE": "All reminders are enabled!",
+      "ALL_DISABLED": "All reminders are disabled!",
+      "DEFAULT_ROLE_UPDATE": "Default role updated!",
+      "DEFAULT_ROLE_REMOVE": "Default role removed!"
+    }
+  },
+  "LIVE_UPDATES": {
+    "name": "live",
+    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "group": "updates",
+    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
+    "options": {
+      "START": {
+        "name": "start",
+        "description": "start live shards or skytimes update with auto updating message at regular interval",
+        "option": {
+          "CHANNEL": {
+            "name": "channel",
+            "description": "channel where live updates should be updated"
+          }
+        }
+      },
+      "STOP": {
+        "name": "stop",
+        "description": "stop live updates"
+      }
+    },
+    "RESPONSES": {
+      "NOT_GUILD": "This command can only be used in a server",
+      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
+      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
+      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
+      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
+      "DISABLED": "{{TYPE}} is disabled"
+    }
+  },
+  "SEASONAL_CALCULATOR": {
+    "name": "seasonal-calculator",
+    "description": "calculate seasonal currencies",
+    "options": {
+      "CANDLES": {
+        "name": "candles",
+        "description": "amount of candles you have?"
+      },
+      "DAILIES": {
+        "name": "dailies",
+        "description": "did you do your dailies today?"
+      },
+      "SEASON_PASS": {
+        "name": "season-pass",
+        "description": "do you have the season pass?"
+      }
+    },
+    "RESPONSES": {
+      "NOT_ACTIVE": "No active season at the moment. Please run this command when a seson is active.",
+      "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles",
+      "ENDS_IN": "Ends in {{DAYS}} days",
+      "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
+    }
+  },
+  "HELP": {
+    "name": "help",
+    "description": "help menu",
+    "options": {
+      "COMMAND": {
+        "name": "command",
+        "description": "help about a specific command"
+      }
+    },
+    "RESPONSES": {
+      "MESSAGE_APP_DESC": "Message App Command",
+      "USER_APP_DESC": "User App Command",
+      "REQUESTED_BY": "Requested by {{USER}}",
+      "FOOTER_SINGLE": "Help Command",
+      "FOOTER": "run /help <command> for details. | Page {{PAGE}}/{{TOTAL}}",
+      "BTN-PREV": "Prev",
+      "BTN-NEXT": "Next"
+    }
+  },
+  "UTILS": {
+    "name": "utils",
+    "description": "Utilities",
+    "options": {
+      "TIMESTAMP": {
+        "name": "timestamp",
+        "description": "get unix timestamp for the given date",
+        "options": {
+          "TIME": {
+            "name": "time",
+            "description": "The time to convert (format: HH mm ss)"
+          },
+          "TIMEZONE": {
+            "name": "timezone",
+            "description": "Your timezone in the format: Continent/City"
+          },
+          "DATE": {
+            "name": "date",
+            "description": "The date to convert (format: DD)"
+          },
+          "MONTH": {
+            "name": "month",
+            "description": "The month to convert (format: MM)"
+          },
+          "YEAR": {
+            "name": "year",
+            "description": "The year to convert (format: YYYY)"
+          }
+        }
+      },
+      "CHANGELOG": {
+        "name": "changelog",
+        "description": "bot's changelog"
+      },
+      "BOTINFO": {
+        "name": "botinfo",
+        "description": "get the bot's info and configure settings"
+      },
+      "CONTACT-US": {
+        "name": "contact-us",
+        "description": "for suggestions/bug reports/contacting us or just anything"
+      }
+    },
+    "RESPONSES": {
+      "INVALID-FORMAT": "Invalid time format. Please provide time in `HH mm ss` format. (e.g: `02 12 44`)",
+      "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City` (e.g, `America/Los_Angeles`).\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
+      "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
+      "SUGGESTION_TITLE": "Title",
+      "TITLE_PLACEHOLDER": "Title for the suggestion",
+      "SUGGESTION_MODAL_TITLE": "Contact Us",
+      "SUGGESTION": "Suggestion/Bug Report/Others",
+      "SUGGESTION_PLACEHOLDER": "Explain in brief.",
+      "RECIEVED": "Your message is received. Here's a preview!"
+    }
+  },
+  "LANGUAGE": {
+    "name": "language",
+    "description": "manage preferred language for the bot's response",
+    "options": {
+      "CATEGORY": {
+        "name": "category",
+        "description": "select a category to set the laguage for",
+        "choices": {
+          "GUILD": "Server",
+          "USER": "User"
+        }
+      },
+      "LANGUAGES": {
+        "name": "languages",
+        "description": "select a language"
+      },
+      "SUB": {
+        "SET": {
+          "name": "set",
+          "description": "set your/server language for the bot"
+        },
+        "REMOVE": {
+          "name": "remove",
+          "description": "remove a set language",
+          "options": {
+            "description": "select a category type to remove"
+          }
+        }
+      },
+      "RESPONSES": {
+        "NO-PERM": "You do not have permission(s) ({{PERMISSION}}) to set a server's language",
+        "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nPlease consider contrubuting to translation of this bot by visiting {{LINK}} and help us add more supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
+        "ALREADY_SET": "{{TYPE}} language setting is already set to {{LANGUAGE}}",
+        "ALREADY_NOT_SET": "There's already no language set for {{CATEGORY}}.",
+        "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
+      }
+    }
+  },
+  "DAILY_QUESTS": {
+    "name": "daily-quests",
+    "description": "get the daily quests",
+    "RESPONSES": {
+      "NO_DATA": "No data found for today's daily quests. Please try again later.\n- -# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
+      "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
+      "EMBED_AUTHOR": "Daily Quests",
+      "EMBED_DESCRIPTION": "Daily quests for today"
+    }
+  },
+  "SKYGAME": {
+    "name": "skygame",
+    "description": "Various fun games based around Sky: CotL",
+    "SUB": {
+      "HANGMAN": {
+        "name": "hangman",
+        "description": "Play a game of hangman based on sky-related words, or a custom word",
+        "options": {
+          "mode": {
+            "name": "mode",
+            "description": "The mode of this game",
+            "choices": {
+              "single": "Single Player",
+              "double": "Double Player"
+            }
+          }
+        }
+      },
+      "SCRAMBLE": {
+        "name": "scrambled",
+        "description": "Unscramble the word to win"
+      },
+      "LEADERBOARD": {
+        "name": "leaderboard",
+        "description": "View the leaderboard for the skygames",
+        "options": {
+          "game": {
+            "name": "game",
+            "description": "The game to view the leaderboard for",
+            "choices": {
+              "hangman": "Hangman"
+            }
+          },
+          "leaderboard-type": {
+            "name": "leaderboard-type",
+            "description": "Gloabal leaderboard or server specific (default: global)",
+            "choices": {
+              "global": "Global",
+              "server": "Server"
+            }
+          }
+        }
+      }
+    }
+  }
+}
