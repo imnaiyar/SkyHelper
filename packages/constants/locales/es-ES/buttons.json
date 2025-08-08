@@ -1,0 +1,38 @@
+{
+  "ABOUT_SHARDS": {
+    "CREDIT": "Sobre los fragmentos, por {{CREDIT}}",
+    "WHAT_ARE": "¿Qué son los fragmentos?",
+    "TIMING": "¿Cómo sé cuando viene un fragmento?",
+    "REWARDS": "¿Cuáles son las recompensas?"
+  },
+  "SHARD_LOCATION": {
+    "L_CREDIT": "Ubicación del fragmento por {{CREDIT}}",
+    "D_CREDIT": "Información del fragmento por {{CREDIT}}",
+    "LOCATION": "Ubicación",
+    "DATA": "Información"
+  },
+  "SHARD_TIMELINE": {
+    "MUSIC_CREDIT": "El cielo cambia de color con la música de {{CREDIT}}",
+    "TIMESTAMP_CREDIT": "Horario del fragmento por {{CREDIT}}",
+    "COLOR": {
+      "LABEL": "Cambio de color en el cielo",
+      "VALUE": "El cielo cambiará de color a las {{TIME}}"
+    },
+    "GATE": {
+      "LABEL": "Cristales en el portal",
+      "VALUE": "Pequeños cristales aparecerán en el portal a las {{TIME}}"
+    },
+    "LANDS": {
+      "LABEL": "Impacto del fragmento",
+      "VALUE": "El fragmento caerá en: {{TIME}}"
+    },
+    "ENDS": {
+      "LABEL": "Fin del evento",
+      "VALUE": "El fragmento se destruirá a las: {{TIME}}"
+    },
+    "MUSIC": {
+      "LABEL": "Música del fragmento",
+      "VALUE": "{{MUSIC}} Se escuchará durante el fragmento."
+    }
+  }
+}
