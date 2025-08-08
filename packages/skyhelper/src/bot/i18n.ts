@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import Backend, { type FsBackendOptions } from "i18next-fs-backend";
+import { supportedLang } from "@skyhelperbot/constants";
 import type { LangKeys } from "./@types/i18n.js";
 await i18next.use(Backend).init<FsBackendOptions>({
   cleanCode: true,
@@ -14,8 +15,8 @@ await i18next.use(Backend).init<FsBackendOptions>({
     escapeValue: false,
   },
   returnEmptyString: false,
-  preload: ["en-US", "hi", "ru", "ja"],
-  supportedLngs: ["en-US", "hi", "ru", "ja"],
+  preload: supportedLang.map((l) => l.value),
+  supportedLngs: supportedLang.map((l) => l.value),
   saveMissing: true,
   missingKeyHandler: (_lngs, _ns, _key, _fallbackValue) => {
     throw new Error(`Translation key invalid: ${_key}`);
