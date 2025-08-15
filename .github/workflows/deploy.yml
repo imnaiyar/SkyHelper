@@ -8,6 +8,8 @@ on:
       - "packages/skyhelper/package.json"
       - "packages/jobs/src/**"
       - "packages/jobs/package.json"
+      - "packages/constants/locales/**"
+      - "!packages/constants/locales/en-US/**"
   workflow_dispatch:
     inputs:
       to_deploy:
@@ -34,6 +36,8 @@ jobs:
               - 'packages/skyhelper/**'
             jobs:
               - 'packages/jobs/**'
+            both:
+              - 'packages/constants/locales/**'
 
       - name: Set target for deployment
         run: |
@@ -46,6 +50,9 @@ jobs:
             echo "DEPLOY_TARGET=skyhelper" >> $GITHUB_ENV
           elif [[ "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
             echo "DEPLOY_TARGET=jobs" >> $GITHUB_ENV
+          elif [[ "${{ steps.filter.outputs.both }}" == "true" ]]; then
+            echo "DEPLOY_TARGET=both" >>
+              $GITHUB_ENV
           fi
 
   deploy:
