@@ -39,21 +39,18 @@ jobs:
             both:
               - 'packages/constants/locales/**'
 
-      - name: Set target for deployment
+      - name: Determine deployment target
         run: |
-          # Determine deployment target
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "DEPLOY_TARGET=${{ github.event.inputs.to_deploy }}" >> $GITHUB_ENV
-          elif [[ "${{ steps.filter.outputs.skyhelper }}" == "true" && "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
-            echo "DEPLOY_TARGET=both" >> $GITHUB_ENV
+          DEPLOY_TARGET="${{ github.event.inputs.to_deploy }}"
+          elif [[ "${{ steps.filter.outputs.both }}" == "true" || ( "${{ steps.filter.outputs.skyhelper }}" == "true" && "${{ steps.filter.outputs.jobs }}" == "true" ) ]]; then
+          DEPLOY_TARGET="both"
           elif [[ "${{ steps.filter.outputs.skyhelper }}" == "true" ]]; then
-            echo "DEPLOY_TARGET=skyhelper" >> $GITHUB_ENV
+          DEPLOY_TARGET="skyhelper"
           elif [[ "${{ steps.filter.outputs.jobs }}" == "true" ]]; then
-            echo "DEPLOY_TARGET=jobs" >> $GITHUB_ENV
-          elif [[ "${{ steps.filter.outputs.both }}" == "true" ]]; then
-            echo "DEPLOY_TARGET=both" >>
-              $GITHUB_ENV
+          DEPLOY_TARGET="jobs"
           fi
+          echo "DEPLOY_TARGET=$DEPLOY_TARGET" >> $GITHUB_ENV
 
   deploy:
     needs: changes
