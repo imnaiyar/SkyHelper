@@ -139,7 +139,7 @@
     "description": "obtén detalles sobre el espíritu viajero actual/futuros.",
     "RESPONSES": {
       "NO_DATA": "¡Oops! Parece que no tenemos información sobre ese espíritu viajero, por favor, inténtalo de nuevo más tarde",
-      "VISITING": "{{SPIRIT}} está visitando los reinos de Sky. Sé irá a la(s) {{TIME}} (en {{DURATION}})",
+      "VISITING": "{{SPIRIT}} está visitando los reinos de Sky. Sé irá a la(s) {{TIME}} en {{DURATION}})",
       "EXPECTED": "{{SPIRIT}} estará visitando los reinos de Sky él {{DATE}} (en {{DURATION}})",
       "EMBED_AUTHOR": "¡Resumen del espíritu viajero #{{INDEX}}!",
       "VISITING_TITLE": "Fecha de la visita:"
@@ -175,32 +175,32 @@
         "BTN_REMOVE_ROLE": "Elimina un rol",
         "ROLE_TYPE_SELECT_PLACEHOLDER": "Escoge un rol al que notificar"
       },
-      "CHANNEL_UPDATE": "Reminders channel updated!",
-      "ALL_ACTIVE": "All reminders are enabled!",
-      "ALL_DISABLED": "All reminders are disabled!",
-      "DEFAULT_ROLE_UPDATE": "Default role updated!",
-      "DEFAULT_ROLE_REMOVE": "Default role removed!"
+      "CHANNEL_UPDATE": "Canal de recordatorios seleccionado!",
+      "ALL_ACTIVE": "Todos los recordatorios están activados!",
+      "ALL_DISABLED": "Todos los recordatorios están desactivados!",
+      "DEFAULT_ROLE_UPDATE": "Rol predeterminado seleccionado!",
+      "DEFAULT_ROLE_REMOVE": "Se eliminó el rol predeterminado"
     }
   },
   "LIVE_UPDATES": {
-    "name": "live",
-    "description": "live shards or skytimes update with auto updating message at regular interval",
-    "group": "updates",
-    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
+    "name": "en vivo",
+    "description": "sobre los fragmentos y eventos dentro del juego con mensajes automáticos en intervalos regulares ",
+    "group": "actualizaciones",
+    "group-desc": "sobre los fragmentos y eventos dentro del juego con mensajes automáticos en intervalos regulares ",
     "options": {
       "START": {
-        "name": "start",
-        "description": "start live shards or skytimes update with auto updating message at regular interval",
+        "name": "notificar",
+        "description": "sobre los fragmentos y eventos dentro del juego con mensajes automáticos en intervalos regulares",
         "option": {
           "CHANNEL": {
-            "name": "channel",
-            "description": "channel where live updates should be updated"
+            "name": "canal",
+            "description": "canal donde se deberían subir las actualizaciones en tiempo real"
           }
         }
       },
       "STOP": {
-        "name": "stop",
-        "description": "stop live updates"
+        "name": "parar",
+        "description": "parar las actualizaciones en tiempo real"
       }
     },
     "RESPONSES": {
