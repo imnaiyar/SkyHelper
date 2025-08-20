@@ -11,6 +11,8 @@ const IGNORED_KEYS = [
   "features:REALMS",
   "features:reminders.EDEN_RESET",
   "features:reminders.DAILY_RESET",
+  "common:bot.intro",
+  "common:bot.name",
 ];
 // Colors for console output
 const colors = {
