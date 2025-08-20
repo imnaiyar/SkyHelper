@@ -32,7 +32,10 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
     });
   }
   let value = spirits[0][0];
-  const placehoder = typeof seasonOrRealm === "string" ? `${seasonOrRealm} Spirits` : `Season of ${seasonOrRealm.name}`;
+  const placehoder =
+    typeof seasonOrRealm === "string"
+      ? t("commands:GUIDES.RESPONSES.REALM_SELECT_PLACEHOLDER", { REALM: seasonOrRealm })
+      : t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: seasonOrRealm.name });
 
   const getUpdate = async (commandHelper: InteractionHelper) => {
     const data = client.spiritsData[value];

@@ -7,7 +7,8 @@ export async function handleSkyTimesSelect(interaction: APIMessageComponentSelec
   const { t, client } = helper;
   const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value as EventKey);
   const embed: APIEmbed = {
-    title: event.name + " Times",
+    // @ts-expect-error
+    title: helper.t(`features:times-embed.EVENTS.${value.toUpperCase()}`) + " Times",
     footer: {
       text: "SkyTimes",
     },
@@ -28,7 +29,7 @@ export async function handleSkyTimesSelect(interaction: APIMessageComponentSelec
       DURATION: status.duration,
     });
   }
-  desc += `\n\n**${t("features:times-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
+  desc += `\n\n**${t("features:shards-embed.TIMELINE")}**\n${allOccurences.slice(0, 2000)}`;
 
   if (event.infographic) {
     desc += `\n\n© ${event.infographic.by}`;

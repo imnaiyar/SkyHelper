@@ -56,7 +56,7 @@ export async function reminderSchedules(): Promise<void> {
         switch (key) {
           case "shards-eruption": {
             const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as Array<"red" | "black">);
-            const data = getShardReminderResponse(now, offset || 0, shard_type);
+            const data = getShardReminderResponse(now, t, offset || 0, shard_type);
             if (!data) continue;
             response = { components: data };
             break;
@@ -74,7 +74,7 @@ export async function reminderSchedules(): Promise<void> {
                     "-# SkyHelper Reminders\n" +
                       `### ${t("features:reminders.TITLE", {
                         // @ts-expect-error
-                        TYPE: t("features:times-embed." + (key === "reset" ? "DAILY-RESET" : key.toUpperCase())),
+                        TYPE: t("features:times-embed.EVENTS." + (key === "reset" ? "DAILY-RESET" : key.toUpperCase())),
                       })}`,
                   ),
                   separator(),

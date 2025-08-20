@@ -2,46 +2,6 @@ import { supportedLang } from "@skyhelperbot/constants";
 import type { Command } from "@/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "@discordjs/core";
 
-// #region SeasonCalculator
-export const SEASON_CALCULATOR_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
-  name: "seasonal-calculator",
-  description: "calculate seasonal currencies",
-  data: {
-    name_localizations: "commands:SEASONAL_CALCULATOR.name",
-    description_localizations: "commands:SEASONAL_CALCULATOR.description",
-    integration_types: [0, 1],
-    contexts: [0, 1, 2],
-    options: [
-      {
-        name: "candles",
-        name_localizations: "commands:SEASONAL_CALCULATOR.options.CANDLES.name",
-        description: "amount of candles you have?",
-        description_localizations: "commands:SEASONAL_CALCULATOR.options.CANDLES.description",
-        required: true,
-        type: ApplicationCommandOptionType.Integer,
-      },
-      {
-        name: "dailies",
-        name_localizations: "commands:SEASONAL_CALCULATOR.options.DAILIES.name",
-        description: "did you do your dailies today?",
-        description_localizations: "commands:SEASONAL_CALCULATOR.options.DAILIES.description",
-        required: true,
-        type: ApplicationCommandOptionType.Boolean,
-      },
-      {
-        name: "season-pass",
-        name_localizations: "commands:SEASONAL_CALCULATOR.options.SEASON_PASS.name",
-        description: "do you have the season pass?",
-        description_localizations: "commands:SEASONAL_CALCULATOR.options.SEASON_PASS.description",
-        required: false,
-        type: ApplicationCommandOptionType.Boolean,
-      },
-    ],
-  },
-  cooldown: 10,
-  category: "Utility",
-};
-
 // #region Help
 export const HELP_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "help",
@@ -127,7 +87,7 @@ export const LANGUAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
             name: "category",
             name_localizations: "commands:LANGUAGE.options.CATEGORY.name",
             description: "select a category type to remove",
-            description_localizations: "commands:LANGUAGE.options.CATEGORY.description",
+            description_localizations: "commands:LANGUAGE.options.SUB.REMOVE.options.description",
             type: ApplicationCommandOptionType.String,
             choices: [
               {

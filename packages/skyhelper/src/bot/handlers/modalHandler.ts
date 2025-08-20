@@ -13,7 +13,9 @@ export async function handleShardsCalendarModal(helper: InteractionHelper) {
   const testDate = DateTime.fromObject({ month, year });
   if (!dateRegex.test(date.value) || !testDate.isValid) {
     await helper.reply({
-      content: `Invalid date format (\`${date.value}\`). Please enter the month and year in this format: MM-YYYY (e.g. 01-2022)`,
+      content: helper.t("commands:SHARDS_CALENDAR.RESPONSES.INVALID_DATE", {
+        DATE: date.value,
+      }),
       flags: 64,
     });
     return;

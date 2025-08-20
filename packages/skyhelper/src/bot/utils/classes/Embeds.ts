@@ -105,24 +105,25 @@ export function buildShardEmbed(
           }),
           style: ButtonStyle.Secondary,
         },
-        `**${t("features:shards-embed.BUTTON1")}**` +
+        `**${t("features:shards-embed.TIMELINE")}**` +
           "\n" +
           status
             .map((s, i, arr) => {
               const prefix = `${s.ended ? "-# " : ""}${i === arr.length - 1 ? emojis.tree_end : emojis.tree_middle}**${getIndex(i + 1)} Shard:** `;
               // prettier-ignore
-              if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ENDED", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })})~~`;
+              if (s.ended) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.COUNTDOWN.ENDED", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })})~~`;
               // prettier-ignore
-              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.ACTIVE", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })}) <a:uptime:1228956558113771580>`;
+              if (s.active) return prefix + `~~${Utils.time(s.start.toUnixInteger(), "T")}~~ - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.COUNTDOWN.ACTIVE", { DURATION: `<t:${s.end.toUnixInteger()}:R>` })}) <a:uptime:1228956558113771580>`;
               return (
                 prefix +
-                `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.FIELDS.COUNTDOWN.VALUE.EXPECTED", { DURATION: `<t:${s.start.toUnixInteger()}:R>` })})`
+                `${Utils.time(s.start.toUnixInteger(), "T")} - ${Utils.time(s.end.toUnixInteger(), "t")} (${t("features:shards-embed.COUNTDOWN.EXPECTED", { DURATION: `<t:${s.start.toUnixInteger()}:R>` })})`
               );
             })
             .join("\n"),
       ),
       separator(true, 1),
-      ...info.locations.map((l) => section(thumbnail(l.image, l.description), l.description)),
+      section(thumbnail(info.location, t("features:shards-embed.LOCATION")), `**${t("features:shards-embed.LOCATION")}**`),
+      section(thumbnail(info.data, t("features:shards-embed.DATA")), `**${t("features:shards-embed.DATA")}**`),
       ...(navBtns ? [separator(true, 1), navBtns] : []),
     );
   }
@@ -195,7 +196,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     let desc = `${
       i === 0 ? emojis.tree_top : i === data.length - 1 ? emojis.tree_end : emojis.tree_middle
       // @ts-expect-error
-    }\`${t(`features:times-embed.${k.toString().toUpperCase()}`)}:\` `;
+    }\`${t(`features:times-embed.EVENTS.${k.toString().toUpperCase()}`)}:\` `;
     const nextTime = `<t:${status.nextTime.toUnixInteger()}:t> - <t:${status.nextTime.toUnixInteger()}:R>`;
     if (status.active) {
       desc += t("features:times-embed.ACTIVE", {
@@ -217,8 +218,9 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
         placeholder: "Detailed Timelines",
         options: Object.entries(eventData)
           .filter(([, e]) => e.displayAllTimes)
-          .map(([k, e]) => ({
-            label: e.name.charAt(0).toUpperCase() + e.name.slice(1),
+          .map(([k]) => ({
+            // @ts-expect-error
+            label: t(`features:times-embed.EVENTS.${k.toUpperCase()}`),
             value: k,
           })),
       },
@@ -233,12 +235,15 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
   };
 }
 
-export function dailyQuestEmbed(data: DailyQuestsSchema) {
+export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof getTranslator>) {
   const { quests, rotating_candles } = data;
   const total = quests.length;
   const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const nowFormatted = now.toFormat("dd-MM-yyyy");
-  const component = container(textDisplay(`### Daily Quests (${total}) :: ${nowFormatted}`), separator());
+  const component = container(
+    textDisplay(`### ${t("commands:DAILY_QUESTS.RESPONSES.EMBED_AUTHOR")} (${total}) :: ${nowFormatted}`),
+    separator(),
+  );
   for (const [index, quest] of quests.entries()) {
     let quest_title = `${quest.title}`;
 
@@ -272,13 +277,13 @@ export function dailyQuestEmbed(data: DailyQuestsSchema) {
   const rotatingBtn: APIButtonComponent = {
     type: ComponentType.Button,
     custom_id: Utils.store.serialize(Utils.customId.CandleButton, { type: "rotating", date: nowFormatted, user: null }),
-    label: "Rotating Candles",
+    label: t("commands:DAILY_QUESTS.RESPONSES.BUTTON1"),
     style: ButtonStyle.Success,
   };
   const seasonalBtn: APIButtonComponent = {
     type: ComponentType.Button,
     custom_id: Utils.store.serialize(Utils.customId.CandleButton, { user: null, type: "seasonal", date: nowFormatted }),
-    label: "Seasonal Candles",
+    label: t("commands:DAILY_QUESTS.RESPONSES.BUTTON2"),
     disabled: disabledSe,
     style: ButtonStyle.Success,
   };
@@ -375,7 +380,7 @@ export function buildCalendarResponse(
           year: year,
           user: userId,
         }),
-        label: "Change Month/Year",
+        label: t("commands:SHARDS_CALENDAR.RESPONSES.CHANGE_BUTTON"),
         style: 2,
       },
       `-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year })}\n### ${title}\n${t(
@@ -397,8 +402,12 @@ export async function handleRemindersStatus(
   guildName: string,
   page: number = 0,
 ) {
-  const title = `Reminders Status for ${guildName}`;
-  const description = `### Status: ${RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive"}\n`;
+  const title = helper.t("commands:REMINDERS.RESPONSES.STATUS.TITLE", { SERVER_NAME: guildName });
+  const description =
+    "### " +
+    helper.t("commands:REMINDERS.RESPONSES.STATUS.STATUS", {
+      STATUS: RemindersUtils.checkActive(guildSettings) ? "Active" : "Inactive",
+    });
   const appEmojis = [...helper.client.applicationEmojis.values()];
   const paginator = await paginate(
     helper,
@@ -424,16 +433,23 @@ export async function handleRemindersStatus(
 
         let text = `${eventEmojis[0]}${eventEmojis[1]}  **${name}**\n${eventEmojis[2]}${eventEmojis[3]}  ${event?.active ? "Active" : "Inactive"}`;
         text +=
-          `\n-# - Channel: ` +
-          ((event?.webhook?.threadId ?? event?.webhook?.channelId)
-            ? `<#${event.webhook.threadId ?? event.webhook.channelId}>`
-            : "None");
+          `\n-# - ` +
+          helper.t("commands:REMINDERS.RESPONSES.STATUS.CHANNEL", {
+            CHANNEL:
+              (event?.webhook?.threadId ?? event?.webhook?.channelId)
+                ? `<#${event.webhook.threadId ?? event.webhook.channelId}>`
+                : "None",
+          });
 
-        text += "\n-# - Role: " + (event?.role ? `<@&${event.role}>` : "None");
+        text +=
+          "\n-# - " + helper.t("commands:REMINDERS.RESPONSES.STATUS.ROLE", { ROLE: event?.role ? `<@&${event.role}>` : "None" });
 
-        text += `\n-# - Offset: \`${event?.offset || 0}\` minutes.`;
+        text += `\n-# - ` + helper.t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: event?.offset || 0 });
 
-        text += event && "shard_type" in event ? `\n-# - Shard Type: ${event.shard_type.join(", ")}` : "";
+        text +=
+          event && "shard_type" in event
+            ? `\n-# ` + helper.t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: event.shard_type.join(", ") })
+            : "";
 
         cont.components.push(
           section(
@@ -444,7 +460,7 @@ export async function handleRemindersStatus(
                 user: helper.user.id,
                 page: index,
               }),
-              label: "Manage",
+              label: helper.t("commands:REMINDERS.RESPONSES.STATUS.BUTTON"),
               style: 2,
             },
             text,

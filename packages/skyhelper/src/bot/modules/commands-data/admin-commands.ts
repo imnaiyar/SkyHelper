@@ -64,18 +64,24 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     options: [
       {
         name: "configure",
+        name_localizations: "commands:REMINDERS.options.CONFIGURE.name",
         description: "configure reminders",
+        description_localizations: "commands:REMINDERS.options.CONFIGURE.description",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "channel",
+            name_localizations: "commands:LIVE_UPDATES.options.START.option.CHANNEL.name",
             description: "channel where reminders should be sent",
+            description_localizations: "commands:REMINDERS.options.CONFIGURE.options.CHANNEL.description",
             type: ApplicationCommandOptionType.Channel,
             channel_types: [ChannelType.GuildText, ChannelType.PublicThread],
             required: true,
           },
           {
             name: "event",
+            name_localizations: "commands:REMINDERS.options.CONFIGURE.options.EVENT.name",
+            description_localizations: "commands:REMINDERS.options.CONFIGURE.options.EVENT.description",
             description: "event to remind",
             type: ApplicationCommandOptionType.String,
             required: true,
@@ -83,12 +89,16 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
           {
             name: "role",
+            name_localizations: "commands:REMINDERS.options.CONFIGURE.options.ROLE.name",
+            description_localizations: "commands:REMINDERS.options.CONFIGURE.options.ROLE.description",
             description: "role to ping",
             type: ApplicationCommandOptionType.Role,
             required: false,
           },
           {
             name: "offset",
+            name_localizations: "commands:REMINDERS.options.CONFIGURE.options.OFFSET.name",
+            description_localizations: "commands:REMINDERS.options.CONFIGURE.options.OFFSET.description",
             description: "how many minutes before the event should the reminder be sent.",
             type: ApplicationCommandOptionType.Integer,
             max_value: 15,
@@ -99,11 +109,15 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
       {
         name: "stop",
+        name_localizations: "commands:REMINDERS.options.STOP.name",
+        description_localizations: "commands:REMINDERS.options.STOP.description",
         description: "configure reminders",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
             name: "event",
+            name_localizations: "commands:REMINDERS.options.CONFIGURE.options.EVENT.name",
+            description_localizations: "commands:REMINDERS.options.STOP.options.EVENT.description",
             description: "event to stop reminding",
             type: ApplicationCommandOptionType.String,
             choices: eventChoices,
@@ -113,6 +127,8 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
       {
         name: "status",
+        name_localizations: "commands:REMINDERS.options.STATUS.name",
+        description_localizations: "commands:REMINDERS.options.STATUS.description",
         description: "reminders configurations for this server",
         type: ApplicationCommandOptionType.Subcommand,
       },
@@ -135,6 +151,8 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   name: "live",
   description: "live shards or skytimes update with auto updating message at regular interval",
   data: {
+    name_localizations: "commands:LIVE_UPDATES.name",
+    description_localizations: "commands:LIVE_UPDATES.description",
     options: [
       {
         name: "updates",

@@ -38,7 +38,7 @@ export default {
         const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
         const offset = options.getInteger("offset") || 0;
 
-        // Check if channel is a valid channel type
+        // Check if channel is a valid channel type (will never happen)
         if (!SendableChannels.includes(ch.type)) {
           return void (await helper.editReply({
             content: "Invalid channel type. Please provide a valid text channel or thread channel.",
@@ -87,13 +87,22 @@ export default {
         await helper.editReply({
           components: [
             textDisplay(
-              `Successfully configured \`${RemindersEventsMap[event]}\` reminders in <#${ch.id}>${role ? ` with role <@&${role.id}>` : ""}.`,
+              t(role ? "commands:REMINDERS.RESPONSES.CONFIGURED_ROLE" : "commands:REMINDERS.RESPONSES.CONFIGURED", {
+                EVENT: RemindersEventsMap[event],
+                CHANNEL: `<#${ch.id}>`,
+                ROLE: role ? `<@&${role.id}>` : "",
+              }),
             ),
             separator(true, 1),
             textDisplay(
-              `-# Next reminders for \`${RemindersEventsMap[event]}\` will be sent <t:${nextOccurence}:R>`,
-              (offset ? `-# Offset: \`${offset}\` minutes\n` : "") +
-                (shard_type.length ? `-# Shard Type: ${shard_type.join(", ")}` : ""),
+              `-# ${t("commands:REMINDERS.RESPONSES.NEXT_TIME", {
+                EVENT: RemindersEventsMap[event],
+                TIME: `<t:${nextOccurence}:R>`,
+              })}`,
+              (offset ? "-# " + t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: offset }) + "\n" : "") +
+                (shard_type.length
+                  ? "-# " + t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: shard_type.join(", ") })
+                  : ""),
             ),
           ],
           allowed_mentions: { parse: [] },
@@ -106,7 +115,9 @@ export default {
         const eventSettings = guildSettings.reminders.events[event as keyof GuildSchema["reminders"]["events"]];
         if (!eventSettings?.active) {
           return void (await helper.editReply({
-            content: `Reminders for ${RemindersEventsMap[event]} are already inactive`,
+            content: t("commands:REMINDERS.RESPONSES.ALREADY_NOT_CONFIGURED", {
+              EVENT: RemindersEventsMap[event],
+            }),
           }));
         }
         const util = new RemindersUtils(client);
