@@ -50,7 +50,7 @@ export function getResponse(
     return (
       t("features:reminders.COMMON", {
         // @ts-expect-error
-        TYPE: t("features:times-embed.EVENTS" + skytime?.toUpperCase()),
+        TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
         TIME: `<t:${startTime?.toUnixInteger()}:t>`,
         "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
         "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
@@ -61,7 +61,7 @@ export function getResponse(
       return (
         t("features:reminders.PRE-RESET", {
           // @ts-expect-error
-          TYPE: t("features:times-embed." + skytime?.toUpperCase()),
+          TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
           TIME: `<t:${nextTime.toUnixInteger()}:t>`,
           "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
         }) + (between ? `\n\n${between}` : "")
@@ -71,7 +71,7 @@ export function getResponse(
     return (
       t("features:reminders.PRE", {
         // @ts-expect-error
-        TYPE: t("features:times-embed.EVENTS" + skytime?.toUpperCase()),
+        TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
       }) + (between ? `\n\n${between}` : "")
