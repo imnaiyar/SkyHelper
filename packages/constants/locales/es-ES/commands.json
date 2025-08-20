@@ -204,102 +204,102 @@
       }
     },
     "RESPONSES": {
-      "NOT_GUILD": "This command can only be used in a server",
-      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
-      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
-      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
-      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
-      "DISABLED": "{{TYPE}} is disabled"
+      "NOT_GUILD": "Este comando solo se puede utilizar en un servidor",
+      "ALREADY_CONFIGURED": "{{TYPE}} ya está configurado en {{CHANNEL}} para este mensaje {{MESSAGE}}",
+      "INVALID_CHANNEL": "{{CHANNEL}} no es un canal de texto. Por favor, selecciona un canal de voz válido",
+      "CONFIGURED": "{{CHANNEL}}{{TYPE}} configurado en {{CHANNEL}}. El mensaje {{MESSAGE}} será actualizado con detalles relevantes",
+      "ALREADY_DISABLED": "{{TYPE}} ya esta desactivado en este servidor",
+      "DISABLED": "{{TYPE}} esta desactivado"
     }
   },
   "SEASONAL_CALCULATOR": {
-    "name": "seasonal-calculator",
-    "description": "calculate seasonal currencies",
+    "name": "calculadora-temporada",
+    "description": "calcular la economía de la temporada",
     "options": {
       "CANDLES": {
-        "name": "candles",
-        "description": "amount of candles you have?"
+        "name": "velas",
+        "description": "cuantas velas tienes?"
       },
       "DAILIES": {
-        "name": "dailies",
-        "description": "did you do your dailies today?"
+        "name": "diarias",
+        "description": "hiciste las misiones diarias de hoy?"
       },
       "SEASON_PASS": {
-        "name": "season-pass",
-        "description": "do you have the season pass?"
+        "name": "pase",
+        "description": "tienes el pase de aventura?"
       }
     },
     "RESPONSES": {
-      "NOT_ACTIVE": "No active season at the moment. Please run this command when a seson is active.",
-      "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles",
-      "ENDS_IN": "Ends in {{DAYS}} days",
-      "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
+      "NOT_ACTIVE": "No hay ninguna temporada activa en este momento. Intenta otra vez cuando haya una temporada activa.",
+      "EMBED_DESCRIPTION": "**Pase**: {{PASS}}\n**Misiones diárias**: {{DAILIES}}\n**Velas conseguibles**: {{OBTAINABLE}} Velas\n**Dias para consegirlas**: {{DAYS}} dias\n**Velas sobrantes**: {{REMAINING}} velas",
+      "ENDS_IN": "Termina en {{DAYS }} días",
+      "SPIRITS_NOT_UPDATED": "{{SEASON}} y sus espiritus es informacion pendiente por actualizar. Intenta de nuevo más tarde.\n- Temporada: {{SEASON}}\n- Empieza: {{START}}\n- Termina: {{END}}"
     }
   },
   "HELP": {
-    "name": "help",
-    "description": "help menu",
+    "name": "ayuda",
+    "description": "menú de ayuda",
     "options": {
       "COMMAND": {
-        "name": "command",
-        "description": "help about a specific command"
+        "name": "comando",
+        "description": "ayuda/descripción de un comando específico"
       }
     },
     "RESPONSES": {
-      "MESSAGE_APP_DESC": "Message App Command",
-      "USER_APP_DESC": "User App Command",
-      "REQUESTED_BY": "Requested by {{USER}}",
-      "FOOTER_SINGLE": "Help Command",
-      "FOOTER": "run /help <command> for details. | Page {{PAGE}}/{{TOTAL}}",
-      "BTN-PREV": "Prev",
-      "BTN-NEXT": "Next"
+      "MESSAGE_APP_DESC": "Comando de app de mensajes",
+      "USER_APP_DESC": "Comando App de usuario",
+      "REQUESTED_BY": "Petición de {{USER}}",
+      "FOOTER_SINGLE": "Comando \"ayuda\"",
+      "FOOTER": "Escribe /ayuda <comando> para obtener detalles. | Pagina {{PAGE}}/{{TOTAL}}",
+      "BTN-PREV": "Previo",
+      "BTN-NEXT": "Siguiente"
     }
   },
   "UTILS": {
-    "name": "utils",
-    "description": "Utilities",
+    "name": "util",
+    "description": "utilidades",
     "options": {
       "TIMESTAMP": {
-        "name": "timestamp",
-        "description": "get unix timestamp for the given date",
+        "name": "horarios",
+        "description": "obtén un unix timestamp con la fecha da",
         "options": {
           "TIME": {
-            "name": "time",
-            "description": "The time to convert (format: HH mm ss)"
+            "name": "hora",
+            "description": "La hora que deseas convertir (formato: HH mm ss)"
           },
           "TIMEZONE": {
-            "name": "timezone",
-            "description": "Your timezone in the format: Continent/City"
+            "name": "horario",
+            "description": "Tu zona horaria en este formato: Continente/Ciudad"
           },
           "DATE": {
-            "name": "date",
-            "description": "The date to convert (format: DD)"
+            "name": "fecha",
+            "description": "La fecha  para la conversion (formato: DD)"
           },
           "MONTH": {
-            "name": "month",
-            "description": "The month to convert (format: MM)"
+            "name": "mes",
+            "description": "El mes para la conversion (formato: MM)"
           },
           "YEAR": {
-            "name": "year",
-            "description": "The year to convert (format: YYYY)"
+            "name": "año",
+            "description": "El año para la conversion (formato: AAAA)"
           }
         }
       },
       "CHANGELOG": {
-        "name": "changelog",
-        "description": "bot's changelog"
+        "name": "registro",
+        "description": "registro de cambios del bot"
       },
       "BOTINFO": {
         "name": "botinfo",
-        "description": "get the bot's info and configure settings"
+        "description": "obten información del bot y configura sus opciones"
       },
       "CONTACT-US": {
-        "name": "contact-us",
-        "description": "for suggestions/bug reports/contacting us or just anything"
+        "name": "contáctanos",
+        "description": "para sugerencias, reporte, contactarnos o cualquier otra cosa."
       }
     },
     "RESPONSES": {
-      "INVALID-FORMAT": "Invalid time format. Please provide time in `HH mm ss` format. (e.g: `02 12 44`)",
+      "INVALID-FORMAT": "Formato de hora invalido. Introduzca la hora en formato «HH mm ss» (por ejemplo: «02 12 44»)",
       "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City` (e.g, `America/Los_Angeles`).\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
       "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
       "SUGGESTION_TITLE": "Title",
@@ -396,7 +396,7 @@
             "description": "Gloabal leaderboard or server specific (default: global)",
             "choices": {
               "global": "Global",
-              "server": "Server"
+              "server": "Servidor"
             }
           }
         }
