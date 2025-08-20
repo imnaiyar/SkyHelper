@@ -1,5 +1,7 @@
 {
   "bot": {
+    "name": "SkyHelper",
+    "intro": "That's me...",
     "EMBED_TITLE": "Bot Info",
     "TOTAL_SERVER": "Total Servers",
     "TOTAL_AUTHORIZED": "Total User Installs",
@@ -18,6 +20,7 @@
     "DASHBOARD": "Dashboard"
   },
   "NO-WB-PERM-BOT": "I do not have `Manage Webhooks` permission in {{CHANNEL}}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.",
+  "SELECT_EXPIRED": "Menu Expired!",
   "hide-options": {
     "name": "hide",
     "description": "hide the response"
