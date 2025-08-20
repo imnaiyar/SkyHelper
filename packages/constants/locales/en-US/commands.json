@@ -73,8 +73,6 @@
     "RESPONSES": {
       "NO_DATA": "No data found for {{VALUE}}! If you think this is an error, please let us know via {{COMMAND}}",
       "BUTTONS": {
-        "TREE": "Friendship Tree",
-        "LOCATION": "Location",
         "ACTION": "Friendship Action",
         "CALL": "Call",
         "STANCE": "Stance",
@@ -84,7 +82,6 @@
         "AUTHOR": "Spirit Summary",
         "TYPE": "**Type**: {{SPIRIT_TYPE}}",
         "REALM": "**Realm**: {{REALM}}",
-        "SEASON": "**Season**: Season of {{SEASON}}",
         "FIELDS": {
           "SUMMARY_TITLE": "TS Summary",
           "SUMMARY_DESC_NO_ELIGIBLE": "This spirit is not eligible to return as a TS yet, and will become eligible when the season after the {{SEASON}} ends!",
@@ -100,9 +97,6 @@
     "name": "shards-calendar",
     "description": "Show the shards calendar",
     "RESPONSES": {
-      "DATE_SELECT_PLACEHOLDER": "Select a date range",
-      "MONTH_SELECT_PLACEHOLDER": "Select a month",
-      "YEAR_SELECT_PLACEHOLDER": "Select a year",
       "INFO": {
         "NO_SHARD": "No Shard",
         "SHARD-INFO": "**Info:** {{INFO}} in {{AREA}}",
@@ -110,7 +104,10 @@
       },
       "EMBED_AUTHOR": "Shards Calender of {{MONTH}}, {{YEAR}}",
       "EMBED_DESCRIPTION": "For detailed shard info, use {{shardsCmd}}",
-      "EMBED_FOOTER": "Page {{INDEX}}/{{TOTAL}}"
+      "EMBED_FOOTER": "Page {{INDEX}}/{{TOTAL}}",
+      "CHANGE_BUTTON": "Change Month/Year",
+      "MODAL_TITLE": "Enter Month/Year (Format: MM-YYYY)",
+      "INVALID_DATE": "Invalid date format (`{{DATE}}`). Please enter the month and year in this format: MM-YYYY (e.g. 01-2022)"
     }
   },
   "SHARDS": {
@@ -129,10 +126,7 @@
   },
   "SKYTIMES": {
     "name": "skytimes",
-    "description": "various in-game events countdown",
-    "RESPONSES": {
-      "SELECT_PLACEHOLDER": "Detailed Times"
-    }
+    "description": "various in-game events countdown"
   },
   "TRAVELING-SPIRIT": {
     "name": "traveling-spirit",
@@ -148,38 +142,56 @@
   "REMINDERS": {
     "name": "reminders",
     "description": "set up reminders",
-    "RESPONSES": {
-      "USER_APP_ERROR": "Please run this command in a server I am a member of!",
-      "NOT_CACHED": "Not a cached server. Please contact the bot dev(s)",
-      "INACITVE_NO_CHANNEL": "🔴 Inactive (No Channels Selected)",
-      "INACTIVE": "🔴 Inactive",
-      "ACTIVE": "🟢 Active",
-      "EMBED_AUTHOR": "SkyHelper Reminders",
-      "DES_TITLE": "**Reminder Settings**",
-      "CHANNEL": "Channel: {{CHANNEL}}",
-      "DEFAULT_ROLE": "Default Role: {{ROLE}}",
-      "TYPE_SELECT_PLACEHOLDER": "Chose a type to edit!",
-      "ROLE_SELECT_PLACEHOLDER": "Select a default role to ping!",
-      "CHANNEL_SELECT_PLACEHOLDER": "Edit the reminders channel!",
-      "BTN_ENABLE_ALL": "Enable All",
-      "BTN_DISABLE_ALL": "Disable All",
-      "BTN_DISABLE_DEFAULT_ROLE": "Remove Default Role",
-      "TYPE-DESCRIPTION": {
-        "STATUS": "Status",
-        "ACTIVE": "Active",
-        "INACTIVE": "Inactive",
-        "ROLE": "Role",
-        "NONE": "None",
-        "BTN_ENABLE": "Enable",
-        "BTN_DISABLE": "Disable",
-        "BTN_REMOVE_ROLE": "Remove Role",
-        "ROLE_TYPE_SELECT_PLACEHOLDER": "Choose a role to ping"
+    "options": {
+      "CONFIGURE": {
+        "name": "configure",
+        "description": "configure reminders",
+        "options": {
+          "CHANNEL": {
+            "description": "channel where reminders should be sent"
+          },
+          "EVENT": {
+            "name": "event",
+            "description": "event to remind"
+          },
+          "ROLE": {
+            "name": "role",
+            "description": "role to ping"
+          },
+          "OFFSET": {
+            "name": "offset",
+            "description": "how many minutes before the event should the reminder be sent."
+          }
+        }
       },
-      "CHANNEL_UPDATE": "Reminders channel updated!",
-      "ALL_ACTIVE": "All reminders are enabled!",
-      "ALL_DISABLED": "All reminders are disabled!",
-      "DEFAULT_ROLE_UPDATE": "Default role updated!",
-      "DEFAULT_ROLE_REMOVE": "Default role removed!"
+      "STOP": {
+        "name": "stop",
+        "description": "stop reminders",
+        "options": {
+          "EVENT": {
+            "description": "event to stop reminding"
+          }
+        }
+      },
+      "STATUS": {
+        "name": "status",
+        "description": "reminders configurations for this server"
+      }
+    },
+    "RESPONSES": {
+      "CONFIGURED": "Successfully configured `{{TYPE}}` reminders in {{CHANNEL}}",
+      "CONFIGURED_ROLE": "Successfully configured `{{EVENT}}` reminders for role {{ROLE}} in {{CHANNEL}}",
+      "ALREADY_NOT_CONFIGURED": "Reminders for {{EVENT}} are already inactive",
+      "NEXT_TIME": "Next reminder for `{{EVENT}}` will be sent {{TIME}}",
+      "OFFSET": "Offset: `{{OFFSET}}` minutes",
+      "SHARD_TYPE": "Shard Type: {{SHARD_TYPE}}",
+      "STATUS": {
+        "TITLE": "Reminder status for {{SERVER_NAME}}",
+        "STATUS": "Status: {{STATUS}}",
+        "CHANNEL": "Channel: {{CHANNEL}}",
+        "ROLE": "Role: {{ROLE}}",
+        "BUTTON": "Manage"
+      }
     }
   },
   "LIVE_UPDATES": {
@@ -212,30 +224,7 @@
       "DISABLED": "{{TYPE}} is disabled"
     }
   },
-  "SEASONAL_CALCULATOR": {
-    "name": "seasonal-calculator",
-    "description": "calculate seasonal currencies",
-    "options": {
-      "CANDLES": {
-        "name": "candles",
-        "description": "amount of candles you have?"
-      },
-      "DAILIES": {
-        "name": "dailies",
-        "description": "did you do your dailies today?"
-      },
-      "SEASON_PASS": {
-        "name": "season-pass",
-        "description": "do you have the season pass?"
-      }
-    },
-    "RESPONSES": {
-      "NOT_ACTIVE": "No active season at the moment. Please run this command when a seson is active.",
-      "EMBED_DESCRIPTION": "**Season Pass**: {{PASS}}\n**Dailies**: {{DAILIES}} \n**Currency Required:**{{REQUIRED}} Candles\n**Obtainable Candles:** {{OBTAINABLE}} Candles\n**Days to complete:**{{DAYS}} Days {{POSSIBLE}} \n**Remaining candles at the end of the season:** {{REMAINING}} Candles",
-      "ENDS_IN": "Ends in {{DAYS}} days",
-      "SPIRITS_NOT_UPDATED": "{{SEASON}} spirits data is yet to be updated. Please try again later.\n- Season: {{SEASON}}\n- Starts: {{START}}\n- Ends: {{END}}"
-    }
-  },
+
   "HELP": {
     "name": "help",
     "description": "help menu",
@@ -301,7 +290,6 @@
     "RESPONSES": {
       "INVALID-FORMAT": "Invalid time format. Please provide time in `HH mm ss` format. (e.g: `02 12 44`)",
       "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City` (e.g, `America/Los_Angeles`).\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
-      "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
       "SUGGESTION_TITLE": "Title",
       "TITLE_PLACEHOLDER": "Title for the suggestion",
       "SUGGESTION_MODAL_TITLE": "Contact Us",
@@ -353,10 +341,12 @@
     "name": "daily-quests",
     "description": "get the daily quests",
     "RESPONSES": {
-      "NO_DATA": "No data found for today's daily quests. Please try again later.\n- -# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
+      "NO_DATA": "No data found for today's daily quests. Please try again later.",
+      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
       "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
       "EMBED_AUTHOR": "Daily Quests",
-      "EMBED_DESCRIPTION": "Daily quests for today"
+      "BUTTON1": "Rotating Candles",
+      "BUTTON2": "Seasonal Candles"
     }
   },
   "SKYGAME": {

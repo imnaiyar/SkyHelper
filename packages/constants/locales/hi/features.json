@@ -30,6 +30,7 @@
         }
       }
     },
+    "TIMELINE": "टाइमलाइन",
     "BUTTON1": "टाइमलाइन",
     "BUTTON2": "जगह",
     "BUTTON3": "Shards के बारे में"
@@ -46,24 +47,25 @@
     "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
     "TS_UPDATED": "अभी अपडेट होने को है",
     "TS_UNKNOWN": "अनजान स्पिरिट",
-    "GEYSER": "गाइज़र",
-    "GRANDMA": "ग्रांडमा",
-    "TURTLE": "टर्टल",
-    "AURORA": "अरोरा का कॉन्सर्ट",
-    "DREAM-SKATER": "ड्रीम स्केटर",
-    "PASSAGE-QUESTS": "पैसेज क्वेस्ट्स",
-    "NEST-SUNSET": "नेस्ट सूर्यास्त",
-    "FIREWORKS-FESTIVAL": "अवियरी आतिशबाजी महोत्सव",
-    "FAIRY-RING": "फेयरी रिंग",
-    "BROOK-RAINBOW": "फारेस्ट ब्रूक का इंद्रधनुष",
-    "DAILY-RESET": "दैनिक रीसेट",
-    "EDEN": "ईडन रीसेट",
+    "EVENTS": {
+      "GEYSER": "गाइज़र",
+      "GRANDMA": "ग्रांडमा",
+      "TURTLE": "टर्टल",
+      "AURORA": "अरोरा का कॉन्सर्ट",
+      "DREAM-SKATER": "ड्रीम स्केटर",
+      "PASSAGE-QUESTS": "पैसेज क्वेस्ट्स",
+      "NEST-SUNSET": "नेस्ट सूर्यास्त",
+      "FIREWORKS-FESTIVAL": "अवियरी आतिशबाजी महोत्सव",
+      "FAIRY-RING": "फेयरी रिंग",
+      "BROOK-RAINBOW": "फारेस्ट ब्रूक का इंद्रधनुष",
+      "DAILY-RESET": "दैनिक रीसेट",
+      "EDEN": "ईडन रीसेट"
+    },
     "TS_TITLE": "ट्रैवलिंग स्पिरिट",
     "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
     "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
     "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
-    "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}",
-    "TIMELINE": "टाइमलाइन"
+    "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}"
   },
   "reminders": {
     "ROLE_MENTION": "हेय, {{ROLE}}",
