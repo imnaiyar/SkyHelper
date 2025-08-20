@@ -1,16 +1,4 @@
 {
-  "ABOUT_SHARDS": {
-    "CREDIT": "Все о шардах от {{CREDIT}}",
-    "WHAT_ARE": "Что такое осколки?",
-    "TIMING": "Как я могу узнать, когда приближается осколка?",
-    "REWARDS": "Что такое осколки?"
-  },
-  "SHARD_LOCATION": {
-    "L_CREDIT": "Расположение по {{CREDIT}}",
-    "D_CREDIT": "Расположение по {{CREDIT}}",
-    "LOCATION": "Location",
-    "DATA": "Данные"
-  },
   "SHARD_TIMELINE": {
     "MUSIC_CREDIT": "Небо меняется и музыка Shard от {{CREDIT}}",
     "TIMESTAMP_CREDIT": "Расположение по {{CREDIT}}",

@@ -2,68 +2,46 @@
   "shards-embed": {
     "TODAY": "今日",
     "AUTHOR": "シャード情報",
-    "FOOTER": "ライブシャード（5分ごとに更新）",
     "CONTENT": "最終更新: {{TIME}}",
     "NO-SHARD": "今日はシャードがありません。",
-    "FIELDS": {
-      "TYPE": {
-        "LABEL": "シャードタイプ",
-        "VALUE": "{{VALUE}}"
-      },
-      "LOCATION": {
-        "LABEL": "場所",
-        "VALUE": "{{VALUE}}"
-      },
-      "STATUS": {
-        "LABEL": "状態",
-        "VALUE": {
-          "ENDED": "すべてのシャードが{{DURATION}} 前に終了",
-          "ACTIVE": "{{INDEX}} 番目のシャードが現在アクティブで、{{DURATION}} 後に終了",
-          "EXPECTED": "{{INDEX}}番目のシャードが{{DURATION}}後に着地"
-        }
-      },
-      "COUNTDOWN": {
-        "VALUE": {
-          "ENDED": "Ended {{DURATION}}",
-          "ACTIVE": "Ends {{DURATION}}",
-          "EXPECTED": "Falls {{DURATION}}"
-        }
-      }
+    "COUNTDOWN": {
+      "ENDED": "終了した {{DURATION}}",
+      "ACTIVE": "{{DURATION}} で終了",
+      "EXPECTED": "{{DURATION}} の滝"
     },
-    "BUTTON1": "タイムライン",
-    "BUTTON2": "場所",
-    "BUTTON3": "シャードについて"
+    "TIMELINE": "タイムライン",
+    "LOCATION": "シャードの場所",
+    "DATA": "シャードデータ"
   },
   "times-embed": {
-    "FOOTER": "ライブSkyTimes（2分ごとに更新）",
     "EVENT_INACTIVE": "アクティブなイベントなし",
-    "EMBED_TITLE": "Event Times",
-    "EMBED_AUTHOR": "スカイタイムズ",
+    "EMBED_TITLE": "イベント時間",
     "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "開始まで",
-    "ENDS": "Ends",
-    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
+    "ENDS": "終了",
+    "TS_VISITING": "<:tree_top:133996361818111782985>**現在の訪問:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**出発:** {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}} が {{DATE}}（{{DURATION}}後）に到着予定",
     "TS_UPDATED": "まだ更新されていません",
     "TS_UNKNOWN": "不明な精霊",
-    "GEYSER": "間欠泉",
-    "GRANDMA": "おばあちゃん",
-    "TURTLE": "カメ",
-    "AURORA": "オーロラのコンサート",
-    "DREAM-SKATER": "ドリームスケーター",
-    "PASSAGE-QUESTS": "通過クエスト",
-    "NEST-SUNSET": "ネストサンセット",
-    "FIREWORKS-FESTIVAL": "鳥小屋花火大会",
-    "FAIRY-RING": "妖精の指輪",
-    "BROOK-RAINBOW": "フォレストブルックレインボー",
-    "DAILY-RESET": "デイリーリセット",
-    "EDEN": "エデンリセット",
+    "EVENTS": {
+      "GEYSER": "間欠泉",
+      "GRANDMA": "おばあちゃん",
+      "TURTLE": "カメ",
+      "AURORA": "オーロラのコンサート",
+      "DREAM-SKATER": "ドリームスケーター",
+      "PASSAGE-QUESTS": "通過クエスト",
+      "NEST-SUNSET": "ネストサンセット",
+      "FIREWORKS-FESTIVAL": "鳥小屋花火大会",
+      "FAIRY-RING": "妖精の指輪",
+      "BROOK-RAINBOW": "フォレストブルックレインボー",
+      "DAILY-RESET": "デイリーリセット",
+      "EDEN": "エデンリセット"
+    },
     "TS_TITLE": "旅する精霊",
     "EVENT_TITLE": "特別イベント（...の日々）",
-    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
+    "ACTIVE": "<a:uptime:1228956558113771580> アクティブ. 終了まで {{END_TIME}} (`Next:` {{NEXT_TIME}})",
     "NEXT-OCC": "次の発生: {{TIME}}",
-    "NEXT-OCC-IDLE": "次の発生: {{TIME}}",
-    "TIMELINE": "タイムライン"
+    "NEXT-OCC-IDLE": "次の発生: {{TIME}}"
   },
   "reminders": {
     "ROLE_MENTION": "こんにちは、{{ROLE}}",
@@ -71,11 +49,10 @@
     "DAILY_RESET": "Skyの世界がリセットされ、デイリークエストが更新されました！",
     "TITLE": "{{TYPE}}リマインダー",
     "DAILY_QUESTS": "デイリークエスト",
-    "CONCERT": "オーロラのコンサート",
-    "ERROR": "これは、予想どおりに動作していません!",
     "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します",
-    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}})."
+    "PRE": "{{TYPE}} は {{TIME}} ({{TIME-R}}) から始まります。",
+    "PRE-RESET": "{{TYPE}} は {{TIME}} ({{TIME-R}}) で発生します。",
+    "SHARDS": "**{{SHARD_NUMBER}} シャード** は {{TIME}} に落ちます"
   },
   "REALMS": {
     "ISLE": "夜明けの島",

@@ -73,8 +73,6 @@
     "RESPONSES": {
       "NO_DATA": "No se ha encontrado la información {{VALUE}} Si crees que se trata de un error, puedes reportarlo por {{COMMAND}}",
       "BUTTONS": {
-        "TREE": "Árbol de amistad",
-        "LOCATION": "Ubicación",
         "ACTION": "Acción de amistad",
         "CALL": "Honk",
         "STANCE": "Postura",
@@ -84,7 +82,6 @@
         "AUTHOR": "Resumen del espíritu",
         "TYPE": "**Tipo** {{SPIRIT_TYPE}}",
         "REALM": "**Reino** {{REALM}}",
-        "SEASON": "**Temporada**: Temporada de(l) {{SEASON}}",
         "FIELDS": {
           "SUMMARY_TITLE": "Resumen del espíritu viajero",
           "SUMMARY_DESC_NO_ELIGIBLE": "¡Este espíritu no es elegible para volver como un espíritu viajero por el momento, pero volverá a estarlo cuando la temporada después de(l) {{SEASON}} termine!",
@@ -100,9 +97,6 @@
     "name": "calendario-de-fragmentos",
     "description": "Muestra un calendario de los fragmentos",
     "RESPONSES": {
-      "DATE_SELECT_PLACEHOLDER": "Selecciona un periodo de tiempo",
-      "MONTH_SELECT_PLACEHOLDER": "Elige un mes",
-      "YEAR_SELECT_PLACEHOLDER": "Elige un año",
       "INFO": {
         "NO_SHARD": "Sin fragmentos",
         "SHARD-INFO": "**Info:** {{INFO}} en {{AREA}}",
@@ -110,7 +104,10 @@
       },
       "EMBED_AUTHOR": "Calendario de los fragmentos de {{MONTH}}, {{YEAR}}",
       "EMBED_DESCRIPTION": "Para información detallada, usa {{shardsCmd}}",
-      "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}"
+      "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}",
+      "CHANGE_BUTTON": "Change Month/Year",
+      "MODAL_TITLE": "Enter Month/Year (Format: MM-YYYY)",
+      "INVALID_DATE": "Invalid date format (`{{DATE}}`). Please enter the month and year in this format: MM-YYYY (e.g. 01-2022)"
     }
   },
   "SHARDS": {
@@ -129,10 +126,7 @@
   },
   "SKYTIMES": {
     "name": "skytimes",
-    "description": "cuentas regresivas de varios eventos dentro del juego",
-    "RESPONSES": {
-      "SELECT_PLACEHOLDER": "Horario detallado"
-    }
+    "description": "cuentas regresivas de varios eventos dentro del juego"
   },
   "TRAVELING-SPIRIT": {
     "name": "espíritu-viajero",
@@ -148,38 +142,56 @@
   "REMINDERS": {
     "name": "recordatorios",
     "description": "configura los recordatorios",
-    "RESPONSES": {
-      "USER_APP_ERROR": "¡Por favor usa este comando en un servidor en el que sea miembro!",
-      "NOT_CACHED": "Este servidor no tiene caché. Ponte en contacto con el desarrollador(es) del bot",
-      "INACITVE_NO_CHANNEL": "🟢 Inactivo (No hay canales seleccionados)",
-      "INACTIVE": "🟢 Inactivo",
-      "ACTIVE": "🟢 Activo",
-      "EMBED_AUTHOR": "SkyHelper Recordatorios",
-      "DES_TITLE": "**Configuración de los recordatorios**",
-      "CHANNEL": "Canal: {{CHANNEL}}",
-      "DEFAULT_ROLE": "Rol predeterminado: {{ROLE}}",
-      "TYPE_SELECT_PLACEHOLDER": "¡Escoge una categoría para editar!",
-      "ROLE_SELECT_PLACEHOLDER": "¡Selecciona un rol predeterminado para el ping!",
-      "CHANNEL_SELECT_PLACEHOLDER": "¡Cambiar el canal de recordatorios!",
-      "BTN_ENABLE_ALL": "Activarlos todos",
-      "BTN_DISABLE_ALL": "Desactivarlos todos",
-      "BTN_DISABLE_DEFAULT_ROLE": "Eliminar el rol predeterminado",
-      "TYPE-DESCRIPTION": {
-        "STATUS": "Estado",
-        "ACTIVE": "Activo",
-        "INACTIVE": "Inactivo",
-        "ROLE": "Rol",
-        "NONE": "Ninguno",
-        "BTN_ENABLE": "Activar",
-        "BTN_DISABLE": "Desactivar",
-        "BTN_REMOVE_ROLE": "Elimina un rol",
-        "ROLE_TYPE_SELECT_PLACEHOLDER": "Escoge un rol al que notificar"
+    "options": {
+      "CONFIGURE": {
+        "name": "configure",
+        "description": "configure reminders",
+        "options": {
+          "CHANNEL": {
+            "description": "channel where reminders should be sent"
+          },
+          "EVENT": {
+            "name": "event",
+            "description": "event to remind"
+          },
+          "ROLE": {
+            "name": "role",
+            "description": "role to ping"
+          },
+          "OFFSET": {
+            "name": "offset",
+            "description": "how many minutes before the event should the reminder be sent."
+          }
+        }
       },
-      "CHANNEL_UPDATE": "Canal de recordatorios seleccionado!",
-      "ALL_ACTIVE": "Todos los recordatorios están activados!",
-      "ALL_DISABLED": "Todos los recordatorios están desactivados!",
-      "DEFAULT_ROLE_UPDATE": "Rol predeterminado seleccionado!",
-      "DEFAULT_ROLE_REMOVE": "Se eliminó el rol predeterminado"
+      "STOP": {
+        "name": "stop",
+        "description": "stop reminders",
+        "options": {
+          "EVENT": {
+            "description": "event to stop reminding"
+          }
+        }
+      },
+      "STATUS": {
+        "name": "status",
+        "description": "reminders configurations for this server"
+      }
+    },
+    "RESPONSES": {
+      "CONFIGURED": "Successfully configured `{{TYPE}}` reminders in {{CHANNEL}}",
+      "CONFIGURED_ROLE": "Successfully configured `{{EVENT}}` reminders for role {{ROLE}} in {{CHANNEL}}",
+      "ALREADY_NOT_CONFIGURED": "Reminders for {{EVENT}} are already inactive",
+      "NEXT_TIME": "Next reminder for `{{EVENT}}` will be sent {{TIME}}",
+      "OFFSET": "Offset: `{{OFFSET}}` minutes",
+      "SHARD_TYPE": "Shard Type: {{SHARD_TYPE}}",
+      "STATUS": {
+        "TITLE": "Reminder status for {{SERVER_NAME}}",
+        "STATUS": "Status: {{STATUS}}",
+        "CHANNEL": "Channel: {{CHANNEL}}",
+        "ROLE": "Role: {{ROLE}}",
+        "BUTTON": "Manage"
+      }
     }
   },
   "LIVE_UPDATES": {
@@ -210,30 +222,6 @@
       "CONFIGURED": "{{CHANNEL}}{{TYPE}} configurado en {{CHANNEL}}. El mensaje {{MESSAGE}} será actualizado con detalles relevantes",
       "ALREADY_DISABLED": "{{TYPE}} ya esta desactivado en este servidor",
       "DISABLED": "{{TYPE}} esta desactivado"
-    }
-  },
-  "SEASONAL_CALCULATOR": {
-    "name": "calculadora-temporada",
-    "description": "calcular la economía de la temporada",
-    "options": {
-      "CANDLES": {
-        "name": "velas",
-        "description": "cuantas velas tienes?"
-      },
-      "DAILIES": {
-        "name": "diarias",
-        "description": "hiciste las misiones diarias de hoy?"
-      },
-      "SEASON_PASS": {
-        "name": "pase",
-        "description": "tienes el pase de aventura?"
-      }
-    },
-    "RESPONSES": {
-      "NOT_ACTIVE": "No hay ninguna temporada activa en este momento. Intenta otra vez cuando haya una temporada activa.",
-      "EMBED_DESCRIPTION": "**Pase**: {{PASS}}\n**Misiones diárias**: {{DAILIES}}\n**Velas conseguibles**: {{OBTAINABLE}} Velas\n**Dias para consegirlas**: {{DAYS}} dias\n**Velas sobrantes**: {{REMAINING}} velas",
-      "ENDS_IN": "Termina en {{DAYS }} días",
-      "SPIRITS_NOT_UPDATED": "{{SEASON}} y sus espiritus es informacion pendiente por actualizar. Intenta de nuevo más tarde.\n- Temporada: {{SEASON}}\n- Empieza: {{START}}\n- Termina: {{END}}"
     }
   },
   "HELP": {
@@ -300,100 +288,101 @@
     },
     "RESPONSES": {
       "INVALID-FORMAT": "Formato de hora invalido. Introduzca la hora en formato «HH mm ss» (por ejemplo: «02 12 44»)",
-      "INVALID-TIMEZONE": "Invalid timezone. Please provide a correct one. Use the format: `Continent/City` (e.g, `America/Los_Angeles`).\nUse this link to find your timezone if you are not sure: <https://timezonedb.com/time-zones>",
-      "DATE_NOT_EXIST": "{{DATE}}  does not exist, please provide a valid date.",
-      "SUGGESTION_TITLE": "Title",
-      "TITLE_PLACEHOLDER": "Title for the suggestion",
-      "SUGGESTION_MODAL_TITLE": "Contact Us",
-      "SUGGESTION": "Suggestion/Bug Report/Others",
-      "SUGGESTION_PLACEHOLDER": "Explain in brief.",
-      "RECIEVED": "Your message is received. Here's a preview!"
+      "INVALID-TIMEZONE": "Zona horaria inválida. Introduzca una válida. Utilice el formato: «Continente/Ciudad» (por ejemplo, «América/Los Ángeles»).\nSi no está seguro, utilice este enlace para encontrar su zona horaria: <https://timezonedb.com/time-zones>.",
+      "SUGGESTION_TITLE": "Título",
+      "TITLE_PLACEHOLDER": "Título de la sugerencia",
+      "SUGGESTION_MODAL_TITLE": "Contáctanos",
+      "SUGGESTION": "Sugerencias/Reporte de bugs/Otros",
+      "SUGGESTION_PLACEHOLDER": "Da una explicación breve",
+      "RECIEVED": "Tu mensaje a sido enviado. Aquí hay una vista previa!"
     }
   },
   "LANGUAGE": {
-    "name": "language",
-    "description": "manage preferred language for the bot's response",
+    "name": "idioma",
+    "description": "cambia el idioma en el que responde el bot",
     "options": {
       "CATEGORY": {
-        "name": "category",
-        "description": "select a category to set the laguage for",
+        "name": "categoria",
+        "description": "selecciona una categoría para cambiar el idioma",
         "choices": {
-          "GUILD": "Server",
-          "USER": "User"
+          "GUILD": "Servidor",
+          "USER": "Usuario"
         }
       },
       "LANGUAGES": {
-        "name": "languages",
-        "description": "select a language"
+        "name": "idiomas",
+        "description": "selecciona un idioma"
       },
       "SUB": {
         "SET": {
-          "name": "set",
-          "description": "set your/server language for the bot"
+          "name": "establecer",
+          "description": "establece el idioma del bot para ti/el servidor"
         },
         "REMOVE": {
-          "name": "remove",
-          "description": "remove a set language",
+          "name": "eliminar",
+          "description": "elimina el idioma seleccionado",
           "options": {
-            "description": "select a category type to remove"
+            "description": "selecciona una categoría para eliminar el idioma"
           }
         }
       },
       "RESPONSES": {
-        "NO-PERM": "You do not have permission(s) ({{PERMISSION}}) to set a server's language",
-        "SUCCESS": "Language for {{TYPE}} set to {{Language}} succesfully, you may still see english in some places as it is not possible to translate everything. \n\nPlease consider contrubuting to translation of this bot by visiting {{LINK}} and help us add more supported language.\n\nNote: User level language settings will take precedence over server settings (if any).",
-        "ALREADY_SET": "{{TYPE}} language setting is already set to {{LANGUAGE}}",
-        "ALREADY_NOT_SET": "There's already no language set for {{CATEGORY}}.",
-        "SUCCESS_REMOVED": "Succesfully removed {{LANGUAGE}} from {{CATEGORY}}!"
+        "NO-PERM": "No tienes los permisos {{PERMISSION}} para cambiar el idioma en este servidor",
+        "SUCCESS": "Idioma para {{TYPE}} cambiado a {{Language}} exitosamente, es posible que aún veas inglés en algunos lugares, ya que es imposible traducirlo todo\n\nPor favor, considera contribuir a la traducción de este bot visitando {{LINK}} y ayudarnos a añadir más idiomas a este bot\n\nNota: La configuración de idioma del usuario tendrá prioridad sobre la configuración del servidor (si la hubiera).",
+        "ALREADY_SET": "La configuracion {{TYPE}} ya esta establecida en {{LANGUAGE}}",
+        "ALREADY_NOT_SET": "No hay un idioma establecido para {{CATEGORY}}",
+        "SUCCESS_REMOVED": "Se ha removido {{LANGUAGE}} de {{CATEGORY}}"
       }
     }
   },
   "DAILY_QUESTS": {
-    "name": "daily-quests",
-    "description": "get the daily quests",
+    "name": "misiones-diarias",
+    "description": "obten un vistazo a las misiones diarias",
     "RESPONSES": {
-      "NO_DATA": "No data found for today's daily quests. Please try again later.\n- -# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
-      "OUTDATED": "This quest is outdated. Please wait for the quests to be updated.",
-      "EMBED_AUTHOR": "Daily Quests",
-      "EMBED_DESCRIPTION": "Daily quests for today"
+      "NO_DATA": "No data found for today's daily quests. Please try again later.",
+      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
+      "OUTDATED": "Esta misión está desactualizada. Por favor espera a que las misiones se actualicen",
+      "EMBED_AUTHOR": "Misiones diarias",
+      "BUTTON1": "Rotating Candles",
+      "BUTTON2": "Seasonal Candles"
     }
   },
   "SKYGAME": {
     "name": "skygame",
-    "description": "Various fun games based around Sky: CotL",
+    "description": "Variedad de juegos divertidos basados en Sky: CotL",
     "SUB": {
       "HANGMAN": {
-        "name": "hangman",
-        "description": "Play a game of hangman based on sky-related words, or a custom word",
+        "name": "ahorcado",
+        "description": "Juega al ahorcado con palabras basadas en sky o personalizadas",
         "options": {
           "mode": {
-            "name": "mode",
-            "description": "The mode of this game",
+            "name": "modo",
+            "description": "El modo del juego",
             "choices": {
-              "single": "Single Player",
-              "double": "Double Player"
+              "single": "Un jugador",
+              "double": "Dos jugadores"
             }
           }
         }
       },
       "SCRAMBLE": {
-        "name": "scrambled",
-        "description": "Unscramble the word to win"
+        "name": "mezclas",
+        "description": "Organiza las letras y forma una palabra"
       },
       "LEADERBOARD": {
-        "name": "leaderboard",
-        "description": "View the leaderboard for the skygames",
+        "name": "marcador",
+        "description": "Ver la tabla de clasificaciones de los skygames",
         "options": {
           "game": {
-            "name": "game",
-            "description": "The game to view the leaderboard for",
+            "name": "juego",
+            "description": "El juego del que quieres ver la tabla de clasificaciones",
             "choices": {
-              "hangman": "Hangman"
+              "hangman": "Ahorcado"
             }
           },
           "leaderboard-type": {
-            "name": "leaderboard-type",
-            "description": "Gloabal leaderboard or server specific (default: global)",
+            "name": "tipo-marcador",
+            "description": "Tabla de clasificación global o un servidor específico (predeterminado: Global)",
             "choices": {
               "global": "Global",
               "server": "Servidor"

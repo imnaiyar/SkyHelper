@@ -2,68 +2,46 @@
   "shards-embed": {
     "TODAY": "Сегодня",
     "AUTHOR": "Информация об осколках",
-    "FOOTER": "Осколок в данный момент (обновление каждые 5 минут)",
     "CONTENT": "Последнее обновление: {{TIME}}",
     "NO-SHARD": "Сегодня день без осколков.",
-    "FIELDS": {
-      "TYPE": {
-        "LABEL": "Тип осколка",
-        "VALUE": "{{VALUE}}"
-      },
-      "LOCATION": {
-        "LABEL": "Расположение",
-        "VALUE": "{{VALUE}}"
-      },
-      "STATUS": {
-        "LABEL": "Статус",
-        "VALUE": {
-          "ENDED": "Все осколки закончились {{DURATION}} назад",
-          "ACTIVE": "{{INDEX}} осколок сейчас активен и закончится через {{DURATION}}",
-          "EXPECTED": "Осколок {{INDEX}} приземлится через {{DURATION}}"
-        }
-      },
-      "COUNTDOWN": {
-        "VALUE": {
-          "ENDED": "Ended {{DURATION}}",
-          "ACTIVE": "Ends {{DURATION}}",
-          "EXPECTED": "Falls {{DURATION}}"
-        }
-      }
+    "COUNTDOWN": {
+      "ENDED": "Закончили {{DURATION}}",
+      "ACTIVE": "Конец {{DURATION}}",
+      "EXPECTED": "Славы {{DURATION}}"
     },
-    "BUTTON1": "Временная шкала",
-    "BUTTON2": "Расположение",
-    "BUTTON3": "Об осколках"
+    "TIMELINE": "Временная шкала",
+    "LOCATION": "Расположение осколка",
+    "DATA": "Осколки данных"
   },
   "times-embed": {
-    "FOOTER": "Информация о событиях (обновление каждые 2 минуты)",
     "EVENT_INACTIVE": "Нет активных событий",
-    "EMBED_TITLE": "Event Times",
-    "EMBED_AUTHOR": "События",
+    "EMBED_TITLE": "Время событий",
     "EVENT_ACTIVE": "**Событие**: {{EVENT_NAME}}\n**Длительность**: {{DATE1}} – {{DATE2}}\n**Всего дней**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Начнётся через",
-    "ENDS": "Ends",
-    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
+    "ENDS": "Окончание",
+    "TS_VISITING": "<:tree_top:1339963618111782985>**В настоящее время посещение:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Отправка:** На {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}}} прибудет {{DATE}} (через {{DURATION}})",
     "TS_UPDATED": "Еще не обновлено",
     "TS_UNKNOWN": "Неизвестный дух",
-    "GEYSER": "Гейзер",
-    "GRANDMA": "Бабушка",
-    "TURTLE": "Черепаха",
-    "AURORA": "Концерт Авроры",
-    "DREAM-SKATER": "Скат Мечты",
-    "PASSAGE-QUESTS": "Проходные задания",
-    "NEST-SUNSET": "Nest Закат",
-    "FIREWORKS-FESTIVAL": "Aviary Фестиваль фейерверков",
-    "FAIRY-RING": "Ведьмин круг",
-    "BROOK-RAINBOW": "Лесная радуга",
-    "DAILY-RESET": "Ежедневный сброс",
-    "EDEN": "Сброс Эдема",
+    "EVENTS": {
+      "GEYSER": "Geyser",
+      "GRANDMA": "Grandma",
+      "TURTLE": "Черепаха",
+      "AURORA": "Концерт Авроры",
+      "DREAM-SKATER": "Скат Мечты",
+      "PASSAGE-QUESTS": "Проходные задания",
+      "NEST-SUNSET": "Nest Закат",
+      "FIREWORKS-FESTIVAL": "Aviary Фестиваль фейерверков",
+      "FAIRY-RING": "Ведьмин круг",
+      "BROOK-RAINBOW": "Лесная радуга",
+      "DAILY-RESET": "Ежедневный сброс",
+      "EDEN": "Сброс Эдема"
+    },
     "TS_TITLE": "Странствующий дух",
     "EVENT_TITLE": "Специальное событие (Дни ...)",
-    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
+    "ACTIVE": "",
     "NEXT-OCC": "Следующее появление: {{TIME}}",
-    "NEXT-OCC-IDLE": "Следующее Окружение: {{TIME}}",
-    "TIMELINE": "Временная шкала"
+    "NEXT-OCC-IDLE": "Следующее Окружение: {{TIME}}"
   },
   "reminders": {
     "ROLE_MENTION": "Эй, {{ROLE}}",
@@ -71,11 +49,10 @@
     "DAILY_RESET": "Мир Скай только что обновился, и ежедневные квесты были обновлены!",
     "TITLE": "{{TYPE}} Напоминание",
     "DAILY_QUESTS": "Ежедневные Задания",
-    "CONCERT": "Концерт Авроры",
-    "ERROR": "Это не работает, как ожидалось!",
     "COMMON": "{{TYPE}} только что начался (в {{TIME}}) и закончится в {{TIME-END}} ({{TIME-END-R}})",
-    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}})."
+    "PRE": "{{TYPE}} начнется в {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} будет происходить в {{TIME}} ({{TIME-R}}).",
+    "SHARDS": "** Осколок{{SHARD_NUMBER}} ** упадет на {{TIME}}"
   },
   "REALMS": {
     "ISLE": "↪️ Isle of Dawn",

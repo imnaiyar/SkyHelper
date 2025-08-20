@@ -1,28 +1,27 @@
 {
   "bot": {
     "name": "SkyHelper",
-    "intro": "That's me...",
-    "EMBED_TITLE": "Bot Info",
-    "TOTAL_SERVER": "Total Servers",
-    "TOTAL_AUTHORIZED": "Total User Installs",
-    "TOTAL_USERS": "Total Users",
-    "LATENCY": "Latency",
+    "intro": "Soy yo...",
+    "EMBED_TITLE": "Sobre el bot",
+    "TOTAL_SERVER": "Total de servidores",
+    "TOTAL_AUTHORIZED": "Instalaciones de usuarios",
+    "TOTAL_USERS": "Total de usuarios",
+    "LATENCY": "Latencia",
     "VERSION": "Version",
-    "UPTIME": "Uptime",
-    "PING": "Websocket Ping",
-    "GUILD_SETTINGS": "Server Settings",
-    "LANGUAGE": "Language",
-    "ANNOUNCEMENT_CHANNEL": "Announcement Channel",
-    "NOT_SET": "None (you can set it via bot's dashboard)",
-    "USER_SETTINGS": "User Settings",
-    "INVITE": "Invite",
-    "SUPPORT": "Support Server",
-    "DASHBOARD": "Dashboard"
+    "UPTIME": "Tiempo en linea",
+    "PING": "Websocket ping",
+    "GUILD_SETTINGS": "Configuracion del servidor",
+    "LANGUAGE": "Idioma",
+    "ANNOUNCEMENT_CHANNEL": "Canal de anuncios",
+    "NOT_SET": "Ninguno (Puedes establecerlo en el panel de control del bot)",
+    "USER_SETTINGS": "Configuracion del usuario",
+    "INVITE": "Invitacion",
+    "SUPPORT": "Soporte",
+    "DASHBOARD": "Panel de control"
   },
-  "NO-WB-PERM-BOT": "I do not have `Manage Webhooks` permission in {{CHANNEL}}. Please make sure that there is no channel level permission overwrides and if there is, please grant me the necessary permissions in the said channel before running the command again.",
-  "SELECT_EXPIRED": "Menu Expired!",
+  "NO-WB-PERM-BOT": "No tengo el permiso \"Manejar webhooks\" en el canal {{CHANNEL}}.\nPor favor asegúrate de darme los permisos necesarios revisando mis roles o mis permisos en el canal antes de volver a ejecutar el comando",
   "hide-options": {
-    "name": "hide",
-    "description": "hide the response"
+    "name": "ocultar",
+    "description": "ocultar la respuesta"
   }
 }
