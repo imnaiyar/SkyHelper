@@ -1,16 +1,4 @@
 {
-  "ABOUT_SHARDS": {
-    "CREDIT": "Sobre los fragmentos, por {{CREDIT}}",
-    "WHAT_ARE": "¿Qué son los fragmentos?",
-    "TIMING": "¿Cómo sé cuando viene un fragmento?",
-    "REWARDS": "¿Cuáles son las recompensas?"
-  },
-  "SHARD_LOCATION": {
-    "L_CREDIT": "Ubicación del fragmento por {{CREDIT}}",
-    "D_CREDIT": "Información del fragmento por {{CREDIT}}",
-    "LOCATION": "Ubicación",
-    "DATA": "Información"
-  },
   "SHARD_TIMELINE": {
     "MUSIC_CREDIT": "El cielo cambia de color con la música de {{CREDIT}}",
     "TIMESTAMP_CREDIT": "Horario del fragmento por {{CREDIT}}",

@@ -1,16 +1,4 @@
 {
-  "ABOUT_SHARDS": {
-    "CREDIT": "{{CREDIT}} के तरफ से शार्ड बारे में",
-    "WHAT_ARE": "शार्ड क्या है?",
-    "TIMING": "मुझे कैसे पता चलेगा कि शार्ड कब आएगा?",
-    "REWARDS": "मुझे ईनाम में क्या मिलेगा?"
-  },
-  "SHARD_LOCATION": {
-    "L_CREDIT": "{{CREDIT}} के तरफ से शार्ड का जगह",
-    "D_CREDIT": "{{CREDIT}} के तरफ से शार्ड का डाटा",
-    "LOCATION": "जगह",
-    "DATA": "डाटा"
-  },
   "SHARD_TIMELINE": {
     "MUSIC_CREDIT": "{{CREDIT}} के तरफ से शार्ड म्यूजिक और आसमान में बदलाव के बारे में",
     "TIMESTAMP_CREDIT": "{{CREDIT}} के तरफ से शार्ड का समय",

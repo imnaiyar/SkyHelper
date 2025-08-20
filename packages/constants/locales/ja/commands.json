@@ -73,8 +73,6 @@
     "RESPONSES": {
       "NO_DATA": "{{VALUE}}のデータが見つかりません！これがエラーだと思われる場合は、{{COMMAND}}を通じてお知らせください",
       "BUTTONS": {
-        "TREE": "友好ツリー",
-        "LOCATION": "場所",
         "ACTION": "友好アクション",
         "CALL": "呼び出し",
         "STANCE": "姿勢",
@@ -84,12 +82,11 @@
         "AUTHOR": "精霊概要",
         "TYPE": "**タイプ**: {{SPIRIT_TYPE}}",
         "REALM": "**領域**: {{REALM}}",
-        "SEASON": "**シーズン**: {{SEASON}}シーズン",
         "FIELDS": {
           "SUMMARY_TITLE": "TS概要",
           "SUMMARY_DESC_NO_ELIGIBLE": "この精霊はまだTSとして戻る資格がありません。{{SEASON}}の次のシーズンが終わると資格を得ます！",
-          "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}",
-          "SUMMARY_RETURNED_DATE": "Returned Dates",
+          "SUMMARY_DESC_RETURNED": "総訪問数： {{VISITS}}",
+          "SUMMARY_RETURNED_DATE": "返却日",
           "SUMMARY_DESC_NO_VISIT": "この精霊はまだ戻っていません。戻ってきたときには、シーズン中に提供されたのと同じアイテムを再構成された友好ツリーで提供します。"
         },
         "CREDIT": "インフォグラフィック by Ed.7"
@@ -100,9 +97,6 @@
     "name": "シャードカレンダー",
     "description": "シャードカレンダーを表示",
     "RESPONSES": {
-      "DATE_SELECT_PLACEHOLDER": "日付範囲を選択",
-      "MONTH_SELECT_PLACEHOLDER": "月を選択",
-      "YEAR_SELECT_PLACEHOLDER": "年を選択",
       "INFO": {
         "NO_SHARD": "シャードなし",
         "SHARD-INFO": "**情報:** {{AREA}}の{{INFO}}",
@@ -110,7 +104,10 @@
       },
       "EMBED_AUTHOR": "{{YEAR}}年{{MONTH}}のシャードカレンダー",
       "EMBED_DESCRIPTION": "詳細なシャード情報は{{shardsCmd}}を使用してください",
-      "EMBED_FOOTER": "ページ {{INDEX}}/{{TOTAL}}"
+      "EMBED_FOOTER": "ページ {{INDEX}}/{{TOTAL}}",
+      "CHANGE_BUTTON": "月/年を変更",
+      "MODAL_TITLE": "月/年を入力 (フォーマット: MM-YYYY)",
+      "INVALID_DATE": "無効な日付形式 (`{{DATE}}`) です。月と年をこの形式で入力してください：MM-YYYY (例: 01-2022)"
     }
   },
   "SHARDS": {
@@ -129,10 +126,7 @@
   },
   "SKYTIMES": {
     "name": "スカイタイムズ",
-    "description": "様々なゲーム内イベントのカウントダウン",
-    "RESPONSES": {
-      "SELECT_PLACEHOLDER": "詳細な時間"
-    }
+    "description": "様々なゲーム内イベントのカウントダウン"
   },
   "TRAVELING-SPIRIT": {
     "name": "旅する精霊",
@@ -148,92 +142,86 @@
   "REMINDERS": {
     "name": "リマインダー",
     "description": "リマインダーを設定",
-    "RESPONSES": {
-      "USER_APP_ERROR": "私がメンバーであるサーバーでこのコマンドを実行してください！",
-      "NOT_CACHED": "キャッシュされていないサーバーです。ボット開発者に連絡してください",
-      "INACITVE_NO_CHANNEL": "🔴 非アクティブ（チャンネルが選択されていません）",
-      "INACTIVE": "🔴 非アクティブ",
-      "ACTIVE": "🟢 アクティブ",
-      "EMBED_AUTHOR": "SkyHelperリマインダー",
-      "DES_TITLE": "**リマインダー設定**",
-      "CHANNEL": "チャンネル: {{CHANNEL}}",
-      "DEFAULT_ROLE": "デフォルトロール: {{ROLE}}",
-      "TYPE_SELECT_PLACEHOLDER": "編集するタイプを選択！",
-      "ROLE_SELECT_PLACEHOLDER": "メンション用のデフォルトロールを選択！",
-      "CHANNEL_SELECT_PLACEHOLDER": "リマインダーチャンネルを編集！",
-      "BTN_ENABLE_ALL": "すべて有効化",
-      "BTN_DISABLE_ALL": "すべて無効化",
-      "BTN_DISABLE_DEFAULT_ROLE": "デフォルトロールを削除",
-      "TYPE-DESCRIPTION": {
-        "STATUS": "ステータス",
-        "ACTIVE": "アクティブ",
-        "INACTIVE": "非アクティブ",
-        "ROLE": "ロール",
-        "NONE": "なし",
-        "BTN_ENABLE": "有効化",
-        "BTN_DISABLE": "無効化",
-        "BTN_REMOVE_ROLE": "ロール削除",
-        "ROLE_TYPE_SELECT_PLACEHOLDER": "メンション用のロールを選択"
-      },
-      "CHANNEL_UPDATE": "リマインダーチャンネルが更新されました！",
-      "ALL_ACTIVE": "すべてのリマインダーが有効化されました！",
-      "ALL_DISABLED": "すべてのリマインダーが無効化されました！",
-      "DEFAULT_ROLE_UPDATE": "デフォルトロールが更新されました！",
-      "DEFAULT_ROLE_REMOVE": "デフォルトロールが削除されました！"
-    }
-  },
-  "LIVE_UPDATES": {
-    "name": "live",
-    "description": "live shards or skytimes update with auto updating message at regular interval",
-    "group": "updates",
-    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
     "options": {
-      "START": {
-        "name": "start",
-        "description": "start live shards or skytimes update with auto updating message at regular interval",
-        "option": {
+      "CONFIGURE": {
+        "name": "設定",
+        "description": "リマインダーを設定",
+        "options": {
           "CHANNEL": {
-            "name": "channel",
-            "description": "channel where live updates should be updated"
+            "description": "リマインダーを送信するチャンネル"
+          },
+          "EVENT": {
+            "name": "event",
+            "description": "思い出させるイベント"
+          },
+          "ROLE": {
+            "name": "役割",
+            "description": "pingへの役割"
+          },
+          "OFFSET": {
+            "name": "オフセット",
+            "description": "リマインダーが送信されるまで何分かかりますか?"
           }
         }
       },
       "STOP": {
-        "name": "stop",
-        "description": "stop live updates"
+        "name": "停止",
+        "description": "リマインダーを設定",
+        "options": {
+          "EVENT": {
+            "description": "リマインダーを停止するイベント"
+          }
+        }
+      },
+      "STATUS": {
+        "name": "ステータス",
+        "description": "このサーバーのリマインダー設定"
       }
     },
     "RESPONSES": {
-      "NOT_GUILD": "This command can only be used in a server",
-      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
-      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
-      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
-      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
-      "DISABLED": "{{TYPE}} is disabled"
+      "CONFIGURED": "`{{TYPE}}`リマインダーが {{CHANNEL}}に設定されました",
+      "CONFIGURED_ROLE": "{{EVENT}}のロール {{ROLE}} のリマインダー「 {{CHANNEL}}」を正常に設定しました",
+      "ALREADY_NOT_CONFIGURED": "{{EVENT}} のリマインダーは既に非アクティブです",
+      "NEXT_TIME": "次のリマインダー「{{EVENT}}」は {{TIME}}に送信されます",
+      "OFFSET": "オフセット: `{{OFFSET}}`分",
+      "SHARD_TYPE": "シャードの種類: {{SHARD_TYPE}}",
+      "STATUS": {
+        "TITLE": "{{SERVER_NAME}} の通知状態",
+        "STATUS": "ステータス: {{STATUS}}",
+        "CHANNEL": "チャンネル: {{CHANNEL}}",
+        "ROLE": "役割： {{ROLE}}",
+        "BUTTON": "管理"
+      }
     }
   },
-  "SEASONAL_CALCULATOR": {
-    "name": "シーズン計算機",
-    "description": "シーズン通貨を計算",
+  "LIVE_UPDATES": {
+    "name": "ライブ",
+    "description": "定期的に自動更新メッセージでライブシャードやスカイタイムを更新する",
+    "group": "更新",
+    "group-desc": "定期的に自動更新メッセージでライブシャードやスカイタイムを更新する",
     "options": {
-      "CANDLES": {
-        "name": "キャンドル",
-        "description": "あなたが持っているキャンドルの量は？"
+      "START": {
+        "name": "開始",
+        "description": "定期的に自動更新メッセージでライブシャードやスカイタイムを更新する",
+        "option": {
+          "CHANNEL": {
+            "name": "チャンネル",
+            "description": "ライブアップデートを更新するチャンネル"
+          }
+        }
       },
-      "DAILIES": {
-        "name": "デイリー",
-        "description": "今日のデイリーをこなしましたか？"
-      },
-      "SEASON_PASS": {
-        "name": "シーズンパス",
-        "description": "シーズンパスを持っていますか？"
+      "STOP": {
+        "name": "停止",
+        "description": "ライブ更新を停止する"
       }
     },
     "RESPONSES": {
-      "NOT_ACTIVE": "現在アクティブなシーズンはありません。シーズンがアクティブな時にこのコマンドを実行してください。",
-      "EMBED_DESCRIPTION": "**シーズンパス**: {{PASS}}\n**デイリー**: {{DAILIES}} \n**必要な通貨:**{{REQUIRED}} キャンドル\n**獲得可能なキャンドル:** {{OBTAINABLE}} キャンドル\n**完了までの日数:**{{DAYS}} 日 {{POSSIBLE}} \n**シーズン終了時の残りキャンドル:** {{REMAINING}} キャンドル",
-      "ENDS_IN": "{{DAYS}}日後に終了",
-      "SPIRITS_NOT_UPDATED": "{{SEASON}}の精霊データはまだ更新されていません。後でもう一度お試しください。\n- シーズン: {{SEASON}}\n- 開始: {{START}}\n- 終了: {{END}}"
+      "NOT_GUILD": "このコマンドはサーバーでのみ使用できます",
+      "ALREADY_CONFIGURED": "{{TYPE}}は既に{{CHANNEL}}のこのメッセージ{{MESSAGE}}で設定されています。",
+      "INVALID_CHANNEL": "{{CHANNEL}}はテキストチャンネルではありません。有効なテキストチャンネルを指定してください",
+      "CONFIGURED": "{{CHANNEL}}の{{TYPE}}が設定されました。このメッセージ{{MESSAGE}}は関連する詳細で更新されます。",
+      "ALREADY_DISABLED": "{{TYPE}}は既にこのサーバーで無効化されています",
+      "DISABLED": "{{TYPE}}が無効化されました"
     }
   },
   "HELP": {
@@ -301,7 +289,6 @@
     "RESPONSES": {
       "INVALID-FORMAT": "無効な時間形式です。時間を `HH mm ss` 形式で入力してください。",
       "INVALID-TIMEZONE": "無効なタイムゾーンです。正しいものを入力してください。形式：`大陸/都市`\nタイムゾーンが不明な場合は、このリンクを使用して確認してください：<https://timezonedb.com/time-zones>",
-      "DATE_NOT_EXIST": "{{DATE}} は存在しません。有効な日付を入力してください。",
       "SUGGESTION_TITLE": "タイトル",
       "TITLE_PLACEHOLDER": "提案のタイトル",
       "SUGGESTION_MODAL_TITLE": "お問い合わせ",
@@ -352,10 +339,12 @@
     "name": "デイリークエスト",
     "description": "デイリークエストを取得",
     "RESPONSES": {
-      "NO_DATA": "今日のデイリークエストのデータは見つかりませんでした。後でもう一度試してください。\n- -# 毎日のリセット後、クエストが更新されるまでに最大 30 分から 1 時間かかる場合があることに注意してください。記載されている期間はあくまで目安であり、場合によってはそれよりも長くかかる場合もあります。その仕組みを [こちら](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>) でご覧ください。",
+      "NO_DATA": "今日のデイリークエストのデータが見つかりません。後でもう一度お試しください。",
+      "TIME_FRAME": "クエストが毎日リセットされると、更新されるまで30分-1時間かかることがありますのでご注意ください。 与えられた時間枠は単なる推定値であり、いつかはそれよりも時間がかかることがあります。 [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
       "OUTDATED": "このクエストは古くなっています。クエストが更新されるまでお待ちください。",
       "EMBED_AUTHOR": "デイリークエスト",
-      "EMBED_DESCRIPTION": "今日のデイリークエスト"
+      "BUTTON1": "ローテーションキャンドルを回転させる",
+      "BUTTON2": "季節のロウソク（ローソク）"
     }
   },
   "SKYGAME": {

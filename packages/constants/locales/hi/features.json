@@ -2,47 +2,23 @@
   "shards-embed": {
     "TODAY": "आज",
     "AUTHOR": "Shards इन्फो",
-    "FOOTER": "लाइव Shards (हर 5 मिनट में अपडेट)",
     "CONTENT": "आखरी अपडेट: {{TIME}}",
     "NO-SHARD": "इस दिन कोई shard नहीं है।",
-    "FIELDS": {
-      "TYPE": {
-        "LABEL": "Shard टाइप",
-        "VALUE": "{{VALUE}}"
-      },
-      "LOCATION": {
-        "LABEL": "जगह",
-        "VALUE": "{{VALUE}}"
-      },
-      "STATUS": {
-        "LABEL": "स्टेटस",
-        "VALUE": {
-          "ENDED": "सभी शार्ड्स {{DURATION}} पहले ख़तम हो चुकें हैं",
-          "ACTIVE": "{{INDEX}} शार्ड अभी एक्टिव है और {{DURATION}} में ख़तम होगा",
-          "EXPECTED": "{{INDEX}} शार्ड {{DURATION}} में लैंड होगा"
-        }
-      },
-      "COUNTDOWN": {
-        "VALUE": {
-          "ENDED": "Ended {{DURATION}}",
-          "ACTIVE": "Ends {{DURATION}}",
-          "EXPECTED": "Falls {{DURATION}}"
-        }
-      }
+    "COUNTDOWN": {
+      "ENDED": "{{DURATION}} पहले ख़तम हो गया",
+      "ACTIVE": "{{DURATION}} में ख़तम होगा",
+      "EXPECTED": "{{DURATION}} में लैंड होगा"
     },
     "TIMELINE": "टाइमलाइन",
-    "BUTTON1": "टाइमलाइन",
-    "BUTTON2": "जगह",
-    "BUTTON3": "Shards के बारे में"
+    "LOCATION": "Shard Location",
+    "DATA": "Shard Data"
   },
   "times-embed": {
-    "FOOTER": "लाइव स्काइटाइम्स (हर 2 मिनट में अपडेट)",
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
-    "EMBED_TITLE": "Event Times",
-    "EMBED_AUTHOR": "स्काइटाइम्स",
+    "EMBED_TITLE": "इवेंट्स का समय",
     "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
     "STARTS": "शुरू होगा",
-    "ENDS": "Ends",
+    "ENDS": "खत्म",
     "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
     "TS_UPDATED": "अभी अपडेट होने को है",
@@ -73,11 +49,10 @@
     "DAILY_RESET": "स्काई की दुनिया रीसेट हो गई है और सारे quests रिफ्रेश हो गई है!",
     "TITLE": "{{TYPE}} रिमाइंडर",
     "DAILY_QUESTS": "डेली क्वेस्ट्स",
-    "CONCERT": "अरोड़ा का संगीत कार्यक्रम",
-    "ERROR": "यह लगता है सही से काम नहीं कर रहा है",
     "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा",
     "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}})."
+    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
+    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}"
   },
   "REALMS": {
     "ISLE": "आईल ऑफ डाॅन",
