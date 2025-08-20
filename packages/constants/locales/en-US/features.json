@@ -2,26 +2,9 @@
   "shards-embed": {
     "TODAY": "Today",
     "AUTHOR": "Shards Info",
-    "FOOTER": "Live Shard (updates every 5 min.)",
     "CONTENT": "Last Updated: {{TIME}}",
     "NO-SHARD": "It's a no shard day.",
     "FIELDS": {
-      "TYPE": {
-        "LABEL": "Shard Type",
-        "VALUE": "{{VALUE}}"
-      },
-      "LOCATION": {
-        "LABEL": "Location",
-        "VALUE": "{{VALUE}}"
-      },
-      "STATUS": {
-        "LABEL": "Status",
-        "VALUE": {
-          "ENDED": "All shards ended {{DURATION}} ago",
-          "ACTIVE": "{{INDEX}} shard is currently active and ends in {{DURATION}}",
-          "EXPECTED": "{{INDEX}} shard lands in {{DURATION}}"
-        }
-      },
       "COUNTDOWN": {
         "VALUE": {
           "ENDED": "Ended {{DURATION}}",
@@ -30,25 +13,23 @@
         }
       }
     },
-    "BUTTON1": "Timeline",
-    "BUTTON2": "Location",
-    "BUTTON3": "About Shards"
+    "BUTTON1": "Timeline"
   },
   "times-embed": {
-    "FOOTER": "Live SkyTimes (updates every 2 min.)",
     "EVENT_INACTIVE": "No Active Events",
     "EMBED_TITLE": "Event Times",
-    "EMBED_AUTHOR": "SkyTimes",
     "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
     "STARTS": "Starts In",
     "ENDS": "Ends",
-    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
+    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596860104>**Departure:** At {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
     "TS_UPDATED": "Yet to be updated",
     "TS_UNKNOWN": "Unknown Spirit",
     "GEYSER": "Geyser",
     "GRANDMA": "Grandma",
     "TURTLE": "Turtle/Sanctuary Sunset",
+    "DAILY-RESET": "Daily Reset",
+    "EDEN": "Eden/Weekly Reset",
     "AURORA": "Aurora's Concert",
     "DREAM-SKATER": "Dream Skater",
     "PASSAGE-QUESTS": "Passage Quests",
@@ -56,8 +37,6 @@
     "FIREWORKS-FESTIVAL": "Aviary Fireworks Festival",
     "FAIRY-RING": "Fairy Ring",
     "BROOK-RAINBOW": "Forest Brook Rainbow",
-    "DAILY-RESET": "Daily Reset",
-    "EDEN": "Eden/Weekly Reset",
     "TS_TITLE": "Traveling Spirit",
     "EVENT_TITLE": "Special Event (Days of ...)",
     "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
@@ -67,24 +46,11 @@
   },
   "reminders": {
     "ROLE_MENTION": "Hey, {{ROLE}}",
-    "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
-    "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
     "TITLE": "{{TYPE}} Reminder",
     "DAILY_QUESTS": "Daily Quests",
-    "CONCERT": "Aurora's Concert",
-    "ERROR": "This is not working as expected!",
     "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})",
     "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
     "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}})."
-  },
-  "REALMS": {
-    "ISLE": "Isle of Dawn",
-    "PRAIRIE": "Daylight Prairie",
-    "FOREST": "Hidden Forest",
-    "VALLEY": "Valley of Triumph",
-    "WASTELAND": "Golden Wasteland",
-    "VAULT": "Vault of Knowledge",
-    "EDEN": "Eye of Eden"
   },
   "SPIRITS": {
     "SEASON_TITLE": "Season",

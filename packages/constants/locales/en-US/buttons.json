@@ -1,16 +1,4 @@
 {
-  "ABOUT_SHARDS": {
-    "CREDIT": "All about shards by {{CREDIT}}",
-    "WHAT_ARE": "What are shards?",
-    "TIMING": "How do I know when a shard comes?",
-    "REWARDS": "What are the rewards?"
-  },
-  "SHARD_LOCATION": {
-    "L_CREDIT": "Shard Location by {{CREDIT}}",
-    "D_CREDIT": "Shard data by {{CREDIT}}",
-    "LOCATION": "Location",
-    "DATA": "Data"
-  },
   "SHARD_TIMELINE": {
     "MUSIC_CREDIT": "Sky changes and Shard music by {{CREDIT}}",
     "TIMESTAMP_CREDIT": "Shard Timestamp by {{CREDIT}}",
