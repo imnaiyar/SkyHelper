@@ -135,6 +135,8 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   name: "live",
   description: "live shards or skytimes update with auto updating message at regular interval",
   data: {
+    name_localizations: "commands:LIVE_UPDATES.name",
+    description_localizations: "commands:LIVE_UPDATES.description",
     options: [
       {
         name: "updates",

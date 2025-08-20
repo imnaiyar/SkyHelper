@@ -1,5 +1,5 @@
 import { emojis, realms_emojis, seasonsData, type REMINDERS_KEY } from "@skyhelperbot/constants";
-import type { LangKeys } from "./getTranslator";
+import type { getTranslator, LangKeys } from "./getTranslator";
 import { container, section, separator, ShardsUtil, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
 import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import type { TSValue } from "@/utils/getTS";
@@ -50,7 +50,7 @@ export function getResponse(
     return (
       t("features:reminders.COMMON", {
         // @ts-expect-error
-        TYPE: t("features:times-embed." + skytime?.toUpperCase()),
+        TYPE: t("features:times-embed.EVENTS" + skytime?.toUpperCase()),
         TIME: `<t:${startTime?.toUnixInteger()}:t>`,
         "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
         "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
@@ -71,7 +71,7 @@ export function getResponse(
     return (
       t("features:reminders.PRE", {
         // @ts-expect-error
-        TYPE: t("features:times-embed." + skytime?.toUpperCase()),
+        TYPE: t("features:times-embed.EVENTS" + skytime?.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
       }) + (between ? `\n\n${between}` : "")
@@ -165,7 +165,12 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
   }
 };
 
-export function getShardReminderResponse(now: DateTime, offset: number = 0, shardType?: ("red" | "black")[]) {
+export function getShardReminderResponse(
+  now: DateTime,
+  t: ReturnType<typeof getTranslator>,
+  offset: number = 0,
+  shardType?: ("red" | "black")[],
+) {
   const nextShard = ShardsUtil.getNextShard(now, shardType);
   if (!nextShard) return null;
 
@@ -179,7 +184,10 @@ export function getShardReminderResponse(now: DateTime, offset: number = 0, shar
 
   if (!(offsetted >= lowerBound.toMillis() && offsetted <= upperBound.toMillis())) return null;
 
-  const text = `**${nextShard.index}${ShardsUtil.getSuffix(nextShard.index)} shard** will fall at <t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`;
+  const text = t("features:reminders.SHARDS", {
+    SHARD_NUMBER: `${nextShard.index}${ShardsUtil.getSuffix(nextShard.index)}`,
+    TIME: `<t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`,
+  });
 
   return [
     section(thumbnail(nextShard.info.image), text, emojis.tree_end + nextShard.info.type),
@@ -188,7 +196,7 @@ export function getShardReminderResponse(now: DateTime, offset: number = 0, shar
       {
         type: 2,
         custom_id: store.serialize(CustomId.ShardsRemindersDetails, { date: nextShard.start.toFormat("dd-MM-yyyy"), user: null }),
-        label: "Shard Info",
+        label: "Info",
         style: 2,
       },
       `Location: ${nextShard.info.area}`,

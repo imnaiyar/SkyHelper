@@ -18,7 +18,7 @@ export default defineButton({
             {
               type: ComponentType.TextInput,
               custom_id: "date-month",
-              placeholder: "Enter month and year in this format: MM-YYYY (e.g. 01-2022)",
+              placeholder: _t("commands:SHARDS_CALENDAR.RESPONSES.MODAL_TITLE"),
               value: `${month < 10 ? `0${month}` : month}-${year}`,
               label: "Enter Month/Year (Format: MM-YYYY)",
               required: true,

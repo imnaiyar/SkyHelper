@@ -86,7 +86,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
 
         let response = null;
 
-        const d = dailyQuestEmbed(data);
+        const d = dailyQuestEmbed(data, t);
         response = {
           components: [...(role ? [textDisplay(`${role}\u200B`)] : []), ...d.components],
         };

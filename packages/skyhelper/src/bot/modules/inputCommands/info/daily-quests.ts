@@ -22,14 +22,12 @@ const getQuestResponse = async (client: SkyHelper, t: ReturnType<typeof getTrans
   if (!data.last_updated || !now.equals(lastUpdated) || !data.quests.length) {
     return {
       components: [
-        textDisplay("No data found for today's daily quests. Please try again later."),
+        textDisplay(t("commands:DAILY_QUESTS.RESPONSES.NO_DATA")),
         separator(true, 1),
-        textDisplay(
-          "-# Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
-        ),
+        textDisplay("-# " + t("commands:DAILY_QUESTS.RESPONSES.TIME_FRAME")),
       ],
       flags: MessageFlags.IsComponentsV2,
     };
   }
-  return { ...dailyQuestEmbed(data), flags: MessageFlags.IsComponentsV2 };
+  return { ...dailyQuestEmbed(data, t), flags: MessageFlags.IsComponentsV2 };
 };

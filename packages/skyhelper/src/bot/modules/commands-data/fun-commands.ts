@@ -105,10 +105,20 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           {
             type: ApplicationCommandOptionType.String,
             name: "leaderboard-type",
+            name_localizations: "commands:SKYGAME.SUB.LEADERBOARD.options.leaderboard-type.name",
+            description_localizations: "commands:SKYGAME.SUB.LEADERBOARD.options.leaderboard-type.description",
             description: "Gloabal leaderboard or server specific (default: global)",
             choices: [
-              { name: "Global", value: "global" },
-              { name: "Server", value: "server" },
+              {
+                name: "Global",
+                name_localizations: "commands:SKYGAME.SUB.LEADERBOARD.options.leaderboard-type.choices.global",
+                value: "global",
+              },
+              {
+                name: "Server",
+                name_localizations: "commands:SKYGAME.SUB.LEADERBOARD.options.leaderboard-type.choices.server",
+                value: "server",
+              },
             ],
             required: false,
           },
