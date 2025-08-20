@@ -142,6 +142,42 @@
   "REMINDERS": {
     "name": "reminders",
     "description": "set up reminders",
+    "options": {
+      "CONFIGURE": {
+        "name": "configure",
+        "description": "configure reminders",
+        "options": {
+          "CHANNEL": {
+            "description": "channel where reminders should be sent"
+          },
+          "EVENT": {
+            "name": "event",
+            "description": "event to remind"
+          },
+          "ROLE": {
+            "name": "role",
+            "description": "role to ping"
+          },
+          "OFFSET": {
+            "name": "offset",
+            "description": "how many minutes before the event should the reminder be sent."
+          }
+        }
+      },
+      "STOP": {
+        "name": "stop",
+        "description": "stop reminders",
+        "options": {
+          "EVENT": {
+            "description": "event to stop reminding"
+          }
+        }
+      },
+      "STATUS": {
+        "name": "status",
+        "description": "reminders configurations for this server"
+      }
+    },
     "RESPONSES": {
       "CONFIGURED": "Successfully configured `{{TYPE}}` reminders in {{CHANNEL}}",
       "CONFIGURED_ROLE": "Successfully configured `{{EVENT}}` reminders for role {{ROLE}} in {{CHANNEL}}",
