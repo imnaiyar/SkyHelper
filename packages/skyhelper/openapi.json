@@ -1378,10 +1378,6 @@
     {
       "url": "https://api.skyhelperbot.com",
       "description": "Production API"
-    },
-    {
-      "url": "http://localhost:5001",
-      "description": "Development API"
     }
   ],
   "components": {

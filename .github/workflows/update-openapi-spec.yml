@@ -1,0 +1,76 @@
+name: Update OpenAPI Specification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/skyhelper/src/api/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "packages/skyhelper/src/api/**"
+    types: [closed]
+
+jobs:
+  update-openapi-spec:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.4.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build workspace packages
+        run: pnpm run build --filter=@skyhelperbot/constants --filter=@skyhelperbot/utils --filter=@skyhelperbot/jobs --filter=skyhelper
+
+      - name: Generate OpenAPI specification
+        working-directory: packages/skyhelper
+        run: pnpm run generate:openapi
+
+      - name: Check if openapi.json was generated
+        run: |
+          if [ ! -f "packages/skyhelper/openapi.json" ]; then
+            echo "❌ OpenAPI specification file was not generated"
+            exit 1
+          fi
+          echo "✅ OpenAPI specification generated successfully"
+
+      - name: Clone target repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.OPENAPI_REPO_TOKEN }}
+        run: |
+          git clone https://${{ secrets.OPENAPI_REPO_TOKEN }}@github.com/imnaiyar/skyhelper-openapi-spec.git target-repo
+
+      - name: Copy OpenAPI spec to target repository
+        run: |
+          cp packages/skyhelper/openapi.json target-repo/openapi.json
+
+      - name: Commit and push to target repository
+        working-directory: target-repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.OPENAPI_REPO_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git add openapi.json
+            git commit -m "chore: update OpenAPI specification from SkyHelper@${{ github.sha }}"
+            git push origin main
+            echo "✅ OpenAPI specification updated in target repository"
+          else
+            echo "ℹ️ No changes to OpenAPI specification"
+          fi
