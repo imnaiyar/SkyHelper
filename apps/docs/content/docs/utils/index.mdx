@@ -11,10 +11,10 @@ Welcome to the TypeScript API documentation for the SkyHelper utilities package.
 
 The utils package provides:
 
-- **Utility Functions** - Helper functions for common operations
-- **Classes** - Reusable class structures
-- **Constants** - Shared constants and enums
-- **Type Definitions** - TypeScript type definitions
+- **Utility Functions** - Helper functions for parsing permissions, formatting dates, color resolution, file operations, and more
+- **Classes** - Reusable class structures for Sky times calculations, leaderboards, and winner cards
+- **Constants** - Shared constants including event data, shards information, and game timelines
+- **Type Definitions** - TypeScript type definitions for consistent data structures
 
 ## Package Installation
 
@@ -22,12 +22,49 @@ The utils package provides:
 npm install skyhelper-utils
 ```
 
-## Usage
+## Quick Start
 
 ```typescript
-import {} from /* utilities */ "skyhelper-utils";
+import { parsePerms, SkytimesUtils, colors, type userData } from "skyhelper-utils";
+
+// Parse Discord permissions
+const perms = parsePerms(["ManageMessages", "BanMembers"]);
+
+// Use Sky times utilities
+const times = SkytimesUtils.getAllTimes(DateTime.now(), 120);
+
+// Access predefined colors
+const primaryColor = colors.blue;
 ```
+
+## API Modules
+
+### Utility Functions
+
+- **parsePerms** - Convert Discord permission flags to readable names
+- **parseDateFormat** - Parse and format date strings
+- **postToBin** - Upload text content to pastebin services
+- **recursiveReadDir** - Recursively read directory contents
+- **resolveColors** - Resolve color values for consistent theming
+- **v2-builders** - Discord API v2 component builders
+
+### Classes
+
+- **SkytimesUtils** - Utilities for Sky: Children of the Light event timing
+- **LeaderBoardCard** - Generate leaderboard images for games
+- **WinnerCard** - Generate winner announcement cards
+
+### Constants & Data
+
+- **eventDatas** - Sky: Children of the Light event definitions
+- **shardsInfo** - Information about shard locations
+- **shardsTimeline** - Timeline data for shard events
+- **shardsUtil** - Utilities for shard-related operations
+
+### Type Definitions
+
+- **typings** - TypeScript interfaces and type definitions for the package
 
 ## API Reference
 
-The API documentation is automatically generated from the TypeScript source code using fumadocs-typescript. Navigate through the different modules using the sidebar to explore the available utilities.
+The API documentation is automatically generated from the TypeScript source code using fumadocs-typescript. Navigate through the different modules using the sidebar to explore the available utilities, their parameters, return types, and usage examples.
