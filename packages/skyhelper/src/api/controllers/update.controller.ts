@@ -36,7 +36,7 @@ const QuestsSchema = z.object({
   seasonal_candles: QuestSchema.optional(),
 });
 
-@ApiTags("Game Data Updates")
+@ApiTags("Event Management")
 @ApiBearerAuth()
 @Controller("/update")
 export class UpdateController {
