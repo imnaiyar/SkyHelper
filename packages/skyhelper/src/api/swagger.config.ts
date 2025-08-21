@@ -2,6 +2,7 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import type { INestApplication } from "@nestjs/common";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import _config from "@/config";
 
 export function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -31,8 +32,6 @@ export function setupSwagger(app: INestApplication) {
     .setVersion("7.7.0")
     .setContact("SkyHelper Team", "https://github.com/imnaiyar/SkyHelper", "support@skyhelperbot.com")
     .setLicense("MIT", "https://github.com/imnaiyar/SkyHelper/blob/main/LICENSE")
-    .addServer("https://api.skyhelperbot.com", "Production API")
-    .addServer("http://localhost:8080", "Development API")
     .addBearerAuth(
       {
         type: "http",
@@ -48,11 +47,14 @@ export function setupSwagger(app: INestApplication) {
     .addTag("Bot Statistics", "Bot performance and statistics endpoints")
     .addTag("Guild Management", "Discord server/guild configuration and management")
     .addTag("User Management", "User settings and profile management")
-    .addTag("Game Data Updates", "Sky: Children of the Light game data management")
-    .addTag("Discord Webhooks", "Internal Discord webhook handlers")
-    .build();
+    .addTag("Game Data Updates", "Skygames data management")
+    .addServer("https://api.skyhelperbot.com", "Production API");
 
-  const document = SwaggerModule.createDocument(app, config);
+  if (process.env.NODE_ENV === "development") {
+    config.addServer("http://localhost:" + _config.DASHBOARD.port, "Development API");
+  }
+
+  const document = SwaggerModule.createDocument(app, config.build());
   SwaggerModule.setup("api/docs", app, document, {
     swaggerOptions: {
       persistAuthorization: true,
@@ -64,8 +66,7 @@ export function setupSwagger(app: INestApplication) {
       tryItOutEnabled: true,
     },
     customSiteTitle: "SkyHelper API Documentation",
-    customfavIcon: "https://skyhelperbot.com/favicon.ico",
-    customCssUrl: "https://skyhelperbot.com/swagger-ui.css",
+    customfavIcon: "https://skyhelper.xyz/assets/img/boticon.png",
   });
 
   return document;

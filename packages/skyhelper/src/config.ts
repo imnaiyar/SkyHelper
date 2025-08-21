@@ -38,6 +38,7 @@ export default {
       "https://skyhelper.xyz",
       "https://dashboard.skyhelper.xyz",
       "https://preview.skyhelper.xyz",
+      "https://docs.skyhelper.xyz",
     ],
 
     port: process.env.NODE_ENV === "production" ? 5000 : 5001,

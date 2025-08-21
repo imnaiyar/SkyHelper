@@ -69,7 +69,7 @@ async function generateSpec() {
     });
 
     // Generate the OpenAPI spec
-    const outputPath = join(process.cwd(), "openapi.json");
+    const outputPath = join(process.cwd(), "./openapi.json");
     generateOpenApiSpec(app, outputPath);
 
     await app.close();

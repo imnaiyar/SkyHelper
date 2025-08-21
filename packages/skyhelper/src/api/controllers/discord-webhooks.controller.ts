@@ -1,50 +1,17 @@
 import type { SkyHelper as BotService } from "@/structures";
 import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiExcludeEndpoint } from "@nestjs/swagger";
-import {
-  type APIEmbed,
-  type APIGuild,
-  type APIUser,
-  ApplicationIntegrationType,
-  MessageFlags,
-  ApplicationWebhookEventType,
-  type APIWebhookEvent,
-} from "@discordjs/core";
+import { ApiExcludeController } from "@nestjs/swagger";
+import { type APIEmbed, MessageFlags, ApplicationWebhookEventType, type APIWebhookEvent } from "@discordjs/core";
 import type { Response } from "express";
 import BlackList from "@/schemas/BlackList";
 
 // Handles webhook events from discord
-@ApiTags("Discord Webhooks")
 @Controller("/webhook-event")
+@ApiExcludeController() // Exclude this from public docs, only meant for discord
 export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Post()
-  @ApiOperation({
-    summary: "Handle Discord webhook events",
-    description: "Processes webhook events from Discord for application authorization/deauthorization",
-  })
-  @ApiBody({
-    description: "Discord webhook event payload",
-    schema: {
-      type: "object",
-      properties: {
-        event: {
-          type: "object",
-          properties: {
-            type: { type: "number", description: "Event type" },
-            timestamp: { type: "string", description: "Event timestamp" },
-            data: { type: "object", description: "Event data" },
-          },
-        },
-      },
-    },
-  })
-  @ApiResponse({
-    status: 204,
-    description: "Webhook event processed successfully",
-  })
-  @ApiExcludeEndpoint() // This is internal Discord webhook, exclude from public docs
   async handleWebhookEvent(@Body() body: APIWebhookEvent, @Res() res: Response) {
     res.status(204).send();
     // Ideally only this application authrization event will be sent as it's the only one that's subscribed, but return still for safety
