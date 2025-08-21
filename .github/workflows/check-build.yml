@@ -28,5 +28,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build the project
-        # TODO: Please revert this so we do not have to ignore apps packages
-        run: pnpm exec turbo run build --filter=!./apps/** --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"
+        run: pnpm exec turbo run build --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"
