@@ -164,5 +164,31 @@ describe("Utils string-store UTF-8 safety", () => {
         expect(deserialized.data.data).toBe(testString);
       });
     });
+
+    it("should reject strings with unpaired UTF-8 surrogates", () => {
+      // Test case based on real issue reported by @imnaiyar
+      // This string contains unpaired surrogates that cause UTF-8 corruption
+      const problematicString = `\x13'恢晪桤桨摤晦摬恲晰≬렀\ud985륽Ǒ`;
+
+      expect(() => {
+        Utils.store.deserialize(problematicString);
+      }).toThrow(/String-store deserialization failed.*Invalid UTF-8 characters/);
+    });
+
+    it("should handle the exact scenario reported by user", () => {
+      // This is the exact scenario that was reported to produce the problematic string
+      const userData = {
+        user: "1053244422336290836",
+        data: "nav_next",
+      };
+
+      // This should work fine with our UTF-8 validation
+      expect(() => {
+        const serialized = Utils.store.serialize(19, userData);
+        const deserialized = Utils.store.deserialize(serialized);
+        expect(deserialized.data.user).toBe(userData.user);
+        expect(deserialized.data.data).toBe(userData.data);
+      }).not.toThrow();
+    });
   });
 });

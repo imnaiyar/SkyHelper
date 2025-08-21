@@ -20,7 +20,12 @@ export default class {
       try {
         const serialized = (store as any).serialize(id, data);
 
-        // Validate UTF-8 integrity
+        // Check for unpaired surrogates first (if available in Node.js version)
+        if (typeof serialized.isWellFormed === "function" && !serialized.isWellFormed()) {
+          throw new Error("UTF-8 corruption detected in serialized string (unpaired surrogates)");
+        }
+
+        // Validate UTF-8 integrity through buffer round-trip
         const buffer = Buffer.from(serialized, "utf8");
         const backToString = buffer.toString("utf8");
 
@@ -56,7 +61,12 @@ export default class {
      */
     deserialize(customId: string): ReturnType<typeof store.deserialize> {
       try {
-        // Validate input is valid UTF-8
+        // Check for unpaired surrogates first (if available in Node.js version)
+        if (typeof customId.isWellFormed === "function" && !customId.isWellFormed()) {
+          throw new Error("Invalid UTF-8 characters in custom ID string (unpaired surrogates detected)");
+        }
+
+        // Validate input is valid UTF-8 through buffer round-trip
         const buffer = Buffer.from(customId, "utf8");
         const backToString = buffer.toString("utf8");
 
