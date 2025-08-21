@@ -1,0 +1,193 @@
+---
+title: Admin Commands
+description: All the admin commands offered by SkyHelper
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Admin Commands
+
+Almost all commands under this category are related to features providing live updates and/or reminders.
+
+<Callout type="error">
+  All commands in this category are only available for servers (not user installations) and require users to have `Manage Server`
+  permissions (Admins) to use them. These commands are also not visible to users who lack the permission (this behavior can be
+  adjusted under `Server Settings > Integrations Tab`, although there's also an internal check for permissions, so enabling it for
+  users without the necessary permission will still prevent them from using it).
+</Callout>
+
+<Callout type="info">
+  All commands in this category require the bot to have the `Manage Webhooks` permission in the channel where you are attempting
+  to add the "updates" feature.
+</Callout>
+
+<Callout type="info">The features in this category can also be managed via bot's [dashboard](https://dash.skyhelper.xyz)</Callout>
+
+## `/shards-live`
+
+**Subcommands**
+
+<Steps>
+
+<Step>
+
+### `start` - Start a live shards update
+
+**Options**
+
+| Option      | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `<channel>` | The channel where the live update message should be sent |
+
+</Step>
+
+<Step>
+
+### `stop` - Stop a shards live update
+
+No additional options required.
+
+</Step>
+
+</Steps>
+
+Starts a live updating message with shard details. Upon setup, the bot will create a webhook in the selected channel and send a message containing shard info using that webhook. The message will update every 5 minutes with current shard details.
+
+<Callout type="warning">
+  If either the original message or the webhook is deleted, live updates will be automatically disabled.
+</Callout>
+
+**Usage**:
+
+- `/shards-live start channel:#live-shard` (starts live shard updates in the "live-shard" channel)
+- `/shards-live stop` (stops live shard updates)
+
+**Features:**
+
+- Automatic updates every 5 minutes
+- Real-time shard information
+- Webhook-based messaging system
+- Easy setup and management
+
+## `/skytimes-live`
+
+**Subcommands**
+
+<Steps>
+
+<Step>
+
+### `start` - Start a live skytimes update
+
+**Options**
+
+| Option      | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `<channel>` | The channel where the live update message should be sent |
+
+</Step>
+
+<Step>
+
+### `stop` - Stop a skytimes live update
+
+No additional options required.
+
+</Step>
+
+</Steps>
+
+Starts a live updating message with skytimes details. Upon setup, the bot will create a webhook in the selected channel and send a message containing skytimes info using that webhook. The message will update every 2 minutes with current skytimes details.
+
+<Callout type="warning">
+  If either the original message or the webhook is deleted, live updates will be automatically disabled.
+</Callout>
+
+**Usage**:
+
+- `/skytimes-live start channel:#live-skytimes` (starts live skytimes updates in the "live-skytimes" channel)
+- `/skytimes-live stop` (stops live skytimes updates)
+
+**Features:**
+
+- Automatic updates every 2 minutes
+- Real-time event countdown information
+- Comprehensive event schedule
+- Interactive refresh functionality
+
+## `/reminders`
+
+Set up reminders for various in-game events. Currently supported events include: `Geyser`, `Grandma`, `Turtle`, `Daily Reset`, `Daily Quests`, `Eden/Weekly Resets`, `Traveling Spirit`, `Aurora's Concert`. Sends a reminder to the chosen channel when a particular event occurs. You can also select a role for individual events to ping.
+
+<Steps>
+
+<Step>
+
+### `configure` - Configure reminders
+
+**Options**
+
+| Option      | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| `<event>`   | The event for which you want to set up a reminder             |
+| `<channel>` | The channel where the reminder will be sent                   |
+| `[role]`    | The role to ping when the reminder is sent (This is optional) |
+
+<Callout type="info">
+  If you need to change the channel or decide to add/remove roles to ping later, simply run the command again with your preferred
+  choices.
+</Callout>
+
+**Usage**:
+
+- `/reminders configure event:Geyser channel:#geyser-reminders role:@GeyserRole` (sets up a reminder for the Geyser event in the "geyser-reminders" channel, pinging the "GeyserRole" role)
+
+</Step>
+
+<Step>
+
+### `stop` - Stops reminders for the given event
+
+**Options**
+
+| Option    | Description                        |
+| --------- | ---------------------------------- |
+| `<event>` | The event to stop the reminder for |
+
+**Usage**:
+
+- `/reminders stop event:Geyser` (stops reminders for Geyser events)
+
+</Step>
+
+<Step>
+
+### `status` - Check the configured status of reminders in the server
+
+**Usage**:
+
+- `/reminders status` (displays all configured reminders for the server)
+
+</Step>
+
+</Steps>
+
+**Supported Events:**
+
+- **Geyser**: Geyser eruption reminders
+- **Grandma**: Grandma visit reminders
+- **Turtle**: Turtle migration reminders
+- **Daily Reset**: Daily reset reminders
+- **Daily Quests**: Daily quest availability reminders
+- **Eden/Weekly Resets**: Weekly Eden reset reminders
+- **Traveling Spirit**: Traveling spirit arrival reminders
+- **Aurora's Concert**: Aurora concert schedule reminders
+
+**Features:**
+
+- Customizable reminder channels
+- Optional role pinging
+- Multiple event support
+- Easy management and configuration
+- Status checking for all configured reminders
