@@ -8,15 +8,10 @@ on:
     branches: [main]
     paths:
       - "packages/skyhelper/src/api/**"
-  pull_request:
-    branches: [main]
-    paths:
-      - "packages/skyhelper/src/api/**"
-    types: [closed]
+  workflow_dispatch:
 
 jobs:
   update-openapi-spec:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "23"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -37,7 +32,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Build workspace packages
-        run: pnpm run build --filter=@skyhelperbot/constants --filter=@skyhelperbot/utils --filter=@skyhelperbot/jobs --filter=skyhelper
+        run: pnpm build
 
       - name: Generate OpenAPI specification
         working-directory: packages/skyhelper
@@ -47,11 +42,12 @@ jobs:
           pnpm run generate:openapi /tmp/openapi-output/openapi.json
           echo "✅ OpenAPI specification generated successfully"
 
-      - name: Clone target repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.OPENAPI_REPO_TOKEN }}
-        run: |
-          git clone https://${{ secrets.OPENAPI_REPO_TOKEN }}@github.com/imnaiyar/skyhelper-openapi-spec.git target-repo
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: imnaiyar/skyhelper-openapi-spec
+          token: ${{ secrets.OPENAPI_REPO_TOKEN }}
+          path: target-repo
 
       - name: Copy OpenAPI spec to target repository
         run: |

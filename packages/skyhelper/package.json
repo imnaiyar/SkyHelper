@@ -28,7 +28,7 @@
     "format": "prettier --write --ignore-unknown src",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
     "setup": "node scripts/env-cli.js",
-    "generate:openapi": "tsx src/scripts/generate-openapi.ts"
+    "generate:openapi": "tsx scripts/generate-openapi.ts"
   },
   "author": "Naiyar Imam",
   "license": "MIT",

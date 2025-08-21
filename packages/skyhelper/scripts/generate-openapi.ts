@@ -7,14 +7,14 @@
 
 import { NestFactory } from "@nestjs/core";
 import { Module } from "@nestjs/common";
-import { AppController } from "../api/controllers/app.controller.js";
-import { GuildController } from "../api/controllers/guild.controller.js";
-import { BotController } from "../api/controllers/bot.controller.js";
-import { UpdateController } from "../api/controllers/update.controller.js";
-import { UsersController } from "../api/controllers/user.controller.js";
-import { WebhookEventController } from "../api/controllers/discord-webhooks.controller.js";
-import { generateOpenApiSpec } from "../api/swagger.config.js";
-import { Logger } from "../api/logger.service.js";
+import { AppController } from "../src/api/controllers/app.controller.js";
+import { GuildController } from "../src/api/controllers/guild.controller.js";
+import { BotController } from "../src/api/controllers/bot.controller.js";
+import { UpdateController } from "../src/api/controllers/update.controller.js";
+import { UsersController } from "../src/api/controllers/user.controller.js";
+import { WebhookEventController } from "../src/api/controllers/discord-webhooks.controller.js";
+import { generateOpenApiSpec } from "../src/api/swagger.config.js";
+import { Logger } from "../src/api/logger.service.js";
 import { join } from "path";
 
 // Mock bot client for OpenAPI generation

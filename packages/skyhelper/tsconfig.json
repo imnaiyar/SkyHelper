@@ -37,6 +37,6 @@
       "@/config": ["src/config.js"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "scripts/generate-openapi.ts"],
   "exclude": ["node_modules"]
 }

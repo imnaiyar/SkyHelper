@@ -17,4 +17,4 @@ __tests__/**.map
 .vercel
 
 # OpenAPI generated file (regenerate with npm run generate:openapi)
-openapi.json
+**/openapi.json
