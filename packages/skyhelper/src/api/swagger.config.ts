@@ -48,7 +48,7 @@ export function setupSwagger(app: INestApplication) {
     .addTag("Guild Management", "Discord server/guild configuration and management")
     .addTag("User Management", "User settings and profile management")
     .addTag("Event Management", "In-game events management")
-    .addServer("https://api.skyhelperbot.com", "Production API");
+    .addServer("https://api.skyhelper.xyz", "Production API");
 
   if (process.env.NODE_ENV === "development") {
     config.addServer("http://localhost:" + _config.DASHBOARD.port, "Development API");
