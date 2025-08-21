@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build --filter=!./apps/docs/",
-    "build:affected": "turbo build --filter=!./apps/docs/ --filter=...[origin/main]",
+    "build": "turbo build",
+    "build:affected": "turbo build --filter=...[origin/main]",
     "bot:dev": "pnpm --filter skyhelper dev",
     "jobs:dev": "pnpm --filter jobs dev",
     "bot": "pnpm --filter skyhelper start",
