@@ -2,3 +2,49 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
+
+/* Use system fonts as fallback for Inter */
+.font-sans {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
+/* Custom theme colors for different sections */
+:root {
+  /* Default docs theme - Sky blue theme */
+  --fd-primary-hue: 200;
+  --fd-primary-saturation: 100%;
+}
+
+/* OpenAPI section - Orange theme */
+[data-theme="openapi"],
+.docs-openapi {
+  --fd-primary-hue: 30;
+  --fd-primary-saturation: 90%;
+}
+
+/* Work section - Green theme */
+[data-theme="work"],
+.docs-work {
+  --fd-primary-hue: 140;
+  --fd-primary-saturation: 80%;
+}
+
+/* Time section - Purple theme */
+[data-theme="time"],
+.docs-time {
+  --fd-primary-hue: 270;
+  --fd-primary-saturation: 75%;
+}
