@@ -48,29 +48,13 @@ Run these commands in order to set up a working development environment:
 
 ### Development Servers
 
-**Documentation Server (Recommended for Testing):**
-
-```bash
-cd apps/docs && pnpm dev
-```
-
-- Runs on http://localhost:3000
-- Works immediately without environment setup
-- Use this to verify the repository is functional
-
-**Main Bot Development (Requires Setup):**
-
-```bash
-cd packages/skyhelper && pnpm setup
-```
-
-Follow the interactive prompts to configure .env file, then:
+**Main Bot Development:**
 
 ```bash
 cd packages/skyhelper && pnpm dev
 ```
 
-**Jobs Service Development (Requires Setup):**
+**Jobs Service Development:**
 
 ```bash
 cd packages/jobs && pnpm dev
@@ -98,12 +82,6 @@ pnpm lint
 ### Manual Testing Scenarios
 
 After making changes, perform these validation steps:
-
-**For Documentation Changes:**
-
-1. Run `cd apps/docs && pnpm dev`
-2. Navigate to http://localhost:3000
-3. Verify pages load correctly and navigation works
 
 **For Bot Code Changes:**
 
@@ -185,9 +163,9 @@ Builds and runs the main bot in container.
 
 ### Environment Setup
 
-- **Bot won't start:** Copy `.env.example` to `.env` in packages/skyhelper and fill required fields
-- **Database connection:** Requires valid MongoDB connection string
-- **Discord tokens:** Requires bot token and client ID from Discord Developer Portal
+- **Bot won't start:** Copy `.env.example` to `.env` in packages/skyhelper and fill required fields (manual setup required)
+- **Database connection:** Requires valid MongoDB connection string (manual configuration)
+- **Discord tokens:** Requires bot token and client ID from Discord Developer Portal (manual setup)
 - **Development dependencies missing:** Run `pnpm install` if tsx or other dev tools are not found
 
 ### Testing Issues
@@ -199,9 +177,9 @@ Builds and runs the main bot in container.
 
 ### Development Server Issues
 
-- **Bot fails to start:** Requires proper .env configuration with valid tokens
+- **Bot fails to start:** Requires proper .env configuration with valid tokens (manual setup required)
 - **Module resolution errors:** Ensure building from source, not running compiled JS directly
-- **Missing environment variables:** Use the setup CLI: `cd packages/skyhelper && pnpm setup`
+- **Missing environment variables:** Use the setup CLI: `cd packages/skyhelper && pnpm setup` (manual setup required)
 
 ## CI/CD Integration
 
@@ -236,7 +214,7 @@ pnpm test
 
 ### Environment Variables
 
-Required for bot development:
+Required for bot development (manual setup required):
 
 - `TOKEN` - Discord bot token
 - `MONGO_CONNECTION` - MongoDB connection string
@@ -244,7 +222,7 @@ Required for bot development:
 - `PUBLIC_KEY` - Discord application public key
 - `SENTRY_DSN` - Error tracking (optional for development)
 
-Optional for full features:
+Optional for full features (manual setup required):
 
 - Various webhook URLs for logging
 - Bot list tokens for publishing statistics
