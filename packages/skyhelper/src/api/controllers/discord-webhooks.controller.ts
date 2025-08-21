@@ -1,5 +1,6 @@
 import type { SkyHelper as BotService } from "@/structures";
 import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiExcludeEndpoint } from "@nestjs/swagger";
 import {
   type APIEmbed,
   type APIGuild,
@@ -13,11 +14,37 @@ import type { Response } from "express";
 import BlackList from "@/schemas/BlackList";
 
 // Handles webhook events from discord
+@ApiTags("Discord Webhooks")
 @Controller("/webhook-event")
 export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Post()
+  @ApiOperation({
+    summary: "Handle Discord webhook events",
+    description: "Processes webhook events from Discord for application authorization/deauthorization",
+  })
+  @ApiBody({
+    description: "Discord webhook event payload",
+    schema: {
+      type: "object",
+      properties: {
+        event: {
+          type: "object",
+          properties: {
+            type: { type: "number", description: "Event type" },
+            timestamp: { type: "string", description: "Event timestamp" },
+            data: { type: "object", description: "Event data" },
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 204,
+    description: "Webhook event processed successfully",
+  })
+  @ApiExcludeEndpoint() // This is internal Discord webhook, exclude from public docs
   async handleWebhookEvent(@Body() body: APIWebhookEvent, @Res() res: Response) {
     res.status(204).send();
     // Ideally only this application authrization event will be sent as it's the only one that's subscribed, but return still for safety

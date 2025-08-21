@@ -16,6 +16,7 @@ import { WebhookEventController } from "./controllers/discord-webhooks.controlle
 import * as _express from "express";
 import { Logger } from "./logger.service.js";
 import { SentryModule, SentryGlobalFilter } from "@sentry/nestjs/setup";
+import { setupSwagger } from "./swagger.config.js";
 
 export async function bootstrap(client: SkyHelper) {
   @Module({
@@ -38,6 +39,13 @@ export async function bootstrap(client: SkyHelper) {
   const app = await NestFactory.create(AppModule, {
     logger: new Logger(),
   });
+
+  // Set up Swagger documentation if in development mode
+  if (process.env.NODE_ENV === "development" || process.env.ENABLE_SWAGGER === "true") {
+    setupSwagger(app);
+    logger.custom("Swagger UI available at /api/docs", "SWAGGER");
+  }
+
   app.enableCors({
     credentials: true,
     maxAge: 40,

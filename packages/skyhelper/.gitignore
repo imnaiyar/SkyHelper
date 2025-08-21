@@ -15,3 +15,6 @@ __tests__/**.map
 # Sentry Config File
 .sentryclirc
 .vercel
+
+# OpenAPI generated file (regenerate with npm run generate:openapi)
+openapi.json
