@@ -7,9 +7,71 @@ import { CustomId, store } from "../customId-store.js";
 
 export default class {
   /**
-   * Schema store of custom IDs
+   * Schema store of custom IDs with UTF-8 safety wrapper
    */
-  static store = store;
+  static store = {
+    /**
+     * Serialize data to a custom ID string with UTF-8 validation
+     * @param id The schema ID
+     * @param data The data to serialize
+     * @returns A UTF-8 safe serialized string
+     */
+    serialize(id: number, data: any): string {
+      try {
+        const serialized = (store as any).serialize(id, data);
+
+        // Validate UTF-8 integrity
+        const buffer = Buffer.from(serialized, "utf8");
+        const backToString = buffer.toString("utf8");
+
+        if (serialized !== backToString) {
+          throw new Error("UTF-8 corruption detected in serialized string");
+        }
+
+        // Check Discord's custom ID limit
+        if (serialized.length > 100) {
+          throw new Error(`Serialized string exceeds Discord's 100 character limit: ${serialized.length} characters`);
+        }
+
+        return serialized;
+      } catch (error) {
+        // Add context to the error for debugging
+        const errorMessage = error instanceof Error ? error.message : String(error);
+
+        // Handle specific string-store buffer overflow error
+        if (errorMessage.includes("The buffer is full")) {
+          throw new Error(
+            `String-store buffer overflow: Data is too large to serialize. Consider reducing the size of the data. Data: ${JSON.stringify(data)}`,
+          );
+        }
+
+        throw new Error(`String-store serialization failed: ${errorMessage}. Data: ${JSON.stringify(data)}`);
+      }
+    },
+
+    /**
+     * Deserialize a custom ID string with UTF-8 validation
+     * @param customId The serialized custom ID string
+     * @returns The deserialized data
+     */
+    deserialize(customId: string): ReturnType<typeof store.deserialize> {
+      try {
+        // Validate input is valid UTF-8
+        const buffer = Buffer.from(customId, "utf8");
+        const backToString = buffer.toString("utf8");
+
+        if (customId !== backToString) {
+          throw new Error("Invalid UTF-8 characters in custom ID string");
+        }
+
+        return (store as any).deserialize(customId);
+      } catch (error) {
+        // Add context to the error for debugging
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        throw new Error(`String-store deserialization failed: ${errorMessage}. Custom ID: ${JSON.stringify(customId)}`);
+      }
+    },
+  };
 
   /**
    * Enum of Custom IDs used in schema store
