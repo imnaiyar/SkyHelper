@@ -197,7 +197,7 @@ This repository uses git hooks to enforce code quality and commit message standa
 All commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/) format:
 
 ```
-<type>: <description>
+<type>(<scope>): <description>
 
 [optional body]
 
@@ -208,8 +208,10 @@ All commit messages must follow [Conventional Commits](https://www.conventionalc
 PR titles opened by copilot must also follow the same conventional commit format:
 
 ```
-<type>: <description>
+<type>(<scope>): <description>
 ```
+
+**Note:** The scope is optional and should be included in parentheses when the change affects a specific area of the codebase.
 
 **Allowed commit types** (defined in `.commitlintrc.json`):
 - `feat` - New features
@@ -238,17 +240,25 @@ PR titles opened by copilot must also follow the same conventional commit format
 **Example valid commit messages:**
 ```bash
 feat: add new spirit calendar view
+feat(api): add user authentication endpoint
 fix: resolve memory leak in event handlers
+fix(bot): resolve Discord API rate limiting
 docs: update installation instructions
+docs(readme): add development environment setup
 refactor: simplify user authentication logic
+refactor(utils): optimize image processing functions
 ```
 
 **Example valid PR titles:**
 ```bash
 feat: add comprehensive event scheduling system
+feat(scheduler): add comprehensive event scheduling system
 fix: resolve Discord API rate limiting issues
+fix(api): resolve Discord API rate limiting issues
 docs: add comprehensive Copilot instructions
+docs(github): add comprehensive Copilot instructions
 refactor: optimize database query performance
+refactor(db): optimize database query performance
 ```
 
 ### Pre-commit Validation
