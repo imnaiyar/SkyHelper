@@ -10,7 +10,7 @@ const TAG_TO_GROUP = {
   "Bot Statistics": "Bot Statistics",
   "Guild Management": "Guild Management",
   "User Management": "User Management",
-  "Game Data Updates": "Game Data Updates",
+  "Event Management": "Event Management",
 };
 
 async function fetchOpenAPISpec() {
