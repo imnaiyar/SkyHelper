@@ -1,6 +1,6 @@
 {
-  "title": "SkyHelper OpenAPI Specs",
-  "description": "OpenAPI Specs for SkyHelperAPI",
+  "title": "SkyHelper OpenAPI",
+  "description": "OpenAPI documentation for SkyHelperAPI",
   "root": true,
   "icon": "Webhook",
   "pages": [
