@@ -204,6 +204,13 @@ All commit messages must follow [Conventional Commits](https://www.conventionalc
 [optional footer(s)]
 ```
 
+**PR Title Format:**
+PR titles opened by copilot must also follow the same conventional commit format:
+
+```
+<type>: <description>
+```
+
 **Allowed commit types** (defined in `.commitlintrc.json`):
 - `feat` - New features
 - `fix` - Bug fixes  
@@ -234,6 +241,14 @@ feat: add new spirit calendar view
 fix: resolve memory leak in event handlers
 docs: update installation instructions
 refactor: simplify user authentication logic
+```
+
+**Example valid PR titles:**
+```bash
+feat: add comprehensive event scheduling system
+fix: resolve Discord API rate limiting issues
+docs: add comprehensive Copilot instructions
+refactor: optimize database query performance
 ```
 
 ### Pre-commit Validation
