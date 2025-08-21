@@ -105,7 +105,7 @@ async function groupOpenAPIDocsByTags() {
     const pages = ["index"];
 
     // Add separators and grouped endpoints in a specific order
-    const groupOrder = ["Application", "Bot Statistics", "Guild Management", "User Management", "Game Data Updates"];
+    const groupOrder = ["Application", "Bot Statistics", "Guild Management", "User Management", "Event Management"];
 
     for (const groupName of groupOrder) {
       const endpoints = groupedEndpoints[groupName];
