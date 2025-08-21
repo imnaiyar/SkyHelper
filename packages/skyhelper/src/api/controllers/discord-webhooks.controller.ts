@@ -1,19 +1,13 @@
 import type { SkyHelper as BotService } from "@/structures";
 import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
-import {
-  type APIEmbed,
-  type APIGuild,
-  type APIUser,
-  ApplicationIntegrationType,
-  MessageFlags,
-  ApplicationWebhookEventType,
-  type APIWebhookEvent,
-} from "@discordjs/core";
+import { ApiExcludeController } from "@nestjs/swagger";
+import { type APIEmbed, MessageFlags, ApplicationWebhookEventType, type APIWebhookEvent } from "@discordjs/core";
 import type { Response } from "express";
 import BlackList from "@/schemas/BlackList";
 
 // Handles webhook events from discord
 @Controller("/webhook-event")
+@ApiExcludeController() // Exclude this from public docs, only meant for discord
 export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 

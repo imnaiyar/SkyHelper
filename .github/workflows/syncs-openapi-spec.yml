@@ -1,0 +1,73 @@
+name: Update OpenAPI Specification
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/skyhelper/src/api/**"
+  workflow_dispatch:
+
+jobs:
+  update-openapi-spec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.4.0
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build workspace packages
+        run: pnpm build
+
+      - name: Generate OpenAPI specification
+        working-directory: packages/skyhelper
+        run: |
+          # Generate OpenAPI spec to a temporary location
+          mkdir -p /tmp/openapi-output
+          # install tsx
+          npm i tsx -g
+          pnpm run generate:openapi /tmp/openapi-output/openapi.json
+          echo "✅ OpenAPI specification generated successfully"
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: imnaiyar/skyhelper-openapi-spec
+          token: ${{ secrets.OPENAPI_REPO_TOKEN }}
+          path: target-repo
+
+      - name: Copy OpenAPI spec to target repository
+        run: |
+          cp /tmp/openapi-output/openapi.json target-repo/openapi.json
+
+      - name: Commit and push to target repository
+        working-directory: target-repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.OPENAPI_REPO_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git add openapi.json
+            git commit -m "chore: update OpenAPI specification from SkyHelper@${{ github.sha }}"
+            git push origin main
+            echo "✅ OpenAPI specification updated in target repository"
+          else
+            echo "ℹ️ No changes to OpenAPI specification"
+          fi
