@@ -1,0 +1,249 @@
+---
+title: Information Commands
+description: A comprehensive guide on information commands offered by SkyHelper bot
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Information Commands
+
+Commands that generally provide information about Sky: Children of the Light.
+
+## `/shards`
+
+**Options**:
+
+| Option   | Description                                                                       |
+| -------- | --------------------------------------------------------------------------------- |
+| `[date]` | The date to get the shard info for (in format: `DD-MM-YYYY`, e.g., `22-07-2024`). |
+| `[hide]` | Whether to hide the response from other users (ephemeral response)                |
+
+Provides information about the shard details for a given date, such as the shard type, location, timeline, and countdown to its occurrences.
+
+<Callout type="info">If you do not provide a date, the current date is used for retrieving shard info.</Callout>
+
+**Usage:**
+
+- `/shards` (returns shard info for the current date)
+- `/shards date:22-07-2024 hide:true` (returns shard info for the specified date)
+
+**Features:**
+
+- View shard type and location
+- See countdown to next shard occurrence
+- Access location guides with interactive buttons
+- View timeline of all shard occurrences for the day
+
+## `/shards-calendar`
+
+**Options**:
+
+| Option   | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| `[hide]` | Whether to hide the response from other users (ephemeral response) |
+
+Returns an embed with a calendar overview for shards for the current month. It provides basic details for each shard during the month, such as type, location, and timeline. The embed also includes select menus that allow users to adjust the date, month, and year displayed in the calendar.
+
+<Callout type="info">
+  The options in the year select menu allow for selecting a year within ±5 years from the currently selected year. This is due to
+  the display limit for select menu options.
+</Callout>
+
+**Usage:**
+
+- `/shards-calendar`
+
+**Features:**
+
+- Monthly calendar view of all shards
+- Interactive date, month, and year selection
+- Quick overview of shard types and locations
+
+## `/daily-quests`
+
+**Options**:
+
+| Option   | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| `[hide]` | Whether to hide the response from other users (ephemeral response) |
+
+Provides the current date's daily quests, rotating candle locations, and seasonal candles (if a season is active), along with guides on completing them.
+
+### How does this work?
+
+Creating the daily quests command was a bit tricky. While there are patterns to the daily quests, they aren't as consistent as the shard patterns. Additionally, some quests are exclusive to ongoing events or seasons, making full automation infeasible. Manually updating the guides daily wasn't an option either due to time constraints.
+
+**Solution:**
+
+The Sky: Children of the Light community is known for sharing helpful resources like infographics or in any other ways. One such community is the [Sky:CoTL Infographics Database](https://discord.gg/skyinfographicsdatabase) server. Their maintainers (like Clement and io) post daily quest guides there, which can be shared to servers via announcement channels.
+
+When they post a guide, the bot captures it, evaluates whether it's worth including, and then saves it. The bot then presents the information to users. Special thanks to Clement, io, and all the creators who help out by producing these infographics.
+
+<Callout type="info">
+  As this command is dependent on guides being published in the infographics server, it's important to note that Clement and io
+  are also human. Sometimes they may be busy and post guides later than usual or not post it at all. In such cases, the bot may
+  not have a guide available for this command. Typically, there's a grace period of 1-2 hours, but this timeframe is not
+  guaranteed.
+</Callout>
+
+**Usage:**
+
+- `/daily-quests`
+
+**Features:**
+
+- Today's daily quest guides
+- Rotating candle locations
+- Seasonal candle guides (when applicable)
+- Community-sourced infographic integration
+
+## `/skytimes`
+
+**Options**:
+
+| Option   | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| `[hide]` | Whether to hide the response from other users (ephemeral response) |
+
+Provides upcoming occurrence times for various in-game events and their countdowns. Clicking the select menu for supported events will show all their occurrence times (not just the upcoming ones) throughout the day, along with related guides if available.
+
+<Callout type="info">There's also a refresh button to update the times.</Callout>
+
+**Usage:**
+
+- `/skytimes`
+- `/skytimes hide:true`
+
+**Supported Events:**
+
+- Geyser eruptions
+- Grandma visits
+- Turtle migration
+- Daily reset
+- Weekly reset (Eden)
+- Aurora's Concert
+- And more!
+
+**Features:**
+
+- Real-time countdown to next events
+- Complete daily schedule for each event
+- Interactive refresh functionality
+- Event-specific guides and tips
+
+## `/traveling-spirit`
+
+**Options**:
+
+| Option   | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| `[hide]` | Whether to hide the response from other users (ephemeral response) |
+
+Provides the schedule for the upcoming traveling spirit.
+
+<Callout type="info">
+  If the upcoming traveling spirit has been revealed (this is manually updated in the bot's database), the command also displays
+  detailed information about the spirit (similar to what's shown by the `/spirits` command).
+</Callout>
+
+**Usage**:
+
+- `/traveling-spirit`
+
+**Features:**
+
+- Next traveling spirit schedule
+- Spirit details when revealed
+- Approximate return dates
+- Spirit cosmetics and emotes preview
+
+## `/guides`
+
+This command offers two subcommands to access guides for different categories.
+
+### Subcommands
+
+<Steps>
+
+<Step>
+
+### `seasonal` - Provides guides related to specific seasons
+
+**Options**:
+
+| Option     | Description                                   |
+| ---------- | --------------------------------------------- |
+| `<season>` | The season you want the guide for             |
+| `<type>`   | The type of guide (e.g., quests, spirits)     |
+| `[hide]`   | Whether to hide the response from other users |
+
+**Usage**:
+
+- `/guides seasonal season:Season of Assembly type:spirits`
+- `/guides seasonal season:Season of Flight type:quests hide:true`
+
+**Available Guide Types:**
+
+- `quests` - Seasonal quest walkthroughs
+- `spirits` - Seasonal spirit locations and trees
+
+</Step>
+
+<Step>
+
+### `realms` - Provides guides related to specific realms
+
+**Options**:
+
+| Option    | Description                                   |
+| --------- | --------------------------------------------- |
+| `<realm>` | The realm you want the guide for              |
+| `<type>`  | The type of guide                             |
+| `[hide]`  | Whether to hide the response from other users |
+
+**Usage**:
+
+- `/guides realms realm:Valley of Triumph type:summary`
+- `/guides realms realm:Isle of Dawn type:maps hide:true`
+
+**Available Guide Types:**
+
+- `summary` - Realm overview and information
+- `maps` - Detailed realm maps
+- `spirits` - Realm spirits and their locations
+
+</Step>
+
+</Steps>
+
+<Callout type="info">The available options for `type` are: `summary`, `maps`, and `spirits`.</Callout>
+
+## `/spirits`
+
+Provides detailed guides for specific spirits, including their locations and the steps to unlock their cosmetics and emotes.
+
+**Options**:
+
+| Option     | Description                                   |
+| ---------- | --------------------------------------------- |
+| `<search>` | Search for a spirit guide by name             |
+| `[hide]`   | Whether to hide the response from other users |
+
+**Usage**:
+
+- `/spirits search:Meditating Monastic`
+- `/spirits search:Dancing Performer hide:true`
+
+<Callout type="info">
+  You can also use partial names when searching for a spirit, and the bot will provide the closest match.
+</Callout>
+
+**Features:**
+
+- Comprehensive spirit information
+- Friendship tree progression
+- Location guides with maps
+- Cosmetics and emotes preview
+- Cost calculations for spirit items
+- Collectibles information

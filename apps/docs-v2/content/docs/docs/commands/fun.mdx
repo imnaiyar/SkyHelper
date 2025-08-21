@@ -1,0 +1,186 @@
+---
+title: Fun Commands
+description: Information about fun commands that is offered by SkyHelper
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Fun Commands
+
+Entertainment and interactive commands to enjoy with your Sky community.
+
+## `/hug`
+
+A simple and fun command to send a virtual Sky hug to another user.
+
+**Options**
+
+| Option   | Description              |
+| -------- | ------------------------ |
+| `<user>` | The user you want to hug |
+
+**Usage:**
+
+- `/hug @username` (sends a Sky-themed hug to the mentioned user)
+
+**Features:**
+
+- Sky-themed hug message and embed
+- Displays both the sender and recipient
+- Friendly community interaction
+
+## `/skygame`
+
+Interactive games featuring Sky: Children of the Light themed content.
+
+**Subcommands**
+
+<Steps>
+
+<Step>
+
+### `hangman` - Play a game of hangman based on words related to Sky or your chosen words
+
+**Options**
+
+| Option   | Description                                                                           |
+| -------- | ------------------------------------------------------------------------------------- |
+| `<mode>` | The mode to play the game in. Available options are: `Single Player`, `Double Player` |
+
+**Game Rules:**
+
+- Each player will have 30 seconds to guess. If they fail to do so, they'll lose the round.
+
+**Single Player Mode:**
+
+- You'll have 6 lives total
+- Each incorrect guess or failing to answer within time limit will cost you one life
+- You'll lose the game if you run out of lives
+- Goal: Guess the word before running out of lives
+
+**Double Player Mode:**
+
+- You'll be prompted to configure additional settings for the game
+- Choose the players and word type (in case of custom word type, you'll have to provide the word)
+
+**Important Notes for Double Player Mode:**
+
+- You can't choose a custom mode if you (the command runner) are one of the players
+- None of the players can be a bot
+- Each player gets their turn to guess the word, starting randomly
+- If a player guesses an alphabet correctly, they get to keep their turn
+- Otherwise, the round passes to the next player
+- If you think you know the full word, you can type it out completely (case insensitive) and win
+- Whoever guesses the word first wins the game
+
+**Usage:**
+
+- `/skygame hangman mode:Single Player`
+- `/skygame hangman mode:Double Player`
+
+**Features:**
+
+- Sky: Children of the Light themed words
+- Custom word options
+- Multiplayer support
+- Time-based gameplay
+- Score tracking
+
+</Step>
+
+<Step>
+
+### `scrambled` - Unscramble Sky-related words to win
+
+**Options**
+
+| Option   | Description                                                                           |
+| -------- | ------------------------------------------------------------------------------------- |
+| `<mode>` | The mode to play the game in. Available options are: `Single Player`, `Double Player` |
+
+**Game Rules:**
+
+- You'll be given a scrambled word related to Sky: Children of the Light
+- Unscramble the letters to form the correct word
+- Time limit of 1 minute to solve each word
+
+**Single Player Mode:**
+
+- Play at your own pace
+- Track your personal statistics
+- Improve your Sky knowledge and word skills
+
+**Double Player Mode:**
+
+- Compete against another player
+- Take turns solving scrambled words
+- First to solve wins the round
+
+**Usage:**
+
+- `/skygame scrambled mode:Single Player`
+- `/skygame scrambled mode:Double Player`
+
+**Features:**
+
+- Sky: Children of the Light themed words
+- Various difficulty levels
+- Time-based challenges
+- Score tracking
+
+</Step>
+
+<Step>
+
+### `leaderboard` - Get leaderboard of skygames
+
+**Options**
+
+| Option               | Description                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| `<game>`             | The game to get the leaderboard for                                                         |
+| `[leaderboard-type]` | The type of leaderboard to get. Available options are: `global`, `server` (default: global) |
+
+**Usage:**
+
+- `/skygame leaderboard game:hangman` (shows global leaderboard for hangman)
+- `/skygame leaderboard game:scrambled` (shows global leaderboard for scrambled)
+- `/skygame leaderboard game:hangman leaderboard-type:server` (shows server leaderboard for hangman)
+
+**Features:**
+
+- Global and server-specific leaderboards
+- Game statistics and rankings
+- Win/loss ratios
+- Total games played
+
+</Step>
+
+</Steps>
+
+**Available Games:**
+
+- **Hangman**: Sky-themed word guessing game with single and multiplayer modes
+- **Scrambled**: Unscramble Sky-related words in a race against time
+
+<Callout type="info">
+  More games are planned for future releases! This feature is currently in beta, so feedback is greatly appreciated.
+</Callout>
+
+**Game Features:**
+
+- **Statistics Tracking**: Your game performance is tracked across all games
+- **Leaderboards**: Compete with other players globally or within your server
+- **Sky Themes**: All games feature content related to Sky: Children of the Light
+- **Multiplayer Support**: Play with friends in supported game modes
+- **Time Challenges**: Test your speed and knowledge
+- **Community Competition**: See how you rank against other Sky players
+
+**Tips for Playing:**
+
+- Take your time to think, but remember the time limits
+- In multiplayer games, communication and strategy can be key
+- Practice in single player mode to improve your skills
+- Check the leaderboards to see how you rank against other players
+- Familiarize yourself with Sky terminology to perform better in games

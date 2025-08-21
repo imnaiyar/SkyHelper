@@ -47,7 +47,7 @@ export function setupSwagger(app: INestApplication) {
     .addTag("Bot Statistics", "Bot performance and statistics endpoints")
     .addTag("Guild Management", "Discord server/guild configuration and management")
     .addTag("User Management", "User settings and profile management")
-    .addTag("Game Data Updates", "Skygames data management")
+    .addTag("Event Management", "In-game events management")
     .addServer("https://api.skyhelperbot.com", "Production API");
 
   if (process.env.NODE_ENV === "development") {

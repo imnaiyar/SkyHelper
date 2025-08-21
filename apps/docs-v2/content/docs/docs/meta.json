@@ -1,0 +1,7 @@
+{
+  "title": "Documentation",
+  "description": "SkyHelper Discord bot documentation",
+  "root": true,
+  "icon": "Book",
+  "pages": ["---Docs---", "index", "commands", "guides", "---Extras---", "changelogs", "about"]
+}

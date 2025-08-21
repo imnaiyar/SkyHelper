@@ -1,0 +1,233 @@
+---
+title: Utility Commands
+description: A comprehensive guide on utility commands offered by SkyHelper bot
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Utility Commands
+
+Utility commands to help you along your Sky journey.
+
+## `/seasonal-calculator`
+
+**Options**:
+
+| Option          | Description                                      |
+| --------------- | ------------------------------------------------ |
+| `<candles>`     | The amount of candles you currently have         |
+| `<dailies>`     | Have you completed today's daily quests?         |
+| `[season-pass]` | Do you have the season pass? (defaults: `false`) |
+
+Helps you calculate the required candles to finish the season. Depending on the items you have already acquired and your current candle count, it tells you how many days until you finish the season or if it's not possible.
+
+**Usage**:
+
+- `/seasonal-calculator candles:45 dailies:true`
+- `/seasonal-calculator candles:120 dailies:false season-pass:true`
+
+**Features:**
+
+- Interactive item selection
+- Season pass consideration
+- Daily quest completion tracking
+- Precise timeline calculations
+- Cost optimization suggestions
+
+## `/help`
+
+**Options**:
+
+| Option      | Description                     |
+| ----------- | ------------------------------- |
+| `[command]` | Get help for a specific command |
+
+The bot's help menu providing comprehensive information about all available commands.
+
+**Usage**:
+
+- `/help` (shows embeds with all available commands)
+- `/help command:shards` (shows help menu for the shards command)
+
+**Features:**
+
+- Categorized command listing
+- Detailed command descriptions
+- Usage examples
+- Permission requirements
+
+## `/utils`
+
+A collection of utility subcommands for various helpful functions.
+
+**Subcommands**
+
+<Steps>
+
+<Step>
+
+### `timestamp` - Gives you a Discord-formatted UNIX timestamp for a given time/date
+
+**Options**
+
+| Option       | Description                                                                                   |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| `<time>`     | The time to convert to UNIX (format: `HH mm ss`, e.g., `04 32 44`)                            |
+| `[timezone]` | The timezone to use for conversion (format: `Continent/City`, default: `America/Los_Angeles`) |
+| `[date]`     | The date to convert (format: `DD`)                                                            |
+| `[month]`    | The month to convert (format: `MM`)                                                           |
+| `[year]`     | The year to convert (format: `YYYY`)                                                          |
+
+<Callout type="info">The format `HH:ss:mm` is not supported because for some reason Discord formats `:xx:` into a custom emoji format (`<:name:id>`) if it matches any emojis accessible to the user. This is a workaround to prevent that.</Callout>
+
+**Usage**:
+
+- `/utils timestamp time:02 07 44`
+- `/utils timestamp time:04 22 30 timezone:Asia/Kolkata`
+- `/utils timestamp time:15 30 00 date:25 month:12 year:2024`
+
+**Features:**
+
+- Multiple timestamp formats
+- Timezone support
+- Date and time customization
+- Discord-ready timestamp output
+
+</Step>
+
+<Step>
+
+### `changelog` - Shows the bot's changelogs
+
+Displays the latest changes and updates to SkyHelper.
+
+**Usage**:
+
+- `/utils changelog`
+
+</Step>
+
+<Step>
+
+### `botinfo` - General information about the bot and its configurations for users/servers
+
+Provides comprehensive information about the bot's status, version, and configuration.
+
+**Usage**:
+
+- `/utils botinfo`
+
+**Information Includes:**
+
+- Bot version and uptime
+- Server count and user statistics
+- Feature configuration status
+- Performance metrics
+
+</Step>
+
+<Step>
+
+### `contact-us` - Reach out to us for any queries you might have with this command
+
+Opens a modal for submitting feedback, questions, or bug reports to the development team.
+
+**Usage**:
+
+- `/utils contact-us`
+
+**Features:**
+
+- Direct communication with developers
+- Bug reporting system
+- Feature request submission
+- General inquiry support
+
+</Step>
+
+</Steps>
+
+## `/language`
+
+Manage language preferences for yourself or your server to use SkyHelper in your preferred language.
+
+**Subcommands**
+
+<Steps>
+
+<Step>
+
+### `set` - Set a language for yourself or the server
+
+**Options**
+
+| Option       | Description                                            |
+| ------------ | ------------------------------------------------------ |
+| `<category>` | The category to set the language for (`Server`/`User`) |
+| `<language>` | The language to set                                    |
+
+**Usage**:
+
+- `/language set category:User language:Spanish`
+- `/language set category:Server language:French`
+
+**Supported Languages:**
+
+- English (default)
+- Spanish
+- French
+- German
+- Japanese
+- Chinese (Simplified)
+- Hindi
+- Russian
+- And more...
+
+<Callout type="info">
+  Help us support more languages by contributing to our [translation project](/docs/guides/translating).
+</Callout>
+
+</Step>
+
+<Step>
+
+### `remove` - Remove a set language
+
+**Options**
+
+| Option       | Description                                               |
+| ------------ | --------------------------------------------------------- |
+| `<category>` | The category to remove the language for (`Server`/`User`) |
+
+**Usage**:
+
+- `/language remove category:User` (reverts to server language or English)
+- `/language remove category:Server` (reverts to English default)
+
+</Step>
+
+</Steps>
+
+**Language Priority:**
+
+1. User's personal language setting
+2. Server's language setting
+3. English (default)
+
+## `/linked-role`
+
+Manage your Sky: Children of the Light linked role connection with Discord.
+
+**Features:**
+
+- Connect your Sky profile to Discord
+- Display Sky information on your Discord profile
+- Customize your linked role appearance
+- Manage connection settings
+
+**Usage**:
+
+- `/linked-role` (opens the linked role management interface)
+
+Learn more about linked roles in the [Linked Roles Guide](/docs/guides/linked-role).

@@ -1,0 +1,209 @@
+---
+title: Linked Role Connection
+description: Complete guide to Discord Linked Roles with SkyHelper
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Linked Role Connection
+
+Linked roles are a special type of role that allows users to acquire a role on their own if they meet specific requirements. SkyHelper supports Discord's Linked Role feature, enabling users to display their Sky: Children of the Light profile information directly on Discord.
+
+## What are Linked Roles?
+
+For example, if your server requires users to have their Reddit account connected to obtain a role, any user with Reddit linked can automatically acquire the role through the `Linked Role` option in the server settings.
+
+The requirements can also be set for specific applications, provided they support linked roles. In our case, SkyHelper supports linked role connections, allowing users to showcase their Sky: Children of the Light profile on Discord.
+
+For an in-depth explanation of linked roles, check out Discord's [official article](https://support.discord.com/hc/en-us/articles/8063233404823).
+
+## How Does It Work with SkyHelper?
+
+When you set up linked roles, the chosen connection (in this case, SkyHelper) can update a user's connection details. Discord then uses these details to display relevant information on the user's profile.
+
+SkyHelper leverages this feature to show a brief Sky: Children of the Light profile, displaying information such as:
+
+- Player preferences and status
+- Sky profile information
+- Connection verification
+
+To use this feature, users first need to authenticate with SkyHelper. After authentication, they will be prompted to set their preferences. Once their preferences are set and they have acquired the role, their Sky profile will be visible within the server.
+
+## For Server Administrators: How to Enable Linked Roles
+
+<Steps>
+
+<Step>
+
+### Access Server Settings
+
+Open your server settings dropdown menu.
+
+</Step>
+
+<Step>
+
+### Navigate to Roles
+
+Go to the `Roles` tab in your server settings.
+
+</Step>
+
+<Step>
+
+### Create or Select a Role
+
+Create a new role and give it a name, or select an existing role you want to link.
+
+</Step>
+
+<Step>
+
+### Link the Role
+
+Under role settings, click the `Link` option (chain link icon).
+
+</Step>
+
+<Step>
+
+### Add SkyHelper Requirement
+
+- Select `Add Requirement`
+- Choose `SkyHelper` from the list of available connections
+
+</Step>
+
+<Step>
+
+### Save Changes
+
+Save the changes and you're done! The role is now linked to SkyHelper.
+
+</Step>
+
+</Steps>
+
+<Callout type="warning">
+  Do not enable any additional verification options unless you understand their purpose. The basic SkyHelper connection is
+  sufficient for most use cases.
+</Callout>
+
+## For Users: How to Get a Linked Role
+
+<Callout type="warning">
+  Before proceeding, ensure that SkyHelper linked role connection has been set up in the server by an administrator.
+</Callout>
+
+<Steps>
+
+<Step>
+
+### Open Server Settings
+
+Access the server settings (not your user settings).
+
+</Step>
+
+<Step>
+
+### Navigate to Linked Roles
+
+Go to the `Linked Roles` tab in the server settings.
+
+</Step>
+
+<Step>
+
+### Select the SkyHelper Role
+
+Click on the role that has been linked with SkyHelper.
+
+</Step>
+
+<Step>
+
+### Authenticate with SkyHelper
+
+You'll be redirected to SkyHelper's dashboard where you'll need to authenticate with Discord.
+
+</Step>
+
+<Step>
+
+### Set Your Preferences
+
+Once authenticated, you'll be prompted to set your Sky: Children of the Light profile preferences.
+
+</Step>
+
+<Step>
+
+### Submit and Return
+
+After setting your preferences, submit them and return to Discord.
+
+</Step>
+
+<Step>
+
+### Acquire the Role
+
+If your preferences meet the requirements set by the server admin, you'll be able to get the role. Click `Finish` and you're done!
+
+</Step>
+
+<Step>
+
+### View Your Profile
+
+Open your server profile and scroll down to see your Sky: Children of the Light information displayed.
+
+</Step>
+
+</Steps>
+
+## Benefits of Linked Roles
+
+- **Profile Display**: Show your Sky preferences on your Discord profile
+- **Server Integration**: Automatic role assignment based on Sky profile
+- **Community Building**: Connect with other Sky players more easily
+- **Verification**: Prove your connection to Sky: Children of the Light
+
+## Troubleshooting
+
+**Role not appearing?**
+
+- Ensure you've completed all authentication steps
+- Check that your preferences meet the server requirements
+- Try refreshing Discord or rejoining the server
+
+**Authentication issues?**
+
+- Make sure you're logged into the correct Discord account
+- Clear your browser cache and try again
+- Contact server administrators if problems persist
+
+**Profile not displaying?**
+
+- Linked role information may take a few minutes to update
+- Check your Discord privacy settings
+- Ensure the server has properly configured the linked role
+
+## Privacy and Security
+
+- SkyHelper only accesses the information you explicitly provide
+- You can modify your preferences at any time through the dashboard
+- Linked role information is only visible in servers where you have the linked role
+- You can revoke the connection at any time through Discord's settings
+
+## Support
+
+If you have any questions or need help with linked roles:
+
+- Join our [support server](https://discord.com/invite/2rjCRKZsBb)
+- Use the `/utils contact-us` command
+- Check our [GitHub repository](https://github.com/imnaiyar/SkyHelper) for updates
+
+We're always happy to help you get set up with linked roles!

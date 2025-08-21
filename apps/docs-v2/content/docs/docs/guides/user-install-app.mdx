@@ -1,0 +1,112 @@
+---
+title: User-installable Apps
+description: Basic information about newly released user-apps
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Card, Cards } from "fumadocs-ui/components/card";
+
+# User-installable App
+
+Discord has recently introduced a feature that allows users to install bots directly to their user accounts. This enables you to access the bot's commands across all Discord contexts: direct messages (DMs), group DMs (GDMs), and even servers where the bot isn't a member.
+
+SkyHelper fully supports user installations, allowing you to use nearly all its commands seamlessly. However, some commands require the bot to be present in a server to function correctly. For details on which commands are server-specific, please refer to the [Commands](/docs/commands) page.
+
+## Benefits of User Installation
+
+- **Universal Access**: Use SkyHelper commands in any Discord context
+- **Direct Messages**: Get Sky information privately without needing a server
+- **Group DMs**: Share Sky content with friends in group conversations
+- **Server Independence**: Use commands even in servers where SkyHelper isn't added
+
+## How to Install SkyHelper
+
+Adding SkyHelper to your user account is quick and easy, similar to adding it to a server—though the process slightly differs. Follow these steps:
+
+<Steps>
+
+<Step>
+
+### Open the bot's profile and click the "Add App" button
+
+You can also use this [direct link](https://discord.com/oauth2/authorize?client_id=1121541967730450574) to get started.
+
+</Step>
+
+<Step>
+
+### Click the "Try it now" button
+
+This will start the authorization process for your user account.
+
+</Step>
+
+<Step>
+
+### Authorize the bot, and you're all set
+
+Grant the necessary permissions and confirm the installation.
+
+</Step>
+
+</Steps>
+
+You can now access SkyHelper's commands anywhere, either through the `App Launcher` or by typing `/` in any chat.
+
+## Server-Specific Commands
+
+<Callout type="warning">
+  Some commands require the bot to be added to a server to function properly. These include: - `/shards-live` - Requires webhook
+  permissions - `/skytimes-live` - Requires webhook permissions - `/reminders` - Requires webhook permissions - Other admin
+  commands that manage server features
+</Callout>
+
+## Using Commands
+
+Once installed, you can access SkyHelper commands in several ways:
+
+### Method 1: Slash Commands
+
+- Type `/` in any chat to see available commands
+- SkyHelper commands will appear in the list
+- Select the command you want to use
+
+### Method 2: App Launcher
+
+- Click the apps icon (grid icon) in the chat input
+- Find SkyHelper in your installed apps
+- Browse and select commands from the interface
+
+### Method 3: Direct Message
+
+- Send a direct message to SkyHelper
+- Use any supported command just like in a server
+
+## Managing Your Installation
+
+You can manage your user app installations by:
+
+1. Going to User Settings
+2. Navigating to "Authorized Apps"
+3. Finding SkyHelper in the list
+4. Modifying or removing permissions as needed
+
+## Troubleshooting
+
+**Commands not appearing?**
+
+- Make sure you've properly authorized the app
+- Try refreshing Discord or restarting the application
+- Check that you're typing `/` to trigger the command menu
+
+**Server-specific commands not working?**
+
+- These commands require SkyHelper to be added to the server
+- Ask a server admin to add SkyHelper using the server invite link
+- Alternatively, use the command in a server where SkyHelper is already present
+
+<Cards>
+  <Card title="Commands" description="Explore all available commands" href="/docs/commands" />
+  <Card title="Support" description="Get help in our Discord server" href="https://discord.com/invite/2rjCRKZsBb" />
+</Cards>
