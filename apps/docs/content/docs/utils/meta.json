@@ -1,0 +1,26 @@
+{
+  "title": "Utils API",
+  "description": "TypeScript API documentation for SkyHelper utilities package",
+  "pages": [
+    "index",
+    "---Utility Functions---",
+    "parseDateFormat",
+    "parsePerms",
+    "postToBin",
+    "recursiveReadDir",
+    "resolveColors",
+    "utils",
+    "v2-builders",
+    "---Classes---",
+    "LeaderBoardCard",
+    "SkytimesUtils",
+    "WinnerCard",
+    "---Constants & Data---",
+    "eventDatas",
+    "shardsInfo",
+    "shardsTimeline",
+    "shardsUtil",
+    "---Type Definitions---",
+    "typings"
+  ]
+}
