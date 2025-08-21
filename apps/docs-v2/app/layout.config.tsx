@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-
+import { linkOptions } from "./layout.shared";
 /**
  * Shared layout configurations
  *
@@ -23,21 +23,5 @@ export const baseOptions: BaseLayoutProps = {
     ),
   },
   // see https://fumadocs.dev/docs/ui/navigation/links
-  links: [
-    {
-      text: "GitHub",
-      url: "https://github.com/imnaiyar/SkyHelper",
-      external: true,
-    },
-    {
-      text: "Website",
-      url: "https://skyhelper.xyz",
-      external: true,
-    },
-    {
-      text: "Support",
-      url: "https://discord.com/invite/2rjCRKZsBb",
-      external: true,
-    },
-  ],
+  ...linkOptions(),
 };

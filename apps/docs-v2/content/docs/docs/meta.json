@@ -2,6 +2,6 @@
   "title": "Documentation",
   "description": "SkyHelper Discord bot documentation",
   "root": true,
-  "icon": "BookOpen",
-  "pages": ["index", "commands", "guides", "changelogs", "about"]
+  "icon": "Book",
+  "pages": ["---Docs---", "index", "commands", "guides", "---Extras---", "changelogs", "about"]
 }

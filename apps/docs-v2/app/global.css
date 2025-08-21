@@ -3,48 +3,33 @@
 @import "fumadocs-ui/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
 
-/* Use system fonts as fallback for Inter */
-.font-sans {
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
+@layer base {
+  * {
+    font-family: var(--font-roboto);
+    text-rendering: optimizeLegibility;
+
+    scrollbar-width: thin;
+  }
 }
 
-/* Custom theme colors for different sections */
 :root {
-  /* Default docs theme - Sky blue theme */
-  --fd-primary-hue: 200;
-  --fd-primary-saturation: 100%;
+  --openapi-color: hsl(250, 80%, 54%);
+  --docs-color: hsl(220, 91%, 54%);
 }
 
-/* OpenAPI section - Orange theme */
-[data-theme="openapi"],
-.docs-openapi {
-  --fd-primary-hue: 30;
-  --fd-primary-saturation: 90%;
+body {
+  overscroll-behavior-y: none;
+  background-color: var(--color-fd-background);
 }
 
-/* Work section - Green theme */
-[data-theme="work"],
-.docs-work {
-  --fd-primary-hue: 140;
-  --fd-primary-saturation: 80%;
+.dark {
+  --openapi-color: hsl(250 100% 80%);
+  --docs-color: hsl(217 92% 76%);
+}
+.openapi {
+  --color-fd-primary: var(--openapi-color);
 }
 
-/* Time section - Purple theme */
-[data-theme="time"],
-.docs-time {
-  --fd-primary-hue: 270;
-  --fd-primary-saturation: 75%;
+.docs {
+  --color-fd-primary: var(--docs-color);
 }

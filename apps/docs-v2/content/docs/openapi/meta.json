@@ -1,7 +1,7 @@
 {
-  "title": "OpenAPI Example",
-  "description": "A demo for Fumadocs OpenAPI",
+  "title": "SkyHelper OpenAPI Specs",
+  "description": "OpenAPI Specs for SkyHelperAPI",
   "root": true,
-  "icon": "Shapes",
+  "icon": "Webhook",
   "pages": ["index", "..."]
 }
