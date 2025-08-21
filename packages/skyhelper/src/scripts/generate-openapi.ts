@@ -68,8 +68,8 @@ async function generateSpec() {
       logger: new Logger(),
     });
 
-    // Generate the OpenAPI spec
-    const outputPath = join(process.cwd(), "./openapi.json");
+    // Get output path from command line args or use default
+    const outputPath = process.argv[2] || join(process.cwd(), "./openapi.json");
     generateOpenApiSpec(app, outputPath);
 
     await app.close();

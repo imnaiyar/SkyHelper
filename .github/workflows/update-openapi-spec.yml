@@ -41,14 +41,10 @@ jobs:
 
       - name: Generate OpenAPI specification
         working-directory: packages/skyhelper
-        run: pnpm run generate:openapi
-
-      - name: Check if openapi.json was generated
         run: |
-          if [ ! -f "packages/skyhelper/openapi.json" ]; then
-            echo "❌ OpenAPI specification file was not generated"
-            exit 1
-          fi
+          # Generate OpenAPI spec to a temporary location
+          mkdir -p /tmp/openapi-output
+          pnpm run generate:openapi /tmp/openapi-output/openapi.json
           echo "✅ OpenAPI specification generated successfully"
 
       - name: Clone target repository
@@ -59,7 +55,7 @@ jobs:
 
       - name: Copy OpenAPI spec to target repository
         run: |
-          cp packages/skyhelper/openapi.json target-repo/openapi.json
+          cp /tmp/openapi-output/openapi.json target-repo/openapi.json
 
       - name: Commit and push to target repository
         working-directory: target-repo
