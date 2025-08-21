@@ -39,6 +39,8 @@ jobs:
         run: |
           # Generate OpenAPI spec to a temporary location
           mkdir -p /tmp/openapi-output
+          # install tsx
+          npm i tsx -g
           pnpm run generate:openapi /tmp/openapi-output/openapi.json
           echo "✅ OpenAPI specification generated successfully"
 

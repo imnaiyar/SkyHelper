@@ -15,7 +15,7 @@ import { UsersController } from "../src/api/controllers/user.controller.js";
 import { WebhookEventController } from "../src/api/controllers/discord-webhooks.controller.js";
 import { generateOpenApiSpec } from "../src/api/swagger.config.js";
 import { Logger } from "../src/api/logger.service.js";
-import { join } from "path";
+import { join } from "node:path";
 
 // Mock bot client for OpenAPI generation
 const mockBotClient = {
