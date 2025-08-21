@@ -49,7 +49,7 @@ const BadRequestResponse = ApiBadRequestResponse({
   description: "Invalid request body",
 });
 const FeatureSchema = {
-  anyOf: [{ ...z.toJSONSchema(FeaturesSchema.shape["live-updates"]) }, { ...z.toJSONSchema(ReminderFeatureSchema) }],
+  anyOf: [z.toJSONSchema(FeaturesSchema.shape["live-updates"]), z.toJSONSchema(ReminderFeatureSchema)],
 };
 
 @ApiTags("Guild Management")
