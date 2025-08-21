@@ -10,6 +10,26 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
 Entertainment and interactive commands to enjoy with your Sky community.
 
+## `/hug`
+
+A simple and fun command to send a virtual Sky hug to another user.
+
+**Options**
+
+| Option   | Description              |
+| -------- | ------------------------ |
+| `<user>` | The user you want to hug |
+
+**Usage:**
+
+- `/hug @username` (sends a Sky-themed hug to the mentioned user)
+
+**Features:**
+
+- Sky-themed hug message and embed
+- Displays both the sender and recipient
+- Friendly community interaction
+
 ## `/skygame`
 
 Interactive games featuring Sky: Children of the Light themed content.
@@ -71,6 +91,48 @@ Interactive games featuring Sky: Children of the Light themed content.
 
 <Step>
 
+### `scrambled` - Unscramble Sky-related words to win
+
+**Options**
+
+| Option   | Description                                                                           |
+| -------- | ------------------------------------------------------------------------------------- |
+| `<mode>` | The mode to play the game in. Available options are: `Single Player`, `Double Player` |
+
+**Game Rules:**
+
+- You'll be given a scrambled word related to Sky: Children of the Light
+- Unscramble the letters to form the correct word
+- Time limit of 1 minute to solve each word
+
+**Single Player Mode:**
+
+- Play at your own pace
+- Track your personal statistics
+- Improve your Sky knowledge and word skills
+
+**Double Player Mode:**
+
+- Compete against another player
+- Take turns solving scrambled words
+- First to solve wins the round
+
+**Usage:**
+
+- `/skygame scrambled mode:Single Player`
+- `/skygame scrambled mode:Double Player`
+
+**Features:**
+
+- Sky: Children of the Light themed words
+- Various difficulty levels
+- Time-based challenges
+- Score tracking
+
+</Step>
+
+<Step>
+
 ### `leaderboard` - Get leaderboard of skygames
 
 **Options**
@@ -83,6 +145,7 @@ Interactive games featuring Sky: Children of the Light themed content.
 **Usage:**
 
 - `/skygame leaderboard game:hangman` (shows global leaderboard for hangman)
+- `/skygame leaderboard game:scrambled` (shows global leaderboard for scrambled)
 - `/skygame leaderboard game:hangman leaderboard-type:server` (shows server leaderboard for hangman)
 
 **Features:**
@@ -99,6 +162,7 @@ Interactive games featuring Sky: Children of the Light themed content.
 **Available Games:**
 
 - **Hangman**: Sky-themed word guessing game with single and multiplayer modes
+- **Scrambled**: Unscramble Sky-related words in a race against time
 
 <Callout type="info">
   More games are planned for future releases! This feature is currently in beta, so feedback is greatly appreciated.
@@ -110,7 +174,8 @@ Interactive games featuring Sky: Children of the Light themed content.
 - **Leaderboards**: Compete with other players globally or within your server
 - **Sky Themes**: All games feature content related to Sky: Children of the Light
 - **Multiplayer Support**: Play with friends in supported game modes
-- **Custom Content**: Some games allow custom words or scenarios
+- **Time Challenges**: Test your speed and knowledge
+- **Community Competition**: See how you rank against other Sky players
 
 **Tips for Playing:**
 
@@ -118,3 +183,4 @@ Interactive games featuring Sky: Children of the Light themed content.
 - In multiplayer games, communication and strategy can be key
 - Practice in single player mode to improve your skills
 - Check the leaderboards to see how you rank against other players
+- Familiarize yourself with Sky terminology to perform better in games
