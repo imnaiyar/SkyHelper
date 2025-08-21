@@ -13,7 +13,7 @@ import { SkyHelper as BotService } from "@/structures";
 import { EventDataSchema, TSDataSchema, type EventData, type TSData } from "../types.js";
 import type { DailyQuestsSchema } from "@/types/schemas";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
-import { z } from "zod";
+import { toJSONSchema, z } from "zod/v4";
 
 const QuestSchema = z.object({
   title: z.string(),
@@ -51,14 +51,7 @@ export class UpdateController {
   @ApiResponse({
     status: 200,
     description: "Traveling Spirit data retrieved successfully",
-    schema: {
-      type: "object",
-      properties: {
-        spirit: { type: "string", example: "abyss-spirit" },
-        visitDate: { type: "string", example: "15-01-2024" },
-        index: { type: "string", example: "1" },
-      },
-    },
+    schema: toJSONSchema(TSDataSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getTS(): Promise<TSData> {
@@ -75,27 +68,11 @@ export class UpdateController {
     summary: "Update Traveling Spirit data",
     description: "Updates the current Traveling Spirit information",
   })
-  @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        spirit: { type: "string", example: "abyss-spirit" },
-        visitDate: { type: "string", example: "15-01-2024" },
-        index: { type: "string", example: "1" },
-      },
-    },
-  })
+  @ApiBody({ schema: toJSONSchema(TSDataSchema) })
   @ApiResponse({
     status: 200,
     description: "Traveling Spirit data updated successfully",
-    schema: {
-      type: "object",
-      properties: {
-        spirit: { type: "string", example: "abyss-spirit" },
-        visitDate: { type: "string", example: "15-01-2024" },
-        index: { type: "string", example: "1" },
-      },
-    },
+    schema: toJSONSchema(TSDataSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiBadRequestResponse({ description: "Invalid request body" })
@@ -124,14 +101,7 @@ export class UpdateController {
   @ApiResponse({
     status: 200,
     description: "Event data retrieved successfully",
-    schema: {
-      type: "object",
-      properties: {
-        name: { type: "string", example: "Days of Bloom" },
-        startDate: { type: "string", example: "15-01-2024" },
-        endDate: { type: "string", example: "29-01-2024" },
-      },
-    },
+    schema: toJSONSchema(EventDataSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getEvents(): Promise<EventData> {
@@ -149,26 +119,12 @@ export class UpdateController {
     description: "Updates the current event information",
   })
   @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        name: { type: "string", example: "Days of Bloom" },
-        startDate: { type: "string", example: "15-01-2024" },
-        endDate: { type: "string", example: "29-01-2024" },
-      },
-    },
+    schema: toJSONSchema(EventDataSchema),
   })
   @ApiResponse({
     status: 200,
     description: "Event data updated successfully",
-    schema: {
-      type: "object",
-      properties: {
-        name: { type: "string", example: "Days of Bloom" },
-        startDate: { type: "string", example: "15-01-2024" },
-        endDate: { type: "string", example: "29-01-2024" },
-      },
-    },
+    schema: toJSONSchema(EventDataSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiBadRequestResponse({ description: "Invalid request body" })
@@ -192,10 +148,7 @@ export class UpdateController {
   @ApiResponse({
     status: 200,
     description: "Daily quests data retrieved successfully",
-    schema: {
-      type: "object",
-      description: "Daily quests schema object",
-    },
+    schema: toJSONSchema(QuestsSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getQuests(): Promise<DailyQuestsSchema> {
@@ -210,37 +163,7 @@ export class UpdateController {
   })
   @ApiBody({
     description: "Daily quests data to update",
-    schema: {
-      type: "object",
-      properties: {
-        quests: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              title: { type: "string" },
-              date: { type: "string" },
-              description: { type: "string" },
-              images: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    url: { type: "string" },
-                    by: { type: "string" },
-                    source: { type: "string" },
-                  },
-                },
-              },
-            },
-          },
-        },
-        last_updated: { type: "string" },
-        last_message: { type: "string" },
-        rotating_candles: { type: "object" },
-        seasonal_candles: { type: "object" },
-      },
-    },
+    schema: toJSONSchema(QuestsSchema),
   })
   @ApiResponse({
     status: 200,

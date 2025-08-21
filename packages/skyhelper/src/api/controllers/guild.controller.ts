@@ -12,9 +12,16 @@ import {
 import { SkyHelper as BotService } from "@/structures";
 import { LiveUpdates as Updates, Reminders } from "../managers/index.js";
 import getSettings from "../utils/getSettings.js";
-import { GuildInfoSchema, ReminderFeatureSchema, type Features, type GuildInfo, type ReminderFeature } from "../types.js";
+import {
+  FeaturesSchema,
+  GuildInfoSchema,
+  ReminderFeatureSchema,
+  type Features,
+  type GuildInfo,
+  type ReminderFeature,
+} from "../types.js";
 import { supportedLang } from "@skyhelperbot/constants";
-import { z } from "zod";
+import { toJSONSchema, z } from "zod/v4";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { ChannelType, type APITextChannel } from "@discordjs/core";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
@@ -23,6 +30,27 @@ const GuildIDPredicate = new ZodValidator(
   "Invalid 'guild' Param",
 );
 const FeaturePredicate = new ZodValidator(z.enum(["live-updates", "reminders"]), "Invalid 'feature' Param");
+
+const GuildParam = ApiParam({
+  name: "guild",
+  description: "Discord guild ID",
+  schema: toJSONSchema(z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID")),
+});
+const FeatureParam = ApiParam({
+  name: "feature",
+  description: "Feature name",
+  enum: ["live-updates", "reminders"],
+});
+const UnauthorizedResponse = ApiUnauthorizedResponse({
+  description: "Missing or invalid authentication",
+});
+
+const BadRequestResponse = ApiBadRequestResponse({
+  description: "Invalid request body",
+});
+const FeatureSchema = {
+  anyOf: [{ ...z.toJSONSchema(FeaturesSchema.shape["live-updates"]) }, { ...z.toJSONSchema(ReminderFeatureSchema) }],
+};
 
 @ApiTags("Guild Management")
 @ApiBearerAuth()
@@ -35,23 +63,11 @@ export class GuildController {
     summary: "Get guild information",
     description: "Retrieves detailed information about a Discord guild/server",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
+  @GuildParam
   @ApiResponse({
     status: 200,
     description: "Guild information retrieved successfully",
-    schema: {
-      type: "object",
-      properties: {
-        id: { type: "string", example: "123456789012345678" },
-        name: { type: "string", example: "Sky Helper Community" },
-        icon: { type: "string", nullable: true },
-        prefix: { type: "string", example: "!" },
-        language: { type: "string", example: "en-US" },
-        announcement_channel: { type: "string" },
-        beta: { type: "boolean", example: false },
-        enabledFeatures: { type: "array", items: { type: "string" } },
-      },
-    },
+    schema: toJSONSchema(GuildInfoSchema),
   })
   @ApiResponse({
     status: 200,
@@ -61,7 +77,7 @@ export class GuildController {
       example: "null",
     },
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @UnauthorizedResponse
   async getGuild(@Param("guild", GuildIDPredicate) guild: string): Promise<GuildInfo | "null"> {
     const data = this.bot.guilds.get(guild);
 
@@ -84,30 +100,14 @@ export class GuildController {
     summary: "Update guild settings",
     description: "Updates guild-specific bot settings like prefix, language, and beta features",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
+  @GuildParam
   @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        prefix: { type: "string", example: "!" },
-        announcement_channel: { type: "string" },
-        beta: { type: "boolean", example: false },
-        language: { type: "string", example: "en-US" },
-      },
-    },
+    schema: toJSONSchema(GuildInfoSchema),
   })
   @ApiResponse({
     status: 200,
     description: "Guild settings updated successfully",
-    schema: {
-      type: "object",
-      properties: {
-        prefix: { type: "string" },
-        beta: { type: "boolean" },
-        language: { type: "string" },
-        announcement_channel: { type: "string" },
-      },
-    },
+    schema: toJSONSchema(GuildInfoSchema),
   })
   @ApiResponse({
     status: 200,
@@ -117,8 +117,8 @@ export class GuildController {
       example: "null",
     },
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
-  @ApiBadRequestResponse({ description: "Invalid request body" })
+  @UnauthorizedResponse
+  @BadRequestResponse
   async updateGuild(
     @Param("guild", GuildIDPredicate) guild: string,
     @Body(new ZodValidator(GuildInfoSchema)) body: GuildInfo,
@@ -145,21 +145,19 @@ export class GuildController {
     summary: "Get feature settings",
     description: "Retrieves settings for a specific bot feature (live-updates or reminders)",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
-  @ApiParam({ name: "feature", description: "Feature name", enum: ["live-updates", "reminders"] })
+  @GuildParam
+  @FeatureParam
   @ApiResponse({
     status: 200,
     description: "Feature settings retrieved successfully",
-    schema: {
-      anyOf: [{ $ref: "#/components/schemas/LiveUpdatesDto" }, { $ref: "#/components/schemas/ReminderFeatureDto" }],
-    },
+    schema: FeatureSchema,
   })
   @ApiResponse({
     status: 200,
     description: "Feature not found or guild not found",
     schema: { type: "null" },
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @UnauthorizedResponse
   async getFeature(
     @Param("guild", GuildIDPredicate) guild: keyof Features,
     @Param("feature", FeaturePredicate) feature: string,
@@ -180,16 +178,14 @@ export class GuildController {
     summary: "Enable feature",
     description: "Enables a specific bot feature for the guild",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
-  @ApiParam({ name: "feature", description: "Feature name", enum: ["live-updates", "reminders"] })
+  @GuildParam
+  @FeatureParam
   @ApiResponse({
     status: 201,
     description: "Feature enabled successfully",
-    schema: {
-      anyOf: [{ $ref: "#/components/schemas/LiveUpdatesDto" }, { $ref: "#/components/schemas/ReminderFeatureDto" }],
-    },
+    schema: FeatureSchema,
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @UnauthorizedResponse
   async enableFeature(@Param("guild", GuildIDPredicate) guild: string, @Param("feature", FeaturePredicate) feature: string) {
     let response;
     switch (feature) {
@@ -207,23 +203,19 @@ export class GuildController {
     summary: "Update feature settings",
     description: "Updates settings for a specific bot feature",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
-  @ApiParam({ name: "feature", description: "Feature name", enum: ["live-updates", "reminders"] })
+  @GuildParam
+  @FeatureParam
   @ApiBody({
     description: "Feature settings to update",
-    schema: {
-      anyOf: [{ $ref: "#/components/schemas/LiveUpdatesDto" }, { $ref: "#/components/schemas/ReminderFeatureDto" }],
-    },
+    schema: FeatureSchema,
   })
   @ApiResponse({
     status: 200,
     description: "Feature settings updated successfully",
-    schema: {
-      anyOf: [{ $ref: "#/components/schemas/LiveUpdatesDto" }, { $ref: "#/components/schemas/ReminderFeatureDto" }],
-    },
+    schema: FeatureSchema,
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
-  @ApiBadRequestResponse({ description: "Invalid request body" })
+  @UnauthorizedResponse
+  @BadRequestResponse
   async updateFeature(
     @Param("guild", GuildIDPredicate) guild: string,
     @Param("feature", FeaturePredicate) feature: string,
@@ -251,13 +243,13 @@ export class GuildController {
     summary: "Disable feature",
     description: "Disables a specific bot feature for the guild",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
-  @ApiParam({ name: "feature", description: "Feature name", enum: ["live-updates", "reminders"] })
+  @GuildParam
+  @FeatureParam
   @ApiResponse({
     status: 200,
     description: "Feature disabled successfully",
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @UnauthorizedResponse
   async disableFeature(
     @Param("guild", GuildIDPredicate) guild: string,
     @Param("feature", FeaturePredicate) feature: keyof Features,
@@ -278,7 +270,7 @@ export class GuildController {
     summary: "Get guild channels",
     description: "Retrieves list of text channels where the bot has manage webhooks permission",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
+  @GuildParam
   @ApiResponse({
     status: 200,
     description: "Channels retrieved successfully",
@@ -300,7 +292,7 @@ export class GuildController {
     description: "Guild not found",
     schema: { type: "null" },
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @UnauthorizedResponse
   async getChannels(@Param("guild", GuildIDPredicate) guild: string) {
     const g = this.bot.guilds.get(guild);
     const channels = g?.channels;
@@ -319,7 +311,7 @@ export class GuildController {
     summary: "Get guild roles",
     description: "Retrieves list of non-managed roles in the guild",
   })
-  @ApiParam({ name: "guild", description: "Discord guild ID", example: "123456789012345678" })
+  @GuildParam
   @ApiResponse({
     status: 200,
     description: "Roles retrieved successfully",
@@ -344,7 +336,7 @@ export class GuildController {
     description: "Guild not found",
     schema: { type: "null" },
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @UnauthorizedResponse
   async getRoles(@Param("guild", GuildIDPredicate) guild: string) {
     const roles = this.bot.guilds.get(guild)?.roles;
     if (roles == null) return null;

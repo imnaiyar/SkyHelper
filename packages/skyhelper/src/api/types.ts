@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { supportedLang } from "@skyhelperbot/constants";
+import { z } from "zod/v4";
 
 const ReminderFeatureBaseSchema = z.object({
   active: z.boolean(),
@@ -35,7 +36,7 @@ export const GuildInfoSchema = z.object({
   prefix: z.string().optional(),
   announcement_channel: z.string().optional(),
   beta: z.boolean().optional(),
-  language: z.string().optional(),
+  language: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
   enabledFeatures: z.array(z.enum(["reminders", "live-updates"])).optional(),
 });
 export type GuildInfo = z.infer<typeof GuildInfoSchema>;
@@ -58,17 +59,18 @@ export const SpiritSchema = z.object({
 
 export type SpiritData = z.infer<typeof SpiritSchema>;
 
-export interface UserInfo {
-  language?: string;
-}
+export const UserInfoSchema = z.object({
+  language: z.enum(supportedLang.map((v) => v.value) as [string, ...string[]]).optional(),
+});
 
-export interface BotStats {
-  totalServers: number;
-  totalMembers: number;
-  ping: number;
-  commands: number;
-  totalUserInstalls: number;
-}
+export const BotStatsSchema = z.object({
+  totalServers: z.number(),
+  totalMembers: z.number(),
+  ping: z.number(),
+  commands: z.number(),
+  totalUserInstalls: z.number(),
+});
+export type BotStats = z.infer<typeof BotStatsSchema>;
 
 export const EventDataSchema = z.object({
   name: z.string(),

@@ -11,10 +11,10 @@ import {
   ApiNotFoundResponse,
 } from "@nestjs/swagger";
 import { SkyHelper as BotService } from "@/structures";
-import type { UserInfo } from "../types.js";
+import { UserInfoSchema } from "../types.js";
 import { supportedLang } from "@skyhelperbot/constants";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
-import { z } from "zod";
+import { z, toJSONSchema } from "zod/v4";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { Routes } from "@discordjs/core";
 const RoleMetadataKeySchema = z.object({
@@ -50,15 +50,10 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: "User information retrieved successfully",
-    schema: {
-      type: "object",
-      properties: {
-        language: { type: "string", example: "en-US" },
-      },
-    },
+    schema: toJSONSchema(UserInfoSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
-  async getUser(@Param("user", UserIDPredicate) userId: string): Promise<UserInfo> {
+  async getUser(@Param("user", UserIDPredicate) userId: string): Promise<z.infer<typeof UserInfoSchema>> {
     const user = await this.bot.api.users.get(userId).catch(() => null);
     if (!user) return { language: "en-US" };
     const user_settings = await this.bot.schemas.getUser(user);
@@ -74,29 +69,19 @@ export class UsersController {
   })
   @ApiParam({ name: "user", description: "Discord user ID", example: "123456789012345678" })
   @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        language: { type: "string", example: "en-US" },
-      },
-    },
+    schema: toJSONSchema(UserInfoSchema),
   })
   @ApiResponse({
     status: 200,
     description: "User settings updated successfully",
-    schema: {
-      type: "object",
-      properties: {
-        language: { type: "string", example: "en-US" },
-      },
-    },
+    schema: toJSONSchema(UserInfoSchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiBadRequestResponse({ description: "Invalid request body" })
   async updateUser(
     @Param("user", UserIDPredicate) userId: string,
-    @Body(new ZodValidator(z.object({ language: z.string().optional() }))) data: UserInfo,
-  ): Promise<UserInfo> {
+    @Body(new ZodValidator(UserInfoSchema)) data: z.infer<typeof UserInfoSchema>,
+  ): Promise<z.infer<typeof UserInfoSchema>> {
     const user = await this.bot.api.users.get(userId).catch(() => null);
     if (!user) return { language: "en-US" };
     const user_settings = await this.bot.schemas.getUser(user);
@@ -119,33 +104,12 @@ export class UsersController {
   @ApiParam({ name: "user", description: "Discord user ID", example: "123456789012345678" })
   @ApiBody({
     description: "Role metadata to update",
-    schema: {
-      type: "object",
-      properties: {
-        username: { type: "string", description: "Platform username" },
-        metadata: {
-          type: "object",
-          properties: {
-            wings: { type: "number", minimum: 1, maximum: 240, description: "Number of wings" },
-            since: { type: "string", description: "Date since playing" },
-            eden: { type: "boolean", description: "Has completed Eden" },
-            cr: { type: "boolean", description: "Completed candle runs" },
-            hangout: { type: "boolean", description: "Available for hangouts" },
-          },
-        },
-      },
-    },
+    schema: toJSONSchema(RoleMetadataKeySchema),
   })
   @ApiResponse({
     status: 200,
     description: "Role metadata updated successfully",
-    schema: {
-      type: "object",
-      properties: {
-        username: { type: "string" },
-        metadata: { type: "object" },
-      },
-    },
+    schema: toJSONSchema(RoleMetadataKeySchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiNotFoundResponse({ description: "User not found" })
@@ -192,22 +156,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: "Role metadata retrieved successfully",
-    schema: {
-      type: "object",
-      properties: {
-        username: { type: "string" },
-        metadata: {
-          type: "object",
-          properties: {
-            wings: { type: "number" },
-            since: { type: "string" },
-            eden: { type: "boolean" },
-            cr: { type: "boolean" },
-            hangout: { type: "boolean" },
-          },
-        },
-      },
-    },
+    schema: toJSONSchema(RoleMetadataKeySchema),
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getUserRoleMetadata(@Req() req: AuthRequest): Promise<RoleMetadataKey> {

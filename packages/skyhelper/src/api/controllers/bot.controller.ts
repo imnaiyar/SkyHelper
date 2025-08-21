@@ -1,8 +1,9 @@
 import { Controller, Get, Inject } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { SkyHelper as BotService } from "@/structures";
-import type { BotStats, SpiritData } from "../types.js";
+import { BotStatsSchema, SpiritSchema, type BotStats, type SpiritData } from "../types.js";
 import type { SeasonalSpiritData, SpiritsData } from "@skyhelperbot/constants/spirits-datas";
+import { toJSONSchema, z } from "zod/v4";
 function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
   return "ts" in data;
 }
@@ -19,16 +20,7 @@ export class BotController {
   @ApiResponse({
     status: 200,
     description: "Bot statistics retrieved successfully",
-    schema: {
-      type: "object",
-      properties: {
-        totalServers: { type: "number", example: 150 },
-        totalMembers: { type: "number", example: 50000 },
-        ping: { type: "number", example: 45 },
-        commands: { type: "number", example: 25 },
-        totalUserInstalls: { type: "number", example: 1000 },
-      },
-    },
+    schema: toJSONSchema(BotStatsSchema),
   })
   async getGuild(): Promise<BotStats> {
     const guilds = this.bot.guilds.size;
@@ -54,17 +46,7 @@ export class BotController {
   @ApiResponse({
     status: 200,
     description: "Spirits list retrieved successfully",
-    schema: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          name: { type: "string", example: "Abyss Spirit" },
-          value: { type: "string", example: "abyss-spirit" },
-          icon: { type: "string", example: "https://cdn.discordapp.com/emojis/1206501060303130664.png" },
-        },
-      },
-    },
+    schema: toJSONSchema(z.array(SpiritSchema)),
   })
   async getSpirits(): Promise<SpiritData[]> {
     const spirits = this.bot.spiritsData;
