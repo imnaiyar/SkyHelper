@@ -189,9 +189,56 @@ Builds and runs the main bot in container.
 - **.github/workflows/check-build.yml** - Validates build process
 - Both workflows use affected builds for efficiency
 
+### Git Hooks and Commit Standards
+
+This repository uses git hooks to enforce code quality and commit message standards:
+
+**Commit Message Format:**
+All commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+```
+<type>: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**Allowed commit types** (defined in `.commitlintrc.json`):
+- `feat` - New features
+- `fix` - Bug fixes  
+- `docs` - Documentation changes
+- `style` - Code style changes (formatting, etc.)
+- `refactor` - Code refactoring
+- `test` - Test changes
+- `chore` - Build process or auxiliary tool changes
+- `ci` - CI/CD changes
+- `perf` - Performance improvements
+- `revert` - Revert previous commits
+
+**Git Hooks (configured via Husky):**
+
+1. **Pre-commit hook** - Automatically runs before each commit:
+   - Formats all files with Prettier (`prettier --ignore-unknown --write`)
+   - Runs ESLint with auto-fix on JS/TS files in `src/` and `__tests__/` directories
+   - Configured in `.lintstagedrc.json`
+
+2. **Commit-msg hook** - Validates commit message format:
+   - Runs `commitlint` to ensure messages follow conventional commit format
+   - Rejects commits with invalid message format
+   - Configured in `.commitlintrc.json`
+
+**Example valid commit messages:**
+```bash
+feat: add new spirit calendar view
+fix: resolve memory leak in event handlers
+docs: update installation instructions
+refactor: simplify user authentication logic
+```
+
 ### Pre-commit Validation
 
-Always run before committing:
+The git hooks handle most validation automatically, but you can also run manually:
 
 ```bash
 pnpm lint
