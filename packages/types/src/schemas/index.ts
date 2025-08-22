@@ -37,7 +37,7 @@ export interface LiveUpdates {
   webhook: {
     id: string | null;
     token: string | null;
-    channelId: string | null;
+    channelId?: string | null;
     threadId?: string;
   };
 }

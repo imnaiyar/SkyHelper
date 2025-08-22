@@ -1,5 +1,4 @@
 import type { DateTime } from "luxon";
-import { Document } from "mongoose";
 
 /** Data of users provided for making a game leaderboard card */
 export interface userData {
@@ -45,17 +44,6 @@ export interface SkyEvent {
   eventEnds: DateTime;
   eventDuration: string;
 }
-export interface TSData extends Document {
-  name: string;
-  visitDate: string;
-  value: string;
-  index: number;
-}
-export interface SpecialEventData extends Document {
-  startDate: string;
-  endDate: string;
-  name: string;
-}
 
 export interface ShardsCountdown {
   // The shard index
@@ -76,3 +64,6 @@ export interface ShardsCountdown {
   // THe countdown for the shard end/land
   duration: string;
 }
+
+// Re-export types from the shared types package
+export type { TSData, EventData as SpecialEventData } from "@skyhelperbot/types/schemas";

@@ -1,4 +1,5 @@
-import {
+// Re-export all types from the new types package
+export {
   ReminderFeatureSchema,
   type ReminderFeature,
   GuildInfoSchema,
@@ -12,7 +13,7 @@ import {
   BotStatsSchema,
   type BotStats,
   EventDataSchema,
-  type ApiEventData as EventData,
+  type EventData,
   TSDataSchema,
-  type ApiTSData as TSData,
+  type TSData,
 } from "@skyhelperbot/types/api";
