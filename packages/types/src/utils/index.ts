@@ -1,5 +1,4 @@
 import type { DateTime } from "luxon";
-import { Document } from "mongoose";
 
 /** Data of users provided for making a game leaderboard card */
 export interface UserData {
