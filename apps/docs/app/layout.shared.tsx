@@ -1,3 +1,4 @@
+import { DISCORD_SERVER } from "@/lib/constants";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { BiSupport } from "react-icons/bi";
 import { CgWebsite } from "react-icons/cg";
@@ -14,7 +15,7 @@ export function linkOptions(): BaseLayoutProps {
       },
       {
         text: "Support",
-        url: "https://discord.com/invite/2rjCRKZsBb",
+        url: DISCORD_SERVER,
         external: true,
         icon: <BiSupport />,
       },

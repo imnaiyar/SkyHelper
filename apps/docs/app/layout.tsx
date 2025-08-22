@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "SkyHelper Documentation",
     description: "SkyHelper is a feature-rich Discord bot designed to enhance your Sky: Children of the Light experience.",
     url: "https://docs.skyhelper.xyz",
-    siteName: "SkyHelper",
+    siteName: "SkyHelper Docs",
     images: [
       {
         url: "https://skyhelper.xyz/assets/img/boticon.png",

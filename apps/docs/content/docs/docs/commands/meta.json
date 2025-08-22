@@ -1,5 +1,5 @@
 {
   "title": "Commands",
   "description": "Comprehensive command documentation",
-  "pages": ["information", "admin", "utility", "fun"]
+  "pages": ["info", "admin", "utility", "fun"]
 }

@@ -18,7 +18,7 @@ export const baseOptions: BaseLayoutProps = {
           height="24"
           style={{ borderRadius: "4px" }}
         />
-        SkyHelper
+        SkyHelper Docs
       </>
     ),
   },

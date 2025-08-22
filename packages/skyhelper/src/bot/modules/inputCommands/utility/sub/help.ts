@@ -90,7 +90,7 @@ function formatCommand(command: APIApplicationCommand, client: SkyHelper): APIEm
     if (local_commands.category) desc += `\n- Category: \`${local_commands.category}\``;
 
     // prettier-ignore
-    if (local_commands.category) desc += `\n\n-# You can learn more about this command at our command documentations [here](${client.config.DOCS_URL}/commands/${local_commands.category.toLowerCase()}#${command.name})`;
+    if (local_commands.category) desc += `\n\n-# You can learn more about this command at our command documentations [here](${client.config.DOCS_URL}/guide/docs/commands/${local_commands.category.toLowerCase()}#${command.name})`;
   }
   return {
     title,

@@ -1,7 +1,179 @@
 ---
 title: SkyHelper OpenAPI
-description: SkyHelper OpenAPI documentation
+description: Complete API documentation for SkyHelper bot services
 index: true
 ---
 
-Here you can find the comprehensive documentation for the SkyHelper OpenAPI, including all available public endpoints, request/response formats, and examples.
+import { Callout } from "fumadocs-ui/components/callout";
+
+# SkyHelper OpenAPI Documentation
+
+Welcome to the comprehensive API documentation for SkyHelper, a Discord bot for Sky: Children of the Light. Our REST API provides programmatic access to bot statistics, guild management, user settings, event data, and more.
+
+```bash title="BaseURL"
+https://api.skyhelper.xyz/
+```
+
+## Getting Started
+
+### Authentication
+
+Most endpoints require OAuth2 Bearer token authentication:
+
+```http
+Authorization: Bearer YOUR_DISCORD_ACCESS_TOKEN
+```
+
+Public endpoints (health checks, embeds) don't require authentication.
+
+### Rate Limiting
+
+All API endpoints are subject to standard rate limiting. Please implement appropriate retry logic with exponential backoff.
+
+### Response Format
+
+All responses are in JSON format with appropriate HTTP status codes:
+
+- `200` - Success
+- `400` - Bad Request (invalid parameters)
+- `401` - Unauthorized (missing/invalid token)
+- `404` - Not Found
+- `500` - Internal Server Error
+
+## API Categories
+
+### 🔧 Application
+
+Core application endpoints for health checks and general bot functionality:
+
+- **Health Check** - Verify API status
+- **Shard Information** - Get Discord embed data for shards
+- **Event Times** - Get Sky game event scheduling information
+
+These endpoints provide essential bot status information and pre-formatted Discord embeds for integration.
+
+### 📊 Bot Statistics
+
+Endpoints for retrieving bot performance metrics and game data:
+
+- **Bot Stats** - Server count, member count, performance metrics
+- **Spirits Data** - Available seasonal spirits with metadata
+
+Perfect for dashboards, status pages, or integrating bot statistics into other applications.
+
+### 🏛️ Guild Management
+
+Comprehensive Discord server configuration and management:
+
+- **Guild Settings** - Get and update server preferences
+- **Feature Management** - Enable/disable bot features (live-updates, reminders)
+- **Channel Access** - List available channels with webhook permissions
+- **Role Management** - Retrieve server roles for configuration
+
+Requires user authentication and appropriate server permissions.
+
+### 👤 User Management
+
+User-specific settings and profile management:
+
+- **User Preferences** - Language settings and personalization
+- **Role Metadata** - Game-specific user data (wings count, achievements)
+
+Allows users to customize their bot experience and track game progress.
+
+### 🎮 Event Management
+
+Sky: Children of the Light game event data management:
+
+- **Current Events** - Active in-game events information
+- **Daily Quests** - Quest data and guides
+- **Traveling Spirit** - Weekly spirit rotation data
+
+<Callout type="warn">**Admin Only:** Event management endpoints require administrative privileges.</Callout>
+
+## Authentication Flow
+
+1. **Obtain Discord OAuth2 Token**
+
+   - Use Discord's OAuth2 flow to get an access token
+   - Scopes needed: `identify` for basic user info
+
+2. **Include in Requests**
+
+   ```http
+   Authorization: Bearer your_access_token_here
+   ```
+
+3. **Permission Checks**
+   - Guild endpoints verify user has manage server permissions
+   - Event management requires bot administrator status
+
+## Common Use Cases
+
+### Dashboard Integration
+
+```typescript
+// Get bot statistics
+const stats = await fetch("https://api.skyhelper.xyz/stats");
+
+// Get guild settings
+const guild = await fetch(`https://api.skyhelper.xyz/guilds/${guildId}`, {
+  // [!code word:`Bearer ${token}`]
+  headers: { Authorization: `Bearer ${token}` },
+});
+```
+
+### Discord Bot Integration
+
+```typescript
+// Get pre-formatted embeds
+const shardsEmbed = await fetch(
+  "https://api.skyhelper.xyz/shards-embed?locale=en-US", // [!code highlight]
+);
+
+const timesEmbed = await fetch(
+  "https://api.skyhelper.xyz/times-embed?locale=en-US", // [!code highlight]
+);
+```
+
+### User Management
+
+```typescript
+// Update user language preference
+await fetch(`https://api.skyhelper.xyz/users/${userId}`, {
+  method: "PATCH",
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ language: "fr-FR" }),
+});
+```
+
+## Error Handling
+
+The API uses standard HTTP status codes and returns detailed error messages:
+
+```json
+{
+  "statusCode": 400,
+  "message": "Invalid request parameters",
+  "error": "Bad Request"
+}
+```
+
+Common error scenarios:
+
+- **401 Unauthorized**: Missing or invalid OAuth2 token
+- **403 Forbidden**: Insufficient permissions for the requested resource
+- **404 Not Found**: Guild or user not found
+- **400 Bad Request**: Invalid request body or parameters
+
+## Support and Feedback
+
+- **Documentation Issues**: Report in our [GitHub repository](https://github.com/imnaiyar/SkyHelper)
+- **Discord Community**: Join our [Discord server](https://discord.com/invite/2rjCRKZsBb) for community support
+
+---
+
+Explore the endpoints in the navigation menu to get detailed information about request/response schemas, examples, and implementation details.
