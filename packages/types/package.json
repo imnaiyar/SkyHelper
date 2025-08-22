@@ -1,0 +1,41 @@
+{
+  "name": "@skyhelperbot/types",
+  "version": "1.0.0",
+  "description": "Shared type definitions for SkyHelper packages",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./schemas": "./dist/schemas/index.js",
+    "./api": "./dist/api/index.js",
+    "./utils": "./dist/utils/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --fix src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imnaiyar/skyhelper.git",
+    "directory": "packages/types"
+  },
+  "bugs": {
+    "url": "https://github.com/imnaiyar/skyhelper/issues"
+  },
+  "homepage": "https://github.com/imnaiyar/skyhelper/tree/main/packages/types",
+  "keywords": [],
+  "author": "NyR",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^8.9.0",
+    "zod": "^3.25.51",
+    "luxon": "^3.5.0",
+    "@skyhelperbot/constants": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/luxon": "^3.4.2"
+  }
+}
