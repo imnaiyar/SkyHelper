@@ -340,7 +340,7 @@
     "description": "आज के डेली क्वेस्ट्स के बारे में जाने",
     "RESPONSES": {
       "NO_DATA": "No data found for today's daily quests. Please try again later.",
-      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
+      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>)",
       "OUTDATED": "यह क्वेस्ट पुराना है। कृपया नए क्वेस्ट के अपडेट होने का इंतजार करें।",
       "EMBED_AUTHOR": "डेली क्वेस्ट्स",
       "BUTTON1": "Rotating Candles",

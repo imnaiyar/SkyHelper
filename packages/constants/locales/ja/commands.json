@@ -340,7 +340,7 @@
     "description": "デイリークエストを取得",
     "RESPONSES": {
       "NO_DATA": "今日のデイリークエストのデータが見つかりません。後でもう一度お試しください。",
-      "TIME_FRAME": "クエストが毎日リセットされると、更新されるまで30分-1時間かかることがありますのでご注意ください。 与えられた時間枠は単なる推定値であり、いつかはそれよりも時間がかかることがあります。 [here](<https://docs.skyhelper.xyz/commands/info#how-does-this-work>)",
+      "TIME_FRAME": "クエストが毎日リセットされると、更新されるまで30分-1時間かかることがありますのでご注意ください。 与えられた時間枠は単なる推定値であり、いつかはそれよりも時間がかかることがあります。 [here](<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>)",
       "OUTDATED": "このクエストは古くなっています。クエストが更新されるまでお待ちください。",
       "EMBED_AUTHOR": "デイリークエスト",
       "BUTTON1": "ローテーションキャンドルを回転させる",
@@ -366,8 +366,8 @@
         }
       },
       "SCRAMBLE": {
-        "name": "scrambled",
-        "description": "Unscramble the word to win"
+        "name": "スクランブル済み",
+        "description": "勝つために単語をスクランブル解除してください"
       },
       "LEADERBOARD": {
         "name": "ランキング",
