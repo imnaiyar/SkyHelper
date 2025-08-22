@@ -50,6 +50,7 @@
     "@sentry/node": "^8.49.0",
     "@sentry/profiling-node": "^8.49.0",
     "@skyhelperbot/constants": "workspace:^",
+    "@skyhelperbot/types": "workspace:^",
     "@skyhelperbot/utils": "workspace:^",
     "chalk": "^4.1.2",
     "cropify": "^1.0.9",
