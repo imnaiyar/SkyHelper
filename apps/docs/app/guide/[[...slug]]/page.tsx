@@ -1,9 +1,12 @@
 import { source } from "@/lib/source";
-import { DocsPage, DocsBody, DocsDescription, DocsTitle } from "fumadocs-ui/page";
+import { DocsPage, DocsBody } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { getMDXComponents } from "@/mdx-components";
 import { Metadata } from "next";
+import { GithubInfo } from "fumadocs-ui/components/github-info";
+import { FaDiscord } from "react-icons/fa6";
+import { DISCORD_SERVER } from "@/lib/constants";
 
 export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {
   const params = await props.params;
@@ -13,9 +16,19 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
   const MDXContent = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full} lastUpdate={new Date()}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      lastUpdate={page.data.lastModified ? new Date(page.data.lastModified.toLocaleString()) : new Date()}
+    >
+      <h1 className="text-3xl font-semibold">{page.data.title}</h1>
+      <p className="text-lg text-fd-muted-foreground">{page.data.description}</p>
+      <div className="flex flex-row gap-3 items-center border-b pb-6">
+        <a href={DISCORD_SERVER} target="_blank" rel="noreferrer noopener">
+          <FaDiscord className="hover:text-indigo-500" />
+        </a>
+        <GithubInfo owner="imnaiyar" repo="skyhelper" className="flex flex-row lg:-mx-2" />
+      </div>
       <DocsBody>
         <MDXContent
           components={getMDXComponents({

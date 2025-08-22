@@ -13,8 +13,8 @@
 }
 
 :root {
-  --openapi-color: hsl(250, 80%, 54%);
-  --docs-color: hsl(220, 91%, 54%);
+  --openapi-color: hsl(9, 75%, 26%);
+  --docs-color: hsl(124, 74%, 30%);
 }
 
 body {
@@ -23,8 +23,8 @@ body {
 }
 
 .dark {
-  --openapi-color: hsl(250 100% 80%);
-  --docs-color: hsl(217 92% 76%);
+  --openapi-color: hsl(4, 98%, 68%);
+  --docs-color: hsl(123, 73%, 68%);
 }
 .openapi {
   --color-fd-primary: var(--openapi-color);
