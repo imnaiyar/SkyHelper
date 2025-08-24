@@ -1,5 +1,6 @@
-import type { Command, InteractionOptions, ValidationReturn } from "@/structures/Command";
+import { defineStructure, type InteractionOptions, type Options, type ValidationReturn } from "@/structures/Command";
 import type { Awaitable } from "@/types/utils";
+import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import {
   ApplicationCommandOptionType,
@@ -10,6 +11,7 @@ import {
   type APIGuildForumChannel,
   type APITextChannel,
 } from "@discordjs/core";
+import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 const eventChoices = [
   { name: "Geyser", value: "geyser" },
   { name: "Grandma", value: "grandma" },
@@ -24,17 +26,18 @@ const eventChoices = [
 ];
 
 const commonCallback = ({
-  interaction,
   options,
-  t,
   helper,
-}: InteractionOptions<APIChatInputApplicationCommandInteraction>): Awaitable<ValidationReturn> => {
-  const { client } = helper;
-  const commandName = interaction.data.name;
+}: {
+  helper: InteractionHelper;
+  options: InteractionOptionResolver;
+}): Awaitable<ValidationReturn> => {
+  const { client, int } = helper;
+  const commandName = (int as APIChatInputApplicationCommandInteraction).data.name;
   if (!["reminders", "live"].includes(commandName)) return { status: false, message: "Wrong Command" };
 
-  if (!interaction.guild_id) return { status: false, message: "Command is only available fo guild" };
-  const guild = client.guilds.get(interaction.guild_id);
+  if (!int.guild_id) return { status: false, message: "Command is only available fo guild" };
+  const guild = client.guilds.get(int.guild_id);
   if (!guild) return { status: false, message: "Guild not found" };
   const ch = options.getChannel("channel");
 
@@ -49,13 +52,13 @@ const commonCallback = ({
   if (!PermissionsUtil.overwriteFor(guild.clientMember, resolvedChannel, client).has("ManageWebhooks")) {
     return {
       status: false,
-      message: t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${resolvedChannel.id}>` }),
+      message: helper.t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${resolvedChannel.id}>` }),
     };
   }
   return { status: true };
 };
 // #region Reminders
-export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const REMINDERS_DATA = defineStructure({
   name: "reminders",
   description: "Set up reminders",
   data: {
@@ -132,7 +135,7 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         description: "reminders configurations for this server",
         type: ApplicationCommandOptionType.Subcommand,
       },
-    ],
+    ] as const,
     integration_types: [ApplicationIntegrationType.GuildInstall],
     contexts: [InteractionContextType.Guild],
   },
@@ -140,14 +143,14 @@ export const REMINDERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   validations: [
     {
       type: "interaction",
-      callback: commonCallback,
+      callback: ({ helper, optionsResolver }) => commonCallback({ helper, options: optionsResolver }),
     },
   ],
   category: "Admin",
-};
+});
 
 // #region Liveupdates
-export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const LIVE_UPDATES_DATA = defineStructure({
   name: "live",
   description: "live shards or skytimes update with auto updating message at regular interval",
   data: {
@@ -210,7 +213,7 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
           },
         ],
       },
-    ],
+    ] as const,
     integration_types: [0],
     contexts: [0],
   },
@@ -231,9 +234,9 @@ export const LIVE_UPDATES_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   validations: [
     {
       type: "interaction",
-      callback: commonCallback,
+      callback: ({ helper, optionsResolver }) => commonCallback({ helper, options: optionsResolver }),
     },
   ],
   userPermissions: ["ManageGuild"],
   category: "Admin",
-};
+});

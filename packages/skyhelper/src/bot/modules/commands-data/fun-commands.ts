@@ -1,9 +1,9 @@
-import type { Command } from "@/structures/Command";
+import { defineStructure } from "@/structures/Command";
 import type { OverrideLocalizations } from "@/types/utils";
-import { ApplicationCommandOptionType, InteractionContextType, type APIApplicationCommandStringOption } from "@discordjs/core";
+import { ApplicationCommandOptionType, type APIApplicationCommandStringOption } from "@discordjs/core";
 
 // #region Hug
-export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const HUG_DATA = defineStructure({
   name: "hug",
   description: "sky hug someone",
   prefix: {
@@ -19,12 +19,12 @@ export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         required: true,
         type: ApplicationCommandOptionType.User,
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   category: "Fun",
-};
+});
 
 // #region SkyGame
 const SKYGAME_MODE_OPTION: OverrideLocalizations<APIApplicationCommandStringOption>[] = [
@@ -50,7 +50,7 @@ const SKYGAME_MODE_OPTION: OverrideLocalizations<APIApplicationCommandStringOpti
   },
 ];
 
-export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SKY_GAME_DATA = defineStructure({
   name: "skygame",
   description: "Various fun games based around Sky: CotL",
   data: {
@@ -124,9 +124,9 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
         ],
       },
-    ],
+    ] as const,
   },
   botPermissions: ["SendMessages", "ViewChannel"],
   forSubs: ["hangman"],
   category: "Fun",
-};
+});

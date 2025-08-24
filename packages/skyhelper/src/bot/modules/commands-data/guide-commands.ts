@@ -1,7 +1,7 @@
-import type { Command } from "@/structures/Command";
+import { defineStructure } from "@/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType } from "@discordjs/core";
 
-export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const GUIDES_DATA = defineStructure({
   name: "guides",
   description: "various guides",
   cooldown: 10,
@@ -156,13 +156,13 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       //     },
       //   ],
       // },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
-};
+});
 
-export const SPIRTIS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SPIRTIS_DATA = defineStructure({
   name: "spirits",
   description: "search for spirits",
   data: {
@@ -186,10 +186,10 @@ export const SPIRTIS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         description_localizations: "common:hide-options.description",
         required: false,
       },
-    ],
+    ] as const,
     integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
     contexts: [0, 1, 2],
   },
   cooldown: 5,
   category: "Info",
-};
+});

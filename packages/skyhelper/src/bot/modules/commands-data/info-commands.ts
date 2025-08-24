@@ -1,7 +1,7 @@
-import type { Command } from "@/structures/Command";
+import { defineStructure, type Command } from "@/structures/Command";
 import { ApplicationCommandOptionType } from "@discordjs/core";
 // #region DailyQuests
-export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const DAILY_QUESTS_DATA = defineStructure({
   name: "daily-quests",
   description: "Get the daily quests for today",
   data: {
@@ -15,7 +15,7 @@ export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
         description_localizations: "common:hide-options.description",
         type: ApplicationCommandOptionType.Boolean,
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
@@ -24,10 +24,10 @@ export const DAILY_QUESTS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     aliases: ["quests", "quest"],
   },
   cooldown: 15,
-};
+});
 
 // #region ShardsCalendar
-export const SHARDS_CALENDAR_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SHARDS_CALENDAR_DATA = defineStructure({
   name: "shards-calendar",
   description: "Show the shards calendar",
   prefix: {
@@ -45,16 +45,16 @@ export const SHARDS_CALENDAR_DATA: Omit<Command, "interactionRun" | "messageRun"
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   category: "Info",
   cooldown: 15,
-};
+});
 
 // #region Shards
-export const SHARDS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SHARDS_DATA = defineStructure({
   name: "shards",
   description: "Get the a specific shard information",
   prefix: {
@@ -81,16 +81,16 @@ export const SHARDS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   category: "Info",
   cooldown: 30,
-};
+});
 
 // #region Skytimes
-export const SKYTIMES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SKYTIMES_DATA = defineStructure({
   name: "skytimes",
   description: "various in-game events countdown",
   data: {
@@ -105,7 +105,7 @@ export const SKYTIMES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
@@ -114,10 +114,10 @@ export const SKYTIMES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   },
   category: "Info",
   cooldown: 20,
-};
+});
 
 // #region TravelingSpirits
-export const TRAVELING_SPIRITS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const TRAVELING_SPIRITS_DATA = defineStructure({
   name: "traveling-spirit",
   description: "get details about current/upcoming TS.",
   data: {
@@ -129,4 +129,4 @@ export const TRAVELING_SPIRITS_DATA: Omit<Command, "interactionRun" | "messageRu
   prefix: { aliases: ["ts", "ts-date"] },
   cooldown: 20,
   category: "Info",
-};
+});

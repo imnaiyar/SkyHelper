@@ -1,8 +1,8 @@
-import type { Command } from "@/structures/Command";
+import { defineStructure } from "@/structures/Command";
 import { ApplicationCommandOptionType } from "@discordjs/core";
 
 // #region Annoouncement
-export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const ANNOUNCEMENT_DATA = defineStructure({
   name: "announce",
   description: "announce new release/updates to the subscribed channels",
   prefix: {
@@ -14,10 +14,10 @@ export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   data: {
     guilds: ["852141490105090059"],
   },
-};
+});
 
 // #region Eval
-export const EVAL_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const EVAL_DATA = defineStructure({
   name: "eval",
   description: "Evaluate a JavaScript code",
   ownerOnly: true,
@@ -29,10 +29,10 @@ export const EVAL_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   },
   botPermissions: ["ViewChannel", "SendMessages"],
   category: "Owner",
-};
+});
 
 // #region Blacklist
-export const BLACKLIST_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const BLACKLIST_DATA = defineStructure({
   name: "blacklist",
   description: "blacklist a guild or an user.",
   prefix: {
@@ -77,10 +77,10 @@ export const BLACKLIST_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   ],
   category: "Owner",
   ownerOnly: true,
-};
+});
 
 // #region Exec
-export const EXEC_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const EXEC_DATA = defineStructure({
   name: "run",
   description: "runs commands on the console",
   prefix: {
@@ -90,10 +90,10 @@ export const EXEC_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   },
   category: "Owner",
   ownerOnly: true,
-};
+});
 
 // #region ListServers
-export const LIST_SERVERS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const LIST_SERVERS_DATA = defineStructure({
   name: "listserver",
   description: "list servers",
   prefix: {
@@ -102,10 +102,10 @@ export const LIST_SERVERS_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   },
   ownerOnly: true,
   category: "Owner",
-};
+});
 
 // #region Register
-export const REGISTER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const REGISTER_DATA = defineStructure({
   name: "register",
   description: "register data commands",
   ownerOnly: true,
@@ -113,10 +113,10 @@ export const REGISTER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   prefix: {
     aliases: ["r", "rs"],
   },
-};
+});
 
 // #region SendMessage
-export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SEND_MESSAGE_DATA = defineStructure({
   name: "sendmessage",
   description: "Send a message to a user",
   prefix: {
@@ -132,7 +132,7 @@ export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> =
         type: ApplicationCommandOptionType.User,
         required: true,
       },
-    ],
+    ] as const,
     guilds: ["852141490105090059"],
   },
   category: "Owner",
@@ -154,10 +154,10 @@ export const SEND_MESSAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> =
     },
   ],
   ownerOnly: true,
-};
+});
 
 // #region SetPrefix
-export const SET_PREFIX_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const SET_PREFIX_DATA = defineStructure({
   name: "setprefix",
   description: "set the prefix for this server",
   prefix: {
@@ -168,4 +168,4 @@ export const SET_PREFIX_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   },
   userPermissions: ["ManageGuild"],
   category: "Owner",
-};
+});

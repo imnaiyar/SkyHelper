@@ -14,12 +14,14 @@ import type { MessageFlags } from "./classes/MessageFlags.js";
 import { PermissionsUtil } from "./classes/PermissionUtils.js";
 
 import type { InteractionHelper } from "./classes/InteractionUtil.js";
+import type { CommandOptionsType } from "@/types/CommandOptions";
 
 // #region interaction
 type ValidateInteractionOptions = {
   command: Command | ContextMenuCommand<"MessageContext" | "UserContext">;
   interaction: APIChatInputApplicationCommandInteraction | APIContextMenuInteraction;
-  options: InteractionOptionResolver;
+  options: CommandOptionsType<any>;
+  resolver: InteractionOptionResolver;
   helper: InteractionHelper;
   t: ReturnType<typeof import("../i18n.js").getTranslator>;
 };
@@ -27,7 +29,14 @@ type ValidateInteractionOptions = {
 /**
  * Validates interactions if it passes a set of checks
  */
-export async function validateInteractions({ command, interaction, options, helper, t }: ValidateInteractionOptions): Promise<
+export async function validateInteractions({
+  command,
+  interaction,
+  options,
+  resolver,
+  helper,
+  t,
+}: ValidateInteractionOptions): Promise<
   | {
       status: false;
       message: string;
@@ -63,7 +72,7 @@ export async function validateInteractions({ command, interaction, options, help
   if (interaction.guild_id && command.botPermissions) {
     let toCheck = true;
     if ("description" in command && command.forSubs && interaction.data.type === ApplicationCommandType.ChatInput) {
-      const sub = options.getSubcommand(true);
+      const sub = resolver.getSubcommand(true);
       toCheck = command.forSubs.includes(sub);
     }
     if (toCheck) {
@@ -94,7 +103,7 @@ export async function validateInteractions({ command, interaction, options, help
     for (const validation of command.validations) {
       if (validation.type !== "message") {
         // @ts-expect-error Mismatching between chatinput and context, don't wanna impl a complex solution so just ignore
-        const validated = await validation.callback({ interaction, options, t, helper });
+        const validated = await validation.callback({ interaction, options, optionsResolver: resolver, t, helper });
         if (validated.status === false) {
           return {
             status: false,

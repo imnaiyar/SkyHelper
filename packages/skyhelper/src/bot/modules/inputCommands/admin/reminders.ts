@@ -1,5 +1,5 @@
 import { REMINDERS_DATA } from "@/modules/commands-data/admin-commands";
-import type { Command } from "@/structures";
+import { defineCommand } from "@/structures";
 import type { GuildSchema } from "@/types/schemas";
 import { handleRemindersStatus } from "@/utils/classes/Embeds";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
@@ -12,12 +12,11 @@ import { REMINDERS_KEY, SendableChannels, RemindersEventsMap } from "@skyhelperb
 import { SkytimesUtils, type EventKey, textDisplay, row, separator, ShardsUtil, section } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 
-export default {
-  async interactionRun({ helper, options }) {
+export default defineCommand({
+  async interactionRun({ helper, options: { configure, stop, status } }) {
     const { client, t } = helper;
     await helper.defer();
 
-    const sub = options.getSubcommand(true);
     const guild = helper.client.guilds.get(helper.int.guild_id || "");
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
@@ -31,86 +30,85 @@ export default {
       }
       return true;
     };
-    switch (sub) {
-      case "configure": {
-        const ch = options.getChannel("channel", true);
-        const isThread = "thread_metadata" in ch;
-        const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
-        const offset = options.getInteger("offset") || 0;
 
-        // Check if channel is a valid channel type (will never happen)
-        if (!SendableChannels.includes(ch.type)) {
-          return void (await helper.editReply({
-            content: "Invalid channel type. Please provide a valid text channel or thread channel.",
-          }));
-        }
-        if (!(await checkClientPerms(channel))) return;
-        const util = new RemindersUtils(client);
-        const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
+    if (configure) {
+      const ch = configure.channel;
+      const isThread = "thread_metadata" in ch;
+      const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
+      const offset = configure.offset || 0;
 
-        let shard_type: ("red" | "black")[] = [];
-        if (event === "shards-eruption") {
-          const T = await awaitShardTypeResponse(helper, guildSettings);
-          if (!T) return;
-          shard_type = T;
-        }
-        const wb = await util.createWebhookAfterChecks(
-          channel.id,
-          {
-            name: "SkyHelper Reminders",
-            avatar: client.utils.getUserAvatar(client.user),
-          },
-          `For ${RemindersEventsMap[event]} Reminders`,
-        );
-        const role = options.getRole("role");
-        guildSettings.reminders.events[event as Exclude<typeof event, "shards-eruption">] = {
-          active: true,
-          webhook: {
-            channelId: wb.channel_id,
-            id: wb.id,
-            token: wb.token!,
-            threadId: isThread ? ch.id : undefined,
-          },
-          last_messageId: null,
-          offset,
-          role: role?.id ?? null,
-        };
-
-        if (event === "shards-eruption") {
-          guildSettings.reminders.events[event]!.shard_type = shard_type;
-        }
-        guildSettings.reminders.active = true;
-
-        await guildSettings.save();
-        const eventToGet = ["dailies", "reset"].includes(event) ? "daily-reset" : event;
-        const nextOccurence = await getRemindersNextOccurence(eventToGet, offset, shard_type);
-        await helper.editReply({
-          components: [
-            textDisplay(
-              t(role ? "commands:REMINDERS.RESPONSES.CONFIGURED_ROLE" : "commands:REMINDERS.RESPONSES.CONFIGURED", {
-                EVENT: RemindersEventsMap[event],
-                CHANNEL: `<#${ch.id}>`,
-                ROLE: role ? `<@&${role.id}>` : "",
-              }),
-            ),
-            separator(true, 1),
-            textDisplay(
-              `-# ${t("commands:REMINDERS.RESPONSES.NEXT_TIME", {
-                EVENT: RemindersEventsMap[event],
-                TIME: `<t:${nextOccurence}:R>`,
-              })}`,
-              (offset ? "-# " + t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: offset }) + "\n" : "") +
-                (shard_type.length
-                  ? "-# " + t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: shard_type.join(", ") })
-                  : ""),
-            ),
-          ],
-          allowed_mentions: { parse: [] },
-          flags: MessageFlags.IsComponentsV2,
-        });
-        break;
+      // Check if channel is a valid channel type (will never happen)
+      if (!SendableChannels.includes(ch.type)) {
+        return void (await helper.editReply({
+          content: "Invalid channel type. Please provide a valid text channel or thread channel.",
+        }));
       }
-      case "stop": {
+      if (!(await checkClientPerms(channel))) return;
+      const util = new RemindersUtils(client);
+      const event = configure.event as (typeof REMINDERS_KEY)[number];
+
+      let shard_type: ("red" | "black")[] = [];
+      if (event === "shards-eruption") {
+        const T = await awaitShardTypeResponse(helper, guildSettings);
+        if (!T) return;
+        shard_type = T;
+      }
+      const wb = await util.createWebhookAfterChecks(
+        channel.id,
+        {
+          name: "SkyHelper Reminders",
+          avatar: client.utils.getUserAvatar(client.user),
+        },
+        `For ${RemindersEventsMap[event]} Reminders`,
+      );
+      const role = configure.role;
+      guildSettings.reminders.events[event as Exclude<typeof event, "shards-eruption">] = {
+        active: true,
+        webhook: {
+          channelId: wb.channel_id,
+          id: wb.id,
+          token: wb.token!,
+          threadId: isThread ? ch.id : undefined,
+        },
+        last_messageId: null,
+        offset,
+        role: role?.id ?? null,
+      };
+
+      if (event === "shards-eruption") {
+        guildSettings.reminders.events[event]!.shard_type = shard_type;
+      }
+      guildSettings.reminders.active = true;
+
+      await guildSettings.save();
+      const eventToGet = ["dailies", "reset"].includes(event) ? "daily-reset" : event;
+      const nextOccurence = await getRemindersNextOccurence(eventToGet, offset, shard_type);
+      await helper.editReply({
+        components: [
+          textDisplay(
+            t(role ? "commands:REMINDERS.RESPONSES.CONFIGURED_ROLE" : "commands:REMINDERS.RESPONSES.CONFIGURED", {
+              EVENT: RemindersEventsMap[event],
+              CHANNEL: `<#${ch.id}>`,
+              ROLE: role ? `<@&${role.id}>` : "",
+            }),
+          ),
+          separator(true, 1),
+          textDisplay(
+            `-# ${t("commands:REMINDERS.RESPONSES.NEXT_TIME", {
+              EVENT: RemindersEventsMap[event],
+              TIME: `<t:${nextOccurence}:R>`,
+            })}`,
+            (offset ? "-# " + t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: offset }) + "\n" : "") +
+              (shard_type.length
+                ? "-# " + t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: shard_type.join(", ") })
+                : ""),
+          ),
+        ],
+        allowed_mentions: { parse: [] },
+        flags: MessageFlags.IsComponentsV2,
+      });
+    }
+    /*  case "stop": {
         const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
         const eventSettings = guildSettings.reminders.events[event as keyof GuildSchema["reminders"]["events"]];
         if (!eventSettings?.active) {
@@ -142,11 +140,10 @@ export default {
       case "status": {
         await handleRemindersStatus(helper, guildSettings, guild.name);
         break;
-      }
-    }
+      } */
   },
   ...REMINDERS_DATA,
-} satisfies Command;
+});
 
 /**
  * Collect an addition response for shards eruption to choose which type of shard they want reminders for

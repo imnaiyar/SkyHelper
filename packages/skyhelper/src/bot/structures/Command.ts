@@ -5,16 +5,18 @@ import type {
   APIContextMenuInteraction,
   API,
   GatewayMessageCreateDispatchData,
+  APIApplicationCommandOption,
 } from "@discordjs/core";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import type { SkyHelper } from "./Client.ts";
+import type { SkyHelper } from "./Client.js";
 import type { Awaitable, OverrideLocalizations } from "@/types/utils";
 import type { getTranslator } from "@/i18n";
 import type { PermissionsResolvable } from "@/utils/classes/PermissionUtils";
 import type { MessageFlags } from "@/utils/classes/MessageFlags";
-import type { Category } from "./Category.ts";
+import type { Category } from "./Category.js";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-
+import type { CommandOptionsType } from "@/types/CommandOptions";
+export type Options = readonly OverrideLocalizations<Readonly<APIApplicationCommandOption>>[];
 type MessageParams = {
   message: GatewayMessageCreateDispatchData;
   args: string[];
@@ -28,20 +30,23 @@ export interface MessageValidation {
   type: "message";
   callback(opts: MessageParams & { commandName: string }): Awaitable<ValidationReturn>;
 }
-export interface InteractionValidation<IsContext extends boolean = false> {
+export interface InteractionValidation<TOptions extends Options | undefined = undefined, IsContext extends boolean = false> {
   type: "interaction";
   /** Callback for the validation. */
   callback(
-    opts: InteractionOptions<IsContext extends true ? APIContextMenuInteraction : APIChatInputApplicationCommandInteraction>,
+    opts: InteractionOptions<
+      IsContext extends true ? APIContextMenuInteraction : APIChatInputApplicationCommandInteraction,
+      TOptions
+    >,
   ): Awaitable<ValidationReturn>;
 }
-export type Validation = MessageValidation | InteractionValidation;
+export type Validation<T extends Options | undefined = undefined> = MessageValidation | InteractionValidation<T>;
 export interface PrefixSubcommand {
   trigger: string;
   description: string;
 }
 
-interface CommandBase {
+interface CommandBase<TOptions extends Options | undefined = undefined> {
   /** Name of the command */
   name: string;
 
@@ -75,6 +80,8 @@ interface CommandBase {
     /** Array of guild Ids this command will be deployed to,
      * if present, the command in not deployed globally but only for the specified guilds */
     guilds?: string[];
+    /** Command options - used for type inference */
+    options?: TOptions;
   };
   /* Command category */
   category: (typeof Category)[number]["name"];
@@ -94,34 +101,46 @@ interface CommandBase {
   skipDeploy?: boolean;
 
   /** Any validations for the command */
-  validations?: Validation[];
+  validations?: Validation<TOptions>[];
 
   /* Command cooldown */
   cooldown?: number;
 }
-type InteractionOptions<TType extends APIChatInputApplicationCommandInteraction | APIApplicationCommandAutocompleteInteraction> =
-  {
-    interaction: TType;
-    helper: InteractionHelper;
-    t: ReturnType<typeof getTranslator>;
-    options: InteractionOptionResolver;
-  };
-export type Command<Autocomplete extends boolean = false> = (Autocomplete extends true
-  ? CommandBase & {
+
+//  interaction options for commands with defined option structure
+export type InteractionOptions<
+  TType extends
+    | APIChatInputApplicationCommandInteraction
+    | APIApplicationCommandAutocompleteInteraction
+    | APIContextMenuInteraction,
+  TOptions extends Options | undefined = undefined,
+> = {
+  interaction: TType;
+  helper: InteractionHelper;
+  t: ReturnType<typeof getTranslator>;
+  optionsResolver: InteractionOptionResolver;
+  options: CommandOptionsType<TOptions>;
+};
+
+export type Command<
+  TOptions extends Options | undefined = undefined,
+  Autocomplete extends boolean = false,
+> = (Autocomplete extends true
+  ? CommandBase<TOptions> & {
       /** Autocomplete callback if it exists */
       autocomplete: (opt: InteractionOptions<APIApplicationCommandAutocompleteInteraction>) => Awaitable<void>;
     }
-  : CommandBase) &
+  : CommandBase<TOptions>) &
   (
     | {
         /** The callback function to run when the command is used */
-        interactionRun: (opt: InteractionOptions<APIChatInputApplicationCommandInteraction>) => Awaitable<void>;
+        interactionRun: (opt: InteractionOptions<APIChatInputApplicationCommandInteraction, TOptions>) => Awaitable<void>;
 
         messageRun: (options: MessageParams, api: API) => Awaitable<void>;
       }
     | {
         /** The callback function to run when the command is used */
-        interactionRun: (opt: InteractionOptions<APIChatInputApplicationCommandInteraction>) => Awaitable<void>;
+        interactionRun: (opt: InteractionOptions<APIChatInputApplicationCommandInteraction, TOptions>) => Awaitable<void>;
         messageRun?: never;
       }
     | {
@@ -129,3 +148,7 @@ export type Command<Autocomplete extends boolean = false> = (Autocomplete extend
         interactionRun?: never;
       }
   );
+
+export const defineCommand = <T extends Options>(command: Command<T>) => command;
+
+export const defineStructure = <T extends Options>(structure: Omit<Command<T>, "interactionRun" | "messageRun">) => structure;

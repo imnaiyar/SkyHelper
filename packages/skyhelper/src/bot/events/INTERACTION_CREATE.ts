@@ -24,6 +24,7 @@ import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHan
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
+import { getTypedOptions } from "@/utils/TypedOptionsResolver";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -79,8 +80,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         });
         return;
       }
-      const options = new InteractionOptionResolver(interaction);
-      const validate = await validateInteractions({ command, interaction, options, helper, t });
+      const resolver = new InteractionOptionResolver(interaction);
+      const options = getTypedOptions(resolver, command.data?.options);
+      const validate = await validateInteractions({ command, interaction, options, resolver, helper, t });
       if (!validate.status) {
         return void (await api.interactions.reply(interaction.id, interaction.token, {
           content: validate.message,
@@ -92,12 +94,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           interaction,
           helper,
           options,
+          optionsResolver: resolver,
           t,
         });
         // Log the interaction
         if (interactionLogWebhook && !client.config.OWNER.includes(helper.user.id)) {
           await api.webhooks.execute(interactionLogWebhook.id, interactionLogWebhook.token, {
-            embeds: [buildInteractionLog(interaction, client, options)],
+            embeds: [buildInteractionLog(interaction, client, resolver)],
           });
         }
         return;
@@ -113,7 +116,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region autocomplet
     if (helper.isAutocomplete(interaction)) {
-      const command = client.commands.get(interaction.data.name) as Command<true> | undefined;
+      const command = client.commands.get(interaction.data.name) as Command<any, true> | undefined;
       if (!command || !command.autocomplete) {
         await helper.respond({
           choices: [
@@ -127,7 +130,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       }
 
       try {
-        await command.autocomplete({ interaction, options: new InteractionOptionResolver(interaction), helper, t });
+        await command.autocomplete({
+          interaction,
+          optionsResolver: new InteractionOptionResolver(interaction),
+          options: {},
+          helper,
+          t,
+        });
         return;
       } catch (err) {
         client.logger.error(err, scope);
@@ -153,7 +162,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       }
       const options = new InteractionOptionResolver(interaction);
-      const validate = await validateInteractions({ command, interaction, options, helper, t });
+      const validate = await validateInteractions({ command, interaction, options: {}, resolver: options, helper, t });
       if (!validate.status) {
         return void (await helper.reply({
           content: validate.message,

@@ -1,15 +1,14 @@
-import type { Command } from "@/structures";
+import { defineCommand } from "@/structures/Command";
 import { ShardsUtil } from "@skyhelperbot/utils";
 import type { getTranslator } from "@/i18n";
 import { SHARDS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
 
-export default {
+export default defineCommand({
+  ...SHARDS_DATA,
   async interactionRun({ t, helper, options }) {
-    const date = options.getString("date");
-    const hide = options.getBoolean("hide") || false;
-    const shard = getShards(t, helper.user.id, date);
+    const shard = getShards(t, helper.user.id, options.date);
     if (typeof shard === "string") {
       return void (await helper.reply({
         content: shard,
@@ -17,11 +16,9 @@ export default {
       }));
     }
 
-    await helper.reply({ ...shard, flags: MessageFlags.IsComponentsV2 | (hide ? MessageFlags.Ephemeral : 0) });
+    await helper.reply({ ...shard, flags: MessageFlags.IsComponentsV2 | (options.hide ? MessageFlags.Ephemeral : 0) });
   },
-
-  ...SHARDS_DATA,
-} satisfies Command;
+});
 
 const getShards = (
   t: ReturnType<typeof getTranslator>,

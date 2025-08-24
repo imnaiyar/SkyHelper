@@ -1,19 +1,19 @@
 import { dailyQuestEmbed } from "@/utils/classes/Embeds";
-import type { Command, SkyHelper } from "@/structures";
+import { defineCommand, type SkyHelper } from "@/structures";
 import { DateTime } from "luxon";
 import { textDisplay, separator } from "@skyhelperbot/utils";
 
 import type { getTranslator } from "@/i18n";
 import { DAILY_QUESTS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags } from "@discordjs/core";
-export default {
+export default defineCommand({
   async interactionRun({ t, helper, options }) {
-    await helper.defer({ flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined });
+    await helper.defer({ flags: options.hide ? MessageFlags.Ephemeral : undefined });
 
     await helper.editReply(await getQuestResponse(helper.client, t));
   },
   ...DAILY_QUESTS_DATA,
-} satisfies Command;
+});
 
 const getQuestResponse = async (client: SkyHelper, t: ReturnType<typeof getTranslator>) => {
   const data = await client.schemas.getDailyQuests();

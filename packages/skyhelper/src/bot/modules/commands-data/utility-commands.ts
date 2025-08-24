@@ -1,9 +1,9 @@
 import { supportedLang } from "@skyhelperbot/constants";
-import type { Command } from "@/structures/Command";
+import { defineStructure } from "@/structures/Command";
 import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "@discordjs/core";
 
 // #region Help
-export const HELP_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const HELP_DATA = defineStructure({
   name: "help",
   description: "help menu",
   data: {
@@ -19,16 +19,16 @@ export const HELP_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         required: false,
         autocomplete: true,
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   category: "Utility",
   cooldown: 10,
-};
+});
 
 // #region Language
-export const LANGUAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const LANGUAGE_DATA = defineStructure({
   name: "language",
   description: "manage preferred language for the bot's response",
   data: {
@@ -105,15 +105,15 @@ export const LANGUAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
           },
         ],
       },
-    ],
+    ] as const,
     integration_types: [0, 1],
     contexts: [0, 1, 2],
   },
   category: "Utility",
-};
+});
 
 // #region Utils
-export const UTILS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const UTILS_DATA = defineStructure({
   name: "utils",
   description: "Utilities",
   data: {
@@ -193,14 +193,13 @@ export const UTILS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         description_localizations: "commands:UTILS.options.CONTACT-US.description",
         type: ApplicationCommandOptionType.Subcommand,
       },
-    ],
+    ] as const,
   },
   category: "Utility",
-};
+});
 
 // #region LinkedRole
-
-export const LINKED_ROLE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+export const LINKED_ROLE_DATA = defineStructure({
   name: "linked-role",
   description: "Link your sky profile with the bot",
   data: {
@@ -213,8 +212,8 @@ export const LINKED_ROLE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
-    ],
+    ] as const,
   },
   cooldown: 40,
   category: "Utility",
-};
+});
