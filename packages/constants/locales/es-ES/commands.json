@@ -105,9 +105,9 @@
       "EMBED_AUTHOR": "Calendario de los fragmentos de {{MONTH}}, {{YEAR}}",
       "EMBED_DESCRIPTION": "Para información detallada, usa {{shardsCmd}}",
       "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}",
-      "CHANGE_BUTTON": "Change Month/Year",
-      "MODAL_TITLE": "Enter Month/Year (Format: MM-YYYY)",
-      "INVALID_DATE": "Invalid date format (`{{DATE}}`). Please enter the month and year in this format: MM-YYYY (e.g. 01-2022)"
+      "CHANGE_BUTTON": "Cambiar Mes/Año",
+      "MODAL_TITLE": "Introduzca el Mes/Año (Formato: MM-AAAA)",
+      "INVALID_DATE": "Fecha no valida ({{DATE}}). Por favor introduzca el mes y año en este formato: MM-AAAA (e.j. 01-2022)"
     }
   },
   "SHARDS": {
@@ -144,53 +144,53 @@
     "description": "configura los recordatorios",
     "options": {
       "CONFIGURE": {
-        "name": "configure",
-        "description": "configure reminders",
+        "name": "configurar",
+        "description": "configurar-recordatorios",
         "options": {
           "CHANNEL": {
-            "description": "channel where reminders should be sent"
+            "description": "canal en el que se van a enviar los recordatorios"
           },
           "EVENT": {
-            "name": "event",
-            "description": "event to remind"
+            "name": "evento",
+            "description": "evento que quieres configurar"
           },
           "ROLE": {
-            "name": "role",
-            "description": "role to ping"
+            "name": "rol",
+            "description": "rol a mencionar"
           },
           "OFFSET": {
-            "name": "offset",
-            "description": "how many minutes before the event should the reminder be sent."
+            "name": "desfase",
+            "description": "cuantos minutos antes del evento se enviará el recordatorio"
           }
         }
       },
       "STOP": {
-        "name": "stop",
-        "description": "stop reminders",
+        "name": "parar",
+        "description": "parar los recordatorios",
         "options": {
           "EVENT": {
-            "description": "event to stop reminding"
+            "description": "evento que deseas parar"
           }
         }
       },
       "STATUS": {
-        "name": "status",
-        "description": "reminders configurations for this server"
+        "name": "estado",
+        "description": "configuracion de los recordatorios en este servidor"
       }
     },
     "RESPONSES": {
-      "CONFIGURED": "Successfully configured `{{TYPE}}` reminders in {{CHANNEL}}",
-      "CONFIGURED_ROLE": "Successfully configured `{{EVENT}}` reminders for role {{ROLE}} in {{CHANNEL}}",
-      "ALREADY_NOT_CONFIGURED": "Reminders for {{EVENT}} are already inactive",
-      "NEXT_TIME": "Next reminder for `{{EVENT}}` will be sent {{TIME}}",
-      "OFFSET": "Offset: `{{OFFSET}}` minutes",
-      "SHARD_TYPE": "Shard Type: {{SHARD_TYPE}}",
+      "CONFIGURED": "Los recordatorios `{{TYPE}}` aparecerán en {{CHANNEL}}",
+      "CONFIGURED_ROLE": "Recordatorio `{{EVENT}}` configurado para el rol {{ROLE}} en {{CHANNEL}} exitosamente",
+      "ALREADY_NOT_CONFIGURED": "Los recordatorios para {{EVENT}} ya están desactivados",
+      "NEXT_TIME": "El siguiente recordatorio para {{EVENT}} sera enviado a las {{TIME}}",
+      "OFFSET": "Desfase: `{{OFFSET}}` minutos",
+      "SHARD_TYPE": "Tipo de fragmento: {{SHARD_TYPE}}",
       "STATUS": {
-        "TITLE": "Reminder status for {{SERVER_NAME}}",
-        "STATUS": "Status: {{STATUS}}",
-        "CHANNEL": "Channel: {{CHANNEL}}",
-        "ROLE": "Role: {{ROLE}}",
-        "BUTTON": "Manage"
+        "TITLE": "Estado de los recordatorios en {{SERVER_NAME}}",
+        "STATUS": "Estado: {{STATUS}}",
+        "CHANNEL": "Canal: {{CHANNEL}}",
+        "ROLE": "Rol: {{ROLE}}",
+        "BUTTON": "Configurar"
       }
     }
   },
@@ -339,12 +339,12 @@
     "name": "misiones-diarias",
     "description": "obten un vistazo a las misiones diarias",
     "RESPONSES": {
-      "NO_DATA": "No data found for today's daily quests. Please try again later.",
-      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>)",
+      "NO_DATA": "No se ha encontrado información sobre las misiones de hoy. Inténtalo de nuevo más tarde",
+      "TIME_FRAME": "Por favor, ten en cuenta que las misiones pueden tardar entre 30 minutos y 1 hora en actualizarse después de los reinicios diarios. El tiempo indicado es solo una estimación, ya que algunos días puede tardar más. Mira como funciona aquí[<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>]",
       "OUTDATED": "Esta misión está desactualizada. Por favor espera a que las misiones se actualicen",
       "EMBED_AUTHOR": "Misiones diarias",
-      "BUTTON1": "Rotating Candles",
-      "BUTTON2": "Seasonal Candles"
+      "BUTTON1": "Velas del tesoro",
+      "BUTTON2": "Velas de temporada"
     }
   },
   "SKYGAME": {
