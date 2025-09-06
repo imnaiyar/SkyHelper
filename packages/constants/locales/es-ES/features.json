@@ -1,79 +1,79 @@
 {
   "shards-embed": {
-    "TODAY": "Today",
-    "AUTHOR": "Shards Info",
-    "CONTENT": "Last Updated: {{TIME}}",
-    "NO-SHARD": "It's a no shard day.",
+    "TODAY": "Hoy",
+    "AUTHOR": "Info de los fragmentos",
+    "CONTENT": "Última actualización: {{TIME}}",
+    "NO-SHARD": "No hay fragmentos hoy",
     "COUNTDOWN": {
-      "ENDED": "Ended {{DURATION}}",
-      "ACTIVE": "Ends {{DURATION}}",
-      "EXPECTED": "Falls {{DURATION}}"
+      "ENDED": "Terminó {{DURATION}}",
+      "ACTIVE": "Termina {{DURATION}}",
+      "EXPECTED": "Aterriza {{DURATION}}"
     },
-    "TIMELINE": "Timeline",
-    "LOCATION": "Shard Location",
-    "DATA": "Shard Data"
+    "TIMELINE": "Cronología",
+    "LOCATION": "Ubicación del fragmento",
+    "DATA": "Datos del fragmento"
   },
   "times-embed": {
-    "EVENT_INACTIVE": "No Active Events",
-    "EMBED_TITLE": "Event Times",
-    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
-    "STARTS": "Starts In",
-    "ENDS": "Ends",
-    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
-    "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
-    "TS_UPDATED": "Yet to be updated",
-    "TS_UNKNOWN": "Unknown Spirit",
+    "EVENT_INACTIVE": "No hay eventos activos",
+    "EMBED_TITLE": "Horas del evento",
+    "EVENT_ACTIVE": "**Evento**: {{EVENT_NAME}}\n**De**: {{DATE1}} - {{DATE2}}\n**En total**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "STARTS": "Empieza en",
+    "ENDS": "Termina",
+    "TS_VISITING": "<:tree_top:1339963618111782985>**Visitando actualmente:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Parte:** el {{DATE}} ({{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}} llega el {{DATE}} (en {{DURATION}})",
+    "TS_UPDATED": "Se tiene que actualizar",
+    "TS_UNKNOWN": "Espiritu desconocido",
     "EVENTS": {
       "GEYSER": "Geyser",
-      "GRANDMA": "Grandma",
-      "TURTLE": "Turtle/Sanctuary Sunset",
-      "AURORA": "Aurora's Concert",
-      "DREAM-SKATER": "Dream Skater",
-      "PASSAGE-QUESTS": "Passage Quests",
-      "NEST-SUNSET": "Nest Sunset",
-      "FIREWORKS-FESTIVAL": "Aviary Fireworks Festival",
-      "FAIRY-RING": "Fairy Ring",
-      "BROOK-RAINBOW": "Forest Brook Rainbow",
-      "DAILY-RESET": "Daily Reset",
-      "EDEN": "Eden/Weekly Reset"
+      "GRANDMA": "Abuela",
+      "TURTLE": "Tortuga/Islas santuario",
+      "AURORA": "Concierto de AURORA",
+      "DREAM-SKATER": "Patinadora en valle",
+      "PASSAGE-QUESTS": "Misiones de Iniciacion",
+      "NEST-SUNSET": "Atardecer en el nido",
+      "FIREWORKS-FESTIVAL": "Festival de fuegos artificiales en Aviario",
+      "FAIRY-RING": "Anillo de hada",
+      "BROOK-RAINBOW": "Arcoíris en el arroyo del bosque",
+      "DAILY-RESET": "Reinicio diario",
+      "EDEN": "Edén/Reinicio semanal"
     },
-    "TS_TITLE": "Traveling Spirit",
-    "EVENT_TITLE": "Special Event (Days of ...)",
-    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
-    "NEXT-OCC": "Next Occurence: {{TIME}} (in {{DURATION}})",
-    "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}"
+    "TS_TITLE": "Espíritu viajero",
+    "EVENT_TITLE": "Evento especial (Días de ...)",
+    "ACTIVE": "<a:uptime:1228956558113771580> Activo. Termina en {{END_TIME}} (`Siguiente:` {{NEXT_TIME}})",
+    "NEXT-OCC": "Próxima aparición: {{TIME}} (en: {{DURATION}})",
+    "NEXT-OCC-IDLE": "Próxima aparición: {{TIME}}"
   },
   "reminders": {
-    "ROLE_MENTION": "Hey, {{ROLE}}",
-    "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
-    "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
-    "TITLE": "{{TYPE}} Reminder",
-    "DAILY_QUESTS": "Daily Quests",
-    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})",
-    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "ROLE_MENTION": "Oye, {{ROLE}}",
+    "EDEN_RESET": "Se reinició el Ojo de Edén, las estatuas han sido actualizadas y puedes salvarlas de nuevo por AC!",
+    "DAILY_RESET": "El mundo de Sky ha sido reiniciado y las misiones diarias se actualizaron!",
+    "TITLE": "Recordatorio: {{TYPE}}",
+    "DAILY_QUESTS": "Misiones diarias",
+    "COMMON": "{{TYPE}} acaba de empezar (a la(s) {{TIME}} y terminará {{TIME-END}}) ({{TIME-END-R}})",
+    "PRE": "{{TYPE}} empezará a la(s) {{TIME}}",
     "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
-    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}"
+    "SHARDS": "**{{SHARD_NUMBER}} fragmento** caera {{TIME}}"
   },
   "REALMS": {
-    "ISLE": "Isle of Dawn",
-    "PRAIRIE": "Daylight Prairie",
-    "FOREST": "Hidden Forest",
-    "VALLEY": "Valley of Triumph",
-    "WASTELAND": "Golden Wasteland",
-    "VAULT": "Vault of Knowledge",
-    "EDEN": "Eye of Eden"
+    "ISLE": "Isla del amanecer",
+    "PRAIRIE": "Planicie de luz de día",
+    "FOREST": "Bosque escondido",
+    "VALLEY": "Valle del triunfo",
+    "WASTELAND": "Páramo dorado",
+    "VAULT": "Bóveda del conocimiento",
+    "EDEN": "Ojo de Edén"
   },
   "SPIRITS": {
-    "SEASON_TITLE": "Season",
-    "UNKNOWN": "Unknown Spirit",
-    "REALM_TITLE": "Realm",
-    "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
-    "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
-    "LOCATION_TITLE": "Location by {{CREDIT}}"
+    "SEASON_TITLE": "Temporada",
+    "UNKNOWN": "Espíritu desconocido",
+    "REALM_TITLE": "Reino",
+    "TREE_TITLE": "Árbol de amistad (Última visita) de {{CREDIT}}",
+    "SEASONAL_CHART": "Gráfico de precios por {{CREDIT}}",
+    "LOCATION_TITLE": "Ubicación por {{CREDIT}}"
   },
   "hangman": {
-    "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
-    "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
-    "DOUBLE_MODE_GUILD": "Double mode can only be played in servers I'm a member of."
+    "NOT_PLAYABLE": "Este juego solo se puede ejecutar en canales donde puedo enviar mensajes. Este comando no está disponible en el contexto de aplicación, así que asegúrate de ejecutarlo en un servidor del que sea miembro o en mi DM",
+    "GAME_ACTIVE": "Ya hay un juego en curso en este canal, por favor, espera a que termine. O juega en otro canal!",
+    "DOUBLE_MODE_GUILD": "Solo se puede jugar en servidores de los que soy miembro"
   }
 }
