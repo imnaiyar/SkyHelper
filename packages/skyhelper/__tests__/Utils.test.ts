@@ -154,11 +154,11 @@ describe("Utils", () => {
     it("should return the correct text input component", () => {
       const interaction = {
         data: {
-          components: [{ components: [{ custom_id: "textinput", value: "value" }] }],
+          components: [{ components: [{ custom_id: "textinput", value: "value", type: 4 }] }],
         },
       } as APIModalSubmitInteraction;
       const component = Utils.getTextInput(interaction, "textinput", true);
-      expect(component).toEqual({ custom_id: "textinput", value: "value" });
+      expect(component).toEqual({ custom_id: "textinput", value: "value", type: 4 });
     });
 
     it("should throw an error if the required text input is not found", () => {
