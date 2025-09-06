@@ -45,7 +45,7 @@ export default {
     if (!modal_collect) return;
     const modalHelper = new InteractionHelper(modal_collect, helper.client);
     await modalHelper.defer({ flags: 64 });
-    const msg = modal_collect.data.components[0].components[0].value;
+    const msg = helper.client.utils.getTextInput(modal_collect, "message", true).value;
     // not catching explicitly to know if something went wrong
     const channel = await helper.client.api.users.createDM(user.id);
     await helper.client.api.channels.createMessage(channel.id, {

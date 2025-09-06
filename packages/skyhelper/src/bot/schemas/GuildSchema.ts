@@ -107,7 +107,7 @@ export async function getSettings(guild: APIGuild & { clientMember: APIGuildMemb
         name: guild.name,
         region: guild.preferred_locale,
         owner: guild.owner_id,
-        joinedAt: new Date(guild.clientMember.joined_at),
+        joinedAt: new Date(guild.clientMember.joined_at!),
       },
     });
 

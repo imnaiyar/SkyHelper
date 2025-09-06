@@ -62,9 +62,8 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
   });
   if (!modalInt) return;
   const modalHelper = new InteractionHelper(modalInt, client);
-  const fields = modalInt.data.components;
-  const ti = fields.find((f) => f.components[0].custom_id === "title")!.components[0].value;
-  const sugg = fields.find((f) => f.components[0].custom_id === "suggestion")!.components[0].value;
+  const ti = client.utils.getTextInput(modalInt, "title", true).value;
+  const sugg = client.utils.getTextInput(modalInt, "suggestion", true).value;
   const embed: APIEmbed = {
     author: {
       name: `${modalHelper.user.username} made a suggestion`,

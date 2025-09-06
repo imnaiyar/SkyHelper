@@ -75,7 +75,7 @@ export async function sendGuildLog(
         name: "Name",
         value:
           guild.name +
-          `\n- -# Created At: ${client.utils.time(Math.floor(client.utils.getTimestampFromSnowflake(guild.id) / 1_000), "F")}\n- -# Joined At: ${client.utils.time(new Date(guild.clientMember.joined_at), "F")}`,
+          `\n- -# Created At: ${client.utils.time(Math.floor(client.utils.getTimestampFromSnowflake(guild.id) / 1_000), "F")}\n- -# Joined At: ${client.utils.time(new Date(guild.clientMember.joined_at!), "F")}`,
         inline: true,
       },
       { name: "ID", value: guild.id, inline: true },

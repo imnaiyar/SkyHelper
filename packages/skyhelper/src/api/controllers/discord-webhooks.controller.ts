@@ -83,7 +83,7 @@ export class WebhookEventController {
         content: `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.reason || "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
       })
       .catch(() => {});
-    await this.bot.api.guilds.delete(guild.id).catch(() => {});
+    await this.bot.api.users.leaveGuild(guild.id).catch(() => {});
     const embed: APIEmbed = {
       author: { name: "Blacklisted Server" },
       description: "Someone tried to invite me to a blacklisted server.",

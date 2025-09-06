@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  discord-api-types: 0.38.10
+  discord-api-types: latest
 
 importers:
 
@@ -119,8 +119,8 @@ importers:
   packages/constants:
     dependencies:
       discord-api-types:
-        specifier: 0.38.10
-        version: 0.38.10
+        specifier: latest
+        version: 0.38.23
     devDependencies:
       typescript:
         specifier: ^5.7.3
@@ -144,8 +144,8 @@ importers:
         specifier: workspace:^
         version: link:../utils
       discord-api-types:
-        specifier: 0.38.10
-        version: 0.38.10
+        specifier: latest
+        version: 0.38.23
       i18next:
         specifier: ^23.12.2
         version: 23.16.8
@@ -199,14 +199,14 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       '@discordjs/core':
-        specifier: 3.0.0-dev.1739059974-af3ab2211
-        version: 3.0.0-dev.1739059974-af3ab2211
+        specifier: dev
+        version: 3.0.0-dev.1757160090-352c9819b
       '@discordjs/rest':
-        specifier: ^2.3.0
-        version: 2.4.3
+        specifier: dev
+        version: 3.0.0-dev.1757160090-352c9819b
       '@discordjs/ws':
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: dev
+        version: 3.0.0-dev.1757160090-352c9819b
       '@imnaiyar/framework':
         specifier: latest
         version: 1.2.3
@@ -224,7 +224,7 @@ importers:
         version: 11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)
       '@nestjs/swagger':
         specifier: ^11.2.0
-        version: 11.2.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)
+        version: 11.2.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)(reflect-metadata@0.2.2)
       '@sapphire/discord-utilities':
         specifier: ^3.4.4
         version: 3.4.4
@@ -236,7 +236,7 @@ importers:
         version: 2.43.0
       '@sentry/nestjs':
         specifier: ^8.54.0
-        version: 8.55.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2))
+        version: 8.55.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)
       '@sentry/node':
         specifier: ^8.49.0
         version: 8.55.0
@@ -256,8 +256,8 @@ importers:
         specifier: ^1.0.9
         version: 1.0.9
       discord-api-types:
-        specifier: 0.38.10
-        version: 0.38.10
+        specifier: latest
+        version: 0.38.23
       express:
         specifier: ^4.20.0
         version: 4.21.2
@@ -285,7 +285,7 @@ importers:
         version: 29.7.0
       '@nestjs/testing':
         specifier: ^11.0.6
-        version: 11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20))
+        version: 11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)(@nestjs/platform-express@11.0.20)
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -326,8 +326,8 @@ importers:
         specifier: ^0.1.51
         version: 0.1.69
       discord-api-types:
-        specifier: 0.38.10
-        version: 0.38.10
+        specifier: latest
+        version: 0.38.23
       undici:
         specifier: ^7.10.0
         version: 7.10.0
@@ -609,22 +609,33 @@ packages:
     resolution: {integrity: sha512-LiSusze9Tc7qF03sLCujF5iZp7K+vRNEDBZ86FT9aQAv3vxMLihUvKvpsCWiQ2DJq1tVckopKm1rxomgNUc9hg==}
     engines: {node: '>=18'}
 
-  '@discordjs/core@3.0.0-dev.1739059974-af3ab2211':
-    resolution: {integrity: sha512-jJxRjz+xFCMnLWciy6cZFFnQqLIF8n/RssiofVmpCyzeFIS4EZi2dyBdu/ztpH7rGpHJIMpqIiEsMxroRu3Rhw==}
+  '@discordjs/collection@3.0.0-dev.1757160090-352c9819b':
+    resolution: {integrity: sha512-jlgu6NEm230+9lQMKC9TMLIx60tHmMxXAmseia8iCkFXCD6zQU/ShvCbMO09++C9mKFidMje15IT6QmYP7wc3w==}
     engines: {node: '>=22.12.0'}
-    deprecated: This version is deprecated. Please use a newer version.
+
+  '@discordjs/core@3.0.0-dev.1757160090-352c9819b':
+    resolution: {integrity: sha512-LIFKKJYL2lUwzShVYvwiezpOSpIdZdnPW2nM8zJE+zKVjOqXt2TmD7J/CwRWEKsC2tX5Z+qdr4JYDqtmhKw1KA==}
+    engines: {node: '>=22.12.0'}
 
   '@discordjs/rest@2.4.3':
     resolution: {integrity: sha512-+SO4RKvWsM+y8uFHgYQrcTl/3+cY02uQOH7/7bKbVZsTfrfpoE62o5p+mmV+s7FVhTX82/kQUGGbu4YlV60RtA==}
     engines: {node: '>=18'}
 
+  '@discordjs/rest@3.0.0-dev.1757160090-352c9819b':
+    resolution: {integrity: sha512-zRLcp/PJJZa3Hy6m535fuviEoEMrVIIijgntvRa805gVRgiGNXmHZBrzvvs91vesTgk/rWImRTWIfeYprUM3tA==}
+    engines: {node: '>=22.12.0'}
+
   '@discordjs/util@1.1.1':
     resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
     engines: {node: '>=18'}
 
-  '@discordjs/ws@2.0.1':
-    resolution: {integrity: sha512-5etVbXdwThIT5+KfU+uiBh358Ql58f2vf1W9B5ZXxaZuIlpiX/VC/G0Lr/xuEcs6cL+/HZtEIUf0p9dQfEDang==}
-    engines: {node: '>=20'}
+  '@discordjs/util@2.0.0-dev.1757160090-352c9819b':
+    resolution: {integrity: sha512-4MC3sHMxADndY8Rwhta/c78AEoMxHSEPL5SFPiyn3oUqxM3mwWYJYRVr8ksAlN/TFgTQOrH5KJyLRENWLZlV+w==}
+    engines: {node: '>=22.12.0'}
+
+  '@discordjs/ws@3.0.0-dev.1757160090-352c9819b':
+    resolution: {integrity: sha512-v5hXonw2gKItaWsQwLAt8Ha4nflQ9oYo7airDxtbuyPP7BKZ5gSK+aGYjJiJsnM8u2sKb2CYscfgkpMP4Tbf4A==}
+    engines: {node: '>=22.12.0'}
 
   '@emnapi/core@1.4.5':
     resolution: {integrity: sha512-XsLw1dEOpkSX/WucdqUhPWP7hDxSvZiY+fsUC14h+FtQ2Ifni4znbBt8punRX+Uj2JG/uDb8nEHVKvrVlvdZ5Q==}
@@ -3149,8 +3160,8 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  discord-api-types@0.38.10:
-    resolution: {integrity: sha512-6F02RttmlDoTpFEeOlF1Z9lmNDUFum4ewBPFFjkD6mIlnd+NJ6oze/dllPdp8dpNvFuLHyEfVy+UPZ1s+IWmmA==}
+  discord-api-types@0.38.23:
+    resolution: {integrity: sha512-C8VjK0yxBUq1dakxGpUXQm4VSC7R+aaD2SIr3paj2a0bP/LRok1AqHiezp30GruK6Ba9FtQAKqYUMJPzsqv7IQ==}
 
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
@@ -4561,6 +4572,9 @@ packages:
 
   magic-bytes.js@1.11.0:
     resolution: {integrity: sha512-nVmadqN9gam80tdnn74qjFCKgldwzv1+96XmeCvR3bY7wNn2PjHMnRakOWC6+32g133vgZOjUiYgswIxohffzA==}
+
+  magic-bytes.js@1.12.1:
+    resolution: {integrity: sha512-ThQLOhN86ZkJ7qemtVRGYM+gRgR8GEXNli9H/PMvpnZsE44Xfh3wx9kGJaldg314v85m+bFW6WBMaVHJc/c3zA==}
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -6034,6 +6048,10 @@ packages:
     resolution: {integrity: sha512-u5otvFBOBZvmdjWLVW+5DAc9Nkq8f24g0O9oY7qw2JVIF1VocIFoyz9JFkuVOS2j41AufeO0xnlweJ2RLT8nGw==}
     engines: {node: '>=20.18.1'}
 
+  undici@7.11.0:
+    resolution: {integrity: sha512-heTSIac3iLhsmZhUCjyS3JQEkZELateufzZuBaVM5RHXdSBMb1LPMQf5x+FH7qjsZYDP0ttAc3nnVpUB+wYbOg==}
+    engines: {node: '>=20.18.1'}
+
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
@@ -6104,6 +6122,10 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  uuid@11.1.0:
+    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+    hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
@@ -6184,8 +6206,8 @@ packages:
     resolution: {integrity: sha512-7KxauUdBmSdWnmpaGFg+ppNjKF8uNLry8LyzjauQDOVONfFLNKrKvQOxZ/VuTIcS/gge/YNahf5RIIQWTSarlg==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
 
-  ws@8.18.1:
-    resolution: {integrity: sha512-RKW2aJZMXeMxVpnZ6bck+RswznaxmzdULiBr6KY7XkTnW8uvt0iT9H5DkHUChXrc+uurzwa0rVI16n/Xzjdz1w==}
+  ws@8.18.3:
+    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -6587,14 +6609,16 @@ snapshots:
 
   '@discordjs/collection@2.1.1': {}
 
-  '@discordjs/core@3.0.0-dev.1739059974-af3ab2211':
+  '@discordjs/collection@3.0.0-dev.1757160090-352c9819b': {}
+
+  '@discordjs/core@3.0.0-dev.1757160090-352c9819b':
     dependencies:
-      '@discordjs/rest': 2.4.3
-      '@discordjs/util': 1.1.1
-      '@discordjs/ws': 2.0.1
+      '@discordjs/rest': 3.0.0-dev.1757160090-352c9819b
+      '@discordjs/util': 2.0.0-dev.1757160090-352c9819b
+      '@discordjs/ws': 3.0.0-dev.1757160090-352c9819b
       '@sapphire/snowflake': 3.5.5
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.38.10
+      discord-api-types: 0.38.23
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6606,24 +6630,38 @@ snapshots:
       '@sapphire/async-queue': 1.5.5
       '@sapphire/snowflake': 3.5.5
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.38.10
+      discord-api-types: 0.38.23
       magic-bytes.js: 1.11.0
       tslib: 2.8.1
       undici: 6.21.1
 
+  '@discordjs/rest@3.0.0-dev.1757160090-352c9819b':
+    dependencies:
+      '@discordjs/collection': 3.0.0-dev.1757160090-352c9819b
+      '@discordjs/util': 2.0.0-dev.1757160090-352c9819b
+      '@sapphire/async-queue': 1.5.5
+      '@sapphire/snowflake': 3.5.5
+      '@vladfrangu/async_event_emitter': 2.4.6
+      discord-api-types: 0.38.23
+      magic-bytes.js: 1.12.1
+      tslib: 2.8.1
+      undici: 7.11.0
+      uuid: 11.1.0
+
   '@discordjs/util@1.1.1': {}
 
-  '@discordjs/ws@2.0.1':
+  '@discordjs/util@2.0.0-dev.1757160090-352c9819b': {}
+
+  '@discordjs/ws@3.0.0-dev.1757160090-352c9819b':
     dependencies:
-      '@discordjs/collection': 2.1.1
-      '@discordjs/rest': 2.4.3
-      '@discordjs/util': 1.1.1
+      '@discordjs/collection': 3.0.0-dev.1757160090-352c9819b
+      '@discordjs/util': 2.0.0-dev.1757160090-352c9819b
       '@sapphire/async-queue': 1.5.5
       '@types/ws': 8.18.1
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.38.10
+      discord-api-types: 0.38.23
       tslib: 2.8.1
-      ws: 8.18.1
+      ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -7228,7 +7266,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@nestjs/swagger@11.2.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)':
+  '@nestjs/swagger@11.2.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)(reflect-metadata@0.2.2)':
     dependencies:
       '@microsoft/tsdoc': 0.15.1
       '@nestjs/common': 11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -7240,7 +7278,7 @@ snapshots:
       reflect-metadata: 0.2.2
       swagger-ui-dist: 5.21.0
 
-  '@nestjs/testing@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20))':
+  '@nestjs/testing@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)(@nestjs/platform-express@11.0.20)':
     dependencies:
       '@nestjs/common': 11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -8052,7 +8090,7 @@ snapshots:
 
   '@sapphire/discord-utilities@3.4.4':
     dependencies:
-      discord-api-types: 0.38.10
+      discord-api-types: 0.38.23
 
   '@sapphire/snowflake@3.5.5': {}
 
@@ -8120,7 +8158,7 @@ snapshots:
 
   '@sentry/core@8.55.0': {}
 
-  '@sentry/nestjs@8.55.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2))':
+  '@sentry/nestjs@8.55.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20)':
     dependencies:
       '@nestjs/common': 11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.0.20(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.20)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -9277,7 +9315,7 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  discord-api-types@0.38.10: {}
+  discord-api-types@0.38.23: {}
 
   doctrine@2.1.0:
     dependencies:
@@ -9493,7 +9531,7 @@ snapshots:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@5.8.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.31.0)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.0)
       eslint-plugin-react: 7.37.5(eslint@8.57.0)
@@ -9513,7 +9551,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.0
@@ -9528,14 +9566,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@5.8.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.31.0)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint@8.57.0))(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -9550,7 +9588,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -9579,7 +9617,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.8.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -11249,6 +11287,8 @@ snapshots:
   magic-bytes.js@1.11.0:
     dependencies:
       rimraf: 6.0.1
+
+  magic-bytes.js@1.12.1: {}
 
   magic-string@0.30.17:
     dependencies:
@@ -13067,6 +13107,8 @@ snapshots:
 
   undici@7.10.0: {}
 
+  undici@7.11.0: {}
+
   unicorn-magic@0.1.0: {}
 
   unified@11.0.5:
@@ -13162,6 +13204,8 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   utils-merge@1.0.1: {}
+
+  uuid@11.1.0: {}
 
   uuid@8.3.2: {}
 
@@ -13273,7 +13317,7 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
 
-  ws@8.18.1: {}
+  ws@8.18.3: {}
 
   xml-js@1.6.11:
     dependencies:
