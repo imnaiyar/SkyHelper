@@ -179,15 +179,15 @@ export default class {
     int: APIModalSubmitInteraction,
     customId: string,
     type?: Type,
-  ): Extract<ModalSubmitComponent, { type: Type }> | undefined {
+  ): Extract<ModalSubmitComponent, { type: Type }> {
     const components = int.data.components.reduce((acc, label) => {
       if ("components" in label) return acc.concat(label.components);
       if ("component" in label) return acc.concat(label.component);
       return acc;
     }, [] as ModalSubmitComponent[]);
     const comp = components.find((component) => component.custom_id === customId);
-    if (type && comp?.type !== type) return undefined;
-    return comp as Extract<ModalSubmitComponent, { type: Type }> | undefined;
+    if (type && comp?.type !== type) throw new Error(`Component with customId ${customId} is not of type ${type}`);
+    return comp as Extract<ModalSubmitComponent, { type: Type }>;
   }
   static getTextInput(
     interaction: APIModalSubmitInteraction,

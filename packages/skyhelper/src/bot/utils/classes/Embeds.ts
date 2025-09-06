@@ -442,13 +442,13 @@ export async function handleRemindersStatus(
           });
 
         text +=
-          "\n-# - " + helper.t("commands:REMINDERS.RESPONSES.STATUS.ROLE", { ROLE: event?.role ? `<@&${event.role}>` : "None" });
+          " | " + helper.t("commands:REMINDERS.RESPONSES.STATUS.ROLE", { ROLE: event?.role ? `<@&${event.role}>` : "None" });
 
-        text += `\n-# - ` + helper.t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: event?.offset || 0 });
+        text += ` | ` + helper.t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: event?.offset || 0 });
 
         text +=
-          event && "shard_type" in event
-            ? `\n-# ` + helper.t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: event.shard_type.join(", ") })
+          event && event.shard_type
+            ? ` | ` + helper.t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: event.shard_type.join(", ") })
             : "";
 
         cont.components.push(
@@ -460,7 +460,10 @@ export async function handleRemindersStatus(
                 user: helper.user.id,
                 page: index,
               }),
-              label: helper.t("commands:REMINDERS.RESPONSES.STATUS.BUTTON"),
+              emoji: {
+                animated: true,
+                id: "1228956650757427220",
+              },
               style: 2,
             },
             text,
