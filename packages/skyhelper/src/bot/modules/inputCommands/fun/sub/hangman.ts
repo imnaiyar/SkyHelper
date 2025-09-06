@@ -108,7 +108,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
           })
           .catch(() => null);
         if (modalSubmit) {
-          word = modalSubmit.data.components[0].components[0].value;
+          word = client.utils.getTextInput(modalSubmit, "skygame_hangman_word_input", true).value;
           await client.api.interactions.updateMessage(modalSubmit.id, modalSubmit.token, getResponse());
         }
       } else if (action === "start") {

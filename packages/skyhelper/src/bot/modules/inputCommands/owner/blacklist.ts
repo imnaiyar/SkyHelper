@@ -79,7 +79,7 @@ async function blacklist(client: SkyHelper, message: APIMessage, ID: string, typ
 
   await data.save();
   if (guild) {
-    await client.api.guilds.delete(guildId, { reason: "Blacklisted" });
+    await client.api.users.leaveGuild(guildId);
   }
   return await client.api.channels.createMessage(message.channel_id, {
     content: `Blacklisted.

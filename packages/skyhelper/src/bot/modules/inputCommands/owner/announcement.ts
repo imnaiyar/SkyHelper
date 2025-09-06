@@ -84,7 +84,7 @@ async function handleModal(helper: InteractionHelper) {
   if (!modalSubmit) return;
   const modalHelper = new InteractionHelper(modalSubmit, helper.client);
   await modalHelper.defer();
-  const text = modalSubmit.data.components[0].components[0].value;
+  const text = helper.client.utils.getTextInput(modalSubmit, "announcement_text_input", true).value;
   const data = await helper.client.schemas.getAnnouncementGuilds();
 
   for (const { annoucement_channel } of data) {

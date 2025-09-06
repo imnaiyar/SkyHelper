@@ -1,6 +1,14 @@
 import type { SkyHelper } from "@/structures";
 import type { IdResolvalble, ParsedCustomId, TimestampStyles } from "@/types/utils";
-import type { APIGuildMember, APIMessage, APIModalSubmitInteraction, APIUser, ModalSubmitComponent } from "@discordjs/core";
+import type {
+  APIGuildMember,
+  APIMessage,
+  APIModalSubmitInteraction,
+  APIModalSubmitTextInputComponent,
+  APIUser,
+  ModalSubmitComponent,
+} from "@discordjs/core";
+import { ComponentType } from "@discordjs/core";
 import { CDN } from "@discordjs/rest";
 import { EmojiRegex, WebhookRegex } from "@sapphire/discord-utilities";
 import { CustomId, store } from "../customId-store.js";
@@ -167,16 +175,33 @@ export default class {
     return `</${command}${sub ? ` ${sub}` : ""}:${comd.id}>`;
   }
 
-  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: true): ModalSubmitComponent;
+  static getModalComponent<Type extends ComponentType = ComponentType>(
+    int: APIModalSubmitInteraction,
+    customId: string,
+    type?: Type,
+  ): Extract<ModalSubmitComponent, { type: Type }> | undefined {
+    const components = int.data.components.reduce((acc, label) => {
+      if ("components" in label) return acc.concat(label.components);
+      if ("component" in label) return acc.concat(label.component);
+      return acc;
+    }, [] as ModalSubmitComponent[]);
+    const comp = components.find((component) => component.custom_id === customId);
+    if (type && comp?.type !== type) return undefined;
+    return comp as Extract<ModalSubmitComponent, { type: Type }> | undefined;
+  }
+  static getTextInput(
+    interaction: APIModalSubmitInteraction,
+    textinput: string,
+    required: true,
+  ): APIModalSubmitTextInputComponent;
   static getTextInput(
     interaction: APIModalSubmitInteraction,
     textinput: string,
     required?: false,
-  ): ModalSubmitComponent | undefined;
+  ): APIModalSubmitTextInputComponent | undefined;
   static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: boolean = false) {
-    const components = interaction.data.components.map((row) => row.components[0]); // Can only be one component per row
-    const comp = components.find((component) => component.custom_id === textinput);
-    if (required && !comp) throw new Error("Couldn't find the required text input");
-    return comp;
+    const compo = this.getModalComponent(interaction, textinput, ComponentType.TextInput);
+    if (required && !compo) throw new Error("Couldn't find the required text input");
+    return compo;
   }
 }
