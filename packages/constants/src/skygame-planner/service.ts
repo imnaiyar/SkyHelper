@@ -1,0 +1,336 @@
+/**
+ * SkyGame Planner data service
+ * This file provides the main interface for accessing SkyGame Planner data
+ */
+import { fetchAllData } from "./fetcher.js";
+import { IEvent, IEventInstance } from "./interfaces.js";
+import { transformData, TransformedData } from "./transformer.js";
+
+let cachedData: TransformedData | null = null;
+let lastFetchTime: number = 0;
+const CACHE_LIFETIME_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+/**
+ * Gets the SkyGame Planner data, loading it from cache if available or fetching it if needed
+ * @param forceRefresh Force a refresh of the data, bypassing the cache
+ * @returns The transformed SkyGame Planner data
+ */
+export async function getSkyGamePlannerData(forceRefresh = false): Promise<TransformedData> {
+  const now = Date.now();
+  const cacheExpired = now - lastFetchTime > CACHE_LIFETIME_MS;
+
+  if (!cachedData || cacheExpired || forceRefresh) {
+    console.log("Fetching SkyGame Planner data...");
+    const fetchedData = await fetchAllData();
+    console.log("Transforming SkyGame Planner data...");
+    cachedData = transformData(fetchedData);
+    lastFetchTime = now;
+    console.log("SkyGame Planner data loaded successfully");
+  }
+
+  return cachedData;
+}
+
+/**
+ * Helper function to get a realm by its ID
+ * @param realmId The ID of the realm to find
+ * @param data The transformed data
+ * @returns The realm or undefined if not found
+ */
+export function getRealmById(realmId: string, data: TransformedData) {
+  return data.realms.find((r) => r.guid === realmId);
+}
+
+/**
+ * Helper function to get a spirit by its ID
+ * @param spiritId The ID of the spirit to find
+ * @param data The transformed data
+ * @returns The spirit or undefined if not found
+ */
+export function getSpiritById(spiritId: string, data: TransformedData) {
+  return data.spirits.find((s) => s.guid === spiritId);
+}
+
+/**
+ * Search for entities by name across all data types
+ * @param query Search query string
+ * @param data The transformed data
+ * @returns Array of matching entities with type, name, and guid
+ */
+export function searchEntitiesByName(query: string, data: TransformedData) {
+  if (!query) return [];
+
+  const searchTerms = query.toLowerCase();
+  const results: Array<{ type: string; name: string; guid: string }> = [];
+
+  // Search realms
+  data.realms.forEach((realm) => {
+    if (realm.name.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Realm", name: realm.name, guid: realm.guid });
+    }
+  });
+
+  // Search areas
+  data.areas.forEach((area) => {
+    if (area.name.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Area", name: `${area.name} (${area.realm?.name || "Unknown Realm"})`, guid: area.guid });
+    }
+  });
+
+  // Search spirits
+  data.spirits.forEach((spirit) => {
+    if (spirit.name?.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Spirit", name: spirit.name, guid: spirit.guid });
+    }
+  });
+
+  // Search seasons
+  data.seasons.forEach((season) => {
+    if (season.name.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Season", name: season.name, guid: season.guid });
+    }
+  });
+
+  // Search events
+  data.events.forEach((event) => {
+    if (event.name.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Event", name: event.name, guid: event.guid });
+    }
+  });
+
+  // Search items
+  data.items.forEach((item) => {
+    if (item.name.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Item", name: item.name, guid: item.guid });
+    }
+  });
+
+  return results;
+}
+
+/**
+ * Get an entity by its GUID, searching across all data types
+ * @param guid The GUID to look for
+ * @param data The transformed data
+ * @returns The entity with its type or null if not found
+ */
+export function getEntityByGuid(guid: string, data: TransformedData) {
+  // Search through all entity types
+  const entityTypes = [
+    { type: "Realm", collection: data.realms },
+    { type: "Area", collection: data.areas },
+    { type: "Spirit", collection: data.spirits },
+    { type: "Season", collection: data.seasons },
+    { type: "Event", collection: data.events },
+    { type: "Item", collection: data.items },
+    { type: "Node", collection: data.nodes },
+    { type: "SpiritTree", collection: data.spiritTrees },
+    { type: "TravelingSpirit", collection: data.travelingSpirits },
+    { type: "ReturningSpirit", collection: data.returningSpirits },
+    { type: "Shop", collection: data.shops },
+    { type: "IAP", collection: data.iaps },
+    { type: "WingedLight", collection: data.wingedLights },
+  ];
+
+  for (const { type, collection } of entityTypes) {
+    const entity = collection.find((e) => e.guid === guid);
+    if (entity) {
+      return { type, data: entity };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Helper function to get a season by its ID
+ * @param seasonId The ID of the season to find
+ * @param data The transformed data
+ * @returns The season or undefined if not found
+ */
+export function getSeasonById(seasonId: string, data: TransformedData) {
+  return data.seasons.find((s) => s.guid === seasonId);
+}
+
+/**
+ * Helper function to get an area by its ID
+ * @param areaId The ID of the area to find
+ * @param data The transformed data
+ * @returns The area or undefined if not found
+ */
+export function getAreaById(areaId: string, data: TransformedData) {
+  return data.areas.find((a) => a.guid === areaId);
+}
+
+/**
+ * Helper function to get an item by its ID
+ * @param itemId The ID of the item to find
+ * @param data The transformed data
+ * @returns The item or undefined if not found
+ */
+export function getItemById(itemId: string, data: TransformedData) {
+  return data.items.find((i) => i.guid === itemId);
+}
+
+/**
+ * Helper function to get all spirits from a specific realm
+ * @param realmId The ID of the realm
+ * @param data The transformed data
+ * @returns Array of spirits in the realm
+ */
+export function getSpiritsInRealm(realmId: string, data: TransformedData) {
+  const realm = getRealmById(realmId, data);
+  if (!realm) return [];
+
+  const spirits: any[] = [];
+  for (const area of realm.areas || []) {
+    for (const spirit of area.spirits || []) {
+      spirits.push(spirit);
+    }
+  }
+
+  return spirits;
+}
+
+/**
+ * Helper function to get all winged lights in a specific realm
+ * @param realmId The ID of the realm
+ * @param data The transformed data
+ * @returns Array of winged lights in the realm
+ */
+export function getWingedLightsInRealm(realmId: string, data: TransformedData) {
+  const realm = getRealmById(realmId, data);
+  if (!realm) return [];
+
+  const wingedLights: any[] = [];
+  for (const area of realm.areas || []) {
+    for (const wl of area.wingedLights || []) {
+      wingedLights.push(wl);
+    }
+  }
+
+  return wingedLights;
+}
+
+/**
+ * Helper function to get the current traveling spirit
+ * @param data The transformed data
+ * @returns The current traveling spirit or undefined if none is active
+ */
+export function getCurrentTravelingSpirit(data: TransformedData) {
+  const now = new Date();
+  return data.travelingSpirits.find((ts) => {
+    const startDate = new Date(ts.date);
+    const endDate = new Date(ts.endDate);
+    return now >= startDate && now <= endDate;
+  });
+}
+
+/**
+ * Helper function to get all spirits from a specific season
+ * @param seasonId The ID of the season
+ * @param data The transformed data
+ * @returns Array of spirits in the season
+ */
+export function getSpiritsInSeason(seasonId: string, data: TransformedData) {
+  const season = getSeasonById(seasonId, data);
+  if (!season) return [];
+
+  return season.spirits || [];
+}
+
+/**
+ * Helper function to get all items from a specific spirit tree
+ * @param spiritId The ID of the spirit
+ * @param data The transformed data
+ * @returns Array of items in the spirit tree
+ */
+export function getItemsInSpiritTree(spiritId: string, data: TransformedData) {
+  const spirit = getSpiritById(spiritId, data);
+  if (!spirit?.tree?.node) return [];
+
+  const items: any[] = [];
+
+  // Recursively walk through the node tree and collect items
+  function collectItems(node: any) {
+    if (node.item) {
+      items.push(node.item);
+    }
+
+    if (node.nw) collectItems(node.nw);
+    if (node.ne) collectItems(node.ne);
+    if (node.n) collectItems(node.n);
+  }
+
+  collectItems(spirit.tree.node);
+
+  return items;
+}
+
+/**
+ * Helper function to get current and upcoming events
+ * @param data The transformed data
+ * @returns Object containing current and upcoming events
+ */
+export function getEvents(data: TransformedData) {
+  const now = new Date();
+  const currentEvents: { event: IEvent; instance: IEventInstance }[] = [];
+  const upcomingEvents: { event: IEvent; instance: IEventInstance; startDate: Date }[] = [];
+
+  for (const event of data.events) {
+    for (const instance of event.instances || []) {
+      const startDate = new Date(instance.date);
+      const endDate = new Date(instance.endDate);
+
+      if (now >= startDate && now <= endDate) {
+        currentEvents.push({
+          event,
+          instance,
+        });
+      } else if (now < startDate) {
+        upcomingEvents.push({
+          event,
+          instance,
+          startDate,
+        });
+      }
+    }
+  }
+
+  // Sort upcoming events by start date
+  upcomingEvents.sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+
+  return {
+    current: currentEvents,
+    upcoming: upcomingEvents.slice(0, 5), // Limit to 5 upcoming events
+  };
+}
+
+/**
+ * Get all returning spirits that have visited
+ * @param data The transformed data
+ * @returns Array of all returning spirits
+ */
+export function getAllReturningSpirits(data: TransformedData) {
+  return data.returningSpiritsVisits;
+}
+
+/**
+ * Get stats about the SkyGame Planner data
+ * @param data The transformed data
+ * @returns Object with statistics about the data
+ */
+export function getDataStats(data: TransformedData) {
+  return {
+    realms: data.realms.length,
+    areas: data.areas.length,
+    spirits: data.spirits.length,
+    seasons: data.seasons.length,
+    items: data.items.length,
+    wingedLights: data.wingedLights.length,
+    travelingSpirits: data.travelingSpirits.length,
+    returningSpirits: data.returningSpiritsVisits.length,
+    events: data.events.length,
+    totalNodes: data.nodes.length,
+  };
+}
