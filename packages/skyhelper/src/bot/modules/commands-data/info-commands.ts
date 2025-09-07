@@ -130,3 +130,55 @@ export const TRAVELING_SPIRITS_DATA: Omit<Command, "interactionRun" | "messageRu
   cooldown: 20,
   category: "Info",
 };
+
+// #region SkyGamePlanner
+export const SKYGAME_PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "skygame-planner",
+  description: "Access SkyGame Planner data for Sky: Children of the Light",
+  data: {
+    options: [
+      {
+        name: "stats",
+        description: "Get statistics about the SkyGame Planner data",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "current-ts",
+        description: "Get information about the current traveling spirit",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "events",
+        description: "Get information about current and upcoming events",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "data",
+        description: "Retrieve data by GUID",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          {
+            name: "entity",
+            description: "Search for an entity by name",
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            autocomplete: true,
+          },
+          {
+            name: "hide",
+            description: "Hide the response from others",
+            type: ApplicationCommandOptionType.Boolean,
+            required: false,
+          },
+        ],
+      },
+    ],
+    integration_types: [0, 1],
+    contexts: [0, 1, 2],
+  },
+  category: "Info",
+  prefix: {
+    aliases: ["skyplanner", "sgp"],
+  },
+  cooldown: 15,
+};
