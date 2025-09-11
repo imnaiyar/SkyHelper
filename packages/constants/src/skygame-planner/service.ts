@@ -2,9 +2,12 @@
  * SkyGame Planner data service
  * This file provides the main interface for accessing SkyGame Planner data
  */
+import { resolve } from "path";
+import { fetchEmojis, zone } from "../index.js";
 import { fetchAllData } from "./fetcher.js";
 import { IEvent, IEventInstance } from "./interfaces.js";
 import { transformData, TransformedData } from "./transformer.js";
+import { DateTime } from "luxon";
 
 let cachedData: TransformedData | null = null;
 let lastFetchTime: number = 0;
@@ -25,6 +28,7 @@ export async function getSkyGamePlannerData(forceRefresh = false): Promise<Trans
     console.log("Transforming SkyGame Planner data...");
     cachedData = transformData(fetchedData);
     lastFetchTime = now;
+    await fetchEmojis();
     console.log("SkyGame Planner data loaded successfully");
   }
 
@@ -218,10 +222,10 @@ export function getWingedLightsInRealm(realmId: string, data: TransformedData) {
  * @returns The current traveling spirit or undefined if none is active
  */
 export function getCurrentTravelingSpirit(data: TransformedData) {
-  const now = new Date();
+  const now = DateTime.now().setZone(zone);
   return data.travelingSpirits.find((ts) => {
-    const startDate = new Date(ts.date);
-    const endDate = new Date(ts.endDate);
+    const startDate = resolveToLuxon(ts.date);
+    const endDate = resolveToLuxon(ts.endDate);
     return now >= startDate && now <= endDate;
   });
 }
@@ -273,14 +277,14 @@ export function getItemsInSpiritTree(spiritId: string, data: TransformedData) {
  * @returns Object containing current and upcoming events
  */
 export function getEvents(data: TransformedData) {
-  const now = new Date();
+  const now = DateTime.now().setZone(zone);
   const currentEvents: { event: IEvent; instance: IEventInstance }[] = [];
-  const upcomingEvents: { event: IEvent; instance: IEventInstance; startDate: Date }[] = [];
+  const upcomingEvents: { event: IEvent; instance: IEventInstance; startDate: DateTime }[] = [];
 
   for (const event of data.events) {
     for (const instance of event.instances || []) {
-      const startDate = new Date(instance.date);
-      const endDate = new Date(instance.endDate);
+      const startDate = resolveToLuxon(instance.date);
+      const endDate = resolveToLuxon(instance.endDate);
 
       if (now >= startDate && now <= endDate) {
         currentEvents.push({
@@ -298,7 +302,7 @@ export function getEvents(data: TransformedData) {
   }
 
   // Sort upcoming events by start date
-  upcomingEvents.sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+  upcomingEvents.sort((a, b) => a.startDate.toMillis() - b.startDate.toMillis());
 
   return {
     current: currentEvents,
@@ -313,6 +317,34 @@ export function getEvents(data: TransformedData) {
  */
 export function getAllReturningSpirits(data: TransformedData) {
   return data.returningSpiritsVisits;
+}
+
+/**
+ * Get the currently active season
+ * @param data The transformed data
+ * @returns The current season or undefined if none is active
+ */
+export function getCurrentSeason(data: TransformedData) {
+  const now = DateTime.now().setZone(zone);
+  return data.seasons.find((season) => {
+    const startDate = resolveToLuxon(season.date);
+    const endDate = resolveToLuxon(season.endDate);
+    return now >= startDate && now <= endDate;
+  });
+}
+
+/**
+ * Get currently active returning spirits
+ * @param data The transformed data
+ * @returns Array of currently active returning spirits
+ */
+export function getCurrentReturningSpirits(data: TransformedData) {
+  const now = DateTime.now().setZone(zone);
+  return data.returningSpiritsVisits.filter((visit) => {
+    const startDate = resolveToLuxon(visit.return.date);
+    const endDate = resolveToLuxon(visit.return.endDate);
+    return now >= startDate && now <= endDate;
+  });
 }
 
 /**
@@ -333,4 +365,11 @@ export function getDataStats(data: TransformedData) {
     events: data.events.length,
     totalNodes: data.nodes.length,
   };
+}
+
+export function resolveToLuxon(date: { day: number; month: number; year: number } | string) {
+  if (typeof date === "string") {
+    return DateTime.fromFormat(date, "yyyy-MM-dd", { zone });
+  }
+  return DateTime.fromObject(date as { day: number; month: number; year: number }, { zone });
 }

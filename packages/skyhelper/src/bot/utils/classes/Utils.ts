@@ -112,6 +112,7 @@ export default class {
     let customId = obj.id;
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
+      if (!value) continue;
       customId += `;${key}:${value}`;
     }
     if (customId.length > 100) {

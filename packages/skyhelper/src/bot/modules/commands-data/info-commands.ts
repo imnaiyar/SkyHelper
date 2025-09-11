@@ -153,6 +153,11 @@ export const SKYGAME_PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
+        name: "planner",
+        description: "planner menu",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
         name: "data",
         description: "Retrieve data by GUID",
         type: ApplicationCommandOptionType.Subcommand,
