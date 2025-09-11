@@ -1,3 +1,5 @@
+import { APIEmoji } from "discord-api-types/v10";
+
 export const emojis = {
   tree_top: "<:tree_top:1340954527762743392>",
   tree_middle: "<:tree_middle:1339963268969791550> ",
@@ -10,43 +12,64 @@ export const emojis = {
 };
 
 export const realms_emojis = {
-  "Isle of Dawn": "<:Isle:1150605424752590868>",
-  "Daylight Prairie": "<:Prairie:1150605405408473179>",
-  "Hidden Forest": "<:Forest:1150605383656800317>",
-  "Valley of Triumph": "<:Valley:1150605355777273908>",
-  "Golden Wasteland": "<:Wasteland:1150605333862027314>",
-  "Vault of Knowledge": "<:Vault:1150605308364861580>",
-  "Eye of Eden": "<:eden:1205960597456293969>",
-  "Aviary Village": "<:aviary_map:1388112731886059632>",
+  "Isle of Dawn": "1150605424752590868",
+  "Daylight Prairie": "1150605405408473179",
+  "Hidden Forest": "1150605383656800317",
+  "Valley of Triumph": "1150605355777273908",
+  "Golden Wasteland": "1150605333862027314",
+  "Vault of Knowledge": "1150605308364861580",
+  "Eye of Eden": "1205960597456293969",
+  "Aviary Village": "1388112731886059632",
+  Home: "1414190709287813181",
 };
 
 export const season_emojis = {
-  Moomin: "<:SeasonofMoominIcon:1295323276612206602>",
-  Duets: "<:SeasonofDuetsicon:1362518877619359794>",
-  Nesting: "<:SeasonofNestingicon:1362518491260915976>",
-  "Nine-Colored Deer": "<:ninecoloreddeer:1197412132657053746>",
-  Revival: "<:revival:1163480957706321950>",
-  Moments: "<:moments:1130958731211985019>",
-  Passage: "<:passage:1130958698571911239>",
-  Remembrance: "<:remembrance:1130958673959719062>",
-  Aurora: "<:aurora:1130958641189621771>",
-  Shattering: "<:shattering:1130961257097334895>",
-  Performance: "<:performance:1130958595345895444>",
-  Abyss: "<:abyss:1130958569748045845>",
-  Flight: "<:flight:1130958544276045945>",
-  "The Little Prince": "<:littleprince:1130958521253502987>",
-  Assembly: "<:assembly:1130958465351811173>",
-  Dreams: "<:dreams:1130958442232815646>",
-  Prophecy: "<:prophecy:1130958414655279304>",
-  Sanctuary: "<:sanctuary:1130958391347515573>",
-  Enchantment: "<:enchantment:1130958367674867742>",
-  Rhythm: "<:rhythm:1130958345352777849>",
-  Belonging: "<:belonging:1130958323823423509>",
-  Lightseekers: "<:lightseekers:1130958300293365870>",
-  Gratitude: "<:gratitude:1130958261349261435>",
+  "Two Embers - Part 1": "1414189997581537381",
+  "Blue Bird": "1414189788688285789",
+  Radiance: "1414189556877754378",
+  Moomin: "1295323276612206602",
+  Duets: "1362518877619359794",
+  Nesting: "1362518491260915976",
+  "Nine-Colored Deer": "1197412132657053746",
+  Revival: "1163480957706321950",
+  Moments: "1130958731211985019",
+  Passage: "1130958698571911239",
+  Remembrance: "1130958673959719062",
+  Aurora: "1130958641189621771",
+  Shattering: "1130961257097334895",
+  Performance: "1130958595345895444",
+  Abyss: "1130958569748045845",
+  Flight: "1130958544276045945",
+  "The Little Prince": "1130958521253502987",
+  Assembly: "1130958465351811173",
+  Dreams: "1130958442232815646",
+  Prophecy: "1130958414655279304",
+  Sanctuary: "1130958391347515573",
+  Enchantment: "1130958367674867742",
+  Rhythm: "1130958345352777849",
+  Belonging: "1130958323823423509",
+  Lightseekers: "1130958300293365870",
+  Gratitude: "1130958261349261435",
 };
 
+// These are the server that holds emojis for the bot.
+const EMOJI_SERVERS: string[] = [];
+
 /**
+ * The emojis here are typically only those that'll be used by game planner/tracker, as the their names are mapped according to skygame planner data structures
+ * for e.g `id` of an `item`, to make it easier to map it and retrieve corresponding items
+ */
+export let APPLICATION_EMOJIS: Array<
+  APIEmoji & {
+    /**
+     * Array of skygame structure `id`(s) used to identify emoji to their items
+     */
+    identifiers?: number[];
+  }
+> = [];
+
+/**
+ *
  * This is mapping of hashes used for emoji name whose name exceeded the 32 char limit, the values are base 36 encoded id of item joined together by "_".
  *
  */
@@ -82,3 +105,68 @@ export const EMOJIS_HASH = {
   // Icon: https://static.wikia.nocookie.net/sky-children-of-the-light/images/f/f0/MusicSheetN-Ray.png
   h_4caee4d016bcc2b: "1gi_1lc_1ho_1et_2i_137_yl_fs_15z_mi_vx_rf_113_il_kb_14m_u6_nq_ro_15e_z6",
 };
+
+const BASE_API = "https://discord.com/api/v10";
+
+export async function fetchEmojis() {
+  const fetchedEmojis: APIEmoji[] = [];
+
+  // fetch all the guild emojis
+  for (const guildId of EMOJI_SERVERS) {
+    console.log(`Fetching emojis form guild: ${guildId}...`);
+    const res = await fetch(`${BASE_API}/guilds/${guildId}/emojis`, {
+      headers: {
+        Authorization: `Bot ${process.env.TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      console.error(`Failed to fetch emojis from guild ${guildId}: ${res.status} ${res.statusText}`);
+      continue;
+    }
+    const emojis = (await res.json()) as APIEmoji[];
+    console.log(`Fetched ${emojis.length} emojis from guild: ${guildId}`);
+    fetchedEmojis.push(...emojis);
+  }
+
+  // Fetch application emojis
+  console.log(`Fetching application emojis...`);
+  const appRes = await fetch(`${BASE_API}/applications/${process.env.CLIENT_ID}/emojis`, {
+    headers: {
+      Authorization: `Bot ${process.env.TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const appEmojis = (await appRes.json().then((r) => r.items)) as APIEmoji[];
+  console.log(`Fetched ${appEmojis.length} application emojis`);
+  fetchedEmojis.push(...appEmojis);
+  return transformEmojis(fetchedEmojis);
+}
+
+function transformEmojis(emojis: APIEmoji[]) {
+  const transformed: Array<
+    APIEmoji & {
+      identifiers?: number[];
+    }
+  > = [];
+
+  console.log("Transforming emojis...");
+  for (const emoji of emojis) {
+    const identifier: string = emoji.name.startsWith("h_") ? (EMOJIS_HASH as any)[emoji.name] : emoji.name;
+    const identifiers = identifier
+      ? identifier
+          .split("_")
+          .map((id: string) => parseInt(id, 36))
+          .filter(Boolean)
+      : undefined;
+    transformed.push({
+      ...emoji,
+      identifiers,
+    });
+  }
+  console.log("Transformed emojis.");
+
+  APPLICATION_EMOJIS = transformed;
+
+  return transformed;
+}
