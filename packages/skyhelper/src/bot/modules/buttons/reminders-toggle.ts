@@ -115,10 +115,20 @@ export default defineButton({
     };
     await helper.launchModal(modal);
 
-    const submit = await client.awaitModal({
-      filter: (i) => i.data.custom_id === modal.custom_id,
-      timeout: 2 * 6e4,
-    });
+    const submit = await client
+      .awaitModal({
+        filter: (i) => i.data.custom_id === modal.custom_id,
+        timeout: 2 * 6e4,
+      })
+      .catch(() => null);
+    if (!submit) {
+      helper.followUp({
+        content: "You did not respond in time. Please try again.",
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
+
     const modalHelper = new InteractionHelper(submit, client);
     await modalHelper.deferUpdate();
 
@@ -135,7 +145,14 @@ export default defineButton({
       events[key] = null;
       if (!rem_helper.checkAnyActive(settings)) settings.reminders.active = false;
       await settings.save();
-      return handleRemindersStatus(modalHelper, settings, guild.name, page);
+      await handleRemindersStatus(modalHelper, settings, guild.name, page);
+      await modalHelper.followUp({
+        content: !s_channel.values.length
+          ? `No channel selected! Reminders for ${RemindersEventsMap[key]} have been disabled.`
+          : `Successfully updated ${RemindersEventsMap[key]} reminders!`,
+        flags: 64,
+      });
+      return;
     }
     const ch = submit.data.resolved?.channels![s_channel.values[0]]!;
     const isThread = "thread_metadata" in ch;
@@ -184,5 +201,10 @@ export default defineButton({
 
     await settings.save();
     await handleRemindersStatus(modalHelper, settings, guild.name, page);
+
+    await modalHelper.followUp({
+      content: `Successfully updated ${RemindersEventsMap[key]} reminders!`,
+      flags: 64,
+    });
   },
 });
