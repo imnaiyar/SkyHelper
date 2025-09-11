@@ -16,6 +16,7 @@ import {
   IRealm,
   IReturningSpirit,
   IReturningSpirits,
+  IRevisedSpiritTree,
   ISeason,
   IShop,
   ISpirit,
@@ -24,6 +25,7 @@ import {
   IWingedLight,
 } from "./interfaces.js";
 import { FetchedData } from "./fetcher.js";
+import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
 
 // Interface for the transformed data with resolved references
 export interface TransformedData {
@@ -177,6 +179,8 @@ function registerGuids(data: TransformedData): void {
   }
 }
 
+const resolveUrl = (url: string) => (url.startsWith("/assets") ? `https://sky-planner.com` + url : url);
+
 /**
  * Resolves all references between objects
  * @param data The transformed data
@@ -185,6 +189,9 @@ function resolveReferences(data: TransformedData): void {
   // Helper function to resolve a reference
   function resolveRef<T>(guidRef: string | undefined): T | undefined {
     if (!guidRef) return undefined;
+
+    // probably already resolved
+    if (typeof guidRef === "object") return guidRef;
     return data.guidMap.get(guidRef) as T;
   }
 
@@ -194,8 +201,18 @@ function resolveReferences(data: TransformedData): void {
     return guidRefs.map((guid) => data.guidMap.get(guid) as T).filter(Boolean);
   }
 
+  // resolve item icons
+  for (const item of data.items) {
+    if (item.previewUrl) item.previewUrl = resolveUrl(item.previewUrl);
+    const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id));
+    if (emoji) {
+      item.icon = emoji.id;
+    }
+  }
+
   // Resolve realm references
   for (const realm of data.realms) {
+    if (realm.imageUrl) realm.imageUrl = resolveUrl(realm.imageUrl);
     if (realm.areas) {
       realm.areas = realm.areas
         .map((areaRef) => {
@@ -217,10 +234,15 @@ function resolveReferences(data: TransformedData): void {
         }
       }
     }
+
+    // resolve icon
+    const emoji: string = (realms_emojis as any)[realm.name];
+    if (emoji) realm.icon = emoji;
   }
 
   // Resolve area references
   for (const area of data.areas) {
+    if (area.imageUrl) area.imageUrl = resolveUrl(area.imageUrl);
     if (area.spirits) {
       area.spirits = area.spirits
         .map((spiritRef) => {
@@ -272,6 +294,7 @@ function resolveReferences(data: TransformedData): void {
 
   // Resolve season references
   for (const season of data.seasons) {
+    if (season.imageUrl) season.imageUrl = resolveUrl(season.imageUrl);
     if (season.spirits) {
       season.spirits = season.spirits
         .map((spiritRef) => {
@@ -299,18 +322,30 @@ function resolveReferences(data: TransformedData): void {
         })
         .filter(Boolean);
     }
+
+    // resolve icons
+    const emoji: string = (season_emojis as any)[season.shortName];
+    if (emoji) season.icon = emoji;
   }
 
   // Resolve spirit references
   for (const spirit of data.spirits) {
+    if (spirit.imageUrl) spirit.imageUrl = resolveUrl(spirit.imageUrl);
     if (spirit.tree) {
-      spirit.tree = resolveRef<ISpiritTree>(spirit.tree as any);
+      const tree = resolveRef<ISpiritTree>(spirit.tree as any);
+      spirit.tree = tree;
+      tree.spirit = spirit;
     }
 
-    // Initialize arrays if they don't exist
-    spirit.travels = [];
-    spirit.events = [];
-    spirit.returns = [];
+    if (spirit.treeRevisions) {
+      spirit.treeRevisions = spirit.treeRevisions
+        .map((revisionRef) => {
+          const revision = resolveRef<IRevisedSpiritTree>(revisionRef as any);
+          if (revision) revision.spirit = spirit;
+          return revision;
+        })
+        .filter(Boolean);
+    }
   }
 
   // Resolve spirit tree references
@@ -320,22 +355,24 @@ function resolveReferences(data: TransformedData): void {
       tree.node = node;
       if (node) node.spiritTree = tree;
     }
-
-    if (tree.spirit) {
-      tree.spirit = resolveRef<ISpirit>(tree.spirit as any);
-    }
   }
 
+  const totalCount: Record<string, number> = {};
   // Resolve traveling spirit references
-  for (const ts of data.travelingSpirits) {
+  for (const [i, ts] of data.travelingSpirits.entries()) {
+    ts.number = i + 1;
     if (ts.spirit) {
       const spirit = resolveRef<ISpirit>(ts.spirit as any);
       ts.spirit = spirit;
       if (spirit) {
-        if (!spirit.travels) spirit.travels = [];
-        spirit.travels.push(ts);
+        spirit.ts ??= [];
+        spirit.ts.push(ts);
       }
     }
+
+    totalCount[ts.spirit.name] ??= 0;
+    totalCount[ts.spirit.name]++;
+    ts.visit = totalCount[ts.spirit.name];
 
     if (ts.tree) {
       const tree = resolveRef<ISpiritTree>(ts.tree as any);

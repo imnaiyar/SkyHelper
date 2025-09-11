@@ -42,6 +42,8 @@ export const SendableChannels = [
   ChannelType.GuildVoice,
 ];
 
+/** Timezone where TGC is based on */
+export const zone = "America/Los_Angeles";
 export const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",

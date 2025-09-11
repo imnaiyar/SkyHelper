@@ -19,9 +19,9 @@ export type OverrideLocalizations<T> = T extends (infer U)[]
 export type IdResolvalble = { id: string } | string | { user: { id: string } };
 
 export type ParsedCustomId = {
-  id: string;
+  id: string | number;
   user?: string;
-  [key: string]: string;
+  [key: string]: string | number | null;
 };
 
 export type TimestampStyles = "d" | "D" | "f" | "F" | "t" | "T" | "R";
