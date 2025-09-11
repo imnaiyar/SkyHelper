@@ -29,6 +29,7 @@ export enum CustomId {
   ShardsRemindersDetails,
   RemindersManage,
   SpiritButton,
+  PlannerTopLevelNav,
 }
 
 export const store = new SchemaStore()
@@ -56,4 +57,5 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.SkyGameLeaderboard).string("type").nullable("user", t.string))
   .add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", t.string))
   .add(new Schema(CustomId.RemindersManage).string("key").uint8("page").string("user"))
-  .add(new Schema(CustomId.SpiritButton).string("spirit_key").nullable("user", t.string));
+  .add(new Schema(CustomId.SpiritButton).string("spirit_key").nullable("user", t.string))
+  .add(new Schema(CustomId.PlannerTopLevelNav).string("tab").nullable("user", t.string));

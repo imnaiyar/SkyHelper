@@ -160,6 +160,10 @@ export interface ISpiritTree extends IGuid {
   eventInstanceSpirit?: IEventInstanceSpirit;
 }
 
+export interface IRevisedSpiritTree extends ISpiritTree {
+  revisionType: "DuringSeason" | "AfterSeason" | "Limited";
+}
+
 export interface ISpiritTreeConfig extends IConfig<ISpiritTree> {}
 
 /**
@@ -168,39 +172,52 @@ export interface ISpiritTreeConfig extends IConfig<ISpiritTree> {}
 export type SpiritType = "Regular" | "Elder" | "Guide" | "Season" | "Event" | "Special";
 
 export interface ISpirit extends IGuid {
-  /** Spirit name. */
+  /** Name of the spirit. */
   name: string;
-  /** Short name. */
-  shortName?: string;
-  /** Spirit type. */
-  type?: SpiritType | string;
-  /** Path to spirit icon. */
-  iconUrl?: string;
-  /** Description. */
-  description?: string;
-  /** Hints to finding the spirit. */
-  hints?: string[];
-  /** Link to an embedded YouTube video. */
-  videoUrl?: string;
-  /** Whether the spirit is a returnee. */
-  ts?: boolean;
-  /** Elder gift (wing buffs). */
-  gift?: string;
-  /** Spirit order. */
-  order?: number;
-  /** If marked as draft, data may be inaccurate or incomplete. */
-  draft?: boolean;
+  /** Type of the spirit. */
+  type: SpiritType;
 
-  // References
+  /** Image URL. */
+  imageUrl?: string;
+
+  /// References ///
+
+  /**
+   * Main spirit tree(s).
+   * For regular spirits this is the constellation tree.
+   * For season spirits this is the seasonal tree.
+   */
   tree?: ISpiritTree;
+
+  /** Revised versions of the main spirit tree. */
+  treeRevisions?: Array<IRevisedSpiritTree>;
+
+  /** Area this spirit can be found in normally. */
   area?: IArea;
+
+  /** Season this spirit is part of. */
   season?: ISeason;
-  travels?: Array<ITravelingSpirit>;
-  events?: Array<IEventInstanceSpirit>;
+  /** All Traveling Spirit visits of this spirit. */
+  ts?: Array<ITravelingSpirit>;
+
+  /** All visits as returning spirits.  */
   returns?: Array<IReturningSpirit>;
 
-  // Progress
-  relived?: boolean;
+  /** All visits during events. */
+  events?: Array<IEventInstanceSpirit>;
+
+  /** All shop instances. */
+  shops?: Array<IShop>;
+
+  _wiki?: IWiki;
+}
+
+export interface IWiki {
+  href?: string;
+}
+
+export interface ICalendarFm {
+  href?: string;
 }
 
 export interface ISpiritConfig extends IConfig<ISpirit> {}
@@ -235,6 +252,7 @@ export interface IAreaConfig extends IConfig<IArea> {}
 export interface IRealm extends IGuid {
   name: string;
   shortName: string;
+  icon?: string;
   imageUrl?: string;
   imagePosition?: string;
   hidden?: boolean;
@@ -267,6 +285,9 @@ export interface ISeason extends IGuid, IPeriod {
   name: string;
   /** Short name of the season. */
   shortName: string;
+
+  /** Emoji id of the season icon */
+  icon?: string;
   /** Path to the season icon. */
   iconUrl?: string;
   imageUrl?: string;
@@ -303,9 +324,11 @@ export interface IEvent extends IGuid {
   instances?: Array<IEventInstance>;
 }
 
-export interface IEventInstance extends IGuid, IPeriod {
+export interface IEventInstance extends IGuid {
   /** Name for older event instances, used if an event changes name throughout time. */
   name?: string;
+  date: { day: number; month: number; year: number } | string;
+  endDate: { day: number; month: number; year: number } | string;
   shortName?: string;
   /** Event instance number starting at 1. */
   number: number;
