@@ -5,7 +5,7 @@ import type { ReminderFeature } from "../types.js";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
 import { HttpException, HttpStatus } from "@nestjs/common";
-import type { GuildSchema, ReminderConfigWithShards } from "@/types/schemas";
+import type { GuildSchema, ReminderConfig } from "@/types/schemas";
 /* const payload = (r: GuildSchema["reminders"]) => ({
   channel: r.webhook.channelId ?? undefined,
   default_role: r.default_role ?? undefined,
@@ -26,7 +26,6 @@ const formatReminders = (r: GuildSchema["reminders"]) => {
     };
 
     if (key === "shards-eruption") {
-      // @ts-expect-error id have patience to deal with this, it is just present
       acc[key].shard_type = value?.shard_type ?? null;
     }
     return acc;
@@ -68,7 +67,7 @@ export class Reminders {
         ...event,
         role: value.role ?? null,
         offset: value.offset ?? null,
-      } as ReminderConfigWithShards;
+      } as ReminderConfig;
 
       if (key === "shards-eruption") data.shard_type = body["shards-eruption"].shard_type ?? ["red", "black"];
 

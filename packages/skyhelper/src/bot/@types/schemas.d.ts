@@ -55,14 +55,13 @@ export interface ReminderConfig {
   last_messageId: string | null;
   offset?: number | null;
   role: string | null;
+  shard_type?: ("red" | "black")[];
 }
-
-type ReminderConfigWithShards = ReminderConfig & { shard_type: ("red" | "black")[] };
 export interface Reminders {
   active: boolean;
   default_role: string | null;
   events: {
-    [k in (typeof REMINDERS_KEY)[number]]: (k extends "shards-eruption" ? ReminderConfigWithShards : ReminderConfig) | null;
+    [k in (typeof REMINDERS_KEY)[number]]: ReminderConfig | null;
   };
 }
 export interface GuildSchema extends Document {
