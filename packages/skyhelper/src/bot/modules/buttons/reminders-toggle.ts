@@ -182,6 +182,7 @@ export default defineButton({
     }
 
     events[key] = {
+      last_messageId: null,
       ...(events[key] ?? {}),
       role: s_role.values[0] ?? null,
       offset: s_offset.values[0] ? parseInt(s_offset.values[0]) : 0,
@@ -208,3 +209,4 @@ export default defineButton({
     });
   },
 });
+
