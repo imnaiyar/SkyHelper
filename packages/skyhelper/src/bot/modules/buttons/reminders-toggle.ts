@@ -182,7 +182,7 @@ export default defineButton({
     }
 
     events[key] = {
-      ...events[key]!,
+      ...(events[key] ?? {}),
       role: s_role.values[0] ?? null,
       offset: s_offset.values[0] ? parseInt(s_offset.values[0]) : 0,
       shard_type: s_shard_type
