@@ -166,16 +166,23 @@ export interface IRevisedSpiritTree extends ISpiritTree {
 
 export interface ISpiritTreeConfig extends IConfig<ISpiritTree> {}
 
-/**
- * Spirit interfaces
- */
-export type SpiritType = "Regular" | "Elder" | "Guide" | "Season" | "Event" | "Special";
+export enum SpiritType {
+  Regular = "Regular",
+  Elder = "Elder",
+  Guide = "Guide",
+  Season = "Season",
+  Event = "Event",
+  Special = "Special",
+}
 
 export interface ISpirit extends IGuid {
   /** Name of the spirit. */
   name: string;
   /** Type of the spirit. */
   type: SpiritType;
+
+  /** Icon of the expression offered by this spirit, for display purpose */
+  icon?: string;
 
   /** Image URL. */
   imageUrl?: string;
@@ -356,11 +363,15 @@ export interface IEventConfig extends IConfig<IEvent> {}
 /**
  * Traveling Spirit interfaces
  */
-export interface ITravelingSpirit extends IGuid, IPeriod {
+export interface ITravelingSpirit extends IGuid {
   /** Traveling Spirit number, starting at 1 for the first TS visit. */
   number: number;
   /** This is the n-th visit of this spirit. */
   visit: number;
+
+  date: string;
+
+  endDate?: string;
 
   // References
   spirit: ISpirit;
