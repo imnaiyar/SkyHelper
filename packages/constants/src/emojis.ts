@@ -9,7 +9,14 @@ export const emojis = {
   up_chevron: "<:upchevron:1364607855017070632>",
   right_chevron: "<:rightchevron:1364607835211829431>",
   "30s_timer": "<a:30sec:1288835107804676243>",
-};
+  eventticket: "1416043852292427927",
+  wingwedge: "1416073680815128757",
+  leftarrow: "1416505206623043584",
+  realmelders: "1416536755477417984",
+  regularspirit: "1416537223112818728",
+  auroraguide: "1416538342518034623",
+  travelingspirit: "1416539464590950441",
+} as const;
 
 export const realms_emojis = {
   "Isle of Dawn": "1150605424752590868",
@@ -21,7 +28,7 @@ export const realms_emojis = {
   "Eye of Eden": "1205960597456293969",
   "Aviary Village": "1388112731886059632",
   Home: "1414190709287813181",
-};
+} as const;
 
 export const season_emojis = {
   "Two Embers - Part 1": "1414189997581537381",
@@ -50,6 +57,15 @@ export const season_emojis = {
   Belonging: "1130958323823423509",
   Lightseekers: "1130958300293365870",
   Gratitude: "1130958261349261435",
+} as const;
+
+export const currency = {
+  h: "1416318595604156467",
+  c: "1416318251247337482",
+  ac: "1416316625522528357",
+  sc: "1416315963149778944",
+  sh: "1416316365727338496",
+  ec: "1416043852292427927",
 };
 
 // These are the server that holds emojis for the bot.
@@ -59,7 +75,7 @@ const EMOJI_SERVERS: string[] = [];
  * The emojis here are typically only those that'll be used by game planner/tracker, as the their names are mapped according to skygame planner data structures
  * for e.g `id` of an `item`, to make it easier to map it and retrieve corresponding items
  */
-export let APPLICATION_EMOJIS: Array<
+export const APPLICATION_EMOJIS: Array<
   APIEmoji & {
     /**
      * Array of skygame structure `id`(s) used to identify emoji to their items
@@ -164,9 +180,9 @@ function transformEmojis(emojis: APIEmoji[]) {
       identifiers,
     });
   }
-  console.log("Transformed emojis.");
+  console.log(`Transformed emojis: ${transformed.length}`);
 
-  APPLICATION_EMOJIS = transformed;
+  APPLICATION_EMOJIS.push(...transformed);
 
   return transformed;
 }

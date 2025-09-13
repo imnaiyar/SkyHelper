@@ -201,7 +201,7 @@ function resolveReferences(data: TransformedData): void {
     return guidRefs.map((guid) => data.guidMap.get(guid) as T).filter(Boolean);
   }
 
-  // resolve item icons
+  // #region data.items
   for (const item of data.items) {
     if (item.previewUrl) item.previewUrl = resolveUrl(item.previewUrl);
     const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id));
@@ -210,7 +210,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve realm references
+  // #region data.realms
   for (const realm of data.realms) {
     if (realm.imageUrl) realm.imageUrl = resolveUrl(realm.imageUrl);
     if (realm.areas) {
@@ -240,7 +240,7 @@ function resolveReferences(data: TransformedData): void {
     if (emoji) realm.icon = emoji;
   }
 
-  // Resolve area references
+  // #region data.areas
   for (const area of data.areas) {
     if (area.imageUrl) area.imageUrl = resolveUrl(area.imageUrl);
     if (area.spirits) {
@@ -292,7 +292,53 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve season references
+  // #region data.itemListNodes
+  for (const node of data.itemListNodes) {
+    if (node.item) {
+      const item = resolveRef<IItem>(node.item as any);
+      node.item = item;
+      if (item) {
+        if (!item.listNodes) item.listNodes = [];
+        item.listNodes.push(node);
+      }
+    }
+  }
+
+  // #region data.nodes
+  for (const node of data.nodes) {
+    if (node.item) {
+      const item = resolveRef<IItem>(node.item as any);
+      node.item = item;
+      if (item) {
+        if (!item.nodes) item.nodes = [];
+        item.nodes.push(node);
+      }
+    }
+
+    if (node.nw) {
+      node.nw = resolveRef<INode>(node.nw as any);
+      node.nw.prev = node;
+    }
+
+    if (node.ne) {
+      node.ne = resolveRef<INode>(node.ne as any);
+      node.ne.prev = node;
+    }
+
+    if (node.n) {
+      node.n = resolveRef<INode>(node.n as any);
+      node.n.prev = node;
+    }
+
+    // Find root node
+    let current = node;
+    while (current.prev) {
+      current = current.prev;
+    }
+    node.root = current;
+  }
+
+  // #region data.seasons
   for (const season of data.seasons) {
     if (season.imageUrl) season.imageUrl = resolveUrl(season.imageUrl);
     if (season.spirits) {
@@ -328,7 +374,16 @@ function resolveReferences(data: TransformedData): void {
     if (emoji) season.icon = emoji;
   }
 
-  // Resolve spirit references
+  //#region data.spiritTrees
+  for (const tree of data.spiritTrees) {
+    if (tree.node) {
+      const node = resolveRef<INode>(tree.node as any);
+      tree.node = node;
+      if (node) node.spiritTree = tree;
+    }
+  }
+
+  //#region data.spirits
   for (const spirit of data.spirits) {
     if (spirit.imageUrl) spirit.imageUrl = resolveUrl(spirit.imageUrl);
     if (spirit.tree) {
@@ -346,17 +401,17 @@ function resolveReferences(data: TransformedData): void {
         })
         .filter(Boolean);
     }
+
+    // try to find spirits expression icon as spirits icon
+    const nn = data.nodes.find(
+      (n) => ["Emote", "Stance", "Call"].includes(n.item.type) && n.root.spiritTree?.guid === spirit.tree?.guid,
+    );
+    if (nn) spirit.icon = nn.item.icon;
+    // If there is no expression for the spirit, use the root node's item icon
+    else if (spirit.tree?.node.item?.icon) spirit.icon = spirit.tree.node.item.icon;
   }
 
-  // Resolve spirit tree references
-  for (const tree of data.spiritTrees) {
-    if (tree.node) {
-      const node = resolveRef<INode>(tree.node as any);
-      tree.node = node;
-      if (node) node.spiritTree = tree;
-    }
-  }
-
+  // #region data.travelingSpirits
   const totalCount: Record<string, number> = {};
   // Resolve traveling spirit references
   for (const [i, ts] of data.travelingSpirits.entries()) {
@@ -381,7 +436,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve returning spirits references
+  // #region data.returningSpirits
   for (const rs of data.returningSpirits) {
     if (rs.spirits) {
       rs.spirits = rs.spirits
@@ -394,6 +449,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
+  // #region data.returningSpiritsVisits
   for (const visit of data.returningSpiritsVisits) {
     if (visit.spirit) {
       const spirit = resolveRef<ISpirit>(visit.spirit as any);
@@ -411,7 +467,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve event references
+  // #region data.events
   for (const event of data.events) {
     if (event.instances) {
       event.instances = event.instances
@@ -424,6 +480,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
+  // #region data.eventInstances
   for (const instance of data.eventInstances) {
     if (instance.shops) {
       instance.shops = instance.shops
@@ -446,6 +503,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
+  // #region data.eventInstanceSpirits
   for (const eventSpirit of data.eventInstanceSpirits) {
     if (eventSpirit.spirit) {
       const spirit = resolveRef<ISpirit>(eventSpirit.spirit as any);
@@ -463,7 +521,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve shop references
+  // #region data.shops
   for (const shop of data.shops) {
     if (shop.iaps) {
       shop.iaps = shop.iaps
@@ -486,7 +544,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve IAP references
+  // #region data.iaps
   for (const iap of data.iaps) {
     if (iap.items) {
       iap.items = iap.items
@@ -502,7 +560,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  // Resolve item list references
+  // #region data.itemLists
   for (const list of data.itemLists) {
     if (list.items) {
       list.items = list.items
@@ -513,55 +571,6 @@ function resolveReferences(data: TransformedData): void {
         })
         .filter(Boolean);
     }
-  }
-
-  for (const node of data.itemListNodes) {
-    if (node.item) {
-      const item = resolveRef<IItem>(node.item as any);
-      node.item = item;
-      if (item) {
-        if (!item.listNodes) item.listNodes = [];
-        item.listNodes.push(node);
-      }
-    }
-  }
-
-  // Resolve node references
-  for (const node of data.nodes) {
-    if (node.item) {
-      const item = resolveRef<IItem>(node.item as any);
-      node.item = item;
-      if (item) {
-        if (!item.nodes) item.nodes = [];
-        item.nodes.push(node);
-      }
-    }
-
-    if (node.nw) {
-      node.nw = resolveRef<INode>(node.nw as any);
-    }
-
-    if (node.ne) {
-      node.ne = resolveRef<INode>(node.ne as any);
-    }
-
-    if (node.n) {
-      node.n = resolveRef<INode>(node.n as any);
-    }
-  }
-
-  // Resolve node prev/root relationships
-  for (const node of data.nodes) {
-    if (node.nw && !node.nw.prev) node.nw.prev = node;
-    if (node.ne && !node.ne.prev) node.ne.prev = node;
-    if (node.n && !node.n.prev) node.n.prev = node;
-
-    // Find root node
-    let current = node;
-    while (current.prev) {
-      current = current.prev;
-    }
-    node.root = current;
   }
 
   // Recursively walk through the node tree and set season on items

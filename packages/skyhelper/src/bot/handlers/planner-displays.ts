@@ -1,48 +1,17 @@
 import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
 import { SkyPlannerData } from "@skyhelperbot/constants";
-import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
-import type { NavigationState } from "./planner.js";
-
-/**
- * Creates a row of category buttons for navigation
- */
-export function createCategoryRow(activeCategory: string, user?: string, backOption?: { page?: number }) {
-  // Define categories
-  const TOP_LEVEL_CATEGORIES = ["home", "realms", "areas", "spirits", "season", "events", "items", "search"];
-
-  // Define buttons per row (for responsive UI)
-  const BUTTONS_PER_ROW = 5;
-
-  // Create a button for each category
-  const categoryButtons = TOP_LEVEL_CATEGORIES.map((category) => ({
-    type: ComponentType.Button as const,
-    label: backOption && category === activeCategory ? "Back" : category.charAt(0).toUpperCase() + category.slice(1),
-    custom_id: store
-      .serialize(CustomId.PlannerTopLevelNav, {
-        tab: Utils.encodeCustomId({ id: "42", tab: category, item: null, page: backOption?.page ?? null }),
-        user,
-      })
-      .toString(),
-    style: category === activeCategory ? (backOption ? 4 : 3) : 2,
-    disabled: category === activeCategory && !backOption,
-  }));
-
-  // Split buttons into rows
-  const rows = [];
-  for (let i = 0; i < categoryButtons.length; i += BUTTONS_PER_ROW) {
-    rows.push(row(categoryButtons.slice(i, i + BUTTONS_PER_ROW)));
-  }
-
-  return rows;
-}
+import { createCategoryRow, type NavigationState, type TopLevelCategory } from "./planner.js";
+import type { TransformedData } from "node_modules/@skyhelperbot/constants/dist/skygame-planner/transformer.js";
 
 /**
  * Helper function to create pagination controls
  */
 export function createPaginationRow(currentPage: number, totalPages: number, tab: string, user?: string, item?: string | null) {
-  console.log(currentPage, totalPages, tab, user, item);
+  console.log(currentPage, totalPages, Math.min(totalPages, currentPage + 1));
+
   return row(
     {
       type: ComponentType.Button,
@@ -112,7 +81,7 @@ export function formatDateTimestamp(date: any, style?: string) {
 /**
  * Display for a list of realms
  */
-export function getRealmsListDisplay(user?: string, data?: any, page: number = 1) {
+export function getRealmsListDisplay(data: TransformedData, user?: string, page: number = 1) {
   const pageSize = 4;
   const realms: SkyPlannerData.IRealm[] = data.realms;
   const totalPages = Math.ceil(realms.length / pageSize);
@@ -122,7 +91,7 @@ export function getRealmsListDisplay(user?: string, data?: any, page: number = 1
 
   const components = [
     container(
-      createCategoryRow("realms", user),
+      createCategoryRow("realms", data, user),
       separator(),
       textDisplay(`# Realms`),
       ...displayedRealms.map((realm) =>
@@ -156,7 +125,7 @@ export function getRealmsListDisplay(user?: string, data?: any, page: number = 1
 /**
  * Display for a specific realm
  */
-export function getRealmDisplay(realmId: string, user?: string, data?: any, page?: number) {
+export function getRealmDisplay(realmId: string, data: TransformedData, user?: string, page?: number) {
   const realm = SkyPlannerData.getRealmById(realmId, data);
   if (!realm) {
     return {
@@ -184,7 +153,7 @@ export function getRealmDisplay(realmId: string, user?: string, data?: any, page
 
   const components = [
     container(
-      createCategoryRow("realms", user, { page }),
+      createCategoryRow("realms", data, user, { page }),
       separator(),
       textDisplay(`# ${realm.name}`),
       ...(realm.imageUrl ? [mediaGallery(mediaGalleryItem(realm.imageUrl))] : []),
@@ -319,12 +288,15 @@ export function getComingSoonDisplay(feature: string, user?: string) {
 interface IPaginatedProps<T> {
   title: string;
   items: T[];
+  data: TransformedData;
   user?: string;
-  tab: string;
+  tab: TopLevelCategory;
   page?: number;
-  itemLabelFn: (i: T) => string;
-  itemDescFn: (i: T) => string;
-  itemGuidFn: (i: T) => string;
+  filter?: string;
+  itemLabelFn?: (i: T) => string;
+  itemDescFn?: (i: T) => string;
+  itemGuidFn?: (i: T) => string;
+  itemCallback?: (i: T) => APIComponentInContainer[];
   maxComponents?: number;
 }
 // Helper for paginated list display
@@ -332,26 +304,24 @@ function displayPaginatedList<T>({
   title,
   items,
   user,
+  data,
   tab,
   page = 1,
   itemLabelFn,
   itemDescFn,
   itemGuidFn,
-  maxComponents = 40,
+  itemCallback,
 }: IPaginatedProps<T>) {
-  const pageSize = 5; // 2 components per item, reserve for nav/buttons
+  const pageSize = 4;
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
   const startIndex = (page - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, items.length);
   const displayedItems: T[] = items.slice(startIndex, endIndex);
-  let components: APIComponentInContainer[] = [
-    ...createCategoryRow(tab, user),
-    separator(),
-    textDisplay(`# ${title} (${items.length})`),
-    separator(),
-  ];
+
+  const components: APIComponentInContainer[] = [...createCategoryRow(tab, data, user), separator()];
   for (const [i, item] of displayedItems.entries()) {
-    if (components.length + 2 > maxComponents) break;
+    if (itemCallback) components.push(...itemCallback(item));
+    if (!itemLabelFn || !itemDescFn || !itemGuidFn) continue;
     components.push(
       section(
         {
@@ -370,7 +340,6 @@ function displayPaginatedList<T>({
       ),
     );
   }
-  components.push(separator());
   components.push(createPaginationRow(page, totalPages, tab, user));
 
   return {
@@ -379,9 +348,11 @@ function displayPaginatedList<T>({
   };
 }
 
-export function getAreasListDisplay(user?: string, data?: any, page: number = 1) {
+// TODO: possibly reuse it when implementing areas
+/* export function getAreasListDisplay(data: TransformedData, user?: string, page: number = 1) {
   return displayPaginatedList({
     title: "Areas",
+    data,
     items: data.areas as SkyPlannerData.IArea[],
     user,
     tab: "areas",
@@ -393,11 +364,11 @@ export function getAreasListDisplay(user?: string, data?: any, page: number = 1)
   });
 }
 
-export function getAreaDisplay(areaId: string, user?: string, data?: SkyPlannerData.TransformedData) {
+export function getAreaDisplay(areaId: string, data: TransformedData, user?: string) {
   const area = data?.areas.find((a) => a.guid === areaId);
   if (!area) return getComingSoonDisplay("Area Details", user);
   let components = [
-    ...createCategoryRow("areas", user),
+    ...createCategoryRow("areas", data, user, {}),
     separator(),
     textDisplay(`# ${area.name}`),
     ...(area.imageUrl ? [mediaGallery(mediaGalleryItem(area.imageUrl))] : []),
@@ -405,29 +376,15 @@ export function getAreaDisplay(areaId: string, user?: string, data?: SkyPlannerD
     textDisplay(
       `Realm: ${area.realm?.name || "Unknown"}\nSpirits: ${area.spirits?.length || 0}\nWinged Light: ${area.wingedLights?.length || 0}`,
     ),
-    separator(),
-    row(
-      {
-        type: ComponentType.Button,
-        label: "Back to Areas",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "areas", user }).toString(),
-        style: 2,
-      },
-      {
-        type: ComponentType.Button,
-        label: "Home",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "home", user }).toString(),
-        style: 2,
-      },
-    ),
   ];
   return { flags: MessageFlags.IsComponentsV2, components };
-}
-
-export function getSpiritsListDisplay(user?: string, data?: SkyPlannerData.TransformedData, page: number = 1) {
+} */
+const spirit_cat = ["Regular", "Season", "Elder", "Guide", "Special Spirits"];
+export function getSpiritsListDisplay(data: TransformedData, user?: string, page: number = 1) {
   return displayPaginatedList({
     title: "Spirits",
-    items: data?.spirits ?? [],
+    data,
+    items: data.spirits ?? [],
     user,
     tab: "spirits",
     page,
@@ -437,81 +394,51 @@ export function getSpiritsListDisplay(user?: string, data?: SkyPlannerData.Trans
   });
 }
 
-export function getSpiritDisplay(spiritId: string, user?: string, data?: SkyPlannerData.TransformedData) {
+export function getSpiritDisplay(spiritId: string, data: TransformedData, user?: string) {
   const spirit = data?.spirits.find((s) => s.guid === spiritId);
   if (!spirit) return getComingSoonDisplay("Spirit Details", user);
   let components = [
-    ...createCategoryRow("spirits", user),
+    ...createCategoryRow("spirits", data, user, {}),
     separator(),
     textDisplay(`# ${spirit.name || "Unknown Spirit"}`),
     ...(spirit.imageUrl ? [mediaGallery(mediaGalleryItem(spirit.imageUrl))] : []),
     separator(),
     textDisplay(`Season: ${spirit.season?.name || "Base Game"}\nType: ${spirit.type || ""}`),
-    separator(),
-    row(
-      {
-        type: ComponentType.Button,
-        label: "Back to Spirits",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "spirits", user }).toString(),
-        style: 2,
-      },
-      {
-        type: ComponentType.Button,
-        label: "Home",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "home", user }).toString(),
-        style: 2,
-      },
-    ),
   ];
   return { flags: MessageFlags.IsComponentsV2, components };
 }
 
-export function getSeasonsListDisplay(user?: string, data?: SkyPlannerData.TransformedData, page: number = 1) {
+export function getSeasonsListDisplay(data: SkyPlannerData.TransformedData, user?: string, page: number = 1) {
   return displayPaginatedList({
     title: "Seasons",
     items: data?.seasons ?? [],
+    data,
     user,
     tab: "season",
     page,
-    itemLabelFn: (s) => s.name,
-    itemDescFn: (s) => `Start: ${formatDateTimestamp(s.date)} • End: ${formatDateTimestamp(s.endDate)}`,
-    itemGuidFn: (s) => s.guid,
+    itemCallback: (s) => getSeasonInListDisplay(s, user),
   });
 }
 
-export function getSeasonDisplay(seasonId: string, user?: string, data?: SkyPlannerData.TransformedData) {
+export function getSeasonDisplay(seasonId: string, data: SkyPlannerData.TransformedData, user?: string) {
   const season = data?.seasons.find((s) => s.guid === seasonId);
   if (!season) return getComingSoonDisplay("Season Details", user);
   let components = [
-    ...createCategoryRow("season", user),
+    ...createCategoryRow("season", data, user, {}),
     separator(),
     textDisplay(`# ${season.name}`),
     ...(season.imageUrl ? [mediaGallery(mediaGalleryItem(season.imageUrl))] : []),
     separator(),
     textDisplay(`Start: ${formatDateTimestamp(season.date)}\nEnd: ${formatDateTimestamp(season.endDate)}`),
-    separator(),
-    row(
-      {
-        type: ComponentType.Button,
-        label: "Back to Seasons",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "season", user }).toString(),
-        style: 2,
-      },
-      {
-        type: ComponentType.Button,
-        label: "Home",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "home", user }).toString(),
-        style: 2,
-      },
-    ),
   ];
   return { flags: MessageFlags.IsComponentsV2, components };
 }
 
-export function getEventsListDisplay(user?: string, data?: SkyPlannerData.TransformedData, page: number = 1) {
+export function getEventsListDisplay(data: SkyPlannerData.TransformedData, user?: string, page: number = 1) {
   return displayPaginatedList({
     title: "Events",
     items: data?.events ?? [],
+    data,
     user,
     tab: "events",
     page,
@@ -521,39 +448,25 @@ export function getEventsListDisplay(user?: string, data?: SkyPlannerData.Transf
   });
 }
 
-export function getEventDisplay(eventId: string, user?: string, data?: SkyPlannerData.TransformedData) {
+export function getEventDisplay(eventId: string, data: SkyPlannerData.TransformedData, user?: string) {
   const event = data?.events.find((e) => e.guid === eventId);
   if (!event) return getComingSoonDisplay("Event Details", user);
   let components = [
-    ...createCategoryRow("events", user),
+    ...createCategoryRow("events", data, user, {}),
     separator(),
     textDisplay(`# ${event.name}`),
     ...(event.imageUrl ? [mediaGallery(mediaGalleryItem(event.imageUrl))] : []),
     separator(),
     textDisplay(`Instances: ${event.instances?.length || 0}`),
-    separator(),
-    row(
-      {
-        type: ComponentType.Button,
-        label: "Back to Events",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "events", user }).toString(),
-        style: 2,
-      },
-      {
-        type: ComponentType.Button,
-        label: "Home",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "home", user }).toString(),
-        style: 2,
-      },
-    ),
   ];
   return { flags: MessageFlags.IsComponentsV2, components };
 }
 
-export function getItemsListDisplay(user?: string, data?: SkyPlannerData.TransformedData, page: number = 1) {
+export function getItemsListDisplay(data: SkyPlannerData.TransformedData, user?: string, page: number = 1) {
   return displayPaginatedList({
     title: "Items",
     items: data?.items ?? [],
+    data,
     user,
     tab: "items",
     page,
@@ -563,31 +476,16 @@ export function getItemsListDisplay(user?: string, data?: SkyPlannerData.Transfo
   });
 }
 
-export function getItemDisplay(itemId: string, user?: string, data?: SkyPlannerData.TransformedData) {
+export function getItemDisplay(itemId: string, data: SkyPlannerData.TransformedData, user?: string) {
   const item = data?.items.find((i) => i.guid === itemId);
   if (!item) return getComingSoonDisplay("Item Details", user);
   let components = [
-    ...createCategoryRow("items", user),
+    ...createCategoryRow("items", data, user, {}),
     separator(),
     textDisplay(`# ${item.name}`),
     ...(item.previewUrl ? [mediaGallery(mediaGalleryItem(item.previewUrl))] : []),
     separator(),
     textDisplay(`Type: ${item.type || ""}`),
-    separator(),
-    row(
-      {
-        type: ComponentType.Button,
-        label: "Back to Items",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "items", user }).toString(),
-        style: 2,
-      },
-      {
-        type: ComponentType.Button,
-        label: "Home",
-        custom_id: store.serialize(CustomId.PlannerTopLevelNav, { tab: "home", user }).toString(),
-        style: 2,
-      },
-    ),
   ];
   return { flags: MessageFlags.IsComponentsV2, components };
 }
@@ -600,6 +498,7 @@ export function getSearchDisplay(query?: string | null, user?: string, data?: an
     title: `Search Results for "${query}"`,
     items: results,
     user,
+    // @ts-expect-error cos not implemented yet
     tab: "search",
     page: 1,
     itemLabelFn: (r) => `${r.type}: ${r.name}`,
@@ -609,11 +508,46 @@ export function getSearchDisplay(query?: string | null, user?: string, data?: an
 }
 
 export function getFavoritesDisplay(user?: string, data?: any) {
-  // Placeholder: implement user favorites
+  // TODO: implement user favorites
   return getComingSoonDisplay("Favorites", user);
 }
 
-export function getSettingsDisplay(user?: string) {
-  // Placeholder: implement settings
-  return getComingSoonDisplay("Settings", user);
+export function getSeasonInListDisplay(season: SkyPlannerData.ISeason, user?: string) {
+  const totalcosts = season.spirits?.reduce(
+    (acc, spirit) => {
+      if (!spirit.tree?.node) return acc;
+      const costs = SkyPlannerData.calculateCost(spirit.tree.node);
+      for (const key of Object.keys(acc)) {
+        acc[key as keyof typeof acc] += costs[key as keyof typeof costs] ?? 0;
+      }
+      return acc;
+    },
+    { h: 0, c: 0, ac: 0, sc: 0, sh: 0, ec: 0 },
+  );
+  const formatted = totalcosts && SkyPlannerData.formatCosts(totalcosts);
+
+  const descriptions: [string, ...string[]] = [
+    `${formatDateTimestamp(season.date)} - End: ${formatDateTimestamp(season.endDate)} (${formatDateTimestamp(season.endDate, "R")})`,
+    season.spirits.map((s) => (s.icon ? `<:${s.name.split(/[\s'\-,]+/).join("")}:${s.icon}>` : "")).join(" "),
+    formatted ?? "",
+  ];
+
+  return [
+    section(
+      {
+        type: ComponentType.Button,
+        label: "View Season",
+        custom_id: store
+          .serialize(CustomId.PlannerTopLevelNav, {
+            tab: Utils.encodeCustomId({ id: "12", tab: "season", item: season.guid }),
+            user,
+          })
+          .toString(),
+        style: 1,
+      },
+      `### ${season.icon ? `<:${season.shortName.split(/[\s'\-,]+/).join("")}:${season.icon}>` : ""} **${season.name}**`,
+    ),
+    season.imageUrl ? section(thumbnail(season.imageUrl), ...descriptions) : textDisplay(...descriptions),
+    separator(),
+  ];
 }

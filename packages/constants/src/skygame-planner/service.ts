@@ -3,9 +3,9 @@
  * This file provides the main interface for accessing SkyGame Planner data
  */
 import { resolve } from "path";
-import { fetchEmojis, zone } from "../index.js";
+import { currency, fetchEmojis, zone } from "../index.js";
 import { fetchAllData } from "./fetcher.js";
-import { IEvent, IEventInstance } from "./interfaces.js";
+import { IEvent, IEventInstance, INode, ISpiritTree } from "./interfaces.js";
 import { transformData, TransformedData } from "./transformer.js";
 import { DateTime } from "luxon";
 
@@ -25,10 +25,10 @@ export async function getSkyGamePlannerData(forceRefresh = false): Promise<Trans
   if (!cachedData || cacheExpired || forceRefresh) {
     console.log("Fetching SkyGame Planner data...");
     const fetchedData = await fetchAllData();
+    await fetchEmojis();
     console.log("Transforming SkyGame Planner data...");
     cachedData = transformData(fetchedData);
     lastFetchTime = now;
-    await fetchEmojis();
     console.log("SkyGame Planner data loaded successfully");
   }
 
@@ -225,7 +225,7 @@ export function getCurrentTravelingSpirit(data: TransformedData) {
   const now = DateTime.now().setZone(zone);
   return data.travelingSpirits.find((ts) => {
     const startDate = resolveToLuxon(ts.date);
-    const endDate = resolveToLuxon(ts.endDate);
+    const endDate = !ts.endDate ? startDate.plus({ day: 3 }) : resolveToLuxon(ts.endDate);
     return now >= startDate && now <= endDate;
   });
 }
@@ -367,9 +367,44 @@ export function getDataStats(data: TransformedData) {
   };
 }
 
-export function resolveToLuxon(date: { day: number; month: number; year: number } | string) {
+export function resolveToLuxon(date: { day: number; month: number; year: number } | string | DateTime) {
+  if (date instanceof DateTime) return date;
   if (typeof date === "string") {
     return DateTime.fromFormat(date, "yyyy-MM-dd", { zone });
   }
   return DateTime.fromObject(date as { day: number; month: number; year: number }, { zone });
+}
+
+/**
+ * Calculate total costs of all nodes walkip upto all the references
+ */
+export function calculateCost(node: INode) {
+  const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
+  const addCurrency = (type: any) => {
+    for (const currency of Object.keys(costs)) {
+      costs[currency as keyof typeof costs] += type[currency as keyof typeof costs] ?? 0;
+    }
+  };
+  addCurrency(node);
+  if (node.nw) addCurrency(calculateCost(node.nw));
+  if (node.ne) addCurrency(calculateCost(node.ne));
+  if (node.n) addCurrency(calculateCost(node.n));
+
+  return costs;
+}
+
+export function formatCosts(costs: { h: number; c: number; sc: number; sh: number; ac: number; ec: number }) {
+  const parts = [];
+  if (costs.h) parts.push(`${costs.h} <:Heart:${currency.h}>`);
+  if (costs.c) parts.push(`${costs.c} <:Candle:${currency.c}>`);
+  if (costs.sc) parts.push(`${costs.sc} <:SeasonCandle:${currency.sc}>`);
+  if (costs.sh) parts.push(`${costs.sh} <:SeasonHeart:${currency.sh}>`);
+  if (costs.ac) parts.push(`${costs.ac} <:AC:${currency.ac}>`);
+  if (costs.ec) parts.push(`${costs.ec} <:EventTicket:${currency.ec}>`);
+  return parts.join(" ");
+}
+
+export function getFormattedTreeCost(tree: ISpiritTree) {
+  const c = calculateCost(tree.node);
+  return formatCosts(c);
 }

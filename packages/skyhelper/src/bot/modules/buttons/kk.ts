@@ -14,19 +14,20 @@ export default defineButton({
   // Handle the button interaction
   async execute(interaction, t, helper, data) {
     // Extract navigation state from the button data
-    const { tab, item, page, user } = helper.client.utils.parseCustomId(data.tab) as unknown as NavigationState & { id: string };
+    const { tab, item, page, user, filter } = helper.client.utils.parseCustomId(data.tab) as unknown as NavigationState & {
+      id: string;
+    };
 
-    // Show thinking indicator while we process
     await helper.deferUpdate();
+    const p = page ? parseInt(page as unknown as string) : undefined;
 
-    // Handle the navigation and get the response
     const response = await handlePlannerNavigation({
       tab: tab as any,
       item,
-      page: page ?? undefined,
+      page: p ?? undefined,
+      filter,
     });
 
-    // Edit the original message with the new content
     await helper.editReply({
       components: response.components,
       flags: MessageFlags.IsComponentsV2,
