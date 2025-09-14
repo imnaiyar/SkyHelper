@@ -15,20 +15,21 @@ const emojisMap = {
 } as const;
 
 export class SpiritsDisplay extends BasePlannerHandler {
-  spiritlist(o: SpiritListOptions) {
+  handle() {
     const spirits = this.data.spirits;
+    this.state.filter ??= SpiritNav[0]; // set filter to regular if not present
     const filternav = SpiritNav.map((s, i) =>
       button({
         label: s,
         custom_id: store
           .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ tab: "spirits", filter: s, page: o.page ?? 1, id: i }),
-            user: o.user,
+            tab: Utils.encodeCustomId({ tab: "spirits", filter: s, page: this.state.page ?? 1, id: i }),
+            user: this.state.user,
           })
           .toString(),
         emoji: { id: emojisMap[s] },
-        style: o.filter === s ? 3 : 2,
-        disabled: o.filter === s,
+        style: this.state.filter === s ? 3 : 2,
+        disabled: this.state.filter === s,
       }),
     );
     const uppercomponent = (title: string) => [
@@ -36,7 +37,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
       section(
         button({
           label: "Home",
-          custom_id: this.createCustomId(DisplayTabs.Home, o.user),
+          custom_id: this.createCustomId(DisplayTabs.Home, this.state.user),
           style: 4,
           emoji: { id: emojis.leftarrow },
         }),
@@ -47,39 +48,39 @@ export class SpiritsDisplay extends BasePlannerHandler {
 
     const components: APIComponentInContainer[] = [];
 
-    switch (o.filter) {
+    switch (this.state.filter) {
       case p.SpiritType.Regular:
       case p.SpiritType.Season:
       case p.SpiritType.Elder:
       case p.SpiritType.Guide:
-        const spiritsOfType = spirits.filter((s) => s.type === o.filter);
-        components.push(...uppercomponent(`${o.filter} Spirits (${spiritsOfType.length})`));
+        const spiritsOfType = spirits.filter((s) => s.type === this.state.filter);
+        components.push(...uppercomponent(`${this.state.filter} Spirits (${spiritsOfType.length})`));
         components.push(
           ...this.displayPaginatedList({
             items: spiritsOfType,
-            user: o.user,
-            page: o.page ?? 1,
-            filter: o.filter,
+            user: this.state.user,
+            filter: this.state.filter,
             tab: DisplayTabs.Spirits,
             perpage: 7,
-            itemCallback: (s) => this.spiritInList(s, o.user, { page: o.page, filter: o.filter }),
+            itemCallback: (s) => this.spiritInList(s, { page: this.state.page, filter: this.state.filter }),
           }),
         );
         break;
       case "TS":
         components.push(...uppercomponent(`Traveling Spirits (${this.data.travelingSpirits.length})`));
-        components.push(...this.tslist({ page: o.page ?? 1, user: o.user }));
+        components.push(...this.tslist());
         break;
     }
+
     return { components: [container(components)] };
   }
 
-  tslist(o: Pick<SpiritListOptions, "page" | "user">) {
+  tslist() {
     const ts = this.data.travelingSpirits;
     return this.displayPaginatedList({
       items: [...ts].reverse(),
-      user: o.user,
-      page: o.page ?? 1,
+      user: this.state.user,
+      page: this.state.page ?? 1,
       filter: "TS",
       tab: DisplayTabs.Spirits,
       perpage: 7,
@@ -87,8 +88,8 @@ export class SpiritsDisplay extends BasePlannerHandler {
         section(
           button({
             label: "View",
-            custom_id: this.createCustomId(DisplayTabs.Spirits, o.user, undefined, t.guid, "TS"),
-            style: 2,
+            custom_id: this.createCustomId(DisplayTabs.Spirits, this.state.user, undefined, t.guid, "TS"),
+            style: 1,
           }),
           `**${this.formatemoji(t.spirit.icon, t.spirit.name)} ${t.spirit.name} (#${t.number})**`,
           `From ${this.formatDateTimestamp(t.date)} to ${this.formatDateTimestamp(t.endDate ? t.endDate : this.planner.resolveToLuxon(t.date).plus({ day: 3 }))}`,
@@ -99,17 +100,18 @@ export class SpiritsDisplay extends BasePlannerHandler {
     });
   }
 
-  spiritInList(spirit: SkyPlannerData.ISpirit, user?: string, back?: { page?: number; filter?: string }) {
+  spiritInList(spirit: SkyPlannerData.ISpirit, back?: { page?: number; filter?: string }) {
     return [
       section(
         button({
           custom_id: this.createCustomId(
             DisplayTabs.Spirits,
-            user,
+            this.state.user,
             back?.page,
             spirit.guid,
-            SpiritNav.includes(spirit.type as any) ? spirit.type : p.SpiritType.Regular,
+            SpiritNav.includes(spirit.type as any) ? spirit.type : (back?.filter ?? p.SpiritType.Regular),
           ),
+          style: 1,
           label: "View",
         }),
         `## ${this.formatemoji(spirit.icon, spirit.name)} ${spirit.name}`,

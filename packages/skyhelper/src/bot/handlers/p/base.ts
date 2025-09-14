@@ -8,9 +8,8 @@ import type { DateTime } from "luxon";
 
 export type NavigationState = {
   /** Current page */
-  page: number;
-  /** Total page */
-  total: number;
+  page?: number;
+
   /** The top level tab it should point to */
   tab: DisplayTabs;
   user?: string;
@@ -38,16 +37,20 @@ const CATEGORY_EMOJI_MAP = {
   [DisplayTabs.Realms]: realms_emojis["Isle of Dawn"],
   [DisplayTabs.Events]: emojis.eventticket,
   [DisplayTabs.WingedLights]: emojis.wingwedge,
+  [DisplayTabs.Items]: "1412842595737931859", // Memory whisperer cape icon
+  [DisplayTabs.Shops]: emojis.shopcart,
+  [DisplayTabs.Spirits]: emojis.realmelders,
 };
 
 export class BasePlannerHandler {
   constructor(
     public data: SkyPlannerData.TransformedData,
     public planner: typeof SkyPlannerData,
+    public state: NavigationState,
   ) {}
 
   /** Create a button row for pagination */
-  paginationBtns({ page, total, tab, user, item, filter }: NavigationState & { total: number }) {
+  paginationBtns({ page, total, tab, user, item, filter }: NavigationState & { page: number; total: number }) {
     const basetabs = { tab, item: item ?? "", filter: filter ?? "" };
     return row(
       button({
@@ -163,7 +166,7 @@ export class BasePlannerHandler {
 
   formatemoji(id?: string, name?: string) {
     if (!id) return "";
-    return `<:${name ? name.split(/[\s'\-,]+/).join("") : "_"}:${id}>`;
+    return `<:${name ? name.split(/[\s'\-,#]+/).join("") : "_"}:${id}>`;
   }
 }
 
