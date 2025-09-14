@@ -16,6 +16,7 @@ export const emojis = {
   regularspirit: "1416537223112818728",
   auroraguide: "1416538342518034623",
   travelingspirit: "1416539464590950441",
+  shopcart: "1416677823254368257",
 } as const;
 
 export const realms_emojis = {
