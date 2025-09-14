@@ -17,7 +17,9 @@ import { DateTime } from "luxon";
 import type { TransformedData } from "node_modules/@skyhelperbot/constants/dist/skygame-planner/transformer.js";
 import { getSeasonInListDisplay } from "./planner-displays.js";
 import { SpiritsDisplay } from "./p/spirits.js";
-import { BasePlannerHandler, DisplayTabs } from "./p/base.js";
+import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./p/base.js";
+import { RealmsDisplay } from "./p/realms.js";
+import { ItemsDisplay } from "./p/items.js";
 
 const TOP_LEVEL_CATEGORIES = ["home", "realms", "spirits", "season", "events", "items", "wingedLights", "shops"] as const;
 export type TopLevelCategory = (typeof TOP_LEVEL_CATEGORIES)[number];
@@ -26,14 +28,6 @@ const formatDateTimestamp = (date: any, style?: string) =>
   `<t:${Math.floor(SkyPlannerData.resolveToLuxon(date).toMillis() / 1000)}${style ? `:${style}` : ""}>`;
 
 // Navigation state interface to track user's position
-export interface NavigationState {
-  tab: TopLevelCategory;
-  item: string | null; // GUID of the item or category identifier
-  parent?: string | null; // Previous navigation state for back button
-  page?: number; // For paginated lists
-  filter?: string; // For filtered views
-  user?: string;
-}
 
 const CATEGORY_EMOJI_MAP = {
   home: realms_emojis.Home,
@@ -92,23 +86,18 @@ export async function handlePlannerNavigation(state: NavigationState) {
       return getHomeDisplay(user);
 
     case "realms":
-      return item ? displays.getRealmDisplay(item, data, user) : displays.getRealmsListDisplay(data, user, page);
+      return new RealmsDisplay(data, SkyPlannerData, state).handle();
 
     case "spirits":
-      return new SpiritsDisplay(data, SkyPlannerData).spiritlist({
-        filter: filter ?? SkyPlannerData.SpiritType.Regular,
-        page,
-        user,
-        spirit: item ?? undefined,
-      });
-    case "season":
+      return new SpiritsDisplay(data, SkyPlannerData, state).handle();
+    case "seasons":
       return item ? displays.getSeasonDisplay(item, data, user) : displays.getSeasonsListDisplay(data, user, page);
 
     case "events":
       return item ? displays.getEventDisplay(item, data, user) : displays.getEventsListDisplay(data, user, page);
 
     case "items":
-      return item ? displays.getItemDisplay(item, data, user) : displays.getItemsListDisplay(data, user, page);
+      return new ItemsDisplay(data, SkyPlannerData, state).handle();
 
     default:
       return getHomeDisplay(user);
@@ -122,7 +111,7 @@ export async function getHomeDisplay(user?: string) {
   const activeEvents = SkyPlannerData.getEvents(data);
   const returningSpirits = SkyPlannerData.getCurrentReturningSpirits(data);
   const travelingSpirit = SkyPlannerData.getCurrentTravelingSpirit(data);
-  const handler = new BasePlannerHandler(data, SkyPlannerData);
+  const handler = new BasePlannerHandler(data, SkyPlannerData, { tab: DisplayTabs.Home, user });
 
   const components = [
     container(
