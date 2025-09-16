@@ -115,9 +115,7 @@ export default class {
       if (!value) continue;
       customId += `;${key}:${value}`;
     }
-    if (customId.length > 100) {
-      throw new RangeError("The resulting string exceeded 100 characters. Value: " + `"${customId}"`);
-    }
+
     return customId;
   }
 

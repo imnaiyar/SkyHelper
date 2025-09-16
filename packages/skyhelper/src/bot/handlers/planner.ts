@@ -20,6 +20,9 @@ import { SpiritsDisplay } from "./p/spirits.js";
 import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./p/base.js";
 import { RealmsDisplay } from "./p/realms.js";
 import { ItemsDisplay } from "./p/items.js";
+import { SeasonsDisplay } from "./p/seasons.js";
+import { EventsDisplay } from "./p/events.js";
+import { WingedLightsDisplay } from "./p/wingedlights.js";
 
 const TOP_LEVEL_CATEGORIES = ["home", "realms", "spirits", "season", "events", "items", "wingedLights", "shops"] as const;
 export type TopLevelCategory = (typeof TOP_LEVEL_CATEGORIES)[number];
@@ -71,6 +74,16 @@ export function createCategoryRow(
   return rows;
 }
 
+const displayClasses = {
+  [DisplayTabs.Events]: EventsDisplay,
+  [DisplayTabs.Realms]: RealmsDisplay,
+  [DisplayTabs.Items]: ItemsDisplay,
+  [DisplayTabs.Seasons]: SeasonsDisplay,
+  [DisplayTabs.Spirits]: SpiritsDisplay,
+  [DisplayTabs.Shops]: BasePlannerHandler,
+  [DisplayTabs.WingedLights]: WingedLightsDisplay,
+};
+
 /**
  * Main handler for planner navigation
  */
@@ -79,28 +92,13 @@ export async function handlePlannerNavigation(state: NavigationState) {
 
   const data = await SkyPlannerData.getSkyGamePlannerData();
 
-  const displays = await import("./planner-displays.js");
-
   switch (tab) {
     case "home":
       return getHomeDisplay(user);
-
-    case "realms":
-      return new RealmsDisplay(data, SkyPlannerData, state).handle();
-
-    case "spirits":
-      return new SpiritsDisplay(data, SkyPlannerData, state).handle();
-    case "seasons":
-      return item ? displays.getSeasonDisplay(item, data, user) : displays.getSeasonsListDisplay(data, user, page);
-
-    case "events":
-      return item ? displays.getEventDisplay(item, data, user) : displays.getEventsListDisplay(data, user, page);
-
-    case "items":
-      return new ItemsDisplay(data, SkyPlannerData, state).handle();
-
-    default:
-      return getHomeDisplay(user);
+    default: {
+      const handler = displayClasses[tab as keyof typeof displayClasses];
+      return handler ? new handler(data, SkyPlannerData, state).handle() : getHomeDisplay(user);
+    }
   }
 }
 
