@@ -4,7 +4,7 @@ import { ComponentType } from "discord-api-types/v10";
 import { CustomId, store } from "@/utils/customId-store";
 
 export class RealmsDisplay extends BasePlannerHandler {
-  handle() {
+  override handle() {
     return { components: [this.realmslist()] };
   }
   realmslist() {
@@ -16,13 +16,14 @@ export class RealmsDisplay extends BasePlannerHandler {
         items: realms,
         user: this.state.user,
         tab: this.state.tab,
+        page: this.state.page ?? 1,
         perpage: 7,
         itemCallback: (realm) => [
           section(
             {
               type: ComponentType.Button,
               label: "View",
-              custom_id: this.createCustomId(DisplayTabs.Realms, this.state.user, undefined, realm.guid),
+              custom_id: this.createCustomId({ item: realm.guid }),
               style: 1,
             },
             `**${realm.name}**`,

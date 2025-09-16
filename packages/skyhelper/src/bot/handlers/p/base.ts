@@ -1,8 +1,12 @@
 import { emojis, realms_emojis, type SkyPlannerData } from "@skyhelperbot/constants";
-import { type APIComponentInContainer } from "discord-api-types/v10";
+import {
+  type APIButtonComponent,
+  type APIButtonComponentWithCustomId,
+  type APIComponentInContainer,
+} from "discord-api-types/v10";
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
-import { button, row } from "@skyhelperbot/utils";
+import { button, container, row, textDisplay } from "@skyhelperbot/utils";
 import { string } from "zod/v4";
 import type { DateTime } from "luxon";
 
@@ -12,6 +16,7 @@ export type NavigationState = {
 
   /** The top level tab it should point to */
   tab: DisplayTabs;
+
   user?: string;
 
   /** Specific item it should point to */
@@ -19,6 +24,17 @@ export type NavigationState = {
 
   /** Further filter, for example, spirits have `regular`, `season`, etc. This is used to navigate there */
   filter?: string;
+
+  /** Any extra data that are passed */
+  data?: string;
+
+  /** Array of values, if it was through a string select. */
+  values?: string[];
+
+  /** Options for back button, provided when we want to redirect to somewhere else, instead of generic back
+   * For ex, imagine we go to a particular area from wl tab, providing this back btn, we can come back to wl tab
+   */
+  back?: Omit<NavigationState, "back" | "user" | "values">;
 };
 
 export enum DisplayTabs {
@@ -49,6 +65,12 @@ export class BasePlannerHandler {
     public state: NavigationState,
   ) {}
 
+  /** Main handle method for each tab display, this should be overriden in the child classes */
+  handle() {
+    return {
+      components: [container(this.createTopCategoryRow(this.state.tab, this.state.user), textDisplay("Coming Soon"))], // Placeholde
+    };
+  }
   /** Create a button row for pagination */
   paginationBtns({ page, total, tab, user, item, filter }: NavigationState & { page: number; total: number }) {
     const basetabs = { tab, item: item ?? "", filter: filter ?? "" };
@@ -137,27 +159,46 @@ export class BasePlannerHandler {
   }
 
   /** Returns a paginated list of given items */
-  displayPaginatedList<T>({ items, user, tab, perpage = 5, page = 1, itemCallback, filter }: IPaginatedProps<T>) {
+  displayPaginatedList<T>(opt: IPaginatedProps<T>) {
+    const {
+      items,
+      user = this.state.user,
+      tab = this.state.tab,
+      page = this.state.page ?? 1,
+      perpage = 5,
+      filter = this.state.filter,
+      itemCallback,
+    } = opt;
     const total = Math.max(1, Math.ceil(items.length / perpage));
     const startIndex = (page - 1) * perpage;
     const endIndex = Math.min(startIndex + perpage, items.length);
     const displayedItems: T[] = items.slice(startIndex, endIndex);
     const components: APIComponentInContainer[] = [];
     for (const [i, item] of displayedItems.entries()) {
-      if (itemCallback) components.push(...itemCallback(item));
+      if (itemCallback) components.push(...itemCallback(item, i));
     }
-    components.push(this.paginationBtns({ page, total, tab, filter, user }));
+    // only include if there are multiple pages, may even help save comp limits
+    if (total > 1) components.push(this.paginationBtns({ page, total, tab, filter, user }));
 
     return components;
   }
 
-  createCustomId(tab: DisplayTabs, user?: string, page?: number, item?: string, filter?: string) {
+  createCustomId(opt: Partial<NavigationState>) {
+    const {
+      tab = this.state.tab,
+      user = this.state.user,
+      page = this.state.page,
+      item,
+      filter = this.state.filter,
+      data = this.state.data,
+    } = opt;
     return store.serialize(CustomId.PlannerTopLevelNav, {
       tab: Utils.encodeCustomId({
         tab,
         item: item ?? null,
         page: page ?? null,
         filter: filter ?? null,
+        data: data ?? null,
         id: Math.floor(Math.random() * 1e3),
       }),
       user,
@@ -166,7 +207,12 @@ export class BasePlannerHandler {
 
   formatemoji(id?: string, name?: string) {
     if (!id) return "";
-    return `<:${name ? name.split(/[\s'\-,#]+/).join("") : "_"}:${id}>`;
+    return `<:${name ? name.replaceAll(/[\s'\-,#,),(]+/g, "") : "_"}:${id}>`;
+  }
+
+  /** Return view button for a an item, given a customid */
+  viewbtn(customid: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
+    return button({ label: "View", style: 1, custom_id: customid, ...opt });
   }
 }
 
@@ -176,7 +222,7 @@ interface IPaginatedProps<T> {
   user?: string;
 
   /** The tab it should point to when clicking `View <Item>` */
-  tab: DisplayTabs;
+  tab?: DisplayTabs;
 
   /** The current page */
   page?: number;
@@ -187,6 +233,10 @@ interface IPaginatedProps<T> {
   /** Further filter, for example, spirits have `regular`, `season`, etc. This is used to navigate there */
   filter?: string;
 
-  /** The callback that should return container components for each items that is to be displayed */
-  itemCallback: (i: T) => APIComponentInContainer[];
+  /**
+   * The callback that should return container components for each items that is to be displayed
+   * @param item The item passed inside the items array
+   * @param i Index of the item in the passed array
+   */
+  itemCallback: (item: T, i: number) => APIComponentInContainer[];
 }

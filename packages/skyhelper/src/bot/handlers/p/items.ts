@@ -10,7 +10,7 @@ const ItemCategory = {
   [ItemType.Prop]: [ItemType.Prop, ItemType.Held, ItemType.Furniture, ItemType.Music],
 };
 export class ItemsDisplay extends BasePlannerHandler {
-  handle() {
+  override handle() {
     this.state.filter ??= "Outfit-Outfit"; // default to outfit
     const [mainCategory, subCategory] = this.state.filter.split("-");
     const items = this.data.items.filter((i) => i.type === (subCategory || mainCategory));
@@ -22,13 +22,10 @@ export class ItemsDisplay extends BasePlannerHandler {
     const mainnav = Object.keys(ItemCategory).map((cat, i) =>
       button({
         label: main === cat ? "Home" : cat + "s",
-        custom_id: this.createCustomId(
-          main === cat ? DisplayTabs.Home : this.state.tab,
-          this.state.user,
-          undefined,
-          undefined,
-          `${cat}-${ItemCategory[cat as keyof typeof ItemCategory][0] ?? ""}`,
-        ),
+        custom_id: this.createCustomId({
+          tab: main === cat ? DisplayTabs.Home : this.state.tab,
+          filter: `${cat}-${ItemCategory[cat as keyof typeof ItemCategory][0] ?? ""}`,
+        }),
         style: main === cat ? 4 : 2,
         emoji: main === cat ? { id: emojis.leftarrow } : undefined,
       }),
@@ -36,7 +33,7 @@ export class ItemsDisplay extends BasePlannerHandler {
     const subnav = ItemCategory[main as keyof typeof ItemCategory].map((cat, i) =>
       button({
         label: cat,
-        custom_id: this.createCustomId(this.state.tab, this.state.user, undefined, undefined, `${main}-${cat}`),
+        custom_id: this.createCustomId({ filter: `${main}-${cat}` }),
         style: sub === cat ? 3 : 2,
         disabled: sub === cat,
       }),
@@ -59,7 +56,7 @@ export class ItemsDisplay extends BasePlannerHandler {
         section(
           button({
             label: "View",
-            custom_id: this.createCustomId(this.state.tab, this.state.user, undefined, item.guid, this.state.filter),
+            custom_id: this.createCustomId({ item: item.guid }),
             style: 1,
           }),
           `## ${this.formatemoji(item.icon, item.name)} ${item.name}`,

@@ -1,8 +1,9 @@
 import { CustomId } from "@/utils/customId-store";
-import { handlePlannerNavigation, type NavigationState } from "../../handlers/planner.js";
+import { handlePlannerNavigation } from "../../handlers/planner.js";
 import { defineButton } from "@/structures";
 import { textDisplay } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
+import type { NavigationState } from "@/handlers/p/base";
 
 /**
  * Button handler for the Sky Game Planner navigation
@@ -14,7 +15,13 @@ export default defineButton({
   // Handle the button interaction
   async execute(interaction, t, helper, data) {
     // Extract navigation state from the button data
-    const { tab, item, page, user, filter } = helper.client.utils.parseCustomId(data.tab) as unknown as NavigationState & {
+    const {
+      tab,
+      item,
+      page,
+      filter,
+      data: d,
+    } = helper.client.utils.parseCustomId(data.tab) as unknown as NavigationState & {
       id: string;
     };
 
@@ -25,7 +32,9 @@ export default defineButton({
       tab: tab as any,
       item,
       page: p ?? undefined,
+      data: d ?? undefined,
       filter,
+      user: helper.user.id,
     });
 
     await helper.editReply({

@@ -17,6 +17,9 @@ export const emojis = {
   auroraguide: "1416538342518034623",
   travelingspirit: "1416539464590950441",
   shopcart: "1416677823254368257",
+  rightarrow: "1417190128392212560",
+  uparrow: "1417190034582278175",
+  downarrow: "1417189848133009610",
 } as const;
 
 export const realms_emojis = {
