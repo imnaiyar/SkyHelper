@@ -15,7 +15,7 @@ const emojisMap = {
 } as const;
 
 export class SpiritsDisplay extends BasePlannerHandler {
-  handle() {
+  override handle() {
     const spirits = this.data.spirits;
     this.state.filter ??= SpiritNav[0]; // set filter to regular if not present
     const filternav = SpiritNav.map((s, i) =>
@@ -37,7 +37,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
       section(
         button({
           label: "Home",
-          custom_id: this.createCustomId(DisplayTabs.Home, this.state.user),
+          custom_id: this.createCustomId({ tab: DisplayTabs.Home }),
           style: 4,
           emoji: { id: emojis.leftarrow },
         }),
@@ -60,6 +60,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
             items: spiritsOfType,
             user: this.state.user,
             filter: this.state.filter,
+            page: this.state.page ?? 1,
             tab: DisplayTabs.Spirits,
             perpage: 7,
             itemCallback: (s) => this.spiritInList(s, { page: this.state.page, filter: this.state.filter }),
@@ -88,7 +89,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
         section(
           button({
             label: "View",
-            custom_id: this.createCustomId(DisplayTabs.Spirits, this.state.user, undefined, t.guid, "TS"),
+            custom_id: this.createCustomId({ item: t.guid, filter: "TS" }),
             style: 1,
           }),
           `**${this.formatemoji(t.spirit.icon, t.spirit.name)} ${t.spirit.name} (#${t.number})**`,
@@ -104,13 +105,12 @@ export class SpiritsDisplay extends BasePlannerHandler {
     return [
       section(
         button({
-          custom_id: this.createCustomId(
-            DisplayTabs.Spirits,
-            this.state.user,
-            back?.page,
-            spirit.guid,
-            SpiritNav.includes(spirit.type as any) ? spirit.type : (back?.filter ?? p.SpiritType.Regular),
-          ),
+          custom_id: this.createCustomId({
+            tab: DisplayTabs.Spirits,
+            page: back?.page,
+            item: spirit.guid,
+            filter: SpiritNav.includes(spirit.type as any) ? spirit.type : (back?.filter ?? p.SpiritType.Regular),
+          }),
           style: 1,
           label: "View",
         }),

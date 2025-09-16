@@ -25,7 +25,7 @@ import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "@/handlers/planner";
-import type { DisplayTabs } from "@/handlers/p/base";
+import type { DisplayTabs, NavigationState } from "@/handlers/p/base";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -244,9 +244,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case client.utils.customId.PlannerTopLevelNav:
           await helper.deferUpdate();
           const { user } = data;
-          const tab = interaction.data.values[0] as DisplayTabs;
-          // @ts-expect-error currently types are wonky TODO
-          const res = await handlePlannerNavigation({ tab, user });
+          const values = interaction.data.values;
+          const state = client.utils.parseCustomId(data.tab) as unknown as NavigationState;
+          const res = await handlePlannerNavigation({ values, ...state });
           await helper.editReply({
             components: res.components,
             flags: MessageFlags.IsComponentsV2,
