@@ -72,27 +72,16 @@ export class BasePlannerHandler {
     };
   }
   /** Create a button row for pagination */
-  paginationBtns({ page, total, tab, user, item, filter }: NavigationState & { page: number; total: number }) {
-    const basetabs = { tab, item: item ?? "", filter: filter ?? "" };
+  paginationBtns({ page, total, ...rest }: NavigationState & { page: number; total: number }) {
     return row(
       button({
         label: "« First",
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ id: "12", page: 1, ...basetabs }),
-            user,
-          })
-          .toString(),
+        custom_id: this.createCustomId({ ...rest, page: 1 }),
         disabled: page === 1,
       }),
       button({
         label: "‹ Previous",
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ id: "12w1", ...basetabs, page: Math.max(1, page - 1) }),
-            user,
-          })
-          .toString(),
+        custom_id: this.createCustomId({ ...rest, page: Math.max(1, page - 1) }),
         disabled: page === 1,
       }),
       button({
@@ -102,22 +91,12 @@ export class BasePlannerHandler {
       }),
       button({
         label: "Next ›",
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ id: "213", ...basetabs, page: Math.min(total, page + 1) }),
-            user,
-          })
-          .toString(),
+        custom_id: this.createCustomId({ ...rest, page: Math.min(total, page + 1) }),
         disabled: page === total,
       }),
       button({
         label: "Last »",
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ id: "3049", ...basetabs, page: total }),
-            user,
-          })
-          .toString(),
+        custom_id: this.createCustomId({ ...rest, page: total }),
         disabled: page === total,
       }),
     );
@@ -160,15 +139,7 @@ export class BasePlannerHandler {
 
   /** Returns a paginated list of given items */
   displayPaginatedList<T>(opt: IPaginatedProps<T>) {
-    const {
-      items,
-      user = this.state.user,
-      tab = this.state.tab,
-      page = this.state.page ?? 1,
-      perpage = 5,
-      filter = this.state.filter,
-      itemCallback,
-    } = opt;
+    const { items, user = this.state.user, page = this.state.page ?? 1, perpage = 5, itemCallback } = opt;
     const total = Math.max(1, Math.ceil(items.length / perpage));
     const startIndex = (page - 1) * perpage;
     const endIndex = Math.min(startIndex + perpage, items.length);
@@ -178,20 +149,36 @@ export class BasePlannerHandler {
       if (itemCallback) components.push(...itemCallback(item, i));
     }
     // only include if there are multiple pages, may even help save comp limits
-    if (total > 1) components.push(this.paginationBtns({ page, total, tab, filter, user }));
+    if (total > 1)
+      components.push(
+        this.paginationBtns({
+          page,
+          total,
+          tab: this.state.tab,
+          filter: this.state.filter,
+          item: this.state.item,
+          user,
+          back: this.state.back,
+        }),
+      );
 
     return components;
   }
 
   createCustomId(opt: Partial<NavigationState>) {
+    /** Check if provided tab is different from current, and reset extra tab specific fields if they are not given */
+    const redirect = (data: any) => (opt.tab && this.state.tab !== opt.tab ? null : data);
+
     const {
       tab = this.state.tab,
       user = this.state.user,
-      page = this.state.page,
-      item,
-      filter = this.state.filter,
-      data = this.state.data,
+      page = redirect(this.state.page),
+      item = redirect(this.state.item),
+      filter = redirect(this.state.filter),
+      back = redirect(this.state.back),
+      data = redirect(this.state.data),
     } = opt;
+    if (back && typeof back !== "object") throw new Error("Back option cannot be a primitive value");
     return store.serialize(CustomId.PlannerTopLevelNav, {
       tab: Utils.encodeCustomId({
         tab,
@@ -200,6 +187,7 @@ export class BasePlannerHandler {
         filter: filter ?? null,
         data: data ?? null,
         id: Math.floor(Math.random() * 1e3),
+        back: back ? JSON.stringify(back) : null,
       }),
       user,
     });
@@ -221,18 +209,11 @@ interface IPaginatedProps<T> {
   items: T[];
   user?: string;
 
-  /** The tab it should point to when clicking `View <Item>` */
-  tab?: DisplayTabs;
-
   /** The current page */
   page?: number;
 
   /** Override default items per-page (default: `5`) */
   perpage?: number;
-
-  /** Further filter, for example, spirits have `regular`, `season`, etc. This is used to navigate there */
-  filter?: string;
-
   /**
    * The callback that should return container components for each items that is to be displayed
    * @param item The item passed inside the items array
