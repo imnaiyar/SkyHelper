@@ -20,6 +20,7 @@ export const emojis = {
   rightarrow: "1417190128392212560",
   uparrow: "1417190034582278175",
   downarrow: "1417189848133009610",
+  location: "1417759157817180212",
 } as const;
 
 export const realms_emojis = {

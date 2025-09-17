@@ -113,7 +113,7 @@ export default class {
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
       if (!value) continue;
-      customId += `;${key}:${value}`;
+      customId += `;${key}=${value}`;
     }
 
     return customId;

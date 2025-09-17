@@ -376,7 +376,7 @@ export function resolveToLuxon(date: { day: number; month: number; year: number 
 }
 
 /**
- * Calculate total costs of all nodes walkip upto all the references
+ * Calculate total costs of all nodes walking upwards to all the references
  */
 export function calculateCost(node: INode) {
   const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
@@ -393,7 +393,7 @@ export function calculateCost(node: INode) {
   return costs;
 }
 
-export function formatCosts(costs: { h: number; c: number; sc: number; sh: number; ac: number; ec: number }) {
+export function formatCosts(costs: { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number }) {
   const parts = [];
   if (costs.h) parts.push(`${costs.h} <:Heart:${currency.h}>`);
   if (costs.c) parts.push(`${costs.c} <:Candle:${currency.c}>`);
@@ -407,4 +407,19 @@ export function formatCosts(costs: { h: number; c: number; sc: number; sh: numbe
 export function getFormattedTreeCost(tree: ISpiritTree) {
   const c = calculateCost(tree.node);
   return formatCosts(c);
+}
+
+export function formatGroupedCurrencies(
+  obj: Array<ISpiritTree | INode | { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number }>,
+) {
+  const currencies = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
+
+  for (const item of obj) {
+    const costs = "node" in item ? calculateCost(item.node) : calculateCost(item as INode);
+    for (const key in currencies) {
+      currencies[key as keyof typeof currencies] += costs[key as keyof typeof costs] || 0;
+    }
+  }
+
+  return formatCosts(currencies);
 }
