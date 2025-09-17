@@ -21,20 +21,21 @@ export default defineButton({
       page,
       filter,
       data: d,
+      back,
     } = helper.client.utils.parseCustomId(data.tab) as unknown as NavigationState & {
       id: string;
     };
 
     await helper.deferUpdate();
     const p = page ? parseInt(page as unknown as string) : undefined;
-
+    const b = back ? (JSON.parse(back as unknown as string) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
     const response = await handlePlannerNavigation({
       tab: tab as any,
       item,
       page: p ?? undefined,
       data: d ?? undefined,
       filter,
-      user: helper.user.id,
+      back: b,
     });
 
     await helper.editReply({

@@ -23,6 +23,7 @@ import { ItemsDisplay } from "./p/items.js";
 import { SeasonsDisplay } from "./p/seasons.js";
 import { EventsDisplay } from "./p/events.js";
 import { WingedLightsDisplay } from "./p/wingedlights.js";
+import { ShopsDisplay } from "./p/shops.js";
 
 const TOP_LEVEL_CATEGORIES = ["home", "realms", "spirits", "season", "events", "items", "wingedLights", "shops"] as const;
 export type TopLevelCategory = (typeof TOP_LEVEL_CATEGORIES)[number];
@@ -80,7 +81,7 @@ const displayClasses = {
   [DisplayTabs.Items]: ItemsDisplay,
   [DisplayTabs.Seasons]: SeasonsDisplay,
   [DisplayTabs.Spirits]: SpiritsDisplay,
-  [DisplayTabs.Shops]: BasePlannerHandler,
+  [DisplayTabs.Shops]: ShopsDisplay,
   [DisplayTabs.WingedLights]: WingedLightsDisplay,
 };
 
@@ -91,7 +92,6 @@ export async function handlePlannerNavigation(state: NavigationState) {
   const { tab, user, item, page = 1, filter } = state;
 
   const data = await SkyPlannerData.getSkyGamePlannerData();
-
   switch (tab) {
     case "home":
       return getHomeDisplay(user);

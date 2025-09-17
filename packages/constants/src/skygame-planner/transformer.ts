@@ -26,6 +26,7 @@ import {
 } from "./interfaces.js";
 import { FetchedData } from "./fetcher.js";
 import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
+import { resolveToLuxon } from "./service.js";
 
 // Interface for the transformed data with resolved references
 export interface TransformedData {
@@ -476,7 +477,8 @@ function resolveReferences(data: TransformedData): void {
           if (instance) instance.event = event;
           return instance;
         })
-        .filter(Boolean);
+        .filter(Boolean)
+        .sort((a, b) => resolveToLuxon(b.date).toMillis() - resolveToLuxon(a.date).toMillis());
     }
   }
 
