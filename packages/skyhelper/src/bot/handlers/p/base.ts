@@ -167,7 +167,8 @@ export class BasePlannerHandler {
 
   createCustomId(opt: Partial<NavigationState>) {
     /** Check if provided tab is different from current, and reset extra tab specific fields if they are not given */
-    const redirect = (data: any) => (opt.tab && this.state.tab !== opt.tab ? null : data);
+    const redirect = (data: any) =>
+      (opt.tab && this.state.tab !== opt.tab) || (opt.item && this.state.item !== opt.item) ? null : data;
 
     const {
       tab = this.state.tab,
@@ -182,10 +183,10 @@ export class BasePlannerHandler {
     return store.serialize(CustomId.PlannerTopLevelNav, {
       tab: Utils.encodeCustomId({
         tab,
-        item: item ?? null,
-        page: page ?? null,
-        filter: filter ?? null,
-        data: data ?? null,
+        item: item || null,
+        page: page || null,
+        filter: filter || null,
+        data: data || null,
         id: Math.floor(Math.random() * 1e3),
         back: back ? JSON.stringify(back) : null,
       }),
@@ -201,6 +202,9 @@ export class BasePlannerHandler {
   /** Return view button for a an item, given a customid */
   viewbtn(customid: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
     return button({ label: "View", style: 1, custom_id: customid, ...opt });
+  }
+  backbtn(custom_id: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
+    return button({ label: "Back", style: 4, custom_id, emoji: { id: emojis.leftarrow }, ...opt });
   }
 }
 

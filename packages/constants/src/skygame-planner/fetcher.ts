@@ -19,7 +19,7 @@ import {
   IWingedLightConfig,
 } from "./interfaces.js";
 import { parse as jsonc } from "jsonc-parser";
-const BASE_URL = `https://sky-planner.com`;
+export const BASE_URL = `https://sky-planner.com`;
 const DATA_PATH = "/assets/data";
 
 // List of data files to fetch

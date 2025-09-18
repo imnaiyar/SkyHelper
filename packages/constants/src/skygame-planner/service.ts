@@ -4,7 +4,7 @@
  */
 import { resolve } from "path";
 import { currency, fetchEmojis, zone } from "../index.js";
-import { fetchAllData } from "./fetcher.js";
+import { BASE_URL, fetchAllData } from "./fetcher.js";
 import { IEvent, IEventInstance, INode, ISpiritTree } from "./interfaces.js";
 import { transformData, TransformedData } from "./transformer.js";
 import { DateTime } from "luxon";
@@ -423,3 +423,5 @@ export function formatGroupedCurrencies(
 
   return formatCosts(currencies);
 }
+
+export const resolveUrls = (url: string) => (url.startsWith("http") ? url : BASE_URL + url);
