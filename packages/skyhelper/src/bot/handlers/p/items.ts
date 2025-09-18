@@ -1,7 +1,8 @@
 import { ItemType, type IItem } from "node_modules/@skyhelperbot/constants/dist/skygame-planner/interfaces.js";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { button, container, row, section, separator } from "@skyhelperbot/utils";
+import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
+import type { APIComponentInContainer } from "discord-api-types/v10";
 const ItemCategory = {
   [ItemType.Outfit]: [ItemType.Outfit, ItemType.Shoes],
   [ItemType.Mask]: [ItemType.Mask, ItemType.Necklace, ItemType.FaceAccessory],
@@ -11,6 +12,11 @@ const ItemCategory = {
 };
 export class ItemsDisplay extends BasePlannerHandler {
   override handle() {
+    if (this.state.item) {
+      const item = this.data.items.find((i) => i.guid === this.state.item);
+      if (!item) throw new Error("Invalid item");
+      return { components: [container(this.itemDisplay(item))] };
+    }
     this.state.filter ??= "Outfit-Outfit"; // default to outfit
     const [mainCategory, subCategory] = this.state.filter.split("-");
     const items = this.data.items.filter((i) => i.type === (subCategory || mainCategory));
@@ -49,14 +55,15 @@ export class ItemsDisplay extends BasePlannerHandler {
       items,
       page: this.state.page ?? 1,
       perpage: this.state.filter!.split("-")[0] === "Prop" ? 6 : 7,
-      tab: this.state.tab,
       user: this.state.user,
-      filter: this.state.filter,
       itemCallback: (item) => [
         section(
           button({
             label: "View",
-            custom_id: this.createCustomId({ item: item.guid }),
+            custom_id: this.createCustomId({
+              item: item.guid,
+              back: { tab: this.state.tab, filter: this.state.filter, page: this.state.page ?? 1 },
+            }),
             style: 1,
           }),
           `## ${this.formatemoji(item.icon, item.name)} ${item.name}`,
@@ -71,5 +78,54 @@ export class ItemsDisplay extends BasePlannerHandler {
         ),
       ],
     });
+  }
+  itemDisplay(item: IItem) {
+    return [
+      section(
+        this.backbtn(this.createCustomId({ tab: DisplayTabs.Items, item: "", filter: "", ...this.state.back })),
+        `# ${this.formatemoji(item.icon, item.name)} ${item.name}${item.level ? ` (Lvl ${item.level})` : ""}`,
+        [`Type: ${item.type}`, item.subtype ? `Subtype: ${item.subtype}` : null, item.group ? `Group: ${item.group}` : null]
+          .filter(Boolean)
+          .join(" \u2022 "),
+        [
+          item.group === "Ultimate" ? "- This is a season's ultimate item and may not return in the future." : "",
+          item.group === "Limited" ? "- This is a limited item and may not return in the future." : "",
+          item.group === "SeasonPass" ? "- This item was offered with season pass." : "",
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      ),
+      row(
+        this.viewbtn(this.createCustomId({}), { label: "Find Source" }),
+        this.viewbtn(this.createCustomId({}), { label: "Favorite" }),
+      ),
+      separator(true, 1),
+      item.dye
+        ? row(
+            this.viewbtn(this.createCustomId({ filter: "preview" }), {
+              label: "Preview",
+              style: (this.state.filter || "preview") === "preview" ? 2 : 3,
+              disabled: (this.state.filter || "preview") === "preview",
+            }),
+            this.viewbtn(this.createCustomId({ filter: "dye" }), {
+              label: "Dye Preview",
+              style: this.state.filter === "dye" ? 2 : 3,
+              disabled: this.state.filter === "dye",
+            }),
+          )
+        : null,
+      item.previewUrl && (this.state.filter || "preview") === "preview"
+        ? mediaGallery(mediaGalleryItem(this.planner.resolveUrls(item.previewUrl), { description: item.name }))
+        : null,
+      this.state.filter === "dye"
+        ? mediaGallery(
+            [item.dye?.previewUrl, item.dye?.infoUrl]
+              .filter(Boolean)
+              .map((url) => mediaGalleryItem(this.planner.resolveUrls(url!), { description: item.name })),
+          )
+        : null,
+    ]
+      .flat()
+      .filter(Boolean) as APIComponentInContainer[];
   }
 }
