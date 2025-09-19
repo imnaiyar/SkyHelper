@@ -39,7 +39,7 @@ export default defineButton({
     });
 
     await helper.editReply({
-      components: response.components,
+      ...response,
       flags: MessageFlags.IsComponentsV2,
     });
   },

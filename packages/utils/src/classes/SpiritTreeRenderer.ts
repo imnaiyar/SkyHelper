@@ -65,11 +65,11 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   ctx.beginPath();
   ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
 
-  // draw item icon if present (icon is emoji id or path)
+  // draw item icon
   if (item?.icon) {
     try {
       const img = await loadImage(iconUrl(item.icon));
-      ctx.drawImage(img, -size * 0.45, -size * 0.45, size * 0.9, size * 0.9);
+      ctx.drawImage(img, -(size * 1.5) * 0.45, -(size * 1.5) * 0.45, size * 1.5 * 0.9, size * 1.5 * 0.9);
     } catch (err) {
       console.log(err);
       // fallback: draw emoji text
@@ -85,8 +85,26 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   if (season && item && item.group === "SeasonPass") {
     try {
       const badge = await loadImage(iconUrl(item.season!.icon));
-      const bsize = size * 0.36;
-      ctx.drawImage(badge, -size / 2 - 2, -size / 2 - 2, bsize, bsize);
+      const bsize = size * 0.4;
+      ctx.drawImage(badge, -size / 2 - 20, -size / 2 - 20, bsize, bsize);
+    } catch (err) {
+      // simple star
+      ctx.fillStyle = "#FFD966";
+      ctx.beginPath();
+      ctx.arc(-size * 0.35, -size * 0.35, size * 0.16, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  if (item.level) {
+    try {
+      const fontSize = Math.max(10, Math.floor(size * 0.22));
+      ctx.font = `${fontSize}px SegoeUIEmoji`;
+      ctx.fillStyle = "#F6EAE0";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      const text = `Lvl${item.level}`;
+      ctx.fillText(text, -size / 2, size / 2 - 20);
     } catch (err) {
       // simple star
       ctx.fillStyle = "#FFD966";
@@ -99,36 +117,49 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   // cost overlay (bottom-right) -> show currency emoji + numeric cost
   if (node && node.currency) {
     const cost = node.currency.amount;
-    const cx = size * 0.4; // icon size
+    const r = size / 2; // radius
+    const cx = Math.max(10, Math.floor(size * 0.35)); // currency icon size
     const padding = Math.max(4, Math.floor(size * 0.06));
-    const iconX = size - cx - padding;
-    const iconY = size - cx - padding;
-    // draw currency emoji if mapping exists for item.currency
+
+    // icon center (relative to translated center 0,0): bottom-right inside the circle
+    const iconCenterX = r - padding - cx / 2 + 50;
+    const iconCenterY = r + 40;
+
     const curKey = node.currency.type;
     const curEmojiId = (currencyEmojis as any)[curKey];
     if (curEmojiId) {
       try {
         const curImg = await loadImage(iconUrl(curEmojiId));
-        ctx.drawImage(curImg, iconX * 0.5, iconY * 0.75, cx, cx);
+        ctx.drawImage(curImg, iconCenterX - cx / 2, iconCenterY - cx / 2, cx, cx);
       } catch (err) {
         // fallback: small circle
         ctx.fillStyle = "#FFD966";
         ctx.beginPath();
-        ctx.arc(iconX - cx / 2, iconY - cx / 2, cx / 2, 0, Math.PI * 2);
+        ctx.arc(iconCenterX, iconCenterY, cx / 2, 0, Math.PI * 2);
         ctx.fill();
       }
     }
 
-    // draw cost text to the right of currency icon
-    const fontSize = Math.max(10, Math.floor(size * 0.35));
-    ctx.font = `${fontSize}px`;
+    // draw cost text to the left of currency icon, measure to avoid overlap
+    const fontSize = Math.max(10, Math.floor(cx * 0.9));
+    ctx.font = `${fontSize}px SegoeUIEmoji`;
     ctx.fillStyle = "#F6EAE0";
-    ctx.textAlign = "left";
+    ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    const textX = size / 2 - padding - cx * 1.15;
-    const textY = size / 2 - padding - cx / 2 + cx - 4;
-    ctx.fillText(String(cost), textX, textY);
-    ctx.restore();
+    const text = String(cost);
+    // position text so its right edge sits padding pixels left of the icon's left edge
+    const textRightX = iconCenterX - cx / 2 - Math.max(4, Math.floor(size * 0.03));
+    const textY = iconCenterY;
+    // if text would overflow left of circle, clamp it
+    const measured = ctx.measureText(text);
+    const minTextX = -r + padding; // leftmost allowed x for text left edge
+    const textLeftEdge = textRightX - measured.width;
+    let finalTextX = textRightX;
+    if (textLeftEdge < minTextX) {
+      // shift text to fit inside circle; allow it to overlap icon slightly if needed
+      finalTextX = Math.max(textRightX, minTextX + measured.width);
+    }
+    ctx.fillText(text, finalTextX, textY);
   }
 
   ctx.restore();
@@ -185,7 +216,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   const scale = options.scale || 2;
   const size = 64 * scale; // item size
   const spacingY = size * 2.5; // vertical spacing between levels
-
+  const spirit = tree.spirit;
   // estimate node count to size canvas. We'll traverse breadth-first to find depth and breadth
   const queue: Array<{ node: INode; x: number; y: number; depth: number }> = [];
   const visited = new Set<string>();
@@ -209,8 +240,8 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   }
 
   const columns = maxX - minX + 1;
-  const width = Math.max(1024, Math.ceil(columns * (size * 1.8)));
-  const height = Math.max(1024, Math.ceil((maxDepth + 1) * spacingY + size * 2));
+  const width = Math.max(2048, Math.ceil(columns * (size * 1.8)));
+  const height = Math.max(2048, Math.ceil((maxDepth + 1) * spacingY + size * 2));
 
   const canvas = createCanvas(width, height);
   const ctx: SKRSContext2D = canvas.getContext("2d");
@@ -222,7 +253,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   const startY = Math.floor(height - size);
 
   // render recursively from bottom to top: pass negative spacing so children are drawn above
-  await renderNodeRecursive(ctx, tree.node, centerX, startY, -spacingY, size, true);
+  await renderNodeRecursive(ctx, tree.node, centerX, startY, -spacingY, size, !!options.season);
 
   return canvas.toBuffer("image/png");
 }

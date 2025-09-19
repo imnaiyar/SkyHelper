@@ -9,6 +9,8 @@ import Utils from "@/utils/classes/Utils";
 import { button, container, row, textDisplay } from "@skyhelperbot/utils";
 import { string } from "zod/v4";
 import type { DateTime } from "luxon";
+import type { Awaitable } from "@/types/utils";
+import type { ResponseData } from "@/utils/classes/InteractionUtil";
 
 export type NavigationState = {
   /** Current page */
@@ -66,7 +68,7 @@ export class BasePlannerHandler {
   ) {}
 
   /** Main handle method for each tab display, this should be overriden in the child classes */
-  handle() {
+  handle(): Awaitable<ResponseData> {
     return {
       components: [container(this.createTopCategoryRow(this.state.tab, this.state.user), textDisplay("Coming Soon"))], // Placeholde
     };
