@@ -246,7 +246,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           const { user } = data;
           const values = interaction.data.values;
           const state = client.utils.parseCustomId(data.tab) as unknown as NavigationState;
-          const res = await handlePlannerNavigation({ values, ...state });
+          const p = state.page ? parseInt(state.page as unknown as string) : undefined;
+          const b = state.back
+            ? (JSON.parse(state.back as unknown as string) as unknown as Omit<NavigationState, "back" | "values">)
+            : undefined;
+          const res = await handlePlannerNavigation({ values, ...state, page: p ?? undefined, back: b ?? undefined });
           await helper.editReply({
             components: res.components,
             flags: MessageFlags.IsComponentsV2,
