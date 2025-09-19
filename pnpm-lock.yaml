@@ -136,6 +136,9 @@ importers:
       discord-api-types:
         specifier: latest
         version: 0.38.26
+      jsonc-parser:
+        specifier: ^3.3.1
+        version: 3.3.1
     devDependencies:
       '@types/luxon':
         specifier: ^3.6.2
@@ -334,6 +337,9 @@ importers:
       '@napi-rs/canvas':
         specifier: ^0.1.51
         version: 0.1.69
+      '@skyhelperbot/constants':
+        specifier: workspace:^
+        version: link:../constants
       discord-api-types:
         specifier: latest
         version: 0.38.26

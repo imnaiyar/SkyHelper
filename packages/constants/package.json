@@ -10,7 +10,8 @@
   "exports": {
     "./locales/*": "./locales/*",
     "./spirits-datas": "./dist/spirits-datas/index.js",
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./skygame-planner": "./dist/skygame-planner/index.js"
   },
   "scripts": {
     "build": "tsc",
