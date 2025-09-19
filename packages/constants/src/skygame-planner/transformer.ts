@@ -337,6 +337,11 @@ function resolveReferences(data: TransformedData): void {
       current = current.prev;
     }
     node.root = current;
+
+    // resolve cost into single `currency` prop
+    (["c", "h", "ac", "ec", "sc", "sh"] as const).forEach((key) => {
+      if (node[key]) node.currency = { type: key, amount: node[key] };
+    });
   }
 
   // #region data.seasons

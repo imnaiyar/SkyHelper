@@ -1,9 +1,9 @@
 import { emojis, SkyPlannerData as p, SkyPlannerData, season_emojis } from "@skyhelperbot/constants";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { button, container, row, section, separator } from "@skyhelperbot/utils";
+import { button, container, mediaGallery, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
-import type { APIComponentInContainer } from "discord-api-types/v10";
+import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 
 const SpiritNav = [p.SpiritType.Regular, p.SpiritType.Season, p.SpiritType.Elder, p.SpiritType.Guide, "TS"] as const;
 const emojisMap = {
@@ -17,6 +17,10 @@ const emojisMap = {
 export class SpiritsDisplay extends BasePlannerHandler {
   override handle() {
     const spirits = this.data.spirits;
+    const spirit = this.state.item ? spirits.find((s) => s.guid === this.state.item) : null;
+    if (spirit) {
+      return { components: [container(this.spiritdisplay(spirit))] };
+    }
     this.state.filter ??= SpiritNav[0]; // set filter to regular if not present
     const filternav = SpiritNav.map((s, i) =>
       button({
@@ -59,9 +63,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
           ...this.displayPaginatedList({
             items: spiritsOfType,
             user: this.state.user,
-            filter: this.state.filter,
             page: this.state.page ?? 1,
-            tab: DisplayTabs.Spirits,
             perpage: 7,
             itemCallback: (s) => this.spiritInList(s, { page: this.state.page, filter: this.state.filter }),
           }),
@@ -82,14 +84,15 @@ export class SpiritsDisplay extends BasePlannerHandler {
       items: [...ts].reverse(),
       user: this.state.user,
       page: this.state.page ?? 1,
-      filter: "TS",
-      tab: DisplayTabs.Spirits,
       perpage: 7,
       itemCallback: (t) => [
         section(
           button({
             label: "View",
-            custom_id: this.createCustomId({ item: t.guid, filter: "TS" }),
+            custom_id: this.createCustomId({
+              item: t.guid,
+              back: { tab: this.state.tab, page: this.state.page, filter: this.state.filter, item: "" },
+            }),
             style: 1,
           }),
           `**${this.formatemoji(t.spirit.icon, t.spirit.name)} ${t.spirit.name} (#${t.number})**`,
@@ -106,10 +109,8 @@ export class SpiritsDisplay extends BasePlannerHandler {
       section(
         button({
           custom_id: this.createCustomId({
-            tab: DisplayTabs.Spirits,
-            page: back?.page,
             item: spirit.guid,
-            filter: SpiritNav.includes(spirit.type as any) ? spirit.type : (back?.filter ?? p.SpiritType.Regular),
+            back: { tab: this.state.tab, page: this.state.page, filter: this.state.filter, item: "" },
           }),
           style: 1,
           label: "View",
@@ -129,12 +130,40 @@ export class SpiritsDisplay extends BasePlannerHandler {
       ),
     ];
   }
-}
 
-export type SpiritListOptions = {
-  filter: string;
-  page?: number;
-  user?: string;
-  /** Guid of the spirit, if displaying one specific spirit */
-  spirit?: string;
-};
+  spiritdisplay(spirit: SkyPlannerData.ISpirit) {
+    const trees = [
+      spirit.tree ? { name: "Spirit Tree", tree: spirit.tree } : null,
+      ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree })) || []),
+    ].filter(Boolean) as { name: string; tree: SkyPlannerData.ISpiritTree }[];
+    const selected = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
+    return [
+      section(
+        this.backbtn(this.createCustomId({ tab: DisplayTabs.Spirits, filter: "", item: "", ...this.state.back })),
+        `# ${this.formatemoji(spirit.icon)} ${spirit.name}`,
+        [
+          spirit.area
+            ? `${this.formatemoji(emojis.location)} ${spirit.area.name} ( ${this.formatemoji(spirit.area.realm.icon)} ${spirit.area.realm.name})`
+            : null,
+          spirit.season ? `${this.formatemoji(spirit.season.icon)} ${spirit.season.name}` : null,
+          spirit.events?.length
+            ? `${this.formatemoji(emojis.eventticket)} ${spirit.events.at(-1)!.eventInstance?.event.name}`
+            : null,
+          `Type: ${spirit.type}`,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      ),
+      separator(true, 1),
+      trees.length
+        ? row({
+            type: ComponentType.StringSelect,
+            custom_id: this.createCustomId({}),
+            options: trees.map((t, i) => ({ label: t.name, value: i.toString(), default: selected === i })),
+            placeholder: "Select a spirit tree",
+          })
+        : null,
+      trees.length ? textDisplay(this.planner.getFormattedTreeCost(trees[selected].tree)) : null,
+    ].filter(Boolean) as APIComponentInContainer[];
+  }
+}

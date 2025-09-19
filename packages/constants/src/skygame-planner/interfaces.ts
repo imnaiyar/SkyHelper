@@ -137,6 +137,7 @@ export interface INode extends IGuid, ICost {
   n?: INode;
   prev?: INode;
   root?: INode;
+  currency?: { type: string; amount: number };
 
   // Progress
   unlocked?: boolean;
