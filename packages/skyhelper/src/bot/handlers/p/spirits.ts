@@ -1,9 +1,21 @@
 import { emojis, SkyPlannerData as p, SkyPlannerData, season_emojis } from "@skyhelperbot/constants";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { button, container, mediaGallery, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import {
+  button,
+  container,
+  generateSpiritTree,
+  mediaGallery,
+  mediaGalleryItem,
+  row,
+  section,
+  separator,
+  textDisplay,
+} from "@skyhelperbot/utils";
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
+import type { ResponseData } from "@/utils/classes/InteractionUtil";
+import type { RawFile } from "@discordjs/rest";
 
 const SpiritNav = [p.SpiritType.Regular, p.SpiritType.Season, p.SpiritType.Elder, p.SpiritType.Guide, "TS"] as const;
 const emojisMap = {
@@ -19,7 +31,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
     const spirits = this.data.spirits;
     const spirit = this.state.item ? spirits.find((s) => s.guid === this.state.item) : null;
     if (spirit) {
-      return { components: [container(this.spiritdisplay(spirit))] };
+      return this.spiritdisplay(spirit);
     }
     this.state.filter ??= SpiritNav[0]; // set filter to regular if not present
     const filternav = SpiritNav.map((s, i) =>
@@ -131,13 +143,24 @@ export class SpiritsDisplay extends BasePlannerHandler {
     ];
   }
 
-  spiritdisplay(spirit: SkyPlannerData.ISpirit) {
+  async spiritdisplay(spirit: SkyPlannerData.ISpirit): Promise<ResponseData> {
     const trees = [
-      spirit.tree ? { name: "Spirit Tree", tree: spirit.tree } : null,
+      spirit.tree ? { name: "Spirit Tree", tree: spirit.tree, season: !!spirit.season } : null,
+      spirit.treeRevisions?.length
+        ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t }))
+        : null,
       ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree })) || []),
-    ].filter(Boolean) as { name: string; tree: SkyPlannerData.ISpiritTree }[];
+    ]
+      .flat()
+      .filter(Boolean) as { name: string; tree: SkyPlannerData.ISpiritTree; season?: boolean }[];
     const selected = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
-    return [
+    const tree = trees[selected];
+    let attachment: RawFile | undefined;
+    if (tree) {
+      const buffer = await generateSpiritTree(tree.tree, { season: !!tree.season });
+      attachment = { name: "tree.png", data: buffer };
+    }
+    const compos = [
       section(
         this.backbtn(this.createCustomId({ tab: DisplayTabs.Spirits, filter: "", item: "", ...this.state.back })),
         `# ${this.formatemoji(spirit.icon)} ${spirit.name}`,
@@ -163,7 +186,12 @@ export class SpiritsDisplay extends BasePlannerHandler {
             placeholder: "Select a spirit tree",
           })
         : null,
-      trees.length ? textDisplay(this.planner.getFormattedTreeCost(trees[selected].tree)) : null,
+      tree ? textDisplay(this.planner.getFormattedTreeCost(tree.tree)) : null,
+      tree ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
     ].filter(Boolean) as APIComponentInContainer[];
+    return {
+      components: [container(compos)],
+      files: attachment ? [attachment] : undefined,
+    };
   }
 }

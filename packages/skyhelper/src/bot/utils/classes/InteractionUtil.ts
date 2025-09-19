@@ -23,7 +23,7 @@ import {
 } from "@discordjs/core";
 import type { RawFile } from "@discordjs/rest";
 
-type ResponseData = APIInteractionResponseCallbackData & { files?: RawFile[] };
+export type ResponseData = APIInteractionResponseCallbackData & { files?: RawFile[] };
 export class InteractionHelper {
   public replied = false;
   public deferred = false;
