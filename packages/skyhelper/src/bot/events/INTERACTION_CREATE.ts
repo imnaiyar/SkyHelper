@@ -252,7 +252,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             : undefined;
           const res = await handlePlannerNavigation({ values, ...state, page: p ?? undefined, back: b ?? undefined });
           await helper.editReply({
-            components: res.components,
+            ...res,
             flags: MessageFlags.IsComponentsV2,
           });
           break;
