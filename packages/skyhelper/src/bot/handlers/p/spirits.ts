@@ -157,7 +157,9 @@ export class SpiritsDisplay extends BasePlannerHandler {
     const tree = trees[selected];
     let attachment: RawFile | undefined;
     if (tree) {
+      console.time("Tree Render");
       const buffer = await generateSpiritTree(tree.tree, { season: !!tree.season });
+      console.timeEnd("Tree Render");
       attachment = { name: "tree.png", data: buffer };
     }
     const compos = [
