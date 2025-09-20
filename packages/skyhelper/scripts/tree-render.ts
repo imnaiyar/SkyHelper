@@ -141,7 +141,9 @@ async function main() {
     console.log(`   Season pass items: ${options.season ? "enabled" : "disabled"}`);
 
     // Render the tree
+    console.time("Render time");
     const imageBuffer = await generateSpiritTree(spirit.tree, { season: options.season });
+    console.timeEnd("Render time");
 
     // Save to file
     const outputPath = resolve(process.cwd(), options.output);
