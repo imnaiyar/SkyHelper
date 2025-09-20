@@ -183,7 +183,13 @@ export class SpiritsDisplay extends BasePlannerHandler {
             placeholder: "Select a spirit tree",
           })
         : null,
-      tree ? textDisplay(this.planner.getFormattedTreeCost(tree.tree) || "\u200b") : null,
+      tree
+        ? section(
+            this.viewbtn(this.createCustomId({}), { label: "Modify" }),
+            this.planner.getFormattedTreeCost(tree.tree),
+            "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
+          )
+        : null,
       tree ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
     ].filter(Boolean) as APIComponentInContainer[];
     return {
