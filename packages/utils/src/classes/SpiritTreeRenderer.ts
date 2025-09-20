@@ -2,6 +2,7 @@ import { createCanvas, loadImage, type SKRSContext2D } from "@napi-rs/canvas";
 import type { ISpiritTree, INode, IItem } from "@skyhelperbot/constants/skygame-planner";
 import { currency as currencyEmojis } from "@skyhelperbot/constants";
 import { join } from "path";
+import { start } from "repl";
 
 export interface GenerateSpiritTreeOptions {
   season?: boolean;
@@ -64,12 +65,13 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   ctx.translate(x, y);
   ctx.beginPath();
   ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+  const itemSize = size * 2.5;
 
   // draw item icon
   if (item?.icon) {
     try {
       const img = await loadImage(iconUrl(item.icon));
-      ctx.drawImage(img, -(size * 1.5) * 0.45, -(size * 1.5) * 0.45, size * 1.5 * 0.9, size * 1.5 * 0.9);
+      ctx.drawImage(img, -itemSize * 0.45, -itemSize * 0.45, itemSize * 0.9, itemSize * 0.9);
     } catch (err) {
       console.log(err);
       // fallback: draw emoji text
@@ -81,13 +83,19 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     }
   }
 
+  const r = itemSize / 2; // radius
+  const cx = Math.max(10, Math.floor(itemSize * 0.25)); //  icon size
+
+  const padding = Math.max(4, Math.floor(itemSize * 0.06));
+
   // season overlay (small icon top-left)
-  if (season && item && item.group === "SeasonPass") {
+  if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate")) {
     try {
       const badge = await loadImage(iconUrl(item.season!.icon));
-      const bsize = size * 0.4;
-      ctx.drawImage(badge, -size / 2 - 20, -size / 2 - 20, bsize, bsize);
+      const bsize = itemSize * 0.4;
+      ctx.drawImage(badge, -itemSize / 2 - 20, -itemSize / 2 - 20, bsize, bsize);
     } catch (err) {
+      console.log(err);
       // simple star
       ctx.fillStyle = "#FFD966";
       ctx.beginPath();
@@ -97,33 +105,32 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   }
 
   if (item.level) {
-    try {
-      const fontSize = Math.max(10, Math.floor(size * 0.22));
-      ctx.font = `${fontSize}px SegoeUIEmoji`;
-      ctx.fillStyle = "#F6EAE0";
-      ctx.textAlign = "right";
-      ctx.textBaseline = "middle";
-      const text = `Lvl${item.level}`;
-      ctx.fillText(text, -size / 2, size / 2 - 20);
-    } catch (err) {
-      // simple star
-      ctx.fillStyle = "#FFD966";
-      ctx.beginPath();
-      ctx.arc(-size * 0.35, -size * 0.35, size * 0.16, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    const fontSize = Math.max(10, Math.floor(cx * 0.6));
+    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.fillStyle = "#F6EAE0";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    const text = `Lvl${item.level}`;
+    ctx.fillText(text, -itemSize / 5, itemSize / 2.25 - 20);
+  }
+
+  if (item.sheet) {
+    const fontSize = Math.max(10, Math.floor(cx * 0.5));
+    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.fillStyle = "#F6EAE0";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    const text = `#${item.sheet}`;
+    ctx.fillText(text, itemSize / 2, -itemSize / 4 - 20);
   }
 
   // cost overlay (bottom-right) -> show currency emoji + numeric cost
   if (node && node.currency) {
     const cost = node.currency.amount;
-    const r = size / 2; // radius
-    const cx = Math.max(10, Math.floor(size * 0.35)); // currency icon size
-    const padding = Math.max(4, Math.floor(size * 0.06));
 
     // icon center (relative to translated center 0,0): bottom-right inside the circle
     const iconCenterX = r - padding - cx / 2 + 50;
-    const iconCenterY = r + 40;
+    const iconCenterY = r + 20;
 
     const curKey = node.currency.type;
     const curEmojiId = (currencyEmojis as any)[curKey];
@@ -148,7 +155,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     ctx.textBaseline = "middle";
     const text = String(cost);
     // position text so its right edge sits padding pixels left of the icon's left edge
-    const textRightX = iconCenterX - cx / 2 - Math.max(4, Math.floor(size * 0.03));
+    const textRightX = iconCenterX - cx / 2 - Math.max(4, Math.floor(itemSize * 0.03));
     const textY = iconCenterY;
     // if text would overflow left of circle, clamp it
     const measured = ctx.measureText(text);
@@ -178,6 +185,7 @@ async function renderNodeRecursive(
 ) {
   if (!node || visited.has(node.guid)) return;
   visited.add(node.guid);
+  const gap = Math.max(10, size * 0.7);
 
   // draw current item
   await drawItem(ctx, x, y, size, node, season);
@@ -186,25 +194,25 @@ async function renderNodeRecursive(
   if (node.n) {
     const ny = y + spacingY;
     // use centers for connector so drawConnector can shorten both ends by radius+gap
-    drawConnector(ctx, x, y, x, ny, size / 2, Math.max(10, size * 0.35));
+    drawConnector(ctx, x, y, x, ny, size / 2, gap);
     await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, visited);
   }
 
   // left branch (nw)
   if (node.nw) {
-    const bx = x - size * 2.1;
+    const bx = x + spacingY - 60;
     const by = y + spacingY / 1.5;
     // connect center-to-center; drawConnector will leave a visible gap from the item circles
-    drawConnector(ctx, x, y, bx, by, size / 2, Math.max(10, size * 0.35));
+    drawConnector(ctx, x, y, bx, by, size / 2, gap);
     await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, visited);
   }
 
   // right branch (ne)
   if (node.ne) {
-    const bx = x + size * 2.1;
+    const bx = x - spacingY + 60;
     const by = y + spacingY / 1.5;
     // connect center-to-center; drawConnector will leave a visible gap from the item circles
-    drawConnector(ctx, x, y, bx, by, size / 2, Math.max(10, size * 0.35));
+    drawConnector(ctx, x, y, bx, by, size / 2, gap);
     await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, visited);
   }
 
@@ -215,9 +223,9 @@ async function renderNodeRecursive(
 export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpiritTreeOptions = {}): Promise<Buffer> {
   const scale = options.scale || 2;
   const size = 64 * scale; // item size
-  const spacingY = size * 2.5; // vertical spacing between levels
+  const spacingY = size * 3; // vertical spacing between levels
   const spirit = tree.spirit;
-  // estimate node count to size canvas. We'll traverse breadth-first to find depth and breadth
+  // estimate node count to  canvas. We'll traverse breadth-first to find depth and breadth
   const queue: Array<{ node: INode; x: number; y: number; depth: number }> = [];
   const visited = new Set<string>();
   queue.push({ node: tree.node, x: 0, y: 0, depth: 0 });
@@ -240,20 +248,58 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   }
 
   const columns = maxX - minX + 1;
-  const width = Math.max(2048, Math.ceil(columns * (size * 1.8)));
+  const width = Math.max(2048, Math.ceil(columns * (size * 4)));
   const height = Math.max(2048, Math.ceil((maxDepth + 1) * spacingY + size * 2));
 
   const canvas = createCanvas(width, height);
   const ctx: SKRSContext2D = canvas.getContext("2d");
-  ctx.fillStyle = "#0E2B33"; // background
-  ctx.fillRect(0, 0, width, height);
+  // background: if spirit has an image, draw it blurred and semi-transparent as the background
+  if (spirit.imageUrl) {
+    try {
+      const bgImg = await loadImage(spirit.imageUrl);
+      // compute cover sizing (center-crop)
+      const imgW = (bgImg as any).width ?? (bgImg as any).naturalWidth ?? bgImg.width;
+      const imgH = (bgImg as any).height ?? (bgImg as any).naturalHeight ?? bgImg.height;
+      const scale = Math.max(width / imgW, height / imgH);
+      const drawW = imgW * scale;
+      const drawH = imgH * scale;
+      const dx = Math.floor((width - drawW) / 2);
+      const dy = Math.floor((height - drawH) / 2);
+
+      ctx.save();
+      // apply blur - napi-rs canvas typings may not include filter, so use any cast
+      const blurPx = Math.max(8, Math.round(Math.min(width, height) / 120));
+      (ctx as any).filter = `blur(${blurPx}px)`;
+      ctx.globalAlpha = 0.35; // semi-transparent so tree elements remain readable
+      ctx.drawImage(bgImg as any, dx, dy, drawW, drawH);
+      ctx.restore();
+
+      // subtle overlay so text/icons remain readable
+      ctx.fillStyle = "rgba(14, 43, 51, 0.35)";
+      ctx.fillRect(0, 0, width, height);
+    } catch (err) {
+      // on error, fallback to solid background
+      ctx.fillStyle = "#0E2B33";
+      ctx.fillRect(0, 0, width, height);
+    }
+  } else {
+    ctx.fillStyle = "#0E2B33"; // background
+    ctx.fillRect(0, 0, width, height);
+  }
 
   // center start x and start from bottom so tree builds upwards
   const centerX = Math.floor(width / 2);
   const startY = Math.floor(height - size);
-
+  if (spirit.name) {
+    const fontSize = Math.max(10, Math.floor(size * 0.8));
+    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.fillStyle = "#F6EAE0";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(spirit.name, centerX, startY);
+  }
   // render recursively from bottom to top: pass negative spacing so children are drawn above
-  await renderNodeRecursive(ctx, tree.node, centerX, startY, -spacingY, size, !!options.season);
+  await renderNodeRecursive(ctx, tree.node, centerX, startY - 300, -spacingY, size, !!options.season);
 
   return canvas.toBuffer("image/png");
 }
