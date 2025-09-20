@@ -4,6 +4,7 @@ import { defineButton } from "@/structures";
 import { textDisplay } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
 import type { NavigationState } from "@/handlers/p/base";
+import { setLoadingState } from "@/utils/loading";
 
 /**
  * Button handler for the Sky Game Planner navigation
@@ -25,8 +26,8 @@ export default defineButton({
     } = helper.client.utils.parseCustomId(data.tab) as unknown as NavigationState & {
       id: string;
     };
-
-    await helper.deferUpdate();
+    const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+    await helper.update({ components: getLoading });
     const p = page ? parseInt(page as unknown as string) : undefined;
     const b = back ? (JSON.parse(back as unknown as string) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
     const response = await handlePlannerNavigation({
