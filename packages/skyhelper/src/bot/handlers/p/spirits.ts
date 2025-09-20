@@ -37,12 +37,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
     const filternav = SpiritNav.map((s, i) =>
       button({
         label: s,
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ tab: "spirits", filter: s, page: this.state.page ?? 1, id: i }),
-            user: this.state.user,
-          })
-          .toString(),
+        custom_id: this.createCustomId({ filter: s, page: 1, item: "" }),
         emoji: { id: emojisMap[s] },
         style: this.state.filter === s ? 3 : 2,
         disabled: this.state.filter === s,
@@ -188,7 +183,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
             placeholder: "Select a spirit tree",
           })
         : null,
-      tree ? textDisplay(this.planner.getFormattedTreeCost(tree.tree)) : null,
+      tree ? textDisplay(this.planner.getFormattedTreeCost(tree.tree) || "\u200b") : null,
       tree ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
     ].filter(Boolean) as APIComponentInContainer[];
     return {
