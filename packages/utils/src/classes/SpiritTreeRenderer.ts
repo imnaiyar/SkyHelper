@@ -9,10 +9,6 @@ export interface GenerateSpiritTreeOptions {
   scale?: number; // multiplier for resolution
 }
 
-function pathRel(p: string) {
-  return join(import.meta.dirname, p);
-}
-
 const iconUrl = (icon: string) => `https://cdn.discordapp.com/emojis/${icon}.png`;
 function drawLine(ctx: SKRSContext2D, x1: number, y1: number, x2: number, y2: number, width = 4, color = "#F6EAE0") {
   ctx.save();
@@ -60,8 +56,14 @@ function drawConnector(
 
 async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, node?: INode, season = false) {
   const { item } = node || {};
-  // base circle / background
+
   ctx.save();
+
+  const isUnlocked = !!(item && (item.unlocked || item.autoUnlocked));
+
+  if (item && !isUnlocked) {
+    ctx.globalAlpha = 0.5; //  faded for unacquired items
+  }
   ctx.translate(x, y);
   ctx.beginPath();
   ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
@@ -122,6 +124,26 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     ctx.textBaseline = "middle";
     const text = `#${item.sheet}`;
     ctx.fillText(text, itemSize / 2, -itemSize / 4 - 20);
+  }
+
+  // check mark for unlocked
+  if (item && isUnlocked) {
+    const checkRadius = Math.max(8, Math.floor(itemSize * 0.12));
+    // position the check at bottom-right quadrant of the item circle
+    const badgeX = r * 0.5;
+    const badgeY = r * 0.65;
+
+    ctx.save();
+    ctx.strokeStyle = "#24A72B"; // vibrant green
+    ctx.lineWidth = Math.max(3, Math.floor(checkRadius * 0.3));
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(badgeX - checkRadius * 0.6, badgeY - checkRadius * 0.05);
+    ctx.lineTo(badgeX - checkRadius * 0.05, badgeY + checkRadius * 0.4);
+    ctx.lineTo(badgeX + checkRadius, badgeY - checkRadius * 0.8);
+    ctx.stroke();
+    ctx.restore();
   }
 
   // cost overlay (bottom-right) -> show currency emoji + numeric cost
@@ -193,7 +215,7 @@ async function renderNodeRecursive(
   // vertical connector to center n
   if (node.n) {
     const ny = y + spacingY;
-    // use centers for connector so drawConnector can shorten both ends by radius+gap
+
     drawConnector(ctx, x, y, x, ny, size / 2, gap);
     await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, visited);
   }
@@ -202,7 +224,7 @@ async function renderNodeRecursive(
   if (node.nw) {
     const bx = x + spacingY - 60;
     const by = y + spacingY / 1.5;
-    // connect center-to-center; drawConnector will leave a visible gap from the item circles
+
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
     await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, visited);
   }
@@ -211,12 +233,12 @@ async function renderNodeRecursive(
   if (node.ne) {
     const bx = x - spacingY + 60;
     const by = y + spacingY / 1.5;
-    // connect center-to-center; drawConnector will leave a visible gap from the item circles
+
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
     await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, visited);
   }
 
-  // Some nodes may have upward connector 'n' of child pointing upwards from a branch node; handle by checking children's n that go upward
+  // Some nodes may have upward connector 'n' of child pointing upwards from a branch node (like in a season's guide tree); handle by checking children's n that go upward
   // Already handled via normal recursion since we position children relative to parent.
 }
 
@@ -267,36 +289,45 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
       const dy = Math.floor((height - drawH) / 2);
 
       ctx.save();
-      // apply blur - napi-rs canvas typings may not include filter, so use any cast
       const blurPx = Math.max(8, Math.round(Math.min(width, height) / 120));
-      (ctx as any).filter = `blur(${blurPx}px)`;
+      ctx.filter = `blur(${blurPx}px)`;
       ctx.globalAlpha = 0.35; // semi-transparent so tree elements remain readable
       ctx.drawImage(bgImg as any, dx, dy, drawW, drawH);
       ctx.restore();
-
-      // subtle overlay so text/icons remain readable
-      ctx.fillStyle = "rgba(14, 43, 51, 0.35)";
-      ctx.fillRect(0, 0, width, height);
     } catch (err) {
-      // on error, fallback to solid background
-      ctx.fillStyle = "#0E2B33";
-      ctx.fillRect(0, 0, width, height);
+      // do nothing
     }
-  } else {
-    ctx.fillStyle = "#0E2B33"; // background
-    ctx.fillRect(0, 0, width, height);
   }
+
+  // add overlay and bot watermark
+
+  const watermarkText = "SkyHelper";
+  const titleSize = Math.max(18, Math.floor(Math.min(width, height) / 20));
+  const subSize = Math.max(12, Math.floor(titleSize / 2));
+
+  ctx.font = `${titleSize}px SegoeUIEmoji`;
+  ctx.fillStyle = "rgba(246, 234, 224, 0.6)";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "top";
+  const paddingTitle = Math.floor(titleSize * 0.6);
+  const paddingSub = Math.floor(subSize * 0.6);
+  ctx.fillText(watermarkText, width - paddingTitle, paddingTitle);
+  ctx.font = `${subSize}px SegoeUIEmoji`;
+  ctx.fillText("A Sky: COTL Discord Bot", width - paddingSub, paddingTitle + titleSize + paddingSub / 2);
+  ctx.fillStyle = "rgba(14, 43, 51, 0.35)";
+  ctx.fillRect(0, 0, width, height);
 
   // center start x and start from bottom so tree builds upwards
   const centerX = Math.floor(width / 2);
   const startY = Math.floor(height - size);
-  if (spirit.name) {
+
+  if (spirit.name || tree.name) {
     const fontSize = Math.max(10, Math.floor(size * 0.8));
     ctx.font = `${fontSize}px SegoeUIEmoji`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(spirit.name, centerX, startY);
+    ctx.fillText(tree.name || spirit.name, centerX, startY);
   }
   // render recursively from bottom to top: pass negative spacing so children are drawn above
   await renderNodeRecursive(ctx, tree.node, centerX, startY - 300, -spacingY, size, !!options.season);

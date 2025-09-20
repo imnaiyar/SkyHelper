@@ -26,6 +26,7 @@ import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import type { DisplayTabs, NavigationState } from "@/handlers/p/base";
+import { setLoadingState } from "@/utils/loading";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -242,8 +243,8 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           await handleSkyTimesSelect(interaction, helper);
           return;
         case client.utils.customId.PlannerTopLevelNav:
-          await helper.deferUpdate();
-          const { user } = data;
+          const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+          await helper.update({ components: getLoading });
           const values = interaction.data.values;
           const state = client.utils.parseCustomId(data.tab) as unknown as NavigationState;
           const p = state.page ? parseInt(state.page as unknown as string) : undefined;
