@@ -12,8 +12,6 @@ import {
   textDisplay,
   thumbnail,
 } from "@skyhelperbot/utils";
-import { CustomId, store } from "@/utils/customId-store";
-import Utils from "@/utils/classes/Utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import type { RawFile } from "@discordjs/rest";
@@ -64,7 +62,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
       case p.SpiritType.Regular:
       case p.SpiritType.Season:
       case p.SpiritType.Elder:
-      case p.SpiritType.Guide:
+      case p.SpiritType.Guide: {
         const spiritsOfType = spirits.filter((s) => s.type === this.state.filter);
         components.push(...uppercomponent(`${this.state.filter} Spirits (${spiritsOfType.length})`));
         components.push(
@@ -77,6 +75,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
           }),
         );
         break;
+      }
       case "TS":
         components.push(...uppercomponent(`Traveling Spirits (${this.data.travelingSpirits.length})`));
         components.push(...this.tslist());
