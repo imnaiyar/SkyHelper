@@ -22,6 +22,7 @@ interface ScriptOptions {
   spiritQuery: string;
   season: boolean;
   output: string;
+  spiritName?: string;
 }
 
 /**
@@ -31,13 +32,14 @@ function parseArgs(): ScriptOptions {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.error("Usage: pnpm tree-render <spiritName> [--season] [--output=filename.png]");
+    console.error("Usage: pnpm tree-render <spiritName> [--season] [--output=filename.png] [--name=spirit-name]");
     process.exit(1);
   }
 
   let spiritQuery = "";
   let season = false;
   let output = "";
+  let spiritName;
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -46,6 +48,8 @@ function parseArgs(): ScriptOptions {
       season = true;
     } else if (arg.startsWith("--output=")) {
       output = arg.substring(9);
+    } else if (arg.startsWith("--name=")) {
+      spiritName = arg.substring(7);
     } else if (!arg.startsWith("--")) {
       spiritQuery = arg;
     }
@@ -62,7 +66,7 @@ function parseArgs(): ScriptOptions {
     output = `${sanitized}_tree.png`;
   }
 
-  return { spiritQuery, season, output };
+  return { spiritQuery, season, output, spiritName };
 }
 
 /**
@@ -130,19 +134,19 @@ async function main() {
     }
 
     console.log(`✅ Found spirit: ${spirit.name}`);
-
-    if (!spirit.tree) {
+    const tree = spirit.tree || spirit.events?.[0]?.tree;
+    if (!tree) {
       console.error(`❌ Spirit "${spirit.name}" has no tree data available`);
       process.exit(1);
     }
 
     console.log(`📊 Rendering tree for: ${spirit.name}`);
-    console.log(`   Tree has ${countNodes(spirit.tree.node)} nodes`);
+    console.log(`   Tree has ${countNodes(tree.node)} nodes`);
     console.log(`   Season pass items: ${options.season ? "enabled" : "disabled"}`);
 
     // Render the tree
     console.time("Render time");
-    const imageBuffer = await generateSpiritTree(spirit.tree, { season: options.season });
+    const imageBuffer = await generateSpiritTree(tree, { season: options.season, spiritName: options.spiritName });
     console.timeEnd("Render time");
 
     // Save to file

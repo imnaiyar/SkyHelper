@@ -4,6 +4,8 @@ import { currency as currencyEmojis } from "@skyhelperbot/constants";
 
 export interface GenerateSpiritTreeOptions {
   season?: boolean;
+  spiritName?: string;
+  spiritUrl?: string;
   scale?: number; // multiplier for resolution
 }
 
@@ -117,7 +119,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   const padding = Math.max(4, Math.floor(itemSize * 0.06));
 
   // season overlay
-  if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate")) {
+  if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate") && item.season?.icon) {
     try {
       const badge = await getImage(iconUrl(item.season!.icon));
       const bsize = itemSize * 0.4;
@@ -255,7 +257,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   const scale = options.scale ?? 0.5; // default slightly reduced for perf
   const size = 64 * scale;
   const spacingY = size * 4;
-  const spirit = tree.spirit ?? tree.ts.spirit;
+  const spirit = tree.spirit ?? tree.ts?.spirit;
 
   // preload all images in parallel
   await preloadImages(tree);
@@ -283,15 +285,15 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
 
   const columns = maxX - minX + 1;
   const width = Math.max(800, Math.ceil(columns * (size * 4) * 1.5));
-  const height = Math.ceil((maxDepth + 1) * spacingY + size * 3);
+  const height = Math.max(800, Math.ceil((maxDepth + 1) * spacingY + size * 3));
 
   const canvas = createCanvas(width, height);
   const ctx: SKRSContext2D = canvas.getContext("2d");
 
   // background
-  if (spirit?.imageUrl) {
+  if (spirit?.imageUrl || options.spiritUrl) {
     try {
-      const bgImg = await getImage(spirit.imageUrl);
+      const bgImg = await getImage(spirit?.imageUrl || options.spiritUrl!);
       const imgW = (bgImg as any).width ?? bgImg.width;
       const imgH = (bgImg as any).height ?? bgImg.height;
       const scaleBg = Math.max(width / imgW, height / imgH);
@@ -326,15 +328,27 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   ctx.fillRect(0, 0, width, height);
 
   const centerX = Math.floor(width / 2);
-  const startY = Math.floor(height - size);
+  // compute the ideal content height for the tree (all depths stacked)
+  const contentHeight = Math.ceil((maxDepth + 1) * spacingY + size * 1.5);
 
-  if (spirit?.name || tree.name) {
+  const verticalPadding = Math.max(80, Math.floor(size * 1.5));
+
+  let startY: number;
+  if (height - contentHeight > verticalPadding * 2) {
+    // center content within canvas while respecting padding
+    const top = Math.floor((height - contentHeight) / 2);
+    startY = top + contentHeight - size;
+  } else {
+    startY = Math.floor(height - size);
+  }
+
+  if (spirit?.name || tree.name || options.spiritName) {
     const fontSize = Math.max(10, Math.floor(size * 1.15));
     ctx.font = `${fontSize}px SegoeUIEmoji`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(tree.name || spirit?.name, centerX, startY - 30);
+    ctx.fillText(options.spiritName || tree.name || spirit!.name, centerX, startY + fontSize / 2 - 30);
   }
 
   await renderNodeRecursive(ctx, tree.node, centerX, startY - 100, -spacingY, size, !!options.season);

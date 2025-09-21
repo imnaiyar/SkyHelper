@@ -3,7 +3,7 @@ import { handlePlannerNavigation } from "../../handlers/planner.js";
 import { defineButton } from "@/structures";
 import { textDisplay } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
-import type { NavigationState } from "@/handlers/p/base";
+import type { NavigationState } from "@/handlers/planner-displays/base";
 import { setLoadingState } from "@/utils/loading";
 
 /**
