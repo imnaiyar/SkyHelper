@@ -242,7 +242,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case client.utils.customId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
           return;
-        case client.utils.customId.PlannerTopLevelNav:
+        case client.utils.customId.PlannerTopLevelNav: {
           const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
           await helper.update({ components: getLoading });
           const values = interaction.data.values;
@@ -257,6 +257,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             flags: MessageFlags.IsComponentsV2,
           });
           break;
+        }
         default:
           return;
       }

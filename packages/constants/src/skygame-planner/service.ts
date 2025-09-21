@@ -2,7 +2,6 @@
  * SkyGame Planner data service
  * This file provides the main interface for accessing SkyGame Planner data
  */
-import { resolve } from "path";
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
 import type { IEvent, IEventInstance, INode, ISpiritTree } from "./interfaces.js";
@@ -381,8 +380,8 @@ export function resolveToLuxon(date: { day: number; month: number; year: number 
 export function calculateCost(node: INode) {
   const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
   const addCurrency = (type: any) => {
-    for (const currency of Object.keys(costs)) {
-      costs[currency as keyof typeof costs] += type[currency as keyof typeof costs] ?? 0;
+    for (const currencyy of Object.keys(costs)) {
+      costs[currencyy as keyof typeof costs] += type[currencyy as keyof typeof costs] ?? 0;
     }
   };
   addCurrency(node);

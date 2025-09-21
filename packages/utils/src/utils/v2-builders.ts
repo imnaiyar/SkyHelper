@@ -108,11 +108,11 @@ export function row(
   };
 }
 
-export function button(button: Partial<Omit<APIButtonComponentWithCustomId, "type">> = {}): APIButtonComponent {
+export function button(b: Partial<Omit<APIButtonComponentWithCustomId, "type">> = {}): APIButtonComponent {
   return {
     type: ComponentType.Button,
     style: 2,
     custom_id: "button",
-    ...button,
+    ...b,
   };
 }

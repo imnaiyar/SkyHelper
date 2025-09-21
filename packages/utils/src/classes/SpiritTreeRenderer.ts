@@ -307,7 +307,9 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
       ctx.globalAlpha = 0.35;
       ctx.drawImage(bgImg as any, dx, dy, drawW, drawH);
       ctx.restore();
-    } catch {}
+    } catch {
+      // ignore
+    }
   }
 
   // watermark

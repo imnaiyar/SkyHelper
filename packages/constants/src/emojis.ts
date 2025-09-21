@@ -145,9 +145,9 @@ export async function fetchEmojis() {
       console.error(`Failed to fetch emojis from guild ${guildId}: ${res.status} ${res.statusText}`);
       continue;
     }
-    const emojis = (await res.json()) as APIEmoji[];
-    console.log(`Fetched ${emojis.length} emojis from guild: ${guildId}`);
-    fetchedEmojis.push(...emojis);
+    const emjs = (await res.json()) as APIEmoji[];
+    console.log(`Fetched ${emjs.length} emojis from guild: ${guildId}`);
+    fetchedEmojis.push(...emjs);
   }
 
   // Fetch application emojis
@@ -164,7 +164,7 @@ export async function fetchEmojis() {
   return transformEmojis(fetchedEmojis);
 }
 
-function transformEmojis(emojis: APIEmoji[]) {
+function transformEmojis(emjs: APIEmoji[]) {
   const transformed: Array<
     APIEmoji & {
       identifiers?: number[];
@@ -172,7 +172,7 @@ function transformEmojis(emojis: APIEmoji[]) {
   > = [];
 
   console.log("Transforming emojis...");
-  for (const emoji of emojis) {
+  for (const emoji of emjs) {
     const identifier: string = emoji.name?.startsWith("h_") ? (EMOJIS_HASH as any)[emoji.name] : emoji.name;
     const identifiers = identifier
       ? identifier

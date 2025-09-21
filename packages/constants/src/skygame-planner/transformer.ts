@@ -385,7 +385,7 @@ function resolveReferences(data: TransformedData): void {
     if (emoji) season.icon = emoji;
   }
 
-  //#region data.spiritTrees
+  // #region data.spiritTrees
   for (const tree of data.spiritTrees) {
     if (tree.node) {
       const node = resolveRef<INode>(tree.node as any);
@@ -394,7 +394,7 @@ function resolveReferences(data: TransformedData): void {
     }
   }
 
-  //#region data.spirits
+  // #region data.spirits
   for (const spirit of data.spirits) {
     if (spirit.imageUrl) spirit.imageUrl = resolveUrl(spirit.imageUrl);
     if (spirit.tree) {
