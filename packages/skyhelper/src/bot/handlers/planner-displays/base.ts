@@ -151,7 +151,7 @@ export class BasePlannerHandler {
       if (itemCallback) components.push(...itemCallback(item, i));
     }
     // only include if there are multiple pages, may even help save comp limits
-    if (total > 1)
+    if (total > 1) {
       components.push(
         this.paginationBtns({
           page,
@@ -163,6 +163,7 @@ export class BasePlannerHandler {
           back: this.state.back,
         }),
       );
+    }
 
     return components;
   }
