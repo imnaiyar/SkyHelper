@@ -37,7 +37,7 @@ export class LimitedCollection<K, V> extends Collection<K, V> {
     return super.set(key, value);
   }
 
-  static get [Symbol.species]() {
+  static override get [Symbol.species]() {
     return Collection;
   }
 }

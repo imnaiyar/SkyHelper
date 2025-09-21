@@ -33,7 +33,6 @@ export class WingedLightsDisplay extends BasePlannerHandler {
   wlslist(wls: SkyPlannerData.IWingedLight[]) {
     return this.displayPaginatedList({
       items: wls,
-      filter: this.filters!,
       perpage: 4,
       itemCallback: (wl, i) => [
         textDisplay(

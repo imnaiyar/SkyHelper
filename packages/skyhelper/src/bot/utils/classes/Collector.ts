@@ -108,7 +108,7 @@ export class InteractionCollector<
   public componentType: TComponent | null = null;
   public userId: string | null = null;
   constructor(
-    readonly client: SkyHelper,
+    override readonly client: SkyHelper,
     readonly options: InteractionCollectorOptions<TComponent, TType>,
   ) {
     super(client, options);
@@ -167,7 +167,7 @@ export interface MessageCollectorOptions extends CollectorOptions<APIMessage> {
 export class MessageCollector extends Collector<APIMessage> {
   public channel: APIChannel | null = null;
   constructor(
-    readonly client: SkyHelper,
+    override readonly client: SkyHelper,
     readonly options: MessageCollectorOptions,
   ) {
     super(client, options);

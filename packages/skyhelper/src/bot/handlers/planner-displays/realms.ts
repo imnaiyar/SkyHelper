@@ -14,8 +14,6 @@ export class RealmsDisplay extends BasePlannerHandler {
       textDisplay(`# Realms (${realms.length})`),
       ...this.displayPaginatedList({
         items: realms,
-        user: this.state.user,
-        tab: this.state.tab,
         page: this.state.page ?? 1,
         perpage: 7,
         itemCallback: (realm) => [
