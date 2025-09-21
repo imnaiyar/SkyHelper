@@ -16,13 +16,13 @@ import { PermissionsUtil } from "./classes/PermissionUtils.js";
 import type { InteractionHelper } from "./classes/InteractionUtil.js";
 
 // #region interaction
-type ValidateInteractionOptions = {
+interface ValidateInteractionOptions {
   command: Command | ContextMenuCommand<"MessageContext" | "UserContext">;
   interaction: APIChatInputApplicationCommandInteraction | APIContextMenuInteraction;
   options: InteractionOptionResolver;
   helper: InteractionHelper;
   t: ReturnType<typeof import("../i18n.js").getTranslator>;
-};
+}
 
 /**
  * Validates interactions if it passes a set of checks
@@ -141,7 +141,7 @@ export async function validateInteractions({ command, interaction, options, help
 }
 
 // #region Message
-type ValidateMessageOptions = {
+interface ValidateMessageOptions {
   command: Command;
   message: GatewayMessageCreateDispatchData;
   args: string[];
@@ -149,7 +149,7 @@ type ValidateMessageOptions = {
   flags: MessageFlags;
   client: SkyHelper;
   t: ReturnType<typeof import("../i18n.js").getTranslator>;
-};
+}
 
 /**
  * Validates message commands if it passes a set of checks.

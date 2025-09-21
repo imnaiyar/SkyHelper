@@ -22,7 +22,7 @@ export abstract class GameController {
   public initiator: APIUser | null = null;
 
   /** Whether this game is stopped or not */
-  protected _stopped: boolean = false;
+  protected _stopped = false;
 
   /** Collector listening for stop */
   protected _stopCollector: InteractionCollector<ComponentType.Button> | null = null;
@@ -89,19 +89,19 @@ export class Scrambled extends GameController {
   private currentWord: { original: string; scrambled: string };
 
   /** Total words used in the game */
-  private words: Array<{ original: string; scrambled: string }> = [];
+  private words: { original: string; scrambled: string }[] = [];
 
   /** Current round number (0-based) */
-  private currentRound: number = 0;
+  private currentRound = 0;
 
   /** Total number of rounds */
   private totalRounds: number;
 
   /** Player stats tracking scores and guesses */
-  public playerStats: Map<string, PlayerRoundStats> = new Map();
+  public playerStats = new Map<string, PlayerRoundStats>();
 
   /** Time per round in milliseconds */
-  private timePerRound: number = 30000;
+  private timePerRound = 30000;
 
   /** Round winner for the current round */
   private roundWinner: APIUser | null = null;
@@ -366,10 +366,10 @@ interface ScrambledRoundsOptions {
   timePerRound?: number;
 }
 
-type PlayerRoundStats = {
+interface PlayerRoundStats {
   totalCorrect: number;
-  rounds: Array<{ correct: boolean; attemptTime: number | null } | null>;
-};
+  rounds: ({ correct: boolean; attemptTime: number | null } | null)[];
+}
 
 export function scrambleWord() {
   const word = hangmanWords.random().toLowerCase();

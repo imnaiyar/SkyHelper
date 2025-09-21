@@ -89,7 +89,7 @@ export class LeaderboardCard {
    * @param opacity must be between 0 and 1
    * @example setOpacity(0.6)
    */
-  setOpacity(opacity: number = 0): this {
+  setOpacity(opacity = 0): this {
     if (opacity >= 0 && opacity <= 1) {
       this.opacity = opacity;
       return this;

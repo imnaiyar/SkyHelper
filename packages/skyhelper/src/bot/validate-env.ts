@@ -31,6 +31,7 @@ if (!results.success) {
   process.exit(1);
 }
 
+/* eslint-disable */
 declare global {
   namespace NodeJS {
     interface ProcessEnv extends z.infer<typeof EnvPredicate> {}

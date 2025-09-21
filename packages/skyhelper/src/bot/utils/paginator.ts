@@ -15,7 +15,7 @@ const _get = (obj: any, _path: string) => {
   return _path.split(".").reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
 };
 
-type PaginatorOptions = {
+interface PaginatorOptions {
   /**
    * Max number of items per page.
    * * default: 10
@@ -69,9 +69,9 @@ type PaginatorOptions = {
    * * default: 0
    */
   startPage?: number;
-};
+}
 
-type PaginatorExtraParams = {
+interface PaginatorExtraParams {
   /**
    * Current index the paginator is on
    */
@@ -81,7 +81,7 @@ type PaginatorExtraParams = {
    * Total number of pages the paginator is handling
    */
   total_page: number;
-};
+}
 export async function paginate<U, T extends U[]>(
   helper: InteractionHelper,
   data: T,

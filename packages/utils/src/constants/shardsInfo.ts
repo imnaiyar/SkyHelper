@@ -17,11 +17,7 @@ export interface ShardInfo {
   data: string;
 }
 
-export interface ShardsInfo {
-  [key: string]: {
-    [key: string]: ShardInfo;
-  };
-}
+export type ShardsInfo = Record<string, Record<string, ShardInfo>>;
 
 /**
  * Returns the shard information for each area

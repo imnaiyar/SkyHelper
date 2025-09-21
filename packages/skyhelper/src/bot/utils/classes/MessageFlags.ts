@@ -8,7 +8,7 @@ export class MessageFlags {
   private content: string;
 
   /** Regex to match flags */
-  private flagRegex: RegExp = /--([^\s]+(?:=[^\s]+)?)/g;
+  private flagRegex = /--([^\s]+(?:=[^\s]+)?)/g;
 
   /** Array of flags */
   public flags: string[];

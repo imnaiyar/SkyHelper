@@ -37,7 +37,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   public type: "custom" | "random" = "random";
 
   /** Total lives of the player in single-mode game */
-  public totalLives: number = 6;
+  public totalLives = 6;
 
   /** Remaining lives of the player in single-mode game */
   public remainingLives: number = this.totalLives;
@@ -49,7 +49,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   public players: APIUser[];
 
   /** Player stats for the game */
-  public playerStats: Map<string, PlayerStats> = new Map();
+  public playerStats = new Map<string, PlayerStats>();
 
   /** The word for the game */
   public word: string;
@@ -65,7 +65,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   private guessedAlphabets: (typeof EnglishAlphabets)[number][] = [];
 
   /** Whether this game is stopped or not */
-  private _stopped: boolean = false;
+  private _stopped = false;
 
   /** Collector listening for stop */
   private _stopCollector: InteractionCollector<ComponentType.Button> | null = null;
@@ -85,7 +85,10 @@ export class Hangman<T extends ModeType, K extends WordType> {
       this.playerStats.set(player.id, { incorrectGuesses: 0, correctGuesses: 0 });
     }
     // prettier-ignore
-    if (this.mode === "single" && "totalLives" in option && option.totalLives) (this.totalLives = option.totalLives), (this.remainingLives = option.totalLives);
+    if (this.mode === "single" && "totalLives" in option && option.totalLives) {
+      this.totalLives = option.totalLives;
+      this.remainingLives = option.totalLives;
+    }
 
     if (option.type === "custom") {
       if ("word" in option) {
@@ -107,7 +110,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       guessedBy: null,
     }));
 
-    // @ts-ignore
+    // @ts-expect-error whatever
     this.alphabetLength = this.alphabets.filter((alp) => EnglishAlphabets.includes(alp.alphabet.toLowerCase())).length;
     this.currentPlayer = this.players.random();
     if (this.mode === "double") {
@@ -198,7 +201,10 @@ export class Hangman<T extends ModeType, K extends WordType> {
       stat.correctGuesses += unguessedWords.length;
       this.playerStats.set(this.currentPlayer!.id, stat);
       this.alphabets?.forEach((a) => {
-        if (!a.guessedBy || !a.guessed) (a.guessed = true), (a.guessedBy = this.currentPlayer!);
+        if (!a.guessedBy || !a.guessed) {
+          a.guessed = true;
+          a.guessedBy = this.currentPlayer!;
+        }
       });
       return HangmanResponseCodes.GuessedFullWord;
     }
@@ -215,7 +221,10 @@ export class Hangman<T extends ModeType, K extends WordType> {
 
     if (!this.alphabets.some((a) => a.alphabet.toLowerCase() === word)) return HangmanResponseCodes.WrongGuess;
     this.alphabets.forEach((alp) => {
-      if (alp.alphabet.toLowerCase() === word) (alp.guessed = true), (alp.guessedBy = this.currentPlayer);
+      if (alp.alphabet.toLowerCase() === word) {
+        alp.guessed = true;
+        alp.guessedBy = this.currentPlayer;
+      }
     });
     const stat = this.playerStats.get(this.currentPlayer!.id)!;
     stat.correctGuesses += this.alphabets.filter((a) => a.alphabet.toLowerCase() === word).length;
@@ -381,7 +390,7 @@ type HangmanWords = {
   guessedBy: APIUser | null;
 }[];
 
-type PlayerStats = {
+interface PlayerStats {
   correctGuesses: number;
   incorrectGuesses: number;
-};
+}

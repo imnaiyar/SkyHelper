@@ -186,7 +186,8 @@ export default class {
       return acc;
     }, [] as ModalSubmitComponent[]);
     const comp = components.find((component) => component.custom_id === customId);
-    if (type && comp?.type !== type) throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
+    if (type && comp?.type !== type)
+      throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
     return comp as Extract<ModalSubmitComponent, { type: Type }>;
   }
   static getTextInput(
@@ -199,7 +200,7 @@ export default class {
     textinput: string,
     required?: false,
   ): APIModalSubmitTextInputComponent | undefined;
-  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required: boolean = false) {
+  static getTextInput(interaction: APIModalSubmitInteraction, textinput: string, required = false) {
     const compo = this.getModalComponent(interaction, textinput, ComponentType.TextInput);
     if (required && !compo) throw new Error("Couldn't find the required text input");
     return compo;

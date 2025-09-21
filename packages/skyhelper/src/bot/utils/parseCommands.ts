@@ -16,7 +16,7 @@ import type { OverrideLocalizations } from "@/types/utils";
  * @param command The command to parse
  */
 export function parseCommands(command: Command | ContextMenuCommand<"UserContext" | "MessageContext">) {
-  // @ts-ignore
+  // @ts-expect-error different types conflicting but it is correct
   const cmd: RESTPostAPIApplicationCommandsJSONBody = {
     name: command.name,
     ...("description" in command && { description: command.description }),
@@ -57,7 +57,7 @@ function _parseOptions(options: OverrideLocalizations<Required<RESTPostAPIApplic
 
   // Map the options
   for (const op of options) {
-    // @ts-ignore Error because op contains different types for localizations which this function will override anyway
+    // @ts-expect-error Error because op contains different types for localizations which this function will override anyway
     const option: APIApplicationCommandOption = { ...op };
 
     // name
@@ -75,23 +75,22 @@ function _parseOptions(options: OverrideLocalizations<Required<RESTPostAPIApplic
       const cChoices = [];
 
       for (const ch of option.choices) {
-        // @ts-ignore Same reasoning as above
+        // @ts-expect-error Same reasoning as above
         const choice: APIApplicationCommandOptionChoice = { ...ch };
 
         if (ch.name_localizations) {
-          // @ts-ignore Same reasoning
+          // @ts-expect-error Same reasoning
           choice.name_localizations = loadLocalization(ch.name_localizations);
         }
 
         cChoices.push(choice);
       }
 
-      // @ts-ignore
       // override the choices
       option.choices = cChoices;
     }
 
-    // @ts-ignore Same reasoning
+    // @ts-expect-error Same reasoning
     // Recursively map the options, if it exists
     if ("options" in option && option.options) option.options = _parseOptions(op.options);
 

@@ -34,7 +34,7 @@ export async function eventSchedules(type: "shard" | "times"): Promise<void> {
   const currentDate = DateTime.now().setZone("America/Los_Angeles");
   switch (type) {
     case "times": {
-      const response = async (locale: string = "en-US"): Promise<WebhookMessageCreateOptions> => {
+      const response = async (locale = "en-US"): Promise<WebhookMessageCreateOptions> => {
         return await getEmbed("times", { locale });
       };
       const data = await getActiveUpdates("times");
@@ -42,7 +42,7 @@ export async function eventSchedules(type: "shard" | "times"): Promise<void> {
       break;
     }
     case "shard": {
-      const response = async (locale: string = "en-US"): Promise<WebhookMessageCreateOptions> =>
+      const response = async (locale = "en-US"): Promise<WebhookMessageCreateOptions> =>
         getEmbed("shards", { date: currentDate.toFormat("yyyy-MM-dd"), locale, noBtn: "true" });
 
       const data = await getActiveUpdates("shard");
