@@ -83,7 +83,7 @@ export class GuildController {
 
     if (data == null) return "null";
     const settings = await getSettings(this.bot, guild);
-    const actives: Array<keyof Features> = ["reminders", "live-updates"];
+    const actives: (keyof Features)[] = ["reminders", "live-updates"];
     return {
       id: data.id,
       name: data.name,

@@ -49,7 +49,7 @@ export function getResponse(
 
     return (
       t("features:reminders.COMMON", {
-        // @ts-expect-error
+        // @ts-expect-error key is known due to not being explicit
         TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
         TIME: `<t:${startTime?.toUnixInteger()}:t>`,
         "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
@@ -60,7 +60,7 @@ export function getResponse(
     if (["eden", "reset"].includes(type)) {
       return (
         t("features:reminders.PRE-RESET", {
-          // @ts-expect-error
+          // @ts-expect-error same
           TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
           TIME: `<t:${nextTime.toUnixInteger()}:t>`,
           "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
@@ -70,7 +70,7 @@ export function getResponse(
 
     return (
       t("features:reminders.PRE", {
-        // @ts-expect-error
+        // @ts-expect-error same
         TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
@@ -168,7 +168,7 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
 export function getShardReminderResponse(
   now: DateTime,
   t: ReturnType<typeof getTranslator>,
-  offset: number = 0,
+  offset = 0,
   shardType?: ("red" | "black")[],
 ) {
   const nextShard = ShardsUtil.getNextShard(now, shardType);

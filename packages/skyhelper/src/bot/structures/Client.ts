@@ -34,14 +34,14 @@ import type { CustomId } from "@/utils/customId-store";
 
 export class SkyHelper extends Client {
   /** Set of unavailable guilds recieved when client first became ready */
-  public unavailableGuilds: Set<string> = new Set();
+  public unavailableGuilds = new Set<string>();
 
-  public ready: boolean = false;
+  public ready = false;
   /** Whether client is waiting to recieve all guilds */
   public waitingForGuilds = false;
 
   /** Collection of guilds the bot is in */
-  public guilds: Collection<string, GatewayGuildCreateDispatchData & { clientMember: APIGuildMember }> = new Collection();
+  public guilds = new Collection<string, GatewayGuildCreateDispatchData & { clientMember: APIGuildMember }>();
 
   // @ts-expect-error this is set when client becomes ready.
   // So ideally should always be present as it is not accessed outside of events
@@ -50,13 +50,13 @@ export class SkyHelper extends Client {
   public schemas = schemas;
 
   /** Collection of channels available to the client */
-  public channels: Collection<string, APIChannel> = new Collection();
+  public channels = new Collection<string, APIChannel>();
 
-  public commands: Collection<string, Command> = new Collection();
+  public commands = new Collection<string, Command>();
 
-  public contexts: Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">> = new Collection();
+  public contexts = new Collection<string, ContextMenuCommand<"MessageContext" | "UserContext">>();
 
-  public buttons: Collection<string, Button<CustomId>> = new Collection();
+  public buttons = new Collection<string, Button<CustomId>>();
 
   public utils = Utils;
 
@@ -77,9 +77,9 @@ export class SkyHelper extends Client {
 
   public logger = logger;
 
-  public applicationCommands: Collection<string, APIApplicationCommand> = new Collection();
+  public applicationCommands = new Collection<string, APIApplicationCommand>();
 
-  public applicationEmojis: Collection<string, APIApplicationEmoji> = new Collection();
+  public applicationEmojis = new Collection<string, APIApplicationEmoji>();
 
   public timezone = "America/Los_Angeles";
 

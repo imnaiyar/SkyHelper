@@ -54,8 +54,8 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
   const mode = options.getString("mode", true);
   // get game configs
   let word: string | null = null;
-  let type: string = "random";
-  const maxLives: number = 6;
+  let type = "random";
+  const maxLives = 6;
   let players: APIUser[] = [helper.user];
   const getResponse = () => getMessageResponse(mode, type, word, players, helper, maxLives);
 

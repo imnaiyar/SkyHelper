@@ -1,13 +1,13 @@
 import type { DateTime } from "luxon";
 
 const shardSequence = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"] as const;
-export type TimelineType = {
+export interface TimelineType {
   readonly earlySky: DateTime;
   readonly gateShard: DateTime;
   readonly start: DateTime;
   readonly end: DateTime;
   readonly shardMusic: string;
-};
+}
 export type TimelineReturnType = Record<(typeof shardSequence)[number], [TimelineType, TimelineType, TimelineType]>;
 /**
  * Returns shards fall - end times for a given date

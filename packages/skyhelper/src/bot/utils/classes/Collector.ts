@@ -11,7 +11,7 @@ import {
 } from "@discordjs/core";
 import { EventEmitter } from "node:events";
 
-export interface CollectorOptions<Int extends unknown> {
+export interface CollectorOptions<Int> {
   filter?: (collected: Int) => boolean;
   max?: number;
   timeout?: number;
@@ -24,12 +24,12 @@ declare interface Collector<Int> {
   once(event: "collect", listener: (interaction: Int) => unknown): this;
   once(event: "end", listener: (collected: Int[], reason: string) => unknown): this;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 abstract class Collector<Int> extends EventEmitter {
   collected: Int[] = [];
   timer: NodeJS.Timeout | undefined;
   filter: (int: Int) => boolean;
-  public ended: boolean = false;
+  public ended = false;
 
   public constructor(
     readonly client: SkyHelper,
@@ -131,13 +131,12 @@ export class InteractionCollector<
     if (this.channel && this.channel.id !== int.channel?.id) return;
 
     if (this.userId && (int.member?.user || int.user!).id !== this.userId) return;
-    // @ts-expect-error
+    // @ts-expect-error type mismatch
     const passesFilter = this.filter(int);
     if (!passesFilter) return;
     this.emit("collect", int);
 
-    // @ts-expect-error
-    this.collected.push(int as Int);
+    this.collected.push(int as any);
     if (this.options.idle) {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => this.stop("timeout"), this.options.idle);

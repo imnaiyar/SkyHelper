@@ -15,13 +15,13 @@ import type { MessageFlags } from "@/utils/classes/MessageFlags";
 import type { Category } from "./Category.ts";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 
-type MessageParams = {
+interface MessageParams {
   message: GatewayMessageCreateDispatchData;
   args: string[];
   flags: MessageFlags;
   t: ReturnType<typeof getTranslator>;
   client: SkyHelper;
-};
+}
 
 export type ValidationReturn = { status: true } | { status: false; message: string };
 export interface MessageValidation {
@@ -99,13 +99,14 @@ interface CommandBase {
   /* Command cooldown */
   cooldown?: number;
 }
-type InteractionOptions<TType extends APIChatInputApplicationCommandInteraction | APIApplicationCommandAutocompleteInteraction> =
-  {
-    interaction: TType;
-    helper: InteractionHelper;
-    t: ReturnType<typeof getTranslator>;
-    options: InteractionOptionResolver;
-  };
+interface InteractionOptions<
+  TType extends APIChatInputApplicationCommandInteraction | APIApplicationCommandAutocompleteInteraction,
+> {
+  interaction: TType;
+  helper: InteractionHelper;
+  t: ReturnType<typeof getTranslator>;
+  options: InteractionOptionResolver;
+}
 export type Command<Autocomplete extends boolean = false> = (Autocomplete extends true
   ? CommandBase & {
       /** Autocomplete callback if it exists */

@@ -60,9 +60,7 @@ export interface ReminderConfig {
 export interface Reminders {
   active: boolean;
   default_role: string | null;
-  events: {
-    [k in (typeof REMINDERS_KEY)[number]]: ReminderConfig | null;
-  };
+  events: Record<(typeof REMINDERS_KEY)[number], ReminderConfig | null>;
 }
 export interface GuildSchema extends Document {
   _id: string;

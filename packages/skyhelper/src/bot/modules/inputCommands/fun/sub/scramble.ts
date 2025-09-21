@@ -141,7 +141,7 @@ export async function handleDoubleMode(helper: InteractionHelper) {
   let players: APIUser[] = [];
 
   const generateResponse = () => {
-    const requirement: Array<string> = [];
+    const requirement: string[] = [];
     if (players.length < 2) {
       requirement.push("❌️ You need to select at least two players for the game.");
     }

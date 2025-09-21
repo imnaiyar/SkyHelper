@@ -1,10 +1,10 @@
 import type { APIUser } from "@discordjs/core";
 import { HttpException, HttpStatus } from "@nestjs/common";
 
-export type UserSession = {
+export interface UserSession {
   access_token: string;
   token_type: "Bearer";
-};
+}
 
 export async function getUser(accessToken: string) {
   const res = await fetch(`https://discord.com/api/v10/users/@me`, {

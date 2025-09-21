@@ -25,8 +25,8 @@ import type { RawFile } from "@discordjs/rest";
 
 type ResponseData = APIInteractionResponseCallbackData & { files?: RawFile[] };
 export class InteractionHelper {
-  public replied: boolean = false;
-  public deferred: boolean = false;
+  public replied = false;
+  public deferred = false;
   public api: API;
   public user: APIUser;
   public t: ReturnType<typeof getTranslator> = getTranslator("en-US");
@@ -68,7 +68,7 @@ export class InteractionHelper {
     return res;
   }
 
-  async editReply(data: ResponseData, id: string = "@original") {
+  async editReply(data: ResponseData, id = "@original") {
     const msg = this.api.interactions.editReply(this.int.application_id, this.int.token, data, id);
     this.replied = true;
     return msg;
@@ -80,7 +80,7 @@ export class InteractionHelper {
     return msg;
   }
 
-  deleteReply(msg: string = "@original") {
+  deleteReply(msg = "@original") {
     return this.api.interactions.deleteReply(this.client.user.id, this.int.token, msg);
   }
   async launchModal(data: APIModalInteractionResponseCallbackData) {

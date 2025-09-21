@@ -38,7 +38,6 @@ const UserIDPredicate = new ZodValidator(z.string().regex(/^\d{17,19}$/, "Must b
 @ApiBearerAuth()
 @Controller("/users")
 export class UsersController {
-  // eslint-disable-next-line
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
   @Get(":user")

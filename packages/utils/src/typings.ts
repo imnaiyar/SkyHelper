@@ -4,7 +4,7 @@ import { Document } from "mongoose";
 /** Data of users provided for making a game leaderboard card */
 export interface userData {
   /** The position of the player in the leaderboard */
-  top: Number;
+  top: number;
 
   /** The Avatar of the player */
   avatar: string;
@@ -39,7 +39,7 @@ export interface Background {
 }
 
 export interface SkyEvent {
-  eventActive: Boolean;
+  eventActive: boolean;
   eventName: string;
   eventStarts: DateTime;
   eventEnds: DateTime;

@@ -10,10 +10,10 @@ import {
 import { makeURLSearchParams, REST } from "@discordjs/rest";
 import { logger } from "./Logger.js";
 const api = new REST().setToken(process.env.TOKEN);
-type WebhookExtraOptions = {
+interface WebhookExtraOptions {
   thread_id?: string;
   retries: number;
-};
+}
 /** Error codes for which the operation will be retried in case of incident */
 const retraibleErrors = [
   "ECONNRESET", // Forcefully closed connection
@@ -112,13 +112,13 @@ class Webhook {
 }
 
 export { Webhook };
-type WebhookData = {
+interface WebhookData {
   id: string;
   token?: string;
-};
+}
 
 /* Only adding options that'll be using, this is not all o fthe options that can be passed,*/
-export type WebhookMessageCreateOptions = {
+export interface WebhookMessageCreateOptions {
   content?: string;
   embeds?: APIEmbed[];
   components?: APIMessageComponent[];
@@ -126,6 +126,6 @@ export type WebhookMessageCreateOptions = {
   avatar_url?: string;
   allowed_mentions?: APIAllowedMentions;
   flags?: MessageFlags;
-};
+}
 
 export type WebhookEditMessageOptions = Omit<WebhookMessageCreateOptions, "username" | "avatar_url">;

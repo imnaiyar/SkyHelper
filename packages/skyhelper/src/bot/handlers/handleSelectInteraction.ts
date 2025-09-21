@@ -7,7 +7,7 @@ export async function handleSkyTimesSelect(interaction: APIMessageComponentSelec
   const { t, client } = helper;
   const { event, allOccurences, status } = SkytimesUtils.getEventDetails(value as EventKey);
   const embed: APIEmbed = {
-    // @ts-expect-error
+    // @ts-expect-error joinig char makes the type as string
     title: helper.t(`features:times-embed.EVENTS.${value.toUpperCase()}`) + " Times",
     footer: {
       text: "SkyTimes",

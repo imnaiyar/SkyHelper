@@ -195,7 +195,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
   for (const [i, [k, { status }]] of data.entries()) {
     let desc = `${
       i === 0 ? emojis.tree_top : i === data.length - 1 ? emojis.tree_end : emojis.tree_middle
-      // @ts-expect-error
+      // @ts-expect-error can't properly resolve `k`
     }\`${t(`features:times-embed.EVENTS.${k.toString().toUpperCase()}`)}:\` `;
     const nextTime = `<t:${status.nextTime.toUnixInteger()}:t> - <t:${status.nextTime.toUnixInteger()}:R>`;
     if (status.active) {
@@ -219,7 +219,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
         options: Object.entries(eventData)
           .filter(([, e]) => e.displayAllTimes)
           .map(([k]) => ({
-            // @ts-expect-error
+            // @ts-expect-error can't properly resolve `k`
             label: t(`features:times-embed.EVENTS.${k.toUpperCase()}`),
             value: k,
           })),
@@ -396,12 +396,7 @@ export function buildCalendarResponse(
   return { components: [component, container(navBtn)] };
 }
 
-export async function handleRemindersStatus(
-  helper: InteractionHelper,
-  guildSettings: GuildSchema,
-  guildName: string,
-  page: number = 0,
-) {
+export async function handleRemindersStatus(helper: InteractionHelper, guildSettings: GuildSchema, guildName: string, page = 0) {
   const title = helper.t("commands:REMINDERS.RESPONSES.STATUS.TITLE", { SERVER_NAME: guildName });
   const description =
     "### " +
@@ -492,8 +487,8 @@ function getDates(date: DateTime): DateTime[] {
   return dates;
 }
 
-type ResponseParams = {
+interface ResponseParams {
   index?: number;
   month?: number;
   year?: number;
-};
+}
