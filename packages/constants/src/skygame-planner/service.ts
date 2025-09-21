@@ -5,8 +5,8 @@
 import { resolve } from "path";
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
-import { IEvent, IEventInstance, INode, ISpiritTree } from "./interfaces.js";
-import { transformData, TransformedData } from "./transformer.js";
+import type { IEvent, IEventInstance, INode, ISpiritTree } from "./interfaces.js";
+import { transformData, type TransformedData } from "./transformer.js";
 import { DateTime } from "luxon";
 
 let cachedData: TransformedData | null = null;

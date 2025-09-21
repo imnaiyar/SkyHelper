@@ -1,4 +1,4 @@
-import { APIEmoji } from "discord-api-types/v10";
+import type { APIEmoji } from "discord-api-types/v10";
 
 export const emojis = {
   tree_top: "<:tree_top:1340954527762743392>",
@@ -173,7 +173,7 @@ function transformEmojis(emojis: APIEmoji[]) {
 
   console.log("Transforming emojis...");
   for (const emoji of emojis) {
-    const identifier: string = emoji.name.startsWith("h_") ? (EMOJIS_HASH as any)[emoji.name] : emoji.name;
+    const identifier: string = emoji.name?.startsWith("h_") ? (EMOJIS_HASH as any)[emoji.name] : emoji.name;
     const identifiers = identifier
       ? identifier
           .split("_")

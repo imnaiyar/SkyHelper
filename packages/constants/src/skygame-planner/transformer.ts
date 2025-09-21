@@ -2,8 +2,9 @@
  * Transformer for SkyGame Planner data
  * This file handles processing the raw data and resolving references between objects
  */
-import {
+import type {
   IArea,
+  IAreaConnection,
   IEvent,
   IEventInstance,
   IEventInstanceSpirit,
@@ -24,10 +25,14 @@ import {
   ITravelingSpirit,
   IWingedLight,
 } from "./interfaces.js";
-import { FetchedData } from "./fetcher.js";
+import type { FetchedData } from "./fetcher.js";
 import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
 import { resolveToLuxon } from "./service.js";
 
+/** Typeguard for filtering array, bcz .filter(Boolean) doesn't properly infer */
+function notNull<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined;
+}
 // Interface for the transformed data with resolved references
 export interface TransformedData {
   areas: IArea[];
@@ -205,9 +210,9 @@ function resolveReferences(data: TransformedData): void {
   // #region data.items
   for (const item of data.items) {
     if (item.previewUrl) item.previewUrl = resolveUrl(item.previewUrl);
-    const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id));
+    const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
     if (emoji) {
-      item.icon = emoji.id;
+      item.icon = emoji.id!;
     }
   }
 
@@ -221,7 +226,7 @@ function resolveReferences(data: TransformedData): void {
           if (area) area.realm = realm;
           return area;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (realm.elder) {
@@ -251,7 +256,7 @@ function resolveReferences(data: TransformedData): void {
           if (spirit) spirit.area = area;
           return spirit;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (area.wingedLights) {
@@ -261,7 +266,7 @@ function resolveReferences(data: TransformedData): void {
           if (wl) wl.area = area;
           return wl;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (area.rs) {
@@ -271,7 +276,7 @@ function resolveReferences(data: TransformedData): void {
           if (rs) rs.area = area;
           return rs;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (area.connections) {
@@ -279,7 +284,7 @@ function resolveReferences(data: TransformedData): void {
         .map((connRef) => {
           return { area: resolveRef<IArea>(connRef.area as any) };
         })
-        .filter((conn) => conn.area);
+        .filter((conn) => conn.area) as IAreaConnection[];
     }
 
     if (area.mapShrines) {
@@ -289,7 +294,7 @@ function resolveReferences(data: TransformedData): void {
           if (shrine) shrine.area = area;
           return shrine;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
   }
 
@@ -297,7 +302,7 @@ function resolveReferences(data: TransformedData): void {
   for (const node of data.itemListNodes) {
     if (node.item) {
       const item = resolveRef<IItem>(node.item as any);
-      node.item = item;
+      node.item = item!;
       if (item) {
         if (!item.listNodes) item.listNodes = [];
         item.listNodes.push(node);
@@ -318,17 +323,17 @@ function resolveReferences(data: TransformedData): void {
 
     if (node.nw) {
       node.nw = resolveRef<INode>(node.nw as any);
-      node.nw.prev = node;
+      node.nw!.prev = node;
     }
 
     if (node.ne) {
       node.ne = resolveRef<INode>(node.ne as any);
-      node.ne.prev = node;
+      node.ne!.prev = node;
     }
 
     if (node.n) {
       node.n = resolveRef<INode>(node.n as any);
-      node.n.prev = node;
+      node.n!.prev = node;
     }
 
     // Find root node
@@ -354,7 +359,7 @@ function resolveReferences(data: TransformedData): void {
           if (spirit) spirit.season = season;
           return spirit;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (season.shops) {
@@ -364,7 +369,7 @@ function resolveReferences(data: TransformedData): void {
           if (shop) shop.season = season;
           return shop;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (season.includedTrees) {
@@ -372,7 +377,7 @@ function resolveReferences(data: TransformedData): void {
         .map((treeRef) => {
           return resolveRef<ISpiritTree>(treeRef as any);
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     // resolve icons
@@ -384,7 +389,7 @@ function resolveReferences(data: TransformedData): void {
   for (const tree of data.spiritTrees) {
     if (tree.node) {
       const node = resolveRef<INode>(tree.node as any);
-      tree.node = node;
+      tree.node = node!;
       if (node) node.spiritTree = tree;
     }
   }
@@ -395,7 +400,7 @@ function resolveReferences(data: TransformedData): void {
     if (spirit.tree) {
       const tree = resolveRef<ISpiritTree>(spirit.tree as any);
       spirit.tree = tree;
-      tree.spirit = spirit;
+      if (tree) tree.spirit = spirit;
     }
 
     if (spirit.treeRevisions) {
@@ -405,14 +410,14 @@ function resolveReferences(data: TransformedData): void {
           if (revision) revision.spirit = spirit;
           return revision;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     // try to find spirits expression icon as spirits icon
     const nn = data.nodes.find(
-      (n) => ["Emote", "Stance", "Call"].includes(n.item.type) && n.root.spiritTree?.guid === spirit.tree?.guid,
+      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type || "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
     );
-    if (nn) spirit.icon = nn.item.icon;
+    if (nn) spirit.icon = nn.item?.icon;
     // If there is no expression for the spirit, use the root node's item icon
     else if (spirit.tree?.node.item?.icon) spirit.icon = spirit.tree.node.item.icon;
   }
@@ -424,7 +429,7 @@ function resolveReferences(data: TransformedData): void {
     ts.number = i + 1;
     if (ts.spirit) {
       const spirit = resolveRef<ISpirit>(ts.spirit as any);
-      ts.spirit = spirit;
+      ts.spirit = spirit!;
       if (spirit) {
         spirit.ts ??= [];
         spirit.ts.push(ts);
@@ -437,7 +442,7 @@ function resolveReferences(data: TransformedData): void {
 
     if (ts.tree) {
       const tree = resolveRef<ISpiritTree>(ts.tree as any);
-      ts.tree = tree;
+      ts.tree = tree!;
       if (tree) tree.ts = ts;
     }
   }
@@ -451,7 +456,7 @@ function resolveReferences(data: TransformedData): void {
           if (visit) visit.return = rs;
           return visit;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
   }
 
@@ -459,7 +464,7 @@ function resolveReferences(data: TransformedData): void {
   for (const visit of data.returningSpiritsVisits) {
     if (visit.spirit) {
       const spirit = resolveRef<ISpirit>(visit.spirit as any);
-      visit.spirit = spirit;
+      visit.spirit = spirit!;
       if (spirit) {
         if (!spirit.returns) spirit.returns = [];
         spirit.returns.push(visit);
@@ -468,7 +473,7 @@ function resolveReferences(data: TransformedData): void {
 
     if (visit.tree) {
       const tree = resolveRef<ISpiritTree>(visit.tree as any);
-      visit.tree = tree;
+      visit.tree = tree!;
       if (tree) tree.visit = visit;
     }
   }
@@ -482,7 +487,7 @@ function resolveReferences(data: TransformedData): void {
           if (instance) instance.event = event;
           return instance;
         })
-        .filter(Boolean)
+        .filter(notNull)
         .sort((a, b) => resolveToLuxon(b.date).toMillis() - resolveToLuxon(a.date).toMillis());
     }
   }
@@ -496,7 +501,7 @@ function resolveReferences(data: TransformedData): void {
           if (shop) shop.event = instance;
           return shop;
         })
-        .filter(Boolean);
+        .filter((s): s is IShop => Boolean(s));
     }
 
     if (instance.spirits) {
@@ -506,7 +511,7 @@ function resolveReferences(data: TransformedData): void {
           if (spirit) spirit.eventInstance = instance;
           return spirit;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
   }
 
@@ -514,7 +519,7 @@ function resolveReferences(data: TransformedData): void {
   for (const eventSpirit of data.eventInstanceSpirits) {
     if (eventSpirit.spirit) {
       const spirit = resolveRef<ISpirit>(eventSpirit.spirit as any);
-      eventSpirit.spirit = spirit;
+      eventSpirit.spirit = spirit!;
       if (spirit) {
         if (!spirit.events) spirit.events = [];
         spirit.events.push(eventSpirit);
@@ -523,7 +528,7 @@ function resolveReferences(data: TransformedData): void {
 
     if (eventSpirit.tree) {
       const tree = resolveRef<ISpiritTree>(eventSpirit.tree as any);
-      eventSpirit.tree = tree;
+      eventSpirit.tree = tree!;
       if (tree) tree.eventInstanceSpirit = eventSpirit;
     }
   }
@@ -537,7 +542,7 @@ function resolveReferences(data: TransformedData): void {
           if (iap) iap.shop = shop;
           return iap;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
 
     if (shop.itemList) {
@@ -563,7 +568,7 @@ function resolveReferences(data: TransformedData): void {
           }
           return item;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
   }
 
@@ -576,7 +581,7 @@ function resolveReferences(data: TransformedData): void {
           if (node) node.itemList = list;
           return node;
         })
-        .filter(Boolean);
+        .filter(notNull);
     }
   }
 

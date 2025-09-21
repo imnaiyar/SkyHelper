@@ -66,44 +66,6 @@ export default {
         ],
         flags: MessageFlags.IsComponentsV2,
       });
-    } else if (subcommand === "current-ts") {
-      const currentTS = SkyPlannerData.getCurrentTravelingSpirit(data);
-
-      if (!currentTS) {
-        await helper.editReply({
-          components: [
-            textDisplay("# No Active Traveling Spirit"),
-            separator(true, 1),
-            textDisplay("There is no traveling spirit currently visiting the game."),
-          ],
-          flags: MessageFlags.IsComponentsV2,
-        });
-        return;
-      }
-
-      const startDate = new Date(currentTS.date).toLocaleDateString();
-      const endDate = new Date(currentTS.endDate).toLocaleDateString();
-
-      await helper.editReply({
-        components: [
-          textDisplay(`# Current Traveling Spirit: ${currentTS.spirit?.name || "Unknown"}`),
-          separator(true, 1),
-          textDisplay(`- From: ${startDate}`),
-          textDisplay(`- Until: ${endDate}`),
-          textDisplay(`- Season: ${currentTS.spirit?.season?.name || "Unknown"}`),
-          textDisplay(
-            `- Home Location: ${currentTS.spirit?.area?.realm?.name || "Unknown"} - ${currentTS.spirit?.area?.name || "Unknown"}`,
-          ),
-          separator(true, 1),
-          textDisplay("## Spirit Tree Items"),
-          ...(currentTS.tree?.node
-            ? SkyPlannerData.getItemsInSpiritTree(currentTS.spirit?.guid || "", data).map((item) =>
-                textDisplay(`- ${item.name}: ${item.price} ${item.currency || "Candles"}`),
-              )
-            : [textDisplay("No item data available")]),
-        ],
-        flags: MessageFlags.IsComponentsV2,
-      });
     } else if (subcommand === "events") {
       const events = SkyPlannerData.getEvents(data);
 

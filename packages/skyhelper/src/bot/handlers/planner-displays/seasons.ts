@@ -15,10 +15,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
   seasonslist() {
     return this.displayPaginatedList({
       items: this.data.seasons,
-      user: this.state.user,
-      tab: this.state.tab,
       page: this.state.page ?? 1,
-      filter: this.state.filter,
       perpage: 3, // TODO: Find a way to increase this limit
       itemCallback: this.getSeasonInListDisplay.bind(this),
     });

@@ -64,6 +64,7 @@ export class Spirits {
     // if seasonal, then the season
     if (this.isSeasonal(data)) {
       description.push(
+        // @ts-expect-error this class will eventually be removed in favor of /game-planner
         season_emojis[data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
       );
     }
