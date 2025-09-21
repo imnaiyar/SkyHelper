@@ -188,7 +188,7 @@ export interface ISpirit extends IGuid {
   /** Image URL. */
   imageUrl?: string;
 
-  /// References ///
+  // / References ///
 
   /**
    * Main spirit tree(s).

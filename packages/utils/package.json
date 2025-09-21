@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
-    "eslint": "8.57.0",
     "luxon": "^3.5.0",
     "mongoose": "^8.3.2",
     "tsup": "^8.5.0",
