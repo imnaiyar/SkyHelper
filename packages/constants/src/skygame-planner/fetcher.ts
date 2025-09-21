@@ -1,7 +1,7 @@
 /**
  * Fetcher for SkyGame Planner data from GitHub repository
  */
-import {
+import type {
   IAreaConfig,
   IEventConfig,
   IIAPConfig,

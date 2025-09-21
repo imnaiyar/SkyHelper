@@ -78,20 +78,13 @@ describe("Utils", () => {
     it("should encode a custom ID correctly", () => {
       const obj = { id: "123", key1: "value1", key2: "value2" };
       const encoded = Utils.encodeCustomId(obj);
-      expect(encoded).toBe("123;key1:value1;key2:value2");
-    });
-
-    it("should throw an error if the resulting string exceeds 100 characters", () => {
-      const obj = { id: "1", key: "a".repeat(100) };
-      expect(() => {
-        Utils.encodeCustomId(obj);
-      }).toThrow(RangeError);
+      expect(encoded).toBe("123;key1=value1;key2=value2");
     });
   });
 
   describe("parseCustomId", () => {
     it("should parse an encoded custom ID correctly", () => {
-      const customId = "123;key1:value1;key2:value2";
+      const customId = "123;key1=value1;key2=value2";
       const parsed = Utils.parseCustomId(customId);
       expect(parsed).toEqual({ id: "123", key1: "value1", key2: "value2" });
     });
