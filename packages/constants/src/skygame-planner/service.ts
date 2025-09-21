@@ -4,7 +4,7 @@
  */
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
-import type { IEvent, IEventInstance, INode, ISpiritTree } from "./interfaces.js";
+import type { IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
 import { transformData, type TransformedData } from "./transformer.js";
 import { DateTime } from "luxon";
 
@@ -185,7 +185,7 @@ export function getSpiritsInRealm(realmId: string, data: TransformedData) {
   const realm = getRealmById(realmId, data);
   if (!realm) return [];
 
-  const spirits: any[] = [];
+  const spirits: ISpirit[] = [];
   for (const area of realm.areas || []) {
     for (const spirit of area.spirits || []) {
       spirits.push(spirit);

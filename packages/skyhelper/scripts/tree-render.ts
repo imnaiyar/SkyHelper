@@ -134,7 +134,7 @@ async function main() {
     }
 
     console.log(`✅ Found spirit: ${spirit.name}`);
-    const tree = spirit.tree || spirit.events?.[0]?.tree;
+    const tree = spirit.tree || spirit.events?.at(-1)?.tree;
     if (!tree) {
       console.error(`❌ Spirit "${spirit.name}" has no tree data available`);
       process.exit(1);
