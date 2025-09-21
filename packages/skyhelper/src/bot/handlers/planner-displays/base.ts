@@ -199,6 +199,7 @@ export class BasePlannerHandler {
 
   formatemoji(id?: string, name?: string) {
     if (!id) return "";
+    if (id.match(/^<a?:\w+:\d{17,19}>$/)) return id;
     return `<:${name ? name.replaceAll(/[\s'\-,#,),(]+/g, "") : "_"}:${id}>`;
   }
 
@@ -209,7 +210,7 @@ export class BasePlannerHandler {
   backbtn(custom_id: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
     return button({ label: "Back", style: 4, custom_id, emoji: { id: emojis.leftarrow }, ...opt });
   }
-  homebtn(user?: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
+  homebtn(user?: string) {
     return button({
       label: "Home",
       style: 4,
