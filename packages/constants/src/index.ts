@@ -28,7 +28,7 @@ export const supportedLang = [
   },
 ] as const;
 
-export { default as seasonsData, SeasonData } from "./seasonsData.js";
+export { default as seasonsData, type SeasonData } from "./seasonsData.js";
 export * from "./hangman.js";
 export * from "./seasonsData.js";
 export * from "./realmsData.js";

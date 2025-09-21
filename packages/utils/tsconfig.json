@@ -1,20 +1,12 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
     "rootDir": "src",
     "outDir": "dist",
-    "noImplicitAny": true,
     "declaration": true,
-    "esModuleInterop": true,
-    "noImplicitReturns": false,
-    "experimentalDecorators": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
     "paths": {
       "#lib/*": ["./fonts/*"]
-    },
-    "moduleResolution": "nodenext"
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]

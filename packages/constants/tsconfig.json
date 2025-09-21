@@ -1,16 +1,10 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "nodenext",
     "rootDir": "src",
     "outDir": "dist",
-    "noImplicitAny": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "noImplicitReturns": false,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "moduleResolution": "nodenext"
+
+    "declaration": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
