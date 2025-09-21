@@ -172,7 +172,8 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   // cost overlay
   if (node?.currency) {
     const cost = node.currency.amount;
-    const iconCenterX = r - padding - cx / 2 + 15;
+    let iconCenterX = r - padding - cx / 2 + 15;
+    if (cost > 99) iconCenterX += itemSize * 0.2; // have more padding for 3 digits
     const iconCenterY = r + 5;
     const curKey = node.currency.type;
     const curEmojiId = (currencyEmojis as any)[curKey];
@@ -255,7 +256,24 @@ async function renderNodeRecursive(
 // --------------------
 export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpiritTreeOptions = {}): Promise<Buffer> {
   const scale = options.scale ?? 0.5; // default slightly reduced for perf
-  const size = 64 * scale;
+  const baseSize = 64 * scale;
+  // count center nodes following the `.n` link from root
+  const countCenterNodes = (root?: INode) => {
+    if (!root) return 0;
+    const seen = new Set<string>();
+    let cur: INode | undefined = root;
+    let count = 0;
+    while (cur && !seen.has(cur.guid)) {
+      seen.add(cur.guid);
+      count++;
+      cur = cur.n as INode | undefined;
+    }
+    return count;
+  };
+
+  const centerCount = countCenterNodes(tree.node);
+  // if there are up to 3 center nodes, make the node size twice as large
+  const size = centerCount > 0 && centerCount <= 3 ? baseSize * 2 : baseSize;
   const spacingY = size * 4;
   const spirit = tree.spirit ?? tree.ts?.spirit;
 
@@ -333,16 +351,8 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   // compute the ideal content height for the tree (all depths stacked)
   const contentHeight = Math.ceil((maxDepth + 1) * spacingY + size * 1.5);
 
-  const verticalPadding = Math.max(80, Math.floor(size * 1.5));
-
-  let startY: number;
-  if (height - contentHeight > verticalPadding * 2) {
-    // center content within canvas while respecting padding
-    const top = Math.floor((height - contentHeight) / 2);
-    startY = top + contentHeight - size;
-  } else {
-    startY = Math.floor(height - size);
-  }
+  const top = Math.floor((height - contentHeight) / 2);
+  const startY = top + contentHeight - size;
 
   if (spirit?.name || tree.name || options.spiritName) {
     const fontSize = Math.max(10, Math.floor(size * 1.15));
@@ -350,10 +360,10 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(options.spiritName || tree.name || spirit!.name, centerX, startY + fontSize / 2 - 30);
+    ctx.fillText(options.spiritName || tree.name || spirit!.name, centerX, startY);
   }
 
-  await renderNodeRecursive(ctx, tree.node, centerX, startY - 100, -spacingY, size, !!options.season);
+  await renderNodeRecursive(ctx, tree.node, centerX, startY - size * 2.5, -spacingY, size, !!options.season);
 
   return canvas.toBuffer("image/png");
 }
