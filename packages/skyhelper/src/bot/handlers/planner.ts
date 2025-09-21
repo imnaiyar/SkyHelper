@@ -15,15 +15,15 @@ import {
 import { ComponentType, MessageFlags } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import type { TransformedData } from "node_modules/@skyhelperbot/constants/dist/skygame-planner/transformer.js";
-import { getSeasonInListDisplay } from "./planner-displays.js";
-import { SpiritsDisplay } from "./p/spirits.js";
-import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./p/base.js";
-import { RealmsDisplay } from "./p/realms.js";
-import { ItemsDisplay } from "./p/items.js";
-import { SeasonsDisplay } from "./p/seasons.js";
-import { EventsDisplay } from "./p/events.js";
-import { WingedLightsDisplay } from "./p/wingedlights.js";
-import { ShopsDisplay } from "./p/shops.js";
+import { SpiritsDisplay } from "./planner-displays/spirits.js";
+import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./planner-displays/base.js";
+import { RealmsDisplay } from "./planner-displays/realms.js";
+import { ItemsDisplay } from "./planner-displays/items.js";
+import { SeasonsDisplay } from "./planner-displays/seasons.js";
+import { EventsDisplay } from "./planner-displays/events.js";
+import { WingedLightsDisplay } from "./planner-displays/wingedlights.js";
+import { ShopsDisplay } from "./planner-displays/shops.js";
+import type { IEvent, IEventInstance, IItemListNode } from "@skyhelperbot/constants/skygame-planner";
 
 const TOP_LEVEL_CATEGORIES = ["home", "realms", "spirits", "season", "events", "items", "wingedLights", "shops"] as const;
 export type TopLevelCategory = (typeof TOP_LEVEL_CATEGORIES)[number];
@@ -110,12 +110,12 @@ export async function getHomeDisplay(user?: string) {
   const returningSpirits = SkyPlannerData.getCurrentReturningSpirits(data);
   const travelingSpirit = SkyPlannerData.getCurrentTravelingSpirit(data);
   const handler = new BasePlannerHandler(data, SkyPlannerData, { tab: DisplayTabs.Home, user });
-
+  const s_display = new SeasonsDisplay(data, SkyPlannerData, { tab: DisplayTabs.Seasons, user });
   const components = [
     container(
       handler.createTopCategoryRow(DisplayTabs.Home, user),
       separator(),
-      ...(activeSeasons ? getSeasonInListDisplay(activeSeasons, user) : []),
+      ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
       ...(travelingSpirit
         ? [
             section(
@@ -181,59 +181,8 @@ export async function getHomeDisplay(user?: string) {
       ...(activeEvents.current.length || activeEvents.upcoming.length
         ? [
             textDisplay("### Events"),
-            ...activeEvents.current.flatMap((event) => [
-              ...(event.event.imageUrl ? [mediaGallery(mediaGalleryItem(event.event.imageUrl))] : []),
-              section(
-                {
-                  type: ComponentType.Button,
-                  label: "View Event",
-                  custom_id: store
-                    .serialize(CustomId.PlannerTopLevelNav, {
-                      tab: Utils.encodeCustomId({ id: "12", tab: "events", item: event.event.guid }),
-                      user,
-                    })
-                    .toString(),
-                  style: 1,
-                },
-                `**${event.event.name}** (Ends ${formatDateTimestamp(event.instance.endDate, "R")})`,
-                `From ${formatDateTimestamp(event.instance.date)} to ${formatDateTimestamp(event.instance.endDate)}`,
-              ),
-            ]),
-            ...activeEvents.upcoming.slice(0, 3).flatMap((event) => [
-              section(
-                {
-                  type: ComponentType.Button,
-                  label: "View Event",
-                  custom_id: store
-                    .serialize(CustomId.PlannerTopLevelNav, {
-                      tab: Utils.encodeCustomId({ id: "23", tab: "events", item: event.event.guid }),
-                      user,
-                    })
-                    .toString(),
-                  style: 2,
-                },
-                `**${event.event.name}** (Starts ${formatDateTimestamp(event.instance.date, "R")})`,
-                `From ${formatDateTimestamp(event.instance.date)} to ${formatDateTimestamp(event.instance.endDate)}`,
-              ),
-            ]),
-            ...(activeEvents.upcoming.length > 3
-              ? [
-                  section(
-                    {
-                      type: ComponentType.Button,
-                      label: "View All",
-                      custom_id: store
-                        .serialize(CustomId.PlannerTopLevelNav, {
-                          tab: "events", // TODO: make it more specific, pointing to the upcoming event
-                          user,
-                        })
-                        .toString(),
-                      style: 2,
-                    },
-                    `_View all ${activeEvents.upcoming.length} upcoming events..._`,
-                  ),
-                ]
-              : []),
+            ...activeEvents.current.flatMap((event) => eventInHome(event, user)),
+            ...activeEvents.upcoming.slice(0, 3).flatMap((event) => eventInHome(event, user)),
             separator(),
           ]
         : []),
@@ -243,4 +192,40 @@ export async function getHomeDisplay(user?: string) {
     components,
     flags: MessageFlags.IsComponentsV2,
   };
+}
+
+function eventInHome(event: { event: IEvent; instance: IEventInstance; startDate?: DateTime }, user?: string) {
+  const subtitles = [
+    `From ${formatDateTimestamp(event.instance.date)} to ${formatDateTimestamp(event.instance.endDate)}`,
+    event.instance.spirits
+      ? [
+          ...event.instance.spirits.map((s) => s.tree.node.item?.icon && `<:_:${s.tree.node.item.icon}>`).filter(Boolean),
+          SkyPlannerData.formatGroupedCurrencies(
+            [
+              event.instance.spirits.map((c) => c.tree),
+              event.instance.shops.flatMap((sh) => sh.itemList?.items).filter(Boolean) as IItemListNode[],
+            ].flat(),
+          ),
+        ]
+      : null,
+  ]
+    .flat()
+    .filter(Boolean) as [string, ...string[]];
+  return [
+    section(
+      {
+        type: ComponentType.Button,
+        label: "View Event",
+        custom_id: store
+          .serialize(CustomId.PlannerTopLevelNav, {
+            tab: Utils.encodeCustomId({ id: "12", tab: "events", item: event.event.guid }),
+            user,
+          })
+          .toString(),
+        style: 1,
+      },
+      `**${event.event.name}** (${event.startDate ? "Starts" : "Ends"} ${formatDateTimestamp(event.instance.endDate, "R")})`,
+    ),
+    event.event.imageUrl ? section(thumbnail(event.event.imageUrl), ...subtitles) : textDisplay(...subtitles),
+  ];
 }
