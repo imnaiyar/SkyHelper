@@ -129,9 +129,9 @@ export class SeasonsDisplay extends BasePlannerHandler {
               this.planner.getFormattedTreeCost(tree),
               "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
             ),
+            mediaGallery(mediaGalleryItem("attachment://tree.png")),
           ]
         : null,
-      tree ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
     ]
       .flat()
       .filter((s) => !!s);

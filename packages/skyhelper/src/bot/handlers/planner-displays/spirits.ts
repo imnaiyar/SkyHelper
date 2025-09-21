@@ -15,8 +15,9 @@ import {
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import type { RawFile } from "@discordjs/rest";
+import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
 
-const SpiritNav = [p.SpiritType.Regular, p.SpiritType.Season, p.SpiritType.Elder, p.SpiritType.Guide, "TS"] as const;
+const SpiritNav = [SpiritType.Regular, SpiritType.Season, SpiritType.Elder, SpiritType.Guide, "TS"] as const;
 const emojisMap = {
   [p.SpiritType.Regular]: emojis.regularspirit,
   [p.SpiritType.Season]: season_emojis.Gratitude,
@@ -24,8 +25,10 @@ const emojisMap = {
   [p.SpiritType.Guide]: emojis.auroraguide,
   ["TS"]: emojis.travelingspirit,
 } as const;
+// TODO: handle various filters, like realm, season, type
 
 export class SpiritsDisplay extends BasePlannerHandler {
+  filters: { spiritTypes: SpiritType[]; realm?: string; season?: string } = { spiritTypes: [SpiritType.Regular] };
   override handle() {
     const spirits = this.data.spirits;
     const spirit = this.state.item ? spirits.find((s) => s.guid === this.state.item) : null;
@@ -33,7 +36,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
       return this.spiritdisplay(spirit);
     }
     this.state.filter ??= SpiritNav[0]; // set filter to regular if not present
-    const filternav = SpiritNav.map((s, i) =>
+    const filternav = SpiritNav.map((s) =>
       button({
         label: s,
         custom_id: this.createCustomId({ filter: s, page: 1, item: "" }),
@@ -71,7 +74,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
             user: this.state.user,
             page: this.state.page ?? 1,
             perpage: 7,
-            itemCallback: (s) => this.spiritInList(s, { page: this.state.page, filter: this.state.filter }),
+            itemCallback: this.spiritInList.bind(this),
           }),
         );
         break;
@@ -111,7 +114,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
     });
   }
 
-  spiritInList(spirit: SkyPlannerData.ISpirit, back?: { page?: number; filter?: string }) {
+  spiritInList(spirit: SkyPlannerData.ISpirit) {
     return [
       section(
         button({

@@ -36,7 +36,7 @@ export type NavigationState = {
   /** Options for back button, provided when we want to redirect to somewhere else, instead of generic back
    * For ex, imagine we go to a particular area from wl tab, providing this back btn, we can come back to wl tab
    */
-  back?: Omit<NavigationState, "back" | "user" | "values">;
+  back?: Omit<NavigationState, "back" | "user">;
 };
 
 export enum DisplayTabs {
@@ -48,6 +48,7 @@ export enum DisplayTabs {
   Items = "items",
   WingedLights = "wingedLights",
   Shops = "shops",
+  Areas = "areas",
 }
 
 const CATEGORY_EMOJI_MAP = {
@@ -106,7 +107,7 @@ export class BasePlannerHandler {
 
   /** Create buttons row for navigating between top level categories */
   createTopCategoryRow(selected: DisplayTabs, user?: string, back?: { page?: number }) {
-    const BUTTONS_PER_ROW = 4;
+    const BUTTONS_PER_ROW = 5;
     const seasonIcon = this.planner.getCurrentSeason(this.data)?.icon ?? this.data.seasons[0]?.icon;
     const categoryButtons = Object.values(DisplayTabs).map((category) => {
       const icon =
