@@ -35,7 +35,7 @@ export class ShardsUtil {
         return currentDate;
       }
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error as any);
     }
   }
 
