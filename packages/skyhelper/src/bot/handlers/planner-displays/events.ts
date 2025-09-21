@@ -25,7 +25,9 @@ export class EventsDisplay extends BasePlannerHandler {
       const display = await this.eventDisplay(event);
       attachements = display.attachment;
       components.push(container(display.components));
-    } else components.push(container(this.createTopCategoryRow(DisplayTabs.Events, this.state.user), ...this.eventslist()));
+    } else {
+      components.push(container(this.createTopCategoryRow(DisplayTabs.Events, this.state.user), ...this.eventslist()));
+    }
 
     return { components, files: attachements ? [attachements] : undefined };
   }
