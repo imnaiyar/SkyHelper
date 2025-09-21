@@ -208,6 +208,14 @@ export class BasePlannerHandler {
   backbtn(custom_id: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
     return button({ label: "Back", style: 4, custom_id, emoji: { id: emojis.leftarrow }, ...opt });
   }
+  homebtn(user?: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
+    return button({
+      label: "Home",
+      style: 4,
+      custom_id: this.createCustomId({ tab: DisplayTabs.Home, user }),
+      emoji: { id: realms_emojis.Home },
+    });
+  }
 }
 
 interface IPaginatedProps<T> {

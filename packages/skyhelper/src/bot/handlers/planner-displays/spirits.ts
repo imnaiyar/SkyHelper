@@ -10,6 +10,7 @@ import {
   section,
   separator,
   textDisplay,
+  thumbnail,
 } from "@skyhelperbot/utils";
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
@@ -152,30 +153,26 @@ export class SpiritsDisplay extends BasePlannerHandler {
     const tree = trees[selected];
     let attachment: RawFile | undefined;
     if (tree) {
-      console.time("Tree Render");
       const buffer = await generateSpiritTree(tree.tree, { season: !!tree.season });
-      console.timeEnd("Tree Render");
       attachment = { name: "tree.png", data: buffer };
     }
+    const title = [
+      `# ${this.formatemoji(spirit.icon)} ${spirit.name}`,
+      spirit.area
+        ? `${this.formatemoji(emojis.location)} ${spirit.area.name} ( ${this.formatemoji(spirit.area.realm.icon)} ${spirit.area.realm.name})`
+        : null,
+      spirit.season ? `${this.formatemoji(spirit.season.icon)} ${spirit.season.name}` : null,
+      spirit.events?.length ? `${this.formatemoji(emojis.eventticket)} ${spirit.events.at(-1)!.eventInstance?.event.name}` : null,
+      `Type: ${spirit.type}`,
+    ].filter(Boolean) as [string, ...string[]];
     const compos = [
-      section(
+      spirit.imageUrl ? section(thumbnail(spirit.imageUrl), ...title) : textDisplay(...title),
+      row(
         this.backbtn(this.createCustomId({ tab: DisplayTabs.Spirits, filter: "", item: "", ...this.state.back })),
-        `# ${this.formatemoji(spirit.icon)} ${spirit.name}`,
-        [
-          spirit.area
-            ? `${this.formatemoji(emojis.location)} ${spirit.area.name} ( ${this.formatemoji(spirit.area.realm.icon)} ${spirit.area.realm.name})`
-            : null,
-          spirit.season ? `${this.formatemoji(spirit.season.icon)} ${spirit.season.name}` : null,
-          spirit.events?.length
-            ? `${this.formatemoji(emojis.eventticket)} ${spirit.events.at(-1)!.eventInstance?.event.name}`
-            : null,
-          `Type: ${spirit.type}`,
-        ]
-          .filter(Boolean)
-          .join("\n"),
+        this.homebtn(),
       ),
       separator(true, 1),
-      trees.length
+      trees.length > 1
         ? row({
             type: ComponentType.StringSelect,
             custom_id: this.createCustomId({}),
