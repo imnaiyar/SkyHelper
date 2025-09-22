@@ -17,7 +17,7 @@ export default {
     let code = args.join(" ");
     if (flags.hasAny(["a", "async"])) code = `(async () => { ${code} })()`;
     let response;
-    const depth = parseFloat(flags.getFlag("depth")?.split("=")[1] || "0") || 0;
+    const depth = parseFloat(flags.getFlag("depth")?.split("=")[1] ?? "0") || 0;
     let errored = false;
     const formatTime = (duration: number) =>
       duration < 1

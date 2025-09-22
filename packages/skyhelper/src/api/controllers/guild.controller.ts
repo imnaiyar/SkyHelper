@@ -83,7 +83,7 @@ export class GuildController {
 
     if (data == null) return "null";
     const settings = await getSettings(this.bot, guild);
-    const actives: (keyof Features)[] = ["reminders", "live-updates"];
+    const actives: Array<keyof Features> = ["reminders", "live-updates"];
     return {
       id: data.id,
       name: data.name,
@@ -127,7 +127,7 @@ export class GuildController {
     const settings = g && (await this.bot.schemas.getSettings(g));
     if (!settings) return "null";
     settings.prefix = body.prefix ?? "";
-    settings.beta = body.beta || false;
+    settings.beta = body.beta ?? false;
     settings.annoucement_channel = body.announcement_channel ?? "";
     const language = supportedLang.find((l) => l.value === body.language);
     settings.language = language;

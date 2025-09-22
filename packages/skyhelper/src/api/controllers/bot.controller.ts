@@ -33,7 +33,7 @@ export class BotController {
       totalServers: guilds,
       totalMembers: member,
       ping: ping,
-      totalUserInstalls: application.approximate_user_install_count || 1,
+      totalUserInstalls: application.approximate_user_install_count ?? 1,
       commands: commands,
     };
   }
@@ -53,7 +53,7 @@ export class BotController {
     const toReturn = Object.entries(spirits)
       .filter(([, v]) => isSeasonal(v) && v.season)
       .map(([k, v]) => {
-        const emoji = v.expression || { icon: "<:spiritIcon:1206501060303130664>" };
+        const emoji = v.expression ?? { icon: "<:spiritIcon:1206501060303130664>" };
         const id = emoji && this.bot.utils.parseEmoji(emoji.icon)?.id;
         const url = id && this.bot.rest.cdn.emoji(id);
         const t = { name: v.name, value: k, ...(url && { icon: url }) };

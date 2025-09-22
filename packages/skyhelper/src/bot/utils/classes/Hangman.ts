@@ -62,7 +62,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   public alphabetLength: number | null = null;
 
   /** The english alphabets that has been guessed */
-  private guessedAlphabets: (typeof EnglishAlphabets)[number][] = [];
+  private guessedAlphabets: Array<(typeof EnglishAlphabets)[number]> = [];
 
   /** Whether this game is stopped or not */
   private _stopped = false;
@@ -311,7 +311,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       textDisplay(`-# SkyHelper`, "### Skygame: Hangman"),
       separator(),
       textDisplay(
-        `### Winner: ${this.winner ? `<@${this.winner.id}>` : "None"} \`(${this.winner?.username || ""})\``,
+        `### Winner: ${this.winner ? `<@${this.winner.id}>` : "None"} \`(${this.winner?.username ?? ""})\``,
         `**Word to guess was**: ${this.word}`,
       ),
       separator(),
@@ -353,7 +353,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     });
     const initiator = this.initiator;
     this._stopCollector.on("collect", async (i) => {
-      if ((i.member?.user || i.user!).id !== initiator.id) {
+      if ((i.member?.user ?? i.user!).id !== initiator.id) {
         return await this.client.api.interactions.reply(i.id, i.token, {
           content: "Only this game's initiator can end the game.",
           flags: 64,
@@ -383,12 +383,12 @@ type HangmanOptions<T extends ModeType, K extends WordType> = HangmanOptionsBase
   (T extends "single" ? { totalLives?: number } : {}) &
   (K extends "custom" ? { word: string } : {});
 
-type HangmanWords = {
+type HangmanWords = Array<{
   guessed: boolean;
   alphabet: string;
   position: number;
   guessedBy: APIUser | null;
-}[];
+}>;
 
 interface PlayerStats {
   correctGuesses: number;

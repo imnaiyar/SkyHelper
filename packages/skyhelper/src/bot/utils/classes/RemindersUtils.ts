@@ -46,7 +46,7 @@ export default class {
   async createWebhookAfterChecks(channelId: string, data: RESTPostAPIChannelWebhookJSONBody, reason?: string) {
     const channelWebhooks = await this.fetchWebhooks(channelId);
     const clientWebhook = channelWebhooks.find((w) => w.application_id === this.client.user.id);
-    return clientWebhook || this.createWebhook(channelId, data, reason);
+    return clientWebhook ?? this.createWebhook(channelId, data, reason);
   }
 
   /**

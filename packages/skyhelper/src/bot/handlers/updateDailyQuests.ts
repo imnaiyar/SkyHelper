@@ -25,7 +25,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
       ?.replaceAll(/<a?:\w+:\d+>/g, "")
       .match(titleRegex)?.[0]
       .replaceAll(/[*_~]/g, "")
-      .trim() || "[Quest Title Error]: Unknown";
+      .trim() ?? "[Quest Title Error]: Unknown";
   const credit = message.content.replaceAll(linkRegex, "").trim().match(creditRegex)?.[0].slice(3);
   const source = linkRegex.exec(message.content)?.[0];
   const images = message.attachments.map((attachment) => attachment.url);

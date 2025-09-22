@@ -27,7 +27,7 @@ export default defineButton({
     const events = settings.reminders.events;
     const event = events[key];
 
-    const channel = event?.webhook?.threadId || event?.webhook?.channelId;
+    const channel = event?.webhook?.threadId ?? event?.webhook?.channelId;
     const modal: APIModalInteractionResponseCallbackData = {
       title: `Editing ${RemindersEventsMap[key]} Reminder`,
       custom_id: `reminders_manage_modal;event:${key};extra:` + helper.int.id,
@@ -188,7 +188,7 @@ export default defineButton({
       offset: s_offset.values[0] ? parseInt(s_offset.values[0]) : 0,
       shard_type: s_shard_type
         ? s_shard_type.values.length
-          ? (s_shard_type.values as ("red" | "black")[])
+          ? (s_shard_type.values as Array<"red" | "black">)
           : ["red", "black"]
         : undefined,
       active: true,

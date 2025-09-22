@@ -83,7 +83,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   const collector = client.componentCollector({
     idle: 2 * 60_1000,
     message: msg,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
   });
   const getCollectorResponse = () =>
     getRealmsRow(
@@ -163,7 +163,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
 
   const collector = helper.client.componentCollector({
     idle: 2 * 60_000,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
     message: msg,
   });
 

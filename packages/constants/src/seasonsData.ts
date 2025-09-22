@@ -4,11 +4,11 @@ export interface SeasonData {
   from: string[];
   icon: string;
   active?: boolean;
-  quests?: {
+  quests?: Array<{
     title: string;
     description?: string;
     image?: string;
-  }[];
+  }>;
 }
 
 export default {
@@ -610,4 +610,4 @@ export default {
     icon: "<:gratitude:1130958261349261435>",
     from: ["19-07-2019", "02-09-2019"],
   },
-} satisfies { [key: string]: SeasonData };
+} satisfies Record<string, SeasonData>;

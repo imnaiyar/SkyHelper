@@ -84,7 +84,7 @@ async function run(script: string, message: GatewayMessageCreateDispatchData, cl
 
     const collector = client.componentCollector({
       idle: 1 * 60 * 1000,
-      filter: (i) => (i.member?.user || i.user!).id === message.author.id,
+      filter: (i) => (i.member?.user ?? i.user!).id === message.author.id,
       componentType: ComponentType.Button,
       message: msg,
     });

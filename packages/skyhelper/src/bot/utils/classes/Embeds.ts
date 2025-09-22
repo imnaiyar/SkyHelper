@@ -163,7 +163,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     tsDesc = "Unknown!";
   } else {
     const spirit: SpiritsData = client.spiritsData[tsData.value!];
-    const emote = spirit?.expression?.icon || "❓";
+    const emote = spirit?.expression?.icon ?? "❓";
     // TODO: update tree emojis from localization in this for prod
     const strVisiting = t("features:times-embed.TS_VISITING", {
       TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
@@ -439,12 +439,11 @@ export async function handleRemindersStatus(helper: InteractionHelper, guildSett
         text +=
           " | " + helper.t("commands:REMINDERS.RESPONSES.STATUS.ROLE", { ROLE: event?.role ? `<@&${event.role}>` : "None" });
 
-        text += ` | ` + helper.t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: event?.offset || 0 });
+        text += ` | ` + helper.t("commands:REMINDERS.RESPONSES.OFFSET", { OFFSET: event?.offset ?? 0 });
 
-        text +=
-          event && event.shard_type
-            ? ` | ` + helper.t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: event.shard_type.join(", ") })
-            : "";
+        text += event?.shard_type
+          ? ` | ` + helper.t("commands:REMINDERS.RESPONSES.SHARD_TYPE", { SHARD_TYPE: event.shard_type.join(", ") })
+          : "";
 
         cont.components.push(
           section(

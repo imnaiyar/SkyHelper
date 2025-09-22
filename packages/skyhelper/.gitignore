@@ -18,3 +18,6 @@ __tests__/**.map
 
 # OpenAPI generated file (regenerate with npm run generate:openapi)
 **/openapi.json
+
+# genrated images most likely
+*.png

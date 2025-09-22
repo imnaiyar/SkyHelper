@@ -7,7 +7,7 @@ export default {
     const type = options.getString("category", true);
     const sub = options.getSubcommand();
     const { client, t } = helper;
-    const guild = helper.client.guilds.get(helper.int.guild_id || "");
+    const guild = helper.client.guilds.get(helper.int.guild_id ?? "");
     if (type === "server") {
       if (!guild) {
         return void (await helper.reply({
@@ -84,7 +84,7 @@ export default {
     if (sub === "remove") {
       const settings = type === "server" ? await client.schemas.getSettings(guild!) : null;
       const user_settings = await client.schemas.getUser(helper.user);
-      const lang = (type === "server" ? settings! : user_settings)["language"];
+      const lang = (type === "server" ? settings! : user_settings).language;
       const formattedLang = lang && `${lang.name} (${lang.flag} ${lang.value})`;
       if (!lang?.value) {
         return void (await helper.followUp({

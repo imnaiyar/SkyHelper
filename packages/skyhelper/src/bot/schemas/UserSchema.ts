@@ -87,25 +87,25 @@ export const getGamesLeaderboard = async (
   const users = await Model.find({ ...query, [_game]: { $exists: true } });
 
   const singleModeLeaderboard = users
-    .filter((user) => (user[_game]?.singleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b[_game]?.singleMode.gamesWon || 0) - (a[_game]?.singleMode.gamesWon || 0))
+    .filter((user) => (user[_game]?.singleMode.gamesPlayed ?? 0) > 0)
+    .sort((a, b) => (b[_game]?.singleMode.gamesWon ?? 0) - (a[_game]?.singleMode.gamesWon ?? 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
       username: user.data.username,
-      gamesPlayed: user[_game]?.singleMode.gamesPlayed || 0,
-      gamesWon: user[_game]?.singleMode.gamesWon || 0,
+      gamesPlayed: user[_game]?.singleMode.gamesPlayed ?? 0,
+      gamesWon: user[_game]?.singleMode.gamesWon ?? 0,
     }));
 
   const doubleModeLeaderboard = users
-    .filter((user) => (user[_game]?.doubleMode.gamesPlayed || 0) > 0)
-    .sort((a, b) => (b[_game]?.doubleMode.gamesWon || 0) - (a[_game]?.doubleMode.gamesWon || 0))
+    .filter((user) => (user[_game]?.doubleMode.gamesPlayed ?? 0) > 0)
+    .sort((a, b) => (b[_game]?.doubleMode.gamesWon ?? 0) - (a[_game]?.doubleMode.gamesWon ?? 0))
     .slice(0, 10)
     .map((user) => ({
       id: user.data.id ?? user._id,
       username: user.data.username,
-      gamesPlayed: user[_game]?.doubleMode.gamesPlayed || 0,
-      gamesWon: user[_game]?.doubleMode.gamesWon || 0,
+      gamesPlayed: user[_game]?.doubleMode.gamesPlayed ?? 0,
+      gamesWon: user[_game]?.doubleMode.gamesWon ?? 0,
     }));
 
   return {

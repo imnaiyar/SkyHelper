@@ -74,7 +74,7 @@ export function setupSwagger(app: INestApplication) {
 
 export function generateOpenApiSpec(app: INestApplication, outputPath?: string) {
   const document = setupSwagger(app);
-  const path = outputPath || join(process.cwd(), "openapi.json");
+  const path = outputPath ?? join(process.cwd(), "openapi.json");
 
   writeFileSync(path, JSON.stringify(document, null, 2));
   console.log(`OpenAPI specification generated at: ${path}`);

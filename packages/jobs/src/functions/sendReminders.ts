@@ -55,7 +55,7 @@ export async function reminderSchedules(): Promise<void> {
 
         switch (key) {
           case "shards-eruption": {
-            const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as ("red" | "black")[]);
+            const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as Array<"red" | "black">);
             const data = getShardReminderResponse(now, t, offset || 0, shard_type);
             if (!data) continue;
             response = { components: data };

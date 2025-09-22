@@ -35,7 +35,7 @@ export async function handleErrorModal(helper: InteractionHelper) {
   const commandUsed = client.utils.getTextInput(int, "commandUsed")?.value;
   const whatHappened = client.utils.getTextInput(int, "whatHappened")?.value;
   const errorId = client.utils.getTextInput(int, "errorId")?.value;
-  const guild = client.guilds.get(int.guild_id || "");
+  const guild = client.guilds.get(int.guild_id ?? "");
   const embed: APIEmbed = {
     title: "BUG REPORT",
     fields: [

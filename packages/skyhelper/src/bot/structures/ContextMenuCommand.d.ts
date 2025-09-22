@@ -20,7 +20,7 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
   userPermissions?: PermissionsResolvable;
   botPermissions?: PermissionsResolvable;
   ownerOnly?: boolean;
-  validations?: InteractionValidation<true>[];
+  validations?: Array<InteractionValidation<true>>;
   cooldown?: number;
   category: (typeof Category)[number]["name"];
 

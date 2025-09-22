@@ -31,7 +31,7 @@ export default {
       ],
     });
     const filter = (i: APIMessageComponentButtonInteraction) =>
-      (i.member?.user || i.user)!.id === message.author.id && client.config.OWNER.includes((i.member?.user || i.user)!.id);
+      (i.member?.user ?? i.user)!.id === message.author.id && client.config.OWNER.includes((i.member?.user ?? i.user)!.id);
     const collected = await client
       .awaitComponent<ComponentType.Button>({
         filter,
@@ -74,8 +74,8 @@ async function handleModal(helper: InteractionHelper) {
   const modalSubmit = await helper.client
     .awaitModal({
       filter: (i) =>
-        (i.member?.user || i.user)!.id === helper.user.id &&
-        helper.client.config.OWNER.includes((i.member?.user || i.user)!.id) &&
+        (i.member?.user ?? i.user)!.id === helper.user.id &&
+        helper.client.config.OWNER.includes((i.member?.user ?? i.user)!.id) &&
         i.data.custom_id === "announcement_text_modal" + helper.int.id,
       timeout: 2_60_000,
     })

@@ -109,7 +109,7 @@ export default class {
    * @param obj The object to encode
    */
   static encodeCustomId(obj: ParsedCustomId): string {
-    let customId = obj["id"];
+    let customId = obj.id;
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
       customId += `;${key}:${value}`;
@@ -186,8 +186,9 @@ export default class {
       return acc;
     }, [] as ModalSubmitComponent[]);
     const comp = components.find((component) => component.custom_id === customId);
-    if (type && comp?.type !== type)
+    if (type && comp?.type !== type) {
       throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
+    }
     return comp as Extract<ModalSubmitComponent, { type: Type }>;
   }
   static getTextInput(

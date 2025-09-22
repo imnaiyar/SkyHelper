@@ -35,7 +35,7 @@ export class InteractionHelper {
     public readonly client: SkyHelper,
   ) {
     this.api = client.api;
-    this.user = int.member?.user || int.user!;
+    this.user = int.member?.user ?? int.user!;
   }
   async initializeT() {
     const userSettings = await this.client.schemas.getUser(this.user);

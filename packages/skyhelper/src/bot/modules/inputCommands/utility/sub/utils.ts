@@ -1,10 +1,6 @@
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { CustomId } from "@/utils/customId-store";
 import {
-  ComponentType,
   MessageFlags,
-  type APIActionRowComponent,
-  type APIButtonComponent,
   type APIEmbed,
   type APIModalInteractionResponseCallbackData,
   type APIModalSubmitInteraction,
@@ -81,7 +77,7 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
   if (attachment) {
     embed.image = { url: attachment.url };
   }
-  const guild = client.guilds.get(modalInt.guild_id || "");
+  const guild = client.guilds.get(modalInt.guild_id ?? "");
   modalHelper
     .reply({
       content: t("commands:UTILS.RESPONSES.RECIEVED"),
@@ -91,7 +87,7 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
     .then(() => {
       embed.fields?.push({
         name: "Server",
-        value: `${guild?.name || "Unknown"} (${modalInt.guild_id || "Unknown"})`,
+        value: `${guild?.name ?? "Unknown"} (${modalInt.guild_id ?? "Unknown"})`,
       });
       const wb = process.env.SUGGESTION ? client.utils.parseWebhookURL(process.env.SUGGESTION) : null;
       if (wb) client.api.webhooks.execute(wb.id, wb.token, { embeds: [embed] }).catch(client.logger.error);

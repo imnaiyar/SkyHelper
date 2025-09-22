@@ -15,7 +15,7 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
     }));
   }
   const [hour, minute, second] = Time.split(" ").map(Number);
-  const timezone = options.getString("timezone") || "America/Los_Angeles";
+  const timezone = options.getString("timezone") ?? "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
     return void (await helper.reply({
       content: t("commands:UTILS.RESPONSES.INVALID-TIMEZONE"),
@@ -24,9 +24,9 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
   }
 
   const currentDate = DateTime.now().setZone(timezone);
-  const day = options.getInteger("date") || currentDate.day;
-  const month = options.getInteger("month") || currentDate.month;
-  const year = options.getInteger("year") || currentDate.year;
+  const day = options.getInteger("date") ?? currentDate.day;
+  const month = options.getInteger("month") ?? currentDate.month;
+  const year = options.getInteger("year") ?? currentDate.year;
   const fDate = `${day}-${month}-${year}`;
   const timestamp = DateTime.fromObject({ day, month, year, hour, minute, second }, { zone: timezone });
 

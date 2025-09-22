@@ -38,8 +38,8 @@ export default {
       }
       case "leaderboard":
         {
-          const guild = client.guilds.get(interaction.guild_id || "");
-          const type = options.getString("leaderboard-type") || "global";
+          const guild = client.guilds.get(interaction.guild_id ?? "");
+          const type = options.getString("leaderboard-type") ?? "global";
           const game = options.getString("game", true) as "hangman" | "scrambled";
           if (type === "server" && !guild) {
             return void (await helper.reply({
@@ -59,7 +59,7 @@ export default {
           const msg = await helper.editReply(await getCard());
           const col = client.componentCollector({
             idle: 6e4,
-            filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+            filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
             message: msg,
           });
           col.on("collect", async (int) => {
@@ -79,7 +79,7 @@ export default {
 async function skygamePrecheck(helper: InteractionHelper, options: InteractionOptionResolver) {
   const { client, t } = helper;
 
-  const guild = client.guilds.get(helper.int.guild_id || "");
+  const guild = client.guilds.get(helper.int.guild_id ?? "");
   const sub = options.getSubcommand(true);
   const mode = options.getString("mode", true);
 

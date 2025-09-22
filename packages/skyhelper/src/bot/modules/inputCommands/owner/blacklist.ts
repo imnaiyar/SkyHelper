@@ -114,7 +114,7 @@ async function getBlacklisted(client: SkyHelper, message: APIMessage) {
   const embed: APIEmbed = {
     author: { name: "Blacklisted Servers" },
     fields: blacklists.map((g) => ({
-      name: g.name || "Hmm",
+      name: g.name ?? "Hmm",
       value: `- ID: ${g._id}\n- Reason: ${g.reason}\n- On: ${g?.Date}\n- Type: ${g.type}`,
     })),
   };

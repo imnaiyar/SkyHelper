@@ -10,9 +10,7 @@ export async function updateUserGameStats(
   const userSchema = await getUser(user);
   if (!userSchema) return;
 
-  if (!userSchema[game]) {
-    userSchema[game] = { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon: 0 } };
-  }
+  userSchema[game] ??= { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon: 0 } };
 
   const gameMode = userSchema[game][mode];
   gameMode.gamesPlayed++;

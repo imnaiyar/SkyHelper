@@ -112,7 +112,7 @@ export class LiveUpdates {
   }
   static async delete(client: BotService, guildId: string): Promise<any> {
     const data = await getSettings(client, guildId);
-    if (!data || !data.autoShard.active) return "Success";
+    if (!data?.autoShard.active) return "Success";
 
     const utils = new RemindersUtils(client);
     const webhooksToDelete = new Map<string, { id: string; token: string }>();

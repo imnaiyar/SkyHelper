@@ -130,7 +130,7 @@ export class InteractionCollector<
 
     if (this.channel && this.channel.id !== int.channel?.id) return;
 
-    if (this.userId && (int.member?.user || int.user!).id !== this.userId) return;
+    if (this.userId && (int.member?.user ?? int.user!).id !== this.userId) return;
     // @ts-expect-error type mismatch
     const passesFilter = this.filter(int);
     if (!passesFilter) return;
@@ -147,7 +147,7 @@ export class InteractionCollector<
   override stop(reason?: string) {
     this.client.removeListener("INTERACTION_CREATE", this.listener);
     clearTimeout(this.timer);
-    this.emit("end", this.collected, reason || "stopped");
+    this.emit("end", this.collected, reason ?? "stopped");
     this.ended = true;
 
     this.removeAllListeners();
@@ -183,7 +183,7 @@ export class MessageCollector extends Collector<APIMessage> {
   override stop(reason?: string) {
     this.client.removeListener("MESSAGE_CREATE", this.listener);
     clearTimeout(this.timer);
-    this.emit("end", this.collected, reason || "stopped");
+    this.emit("end", this.collected, reason ?? "stopped");
     this.ended = true;
   }
 }

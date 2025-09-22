@@ -113,7 +113,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
   const collector = helper.client.componentCollector({
     idle: 60_000,
     message: msg,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
   });
   collector.on("collect", async (compInt) => {
     const { id, data } = helper.client.utils.store.deserialize(compInt.data.custom_id)!;

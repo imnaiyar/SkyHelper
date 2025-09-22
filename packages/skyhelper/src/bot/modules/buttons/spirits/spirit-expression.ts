@@ -32,7 +32,7 @@ export default defineButton({
         filter: (i) =>
           // @ts-expect-error data is present, but wtv
           ["spirit_exprsn_back"].includes(client.utils.store.deserialize(i.data.custom_id).data.data) &&
-          user.id === (i.member?.user || i.user)!.id,
+          user.id === (i.member?.user ?? i.user)!.id,
         idle: 90_000,
         message: reply,
       });

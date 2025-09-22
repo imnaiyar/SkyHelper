@@ -40,7 +40,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
   // Add some contexts for sentry
   scope.setContext("Metadata", {
     guild: interaction.guild
-      ? { id: interaction.guild.id, name: guild?.name || "Unknown", owner: guild?.owner_id || "Unknown" }
+      ? { id: interaction.guild.id, name: guild?.name ?? "Unknown", owner: guild?.owner_id ?? "Unknown" }
       : interaction.guild_id,
     channel: {
       id: interaction.channel?.id,
@@ -60,7 +60,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     user: {
       id: helper.user.id,
       username: helper.user.username,
-      displayName: helper.user.global_name || helper.user.username,
+      displayName: helper.user.global_name ?? helper.user.username,
     },
     occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy LLLL dd HH:mm:ss"),
   });
@@ -280,7 +280,7 @@ function formatIfUserApp(int: APIApplicationCommandInteraction): string | null {
     `DM - Channel: ${int.channel.id} | Owner: ${int.channel.recipients?.[0] ? `${int.channel.recipients[0].username} (${int.channel.recipients[0].id})` : "Unknown"}`;
   const inGroupDM =
     int.channel.type === ChannelType.GroupDM &&
-    `Group DM - Owner: \`${int.channel.owner_id}\` | Channel: ${int.channel.name || "None"} (\`${int.channel.id}\`)`;
+    `Group DM - Owner: \`${int.channel.owner_id}\` | Channel: ${int.channel.name ?? "None"} (\`${int.channel.id}\`)`;
   return "User App" + (inGuild ? `Guild: \`${int.guild_id}\`` : (isDm ?? inGroupDM));
 }
 
@@ -308,7 +308,7 @@ function buildInteractionLog(
         ? [
             {
               name: "Guild",
-              value: `${guild?.name || "Unknown"} (\`${int.guild_id}\`)`,
+              value: `${guild?.name ?? "Unknown"} (\`${int.guild_id}\`)`,
             },
           ]
         : []),
@@ -316,7 +316,7 @@ function buildInteractionLog(
         name: "Extra",
         value:
           formatIfUserApp(int) ??
-          `Channel - ${int.channel.name || "Unknown"} | Type: ${ChannelType[int.channel.type]} (\`${int.channel.id}\`)`,
+          `Channel - ${int.channel.name ?? "Unknown"} | Type: ${ChannelType[int.channel.type]} (\`${int.channel.id}\`)`,
       },
     ],
     color: resolveColor("Blurple"),

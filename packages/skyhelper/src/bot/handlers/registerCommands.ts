@@ -47,7 +47,7 @@ for (const cmd of guildCommands) {
 
   if (!guilds) continue;
   for (const guild of guilds) {
-    const cmds = guildCommandsMap.get(guild) || [];
+    const cmds = guildCommandsMap.get(guild) ?? [];
     cmds.push(parseCommands(cmd));
     guildCommandsMap.set(guild, cmds);
   }

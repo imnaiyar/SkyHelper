@@ -117,7 +117,7 @@ export async function validateInteractions({ command, interaction, options, help
     const cooldownAmount = command.cooldown * 1000;
 
     if (timestamps?.has(user.id)) {
-      const expirationTime = (timestamps.get(user.id) as number) + cooldownAmount;
+      const expirationTime = timestamps.get(user.id)! + cooldownAmount;
 
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1000);
@@ -209,7 +209,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
     return {
       status: false,
       message: {
-        ...(args.length < (command.prefix.minimumArgs || 0) && {
+        ...(args.length < (command.prefix.minimumArgs ?? 0) && {
           content: t("errors:MINIMUM_ARGS", { LIMIT: command.prefix.minimumArgs }),
         }),
 
@@ -263,7 +263,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
     const cooldownAmount = command.cooldown * 1000;
 
     if (timestamps?.has(message.author.id)) {
-      const expirationTime = (timestamps.get(message.author.id) as number) + cooldownAmount;
+      const expirationTime = timestamps.get(message.author.id)! + cooldownAmount;
 
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1000);

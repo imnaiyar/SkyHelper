@@ -19,7 +19,7 @@ const formatReminders = (r: GuildSchema["reminders"]) => {
   const obj = Object.entries(r.events).reduce((acc, [key, value]) => {
     // @ts-expect-error well
     acc[key as (typeof REMINDERS_KEY)[number]] = {
-      active: value?.active || false,
+      active: value?.active ?? false,
       channelId: value?.webhook?.channelId ?? null,
       role: value?.role ?? null,
       offset: value?.offset ?? null,

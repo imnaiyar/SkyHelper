@@ -18,7 +18,7 @@ export default {
     await helper.defer();
 
     const sub = options.getSubcommand(true);
-    const guild = helper.client.guilds.get(helper.int.guild_id || "");
+    const guild = helper.client.guilds.get(helper.int.guild_id ?? "");
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
     const checkClientPerms = async (ch: APITextChannel | APIGuildForumChannel) => {
@@ -36,7 +36,7 @@ export default {
         const ch = options.getChannel("channel", true);
         const isThread = "thread_metadata" in ch;
         const channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
-        const offset = options.getInteger("offset") || 0;
+        const offset = options.getInteger("offset") ?? 0;
 
         // Check if channel is a valid channel type (will never happen)
         if (!SendableChannels.includes(ch.type)) {
@@ -48,7 +48,7 @@ export default {
         const util = new RemindersUtils(client);
         const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
 
-        let shard_type: ("red" | "black")[] = [];
+        let shard_type: Array<"red" | "black"> = [];
         if (event === "shards-eruption") {
           const T = await awaitShardTypeResponse(helper, guildSettings);
           if (!T) return;
@@ -155,7 +155,7 @@ export default {
  * @returns returns null or array of selected shard types
  */
 async function awaitShardTypeResponse(helper: InteractionHelper, settings: GuildSchema) {
-  const shard_type = settings.reminders.events["shards-eruption"]?.shard_type || [];
+  const shard_type = settings.reminders.events["shards-eruption"]?.shard_type ?? [];
   const select = row({
     type: ComponentType.StringSelect,
     custom_id: store.serialize(19, { data: "shard_type_select", user: helper.user.id }),
@@ -196,7 +196,7 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
 
   const response = await helper.client
     .awaitComponent({
-      filter: (i) => (i.member?.user || i.user!).id === helper.user.id,
+      filter: (i) => (i.member?.user ?? i.user!).id === helper.user.id,
       message,
       timeout: 6e4, // 1 min
     })
@@ -209,14 +209,14 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
 
   await helper.client.api.interactions.deferMessageUpdate(response.id, response.token);
 
-  if (response.data.component_type === 2) return shard_type.length ? shard_type : (["black", "red"] as ("black" | "red")[]);
-  return response.data.values as ("black" | "red")[];
+  if (response.data.component_type === 2) return shard_type.length ? shard_type : (["black", "red"] as Array<"black" | "red">);
+  return response.data.values as Array<"black" | "red">;
 }
 
 async function getRemindersNextOccurence(
   event: (typeof REMINDERS_KEY)[number] | "daily-reset",
   offset: number,
-  shardType: ("red" | "black")[] = [],
+  shardType: Array<"red" | "black"> = [],
 ) {
   let nextOccurence: DateTime;
   if (event === "ts") {

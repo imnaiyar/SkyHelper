@@ -13,9 +13,9 @@ import { resolveColor } from "@skyhelperbot/utils";
 export async function handleSingleCmd(helper: InteractionHelper, commandName: string) {
   const { client, t } = helper;
   const commands = client.applicationCommands;
-  const guild = client.guilds.get(helper.int.guild_id || "");
+  const guild = client.guilds.get(helper.int.guild_id ?? "");
   const cmd =
-    commands.find((c) => c.name === commandName) ||
+    commands.find((c) => c.name === commandName) ??
     (guild
       ? (await client.api.applicationCommands.getGuildCommands(client.user.id, guild.id)).find((c) => c.name === commandName)
       : undefined);
@@ -142,7 +142,7 @@ function format(command: APIApplicationCommand, t: ReturnType<typeof import("@/i
     return command.options.map((o) => {
       if (o.type === ApplicationCommandOptionType.SubcommandGroup) {
         const formatted = [];
-        for (const sub of o.options || []) {
+        for (const sub of o.options ?? []) {
           formatted.push(formatSubCommand(sub, `${command.name} ${o.name}`, command.id));
         }
         return formatted;

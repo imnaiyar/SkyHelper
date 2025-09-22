@@ -80,7 +80,7 @@ export class WebhookEventController {
     const channel = await this.bot.api.users.createDM(inviterId);
     await this.bot.api.channels
       .createMessage(channel.id, {
-        content: `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.reason || "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
+        content: `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.reason ?? "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
       })
       .catch(() => {});
     await this.bot.api.users.leaveGuild(guild.id).catch(() => {});
@@ -94,11 +94,11 @@ export class WebhookEventController {
         },
         {
           name: "Reason",
-          value: blacklisted.reason || "No reason provided",
+          value: blacklisted.reason ?? "No reason provided",
         },
         {
           name: "Blacklisted Date",
-          value: `${blacklisted.Date || "Unknown"}`,
+          value: `${blacklisted.Date ?? "Unknown"}`,
         },
       ],
     };

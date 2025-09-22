@@ -37,13 +37,13 @@ interface Collectible {
   icon: string;
 
   /** Link to the collectible images (preview) */
-  images: {
+  images: Array<{
     /** Description of the image (to display on the embed) */
     description: string;
 
     /** The image's link */
     image: string;
-  }[];
+  }>;
 
   /** Cosmetic Cost (absent for items that are unlocked via season pass and the spirit has yet to return as a TS)*/
   price?: string;
@@ -146,7 +146,7 @@ export interface SeasonalSpiritData extends BaseSpiritData {
      * It should be array for Special visits with 1st element as their visit date and 2nd their departure.
      * If an array, only the first element should contain the Special Visit tag (SV#1) as 2nd element is not parsed
      */
-    dates: (string[] | string)[];
+    dates: Array<string[] | string>;
   };
   tree?: {
     by: string;

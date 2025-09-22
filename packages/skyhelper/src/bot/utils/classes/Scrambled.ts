@@ -61,7 +61,7 @@ export abstract class GameController {
     });
     const initiator = this.initiator;
     this._stopCollector.on("collect", async (i) => {
-      if ((i.member?.user || i.user!).id !== initiator.id) {
+      if ((i.member?.user ?? i.user!).id !== initiator.id) {
         return await this.client.api.interactions.reply(i.id, i.token, {
           content: "Only this game's initiator can end the game.",
           flags: 64,
@@ -89,7 +89,7 @@ export class Scrambled extends GameController {
   private currentWord: { original: string; scrambled: string };
 
   /** Total words used in the game */
-  private words: { original: string; scrambled: string }[] = [];
+  private words: Array<{ original: string; scrambled: string }> = [];
 
   /** Current round number (0-based) */
   private currentRound = 0;
@@ -107,14 +107,14 @@ export class Scrambled extends GameController {
   private roundWinner: APIUser | null = null;
 
   constructor(channel: APITextChannel, option: ScrambledRoundsOptions, client: SkyHelper) {
-    super(channel, option.players, option.gameInitiator || null, client);
+    super(channel, option.players, option.gameInitiator ?? null, client);
     this.currentWord = scrambleWord();
     this.words.push(this.currentWord);
     if (option.players.length !== 2) {
       throw new Error("Scrambled game requires exactly two players");
     }
 
-    this.totalRounds = option.maxRounds || 10;
+    this.totalRounds = option.maxRounds ?? 10;
 
     // Initialize player stats
     for (const player of this.players) {
@@ -296,12 +296,12 @@ export class Scrambled extends GameController {
       } else if (stats.totalCorrect === highestScore && highestScore > 0) {
         // If tie, determine the winner by who was faster overall
         const otherPlayerId = this.players.find((p) => p.id !== player.id)!.id;
-        const playerTotalTime = stats.rounds.filter((r) => r && r.correct).reduce((sum, r) => sum + (r!.attemptTime || 0), 0);
+        const playerTotalTime = stats.rounds.filter((r) => r?.correct).reduce((sum, r) => sum + (r?.attemptTime ?? 0), 0);
 
         const otherPlayerTotalTime = this.playerStats
           .get(otherPlayerId)!
-          .rounds.filter((r) => r && r.correct)
-          .reduce((sum, r) => sum + (r!.attemptTime || 0), 0);
+          .rounds.filter((r) => r?.correct)
+          .reduce((sum, r) => sum + (r?.attemptTime ?? 0), 0);
 
         if (playerTotalTime < otherPlayerTotalTime) {
           winner = player;
@@ -321,7 +321,7 @@ export class Scrambled extends GameController {
         let roundWinnerText = "No one";
         for (const player of this.players) {
           const playerRound = this.playerStats.get(player.id)!.rounds[i];
-          if (playerRound && playerRound.correct) {
+          if (playerRound?.correct) {
             roundWinnerText = `<@${player.id}>`;
             break;
           }
@@ -368,7 +368,7 @@ interface ScrambledRoundsOptions {
 
 interface PlayerRoundStats {
   totalCorrect: number;
-  rounds: ({ correct: boolean; attemptTime: number | null } | null)[];
+  rounds: Array<{ correct: boolean; attemptTime: number | null } | null>;
 }
 
 export function scrambleWord() {

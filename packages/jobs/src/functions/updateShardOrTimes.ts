@@ -21,7 +21,7 @@ const getEmbed = async (
   query: { locale?: string; date?: string; noBtn?: "true" | "false" } = { locale: "en-US" },
 ) => {
   return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(query)}`).then((res) => res.json())) as {
-    components: APIActionRowComponent<APIComponentInMessageActionRow>[];
+    components: Array<APIActionRowComponent<APIComponentInMessageActionRow>>;
   };
 };
 
@@ -78,7 +78,7 @@ const update = async (
           ...d,
           components: [
             { type: 10, content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }) },
-            ...(d.components as APIMessageComponent[]),
+            ...d.components!,
           ],
           flags: MessageFlags.IsComponentsV2,
         },

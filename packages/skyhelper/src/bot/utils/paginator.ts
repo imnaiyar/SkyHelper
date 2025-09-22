@@ -131,7 +131,7 @@ export async function paginate<U, T extends U[]>(
 
   const collector = client.componentCollector({
     message,
-    filter: (i) => (user ? (i.member?.user || i.user!).id === user : true),
+    filter: (i) => (user ? (i.member?.user ?? i.user!).id === user : true),
     idle,
     componentType: 2,
   });

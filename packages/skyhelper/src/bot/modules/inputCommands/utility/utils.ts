@@ -66,7 +66,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
     ),
     separator(),
   );
-  const guild = client.guilds.get(helper.int.guild_id || "");
+  const guild = client.guilds.get(helper.int.guild_id ?? "");
   if (guild) {
     const settings = await client.schemas.getSettings(guild);
     component.components.push(
@@ -80,7 +80,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
 
   component.components.push(
     textDisplay(
-      `**${t("common:bot.USER_SETTINGS")} (\`${helper.user.global_name || helper.user.username}\`)**`,
+      `**${t("common:bot.USER_SETTINGS")} (\`${helper.user.global_name ?? helper.user.username}\`)**`,
       `**${t("common:bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
     ),
     ...(client.config.OWNER.includes(helper.user.id) ? [separator(), textDisplay("**Process Info**", getProcessInfo())] : []),

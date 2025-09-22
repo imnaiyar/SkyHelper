@@ -5,7 +5,7 @@ export default {
   async interactionRun({ interaction, t, helper, options }) {
     const client = helper.client;
     await helper.defer({ flags: 64 });
-    const guild = client.guilds.get(interaction.guild_id || "");
+    const guild = client.guilds.get(interaction.guild_id ?? "");
     if (!guild) {
       return void (await helper.editReply({ content: t("commands:LIVE_UPDATES.RESPONSES.NOT_GUILD") }));
     }

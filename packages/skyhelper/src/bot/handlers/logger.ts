@@ -48,7 +48,7 @@ export default class {
   static error(content: any, err?: any | Scope, scope?: Scope): string {
     const scop = err instanceof Scope ? err : scope;
     const error = err instanceof Scope ? undefined : err;
-    const id = captureException(error || content, scop);
+    const id = captureException(error ?? content, scop);
     if (error) {
       logger.error(content, error, id);
     } else {

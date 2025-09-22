@@ -9,7 +9,7 @@ import tseslint from "typescript-eslint";
 export default defineConfig([
   globalIgnores(["**/node_modules", "**/logs", "**/website", "**/jest.config.js", "**/dist"]),
   {
-    extends: [js.configs.recommended, tseslint.configs.recommended],
+    extends: [js.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylisticTypeChecked],
 
     plugins: {
       jsdoc,
@@ -22,6 +22,10 @@ export default defineConfig([
       },
       ecmaVersion: 2023,
       sourceType: "module",
+      parserOptions: {
+        project: ["./packages/*/tsconfig.json", "./apps/*/tsconfig.json", "./tsconfig.json"],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
 
     rules: {
@@ -32,7 +36,12 @@ export default defineConfig([
           after: true,
         },
       ],
-
+      "@typescript-eslint/array-type": [
+        "error",
+        {
+          default: "array-simple",
+        },
+      ],
       "comma-dangle": ["error", "always-multiline"],
       "import/no-commonjs": "error",
       "comma-spacing": "error",
@@ -55,6 +64,13 @@ export default defineConfig([
       ],
 
       "no-unused-vars": "off",
+      "no-empty-function": "off",
+      "@typescript-eslint/no-empty-function": [
+        "warn",
+        {
+          allow: ["arrowFunctions", "constructors"],
+        },
+      ],
       "keyword-spacing": "error",
 
       "max-nested-callbacks": [

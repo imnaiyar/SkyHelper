@@ -184,7 +184,7 @@ export class Spirits {
    * (Because my lazy ass put it in random order for some spirits)
    * @param dates Areay of visit datas
    */
-  private _sortDates(dates: (string | string[])[]) {
+  private _sortDates(dates: Array<string | string[]>) {
     return dates.sort((a, b) => {
       const aDate = DateTime.fromFormat((this._isArray(a) ? a[0] : a).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
         zone: "America/Los_Angeles",
@@ -209,7 +209,7 @@ export class Spirits {
    * Formats the spirit's return dates in discord timestamp
    * @param dates
    */
-  private _formatDates(dates: (string | string[])[]) {
+  private _formatDates(dates: Array<string | string[]>) {
     return this._sortDates(dates)
       .map((date) => {
         let index;

@@ -40,7 +40,7 @@ export class MessageFlags {
    * @returns The value of the flag if found, otherwise null.
    */
   public getFlag(flag: string): string | null {
-    return this.flags.find((f) => f.startsWith(flag)) || null;
+    return this.flags.find((f) => f.startsWith(flag)) ?? null;
   }
 
   /**

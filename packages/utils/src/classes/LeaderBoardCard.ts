@@ -176,14 +176,14 @@ export class LeaderboardCard {
         XP_Y = 45,
         Level_Y = 30,
         Rank_Y = 45;
-      for (let i = 0; i < this.usersData.length; i++) {
+      for (const data of this.usersData) {
         ctx.save();
         ctx.fillStyle = this.colors.box;
         ctx.globalAlpha = this.opacity;
         this.fillRoundRect(ctx, 0, Box_Y, canvas.width, 70, 15, true, false);
         ctx.globalAlpha = 1;
         try {
-          const avatar = await loadImage(this.usersData[i].avatar);
+          const avatar = await loadImage(data.avatar);
           ctx.clip();
           ctx.drawImage(avatar, 0, Avatar_Y, 70, 70);
         } catch (err) {
@@ -197,31 +197,31 @@ export class LeaderboardCard {
         ctx.fillStyle = this.colors.username;
         ctx.font = `bold 25px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
         ctx.textAlign = "left";
-        ctx.fillText(this.usersData[i].tag, 80, Tag_Y, 260);
+        ctx.fillText(data.tag, 80, Tag_Y, 260);
 
         ctx.fillStyle = this.colors.score;
         ctx.font = `bold 20px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
         ctx.textAlign = "right";
         ctx.fillText(
           `${this.scoreMessage} ${
-            this.abbreviateNumber == true ? `${abbreviateNumber(this.usersData[i].score)}` : `${this.usersData[i].score}`
-          }/${this.abbreviateNumber == true ? `${abbreviateNumber(this.usersData[i].games)}` : `${this.usersData[i].games}`}`,
+            this.abbreviateNumber == true ? `${abbreviateNumber(data.score)}` : `${data.score}`
+          }/${this.abbreviateNumber == true ? `${abbreviateNumber(data.games)}` : `${data.games}`}`,
           560,
           XP_Y,
           200,
         );
 
-        if (this.usersData[i].top === 1) {
+        if (data.top === 1) {
           ctx.fillStyle = this.colors.firstRank;
-        } else if (this.usersData[i].top === 2) {
+        } else if (data.top === 2) {
           ctx.fillStyle = this.colors.secondRank;
-        } else if (this.usersData[i].top === 3) {
+        } else if (data.top === 3) {
           ctx.fillStyle = this.colors.thirdRank;
         }
 
         ctx.font = `bold 30px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
         ctx.textAlign = "right";
-        ctx.fillText("#" + this.usersData[i].top, 660, Rank_Y, 75);
+        ctx.fillText("#" + data.top, 660, Rank_Y, 75);
 
         Box_Y = Box_Y + 75;
         Avatar_Y = Avatar_Y + 75;

@@ -49,7 +49,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
           options: spirits.map(([k, v]) => ({
             label: v.name + (v.extra ? ` (${v.extra})` : ""),
             value: k.toString(),
-            emoji: client.utils.parseEmoji(v.expression?.icon || v.icon || (seasonOrRealm as SeasonData).icon)!,
+            emoji: client.utils.parseEmoji(v.expression?.icon ?? v.icon ?? (seasonOrRealm as SeasonData).icon)!,
             default: value === k,
           })),
         },
@@ -67,7 +67,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
   const collector = client.componentCollector({
     filter: (i) =>
       client.utils.store.deserialize(i.data.custom_id)!.id === CustomId.SeasonalSpiritRow &&
-      helper.user.id === (i.member?.user || i.user)!.id,
+      helper.user.id === (i.member?.user ?? i.user)!.id,
     idle: 90_000,
     message,
   });

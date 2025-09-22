@@ -169,7 +169,7 @@ export function getShardReminderResponse(
   now: DateTime,
   t: ReturnType<typeof getTranslator>,
   offset = 0,
-  shardType?: ("red" | "black")[],
+  shardType?: Array<"red" | "black">,
 ) {
   const nextShard = ShardsUtil.getNextShard(now, shardType);
   if (!nextShard) return null;
