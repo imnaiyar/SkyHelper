@@ -101,6 +101,7 @@ export default {
       });
     } else if (subcommand === "data") {
       const entityGuid = options.getString("entity", true);
+      const depth = options.getInteger("depth") ?? 8;
 
       if (entityGuid === "error") {
         await helper.editReply({
@@ -129,7 +130,7 @@ export default {
       }
 
       // Create a JSON string with proper formatting and depth
-      const jsonData = util.inspect(entity.data, { depth: 8, colors: false, compact: false });
+      const jsonData = util.inspect(entity.data, { depth, colors: false, compact: false });
 
       // Post to haste
       const hasteUrl = await postToHaste(jsonData);

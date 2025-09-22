@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsgo",
     "start": "bun run src/index.ts",
     "dev": "tsx --env-file=.env src/index.ts",
     "lint": "eslint --fix src"
@@ -30,6 +30,7 @@
     "@types/moment-duration-format": "^2.2.6",
     "@types/node": "^22.13.1",
     "@types/node-cron": "^3.0.11",
+    "@typescript/native-preview": "7.0.0-dev.20250921.1",
     "prettier": "^3.3.3",
     "typescript": "^5.5.4"
   },
