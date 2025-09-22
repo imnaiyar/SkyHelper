@@ -32,7 +32,7 @@ export const hangmanWords = ["Ancestor Spirit", "Traveling Spirit", "Seasonal Sp
     "Manta Call", "Sky Whale", "Golden Relic", "Sky Journey", "Prairie Ritual",
     "Vault of Prophecy", "Dark Shard", "Aurora Spirit", "Vault Cave", "Vault Journey", "Sanctuary Spirit",
     ...(Object.entries(spiritsData).map(([, v]) => v.name)),
-    ...(Object.entries(SummaryData).map(([, v]) => v["main"].title)),
+    ...(Object.entries(SummaryData).map(([, v]) => v.main.title)),
     ...(Object.entries(seasonsData).map(([, v]) => v.name)),
   ];
 

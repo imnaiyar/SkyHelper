@@ -38,7 +38,7 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
   client.logger.custom(`Guild: ${guild.name} (${guild.id}); Members: ${guild.member_count}`, "Guild Joined");
 
   // register guild on db
-  client.schemas.getSettings({ ...guild, clientMember });
+  await client.schemas.getSettings({ ...guild, clientMember });
 
   // update bot stats message
   await updateBotStatsMessage(client);

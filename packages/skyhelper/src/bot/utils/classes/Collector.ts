@@ -38,9 +38,13 @@ abstract class Collector<Int> extends EventEmitter {
     super();
     this.filter = options.filter ?? (() => true);
     this.timer = options.timeout
-      ? setTimeout(() => this.stop("timeout"), options.timeout)
+      ? setTimeout(() => {
+          this.stop("timeout");
+        }, options.timeout)
       : options.idle
-        ? setTimeout(() => this.stop("timeout"), options.idle)
+        ? setTimeout(() => {
+            this.stop("timeout");
+          }, options.idle)
         : undefined;
     this.listener = this.listener.bind(this);
 
@@ -113,6 +117,7 @@ export class InteractionCollector<
     if (options.componentType) this.componentType = options.componentType;
     if (options.interactionType) this.interactionType = options.interactionType;
     if (options.userId) this.userId = options.userId;
+    // eslint-disable-next-line
     client.addListener("INTERACTION_CREATE", this.listener);
   }
   override listener({ data: int }: ToEventProps<GatewayInteractionCreateDispatchData>) {
@@ -130,7 +135,7 @@ export class InteractionCollector<
 
     if (this.channel && this.channel.id !== int.channel?.id) return;
 
-    if (this.userId && (int.member?.user || int.user!).id !== this.userId) return;
+    if (this.userId && (int.member?.user ?? int.user!).id !== this.userId) return;
     // @ts-expect-error type mismatch
     const passesFilter = this.filter(int);
     if (!passesFilter) return;
@@ -139,15 +144,18 @@ export class InteractionCollector<
     this.collected.push(int as any);
     if (this.options.idle) {
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.stop("timeout"), this.options.idle);
+      this.timer = setTimeout(() => {
+        this.stop("timeout");
+      }, this.options.idle);
     }
 
     if (this.options.max && this.collected.length >= this.options.max) this.stop("max");
   }
   override stop(reason?: string) {
+    // eslint-disable-next-line
     this.client.removeListener("INTERACTION_CREATE", this.listener);
     clearTimeout(this.timer);
-    this.emit("end", this.collected, reason || "stopped");
+    this.emit("end", this.collected, reason ?? "stopped");
     this.ended = true;
 
     this.removeAllListeners();
@@ -164,6 +172,7 @@ export class MessageCollector extends Collector<APIMessage> {
   ) {
     super(client, options);
     if (options.channel) this.channel = options.channel;
+    // eslint-disable-next-line
     client.addListener("MESSAGE_CREATE", this.listener);
   }
   override listener({ data: message }: ToEventProps<GatewayMessageCreateDispatchData>) {
@@ -175,15 +184,18 @@ export class MessageCollector extends Collector<APIMessage> {
     this.collected.push(message);
     if (this.options.idle) {
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.stop("timeout"), this.options.idle);
+      this.timer = setTimeout(() => {
+        this.stop("timeout");
+      }, this.options.idle);
     }
 
     if (this.options.max && this.collected.length >= this.options.max) this.stop("max");
   }
   override stop(reason?: string) {
+    // eslint-disable-next-line
     this.client.removeListener("MESSAGE_CREATE", this.listener);
     clearTimeout(this.timer);
-    this.emit("end", this.collected, reason || "stopped");
+    this.emit("end", this.collected, reason ?? "stopped");
     this.ended = true;
   }
 }

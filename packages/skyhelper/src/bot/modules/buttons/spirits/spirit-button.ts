@@ -9,7 +9,7 @@ export default defineButton({
   data: { name: "spirit_info_button" },
   id: CustomId.SpiritButton,
   async execute(interaction, t, helper, { spirit_key }) {
-    const data = helper.client.spiritsData[spirit_key as keyof typeof helper.client.spiritsData] as SpiritsData;
+    const data = helper.client.spiritsData[spirit_key];
 
     if (!data) {
       await helper.reply({

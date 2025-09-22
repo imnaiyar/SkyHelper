@@ -4,7 +4,7 @@ import type { Command } from "@/structures";
 import { MessageFlags } from "@discordjs/core";
 export default {
   async interactionRun({ options, helper, t }) {
-    const hide = options.getBoolean("hide") || false;
+    const hide = options.getBoolean("hide") ?? false;
     await helper.defer({ flags: hide ? MessageFlags.Ephemeral : undefined });
 
     await helper.editReply({ ...(await getTimesEmbed(helper.client, t)), flags: MessageFlags.IsComponentsV2 });

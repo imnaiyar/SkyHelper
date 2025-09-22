@@ -24,10 +24,10 @@ export default defineButton({
     const comp = container(
       textDisplay(
         `### ${title}\n${DateTime.now().setZone("America/Los_Angeles").toFormat("dd-MM-yyyy")}` +
-          `\n${emojis.tree_middle}By: ${d.images[0].by}\n${emojis.tree_end}Source: ${d.images[0].source || "Unknown"}`,
+          `\n${emojis.tree_middle}By: ${d.images![0]?.by}\n${emojis.tree_end}Source: ${d.images![0]?.source ?? "Unknown"}`,
       ),
       separator(),
-      mediaGallery(mediaGalleryItem(d.images[0].url, { spoiler: true, description: d.title })),
+      mediaGallery(mediaGalleryItem(d.images![0]!.url, { spoiler: true, description: d.title })),
     );
 
     await helper.editReply({ components: [comp], flags: MessageFlags.IsComponentsV2 });

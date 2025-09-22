@@ -17,6 +17,9 @@ export class GuildMiddleware implements NestMiddleware {
 
   async use(req: AuthRequest, _: Response, next: NextFunction) {
     const guildId = req.url.split("/")[1];
+    if (!guildId) {
+      throw new HttpException("Guild ID is required", HttpStatus.BAD_REQUEST);
+    }
     const isAdmin = checkAdmin(req.user);
     // return early for admins since admin might not be a member
     if (isAdmin) {

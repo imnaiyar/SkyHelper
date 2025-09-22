@@ -32,7 +32,7 @@ export default defineButton({
         filter: (i) =>
           // @ts-expect-error data is present, but wtv
           ["spirit_exprsn_back"].includes(client.utils.store.deserialize(i.data.custom_id).data.data) &&
-          user.id === (i.member?.user || i.user)!.id,
+          user.id === (i.member?.user ?? i.user)!.id,
         idle: 90_000,
         message: reply,
       });
@@ -66,8 +66,8 @@ const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator
       `-# ${exprsn.icon ? t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE") : t("commands:SPIRITS.RESPONSES.BUTTONS.ACTION")} - ${
         data.name
       }\n### [${
-        exprsn!.icon
-      } ${exprsn.level[0].title.replace(/ Level [1-6]/, "")}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${
+        exprsn.icon
+      } ${exprsn.level[0]?.title.replace(/ Level [1-6]/, "")}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${
         exprsn.type === "Emote" ? "Expression" : exprsn.type.split(" ").join("_")
       })`,
     ),

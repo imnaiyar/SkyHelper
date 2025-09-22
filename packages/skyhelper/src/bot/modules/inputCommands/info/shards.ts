@@ -8,7 +8,7 @@ import { buildShardEmbed } from "@/utils/classes/Embeds";
 export default {
   async interactionRun({ t, helper, options }) {
     const date = options.getString("date");
-    const hide = options.getBoolean("hide") || false;
+    const hide = options.getBoolean("hide") ?? false;
     const shard = getShards(t, helper.user.id, date);
     if (typeof shard === "string") {
       return void (await helper.reply({

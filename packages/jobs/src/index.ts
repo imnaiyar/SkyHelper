@@ -7,13 +7,9 @@ await initializeMongoose();
 // SkyTimes
 cron.schedule(
   "*/2 * * * *",
-  async () => {
-    try {
-      await eventSchedules("times");
-      logger.info("Ran SkyTimes Job");
-    } catch (err) {
-      logger.error("SkyTimes Job Error: ", err);
-    }
+  () => {
+    eventSchedules("times").catch((err) => logger.error("SkyTimes Job Error: ", err));
+    logger.info("Ran SkyTimes Job");
   },
   { name: "SkyTimes Job" },
 );
@@ -21,26 +17,18 @@ cron.schedule(
 // Shards job
 cron.schedule(
   "*/5 * * * *",
-  async () => {
-    try {
-      await eventSchedules("shard");
-      logger.info("Ran Shards Job");
-    } catch (err) {
-      logger.error("Shards Job Error: ", err);
-    }
+  () => {
+    eventSchedules("shard").catch((err) => logger.error("Shards Job Error: ", err));
+    logger.info("Ran Shards Job");
   },
   { name: "Shards Job" },
 );
 
 cron.schedule(
   "*/1 * * * *",
-  async () => {
-    try {
-      await reminderSchedules();
-      logger.info("Ran Reminders Job");
-    } catch (err) {
-      logger.error("Reminders Job Error: ", err);
-    }
+  () => {
+    reminderSchedules().catch((err) => logger.error("Reminders Job Error: ", err));
+    logger.info("Ran Reminders Job");
   },
   { name: "Reminders Job", timezone: "America/Los_Angeles" },
 );
@@ -48,5 +36,5 @@ cron.schedule(
 logger.info("Logged in and Jobs have been started");
 
 // Catch any unknown errors
-process.on("uncaughtException", logger.error);
-process.on("unhandledRejection", logger.error);
+process.on("uncaughtException", logger.error.bind(logger));
+process.on("unhandledRejection", logger.error.bind(logger));

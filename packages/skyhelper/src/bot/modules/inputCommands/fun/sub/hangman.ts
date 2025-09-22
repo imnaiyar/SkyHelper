@@ -17,6 +17,7 @@ import {
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
+  ComponentType,
 } from "@discordjs/core";
 import type { RawFile } from "@discordjs/rest";
 import type { SkyGameStatsData } from "@/types/custom";
@@ -64,7 +65,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
   const col = client.componentCollector({
     idle: 90_000,
     filter: (i) =>
-      (i.member?.user || i.user)!.id === helper.user.id ||
+      (i.member?.user ?? i.user)!.id === helper.user.id ||
       // @ts-expect-error need extra check to get actions but yeah, loool
       client.utils.store.deserialize(i.data.custom_id).data.action === "instructions",
     message,
@@ -76,7 +77,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
     if (id !== CustomId.SkyHagman) return;
     const { action } = data;
     if (compoHelper.isStringSelect(i)) {
-      const value = i.data.values[0];
+      const value = i.data.values[0]!;
       if (action === "type") {
         type = value;
         if (value === "random") word = null;
@@ -99,7 +100,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
             flags: MessageFlags.Ephemeral,
           });
         }
-        await compoHelper.launchModal(modalComponent(i.id, word || ""));
+        await compoHelper.launchModal(modalComponent(i.id, word ?? ""));
 
         const modalSubmit = await client
           .awaitModal({
@@ -127,9 +128,9 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
         );
         // remove the button row
         const components = i.message.components! as APIContainerComponent[];
-        const rowCount = components[0].components.filter((c) => c.type === 1).length;
+        const rowCount = components[0]!.components.filter((c) => c.type === ComponentType.ActionRow).length;
 
-        components[0].components.splice(-rowCount, rowCount);
+        components[0]!.components.splice(-rowCount, rowCount);
 
         await compoHelper.update({ components });
 
@@ -148,7 +149,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
 };
 
 function createComponents(mode: string, type: string, players: APIUser[], word: string | null, helper: InteractionHelper) {
-  const components: APIActionRowComponent<APIComponentInMessageActionRow>[] = [];
+  const components: Array<APIActionRowComponent<APIComponentInMessageActionRow>> = [];
   if (mode === "double") {
     components.push(
       {
@@ -290,13 +291,13 @@ export const getCardResponse = async (
   const players = await Promise.all(
     data[btnType].map(async (d, i): Promise<userData> => {
       const member: APIGuildMember | APIUser =
-        type === "server" ? guildMembers!.members.find((m) => m.user.id === d.id)! : await client.api.users.get(d.id);
+        type === "server" ? guildMembers.members.find((m) => m.user.id === d.id)! : await client.api.users.get(d.id);
       return {
         tag: "user" in member ? member.user.username : member.username,
-        games: d.gamesPlayed!,
-        score: d.gamesWon!,
+        games: d.gamesPlayed,
+        score: d.gamesWon,
         top: i + 1,
-        avatar: client.utils.getUserAvatar(member as APIGuildMember, guild?.id),
+        avatar: client.utils.getUserAvatar(member as APIGuildMember, guild.id),
       };
     }),
   );
@@ -323,7 +324,7 @@ export const getCardResponse = async (
   const comp = container(
     textDisplay(
       `${game.charAt(0).toUpperCase() + game.slice(1)} Leaderboard - ` +
-        (type === "server" ? `\`Server (${guild!.name})\`` : "`Global`"),
+        (type === "server" ? `\`Server (${guild.name})\`` : "`Global`"),
     ),
     separator(),
     card

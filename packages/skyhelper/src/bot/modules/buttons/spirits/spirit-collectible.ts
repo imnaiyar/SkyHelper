@@ -17,7 +17,7 @@ export default defineButton({
   id: CustomId.SpiritCollectible,
   async execute(interaction, _t, helper, { spirit: value }) {
     const data = helper.client.spiritsData[value];
-    if (!data || !data.collectibles?.length) {
+    if (!data?.collectibles?.length) {
       return void (await helper.reply({
         content: "No collectibles found for this spirit, or something went wrong!",
         flags: 64,
@@ -38,7 +38,7 @@ export default defineButton({
     let index = 1;
     const total = collectibles.length;
     const getResponse = () => {
-      const d = collectibles[index - 1];
+      const d = collectibles[index - 1]!;
       const stringSelect: APIActionRowComponent<APIStringSelectComponent> = {
         type: ComponentType.ActionRow,
         components: [
@@ -60,10 +60,10 @@ export default defineButton({
       };
       const comp = container(
         section(
-          thumbnail(helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id), d.name),
+          thumbnail(helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id!), d.name),
           `-# ${data.name} Collectibles (${index}/${total})\n### [${d.icon} ${d.name || d.type}](https://sky-children-of-the-light.fandom.com/wiki/${data.name
             .split(" ")
-            .join("_")}#${(d.type ? d.type : d.name).split(" ").join("_")})`,
+            .join("_")}#${(d.type ?? d.name).split(" ").join("_")})`,
         ),
         separator(),
         textDisplay(
@@ -93,7 +93,7 @@ export default defineButton({
               type: ComponentType.Button,
               custom_id: helper.client.utils.store.serialize(CustomId.Default, { data: "collectibles-back", user: user.id }),
               label: "Back",
-              emoji: helper.client.utils.parseEmoji(data.expression?.icon || "<:spiritIcon:1206501060303130664>")!,
+              emoji: helper.client.utils.parseEmoji(data.expression?.icon ?? "<:spiritIcon:1206501060303130664>")!,
               style: ButtonStyle.Danger,
             },
           ],
@@ -107,8 +107,8 @@ export default defineButton({
       filter: (i) =>
         ["spirit-collectibles-select", "collectibles-back"].includes(
           // @ts-expect-error data is present but i dont wanna do check ll
-          helper.client.utils.store.deserialize(i.data.custom_id)!.data.data,
-        ) && (i.member?.user || i.user)!.id === user.id,
+          helper.client.utils.store.deserialize(i.data.custom_id).data.data,
+        ) && (i.member?.user ?? i.user)!.id === user.id,
       message,
       idle: 60_000,
     });
@@ -123,7 +123,7 @@ export default defineButton({
       switch (v.data) {
         case "spirit-collectibles-select": {
           if (!compHelper.isStringSelect(int)) return;
-          index = parseInt(int.data.values[0]) + 1;
+          index = parseInt(int.data.values[0]!) + 1;
           await compHelper.editReply(getResponse());
           break;
         }

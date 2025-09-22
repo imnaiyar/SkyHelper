@@ -19,7 +19,7 @@ export class ShardsUtil {
    * @method getDate - get provided date in luxon
    * @param  date - date to get in moment
    */
-  static getDate(date?: string | undefined | null): DateTime | string {
+  static getDate(date?: string | null): DateTime | string {
     const timezone = "America/Los_Angeles";
     let currentDate: DateTime;
     try {
@@ -49,9 +49,9 @@ export class ShardsUtil {
   } {
     const dayOfMonth = date.day;
     const shardIndex = (dayOfMonth - 1) % shardSequence.length;
-    const currentShard = shardSequence[shardIndex];
+    const currentShard = shardSequence[shardIndex]!;
     const realmIndex = (dayOfMonth - 1) % realmSequence.length;
-    const currentRealm = realmSequence[realmIndex];
+    const currentRealm = realmSequence[realmIndex]!;
 
     return { currentShard, currentRealm };
   }
@@ -74,7 +74,7 @@ export class ShardsUtil {
           : remainder10 === 3 && remainder100 !== 13
             ? 3
             : 0
-    ];
+    ]!;
   }
 
   /**
@@ -90,7 +90,7 @@ export class ShardsUtil {
     if (isNoShard) return "No Shard";
     const toReturn: ShardsCountdown[] = [];
     for (let i = 0; i < timings.length; i++) {
-      const eventTiming = timings[i];
+      const eventTiming = timings[i]!;
       // Active
       if (present >= eventTiming.start && present <= eventTiming.end) {
         toReturn.push({
@@ -133,10 +133,10 @@ export class ShardsUtil {
    */
   static getNextShard(
     date: DateTime,
-    shardType?: ("black" | "red")[],
+    shardType?: Array<"black" | "red">,
   ): null | { index: number; start: DateTime; end: DateTime; duration: string; info: ShardInfo } {
     const { currentRealm, currentShard } = this.shardsIndex(date);
-    const info = shardsInfo[currentRealm][currentShard];
+    const info = shardsInfo[currentRealm]![currentShard]!;
     const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
     if (isNoShard) return null;
 
@@ -161,7 +161,7 @@ export class ShardsUtil {
    * @param shardType The type of shard to get the next occuring shard for
    * @returns an upcoming shard relative from now
    */
-  static getNextShardFromNow(shardType?: ("black" | "red")[]) {
+  static getNextShardFromNow(shardType?: Array<"black" | "red">) {
     let present = DateTime.now().setZone("America/Los_Angeles");
     let nextShard = this.getNextShard(present, shardType);
     while (!nextShard) {

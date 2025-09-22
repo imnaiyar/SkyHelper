@@ -11,7 +11,7 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
 
   // Enable Dashboard
   console.log(chalk.blueBright(`\n\n<${"-".repeat(24)} Dashboard ${"-".repeat(26)}>\n`));
-  if (client.config.DASHBOARD.enabled) bootstrap(client);
+  if (client.config.DASHBOARD.enabled) await bootstrap(client);
 
   setInterval(() => {
     client.gateway.send(0, {
@@ -54,7 +54,7 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   // Ready alert
   const ready = process.env.READY_LOGS ? client.utils.parseWebhookURL(process.env.READY_LOGS) : null;
   if (ready) {
-    client.api.webhooks.execute(ready.id, ready.token, {
+    await client.api.webhooks.execute(ready.id, ready.token, {
       username: "Ready",
       avatar_url: client.utils.getUserAvatar(client.user),
       embeds: [readyalertemb],
@@ -110,5 +110,5 @@ function getActivity() {
       url: "https://www.twitch.tv/directory/category/sky-children-of-the-light",
     },
   ];
-  return activities[Math.floor(Math.random() * activities.length)];
+  return activities[Math.floor(Math.random() * activities.length)]!;
 }

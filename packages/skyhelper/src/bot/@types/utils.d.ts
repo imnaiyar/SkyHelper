@@ -8,13 +8,14 @@ export type If<Value extends boolean, TrueResult, FalseResult = null> = Value ex
     ? FalseResult
     : TrueResult | FalseResult;
 
-export type OverrideLocalizations<T> = T extends (infer U)[]
-  ? OverrideLocalizations<U>[]
-  : T extends object
-    ? {
-        [K in keyof T]: K extends "description_localizations" | "name_localizations" ? LangKeys : OverrideLocalizations<T[K]>; // Recursively process nested objects
-      }
-    : T;
+export type OverrideLocalizations<T> =
+  T extends Array<infer U>
+    ? Array<OverrideLocalizations<U>>
+    : T extends object
+      ? {
+          [K in keyof T]: K extends "description_localizations" | "name_localizations" ? LangKeys : OverrideLocalizations<T[K]>; // Recursively process nested objects
+        }
+      : T;
 
 export type IdResolvalble = { id: string } | string | { user: { id: string } };
 

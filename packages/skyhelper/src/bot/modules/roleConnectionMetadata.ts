@@ -36,12 +36,12 @@ const data: APIApplicationRoleConnectionMetadata[] = [
 
 /** Register/update the role connection metadate */
 export async function registerMetadata() {
-  const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
-  const d = await rest.put(Routes.applicationRoleConnectionMetadata(process.env.CLIENT_ID!), {
+  const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
+  const d = await rest.put(Routes.applicationRoleConnectionMetadata(process.env.CLIENT_ID), {
     body: data,
   });
 
   console.log("Successfuly register connection metadata: ", d);
 }
 
-registerMetadata();
+registerMetadata().catch(console.error);

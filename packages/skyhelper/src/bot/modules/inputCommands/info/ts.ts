@@ -29,9 +29,9 @@ const getTSResponse = async (
 
   const visitingDates = `${client.utils.time(ts.nextVisit.toUnixInteger(), "D")} - ${client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "D")}`;
   if (ts.value) {
-    const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
+    const spirit: SpiritsData = client.spiritsData[ts.value]!;
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
-    const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
+    const emote = spirit.expression?.icon ?? "<:spiritIcon:1206501060303130664>";
     const description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
@@ -45,7 +45,7 @@ const getTSResponse = async (
         });
     const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${
       spirit.name
-    }${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
+    }${spirit.extra ?? ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
     const manager = new Spirits(spirit, t, client);
 
     let lctn_link = spirit.location!.image;
@@ -62,13 +62,13 @@ const getTSResponse = async (
       textDisplay(
         `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
           realms_emojis[spirit.realm!]
-        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
+        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season}`,
       ),
       separator(true, 1),
       section(
         thumbnail("https://cdn.imnaiyar.site/" + spirit.tree!.image),
         `${emojis.right_chevron} ${
-          spirit.ts?.returned
+          spirit.ts.returned
             ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
             : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
         }`,

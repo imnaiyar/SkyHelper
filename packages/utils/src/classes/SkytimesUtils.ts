@@ -14,7 +14,7 @@ export class SkytimesUtils {
     const timeBuilt = [];
     while (eventTime.hasSame(clonedTime, "day")) {
       timeBuilt.push(`<t:${clonedTime.toUnixInteger()}:t>`);
-      clonedTime = clonedTime.plus({ minutes: interval || 0 });
+      clonedTime = clonedTime.plus({ minutes: interval ?? 0 });
     }
     return timeBuilt.join(" • ");
   }
@@ -50,14 +50,14 @@ export class SkytimesUtils {
    */
   public static getNextEventOccurrence(eventName: EventKey): DateTime {
     const event = eventData[eventName];
-    if (!event) throw new Error("Unknown Event");
+    if (!event as boolean /* lol */) throw new Error("Unknown Event");
 
     const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
     let nextOccurrence = this.getOccurrenceDay(event);
 
     // Loop to calculate the next occurrence based on the interval
     while (nextOccurrence < now) {
-      nextOccurrence = nextOccurrence.plus({ minutes: event.interval || 0 });
+      nextOccurrence = nextOccurrence.plus({ minutes: event.interval ?? 0 });
     }
 
     return nextOccurrence;
@@ -81,9 +81,9 @@ export class SkytimesUtils {
    * Same as {@apilink SkytimesUtils.getEventDetails | getEventDetails} but for all of the events
    * @returns An array of event details
    */
-  public static allEventDetails(): [EventKey, EventDetails][] {
+  public static allEventDetails(): Array<[EventKey, EventDetails]> {
     const keys = (Object.keys(eventData) as EventKey[]).sort((a, b) => eventData[a].index - eventData[b].index);
-    const occurrences: [EventKey, EventDetails][] = [];
+    const occurrences: Array<[EventKey, EventDetails]> = [];
 
     for (const key of keys) {
       occurrences.push([key, this.getEventDetails(key)]);
@@ -108,7 +108,7 @@ export class SkytimesUtils {
 
     // Subtract the interval because nextOccurrence always calculates the next upcoming event
     // So we subtract the interval to get the last occurrence, and add the active duration to it, and check if now is between those
-    const start = nextOccurrence.minus({ minutes: event.interval || 0 });
+    const start = nextOccurrence.minus({ minutes: event.interval ?? 0 });
     const end = start.plus({ minutes: event.duration });
 
     // When active

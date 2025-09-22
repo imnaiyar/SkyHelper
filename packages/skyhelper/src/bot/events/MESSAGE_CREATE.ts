@@ -41,7 +41,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     }
     const guildSettings = guild ? await client.schemas.getSettings(guild) : null;
     // Prefix
-    const prefix = (guildSettings ? guildSettings.prefix || null : null) || client.config.PREFIX;
+    const prefix = (guildSettings ? guildSettings.prefix || null : null) ?? client.config.PREFIX;
 
     if (!message.content.startsWith(prefix)) return;
 
@@ -50,7 +50,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     const msg = flags.removeFlags();
     const args = msg.slice(prefix.length).trim().split(/ +/g);
     const commandName = args.shift()!.toLowerCase();
-    const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
+    const command = client.commands.get(commandName) ?? client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
     if (!command || !command.messageRun) return;
     const scope = new Sentry.Scope();
     scope.setUser({ id: message.author.id, username: message.author.username });
@@ -72,7 +72,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
       author: {
         id: message.author.id,
         username: message.author.username,
-        displayName: message.author.global_name || message.author.username,
+        displayName: message.author.global_name ?? message.author.username,
       },
       occurenceTime: DateTime.now().setZone("Asia/Kolkata").toFormat("yyyy-MM-dd HH:mm:ss"),
     };

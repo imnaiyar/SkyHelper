@@ -30,7 +30,7 @@ export default class {
    * @param id - The ID to resolve.
    * @returns The creation date of the ID.
    */
-  static createdAt<T extends IdResolvalble>(id: T): Date {
+  static createdAt(id: IdResolvalble): Date {
     const relovedId = this.resolveId(id);
     return new Date(this.getTimestampFromSnowflake(relovedId));
   }
@@ -41,7 +41,7 @@ export default class {
    * @param id - The ID to resolve.
    * @returns The creation timestamp of the ID.
    */
-  static createdTimeStamp<T extends IdResolvalble>(id: T): number {
+  static createdTimeStamp(id: IdResolvalble): number {
     const relovedId = this.resolveId(id);
     return this.getTimestampFromSnowflake(relovedId);
   }
@@ -52,7 +52,7 @@ export default class {
    * @param id - The ID to resolve.
    * @returns The resolved ID as a string.
    */
-  static resolveId<T extends IdResolvalble>(id: T): string {
+  static resolveId(id: IdResolvalble): string {
     let resolvedId;
     if (typeof id === "string") resolvedId = id;
     else if (typeof id === "object" && "id" in id) resolvedId = id.id;
@@ -97,8 +97,8 @@ export default class {
     const match = url.match(WebhookRegex);
     if (!match) return null;
     return {
-      id: match[2],
-      token: match[3],
+      id: match[2]!,
+      token: match[3]!,
     };
   }
 
@@ -109,7 +109,7 @@ export default class {
    * @param obj The object to encode
    */
   static encodeCustomId(obj: ParsedCustomId): string {
-    let customId = obj["id"];
+    let customId = obj.id;
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
       customId += `;${key}:${value}`;
@@ -126,10 +126,10 @@ export default class {
    */
   static parseCustomId(customId: string): ParsedCustomId {
     const parts = customId.split(";");
-    const obj: ParsedCustomId = { id: parts[0] };
+    const obj: ParsedCustomId = { id: parts[0]! };
     for (let i = 1; i < parts.length; i++) {
-      const [key, value] = parts[i].split(":");
-      obj[key] = value;
+      const [key, value] = parts[i]!.split(":");
+      obj[key!] = value!;
     }
     return obj;
   }
@@ -178,17 +178,33 @@ export default class {
   static getModalComponent<Type extends ComponentType = ComponentType>(
     int: APIModalSubmitInteraction,
     customId: string,
+    type: Type,
+    required: true,
+  ): Extract<ModalSubmitComponent, { type: Type }>;
+
+  static getModalComponent<Type extends ComponentType = ComponentType>(
+    int: APIModalSubmitInteraction,
+    customId: string,
     type?: Type,
-  ): Extract<ModalSubmitComponent, { type: Type }> {
-    const components = int.data.components.reduce((acc, label) => {
+    required?: boolean,
+  ): Extract<ModalSubmitComponent, { type: Type }> | undefined;
+  static getModalComponent<Type extends ComponentType = ComponentType>(
+    int: APIModalSubmitInteraction,
+    customId: string,
+    type?: Type,
+    required?: boolean,
+  ): Extract<ModalSubmitComponent, { type: Type }> | undefined {
+    const components = int.data.components.reduce<ModalSubmitComponent[]>((acc, label) => {
       if ("components" in label) return acc.concat(label.components);
       if ("component" in label) return acc.concat(label.component);
       return acc;
-    }, [] as ModalSubmitComponent[]);
+    }, []);
     const comp = components.find((component) => component.custom_id === customId);
-    if (type && comp?.type !== type)
+    if (required && !comp) throw new Error(`Couldn't find the required component with customId '${customId}'`);
+    if (type && comp?.type !== type) {
       throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
-    return comp as Extract<ModalSubmitComponent, { type: Type }>;
+    }
+    return comp as Extract<ModalSubmitComponent, { type: Type }> | undefined;
   }
   static getTextInput(
     interaction: APIModalSubmitInteraction,

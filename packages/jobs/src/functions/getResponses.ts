@@ -27,7 +27,7 @@ export function getResponse(
     event,
   } = details;
   const start = active
-    ? startTime!
+    ? startTime
     : offset === 0 && !event.duration
       ? // Event with no duration will point to next time when it just became active for 0 offsetted reminder,
         // dial back to reflect correct time
@@ -35,7 +35,7 @@ export function getResponse(
         //  if this includes any other events that also occurs on specific days, rethink this approach
         // possibly include previous occurrence in details accounting for occurrence day
         nextTime.minus({
-          minutes: event.interval || 0,
+          minutes: event.interval ?? 0,
         })
       : nextTime;
   let between: string | null = null;
@@ -50,7 +50,7 @@ export function getResponse(
     return (
       t("features:reminders.COMMON", {
         // @ts-expect-error key is known due to not being explicit
-        TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
+        TYPE: t("features:times-embed.EVENTS." + skytime.toUpperCase()),
         TIME: `<t:${startTime?.toUnixInteger()}:t>`,
         "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
         "TIME-END-R": `<t:${endTime?.toUnixInteger()}:R>`,
@@ -60,8 +60,8 @@ export function getResponse(
     if (["eden", "reset"].includes(type)) {
       return (
         t("features:reminders.PRE-RESET", {
-          // @ts-expect-error same
-          TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
+          // @ts-expect-error same dynamic
+          TYPE: t("features:times-embed.EVENTS." + skytime.toUpperCase()),
           TIME: `<t:${nextTime.toUnixInteger()}:t>`,
           "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
         }) + (between ? `\n\n${between}` : "")
@@ -70,8 +70,8 @@ export function getResponse(
 
     return (
       t("features:reminders.PRE", {
-        // @ts-expect-error same
-        TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
+        // @ts-expect-error same dynamic key but it is a valid key in runtime
+        TYPE: t("features:times-embed.EVENTS." + skytime.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
       }) + (between ? `\n\n${between}` : "")
@@ -89,13 +89,11 @@ const isSeasonal = (data: SpiritsData) => "ts" in data;
  * @returns The response to send
  */
 export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTranslator").getTranslator>) => {
-  if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
-
   const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
   if (ts.value) {
-    const spirit: SpiritsData = spiritsData[ts.value as keyof typeof spiritsData];
+    const spirit: SpiritsData = spiritsData[ts.value]!;
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
-    const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
+    const emote = spirit.expression?.icon ?? "<:spiritIcon:1206501060303130664>";
     const description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
@@ -107,7 +105,7 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
           DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
           DURATION: ts.duration,
         });
-    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${spirit.name}${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
+    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${spirit.name}${spirit.extra ?? ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
 
     let lctn_link = spirit.location!.image;
     if (!lctn_link.startsWith("https://")) lctn_link = "https://cdn.imnaiyar.site/" + lctn_link;
@@ -123,13 +121,13 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
       textDisplay(
         `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
           realms_emojis[spirit.realm!]
-        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
+        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season}`,
       ),
       separator(true, 1),
       section(
         thumbnail("https://cdn.imnaiyar.site/" + spirit.tree!.image),
         `${emojis.right_chevron} ${
-          spirit.ts?.returned
+          spirit.ts.returned
             ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
             : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
         }`,
@@ -169,7 +167,7 @@ export function getShardReminderResponse(
   now: DateTime,
   t: ReturnType<typeof getTranslator>,
   offset = 0,
-  shardType?: ("red" | "black")[],
+  shardType?: Array<"red" | "black">,
 ) {
   const nextShard = ShardsUtil.getNextShard(now, shardType);
   if (!nextShard) return null;

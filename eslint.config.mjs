@@ -1,6 +1,5 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import jsdoc from "eslint-plugin-jsdoc";
-import _import from "eslint-plugin-import";
 import { fixupPluginRules } from "@eslint/compat";
 import globals from "globals";
 import js from "@eslint/js";
@@ -9,11 +8,15 @@ import tseslint from "typescript-eslint";
 export default defineConfig([
   globalIgnores(["**/node_modules", "**/logs", "**/website", "**/jest.config.js", "**/dist"]),
   {
-    extends: [js.configs.recommended, tseslint.configs.recommended],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      tseslint.configs.stylisticTypeChecked,
+      tseslint.configs.strictTypeChecked,
+    ],
 
     plugins: {
       jsdoc,
-      import: fixupPluginRules(_import),
     },
 
     languageOptions: {
@@ -22,9 +25,24 @@ export default defineConfig([
       },
       ecmaVersion: 2023,
       sourceType: "module",
+      parserOptions: {
+        project: ["./packages/*/tsconfig.json", "./apps/*/tsconfig.json", "./tsconfig.json"],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
 
     rules: {
+      /** Turn of extreme strict ones lol */
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/restrict-plus-operands": "off",
+      "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
       "arrow-spacing": [
         "warn",
         {
@@ -32,9 +50,13 @@ export default defineConfig([
           after: true,
         },
       ],
-
+      "@typescript-eslint/array-type": [
+        "error",
+        {
+          default: "array-simple",
+        },
+      ],
       "comma-dangle": ["error", "always-multiline"],
-      "import/no-commonjs": "error",
       "comma-spacing": "error",
       "comma-style": "error",
       curly: ["error", "multi-line", "consistent"],
@@ -55,6 +77,13 @@ export default defineConfig([
       ],
 
       "no-unused-vars": "off",
+      "no-empty-function": "off",
+      "@typescript-eslint/no-empty-function": [
+        "warn",
+        {
+          allow: ["arrowFunctions", "constructors"],
+        },
+      ],
       "keyword-spacing": "error",
 
       "max-nested-callbacks": [

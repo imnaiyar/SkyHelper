@@ -34,7 +34,7 @@ export async function handleSingleMode(helper: InteractionHelper) {
 
   const response = await helper.client
     .awaitComponent({
-      filter: (i) => (i.member?.user || i.user!).id === helper.user.id,
+      filter: (i) => (i.member?.user ?? i.user!).id === helper.user.id,
       message,
       timeout: 60_000,
     })
@@ -92,7 +92,7 @@ export async function handleSingleMode(helper: InteractionHelper) {
     .awaitModal({
       timeout: 60_000,
       filter: (i) =>
-        i.data.custom_id === "scramble-guess-modal;" + helper.int.id && helper.user.id === (i.member?.user || i.user)!.id,
+        i.data.custom_id === "scramble-guess-modal;" + helper.int.id && helper.user.id === (i.member?.user ?? i.user)!.id,
     })
     .catch(() => null);
 
@@ -191,7 +191,7 @@ export async function handleDoubleMode(helper: InteractionHelper) {
   const message = await helper.editReply(generateResponse());
   const collector = helper.client.componentCollector({
     idle: 90_000,
-    filter: (i) => helper.user.id === (i.member?.user || i.user)!.id,
+    filter: (i) => helper.user.id === (i.member?.user ?? i.user)!.id,
     message,
   });
   collector.on("collect", async (int) => {

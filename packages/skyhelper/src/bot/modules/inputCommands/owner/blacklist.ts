@@ -13,7 +13,7 @@ export default {
         content: "ID must only contain Numbers",
       }));
     }
-    const ID = args[1];
+    const ID = args[1]!;
     switch (sub) {
       case "g":
         await blacklist(client, message, ID, "guild");
@@ -22,12 +22,12 @@ export default {
         await removeBlacklist(client, message, ID, "guild");
         break;
       case "u": {
-        const user = await client.api.users.get(args[1]);
+        const user = await client.api.users.get(args[1]!);
         await blacklist(client, message, user.id, "user");
         break;
       }
       case "rmU": {
-        const userR = await client.api.users.get(args[1]);
+        const userR = await client.api.users.get(args[1]!);
         await removeBlacklist(client, message, userR.id, "user");
         break;
       }
@@ -114,8 +114,8 @@ async function getBlacklisted(client: SkyHelper, message: APIMessage) {
   const embed: APIEmbed = {
     author: { name: "Blacklisted Servers" },
     fields: blacklists.map((g) => ({
-      name: g.name || "Hmm",
-      value: `- ID: ${g._id}\n- Reason: ${g.reason}\n- On: ${g?.Date}\n- Type: ${g.type}`,
+      name: g.name ?? "Hmm",
+      value: `- ID: ${g._id}\n- Reason: ${g.reason}\n- On: ${g.Date}\n- Type: ${g.type}`,
     })),
   };
   return await client.api.channels.createMessage(message.channel_id, {

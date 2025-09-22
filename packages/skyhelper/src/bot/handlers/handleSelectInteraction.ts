@@ -36,5 +36,5 @@ export async function handleSkyTimesSelect(interaction: APIMessageComponentSelec
     embed.image = { url: event.infographic.image };
   }
   embed.description = desc;
-  return void helper.reply({ embeds: [embed], flags: 64 });
+  return void (await helper.reply({ embeds: [embed], flags: 64 }));
 }

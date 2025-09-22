@@ -62,7 +62,7 @@ export class Spirits {
     if (data.realm) description.push(this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: data.realm }));
 
     // if seasonal, then the season
-    if (this.isSeasonal(data) && data.season) {
+    if (this.isSeasonal(data)) {
       description.push(
         season_emojis[data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
       );
@@ -90,7 +90,7 @@ export class Spirits {
             !data.ts.eligible
               ? `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
                   SEASON:
-                    Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
+                    (Object.values(seasonsData).find((v) => v.name === data.season)?.icon ?? "") +
                     ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
                 })}`
               : data.ts.returned
@@ -110,7 +110,7 @@ export class Spirits {
       );
     } else {
       let url = data.tree?.image;
-      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
+      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url!;
       if (url) {
         const totalCosts = data
           .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
@@ -122,7 +122,7 @@ export class Spirits {
             thumbnail(url),
             emojis.right_chevron +
               " " +
-              (data.ts?.returned
+              (data.ts.returned
                 ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
                 : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })),
             totalCosts ? `-# ${totalCosts}` : "",
@@ -132,7 +132,7 @@ export class Spirits {
     }
     if ("location" in data) {
       let url = data.location!.image;
-      if (!url!.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
+      if (!url.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
       comp.components.push(
         section(
           thumbnail(url),
@@ -161,7 +161,7 @@ export class Spirits {
 
     if (data.collectibles?.length) {
       components.push(
-        collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)].icon, value, userid),
+        collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)]!.icon, value, userid),
       );
     }
 
@@ -184,12 +184,12 @@ export class Spirits {
    * (Because my lazy ass put it in random order for some spirits)
    * @param dates Areay of visit datas
    */
-  private _sortDates(dates: (string | string[])[]) {
+  private _sortDates(dates: Array<string | string[]>) {
     return dates.sort((a, b) => {
-      const aDate = DateTime.fromFormat((this._isArray(a) ? a[0] : a).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
+      const aDate = DateTime.fromFormat((this._isArray(a) ? a[0]! : a).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
         zone: "America/Los_Angeles",
       }).startOf("day");
-      const bDate = DateTime.fromFormat((this._isArray(b) ? b[0] : b).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
+      const bDate = DateTime.fromFormat((this._isArray(b) ? b[0]! : b).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
         zone: "America/Los_Angeles",
       }).startOf("day");
       if (aDate > bDate) return -1;
@@ -209,7 +209,7 @@ export class Spirits {
    * Formats the spirit's return dates in discord timestamp
    * @param dates
    */
-  private _formatDates(dates: (string | string[])[]) {
+  private _formatDates(dates: Array<string | string[]>) {
     return this._sortDates(dates)
       .map((date) => {
         let index;
@@ -218,7 +218,7 @@ export class Spirits {
         const isArray = this._isArray(date);
 
         // Only first element should have the SV tag (if an array) so use that to get it
-        const formatDate = (isArray ? date[0] : date)
+        const formatDate = (isArray ? date[0]! : date)
           .replace(/\([^)]+\)/g, (match) => {
             index = match.trim().replaceAll("SV", "[SV](https://sky-children-of-the-light.fandom.com/wiki/Returning_Spirits)");
             return "";
@@ -228,7 +228,7 @@ export class Spirits {
 
         // Use the 2nd element in the array as the end date, or add 3 days to the start date
         const dateE = isArray
-          ? DateTime.fromFormat(date[1], "LLLL dd, yyyy", { zone: "America/Los_Angeles" }).endOf("day")
+          ? DateTime.fromFormat(date[1]!, "LLLL dd, yyyy", { zone: "America/Los_Angeles" }).endOf("day")
           : dateM.plus({ days: 3 }).endOf("day");
         return `- ${utils.time(dateM.toJSDate())} - ${utils.time(dateE.toJSDate())} ${index}`;
       })

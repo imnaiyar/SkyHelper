@@ -38,7 +38,7 @@
  * - `NotQuiteBlack`
  * - `Random`
  */
-type ColorResolvable = keyof typeof Colors | "Random" | "Default" | string | number | number[];
+type ColorResolvable = keyof typeof Colors | "Random" | `#${string}` | number | number[];
 /**
  * Resolves a ColorResolvable into a color number.
  * @param  color Color to resolve
@@ -53,7 +53,7 @@ export function resolveColor(color: ColorResolvable) {
     if (/^#?[\da-f]{6}$/i.test(color)) return parseInt(color.replace("#", ""), 16);
     resolvedColor = Colors[color as keyof typeof Colors];
   } else if (Array.isArray(color)) {
-    resolvedColor = (color[0] << 16) + (color[1] << 8) + color[2];
+    resolvedColor = (color[0]! << 16) + (color[1]! << 8) + color[2]!;
   } else {
     resolvedColor = color;
   }

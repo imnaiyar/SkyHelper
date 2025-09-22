@@ -21,6 +21,7 @@ declare global {
 }
 // prettier-ignore
 Array.prototype.random = function() {
+// eslint-disable-next-line
   return this[Math.floor(Math.random() * this.length)];
 };
 type ModeType = "single" | "double";
@@ -62,7 +63,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   public alphabetLength: number | null = null;
 
   /** The english alphabets that has been guessed */
-  private guessedAlphabets: (typeof EnglishAlphabets)[number][] = [];
+  private guessedAlphabets: Array<(typeof EnglishAlphabets)[number]> = [];
 
   /** Whether this game is stopped or not */
   private _stopped = false;
@@ -76,7 +77,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     option: HangmanOptions<T, K>,
     readonly client: SkyHelper,
   ) {
-    if (option.mode) this.mode = option.mode;
+    this.mode = option.mode;
 
     if (this.mode === "single" && option.players.length > 1) throw new Error("Only one player must be provided for single mode");
 
@@ -110,7 +111,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       guessedBy: null,
     }));
 
-    // @ts-expect-error whatever
+    // @ts-expect-error whatever const type
     this.alphabetLength = this.alphabets.filter((alp) => EnglishAlphabets.includes(alp.alphabet.toLowerCase())).length;
     this.currentPlayer = this.players.random();
     if (this.mode === "double") {
@@ -119,27 +120,27 @@ export class Hangman<T extends ModeType, K extends WordType> {
       await this._sendResponse(getHangmanResponse(HangmanResponseCodes.SingleModeStart, this.totalLives));
     }
     await wait(3000);
-    this._collectResponse();
+    this._collectResponse().catch(this.client.logger.error);
     this._listenForStop();
   }
 
   // #region Collect Response
   private async _collectResponse(): Promise<any> {
     if (this._stopped) return;
-    await this._sendResponse(await this._getEmbedResponse());
+    await this._sendResponse(this._getEmbedResponse());
     const res = await this._getCollectorResponse();
-    if (this._stopped) return;
+    if (this._stopped as boolean) return;
     if (res === "Timeout") {
       if (this.mode === "double") this.currentPlayer = this.players.find((p) => p.id !== this.currentPlayer!.id)!;
       if (this.mode === "single") {
         this.remainingLives--;
         if (this.remainingLives <= 0) {
-          this._sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
+          await this._sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
           await wait(2000);
           return this._endGame();
         }
       }
-      this._sendResponse(
+      await this._sendResponse(
         getHangmanResponse(HangmanResponseCodes.Timeout) +
           (this.mode === "double" ? getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer!.id) : ""),
       );
@@ -149,19 +150,19 @@ export class Hangman<T extends ModeType, K extends WordType> {
     switch (validate) {
       case HangmanResponseCodes.GuessedFullWord: {
         this.winner = this.currentPlayer;
-        this._sendResponse(getHangmanResponse(validate, this.winner!.id, this.word));
+        await this._sendResponse(getHangmanResponse(validate, this.winner!.id, this.word));
         await wait(2000);
         return this._endGame();
       }
       case HangmanResponseCodes.GuessSuccess: {
-        this._sendResponse(
+        await this._sendResponse(
           getHangmanResponse(validate) +
             (this.mode === "double" ? " " + getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer!.id) : ""),
         );
 
         if (this.alphabets!.every((a) => a.guessed)) {
           this.winner = this.currentPlayer;
-          this._sendResponse(getHangmanResponse(HangmanResponseCodes.Winner, this.winner!.id, this.word));
+          await this._sendResponse(getHangmanResponse(HangmanResponseCodes.Winner, this.winner!.id, this.word));
           await wait(2000);
           return this._endGame();
         }
@@ -178,14 +179,16 @@ export class Hangman<T extends ModeType, K extends WordType> {
         if (this.mode === "single") {
           this.remainingLives--;
           if (this.remainingLives <= 0) {
-            this._sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
+            await this._sendResponse(getHangmanResponse(HangmanResponseCodes.LivesExhausted, this.word));
             await wait(2000);
             return this._endGame();
           }
         }
 
-        this._sendResponse(getHangmanResponse(validate, res.content));
-        if (this.mode === "double") this._sendResponse(getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer?.id));
+        await this._sendResponse(getHangmanResponse(validate, res.content));
+        if (this.mode === "double") {
+          await this._sendResponse(getHangmanResponse(HangmanResponseCodes.NextUp, this.currentPlayer?.id));
+        }
         await wait(3000);
         return this._collectResponse();
       }
@@ -251,7 +254,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
   }
 
   // #region response embed
-  private async _getEmbedResponse() {
+  private _getEmbedResponse() {
     if (!this.currentPlayer || !this.alphabets) throw new Error(getHangmanResponse(HangmanResponseCodes.NotInitialized));
     let remaininglives: string | null = null;
     if (this.mode === "single") {
@@ -280,7 +283,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       textDisplay(
         `Word: **${this.alphabets
           .map((a) => {
-            if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : `${a.alphabet}`;
+            if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : a.alphabet;
             else return "◼️";
           })
           .join("")}** (${this.alphabetLength!} alphabets excluding special characters)`,
@@ -311,13 +314,13 @@ export class Hangman<T extends ModeType, K extends WordType> {
       textDisplay(`-# SkyHelper`, "### Skygame: Hangman"),
       separator(),
       textDisplay(
-        `### Winner: ${this.winner ? `<@${this.winner.id}>` : "None"} \`(${this.winner?.username || ""})\``,
+        `### Winner: ${this.winner ? `<@${this.winner.id}>` : "None"} \`(${this.winner?.username ?? ""})\``,
         `**Word to guess was**: ${this.word}`,
       ),
       separator(),
       textDisplay("**Stats:**", this._getPlayerStats()),
     );
-    this._sendResponse({ components: [comp], flags: MessageFlags.IsComponentsV2 });
+    await this._sendResponse({ components: [comp], flags: MessageFlags.IsComponentsV2 });
     this.client.gameData.delete(this.channel.id);
   }
 
@@ -353,11 +356,12 @@ export class Hangman<T extends ModeType, K extends WordType> {
     });
     const initiator = this.initiator;
     this._stopCollector.on("collect", async (i) => {
-      if ((i.member?.user || i.user!).id !== initiator.id) {
-        return await this.client.api.interactions.reply(i.id, i.token, {
+      if ((i.member?.user ?? i.user!).id !== initiator.id) {
+        await this.client.api.interactions.reply(i.id, i.token, {
           content: "Only this game's initiator can end the game.",
           flags: 64,
         });
+        return;
       }
       this._stopped = true;
 
@@ -383,12 +387,12 @@ type HangmanOptions<T extends ModeType, K extends WordType> = HangmanOptionsBase
   (T extends "single" ? { totalLives?: number } : {}) &
   (K extends "custom" ? { word: string } : {});
 
-type HangmanWords = {
+type HangmanWords = Array<{
   guessed: boolean;
   alphabet: string;
   position: number;
   guessedBy: APIUser | null;
-}[];
+}>;
 
 interface PlayerStats {
   correctGuesses: number;

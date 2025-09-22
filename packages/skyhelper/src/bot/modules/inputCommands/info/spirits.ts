@@ -13,8 +13,11 @@ export default {
   async interactionRun({ t, helper, options }) {
     await helper.defer({ flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined });
     const value = options.getString("search");
-    if (!value) return void (await handleSpiritList(helper));
-    const data = helper.client.spiritsData[value as keyof typeof helper.client.spiritsData] as SpiritsData;
+    if (!value) {
+      await handleSpiritList(helper);
+      return;
+    }
+    const data = helper.client.spiritsData[value];
 
     if (!data) {
       await helper.editReply({
@@ -66,8 +69,8 @@ async function handleSpiritList(helper: InteractionHelper) {
       const comp = container(
         ...title,
         ...data.flatMap(([key, spirit]) => {
-          const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] || "" : "";
-          const realmIcon = spirit.realm ? realms_emojis[spirit.realm] || "" : "";
+          const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] : "";
+          const realmIcon = spirit.realm ? realms_emojis[spirit.realm] : "";
           let icon = appMojis.filter((e) => e.name.split("_").slice(0, -1).join("_") === key.replaceAll("-", ""));
           if (icon.length === 0) {
             icon = appMojis.filter((e) => e.name.startsWith("ts"));
@@ -84,7 +87,7 @@ async function handleSpiritList(helper: InteractionHelper) {
                 style: 2,
               },
               `${mapped[0]}${mapped[1]} **${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
-              `${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") || ""}`,
+              `${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") ?? ""}`,
             ),
           ];
         }),

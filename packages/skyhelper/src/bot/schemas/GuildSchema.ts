@@ -91,7 +91,6 @@ export { Model as GuildModel };
  * @param guild Particular guild
  */
 export async function getSettings(guild: APIGuild & { clientMember: APIGuildMember }): Promise<GuildSchema> {
-  if (!guild) throw new Error("Guild is undefined");
   if (!guild.id) throw new Error("Guild Id is undefined");
   const cached = cache.get(guild.id);
   if (cached) return cached;

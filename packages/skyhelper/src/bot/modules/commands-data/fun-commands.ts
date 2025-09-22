@@ -27,7 +27,7 @@ export const HUG_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
 };
 
 // #region SkyGame
-const SKYGAME_MODE_OPTION: OverrideLocalizations<APIApplicationCommandStringOption>[] = [
+const SKYGAME_MODE_OPTION: Array<OverrideLocalizations<APIApplicationCommandStringOption>> = [
   {
     type: ApplicationCommandOptionType.String,
     name: "mode",

@@ -61,11 +61,12 @@ export abstract class GameController {
     });
     const initiator = this.initiator;
     this._stopCollector.on("collect", async (i) => {
-      if ((i.member?.user || i.user!).id !== initiator.id) {
-        return await this.client.api.interactions.reply(i.id, i.token, {
+      if ((i.member?.user ?? i.user!).id !== initiator.id) {
+        await this.client.api.interactions.reply(i.id, i.token, {
           content: "Only this game's initiator can end the game.",
           flags: 64,
         });
+        return;
       }
       this._stopped = true;
 
@@ -89,7 +90,7 @@ export class Scrambled extends GameController {
   private currentWord: { original: string; scrambled: string };
 
   /** Total words used in the game */
-  private words: { original: string; scrambled: string }[] = [];
+  private words: Array<{ original: string; scrambled: string }> = [];
 
   /** Current round number (0-based) */
   private currentRound = 0;
@@ -107,14 +108,14 @@ export class Scrambled extends GameController {
   private roundWinner: APIUser | null = null;
 
   constructor(channel: APITextChannel, option: ScrambledRoundsOptions, client: SkyHelper) {
-    super(channel, option.players, option.gameInitiator || null, client);
+    super(channel, option.players, option.gameInitiator ?? null, client);
     this.currentWord = scrambleWord();
     this.words.push(this.currentWord);
     if (option.players.length !== 2) {
       throw new Error("Scrambled game requires exactly two players");
     }
 
-    this.totalRounds = option.maxRounds || 10;
+    this.totalRounds = option.maxRounds ?? 10;
 
     // Initialize player stats
     for (const player of this.players) {
@@ -135,7 +136,7 @@ export class Scrambled extends GameController {
     await wait(3000);
 
     // Start the first round
-    this._startRound();
+    this._startRound().catch(this.client.logger.error);
     this._listenForStop();
   }
 
@@ -154,9 +155,9 @@ export class Scrambled extends GameController {
       ),
     );
 
-    await this._sendResponse(await this._getRoundEmbedResponse());
+    await this._sendResponse(this._getRoundEmbedResponse());
 
-    this._collectRoundResponses();
+    await this._collectRoundResponses();
   }
 
   private async _collectRoundResponses(): Promise<void> {
@@ -172,12 +173,12 @@ export class Scrambled extends GameController {
         timeout: this.timePerRound,
         max: 1,
       })
-      .then((m) => m[0])
+      .then((m) => m[0]!)
       .catch(() => "Timeout");
-    if (this._stopped) return;
+    if (this._stopped as boolean) return;
     if (typeof message === "string") {
       await this._sendResponse(getScrambledResponse(ScrambledResponseCodes.RoundTimeUp, this.currentWord.original));
-      this._advanceRound();
+      await this._advanceRound();
       return;
     }
     const playerId = message.author.id;
@@ -195,7 +196,7 @@ export class Scrambled extends GameController {
       getScrambledResponse(ScrambledResponseCodes.CorrectRoundGuess, message.author.id, this.currentWord.original),
     );
 
-    this._advanceRound();
+    await this._advanceRound();
   }
 
   private async _advanceRound(): Promise<void> {
@@ -204,7 +205,7 @@ export class Scrambled extends GameController {
     this.currentRound++;
 
     // show round results
-    await this._sendResponse(await this._getRoundResultsEmbed());
+    await this._sendResponse(this._getRoundResultsEmbed());
 
     await wait(3000);
 
@@ -218,10 +219,10 @@ export class Scrambled extends GameController {
     this.words.push(this.currentWord);
 
     // Start next round
-    this._startRound();
+    await this._startRound();
   }
 
-  private async _getRoundEmbedResponse(): Promise<RESTPostAPIChannelMessageJSONBody> {
+  private _getRoundEmbedResponse(): RESTPostAPIChannelMessageJSONBody {
     const comp = container(
       section(
         { label: "End Game", style: 4, custom_id: store.serialize(CustomId.SkyGameEndGame, { user: null }), type: 2 },
@@ -241,7 +242,7 @@ export class Scrambled extends GameController {
     return { components: [comp], flags: MessageFlags.IsComponentsV2 };
   }
 
-  private async _getRoundResultsEmbed(): Promise<RESTPostAPIChannelMessageJSONBody> {
+  private _getRoundResultsEmbed(): RESTPostAPIChannelMessageJSONBody {
     const scoreBoard = this.players
       .map((player) => {
         const stats = this.playerStats.get(player.id)!;
@@ -296,12 +297,12 @@ export class Scrambled extends GameController {
       } else if (stats.totalCorrect === highestScore && highestScore > 0) {
         // If tie, determine the winner by who was faster overall
         const otherPlayerId = this.players.find((p) => p.id !== player.id)!.id;
-        const playerTotalTime = stats.rounds.filter((r) => r && r.correct).reduce((sum, r) => sum + (r!.attemptTime || 0), 0);
+        const playerTotalTime = stats.rounds.filter((r) => r?.correct).reduce((sum, r) => sum + (r?.attemptTime ?? 0), 0);
 
         const otherPlayerTotalTime = this.playerStats
           .get(otherPlayerId)!
-          .rounds.filter((r) => r && r.correct)
-          .reduce((sum, r) => sum + (r!.attemptTime || 0), 0);
+          .rounds.filter((r) => r?.correct)
+          .reduce((sum, r) => sum + (r?.attemptTime ?? 0), 0);
 
         if (playerTotalTime < otherPlayerTotalTime) {
           winner = player;
@@ -321,7 +322,7 @@ export class Scrambled extends GameController {
         let roundWinnerText = "No one";
         for (const player of this.players) {
           const playerRound = this.playerStats.get(player.id)!.rounds[i];
-          if (playerRound && playerRound.correct) {
+          if (playerRound?.correct) {
             roundWinnerText = `<@${player.id}>`;
             break;
           }
@@ -368,7 +369,7 @@ interface ScrambledRoundsOptions {
 
 interface PlayerRoundStats {
   totalCorrect: number;
-  rounds: ({ correct: boolean; attemptTime: number | null } | null)[];
+  rounds: Array<{ correct: boolean; attemptTime: number | null } | null>;
 }
 
 export function scrambleWord() {
@@ -384,7 +385,7 @@ export function scrambleWord() {
     // shuffle
     for (let i = letters.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [letters[i], letters[j]] = [letters[j], letters[i]];
+      [letters[i], letters[j]] = [letters[j]!, letters[i]!];
     }
 
     return letters.join("");

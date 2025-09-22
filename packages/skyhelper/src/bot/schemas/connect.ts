@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import logger from "@/handlers/logger";
 import chalk from "chalk";
+// eslint-disable-next-line
 const { custom, error } = logger;
 export async function initializeMongoose(): Promise<mongoose.Connection> {
   console.log(chalk.blueBright("\n\n<------------------------ Connecting --------------------------->\n"));
@@ -8,7 +9,7 @@ export async function initializeMongoose(): Promise<mongoose.Connection> {
 
   try {
     mongoose.set("strictQuery", true);
-    await mongoose.connect(process.env.MONGO_CONNECTION as string);
+    await mongoose.connect(process.env.MONGO_CONNECTION);
 
     custom("Database connection established", "DATABASE");
 

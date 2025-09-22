@@ -21,7 +21,7 @@ export async function reminderSchedules(): Promise<void> {
 
   const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
 
-  const ts = await getTS()!;
+  const ts = await getTS();
 
   const activeGuilds = await getActiveReminders();
 
@@ -29,7 +29,6 @@ export async function reminderSchedules(): Promise<void> {
     const t = getTranslator(guild.language?.value ?? "en-US");
 
     const reminders = guild.reminders;
-    if (!reminders) return;
     for (const key of REMINDERS_KEY) {
       const event = reminders.events[key];
       if (!event || !event.active || !event.webhook) continue;
@@ -41,7 +40,7 @@ export async function reminderSchedules(): Promise<void> {
 
       // Do not check validity for shards-eruption, it is handled separately
       if (key !== "shards-eruption") {
-        const isValid = checkReminderValid(now, details ?? ts, offset ?? 0);
+        const isValid = checkReminderValid(now, details ?? ts!, offset ?? 0);
 
         if (!isValid) continue;
       }
@@ -55,8 +54,8 @@ export async function reminderSchedules(): Promise<void> {
 
         switch (key) {
           case "shards-eruption": {
-            const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as ("red" | "black")[]);
-            const data = getShardReminderResponse(now, t, offset || 0, shard_type);
+            const shard_type = "shard_type" in event ? event.shard_type : (["red", "black"] as Array<"red" | "black">);
+            const data = getShardReminderResponse(now, t, offset ?? 0, shard_type);
             if (!data) continue;
             response = { components: data };
             break;
@@ -66,7 +65,7 @@ export async function reminderSchedules(): Promise<void> {
             response = getTSResponse(ts, t);
             break;
           default: {
-            const data = getResponse(key, t, details, offset || 0);
+            const data = getResponse(key, t, details!, offset ?? 0);
             response = {
               components: [
                 container(
@@ -78,7 +77,7 @@ export async function reminderSchedules(): Promise<void> {
                       })}`,
                   ),
                   separator(),
-                  textDisplay(data as string),
+                  textDisplay(data),
                 ),
               ],
             };

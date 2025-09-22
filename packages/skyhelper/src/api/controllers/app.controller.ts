@@ -63,7 +63,7 @@ export class AppController {
       },
     },
   })
-  async getShardsEmbed(@Query(new ZodValidator(GetShardsParams)) query: z.infer<typeof GetShardsParams>) {
+  getShardsEmbed(@Query(new ZodValidator(GetShardsParams)) query: z.infer<typeof GetShardsParams>) {
     const { date, noBtn, user, locale } = query;
     let shardDate;
     if (date) {

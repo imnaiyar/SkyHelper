@@ -53,7 +53,7 @@ export interface Reminders {
   default_role: string | null;
   events: {
     [k in (typeof REMINDERS_KEY)[number]]: k extends "shards-eruption"
-      ? (ReminderConfig & { shard_type: ("red" | "black")[] }) | null
+      ? (ReminderConfig & { shard_type: Array<"red" | "black"> }) | null
       : EventReminder;
   };
 }

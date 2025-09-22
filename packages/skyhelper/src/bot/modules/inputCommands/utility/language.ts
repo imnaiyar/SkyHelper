@@ -7,7 +7,7 @@ export default {
     const type = options.getString("category", true);
     const sub = options.getSubcommand();
     const { client, t } = helper;
-    const guild = helper.client.guilds.get(helper.int.guild_id || "");
+    const guild = helper.client.guilds.get(helper.int.guild_id ?? "");
     if (type === "server") {
       if (!guild) {
         return void (await helper.reply({
@@ -31,13 +31,11 @@ export default {
       switch (type) {
         case "server": {
           const settings = await client.schemas.getSettings(guild!);
-          if (lang === settings.language?.value) {
+          if (settings.language?.value === lang) {
             return void (await helper.editReply({
               content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_SET", {
                 TYPE: "The server's",
-                LANGUAGE: `${language.name} (${
-                  settings.language?.flag ? settings.language.flag + " " : ""
-                }\`${language.value}\`)`,
+                LANGUAGE: `${language.name} (${settings.language.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
               }),
             }));
           }
@@ -48,7 +46,7 @@ export default {
           return void (await helper.editReply({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS", {
               TYPE: `\`${guild!.name}\``,
-              Language: `${language.name} (${settings.language?.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
+              Language: `${language.name} (${settings.language.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
               LINK: "<https://docs.skyhelper.xyz/pages/translating>",
             }),
           }));
@@ -60,7 +58,7 @@ export default {
               content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_SET", {
                 TYPE: "Your",
                 LANGUAGE: `${language.name} (${
-                  user_settings.language?.flag ? user_settings.language.flag + " " : ""
+                  user_settings.language.flag ? user_settings.language.flag + " " : ""
                 }\`${language.value}\`)`,
               }),
             }));
@@ -72,7 +70,7 @@ export default {
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS", {
               TYPE: `\`${helper.user.username}\``,
               Language: `${language.name} (${
-                user_settings.language?.flag ? user_settings.language.flag + " " : ""
+                user_settings.language.flag ? user_settings.language.flag + " " : ""
               }\`${language.value}\`)`,
               LINK: "<https://crowdin.com/project/skyhelper>",
             }),
@@ -84,37 +82,40 @@ export default {
     if (sub === "remove") {
       const settings = type === "server" ? await client.schemas.getSettings(guild!) : null;
       const user_settings = await client.schemas.getUser(helper.user);
-      const lang = (type === "server" ? settings! : user_settings)["language"];
+      const lang = (type === "server" ? settings! : user_settings).language;
       const formattedLang = lang && `${lang.name} (${lang.flag} ${lang.value})`;
       if (!lang?.value) {
-        return void (await helper.followUp({
+        await helper.followUp({
           content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_NOT_SET", {
             CATEGORY: `\`${type === "server" ? guild!.name : helper.user.username}\``,
           }),
-        }));
+        });
+        return;
       }
       switch (type) {
         case "server": {
           settings!.language = undefined;
           const ts = getTranslator(user_settings.language?.value ?? "en-US");
           await settings!.save();
-          return void (await helper.followUp({
+          await helper.followUp({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS_REMOVED", {
               LANGUAGE: formattedLang,
               CATEGORY: `\`${guild!.name}\``,
             }),
-          }));
+          });
+          return;
         }
         case "user": {
           user_settings.language = undefined;
           const ts = getTranslator(settings?.language?.value ?? "en-US");
           await user_settings.save();
-          return void (await helper.followUp({
+          await helper.followUp({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS_REMOVED", {
               LANGUAGE: formattedLang,
               CATEGORY: `\`${helper.user.username}\``,
             }),
-          }));
+          });
+          return;
         }
       }
     }

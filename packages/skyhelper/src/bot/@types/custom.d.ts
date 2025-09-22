@@ -21,27 +21,27 @@ export interface DailyQuest {
   description?: string;
 
   /* Image guide for the quest (if any) */
-  images: {
+  images?: Array<{
     url: string;
 
     /* Credit for the guide */
     by: string;
     /* Source of the guide */
     source?: string;
-  }[];
+  }>;
 }
 
 export interface SkyGameStatsData {
-  singleMode: {
+  singleMode: Array<{
     id: string;
     username: string;
     gamesPlayed: number;
     gamesWon: number;
-  }[];
-  doubleMode: {
+  }>;
+  doubleMode: Array<{
     id: string;
     username: string;
     gamesPlayed: number;
     gamesWon: number;
-  }[];
+  }>;
 }

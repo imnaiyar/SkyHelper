@@ -7,7 +7,7 @@ import type { APIUser } from "@discordjs/core";
 function getToken(req: Request): UserSession {
   const data = req.headers.authorization as string | null;
 
-  if (data == null || !data.startsWith("Bearer ")) {
+  if (!data?.startsWith("Bearer ")) {
     throw new HttpException("You must login first", HttpStatus.UNAUTHORIZED);
   }
 

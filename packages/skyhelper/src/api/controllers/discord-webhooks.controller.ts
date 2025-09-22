@@ -21,11 +21,10 @@ export class WebhookEventController {
     ) {
       return;
     }
-    if (!body.event.data) return;
     const data = body.event.data;
     const { user } = data;
     const webhook = process.env.GUILD ? this.bot.utils.parseWebhookURL(process.env.GUILD) : undefined;
-    if ("guild" in data && data.guild) this._checkBlacklisted(data.guild.id, user.id);
+    if ("guild" in data && data.guild) await this._checkBlacklisted(data.guild.id, user.id);
     const isDeauthorized = body.event.type === ApplicationWebhookEventType.ApplicationDeauthorized;
     if (!webhook) return;
 
@@ -37,7 +36,7 @@ export class WebhookEventController {
           : "GuildInstall"
         : "Oauth2";
     description += `\n\n**Type:** \`${isDeauthorized ? "Deauthorized" : type}\``;
-    if ("scopes" in data && data.scopes) {
+    if ("scopes" in data) {
       description += `\n**Scopes:** ${data.scopes.map((sc) => `\`${sc}\``).join(" ")}`;
     }
     if ("guild" in data && data.guild) {
@@ -80,7 +79,7 @@ export class WebhookEventController {
     const channel = await this.bot.api.users.createDM(inviterId);
     await this.bot.api.channels
       .createMessage(channel.id, {
-        content: `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.reason || "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
+        content: `You attempted to invite me to a blacklisted server, the server ${guild.name} is blacklisted from inviting me for the reason \`${blacklisted.reason ?? "No reason provided"}\`. For that, I've left the server. If you think this is a mistake, you can appeal by joining our support server [here](${this.bot.config.Support}).`,
       })
       .catch(() => {});
     await this.bot.api.users.leaveGuild(guild.id).catch(() => {});
@@ -94,11 +93,11 @@ export class WebhookEventController {
         },
         {
           name: "Reason",
-          value: blacklisted.reason || "No reason provided",
+          value: blacklisted.reason ?? "No reason provided",
         },
         {
           name: "Blacklisted Date",
-          value: `${blacklisted.Date || "Unknown"}`,
+          value: `${blacklisted.Date ?? "Unknown"}`,
         },
       ],
     };

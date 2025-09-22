@@ -48,7 +48,7 @@ export async function validateInteractions({ command, interaction, options, help
   // Handle command user required permissions
   if (command.userPermissions) {
     if (interaction.guild_id) {
-      if (!client.permUtils(command.userPermissions)) {
+      if (!client.permUtils(interaction.member!.permissions as `${number}`).has(command.userPermissions)) {
         return {
           status: false,
           message: t("errors:NO_PERMS_USER", {
@@ -77,7 +77,7 @@ export async function validateInteractions({ command, interaction, options, help
 
       const botPerms = client.permUtils(interaction.app_permissions as `${number}`);
 
-      if (toCheck && !botPerms.has(command.botPermissions)) {
+      if (!botPerms.has(command.botPermissions)) {
         const missingPerms = client.permUtils(botPerms.bitfield).missing(command.botPermissions);
         return {
           status: false,
@@ -95,7 +95,7 @@ export async function validateInteractions({ command, interaction, options, help
       if (validation.type !== "message") {
         // @ts-expect-error Mismatching between chatinput and context, don't wanna impl a complex solution so just ignore
         const validated = await validation.callback({ interaction, options, t, helper });
-        if (validated.status === false) {
+        if (!validated.status) {
           return {
             status: false,
             message: validated.message,
@@ -105,7 +105,7 @@ export async function validateInteractions({ command, interaction, options, help
     }
   }
   // Check cooldowns
-  if (command?.cooldown && !client.config.OWNER.includes(user.id)) {
+  if (command.cooldown && !client.config.OWNER.includes(user.id)) {
     const { cooldowns } = client;
 
     if (!cooldowns.has(command.name)) {
@@ -117,7 +117,7 @@ export async function validateInteractions({ command, interaction, options, help
     const cooldownAmount = command.cooldown * 1000;
 
     if (timestamps?.has(user.id)) {
-      const expirationTime = (timestamps.get(user.id) as number) + cooldownAmount;
+      const expirationTime = timestamps.get(user.id)! + cooldownAmount;
 
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1000);
@@ -204,12 +204,12 @@ export async function validateMessage({ command, message, args, prefix, flags, c
   // Check if args are valid
   if (
     (command.prefix?.minimumArgs && args.length < command.prefix.minimumArgs) ||
-    (command.prefix?.subcommands && args[0] && !command.prefix.subcommands.find((sub) => sub.trigger.startsWith(args[0])))
+    (command.prefix?.subcommands && args[0] && !command.prefix.subcommands.find((sub) => sub.trigger.startsWith(args[0]!)))
   ) {
     return {
       status: false,
       message: {
-        ...(args.length < (command.prefix.minimumArgs || 0) && {
+        ...(args.length < (command.prefix.minimumArgs ?? 0) && {
           content: t("errors:MINIMUM_ARGS", { LIMIT: command.prefix.minimumArgs }),
         }),
 
@@ -251,7 +251,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
   }
 
   // Check cooldowns
-  if (command?.cooldown && !client.config.OWNER.includes(message.author.id)) {
+  if (command.cooldown && !client.config.OWNER.includes(message.author.id)) {
     const { cooldowns } = client;
 
     if (!cooldowns.has(command.name)) {
@@ -263,7 +263,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
     const cooldownAmount = command.cooldown * 1000;
 
     if (timestamps?.has(message.author.id)) {
-      const expirationTime = (timestamps.get(message.author.id) as number) + cooldownAmount;
+      const expirationTime = timestamps.get(message.author.id)! + cooldownAmount;
 
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1000);
@@ -290,7 +290,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
     const perms = PermissionsUtil.overwriteFor(guild!.clientMember, channel as APITextChannel, client);
     const missing = perms.missing(command.botPermissions);
     if (command.forSubs) {
-      toCheck = command.forSubs.includes(args[0]);
+      toCheck = command.forSubs.includes(args[0]!);
     }
     if (toCheck && !perms.has(command.botPermissions)) {
       return {

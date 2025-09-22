@@ -85,7 +85,6 @@ const guildModel = mongoose.model<GuildSchema>("guild", Schema);
  * await getActiveUpdate("shard")
  */
 export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSchema[]> {
-  if (type !== "shard" && type !== "times") throw new Error('Param "type" must be either "shard" or "times"');
   const query = type === "shard" ? { "autoShard.active": true } : { "autoTimes.active": true };
   const activeGuilds = await guildModel.find(query);
   return activeGuilds;

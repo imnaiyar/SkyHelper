@@ -10,7 +10,7 @@ const commands = await loadCommands();
 const contexts = await loadContextCmd();
 const toRegister: RESTPutAPIApplicationCommandsJSONBody = [];
 
-const rest = new REST().setToken(process.env.TOKEN!);
+const rest = new REST().setToken(process.env.TOKEN);
 
 // Filter slash commands
 commands
@@ -47,14 +47,14 @@ for (const cmd of guildCommands) {
 
   if (!guilds) continue;
   for (const guild of guilds) {
-    const cmds = guildCommandsMap.get(guild) || [];
+    const cmds = guildCommandsMap.get(guild) ?? [];
     cmds.push(parseCommands(cmd));
     guildCommandsMap.set(guild, cmds);
   }
 }
 await Promise.all(
   guildCommandsMap.map(async (cmds, guildID) => {
-    await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID!, guildID), {
+    await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildID), {
       body: cmds,
     });
     logger.custom(`Successfully registered [${cmds.map((c) => c.name).join(", ")}] in ${guildID}`, "GUILD COMMANDS");

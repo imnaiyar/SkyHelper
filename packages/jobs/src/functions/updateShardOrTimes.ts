@@ -21,7 +21,7 @@ const getEmbed = async (
   query: { locale?: string; date?: string; noBtn?: "true" | "false" } = { locale: "en-US" },
 ) => {
   return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(query)}`).then((res) => res.json())) as {
-    components: APIActionRowComponent<APIComponentInMessageActionRow>[];
+    components: Array<APIActionRowComponent<APIComponentInMessageActionRow>>;
   };
 };
 
@@ -66,7 +66,7 @@ const update = async (
   await throttleRequests(data, async (guild) => {
     const event = guild[type];
     if (!event.webhook.id) return;
-    const webhook = new Webhook({ token: event.webhook.token || undefined, id: event.webhook.id });
+    const webhook = new Webhook({ token: event.webhook.token ?? undefined, id: event.webhook.id });
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
     const d = await response(guild.language?.value ?? "en-US");
@@ -78,18 +78,18 @@ const update = async (
           ...d,
           components: [
             { type: 10, content: t("features:shards-embed.CONTENT", { TIME: `<t:${now.toUnixInteger()}:R>` }) },
-            ...(d.components as APIMessageComponent[]),
+            ...d.components!,
           ],
           flags: MessageFlags.IsComponentsV2,
         },
         { thread_id: event.webhook.threadId, retries: 3 },
       )
-      .catch((e) => e);
+      .catch((e) => e as Error);
     // TODO: actually log other errors instead of just ignoring
     if (res instanceof DiscordAPIError && (res.message === "Unknown Message" || res.message === "Unknown Webhook")) {
       if (res.code === 10008) {
         // unknown message
-        deleteWebhookAfterChecks(webhook, guild, [type]);
+        await deleteWebhookAfterChecks(webhook, guild, [type]);
         logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
       } else if (res.code === 10015) {
         logger.error(`Live ${type} disabled for ${guild.data.name}, webhook not found!`);

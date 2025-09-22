@@ -14,7 +14,7 @@ export interface AuthRequest extends Request {
 export class UpdateMiddleware implements NestMiddleware {
   constructor(@Inject("BotClient") private readonly bot: SkyHelper) {}
 
-  async use(req: AuthRequest, _: Response, next: NextFunction) {
+  use(req: AuthRequest, _: Response, next: NextFunction) {
     const isAdmin = checkAdmin(req.user);
     if (!isAdmin) {
       throw new HttpException("Missing access", HttpStatus.UNAUTHORIZED);

@@ -57,7 +57,7 @@ export class UsersController {
     if (!user) return { language: "en-US" };
     const user_settings = await this.bot.schemas.getUser(user);
     return {
-      language: user_settings.language?.value || "en-US",
+      language: user_settings.language?.value ?? "en-US",
     };
   }
 

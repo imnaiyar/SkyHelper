@@ -83,7 +83,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   const collector = client.componentCollector({
     idle: 2 * 60_1000,
     message: msg,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
   });
   const getCollectorResponse = () =>
     getRealmsRow(
@@ -122,7 +122,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
         });
         return;
       case "area-menu":
-        page = parseInt((inter as ComponentInteractionMap[ComponentType.StringSelect]).data.values[0].split("_")[1]) + 1;
+        page = parseInt((inter as ComponentInteractionMap[ComponentType.StringSelect]).data.values[0]!.split("_")[1]!) + 1;
         break;
       default:
         await compoHelper.editReply({ content: t("commands:GUIDES.RESPONSES.INVALID-CHOICE") });
@@ -132,9 +132,9 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
     await compoHelper.editReply(getCollectorResponse());
   });
 
-  collector.on("end", async () => {
+  collector.on("end", () => {
     const res = getCollectorResponse();
-    const comp = res.components[0];
+    const comp = res.components[0]!;
     comp.components.splice(-3, 3, expired_row);
     helper.editReply({ components: [comp] }).catch(() => {});
   });
@@ -163,7 +163,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
 
   const collector = helper.client.componentCollector({
     idle: 2 * 60_000,
-    filter: (i) => (i.member?.user || i.user)!.id === helper.user.id,
+    filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
     message: msg,
   });
 
@@ -184,7 +184,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
         page++;
         break;
       case "area-menu":
-        page = parseInt((inter as ComponentInteractionMap[ComponentType.StringSelect]).data.values[0].split("_")[1]) + 1;
+        page = parseInt((inter as ComponentInteractionMap[ComponentType.StringSelect]).data.values[0]!.split("_")[1]!) + 1;
         break;
     }
 
@@ -192,7 +192,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
   });
   collector.on("end", () => {
     const res = getCollectorResponse();
-    const comp = res.components[0];
+    const comp = res.components[0]!;
     comp.components.splice(-3, 3, expired_row);
     helper.editReply({ components: [comp] }).catch(() => {});
   });
@@ -211,7 +211,7 @@ function getRealmsRow(
   user: string,
   content?: string,
 ) {
-  const embed = data[page - 1];
+  const embed = data[page - 1]!;
 
   const btns: APIActionRowComponent<APIButtonComponent> = {
     type: ComponentType.ActionRow,
@@ -219,7 +219,7 @@ function getRealmsRow(
       {
         type: ComponentType.Button,
         custom_id: Utils.store.serialize(CustomId.RealmsBaseNav, { type: "back", user }),
-        label: `⬅ ${data[page - 2]?.title || data[page - 1].title}`,
+        label: `⬅ ${data[page - 2]?.title ?? data[page - 1]?.title}`,
         disabled: page - 1 === 0,
         style: ButtonStyle.Secondary,
       },
@@ -235,7 +235,7 @@ function getRealmsRow(
       {
         type: ComponentType.Button,
         custom_id: Utils.store.serialize(CustomId.RealmsBaseNav, { type: "forward", user }),
-        label: `${data[page]?.title || data[page - 1].title} ➡`,
+        label: `${data[page]?.title ?? data[page - 1]?.title} ➡`,
         disabled: page - 1 === total,
         style: ButtonStyle.Secondary,
       },

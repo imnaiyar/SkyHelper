@@ -35,7 +35,7 @@ export class InteractionHelper {
     public readonly client: SkyHelper,
   ) {
     this.api = client.api;
-    this.user = int.member?.user || int.user!;
+    this.user = int.member?.user ?? int.user!;
   }
   async initializeT() {
     const userSettings = await this.client.schemas.getUser(this.user);
@@ -75,7 +75,7 @@ export class InteractionHelper {
   }
 
   async followUp(data: ResponseData) {
-    const msg = await this.api.webhooks.execute(this.int.application_id, this.int.token, data);
+    const msg = await this.api.webhooks.execute(this.int.application_id, this.int.token, { ...data, wait: true });
     this.replied = true;
     return msg;
   }
@@ -100,7 +100,7 @@ export class InteractionHelper {
     return interaction.type === InteractionType.ApplicationCommand;
   }
   isChatInput(interaction: APIInteraction): interaction is APIChatInputApplicationCommandInteraction {
-    return interaction.type === InteractionType.ApplicationCommand && interaction.data.type === 1;
+    return interaction.type === InteractionType.ApplicationCommand && interaction.data.type === ApplicationCommandType.ChatInput;
   }
 
   isContextMenu(interaction: APIInteraction): interaction is APIContextMenuInteraction {

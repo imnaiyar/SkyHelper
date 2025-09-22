@@ -20,7 +20,7 @@ export default defineButton({
     const datas = shardsTimeline(date)[currentShard];
     const total = datas.length - 1;
     const getResponse = () => {
-      const data = datas[page];
+      const data = datas[page]!;
       const shardEmbed: APIEmbed = {
         title: "__" + (page + 1).toString() + utils.getSuffix(page + 1) + " Shard__",
         description: `**${DateTime.now().setZone(client.timezone).startOf("day").hasSame(date.startOf("day"), "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd LLLL yyyy")}**`,
@@ -104,7 +104,7 @@ export default defineButton({
       }
     });
 
-    collector.on("end", async () => {
+    collector.on("end", () => {
       helper.deleteReply().catch(() => {});
     });
   },

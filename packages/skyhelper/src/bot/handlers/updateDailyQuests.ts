@@ -22,16 +22,16 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
   if (message.content === "**Daily Quests**" || message.content === "`**Daily Quest**" || /^\*?\*?daily quests?\*?\*? by/i.test(message.content)) return;
   const title =
     message.content
-      ?.replaceAll(/<a?:\w+:\d+>/g, "")
+      .replaceAll(/<a?:\w+:\d+>/g, "")
       .match(titleRegex)?.[0]
       .replaceAll(/[*_~]/g, "")
-      .trim() || "[Quest Title Error]: Unknown";
+      .trim() ?? "[Quest Title Error]: Unknown";
   const credit = message.content.replaceAll(linkRegex, "").trim().match(creditRegex)?.[0].slice(3);
   const source = linkRegex.exec(message.content)?.[0];
   const images = message.attachments.map((attachment) => attachment.url);
   const data = await client.schemas.getDailyQuests();
   const guide: DailyQuest = {
-    title: title!,
+    title: title,
     date: DateTime.now().setZone(client.timezone).startOf("day").toISO()!,
     images: images.map((img) => ({
       url: img,
@@ -50,15 +50,15 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
   data.quests = d;
 
   if (timer) clearTimeout(timer);
-  timer = setTimeout(async () => {
+  timer = setTimeout(() => {
     // ! This is where the reminder will be scheduled and sent
     const today = DateTime.now().setZone(client.timezone).startOf("day");
     // Return if the reminders are already sent, prevent spam in case of some guides added way later
     if (!DateTime.fromISO(data.last_updated).setZone(client.timezone).startOf("day").hasSame(today, "day")) {
-      await dailyQuestRemindersSchedules(client);
+      dailyQuestRemindersSchedules(client).catch(client.logger.error);
     }
     data.last_updated = today.toISO()!;
-    await data.save();
+    data.save().catch(client.logger.error);
   }, 6e5); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
 
@@ -78,10 +78,9 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
         const event = guild.reminders.events.dailies;
         if (!event?.active) return;
         const { webhook } = event;
-        if (!event?.active) return;
-        if (!webhook?.id || !webhook?.token) return;
+        if (!webhook?.id || !webhook.token) return;
 
-        const roleid = event?.role ?? "";
+        const roleid = event.role ?? "";
         const role = roleid && t("features:reminders.ROLE_MENTION", { ROLE: `<@&${roleid}>` });
 
         let response = null;
@@ -90,8 +89,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
         response = {
           components: [...(role ? [textDisplay(`${role}\u200B`)] : []), ...d.components],
         };
-        if (!response) return;
-        client.api.webhooks
+        await client.api.webhooks
           .execute(webhook.id, webhook.token, {
             username: t("features:reminders.DAILY_QUESTS"),
             avatar_url: client.utils.getUserAvatar(client.user),
@@ -102,7 +100,7 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
             flags: MessageFlags.IsComponentsV2,
           })
           .then((msg) => {
-            event.last_messageId = msg?.id || null;
+            event.last_messageId = msg.id || null;
             guild.save().catch((err) => client.logger.error(guild.data.name + " Error saving Last Message Id: ", err));
           })
           .catch((err) => {

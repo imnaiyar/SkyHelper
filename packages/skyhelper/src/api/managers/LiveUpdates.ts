@@ -110,9 +110,9 @@ export class LiveUpdates {
     await data.save();
     return "Success";
   }
-  static async delete(client: BotService, guildId: string): Promise<any> {
+  static async delete(client: BotService, guildId: string): Promise<"Success" | { shards: null; times: null }> {
     const data = await getSettings(client, guildId);
-    if (!data || !data.autoShard.active) return "Success";
+    if (!data?.autoShard.active) return "Success";
 
     const utils = new RemindersUtils(client);
     const webhooksToDelete = new Map<string, { id: string; token: string }>();
@@ -120,11 +120,11 @@ export class LiveUpdates {
     for (const key of ["autoShard", "autoTimes"] as const) {
       const { webhook, messageId } = data[key];
 
-      if (messageId && webhook?.id && webhook?.token) {
+      if (messageId && webhook.id && webhook.token) {
         await client.api.webhooks.deleteMessage(webhook.id, webhook.token, messageId).catch(() => {});
       }
 
-      if (webhook?.id) {
+      if (webhook.id) {
         webhooksToDelete.set(webhook.id, webhook as { id: string; token: string });
       }
       Object.assign(data[key], {

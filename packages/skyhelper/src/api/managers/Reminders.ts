@@ -17,9 +17,9 @@ import type { GuildSchema, ReminderConfig } from "@/types/schemas";
 
 const formatReminders = (r: GuildSchema["reminders"]) => {
   const obj = Object.entries(r.events).reduce((acc, [key, value]) => {
-    // @ts-expect-error well
+    // @ts-expect-error well well keeeys
     acc[key as (typeof REMINDERS_KEY)[number]] = {
-      active: value?.active || false,
+      active: value?.active ?? false,
       channelId: value?.webhook?.channelId ?? null,
       role: value?.role ?? null,
       offset: value?.offset ?? null,
@@ -52,7 +52,7 @@ export class Reminders {
       if (!value.active) {
         if (event?.webhook) webhooksToDelete.add(event.webhook);
 
-        settings.reminders.events[key as (typeof REMINDERS_KEY)[number]] = null;
+        settings.reminders.events[key] = null;
 
         continue;
       }
@@ -89,7 +89,7 @@ export class Reminders {
         webhooksToDelete.add(event.webhook);
       }
 
-      settings.reminders.events[key]!.webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
+      settings.reminders.events[key].webhook = { id: wb.id, token: wb.token, channelId: value.channelId };
     }
 
     const isAnyActive = RemindersUtils.checkActive(settings);

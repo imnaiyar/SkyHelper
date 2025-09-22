@@ -8,7 +8,8 @@ import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { MessageFlags, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
 import { container, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
-const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res));
+const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res) as Record<string, any>);
+
 export default {
   async interactionRun({ helper, options }) {
     const sub = options.getSubcommand();
@@ -35,7 +36,7 @@ export default {
     if (focused.name !== "timezone") return;
     const timezones = Intl.supportedValuesOf("timeZone");
     timezones.push("Asia/Kolkata");
-    helper.respond({
+    await helper.respond({
       choices: timezones
         .filter((tz) => tz.toLowerCase().includes((focused.value as string).toLowerCase()))
         .map((tz) => ({ name: tz === "America/Los_Angeles" ? `${tz} (default)` : tz, value: tz }))
@@ -52,7 +53,8 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
   const appl = await client.api.applications.getCurrent();
   let desc = "";
   desc += `<:servers:1243977429542764636> ${t("common:bot.TOTAL_SERVER")}: ${guilds}\n`;
-  desc += t("common:bot.TOTAL_AUTHORIZED") + ": " + appl.approximate_user_install_count + "\n";
+
+  desc += t("common:bot.TOTAL_AUTHORIZED") + ": " + appl.approximate_user_install_count! + "\n";
   desc += `<:users:1243977425725952161> ${t("common:bot.TOTAL_USERS")}: ${users}\n`;
   desc += `<a:uptime:1228956558113771580> ${t("common:bot.PING")}: ${client.ping} ms\n`;
   desc += `<:latency:1243977421812924426> ${t("common:bot.LATENCY")}: ${time - client.utils.createdTimeStamp(helper.int.id)} ms\n`;
@@ -66,7 +68,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
     ),
     separator(),
   );
-  const guild = client.guilds.get(helper.int.guild_id || "");
+  const guild = client.guilds.get(helper.int.guild_id ?? "");
   if (guild) {
     const settings = await client.schemas.getSettings(guild);
     component.components.push(
@@ -80,7 +82,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
 
   component.components.push(
     textDisplay(
-      `**${t("common:bot.USER_SETTINGS")} (\`${helper.user.global_name || helper.user.username}\`)**`,
+      `**${t("common:bot.USER_SETTINGS")} (\`${helper.user.global_name ?? helper.user.username}\`)**`,
       `**${t("common:bot.LANGUAGE")}**: ${user_settings.language?.value ? `${user_settings.language.name} (${user_settings.language.flag} \`${user_settings.language.value}\`)` : "English (🇺🇸 `en-US`)(default)"}`,
     ),
     ...(client.config.OWNER.includes(helper.user.id) ? [separator(), textDisplay("**Process Info**", getProcessInfo())] : []),
@@ -116,8 +118,8 @@ function timeformat(timeInSeconds: number) {
   return ["d", "h", "m", "s"]
     .map((v, i) => {
       const value = [86400, 3600, 60, 1];
-      const time = Math.floor(timeInSeconds / value[i]);
-      timeInSeconds %= value[i];
+      const time = Math.floor(timeInSeconds / value[i]!);
+      timeInSeconds %= value[i]!;
       return time ? `${time}${v}` : "";
     })
     .join(" ");

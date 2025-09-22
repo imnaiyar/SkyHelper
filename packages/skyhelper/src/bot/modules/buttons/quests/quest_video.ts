@@ -18,12 +18,12 @@ export default defineButton({
     if (!isValid || !checkQuestButtonValidToday(date)) {
       return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
     }
-    let quest_title = `${d.title}`;
-    if (d.images?.[0].source) quest_title = `[${quest_title}](${d.images?.[0].source})`;
+    let quest_title = d.title;
+    if (d.images?.[0]?.source) quest_title = `[${quest_title}](${d.images[0].source})`;
     const comp = container(
-      textDisplay(`### ${quest_title}\n-# © ${d.images?.[0].by || "Unknown"}`),
+      textDisplay(`### ${quest_title}\n-# © ${d.images?.[0]?.by ?? "Unknown"}`),
       separator(),
-      mediaGallery(mediaGalleryItem(d.images[0].url, { spoiler: true, description: d.title })),
+      mediaGallery(mediaGalleryItem(d.images![0]!.url, { spoiler: true, description: d.title })),
     );
 
     await helper.editReply({ components: [comp], flags: MessageFlags.IsComponentsV2 });

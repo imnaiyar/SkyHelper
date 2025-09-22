@@ -19,6 +19,7 @@
     "noImplicitAny": true,
     "alwaysStrict": true,
     "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
