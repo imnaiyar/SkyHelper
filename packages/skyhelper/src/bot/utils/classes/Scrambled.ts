@@ -136,7 +136,7 @@ export class Scrambled extends GameController {
     await wait(3000);
 
     // Start the first round
-    this._startRound();
+    this._startRound().catch(this.client.logger.error);
     this._listenForStop();
   }
 
@@ -155,9 +155,9 @@ export class Scrambled extends GameController {
       ),
     );
 
-    await this._sendResponse(await this._getRoundEmbedResponse());
+    await this._sendResponse(this._getRoundEmbedResponse());
 
-    this._collectRoundResponses();
+    await this._collectRoundResponses();
   }
 
   private async _collectRoundResponses(): Promise<void> {
@@ -175,10 +175,10 @@ export class Scrambled extends GameController {
       })
       .then((m) => m[0])
       .catch(() => "Timeout");
-    if (this._stopped) return;
+    if (this._stopped as boolean) return;
     if (typeof message === "string") {
       await this._sendResponse(getScrambledResponse(ScrambledResponseCodes.RoundTimeUp, this.currentWord.original));
-      this._advanceRound();
+      await this._advanceRound();
       return;
     }
     const playerId = message.author.id;
@@ -196,7 +196,7 @@ export class Scrambled extends GameController {
       getScrambledResponse(ScrambledResponseCodes.CorrectRoundGuess, message.author.id, this.currentWord.original),
     );
 
-    this._advanceRound();
+    await this._advanceRound();
   }
 
   private async _advanceRound(): Promise<void> {
@@ -205,7 +205,7 @@ export class Scrambled extends GameController {
     this.currentRound++;
 
     // show round results
-    await this._sendResponse(await this._getRoundResultsEmbed());
+    await this._sendResponse(this._getRoundResultsEmbed());
 
     await wait(3000);
 
@@ -219,10 +219,10 @@ export class Scrambled extends GameController {
     this.words.push(this.currentWord);
 
     // Start next round
-    this._startRound();
+    await this._startRound();
   }
 
-  private async _getRoundEmbedResponse(): Promise<RESTPostAPIChannelMessageJSONBody> {
+  private _getRoundEmbedResponse(): RESTPostAPIChannelMessageJSONBody {
     const comp = container(
       section(
         { label: "End Game", style: 4, custom_id: store.serialize(CustomId.SkyGameEndGame, { user: null }), type: 2 },
@@ -242,7 +242,7 @@ export class Scrambled extends GameController {
     return { components: [comp], flags: MessageFlags.IsComponentsV2 };
   }
 
-  private async _getRoundResultsEmbed(): Promise<RESTPostAPIChannelMessageJSONBody> {
+  private _getRoundResultsEmbed(): RESTPostAPIChannelMessageJSONBody {
     const scoreBoard = this.players
       .map((player) => {
         const stats = this.playerStats.get(player.id)!;

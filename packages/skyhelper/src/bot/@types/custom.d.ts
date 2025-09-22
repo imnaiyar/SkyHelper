@@ -21,7 +21,7 @@ export interface DailyQuest {
   description?: string;
 
   /* Image guide for the quest (if any) */
-  images: Array<{
+  images?: Array<{
     url: string;
 
     /* Credit for the guide */

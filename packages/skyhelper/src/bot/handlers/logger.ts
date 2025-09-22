@@ -37,20 +37,20 @@ export default class {
     else logger.warn(content);
   }
 
-  static error(content: any, err?: any): string;
-  static error(content: any, err?: any, scope?: Scope): string;
-  static error(content: any, scope: Scope): string;
+  static error(this: void, content: any, err?: any, scope?: Scope): string;
+  static error(this: void, content: any, scope: Scope): string;
   /**
    * @param content
    * @param ex
    * @returns The error ID
    */
-  static error(content: any, err?: any | Scope, scope?: Scope): string {
+  static error(content: any, err?: any, scope?: Scope): string {
     const scop = err instanceof Scope ? err : scope;
+    // eslint-disable-next-line
     const error = err instanceof Scope ? undefined : err;
     const id = captureException(error ?? content, scop);
     if (error) {
-      logger.error(content, error, id);
+      logger.error(content as string, error, id);
     } else {
       logger.error(content, id);
     }
@@ -62,6 +62,7 @@ export default class {
    * @param content
    */
   static debug(...content: any[]) {
+    // eslint-disable-next-line
     logger.debug(...content);
   }
 

@@ -47,7 +47,7 @@ export function buildShardEmbed(
   components: APIMessageTopLevelComponent[];
 } {
   const { currentShard, currentRealm } = utils.shardsIndex(date);
-  const info = shardsInfo[currentRealm][currentShard];
+  const info = shardsInfo[currentRealm]![currentShard]!;
   const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
   const status = utils.getStatus(date);
@@ -162,16 +162,16 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
   if (!tsData) {
     tsDesc = "Unknown!";
   } else {
-    const spirit: SpiritsData = client.spiritsData[tsData.value!];
-    const emote = spirit?.expression?.icon ?? "❓";
+    const spirit: SpiritsData = client.spiritsData[tsData.value!]!;
+    const emote = spirit.expression?.icon ?? "❓";
     // TODO: update tree emojis from localization in this for prod
     const strVisiting = t("features:times-embed.TS_VISITING", {
-      TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
+      TS_NAME: `${emote} ${spirit.name || t("features:times-embed.TS_UPDATED")}`,
       DATE: Utils.time(tsData.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
       DURATION: tsData.duration,
     });
     const strExpected = t("features:times-embed.TS_EXPECTED", {
-      TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UNKNOWN")}`,
+      TS_NAME: `${emote} ${spirit.name || t("features:times-embed.TS_UNKNOWN")}`,
       DATE: Utils.time(tsData.nextVisit.toUnixInteger(), "F"),
       DURATION: tsData.duration,
     });
@@ -196,7 +196,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     let desc = `${
       i === 0 ? emojis.tree_top : i === data.length - 1 ? emojis.tree_end : emojis.tree_middle
       // @ts-expect-error can't properly resolve `k`
-    }\`${t(`features:times-embed.EVENTS.${k.toString().toUpperCase()}`)}:\` `;
+    }\`${t(`features:times-embed.EVENTS.${k.toUpperCase()}`)}:\` `;
     const nextTime = `<t:${status.nextTime.toUnixInteger()}:t> - <t:${status.nextTime.toUnixInteger()}:R>`;
     if (status.active) {
       desc += t("features:times-embed.ACTIVE", {
@@ -236,7 +236,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
 }
 
 export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof getTranslator>) {
-  const { quests, rotating_candles } = data;
+  const { quests, seasonal_candles } = data;
   const total = quests.length;
   const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const nowFormatted = now.toFormat("dd-MM-yyyy");
@@ -247,9 +247,9 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof ge
   for (const [index, quest] of quests.entries()) {
     let quest_title = quest.title;
 
-    if (quest.images?.[0].source) quest_title = `[${quest_title}](${quest.images?.[0].source})`;
+    if (quest.images?.[0]?.source) quest_title = `[${quest_title}](${quest.images[0].source})`;
     if (quest.images?.length) {
-      const ext = quest.images[0].url.split("?")[0].split(".").pop();
+      const ext = quest.images[0]?.url.split("?")[0]?.split(".").pop();
       const isVideo = ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext);
       component.components.push(
         section(
@@ -260,12 +260,12 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof ge
                 type: 2,
                 style: 2,
               }
-            : thumbnail(quest.images[0].url, quest.title, true),
-          `${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`,
+            : thumbnail(quest.images[0]!.url, quest.title, true),
+          `${quest_title}\n-# © ${quest.images[0]!.by || "Unknown"}`,
         ),
       );
     } else {
-      component.components.push(textDisplay(`${quest_title}\n-# © ${quest.images?.[0].by || "Unknown"}`));
+      component.components.push(textDisplay(`${quest_title}\n-# © ${quest.images?.[0]?.by ?? "Unknown"}`));
     }
   }
   const disabledSe =
@@ -291,7 +291,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof ge
     type: ComponentType.ActionRow,
     components: [rotatingBtn],
   };
-  if (rotating_candles) row.components.push(seasonalBtn);
+  if (seasonal_candles) row.components.push(seasonalBtn);
   component.components.push(separator(true, 1), row);
   return { components: [component] };
 }
@@ -322,7 +322,7 @@ export function buildCalendarResponse(
   const start = index * 5;
   const end = start + 5;
   const toDisplay = dates.slice(start, end);
-  const title = `${toDisplay[0].toFormat("DD")} - ${toDisplay[toDisplay.length - 1].toFormat("DD")}`;
+  const title = `${toDisplay[0]!.toFormat("DD")} - ${toDisplay[toDisplay.length - 1]!.toFormat("DD")}`;
   const navBtn: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
     components: [
@@ -357,7 +357,7 @@ export function buildCalendarResponse(
       const { currentRealm, currentShard } = utils.shardsIndex(d);
       const timelines = shardsTimeline(d)[currentShard];
       const noShard = utils.getStatus(d);
-      const info = shardsInfo[currentRealm][currentShard];
+      const info = shardsInfo[currentRealm]![currentShard]!;
       let desc = `**${
         d.hasSame(now, "day")
           ? client.utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`

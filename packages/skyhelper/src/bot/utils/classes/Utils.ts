@@ -30,7 +30,7 @@ export default class {
    * @param id - The ID to resolve.
    * @returns The creation date of the ID.
    */
-  static createdAt<T extends IdResolvalble>(id: T): Date {
+  static createdAt(id: IdResolvalble): Date {
     const relovedId = this.resolveId(id);
     return new Date(this.getTimestampFromSnowflake(relovedId));
   }
@@ -41,7 +41,7 @@ export default class {
    * @param id - The ID to resolve.
    * @returns The creation timestamp of the ID.
    */
-  static createdTimeStamp<T extends IdResolvalble>(id: T): number {
+  static createdTimeStamp(id: IdResolvalble): number {
     const relovedId = this.resolveId(id);
     return this.getTimestampFromSnowflake(relovedId);
   }
@@ -52,7 +52,7 @@ export default class {
    * @param id - The ID to resolve.
    * @returns The resolved ID as a string.
    */
-  static resolveId<T extends IdResolvalble>(id: T): string {
+  static resolveId(id: IdResolvalble): string {
     let resolvedId;
     if (typeof id === "string") resolvedId = id;
     else if (typeof id === "object" && "id" in id) resolvedId = id.id;
@@ -179,7 +179,7 @@ export default class {
     int: APIModalSubmitInteraction,
     customId: string,
     type?: Type,
-  ): Extract<ModalSubmitComponent, { type: Type }> {
+  ): Extract<ModalSubmitComponent, { type: Type }> | undefined {
     const components = int.data.components.reduce<ModalSubmitComponent[]>((acc, label) => {
       if ("components" in label) return acc.concat(label.components);
       if ("component" in label) return acc.concat(label.component);
@@ -189,7 +189,7 @@ export default class {
     if (type && comp?.type !== type) {
       throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
     }
-    return comp as Extract<ModalSubmitComponent, { type: Type }>;
+    return comp as Extract<ModalSubmitComponent, { type: Type }> | undefined;
   }
   static getTextInput(
     interaction: APIModalSubmitInteraction,

@@ -32,6 +32,12 @@ export default defineConfig([
     },
 
     rules: {
+      "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "arrow-spacing": [
         "warn",

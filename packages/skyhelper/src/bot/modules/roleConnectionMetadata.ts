@@ -44,4 +44,4 @@ export async function registerMetadata() {
   console.log("Successfuly register connection metadata: ", d);
 }
 
-registerMetadata();
+registerMetadata().catch(console.error);

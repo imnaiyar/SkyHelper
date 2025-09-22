@@ -1,19 +1,14 @@
-import type {
-  APIActionRowComponent,
-  APIComponentInMessageActionRow,
-  APIMessage,
-  APIMessageComponent,
-  InteractionType,
-  RESTPostAPIChannelMessageJSONBody,
+import {
+  ComponentType,
+  type APIActionRowComponent,
+  type APIComponentInMessageActionRow,
+  type APIMessage,
+  type APIMessageComponent,
+  type RESTPostAPIChannelMessageJSONBody,
 } from "discord-api-types/v10";
-import { store } from "./customId-store.js";
+import { CustomId, store } from "./customId-store.js";
 import type { InteractionHelper } from "./classes/InteractionUtil.js";
 import type { InteractionCollector } from "./classes/Collector.js";
-// Replicate "lodash.get" function
-
-const _get = (obj: any, _path: string) => {
-  return _path.split(".").reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
-};
 
 interface PaginatorOptions {
   /**
@@ -82,6 +77,8 @@ interface PaginatorExtraParams {
    */
   total_page: number;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export async function paginate<U, T extends U[]>(
   helper: InteractionHelper,
   data: T,
@@ -138,9 +135,9 @@ export async function paginate<U, T extends U[]>(
 
   collector.on("collect", async (interaction) => {
     const { id, data: d } = store.deserialize(interaction.data.custom_id);
-    if (id !== 19) return;
+    if (id !== CustomId.Default) return;
 
-    if (!["nav_next", "xxyyzzkkll", "start", "end"].includes(d.data!)) return; // check for data here so that idle state can be reset even for other interaction
+    if (!["nav_next", "xxyyzzkkll", "start", "end"].includes(String(d.data))) return; // check for data here so that idle state can be reset even for other interaction
     switch (d.data) {
       case "start":
         page = 0;
@@ -181,7 +178,7 @@ export async function paginate<U, T extends U[]>(
   // Recursively search for a row component with id: 1
   function findRowWithId(components: APIMessageComponent[]): APIActionRowComponent<APIComponentInMessageActionRow> | undefined {
     for (const comp of components) {
-      if (comp.type === 1 && comp.id === 57) return comp;
+      if (comp.type === ComponentType.ActionRow && comp.id === 57) return comp;
       if ("components" in comp) {
         const found = findRowWithId(comp.components);
         if (found) return found;

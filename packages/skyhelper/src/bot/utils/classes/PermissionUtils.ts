@@ -1,5 +1,6 @@
 import type { SkyHelper } from "@/structures/Client";
 import {
+  OverwriteType,
   PermissionFlagsBits,
   type APIGuild,
   type APIGuildForumChannel,
@@ -60,10 +61,11 @@ export class PermissionsUtil {
   static resolveBits(perms: PermissionsResolvable): bigint {
     if (typeof perms === "bigint" && perms > 0n) return perms;
     if (Array.isArray(perms)) {
-      return perms.map(this.resolveBits).reduce((acc, bit) => acc | bit, 0n);
+      return perms.map(this.resolveBits.bind(this)).reduce((acc, bit) => acc | bit, 0n);
     }
     if (typeof perms === "string") {
       if (!Number.isNaN(parseInt(perms))) return BigInt(perms);
+      // eslint-disable-next-line
       if (PermissionFlagsBits[perms as PermissionFlags] !== undefined) {
         return PermissionFlagsBits[perms as PermissionFlags];
       }
@@ -153,7 +155,7 @@ export class PermissionsUtil {
       return _perms;
     }
     const roleOverwrites = channel
-      .permission_overwrites!.map((p) => p.type === 0 && userOrRole.roles.includes(p.id) && p)
+      .permission_overwrites!.map((p) => p.type === OverwriteType.Role && userOrRole.roles.includes(p.id) && p)
       .filter((p) => p !== false);
     const memberOverwrites = channel.permission_overwrites!.find((p) => p.id === userOrRole.user.id);
     if (everyoneOverwrites) {

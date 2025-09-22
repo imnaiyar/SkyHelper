@@ -77,7 +77,7 @@ export async function validateInteractions({ command, interaction, options, help
 
       const botPerms = client.permUtils(interaction.app_permissions as `${number}`);
 
-      if (toCheck && !botPerms.has(command.botPermissions)) {
+      if (!botPerms.has(command.botPermissions)) {
         const missingPerms = client.permUtils(botPerms.bitfield).missing(command.botPermissions);
         return {
           status: false,
@@ -105,7 +105,7 @@ export async function validateInteractions({ command, interaction, options, help
     }
   }
   // Check cooldowns
-  if (command?.cooldown && !client.config.OWNER.includes(user.id)) {
+  if (command.cooldown && !client.config.OWNER.includes(user.id)) {
     const { cooldowns } = client;
 
     if (!cooldowns.has(command.name)) {
@@ -251,7 +251,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
   }
 
   // Check cooldowns
-  if (command?.cooldown && !client.config.OWNER.includes(message.author.id)) {
+  if (command.cooldown && !client.config.OWNER.includes(message.author.id)) {
     const { cooldowns } = client;
 
     if (!cooldowns.has(command.name)) {

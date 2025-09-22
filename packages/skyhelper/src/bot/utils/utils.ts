@@ -8,7 +8,6 @@ export async function updateUserGameStats(
   won?: boolean,
 ) {
   const userSchema = await getUser(user);
-  if (!userSchema) return;
 
   userSchema[game] ??= { singleMode: { gamesPlayed: 0, gamesWon: 0 }, doubleMode: { gamesPlayed: 0, gamesWon: 0 } };
 

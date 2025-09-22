@@ -62,7 +62,7 @@ export class Spirits {
     if (data.realm) description.push(this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: data.realm }));
 
     // if seasonal, then the season
-    if (this.isSeasonal(data) && data.season) {
+    if (this.isSeasonal(data)) {
       description.push(
         season_emojis[data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
       );
@@ -90,7 +90,7 @@ export class Spirits {
             !data.ts.eligible
               ? `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
                   SEASON:
-                    Object.values(seasonsData).find((v) => v.name === data.season)?.icon +
+                    (Object.values(seasonsData).find((v) => v.name === data.season)?.icon ?? "") +
                     ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
                 })}`
               : data.ts.returned
@@ -110,7 +110,7 @@ export class Spirits {
       );
     } else {
       let url = data.tree?.image;
-      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url;
+      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url!;
       if (url) {
         const totalCosts = data
           .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
@@ -122,7 +122,7 @@ export class Spirits {
             thumbnail(url),
             emojis.right_chevron +
               " " +
-              (data.ts?.returned
+              (data.ts.returned
                 ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
                 : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })),
             totalCosts ? `-# ${totalCosts}` : "",

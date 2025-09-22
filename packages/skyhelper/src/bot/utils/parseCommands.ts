@@ -4,6 +4,7 @@ import { loadLocalization } from "./loaders.js";
 import {
   PermissionFlagsBits,
   type APIApplicationCommandOption,
+  type APIApplicationCommandOptionChoice,
   type RESTPostAPIApplicationCommandsJSONBody,
 } from "@discordjs/core";
 import type { OverrideLocalizations } from "@/types/utils";
@@ -75,7 +76,6 @@ function _parseOptions(options: OverrideLocalizations<Required<RESTPostAPIApplic
       const cChoices = [];
 
       for (const ch of option.choices) {
-        // @ts-expect-error Same reasoning as above
         const choice: APIApplicationCommandOptionChoice = { ...ch };
 
         if (ch.name_localizations) {
@@ -87,12 +87,13 @@ function _parseOptions(options: OverrideLocalizations<Required<RESTPostAPIApplic
       }
 
       // override the choices
+      // @ts-expect-error Same reasoning
       option.choices = cChoices;
     }
 
-    // @ts-expect-error Same reasoning
     // Recursively map the options, if it exists
-    if ("options" in option && option.options) option.options = _parseOptions(op.options);
+    // @ts-expect-error Same reasoning
+    if ("options" in op && "options" in option) option.options = _parseOptions(op.options);
 
     cOptions.push(option);
   }
