@@ -23,7 +23,7 @@ export class LeaderboardCard {
     this.abbreviateNumber = false;
     this.opacity = 0;
     this.scoreMessage = "";
-    this.colors = options?.colors || {
+    this.colors = options?.colors ?? {
       box: "#212121",
       username: "#ffffff",
       score: "#ffffff",

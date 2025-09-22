@@ -133,7 +133,7 @@ export class ShardsUtil {
    */
   static getNextShard(
     date: DateTime,
-    shardType?: ("black" | "red")[],
+    shardType?: Array<"black" | "red">,
   ): null | { index: number; start: DateTime; end: DateTime; duration: string; info: ShardInfo } {
     const { currentRealm, currentShard } = this.shardsIndex(date);
     const info = shardsInfo[currentRealm][currentShard];
@@ -161,7 +161,7 @@ export class ShardsUtil {
    * @param shardType The type of shard to get the next occuring shard for
    * @returns an upcoming shard relative from now
    */
-  static getNextShardFromNow(shardType?: ("black" | "red")[]) {
+  static getNextShardFromNow(shardType?: Array<"black" | "red">) {
     let present = DateTime.now().setZone("America/Los_Angeles");
     let nextShard = this.getNextShard(present, shardType);
     while (!nextShard) {

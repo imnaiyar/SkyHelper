@@ -47,7 +47,7 @@ class Webhook {
     { thread_id, retries }: WebhookExtraOptions = { retries: 3 },
   ): Promise<APIMessage> {
     try {
-      if (!this.token) this.token = (await this.getWebhook(this.id)).token;
+      this.token ??= (await this.getWebhook(this.id)).token;
       const query = makeURLSearchParams({ wait: true, thread_id });
       return api.post(Routes.webhook(this.id, this.token), { body: { ...options }, query }) as Promise<APIMessage>;
     } catch (err: any) {
@@ -72,7 +72,7 @@ class Webhook {
     { thread_id, retries }: WebhookExtraOptions = { retries: 3 },
   ): Promise<APIMessage> {
     try {
-      if (!this.token) this.token = (await this.getWebhook(this.id)).token!;
+      this.token ??= (await this.getWebhook(this.id)).token!;
       if (!messageId) throw new Error("Yout must provide message id to edit");
       const query = makeURLSearchParams({ thread_id });
 
@@ -96,7 +96,7 @@ class Webhook {
    * @returns
    */
   async deleteMessage(messageId: string, thread_id?: string) {
-    if (!this.token) this.token = (await this.getWebhook(this.id)).token!;
+    this.token ??= (await this.getWebhook(this.id)).token!;
     if (!messageId) throw new Error("Yout must provide message id to delete");
     const query = makeURLSearchParams({ thread_id });
     return await api.delete(Routes.webhookMessage(this.id, this.token, messageId), { query });

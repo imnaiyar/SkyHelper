@@ -17,10 +17,10 @@ export class GameWinnerCard {
     readonly clientAvatar: string,
   ) {
     if ("user" in winner) {
-      this.name = winner.nick || winner.user?.global_name || winner?.user.username;
+      this.name = winner.nick ?? winner.user?.global_name ?? winner?.user.username;
       this.thumbnail = getUserAvatar(winner.user);
     } else {
-      this.name = winner?.global_name || winner?.username;
+      this.name = winner?.global_name ?? winner?.username;
       this.thumbnail = getUserAvatar(winner);
     }
     this.points = wins;

@@ -35,7 +35,7 @@ export function getResponse(
         //  if this includes any other events that also occurs on specific days, rethink this approach
         // possibly include previous occurrence in details accounting for occurrence day
         nextTime.minus({
-          minutes: event.interval || 0,
+          minutes: event.interval ?? 0,
         })
       : nextTime;
   let between: string | null = null;
@@ -95,7 +95,7 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
   if (ts.value) {
     const spirit: SpiritsData = spiritsData[ts.value as keyof typeof spiritsData];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
-    const emote = spirit.expression?.icon || "<:spiritIcon:1206501060303130664>";
+    const emote = spirit.expression?.icon ?? "<:spiritIcon:1206501060303130664>";
     const description = ts.visiting
       ? t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING", {
           SPIRIT: "↪",
@@ -107,7 +107,7 @@ export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTra
           DATE: `<t:${ts.nextVisit.toUnixInteger()}:F>`,
           DURATION: ts.duration,
         });
-    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${spirit.name}${spirit.extra || ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
+    const headerContent = `-# ${t("commands:TRAVELING-SPIRIT.RESPONSES.EMBED_AUTHOR", { INDEX: ts.index })}\n### [${emote} ${spirit.name}${spirit.extra ?? ""}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})\n${description}`;
 
     let lctn_link = spirit.location!.image;
     if (!lctn_link.startsWith("https://")) lctn_link = "https://cdn.imnaiyar.site/" + lctn_link;
