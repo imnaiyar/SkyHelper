@@ -132,7 +132,7 @@ export class Spirits {
     }
     if ("location" in data) {
       let url = data.location!.image;
-      if (!url!.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
+      if (!url.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
       comp.components.push(
         section(
           thumbnail(url),

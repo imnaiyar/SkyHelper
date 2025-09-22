@@ -94,7 +94,7 @@ export async function loadButtons() {
       added++;
     } catch (err) {
       failed += 1;
-      logger.error(`${filename}`, err);
+      logger.error(filename, err);
     }
   }
   logger.custom(`Loaded ${added} buttons. Failed ${failed}`, "Buttons");

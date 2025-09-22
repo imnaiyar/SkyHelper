@@ -107,7 +107,7 @@ export default defineButton({
       filter: (i) =>
         ["spirit-collectibles-select", "collectibles-back"].includes(
           // @ts-expect-error data is present but i dont wanna do check ll
-          helper.client.utils.store.deserialize(i.data.custom_id)!.data.data,
+          helper.client.utils.store.deserialize(i.data.custom_id).data.data,
         ) && (i.member?.user ?? i.user)!.id === user.id,
       message,
       idle: 60_000,

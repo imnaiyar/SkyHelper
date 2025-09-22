@@ -112,7 +112,7 @@ async function skygamePrecheck(helper: InteractionHelper, options: InteractionOp
   if (!scrambleSingleModePreCheck && guild && !botPermsInChannel?.has(["SendMessages", "ViewChannel"])) {
     await helper.reply({
       content: t("errors:NO_PERMS_BOT", {
-        PERMISSIONS: parsePerms(botPermsInChannel!.missing(["SendMessages", "ViewChannel"]) as Permission[]),
+        PERMISSIONS: parsePerms(botPermsInChannel.missing(["SendMessages", "ViewChannel"]) as Permission[]),
       }),
       flags: 64,
     });

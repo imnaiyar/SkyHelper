@@ -28,7 +28,7 @@ export class WebhookEventMiddleware implements NestMiddleware {
 
     const pubKey = await crypto.subtle.importKey(
       "raw",
-      hextToUint8(process.env.PUBLIC_KEY!),
+      hextToUint8(process.env.PUBLIC_KEY),
       { name: "ED25519", namedCurve: "NODE-ED25519" },
       false,
       ["verify"],

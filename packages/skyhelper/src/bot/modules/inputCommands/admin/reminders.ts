@@ -112,7 +112,7 @@ export default {
       }
       case "stop": {
         const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
-        const eventSettings = guildSettings.reminders.events[event as keyof GuildSchema["reminders"]["events"]];
+        const eventSettings = guildSettings.reminders.events[event];
         if (!eventSettings?.active) {
           return void (await helper.editReply({
             content: t("commands:REMINDERS.RESPONSES.ALREADY_NOT_CONFIGURED", {
@@ -124,7 +124,7 @@ export default {
         await util.deleteAfterChecks(
           {
             id: eventSettings.webhook!.id,
-            token: eventSettings.webhook!.token!,
+            token: eventSettings.webhook!.token,
           },
           [event],
           guildSettings,

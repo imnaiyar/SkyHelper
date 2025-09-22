@@ -180,11 +180,11 @@ export default class {
     customId: string,
     type?: Type,
   ): Extract<ModalSubmitComponent, { type: Type }> {
-    const components = int.data.components.reduce((acc, label) => {
+    const components = int.data.components.reduce<ModalSubmitComponent[]>((acc, label) => {
       if ("components" in label) return acc.concat(label.components);
       if ("component" in label) return acc.concat(label.component);
       return acc;
-    }, [] as ModalSubmitComponent[]);
+    }, []);
     const comp = components.find((component) => component.custom_id === customId);
     if (type && comp?.type !== type) {
       throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);

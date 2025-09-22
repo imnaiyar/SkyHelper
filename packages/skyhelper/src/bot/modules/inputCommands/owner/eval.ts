@@ -53,7 +53,7 @@ async function buildSuccessResponse(
 }> {
   // Token protection
   output = (typeof output !== "string" ? util.inspect(output, { depth: depth }) : output).replaceAll(
-    process.env.TOKEN!,
+    process.env.TOKEN,
     "~~REDACTED~~",
   );
   let embOutput;

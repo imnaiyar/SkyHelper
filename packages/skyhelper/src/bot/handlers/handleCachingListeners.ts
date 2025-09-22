@@ -89,7 +89,7 @@ export default (client: SkyHelper) => {
 
     const channelIndex = guild?.channels.findIndex((c) => c.id === channel.id);
     if (channelIndex === -1) return;
-    guild!.channels[channelIndex] = Object.assign(guild.channels[channelIndex], channel);
+    guild.channels[channelIndex] = Object.assign(guild.channels[channelIndex], channel);
   });
   client.on(GatewayDispatchEvents.ChannelDelete, ({ data: channel }) => {
     const guild = client.guilds.get(channel.guild_id);

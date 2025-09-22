@@ -91,7 +91,7 @@ export async function paginate<U, T extends U[]>(
     extra: PaginatorExtraParams,
   ) => RESTPostAPIChannelMessageJSONBody,
   options: PaginatorOptions = {},
-): Promise<InteractionCollector<2, InteractionType.MessageComponent>> {
+): Promise<InteractionCollector<2>> {
   const { client } = helper;
   const {
     per_page = 10,

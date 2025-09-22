@@ -290,11 +290,11 @@ export const getCardResponse = async (
   const players = await Promise.all(
     data[btnType].map(async (d, i): Promise<userData> => {
       const member: APIGuildMember | APIUser =
-        type === "server" ? guildMembers!.members.find((m) => m.user.id === d.id)! : await client.api.users.get(d.id);
+        type === "server" ? guildMembers.members.find((m) => m.user.id === d.id)! : await client.api.users.get(d.id);
       return {
         tag: "user" in member ? member.user.username : member.username,
-        games: d.gamesPlayed!,
-        score: d.gamesWon!,
+        games: d.gamesPlayed,
+        score: d.gamesWon,
         top: i + 1,
         avatar: client.utils.getUserAvatar(member as APIGuildMember, guild?.id),
       };
@@ -323,7 +323,7 @@ export const getCardResponse = async (
   const comp = container(
     textDisplay(
       `${game.charAt(0).toUpperCase() + game.slice(1)} Leaderboard - ` +
-        (type === "server" ? `\`Server (${guild!.name})\`` : "`Global`"),
+        (type === "server" ? `\`Server (${guild.name})\`` : "`Global`"),
     ),
     separator(),
     card

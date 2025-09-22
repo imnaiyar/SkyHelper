@@ -82,7 +82,7 @@ export const getGamesLeaderboard = async (
   _game: "hangman" | "scrambled",
   guildMembers?: APIGuildMember[],
 ): Promise<SkyGameStatsData> => {
-  const query = guildMembers ? { _id: { $in: guildMembers.map((m) => m.user!.id) } } : {};
+  const query = guildMembers ? { _id: { $in: guildMembers.map((m) => m.user.id) } } : {};
 
   const users = await Model.find({ ...query, [_game]: { $exists: true } });
 

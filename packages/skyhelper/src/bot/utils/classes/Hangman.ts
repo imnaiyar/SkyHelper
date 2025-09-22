@@ -247,7 +247,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       })
       .catch(() => []);
     if (!col.length) return "Timeout";
-    return col[0]!;
+    return col[0];
   }
 
   // #region response embed
@@ -280,7 +280,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       textDisplay(
         `Word: **${this.alphabets
           .map((a) => {
-            if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : `${a.alphabet}`;
+            if (a.guessed) return a.alphabet === " " ? a.alphabet + "  " : a.alphabet;
             else return "◼️";
           })
           .join("")}** (${this.alphabetLength!} alphabets excluding special characters)`,
@@ -354,10 +354,11 @@ export class Hangman<T extends ModeType, K extends WordType> {
     const initiator = this.initiator;
     this._stopCollector.on("collect", async (i) => {
       if ((i.member?.user ?? i.user!).id !== initiator.id) {
-        return await this.client.api.interactions.reply(i.id, i.token, {
+        await this.client.api.interactions.reply(i.id, i.token, {
           content: "Only this game's initiator can end the game.",
           flags: 64,
         });
+        return;
       }
       this._stopped = true;
 

@@ -87,34 +87,37 @@ export default {
       const lang = (type === "server" ? settings! : user_settings).language;
       const formattedLang = lang && `${lang.name} (${lang.flag} ${lang.value})`;
       if (!lang?.value) {
-        return void (await helper.followUp({
+        await helper.followUp({
           content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_NOT_SET", {
             CATEGORY: `\`${type === "server" ? guild!.name : helper.user.username}\``,
           }),
-        }));
+        });
+        return;
       }
       switch (type) {
         case "server": {
           settings!.language = undefined;
           const ts = getTranslator(user_settings.language?.value ?? "en-US");
           await settings!.save();
-          return void (await helper.followUp({
+          await helper.followUp({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS_REMOVED", {
               LANGUAGE: formattedLang,
               CATEGORY: `\`${guild!.name}\``,
             }),
-          }));
+          });
+          return;
         }
         case "user": {
           user_settings.language = undefined;
           const ts = getTranslator(settings?.language?.value ?? "en-US");
           await user_settings.save();
-          return void (await helper.followUp({
+          await helper.followUp({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS_REMOVED", {
               LANGUAGE: formattedLang,
               CATEGORY: `\`${helper.user.username}\``,
             }),
-          }));
+          });
+          return;
         }
       }
     }

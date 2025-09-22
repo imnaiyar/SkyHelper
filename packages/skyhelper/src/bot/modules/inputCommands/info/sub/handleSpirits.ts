@@ -66,7 +66,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
   const message = await getUpdate(helper);
   const collector = client.componentCollector({
     filter: (i) =>
-      client.utils.store.deserialize(i.data.custom_id)!.id === CustomId.SeasonalSpiritRow &&
+      client.utils.store.deserialize(i.data.custom_id).id === CustomId.SeasonalSpiritRow &&
       helper.user.id === (i.member?.user ?? i.user)!.id,
     idle: 90_000,
     message,

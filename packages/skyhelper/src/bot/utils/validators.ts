@@ -48,7 +48,7 @@ export async function validateInteractions({ command, interaction, options, help
   // Handle command user required permissions
   if (command.userPermissions) {
     if (interaction.guild_id) {
-      if (!client.permUtils(command.userPermissions)) {
+      if (!client.permUtils(interaction.member!.permissions as `${number}`).has(command.userPermissions)) {
         return {
           status: false,
           message: t("errors:NO_PERMS_USER", {
@@ -95,7 +95,7 @@ export async function validateInteractions({ command, interaction, options, help
       if (validation.type !== "message") {
         // @ts-expect-error Mismatching between chatinput and context, don't wanna impl a complex solution so just ignore
         const validated = await validation.callback({ interaction, options, t, helper });
-        if (validated.status === false) {
+        if (!validated.status) {
           return {
             status: false,
             message: validated.message,

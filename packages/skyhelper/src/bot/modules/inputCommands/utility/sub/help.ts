@@ -167,11 +167,11 @@ function format(command: APIApplicationCommand, t: ReturnType<typeof import("@/i
 function formatSubCommand(option: APIApplicationCommandSubcommandOption, prefix: string, id: string) {
   return `**</${prefix} ${option.name}:${id}>** ${
     option.options?.length
-      ? `${option.options
+      ? option.options
           .map((m) => {
             return m.required ? `\`<${m.name}>\`` : `\`[${m.name}]\``;
           })
-          .join(", ")}`
+          .join(", ")
       : ""
   }\n  ↪ ${option.description}`;
 }

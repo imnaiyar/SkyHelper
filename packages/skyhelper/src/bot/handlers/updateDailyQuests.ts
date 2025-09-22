@@ -31,7 +31,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
   const images = message.attachments.map((attachment) => attachment.url);
   const data = await client.schemas.getDailyQuests();
   const guide: DailyQuest = {
-    title: title!,
+    title: title,
     date: DateTime.now().setZone(client.timezone).startOf("day").toISO()!,
     images: images.map((img) => ({
       url: img,

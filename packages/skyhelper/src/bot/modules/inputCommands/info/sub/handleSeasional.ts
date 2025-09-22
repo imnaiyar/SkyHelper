@@ -50,7 +50,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
   let page = 1;
   const getResponse = () => {
     const quest = quests[page - 1];
-    const emojiUrl = helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(season.icon)!.id!);
+    const emojiUrl = helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(season.icon)!.id);
     const comp = container(
       section(
         thumbnail(emojiUrl, season.name),
@@ -116,7 +116,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
     filter: (i) => (i.member?.user ?? i.user)!.id === helper.user.id,
   });
   collector.on("collect", async (compInt) => {
-    const { id, data } = helper.client.utils.store.deserialize(compInt.data.custom_id)!;
+    const { id, data } = helper.client.utils.store.deserialize(compInt.data.custom_id);
     const compHelper = new InteractionHelper(compInt, helper.client);
     if (id !== CustomId.SeasonalQuestNav && id !== CustomId.SeasonalQuestSelect) {
       await compHelper.reply({ content: helper.t("commands:GUIDES.RESPONSES.INVALID-CHOICE"), flags: 64 });

@@ -38,9 +38,13 @@ abstract class Collector<Int> extends EventEmitter {
     super();
     this.filter = options.filter ?? (() => true);
     this.timer = options.timeout
-      ? setTimeout(() => this.stop("timeout"), options.timeout)
+      ? setTimeout(() => {
+          this.stop("timeout");
+        }, options.timeout)
       : options.idle
-        ? setTimeout(() => this.stop("timeout"), options.idle)
+        ? setTimeout(() => {
+            this.stop("timeout");
+          }, options.idle)
         : undefined;
     this.listener = this.listener.bind(this);
 
@@ -139,7 +143,9 @@ export class InteractionCollector<
     this.collected.push(int as any);
     if (this.options.idle) {
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.stop("timeout"), this.options.idle);
+      this.timer = setTimeout(() => {
+        this.stop("timeout");
+      }, this.options.idle);
     }
 
     if (this.options.max && this.collected.length >= this.options.max) this.stop("max");
@@ -175,7 +181,9 @@ export class MessageCollector extends Collector<APIMessage> {
     this.collected.push(message);
     if (this.options.idle) {
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.stop("timeout"), this.options.idle);
+      this.timer = setTimeout(() => {
+        this.stop("timeout");
+      }, this.options.idle);
     }
 
     if (this.options.max && this.collected.length >= this.options.max) this.stop("max");

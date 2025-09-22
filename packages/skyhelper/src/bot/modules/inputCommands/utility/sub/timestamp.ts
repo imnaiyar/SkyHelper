@@ -8,7 +8,7 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
   const { client, t } = helper;
 
   const Time = options.getString("time", true);
-  if (!isTimeStringValid(Time!)) {
+  if (!isTimeStringValid(Time)) {
     return void (await helper.reply({
       content: t("commands:UTILS.RESPONSES.INVALID-FORMAT"),
       flags: 64,

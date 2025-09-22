@@ -154,7 +154,7 @@ export default defineButton({
       });
       return;
     }
-    const ch = submit.data.resolved!.channels![s_channel.values[0]]!;
+    const ch = submit.data.resolved!.channels![s_channel.values[0]];
     const isThread = "thread_metadata" in ch;
     const new_channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
 

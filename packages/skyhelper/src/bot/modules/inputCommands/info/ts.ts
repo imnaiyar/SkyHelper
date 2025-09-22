@@ -29,7 +29,7 @@ const getTSResponse = async (
 
   const visitingDates = `${client.utils.time(ts.nextVisit.toUnixInteger(), "D")} - ${client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "D")}`;
   if (ts.value) {
-    const spirit: SpiritsData = client.spiritsData[ts.value as keyof typeof client.spiritsData];
+    const spirit: SpiritsData = client.spiritsData[ts.value];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
     const emote = spirit.expression?.icon ?? "<:spiritIcon:1206501060303130664>";
     const description = ts.visiting
@@ -62,7 +62,7 @@ const getTSResponse = async (
       textDisplay(
         `\n\n**${t("commands:TRAVELING-SPIRIT.RESPONSES.VISITING_TITLE")}** ${visitingDates}\n**${t("features:SPIRITS.REALM_TITLE")}:** ${
           realms_emojis[spirit.realm!]
-        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season!}`,
+        } ${spirit.realm}\n**${t("features:SPIRITS.SEASON_TITLE")}:** ${Object.values(seasonsData).find((v) => v.name === spirit.season)?.icon} Season of ${spirit.season}`,
       ),
       separator(true, 1),
       section(

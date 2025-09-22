@@ -160,8 +160,8 @@ export class PermissionsUtil {
       perms.remove(everyoneOverwrites.deny as `${number}`).add(everyoneOverwrites.allow as `${number}`);
     }
     if (roleOverwrites.length) {
-      perms.remove(this.resolveBits(roleOverwrites.map((p) => p!.deny as `${number}`)));
-      perms.add(this.resolveBits(roleOverwrites.map((p) => p!.allow as `${number}`)));
+      perms.remove(this.resolveBits(roleOverwrites.map((p) => p.deny as `${number}`)));
+      perms.add(this.resolveBits(roleOverwrites.map((p) => p.allow as `${number}`)));
     }
     if (memberOverwrites) {
       perms.remove(memberOverwrites.deny as `${number}`).add(memberOverwrites.allow as `${number}`);

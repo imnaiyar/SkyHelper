@@ -82,10 +82,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       const options = new InteractionOptionResolver(interaction);
       const validate = await validateInteractions({ command, interaction, options, helper, t });
       if (!validate.status) {
-        return void (await api.interactions.reply(interaction.id, interaction.token, {
+        await api.interactions.reply(interaction.id, interaction.token, {
           content: validate.message,
           flags: MessageFlags.Ephemeral,
-        }));
+        });
+        return;
       }
       try {
         await command.interactionRun({

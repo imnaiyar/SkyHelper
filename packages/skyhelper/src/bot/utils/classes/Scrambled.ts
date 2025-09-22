@@ -62,10 +62,11 @@ export abstract class GameController {
     const initiator = this.initiator;
     this._stopCollector.on("collect", async (i) => {
       if ((i.member?.user ?? i.user!).id !== initiator.id) {
-        return await this.client.api.interactions.reply(i.id, i.token, {
+        await this.client.api.interactions.reply(i.id, i.token, {
           content: "Only this game's initiator can end the game.",
           flags: 64,
         });
+        return;
       }
       this._stopped = true;
 

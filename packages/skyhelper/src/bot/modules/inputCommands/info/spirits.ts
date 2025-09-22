@@ -13,8 +13,11 @@ export default {
   async interactionRun({ t, helper, options }) {
     await helper.defer({ flags: options.getBoolean("hide") ? MessageFlags.Ephemeral : undefined });
     const value = options.getString("search");
-    if (!value) return void (await handleSpiritList(helper));
-    const data = helper.client.spiritsData[value as keyof typeof helper.client.spiritsData] as SpiritsData;
+    if (!value) {
+      await handleSpiritList(helper);
+      return;
+    }
+    const data = helper.client.spiritsData[value];
 
     if (!data) {
       await helper.editReply({

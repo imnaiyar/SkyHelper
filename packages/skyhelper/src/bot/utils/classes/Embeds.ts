@@ -245,7 +245,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof ge
     separator(),
   );
   for (const [index, quest] of quests.entries()) {
-    let quest_title = `${quest.title}`;
+    let quest_title = quest.title;
 
     if (quest.images?.[0].source) quest_title = `[${quest_title}](${quest.images?.[0].source})`;
     if (quest.images?.length) {
@@ -366,7 +366,7 @@ export function buildCalendarResponse(
       desc +=
         typeof noShard === "string"
           ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => `${client.utils.time(ti.start.toUnixInteger(), "T")}`).join(" • ") })}`;
+          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => client.utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
       return desc;
     })
     .join("\n\n");

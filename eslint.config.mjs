@@ -1,6 +1,5 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import jsdoc from "eslint-plugin-jsdoc";
-import _import from "eslint-plugin-import";
 import { fixupPluginRules } from "@eslint/compat";
 import globals from "globals";
 import js from "@eslint/js";
@@ -9,11 +8,15 @@ import tseslint from "typescript-eslint";
 export default defineConfig([
   globalIgnores(["**/node_modules", "**/logs", "**/website", "**/jest.config.js", "**/dist"]),
   {
-    extends: [js.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylisticTypeChecked],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      tseslint.configs.stylisticTypeChecked,
+      tseslint.configs.strictTypeChecked,
+    ],
 
     plugins: {
       jsdoc,
-      import: fixupPluginRules(_import),
     },
 
     languageOptions: {
@@ -29,6 +32,7 @@ export default defineConfig([
     },
 
     rules: {
+      "@typescript-eslint/no-non-null-assertion": "off",
       "arrow-spacing": [
         "warn",
         {
@@ -43,7 +47,6 @@ export default defineConfig([
         },
       ],
       "comma-dangle": ["error", "always-multiline"],
-      "import/no-commonjs": "error",
       "comma-spacing": "error",
       "comma-style": "error",
       curly: ["error", "multi-line", "consistent"],
