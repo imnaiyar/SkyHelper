@@ -21,7 +21,7 @@ export async function reminderSchedules(): Promise<void> {
 
   const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
 
-  const ts = await getTS()!;
+  const ts = await getTS();
 
   const activeGuilds = await getActiveReminders();
 
@@ -32,7 +32,7 @@ export async function reminderSchedules(): Promise<void> {
     if (!reminders) return;
     for (const key of REMINDERS_KEY) {
       const event = reminders.events[key];
-      if (!event || !event.active || !event.webhook) continue;
+      if (!event?.active || !event.webhook) continue;
 
       const { webhook, role, last_messageId, offset } = event;
       const details = eventDetails[key === "reset" ? "daily-reset" : key];
@@ -78,7 +78,7 @@ export async function reminderSchedules(): Promise<void> {
                       })}`,
                   ),
                   separator(),
-                  textDisplay(data as string),
+                  textDisplay(data),
                 ),
               ],
             };

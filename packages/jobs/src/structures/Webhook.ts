@@ -51,10 +51,10 @@ class Webhook {
       const query = makeURLSearchParams({ wait: true, thread_id });
       return api.post(Routes.webhook(this.id, this.token), { body: { ...options }, query }) as Promise<APIMessage>;
     } catch (err: any) {
-      if (retries! > 0 && retraibleErrors.includes(err.code)) {
+      if (retries > 0 && retraibleErrors.includes(err.code)) {
         logger.warn(`Retrying webhook send... Attempts left: ${retries}`);
         await new Promise((r) => setTimeout(r, 2000));
-        return this.send(options, { retries: retries! - 1, thread_id });
+        return this.send(options, { retries: retries - 1, thread_id });
       }
       throw err;
     }
@@ -81,10 +81,10 @@ class Webhook {
         query,
       }) as Promise<APIMessage>;
     } catch (err: any) {
-      if (retries! > 0 && retraibleErrors.includes(err.code)) {
+      if (retries > 0 && retraibleErrors.includes(err.code)) {
         logger.warn(`Retrying webhook edit... Attempts left: ${retries}`);
         await new Promise((r) => setTimeout(r, 2000));
-        return this.editMessage(messageId, options, { retries: retries! - 1, thread_id });
+        return this.editMessage(messageId, options, { retries: retries - 1, thread_id });
       }
       throw err;
     }

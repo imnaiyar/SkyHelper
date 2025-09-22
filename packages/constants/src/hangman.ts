@@ -77,6 +77,7 @@ export const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: 
 };
 export const getHangmanResponse = (code: HangmanResponseCodes, ...args: any[]) => {
   const response = HangmanResponses[code];
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   if (typeof response === "function") return response(...args);
   return response;
 };
