@@ -161,7 +161,7 @@ export class Spirits {
 
     if (data.collectibles?.length) {
       components.push(
-        collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)].icon, value, userid),
+        collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)]!.icon, value, userid),
       );
     }
 
@@ -186,10 +186,10 @@ export class Spirits {
    */
   private _sortDates(dates: Array<string | string[]>) {
     return dates.sort((a, b) => {
-      const aDate = DateTime.fromFormat((this._isArray(a) ? a[0] : a).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
+      const aDate = DateTime.fromFormat((this._isArray(a) ? a[0]! : a).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
         zone: "America/Los_Angeles",
       }).startOf("day");
-      const bDate = DateTime.fromFormat((this._isArray(b) ? b[0] : b).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
+      const bDate = DateTime.fromFormat((this._isArray(b) ? b[0]! : b).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
         zone: "America/Los_Angeles",
       }).startOf("day");
       if (aDate > bDate) return -1;
@@ -218,7 +218,7 @@ export class Spirits {
         const isArray = this._isArray(date);
 
         // Only first element should have the SV tag (if an array) so use that to get it
-        const formatDate = (isArray ? date[0] : date)
+        const formatDate = (isArray ? date[0]! : date)
           .replace(/\([^)]+\)/g, (match) => {
             index = match.trim().replaceAll("SV", "[SV](https://sky-children-of-the-light.fandom.com/wiki/Returning_Spirits)");
             return "";
@@ -228,7 +228,7 @@ export class Spirits {
 
         // Use the 2nd element in the array as the end date, or add 3 days to the start date
         const dateE = isArray
-          ? DateTime.fromFormat(date[1], "LLLL dd, yyyy", { zone: "America/Los_Angeles" }).endOf("day")
+          ? DateTime.fromFormat(date[1]!, "LLLL dd, yyyy", { zone: "America/Los_Angeles" }).endOf("day")
           : dateM.plus({ days: 3 }).endOf("day");
         return `- ${utils.time(dateM.toJSDate())} - ${utils.time(dateE.toJSDate())} ${index}`;
       })

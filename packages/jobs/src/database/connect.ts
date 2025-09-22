@@ -6,7 +6,7 @@ export async function initializeMongoose(): Promise<mongoose.Connection> {
 
   try {
     mongoose.set("strictQuery", true);
-    await mongoose.connect(process.env.MONGO_CONNECTION as string);
+    await mongoose.connect(process.env.MONGO_CONNECTION);
 
     logger.log({ level: { name: "DATABASE" } }, "Database connection established");
 

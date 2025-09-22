@@ -173,7 +173,7 @@ export class Scrambled extends GameController {
         timeout: this.timePerRound,
         max: 1,
       })
-      .then((m) => m[0])
+      .then((m) => m[0]!)
       .catch(() => "Timeout");
     if (this._stopped as boolean) return;
     if (typeof message === "string") {
@@ -385,7 +385,7 @@ export function scrambleWord() {
     // shuffle
     for (let i = letters.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [letters[i], letters[j]] = [letters[j], letters[i]];
+      [letters[i], letters[j]] = [letters[j]!, letters[i]!];
     }
 
     return letters.join("");

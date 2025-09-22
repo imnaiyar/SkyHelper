@@ -4,7 +4,7 @@
  * @param callback The callback to process each item
  * @param maxConcurrent Maximum number of concurrent operations
  */
-export async function throttleRequests<T>(datas: T[], callback: (data: T) => unknown | Promise<unknown>, maxConcurrent = 10) {
+export async function throttleRequests<T>(datas: T[], callback: (data: T) => unknown, maxConcurrent = 10) {
   const promises = [];
   let index = 0;
 
@@ -12,7 +12,7 @@ export async function throttleRequests<T>(datas: T[], callback: (data: T) => unk
   async function next() {
     if (index >= datas.length) return;
     const currentIndex = index++;
-    await callback(datas[currentIndex]);
+    await callback(datas[currentIndex]!);
     return next();
   }
 

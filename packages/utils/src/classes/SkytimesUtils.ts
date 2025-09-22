@@ -50,7 +50,7 @@ export class SkytimesUtils {
    */
   public static getNextEventOccurrence(eventName: EventKey): DateTime {
     const event = eventData[eventName];
-    if (!event) throw new Error("Unknown Event");
+    if (!event as boolean /* lol */) throw new Error("Unknown Event");
 
     const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
     let nextOccurrence = this.getOccurrenceDay(event);

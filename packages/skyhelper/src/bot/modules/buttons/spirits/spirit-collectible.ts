@@ -38,7 +38,7 @@ export default defineButton({
     let index = 1;
     const total = collectibles.length;
     const getResponse = () => {
-      const d = collectibles[index - 1];
+      const d = collectibles[index - 1]!;
       const stringSelect: APIActionRowComponent<APIStringSelectComponent> = {
         type: ComponentType.ActionRow,
         components: [
@@ -60,7 +60,7 @@ export default defineButton({
       };
       const comp = container(
         section(
-          thumbnail(helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id), d.name),
+          thumbnail(helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id!), d.name),
           `-# ${data.name} Collectibles (${index}/${total})\n### [${d.icon} ${d.name || d.type}](https://sky-children-of-the-light.fandom.com/wiki/${data.name
             .split(" ")
             .join("_")}#${(d.type ?? d.name).split(" ").join("_")})`,
@@ -123,7 +123,7 @@ export default defineButton({
       switch (v.data) {
         case "spirit-collectibles-select": {
           if (!compHelper.isStringSelect(int)) return;
-          index = parseInt(int.data.values[0]) + 1;
+          index = parseInt(int.data.values[0]!) + 1;
           await compHelper.editReply(getResponse());
           break;
         }

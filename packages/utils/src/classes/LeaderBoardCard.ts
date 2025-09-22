@@ -15,7 +15,7 @@ export class LeaderboardCard {
   private colors: colorsType;
 
   constructor(options: LeaderboardOptions) {
-    this.usersData = options?.usersData || [];
+    this.usersData = options.usersData;
     this.background = {
       type: "none",
       background: "none",
@@ -23,7 +23,7 @@ export class LeaderboardCard {
     this.abbreviateNumber = false;
     this.opacity = 0;
     this.scoreMessage = "";
-    this.colors = options?.colors ?? {
+    this.colors = options.colors ?? {
       box: "#212121",
       username: "#ffffff",
       score: "#ffffff",
@@ -144,7 +144,7 @@ export class LeaderboardCard {
           }
         }
         if (typeof shortValue === "number" && shortValue % 1 != 0) shortValue = shortValue.toFixed(1);
-        newValue = shortValue + suffixes[suffixNum];
+        newValue = shortValue + suffixes[suffixNum]!;
       }
       return newValue.toString();
     };
@@ -169,77 +169,66 @@ export class LeaderboardCard {
       }
     }
 
-    if (this.usersData) {
-      let Box_Y = 0,
-        Avatar_Y = 0,
-        Tag_Y = 45,
-        XP_Y = 45,
-        Level_Y = 30,
-        Rank_Y = 45;
-      for (const data of this.usersData) {
-        ctx.save();
-        ctx.fillStyle = this.colors.box;
-        ctx.globalAlpha = this.opacity;
-        this.fillRoundRect(ctx, 0, Box_Y, canvas.width, 70, 15, true, false);
-        ctx.globalAlpha = 1;
-        try {
-          const avatar = await loadImage(data.avatar);
-          ctx.clip();
-          ctx.drawImage(avatar, 0, Avatar_Y, 70, 70);
-        } catch (err) {
-          console.error("Failed to load avatar", err);
-        }
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetX = 8;
-        ctx.shadowOffsetY = 6;
-        ctx.shadowColor = "#0a0a0a";
-
-        ctx.fillStyle = this.colors.username;
-        ctx.font = `bold 25px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-        ctx.textAlign = "left";
-        ctx.fillText(data.tag, 80, Tag_Y, 260);
-
-        ctx.fillStyle = this.colors.score;
-        ctx.font = `bold 20px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-        ctx.textAlign = "right";
-        ctx.fillText(
-          `${this.scoreMessage} ${
-            this.abbreviateNumber == true ? `${abbreviateNumber(data.score)}` : `${data.score}`
-          }/${this.abbreviateNumber == true ? `${abbreviateNumber(data.games)}` : `${data.games}`}`,
-          560,
-          XP_Y,
-          200,
-        );
-
-        if (data.top === 1) {
-          ctx.fillStyle = this.colors.firstRank;
-        } else if (data.top === 2) {
-          ctx.fillStyle = this.colors.secondRank;
-        } else if (data.top === 3) {
-          ctx.fillStyle = this.colors.thirdRank;
-        }
-
-        ctx.font = `bold 30px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-        ctx.textAlign = "right";
-        ctx.fillText("#" + data.top, 660, Rank_Y, 75);
-
-        Box_Y = Box_Y + 75;
-        Avatar_Y = Avatar_Y + 75;
-        Tag_Y = Tag_Y + 75;
-        XP_Y = XP_Y + 75;
-        Level_Y = Level_Y + 75;
-        Rank_Y = Rank_Y + 75;
-        ctx.restore();
+    let Box_Y = 0,
+      Avatar_Y = 0,
+      Tag_Y = 45,
+      XP_Y = 45,
+      Level_Y = 30,
+      Rank_Y = 45;
+    for (const data of this.usersData) {
+      ctx.save();
+      ctx.fillStyle = this.colors.box;
+      ctx.globalAlpha = this.opacity;
+      this.fillRoundRect(ctx, 0, Box_Y, canvas.width, 70, 15, true, false);
+      ctx.globalAlpha = 1;
+      try {
+        const avatar = await loadImage(data.avatar);
+        ctx.clip();
+        ctx.drawImage(avatar, 0, Avatar_Y, 70, 70);
+      } catch (err) {
+        console.error("Failed to load avatar", err);
       }
-    } else {
-      ctx.font = `bold 40px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
-      ctx.fillStyle = "#ffffff";
-      ctx.textAlign = "center";
       ctx.shadowBlur = 10;
       ctx.shadowOffsetX = 8;
       ctx.shadowOffsetY = 6;
       ctx.shadowColor = "#0a0a0a";
-      ctx.fillText("Not found!", 340, 370, 500);
+
+      ctx.fillStyle = this.colors.username;
+      ctx.font = `bold 25px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
+      ctx.textAlign = "left";
+      ctx.fillText(data.tag, 80, Tag_Y, 260);
+
+      ctx.fillStyle = this.colors.score;
+      ctx.font = `bold 20px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
+      ctx.textAlign = "right";
+      ctx.fillText(
+        `${this.scoreMessage} ${
+          this.abbreviateNumber ? abbreviateNumber(data.score) : `${data.score}`
+        }/${this.abbreviateNumber ? abbreviateNumber(data.games) : `${data.games}`}`,
+        560,
+        XP_Y,
+        200,
+      );
+
+      if (data.top === 1) {
+        ctx.fillStyle = this.colors.firstRank;
+      } else if (data.top === 2) {
+        ctx.fillStyle = this.colors.secondRank;
+      } else if (data.top === 3) {
+        ctx.fillStyle = this.colors.thirdRank;
+      }
+
+      ctx.font = `bold 30px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
+      ctx.textAlign = "right";
+      ctx.fillText("#" + data.top, 660, Rank_Y, 75);
+
+      Box_Y = Box_Y + 75;
+      Avatar_Y = Avatar_Y + 75;
+      Tag_Y = Tag_Y + 75;
+      XP_Y = XP_Y + 75;
+      Level_Y = Level_Y + 75;
+      Rank_Y = Rank_Y + 75;
+      ctx.restore();
     }
 
     return canvas.toBuffer("image/png");

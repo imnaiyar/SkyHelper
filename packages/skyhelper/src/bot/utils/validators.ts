@@ -204,7 +204,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
   // Check if args are valid
   if (
     (command.prefix?.minimumArgs && args.length < command.prefix.minimumArgs) ||
-    (command.prefix?.subcommands && args[0] && !command.prefix.subcommands.find((sub) => sub.trigger.startsWith(args[0])))
+    (command.prefix?.subcommands && args[0] && !command.prefix.subcommands.find((sub) => sub.trigger.startsWith(args[0]!)))
   ) {
     return {
       status: false,
@@ -290,7 +290,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
     const perms = PermissionsUtil.overwriteFor(guild!.clientMember, channel as APITextChannel, client);
     const missing = perms.missing(command.botPermissions);
     if (command.forSubs) {
-      toCheck = command.forSubs.includes(args[0]);
+      toCheck = command.forSubs.includes(args[0]!);
     }
     if (toCheck && !perms.has(command.botPermissions)) {
       return {

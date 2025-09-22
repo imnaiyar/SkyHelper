@@ -67,7 +67,7 @@ const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator
         data.name
       }\n### [${
         exprsn.icon
-      } ${exprsn.level[0].title.replace(/ Level [1-6]/, "")}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${
+      } ${exprsn.level[0]?.title.replace(/ Level [1-6]/, "")}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${
         exprsn.type === "Emote" ? "Expression" : exprsn.type.split(" ").join("_")
       })`,
     ),
