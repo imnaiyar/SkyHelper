@@ -23,6 +23,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
   prefix: String,
   reminders: {
     active: { type: Boolean, default: false },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     events: REMINDERS_KEY.reduce(
       (acc, key) => {
         const schemaObj: any = {
@@ -51,8 +52,10 @@ const Schema = new mongoose.Schema<GuildSchema>({
           type: new mongoose.Schema(schemaObj, { _id: false }),
           default: null,
         };
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return acc;
       },
+
       {} as Record<(typeof REMINDERS_KEY)[number], any>,
     ),
   },
@@ -85,7 +88,6 @@ const guildModel = mongoose.model<GuildSchema>("guild", Schema);
  * await getActiveUpdate("shard")
  */
 export async function getActiveUpdates(type: "shard" | "times"): Promise<GuildSchema[]> {
-  if (type !== "shard" && type !== "times") throw new Error('Param "type" must be either "shard" or "times"');
   const query = type === "shard" ? { "autoShard.active": true } : { "autoTimes.active": true };
   const activeGuilds = await guildModel.find(query);
   return activeGuilds;

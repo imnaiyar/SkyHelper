@@ -4,6 +4,7 @@
  * @param callback The callback to process each item
  * @param maxConcurrent Maximum number of concurrent operations
  */
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export async function throttleRequests<T>(datas: T[], callback: (data: T) => unknown | Promise<unknown>, maxConcurrent = 10) {
   const promises = [];
   let index = 0;

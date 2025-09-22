@@ -13,6 +13,7 @@ import {
   MessageFlags,
   type APIActionRowComponent,
   type APIComponentInMessageActionRow,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type APIMessageComponent,
 } from "discord-api-types/v10";
 
@@ -84,11 +85,13 @@ const update = async (
         },
         { thread_id: event.webhook.threadId, retries: 3 },
       )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       .catch((e) => e);
     // TODO: actually log other errors instead of just ignoring
     if (res instanceof DiscordAPIError && (res.message === "Unknown Message" || res.message === "Unknown Webhook")) {
       if (res.code === 10008) {
         // unknown message
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         deleteWebhookAfterChecks(webhook, guild, [type]);
         logger.error(`Live ${type} disabled for ${guild.data.name}, message found deleted!`);
       } else if (res.code === 10015) {

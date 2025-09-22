@@ -35,7 +35,9 @@ await i18next.use(Backend).init<FsBackendOptions>({
     escapeValue: false,
   },
   returnEmptyString: false,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
   preload: supportedLang.map((l) => l.value),
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
   supportedLngs: supportedLang.map((l) => l.value),
   saveMissing: true,
   missingKeyHandler: (_lngs, _ns, _key, _fallbackValue) => {

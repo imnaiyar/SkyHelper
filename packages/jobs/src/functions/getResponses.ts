@@ -8,6 +8,11 @@ import { MessageFlags } from "discord-api-types/v10";
 import type { DateTime } from "luxon";
 import { Schema, SchemaStore, t as tt } from "@sapphire/string-store";
 
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+
 /**
  * Get the response to send
  * @param type Type of the event
@@ -49,7 +54,7 @@ export function getResponse(
 
     return (
       t("features:reminders.COMMON", {
-        // @ts-expect-error key is known due to not being explicit
+        // @ts-expect-error key is known due to not being explicit, event type is valid
         TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
         TIME: `<t:${startTime?.toUnixInteger()}:t>`,
         "TIME-END": `<t:${endTime?.toUnixInteger()}:t>`,
@@ -60,7 +65,7 @@ export function getResponse(
     if (["eden", "reset"].includes(type)) {
       return (
         t("features:reminders.PRE-RESET", {
-          // @ts-expect-error same
+          // @ts-expect-error key is known due to not being explicit, event type is valid
           TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
           TIME: `<t:${nextTime.toUnixInteger()}:t>`,
           "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
@@ -70,7 +75,7 @@ export function getResponse(
 
     return (
       t("features:reminders.PRE", {
-        // @ts-expect-error same
+        // @ts-expect-error key is known due to not being explicit, event type is valid
         TYPE: t("features:times-embed.EVENTS." + skytime?.toUpperCase()),
         TIME: `<t:${nextTime.toUnixInteger()}:t>`,
         "TIME-R": `<t:${nextTime.toUnixInteger()}:R>`,
@@ -89,6 +94,7 @@ const isSeasonal = (data: SpiritsData) => "ts" in data;
  * @returns The response to send
  */
 export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTranslator").getTranslator>) => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!ts) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
 
   const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
@@ -189,6 +195,7 @@ export function getShardReminderResponse(
     TIME: `<t:${nextShard.start.toUnixInteger()}:T> (<t:${nextShard.start.toUnixInteger()}:R>)`,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return [
     section(thumbnail(nextShard.info.image), text, emojis.tree_end + nextShard.info.type),
     separator(true, 1),

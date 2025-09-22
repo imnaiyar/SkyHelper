@@ -19,7 +19,7 @@ export class ShardsUtil {
    * @method getDate - get provided date in luxon
    * @param  date - date to get in moment
    */
-  static getDate(date?: string | undefined | null): DateTime | string {
+  static getDate(date?: string | null): DateTime | string {
     const timezone = "America/Los_Angeles";
     let currentDate: DateTime;
     try {

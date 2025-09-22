@@ -204,8 +204,8 @@ export class LeaderboardCard {
         ctx.textAlign = "right";
         ctx.fillText(
           `${this.scoreMessage} ${
-            this.abbreviateNumber == true ? `${abbreviateNumber(data.score)}` : `${data.score}`
-          }/${this.abbreviateNumber == true ? `${abbreviateNumber(data.games)}` : `${data.games}`}`,
+            this.abbreviateNumber ? abbreviateNumber(data.score) : `${data.score}`
+          }/${this.abbreviateNumber ? abbreviateNumber(data.games) : `${data.games}`}`,
           560,
           XP_Y,
           200,

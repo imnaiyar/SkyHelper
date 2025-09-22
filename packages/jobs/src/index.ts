@@ -7,6 +7,7 @@ await initializeMongoose();
 // SkyTimes
 cron.schedule(
   "*/2 * * * *",
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   async () => {
     try {
       await eventSchedules("times");
@@ -21,6 +22,7 @@ cron.schedule(
 // Shards job
 cron.schedule(
   "*/5 * * * *",
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   async () => {
     try {
       await eventSchedules("shard");
@@ -34,6 +36,7 @@ cron.schedule(
 
 cron.schedule(
   "*/1 * * * *",
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   async () => {
     try {
       await reminderSchedules();
@@ -48,5 +51,7 @@ cron.schedule(
 logger.info("Logged in and Jobs have been started");
 
 // Catch any unknown errors
+// eslint-disable-next-line @typescript-eslint/unbound-method
 process.on("uncaughtException", logger.error);
+// eslint-disable-next-line @typescript-eslint/unbound-method
 process.on("unhandledRejection", logger.error);
