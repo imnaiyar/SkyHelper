@@ -69,6 +69,7 @@ async function handleSpiritList(helper: InteractionHelper) {
       const comp = container(
         ...title,
         ...data.flatMap(([key, spirit]) => {
+          // @ts-expect-error will be removed from planner
           const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] : "";
           const realmIcon = spirit.realm ? realms_emojis[spirit.realm] : "";
           let icon = appMojis.filter((e) => e.name.split("_").slice(0, -1).join("_") === key.replaceAll("-", ""));

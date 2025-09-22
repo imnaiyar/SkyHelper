@@ -61,7 +61,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
 
     const components: APIComponentInContainer[] = [];
 
-    switch (this.state.filter) {
+    switch (this.state.filter as (typeof SpiritNav)[number]) {
       case p.SpiritType.Regular:
       case p.SpiritType.Season:
       case p.SpiritType.Elder:
@@ -106,7 +106,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
             style: 1,
           }),
           `**${this.formatemoji(t.spirit.icon, t.spirit.name)} ${t.spirit.name} (#${t.number})**`,
-          `From ${this.formatDateTimestamp(t.date)} to ${this.formatDateTimestamp(t.endDate ? t.endDate : this.planner.resolveToLuxon(t.date).plus({ day: 3 }))}`,
+          `From ${this.formatDateTimestamp(t.date)} to ${this.formatDateTimestamp(t.endDate ?? this.planner.resolveToLuxon(t.date).plus({ day: 3 }))}`,
           this.planner.getFormattedTreeCost(t.tree),
           "\u200b", // o-width for visual spacing, not using separator to save comp limit,
         ),
@@ -147,10 +147,10 @@ export class SpiritsDisplay extends BasePlannerHandler {
       spirit.treeRevisions?.length
         ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t }))
         : null,
-      ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree })) || []),
+      ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree })) ?? []),
     ]
       .flat()
-      .filter(Boolean) as { name: string; tree: SkyPlannerData.ISpiritTree; season?: boolean }[];
+      .filter(Boolean) as Array<{ name: string; tree: SkyPlannerData.ISpiritTree; season?: boolean }>;
     const selected = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
     const tree = trees[selected];
     let attachment: RawFile | undefined;

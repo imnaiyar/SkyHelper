@@ -78,7 +78,6 @@ interface PaginatorExtraParams {
   total_page: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export async function paginate<U, T extends U[]>(
   helper: InteractionHelper,
   data: T,

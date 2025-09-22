@@ -19,10 +19,10 @@ export type OverrideLocalizations<T> =
 
 export type IdResolvalble = { id: string } | string | { user: { id: string } };
 
-export type ParsedCustomId = {
+export interface ParsedCustomId {
   id: string | number;
   user?: string;
   [key: string]: string | number | null;
-};
+}
 
 export type TimestampStyles = "d" | "D" | "f" | "F" | "t" | "T" | "R";
