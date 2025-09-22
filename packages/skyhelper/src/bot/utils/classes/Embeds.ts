@@ -162,7 +162,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
   if (!tsData) {
     tsDesc = "Unknown!";
   } else {
-    const spirit: SpiritsData = client.spiritsData[tsData.value!]!;
+    const spirit: SpiritsData = client.spiritsData[tsData.value!];
     const emote = spirit.expression?.icon ?? "❓";
     // TODO: update tree emojis from localization in this for prod
     const strVisiting = t("features:times-embed.TS_VISITING", {

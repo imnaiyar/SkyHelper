@@ -63,7 +63,7 @@ export default {
           `For ${RemindersEventsMap[event]} Reminders`,
         );
         const role = options.getRole("role");
-        guildSettings.reminders.events[event as Exclude<typeof event, "shards-eruption">] = {
+        guildSettings.reminders.events[event] = {
           active: true,
           webhook: {
             channelId: wb.channel_id,
@@ -77,7 +77,7 @@ export default {
         };
 
         if (event === "shards-eruption") {
-          guildSettings.reminders.events[event]!.shard_type = shard_type;
+          guildSettings.reminders.events[event].shard_type = shard_type;
         }
         guildSettings.reminders.active = true;
 

@@ -15,6 +15,7 @@ export class LeaderboardCard {
   private colors: colorsType;
 
   constructor(options: LeaderboardOptions) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     this.usersData = options?.usersData || [];
     this.background = {
       type: "none",
@@ -23,6 +24,7 @@ export class LeaderboardCard {
     this.abbreviateNumber = false;
     this.opacity = 0;
     this.scoreMessage = "";
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     this.colors = options?.colors ?? {
       box: "#212121",
       username: "#ffffff",
@@ -134,16 +136,19 @@ export class LeaderboardCard {
       let newValue: string | number = value;
       if (value >= 1000) {
         const suffixes = ["", "K", "M", "B", "T"];
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         const suffixNum = Math.floor(("" + value).length / 3);
         let shortValue: number | string = "";
         for (let precision = 2; precision >= 1; precision--) {
           shortValue = parseFloat((suffixNum != 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(precision));
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           const dotLessShortValue = (shortValue + "").replace(/[^a-zA-Z 0-9]+/g, "");
           if (dotLessShortValue.length <= 2) {
             break;
           }
         }
         if (typeof shortValue === "number" && shortValue % 1 != 0) shortValue = shortValue.toFixed(1);
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         newValue = shortValue + suffixes[suffixNum];
       }
       return newValue.toString();
@@ -169,6 +174,7 @@ export class LeaderboardCard {
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.usersData) {
       let Box_Y = 0,
         Avatar_Y = 0,
@@ -221,6 +227,7 @@ export class LeaderboardCard {
 
         ctx.font = `bold 30px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
         ctx.textAlign = "right";
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         ctx.fillText("#" + data.top, 660, Rank_Y, 75);
 
         Box_Y = Box_Y + 75;

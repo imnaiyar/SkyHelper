@@ -35,6 +35,7 @@ export class ShardsUtil {
         return currentDate;
       }
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       throw new Error(error as any);
     }
   }
