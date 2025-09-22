@@ -1,5 +1,5 @@
 import { CustomId } from "@/utils/customId-store";
-import { handlePlannerNavigation } from "../../handlers/planner.js";
+import { handlePlannerNavigation } from "../../../handlers/planner.js";
 import { defineButton } from "@/structures";
 import { textDisplay } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";

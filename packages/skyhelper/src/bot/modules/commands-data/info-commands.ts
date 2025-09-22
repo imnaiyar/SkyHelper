@@ -170,6 +170,12 @@ export const SKYGAME_PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"
             autocomplete: true,
           },
           {
+            name: "depth",
+            description: "The depth to which nested objects should be displayed (default: 8)",
+            type: ApplicationCommandOptionType.Integer,
+            required: false,
+          },
+          {
             name: "hide",
             description: "Hide the response from others",
             type: ApplicationCommandOptionType.Boolean,

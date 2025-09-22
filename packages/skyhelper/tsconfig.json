@@ -6,7 +6,6 @@
     // This improves issue grouping in Sentry.
     "sourceRoot": "/",
     "rootDir": "src",
-    "baseUrl": ".",
     "outDir": "dist",
     "strict": true,
     "noImplicitAny": true,
@@ -20,11 +19,11 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
-      "@/api/*": ["src/api/*.js"],
-      "@/structures": ["src/bot/structures/index.js"],
-      "@/types/*": ["src/bot/@types/*.js"],
-      "@/*": ["src/bot/*.js"],
-      "@/config": ["src/config.js"]
+      "@/api/*": ["./src/api/*.js"],
+      "@/structures": ["./src/bot/structures/index.js"],
+      "@/types/*": ["./src/bot/@types/*.js"],
+      "@/*": ["./src/bot/*.js"],
+      "@/config": ["./src/config.js"]
     }
   },
   "include": ["src"],
