@@ -1,6 +1,7 @@
 import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "./base.js";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
+import type { IIAP, IItemListNode } from "@skyhelperbot/constants/skygame-planner";
 
 export class ShopsDisplay extends BasePlannerHandler {
   listItems: SkyPlannerData.IItemListNode[] = [];
@@ -15,8 +16,8 @@ export class ShopsDisplay extends BasePlannerHandler {
       if (shop.iaps) this.iaps.push(...shop.iaps);
     }
     if (this.listItems.length && this.iaps.length) this.state.filter ??= "store";
-
-    return { components: [container(this.shopdisplay(this.shops[0]))] };
+    const shop = this.shops[0]!; // only used for names and location
+    return { components: [container(this.shopdisplay(shop))] };
   }
 
   shopdisplay(shop: SkyPlannerData.IShop) {
@@ -48,7 +49,7 @@ export class ShopsDisplay extends BasePlannerHandler {
     return "Shop";
   }
   private getshoplocation(shop: SkyPlannerData.IShop) {
-    return shop.name ?? (shop.type === "Store" ? "Premium Candle Store" : shop.spirit?.name || "Unknown");
+    return shop.name ?? (shop.type === "Store" ? "Premium Candle Store" : (shop.spirit?.name ?? "Unknown"));
   }
   private getfilterrow() {
     return row(
@@ -71,10 +72,10 @@ export class ShopsDisplay extends BasePlannerHandler {
     return this.displayPaginatedList({
       /** Only asserting so I get correct type in `itemCallback` bcz aparrentl filter(Boolean) doesnt cut it */
       items: (this.state.filter === "store" ? this.listItems.map((i) => ({ ...i, type: "list" })) : this.iaps) as Array<
-        SkyPlannerData.IIAP | (SkyPlannerData.IItemListNode & { type: string })
+        (IItemListNode & { type: string }) | IIAP
       >,
       itemCallback: (as) => [
-        ...("type" in as!
+        ...("type" in as
           ? [
               section(
                 this.viewbtn(this.createCustomId({ data: "sldjfh" })),
@@ -85,16 +86,16 @@ export class ShopsDisplay extends BasePlannerHandler {
             ].flat()
           : [
               textDisplay(
-                `${as!.name || "In-App Purchase"}`,
-                `$ ${as!.price || "N/A"} | ${as?.returning ? "Returning" : "New"} IAP`,
-                [as!.items?.map((i) => `${this.formatemoji(i.icon, i.name)} ${i.name || "N/A"}`), this.planner.formatCosts(as!)]
+                as.name ?? "In-App Purchase",
+                `$ ${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP`,
+                [as.items?.map((i) => `${this.formatemoji(i.icon, i.name)} ${i.name}`), this.planner.formatCosts(as)]
                   .flat()
                   .filter(Boolean)
                   .join(" \u2022 "),
               ),
               row(
-                button({ custom_id: this.createCustomId({ item: as!.guid, data: "Buy" }), label: "Bought", style: 3 }),
-                button({ custom_id: this.createCustomId({ item: as!.guid, data: "Receive" }), label: "Received", style: 2 }),
+                button({ custom_id: this.createCustomId({ item: as.guid, data: "Buy" }), label: "Bought", style: 3 }),
+                button({ custom_id: this.createCustomId({ item: as.guid, data: "Receive" }), label: "Received", style: 2 }),
               ),
             ]),
       ],

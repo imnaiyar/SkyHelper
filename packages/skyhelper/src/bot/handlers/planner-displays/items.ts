@@ -19,9 +19,9 @@ export class ItemsDisplay extends BasePlannerHandler {
     }
     this.state.filter ??= "Outfit-Outfit"; // default to outfit
     const [mainCategory, subCategory] = this.state.filter.split("-");
-    const items = this.data.items.filter((i) => i.type === (subCategory || mainCategory));
+    const items = this.data.items.filter((i) => i.type === (subCategory ?? mainCategory));
     return {
-      components: [container(this.createItemsNav(mainCategory, subCategory), ...this.itemslist(items))],
+      components: [container(this.createItemsNav(mainCategory!, subCategory!), ...this.itemslist(items))],
     };
   }
   createItemsNav(main: string, sub: string) {
@@ -36,7 +36,7 @@ export class ItemsDisplay extends BasePlannerHandler {
         emoji: main === cat ? { id: emojis.leftarrow } : undefined,
       }),
     );
-    const subnav = ItemCategory[main as unknown as keyof typeof ItemCategory].map((cat) =>
+    const subnav = ItemCategory[main as unknown as keyof typeof ItemCategory].map((cat: string) =>
       button({
         label: cat,
         custom_id: this.createCustomId({ filter: `${main}-${cat}` }),
@@ -70,7 +70,7 @@ export class ItemsDisplay extends BasePlannerHandler {
           [
             item.group,
             item.nodes?.[0]?.root?.spiritTree?.spirit?.name,
-            item.nodes?.[0].root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
+            item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
             item.season?.shortName,
           ]
             .filter(Boolean)
@@ -104,8 +104,8 @@ export class ItemsDisplay extends BasePlannerHandler {
         ? row(
             this.viewbtn(this.createCustomId({ filter: "preview" }), {
               label: "Preview",
-              style: (this.state.filter || "preview") === "preview" ? 2 : 3,
-              disabled: (this.state.filter || "preview") === "preview",
+              style: (this.state.filter ?? "preview") === "preview" ? 2 : 3,
+              disabled: (this.state.filter ?? "preview") === "preview",
             }),
             this.viewbtn(this.createCustomId({ filter: "dye" }), {
               label: "Dye Preview",
@@ -114,7 +114,7 @@ export class ItemsDisplay extends BasePlannerHandler {
             }),
           )
         : null,
-      item.previewUrl && (this.state.filter || "preview") === "preview"
+      item.previewUrl && (this.state.filter ?? "preview") === "preview"
         ? mediaGallery(mediaGalleryItem(this.planner.resolveUrls(item.previewUrl), { description: item.name }))
         : null,
       this.state.filter === "dye"

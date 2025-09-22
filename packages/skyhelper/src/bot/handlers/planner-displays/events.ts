@@ -21,7 +21,7 @@ export class EventsDisplay extends BasePlannerHandler {
     if (this.state.item) {
       const event = this.data.events.find((e) => e.guid === this.state.item);
       if (!event) throw new Error("Event not found");
-      this.state.filter ??= event.instances?.[0].guid || undefined;
+      this.state.filter ??= event.instances?.[0]?.guid ?? undefined;
       const display = await this.eventDisplay(event);
       attachements = display.attachment;
       components.push(container(display.components));
@@ -44,8 +44,8 @@ export class EventsDisplay extends BasePlannerHandler {
           this.viewbtn(this.createCustomId({ item: event.guid })),
           `**${event.name}**`,
           [event.instances?.map((i) => this.planner.resolveToLuxon(i.date).year.toString()), event.recurring ? "Recurring" : ""]
-            .filter(Boolean)
-            .flatMap((s) => s)
+            .filter((s) => !!s)
+            .flat()
             .join(" • "),
           "\u200b", // o-width for visual spacing, not using separator to save comp limit,
         ),
@@ -83,7 +83,7 @@ export class EventsDisplay extends BasePlannerHandler {
       : null;
     const subs = [
       `## ${event.name}`,
-      instance ? `From ${this.formatDateTimestamp(instance.date)} to ${this.formatDateTimestamp(instance?.date)}` : null,
+      instance ? `From ${this.formatDateTimestamp(instance.date)} to ${this.formatDateTimestamp(instance.date)}` : null,
       totalCosts && `Total Cost: ${totalCosts}`,
     ].filter(Boolean) as [string, ...string[]];
 
@@ -109,7 +109,7 @@ export class EventsDisplay extends BasePlannerHandler {
       type: ComponentType.StringSelect,
       custom_id: this.createCustomId({}),
       options: instance.spirits.map((s, i) => ({
-        label: s.name || s.spirit.name,
+        label: s.name ?? s.spirit.name,
         value: i.toString(),
         default: index === i,
       })),
@@ -119,7 +119,7 @@ export class EventsDisplay extends BasePlannerHandler {
     let attachment: RawFile | undefined;
     if (spirit?.tree) {
       const buffer = await generateSpiritTree(spirit.tree, {
-        spiritName: spirit.name || spirit.spirit.name,
+        spiritName: spirit.name ?? spirit.spirit.name,
         spiritUrl: spirit.spirit.imageUrl,
       });
       attachment = { name: "tree.png", data: buffer };
@@ -136,14 +136,14 @@ export class EventsDisplay extends BasePlannerHandler {
             }),
             { label: "Shop", emoji: { id: emojis.shopcart } },
           ),
-          `## ${instance.name || ""} Year ${start.year}`,
+          `## ${instance.name ?? ""} Year ${start.year}`,
         ),
         instance.spirits.length > 1 ? selectRow : null,
 
         spirit
           ? section(
               this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-              `# ${spirit.name || spirit.spirit.name}`,
+              `# ${spirit.name ?? spirit.spirit.name}`,
               this.planner.getFormattedTreeCost(spirit.tree),
               "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
             )

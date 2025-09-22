@@ -16,13 +16,13 @@ export default {
       try {
         const data = await SkyPlannerData.getSkyGamePlannerData();
         const results = SkyPlannerData.searchEntitiesByName(focusedValue as string, data);
-
-        return helper.respond({
+        await helper.respond({
           choices: results.slice(0, 25).map((result) => ({
             name: `${result.type}: ${result.name}`,
             value: result.guid,
           })),
         });
+        return;
       } catch (error) {
         console.error("Error in autocomplete:", error);
         return helper.respond({ choices: [{ name: "Error searching data", value: "error" }] });
@@ -138,7 +138,7 @@ export default {
       // Get a descriptive name for the entity
       let entityName = "Unknown";
       if ("name" in entity.data && entity.data.name) {
-        entityName = entity.data.name as string;
+        entityName = entity.data.name;
       }
 
       await helper.editReply({
