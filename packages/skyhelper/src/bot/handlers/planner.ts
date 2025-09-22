@@ -14,7 +14,7 @@ import {
 } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags } from "discord-api-types/v10";
 import { DateTime } from "luxon";
-import type { TransformedData } from "node_modules/@skyhelperbot/constants/dist/skygame-planner/transformer.js";
+import type { TransformedData } from "@skyhelperbot/constants/skygame-planner";
 import { SpiritsDisplay } from "./planner-displays/spirits.js";
 import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./planner-displays/base.js";
 import { RealmsDisplay } from "./planner-displays/realms.js";

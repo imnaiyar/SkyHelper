@@ -1,4 +1,4 @@
-import { ItemType, type IItem } from "node_modules/@skyhelperbot/constants/dist/skygame-planner/interfaces.js";
+import { ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
@@ -25,18 +25,18 @@ export class ItemsDisplay extends BasePlannerHandler {
     };
   }
   createItemsNav(main: string, sub: string) {
-    const mainnav = Object.keys(ItemCategory).map((cat, i) =>
+    const mainnav = Object.keys(ItemCategory).map((cat) =>
       button({
         label: main === cat ? "Home" : cat + "s",
         custom_id: this.createCustomId({
           tab: main === cat ? DisplayTabs.Home : this.state.tab,
-          filter: `${cat}-${ItemCategory[cat as keyof typeof ItemCategory][0] ?? ""}`,
+          filter: `${cat}-${ItemCategory[cat as unknown as keyof typeof ItemCategory][0] ?? ""}`,
         }),
         style: main === cat ? 4 : 2,
         emoji: main === cat ? { id: emojis.leftarrow } : undefined,
       }),
     );
-    const subnav = ItemCategory[main as keyof typeof ItemCategory].map((cat, i) =>
+    const subnav = ItemCategory[main as unknown as keyof typeof ItemCategory].map((cat) =>
       button({
         label: cat,
         custom_id: this.createCustomId({ filter: `${main}-${cat}` }),

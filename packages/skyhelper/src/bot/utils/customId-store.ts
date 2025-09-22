@@ -30,6 +30,7 @@ export enum CustomId {
   RemindersManage,
   SpiritButton,
   PlannerTopLevelNav,
+  PlannerFilters,
 }
 
 export const store = new SchemaStore()
@@ -58,4 +59,11 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", t.string))
   .add(new Schema(CustomId.RemindersManage).string("key").uint8("page").string("user"))
   .add(new Schema(CustomId.SpiritButton).string("spirit_key").nullable("user", t.string))
-  .add(new Schema(CustomId.PlannerTopLevelNav).string("tab").nullable("user", t.string));
+  .add(new Schema(CustomId.PlannerTopLevelNav).string("tab").nullable("user", t.string))
+  .add(
+    new Schema(CustomId.PlannerFilters)
+      .string("tab")
+      .array("filters", t.string)
+      .nullable("default", t.string)
+      .nullable("user", t.string),
+  );

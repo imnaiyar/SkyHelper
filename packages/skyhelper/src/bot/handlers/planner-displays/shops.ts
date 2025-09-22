@@ -38,7 +38,7 @@ export class ShopsDisplay extends BasePlannerHandler {
           ? "Store Items" + ` (${this.listItems.length})`
           : "In-App Purchases" + ` (${this.iaps.length})`,
       ),
-      ...this.getItemsListDisplay(shop),
+      ...this.getItemsListDisplay(),
     ];
   }
   private getshopname(shop: SkyPlannerData.IShop) {
@@ -67,7 +67,7 @@ export class ShopsDisplay extends BasePlannerHandler {
     );
   }
 
-  getItemsListDisplay(shop: SkyPlannerData.IShop) {
+  getItemsListDisplay() {
     return this.displayPaginatedList({
       /** Only asserting so I get correct type in `itemCallback` bcz aparrentl filter(Boolean) doesnt cut it */
       items: (this.state.filter === "store" ? this.listItems.map((i) => ({ ...i, type: "list" })) : this.iaps) as Array<
