@@ -20,6 +20,7 @@ export default defineButton({
   async execute(interaction, _t, helper, { key: event_key, page }) {
     const key = event_key as (typeof REMINDERS_KEY)[number];
     const { client } = helper;
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const { getModalComponent: getMC } = client.utils;
     const guild = client.guilds.get(interaction.guild!.id);
     if (!guild) throw new Error("'guild not found");
@@ -122,7 +123,7 @@ export default defineButton({
       })
       .catch(() => null);
     if (!submit) {
-      helper.followUp({
+      await helper.followUp({
         content: "You did not respond in time. Please try again.",
         flags: MessageFlags.Ephemeral,
       });
@@ -132,7 +133,7 @@ export default defineButton({
     const modalHelper = new InteractionHelper(submit, client);
     await modalHelper.deferUpdate();
 
-    const s_channel = getMC(submit, "channel", ComponentType.ChannelSelect);
+    const s_channel = getMC(submit, "channel", ComponentType.ChannelSelect, true);
     const s_role = getMC(submit, "role", ComponentType.RoleSelect);
     const s_offset = getMC(submit, "offset", ComponentType.StringSelect);
     const s_shard_type = key === "shards-eruption" ? getMC(submit, "shard_type", ComponentType.StringSelect) : null;
@@ -154,7 +155,7 @@ export default defineButton({
       });
       return;
     }
-    const ch = submit.data.resolved!.channels![s_channel.values[0]];
+    const ch = submit.data.resolved!.channels![s_channel.values[0]!]!;
     const isThread = "thread_metadata" in ch;
     const new_channel = client.channels.get(isThread ? ch.parent_id! : ch.id)! as APITextChannel | APIGuildForumChannel;
 
@@ -184,8 +185,8 @@ export default defineButton({
     events[key] = {
       last_messageId: null,
       ...(events[key] ?? {}),
-      role: s_role.values[0] ?? null,
-      offset: s_offset.values[0] ? parseInt(s_offset.values[0]) : 0,
+      role: s_role?.values[0] ?? null,
+      offset: s_offset?.values[0] ? parseInt(s_offset.values[0]) : 0,
       shard_type: s_shard_type
         ? s_shard_type.values.length
           ? (s_shard_type.values as Array<"red" | "black">)

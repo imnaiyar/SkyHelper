@@ -46,7 +46,7 @@ export default class {
    */
   static error(content: any, err?: any, scope?: Scope): string {
     const scop = err instanceof Scope ? err : scope;
-    // eslint-disable-next-line
+
     const error = err instanceof Scope ? undefined : err;
     const id = captureException(error ?? content, scop);
     if (error) {
@@ -62,7 +62,6 @@ export default class {
    * @param content
    */
   static debug(...content: any[]) {
-    // eslint-disable-next-line
     logger.debug(...content);
   }
 

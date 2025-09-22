@@ -115,7 +115,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     // #region autocomplet
     if (helper.isAutocomplete(interaction)) {
       const command = client.commands.get(interaction.data.name) as Command<true> | undefined;
-      if (!command || !command.autocomplete) {
+      if (!command?.autocomplete) {
         await helper.respond({
           choices: [
             {
@@ -282,7 +282,7 @@ function formatIfUserApp(int: APIApplicationCommandInteraction): string | null {
   const inGroupDM =
     int.channel.type === ChannelType.GroupDM &&
     `Group DM - Owner: \`${int.channel.owner_id}\` | Channel: ${int.channel.name ?? "None"} (\`${int.channel.id}\`)`;
-  return "User App" + (inGuild ? `Guild: \`${int.guild_id}\`` : (isDm ?? inGroupDM));
+  return "User App" + (inGuild ? `Guild: \`${int.guild_id}\`` : isDm || inGroupDM);
 }
 
 function buildInteractionLog(

@@ -97,8 +97,8 @@ export default class {
     const match = url.match(WebhookRegex);
     if (!match) return null;
     return {
-      id: match[2],
-      token: match[3],
+      id: match[2]!,
+      token: match[3]!,
     };
   }
 
@@ -126,10 +126,10 @@ export default class {
    */
   static parseCustomId(customId: string): ParsedCustomId {
     const parts = customId.split(";");
-    const obj: ParsedCustomId = { id: parts[0] };
+    const obj: ParsedCustomId = { id: parts[0]! };
     for (let i = 1; i < parts.length; i++) {
-      const [key, value] = parts[i].split(":");
-      obj[key] = value;
+      const [key, value] = parts[i]!.split(":");
+      obj[key!] = value!;
     }
     return obj;
   }
@@ -178,7 +178,21 @@ export default class {
   static getModalComponent<Type extends ComponentType = ComponentType>(
     int: APIModalSubmitInteraction,
     customId: string,
+    type: Type,
+    required: true,
+  ): Extract<ModalSubmitComponent, { type: Type }>;
+
+  static getModalComponent<Type extends ComponentType = ComponentType>(
+    int: APIModalSubmitInteraction,
+    customId: string,
     type?: Type,
+    required?: boolean,
+  ): Extract<ModalSubmitComponent, { type: Type }> | undefined;
+  static getModalComponent<Type extends ComponentType = ComponentType>(
+    int: APIModalSubmitInteraction,
+    customId: string,
+    type?: Type,
+    required?: boolean,
   ): Extract<ModalSubmitComponent, { type: Type }> | undefined {
     const components = int.data.components.reduce<ModalSubmitComponent[]>((acc, label) => {
       if ("components" in label) return acc.concat(label.components);
@@ -186,6 +200,7 @@ export default class {
       return acc;
     }, []);
     const comp = components.find((component) => component.custom_id === customId);
+    if (required && !comp) throw new Error(`Couldn't find the required component with customId '${customId}'`);
     if (type && comp?.type !== type) {
       throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
     }

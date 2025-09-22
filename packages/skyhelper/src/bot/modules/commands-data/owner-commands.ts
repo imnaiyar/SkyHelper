@@ -66,8 +66,8 @@ export const BLACKLIST_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
     {
       type: "message",
       callback({ args }) {
-        if (args) return { status: true };
-        const sub = args[0];
+        if (args.length) return { status: true };
+        const sub = args[0]!;
         if (["g", "rmG", "u", "rmU"].includes(sub) && !args[1]) {
           return { status: false, message: "Id must be provided with the subcommand" };
         }

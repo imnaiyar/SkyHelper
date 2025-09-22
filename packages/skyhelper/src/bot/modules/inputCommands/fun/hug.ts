@@ -6,7 +6,7 @@ export default {
   ...HUG_DATA,
   async messageRun({ message, args, client }) {
     const msg = message;
-    const user = msg.mentions[0] || (await client.api.users.get(args[0]).catch(() => undefined));
+    const user = msg.mentions[0] ?? (await client.api.users.get(args[0]!).catch(() => undefined));
     if (!user) {
       await client.api.channels.createMessage(msg.channel_id, {
         content: "You need to mention someone to hug, you can't exactly hug air, can you?",

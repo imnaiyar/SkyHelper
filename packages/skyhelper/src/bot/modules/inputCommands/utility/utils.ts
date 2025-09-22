@@ -53,7 +53,7 @@ async function handleInfo(helper: InteractionHelper, time: number): Promise<void
   const appl = await client.api.applications.getCurrent();
   let desc = "";
   desc += `<:servers:1243977429542764636> ${t("common:bot.TOTAL_SERVER")}: ${guilds}\n`;
-  // eslint-disable-next-line
+
   desc += t("common:bot.TOTAL_AUTHORIZED") + ": " + appl.approximate_user_install_count! + "\n";
   desc += `<:users:1243977425725952161> ${t("common:bot.TOTAL_USERS")}: ${users}\n`;
   desc += `<a:uptime:1228956558113771580> ${t("common:bot.PING")}: ${client.ping} ms\n`;

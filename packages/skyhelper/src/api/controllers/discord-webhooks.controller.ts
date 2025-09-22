@@ -21,11 +21,10 @@ export class WebhookEventController {
     ) {
       return;
     }
-    if (!body.event.data) return;
     const data = body.event.data;
     const { user } = data;
     const webhook = process.env.GUILD ? this.bot.utils.parseWebhookURL(process.env.GUILD) : undefined;
-    if ("guild" in data && data.guild) this._checkBlacklisted(data.guild.id, user.id);
+    if ("guild" in data && data.guild) await this._checkBlacklisted(data.guild.id, user.id);
     const isDeauthorized = body.event.type === ApplicationWebhookEventType.ApplicationDeauthorized;
     if (!webhook) return;
 
@@ -37,7 +36,7 @@ export class WebhookEventController {
           : "GuildInstall"
         : "Oauth2";
     description += `\n\n**Type:** \`${isDeauthorized ? "Deauthorized" : type}\``;
-    if ("scopes" in data && data.scopes) {
+    if ("scopes" in data) {
       description += `\n**Scopes:** ${data.scopes.map((sc) => `\`${sc}\``).join(" ")}`;
     }
     if ("guild" in data && data.guild) {

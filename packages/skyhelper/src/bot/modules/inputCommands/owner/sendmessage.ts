@@ -6,7 +6,7 @@ import type { APIModalInteractionResponseCallbackData } from "@discordjs/core";
 export default {
   ...SEND_MESSAGE_DATA,
   async messageRun({ message, args, client }) {
-    const user = message.mentions[0]?.id || args[0];
+    const user = message.mentions[0]?.id ?? args[0]!;
     const msg = args.slice(1).join(" ");
     // not catching explicitly to know if something went wrong
     const channel = await client.api.users.createDM(user);

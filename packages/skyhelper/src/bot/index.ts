@@ -62,7 +62,7 @@ gateway.on(WebSocketShardEvents.HeartbeatComplete, (d) => {
   client.ping = d.latency;
 });
 
-gateway.connect();
+gateway.connect().catch(client.logger.error);
 
 process.on("unhandledRejection", (err) => {
   client.logger.error("Unhandled: ", err);

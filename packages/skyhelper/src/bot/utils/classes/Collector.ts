@@ -141,7 +141,6 @@ export class InteractionCollector<
     if (!passesFilter) return;
     this.emit("collect", int);
 
-    // eslint-disable-next-line
     this.collected.push(int as any);
     if (this.options.idle) {
       clearTimeout(this.timer);

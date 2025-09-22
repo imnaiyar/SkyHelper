@@ -209,7 +209,9 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
 
   await helper.client.api.interactions.deferMessageUpdate(response.id, response.token);
 
-  if (response.data.component_type === 2) return shard_type.length ? shard_type : (["black", "red"] as Array<"black" | "red">);
+  if (response.data.component_type === ComponentType.Button) {
+    return shard_type.length ? shard_type : (["black", "red"] as Array<"black" | "red">);
+  }
   return response.data.values as Array<"black" | "red">;
 }
 

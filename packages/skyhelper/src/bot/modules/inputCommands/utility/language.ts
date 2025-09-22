@@ -31,13 +31,11 @@ export default {
       switch (type) {
         case "server": {
           const settings = await client.schemas.getSettings(guild!);
-          if (lang === settings.language?.value) {
+          if (settings.language?.value === lang) {
             return void (await helper.editReply({
               content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_SET", {
                 TYPE: "The server's",
-                LANGUAGE: `${language.name} (${
-                  settings.language?.flag ? settings.language.flag + " " : ""
-                }\`${language.value}\`)`,
+                LANGUAGE: `${language.name} (${settings.language.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
               }),
             }));
           }
@@ -48,7 +46,7 @@ export default {
           return void (await helper.editReply({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS", {
               TYPE: `\`${guild!.name}\``,
-              Language: `${language.name} (${settings.language?.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
+              Language: `${language.name} (${settings.language.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
               LINK: "<https://docs.skyhelper.xyz/pages/translating>",
             }),
           }));
@@ -60,7 +58,7 @@ export default {
               content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_SET", {
                 TYPE: "Your",
                 LANGUAGE: `${language.name} (${
-                  user_settings.language?.flag ? user_settings.language.flag + " " : ""
+                  user_settings.language.flag ? user_settings.language.flag + " " : ""
                 }\`${language.value}\`)`,
               }),
             }));
@@ -72,7 +70,7 @@ export default {
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS", {
               TYPE: `\`${helper.user.username}\``,
               Language: `${language.name} (${
-                user_settings.language?.flag ? user_settings.language.flag + " " : ""
+                user_settings.language.flag ? user_settings.language.flag + " " : ""
               }\`${language.value}\`)`,
               LINK: "<https://crowdin.com/project/skyhelper>",
             }),

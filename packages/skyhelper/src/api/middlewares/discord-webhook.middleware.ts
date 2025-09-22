@@ -12,8 +12,6 @@ function hextToUint8(value: string) {
 }
 @Injectable()
 export class WebhookEventMiddleware implements NestMiddleware {
-  constructor() {}
-
   async use(req: Request, res: Response, next: NextFunction) {
     // Get the headers
     const timestamp = req.header("X-Signature-Timestamp");

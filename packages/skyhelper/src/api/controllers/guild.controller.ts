@@ -136,7 +136,7 @@ export class GuildController {
       prefix: settings.prefix,
       beta: settings.beta,
       language: settings.language?.value ?? "en-US",
-      announcement_channel: settings.annoucement_channel ?? undefined,
+      announcement_channel: settings.annoucement_channel || undefined,
     };
   }
 
@@ -293,7 +293,7 @@ export class GuildController {
     schema: { type: "null" },
   })
   @UnauthorizedResponse
-  async getChannels(@Param("guild", GuildIDPredicate) guild: string) {
+  getChannels(@Param("guild", GuildIDPredicate) guild: string) {
     const g = this.bot.guilds.get(guild);
     const channels = g?.channels;
     if (!g || channels == null) return null;
@@ -301,7 +301,7 @@ export class GuildController {
     const memberPerm = (ch: APITextChannel) => PermissionsUtil.overwriteFor(member, ch, this.bot);
     return [
       ...channels
-        .filter((ch) => ch?.type === ChannelType.GuildText && memberPerm(ch).has(["ViewChannel", "ManageWebhooks"]))
+        .filter((ch) => ch.type === ChannelType.GuildText && memberPerm(ch).has(["ViewChannel", "ManageWebhooks"]))
         .values(),
     ];
   }
@@ -337,7 +337,7 @@ export class GuildController {
     schema: { type: "null" },
   })
   @UnauthorizedResponse
-  async getRoles(@Param("guild", GuildIDPredicate) guild: string) {
+  getRoles(@Param("guild", GuildIDPredicate) guild: string) {
     const roles = this.bot.guilds.get(guild)?.roles;
     if (roles == null) return null;
 

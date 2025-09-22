@@ -18,7 +18,7 @@ export async function handleSeasional(helper: InteractionHelper, options: Intera
   const value = options.getString("season")!;
   const type = options.getString("type")!;
   const season = seasonsData[value as keyof typeof seasonsData];
-  if (!season) {
+  if (!season as boolean) {
     return await helper.editReply({ content: helper.t("commands:GUIDES.RESPONSES.INVALID_SEASON_VALUE", { VALUE: value }) });
   }
   switch (type) {
@@ -36,8 +36,8 @@ export async function handleSeasional(helper: InteractionHelper, options: Intera
 async function handleQuests(helper: InteractionHelper, season: SeasonData) {
   const quests = season.quests;
   const now = DateTime.now().setZone(helper.client.timezone).startOf("day");
-  const start = DateTime.fromFormat(season.from[0], "dd-MM-yyyy", { zone: helper.client.timezone }).startOf("day");
-  const end = DateTime.fromFormat(season.from[1], "dd-MM-yyyy", { zone: helper.client.timezone }).endOf("day");
+  const start = DateTime.fromFormat(season.from[0]!, "dd-MM-yyyy", { zone: helper.client.timezone }).startOf("day");
+  const end = DateTime.fromFormat(season.from[1]!, "dd-MM-yyyy", { zone: helper.client.timezone }).endOf("day");
   const isActive = now >= start && now <= end;
 
   const t = helper.t;
@@ -50,7 +50,8 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
   let page = 1;
   const getResponse = () => {
     const quest = quests[page - 1];
-    const emojiUrl = helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(season.icon)!.id);
+    if (!quest) throw new Error("Unknown quests");
+    const emojiUrl = helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(season.icon)!.id!);
     const comp = container(
       section(
         thumbnail(emojiUrl, season.name),
@@ -93,14 +94,14 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
         {
           type: ComponentType.Button,
           custom_id: helper.client.utils.store.serialize(CustomId.SeasonalQuestNav, { page: page - 1, user: helper.user.id }),
-          label: "◀️ " + (page === 1 ? quest.title : quests[page - 2].title),
+          label: "◀️ " + (page === 1 ? quest.title : quests[page - 2]?.title),
           disabled: page === 1,
           style: ButtonStyle.Secondary,
         },
         {
           type: ComponentType.Button,
           custom_id: helper.client.utils.store.serialize(CustomId.SeasonalQuestNav, { page: page + 1, user: helper.user.id }),
-          label: page === total ? quest.title : quests[page].title + " ▶️",
+          label: page === total ? quest.title : quests[page]?.title + " ▶️",
           disabled: page === total,
           style: ButtonStyle.Secondary,
         },
@@ -123,7 +124,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
       return;
     }
     if (id === CustomId.SeasonalQuestNav) page = data.page;
-    if (compHelper.isStringSelect(compInt)) page = parseInt(compInt.data.values[0]);
+    if (compHelper.isStringSelect(compInt)) page = parseInt(compInt.data.values[0]!);
     await compHelper.update(getResponse());
   });
 }

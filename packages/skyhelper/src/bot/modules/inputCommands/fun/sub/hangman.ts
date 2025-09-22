@@ -17,6 +17,7 @@ import {
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
+  ComponentType,
 } from "@discordjs/core";
 import type { RawFile } from "@discordjs/rest";
 import type { SkyGameStatsData } from "@/types/custom";
@@ -76,7 +77,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
     if (id !== CustomId.SkyHagman) return;
     const { action } = data;
     if (compoHelper.isStringSelect(i)) {
-      const value = i.data.values[0];
+      const value = i.data.values[0]!;
       if (action === "type") {
         type = value;
         if (value === "random") word = null;
@@ -127,9 +128,9 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
         );
         // remove the button row
         const components = i.message.components! as APIContainerComponent[];
-        const rowCount = components[0].components.filter((c) => c.type === 1).length;
+        const rowCount = components[0]!.components.filter((c) => c.type === ComponentType.ActionRow).length;
 
-        components[0].components.splice(-rowCount, rowCount);
+        components[0]!.components.splice(-rowCount, rowCount);
 
         await compoHelper.update({ components });
 
@@ -296,7 +297,7 @@ export const getCardResponse = async (
         games: d.gamesPlayed,
         score: d.gamesWon,
         top: i + 1,
-        avatar: client.utils.getUserAvatar(member as APIGuildMember, guild?.id),
+        avatar: client.utils.getUserAvatar(member as APIGuildMember, guild.id),
       };
     }),
   );

@@ -57,10 +57,10 @@ function formatCommand(command: APIApplicationCommand, client: SkyHelper): APIEm
         desc += _opts.options
           ?.map((opt) => {
             let opts: string | undefined = undefined;
-            if (opt.type === ApplicationCommandOptionType.Subcommand && opt.options) {
+            if (opt.options) {
               opts = formatOptions(opt.options);
             }
-            return `</${name} ${_opts.name} ${opt.name}:${command.id}>\n↪ ${opt.description}${opt ? `\n- **Options**:\n${opts}` : ""}`;
+            return `</${name} ${_opts.name} ${opt.name}:${command.id}>\n↪ ${opt.description}\n- **Options**:\n${opts}`;
           })
           .join("\n\n");
       }
@@ -71,7 +71,7 @@ function formatCommand(command: APIApplicationCommand, client: SkyHelper): APIEm
           if (opt.type === ApplicationCommandOptionType.Subcommand && opt.options) {
             opts = formatOptions(opt.options);
           }
-          return `</${name} ${opt.name}:${command.id}>\n↪ ${opt.description}${opt ? `\n- **Options**:\n${opts}` : ""}`;
+          return `</${name} ${opt.name}:${command.id}>\n↪ ${opt.description}\n- **Options**:\n${opts}`;
         })
         .join("\n\n");
     }
@@ -87,10 +87,9 @@ function formatCommand(command: APIApplicationCommand, client: SkyHelper): APIEm
     if (local_commands.userPermissions) desc += `\n- Required User Permissions: \`${(local_commands.userPermissions as []).join(", ")}\``;
     // prettier-ignore
     if (local_commands.botPermissions) desc += `\n- Required Bot Permissions: \`${(local_commands.botPermissions as []).join(", ")}\``;
-    if (local_commands.category) desc += `\n- Category: \`${local_commands.category}\``;
+    desc += `\n- Category: \`${local_commands.category}\``;
 
-    // prettier-ignore
-    if (local_commands.category) desc += `\n\n-# You can learn more about this command at our command documentations [here](${client.config.DOCS_URL}/guide/docs/commands/${local_commands.category.toLowerCase()}#${command.name})`;
+    desc += `\n\n-# You can learn more about this command at our command documentations [here](${client.config.DOCS_URL}/guide/docs/commands/${local_commands.category.toLowerCase()}#${command.name})`;
   }
   return {
     title,
@@ -136,9 +135,13 @@ export function handleCategoryCommands(
 
 function format(command: APIApplicationCommand, t: ReturnType<typeof import("@/i18n").getTranslator>) {
   if ([ApplicationCommandType.Message, ApplicationCommandType.User].includes(command.type)) {
-    return `</${command.name}:${command.id}>  \`${command.type === 3 ? t("commands:HELP.RESPONSES.MESSAGE_APP_DESC") : t("commands:HELP.RESPONSES.USER_APP_DESC")}\``;
+    return `</${command.name}:${command.id}>  \`${command.type === ApplicationCommandType.Message ? t("commands:HELP.RESPONSES.MESSAGE_APP_DESC") : t("commands:HELP.RESPONSES.USER_APP_DESC")}\``;
   }
-  if (command.options?.some((op) => op.type === 1 || op.type === ApplicationCommandOptionType.SubcommandGroup)) {
+  if (
+    command.options?.some(
+      (op) => op.type === ApplicationCommandOptionType.Subcommand || op.type === ApplicationCommandOptionType.SubcommandGroup,
+    )
+  ) {
     return command.options.map((o) => {
       if (o.type === ApplicationCommandOptionType.SubcommandGroup) {
         const formatted = [];

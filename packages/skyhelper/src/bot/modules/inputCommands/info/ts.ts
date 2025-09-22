@@ -29,7 +29,7 @@ const getTSResponse = async (
 
   const visitingDates = `${client.utils.time(ts.nextVisit.toUnixInteger(), "D")} - ${client.utils.time(ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "D")}`;
   if (ts.value) {
-    const spirit: SpiritsData = client.spiritsData[ts.value];
+    const spirit: SpiritsData = client.spiritsData[ts.value]!;
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
     const emote = spirit.expression?.icon ?? "<:spiritIcon:1206501060303130664>";
     const description = ts.visiting
@@ -68,7 +68,7 @@ const getTSResponse = async (
       section(
         thumbnail("https://cdn.imnaiyar.site/" + spirit.tree!.image),
         `${emojis.right_chevron} ${
-          spirit.ts?.returned
+          spirit.ts.returned
             ? t("features:SPIRITS.TREE_TITLE", { CREDIT: spirit.tree!.by })
             : t("features:SPIRITS.SEASONAL_CHART", { CREDIT: spirit.tree!.by })
         }`,

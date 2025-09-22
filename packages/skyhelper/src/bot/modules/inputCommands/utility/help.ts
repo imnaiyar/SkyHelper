@@ -30,7 +30,7 @@ export default {
     const guild = client.guilds.get(helper.int.guild_id ?? "");
     let page = 1;
     const guildCommands = guild ? [...(await client.api.applicationCommands.getGuildCommands(client.user.id, guild.id))] : [];
-    const updateSlashMenu = async () => {
+    const updateSlashMenu = () => {
       const totalCommands: string[] = handleCategoryCommands([...commands.values(), ...guildCommands], client, category.name, t);
       const commandsPerPage = 5;
       const totalPages = Math.ceil(totalCommands.length / commandsPerPage);
@@ -106,24 +106,24 @@ export default {
         components: [categoryMenu, hmBtn],
       };
     };
-    await helper.followUp(await updateSlashMenu());
+    await helper.followUp(updateSlashMenu());
     collector.on("collect", async (int) => {
       const compHelper = new InteractionHelper(int, client);
       const { id, data } = client.utils.store.deserialize(int.data.custom_id);
       if (id !== CustomId.Default) return;
       if (data.data === "next") {
         page++;
-        await compHelper.update(await updateSlashMenu());
+        await compHelper.update(updateSlashMenu());
       } else if (data.data === "xxyshdkesudjdsj") {
         if (page > 1) {
           page--;
-          await compHelper.update(await updateSlashMenu());
+          await compHelper.update(updateSlashMenu());
         }
       }
       if (compHelper.isStringSelect(int)) {
         category = Category.find((c) => c.name === int.data.values[0])!;
         page = 1;
-        await compHelper.update(await updateSlashMenu());
+        await compHelper.update(updateSlashMenu());
       }
     });
   },

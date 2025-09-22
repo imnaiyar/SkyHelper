@@ -30,7 +30,7 @@ export const handleLive = async (
       | APITextChannel
       | APIGuildForumChannel;
 
-    if (liveData.messageId && liveData.webhook?.id) {
+    if (liveData.messageId && liveData.webhook.id) {
       const wbh = await client.api.webhooks
         .get(liveData.webhook.id, { token: liveData.webhook.token ?? undefined })
         .catch(() => {});

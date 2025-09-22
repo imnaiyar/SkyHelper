@@ -48,13 +48,13 @@ export class BotController {
     description: "Spirits list retrieved successfully",
     schema: toJSONSchema(z.array(SpiritSchema)),
   })
-  async getSpirits(): Promise<SpiritData[]> {
+  getSpirits(): SpiritData[] {
     const spirits = this.bot.spiritsData;
     const toReturn = Object.entries(spirits)
-      .filter(([, v]) => isSeasonal(v) && v.season)
+      .filter(([, v]) => isSeasonal(v))
       .map(([k, v]) => {
         const emoji = v.expression ?? { icon: "<:spiritIcon:1206501060303130664>" };
-        const id = emoji && this.bot.utils.parseEmoji(emoji.icon)?.id;
+        const id = this.bot.utils.parseEmoji(emoji.icon)?.id;
         const url = id && this.bot.rest.cdn.emoji(id);
         const t = { name: v.name, value: k, ...(url && { icon: url }) };
         return t;

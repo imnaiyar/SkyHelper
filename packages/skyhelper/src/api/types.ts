@@ -18,7 +18,7 @@ export const ReminderFeatureSchema = z.object({
   aurora: ReminderFeatureBaseSchema,
   ts: ReminderFeatureBaseSchema,
   "shards-eruption": ReminderFeatureBaseSchema.extend({ shard_type: z.array(z.enum(["red", "black"])).nullable() }).refine(
-    (data) => !data.active || (data.active && data.shard_type && data.shard_type.length > 0),
+    (data) => !data.active || (data.shard_type && data.shard_type.length > 0),
     {
       message: "You must select at least one shard type for the reminder",
       path: ["shard_type"],

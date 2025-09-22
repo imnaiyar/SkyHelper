@@ -19,7 +19,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
   const t = helper.t;
   const spirits = Object.entries(client.spiritsData).filter(([, v]) => {
     if (typeof seasonOrRealm !== "string") {
-      return isSeasonal(v) && v.season && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
+      return isSeasonal(v) && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
     }
     return v.realm && v.realm.toLowerCase() === seasonOrRealm.toLowerCase();
   });
@@ -31,14 +31,14 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
         client.utils.mentionCommand(client, "utils", "contact-us"),
     });
   }
-  let value = spirits[0][0];
+  let value = spirits[0]![0];
   const placehoder =
     typeof seasonOrRealm === "string"
       ? t("commands:GUIDES.RESPONSES.REALM_SELECT_PLACEHOLDER", { REALM: seasonOrRealm })
       : t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: seasonOrRealm.name });
 
   const getUpdate = async (commandHelper: InteractionHelper) => {
-    const data = client.spiritsData[value];
+    const data = client.spiritsData[value]!;
     const row: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
@@ -48,7 +48,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
           placeholder: placehoder,
           options: spirits.map(([k, v]) => ({
             label: v.name + (v.extra ? ` (${v.extra})` : ""),
-            value: k.toString(),
+            value: k,
             emoji: client.utils.parseEmoji(v.expression?.icon ?? v.icon ?? (seasonOrRealm as SeasonData).icon)!,
             default: value === k,
           })),
@@ -75,7 +75,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
     const strHelper = new InteractionHelper(stringInt, client);
     if (!strHelper.isStringSelect(stringInt)) return;
     await strHelper.deferUpdate();
-    value = stringInt.data.values[0];
+    value = stringInt.data.values[0]!;
 
     await getUpdate(strHelper);
   });
@@ -83,7 +83,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
     const m = await helper.fetchReply().catch(() => {});
     if (!m) return;
     const components = [...m.components!] as APIContainerComponent[];
-    components[0].components.splice(9, 1);
+    components[0]?.components.splice(9, 1);
     await helper.editReply({ components });
   });
 }

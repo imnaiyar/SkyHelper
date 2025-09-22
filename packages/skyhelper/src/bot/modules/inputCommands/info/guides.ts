@@ -30,7 +30,7 @@ export default {
       await helper.respond({
         choices: choices.map(([k, v]) => ({
           name: `↪️ Season of ${v.name}`,
-          value: k.toString(),
+          value: k,
         })),
       });
     }

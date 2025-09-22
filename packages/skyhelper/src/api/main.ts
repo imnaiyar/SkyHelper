@@ -54,7 +54,7 @@ export async function bootstrap(client: SkyHelper) {
     methods: ["GET", "HEAD", "POST", "DELETE", "PATCH"],
   });
 
-  await app.listen(config.DASHBOARD.port ?? 8080, () => {
+  await app.listen(config.DASHBOARD.port || 8080, () => {
     logger.custom("Dashboard started at port " + config.DASHBOARD.port, "DASHBOARD");
   });
 }

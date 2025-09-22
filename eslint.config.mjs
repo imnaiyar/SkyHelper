@@ -32,6 +32,10 @@ export default defineConfig([
     },
 
     rules: {
+      /** Turn of extreme strict ones lol */
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/restrict-plus-operands": "off",
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
