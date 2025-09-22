@@ -14,14 +14,14 @@ export const colors = {
 };
 
 export function fancyCount(n: number): string {
-  if (n > 1000000) return Math.floor(n / 1000000) + "M";
+  if (n > 1000000) return String(Math.floor(n / 1000000)) + "M";
 
   if (n > 1000) {
     if (n < 10000) return (n / 1000).toFixed(1) + "k";
-    return Math.floor(n / 1000) + "k";
+    return String(Math.floor(n / 1000)) + "k";
   }
 
-  return Math.floor(n) + "";
+  return String(Math.floor(n));
 }
 
 export function getUserAvatar(user: APIUser): string {

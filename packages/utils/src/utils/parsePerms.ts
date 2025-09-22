@@ -51,6 +51,6 @@ export const parsePerms = (perms: Permission | Permission[]): string => {
   if (Array.isArray(perms)) {
     return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ");
   } else {
-    return `\`${permissions[perms] || perms}\``;
+    return `\`${permissions[perms]}\``;
   }
 };

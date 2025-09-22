@@ -15,7 +15,7 @@ export class LeaderboardCard {
   private colors: colorsType;
 
   constructor(options: LeaderboardOptions) {
-    this.usersData = options?.usersData || [];
+    this.usersData = options.usersData;
     this.background = {
       type: "none",
       background: "none",
@@ -23,7 +23,7 @@ export class LeaderboardCard {
     this.abbreviateNumber = false;
     this.opacity = 0;
     this.scoreMessage = "";
-    this.colors = options?.colors ?? {
+    this.colors = options.colors ?? {
       box: "#212121",
       username: "#ffffff",
       score: "#ffffff",
@@ -134,17 +134,17 @@ export class LeaderboardCard {
       let newValue: string | number = value;
       if (value >= 1000) {
         const suffixes = ["", "K", "M", "B", "T"];
-        const suffixNum = Math.floor(("" + value).length / 3);
+        const suffixNum = Math.floor(String(value).length / 3);
         let shortValue: number | string = "";
         for (let precision = 2; precision >= 1; precision--) {
           shortValue = parseFloat((suffixNum != 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(precision));
-          const dotLessShortValue = (shortValue + "").replace(/[^a-zA-Z 0-9]+/g, "");
+          const dotLessShortValue = String(shortValue).replace(/[^a-zA-Z 0-9]+/g, "");
           if (dotLessShortValue.length <= 2) {
             break;
           }
         }
         if (typeof shortValue === "number" && shortValue % 1 != 0) shortValue = shortValue.toFixed(1);
-        newValue = shortValue + suffixes[suffixNum];
+        newValue = String(shortValue) + (suffixes[suffixNum] ?? "");
       }
       return newValue.toString();
     };
@@ -169,7 +169,7 @@ export class LeaderboardCard {
       }
     }
 
-    if (this.usersData) {
+    if (this.usersData.length > 0) {
       let Box_Y = 0,
         Avatar_Y = 0,
         Tag_Y = 45,
@@ -204,8 +204,8 @@ export class LeaderboardCard {
         ctx.textAlign = "right";
         ctx.fillText(
           `${this.scoreMessage} ${
-            this.abbreviateNumber == true ? `${abbreviateNumber(data.score)}` : `${data.score}`
-          }/${this.abbreviateNumber == true ? `${abbreviateNumber(data.games)}` : `${data.games}`}`,
+            this.abbreviateNumber ? abbreviateNumber(data.score) : `${data.score}`
+          }/${this.abbreviateNumber ? abbreviateNumber(data.games) : `${data.games}`}`,
           560,
           XP_Y,
           200,
@@ -221,7 +221,7 @@ export class LeaderboardCard {
 
         ctx.font = `bold 30px circular-std, noto-emoji, noto-sans-jp, noto-sans, noto-sans-kr`;
         ctx.textAlign = "right";
-        ctx.fillText("#" + data.top, 660, Rank_Y, 75);
+        ctx.fillText("#" + String(data.top), 660, Rank_Y, 75);
 
         Box_Y = Box_Y + 75;
         Avatar_Y = Avatar_Y + 75;

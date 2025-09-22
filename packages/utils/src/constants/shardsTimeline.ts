@@ -1,6 +1,6 @@
 import type { DateTime } from "luxon";
 
-const shardSequence = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"] as const;
+const _shardSequence = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"] as const;
 export interface TimelineType {
   readonly earlySky: DateTime;
   readonly gateShard: DateTime;
