@@ -53,7 +53,6 @@ export function resolveColor(color: ColorResolvable) {
     if (/^#?[\da-f]{6}$/i.test(color)) return parseInt(color.replace("#", ""), 16);
     resolvedColor = Colors[color as keyof typeof Colors];
   } else if (Array.isArray(color)) {
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     resolvedColor = (color[0] << 16) + (color[1] << 8) + color[2];
   } else {
     resolvedColor = color;

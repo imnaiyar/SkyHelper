@@ -17,13 +17,10 @@ export class GameWinnerCard {
     readonly clientAvatar: string,
   ) {
     if ("user" in winner) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       this.name = winner.nick ?? winner.user?.global_name ?? winner?.user.username;
       this.thumbnail = getUserAvatar(winner.user);
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       this.name = winner?.global_name ?? winner?.username;
-
       this.thumbnail = getUserAvatar(winner);
     }
     this.points = wins;
@@ -95,7 +92,6 @@ export class GameWinnerCard {
     // User Text
     //
     ctx.fillStyle = colors.blue;
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     this.changeFontSize(ctx, h * 0.17 + "px");
     ctx.fillText(this.name, w * 0.3, h * 0.45, w * 0.425);
     ctx.fillStyle = colors.idle;
@@ -112,7 +108,6 @@ export class GameWinnerCard {
     ctx.fill();
     ctx.fillRect(w * 0.625, 0, w * 0.5, w * 0.0625);
     ctx.fillStyle = colors.darkgrey;
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     this.changeFontSize(ctx, h * 0.15 + "px");
     ctx.fillText("Sky CoTL Quiz Game", w * 0.55 + h * 0.65, h * 0.15, w * 0.421875);
 
@@ -121,7 +116,6 @@ export class GameWinnerCard {
     ctx.textAlign = "left";
     ctx.fillStyle = colors.lightgrey;
     ctx.drawImage(await loadImage(this.path("../../shared/assets/Point.png")), w * 0.3, h * 0.65, w * 0.0625, w * 0.0625);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     this.changeFontSize(ctx, h * 0.15 + "px");
     ctx.fillText(`${fancyCount(this.points)}/${fancyCount(this.total)} points`, w * 0.25 + h * 0.45, h * 0.65 + h * 0.15, h * 10);
 

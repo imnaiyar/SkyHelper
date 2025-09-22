@@ -51,7 +51,6 @@ export const parsePerms = (perms: Permission | Permission[]): string => {
   if (Array.isArray(perms)) {
     return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ");
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return `\`${permissions[perms] || perms}\``;
   }
 };

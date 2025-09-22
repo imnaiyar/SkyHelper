@@ -75,12 +75,40 @@ export const HangmanResponses: Record<HangmanResponseCodes, string | ((...args: 
     `Sorry! Looks like you have exhausted your lives. Better luck next time! \`${word}\` was the correct word.`,
   [HangmanResponseCodes.EndmGame]: `Stopped the game!`,
 };
-export const getHangmanResponse = (code: HangmanResponseCodes, ...args: any[]) => {
+// Overloads for type safety
+export function getHangmanResponse(
+  code:
+    | HangmanResponseCodes.AlreadyGuessed
+    | HangmanResponseCodes.NextUp
+    | HangmanResponseCodes.FirstRound
+    | HangmanResponseCodes.LivesExhausted,
+  arg: string,
+): string;
+export function getHangmanResponse(code: HangmanResponseCodes.SingleModeStart, lives: number): string;
+export function getHangmanResponse(
+  code: HangmanResponseCodes.Winner | HangmanResponseCodes.GuessedFullWord,
+  user: string,
+  word: string,
+): string;
+export function getHangmanResponse(
+  code:
+    | HangmanResponseCodes.Timeout
+    | HangmanResponseCodes.NotAnAlphabet
+    | HangmanResponseCodes.GuessSuccess
+    | HangmanResponseCodes.WrongGuess
+    | HangmanResponseCodes.WrongWordGuess
+    | HangmanResponseCodes.NotInitialized
+    | HangmanResponseCodes.EndmGame,
+): string;
+
+// Implementation
+export function getHangmanResponse(code: HangmanResponseCodes, ...args: unknown[]): string {
   const response = HangmanResponses[code];
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  if (typeof response === "function") return response(...args);
+  if (typeof response === "function") {
+    return (response as (...args: unknown[]) => string)(...args);
+  }
   return response;
-};
+}
 
 // prettier-ignore
 export const EnglishAlphabets = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",

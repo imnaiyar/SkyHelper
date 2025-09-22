@@ -14,16 +14,13 @@ export const colors = {
 };
 
 export function fancyCount(n: number): string {
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   if (n > 1000000) return Math.floor(n / 1000000) + "M";
 
   if (n > 1000) {
     if (n < 10000) return (n / 1000).toFixed(1) + "k";
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return Math.floor(n / 1000) + "k";
   }
 
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   return Math.floor(n) + "";
 }
 

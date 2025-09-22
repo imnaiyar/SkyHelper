@@ -11,12 +11,6 @@ import { AllowedMentionsTypes, MessageFlags, type RESTPostAPIChannelMessageJSONB
 import { getResponse, getShardReminderResponse, getTSResponse } from "./getResponses.js";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
 
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-
 const speciallyHandledReminders = ["ts", "shards-eruption"];
 /**
  * Sends the reminder to the each active guilds
@@ -35,7 +29,6 @@ export async function reminderSchedules(): Promise<void> {
     const t = getTranslator(guild.language?.value ?? "en-US");
 
     const reminders = guild.reminders;
-    if (!reminders) return;
     for (const key of REMINDERS_KEY) {
       const event = reminders.events[key];
       if (!event?.active || !event.webhook) continue;

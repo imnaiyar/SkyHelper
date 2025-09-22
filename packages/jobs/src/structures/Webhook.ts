@@ -49,10 +49,8 @@ class Webhook {
     try {
       this.token ??= (await this.getWebhook(this.id)).token;
       const query = makeURLSearchParams({ wait: true, thread_id });
-      // eslint-disable-next-line @typescript-eslint/return-await
       return api.post(Routes.webhook(this.id, this.token), { body: { ...options }, query }) as Promise<APIMessage>;
     } catch (err: any) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       if (retries > 0 && retraibleErrors.includes(err.code)) {
         logger.warn(`Retrying webhook send... Attempts left: ${retries}`);
         await new Promise((r) => setTimeout(r, 2000));
@@ -78,13 +76,11 @@ class Webhook {
       if (!messageId) throw new Error("Yout must provide message id to edit");
       const query = makeURLSearchParams({ thread_id });
 
-      // eslint-disable-next-line @typescript-eslint/return-await
       return api.patch(Routes.webhookMessage(this.id, this.token, messageId), {
         body: { ...options },
         query,
       }) as Promise<APIMessage>;
     } catch (err: any) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       if (retries > 0 && retraibleErrors.includes(err.code)) {
         logger.warn(`Retrying webhook edit... Attempts left: ${retries}`);
         await new Promise((r) => setTimeout(r, 2000));
@@ -110,9 +106,7 @@ class Webhook {
     return (await api.get(Routes.webhook(id, token))) as APIWebhook;
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   async delete() {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     api.delete(Routes.webhook(this.id, this.token));
   }
 }

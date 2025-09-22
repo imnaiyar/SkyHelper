@@ -1,6 +1,5 @@
 import type { DateTime } from "luxon";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const shardSequence = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"] as const;
 export interface TimelineType {
   readonly earlySky: DateTime;

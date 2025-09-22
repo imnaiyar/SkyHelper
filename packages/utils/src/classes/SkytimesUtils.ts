@@ -50,7 +50,6 @@ export class SkytimesUtils {
    */
   public static getNextEventOccurrence(eventName: EventKey): DateTime {
     const event = eventData[eventName];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!event) throw new Error("Unknown Event");
 
     const now = DateTime.now().setZone("America/Los_Angeles"); // Current time

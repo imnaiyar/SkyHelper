@@ -24,7 +24,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
   reminders: {
     active: { type: Boolean, default: false },
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    events: REMINDERS_KEY.reduce(
+    events: REMINDERS_KEY.reduce<Record<(typeof REMINDERS_KEY)[number], any>>(
       (acc, key) => {
         const schemaObj: any = {
           active: { type: Boolean, default: false },
@@ -52,10 +52,9 @@ const Schema = new mongoose.Schema<GuildSchema>({
           type: new mongoose.Schema(schemaObj, { _id: false }),
           default: null,
         };
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return acc;
+        // Return accumulator for mongoose schema building
+        return acc as Record<(typeof REMINDERS_KEY)[number], any>;
       },
-
       {} as Record<(typeof REMINDERS_KEY)[number], any>,
     ),
   },
