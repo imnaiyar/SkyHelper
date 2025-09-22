@@ -37,23 +37,23 @@ export class SeasonsDisplay extends BasePlannerHandler {
   }
 
   getSeasonInListDisplay(season: SkyPlannerData.ISeason) {
-    const totalcosts = season.spirits?.reduce(
+    const totalcosts = season.spirits.reduce(
       (acc, spirit) => {
         if (!spirit.tree?.node) return acc;
         const costs = this.planner.calculateCost(spirit.tree.node);
         for (const key of Object.keys(acc)) {
-          acc[key as keyof typeof acc] += costs[key as keyof typeof costs] ?? 0;
+          acc[key as keyof typeof acc] += costs[key as keyof typeof costs] || 0;
         }
         return acc;
       },
       { h: 0, c: 0, ac: 0, sc: 0, sh: 0, ec: 0 },
     );
-    const formatted = totalcosts && this.planner.formatCosts(totalcosts);
+    const formatted = this.planner.formatCosts(totalcosts);
 
     const descriptions: [string, ...string[]] = [
       `From ${this.formatDateTimestamp(season.date)} to ${this.formatDateTimestamp(season.endDate)} (${this.formatDateTimestamp(season.endDate, "R")})`,
       season.spirits.map((s) => (s.icon ? this.formatemoji(s.icon, s.name) : "")).join(" "),
-      formatted ?? "",
+      formatted,
     ];
 
     return [
@@ -71,7 +71,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
   }
 
   async seasondisplay(season: ISeason) {
-    const trees = [...season.spirits.map((s) => s.tree).filter((t) => !!t), ...(season.includedTrees?.filter((t) => !!t) ?? [])];
+    const trees = [...season.spirits.map((s) => s.tree).filter((t) => !!t), ...(season.includedTrees ?? [])];
     const [start, end] = [this.planner.resolveToLuxon(season.date), this.planner.resolveToLuxon(season.endDate)];
     const index = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
 
@@ -80,7 +80,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
       custom_id: this.createCustomId({}),
       placeholder: "Select Spirit",
       options: trees.map((t, i) => ({
-        label: t.spirit?.name || "Unknown",
+        label: t.spirit?.name ?? "Unknown",
         value: i.toString(),
         default: i === index,
         emoji: t.spirit?.icon ? { id: t.spirit.icon } : undefined,
@@ -122,7 +122,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
                 label: "View",
                 disabled: !tree.spirit,
               }),
-              `# ${tree.spirit?.name || "Unknown"}`,
+              `# ${tree.spirit?.name ?? "Unknown"}`,
             ),
             section(
               this.viewbtn(this.createCustomId({}), { label: "Modify" }),

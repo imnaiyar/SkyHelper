@@ -91,8 +91,8 @@ function drawConnector(
 }
 
 async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, node?: INode, season = false) {
-  const { item } = node || {};
-  const isUnlocked = !!(item && (item.unlocked || item.autoUnlocked));
+  const { item } = node ?? {};
+  const isUnlocked = !!(item && (item.unlocked ?? item.autoUnlocked));
 
   ctx.save();
   ctx.translate(x, y);
@@ -121,7 +121,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   // season overlay
   if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate") && item.season?.icon) {
     try {
-      const badge = await getImage(iconUrl(item.season!.icon));
+      const badge = await getImage(iconUrl(item.season.icon));
       const bsize = itemSize * 0.4;
       ctx.drawImage(badge, -itemSize / 2, -itemSize / 2, bsize, bsize);
     } catch {
@@ -224,7 +224,7 @@ async function renderNodeRecursive(
   season: boolean,
   visited = new Set<string>(),
 ) {
-  if (!node || visited.has(node.guid)) return;
+  if (visited.has(node.guid)) return;
   visited.add(node.guid);
   const gap = Math.max(10, size * 0.7);
 
@@ -266,7 +266,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
     while (cur && !seen.has(cur.guid)) {
       seen.add(cur.guid);
       count++;
-      cur = cur.n as INode | undefined;
+      cur = cur.n;
     }
     return count;
   };
@@ -290,7 +290,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
 
   while (queue.length) {
     const cur = queue.shift()!;
-    if (!cur.node || visited.has(cur.node.guid)) continue;
+    if (visited.has(cur.node.guid)) continue;
     visited.add(cur.node.guid);
     maxDepth = Math.max(maxDepth, cur.depth);
     minX = Math.min(minX, cur.x);
@@ -311,7 +311,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   // background
   if (spirit?.imageUrl || options.spiritUrl) {
     try {
-      const bgImg = await getImage(spirit?.imageUrl || options.spiritUrl!);
+      const bgImg = await getImage(spirit?.imageUrl ?? options.spiritUrl!);
       const imgW = (bgImg as any).width ?? bgImg.width;
       const imgH = (bgImg as any).height ?? bgImg.height;
       const scaleBg = Math.max(width / imgW, height / imgH);
@@ -360,7 +360,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(options.spiritName || tree.name || spirit!.name, centerX, startY);
+    ctx.fillText(options.spiritName ?? tree.name ?? spirit!.name, centerX, startY);
   }
 
   await renderNodeRecursive(ctx, tree.node, centerX, startY - size * 2.5, -spacingY, size, !!options.season);

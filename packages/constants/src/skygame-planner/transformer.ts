@@ -1,28 +1,29 @@
 /**
  * Transformer for SkyGame Planner data
  */
-import type {
-  IArea,
-  IAreaConnection,
-  IEvent,
-  IEventInstance,
-  IEventInstanceSpirit,
-  IIAP,
-  IItem,
-  IItemList,
-  IItemListNode,
-  IMapShrine,
-  INode,
-  IRealm,
-  IReturningSpirit,
-  IReturningSpirits,
-  ISeason,
-  IShop,
-  ISpirit,
-  ISpiritTree,
-  ITravelingSpirit,
-  IWingedLight,
-  IGuid,
+import {
+  type IArea,
+  type IAreaConnection,
+  type IEvent,
+  type IEventInstance,
+  type IEventInstanceSpirit,
+  type IIAP,
+  type IItem,
+  type IItemList,
+  type IItemListNode,
+  type IMapShrine,
+  type INode,
+  type IRealm,
+  type IReturningSpirit,
+  type IReturningSpirits,
+  type ISeason,
+  type IShop,
+  type ISpirit,
+  type ISpiritTree,
+  type ITravelingSpirit,
+  type IWingedLight,
+  type IGuid,
+  SpiritType,
 } from "./interfaces.js";
 import type { FetchedData } from "./fetcher.js";
 import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
@@ -65,17 +66,17 @@ export function transformData(fetchedData: FetchedData): TransformedData {
   const transformedData: TransformedData = {
     areas: fetchedData.areas.items,
     events: fetchedData.events.items,
-    eventInstances: fetchedData.events.items.flatMap((e) => e.instances || []),
-    eventInstanceSpirits: fetchedData.events.items.flatMap((e) => (e.instances || []).flatMap((i) => i.spirits || [])),
+    eventInstances: fetchedData.events.items.flatMap((e) => e.instances ?? []),
+    eventInstanceSpirits: fetchedData.events.items.flatMap((e) => (e.instances ?? []).flatMap((i) => i.spirits)),
     iaps: fetchedData.iaps.items,
     items: fetchedData.items.items,
     itemLists: fetchedData.itemLists.items,
-    itemListNodes: fetchedData.itemLists.items.flatMap((l) => l.items || []),
+    itemListNodes: fetchedData.itemLists.items.flatMap((l) => l.items),
     mapShrines: fetchedData.mapShrines.items,
     nodes: fetchedData.nodes.items,
     realms: fetchedData.realms.items,
     returningSpirits: fetchedData.returningSpirits.items,
-    returningSpiritsVisits: fetchedData.returningSpirits.items.flatMap((rs) => rs.spirits || []),
+    returningSpiritsVisits: fetchedData.returningSpirits.items.flatMap((rs) => rs.spirits),
     seasons: fetchedData.seasons.items,
     shops: fetchedData.shops.items,
     spirits: fetchedData.spirits.items,
@@ -128,7 +129,9 @@ function registerGuids(data: TransformedData) {
       data.travelingSpirits,
       data.wingedLights,
     ] as IGuid[][]
-  ).forEach((arr) => registerAll(arr, data.guidMap));
+  )
+    // eslint-disable-next-line
+    .forEach((arr) => registerAll(arr, data.guidMap));
 }
 
 function resolveRef<T>(guidRef: string | undefined, data: TransformedData): T | undefined {
@@ -138,7 +141,7 @@ function resolveRef<T>(guidRef: string | undefined, data: TransformedData): T | 
 }
 
 function resolveArray<T>(
-  refs: (string | undefined)[] | undefined,
+  refs: Array<string | undefined> | undefined,
   data: TransformedData,
   mapFn: (resolved: T) => void = () => {},
 ): T[] {
@@ -185,7 +188,7 @@ function resolveReferences(data: TransformedData): void {
     fixUrl(realm);
     realm.areas = resolveArray(realm.areas as any, data, (a) => (a.realm = realm));
     linkOne<ISpirit, IRealm>(realm.elder as any, realm, "elder", data);
-    realm.constellation?.icons?.forEach((icon) => linkOne<ISpirit, typeof icon>(icon.spirit as any, icon, "spirit", data));
+    realm.constellation?.icons.forEach((icon) => linkOne<ISpirit, typeof icon>(icon.spirit as any, icon, "spirit", data));
     realm.icon = (realms_emojis as any)[realm.name] ?? realm.icon;
   }
 
@@ -251,14 +254,14 @@ function resolveReferences(data: TransformedData): void {
 
     // icon from emote node
     const nn = data.nodes.find(
-      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type || "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
+      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type ?? "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
     );
     spirit.icon = nn?.item?.icon ?? spirit.tree?.node.item?.icon ?? spirit.icon;
   }
 
   // Add tiers to regular spirit nodes
   for (const node of data.nodes) {
-    if (node.root?.spiritTree?.spirit?.type === "Regular") node.tier = getNodeTier(node);
+    if (node.root?.spiritTree?.spirit?.type === SpiritType.Regular) node.tier = getNodeTier(node);
   }
 
   /* ------------------------------ seasons ---------------------------- */
@@ -278,7 +281,7 @@ function resolveReferences(data: TransformedData): void {
     ts.number = i + 1;
     ts.spirit = linkOne<ISpirit, ITravelingSpirit>(ts.spirit as any, ts, "spirit", data, "ts")!;
     totalCount[ts.spirit.name] ??= 0;
-    ts.visit = ++totalCount[ts.spirit.name];
+    ts.visit = ++totalCount[ts.spirit.name]!;
     linkOne<ISpiritTree, ITravelingSpirit>(ts.tree as any, ts, "tree", data, "ts");
   });
 
@@ -339,16 +342,18 @@ function resolveReferences(data: TransformedData): void {
 
   function walkNodeTree(node: INode, season: ISeason) {
     if (node.item) node.item.season = season;
+    // eslint-disable-next-line
     [node.nw, node.ne, node.n].filter(notNull).forEach((child) => walkNodeTree(child, season));
   }
 
   for (const season of data.seasons) {
+    // eslint-disable-next-line
     for (const spirit of season.spirits || []) {
-      if (spirit?.tree?.node) walkNodeTree(spirit.tree.node, season);
+      if (spirit.tree?.node) walkNodeTree(spirit.tree.node, season);
     }
-    for (const shop of season.shops || []) {
-      for (const iap of shop.iaps || []) {
-        for (const item of iap.items || []) {
+    for (const shop of season.shops ?? []) {
+      for (const iap of shop.iaps ?? []) {
+        for (const item of iap.items ?? []) {
           item.season = season;
         }
       }
@@ -358,7 +363,7 @@ function resolveReferences(data: TransformedData): void {
 
 function getNodeTier(node: INode) {
   let tier = 0;
-  const root = node.root || node;
+  const root = node.root ?? node;
   (function walk(n: INode) {
     if (n.item?.type === "Wing Buff") tier++;
     if (n === node) return;

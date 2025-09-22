@@ -1,17 +1,7 @@
 import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
-import { APPLICATION_EMOJIS, emojis, realms_emojis, SkyPlannerData, zone } from "@skyhelperbot/constants";
-import {
-  button,
-  container,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  separator,
-  textDisplay,
-  thumbnail,
-} from "@skyhelperbot/utils";
+import { emojis, realms_emojis, SkyPlannerData, zone } from "@skyhelperbot/constants";
+import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import type { TransformedData } from "@skyhelperbot/constants/skygame-planner";
@@ -55,12 +45,10 @@ export function createCategoryRow(
 
     return button({
       label: backOption && category === selected ? "Back" : category.charAt(0).toUpperCase() + category.slice(1),
-      custom_id: store
-        .serialize(CustomId.PlannerTopLevelNav, {
-          tab: Utils.encodeCustomId({ id: "42", tab: category, item: null, page: backOption?.page ?? null }),
-          user,
-        })
-        .toString(),
+      custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
+        tab: Utils.encodeCustomId({ id: "42", tab: category, item: null, page: backOption?.page ?? null }),
+        user,
+      }),
       emoji: icon ? { id: icon } : undefined,
       style: category === selected ? (backOption ? 4 : 3) : 2,
       disabled: category === selected && !backOption,
@@ -89,14 +77,15 @@ const displayClasses = {
  * Main handler for planner navigation
  */
 export async function handlePlannerNavigation(state: NavigationState) {
-  const { tab, user, item, page = 1, filter } = state;
+  const { tab, user } = state;
 
   const data = await SkyPlannerData.getSkyGamePlannerData();
   switch (tab) {
-    case "home":
+    case DisplayTabs.Home:
       return getHomeDisplay(user);
     default: {
       const handler = displayClasses[tab as keyof typeof displayClasses];
+      // eslint-disable-next-line
       return handler ? new handler(data, SkyPlannerData, state).handle() : getHomeDisplay(user);
     }
   }
@@ -122,12 +111,10 @@ export async function getHomeDisplay(user?: string) {
               {
                 type: ComponentType.Button,
                 label: "View Spirit",
-                custom_id: store
-                  .serialize(CustomId.PlannerTopLevelNav, {
-                    tab: Utils.encodeCustomId({ id: "12", tab: "spirits", item: travelingSpirit.guid }),
-                    user,
-                  })
-                  .toString(),
+                custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
+                  tab: Utils.encodeCustomId({ id: "12", tab: "spirits", item: travelingSpirit.guid }),
+                  user,
+                }),
                 style: 1,
               },
               `### Traveling Spirit`,
@@ -145,16 +132,14 @@ export async function getHomeDisplay(user?: string) {
                 {
                   type: ComponentType.Button,
                   label: "View Details",
-                  custom_id: store
-                    .serialize(CustomId.PlannerTopLevelNav, {
-                      tab: Utils.encodeCustomId({ id: "12", tab: "events", item: visit.guid }),
-                      user,
-                    })
-                    .toString(),
+                  custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
+                    tab: Utils.encodeCustomId({ id: "12", tab: "events", item: visit.guid }),
+                    user,
+                  }),
                   style: 1,
                 },
-                `**${visit.return.name || "Returning Spirits"}**`,
-                `${visit.return.spirits.length || 0} spirits • Until ${formatDateTimestamp(visit.return.endDate)} (${formatDateTimestamp(visit.return.endDate, "R")})`,
+                `**${visit.return.name ?? "Returning Spirits"}**`,
+                `${visit.return.spirits.length} spirits • Until ${formatDateTimestamp(visit.return.endDate)} (${formatDateTimestamp(visit.return.endDate, "R")})`,
               ),
             ]),
             ...(returningSpirits.length > 3
@@ -163,12 +148,10 @@ export async function getHomeDisplay(user?: string) {
                     {
                       type: ComponentType.Button,
                       label: "View All",
-                      custom_id: store
-                        .serialize(CustomId.PlannerTopLevelNav, {
-                          tab: "returning",
-                          user,
-                        })
-                        .toString(),
+                      custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
+                        tab: "returning",
+                        user,
+                      }),
                       style: 2,
                     },
                     `_View all ${returningSpirits.length} returning spirit events..._`,
@@ -197,7 +180,7 @@ export async function getHomeDisplay(user?: string) {
 function eventInHome(event: { event: IEvent; instance: IEventInstance; startDate?: DateTime }, user?: string) {
   const subtitles = [
     `From ${formatDateTimestamp(event.instance.date)} to ${formatDateTimestamp(event.instance.endDate)}`,
-    event.instance.spirits
+    event.instance.spirits.length
       ? [
           ...event.instance.spirits.map((s) => s.tree.node.item?.icon && `<:_:${s.tree.node.item.icon}>`).filter(Boolean),
           SkyPlannerData.formatGroupedCurrencies(
@@ -216,12 +199,10 @@ function eventInHome(event: { event: IEvent; instance: IEventInstance; startDate
       {
         type: ComponentType.Button,
         label: "View Event",
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ id: "12", tab: "events", item: event.event.guid }),
-            user,
-          })
-          .toString(),
+        custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
+          tab: Utils.encodeCustomId({ id: "12", tab: "events", item: event.event.guid }),
+          user,
+        }),
         style: 1,
       },
       `**${event.event.name}** (${event.startDate ? "Starts" : "Ends"} ${formatDateTimestamp(event.instance.endDate, "R")})`,

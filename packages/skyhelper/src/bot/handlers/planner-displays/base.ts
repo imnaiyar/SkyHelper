@@ -12,7 +12,7 @@ import type { DateTime } from "luxon";
 import type { Awaitable } from "@/types/utils";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 
-export type NavigationState = {
+export interface NavigationState {
   /** Current page */
   page?: number;
 
@@ -37,7 +37,7 @@ export type NavigationState = {
    * For ex, imagine we go to a particular area from wl tab, providing this back btn, we can come back to wl tab
    */
   back?: Omit<NavigationState, "back" | "user">;
-};
+}
 
 export enum DisplayTabs {
   Home = "home",
@@ -115,12 +115,10 @@ export class BasePlannerHandler {
 
       return button({
         label: back && category === selected ? "Back" : category.charAt(0).toUpperCase() + category.slice(1),
-        custom_id: store
-          .serialize(CustomId.PlannerTopLevelNav, {
-            tab: Utils.encodeCustomId({ id: "42", tab: category, item: null, page: back?.page ?? null }),
-            user,
-          })
-          .toString(),
+        custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
+          tab: Utils.encodeCustomId({ id: "42", tab: category, item: null, page: back?.page ?? null }),
+          user,
+        }),
         emoji: icon ? { id: icon } : undefined,
         style: category === selected ? (back ? 4 : 3) : 2,
         disabled: category === selected && !back,
@@ -149,7 +147,7 @@ export class BasePlannerHandler {
     const displayedItems: T[] = items.slice(startIndex, endIndex);
     const components: APIComponentInContainer[] = [];
     for (const [i, item] of displayedItems.entries()) {
-      if (itemCallback) components.push(...itemCallback(item, i));
+      components.push(...itemCallback(item, i));
     }
     // only include if there are multiple pages, may even help save comp limits
     if (total > 1) {
@@ -184,6 +182,7 @@ export class BasePlannerHandler {
       data = redirect(this.state.data),
     } = opt;
     if (back && typeof back !== "object") throw new Error("Back option cannot be a primitive value");
+    /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
     return store.serialize(CustomId.PlannerTopLevelNav, {
       tab: Utils.encodeCustomId({
         tab,
@@ -196,11 +195,12 @@ export class BasePlannerHandler {
       }),
       user,
     });
+    /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
   }
 
   formatemoji(id?: string, name?: string) {
     if (!id) return "";
-    if (id.match(/^<a?:\w+:\d{17,19}>$/)) return id;
+    if (/^<a?:\w+:\d{17,19}>$/.test(id)) return id;
     return `<:${name ? name.replaceAll(/[\s'\-,#,),(]+/g, "") : "_"}:${id}>`;
   }
 

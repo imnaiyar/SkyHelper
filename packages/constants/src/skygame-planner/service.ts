@@ -9,7 +9,7 @@ import { transformData, type TransformedData } from "./transformer.js";
 import { DateTime } from "luxon";
 
 let cachedData: TransformedData | null = null;
-let lastFetchTime: number = 0;
+let lastFetchTime = 0;
 const CACHE_LIFETIME_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 /**
@@ -76,13 +76,13 @@ export function searchEntitiesByName(query: string, data: TransformedData) {
   // Search areas
   data.areas.forEach((area) => {
     if (area.name.toLowerCase().includes(searchTerms)) {
-      results.push({ type: "Area", name: `${area.name} (${area.realm?.name || "Unknown Realm"})`, guid: area.guid });
+      results.push({ type: "Area", name: `${area.name} (${area.realm.name || "Unknown Realm"})`, guid: area.guid });
     }
   });
 
   // Search spirits
   data.spirits.forEach((spirit) => {
-    if (spirit.name?.toLowerCase().includes(searchTerms)) {
+    if (spirit.name.toLowerCase().includes(searchTerms)) {
       results.push({ type: "Spirit", name: spirit.name, guid: spirit.guid });
     }
   });
@@ -186,8 +186,8 @@ export function getSpiritsInRealm(realmId: string, data: TransformedData) {
   if (!realm) return [];
 
   const spirits: ISpirit[] = [];
-  for (const area of realm.areas || []) {
-    for (const spirit of area.spirits || []) {
+  for (const area of realm.areas ?? []) {
+    for (const spirit of area.spirits ?? []) {
       spirits.push(spirit);
     }
   }
@@ -206,8 +206,8 @@ export function getWingedLightsInRealm(realmId: string, data: TransformedData) {
   if (!realm) return [];
 
   const wingedLights: any[] = [];
-  for (const area of realm.areas || []) {
-    for (const wl of area.wingedLights || []) {
+  for (const area of realm.areas ?? []) {
+    for (const wl of area.wingedLights ?? []) {
       wingedLights.push(wl);
     }
   }
@@ -239,7 +239,7 @@ export function getSpiritsInSeason(seasonId: string, data: TransformedData) {
   const season = getSeasonById(seasonId, data);
   if (!season) return [];
 
-  return season.spirits || [];
+  return season.spirits;
 }
 
 /**
@@ -277,11 +277,11 @@ export function getItemsInSpiritTree(spiritId: string, data: TransformedData) {
  */
 export function getEvents(data: TransformedData) {
   const now = DateTime.now().setZone(zone);
-  const currentEvents: { event: IEvent; instance: IEventInstance }[] = [];
-  const upcomingEvents: { event: IEvent; instance: IEventInstance; startDate: DateTime }[] = [];
+  const currentEvents: Array<{ event: IEvent; instance: IEventInstance }> = [];
+  const upcomingEvents: Array<{ event: IEvent; instance: IEventInstance; startDate: DateTime }> = [];
 
   for (const event of data.events) {
-    for (const instance of event.instances || []) {
+    for (const instance of event.instances ?? []) {
       const startDate = resolveToLuxon(instance.date);
       const endDate = resolveToLuxon(instance.endDate);
 

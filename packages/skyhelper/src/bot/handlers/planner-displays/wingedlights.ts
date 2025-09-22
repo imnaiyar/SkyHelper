@@ -79,7 +79,7 @@ export class WingedLightsDisplay extends BasePlannerHandler {
 
   private getAreaFilterRow() {
     const realm = this.data.realms.find((r) => r.shortName === this.realm)!;
-    const filters = this.areas ?? [realm.areas![0].guid];
+    const filters = this.areas ?? [realm.areas![0]!.guid];
     return row({
       type: ComponentType.StringSelect,
       min_values: 1,
@@ -116,7 +116,7 @@ export class WingedLightsDisplay extends BasePlannerHandler {
     const [realm, ...areas] = (this.state.filter ?? "").split(".");
     this.realm = realm ? (realm as (typeof WLRealms)[number]) : "Dawn";
     this.areas = areas.length ? areas : null;
-    if (this.state.values && this.state.values.length) {
+    if (this.state.values?.length) {
       // this means it is a select menu interaction for realm/areas filter;
       if (this.state.data === "realms") {
         this.realm = this.state.values[0] as (typeof WLRealms)[number];
@@ -128,12 +128,9 @@ export class WingedLightsDisplay extends BasePlannerHandler {
       // reset page when changing areas or realms
       this.state.page = 1;
     }
-    this.realm ??= "Dawn"; // fallback, if something goes wrong
-    this.areas ??= [
-      this.data.realms.find((r) => r.shortName === this.realm)!.areas!.filter((a) => a.wingedLights?.length)[0].guid,
-    ];
+    this.areas ??= [this.data.realms.find((r) => r.shortName === this.realm)!.areas!.find((a) => a.wingedLights?.length)!.guid];
 
-    this.filters = `${this.realm}.${this.areas && this.areas.length ? this.areas.join(".") : ""}`;
+    this.filters = `${this.realm}.${this.areas.length ? this.areas.join(".") : ""}`;
   }
 
   private getTopBtns() {

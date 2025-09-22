@@ -109,7 +109,7 @@ export default class {
    * @param obj The object to encode
    */
   static encodeCustomId(obj: ParsedCustomId): string {
-    let customId = obj.id;
+    let customId = `${obj.id}`;
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
       if (!value) continue;
@@ -127,7 +127,7 @@ export default class {
     const parts = customId.split(";");
     const obj: ParsedCustomId = { id: parts[0]! };
     for (let i = 1; i < parts.length; i++) {
-      const [key, value] = parts[i]!.split(":");
+      const [key, value] = parts[i]!.split("=");
       obj[key!] = value!;
     }
     return obj;

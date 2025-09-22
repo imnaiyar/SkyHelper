@@ -11,7 +11,7 @@ export interface IGuid {
 }
 
 export interface IConfig<T> {
-  items: Array<T>;
+  items: T[];
 }
 
 export interface IPeriod {
@@ -89,7 +89,7 @@ export interface IItem extends IGuid {
   /* Item subtype */
   subtype?: ItemSubtype | string;
   /** Item group. */
-  group?: ItemGroup | string;
+  group?: ItemGroup;
   /** Item name. */
   name: string;
   /** Path to item icon. */
@@ -110,10 +110,10 @@ export interface IItem extends IGuid {
   closetHide?: boolean;
 
   // References can be added when transforming the data
-  nodes?: Array<INode>;
-  hiddenNodes?: Array<INode>;
-  listNodes?: Array<IItemListNode>;
-  iaps?: Array<IIAP>;
+  nodes?: INode[];
+  hiddenNodes?: INode[];
+  listNodes?: IItemListNode[];
+  iaps?: IIAP[];
   season?: ISeason;
 
   // Progress
@@ -130,7 +130,7 @@ export interface IItemConfig extends IConfig<IItem> {}
 export interface INode extends IGuid, ICost {
   // References to be added during data transformation
   item?: IItem;
-  hiddenItems?: Array<IItem>;
+  hiddenItems?: IItem[];
   spiritTree?: ISpiritTree;
   nw?: INode;
   ne?: INode;
@@ -199,7 +199,7 @@ export interface ISpirit extends IGuid {
   tree?: ISpiritTree;
 
   /** Revised versions of the main spirit tree. */
-  treeRevisions?: Array<IRevisedSpiritTree>;
+  treeRevisions?: IRevisedSpiritTree[];
 
   /** Area this spirit can be found in normally. */
   area?: IArea;
@@ -207,16 +207,16 @@ export interface ISpirit extends IGuid {
   /** Season this spirit is part of. */
   season?: ISeason;
   /** All Traveling Spirit visits of this spirit. */
-  ts?: Array<ITravelingSpirit>;
+  ts?: ITravelingSpirit[];
 
   /** All visits as returning spirits.  */
-  returns?: Array<IReturningSpirit>;
+  returns?: IReturningSpirit[];
 
   /** All visits during events. */
-  events?: Array<IEventInstanceSpirit>;
+  events?: IEventInstanceSpirit[];
 
   /** All shop instances. */
-  shops?: Array<IShop>;
+  shops?: IShop[];
 
   _wiki?: IWiki;
 }
@@ -242,11 +242,11 @@ export interface IArea extends IGuid {
 
   // References
   realm: IRealm;
-  spirits?: Array<ISpirit>;
-  wingedLights?: Array<IWingedLight>;
-  rs?: Array<IReturningSpirits>;
-  connections?: Array<IAreaConnection>;
-  mapShrines?: Array<IMapShrine>;
+  spirits?: ISpirit[];
+  wingedLights?: IWingedLight[];
+  rs?: IReturningSpirits[];
+  connections?: IAreaConnection[];
+  mapShrines?: IMapShrine[];
 }
 
 export interface IAreaConnection {
@@ -267,14 +267,14 @@ export interface IRealm extends IGuid {
   hidden?: boolean;
 
   // References
-  areas?: Array<IArea>;
+  areas?: IArea[];
   constellation?: IRealmConstellation;
   elder?: ISpirit;
 }
 
 export interface IRealmConstellation {
   imageUrl: string;
-  icons: Array<IRealmConstellationIcon>;
+  icons: IRealmConstellationIcon[];
 }
 
 export interface IRealmConstellationIcon {
@@ -309,9 +309,9 @@ export interface ISeason extends IGuid, IPeriod {
   draft?: boolean;
 
   // References
-  spirits: Array<ISpirit>;
-  shops?: Array<IShop>;
-  includedTrees?: Array<ISpiritTree>;
+  spirits: ISpirit[];
+  shops?: IShop[];
+  includedTrees?: ISpiritTree[];
 }
 
 export interface ISeasonConfig extends IConfig<ISeason> {}
@@ -330,7 +330,7 @@ export interface IEvent extends IGuid {
   recurring?: boolean;
 
   // References
-  instances?: Array<IEventInstance>;
+  instances?: IEventInstance[];
 }
 
 export interface IEventInstance extends IGuid {
@@ -346,8 +346,8 @@ export interface IEventInstance extends IGuid {
 
   // References
   event: IEvent;
-  shops: Array<IShop>;
-  spirits: Array<IEventInstanceSpirit>;
+  shops: IShop[];
+  spirits: IEventInstanceSpirit[];
 }
 
 export interface IEventInstanceSpirit extends IGuid {
@@ -391,7 +391,7 @@ export interface IReturningSpirits extends IGuid, IPeriod {
   /** Area the spirits visited. */
   area?: IArea;
   /** Visiting spirits. */
-  spirits: Array<IReturningSpirit>;
+  spirits: IReturningSpirit[];
   imageUrl?: string;
   draft?: boolean;
 }
@@ -418,7 +418,7 @@ export interface IShop extends IGuid {
   permanent?: boolean | string;
 
   // References
-  iaps?: Array<IIAP>;
+  iaps?: IIAP[];
   itemList?: IItemList;
   event?: IEventInstance;
   spirit?: ISpirit;
@@ -445,7 +445,7 @@ export interface IIAP extends IGuid {
   sp?: number;
 
   // References
-  items?: Array<IItem>;
+  items?: IItem[];
   shop?: IShop;
 
   // Progress
@@ -460,7 +460,7 @@ export interface IIAPConfig extends IConfig<IIAP> {}
  */
 export interface IItemList extends IGuid {
   /** All items in the list. */
-  items: Array<IItemListNode>;
+  items: IItemListNode[];
   description?: string;
 
   // References

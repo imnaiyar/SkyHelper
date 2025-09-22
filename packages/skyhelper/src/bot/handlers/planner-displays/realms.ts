@@ -11,7 +11,7 @@ import {
 } from "@skyhelperbot/utils";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
-import type { IRealm } from "@skyhelperbot/constants/skygame-planner";
+import { type IRealm, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import type { RawFile } from "@discordjs/rest";
 
 export class RealmsDisplay extends BasePlannerHandler {
@@ -38,20 +38,20 @@ export class RealmsDisplay extends BasePlannerHandler {
               style: 1,
             },
             `**${realm.name}**`,
-            `${realm.areas?.length || 0} Areas • ${this.planner.getSpiritsInRealm(realm.guid, this.data).length} Spirits • ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} Winged Light`,
+            `${realm.areas?.length ?? 0} Areas • ${this.planner.getSpiritsInRealm(realm.guid, this.data).length} Spirits • ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} Winged Light`,
           ),
         ],
       }),
     );
   }
   async realmdisplay(realm: IRealm) {
-    const constellations = realm.constellation?.icons.map((icon) => icon.spirit).filter((s) => !!s) || [];
+    const constellations = realm.constellation?.icons.map((icon) => icon.spirit).filter((s) => !!s) ?? [];
     const index = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
     const constellation = constellations[index];
     const realmSpirits = this.planner.getSpiritsInRealm(realm.guid, this.data);
     const { regular, seasonal } = realmSpirits.reduce(
       (acc, spirit) => {
-        if (spirit.type === "Season" || spirit.type === "Guide") acc.seasonal++;
+        if (spirit.type === SpiritType.Season || spirit.type === SpiritType.Guide) acc.seasonal++;
         else acc.regular++;
         return acc;
       },
@@ -71,7 +71,7 @@ export class RealmsDisplay extends BasePlannerHandler {
 
     const title: [string, ...string[]] = [
       `# ${this.formatemoji(realm.icon, realm.name)} ${realm.name}`,
-      `${realm.areas?.length || 0} Areas \u2022 ${regular} regular and ${seasonal} seasonal spirits \u2022 ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} winged lights`,
+      `${realm.areas?.length ?? 0} Areas \u2022 ${regular} regular and ${seasonal} seasonal spirits \u2022 ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} winged lights`,
     ];
 
     let file: RawFile | undefined;
@@ -90,7 +90,7 @@ export class RealmsDisplay extends BasePlannerHandler {
             // we only want to go one level back
             back: { ...this.state, back: undefined },
           }),
-          { label: `Areas (${realm.areas?.length || 0})`, disabled: !realm.areas?.length },
+          { label: `Areas (${realm.areas?.length ?? 0})`, disabled: !realm.areas?.length },
         ),
         this.viewbtn(
           this.createCustomId({

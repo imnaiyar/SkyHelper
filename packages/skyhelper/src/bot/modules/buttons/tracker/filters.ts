@@ -8,7 +8,7 @@ const FilterKeys = ["realms", "seasons", "events"];
 export default defineButton({
   data: { name: "filter" },
   id: CustomId.PlannerFilters,
-  async execute(_interaction, _t, helper, props) {
+  execute(_interaction, _t, helper, props) {
     const { tab, filters, user } = props;
     const unwrapped = Utils.parseCustomId(tab) as unknown as NavigationState;
     const formatted = filters.map((f) => {
