@@ -64,6 +64,6 @@ export const store = new SchemaStore()
     new Schema(CustomId.PlannerFilters)
       .string("tab")
       .array("filters", t.string)
-      .nullable("default", t.string)
+      .nullable("def", t.string)
       .nullable("user", t.string),
   );
