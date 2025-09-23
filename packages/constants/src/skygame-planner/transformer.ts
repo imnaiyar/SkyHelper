@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /**
  * Transformer for SkyGame Planner data
  */
@@ -66,12 +67,14 @@ export function transformData(fetchedData: FetchedData): TransformedData {
   const transformedData: TransformedData = {
     areas: fetchedData.areas.items,
     events: fetchedData.events.items,
-    eventInstances: fetchedData.events.items.flatMap((e) => e.instances ?? []),
-    eventInstanceSpirits: fetchedData.events.items.flatMap((e) => (e.instances ?? []).flatMap((i) => i.spirits)),
+    eventInstances: fetchedData.events.items.flatMap((e) => e.instances || []),
+    // eslint-disable-next-line
+    eventInstanceSpirits: fetchedData.events.items.flatMap((e) => e.instances || []).flatMap((i) => i.spirits || []),
     iaps: fetchedData.iaps.items,
     items: fetchedData.items.items,
     itemLists: fetchedData.itemLists.items,
-    itemListNodes: fetchedData.itemLists.items.flatMap((l) => l.items),
+    // eslint-disable-next-line
+    itemListNodes: fetchedData.itemLists.items.flatMap((l) => l.items || []),
     mapShrines: fetchedData.mapShrines.items,
     nodes: fetchedData.nodes.items,
     realms: fetchedData.realms.items,
@@ -145,7 +148,7 @@ function resolveArray<T>(
   data: TransformedData,
   mapFn: (resolved: T) => void = () => {},
 ): T[] {
-  return (refs ?? [])
+  return (refs || [])
     .map((ref) => {
       const resolved = resolveRef<T>(ref as any, data);
       if (resolved) mapFn(resolved);
@@ -189,7 +192,7 @@ function resolveReferences(data: TransformedData): void {
     realm.areas = resolveArray(realm.areas as any, data, (a) => (a.realm = realm));
     linkOne<ISpirit, IRealm>(realm.elder as any, realm, "elder", data);
     realm.constellation?.icons.forEach((icon) => linkOne<ISpirit, typeof icon>(icon.spirit as any, icon, "spirit", data));
-    realm.icon = (realms_emojis as any)[realm.name] ?? realm.icon;
+    realm.icon = (realms_emojis as any)[realm.name] || realm.icon;
   }
 
   /* ------------------------------- areas ----------------------------- */
@@ -199,7 +202,7 @@ function resolveReferences(data: TransformedData): void {
     area.spirits = resolveArray(area.spirits as any, data, (s) => (s.area = area));
     area.wingedLights = resolveArray(area.wingedLights as any, data, (wl) => (wl.area = area));
     area.rs = resolveArray(area.rs as any, data, (rs) => (rs.area = area));
-    area.connections = (area.connections ?? [])
+    area.connections = (area.connections || [])
       .map((c) => ({ area: resolveRef<IArea>(c.area as any, data) }))
       .filter((c) => c.area) as IAreaConnection[];
     area.mapShrines = resolveArray(area.mapShrines as any, data, (s) => (s.area = area));
@@ -254,9 +257,9 @@ function resolveReferences(data: TransformedData): void {
 
     // icon from emote node
     const nn = data.nodes.find(
-      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type ?? "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
+      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type || "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
     );
-    spirit.icon = nn?.item?.icon ?? spirit.tree?.node.item?.icon ?? spirit.icon;
+    spirit.icon = nn?.item?.icon || spirit.tree?.node.item?.icon || spirit.icon;
   }
 
   // Add tiers to regular spirit nodes
@@ -271,7 +274,7 @@ function resolveReferences(data: TransformedData): void {
     season.spirits = resolveArray(season.spirits as any, data, (s) => (s.season = season));
     season.shops = resolveArray(season.shops as any, data, (shop) => (shop.season = season));
     season.includedTrees = resolveArray(season.includedTrees as any, data);
-    season.icon = (season_emojis as any)[season.shortName] ?? season.icon;
+    season.icon = (season_emojis as any)[season.shortName] || season.icon;
   }
 
   /* -------------------------- travelingSpirits ----------------------- */
@@ -351,9 +354,9 @@ function resolveReferences(data: TransformedData): void {
     for (const spirit of season.spirits || []) {
       if (spirit.tree?.node) walkNodeTree(spirit.tree.node, season);
     }
-    for (const shop of season.shops ?? []) {
-      for (const iap of shop.iaps ?? []) {
-        for (const item of iap.items ?? []) {
+    for (const shop of season.shops || []) {
+      for (const iap of shop.iaps || []) {
+        for (const item of iap.items || []) {
           item.season = season;
         }
       }
@@ -363,7 +366,7 @@ function resolveReferences(data: TransformedData): void {
 
 function getNodeTier(node: INode) {
   let tier = 0;
-  const root = node.root ?? node;
+  const root = node.root || node;
   (function walk(n: INode) {
     if (n.item?.type === "Wing Buff") tier++;
     if (n === node) return;
