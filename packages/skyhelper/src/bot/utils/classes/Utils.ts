@@ -25,6 +25,16 @@ export default class {
   static customId = CustomId;
 
   /**
+   * Capitalizes first letter (or all spaced ones) and returns it
+   */
+  static capitalize(text: string, includeSpaced = false): string {
+    if (includeSpaced) {
+      return text.replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  /**
    * Returns the creation date of the given ID.
    *
    * @param id - The ID to resolve.
