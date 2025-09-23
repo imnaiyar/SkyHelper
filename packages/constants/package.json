@@ -10,10 +10,11 @@
   "exports": {
     "./locales/*": "./locales/*",
     "./spirits-datas": "./dist/spirits-datas/index.js",
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./skygame-planner": "./dist/skygame-planner/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsgo",
     "lint": "eslint --fix src"
   },
   "repository": {
@@ -29,9 +30,16 @@
   "author": "NyR",
   "license": "ISC",
   "dependencies": {
-    "discord-api-types": "0.38.10"
+    "discord-api-types": "0.38.10",
+    "jsonc-parser": "^3.3.1"
   },
   "devDependencies": {
+    "@types/luxon": "^3.6.2",
+    "@typescript/native-preview": "7.0.0-dev.20250921.1",
+    "luxon": "^3.6.1",
     "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "luxon": "^3.6.1"
   }
 }

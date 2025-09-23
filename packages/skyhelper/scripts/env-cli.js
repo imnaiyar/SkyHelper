@@ -24,7 +24,7 @@ function generateEnvFile() {
       const mongoUrlRegex = /^mongodb\+srv:\/\//;
       if (mongoUrlRegex.test(dbUrl)) {
         envData["MONGO_CONNECTION"] = dbUrl;
-        askBotToken();
+        askClientIdUrl();
       } else {
         console.log(chalk.red`ERROR: ` + `Invalid MongoDB URL format. Please enter a valid MongoDB URL. Tutorials are above.`);
         askDatabaseUrl();
@@ -32,10 +32,39 @@ function generateEnvFile() {
     });
   }
 
+  function askClientIdUrl() {
+    rl.question(chalk.bold.cyanBright`Enter your Discord bot id${chalk.red`*`}: `, (clientId) => {
+      if (clientId.trim().length) {
+        envData["CLIENT_ID"] = clientId;
+        askPublicKey();
+      } else {
+        console.log(
+          chalk.red`ERROR: ` + `Invalid Discord bot id format. Please enter a valid Discord bot id. Tutorials are above.`,
+        );
+        askClientIdUrl();
+      }
+    });
+  }
+
+  function askPublicKey() {
+    rl.question(chalk.bold.cyanBright`Enter your Discord bot public key${chalk.red`*`}: `, (publicKey) => {
+      if (publicKey.trim().length === 64) {
+        envData["PUBLIC_KEY"] = publicKey;
+        askBotToken();
+      } else {
+        console.log(
+          chalk.red`ERROR: ` +
+            `Invalid Discord bot public key format. Please enter a valid Discord bot public key. Tutorials are above.`,
+        );
+        askPublicKey();
+      }
+    });
+  }
+
   function askBotToken() {
     rl.question(chalk.bold.cyanBright`Enter your bot token${chalk.red`*`}: `, (botToken) => {
       if (botToken.trim().length >= 40) {
-        envData["BOT_TOKEN"] = botToken;
+        envData["TOKEN"] = botToken;
         askSentryDSN();
       } else {
         console.log(chalk.red`ERROR: ` + "Invalid bot token. Please enter a valid token. Tutorials are above.");
@@ -55,7 +84,7 @@ function generateEnvFile() {
       }
     });
   }
-  rl.prom;
+
   function askWebhookErrors() {
     rl.question(chalk.bold.cyanBright`Enter the Webhook URL for error logs: [Hit enter to skip]`, (errLogs) => {
       const webhookUrlRegex = /^https:\/\/discord\.com\/api\/webhooks/;
@@ -88,7 +117,7 @@ function generateEnvFile() {
 
   function writeEnvFile() {
     fs.writeFileSync(
-      ".envs",
+      ".env",
       Object.entries(envData)
         .map(([key, value]) => `${key}=${value}`)
         .join("\n"),

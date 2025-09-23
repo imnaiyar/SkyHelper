@@ -24,6 +24,9 @@ import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHan
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
+import { handlePlannerNavigation } from "@/handlers/planner";
+import type { DisplayTabs, NavigationState } from "@/handlers/planner-displays/base";
+import { setLoadingState } from "@/utils/loading";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -234,11 +237,27 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region selects
     if (helper.isSelect(interaction)) {
-      const { id } = client.utils.store.deserialize(interaction.data.custom_id);
+      const { id, data } = client.utils.store.deserialize(interaction.data.custom_id);
       switch (id) {
         case client.utils.customId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
           return;
+        case client.utils.customId.PlannerTopLevelNav: {
+          const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+          await helper.update({ components: getLoading });
+          const values = interaction.data.values;
+          const state = client.utils.parseCustomId(data.tab) as unknown as NavigationState;
+          const p = state.page ? parseInt(state.page as unknown as string) : undefined;
+          const b = state.back
+            ? (JSON.parse(state.back as unknown as string) as unknown as Omit<NavigationState, "back" | "values">)
+            : undefined;
+          const res = await handlePlannerNavigation({ values, ...state, page: p ?? undefined, back: b ?? undefined });
+          await helper.editReply({
+            ...res,
+            flags: MessageFlags.IsComponentsV2,
+          });
+          break;
+        }
         default:
           return;
       }
