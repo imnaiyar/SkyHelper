@@ -83,18 +83,6 @@ export default function DiscordLogin({
     }
   }, [error, onLoginError]);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setShowDropdown(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   // Loading state
   if (authState === "loading") {
     if (variant === "button") {
@@ -362,6 +350,18 @@ const SuccessBtn = ({
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return size === "sm" ? (
     <div className="relative" ref={dropdownRef}>
       <button
@@ -387,7 +387,7 @@ const SuccessBtn = ({
           <div className="p-2">
             <button
               onClick={() => {
-                handleLogout;
+                handleLogout();
                 setShowDropdown(false);
               }}
               className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-slate-700 rounded-md transition-colors flex items-center space-x-2"
