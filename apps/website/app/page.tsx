@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import FeatureCard, { FeatureCardProps } from "./components/FeatureCard";
 import FeatureModal from "./components/FeatureModal";
 import Image from "next/image";
@@ -11,7 +9,7 @@ import useStats from "./hooks/useStats";
 import { ModalContent, ModalProvider, ModalTrigger } from "./components/Modal";
 
 export default function Home() {
-  const [selectedFeature, setSelectedFeature] = useState<any>(null);
+  const [selectedFeature, setSelectedFeature] = useState<FeatureCardProps | null>(null);
 
   // Define feature images for each feature
   const featureImages = {
@@ -272,7 +270,7 @@ export default function Home() {
                   />
                 </ModalTrigger>
                 <ModalContent>
-                  <FeatureModal images={selectedFeature?.images || []} icon={selectedFeature?.icon} />
+                  <FeatureModal images={selectedFeature?.images || []} icon={selectedFeature?.icon as string} />
                 </ModalContent>
               </ModalProvider>
             ))}

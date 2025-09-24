@@ -6,6 +6,7 @@ interface TOS {
   description?: React.ReactNode;
   subtitles?: Omit<TOS, "subtitles">[];
 }
+const s = "hh";
 
 const toss: TOS[] = [
   {

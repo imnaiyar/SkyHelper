@@ -28,8 +28,8 @@ interface DiscordUser {
 
 const DEFAULT_SCOPES = ["identify", "guilds"];
 const DISCORD_CDN_URL = "https://cdn.discordapp.com";
-const DEFAULT_REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000/api/auth/discord/callback";
-
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const REDIRECT_URI = `${BASE_URL}/api/auth/discord/callback`;
 const getAvatarUrl = (user: DiscordUser, size = 128) => {
   if (!user.avatar) {
     const defaultAvatarNumber = parseInt(user.discriminator) % 5;
@@ -65,7 +65,7 @@ export default function DiscordLogin({
   onLoginComplete,
   onLoginError,
   className = "",
-  redirectUri = DEFAULT_REDIRECT_URI,
+  redirectUri = REDIRECT_URI,
   btnTitle,
 }: DiscordLoginProps) {
   const { user, authState, error, login, logout } = useDiscordAuth();

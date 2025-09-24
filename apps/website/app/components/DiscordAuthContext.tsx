@@ -25,7 +25,7 @@ interface DiscordAuthContextType {
 const DiscordAuthContext = createContext<DiscordAuthContextType | undefined>(undefined);
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
-const DEFAULT_REDIRECT_URI = `${BASE_URL}/api/auth/discord/callback`;
+const REDIRECT_URI = `${BASE_URL}/api/auth/discord/callback`;
 const DEFAULT_SCOPES = ["identify", "guilds"];
 
 interface DiscordAuthProviderProps {
@@ -54,7 +54,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     return state;
   };
 
-  const login = (scopes = DEFAULT_SCOPES, redirectUri = DEFAULT_REDIRECT_URI) => {
+  const login = (scopes = DEFAULT_SCOPES) => {
     if (!DISCORD_CLIENT_ID) {
       setError("Discord client ID not configured");
       setAuthState("error");
@@ -73,7 +73,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
 
     const params = new URLSearchParams({
       client_id: DISCORD_CLIENT_ID,
-      redirect_uri: redirectUri,
+      redirect_uri: REDIRECT_URI,
       response_type: "code",
       scope: scopes.join(" "),
       state: state,

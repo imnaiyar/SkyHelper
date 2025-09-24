@@ -6,7 +6,7 @@ interface BotStats {
   commands: number;
   totalUserInstalls: number;
 }
-export default function () {
+export default function useStats() {
   const [loading, setLoading] = useState<boolean>(true);
   const [stats, setStats] = useState<BotStats | null>(null);
   const [error, setError] = useState(null);
@@ -16,6 +16,7 @@ export default function () {
         const data = await fetch(process.env.NEXT_PUBLIC_API_URL! + "/stats").then((r) => r.json());
         setStats(data as BotStats);
         setLoading(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message);
         setLoading(false);
