@@ -166,12 +166,12 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     const emote = spirit?.expression?.icon ?? "❓";
     // TODO: update tree emojis from localization in this for prod
     const strVisiting = t("features:times-embed.TS_VISITING", {
-      TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UPDATED")}`,
+      TS_NAME: `${emote} ${spirit?.name ?? t("features:times-embed.TS_UPDATED")}`,
       DATE: Utils.time(tsData.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
       DURATION: tsData.duration,
     });
     const strExpected = t("features:times-embed.TS_EXPECTED", {
-      TS_NAME: `${emote} ${spirit?.name || t("features:times-embed.TS_UNKNOWN")}`,
+      TS_NAME: `${emote} ${spirit?.name ?? t("features:times-embed.TS_UNKNOWN")}`,
       DATE: Utils.time(tsData.nextVisit.toUnixInteger(), "F"),
       DURATION: tsData.duration,
     });
