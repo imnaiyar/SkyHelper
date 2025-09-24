@@ -48,10 +48,10 @@ export type Permission = keyof typeof permissions;
 /**
  * @param {string[]|string} perms
  */
-export const parsePerms = (perms: Permission | Permission[]): string => {
+export const parsePerms = (perms: Permission | Permission[]): string[] => {
   if (Array.isArray(perms)) {
-    return perms.map((perm) => `\`${permissions[perm]}\` `).join(", ");
+    return perms.map((perm) => permissions[perm]);
   } else {
-    return `\`${permissions[perms]}\``;
+    return [permissions[perms]];
   }
 };
