@@ -38,6 +38,7 @@ export default {
       "https://skyhelper.xyz",
       "https://dashboard.skyhelper.xyz",
       "https://preview.skyhelper.xyz",
+      "https://next.skyhelper.xyz",
       "https://docs.skyhelper.xyz",
     ],
 
