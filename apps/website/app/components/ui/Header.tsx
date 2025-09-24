@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import DiscordLogin from "./DiscordLogin";
+import DiscordLogin from "../auth/DiscordLogin";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,8 +27,8 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed rounded-lg top-2 left-2 right-2 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-slate-800/80 backdrop-blur-md border-2 border-slate-800/50" : "bg-slate-900/95 border-slate-800 border-2"
+      className={`fixed bg-slate-900/95 border-2 border-slate-800/50  rounded-lg top-2 left-2 right-2 z-50 transition-all duration-300 ${
+        isScrolled ? "backdrop-blur-md border-slate-800/80" : ""
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,7 +93,7 @@ export default function Header() {
               </Link>
             ))}
 
-            <DiscordLogin size="md" variant="button" />
+            <DiscordLogin btnTitle="Login with Discord" size="md" variant="button" />
           </div>
         </div>
       )}

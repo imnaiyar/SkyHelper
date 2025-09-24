@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { DiscordAuthProvider } from "./components/DiscordAuthContext";
+import Header from "./components/ui/Header";
+import Footer from "./components/ui/Footer";
+import { DiscordAuthProvider } from "./components/auth/DiscordAuthContext";
+import { NotificationProvider } from "./components/NotificationContext";
+import NotificationContainer from "./components/NotificationContainer";
 import { generateOGMetadata } from "../lib/og";
 
 const inter = Inter({
@@ -31,13 +33,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-slate-900 text-white`}>
-        <DiscordAuthProvider>
-          <div className="min-h-screen bg-slate-900">
-            <Header />
-            <div className="pt-20">{children}</div>
-            <Footer />
-          </div>
-        </DiscordAuthProvider>
+        <NotificationProvider>
+          <DiscordAuthProvider>
+            <div className="min-h-screen bg-slate-900">
+              <Header />
+              <div className="pt-20">{children}</div>
+              <Footer />
+              <NotificationContainer />
+            </div>
+          </DiscordAuthProvider>
+        </NotificationProvider>
       </body>
     </html>
   );

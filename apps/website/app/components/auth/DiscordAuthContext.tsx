@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/app/hooks/useToast";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface DiscordUser {
@@ -36,6 +37,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
   const [user, setUser] = useState<DiscordUser | null>(null);
   const [authState, setAuthState] = useState<AuthState>("loading");
   const [error, setError] = useState<string | null>(null);
+  const { success, error: terror, info, warning } = useToast();
 
   // Track ongoing requests to prevent duplicates
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -88,6 +90,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     setError(null);
     localStorage.removeItem("discord_user");
     sessionStorage.removeItem("discord_auth_state");
+    terror({ title: "Logged out!", duration: 2000 });
   };
 
   const refreshUser = async () => {
@@ -104,7 +107,6 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
 
       if (response.ok) {
         const userData = await response.json();
-        console.log(userData);
         setUser(userData);
         setAuthState("success");
         localStorage.setItem("discord_user", JSON.stringify(userData));
@@ -115,6 +117,8 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
       }
     } catch (error) {
       console.error("Error refreshing user:", error);
+      /* @ts-expect-error well */
+      terror({ title: "Something went wrong!", message: error.message ?? error.statusText ?? error });
       setUser(null);
       setAuthState("idle");
       localStorage.removeItem("discord_user");
@@ -134,6 +138,8 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
       if (error) {
         setError(decodeURIComponent(error));
         setAuthState("error");
+
+        terror({ title: "Something went wrong!", message: error });
         // Clean up URL without triggering navigation
         window.history.replaceState({}, document.title, window.location.pathname);
         return;
@@ -145,10 +151,11 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
 
       if (code && state) {
         const savedState = getAndClearState();
-        console.log(state, savedState);
         if (state !== savedState) {
           setError("Invalid state parameter");
           setAuthState("error");
+
+          terror({ title: "Something went wrong!", message: "Invalid state parameter" });
           window.history.replaceState({}, document.title, window.location.pathname);
           return;
         }
@@ -164,11 +171,11 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
           });
 
           const data = await response.json();
-          console.log(data);
           if (response.ok) {
             setUser(data);
             localStorage.setItem("discord_user", JSON.stringify(data));
             setAuthState("success");
+            success({ title: "Logged In!" });
           } else {
             setError(data.error || "Authentication failed");
             setAuthState("error");

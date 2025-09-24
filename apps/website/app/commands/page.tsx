@@ -14,8 +14,8 @@ import {
 import { PermissionsUtil } from "@/utils/PermissionUtils";
 import { parsePerms } from "@/utils/parsePerms";
 
-import { SecurityCallout } from "../components/Callout";
-import Loading from "../components/Loading";
+import { SecurityCallout } from "../components/ui/Callout";
+import Loading from "../components/ui/Loading";
 
 const CommandTypeMap = {
   [ApplicationCommandType.ChatInput]: "Slash",

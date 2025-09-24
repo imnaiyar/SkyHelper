@@ -6,7 +6,7 @@ import FeatureCard, { FeatureCardProps } from "./components/FeatureCard";
 import FeatureModal from "./components/FeatureModal";
 import Image from "next/image";
 import useStats from "./hooks/useStats";
-import { ModalContent, ModalProvider, ModalTrigger } from "./components/Modal";
+import { ModalContent, ModalProvider, ModalTrigger } from "./components/ui/Modal";
 
 export default function Home() {
   const [selectedFeature, setSelectedFeature] = useState<FeatureCardProps | null>(null);

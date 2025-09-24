@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { LogIn, ExternalLink, Shield, Bot, CheckCircle, AlertCircle, LogOut, ChevronDown, User } from "lucide-react";
-import Loading from "./Loading";
+import Loading from "../ui/Loading";
 import { useDiscordAuth } from "./DiscordAuthContext";
 
 interface DiscordLoginProps {
@@ -65,10 +65,9 @@ export default function DiscordLogin({
   onLoginError,
   className = "",
   redirectUri = REDIRECT_URI,
-  btnTitle,
+  btnTitle = "Login",
 }: DiscordLoginProps) {
   const { user, authState, error, login, logout } = useDiscordAuth();
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Notify parent components of state changes
   useEffect(() => {
@@ -189,7 +188,7 @@ export default function DiscordLogin({
         `}
       >
         <LogIn className={sizeClasses[size].icon} />
-        <span>Login</span>
+        <span>{btnTitle}</span>
       </button>
     );
   }
@@ -373,7 +372,7 @@ const SuccessBtn = ({
               ${sizeClasses[size].card} ${className}
             `}
       >
-        <img src={getAvatarUrl(user, 32)} alt={`${user.username}'s avatar`} className="w-10 h-10 rounded-full flex-shrink-0" />
+        <img src={getAvatarUrl(user, 32)} alt={`${user.username}'s avatar`} className="w-8 h-8 rounded-full flex-shrink-0" />
         <div className="flex-1 text-left">
           <p className="font-semibold text-white text-sm truncate">
             {user.username}#{user.discriminator}

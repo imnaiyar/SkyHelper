@@ -4,7 +4,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: ["/", "/api/og/"],
+      allow: ["/", "/api/og"],
       disallow: "/api",
     },
     sitemap: "https://next.skyhelper.xyz/sitemap.xml",

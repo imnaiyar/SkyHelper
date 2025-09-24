@@ -166,3 +166,80 @@ html {
 .animate-slide-in-out {
   animation: slideInOut 1.2s ease-in-out infinite;
 }
+
+/* Notification animations */
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes stackSlideIn {
+  from {
+    transform: translateX(100%) translateY(0px) scale(1);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(0px) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes stackReorder {
+  from {
+    transform: translateY(0px) translateX(0px) scale(1);
+  }
+  to {
+    transform: translateY(var(--stack-y, 0px)) translateX(var(--stack-x, 0px)) scale(var(--stack-scale, 1));
+  }
+}
+
+/* Enhanced notification stack styles */
+.notification-stack-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top right;
+}
+
+/* Notification stack hover expansion using CSS variables */
+.notification-stack-container:hover .notification-stack-item {
+  --current-y: var(--expanded-y);
+  --current-x: 0px;
+  --current-scale: 1;
+  --current-opacity: 1;
+}
+
+/* Responsive notification styles */
+@media (max-width: 640px) {
+  .notification-container {
+    top: 4rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    width: calc(100vw - 1rem);
+    max-width: none;
+  }
+}
