@@ -61,7 +61,6 @@ export default function DiscordLogin({
   scopes = DEFAULT_SCOPES,
   variant = "button",
   size = "md",
-  showPermissions = false,
   onLoginComplete,
   onLoginError,
   className = "",
@@ -69,7 +68,6 @@ export default function DiscordLogin({
   btnTitle,
 }: DiscordLoginProps) {
   const { user, authState, error, login, logout } = useDiscordAuth();
-  const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Notify parent components of state changes
