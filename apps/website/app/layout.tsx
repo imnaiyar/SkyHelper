@@ -6,6 +6,8 @@ import Footer from "./components/ui/Footer";
 import { DiscordAuthProvider } from "./components/auth/DiscordAuthContext";
 import { NotificationProvider } from "./components/NotificationContext";
 import NotificationContainer from "./components/NotificationContainer";
+import PWARegister from "./components/ui/PWARegister";
+import OfflineIndicator from "./components/ui/OfflineIndicator";
 import { generateOGMetadata } from "../lib/og";
 
 const inter = Inter({
@@ -32,6 +34,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0f172a" />
+        <link rel="icon" type="image/png" href="/icons/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+        <link rel="shortcut icon" href="/icons/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="SkyHelper" />
+      </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-slate-900 text-white`}>
         <NotificationProvider>
           <DiscordAuthProvider>
@@ -40,6 +51,8 @@ export default function RootLayout({
               <div className="pt-20">{children}</div>
               <Footer />
               <NotificationContainer />
+              <PWARegister />
+              <OfflineIndicator />
             </div>
           </DiscordAuthProvider>
         </NotificationProvider>
