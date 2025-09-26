@@ -1,6 +1,6 @@
 const CACHE_NAME = "skyhelper-v1";
 const RUNTIME = "runtime";
-
+const version = "v1";
 // max entries to prevent too much cache
 const MAX_RUNTIME_ENTRIES = 50;
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { extractScopesFromToken } from "@/app/lib/auth/scopes";
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,16 +11,24 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const data = JSON.parse(token.value);
+    const tokenData = JSON.parse(token.value);
+    const grantedScopes = extractScopesFromToken(tokenData);
+
     const user = await fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {
-        Authorization: `Bearer ${data.access_token}`,
+        Authorization: `Bearer ${tokenData.access_token}`,
         "Content-Type": "application/json",
       },
     }).then((u) => u.json());
 
-    const response = NextResponse.json({ ...user, verified: true });
-    response.cookies.set("discord_user", JSON.stringify({ ...user, verified: true }));
+    const userWithScopes = {
+      ...user,
+      verified: true,
+      grantedScopes,
+    };
+
+    const response = NextResponse.json(userWithScopes);
+    response.cookies.set("discord_user", JSON.stringify(userWithScopes));
     return response;
   } catch (error) {
     console.error("Error fetching user data:", error);

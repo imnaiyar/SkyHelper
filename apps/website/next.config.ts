@@ -3,7 +3,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    remotePatterns: [new URL("https://skyhelper.xyz/**")],
+    remotePatterns: [
+      new URL("https://skyhelper.xyz/**"),
+      {
+        protocol: "https",
+        hostname: "**.discord.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.discordapp.com",
+      },
+    ],
   },
   async headers() {
     return [

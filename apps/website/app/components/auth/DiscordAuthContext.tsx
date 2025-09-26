@@ -1,24 +1,16 @@
 "use client";
 
 import { useToast } from "@/app/hooks/useToast";
+import { AuthUser, DiscordScope, BASE_SCOPES } from "@/app/lib/auth/types";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-interface DiscordUser {
-  id: string;
-  username: string;
-  discriminator: string;
-  avatar: string | null;
-  email?: string;
-  verified?: boolean;
-}
-
-type AuthState = "idle" | "loading" | "authenticating" | "success" | "error";
+export type AuthState = "idle" | "loading" | "authenticating" | "success" | "error" | "redirecting";
 
 interface DiscordAuthContextType {
-  user: DiscordUser | null;
+  user: AuthUser | null;
   authState: AuthState;
   error: string | null;
-  login: (scopes?: string[], redirectUri?: string) => void;
+  login: (scopes?: DiscordScope[], redirectUri?: string) => void;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -27,17 +19,16 @@ const DiscordAuthContext = createContext<DiscordAuthContextType | undefined>(und
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
 const REDIRECT_URI = `${BASE_URL}/api/auth/discord/callback`;
-const DEFAULT_SCOPES = ["identify", "guilds"];
 
 interface DiscordAuthProviderProps {
   children: ReactNode;
 }
 
 export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<DiscordUser | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [authState, setAuthState] = useState<AuthState>("loading");
   const [error, setError] = useState<string | null>(null);
-  const { success, error: terror, info, warning } = useToast();
+  const { success, error: terror } = useToast();
 
   // Track ongoing requests to prevent duplicates
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -56,7 +47,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     return state;
   };
 
-  const login = (scopes = DEFAULT_SCOPES) => {
+  const login = (scopes = BASE_SCOPES) => {
     if (!DISCORD_CLIENT_ID) {
       setError("Discord client ID not configured");
       setAuthState("error");
@@ -70,7 +61,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     const state = generateState() + `:${window.location.pathname}`;
     saveState(state);
 
-    setAuthState("loading");
+    setAuthState("redirecting");
     setError(null);
 
     const params = new URLSearchParams({
@@ -145,11 +136,12 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
         return;
       }
 
-      if (authState === "loading" || authState === "authenticating") {
+      if (authState === "loading" || authState === "authenticating" || authState === "redirecting") {
         return; // Already processing
       }
 
       if (code && state) {
+        setAuthState("authenticating");
         const savedState = getAndClearState();
         if (state !== savedState) {
           setError("Invalid state parameter");
@@ -159,8 +151,6 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
           window.history.replaceState({}, document.title, window.location.pathname);
           return;
         }
-
-        setAuthState("authenticating");
 
         try {
           const response = await fetch("/api/auth/discord/login", {

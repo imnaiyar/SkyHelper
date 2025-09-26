@@ -5,6 +5,8 @@ import { useEffect } from "react";
 export default function PWARegister() {
   const { info } = useToast();
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") return; // do not register in dev mode
+
     if ("serviceWorker" in navigator) {
       const register = async () => {
         try {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { extractScopesFromToken } from "@/app/lib/auth/scopes";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     const tokenData = await tokenResponse.json();
+    const grantedScopes = extractScopesFromToken(tokenData);
 
     const user = await fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {
@@ -41,8 +43,14 @@ export async function POST(request: NextRequest) {
       },
     }).then((u) => u.json());
 
-    const response = NextResponse.json({ ...user, verified: true });
-    response.cookies.set("discord_user", JSON.stringify({ ...user, verified: true }));
+    const userWithScopes = {
+      ...user,
+      verified: true,
+      grantedScopes,
+    };
+
+    const response = NextResponse.json(userWithScopes);
+    response.cookies.set("discord_user", JSON.stringify(userWithScopes));
     response.cookies.set("token", JSON.stringify(tokenData));
     return response;
   } catch (error) {
