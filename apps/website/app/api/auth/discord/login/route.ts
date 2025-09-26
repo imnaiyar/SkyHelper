@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { extractScopesFromToken } from "@/app/lib/auth/scopes";
+import { setCookie, serializeTokenData, COOKIE_NAMES } from "@/app/lib/auth/cookies";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
@@ -49,9 +50,15 @@ export async function POST(request: NextRequest) {
       grantedScopes,
     };
 
-    const response = NextResponse.json(userWithScopes);
-    response.cookies.set("discord_user", JSON.stringify(userWithScopes));
-    response.cookies.set("token", JSON.stringify(tokenData));
+    // Set secure cookies instead of returning sensitive data
+    const response = NextResponse.json({
+      ...userWithScopes,
+      // Don't include sensitive token data in response
+    });
+
+    // Store token and user data in secure, httpOnly cookies
+    setCookie(response, COOKIE_NAMES.TOKEN, serializeTokenData(tokenData));
+
     return response;
   } catch (error) {
     console.error("Discord OAuth error:", error);

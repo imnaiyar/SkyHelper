@@ -324,7 +324,7 @@ const CardLogin = ({
               <Loading variant="minimal" size="sm" className="border-t-white" />
             )}
             {state === "idle" && <LogIn className="w-5 h-5" />}
-            <span>{btnTitle || ClassMap[state].text}</span>
+            <span>{missingScopes.length ? "Re-authenticate" : (state === "idle" && btnTitle) || ClassMap[state].text}</span>
             {state === "success" && <LogOut className="w-5 h-5" />}
           </button>
 

@@ -12,7 +12,6 @@ interface DiscordAuthContextType {
   error: string | null;
   login: (scopes?: DiscordScope[], redirectUri?: string) => void;
   logout: () => void;
-  refreshUser: () => Promise<void>;
 }
 
 const DiscordAuthContext = createContext<DiscordAuthContextType | undefined>(undefined);
@@ -22,16 +21,14 @@ const REDIRECT_URI = `${BASE_URL}/api/auth/discord/callback`;
 
 interface DiscordAuthProviderProps {
   children: ReactNode;
+  user?: AuthUser;
 }
 
-export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [authState, setAuthState] = useState<AuthState>("loading");
+export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ children, user: u }) => {
+  const [user, setUser] = useState<AuthUser | null>(u ?? null);
+  const [authState, setAuthState] = useState<AuthState>(u ? "success" : "idle");
   const [error, setError] = useState<string | null>(null);
   const { success, error: terror } = useToast();
-
-  // Track ongoing requests to prevent duplicates
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const generateState = () => {
     return btoa(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
@@ -54,7 +51,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
       return;
     }
 
-    if (authState === "authenticating" || authState === "loading") {
+    if (authState === "authenticating" || authState === "loading" || authState === "redirecting") {
       return; // Prevent multiple simultaneous login attempts
     }
 
@@ -79,43 +76,17 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     setUser(null);
     setAuthState("idle");
     setError(null);
-    localStorage.removeItem("discord_user");
-    sessionStorage.removeItem("discord_auth_state");
+
+    // Call server-side logout to clear secure cookies
+    fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    }).catch((error) => {
+      console.error("Error during logout:", error);
+      terror({ message: error.message });
+    });
+
     terror({ title: "Logged out!", duration: 2000 });
-  };
-
-  const refreshUser = async () => {
-    if (isRefreshing) {
-      return; // Prevent duplicate refresh requests
-    }
-
-    setIsRefreshing(true);
-
-    try {
-      const response = await fetch("/api/auth/user", {
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        setAuthState("success");
-        localStorage.setItem("discord_user", JSON.stringify(userData));
-      } else {
-        setUser(null);
-        setAuthState("idle");
-        localStorage.removeItem("discord_user");
-      }
-    } catch (error) {
-      console.error("Error refreshing user:", error);
-      /* @ts-expect-error well */
-      terror({ title: "Something went wrong!", message: error.message ?? error.statusText ?? error });
-      setUser(null);
-      setAuthState("idle");
-      localStorage.removeItem("discord_user");
-    } finally {
-      setIsRefreshing(false);
-    }
   };
 
   // Handle OAuth callback
@@ -163,7 +134,6 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
           const data = await response.json();
           if (response.ok) {
             setUser(data);
-            localStorage.setItem("discord_user", JSON.stringify(data));
             setAuthState("success");
             success({ title: "Logged In!" });
           } else {
@@ -182,25 +152,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     };
 
     handleOAuthCallback();
-  }, [authState]);
-
-  // Load user from localStorage on mount
-  useEffect(() => {
-    setAuthState("loading");
-    const savedUser = localStorage.getItem("discord_user");
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
-        setAuthState("success");
-        // Refresh user data in background
-        refreshUser();
-      } catch (error) {
-        console.error("Error parsing saved user:", error);
-        localStorage.removeItem("discord_user");
-      }
-    } else setAuthState("idle");
-  }, []);
+  }, [authState, success, terror]);
 
   const contextValue: DiscordAuthContextType = {
     user,
@@ -208,7 +160,6 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
     error,
     login,
     logout,
-    refreshUser,
   };
 
   return <DiscordAuthContext.Provider value={contextValue}>{children}</DiscordAuthContext.Provider>;

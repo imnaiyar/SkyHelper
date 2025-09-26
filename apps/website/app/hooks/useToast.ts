@@ -7,8 +7,8 @@ export function useToast() {
     showNotification({ type: "success", ...op });
   };
 
-  const error = (op: { title: string; message?: string; duration?: number }) => {
-    showNotification({ type: "error", ...op });
+  const error = (op: { title?: string; message?: string; duration?: number }) => {
+    showNotification({ type: "error", title: op.title ?? "Something went wrong!", ...op });
   };
 
   const warning = (op: { title: string; message?: string; duration?: number }) => {

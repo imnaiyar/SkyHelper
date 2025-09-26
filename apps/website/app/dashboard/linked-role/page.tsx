@@ -1,18 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useDiscordAuth } from "../../components/auth/DiscordAuthContext";
+import { getRoleConnections } from "@/app/lib/discord";
+import { XCircleIcon } from "lucide-react";
 
-// todo: this need updating
-interface RoleConnectionMetadata {
-  username?: string;
-  metadata: {
-    wings: number;
-    since?: string;
-    cr: boolean;
-    eden: boolean;
-    hangout: boolean;
-  };
-}
 const RoleCard = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen bg-slate-900 py-12">
@@ -24,7 +12,25 @@ const RoleCard = ({ children }: { children: React.ReactNode }) => {
             automatically assign roles based on your game progress.
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+        <div className="relative bg-slate-800 border border-slate-700 rounded-xl p-6">
+          <div className="absolute right-6">
+            <button className="text-slate-400 hover:text-white transition-colors p-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="m18.5 2.5 a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z" />
+              </svg>
+            </button>
+          </div>
           <h2 className="text-2xl font-semibold text-white mb-6">Your Sky Profile</h2>
           {children}
         </div>
@@ -50,167 +56,63 @@ const RoleCard = ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
-export default function LinkedRolePage() {
-  const { user, authState } = useDiscordAuth();
-  const [metadata, setMetadata] = useState<RoleConnectionMetadata | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchRoleMetadata = async () => {
-    if (!user) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/auth/user/role-metadata", {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch role metadata");
-      }
-
-      const data = await response.json();
-      setMetadata(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateRoleMetadata = async (newMetadata: Partial<RoleConnectionMetadata["metadata"]>) => {
-    if (!user) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/auth/user/role-metadata", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(newMetadata),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update role metadata");
-      }
-
-      const data = await response.json();
-      setMetadata(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      fetchRoleMetadata();
-    }
-  }, []);
-  if (authState === "loading" || loading)
-    return (
-      <RoleCard>
-        {" "}
-        <div className="flex items-center justify-center py-8">
-          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          <span className="ml-3 text-slate-400">Loading your profile...</span>
-        </div>
-      </RoleCard>
-    );
-
-  if (error)
+export default async function LinkedRolePage() {
+  const data = await getRoleConnections();
+  if (!data)
     return (
       <RoleCard>
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-          <p className="text-red-400">{error}</p>
+          <p className="text-red-400">Failed to get any role connections</p>
         </div>
       </RoleCard>
     );
+
+  const { metadata } = data;
   return (
     <RoleCard>
       {metadata ? (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Maximum Wings</label>
-                <input
-                  type="number"
-                  min="0"
-                  max="200"
-                  value={metadata.metadata.wings}
-                  onChange={(e) => updateRoleMetadata({ wings: parseInt(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
+            <p className="block text-sm font-medium text-slate-300 mb-2">Maximum Wings: {metadata.wings || 0}</p>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Playing Since</label>
-                <input
-                  type="date"
-                  value={metadata.metadata.since || ""}
-                  onChange={(e) => updateRoleMetadata({ since: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
+            <p className="block text-sm font-medium text-slate-300 mb-2">Playing Since: {metadata.since || 0}</p>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-3">Activities</label>
-
-                <div className="space-y-3">
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={metadata.metadata.cr}
-                      onChange={(e) => updateRoleMetadata({ cr: e.target.checked })}
-                      className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500 focus:ring-2"
-                    />
-                    <span className="ml-2 text-slate-300">CR/WL Runner</span>
-                  </label>
-
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={metadata.metadata.eden}
-                      onChange={(e) => updateRoleMetadata({ eden: e.target.checked })}
-                      className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500 focus:ring-2"
-                    />
-                    <span className="ml-2 text-slate-300">Eden Runner</span>
-                  </label>
-
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={metadata.metadata.hangout}
-                      onChange={(e) => updateRoleMetadata({ hangout: e.target.checked })}
-                      className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-600 rounded focus:ring-blue-500 focus:ring-2"
-                    />
-                    <span className="ml-2 text-slate-300">Hangout Enjoyer</span>
-                  </label>
-                </div>
-              </div>
-            </div>
+            <p className="block text-sm font-medium text-slate-300 mb-2">
+              Candle Runner:{" "}
+              {metadata.cr ? (
+                <span className="text-green-500 text-sm">✔</span>
+              ) : (
+                <span className="text-red-500 text-sm">✖</span>
+              )}
+            </p>
+            <p className="block text-sm font-medium text-slate-300 mb-2">
+              Hangouts:{" "}
+              {metadata.hangout ? (
+                <span className="text-green-500 text-sm">✔</span>
+              ) : (
+                <span className="text-red-500 text-sm">✖</span>
+              )}
+            </p>
+            <p className="block text-sm font-medium text-slate-300 mb-2">
+              Eden Runner:{" "}
+              {metadata.eden ? (
+                <span className="text-green-500 text-sm">✔</span>
+              ) : (
+                <span className="text-red-500 text-sm">✖</span>
+              )}
+            </p>
           </div>
 
           <div className="pt-6 border-t border-slate-700">
             <h3 className="text-lg font-medium text-white mb-3">Connected Account</h3>
-            <p className="text-slate-400">Platform Username: {metadata.username || "Not set"}</p>
+            <p className="text-slate-400">Platform Username: {data.username || "Not set"}</p>
           </div>
         </div>
       ) : (
         <div className="text-center py-8">
           <p className="text-slate-400 mb-4">No role metadata found.</p>
           <button
-            onClick={fetchRoleMetadata}
+            /*   onClick={ TODO } */
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
           >
             Retry

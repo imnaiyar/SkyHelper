@@ -1,17 +1,25 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { extractScopesFromToken } from "@/app/lib/auth/scopes";
+import { COOKIE_NAMES, deserializeTokenData, isTokenExpired, setCookie, clearCookies } from "@/app/lib/auth/cookies";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("token");
+    const token = cookieStore.get(COOKIE_NAMES.TOKEN);
 
     if (!token) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const tokenData = JSON.parse(token.value);
+    const tokenData = deserializeTokenData(token.value);
+    if (!tokenData || isTokenExpired(tokenData)) {
+      // Token is invalid or expired
+      const response = NextResponse.json({ error: "Token expired" }, { status: 401 });
+      clearCookies(response, [COOKIE_NAMES.TOKEN, COOKIE_NAMES.USER]);
+      return response;
+    }
+
     const grantedScopes = extractScopesFromToken(tokenData);
 
     const user = await fetch(`https://discord.com/api/v10/users/@me`, {
@@ -19,16 +27,21 @@ export async function GET(request: NextRequest) {
         Authorization: `Bearer ${tokenData.access_token}`,
         "Content-Type": "application/json",
       },
-    }).then((u) => u.json());
+    });
+
+    if (!user.ok) {
+      return NextResponse.json({ error: user.statusText }, { status: user.status, statusText: user.statusText });
+    }
 
     const userWithScopes = {
-      ...user,
+      ...(await user.json()),
       verified: true,
       grantedScopes,
     };
 
     const response = NextResponse.json(userWithScopes);
-    response.cookies.set("discord_user", JSON.stringify(userWithScopes));
+    // Update user data in cookie
+    setCookie(response, COOKIE_NAMES.USER, JSON.stringify(userWithScopes));
     return response;
   } catch (error) {
     console.error("Error fetching user data:", error);
@@ -36,13 +49,12 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE() {
   try {
-    // Logout - clear cookies
+    // Logout - clear secure cookies
     const response = NextResponse.json({ message: "Logged out successfully" });
 
-    response.cookies.delete("discord_user");
-    response.cookies.delete("discord_token");
+    clearCookies(response, [COOKIE_NAMES.TOKEN]);
 
     return response;
   } catch (error) {

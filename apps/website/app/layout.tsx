@@ -9,6 +9,7 @@ import NotificationContainer from "./components/NotificationContainer";
 import PWARegister from "./components/ui/PWARegister";
 import OfflineIndicator from "./components/ui/OfflineIndicator";
 import { generateOGMetadata } from "../lib/og";
+import { getUser } from "./lib/discord";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,11 +28,12 @@ export const metadata: Metadata = generateOGMetadata({
     "SkyHelper is a comprehensive Discord bot designed for the Sky: Children of the Light community. Track daily events, spirit information, shards calendar, and more with real-time updates.",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user } = await getUser(); // get initial user
   return (
     <html lang="en" className="scroll-smooth">
       <head>
@@ -45,7 +47,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-slate-900 text-white`}>
         <NotificationProvider>
-          <DiscordAuthProvider>
+          <DiscordAuthProvider user={user ?? undefined}>
             <div className="min-h-screen bg-slate-900">
               <Header />
               <div className="pt-20">{children}</div>
