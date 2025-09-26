@@ -13,6 +13,7 @@ const permissions = {
   KickMembers: "Kick Members",
   ManageChannels: "Manage Channels",
   ManageEmojisAndStickers: "Manage Emojis and Stickers",
+  ManageGuildExpressions: "Manage Expressions",
   ManageEvents: "Manage Events",
   ManageGuild: "Manage Server",
   ManageMessages: "Manage Message",

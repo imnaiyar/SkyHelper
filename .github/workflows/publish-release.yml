@@ -22,6 +22,7 @@ on:
           - "@skyhelperbot/constants"
           - "@skyhelperbot/jobs"
           - "@skyhelperbot/docs"
+          - "@skyhelperbot/website"
           - "skyhelper"
 
 jobs:

@@ -1,6 +1,5 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import jsdoc from "eslint-plugin-jsdoc";
-import { fixupPluginRules } from "@eslint/compat";
 import globals from "globals";
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
