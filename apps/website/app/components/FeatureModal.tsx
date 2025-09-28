@@ -32,19 +32,15 @@ export default function FeatureModal({ images, icon }: FeatureModalProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
-      {/* Image Carousel Side */}
       <div className="relative bg-slate-900  flex items-center justify-center min-h-[400px] lg:min-h-[600px]">
         {images.length > 0 ? (
           <>
-            {/* Main Image Display */}
             <div className="relative w-full h-full flex items-center justify-center p-8">
-              {/* Placeholder for now - will show actual images later */}
               <div className="w-full  max-w-md aspect-video bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center border border-slate-700">
                 <img src={images[currentImageIndex].url} />
               </div>
             </div>
 
-            {/* Navigation Arrows */}
             {images.length > 1 && (
               <>
                 <button
@@ -66,7 +62,6 @@ export default function FeatureModal({ images, icon }: FeatureModalProps) {
               </>
             )}
 
-            {/* Image Indicators */}
             {images.length > 1 && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
                 {images.map((_, index) => (
@@ -82,7 +77,6 @@ export default function FeatureModal({ images, icon }: FeatureModalProps) {
             )}
           </>
         ) : (
-          // Fallback when no images
           <div className="text-center p-8">
             <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-6">
               <span className="text-4xl">{icon}</span>
@@ -92,7 +86,6 @@ export default function FeatureModal({ images, icon }: FeatureModalProps) {
         )}
       </div>
 
-      {/* Content Side */}
       <div className="p-8 lg:p-12 flex flex-col justify-center">
         <div className="flex items-center mb-6">
           <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4">
@@ -103,7 +96,6 @@ export default function FeatureModal({ images, icon }: FeatureModalProps) {
 
         <p className="text-slate-300 text-lg leading-relaxed mb-8">{images[currentImageIndex].description}</p>
 
-        {/* Image thumbnails */}
         {images.length > 1 && (
           <div>
             <h3 className="text-white font-semibold mb-4">Screenshots ({images.length})</h3>
@@ -118,7 +110,6 @@ export default function FeatureModal({ images, icon }: FeatureModalProps) {
                       : "border-slate-600 hover:border-slate-500"
                   }`}
                 >
-                  {/* Thumbnail placeholder */}
                   <div className="w-full h-full bg-gradient-to-br from-blue-500/10 to-purple-600/10 flex items-center justify-center">
                     <img src={image.url} />
                   </div>

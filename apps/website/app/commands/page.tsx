@@ -40,7 +40,6 @@ export default function CommandsPage() {
     setExpandedCommands(newExpanded);
   };
 
-  // Flatten commands to include subcommands as separate entries
   const flattenCommands = (
     commands: APIApplicationCommand[],
   ): Array<APIApplicationCommand & { parentName?: string; isSubcommand?: boolean }> => {
@@ -195,12 +194,10 @@ export default function CommandsPage() {
           </div>
         </div>
 
-        {/* Commands Count */}
         <div className="mb-6 text-slate-400">
           Found {filteredCommands.length} command{filteredCommands.length !== 1 ? "s" : ""}
         </div>
 
-        {/* Commands List */}
         <div className="space-y-4">
           {filteredCommands.map((command) => (
             <div key={command.id} className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden">

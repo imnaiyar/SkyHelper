@@ -20,6 +20,7 @@ export default function Header() {
 
   const navItems = [
     { name: "Features", href: "/#features" },
+    { name: "Dashboard", href: "/dashboard" },
     { name: "Commands", href: "/commands" },
     { name: "Docs", href: "https://docs.skyhelper.xyz", external: true },
     { name: "Support", href: "https://discord.com/invite/2rjCRKZsBb", external: true },
@@ -27,7 +28,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed bg-slate-900/95 border-2 border-slate-800/50  rounded-lg top-2 left-2 right-2 z-50 transition-all duration-300 ${
+      className={`fixed bg-slate-900/95 border-2 border-slate-800/50 rounded-lg top-2 left-4 right-4 z-100 transition-all duration-300 ${
         isScrolled ? "backdrop-blur-md border-slate-800/80" : ""
       }`}
     >
@@ -78,7 +79,8 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden top-16">
+        <div className="md:hidden">
+          <div className="border-t-2 border-slate-800/50"></div>
           <div className="px-4 py-4 space-y-4">
             {navItems.map((item) => (
               <Link

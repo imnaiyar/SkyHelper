@@ -6,7 +6,6 @@ export const runtime = "edge";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
-  // Extract parameters from the URL
   const title = searchParams.get("title") || "SkyHelper";
   const description = searchParams.get("description") || "Your companion for Sky: Children of the Light";
   const pathname = searchParams.get("pathname") || "/";
@@ -58,7 +57,6 @@ export async function GET(request: NextRequest) {
             </span>
           </div>
 
-          {/* Main Content - Title and Description */}
           <div
             style={{
               flex: 1,
@@ -92,7 +90,6 @@ export async function GET(request: NextRequest) {
             </p>
           </div>
 
-          {/* Bottom Left - Pathname Pill */}
           <div
             style={{
               display: "flex",

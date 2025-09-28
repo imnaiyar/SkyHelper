@@ -48,14 +48,15 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-slate-900 text-white`}>
         <NotificationProvider>
           <DiscordAuthProvider user={user ?? undefined}>
-            <div className="min-h-screen bg-slate-900">
+            <div className="min-h-screen bg-slate-900 p-4">
               <Header />
-              <div className="pt-20">{children}</div>
-              <Footer />
+              <div className="pt-18">{children}</div>
               <NotificationContainer />
               <PWARegister />
               <OfflineIndicator />
             </div>
+
+            <Footer />
           </DiscordAuthProvider>
         </NotificationProvider>
       </body>

@@ -14,7 +14,6 @@ export async function GET() {
 
     const tokenData = deserializeTokenData(token.value);
     if (!tokenData || isTokenExpired(tokenData)) {
-      // Token is invalid or expired
       const response = NextResponse.json({ error: "Token expired" }, { status: 401 });
       clearCookies(response, [COOKIE_NAMES.TOKEN, COOKIE_NAMES.USER]);
       return response;
@@ -51,7 +50,6 @@ export async function GET() {
 
 export async function DELETE() {
   try {
-    // Logout - clear secure cookies
     const response = NextResponse.json({ message: "Logged out successfully" });
 
     clearCookies(response, [COOKIE_NAMES.TOKEN]);

@@ -18,21 +18,14 @@ export interface AccessToken extends RESTPostOAuth2AccessTokenResult {
 }
 const isDevelopment = process.env.NODE_ENV === "development";
 
-/**
- * Default secure cookie options
- */
-const defaultSecureOptions = {
+const defaultoptions = {
   httpOnly: true,
-  secure: !isDevelopment, // Use secure cookies in production only
+  secure: !isDevelopment,
   sameSite: "lax" as const,
   path: "/",
-  // 7 days expiration for auth tokens
   maxAge: 60 * 60 * 24 * 7,
 };
 
-/**
- * Set a secure cookie on the response
- */
 export function setCookie(
   response: NextResponse,
   name: string,
@@ -40,16 +33,13 @@ export function setCookie(
   options: Partial<Omit<CookieOptions, "name" | "value">> = {},
 ): void {
   const cookieOptions = {
-    ...defaultSecureOptions,
+    ...defaultoptions,
     ...options,
   };
 
   response.cookies.set(name, value, cookieOptions);
 }
 
-/**
- * Set multiple secure cookies on the response
- */
 export function setCookies(
   response: NextResponse,
   cookies: Array<{ name: string; value: string; options?: Partial<Omit<CookieOptions, "name" | "value">> }>,
@@ -57,27 +47,18 @@ export function setCookies(
   cookies.forEach(({ name, value, options }) => setCookie(response, name, value, options));
 }
 
-/**
- * Clear cookies by setting them to expire in the past
- */
 export function clearCookies(response: NextResponse, cookieNames: string[]): void {
   cookieNames.forEach((name) => {
     response.cookies.delete(name);
   });
 }
 
-/**
- * Cookie names used by the authentication system
- */
 export const COOKIE_NAMES = {
   TOKEN: "auth_token",
   USER: "auth_user",
   STATE: "auth_state",
 } as const;
 
-/**
- * Serialize token data for storage in cookies
- */
 export function serializeTokenData(tokenData: RESTPostOAuth2AccessTokenResult): string {
   return JSON.stringify({
     access_token: tokenData.access_token,
@@ -85,14 +66,10 @@ export function serializeTokenData(tokenData: RESTPostOAuth2AccessTokenResult): 
     expires_in: tokenData.expires_in,
     scope: tokenData.scope,
     token_type: tokenData.token_type,
-    // Add timestamp for expiration tracking
     issued_at: Date.now(),
   });
 }
 
-/**
- * Deserialize token data from cookie
- */
 export function deserializeTokenData(tokenString: string): AccessToken | null {
   try {
     return JSON.parse(tokenString);
@@ -101,9 +78,6 @@ export function deserializeTokenData(tokenString: string): AccessToken | null {
   }
 }
 
-/**
- * Check if token is expired
- */
 export function isTokenExpired(tokenData: AccessToken): boolean {
   if (!tokenData || !tokenData.issued_at || !tokenData.expires_in) {
     return true;

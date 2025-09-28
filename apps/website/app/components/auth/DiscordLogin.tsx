@@ -32,7 +32,6 @@ const getAvatarUrl = (user: AuthUser, size = 128) => {
   return `${DISCORD_CDN_URL}/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith("a_") ? "gif" : "png"}?size=${size}`;
 };
 
-// Size classes
 const sizeClasses = {
   sm: {
     button: "px-4 min-w-20 justify-center py-2 text-sm",
@@ -64,7 +63,6 @@ export default function DiscordLogin({
 }: DiscordLoginProps) {
   const { user, authState, error, login, logout } = useDiscordAuth();
 
-  // Notify parent components of state changes
   useEffect(() => {
     if (authState === "success" && user) {
       onLoginComplete?.(user);
@@ -95,7 +93,6 @@ export default function DiscordLogin({
     }
   }
 
-  // Authenticating state
   if (authState === "authenticating") {
     if (variant === "button") {
       return (
@@ -114,14 +111,12 @@ export default function DiscordLogin({
     }
   }
 
-  // Success state (logged in)
   if (authState === "success" && user) {
     if (variant === "button") {
       return <SuccessBtn size={size} user={user} handleLogout={logout} className={className} />;
     }
   }
 
-  // Error state
   if (authState === "error") {
     if (variant === "button") {
       return (
@@ -165,7 +160,6 @@ export default function DiscordLogin({
     );
   }
 
-  // Idle state (show login interface)
   if (variant === "button") {
     return (
       <button
@@ -182,7 +176,6 @@ export default function DiscordLogin({
     );
   }
 
-  // Card variant - idle state
   return (
     <CardLogin
       size={size}
@@ -198,7 +191,6 @@ export default function DiscordLogin({
   );
 }
 
-// Convenience components
 export const DiscordLoginButton = (props: Omit<DiscordLoginProps, "variant">) => <DiscordLogin variant="button" {...props} />;
 
 export const DiscordLoginCard = (props: Omit<DiscordLoginProps, "variant">) => <DiscordLogin variant="card" {...props} />;
@@ -377,7 +369,7 @@ const SuccessBtn = ({
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  // Close dropdown when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

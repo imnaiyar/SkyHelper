@@ -8,7 +8,6 @@ export async function POST() {
       message: "Logged out successfully",
     });
 
-    // Clear all authentication-related cookies
     clearCookies(response, [COOKIE_NAMES.TOKEN]);
 
     return response;

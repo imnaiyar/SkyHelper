@@ -64,7 +64,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Product Links */}
           <div>
             <h3 className="text-white font-semibold mb-4">Links</h3>
             <ul className="space-y-3">
@@ -83,7 +82,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Legal Links */}
           <div>
             <h3 className="text-white font-semibold mb-4">Others</h3>
             <ul className="space-y-3">

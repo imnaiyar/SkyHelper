@@ -28,25 +28,19 @@ export default function FeatureCard({
 }: FeatureCardProps) {
   return (
     <div className="group relative cursor-pointer" onClick={(e) => onClick && onClick(e)}>
-      {/* Background gradient that appears on hover */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
 
-      {/* Main card */}
       <div className="relative bg-slate-800 p-6 rounded-2xl border border-slate-700 group-hover:border-slate-600 transition-all duration-300 h-full transform group-hover:scale-[1.02]">
-        {/* Icon */}
         <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
           <span className="text-2xl">{icon}</span>
         </div>
 
-        {/* Title */}
         <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400 transition-all duration-300">
           {title}
         </h3>
 
-        {/* Description */}
         <p className="text-slate-300 mb-4 leading-relaxed">{description}</p>
 
-        {/* Features list */}
         <ul className="space-y-2">
           {features.map((feature, index) => (
             <li key={index} className="flex items-center text-sm text-slate-400">
@@ -62,7 +56,6 @@ export default function FeatureCard({
           ))}
         </ul>
 
-        {/* Hover effect indicator */}
         <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="flex items-center space-x-2">
             {((images && images.length > 0) || forwardDescription) && (

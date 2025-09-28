@@ -20,7 +20,6 @@ export async function getUser(): Promise<{ user: AuthUser | null; error?: string
       return { user: null, error: "Token expired" };
     }
 
-    // Check if we have cached user data
     const userCookie = cookieStore.get(COOKIE_NAMES.USER);
     if (userCookie) {
       try {

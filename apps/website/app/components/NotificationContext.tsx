@@ -41,7 +41,6 @@ export function NotificationProvider({ children }: NotificationProviderProps) {
 
     setNotifications((prev) => [...prev, newNotification]);
 
-    // Auto-hide notification after duration
     if (duration > 0) {
       setTimeout(() => {
         hideNotification(id);
@@ -54,7 +53,6 @@ export function NotificationProvider({ children }: NotificationProviderProps) {
       prev.map((notification) => (notification.id === id ? { ...notification, isVisible: false } : notification)),
     );
 
-    // Remove from DOM after animation
     setTimeout(() => {
       setNotifications((prev) => prev.filter((notification) => notification.id !== id));
     }, 300);

@@ -114,7 +114,6 @@ const NotificationItem = ({ notification }: { notification: Notification }) => {
         </div>
       </div>
 
-      {/* Progress bar for timed notifications */}
       {notification.duration && notification.duration > 0 && (
         <div className="absolute bottom-0 left-0 h-1 bg-slate-600/30 w-full">
           <div
@@ -142,7 +141,6 @@ export default function NotificationContainer() {
 
   if (notifications.length === 0) return null;
 
-  // Reverse the notifications array so newest appears on top
   const reversedNotifications = [...notifications].reverse();
 
   return (

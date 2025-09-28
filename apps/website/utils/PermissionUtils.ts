@@ -63,12 +63,11 @@ export class PermissionsUtil {
     }
     if (typeof perms === "string") {
       if (!Number.isNaN(parseInt(perms))) return BigInt(perms);
-      // eslint-disable-next-line
+
       if (PermissionFlagsBits[perms as PermissionFlags] !== undefined) {
         return PermissionFlagsBits[perms as PermissionFlags];
       }
     }
-    console.warn(`Recieved Unknown Permissions: `, perms as string); // just warn, there maybe new permissions that maybe not handled by discord.js yet
 
     return 0n; // return this, if any of the above case doesn't match. Ideally this should happen very rarely
   }

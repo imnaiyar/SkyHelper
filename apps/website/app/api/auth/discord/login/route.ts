@@ -50,13 +50,10 @@ export async function POST(request: NextRequest) {
       grantedScopes,
     };
 
-    // Set secure cookies instead of returning sensitive data
     const response = NextResponse.json({
       ...userWithScopes,
-      // Don't include sensitive token data in response
     });
 
-    // Store token and user data in secure, httpOnly cookies
     setCookie(response, COOKIE_NAMES.TOKEN, serializeTokenData(tokenData));
 
     return response;

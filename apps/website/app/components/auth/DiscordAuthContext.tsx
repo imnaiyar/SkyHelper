@@ -102,7 +102,7 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
         setAuthState("error");
 
         terror({ title: "Something went wrong!", message: error });
-        // Clean up URL without triggering navigation
+
         window.history.replaceState({}, document.title, window.location.pathname);
         return;
       }
@@ -146,7 +146,6 @@ export const DiscordAuthProvider: React.FC<DiscordAuthProviderProps> = ({ childr
           setAuthState("error");
         }
 
-        // Clean up URL
         window.history.replaceState({}, document.title, window.location.pathname);
       }
     };

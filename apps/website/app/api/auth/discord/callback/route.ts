@@ -9,9 +9,9 @@ export async function GET(request: NextRequest) {
   if (!state) {
     return NextResponse.redirect(`${request.nextUrl.origin}/login?error="state" not found`);
   }
-  // hello
+
   const pathname = state.split(":")[1];
-  // Handle OAuth errors
+
   if (error) {
     return NextResponse.redirect(`${request.nextUrl.origin}${pathname}?error=${error}`);
   }

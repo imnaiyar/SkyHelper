@@ -10,17 +10,12 @@ import Loading from "../ui/Loading";
 
 interface ScopeAuthGateProps {
   children: React.ReactNode;
-  /** Specific scopes required. If not provided, uses route-based requirements */
   requiredScopes?: DiscordScope[];
-  /** Override the route path for scope lookup */
   routePath?: string;
-  /** Custom fallback component */
   fallback?: React.ReactNode;
-  /** Show permissions in login card */
   showPermissions?: boolean;
 }
 
-/* Auth guard for required routes */
 export default function AuthGate({ children, requiredScopes, routePath, fallback, showPermissions = true }: ScopeAuthGateProps) {
   const { user, authState } = useDiscordAuth();
   const currentPath = usePathname();
@@ -51,7 +46,6 @@ export default function AuthGate({ children, requiredScopes, routePath, fallback
     return <>{fallback}</>;
   }
 
-  // Show re-authentication UI with missing scopes highlighted
   return (
     <div className="py-12">
       <div className="max-w-md mx-auto">
