@@ -8,8 +8,10 @@ import { NotificationProvider } from "./components/NotificationContext";
 import NotificationContainer from "./components/NotificationContainer";
 import PWARegister from "./components/ui/PWARegister";
 import OfflineIndicator from "./components/ui/OfflineIndicator";
+import FloatingStarsBackground from "./components/ui/FloatingStarsBackground";
 import { generateOGMetadata } from "../lib/og";
-import { getUser } from "./lib/discord";
+import { AuthUser } from "./lib/auth/types";
+import { cookies } from "next/headers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,7 +35,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { user } = await getUser(); // get initial user
+  const c = (await cookies()).toString();
+  const data = (await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/auth/user", { headers: { Cookie: c } }).then((r) =>
+    r.json(),
+  )) as AuthUser | { error: string }; // get initial user
   return (
     <html lang="en" className="scroll-smooth">
       <head>
@@ -46,9 +51,10 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="SkyHelper" />
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-slate-900 text-white`}>
+        <FloatingStarsBackground />
         <NotificationProvider>
-          <DiscordAuthProvider user={user ?? undefined}>
-            <div className="min-h-screen bg-slate-900 p-4">
+          <DiscordAuthProvider user={"id" in data ? data : undefined}>
+            <div className="min-h-screen p-4 relative z-10">
               <Header />
               <div className="pt-18">{children}</div>
               <NotificationContainer />

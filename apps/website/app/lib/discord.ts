@@ -1,61 +1,8 @@
 import { cookies } from "next/headers";
-import { AuthUser } from "./auth/types";
-import { extractScopesFromToken } from "./auth/scopes";
-import { COOKIE_NAMES, deserializeTokenData, isTokenExpired } from "./auth/cookies";
+import { COOKIE_NAMES } from "./auth/cookies";
 import { APIApplicationRoleConnection, Routes } from "discord-api-types/v10";
 
 const BASE_API = "https://discord.com/api/v10";
-
-export async function getUser(): Promise<{ user: AuthUser | null; error?: string }> {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(COOKIE_NAMES.TOKEN);
-
-    if (!token) {
-      return { user: null };
-    }
-
-    const tokenData = deserializeTokenData(token.value);
-    if (!tokenData || isTokenExpired(tokenData)) {
-      return { user: null, error: "Token expired" };
-    }
-
-    const userCookie = cookieStore.get(COOKIE_NAMES.USER);
-    if (userCookie) {
-      try {
-        const cachedUser = JSON.parse(userCookie.value) as AuthUser;
-        return { user: cachedUser };
-      } catch {
-        // If parsing fails, fall back to fetching fresh data
-      }
-    }
-
-    const grantedScopes = extractScopesFromToken(tokenData);
-
-    const response = await fetch(`${BASE_API}/users/@me`, {
-      headers: {
-        Authorization: `Bearer ${tokenData.access_token}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      return { user: null, error: `Discord API error: ${response.statusText}` };
-    }
-
-    const discordUser = await response.json();
-    const user: AuthUser = {
-      ...discordUser,
-      verified: true,
-      grantedScopes,
-    };
-
-    return { user };
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return { user: null, error: "Internal server error" };
-  }
-}
 
 export async function getRoleConnections() {
   const d = await discordRequest<APIApplicationRoleConnection>(

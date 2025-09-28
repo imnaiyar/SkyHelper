@@ -1,0 +1,5 @@
+1. Proper query handler for data fetchung
+2. editing and updating /linked-roles
+3. managing guids, and guild features
+4. user profiles
+5. admin route (updates, ts, etc...)

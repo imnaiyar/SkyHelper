@@ -1,4 +1,4 @@
-import React, { MouseEvent, MouseEventHandler } from "react";
+import React from "react";
 
 interface FeatureImage {
   id: string;
@@ -14,20 +14,11 @@ export interface FeatureCardProps {
   forwardDescription?: React.ReactNode;
   features: string[];
   images?: FeatureImage[];
-  onClick?: (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
 }
 
-export default function FeatureCard({
-  icon,
-  title,
-  description,
-  features,
-  images,
-  onClick,
-  forwardDescription,
-}: FeatureCardProps) {
+export default function FeatureCard({ icon, title, description, features, images, forwardDescription }: FeatureCardProps) {
   return (
-    <div className="group relative cursor-pointer" onClick={(e) => onClick && onClick(e)}>
+    <div className="group relative cursor-pointer">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
 
       <div className="relative bg-slate-800 p-6 rounded-2xl border border-slate-700 group-hover:border-slate-600 transition-all duration-300 h-full transform group-hover:scale-[1.02]">

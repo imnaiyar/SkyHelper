@@ -2,7 +2,7 @@
 
 import { useState, useEffect, JSX } from "react";
 import { ChevronDown, ChevronUp, Search, Filter, Command, Hash, Folder, SlashSquare } from "lucide-react";
-import useFetchHook from "../hooks/useFetchHook";
+import useFetchHook from "../hooks/discord";
 import {
   APIApplicationCommand,
   APIApplicationCommandBasicOption,
@@ -146,7 +146,7 @@ export default function CommandsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className="min-h-screeflex items-center justify-center">
         <Loading variant="bot" size="xl" />
       </div>
     );
@@ -154,13 +154,13 @@ export default function CommandsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className="text-red-400 text-xl">Error: {error}</div>
       </div>
     );
   }
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className="min-h-screen text-white">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
           Bot Commands

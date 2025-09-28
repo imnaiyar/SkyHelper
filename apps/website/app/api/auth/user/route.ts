@@ -1,29 +1,26 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { extractScopesFromToken } from "@/app/lib/auth/scopes";
-import { COOKIE_NAMES, deserializeTokenData, isTokenExpired, setCookie, clearCookies } from "@/app/lib/auth/cookies";
+import { COOKIE_NAMES, isTokenExpired, setCookie, clearCookies, getServerCookie } from "@/app/lib/auth/cookies";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(COOKIE_NAMES.TOKEN);
+    const data = await getServerCookie(req);
 
-    if (!token) {
+    if (!data?.success) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const tokenData = deserializeTokenData(token.value);
-    if (!tokenData || isTokenExpired(tokenData)) {
+    if (isTokenExpired(data.data)) {
       const response = NextResponse.json({ error: "Token expired" }, { status: 401 });
       clearCookies(response, [COOKIE_NAMES.TOKEN, COOKIE_NAMES.USER]);
       return response;
     }
 
-    const grantedScopes = extractScopesFromToken(tokenData);
+    const grantedScopes = extractScopesFromToken(data.data);
 
     const user = await fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {
-        Authorization: `Bearer ${tokenData.access_token}`,
+        Authorization: `Bearer ${data.data.access_token}`,
         "Content-Type": "application/json",
       },
     });

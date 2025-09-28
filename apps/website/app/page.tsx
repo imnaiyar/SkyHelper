@@ -1,16 +1,10 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import FeatureCard, { FeatureCardProps } from "./components/FeatureCard";
 import FeatureModal from "./components/FeatureModal";
 import Image from "next/image";
-import useStats from "./hooks/useStats";
 import { ModalContent, ModalProvider, ModalTrigger } from "./components/ui/Modal";
 
-export default function Home() {
-  const [selectedFeature, setSelectedFeature] = useState<FeatureCardProps | null>(null);
-
+export default async function Home() {
   // Define feature images for each feature
   const featureImages = {
     events: [
@@ -140,10 +134,6 @@ export default function Home() {
       description: "Available in multiple languages thanks to our amazing community translators.",
       features: ["English", "Spanish", "Hindi", "Japanese"],
       key: "language",
-      onClick(event) {
-        event.preventDefault();
-        window.open("https://docs.skyhelper.xyz/guide/docs/guides/translating", "_blank");
-      },
       forwardDescription: (
         <span className="flex flex-row items-center gap-2">
           <img src="/crowdin.svg" className="h-5 w-5" /> Help us translate to more languages
@@ -172,7 +162,8 @@ export default function Home() {
     },
   ];
 
-  const { stats } = useStats();
+  const stats = await fetch(process.env.NEXT_PUBLIC_API_URL! + "/stats").then((r) => r.json());
+
   return (
     <>
       {" "}
@@ -260,20 +251,22 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <ModalProvider key={index}>
-                <ModalTrigger>
-                  <FeatureCard
-                    {...feature}
-                    key={`f-${index}`}
-                    onClick={feature.onClick ? feature.onClick : () => setSelectedFeature(feature)}
-                  />
-                </ModalTrigger>
-                <ModalContent>
-                  <FeatureModal images={selectedFeature?.images || []} icon={selectedFeature?.icon as string} />
-                </ModalContent>
-              </ModalProvider>
-            ))}
+            {features.map((feature, index) => {
+              return feature.key === "language" ? (
+                <Link href={"https://docs.skyhelper.xyz/guide/docs/guides/translating"} target={"_blank"}>
+                  <FeatureCard {...feature} key={`f-${index}`} />
+                </Link>
+              ) : (
+                <ModalProvider key={index}>
+                  <ModalTrigger>
+                    <FeatureCard {...feature} key={`f-${index}`} />
+                  </ModalTrigger>
+                  <ModalContent>
+                    <FeatureModal images={feature?.images || []} icon={feature.icon as string} />
+                  </ModalContent>
+                </ModalProvider>
+              );
+            })}
           </div>
         </div>
       </section>

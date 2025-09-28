@@ -1,6 +1,6 @@
 const CACHE_NAME = "skyhelper-v1";
 const RUNTIME = "runtime";
-const version = "v1";
+const version = "v1.1";
 // max entries to prevent too much cache
 const MAX_RUNTIME_ENTRIES = 50;
 
@@ -66,7 +66,6 @@ async function cacheFirst(request) {
   return response;
 }
 
-// Trim a cache to at most `maxItems` entries by deleting the oldest entries first.
 async function trimCache(cacheName, maxItems) {
   const cache = await caches.open(cacheName);
   const keys = await cache.keys();

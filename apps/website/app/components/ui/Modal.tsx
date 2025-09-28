@@ -29,7 +29,7 @@ export default function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className={isOpen ? "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" : "hidden"}>
+    <div className={isOpen ? "fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" : "hidden"}>
       <div className="relative bg-slate-800 rounded-2xl border border-slate-700 max-w-6xl w-full max-h-[90vh] overflow-hidden">
         {/* Close button */}
         <button

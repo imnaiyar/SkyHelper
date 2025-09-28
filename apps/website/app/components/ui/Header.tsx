@@ -28,7 +28,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed bg-slate-900/95 border-2 border-slate-800/50 rounded-lg top-2 left-4 right-4 z-100 transition-all duration-300 ${
+      className={`fixed bg-slate-900/95 border-2 border-slate-800/50 rounded-lg top-2 left-4 right-4 z-50 transition-all duration-300 ${
         isScrolled ? "backdrop-blur-md border-slate-800/80" : ""
       }`}
     >

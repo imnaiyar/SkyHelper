@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { extractScopesFromToken } from "@/app/lib/auth/scopes";
-import { setCookie, serializeTokenData, COOKIE_NAMES } from "@/app/lib/auth/cookies";
+import { setCookie, COOKIE_NAMES } from "@/app/lib/auth/cookies";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (!tokenResponse.ok) {
-      console.log(tokenResponse.statusText);
       throw new Error("Failed to exchange code for token:" + tokenResponse.statusText);
     }
 
@@ -54,7 +53,7 @@ export async function POST(request: NextRequest) {
       ...userWithScopes,
     });
 
-    setCookie(response, COOKIE_NAMES.TOKEN, serializeTokenData(tokenData));
+    setCookie(response, COOKIE_NAMES.TOKEN, JSON.stringify({ ...tokenData, issued_at: Date.now() }));
 
     return response;
   } catch (error) {

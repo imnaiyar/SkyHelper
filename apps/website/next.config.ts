@@ -1,17 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
-      new URL("https://skyhelper.xyz/**"),
       {
         protocol: "https",
-        hostname: "**.discord.com",
+        hostname: "cdn.discordapp.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "**.discordapp.com",
+        hostname: "discord.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "skyhelper.xyz",
+        pathname: "/**",
       },
     ],
   },
@@ -20,14 +25,8 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         ],
       },
       {
