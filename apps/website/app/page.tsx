@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ModalContent, ModalProvider, ModalTrigger } from "./components/ui/Modal";
 
 export default async function Home() {
-  // Define feature images for each feature
   const featureImages = {
     events: [
       {
@@ -167,12 +166,9 @@ export default async function Home() {
   return (
     <>
       {" "}
-      {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-8">
           <div className="text-center max-w-4xl mx-auto">
-            {/* Hero Icon */}
-
             <Image
               alt="log"
               className="inline-flex items-center rounded-full justify-center mb-8"
@@ -181,26 +177,22 @@ export default async function Home() {
               src={"/boticon.png"}
             />
 
-            {/* Hero Title */}
             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 SkyHelper
               </span>
             </h1>
 
-            {/* Hero Subtitle */}
             <h2 className="text-xl lg:text-2xl text-slate-300 mb-8 leading-relaxed">
               The ultimate Discord bot for <span className="text-blue-400 font-semibold">Sky: Children of the Light</span>{" "}
               community
             </h2>
 
-            {/* Hero Description */}
             <p className="text-lg text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
               Track daily events, explore spirit information, never miss shard events, and enhance your Sky experience with
               comprehensive bot features designed by the community, for the community.
             </p>
 
-            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 href="https://skyhelper.xyz/invite"
@@ -218,7 +210,6 @@ export default async function Home() {
               </Link>
             </div>
 
-            {/* Stats */}
             <div className="mt-16 grid xs:grid-cols-1 grid-cols-3 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
                 <div className="text-3xl font-bold text-white mb-2">{stats?.totalServers || 0}</div>
@@ -236,7 +227,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      {/* Features Section */}
       <section id="features" className="py-20 lg:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

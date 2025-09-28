@@ -10,13 +10,13 @@
   "screenshots": [
     {
       "src": "icons/screenshot-web.png",
-      "sizes": "1280x720",
+      "sizes": "1280x800",
       "form_factor": "wide",
       "type": "image/png"
     },
     {
       "src": "icons/screenshot-mobile.png",
-      "sizes": "720x1280",
+      "sizes": "700x1200",
       "form_factor": "narrow",
       "type": "image/png"
     }
