@@ -169,16 +169,16 @@ export default async function Home() {
       {" "}
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-8">
           <div className="text-center max-w-4xl mx-auto">
             {/* Hero Icon */}
 
             <Image
               alt="log"
-              className="inline-flex items-center justify-center mb-8"
-              width={80}
-              height={80}
-              src={"https://skyhelper.xyz/assets/img/boticon.png"}
+              className="inline-flex items-center rounded-full justify-center mb-8"
+              width={120}
+              height={120}
+              src={"/boticon.png"}
             />
 
             {/* Hero Title */}
@@ -253,7 +253,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => {
               return feature.key === "language" ? (
-                <Link href={"https://docs.skyhelper.xyz/guide/docs/guides/translating"} target={"_blank"}>
+                <Link key={"language"} href={"https://docs.skyhelper.xyz/guide/docs/guides/translating"} target={"_blank"}>
                   <FeatureCard {...feature} key={`f-${index}`} />
                 </Link>
               ) : (
