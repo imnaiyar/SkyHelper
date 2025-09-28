@@ -11,7 +11,7 @@
     "bot:dev": "pnpm --filter skyhelper dev",
     "jobs:dev": "pnpm --filter jobs dev",
     "bot": "pnpm --filter skyhelper start",
-    "lint": "turbo lint",
+    "lint": "turbo lint --filter=!@skyhelperbot/website",
     "lint:affected": "turbo lint --filter=...[origin/main]",
     "test:affected": "turbo test --filter=...[origin/main]",
     "test": "turbo test",
