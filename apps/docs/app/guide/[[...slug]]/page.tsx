@@ -25,8 +25,10 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
       <p className="text-lg text-fd-muted-foreground">{page.data.description}</p>
       <div className="flex flex-row gap-3 items-center border-b pb-6">
         <a href={DISCORD_SERVER} target="_blank" rel="noreferrer noopener">
+          {/* @ts-expect-error idk why this erroring tbh */}
           <FaDiscord className="hover:text-indigo-500" />
         </a>
+
         <GithubInfo owner="imnaiyar" repo="skyhelper" className="flex flex-row lg:-mx-2" />
       </div>
       <DocsBody>

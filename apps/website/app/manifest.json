@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest.json",
+  "name": "SkyHelper",
+  "short_name": "SkyHelper",
+  "start_url": "/",
+  "description": "Website for SkyHelper bot, which is a comprehensive Discord bot designed for the Sky: Children of the Light community. Track daily events, spirit information, shards calendar, and more with real-time updates.",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
+  "display": "standalone",
+  "screenshots": [
+    {
+      "src": "icons/screenshot-web.png",
+      "sizes": "1280x800",
+      "form_factor": "wide",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/screenshot-mobile.png",
+      "sizes": "700x1200",
+      "form_factor": "narrow",
+      "type": "image/png"
+    }
+  ],
+  "icons": [
+    {
+      "src": "icons/icon_x48.png",
+      "sizes": "48x48",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x72.png",
+      "sizes": "72x72",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x96.png",
+      "sizes": "96x96",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x128.png",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x144.png",
+      "sizes": "144x144",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x192.png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x384.png",
+      "sizes": "384x384",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon_x512.png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ]
+}
