@@ -1,16 +1,19 @@
-import { type SkyPlannerData as p, emojis, season_emojis } from "@skyhelperbot/constants";
-import { SpiritType, ItemType } from "@skyhelperbot/constants/skygame-planner";
+import { type SkyPlannerData as p, emojis, season_emojis, SkyPlannerData } from "@skyhelperbot/constants";
+import { SpiritType, ItemType, type TransformedData } from "@skyhelperbot/constants/skygame-planner";
 import { type APISelectMenuOption } from "@discordjs/core";
+import { DisplayTabs } from "./base.js";
 /* eslint-disable @typescript-eslint/no-dynamic-delete */ // this is fine here
+// short values to save custom_id spaces
 export enum FilterType {
-  SpiritTypes = "spiritTypes",
-  Realms = "realms",
-  Seasons = "seasons",
-  Events = "events",
-  Order = "order",
-  ItemTypes = "itemTypes",
-  ShopTypes = "shopTypes",
-  Currencies = "currencies",
+  SpiritTypes = "sp",
+  Areas = "ar",
+  Realms = "rl",
+  Seasons = "sn",
+  Events = "ev",
+  Order = "o",
+  ItemTypes = "it",
+  ShopTypes = "st",
+  Currencies = "cr",
 }
 
 export type FilterValue = string | string[];
@@ -25,6 +28,8 @@ export interface FilterConfig {
   options: APISelectMenuOption[];
 }
 
+export type CustomFilterConfigs = Partial<Record<FilterType, Partial<FilterConfig>>>;
+
 export type ParsedFilters = Record<string, string[]>;
 
 /**
@@ -34,9 +39,26 @@ export type ParsedFilters = Record<string, string[]>;
 export class FilterManager {
   private data: p.TransformedData;
   private filters: ParsedFilters = {};
+  private customConfigs?: CustomFilterConfigs;
+  private allowedFilters?: FilterType[];
 
-  constructor(data: p.TransformedData, initialFilters?: string) {
+  constructor(
+    data: p.TransformedData,
+    initialFilters?: string,
+    allowedFilters?: FilterType[],
+    customConfigs?: CustomFilterConfigs,
+  ) {
     this.data = data;
+    this.allowedFilters = allowedFilters;
+    this.customConfigs = customConfigs;
+    // fill defaults, which can be overwritten later in parseFilters
+    if (this.allowedFilters) {
+      const configs = this.getFilterConfigs(this.allowedFilters);
+      for (const config of configs) {
+        if (config.defaultValues?.length) this.filters[config.type] = config.defaultValues;
+      }
+    }
+
     if (initialFilters) {
       this.parseFilters(initialFilters);
     }
@@ -134,15 +156,39 @@ export class FilterManager {
   }
 
   /**
+   * Get filter configurations for this manager instance
+   */
+  public getFilterConfigs(types: FilterType[]): FilterConfig[] {
+    return FilterManager.getFilterConfigs(types, this.data, this.customConfigs);
+  }
+
+  /**
    * Get predefined filter configurations
    */
-  public static getFilterConfigs(types: FilterType[]): FilterConfig[] {
+  public static getFilterConfigs(
+    types: FilterType[],
+    data: TransformedData,
+    customConfigs?: CustomFilterConfigs,
+  ): FilterConfig[] {
     const configs: FilterConfig[] = [];
 
     // This will be populated with actual data when needed
     // For now, returning structure
     for (const type of types) {
-      configs.push(FilterManager.createFilterConfig(type));
+      const baseConfig = FilterManager.createFilterConfig(type, data);
+      const customConfig = customConfigs?.[type];
+
+      if (customConfig) {
+        // Merge custom config with base config
+        configs.push({
+          ...baseConfig,
+          ...customConfig,
+          // Options should be completely replaced if provided in custom config
+          options: customConfig.options ?? baseConfig.options,
+        });
+      } else {
+        configs.push(baseConfig);
+      }
     }
 
     return configs;
@@ -151,7 +197,7 @@ export class FilterManager {
   /**
    * Create filter configuration for a specific type
    */
-  private static createFilterConfig(type: FilterType): FilterConfig {
+  private static createFilterConfig(type: FilterType, data: TransformedData): FilterConfig {
     switch (type) {
       case FilterType.SpiritTypes:
         return {
@@ -173,7 +219,11 @@ export class FilterManager {
           label: "Realms",
           description: "Filter by realms",
           multiSelect: true,
-          options: [], // Wwll be populated with actual realm data
+          options: data.realms.map((realm) => ({
+            label: realm.name,
+            value: realm.guid /*
+          emoji: { id: realm.icon }, */, // todo later
+          })), // Wwll be populated with actual realm data
         };
 
       case FilterType.Seasons:
@@ -182,7 +232,13 @@ export class FilterManager {
           label: "Seasons",
           description: "Filter by seasons",
           multiSelect: true,
-          options: [], // will be populated with actual season data
+          options: data.seasons
+            .map((season) => ({
+              label: season.name,
+              value: season.guid /*
+            emoji: { id: season.icon }, */, // todo later
+            }))
+            .slice(0, 25), // will be populated with actual season data
         };
 
       case FilterType.Events:
@@ -191,7 +247,12 @@ export class FilterManager {
           label: "Events",
           description: "Filter by events",
           multiSelect: true,
-          options: [], // will be populated with actual event data
+          options: data.events
+            .map((event) => ({
+              label: event.name,
+              value: event.guid,
+            }))
+            .slice(0, 25), // will be populated with actual event data
         };
 
       case FilterType.Order:
@@ -247,6 +308,14 @@ export class FilterManager {
             { label: "Season Candles", value: "sc" },
           ],
         };
+      case FilterType.Areas:
+        return {
+          type: FilterType.Areas,
+          label: "Areas",
+          description: "Filter by areas",
+          multiSelect: true,
+          options: [], // populated later
+        };
 
       default:
         throw new Error(`Unknown filter type: ${type}`);
@@ -254,39 +323,34 @@ export class FilterManager {
   }
 
   /**
-   * Populate filter config options with actual data from planner
+   * Default factory for creating custom filter configurations based on display tab
+   * This can be overridden by display handlers that need custom configurations
    */
-  public populateFilterConfig(config: FilterConfig): FilterConfig {
-    switch (config.type) {
-      case FilterType.Realms:
-        config.options = this.data.realms.map((realm) => ({
-          label: realm.name,
-          value: realm.guid /*
-          emoji: { id: realm.icon }, */, // todo later
-        }));
-        break;
-
-      case FilterType.Seasons:
-        config.options = this.data.seasons
-          .map((season) => ({
-            label: season.name,
-            value: season.guid /*
-            emoji: { id: season.icon }, */, // todo later
-          }))
-          .slice(0, 25);
-        break;
-
-      case FilterType.Events:
-        config.options = this.data.events
-          .map((event) => ({
-            label: event.name,
-            value: event.guid,
-          }))
-          .slice(0, 25); // todo possible way to add more
-        break;
+  public static tabsCustomConfig(data: p.TransformedData, tab: DisplayTabs, filters: string[]): CustomFilterConfigs | undefined {
+    const manager = new FilterManager(data, filters.join("/"));
+    switch (tab) {
+      case DisplayTabs.WingedLights: {
+        const realm = data.realms.find(
+          (r) => r.guid === (manager.getFilterValues(FilterType.Realms)[0] ?? "E1RwpAdA8l") /* Dawn guid */,
+        )!;
+        return {
+          [FilterType.Realms]: { multiSelect: false },
+          [FilterType.Areas]: {
+            multiSelect: true,
+            description: "Filter by area. (This will be ignored if 'Realm' filter was changed.)",
+            options:
+              realm.areas
+                ?.filter((a) => a.wingedLights?.length)
+                .map((a) => ({
+                  label: a.name,
+                  value: a.guid,
+                })) ?? [],
+          },
+        };
+      }
+      default:
+        return undefined;
     }
-
-    return config;
   }
 
   /**
@@ -366,7 +430,8 @@ export class FilterManager {
   /**
    * Sort spirits based on order criteria
    */
-  private sortSpirits(spirits: p.ISpirit[], order: string): p.ISpirit[] {
+  private sortSpirits(sprts: p.ISpirit[], order: string): p.ISpirit[] {
+    const spirits = [...sprts];
     switch (order) {
       case "name_asc":
         return spirits.sort((a, b) => a.name.localeCompare(b.name));
@@ -374,15 +439,21 @@ export class FilterManager {
         return spirits.sort((a, b) => b.name.localeCompare(a.name));
       case "date_asc":
         return spirits.sort((a, b) => {
-          const aDate = a.season?.date ?? a.ts?.[0]?.date ?? "0";
-          const bDate = b.season?.date ?? b.ts?.[0]?.date ?? "0";
-          return aDate.localeCompare(bDate);
+          const aDate = a.season?.date ?? a.ts?.[0]?.date;
+          const bDate = b.season?.date ?? b.ts?.[0]?.date;
+          if (!aDate && !bDate) return 0;
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return SkyPlannerData.resolveToLuxon(aDate).toMillis() - SkyPlannerData.resolveToLuxon(bDate).toMillis();
         });
       case "date_desc":
         return spirits.sort((a, b) => {
-          const aDate = a.season?.date ?? a.ts?.[0]?.date ?? "0";
-          const bDate = b.season?.date ?? b.ts?.[0]?.date ?? "0";
-          return bDate.localeCompare(aDate);
+          const aDate = a.season?.date ?? a.ts?.[0]?.date;
+          const bDate = b.season?.date ?? b.ts?.[0]?.date;
+          if (!aDate && !bDate) return 0;
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return SkyPlannerData.resolveToLuxon(bDate).toMillis() - SkyPlannerData.resolveToLuxon(aDate).toMillis();
         });
       default:
         return spirits;
@@ -392,7 +463,8 @@ export class FilterManager {
   /**
    * Sort items based on order criteria
    */
-  private sortItems(items: p.IItem[], order: string): p.IItem[] {
+  private sortItems(itms: p.IItem[], order: string): p.IItem[] {
+    const items = [...itms];
     switch (order) {
       case "name_asc":
         return items.sort((a, b) => a.name.localeCompare(b.name));

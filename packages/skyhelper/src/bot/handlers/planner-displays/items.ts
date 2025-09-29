@@ -1,17 +1,16 @@
 import { ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { FilterType, serializeFilters } from "./filter.manager.js";
+import { FilterType } from "./filter.manager.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
-import { emojis } from "@skyhelperbot/constants";
+
 import type { APIComponentInContainer } from "discord-api-types/v10";
 
 export class ItemsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any) {
-    // pass default if not set, only if an item is not selected
-    if (!state.item) state.filter ??= serializeFilters({ [FilterType.ItemTypes]: [ItemType.Outfit] });
     super(data, planner, state);
-    // Initialize filters for items display
-    this.initializeFilters([FilterType.ItemTypes, FilterType.Seasons, FilterType.Order]);
+    this.initializeFilters([FilterType.ItemTypes, FilterType.Seasons, FilterType.Order, FilterType.Currencies], {
+      [FilterType.ItemTypes]: { defaultValues: [ItemType.Outfit] },
+    });
   }
 
   override handle() {
@@ -28,17 +27,24 @@ export class ItemsDisplay extends BasePlannerHandler {
     }
 
     return {
-      components: [container(this.createItemsNav(), textDisplay(this.createFilterIndicator()!), ...this.itemslist(items))],
+      components: [
+        container(
+          textDisplay("# Items", this.createFilterIndicator() ?? ""),
+          this.createItemsNav(),
+          separator(),
+          ...this.itemslist(items),
+        ),
+      ],
     };
   }
   createItemsNav() {
-    return [/* ...this.createTopCategoryRow(DisplayTabs.Items), */ row(this.createFilterButton("Filter"))];
+    return row(this.createFilterButton("Filter"), this.homebtn());
   }
   itemslist(items: IItem[]) {
     return this.displayPaginatedList({
       items,
       page: this.state.page ?? 1,
-      perpage: 5,
+      perpage: 7,
       user: this.state.user,
       itemCallback: (item) => [
         section(

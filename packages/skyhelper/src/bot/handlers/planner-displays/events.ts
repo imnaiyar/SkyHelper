@@ -8,6 +8,7 @@ import {
   section,
   textDisplay,
   thumbnail,
+  separator,
 } from "@skyhelperbot/utils";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { FilterType } from "./filter.manager.js";
@@ -19,7 +20,7 @@ export class EventsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any) {
     super(data, planner, state);
     // Initialize filters for events display
-    this.initializeFilters([FilterType.Events, FilterType.Order]);
+    this.initializeFilters([FilterType.Order]);
   }
   override async handle() {
     const components: APIContainerComponent[] = [];
@@ -27,23 +28,31 @@ export class EventsDisplay extends BasePlannerHandler {
     if (this.state.item) {
       const event = this.data.events.find((e) => e.guid === this.state.item);
       if (!event) throw new Error("Event not found");
-      this.state.filter ??= event.instances?.[0]?.guid ?? undefined;
+      this.state.data ??= event.instances?.[0]?.guid ?? undefined;
       const display = await this.eventDisplay(event);
       attachements = display.attachment;
       components.push(container(display.components));
     } else {
-      components.push(container(this.createTopCategoryRow(DisplayTabs.Events, this.state.user), ...this.eventslist()));
+      const order = this.filterManager!.getFilterValues(FilterType.Order)[0];
+      const events = order ? this.sortEvents(this.data.events, order) : this.data.events;
+      components.push(
+        container(
+          textDisplay(`# Events (${events.length})`, this.createFilterIndicator() ?? ""),
+          row(this.createFilterButton("Filter"), this.homebtn()),
+          separator(),
+          ...this.eventslist(events),
+        ),
+      );
     }
 
     return { components, files: attachements ? [attachements] : undefined };
   }
 
-  eventslist() {
-    const events = this.data.events;
+  eventslist(events: SkyPlannerData.IEvent[]) {
     return this.displayPaginatedList({
       items: events,
       page: this.state.page ?? 1,
-      perpage: 7,
+      perpage: 6,
       user: this.state.user,
       itemCallback: (event) => [
         section(
@@ -63,19 +72,19 @@ export class EventsDisplay extends BasePlannerHandler {
     const instanceButtons = event.instances?.length
       ? event.instances.map((instance) =>
           button({
-            custom_id: this.createCustomId({ filter: instance.guid }),
+            custom_id: this.createCustomId({ data: instance.guid }),
             label: this.planner.resolveToLuxon(instance.date).year.toString(),
-            disabled: this.state.filter === instance.guid,
+            disabled: this.state.data === instance.guid,
           }),
         )
       : [];
 
-    instanceButtons.push(this.backbtn(this.createCustomId({ item: "", filter: "" })), this.homebtn());
+    instanceButtons.push(this.backbtn(this.createCustomId({ item: "", filter: "", data: "" })), this.homebtn());
     const rows =
       instanceButtons.length > 0
         ? Array.from({ length: Math.ceil(instanceButtons.length / 5) }, (_, i) => row(instanceButtons.slice(i * 5, i * 5 + 5)))
         : [];
-    const instance = event.instances?.find((e) => e.guid === this.state.filter);
+    const instance = event.instances?.find((e) => e.guid === this.state.data);
 
     const totalCosts = instance
       ? this.planner.formatGroupedCurrencies(
@@ -157,5 +166,34 @@ export class EventsDisplay extends BasePlannerHandler {
         attachment ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
       ].filter(Boolean) as APIComponentInContainer[],
     };
+  }
+  private sortEvents(evs: SkyPlannerData.IEvent[], order: string) {
+    const events = [...evs]; // shallow clone to prevent modifying org arr
+    switch (order) {
+      case "name_asc":
+        return events.sort((a, b) => a.name.localeCompare(b.name));
+      case "name_desc":
+        return events.sort((a, b) => b.name.localeCompare(a.name));
+      case "date_asc":
+        return events.sort((a, b) => {
+          const aDate = a.instances?.[0]?.date;
+          const bDate = b.instances?.[0]?.date;
+          if (!aDate && !bDate) return 0;
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return this.planner.resolveToLuxon(aDate).toMillis() - this.planner.resolveToLuxon(bDate).toMillis();
+        });
+      case "date_desc":
+        return events.sort((a, b) => {
+          const aDate = a.instances?.[0]?.date;
+          const bDate = b.instances?.[0]?.date;
+          if (!aDate && !bDate) return 0;
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return this.planner.resolveToLuxon(bDate).toMillis() - this.planner.resolveToLuxon(aDate).toMillis();
+        });
+      default:
+        return events;
+    }
   }
 }

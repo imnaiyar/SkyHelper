@@ -1,30 +1,41 @@
 import { mediaGallery, mediaGalleryItem, section, textDisplay, container, row, separator, button } from "@skyhelperbot/utils";
-import { BasePlannerHandler, DisplayTabs } from "./base.js";
+import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./base.js";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import config from "@/config";
-import { ComponentType } from "discord-api-types/v10";
+import { FilterType } from "./filter.manager.js";
 
-const WLRealms = ["Dawn", "Prairie", "Forest", "Valley", "Wasteland", "Vault", "Void"] as const;
-type Filters = `${(typeof WLRealms)[number]}.${string}`;
 export class WingedLightsDisplay extends BasePlannerHandler {
-  private realm: (typeof WLRealms)[number] = "Dawn";
-  private areas: string[] | null = [];
-  private filters: Filters | null = null;
-  override handle() {
-    this.transformFilters();
+  constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: NavigationState) {
+    super(data, planner, state);
+    // initialize first time to populate realms
+    this.initializeFilters([FilterType.Realms, FilterType.Areas]);
 
-    const wls = this.data.wingedLights.filter((wl) => this.areas!.includes(wl.area.guid));
+    const realm = data.realms.find(
+      (r) => r.guid === (this.filterManager!.getFilterValues(FilterType.Realms)[0] ?? "E1RwpAdA8l") /* Dawn guid */,
+    )!;
+    const areas = realm.areas?.filter((a) => a.wingedLights?.length) ?? [];
+    // second initialize with areas
+    this.initializeFilters(areas.length ? [FilterType.Realms, FilterType.Areas] : [FilterType.Realms], {
+      [FilterType.Realms]: { defaultValues: ["E1RwpAdA8l"], multiSelect: false },
+      [FilterType.Areas]: {
+        // TODO: there'll be conflict if realm is changed but areas values remain according to previous realms, remember to fix it
+        defaultValues: [areas[0]?.guid ?? ""],
+      },
+    });
+  }
+  override handle() {
+    const wls = this.filterWls(this.data.wingedLights);
 
     return {
       components: [
         container(
           this.getTopBtns(),
-          textDisplay("Filter by Realm"),
-          this.getRealmRow(),
-          textDisplay("Filter by Areas:"),
-          this.getAreaFilterRow(),
           separator(true, 1),
-          section(this.viewbtn(this.createCustomId({}), { label: "All Found" }), `# Winged Lights (${wls.length})`),
+          section(
+            this.viewbtn(this.createCustomId({}), { label: "All Found" }),
+            `# Winged Lights (${wls.length})`,
+            this.createFilterIndicator() ?? "",
+          ),
           ...this.wlslist(wls),
         ),
       ],
@@ -39,14 +50,14 @@ export class WingedLightsDisplay extends BasePlannerHandler {
           `**${i + 1}\\. Area: ${wl.area.name} | Realm: ${wl.area.realm.name}**\n${wl.description ? `${emojis.tree_end} ${wl.description}` : ""}`,
         ),
         row(
-          this.viewbtn(this.createCustomId({ item: wl.guid, filter: this.filters! }), { label: "Found" }),
+          // TODO: it's handling
+          this.viewbtn(this.createCustomId({ item: wl.guid }), { label: "Found" }),
           ...(wl.mapData?.videoUrl
             ? [
                 /** Keep it video, bcz initial data can be empty, that way it can fall back to `video` which is default state */
                 this.viewbtn(
                   this.createCustomId({
                     item: wl.guid,
-                    filter: this.filters!,
                     data: this.verifyRefWl(wl, "video") ? "minimize" : "video",
                   }),
                   {
@@ -77,64 +88,19 @@ export class WingedLightsDisplay extends BasePlannerHandler {
     return config.SKY_PLANNER_URL + `/assets/game/col/${url}`;
   }
 
-  private getAreaFilterRow() {
-    const realm = this.data.realms.find((r) => r.shortName === this.realm)!;
-    const filters = this.areas ?? [realm.areas![0]!.guid];
-    return row({
-      type: ComponentType.StringSelect,
-      min_values: 1,
-      max_values: realm.areas!.filter((a) => a.wingedLights?.length).length,
-      custom_id: this.createCustomId({ data: "areas", filter: this.filters! }),
-      options: realm
-        .areas!.filter((a) => a.wingedLights?.length /* only include areas with wls */)
-        .map((a) => ({
-          label: a.name,
-          value: a.guid,
-          default: filters.includes(a.guid),
-        })),
-    });
-  }
+  private filterWls(wls: SkyPlannerData.IWingedLight[]) {
+    let winged = [...wls];
+    const realm = this.filterManager!.getFilterValues(FilterType.Realms)[0];
+    if (realm) winged = winged.filter((wl) => wl.area.realm.guid === realm);
 
-  private getRealmRow() {
-    return row({
-      type: ComponentType.StringSelect,
-      placeholder: "Select a realm to it's wls",
-      custom_id: this.createCustomId({ data: "realms", filter: this.filters! }),
-      options: WLRealms.map((r) => {
-        const realm = this.data.realms.find((s) => s.shortName === r)!;
-        return {
-          label: realm.name,
-          value: r,
-          default: r === this.realm,
-          emoji: realm.icon ? { id: realm.icon } : undefined,
-        };
-      }),
-    });
-  }
-
-  private transformFilters() {
-    const [realm, ...areas] = (this.state.filter ?? "").split(".");
-    this.realm = realm ? (realm as (typeof WLRealms)[number]) : "Dawn";
-    this.areas = areas.length ? areas : null;
-    if (this.state.values?.length) {
-      // this means it is a select menu interaction for realm/areas filter;
-      if (this.state.data === "realms") {
-        this.realm = this.state.values[0] as (typeof WLRealms)[number];
-
-        this.areas = null; // reset areas on realm change
-      }
-      if (this.state.data === "areas") this.areas = this.state.values;
-
-      // reset page when changing areas or realms
-      this.state.page = 1;
-    }
-    this.areas ??= [this.data.realms.find((r) => r.shortName === this.realm)!.areas!.find((a) => a.wingedLights?.length)!.guid];
-
-    this.filters = `${this.realm}.${this.areas.length ? this.areas.join(".") : ""}`;
+    const areas = this.filterManager!.getFilterValues(FilterType.Areas);
+    if (areas.length) winged = winged.filter((wl) => areas.includes(wl.area.guid));
+    return winged;
   }
 
   private getTopBtns() {
     return row(
+      this.createFilterButton("Filter"),
       this.viewbtn(this.createCustomId({}), { label: "All Found" + ` (${this.data.wingedLights.length})` }),
       this.viewbtn(this.createCustomId({}), { label: "Reset All", style: 4 }),
       button({ label: "Home", custom_id: this.createCustomId({ tab: DisplayTabs.Home }), style: 4 }),
