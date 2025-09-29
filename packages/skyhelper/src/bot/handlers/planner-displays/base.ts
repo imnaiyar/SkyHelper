@@ -7,10 +7,10 @@ import {
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
 import { button, container, row, textDisplay } from "@skyhelperbot/utils";
-import { string } from "zod/v4";
 import type { DateTime } from "luxon";
 import type { Awaitable } from "@/types/utils";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
+import { FilterManager, FilterType } from "./filter.manager.js";
 
 export interface NavigationState {
   /** Current page */
@@ -62,11 +62,30 @@ const CATEGORY_EMOJI_MAP = {
 };
 
 export class BasePlannerHandler {
+  protected filterManager?: FilterManager;
+
   constructor(
     public data: SkyPlannerData.TransformedData,
     public planner: typeof SkyPlannerData,
     public state: NavigationState,
-  ) {}
+  ) {
+    // Initialize filter manager if filters are present
+    if (this.state.filter) {
+      this.filterManager = new FilterManager(this.data, this.state.filter);
+    }
+  }
+
+  /**
+   * Initialize filter manager with supported filter types for this display
+   * Should be called by child classes to enable filtering
+   */
+  protected initializeFilters(supportedFilters: FilterType[]): void {
+    this.filterManager = new FilterManager(this.data, this.state.filter);
+    this.supportedFilters = supportedFilters;
+  }
+
+  /** Supported filter types for this display */
+  protected supportedFilters: FilterType[] = [];
 
   /** Main handle method for each tab display, this should be overriden in the child classes */
   handle(): Awaitable<ResponseData> {
@@ -218,6 +237,77 @@ export class BasePlannerHandler {
       custom_id: this.createCustomId({ tab: DisplayTabs.Home, user }),
       emoji: { id: realms_emojis.Home },
     });
+  }
+
+  /**
+   * Create a filter button that opens the unified filter modal
+   */
+  protected createFilterButton(label = "Filters"): APIButtonComponent {
+    if (!this.filterManager || this.supportedFilters.length === 0) {
+      throw new Error("Filter manager not initialized. Call initializeFilters() first.");
+    }
+
+    const filterStrings = this.supportedFilters.map((filter) => {
+      const values = this.filterManager!.getFilterValues(filter);
+      return values.length > 0 ? `${filter}:${values.join(",")}` : filter;
+    });
+
+    return button({
+      label,
+      style: 2,
+      custom_id: store.serialize(CustomId.PlannerFilters, {
+        tab: this.state.tab,
+        filters: filterStrings,
+        user: this.state.user,
+      }),
+      emoji: { id: emojis.filter }, // Using down chevron as filter indicator
+    });
+  }
+
+  /**
+   * Create filter indicator text showing active filters
+   */
+  protected createFilterIndicator(): string | null {
+    if (!this.filterManager) return null;
+
+    const activeFilters: string[] = [];
+
+    for (const filterType of this.supportedFilters) {
+      const values = this.filterManager.getFilterValues(filterType);
+      if (values.length > 0) {
+        activeFilters.push(`${filterType}: ${values.join("|")}`);
+      }
+    }
+
+    return activeFilters.length > 0 ? `-# Filters: ${activeFilters.join(" • ")}` : null;
+  }
+
+  /**
+   * Update filters from new filter string (called when returning from filter modal)
+   */
+  protected updateFilters(newFilterString: string): void {
+    if (!this.filterManager) {
+      this.filterManager = new FilterManager(this.data, newFilterString);
+    } else {
+      this.filterManager = new FilterManager(this.data, newFilterString);
+    }
+
+    // Update the state
+    this.state.filter = newFilterString || undefined;
+  }
+
+  /**
+   * Get current filter manager instance
+   */
+  protected getFilterManager(): FilterManager | undefined {
+    return this.filterManager;
+  }
+
+  /**
+   * Check if any filters are currently active
+   */
+  protected hasActiveFilters(): boolean {
+    return !!this.filterManager && this.filterManager.serializeFilters().length > 0;
   }
 }
 

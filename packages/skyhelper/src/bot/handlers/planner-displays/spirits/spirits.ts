@@ -1,5 +1,6 @@
 import { emojis, SkyPlannerData as p, SkyPlannerData, season_emojis } from "@skyhelperbot/constants";
 import { BasePlannerHandler, DisplayTabs } from "../base.js";
+import { FilterManager, FilterType, serializeFilters } from "../filter.manager.js";
 import {
   button,
   container,
@@ -17,7 +18,6 @@ import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import type { RawFile } from "@discordjs/rest";
 import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
 
-const SpiritNav = [SpiritType.Regular, SpiritType.Season, SpiritType.Elder, SpiritType.Guide, "TS"] as const;
 const emojisMap = {
   [p.SpiritType.Regular]: emojis.regularspirit,
   [p.SpiritType.Season]: season_emojis.Gratitude,
@@ -25,36 +25,25 @@ const emojisMap = {
   [p.SpiritType.Guide]: emojis.auroraguide,
   ["TS"]: emojis.travelingspirit,
 } as const;
-// TODO: handle various filters, like realm, season, type
 
 export class SpiritsDisplay extends BasePlannerHandler {
-  filters: { spiritTypes: SpiritType[]; realms?: string[]; seasons?: string[] } = {
-    spiritTypes: [SpiritType.Regular],
-  };
+  constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: any) {
+    if (!state.item && state.data !== "TS") state.filter ??= serializeFilters({ [FilterType.SpiritTypes]: [SpiritType.Regular] });
+    super(data, planner, state);
+    this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons]);
+  }
   override handle() {
     const spirits = this.data.spirits;
     const spirit = this.state.item ? spirits.find((s) => s.guid === this.state.item) : null;
     if (spirit) {
       return this.spiritdisplay(spirit);
     }
-    this.parseFilters();
-    const filternav = SpiritNav.map((s) =>
-      button({
-        label: s,
-        custom_id: this.createCustomId({
-          filter: this.transformFilters(s),
-          data: s === "TS" ? "TS" : "normal",
-          page: 1,
-          item: "",
-        }),
-        emoji: { id: emojisMap[s] },
 
-        style: s === "TS" && this.state.data === "TS" ? 3 : this.filters.spiritTypes.includes(s as SpiritType) ? 3 : 2,
-        disabled: s === "TS" && this.state.data === "TS",
-      }),
-    );
+    // Get current filter values
+    const spiritTypes = this.filterManager ? this.filterManager.getFilterValues(FilterType.SpiritTypes) : [SpiritType.Regular];
+
     const uppercomponent = (title: string) => [
-      row(filternav),
+      row(this.createFilterButton("Advanced Filters")),
       section(
         button({
           label: "Home",
@@ -63,6 +52,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
           emoji: { id: emojis.leftarrow },
         }),
         `# ${title}`,
+        ...(this.createFilterIndicator() ? [this.createFilterIndicator()!] : []),
       ),
       separator(),
     ];
@@ -72,10 +62,12 @@ export class SpiritsDisplay extends BasePlannerHandler {
     switch (this.state.data) {
       case "normal":
       default: {
-        const spiritsOfType = spirits.filter((s) => this.filters.spiritTypes.includes(s.type));
-        components.push(
-          ...uppercomponent(`Spirits (${spiritsOfType.length})` + `\n-# Filters: ${this.filters.spiritTypes.join(",")}`),
-        );
+        // Apply filters using FilterManager
+        const spiritsOfType = this.filterManager
+          ? this.filterManager.filterSpirits(spirits)
+          : spirits.filter((s) => spiritTypes.includes(s.type));
+
+        components.push(...uppercomponent(`Spirits (${spiritsOfType.length})`));
         components.push(
           ...this.displayPaginatedList({
             items: spiritsOfType,
@@ -205,30 +197,25 @@ export class SpiritsDisplay extends BasePlannerHandler {
     };
   }
 
-  private parseFilters() {
-    if (!this.state.filter) return;
-    const parts = this.state.filter.split("/");
-    if (parts.length === 0) return;
-    for (const part of parts) {
-      const [k, v] = part.split(":") as [keyof SpiritsDisplay["filters"], string | undefined];
-      if (!v) continue;
-      this.filters[k] = v.split(",") as any;
-    }
-    if (this.state.data === "TS") {
-      this.filters.spiritTypes = []; // basically unselect all others for TS is treated as a standalone display;
-      this.state.filter = "";
-    }
-  }
+  /**
+   * Toggle a spirit type filter and return the new filter string
+   */
+  private toggleSpiritTypeFilter(type: string): string {
+    this.filterManager ??= new FilterManager(this.data);
 
-  private transformFilters(type?: string) {
-    const filters = structuredClone(this.filters); // deep clone to avoid modifi=ying original
-    if (type && !filters.spiritTypes.includes(type as any)) filters.spiritTypes.push(type as any);
-    else if (type) filters.spiritTypes = filters.spiritTypes.filter((t) => t !== (type as any));
-    const s = Object.entries(filters).reduce((acc, [k, v]) => {
-      if (v.length > 0) return `${acc}${acc.length > 0 ? "/" : ""}${k}:${v.join(",")}`;
-      return acc;
-    }, "");
-    console.log(this.filters);
-    return s;
+    if (type === "TS") {
+      // TS is handled separately via the data parameter
+      return this.filterManager.serializeFilters();
+    }
+
+    this.filterManager.toggleFilterValue(FilterType.SpiritTypes, type as SpiritType);
+
+    // Ensure at least one spirit type is selected
+    const currentTypes = this.filterManager.getFilterValues(FilterType.SpiritTypes);
+    if (currentTypes.length === 0) {
+      this.filterManager.setFilterValues(FilterType.SpiritTypes, [SpiritType.Regular]);
+    }
+
+    return this.filterManager.serializeFilters();
   }
 }

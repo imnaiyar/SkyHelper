@@ -10,11 +10,17 @@ import {
   thumbnail,
 } from "@skyhelperbot/utils";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
+import { FilterType } from "./filter.manager.js";
 import { ComponentType, type APIComponentInContainer, type APIContainerComponent } from "discord-api-types/v10";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import type { RawFile } from "@discordjs/rest";
 
 export class EventsDisplay extends BasePlannerHandler {
+  constructor(data: any, planner: any, state: any) {
+    super(data, planner, state);
+    // Initialize filters for events display
+    this.initializeFilters([FilterType.Events, FilterType.Order]);
+  }
   override async handle() {
     const components: APIContainerComponent[] = [];
     let attachements: RawFile | undefined;

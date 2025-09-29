@@ -1,11 +1,11 @@
 import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
-import { emojis, realms_emojis, SkyPlannerData, zone } from "@skyhelperbot/constants";
+import { emojis, realms_emojis, SkyPlannerData } from "@skyhelperbot/constants";
 import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import type { TransformedData } from "@skyhelperbot/constants/skygame-planner";
-import { SpiritsDisplay } from "./planner-displays/spirits.js";
+import { SpiritsDisplay } from "./planner-displays/spirits/spirits.js";
 import { BasePlannerHandler, DisplayTabs, type NavigationState } from "./planner-displays/base.js";
 import { RealmsDisplay } from "./planner-displays/realms.js";
 import { ItemsDisplay } from "./planner-displays/items.js";
@@ -86,7 +86,7 @@ export async function handlePlannerNavigation(state: NavigationState) {
     default: {
       const handler = displayClasses[tab as keyof typeof displayClasses];
       // eslint-disable-next-line
-      return handler ? new handler(data, SkyPlannerData, state).handle() : getHomeDisplay(user);
+      return handler ? new handler(data, SkyPlannerData, { ...state, user: undefined }).handle() : getHomeDisplay(user);
     }
   }
 }

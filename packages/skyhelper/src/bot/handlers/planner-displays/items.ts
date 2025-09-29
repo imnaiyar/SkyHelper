@@ -1,60 +1,44 @@
 import { ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
+import { FilterType, serializeFilters } from "./filter.manager.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 import type { APIComponentInContainer } from "discord-api-types/v10";
-const ItemCategory = {
-  [ItemType.Outfit]: [ItemType.Outfit, ItemType.Shoes],
-  [ItemType.Mask]: [ItemType.Mask, ItemType.Necklace, ItemType.FaceAccessory],
-  [ItemType.Hair]: [ItemType.Hair, ItemType.HeadAccessory, ItemType.HairAccessory],
-  [ItemType.Cape]: [],
-  [ItemType.Prop]: [ItemType.Prop, ItemType.Held, ItemType.Furniture, ItemType.Music],
-};
+
 export class ItemsDisplay extends BasePlannerHandler {
+  constructor(data: any, planner: any, state: any) {
+    // pass default if not set, only if an item is not selected
+    if (!state.item) state.filter ??= serializeFilters({ [FilterType.ItemTypes]: [ItemType.Outfit] });
+    super(data, planner, state);
+    // Initialize filters for items display
+    this.initializeFilters([FilterType.ItemTypes, FilterType.Seasons, FilterType.Order]);
+  }
+
   override handle() {
     if (this.state.item) {
       const item = this.data.items.find((i) => i.guid === this.state.item);
       if (!item) throw new Error("Invalid item");
       return { components: [container(this.itemDisplay(item))] };
     }
-    this.state.filter ??= "Outfit-Outfit"; // default to outfit
-    const [mainCategory, subCategory] = this.state.filter.split("-");
-    const items = this.data.items.filter((i) => i.type === (subCategory ?? mainCategory));
+    let items = this.data.items;
+
+    // Apply additional filters if filter manager is available and has filters
+    if (this.filterManager && this.hasActiveFilters()) {
+      items = this.filterManager.filterItems(items);
+    }
+
     return {
-      components: [container(this.createItemsNav(mainCategory!, subCategory!), ...this.itemslist(items))],
+      components: [container(this.createItemsNav(), textDisplay(this.createFilterIndicator()!), ...this.itemslist(items))],
     };
   }
-  createItemsNav(main: string, sub: string) {
-    const mainnav = Object.keys(ItemCategory).map((cat) =>
-      button({
-        label: main === cat ? "Home" : cat + "s",
-        custom_id: this.createCustomId({
-          tab: main === cat ? DisplayTabs.Home : this.state.tab,
-          filter: `${cat}-${ItemCategory[cat as unknown as keyof typeof ItemCategory][0] ?? ""}`,
-        }),
-        style: main === cat ? 4 : 2,
-        emoji: main === cat ? { id: emojis.leftarrow } : undefined,
-      }),
-    );
-    const subnav = ItemCategory[main as unknown as keyof typeof ItemCategory].map((cat: string) =>
-      button({
-        label: cat,
-        custom_id: this.createCustomId({ filter: `${main}-${cat}` }),
-        style: sub === cat ? 3 : 2,
-        disabled: sub === cat,
-      }),
-    );
-    return [
-      row(mainnav),
-      separator(true, 1),
-      row(subnav, button({ label: "Filter (TBD)", style: 1, custom_id: "sdw", disabled: true })),
-    ];
+  createItemsNav() {
+    return [/* ...this.createTopCategoryRow(DisplayTabs.Items), */ row(this.createFilterButton("Filter"))];
   }
   itemslist(items: IItem[]) {
     return this.displayPaginatedList({
       items,
       page: this.state.page ?? 1,
-      perpage: this.state.filter!.split("-")[0] === "Prop" ? 6 : 7,
+      perpage: 5,
       user: this.state.user,
       itemCallback: (item) => [
         section(
