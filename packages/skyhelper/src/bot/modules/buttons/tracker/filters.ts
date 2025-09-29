@@ -8,16 +8,6 @@ import { SkyPlannerData } from "@skyhelperbot/constants";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { FilterManager, FilterType } from "@/handlers/planner-displays/filter.manager";
 
-export enum FilterKeys {
-  Order = "order",
-  SpiritTypes = "spiritTypes",
-  Realms = "realms",
-  Seasons = "seasons",
-  Events = "events",
-  ItemTypes = "itemTypes",
-  ShopTypes = "shopTypes",
-}
-
 export default defineButton({
   data: { name: "filter" },
   id: CustomId.PlannerFilters,
@@ -41,10 +31,9 @@ export default defineButton({
         }
       }
     }
+    const custom = FilterManager.tabsCustomConfig(data, tab as DisplayTabs, filters);
 
-    const filterConfigs = FilterManager.getFilterConfigs(supportedFilters);
-
-    const populatedConfigs = filterConfigs.map((config) => filterManager.populateFilterConfig(config));
+    const filterConfigs = FilterManager.getFilterConfigs(supportedFilters, data, custom);
 
     const components: Array<APILabelComponent | APITextDisplayComponent> = [];
 
@@ -55,7 +44,7 @@ export default defineButton({
     );
 
     // Add filter components
-    for (const config of populatedConfigs) {
+    for (const config of filterConfigs) {
       const currentValues = filterManager.getFilterValues(config.type);
       const defaultValues = filterDefaults[config.type] ?? currentValues;
 
@@ -100,7 +89,7 @@ export default defineButton({
     // Process the submitted filter values
     const newFilterManager = new FilterManager(data);
 
-    for (const config of populatedConfigs) {
+    for (const config of filterConfigs) {
       const comp = Utils.getModalComponent(modalSubmission, config.type, ComponentType.StringSelect);
       if (comp?.values) newFilterManager.setFilterValues(comp.custom_id as FilterType, comp.values);
     }

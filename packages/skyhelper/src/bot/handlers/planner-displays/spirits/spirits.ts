@@ -1,6 +1,6 @@
 import { emojis, SkyPlannerData as p, SkyPlannerData, season_emojis } from "@skyhelperbot/constants";
 import { BasePlannerHandler, DisplayTabs } from "../base.js";
-import { FilterManager, FilterType, serializeFilters } from "../filter.manager.js";
+import { FilterManager, FilterType, serializeFilters, type CustomFilterConfigs } from "../filter.manager.js";
 import {
   button,
   container,
@@ -18,19 +18,13 @@ import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import type { RawFile } from "@discordjs/rest";
 import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
 
-const emojisMap = {
-  [p.SpiritType.Regular]: emojis.regularspirit,
-  [p.SpiritType.Season]: season_emojis.Gratitude,
-  [p.SpiritType.Elder]: emojis.realmelders,
-  [p.SpiritType.Guide]: emojis.auroraguide,
-  ["TS"]: emojis.travelingspirit,
-} as const;
-
 export class SpiritsDisplay extends BasePlannerHandler {
   constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: any) {
-    if (!state.item && state.data !== "TS") state.filter ??= serializeFilters({ [FilterType.SpiritTypes]: [SpiritType.Regular] });
     super(data, planner, state);
-    this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons]);
+    this.state.data ??= "normal";
+    this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons], {
+      [FilterType.SpiritTypes]: { defaultValues: [SpiritType.Regular] },
+    });
   }
   override handle() {
     const spirits = this.data.spirits;
@@ -41,18 +35,28 @@ export class SpiritsDisplay extends BasePlannerHandler {
 
     // Get current filter values
     const spiritTypes = this.filterManager ? this.filterManager.getFilterValues(FilterType.SpiritTypes) : [SpiritType.Regular];
-
+    const selected = (d: string) => this.state.data === d;
     const uppercomponent = (title: string) => [
-      row(this.createFilterButton("Advanced Filters")),
-      section(
-        button({
-          label: "Home",
-          custom_id: this.createCustomId({ tab: DisplayTabs.Home }),
-          style: 4,
-          emoji: { id: emojis.leftarrow },
+      textDisplay(`# ${title}`, this.createFilterIndicator() ?? ""),
+      row(
+        this.viewbtn(this.createCustomId({ data: "normal", item: "", filter: "", page: 1 }), {
+          label: "Spirits",
+          disabled: selected("normal"),
+          style: selected("normal") ? 3 : 2,
         }),
-        `# ${title}`,
-        ...(this.createFilterIndicator() ? [this.createFilterIndicator()!] : []),
+        this.viewbtn(this.createCustomId({ data: "ts", item: "", filter: "", page: 1 }), {
+          label: "Traveling Spirits",
+          disabled: selected("ts"),
+          style: selected("ts") ? 3 : 2,
+          emoji: { id: emojis.travelingspirit },
+        }),
+        this.viewbtn(this.createCustomId({ data: "rs", item: "", filter: "", page: 1 }), {
+          label: "Special Visits",
+          disabled: selected("rs"),
+          style: selected("rs") ? 3 : 2,
+        }),
+        this.createFilterButton("Filters"),
+        this.homebtn(),
       ),
       separator(),
     ];
@@ -79,7 +83,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
         );
         break;
       }
-      case "TS":
+      case "ts":
         components.push(...uppercomponent(`Traveling Spirits (${this.data.travelingSpirits.length})`));
         components.push(...this.tslist());
         break;
@@ -101,7 +105,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
             label: "View",
             custom_id: this.createCustomId({
               item: t.guid,
-              back: { tab: this.state.tab, page: this.state.page, filter: this.state.filter, item: "" },
+              back: { tab: this.state.tab, page: this.state.page, item: "" },
             }),
             style: 1,
           }),
