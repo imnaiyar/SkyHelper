@@ -11,14 +11,55 @@ export interface GenerateSpiritTreeOptions {
 
 const iconUrl = (icon: string) => `https://cdn.discordapp.com/emojis/${icon}.png`;
 
-// --------------------
-// Cache image loading to reduce load
-// TODO: implement LRU or size limit as this may cause memory bloat
-// --------------------
-const imageCache = new Map<string, Image>();
+// LRU cache to reduce memory load
+class ImageCache {
+  private cache = new Map<string, Image>();
+  private readonly maxSize: number;
+
+  constructor(maxSize = 100) {
+    this.maxSize = maxSize;
+  }
+
+  get(key: string): Image | undefined {
+    const value = this.cache.get(key);
+    if (value !== undefined) {
+      this.cache.delete(key);
+      this.cache.set(key, value);
+    }
+    return value;
+  }
+
+  set(key: string, value: Image): void {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.maxSize) {
+      const firstKey = this.cache.keys().next().value;
+      if (firstKey !== undefined) {
+        this.cache.delete(firstKey);
+      }
+    }
+    this.cache.set(key, value);
+  }
+
+  has(key: string): boolean {
+    return this.cache.has(key);
+  }
+
+  clear(): void {
+    this.cache.clear();
+  }
+
+  get size(): number {
+    return this.cache.size;
+  }
+}
+
+const imageCache = new ImageCache(250);
 
 async function getImage(url: string): Promise<Image> {
-  if (imageCache.has(url)) return imageCache.get(url)!;
+  const cached = imageCache.get(url);
+  if (cached) return cached;
+
   const img = await loadImage(url);
   imageCache.set(url, img);
   return img;
