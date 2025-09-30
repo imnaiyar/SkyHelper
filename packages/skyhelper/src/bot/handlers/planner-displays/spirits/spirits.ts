@@ -1,6 +1,6 @@
-import { emojis, SkyPlannerData as p, SkyPlannerData, season_emojis } from "@skyhelperbot/constants";
+import { emojis, SkyPlannerData } from "@skyhelperbot/constants";
 import { BasePlannerHandler, DisplayTabs } from "../base.js";
-import { FilterManager, FilterType, serializeFilters, type CustomFilterConfigs } from "../filter.manager.js";
+import { FilterType } from "../filter.manager.js";
 import {
   button,
   container,
@@ -21,36 +21,37 @@ import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
 export class SpiritsDisplay extends BasePlannerHandler {
   constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: any) {
     super(data, planner, state);
-    this.state.data ??= "normal";
+    this.state.d ??= "normal";
     this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons], {
       [FilterType.SpiritTypes]: { defaultValues: [SpiritType.Regular] },
     });
   }
   override handle() {
     const spirits = this.data.spirits;
-    const spirit = this.state.item ? spirits.find((s) => s.guid === this.state.item) : null;
+    const spirit = this.state.it ? spirits.find((s) => s.guid === this.state.it) : null;
     if (spirit) {
+      console.log(spirit);
       return this.spiritdisplay(spirit);
     }
 
     // Get current filter values
     const spiritTypes = this.filterManager ? this.filterManager.getFilterValues(FilterType.SpiritTypes) : [SpiritType.Regular];
-    const selected = (d: string) => this.state.data === d;
+    const selected = (d: string) => this.state.d === d;
     const uppercomponent = (title: string) => [
       textDisplay(`# ${title}`, this.createFilterIndicator() ?? ""),
       row(
-        this.viewbtn(this.createCustomId({ data: "normal", item: "", filter: "", page: 1 }), {
+        this.viewbtn(this.createCustomId({ d: "normal", it: "", f: "", p: 1 }), {
           label: "Spirits",
           disabled: selected("normal"),
           style: selected("normal") ? 3 : 2,
         }),
-        this.viewbtn(this.createCustomId({ data: "ts", item: "", filter: "", page: 1 }), {
+        this.viewbtn(this.createCustomId({ d: "ts", it: "", f: "", p: 1 }), {
           label: "Traveling Spirits",
           disabled: selected("ts"),
           style: selected("ts") ? 3 : 2,
           emoji: { id: emojis.travelingspirit },
         }),
-        this.viewbtn(this.createCustomId({ data: "rs", item: "", filter: "", page: 1 }), {
+        this.viewbtn(this.createCustomId({ d: "rs", it: "", f: "", p: 1 }), {
           label: "Special Visits",
           disabled: selected("rs"),
           style: selected("rs") ? 3 : 2,
@@ -63,7 +64,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
 
     const components: APIComponentInContainer[] = [];
 
-    switch (this.state.data) {
+    switch (this.state.d) {
       case "normal":
       default: {
         // Apply filters using FilterManager
@@ -76,7 +77,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
           ...this.displayPaginatedList({
             items: spiritsOfType,
             user: this.state.user,
-            page: this.state.page ?? 1,
+            page: this.state.p ?? 1,
             perpage: 7,
             itemCallback: this.spiritInList.bind(this),
           }),
@@ -97,15 +98,15 @@ export class SpiritsDisplay extends BasePlannerHandler {
     return this.displayPaginatedList({
       items: [...ts].reverse(),
       user: this.state.user,
-      page: this.state.page ?? 1,
+      page: this.state.p ?? 1,
       perpage: 7,
       itemCallback: (t) => [
         section(
           button({
             label: "View",
             custom_id: this.createCustomId({
-              item: t.guid,
-              back: { tab: this.state.tab, page: this.state.page, item: "" },
+              it: t.guid,
+              b: { t: this.state.t, p: this.state.p, it: "" },
             }),
             style: 1,
           }),
@@ -123,8 +124,8 @@ export class SpiritsDisplay extends BasePlannerHandler {
       section(
         button({
           custom_id: this.createCustomId({
-            item: spirit.guid,
-            back: { tab: this.state.tab, page: this.state.page, filter: this.state.filter, item: "" },
+            it: spirit.guid,
+            b: { t: this.state.t, p: this.state.p, f: this.state.f, d: this.state.d },
           }),
           style: 1,
           label: "View",
@@ -155,13 +156,15 @@ export class SpiritsDisplay extends BasePlannerHandler {
     ]
       .flat()
       .filter(Boolean) as Array<{ name: string; tree: SkyPlannerData.ISpiritTree; season?: boolean }>;
-    const selected = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
+
+    const selected = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
     const tree = trees[selected];
     let attachment: RawFile | undefined;
     if (tree) {
       const buffer = await generateSpiritTree(tree.tree, { season: !!tree.season });
       attachment = { name: "tree.png", data: buffer };
     }
+
     const title = [
       `# ${this.formatemoji(spirit.icon)} ${spirit.name}`,
       spirit.area
@@ -171,12 +174,10 @@ export class SpiritsDisplay extends BasePlannerHandler {
       spirit.events?.length ? `${this.formatemoji(emojis.eventticket)} ${spirit.events.at(-1)!.eventInstance?.event.name}` : null,
       `Type: ${spirit.type}`,
     ].filter(Boolean) as [string, ...string[]];
+
     const compos = [
       spirit.imageUrl ? section(thumbnail(spirit.imageUrl), ...title) : textDisplay(...title),
-      row(
-        this.backbtn(this.createCustomId({ tab: DisplayTabs.Spirits, filter: "", item: "", ...this.state.back })),
-        this.homebtn(),
-      ),
+      row(this.backbtn(this.createCustomId({ t: DisplayTabs.Spirits, f: "", it: "", ...this.state.b })), this.homebtn()),
       separator(true, 1),
       trees.length > 1
         ? row({
@@ -195,31 +196,10 @@ export class SpiritsDisplay extends BasePlannerHandler {
         : null,
       tree ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
     ].filter(Boolean) as APIComponentInContainer[];
+
     return {
       components: [container(compos)],
       files: attachment ? [attachment] : undefined,
     };
-  }
-
-  /**
-   * Toggle a spirit type filter and return the new filter string
-   */
-  private toggleSpiritTypeFilter(type: string): string {
-    this.filterManager ??= new FilterManager(this.data);
-
-    if (type === "TS") {
-      // TS is handled separately via the data parameter
-      return this.filterManager.serializeFilters();
-    }
-
-    this.filterManager.toggleFilterValue(FilterType.SpiritTypes, type as SpiritType);
-
-    // Ensure at least one spirit type is selected
-    const currentTypes = this.filterManager.getFilterValues(FilterType.SpiritTypes);
-    if (currentTypes.length === 0) {
-      this.filterManager.setFilterValues(FilterType.SpiritTypes, [SpiritType.Regular]);
-    }
-
-    return this.filterManager.serializeFilters();
   }
 }

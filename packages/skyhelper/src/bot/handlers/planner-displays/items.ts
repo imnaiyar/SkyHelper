@@ -14,8 +14,8 @@ export class ItemsDisplay extends BasePlannerHandler {
   }
 
   override handle() {
-    if (this.state.item) {
-      const item = this.data.items.find((i) => i.guid === this.state.item);
+    if (this.state.it) {
+      const item = this.data.items.find((i) => i.guid === this.state.it);
       if (!item) throw new Error("Invalid item");
       return { components: [container(this.itemDisplay(item))] };
     }
@@ -43,7 +43,7 @@ export class ItemsDisplay extends BasePlannerHandler {
   itemslist(items: IItem[]) {
     return this.displayPaginatedList({
       items,
-      page: this.state.page ?? 1,
+      page: this.state.p ?? 1,
       perpage: 7,
       user: this.state.user,
       itemCallback: (item) => [
@@ -51,8 +51,8 @@ export class ItemsDisplay extends BasePlannerHandler {
           button({
             label: "View",
             custom_id: this.createCustomId({
-              item: item.guid,
-              back: { tab: this.state.tab, filter: this.state.filter, page: this.state.page ?? 1 },
+              it: item.guid,
+              b: { t: this.state.t, f: this.state.f, p: this.state.p ?? 1 },
             }),
             style: 1,
           }),
@@ -72,7 +72,7 @@ export class ItemsDisplay extends BasePlannerHandler {
   itemDisplay(item: IItem) {
     return [
       section(
-        this.backbtn(this.createCustomId({ tab: DisplayTabs.Items, item: "", filter: "", ...this.state.back })),
+        this.backbtn(this.createCustomId({ t: DisplayTabs.Items, it: "", f: "", ...this.state.b })),
         `# ${this.formatemoji(item.icon, item.name)} ${item.name}${item.level ? ` (Lvl ${item.level})` : ""}`,
         [`Type: ${item.type}`, item.subtype ? `Subtype: ${item.subtype}` : null, item.group ? `Group: ${item.group}` : null]
           .filter(Boolean)
@@ -92,22 +92,22 @@ export class ItemsDisplay extends BasePlannerHandler {
       separator(true, 1),
       item.dye
         ? row(
-            this.viewbtn(this.createCustomId({ filter: "preview" }), {
+            this.viewbtn(this.createCustomId({ f: "preview" }), {
               label: "Preview",
-              style: (this.state.filter ?? "preview") === "preview" ? 2 : 3,
-              disabled: (this.state.filter ?? "preview") === "preview",
+              style: (this.state.f ?? "preview") === "preview" ? 2 : 3,
+              disabled: (this.state.f ?? "preview") === "preview",
             }),
-            this.viewbtn(this.createCustomId({ filter: "dye" }), {
+            this.viewbtn(this.createCustomId({ f: "dye" }), {
               label: "Dye Preview",
-              style: this.state.filter === "dye" ? 2 : 3,
-              disabled: this.state.filter === "dye",
+              style: this.state.f === "dye" ? 2 : 3,
+              disabled: this.state.f === "dye",
             }),
           )
         : null,
-      item.previewUrl && (this.state.filter ?? "preview") === "preview"
+      item.previewUrl && (this.state.f ?? "preview") === "preview"
         ? mediaGallery(mediaGalleryItem(this.planner.resolveUrls(item.previewUrl), { description: item.name }))
         : null,
-      this.state.filter === "dye"
+      this.state.f === "dye"
         ? mediaGallery(
             [item.dye?.previewUrl, item.dye?.infoUrl]
               .filter(Boolean)

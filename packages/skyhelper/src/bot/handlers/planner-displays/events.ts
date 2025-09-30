@@ -24,13 +24,13 @@ export class EventsDisplay extends BasePlannerHandler {
   }
   override async handle() {
     const components: APIContainerComponent[] = [];
-    let attachements: RawFile | undefined;
-    if (this.state.item) {
-      const event = this.data.events.find((e) => e.guid === this.state.item);
+    let attachments: RawFile | undefined;
+    if (this.state.it) {
+      const event = this.data.events.find((e) => e.guid === this.state.it);
       if (!event) throw new Error("Event not found");
-      this.state.data ??= event.instances?.[0]?.guid ?? undefined;
+      this.state.d ??= event.instances?.[0]?.guid ?? undefined;
       const display = await this.eventDisplay(event);
-      attachements = display.attachment;
+      attachments = display.attachment;
       components.push(container(display.components));
     } else {
       const order = this.filterManager!.getFilterValues(FilterType.Order)[0];
@@ -45,18 +45,18 @@ export class EventsDisplay extends BasePlannerHandler {
       );
     }
 
-    return { components, files: attachements ? [attachements] : undefined };
+    return { components, files: attachments ? [attachments] : undefined };
   }
 
   eventslist(events: SkyPlannerData.IEvent[]) {
     return this.displayPaginatedList({
       items: events,
-      page: this.state.page ?? 1,
+      page: this.state.p ?? 1,
       perpage: 6,
       user: this.state.user,
       itemCallback: (event) => [
         section(
-          this.viewbtn(this.createCustomId({ item: event.guid })),
+          this.viewbtn(this.createCustomId({ it: event.guid })),
           `**${event.name}**`,
           [event.instances?.map((i) => this.planner.resolveToLuxon(i.date).year.toString()), event.recurring ? "Recurring" : ""]
             .filter((s) => !!s)
@@ -72,19 +72,19 @@ export class EventsDisplay extends BasePlannerHandler {
     const instanceButtons = event.instances?.length
       ? event.instances.map((instance) =>
           button({
-            custom_id: this.createCustomId({ data: instance.guid }),
+            custom_id: this.createCustomId({ d: instance.guid }),
             label: this.planner.resolveToLuxon(instance.date).year.toString(),
-            disabled: this.state.data === instance.guid,
+            disabled: this.state.d === instance.guid,
           }),
         )
       : [];
 
-    instanceButtons.push(this.backbtn(this.createCustomId({ item: "", filter: "", data: "" })), this.homebtn());
+    instanceButtons.push(this.backbtn(this.createCustomId({ it: "", f: "", d: "" })), this.homebtn());
     const rows =
       instanceButtons.length > 0
         ? Array.from({ length: Math.ceil(instanceButtons.length / 5) }, (_, i) => row(instanceButtons.slice(i * 5, i * 5 + 5)))
         : [];
-    const instance = event.instances?.find((e) => e.guid === this.state.data);
+    const instance = event.instances?.find((e) => e.guid === this.state.d);
 
     const totalCosts = instance
       ? this.planner.formatGroupedCurrencies(
@@ -118,7 +118,7 @@ export class EventsDisplay extends BasePlannerHandler {
 
   async getinstancedisplay(instance: SkyPlannerData.IEventInstance) {
     const [start, end] = [this.planner.resolveToLuxon(instance.date), this.planner.resolveToLuxon(instance.endDate)];
-    const index = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
+    const index = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
     const spirit = instance.spirits.length ? instance.spirits[index] : null;
     const selectRow = row({
       type: ComponentType.StringSelect,
@@ -145,9 +145,9 @@ export class EventsDisplay extends BasePlannerHandler {
         section(
           this.viewbtn(
             this.createCustomId({
-              tab: DisplayTabs.Shops,
-              item: instance.shops.map((s) => s.guid).join(","),
-              back: { tab: DisplayTabs.Events, item: this.state.item, filter: this.state.filter },
+              t: DisplayTabs.Shops,
+              it: instance.shops.map((s) => s.guid).join(","),
+              b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f },
             }),
             { label: "Shop", emoji: { id: emojis.shopcart } },
           ),

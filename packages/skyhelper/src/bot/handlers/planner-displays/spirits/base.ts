@@ -23,15 +23,15 @@ export class BaseSpiritsDisplay extends BasePlannerHandler {
       button({
         label: s,
         custom_id: this.createCustomId({
-          filter: this.transformFilters(s),
-          data: s === "TS" ? "TS" : "normal",
-          page: 1,
-          item: "",
+          f: this.transformFilters(s),
+          d: s === "TS" ? "TS" : "normal",
+          p: 1,
+          it: "",
         }),
         emoji: { id: emojisMap[s] },
 
-        style: s === "TS" && this.state.data === "TS" ? 3 : this.filters.spiritTypes.includes(s as SpiritType) ? 3 : 2,
-        disabled: s === "TS" && this.state.data === "TS",
+        style: s === "TS" && this.state.d === "TS" ? 3 : this.filters.spiritTypes.includes(s as SpiritType) ? 3 : 2,
+        disabled: s === "TS" && this.state.d === "TS",
       }),
     );
     return { components: [] };
@@ -42,31 +42,31 @@ export class BaseSpiritsDisplay extends BasePlannerHandler {
       button({
         label: s,
         custom_id: this.createCustomId({
-          filter: this.transformFilters(s),
-          data: s === "TS" ? "TS" : "normal",
-          page: 1,
-          item: "",
+          f: this.transformFilters(s),
+          d: s === "TS" ? "TS" : "normal",
+          p: 1,
+          it: "",
         }),
         emoji: { id: emojisMap[s] },
 
-        style: s === "TS" && this.state.data === "TS" ? 3 : this.filters.spiritTypes.includes(s as SpiritType) ? 3 : 2,
-        disabled: s === "TS" && this.state.data === "TS",
+        style: s === "TS" && this.state.d === "TS" ? 3 : this.filters.spiritTypes.includes(s as SpiritType) ? 3 : 2,
+        disabled: s === "TS" && this.state.d === "TS",
       }),
     );
   }
 
   public parseFilters() {
-    if (!this.state.filter) return;
-    const parts = this.state.filter.split("/");
+    if (!this.state.f) return;
+    const parts = this.state.f.split("/");
     if (parts.length === 0) return;
     for (const part of parts) {
       const [k, v] = part.split(":") as [keyof BaseSpiritsDisplay["filters"], string | undefined];
       if (!v) continue;
       this.filters[k] = v.split(",") as any;
     }
-    if (this.state.data === "TS") {
+    if (this.state.d === "TS") {
       this.filters.spiritTypes = []; // basically unselect all others for TS is treated as a standalone display;
-      this.state.filter = "";
+      this.state.f = "";
     }
   }
 

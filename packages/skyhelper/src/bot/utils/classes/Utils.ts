@@ -119,7 +119,7 @@ export default class {
    * @param obj The object to encode
    */
   static encodeCustomId(obj: ParsedCustomId): string {
-    let customId = `${obj.id}`;
+    let customId = `${obj.id ?? ""}`;
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
       if (!value) continue;

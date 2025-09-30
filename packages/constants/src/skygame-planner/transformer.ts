@@ -35,6 +35,16 @@ function notNull<T>(value: T | null | undefined): value is T {
   return value !== null && value !== undefined;
 }
 
+/** Mappings of currency keys with thier names */
+export const currencyMap = {
+  c: "Candles",
+  h: "Hearts",
+  sc: "Season Candles",
+  sh: "Season Hearts",
+  ac: "Ascended Candles",
+  ec: "Event Tickets",
+};
+
 export interface TransformedData {
   areas: IArea[];
   events: IEvent[];
@@ -162,12 +172,15 @@ function linkOne<T, P>(
   parent: P,
   prop: keyof P,
   data: TransformedData,
-  backProp?: keyof T,
+  backProp?: keyof T | ((ref: T) => void),
 ): T | undefined {
   const resolved = resolveRef<T>(ref, data);
   if (resolved) {
     (parent as any)[prop] = resolved;
-    if (backProp) (resolved as any)[backProp] = parent;
+    if (backProp) {
+      if (typeof backProp === "function") backProp(resolved);
+      else (resolved as any)[backProp] = parent;
+    }
   }
   return resolved;
 }
@@ -282,7 +295,10 @@ function resolveReferences(data: TransformedData): void {
   const totalCount: Record<string, number> = {};
   data.travelingSpirits.forEach((ts, i) => {
     ts.number = i + 1;
-    ts.spirit = linkOne<ISpirit, ITravelingSpirit>(ts.spirit as any, ts, "spirit", data, "ts")!;
+    linkOne<ISpirit, ITravelingSpirit>(ts.spirit as any, ts, "spirit", data, (spirit) => {
+      spirit.ts ??= [];
+      spirit.ts.push(ts);
+    })!;
     totalCount[ts.spirit.name] ??= 0;
     ts.visit = ++totalCount[ts.spirit.name]!;
     linkOne<ISpiritTree, ITravelingSpirit>(ts.tree as any, ts, "tree", data, "ts");
@@ -295,7 +311,10 @@ function resolveReferences(data: TransformedData): void {
   }
 
   for (const visit of data.returningSpiritsVisits) {
-    linkOne<ISpirit, IReturningSpirit>(visit.spirit as any, visit, "spirit", data, "returns");
+    linkOne<ISpirit, IReturningSpirit>(visit.spirit as any, visit, "spirit", data, (spirit) => {
+      spirit.returns ??= [];
+      spirit.returns.push(visit);
+    });
     linkOne<ISpiritTree, IReturningSpirit>(visit.tree as any, visit, "tree", data, "visit");
   }
 

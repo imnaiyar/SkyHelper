@@ -18,7 +18,7 @@ import type { RawFile } from "@discordjs/rest";
 
 export class SeasonsDisplay extends BasePlannerHandler {
   override handle() {
-    const season = this.data.seasons.find((s) => s.guid === this.state.item);
+    const season = this.data.seasons.find((s) => s.guid === this.state.it);
     if (season) return this.seasondisplay(season);
     return {
       components: [
@@ -30,7 +30,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
   seasonslist() {
     return this.displayPaginatedList({
       items: this.data.seasons,
-      page: this.state.page ?? 1,
+      page: this.state.p ?? 1,
       perpage: 3, // TODO: Find a way to increase this limit
       itemCallback: this.getSeasonInListDisplay.bind(this),
     });
@@ -61,7 +61,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
         {
           type: ComponentType.Button,
           label: "View Season",
-          custom_id: this.createCustomId({ item: season.guid }),
+          custom_id: this.createCustomId({ it: season.guid }),
           style: 1,
         },
         `### ${season.icon ? this.formatemoji(season.icon, season.shortName) : ""} **${season.name}**`,
@@ -73,7 +73,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
   async seasondisplay(season: ISeason) {
     const trees = [...season.spirits.map((s) => s.tree).filter((t) => !!t), ...(season.includedTrees ?? [])];
     const [start, end] = [this.planner.resolveToLuxon(season.date), this.planner.resolveToLuxon(season.endDate)];
-    const index = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
+    const index = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
 
     const spiritRow = row({
       type: ComponentType.StringSelect,
@@ -104,13 +104,13 @@ export class SeasonsDisplay extends BasePlannerHandler {
       row(
         this.viewbtn(
           this.createCustomId({
-            tab: DisplayTabs.Shops,
-            item: season.shops?.map((s) => s.guid).join(","),
-            back: { tab: DisplayTabs.Events, item: this.state.item, filter: this.state.filter },
+            t: DisplayTabs.Shops,
+            it: season.shops?.map((s) => s.guid).join(","),
+            b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f },
           }),
           { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !season.shops?.length },
         ),
-        this.backbtn(this.createCustomId({ item: "", filter: "", ...this.state.back })),
+        this.backbtn(this.createCustomId({ it: "", f: "", ...this.state.b })),
         this.homebtn(),
       ),
       separator(),
@@ -118,7 +118,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
       tree
         ? [
             section(
-              this.viewbtn(this.createCustomId({ tab: DisplayTabs.Spirits, item: tree.spirit?.guid }), {
+              this.viewbtn(this.createCustomId({ t: DisplayTabs.Spirits, it: tree.spirit?.guid }), {
                 label: "View",
                 disabled: !tree.spirit,
               }),

@@ -60,7 +60,7 @@ export default defineButton({
             default: defaultValues.includes(option.value),
           })),
           min_values: config.required ? 1 : 0,
-          max_values: config.multiSelect ? 3 : 1, // keep it 3 to limit data size
+          max_values: config.max ? config.options.length : config.multiSelect ? 3 : 1, // keep it 3 to limit data size
           required: false,
         },
       });
@@ -96,10 +96,10 @@ export default defineButton({
 
     const newFilterString = newFilterManager.serializeFilters();
     const comps = await handlePlannerNavigation({
-      tab: tab as DisplayTabs,
+      t: tab as DisplayTabs,
       user: user ?? helper.user.id,
-      filter: newFilterString || undefined,
-      page: 1, // Reset to first page when filters change
+      f: newFilterString || undefined,
+      p: 1, // Reset to first page when filters change
     });
 
     await helper.api.interactions.editReply(modalSubmission.application_id, modalSubmission.token, comps);
