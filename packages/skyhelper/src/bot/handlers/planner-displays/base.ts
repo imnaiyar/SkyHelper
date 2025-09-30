@@ -49,7 +49,7 @@ export interface NavigationState {
    * For ex, imagine we go to a particular area from wl tab, providing this back btn, we can come back to wl tab
    * * b = back
    */
-  b?: Omit<NavigationState, "back" | "user">;
+  b?: Omit<NavigationState, "back" | "user"> | null;
 
   /** any string to prevent custom_id duplication */
   i?: string;
@@ -226,7 +226,7 @@ export abstract class BasePlannerHandler {
       p: p || null,
       f: f || null,
       d: d || null,
-      i: Math.floor(Math.random() * 1e3).toString(),
+      i: opt.i ?? Math.floor(Math.random() * 1e3).toString(),
       back: b ? Utils.encodeCustomId({ ...b }) : null,
       user,
     });
@@ -272,7 +272,12 @@ export abstract class BasePlannerHandler {
       label,
       style: 2,
       custom_id: store.serialize(CustomId.PlannerFilters, {
-        tab: this.state.t,
+        tab: Utils.encodeCustomId({
+          t: this.state.t,
+          it: this.state.it ?? null,
+          d: this.state.d ?? null,
+          i: this.state.i ?? null,
+        }),
         filters: filterStrings,
         user: this.state.user,
       }),

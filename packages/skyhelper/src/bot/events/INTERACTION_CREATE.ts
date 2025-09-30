@@ -255,6 +255,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             f: f ?? undefined,
             d: d ?? undefined,
             it: it ?? undefined,
+            i: data.i ?? undefined,
             b,
             user: helper.user.id,
           });

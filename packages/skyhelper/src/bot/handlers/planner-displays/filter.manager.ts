@@ -1,5 +1,13 @@
 import { type SkyPlannerData as p, emojis, season_emojis, SkyPlannerData } from "@skyhelperbot/constants";
-import { SpiritType, ItemType, type TransformedData, currencyMap } from "@skyhelperbot/constants/skygame-planner";
+import {
+  SpiritType,
+  ItemType,
+  type TransformedData,
+  currencyMap,
+  type ISpirit,
+  type ITravelingSpirit,
+  type IReturningSpirits,
+} from "@skyhelperbot/constants/skygame-planner";
 import { type APISelectMenuOption } from "@discordjs/core";
 import { DisplayTabs } from "./base.js";
 
@@ -352,31 +360,31 @@ export class FilterManager {
   /**
    * Apply filters to a list of spirits
    */
-  public filterSpirits(spirits: p.ISpirit[]): p.ISpirit[] {
+  public filterSpirits<TType extends ISpirit | ITravelingSpirit | IReturningSpirits>(spirits: TType[]): TType[] {
     let filtered = [...spirits];
 
     // type filter
     const spiritTypes = this.getFilterValues(FilterType.SpiritTypes);
     if (spiritTypes.length > 0) {
-      filtered = filtered.filter((spirit) => spiritTypes.includes(spirit.type));
+      filtered = filtered.filter((spirit) => "type" in spirit && spiritTypes.includes(spirit.type));
     }
 
     // realm
     const realms = this.getFilterValues(FilterType.Realms);
     if (realms.length > 0) {
-      filtered = filtered.filter((spirit) => spirit.area && realms.includes(spirit.area.realm.guid));
+      filtered = filtered.filter((spirit) => "area" in spirit && realms.includes(spirit.area?.realm.guid ?? ""));
     }
 
     // season
     const seasons = this.getFilterValues(FilterType.Seasons);
     if (seasons.length > 0) {
-      filtered = filtered.filter((spirit) => spirit.season && seasons.includes(spirit.season.guid));
+      filtered = filtered.filter((spirit) => "season" in spirit && seasons.includes(spirit.season?.guid ?? ""));
     }
 
     // events
     const events = this.getFilterValues(FilterType.Events);
     if (events.length > 0) {
-      filtered = filtered.filter((spirit) => spirit.events?.some((event) => events.includes(event.guid)));
+      filtered = filtered.filter((spirit) => "events" in spirit && spirit.events?.some((event) => events.includes(event.guid)));
     }
 
     // sorting
@@ -387,7 +395,7 @@ export class FilterManager {
 
     const areas = this.getFilterValues(FilterType.Areas);
     if (areas.length > 0) {
-      filtered = filtered.filter((spirit) => areas.includes(spirit.area?.guid ?? ""));
+      filtered = filtered.filter((spirit) => "area" in spirit && areas.includes(spirit.area?.guid ?? ""));
     }
 
     return filtered;
@@ -435,17 +443,31 @@ export class FilterManager {
   /**
    * Sort spirits based on order criteria
    */
-  private sortSpirits(sprts: p.ISpirit[], order: string): p.ISpirit[] {
+  private sortSpirits<TType extends ISpirit | ITravelingSpirit | IReturningSpirits>(sprts: TType[], order: string): TType[] {
     const spirits = [...sprts];
+    const getSpirit = (spirit: TType): ISpirit | null => {
+      if ("spirit" in spirit) return spirit.spirit;
+      if ("spirits" in spirit) return null; // this is rs, so no 1 spirit, ignore
+      return spirit;
+    };
+
     switch (order) {
       case "name_asc":
-        return spirits.sort((a, b) => a.name.localeCompare(b.name));
+        return spirits.sort((a, b) => {
+          const nameA = "name" in a ? (a.name ?? "") : (getSpirit(a)?.name ?? "");
+          const nameB = "name" in b ? (b.name ?? "") : (getSpirit(b)?.name ?? "");
+          return nameA.localeCompare(nameB);
+        });
       case "name_desc":
-        return spirits.sort((a, b) => b.name.localeCompare(a.name));
+        return spirits.sort((a, b) => {
+          const nameA = "name" in a ? (a.name ?? "") : (getSpirit(a)?.name ?? "");
+          const nameB = "name" in b ? (b.name ?? "") : (getSpirit(b)?.name ?? "");
+          return nameB.localeCompare(nameA);
+        });
       case "date_asc":
         return spirits.sort((a, b) => {
-          const aDate = a.season?.date ?? a.ts?.[0]?.date;
-          const bDate = b.season?.date ?? b.ts?.[0]?.date;
+          const aDate = "date" in a ? a.date : (a.season?.date ?? a.ts?.[0]?.date);
+          const bDate = "date" in b ? b.date : (b.season?.date ?? b.ts?.[0]?.date);
           if (!aDate && !bDate) return 0;
           if (!aDate) return 1;
           if (!bDate) return -1;
@@ -453,8 +475,8 @@ export class FilterManager {
         });
       case "date_desc":
         return spirits.sort((a, b) => {
-          const aDate = a.season?.date ?? a.ts?.[0]?.date;
-          const bDate = b.season?.date ?? b.ts?.[0]?.date;
+          const aDate = "date" in a ? a.date : (a.season?.date ?? a.ts?.[0]?.date);
+          const bDate = "date" in b ? b.date : (b.season?.date ?? b.ts?.[0]?.date);
           if (!aDate && !bDate) return 0;
           if (!aDate) return 1;
           if (!bDate) return -1;

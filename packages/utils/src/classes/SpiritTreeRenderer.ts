@@ -275,7 +275,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   // if there are up to 3 center nodes, make the node size twice as large
   const size = centerCount > 0 && centerCount <= 3 ? baseSize * 2 : baseSize;
   const spacingY = size * 4;
-  const spirit = tree.spirit ?? tree.ts?.spirit;
+  const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit;
 
   // preload all images in parallel
   await preloadImages(tree);

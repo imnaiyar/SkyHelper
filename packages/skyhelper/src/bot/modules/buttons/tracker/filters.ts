@@ -1,4 +1,4 @@
-import type { DisplayTabs } from "@/handlers/planner-displays/base";
+import type { DisplayTabs, NavigationState } from "@/handlers/planner-displays/base";
 import { defineButton } from "@/structures";
 import Utils from "@/utils/classes/Utils";
 import { CustomId } from "@/utils/customId-store";
@@ -95,8 +95,9 @@ export default defineButton({
     }
 
     const newFilterString = newFilterManager.serializeFilters();
+    const state = Utils.parseCustomId(tab) as unknown as NavigationState;
     const comps = await handlePlannerNavigation({
-      t: tab as DisplayTabs,
+      ...state,
       user: user ?? helper.user.id,
       f: newFilterString || undefined,
       p: 1, // Reset to first page when filters change
