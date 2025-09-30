@@ -77,7 +77,7 @@ const CATEGORY_EMOJI_MAP = {
   [DisplayTabs.Spirits]: emojis.realmelders,
 };
 
-export class BasePlannerHandler {
+export abstract class BasePlannerHandler {
   protected filterManager?: FilterManager;
   protected customFilterConfigs?: CustomFilterConfigs;
 
