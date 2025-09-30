@@ -14,20 +14,18 @@ export default defineButton({
   id: CustomId.PlannerTopLevelNav,
   data: { name: "planner-navigation" },
   // Handle the button interaction
-  async execute(interaction, _t, helper, data) {
-    // Extract navigation state from the button data
-    const { t, it, p, f, d } = Utils.parseCustomId(data.tab) as unknown as NavigationState;
+  async execute(interaction, _t, helper, { t, p, it, f, d, back }) {
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
     await helper.update({ components: getLoading });
-    const page = p ? parseInt(p as unknown as string) : undefined;
-    const b = data.back ? (Utils.parseCustomId(data.back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
+    const b = back ? (Utils.parseCustomId(back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
     const response = await handlePlannerNavigation({
       t: t as any,
-      it,
-      p: page ?? undefined,
-      d,
-      f,
+      it: it ?? undefined,
+      p: p ?? undefined,
+      d: d ?? undefined,
+      f: f ?? undefined,
       b,
+      user: helper.user.id,
     });
 
     await helper.editReply({
