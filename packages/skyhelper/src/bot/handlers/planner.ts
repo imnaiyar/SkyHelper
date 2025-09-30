@@ -9,20 +9,33 @@ import { WingedLightsDisplay } from "./planner-displays/wingedlights.js";
 import { ShopsDisplay } from "./planner-displays/shops.js";
 import { AreasDisplay } from "./planner-displays/areas.js";
 import { HomeDisplay } from "./planner-displays/home.js";
+import { TSDisplay } from "./planner-displays/spirits/ts.js";
+import { ReturningSpiritDisplay } from "./planner-displays/spirits/rs.js";
 
 // Navigation state interface to track user's position
 
-const displayClasses = {
+export const getSpiritHandler = (d = "normal") => {
+  switch (d) {
+    case "normal":
+    default:
+      return SpiritsDisplay;
+    case "ts":
+      return TSDisplay;
+    case "rs":
+      return ReturningSpiritDisplay;
+  }
+};
+const displayClasses = (d?: string) => ({
   [DisplayTabs.Events]: EventsDisplay,
   [DisplayTabs.Realms]: RealmsDisplay,
   [DisplayTabs.Items]: ItemsDisplay,
   [DisplayTabs.Seasons]: SeasonsDisplay,
-  [DisplayTabs.Spirits]: SpiritsDisplay,
+  [DisplayTabs.Spirits]: getSpiritHandler(d),
   [DisplayTabs.Shops]: ShopsDisplay,
   [DisplayTabs.WingedLights]: WingedLightsDisplay,
   [DisplayTabs.Areas]: AreasDisplay,
   [DisplayTabs.Home]: HomeDisplay,
-};
+});
 
 /**
  * Main handler for planner navigation
@@ -31,7 +44,7 @@ export async function handlePlannerNavigation(state: NavigationState) {
   const { t, user } = state;
 
   const data = await SkyPlannerData.getSkyGamePlannerData();
-  const handler = displayClasses[t];
+  const handler = displayClasses(state.d)[t];
   // eslint-disable-next-line
   return handler
     ? new handler(data, SkyPlannerData, { ...state, user }).handle()

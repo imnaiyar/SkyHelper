@@ -14,7 +14,7 @@ export default defineButton({
   id: CustomId.PlannerTopLevelNav,
   data: { name: "planner-navigation" },
   // Handle the button interaction
-  async execute(interaction, _t, helper, { t, p, it, f, d, back }) {
+  async execute(interaction, _t, helper, { t, p, it, f, d, back, i }) {
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
     await helper.update({ components: getLoading });
     const b = back ? (Utils.parseCustomId(back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
@@ -24,6 +24,7 @@ export default defineButton({
       p: p ?? undefined,
       d: d ?? undefined,
       f: f ?? undefined,
+      i: i ?? undefined,
       b,
       user: helper.user.id,
     });
