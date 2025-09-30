@@ -244,9 +244,9 @@ export class FilterManager {
           multiSelect: true,
           options: data.realms.map((realm) => ({
             label: realm.name,
-            value: realm.guid /*
-          emoji: { id: realm.icon }, */, // todo later
-          })), // Wwll be populated with actual realm data
+            value: realm.guid,
+            emoji: realm.icon ? { id: realm.icon } : undefined,
+          })),
         };
 
       case FilterType.Seasons:
@@ -258,8 +258,8 @@ export class FilterManager {
           options: data.seasons
             .map((season) => ({
               label: season.name,
-              value: season.guid /*
-            emoji: { id: season.icon }, */, // todo later
+              value: season.guid,
+              emoji: season.icon ? { id: season.icon } : undefined,
             }))
             .slice(0, 25), // will be populated with actual season data
         };
