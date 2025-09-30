@@ -22,7 +22,7 @@ export class SpiritsDisplay extends BasePlannerHandler {
   constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: any) {
     super(data, planner, state);
     this.state.d ??= "normal";
-    this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons], {
+    this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons, FilterType.Areas], {
       [FilterType.SpiritTypes]: { defaultValues: [SpiritType.Regular] },
     });
   }
@@ -30,7 +30,6 @@ export class SpiritsDisplay extends BasePlannerHandler {
     const spirits = this.data.spirits;
     const spirit = this.state.it ? spirits.find((s) => s.guid === this.state.it) : null;
     if (spirit) {
-      console.log(spirit);
       return this.spiritdisplay(spirit);
     }
 
@@ -38,7 +37,13 @@ export class SpiritsDisplay extends BasePlannerHandler {
     const spiritTypes = this.filterManager ? this.filterManager.getFilterValues(FilterType.SpiritTypes) : [SpiritType.Regular];
     const selected = (d: string) => this.state.d === d;
     const uppercomponent = (title: string) => [
-      textDisplay(`# ${title}`, this.createFilterIndicator() ?? ""),
+      this.state.b
+        ? section(
+            this.backbtn(this.createCustomId({ ...this.state.b, b: undefined })),
+            `# ${title}`,
+            this.createFilterIndicator() ?? "",
+          )
+        : textDisplay(`# ${title}`, this.createFilterIndicator() ?? ""),
       row(
         this.viewbtn(this.createCustomId({ d: "normal", it: "", f: "", p: 1 }), {
           label: "Spirits",
@@ -125,7 +130,8 @@ export class SpiritsDisplay extends BasePlannerHandler {
         button({
           custom_id: this.createCustomId({
             it: spirit.guid,
-            b: { t: this.state.t, p: this.state.p, f: this.state.f, d: this.state.d },
+            /* Not passing filter because resulting custom id gets too long, ig it's a compromise */
+            b: { t: this.state.t, p: 1, f: "", d: this.state.d },
           }),
           style: 1,
           label: "View",

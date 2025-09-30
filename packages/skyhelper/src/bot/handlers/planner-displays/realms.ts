@@ -13,6 +13,7 @@ import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import { type IRealm, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import type { RawFile } from "@discordjs/rest";
+import { serializeFilters, FilterType } from "./filter.manager.js";
 
 export class RealmsDisplay extends BasePlannerHandler {
   override handle() {
@@ -85,7 +86,7 @@ export class RealmsDisplay extends BasePlannerHandler {
         this.viewbtn(
           this.createCustomId({
             t: DisplayTabs.Areas,
-            f: `realm-${realm.guid}`,
+            f: serializeFilters(new Map([[FilterType.Realms, [realm.guid]]])),
             // `back` is not in the type but `state` may include `back` so reset it to prevent infinite depth
             // we only want to go one level back
             b: { ...this.state, b: undefined },
@@ -95,7 +96,12 @@ export class RealmsDisplay extends BasePlannerHandler {
         this.viewbtn(
           this.createCustomId({
             t: DisplayTabs.Spirits,
-            f: `type-Guide,Season&realm-${realm.guid}`,
+            f: serializeFilters(
+              new Map([
+                [FilterType.Realms, [realm.guid]],
+                [FilterType.SpiritTypes, [SpiritType.Regular, SpiritType.Season, SpiritType.Guide]],
+              ]),
+            ),
             // same as above
             b: { ...this.state, b: undefined },
           }),

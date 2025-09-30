@@ -52,7 +52,8 @@ export class ItemsDisplay extends BasePlannerHandler {
             label: "View",
             custom_id: this.createCustomId({
               it: item.guid,
-              b: { t: this.state.t, f: this.state.f, p: this.state.p ?? 1 },
+              /** filter can be too long sometimes to be passed, bummer */
+              b: { t: this.state.t, f: "", p: 1 },
             }),
             style: 1,
           }),

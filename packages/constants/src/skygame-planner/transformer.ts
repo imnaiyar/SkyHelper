@@ -241,7 +241,10 @@ function resolveReferences(data: TransformedData): void {
   // #region data.nodes
   const CURRENCY_KEYS = ["c", "h", "ac", "ec", "sc", "sh"] as const;
   for (const node of data.nodes) {
-    linkOne<IItem, INode>(node.item as any, node, "item", data, "nodes");
+    linkOne<IItem, INode>(node.item as any, node, "item", data, (item) => {
+      item.nodes ??= [];
+      item.nodes.push(node);
+    });
 
     node.nw = linkOne<INode, INode>(node.nw as any, node, "nw", data, "prev");
     node.ne = linkOne<INode, INode>(node.ne as any, node, "ne", data, "prev");

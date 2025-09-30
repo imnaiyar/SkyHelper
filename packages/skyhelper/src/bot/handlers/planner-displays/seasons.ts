@@ -15,23 +15,35 @@ import { ComponentType } from "discord-api-types/v10";
 import { resolveToLuxon, type ISeason } from "@skyhelperbot/constants/skygame-planner";
 import { DateTime } from "luxon";
 import type { RawFile } from "@discordjs/rest";
+import { FilterType } from "./filter.manager.js";
 
 export class SeasonsDisplay extends BasePlannerHandler {
+  constructor(data: any, planner: any, state: any) {
+    super(data, planner, state);
+    this.initializeFilters([FilterType.Order]);
+  }
   override handle() {
     const season = this.data.seasons.find((s) => s.guid === this.state.it);
     if (season) return this.seasondisplay(season);
+
+    const filtered = this.filterSeasons(this.data.seasons);
     return {
       components: [
-        container(this.createTopCategoryRow(DisplayTabs.Seasons, this.state.user), separator(), ...this.seasonslist()),
+        container(
+          textDisplay(`# Seasons (${filtered.length})`, this.createFilterIndicator() ?? ""),
+          row(this.createFilterButton(), this.homebtn()),
+          separator(),
+          ...this.seasonslist(filtered),
+        ),
       ],
     };
   }
 
-  seasonslist() {
+  seasonslist(seasons: ISeason[]) {
     return this.displayPaginatedList({
-      items: this.data.seasons,
+      items: seasons,
       page: this.state.p ?? 1,
-      perpage: 3, // TODO: Find a way to increase this limit
+      perpage: 4,
       itemCallback: this.getSeasonInListDisplay.bind(this),
     });
   }
@@ -146,5 +158,36 @@ export class SeasonsDisplay extends BasePlannerHandler {
     const start = resolveToLuxon(season.date);
     const end = resolveToLuxon(season.endDate);
     return now >= start && now <= end;
+  }
+
+  private filterSeasons(seasons: ISeason[]) {
+    const sns = [...seasons];
+    const order = this.filterManager!.getFilterValues(FilterType.Order)[0];
+    switch (order) {
+      case "name_asc":
+        return sns.sort((a, b) => a.name.localeCompare(b.name));
+      case "name_desc":
+        return sns.sort((a, b) => b.name.localeCompare(a.name));
+      case "date_asc":
+        return sns.sort((a, b) => {
+          const aDate = a.date;
+          const bDate = b.date;
+          if (!aDate && !bDate) return 0;
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return this.planner.resolveToLuxon(aDate).toMillis() - this.planner.resolveToLuxon(bDate).toMillis();
+        });
+      case "date_desc":
+        return sns.sort((a, b) => {
+          const aDate = a.date;
+          const bDate = b.date;
+          if (!aDate && !bDate) return 0;
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return this.planner.resolveToLuxon(bDate).toMillis() - this.planner.resolveToLuxon(aDate).toMillis();
+        });
+      default:
+        return sns;
+    }
   }
 }

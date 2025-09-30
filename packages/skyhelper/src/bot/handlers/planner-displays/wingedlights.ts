@@ -8,9 +8,11 @@ export class WingedLightsDisplay extends BasePlannerHandler {
   constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: NavigationState) {
     super(data, planner, state);
 
-    this.initializeFilters([FilterType.Realms], {
-      [FilterType.Realms]: { defaultValues: ["E1RwpAdA8l"] },
-    });
+    this.initializeFilters(
+      [FilterType.Realms, FilterType.Areas] /* {
+      [FilterType.Realms]: { defaultValues: ["E1RwpAdA8l"] }, // dawn guid
+    } */,
+    );
   }
   override handle() {
     const wls = this.filterWls(this.data.wingedLights);
@@ -82,15 +84,20 @@ export class WingedLightsDisplay extends BasePlannerHandler {
     const realms = this.filterManager!.getFilterValues(FilterType.Realms);
     if (realms.length) winged = winged.filter((wl) => realms.includes(wl.area.realm.guid));
 
+    const areas = this.filterManager!.getFilterValues(FilterType.Areas);
+    if (areas.length) winged = winged.filter((wl) => areas.includes(wl.area.guid));
     return winged;
   }
 
   private getTopBtns() {
     return row(
-      this.createFilterButton("Filter"),
-      this.viewbtn(this.createCustomId({}), { label: "All Found" + ` (${this.data.wingedLights.length})` }),
-      this.viewbtn(this.createCustomId({}), { label: "Reset All", style: 4 }),
-      this.homebtn(),
+      [
+        this.createFilterButton("Filter"),
+        this.viewbtn(this.createCustomId({}), { label: "All Found" + ` (${this.data.wingedLights.length})` }),
+        this.viewbtn(this.createCustomId({}), { label: "Reset All", style: 4 }),
+        this.state.b ? this.backbtn(this.createCustomId({ it: "", f: "", ...this.state.b, b: undefined })) : null,
+        this.homebtn(),
+      ].filter((s) => !!s),
     );
   }
 }
