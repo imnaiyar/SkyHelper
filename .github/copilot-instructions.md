@@ -2,7 +2,7 @@
 
 **ALWAYS follow these instructions first.** Only fallback to additional search and context gathering if the information here is incomplete or found to be in error.
 
-SkyHelper is a TypeScript-based Discord bot for Sky: Children of the Light, built as a monorepo using pnpm workspaces and Turbo for build orchestration. The repository includes the main bot, scheduled jobs, documentation, and shared utilities.
+SkyHelper is a TypeScript-based Discord bot for Sky: Children of the Light, built as a monorepo using pnpm workspaces and Turbo for build orchestration. The repository includes the main bot, scheduled jobs, documentation, website, and shared utilities.
 
 ## Working Effectively
 
@@ -13,7 +13,7 @@ Run these commands in order to set up a working development environment:
 1. **Install pnpm globally** (if not already installed):
 
    ```bash
-   npm install -g pnpm@9.4.0
+   npm install -g pnpm@10.15.1
    ```
 
 2. **Install dependencies** - NEVER CANCEL, takes ~45 seconds:
@@ -103,6 +103,7 @@ After making changes, perform these validation steps:
 - **packages/constants/** - Shared data constants (spirits, realms, localizations)
 - **packages/utils/** - Shared utility functions
 - **apps/docs/** - Next.js documentation website
+- **apps/website/** - Main website with dashboard
 
 ### Important Files
 
@@ -119,6 +120,94 @@ After making changes, perform these validation steps:
 - **Database Schemas:** packages/skyhelper/src/bot/schemas/
 - **Tests:** packages/skyhelper/**tests**/
 - **Localization:** packages/constants/src/locales/
+- **Planner Displays:** packages/skyhelper/src/bot/handlers/planner-displays/
+
+## Architecture Overview
+
+### Bot Core Architecture
+
+The bot uses **Discord.js Core** (not discord.js) with a custom `SkyHelper` client that manages:
+
+- **Gateway/WebSocket Management**: Using `@discordjs/ws` for low-level control
+- **REST API**: Using `@discordjs/rest` for HTTP requests
+- **Event System**: Custom event handling with caching listeners
+- **Command Framework**: Custom framework with TypeScript decorators (`@imnaiyar/framework`)
+
+### Planner System Architecture
+
+The bot features a sophisticated **Sky Game Planner** with modular display handlers:
+
+**Base Architecture:**
+
+- `BasePlannerHandler` - Abstract base class for all planner displays
+- `NavigationState` - Serializable state for deep navigation and filtering
+- `FilterManager` - Handles complex filtering with serializable state
+- Custom ID storage system for maintaining state across interactions
+
+**Display Classes Pattern:**
+Each game data type has its own display handler extending `BasePlannerHandler`:
+
+- `SpiritsDisplay` - Spirit information and trees
+- `SeasonsDisplay` - Seasonal content and events
+- `AreasDisplay` - Game areas and locations
+- `EventsDisplay` - Special events with instances
+- `ItemsDisplay` - Cosmetics and collectibles
+- `RealmsDisplay` - Game realms navigation
+- `ShopsDisplay` - In-game shops
+
+**Key Patterns:**
+
+```typescript
+// All display handlers follow this pattern
+export class ExampleDisplay extends BasePlannerHandler {
+  constructor(data: any, planner: any, state: any) {
+    super(data, planner, state);
+    // Initialize filters specific to this display
+    this.initializeFilters([FilterType.Realms, FilterType.Order]);
+  }
+
+  override handle() {
+    // Main display logic with navigation state management
+    return { components: [...] };
+  }
+}
+```
+
+### Component Library Pattern
+
+Uses `@skyhelperbot/utils` for Discord component building with a builder pattern:
+
+- `container()` - Message component containers
+- `section()` - Logical content sections
+- `row()` - Button/select rows
+- `textDisplay()` - Rich text with formatting
+- `mediaGallery()` - Image galleries
+- `separator()` - Visual separators
+
+### State Management
+
+**Navigation State Serialization:**
+The planner uses a sophisticated state system that serializes all navigation context into custom IDs:
+
+- Deep navigation with back button support
+- Filter state preservation across interactions
+- Pagination state management
+- User-specific state isolation
+
+**Custom ID Pattern:**
+
+```typescript
+// State is serialized into Discord custom IDs
+const customId = store.serialize(CustomId.PlannerTopLevelNav, {
+  t: DisplayTabs.Spirits, // tab
+  it: "spirit-guid", // item
+  p: 2, // page
+  f: "serialized-filters", // filters
+  d: "additional-data", // extra data
+  user: "user-id", // user isolation
+  b: backNavigationState, // back navigation
+});
+```
 
 ## Build System Details
 
@@ -214,8 +303,9 @@ PR titles opened by copilot must also follow the same conventional commit format
 **Note:** The scope is optional and should be included in parentheses when the change affects a specific area of the codebase.
 
 **Allowed commit types** (defined in `.commitlintrc.json`):
+
 - `feat` - New features
-- `fix` - Bug fixes  
+- `fix` - Bug fixes
 - `docs` - Documentation changes
 - `style` - Code style changes (formatting, etc.)
 - `refactor` - Code refactoring
@@ -228,6 +318,7 @@ PR titles opened by copilot must also follow the same conventional commit format
 **Git Hooks (configured via Husky):**
 
 1. **Pre-commit hook** - Automatically runs before each commit:
+
    - Formats all files with Prettier (`prettier --ignore-unknown --write`)
    - Runs ESLint with auto-fix on JS/TS files in `src/` and `__tests__/` directories
    - Configured in `.lintstagedrc.json`
@@ -238,6 +329,7 @@ PR titles opened by copilot must also follow the same conventional commit format
    - Configured in `.commitlintrc.json`
 
 **Example valid commit messages:**
+
 ```bash
 feat: add new spirit calendar view
 feat(api): add user authentication endpoint
@@ -250,6 +342,7 @@ refactor(utils): optimize image processing functions
 ```
 
 **Example valid PR titles:**
+
 ```bash
 feat: add comprehensive event scheduling system
 feat(scheduler): add comprehensive event scheduling system
@@ -319,6 +412,12 @@ Optional for full features (manual setup required):
 - Next.js with Nextra theme
 - React components for interactive elements
 - Builds independently from main packages
+
+### website (Main Website)
+
+- Next.js with React 19 and Tailwind CSS
+- Dashboard functionality for bot management
+- User authentication and bot configuration
 
 ### constants (Data)
 
