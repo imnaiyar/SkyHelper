@@ -56,7 +56,9 @@ export class EventsDisplay extends BasePlannerHandler {
       user: this.state.user,
       itemCallback: (event) => [
         section(
-          this.viewbtn(this.createCustomId({ it: event.guid })),
+          this.viewbtn(
+            this.createCustomId({ it: event.guid, b: { t: DisplayTabs.Events, f: this.state.f, p: this.state.p ?? 1 } }),
+          ),
           `**${event.name}**`,
           [event.instances?.map((i) => this.planner.resolveToLuxon(i.date).year.toString()), event.recurring ? "Recurring" : ""]
             .filter((s) => !!s)
@@ -79,7 +81,7 @@ export class EventsDisplay extends BasePlannerHandler {
         )
       : [];
 
-    instanceButtons.push(this.backbtn(this.createCustomId({ it: "", f: "", d: "" })), this.homebtn());
+    instanceButtons.push(this.backbtn(this.createCustomId({ it: "", f: "", d: "", ...this.state.b })), this.homebtn());
     const rows =
       instanceButtons.length > 0
         ? Array.from({ length: Math.ceil(instanceButtons.length / 5) }, (_, i) => row(instanceButtons.slice(i * 5, i * 5 + 5)))

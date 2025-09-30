@@ -14,6 +14,7 @@ import { EventsDisplay } from "./planner-displays/events.js";
 import { WingedLightsDisplay } from "./planner-displays/wingedlights.js";
 import { ShopsDisplay } from "./planner-displays/shops.js";
 import type { IEvent, IEventInstance, IItemListNode } from "@skyhelperbot/constants/skygame-planner";
+import { AreasDisplay } from "./planner-displays/areas.js";
 
 const TOP_LEVEL_CATEGORIES = ["home", "realms", "spirits", "season", "events", "items", "wingedLights", "shops"] as const;
 export type TopLevelCategory = (typeof TOP_LEVEL_CATEGORIES)[number];
@@ -77,6 +78,7 @@ const displayClasses = {
   [DisplayTabs.Spirits]: SpiritsDisplay,
   [DisplayTabs.Shops]: ShopsDisplay,
   [DisplayTabs.WingedLights]: WingedLightsDisplay,
+  [DisplayTabs.Areas]: AreasDisplay,
 };
 
 /**
@@ -90,9 +92,9 @@ export async function handlePlannerNavigation(state: NavigationState) {
     case DisplayTabs.Home:
       return getHomeDisplay(user);
     default: {
-      const handler = displayClasses[t as keyof typeof displayClasses];
+      const handler = displayClasses[t];
       // eslint-disable-next-line
-      return handler ? new handler(data, SkyPlannerData, { ...state, user: undefined }).handle() : getHomeDisplay(user);
+      return handler ? new handler(data, SkyPlannerData, { ...state, user }).handle() : getHomeDisplay(user);
     }
   }
 }

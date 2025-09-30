@@ -6,6 +6,7 @@ import { DisplayTabs } from "./base.js";
 // short values to save custom_id spaces
 export enum FilterType {
   SpiritTypes = "sp",
+  Areas = "ar",
   Realms = "rl",
   Seasons = "sn",
   Events = "ev",
@@ -189,6 +190,7 @@ export class FilterManager {
 
     for (const type of types) {
       const baseConfig = FilterManager.createFilterConfig(type, data);
+      if (!baseConfig) continue; // skip unknown types
       const customConfig = customConfigs?.[type];
 
       if (customConfig) {
@@ -210,7 +212,7 @@ export class FilterManager {
   /**
    * Create filter configuration for a specific type
    */
-  private static createFilterConfig(type: FilterType, data: TransformedData): FilterConfig {
+  private static createFilterConfig(type: FilterType, data: TransformedData): FilterConfig | undefined {
     switch (type) {
       case FilterType.SpiritTypes:
         return {
@@ -311,7 +313,7 @@ export class FilterManager {
         };
 
       default:
-        throw new Error(`Unknown filter type: ${type}`);
+        return undefined; // igonore
     }
   }
 
@@ -330,6 +332,18 @@ export class FilterManager {
           [FilterType.Realms]: { max: true },
         };
       }
+      case DisplayTabs.Areas:
+        return {
+          [FilterType.Order]: {
+            options: Object.entries(OrderMappings)
+              .map(([k, v]) => {
+                // eslint-disable-next-line
+                if (k === OrderType.DateAsc || k === OrderType.DateDesc) return null;
+                return { label: v, value: k };
+              })
+              .filter((v) => !!v),
+          },
+        };
       default:
         return undefined;
     }
@@ -371,6 +385,11 @@ export class FilterManager {
       filtered = this.sortSpirits(filtered, order);
     }
 
+    const areas = this.getFilterValues(FilterType.Areas);
+    if (areas.length > 0) {
+      filtered = filtered.filter((spirit) => areas.includes(spirit.area?.guid ?? ""));
+    }
+
     return filtered;
   }
 
@@ -404,6 +423,10 @@ export class FilterManager {
       filtered = filtered.filter((item) =>
         item.nodes?.some((node) => events.includes(node.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.event.guid ?? "")),
       );
+    }
+    const currencies = this.getFilterValues(FilterType.Currencies);
+    if (currencies.length > 0) {
+      filtered = filtered.filter((item) => item.nodes?.some((node) => currencies.includes(node.currency?.type ?? "")));
     }
 
     return filtered;

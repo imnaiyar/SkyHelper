@@ -321,11 +321,15 @@ export class BasePlannerHandler {
         return formatted;
       }
       case FilterType.Currencies: {
-        const formatted = values.map((v) => currencyMap[v as keyof typeof currencyMap] ?? v);
+        const formatted = values.map((v) => (currencyMap as Record<string, string>)[v] ?? v);
         return formatted;
       }
       case FilterType.Order: {
         const formatted = values.map((v) => (OrderMappings as Record<string, string>)[v] ?? v);
+        return formatted;
+      }
+      case FilterType.Areas: {
+        const formatted = values.map((v) => this.data.areas.find((a) => a.guid === v)?.name ?? v);
         return formatted;
       }
       default:
