@@ -4,8 +4,8 @@ import { SkyPlannerData } from "@skyhelperbot/constants";
 import { postToHaste, separator, textDisplay } from "@skyhelperbot/utils";
 import { SKYGAME_PLANNER_DATA } from "@/modules/commands-data/info-commands";
 import util from "util";
-import { getHomeDisplay } from "../../../handlers/planner.js";
-import { DateTime } from "luxon";
+import { HomeDisplay } from "@/handlers/planner-displays/home";
+import { DisplayTabs } from "@/handlers/planner-displays/base";
 
 export default {
   async autocomplete({ helper, options }) {
@@ -41,7 +41,7 @@ export default {
     const data = await SkyPlannerData.getSkyGamePlannerData();
 
     if (subcommand === "planner") {
-      const comp = await getHomeDisplay(helper.user.id);
+      const comp = new HomeDisplay(data, SkyPlannerData, { t: DisplayTabs.Home, user: helper.user.id }).handle();
       await helper.editReply({ components: comp.components, flags: MessageFlags.IsComponentsV2 });
       return;
     }
