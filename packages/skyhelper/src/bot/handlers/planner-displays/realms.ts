@@ -16,7 +16,7 @@ import type { RawFile } from "@discordjs/rest";
 
 export class RealmsDisplay extends BasePlannerHandler {
   override handle() {
-    const realm = this.data.realms.find((r) => r.guid === this.state.item);
+    const realm = this.data.realms.find((r) => r.guid === this.state.it);
     if (realm) return this.realmdisplay(realm);
     return { components: [this.realmslist()] };
   }
@@ -27,14 +27,14 @@ export class RealmsDisplay extends BasePlannerHandler {
       textDisplay(`# Realms (${realms.length})`),
       ...this.displayPaginatedList({
         items: realms,
-        page: this.state.page ?? 1,
+        page: this.state.p ?? 1,
         perpage: 7,
         itemCallback: (realm) => [
           section(
             {
               type: ComponentType.Button,
               label: "View",
-              custom_id: this.createCustomId({ item: realm.guid }),
+              custom_id: this.createCustomId({ it: realm.guid }),
               style: 1,
             },
             `**${realm.name}**`,
@@ -46,7 +46,7 @@ export class RealmsDisplay extends BasePlannerHandler {
   }
   async realmdisplay(realm: IRealm) {
     const constellations = realm.constellation?.icons.map((icon) => icon.spirit).filter((s) => !!s) ?? [];
-    const index = this.state.values?.[0] ? parseInt(this.state.values[0]) : 0;
+    const index = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
     const constellation = constellations[index];
     const realmSpirits = this.planner.getSpiritsInRealm(realm.guid, this.data);
     const { regular, seasonal } = realmSpirits.reduce(
@@ -84,24 +84,24 @@ export class RealmsDisplay extends BasePlannerHandler {
       row(
         this.viewbtn(
           this.createCustomId({
-            tab: DisplayTabs.Areas,
-            filter: `realm-${realm.guid}`,
-            // @ts-expect-error `back` is not in the type but `state` may include `back` so reset it to prevent infinite depth
+            t: DisplayTabs.Areas,
+            f: `realm-${realm.guid}`,
+            // `back` is not in the type but `state` may include `back` so reset it to prevent infinite depth
             // we only want to go one level back
-            back: { ...this.state, back: undefined },
+            b: { ...this.state, b: undefined },
           }),
           { label: `Areas (${realm.areas?.length ?? 0})`, disabled: !realm.areas?.length },
         ),
         this.viewbtn(
           this.createCustomId({
-            tab: DisplayTabs.Spirits,
-            filter: `type-Guide,Season&realm-${realm.guid}`,
-            // @ts-expect-error same as above
-            back: { ...this.state, back: undefined },
+            t: DisplayTabs.Spirits,
+            f: `type-Guide,Season&realm-${realm.guid}`,
+            // same as above
+            b: { ...this.state, b: undefined },
           }),
           { label: `Spirits (${realmSpirits.length})`, disabled: !realmSpirits.length },
         ),
-        this.backbtn(this.createCustomId({ item: "", filter: "", ...this.state.back })),
+        this.backbtn(this.createCustomId({ it: "", f: "", ...this.state.b })),
         this.homebtn(),
       ),
       separator(),
@@ -111,7 +111,7 @@ export class RealmsDisplay extends BasePlannerHandler {
     if (constellation) {
       components.push(
         section(
-          this.viewbtn(this.createCustomId({ tab: DisplayTabs.Spirits, item: constellation.guid }), {
+          this.viewbtn(this.createCustomId({ t: DisplayTabs.Spirits, it: constellation.guid }), {
             label: "View",
           }),
           `# ${this.formatemoji(constellation.icon, constellation.name)} ${constellation.name}`,

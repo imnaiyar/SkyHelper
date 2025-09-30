@@ -1,12 +1,11 @@
 import { type SkyPlannerData as p, emojis, season_emojis, SkyPlannerData } from "@skyhelperbot/constants";
-import { SpiritType, ItemType, type TransformedData } from "@skyhelperbot/constants/skygame-planner";
+import { SpiritType, ItemType, type TransformedData, currencyMap } from "@skyhelperbot/constants/skygame-planner";
 import { type APISelectMenuOption } from "@discordjs/core";
 import { DisplayTabs } from "./base.js";
-/* eslint-disable @typescript-eslint/no-dynamic-delete */ // this is fine here
+
 // short values to save custom_id spaces
 export enum FilterType {
   SpiritTypes = "sp",
-  Areas = "ar",
   Realms = "rl",
   Seasons = "sn",
   Events = "ev",
@@ -15,7 +14,19 @@ export enum FilterType {
   ShopTypes = "st",
   Currencies = "cr",
 }
+export enum OrderType {
+  NameAsc = "name_asc",
+  NameDesc = "name_desc",
+  DateDesc = "date_desc",
+  DateAsc = "date_asc",
+}
 
+export const OrderMappings = {
+  [OrderType.NameAsc]: "Name (A-Z)",
+  [OrderType.NameDesc]: "Name (Z-A)",
+  [OrderType.DateDesc]: "Date Added (Newest)",
+  [OrderType.DateAsc]: "Date Added (Oldest)",
+};
 export type FilterValue = string | string[];
 
 export interface FilterConfig {
@@ -25,12 +36,13 @@ export interface FilterConfig {
   defaultValues?: string[];
   required?: boolean;
   multiSelect?: boolean;
+  max?: boolean;
   options: APISelectMenuOption[];
 }
 
 export type CustomFilterConfigs = Partial<Record<FilterType, Partial<FilterConfig>>>;
 
-export type ParsedFilters = Record<string, string[]>;
+export type ParsedFilters = Map<string, string[]>;
 
 /**
  * Unified filter manager for planner displays
@@ -38,7 +50,7 @@ export type ParsedFilters = Record<string, string[]>;
  */
 export class FilterManager {
   private data: p.TransformedData;
-  private filters: ParsedFilters = {};
+  private filters: ParsedFilters = new Map();
   private customConfigs?: CustomFilterConfigs;
   private allowedFilters?: FilterType[];
 
@@ -55,7 +67,7 @@ export class FilterManager {
     if (this.allowedFilters) {
       const configs = this.getFilterConfigs(this.allowedFilters);
       for (const config of configs) {
-        if (config.defaultValues?.length) this.filters[config.type] = config.defaultValues;
+        if (config.defaultValues?.length) this.filters.set(config.type, config.defaultValues);
       }
     }
 
@@ -72,12 +84,12 @@ export class FilterManager {
     if (!filterString) return;
 
     const parts = filterString.split("/");
-    this.filters = {};
+    this.filters = new Map();
 
     for (const part of parts) {
       const [key, values] = part.split(":");
       if (key && values) {
-        this.filters[key] = values.split(",").filter(Boolean);
+        this.filters.set(key, values.split(",").filter(Boolean));
       }
     }
   }
@@ -88,7 +100,7 @@ export class FilterManager {
   public serializeFilters(filters?: ParsedFilters): string {
     const parts: string[] = [];
 
-    for (const [key, values] of Object.entries(filters ?? this.filters)) {
+    for (const [key, values] of filters?.entries() ?? this.filters.entries()) {
       if (values.length > 0) {
         parts.push(`${key}:${values.join(",")}`);
       }
@@ -101,7 +113,7 @@ export class FilterManager {
    * Get current filter values for a specific filter type
    */
   public getFilterValues(type: FilterType): string[] {
-    return this.filters[type] ?? [];
+    return this.filters.get(type) ?? [];
   }
 
   /**
@@ -109,9 +121,9 @@ export class FilterManager {
    */
   public setFilterValues(type: FilterType, values: string[]): void {
     if (values.length > 0) {
-      this.filters[type] = values;
+      this.filters.set(type, values);
     } else {
-      delete this.filters[type];
+      this.filters.delete(type);
     }
   }
 
@@ -119,18 +131,21 @@ export class FilterManager {
    * Toggle a specific filter value
    */
   public toggleFilterValue(type: FilterType, value: string): void {
-    const current = this.filters[type] ?? [];
+    const current = this.filters.get(type) ?? [];
     const index = current.indexOf(value);
 
     if (index > -1) {
       // remove if exists
-      this.filters[type] = current.filter((v) => v !== value);
-      if (this.filters[type].length === 0) {
-        delete this.filters[type];
+      this.filters.set(
+        type,
+        current.filter((v) => v !== value),
+      );
+      if (this.filters.get(type)?.length === 0) {
+        this.filters.delete(type);
       }
     } else {
       // add if doesn't exis
-      this.filters[type] = [...current, value];
+      this.filters.set(type, [...current, value]);
     }
   }
 
@@ -145,14 +160,14 @@ export class FilterManager {
    * Clear all filters
    */
   public clearFilters(): void {
-    this.filters = {};
+    this.filters = new Map();
   }
 
   /**
    * Clear specific filter type
    */
   public clearFilter(type: FilterType): void {
-    delete this.filters[type];
+    this.filters.delete(type);
   }
 
   /**
@@ -172,18 +187,16 @@ export class FilterManager {
   ): FilterConfig[] {
     const configs: FilterConfig[] = [];
 
-    // This will be populated with actual data when needed
-    // For now, returning structure
     for (const type of types) {
       const baseConfig = FilterManager.createFilterConfig(type, data);
       const customConfig = customConfigs?.[type];
 
       if (customConfig) {
-        // Merge custom config with base config
+        // merge configs
         configs.push({
           ...baseConfig,
           ...customConfig,
-          // Options should be completely replaced if provided in custom config
+          // options should be completely replaced if provided in custom config
           options: customConfig.options ?? baseConfig.options,
         });
       } else {
@@ -261,12 +274,7 @@ export class FilterManager {
           label: "Sort Order",
           description: "Sort order for results",
           multiSelect: false,
-          options: [
-            { label: "Name (A-Z)", value: "name_asc" },
-            { label: "Name (Z-A)", value: "name_desc" },
-            { label: "Date Added (Newest)", value: "date_desc" },
-            { label: "Date Added (Oldest)", value: "date_asc" },
-          ],
+          options: Object.entries(OrderMappings).map(([k, v]) => ({ label: v, value: k })),
         };
 
       case FilterType.ItemTypes:
@@ -299,22 +307,7 @@ export class FilterManager {
           label: "Currency",
           description: "Filter by required currency of an item",
           multiSelect: true,
-          options: [
-            { label: "Candles", value: "c" },
-            { label: "Hearts", value: "h" },
-            { label: "Ascended Candles", value: "ac" },
-            { label: "Event Tickets", value: "ec" },
-            { label: "Season Hearts", value: "sh" },
-            { label: "Season Candles", value: "sc" },
-          ],
-        };
-      case FilterType.Areas:
-        return {
-          type: FilterType.Areas,
-          label: "Areas",
-          description: "Filter by areas",
-          multiSelect: true,
-          options: [], // populated later
+          options: Object.entries(currencyMap).map(([k, v]) => ({ label: v, value: k })),
         };
 
       default:
@@ -326,26 +319,15 @@ export class FilterManager {
    * Default factory for creating custom filter configurations based on display tab
    * This can be overridden by display handlers that need custom configurations
    */
-  public static tabsCustomConfig(data: p.TransformedData, tab: DisplayTabs, filters: string[]): CustomFilterConfigs | undefined {
-    const manager = new FilterManager(data, filters.join("/"));
+  public static tabsCustomConfig(
+    _data: p.TransformedData,
+    tab: DisplayTabs,
+    _filters: string[],
+  ): CustomFilterConfigs | undefined {
     switch (tab) {
       case DisplayTabs.WingedLights: {
-        const realm = data.realms.find(
-          (r) => r.guid === (manager.getFilterValues(FilterType.Realms)[0] ?? "E1RwpAdA8l") /* Dawn guid */,
-        )!;
         return {
-          [FilterType.Realms]: { multiSelect: false },
-          [FilterType.Areas]: {
-            multiSelect: true,
-            description: "Filter by area. (This will be ignored if 'Realm' filter was changed.)",
-            options:
-              realm.areas
-                ?.filter((a) => a.wingedLights?.length)
-                .map((a) => ({
-                  label: a.name,
-                  value: a.guid,
-                })) ?? [],
-          },
+          [FilterType.Realms]: { max: true },
         };
       }
       default:
@@ -480,7 +462,7 @@ export class FilterManager {
 export function serializeFilters(filters: ParsedFilters): string {
   const parts: string[] = [];
 
-  for (const [key, values] of Object.entries(filters)) {
+  for (const [key, values] of filters.entries()) {
     if (values.length > 0) {
       parts.push(`${key}:${values.join(",")}`);
     }

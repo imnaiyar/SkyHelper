@@ -46,8 +46,9 @@ export function createCategoryRow(
     return button({
       label: backOption && category === selected ? "Back" : category.charAt(0).toUpperCase() + category.slice(1),
       custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-        tab: Utils.encodeCustomId({ id: "42", tab: category, item: null, page: backOption?.page ?? null }),
+        tab: Utils.encodeCustomId({ id: "42", t: category, it: null, p: backOption?.page ?? null }),
         user,
+        back: null,
       }),
       emoji: icon ? { id: icon } : undefined,
       style: category === selected ? (backOption ? 4 : 3) : 2,
@@ -77,14 +78,14 @@ const displayClasses = {
  * Main handler for planner navigation
  */
 export async function handlePlannerNavigation(state: NavigationState) {
-  const { tab, user } = state;
+  const { t, user } = state;
 
   const data = await SkyPlannerData.getSkyGamePlannerData();
-  switch (tab) {
+  switch (t) {
     case DisplayTabs.Home:
       return getHomeDisplay(user);
     default: {
-      const handler = displayClasses[tab as keyof typeof displayClasses];
+      const handler = displayClasses[t as keyof typeof displayClasses];
       // eslint-disable-next-line
       return handler ? new handler(data, SkyPlannerData, { ...state, user: undefined }).handle() : getHomeDisplay(user);
     }
@@ -98,8 +99,8 @@ export async function getHomeDisplay(user?: string) {
   const activeEvents = SkyPlannerData.getEvents(data);
   const returningSpirits = SkyPlannerData.getCurrentReturningSpirits(data);
   const travelingSpirit = SkyPlannerData.getCurrentTravelingSpirit(data);
-  const handler = new BasePlannerHandler(data, SkyPlannerData, { tab: DisplayTabs.Home, user });
-  const s_display = new SeasonsDisplay(data, SkyPlannerData, { tab: DisplayTabs.Seasons, user });
+  const handler = new BasePlannerHandler(data, SkyPlannerData, { t: DisplayTabs.Home, user });
+  const s_display = new SeasonsDisplay(data, SkyPlannerData, { t: DisplayTabs.Seasons, user });
   const components = [
     container(
       handler.createTopCategoryRow(DisplayTabs.Home, user),
@@ -112,8 +113,9 @@ export async function getHomeDisplay(user?: string) {
                 type: ComponentType.Button,
                 label: "View Spirit",
                 custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-                  tab: Utils.encodeCustomId({ id: "12", tab: "spirits", item: travelingSpirit.guid }),
+                  tab: Utils.encodeCustomId({ id: "12", t: "spirits", it: travelingSpirit.guid }),
                   user,
+                  back: null,
                 }),
                 style: 1,
               },
@@ -133,8 +135,9 @@ export async function getHomeDisplay(user?: string) {
                   type: ComponentType.Button,
                   label: "View Details",
                   custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-                    tab: Utils.encodeCustomId({ id: "12", tab: "events", item: visit.guid }),
+                    tab: Utils.encodeCustomId({ id: "12", t: "events", it: visit.guid }),
                     user,
+                    back: null,
                   }),
                   style: 1,
                 },
@@ -151,6 +154,7 @@ export async function getHomeDisplay(user?: string) {
                       custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
                         tab: "returning",
                         user,
+                        back: null,
                       }),
                       style: 2,
                     },
@@ -200,8 +204,9 @@ function eventInHome(event: { event: IEvent; instance: IEventInstance; startDate
         type: ComponentType.Button,
         label: "View Event",
         custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-          tab: Utils.encodeCustomId({ id: "12", tab: "events", item: event.event.guid }),
+          tab: Utils.encodeCustomId({ id: "12", t: "events", it: event.event.guid }),
           user,
+          back: null,
         }),
         style: 1,
       },

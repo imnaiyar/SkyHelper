@@ -20,7 +20,7 @@ export type OverrideLocalizations<T> =
 export type IdResolvalble = { id: string } | string | { user: { id: string } };
 
 export interface ParsedCustomId {
-  id: string | number;
+  id?: string | number;
   user?: string;
   [key: string]: string | number | null;
 }

@@ -8,14 +8,14 @@ export class ShopsDisplay extends BasePlannerHandler {
   iaps: SkyPlannerData.IIAP[] = [];
   shops: SkyPlannerData.IShop[] = [];
   override handle() {
-    if (!this.state.item) throw new Error("No shop specified");
-    const shopIds = this.state.item.split(",");
+    if (!this.state.it) throw new Error("No shop specified");
+    const shopIds = this.state.it.split(",");
     this.shops = this.data.shops.filter((s) => shopIds.includes(s.guid));
     for (const shop of this.shops) {
       if (shop.itemList) this.listItems.push(...shop.itemList.items);
       if (shop.iaps) this.iaps.push(...shop.iaps);
     }
-    if (this.listItems.length && this.iaps.length) this.state.filter ??= "store";
+    if (this.listItems.length && this.iaps.length) this.state.f ??= "store";
     const shop = this.shops[0]!; // only used for names and location
     return { components: [container(this.shopdisplay(shop))] };
   }
@@ -23,21 +23,19 @@ export class ShopsDisplay extends BasePlannerHandler {
   shopdisplay(shop: SkyPlannerData.IShop) {
     return [
       section(
-        this.viewbtn(this.createCustomId({ ...this.state.back }), {
+        this.viewbtn(this.createCustomId({ ...this.state.b }), {
           label: "Back",
           emoji: { id: emojis.leftarrow },
           style: 4,
-          disabled: !this.state.back,
+          disabled: !this.state.b,
         }),
         `# ${this.getshopname(shop)}`,
         `${this.formatemoji(emojis.location, "Location")} ${this.getshoplocation(shop)}`,
       ),
       separator(),
-      ...(this.state.filter ? [this.getfilterrow()] : []),
+      ...(this.state.f ? [this.getfilterrow()] : []),
       textDisplay(
-        this.state.filter === "store"
-          ? "Store Items" + ` (${this.listItems.length})`
-          : "In-App Purchases" + ` (${this.iaps.length})`,
+        this.state.f === "store" ? "Store Items" + ` (${this.listItems.length})` : "In-App Purchases" + ` (${this.iaps.length})`,
       ),
       ...this.getItemsListDisplay(),
     ];
@@ -54,16 +52,16 @@ export class ShopsDisplay extends BasePlannerHandler {
   private getfilterrow() {
     return row(
       button({
-        custom_id: this.createCustomId({ filter: "store" }),
+        custom_id: this.createCustomId({ f: "store" }),
         label: "Store",
-        style: this.state.filter === "store" ? 3 : 2,
-        disabled: this.state.filter === "store",
+        style: this.state.f === "store" ? 3 : 2,
+        disabled: this.state.f === "store",
       }),
       button({
-        custom_id: this.createCustomId({ filter: "iap" }),
+        custom_id: this.createCustomId({ f: "iap" }),
         label: "IAP",
-        style: this.state.filter === "iap" ? 3 : 2,
-        disabled: this.state.filter === "iap",
+        style: this.state.f === "iap" ? 3 : 2,
+        disabled: this.state.f === "iap",
       }),
     );
   }
@@ -71,14 +69,14 @@ export class ShopsDisplay extends BasePlannerHandler {
   getItemsListDisplay() {
     return this.displayPaginatedList({
       /** Only asserting so I get correct type in `itemCallback` bcz aparrentl filter(Boolean) doesnt cut it */
-      items: (this.state.filter === "store" ? this.listItems.map((i) => ({ ...i, type: "list" })) : this.iaps) as Array<
+      items: (this.state.f === "store" ? this.listItems.map((i) => ({ ...i, type: "list" })) : this.iaps) as Array<
         (IItemListNode & { type: string }) | IIAP
       >,
       itemCallback: (as) => [
         ...("type" in as
           ? [
               section(
-                this.viewbtn(this.createCustomId({ data: "sldjfh" })),
+                this.viewbtn(this.createCustomId({ d: "sldjfh" })),
                 `${this.formatemoji(as.item.icon, as.item.name)} ${as.item.name}`,
                 this.planner.formatCosts(as),
               ),
@@ -94,8 +92,8 @@ export class ShopsDisplay extends BasePlannerHandler {
                   .join(" \u2022 "),
               ),
               row(
-                button({ custom_id: this.createCustomId({ item: as.guid, data: "Buy" }), label: "Bought", style: 3 }),
-                button({ custom_id: this.createCustomId({ item: as.guid, data: "Receive" }), label: "Received", style: 2 }),
+                button({ custom_id: this.createCustomId({ it: as.guid, d: "Buy" }), label: "Bought", style: 3 }),
+                button({ custom_id: this.createCustomId({ it: as.guid, d: "Receive" }), label: "Received", style: 2 }),
               ),
             ]),
       ],
