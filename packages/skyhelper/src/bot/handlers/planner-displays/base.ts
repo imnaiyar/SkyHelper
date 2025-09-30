@@ -221,14 +221,12 @@ export class BasePlannerHandler {
     } = opt;
     /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
     return store.serialize(CustomId.PlannerTopLevelNav, {
-      tab: Utils.encodeCustomId({
-        t,
-        it: it || null,
-        p: p || null,
-        f: f || null,
-        d: d || null,
-        i: Math.floor(Math.random() * 1e3),
-      }),
+      t,
+      it: it || null,
+      p: p || null,
+      f: f || null,
+      d: d || null,
+      i: Math.floor(Math.random() * 1e3).toString(),
       back: b ? Utils.encodeCustomId({ ...b }) : null,
       user,
     });
