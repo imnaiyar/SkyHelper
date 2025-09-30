@@ -2,7 +2,7 @@ import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { type IArea, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import { FilterType, OrderType, serializeFilters } from "./filter.manager.js";
 import { section, container, row, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
-import { ComponentType, type APIButtonComponent } from "discord-api-types/v10";
+import { ComponentType } from "discord-api-types/v10";
 export class AreasDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any) {
     super(data, planner, state);
