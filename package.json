@@ -55,7 +55,10 @@
       "esbuild",
       "sharp",
       "unrs-resolver"
-    ]
+    ],
+    "patchedDependencies": {
+      "@sapphire/string-store": "patches/@sapphire__string-store.patch"
+    }
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
