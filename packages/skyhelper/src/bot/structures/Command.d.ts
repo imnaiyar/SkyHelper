@@ -96,6 +96,9 @@ interface CommandBase {
   /** Any validations for the command */
   validations?: Validation[];
 
+  /** Whether this is a beta command */
+  beta?: boolean;
+
   /* Command cooldown */
   cooldown?: number;
 }

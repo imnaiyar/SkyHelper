@@ -278,10 +278,6 @@
         "name": "changelog",
         "description": "bot's changelog"
       },
-      "BOTINFO": {
-        "name": "botinfo",
-        "description": "get the bot's info and configure settings"
-      },
       "CONTACT-US": {
         "name": "contact-us",
         "description": "for suggestions/bug reports/contacting us or just anything"
@@ -392,6 +388,24 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Get bot information"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
       }
     }
   }
