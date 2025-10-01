@@ -13,7 +13,7 @@
   },
 
   // Service configuration for MongoDB
-  "dockerComposeFile": "docker-compose.dev.yml",
+  "builder": { "dockerfile": "docker-compose.dev.yml" },
   "service": "app",
   "workspaceFolder": "/workspace",
   "customizations": {
