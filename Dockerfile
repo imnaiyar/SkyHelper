@@ -1,7 +1,7 @@
 # Base build image
 FROM node:22.13.0 AS build
 
-RUN npm i -g pnpm@9.4.0
+RUN npm i -g pnpm@10.15.1
 
 WORKDIR /app
 ARG TURBO_TOKEN
