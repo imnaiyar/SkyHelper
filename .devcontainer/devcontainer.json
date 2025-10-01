@@ -1,61 +1,27 @@
 {
-  "name": "SkyHelper Discord Bot Development",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
-
+  "name": "SkyHelper Discord Bot",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
-      "moby": true,
-      "azureDnsAutoDetection": true,
-      "installDockerBuildx": true
-    }
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
 
-  // Service configuration for MongoDB
-  "builder": { "dockerfile": "docker-compose.dev.yml" },
-  "service": "app",
-  "workspaceFolder": "/workspace",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb"
+  },
+
   "customizations": {
     "vscode": {
-      "extensions": [
-        // TypeScript & JavaScript
-        "ms-vscode.vscode-typescript-next",
-        "bradlc.vscode-tailwindcss",
-
-        // Code Quality & Formatting
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "ms-vscode.vscode-json",
-
-        // Git & Version Control
-        "eamodio.gitlens",
-        "github.vscode-pull-request-github",
-
-        // Testing
-        "orta.vscode-jest",
-
-        // Docker
-        "ms-azuretools.vscode-docker",
-
-        // Database
-        "mongodb.mongodb-vscode",
-
-        // Productivity
-        "ms-vscode.vscode-thunder-client",
-        "bradlc.vscode-tailwindcss",
-        "formulahendry.auto-rename-tag",
-        "christian-kohler.path-intellisense",
-        "ms-vscode.vscode-yaml",
-
-        // Discord Development
-        "ms-vscode.vscode-json",
-        "redhat.vscode-yaml"
-      ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash",
-        "typescript.updateImportsOnFileMove.enabled": "always",
         "editor.formatOnSave": true,
+        "eslint.useFlatConfig": true,
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+        "files.eol": "\n",
+        "typescript.updateImportsOnFileMove.enabled": "always",
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "eslint.format.enable": true,
         "editor.codeActionsOnSave": {
@@ -71,50 +37,46 @@
           "**/dist": true,
           "**/.turbo": true,
           "**/pnpm-lock.yaml": true
-        },
-        "typescript.preferences.importModuleSpecifier": "relative",
-        "jest.autoRun": "off",
-        "jest.showCoverageOnLoad": true
-      }
+        }
+      },
+      "extensions": [
+        "github.vscode-github-actions",
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-json",
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+        "orta.vscode-jest",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.vscode-thunder-client",
+        "formulahendry.auto-rename-tag",
+        "ms-vscode.vscode-yaml",
+        "redhat.vscode-yaml"
+      ]
     }
   },
 
-  // Set environment variables
   "containerEnv": {
+    "FORCE_COLOR": "1",
+    "TURBO_TELEMETRY_DISABLED": "1",
     "NODE_ENV": "development",
     "PNPM_HOME": "/usr/local/share/pnpm",
     "PATH": "/usr/local/share/pnpm:${PATH}"
   },
 
-  // Forward ports for development
-  "forwardPorts": [
-    5001, // Main bot API server
-    3000, // Docs/Website development server
-    27017 // MongoDB
-  ],
+  "forwardPorts": [3000, 3001, 5173, 5001, 27017],
 
   "portsAttributes": {
-    "5000": {
-      "label": "Bot API Server",
-      "onAutoForward": "notify"
-    },
-    "3000": {
-      "label": "Docs/Website Server",
-      "onAutoForward": "openBrowser"
-    },
-    "27017": {
-      "label": "MongoDB",
-      "onAutoForward": "silent"
-    }
+    "3000": { "label": "Next.js (docs/website)" },
+    "3001": { "label": "Alt dev server" },
+    "5173": { "label": "Vite/preview" },
+    "5001": { "label": "SkyHelper API (in dev)" },
+    "27017": { "label": "MongoDB (external service)" }
   },
 
   "postCreateCommand": "bash .devcontainer/setup.sh",
 
-  "postStartCommand": "echo 'Container started! Run: pnpm install && pnpm build' to get started.",
-
-  "mounts": ["source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"],
-
-  "remoteUser": "node",
-
-  "shutdownAction": "stopContainer"
+  "remoteUser": "node"
 }

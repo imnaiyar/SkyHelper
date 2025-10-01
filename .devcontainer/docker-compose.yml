@@ -10,7 +10,8 @@ services:
       - PNPM_HOME=/usr/local/share/pnpm
       - PATH=/usr/local/share/pnpm:${PATH}
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     networks:
       - skyhelper-dev
 
@@ -28,6 +29,12 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - skyhelper-dev
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
   mongodb_data:
