@@ -16,8 +16,6 @@
   "dockerComposeFile": "docker-compose.dev.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-
-  // Configure tool-specific properties
   "customizations": {
     "vscode": {
       "extensions": [
@@ -110,18 +108,13 @@
     }
   },
 
-  // Use 'postCreateCommand' to run commands after the container is created
   "postCreateCommand": "bash .devcontainer/setup.sh",
 
-  // Use 'postStartCommand' to run commands after the container starts
   "postStartCommand": "echo 'Container started! Run: pnpm install && pnpm build' to get started.",
 
-  // Mount the workspace and configure git
   "mounts": ["source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"],
 
-  // Configure container user
   "remoteUser": "node",
 
-  // Shutdown action
   "shutdownAction": "stopContainer"
 }
