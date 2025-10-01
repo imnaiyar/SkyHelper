@@ -1,0 +1,127 @@
+{
+  "name": "SkyHelper Discord Bot Development",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true,
+      "azureDnsAutoDetection": true,
+      "installDockerBuildx": true
+    }
+  },
+
+  // Service configuration for MongoDB
+  "dockerComposeFile": "docker-compose.dev.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  // Configure tool-specific properties
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // TypeScript & JavaScript
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+
+        // Code Quality & Formatting
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-json",
+
+        // Git & Version Control
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+
+        // Testing
+        "orta.vscode-jest",
+
+        // Docker
+        "ms-azuretools.vscode-docker",
+
+        // Database
+        "mongodb.mongodb-vscode",
+
+        // Productivity
+        "ms-vscode.vscode-thunder-client",
+        "bradlc.vscode-tailwindcss",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "ms-vscode.vscode-yaml",
+
+        // Discord Development
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "eslint.format.enable": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "files.exclude": {
+          "**/node_modules": true,
+          "**/dist": true,
+          "**/.turbo": true
+        },
+        "search.exclude": {
+          "**/node_modules": true,
+          "**/dist": true,
+          "**/.turbo": true,
+          "**/pnpm-lock.yaml": true
+        },
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "jest.autoRun": "off",
+        "jest.showCoverageOnLoad": true
+      }
+    }
+  },
+
+  // Set environment variables
+  "containerEnv": {
+    "NODE_ENV": "development",
+    "PNPM_HOME": "/usr/local/share/pnpm",
+    "PATH": "/usr/local/share/pnpm:${PATH}"
+  },
+
+  // Forward ports for development
+  "forwardPorts": [
+    5001, // Main bot API server
+    3000, // Docs/Website development server
+    27017 // MongoDB
+  ],
+
+  "portsAttributes": {
+    "5000": {
+      "label": "Bot API Server",
+      "onAutoForward": "notify"
+    },
+    "3000": {
+      "label": "Docs/Website Server",
+      "onAutoForward": "openBrowser"
+    },
+    "27017": {
+      "label": "MongoDB",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // Use 'postCreateCommand' to run commands after the container is created
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  // Use 'postStartCommand' to run commands after the container starts
+  "postStartCommand": "echo 'Container started! Run: pnpm install && pnpm build' to get started.",
+
+  // Mount the workspace and configure git
+  "mounts": ["source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"],
+
+  // Configure container user
+  "remoteUser": "node",
+
+  // Shutdown action
+  "shutdownAction": "stopContainer"
+}

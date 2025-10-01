@@ -1,0 +1,37 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    volumes:
+      - ../..:/workspace:cached
+    working_dir: /workspace
+    command: sleep infinity
+    environment:
+      - NODE_ENV=development
+      - PNPM_HOME=/usr/local/share/pnpm
+      - PATH=/usr/local/share/pnpm:${PATH}
+    depends_on:
+      - mongodb
+    networks:
+      - skyhelper-dev
+
+  mongodb:
+    image: mongo:7.0
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skyhelper
+      MONGO_INITDB_ROOT_PASSWORD: development
+      MONGO_INITDB_DATABASE: skyhelper
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - skyhelper-dev
+
+volumes:
+  mongodb_data:
+
+networks:
+  skyhelper-dev:
+    driver: bridge
