@@ -69,6 +69,18 @@ async function handleModal(helper: InteractionHelper) {
           },
         ],
       },
+      {
+        type: ComponentType.Label,
+        label: "Files",
+        description: "Any file attachments that should be sent with annoucements",
+        component: {
+          // @ts-expect-error https://github.com/discordjs/discord-api-types/pull/1372
+          type: ComponentType.FileUpload,
+          custom_id: "attachments",
+          max_values: 10,
+          required: false,
+        },
+      },
     ],
   };
 
@@ -102,6 +114,15 @@ async function handleModal(helper: InteractionHelper) {
 
     return `</${command.name}${subCommand}:${command.id}>`;
   });
+  // prettier-ignore
+  const atchs = helper.client.utils.getModalComponent(modalSubmit, "attachments", ComponentType.FileUpload).values as string[] | undefined; // TODO: remember to remove the case type errors are resolved
+  const files = await Promise.all(
+    atchs?.map(async (id) => {
+      const ats = modalSubmit.data.resolved!.attachments![id]!;
+      const arrayBuff = await fetch(ats.proxy_url).then((res) => res.arrayBuffer());
+      return { name: ats.filename, data: Buffer.from(arrayBuff) };
+    }) ?? [],
+  );
 
   const data = await helper.client.schemas.getAnnouncementGuilds();
 
@@ -110,8 +131,10 @@ async function handleModal(helper: InteractionHelper) {
     if (!channel) continue;
     if (!SendableChannels.includes(channel.type)) continue;
     await helper.client.api.channels
-      .createMessage(channel.id, { components: [textDisplay(text)], flags: MessageFlags.IsComponentsV2 })
+      .createMessage(channel.id, { components: [textDisplay(text)], files, flags: MessageFlags.IsComponentsV2 })
       .catch(() => {});
+
+    await new Promise((r) => setTimeout(r, 2_000));
   }
   await modalHelper.editReply({ content: "Announcement sent to all the announcement channels.", components: [] }).catch(() => {});
 }
