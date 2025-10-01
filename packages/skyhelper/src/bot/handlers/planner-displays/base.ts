@@ -12,6 +12,7 @@ import type { DateTime } from "luxon";
 import type { Awaitable } from "@/types/utils";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { FilterManager, FilterType, type CustomFilterConfigs, OrderMappings } from "./filter.manager.js";
+import { ComponentType } from "@discordjs/core";
 
 export interface NavigationState {
   /** Current page */
@@ -85,12 +86,7 @@ export abstract class BasePlannerHandler {
     public data: SkyPlannerData.TransformedData,
     public planner: typeof SkyPlannerData,
     public state: NavigationState,
-  ) {
-    // Initialize filter manager if filters are present
-    if (this.state.f) {
-      this.filterManager = new FilterManager(this.data, this.state.f, [], this.customFilterConfigs);
-    }
-  }
+  ) {}
 
   /**
    * Initialize filter manager with supported filter types for this display
@@ -172,6 +168,26 @@ export abstract class BasePlannerHandler {
     return rows;
   }
 
+  createTopCategorySelect(selected: DisplayTabs, user?: string) {
+    return row({
+      type: ComponentType.StringSelect,
+      custom_id: store.serialize(CustomId.PlannerSelectNav, { user }),
+      placeholder: "Select category",
+      options: Object.values(DisplayTabs).map((category) => {
+        const icon =
+          category === DisplayTabs.Seasons
+            ? (this.planner.getCurrentSeason(this.data)?.icon ?? this.data.seasons[0]?.icon)
+            : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
+        return {
+          label: category.charAt(0).toUpperCase() + category.slice(1),
+          value: category,
+          default: category === selected,
+          emoji: icon ? { id: icon } : undefined,
+        };
+      }),
+    });
+  }
+
   /** Formats planner dates to discord unix timestamp */
   formatDateTimestamp(date: string | Record<"day" | "month" | "year", number> | DateTime, style?: string) {
     return `<t:${Math.floor(this.planner.resolveToLuxon(date).toMillis() / 1000)}${style ? `:${style}` : ""}>`;
@@ -195,7 +211,7 @@ export abstract class BasePlannerHandler {
           page,
           total,
           t: this.state.t,
-          f: this.filterManager?.serializeFilters(),
+          f: this.filterManager?.serializeFilters() ?? this.state.f, // fallback if a specific tab is not using filters
           it: this.state.it,
           user,
           b: this.state.b,
@@ -215,7 +231,7 @@ export abstract class BasePlannerHandler {
       user = this.state.user,
       p = redirect(this.state.p),
       it = redirect(this.state.it),
-      f = redirect(this.filterManager?.serializeFilters()),
+      f = redirect(this.filterManager?.serializeFilters() ?? this.state.f),
       b = redirect(this.state.b),
       d = redirect(this.state.d),
     } = opt;

@@ -118,7 +118,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
           this.createCustomId({
             t: DisplayTabs.Shops,
             it: season.shops?.map((s) => s.guid).join(","),
-            b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f },
+            b: { t: DisplayTabs.Spirits, it: this.state.it, f: this.state.f },
           }),
           { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !season.shops?.length },
         ),

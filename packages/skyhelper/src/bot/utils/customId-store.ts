@@ -31,6 +31,7 @@ export enum CustomId {
   SpiritButton,
   PlannerTopLevelNav,
   PlannerFilters,
+  PlannerSelectNav,
 }
 
 export const store = new SchemaStore()
@@ -61,6 +62,7 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.SpiritButton).string("spirit_key").nullable("user", t.string))
   .add(
     new Schema(CustomId.PlannerTopLevelNav)
+      // tab
       .string("t")
       // filter
       .nullable("f", t.string)
@@ -70,8 +72,11 @@ export const store = new SchemaStore()
       .nullable("d", t.string)
       // page
       .nullable("p", t.uint8)
+      // random number or arbitrary data, for any use
       .nullable("i", t.string)
+      // previous state for back button
       .nullable("back", t.string)
       .nullable("user", t.string),
   )
-  .add(new Schema(CustomId.PlannerFilters).string("tab").array("filters", t.string).nullable("user", t.string));
+  .add(new Schema(CustomId.PlannerFilters).string("tab").array("filters", t.string).nullable("user", t.string))
+  .add(new Schema(CustomId.PlannerSelectNav).nullable("user", t.string));

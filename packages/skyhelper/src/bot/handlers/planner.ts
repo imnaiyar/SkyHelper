@@ -46,7 +46,14 @@ export async function handlePlannerNavigation(state: NavigationState) {
   const data = await SkyPlannerData.getSkyGamePlannerData();
   const handler = displayClasses(state.d)[t];
   // eslint-disable-next-line
-  return handler
-    ? new handler(data, SkyPlannerData, { ...state, user }).handle()
-    : new HomeDisplay(data, SkyPlannerData, { t: DisplayTabs.Home, user }).handle();
+  if (!handler) throw new Error("Invalid display tab");
+
+  const instance = new handler(data, SkyPlannerData, { ...state, user });
+  const result = await instance.handle();
+  return {
+    ...result,
+    components: [t !== DisplayTabs.Home ? instance.createTopCategorySelect(t, user) : null, ...(result.components ?? [])].filter(
+      (s) => !!s,
+    ),
+  };
 }

@@ -23,12 +23,7 @@ export class ShopsDisplay extends BasePlannerHandler {
   shopdisplay(shop: SkyPlannerData.IShop) {
     return [
       section(
-        this.viewbtn(this.createCustomId({ ...this.state.b }), {
-          label: "Back",
-          emoji: { id: emojis.leftarrow },
-          style: 4,
-          disabled: !this.state.b,
-        }),
+        this.homebtn(),
         `# ${this.getshopname(shop)}`,
         `${this.formatemoji(emojis.location, "Location")} ${this.getshoplocation(shop)}`,
       ),
@@ -63,12 +58,14 @@ export class ShopsDisplay extends BasePlannerHandler {
         style: this.state.f === "iap" ? 3 : 2,
         disabled: this.state.f === "iap",
       }),
+      this.backbtn(this.createCustomId({ it: "", ...this.state.b, b: null }), {
+        disabled: !this.state.b,
+      }),
     );
   }
 
   getItemsListDisplay() {
     return this.displayPaginatedList({
-      /** Only asserting so I get correct type in `itemCallback` bcz aparrentl filter(Boolean) doesnt cut it */
       items: (this.state.f === "store" ? this.listItems.map((i) => ({ ...i, type: "list" })) : this.iaps) as Array<
         (IItemListNode & { type: string }) | IIAP
       >,
@@ -76,7 +73,8 @@ export class ShopsDisplay extends BasePlannerHandler {
         ...("type" in as
           ? [
               section(
-                this.viewbtn(this.createCustomId({ d: "sldjfh" })),
+                // TODO: handle acquiring the item
+                this.viewbtn(this.createCustomId({ d: "sldjfh" }), { label: "Acquire" }),
                 `${this.formatemoji(as.item.icon, as.item.name)} ${as.item.name}`,
                 this.planner.formatCosts(as),
               ),
@@ -91,6 +89,8 @@ export class ShopsDisplay extends BasePlannerHandler {
                   .filter(Boolean)
                   .join(" \u2022 "),
               ),
+
+              /** TODO:  handle buying/recieving the item */
               row(
                 button({ custom_id: this.createCustomId({ it: as.guid, d: "Buy" }), label: "Bought", style: 3 }),
                 button({ custom_id: this.createCustomId({ it: as.guid, d: "Receive" }), label: "Received", style: 2 }),
