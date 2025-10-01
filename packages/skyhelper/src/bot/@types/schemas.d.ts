@@ -83,6 +83,7 @@ export interface GuildSchema extends Document {
   reminders: Reminders;
   autoShard: LiveUpdates;
   autoTimes: LiveUpdates;
+  isPremium?: boolean;
 }
 
 // #region SpecialEvent

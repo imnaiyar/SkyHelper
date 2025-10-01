@@ -6,6 +6,7 @@ import {
   type APIGuildMember,
   type APIGuildStageVoiceChannel,
   type APIGuildVoiceChannel,
+  type APINewsChannel,
   type APIRole,
   type APITextChannel,
 } from "discord-api-types/v10";
@@ -132,7 +133,7 @@ export class PermissionsUtil {
    */
   static overwriteFor(
     userOrRole: APIRole | APIGuildMember,
-    channel: APITextChannel | APIGuildForumChannel | APIGuildVoiceChannel | APIGuildStageVoiceChannel,
+    channel: APITextChannel | APIGuildForumChannel | APIGuildVoiceChannel | APIGuildStageVoiceChannel | APINewsChannel,
     guild: APIGuild,
   ): PermissionsUtil {
     const isRole = "permissions" in userOrRole;

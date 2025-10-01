@@ -180,13 +180,6 @@ export const UTILS_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
-        name: "botinfo",
-        name_localizations: "commands:UTILS.options.BOTINFO.name",
-        description: "get the bot's info",
-        description_localizations: "commands:UTILS.options.BOTINFO.description",
-        type: ApplicationCommandOptionType.Subcommand,
-      },
-      {
         name: "contact-us",
         name_localizations: "commands:UTILS.options.CONTACT-US.name",
         description: "for suggestions/bug reports/contacting us or just anything",
@@ -217,4 +210,50 @@ export const LINKED_ROLE_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
   },
   cooldown: 40,
   category: "Utility",
+};
+
+// #region bot
+export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "bot",
+  description: "Bot related commands",
+  data: {
+    name_localizations: "commands:BOT.name",
+    description_localizations: "commands:BOT.description",
+    options: [
+      {
+        name: "info",
+        name_localizations: "commands:BOT.options.INFO.name",
+        description_localizations: "commands:BOT.options.INFO.description",
+        description: "Get bot information",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "manage",
+        name_localizations: "commands:BOT.options.MANAGE.name",
+        description_localizations: "commands:BOT.options.MANAGE.description",
+        description: "Manage the bot settings for the server",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "personalize",
+        name_localizations: "commands:BOT.options.PERSONALIZE.name",
+        description_localizations: "commands:BOT.options.PERSONALIZE.description",
+        description: "Personalize the bot for this server",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+    ],
+    integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+    contexts: [InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel],
+  },
+  category: "Utility",
+  validations: [
+    {
+      type: "interaction",
+      callback: ({ options, helper, t }) => {
+        const sub = options.getSubcommand();
+        if (sub === "personalize" && !helper.int.guild_id) return { status: false, message: t("errors:NOT_A_SERVER") };
+        return { status: true };
+      },
+    },
+  ],
 };

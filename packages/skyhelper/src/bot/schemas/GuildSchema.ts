@@ -81,6 +81,7 @@ const Schema = new mongoose.Schema<GuildSchema>({
       threadId: String,
     },
   },
+  isPremium: { type: Boolean, default: false },
 });
 
 const Model = mongoose.model("guild", Schema);
