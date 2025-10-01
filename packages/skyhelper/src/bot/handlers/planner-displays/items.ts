@@ -57,7 +57,7 @@ export class ItemsDisplay extends BasePlannerHandler {
             }),
             style: 1,
           }),
-          `## ${this.formatemoji(item.icon, item.name)} ${item.name}`,
+          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}`,
           [
             item.group,
             item.nodes?.[0]?.root?.spiritTree?.spirit?.name,
@@ -74,7 +74,7 @@ export class ItemsDisplay extends BasePlannerHandler {
     return [
       section(
         this.backbtn(this.createCustomId({ t: DisplayTabs.Items, it: "", f: "", ...this.state.b })),
-        `# ${this.formatemoji(item.icon, item.name)} ${item.name}${item.level ? ` (Lvl ${item.level})` : ""}`,
+        `# ${this.formatemoji(item.emoji, item.name)} ${item.name}${item.level ? ` (Lvl ${item.level})` : ""}`,
         [`Type: ${item.type}`, item.subtype ? `Subtype: ${item.subtype}` : null, item.group ? `Group: ${item.group}` : null]
           .filter(Boolean)
           .join(" \u2022 "),

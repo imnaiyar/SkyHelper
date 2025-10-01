@@ -44,7 +44,7 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
           this.viewbtn(this.createCustomId({ it: rs.guid, d: "rs", b: { ...this.state, b: null, v: undefined } })),
           [
             `# ${rs.name ?? "Special Visit"}`,
-            `-# ${rs.spirits.map((s) => `**${this.formatemoji(s.spirit.icon, s.spirit.name)} ${s.spirit.name}**`).join(" | ")}`,
+            `-# ${rs.spirits.map((s) => `**${this.formatemoji(s.spirit.emoji, s.spirit.name)} ${s.spirit.name}**`).join(" | ")}`,
             `From ${this.formatDateTimestamp(rs.date)} to ${this.formatDateTimestamp(rs.endDate)} (${this.formatDateTimestamp(rs.endDate, "R")})`,
             this.planner.formatGroupedCurrencies(rs.spirits.map((s) => s.tree)),
           ].join("\n"),
@@ -56,7 +56,7 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
   private async rsdisplay(rs: IReturningSpirits) {
     const title = [
       `# ${rs.name ?? "Special Visit"}`,
-      `-# ${rs.spirits.map((s) => `**${this.formatemoji(s.spirit.icon, s.spirit.name)} ${s.spirit.name}**`).join(" | ")}`,
+      `-# ${rs.spirits.map((s) => `**${this.formatemoji(s.spirit.emoji, s.spirit.name)} ${s.spirit.name}**`).join(" | ")}`,
       `From ${this.formatDateTimestamp(rs.date)} to ${this.formatDateTimestamp(rs.endDate)} (${this.formatDateTimestamp(rs.endDate, "R")})`,
       this.planner.formatGroupedCurrencies(rs.spirits.map((s) => s.tree)),
     ].join("\n");
@@ -83,12 +83,12 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
             label: s.spirit.name,
             value: i.toString(),
             default: i === selected,
-            emoji: s.spirit.icon ? { id: s.spirit.icon } : undefined,
+            emoji: s.spirit.emoji ? { id: s.spirit.emoji } : undefined,
           })),
         }),
         section(
           this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-          `## ${this.formatemoji(spirit.spirit.icon, spirit.spirit.name)} ${spirit.spirit.name}`,
+          `## ${this.formatemoji(spirit.spirit.emoji, spirit.spirit.name)} ${spirit.spirit.name}`,
           this.planner.getFormattedTreeCost(spirit.tree),
           "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
         ),

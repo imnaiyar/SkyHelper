@@ -65,12 +65,12 @@ export class RealmsDisplay extends BasePlannerHandler {
         label: c.name,
         value: i.toString(),
         default: i === index,
-        emoji: c.icon ? { id: c.icon } : undefined,
+        emoji: c.emoji ? { id: c.emoji } : undefined,
       })),
     });
 
     const title: [string, ...string[]] = [
-      `# ${this.formatemoji(realm.icon, realm.name)} ${realm.name}`,
+      `# ${this.formatemoji(realm.emoji, realm.name)} ${realm.name}`,
       `${realm.areas?.length ?? 0} Areas \u2022 ${regular} regular and ${seasonal} seasonal spirits \u2022 ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} winged lights`,
     ];
 
@@ -119,7 +119,7 @@ export class RealmsDisplay extends BasePlannerHandler {
           this.viewbtn(this.createCustomId({ t: DisplayTabs.Spirits, it: constellation.guid }), {
             label: "View",
           }),
-          `# ${this.formatemoji(constellation.icon, constellation.name)} ${constellation.name}`,
+          `# ${this.formatemoji(constellation.emoji, constellation.name)} ${constellation.name}`,
         ),
         section(
           this.viewbtn(this.createCustomId({}), { label: "Modify" }),

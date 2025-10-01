@@ -245,7 +245,7 @@ export class FilterManager {
           options: data.realms.map((realm) => ({
             label: realm.name,
             value: realm.guid,
-            emoji: realm.icon ? { id: realm.icon } : undefined,
+            emoji: realm.emoji ? { id: realm.emoji } : undefined,
           })),
         };
 
@@ -259,9 +259,9 @@ export class FilterManager {
             .map((season) => ({
               label: season.name,
               value: season.guid,
-              emoji: season.icon ? { id: season.icon } : undefined,
+              emoji: season.emoji ? { id: season.emoji } : undefined,
             }))
-            .slice(0, 25), // will be populated with actual season data
+            .slice(0, 25), // TODO: find a way to include all seasons
         };
 
       case FilterType.Events:
@@ -275,7 +275,7 @@ export class FilterManager {
               label: event.name,
               value: event.guid,
             }))
-            .slice(0, 25), // will be populated with actual event data
+            .slice(0, 25), // TODO: same here
         };
 
       case FilterType.Order:

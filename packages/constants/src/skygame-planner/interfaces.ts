@@ -92,8 +92,12 @@ export interface IItem extends IGuid {
   group?: ItemGroup;
   /** Item name. */
   name: string;
-  /** Path to item icon. */
+
+  /** Path of the icon image */
   icon?: string;
+
+  /** Emoji id of the icon, if available */
+  emoji?: string;
   /** Path to preview image. */
   previewUrl?: string;
   /** Item order (within category). */
@@ -184,7 +188,7 @@ export interface ISpirit extends IGuid {
   type: SpiritType;
 
   /** Icon of the expression offered by this spirit, for display purpose */
-  icon?: string;
+  emoji?: string;
 
   /** Image URL. */
   imageUrl?: string;
@@ -261,7 +265,7 @@ export interface IAreaConfig extends IConfig<IArea> {}
 export interface IRealm extends IGuid {
   name: string;
   shortName: string;
-  icon?: string;
+  emoji?: string;
   imageUrl?: string;
   imagePosition?: string;
   hidden?: boolean;
@@ -296,7 +300,7 @@ export interface ISeason extends IGuid, IPeriod {
   shortName: string;
 
   /** Emoji id of the season icon */
-  icon?: string;
+  emoji?: string;
   /** Path to the season icon. */
   iconUrl?: string;
   imageUrl?: string;

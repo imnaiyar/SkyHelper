@@ -9,7 +9,10 @@ export interface GenerateSpiritTreeOptions {
   scale?: number; // multiplier for resolution
 }
 
-const iconUrl = (icon: string) => `https://cdn.discordapp.com/emojis/${icon}.png`;
+const skyplanner_baseurl = "https://sky-planner.com";
+
+const iconUrl = (icon: string) => (icon.startsWith("http") ? icon : `${skyplanner_baseurl}${icon}`);
+const emojiURl = (emoji: string) => `https://cdn.discordapp.com/emojis/${emoji}.png`;
 
 // LRU cache to reduce memory load
 class ImageCache {
@@ -71,10 +74,10 @@ async function preloadImages(tree: ISpiritTree) {
   function collect(node?: INode) {
     if (!node) return;
     if (node.item?.icon) urls.add(iconUrl(node.item.icon));
-    if (node.item?.season?.icon) urls.add(iconUrl(node.item.season.icon));
+    if (node.item?.season?.iconUrl) urls.add(iconUrl(node.item.season.iconUrl));
     if (node.currency) {
       const curId = (currencyEmojis as any)[node.currency.type];
-      if (curId) urls.add(iconUrl(curId));
+      if (curId) urls.add(emojiURl(curId));
     }
     collect(node.n);
     collect(node.nw);
@@ -160,9 +163,9 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   const padding = Math.max(4, Math.floor(itemSize * 0.06));
 
   // season overlay
-  if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate") && item.season?.icon) {
+  if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate") && item.season?.iconUrl) {
     try {
-      const badge = await getImage(iconUrl(item.season.icon));
+      const badge = await getImage(iconUrl(item.season.iconUrl));
       const bsize = itemSize * 0.4;
       ctx.drawImage(badge, -itemSize / 2, -itemSize / 2, bsize, bsize);
     } catch {
@@ -221,7 +224,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
 
     if (curEmojiId) {
       try {
-        const curImg = await getImage(iconUrl(curEmojiId));
+        const curImg = await getImage(emojiURl(curEmojiId));
         ctx.drawImage(curImg, iconCenterX - cx / 2, iconCenterY - cx / 2, cx, cx);
       } catch {
         ctx.fillStyle = "#FFD966";

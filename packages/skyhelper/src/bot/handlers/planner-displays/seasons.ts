@@ -64,7 +64,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
 
     const descriptions: [string, ...string[]] = [
       `From ${this.formatDateTimestamp(season.date)} to ${this.formatDateTimestamp(season.endDate)} (${this.formatDateTimestamp(season.endDate, "R")})`,
-      season.spirits.map((s) => (s.icon ? this.formatemoji(s.icon, s.name) : "")).join(" "),
+      season.spirits.map((s) => (s.emoji ? this.formatemoji(s.emoji, s.name) : "")).join(" "),
       formatted,
     ];
 
@@ -76,7 +76,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
           custom_id: this.createCustomId({ it: season.guid }),
           style: 1,
         },
-        `### ${season.icon ? this.formatemoji(season.icon, season.shortName) : ""} **${season.name}**`,
+        `### ${season.emoji ? this.formatemoji(season.emoji, season.shortName) : ""} **${season.name}**`,
       ),
       season.imageUrl ? section(thumbnail(season.imageUrl), ...descriptions) : textDisplay(...descriptions, "\u200b"),
     ];
@@ -95,13 +95,13 @@ export class SeasonsDisplay extends BasePlannerHandler {
         label: t.spirit?.name ?? "Unknown",
         value: i.toString(),
         default: i === index,
-        emoji: t.spirit?.icon ? { id: t.spirit.icon } : undefined,
+        emoji: t.spirit?.emoji ? { id: t.spirit.emoji } : undefined,
       })),
     });
     const tree = trees[index];
 
     const title: [string, ...string[]] = [
-      `# ${this.formatemoji(season.icon, season.shortName)} ${season.name}`,
+      `# ${this.formatemoji(season.emoji, season.shortName)} ${season.name}`,
       `From ${this.formatDateTimestamp(start)} to ${this.formatDateTimestamp(end)} (${SeasonsDisplay.isActive(season) ? "Ends" : "Ended"} ${this.formatDateTimestamp(end, "R")})`,
       `Total: ${this.planner.formatGroupedCurrencies(trees)}`,
     ];
