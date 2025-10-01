@@ -3,6 +3,7 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
+  injectWorkspacePackages: true
 
 overrides:
   discord-api-types: latest
@@ -15,7 +16,6 @@ patchedDependencies:
 importers:
 
   .:
-    dependencies:
       '@actions/core':
         specifier: ^1.11.1
         version: 1.11.1
@@ -220,7 +220,7 @@ importers:
         version: link:../constants
       '@skyhelperbot/utils':
         specifier: workspace:^
-        version: link:../utils
+        version: file:packages/utils(luxon@3.6.1)
       discord-api-types:
         specifier: latest
         version: 0.38.26
@@ -314,7 +314,7 @@ importers:
         version: link:../constants
       '@skyhelperbot/utils':
         specifier: workspace:^
-        version: link:../utils
+        version: file:packages/utils(luxon@3.6.1)
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -2324,6 +2324,11 @@ packages:
 
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
+
+  '@skyhelperbot/utils@file:packages/utils':
+    resolution: {directory: packages/utils, type: directory}
+    peerDependencies:
+      luxon: ^3.5.0
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
@@ -8791,6 +8796,13 @@ snapshots:
   '@sinonjs/fake-timers@10.3.0':
     dependencies:
       '@sinonjs/commons': 3.0.1
+
+  '@skyhelperbot/utils@file:packages/utils(luxon@3.6.1)':
+    dependencies:
+      '@napi-rs/canvas': 0.1.69
+      discord-api-types: 0.38.26
+      luxon: 3.6.1
+      undici: 7.11.0
 
   '@standard-schema/spec@1.0.0': {}
 
