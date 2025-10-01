@@ -24,7 +24,6 @@ export class RealmsDisplay extends BasePlannerHandler {
   realmslist() {
     const realms = this.data.realms;
     return container(
-      this.createTopCategoryRow(DisplayTabs.Realms, this.state.user),
       textDisplay(`# Realms (${realms.length})`),
       ...this.displayPaginatedList({
         items: realms,

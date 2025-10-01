@@ -239,10 +239,10 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     if (helper.isSelect(interaction)) {
       const { id, data } = client.utils.store.deserialize(interaction.data.custom_id);
       switch (id) {
-        case client.utils.customId.TimesDetailsRow:
+        case CustomId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
           return;
-        case client.utils.customId.PlannerTopLevelNav: {
+        case CustomId.PlannerTopLevelNav: {
           const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
           await helper.update({ components: getLoading });
           const values = interaction.data.values;
@@ -264,6 +264,20 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             flags: MessageFlags.IsComponentsV2,
           });
           break;
+        }
+        case CustomId.PlannerSelectNav: {
+          const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+          await helper.update({ components: getLoading });
+          const values = interaction.data.values;
+          const res = await handlePlannerNavigation({
+            t: values[0] as DisplayTabs,
+            user: helper.user.id,
+          });
+          await helper.editReply({
+            ...res,
+            flags: MessageFlags.IsComponentsV2,
+          });
+          return;
         }
         default:
           return;
