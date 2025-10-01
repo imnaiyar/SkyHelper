@@ -68,13 +68,13 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
           style: 1,
           label: "View",
         }),
-        `## ${this.formatemoji(spirit.icon, spirit.name)} ${spirit.name}`,
+        `## ${this.formatemoji(spirit.emoji, spirit.name)} ${spirit.name}`,
         [
           spirit.type,
           spirit.area
-            ? this.formatemoji(spirit.area.realm.icon, spirit.area.realm.shortName) + ` ${spirit.area.realm.shortName}`
+            ? this.formatemoji(spirit.area.realm.emoji, spirit.area.realm.shortName) + ` ${spirit.area.realm.shortName}`
             : null,
-          spirit.season ? this.formatemoji(spirit.season.icon, spirit.season.name) + ` ${spirit.season.shortName}` : null,
+          spirit.season ? this.formatemoji(spirit.season.emoji, spirit.season.name) + ` ${spirit.season.shortName}` : null,
         ]
           .filter(Boolean)
           .join(" \u2022 "),
@@ -114,11 +114,11 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
     }
 
     const title = [
-      `# ${this.formatemoji(spirit.icon)} ${spirit.name}`,
+      `# ${this.formatemoji(spirit.emoji)} ${spirit.name}`,
       spirit.area
-        ? `${this.formatemoji(emojis.location)} ${spirit.area.name} ( ${this.formatemoji(spirit.area.realm.icon)} ${spirit.area.realm.name})`
+        ? `${this.formatemoji(emojis.location)} ${spirit.area.name} ( ${this.formatemoji(spirit.area.realm.emoji)} ${spirit.area.realm.name})`
         : null,
-      spirit.season ? `${this.formatemoji(spirit.season.icon)} ${spirit.season.name}` : null,
+      spirit.season ? `${this.formatemoji(spirit.season.emoji)} ${spirit.season.name}` : null,
       spirit.events?.length ? `${this.formatemoji(emojis.eventticket)} ${spirit.events.at(-1)!.eventInstance?.event.name}` : null,
       `Type: ${spirit.type}`,
     ].filter(Boolean) as [string, ...string[]];

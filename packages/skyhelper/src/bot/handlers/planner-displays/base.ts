@@ -141,7 +141,7 @@ export abstract class BasePlannerHandler {
   /** Create buttons row for navigating between top level categories */
   createTopCategoryRow(selected: DisplayTabs, user?: string, back?: { page?: number }) {
     const BUTTONS_PER_ROW = 5;
-    const seasonIcon = this.planner.getCurrentSeason(this.data)?.icon ?? this.data.seasons[0]?.icon;
+    const seasonIcon = this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji;
     const categoryButtons = Object.values(DisplayTabs).map((category) => {
       const icon =
         category === DisplayTabs.Seasons ? seasonIcon : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
@@ -176,7 +176,7 @@ export abstract class BasePlannerHandler {
       options: Object.values(DisplayTabs).map((category) => {
         const icon =
           category === DisplayTabs.Seasons
-            ? (this.planner.getCurrentSeason(this.data)?.icon ?? this.data.seasons[0]?.icon)
+            ? (this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji)
             : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
         return {
           label: category.charAt(0).toUpperCase() + category.slice(1),

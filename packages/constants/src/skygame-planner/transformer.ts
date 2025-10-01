@@ -195,7 +195,7 @@ function resolveReferences(data: TransformedData): void {
   for (const item of data.items) {
     if (item.previewUrl) item.previewUrl = resolveUrl(item.previewUrl);
     const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
-    if (emoji) item.icon = emoji.id!;
+    if (emoji) item.emoji = emoji.id!;
   }
 
   /* ------------------------------ realms ----------------------------- */
@@ -205,7 +205,7 @@ function resolveReferences(data: TransformedData): void {
     realm.areas = resolveArray(realm.areas as any, data, (a) => (a.realm = realm));
     linkOne<ISpirit, IRealm>(realm.elder as any, realm, "elder", data);
     realm.constellation?.icons.forEach((icon) => linkOne<ISpirit, typeof icon>(icon.spirit as any, icon, "spirit", data));
-    realm.icon = (realms_emojis as any)[realm.name] || realm.icon;
+    realm.emoji = (realms_emojis as any)[realm.name] || realm.emoji;
   }
 
   /* ------------------------------- areas ----------------------------- */
@@ -275,7 +275,7 @@ function resolveReferences(data: TransformedData): void {
     const nn = data.nodes.find(
       (n) => ["Emote", "Stance", "Call"].includes(n.item?.type || "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
     );
-    spirit.icon = nn?.item?.icon || spirit.tree?.node.item?.icon || spirit.icon;
+    spirit.emoji = nn?.item?.emoji || spirit.tree?.node.item?.emoji || spirit.emoji;
   }
 
   // Add tiers to regular spirit nodes
@@ -290,7 +290,7 @@ function resolveReferences(data: TransformedData): void {
     season.spirits = resolveArray(season.spirits as any, data, (s) => (s.season = season));
     season.shops = resolveArray(season.shops as any, data, (shop) => (shop.season = season));
     season.includedTrees = resolveArray(season.includedTrees as any, data);
-    season.icon = (season_emojis as any)[season.shortName] || season.icon;
+    season.emoji = (season_emojis as any)[season.shortName] || season.emoji;
   }
 
   /* -------------------------- travelingSpirits ----------------------- */

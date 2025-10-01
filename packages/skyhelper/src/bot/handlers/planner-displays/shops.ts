@@ -75,7 +75,7 @@ export class ShopsDisplay extends BasePlannerHandler {
               section(
                 // TODO: handle acquiring the item
                 this.viewbtn(this.createCustomId({ d: "sldjfh" }), { label: "Acquire" }),
-                `${this.formatemoji(as.item.icon, as.item.name)} ${as.item.name}`,
+                `${this.formatemoji(as.item.emoji, as.item.name)} ${as.item.name}`,
                 this.planner.formatCosts(as),
               ),
               separator(false),
@@ -84,7 +84,7 @@ export class ShopsDisplay extends BasePlannerHandler {
               textDisplay(
                 as.name ?? "In-App Purchase",
                 `$ ${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP`,
-                [as.items?.map((i) => `${this.formatemoji(i.icon, i.name)} ${i.name}`), this.planner.formatCosts(as)]
+                [as.items?.map((i) => `${this.formatemoji(i.emoji, i.name)} ${i.name}`), this.planner.formatCosts(as)]
                   .flat()
                   .filter(Boolean)
                   .join(" \u2022 "),

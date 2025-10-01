@@ -48,7 +48,7 @@ export class AreasDisplay extends BasePlannerHandler {
           this.viewbtn(this.createCustomId({ it: area.guid, b: { t: this.state.t, f: this.state.f, p: this.state.p ?? 1 } })),
           `## ${area.name}`,
           [
-            `${this.formatemoji(area.realm.icon, area.realm.shortName)} ${area.realm.name}`,
+            `${this.formatemoji(area.realm.emoji, area.realm.shortName)} ${area.realm.name}`,
             area.spirits?.length ? `${area.spirits.length} Spirits` : null,
             area.wingedLights?.length ? `${area.wingedLights.length} Winged Lights` : null,
             area.mapShrines?.length ? `${area.mapShrines.length} Map Shrines` : null,
@@ -61,7 +61,7 @@ export class AreasDisplay extends BasePlannerHandler {
   }
 
   private areadisplay(area: IArea) {
-    const title = [`# ${area.name}`, `${this.formatemoji(area.realm.icon, area.realm.shortName)} ${area.realm.name}`].join("\n");
+    const title = [`# ${area.name}`, `${this.formatemoji(area.realm.emoji, area.realm.shortName)} ${area.realm.name}`].join("\n");
     const filters = new Map<FilterType, string[]>([
       [FilterType.SpiritTypes, [SpiritType.Regular, SpiritType.Season, SpiritType.Guide]],
       [FilterType.Areas, [area.guid]],
