@@ -11,6 +11,7 @@ ENV TURBO_TOKEN=${TURBO_TOKEN}
 
 COPY package.json pnpm-lock.yaml .npmrc ./
 COPY pnpm-workspace.yaml ./
+COPY patches patches
 
 # Store it in virtual store
 RUN pnpm fetch
