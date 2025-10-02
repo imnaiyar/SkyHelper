@@ -2,9 +2,9 @@ diff --git a/CHANGELOG.md b/CHANGELOG.md
 deleted file mode 100644
 index 9282a1c3dfac134cd885d59d21433c6f74444d64..0000000000000000000000000000000000000000
 diff --git a/dist/esm/index.mjs b/dist/esm/index.mjs
-index bf534ce2a90de7621d2c0c2fa75f1d5ee6f054ed..a6424461bbc6c75b55b82023bd3746a48e0b43f2 100644
+index bf534ce2a90de7621d2c0c2fa75f1d5ee6f054ed..124e0061b7e2f16e4e20532e02e9d8131e937db2 100644
 --- a/dist/esm/index.mjs
-+++ b/dist/esm/index.mjs
++++ b/dist/esm/index.mjs	
 @@ -4,7 +4,7 @@ var __typeError = (msg) => {
  };
  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
@@ -14,44 +14,55 @@ index bf534ce2a90de7621d2c0c2fa75f1d5ee6f054ed..a6424461bbc6c75b55b82023bd3746a4
  var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
  var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
  var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-@@ -71,6 +71,19 @@ _value = new WeakMap();
+@@ -71,6 +71,7 @@ _value = new WeakMap();
  __name(_Pointer, "Pointer");
  var Pointer = _Pointer;
  
-+// ====== surrogate-safe mapping helpers ======
-+function maskWord(word) {
-+  // map 0xD800..0xDFFF -> 0xF000..0xF7FF
-+  return (word >= 0xD800 && word <= 0xDFFF) ? (word - 0xD800 + 0xF000) : word;
-+}
-+
-+function unmaskWord(word) {
-+  // reverse mapping 0xF000..0xF7FF -> 0xD800..0xDFFF
-+  return (word >= 0xF000 && word <= 0xF7FF) ? (word - 0xF000 + 0xD800) : word;
-+}
-+// =============================================
-+
 +
  // src/lib/buffer/UnalignedUint16Array.ts
  var ConverterUint8 = new Uint8Array(8);
  var ConverterUint16 = new Uint16Array(ConverterUint8.buffer);
-@@ -227,7 +240,9 @@ var _UnalignedUint16Array = class _UnalignedUint16Array {
-   toString() {
-     let result = "";
-     for (let i = 0; i < this.length; i++) {
--      result += String.fromCharCode(__privateGet(this, _buffer)[i]);
-+      // mask surrogate code units into safe PUA range
-+      const w = __privateGet(this, _buffer)[i];
-+      result += String.fromCharCode(maskWord(w));
-     }
-     return result;
+@@ -225,24 +226,30 @@ var _UnalignedUint16Array = class _UnalignedUint16Array {
+     return ConverterDouble[0];
    }
-@@ -238,7 +253,8 @@ var _UnalignedUint16Array = class _UnalignedUint16Array {
-     if (typeof value !== "string") return value;
-     const buffer = new _UnalignedUint16Array(value.length);
-     for (let i = 0; i < value.length; i++) {
+   toString() {
+-    let result = "";
+-    for (let i = 0; i < this.length; i++) {
+-      result += String.fromCharCode(__privateGet(this, _buffer)[i]);
+-    }
+-    return result;
++  let result = "";
++  for (let i = 0; i < this.length; i++) {
++    const word = __privateGet(this, _buffer)[i];
++    // Map surrogates to safe range for UTF-16 string transport
++    const safeWord = (word >= 0xD800 && word <= 0xDFFF) ? (word + 0x1000) : word;
++    result += String.fromCharCode(safeWord);
+   }
++  return result;
++}
+   toArray() {
+     return __privateGet(this, _buffer).slice(0, this.length);
+   }
+   static from(value) {
+-    if (typeof value !== "string") return value;
+-    const buffer = new _UnalignedUint16Array(value.length);
+-    for (let i = 0; i < value.length; i++) {
 -      __privateGet(buffer, _buffer)[i] = value.charCodeAt(i);
-+      // unmask mapped PUA codepoints back to original words
-+      __privateGet(buffer, _buffer)[i] = unmaskWord(value.charCodeAt(i));
-     }
-     __privateSet(buffer, _bitLength, value.length << 4);
-     return buffer;
+-    }
+-    __privateSet(buffer, _bitLength, value.length << 4);
+-    return buffer;
+-  }
++  if (typeof value !== "string") return value;
++  const buffer = new _UnalignedUint16Array(value.length);
++  for (let i = 0; i < value.length; i++) {
++    const safeWord = value.charCodeAt(i);
++    // Unmap from safe range back to original
++    const word = (safeWord >= 0xE800 && safeWord <= 0xEFFF) ? (safeWord - 0x1000) : safeWord;
++    __privateGet(buffer, _buffer)[i] = word;
++  }
++  __privateSet(buffer, _bitLength, value.length << 4);
++  return buffer;
++}
+ };
+ _buffer = new WeakMap();
+ _bitLength = new WeakMap();
