@@ -277,10 +277,6 @@
         "name": "registro",
         "description": "registro de cambios del bot"
       },
-      "BOTINFO": {
-        "name": "botinfo",
-        "description": "obten información del bot y configura sus opciones"
-      },
       "CONTACT-US": {
         "name": "contáctanos",
         "description": "para sugerencias, reporte, contactarnos o cualquier otra cosa."
@@ -389,6 +385,24 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Get bot information"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
       }
     }
   }
