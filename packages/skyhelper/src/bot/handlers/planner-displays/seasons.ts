@@ -117,6 +117,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
         this.viewbtn(
           this.createCustomId({
             t: DisplayTabs.Shops,
+            d: "shops",
             it: season.shops?.map((s) => s.guid).join(","),
             b: { t: DisplayTabs.Spirits, it: this.state.it, f: this.state.f },
           }),

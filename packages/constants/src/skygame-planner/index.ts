@@ -6,3 +6,4 @@ export * from "./interfaces.js";
 export * from "./fetcher.js";
 export * from "./transformer.js";
 export * from "./service.js";
+export * from "./shop.configs.js";

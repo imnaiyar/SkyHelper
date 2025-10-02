@@ -7,6 +7,7 @@ import { getTimesEmbed, buildShardEmbed } from "@/utils/classes/Embeds";
 import { getTranslator } from "@/i18n";
 import type { SkyHelper } from "@/structures";
 import { supportedLang, SkyPlannerData } from "@skyhelperbot/constants";
+import utils from "node:util";
 const GetShardsParams = z.object({
   date: z
     .string()
@@ -113,7 +114,7 @@ export class AppController {
     const data = await SkyPlannerData.getSkyGamePlannerData();
 
     const results = SkyPlannerData.getEntityByGuid(entity, data);
-    return JSON.parse(JSON.stringify(results, removeCircular()));
+    return utils.inspect(results, { depth: 3 });
   }
   @Get("planner")
   async getPlannerData() {

@@ -149,6 +149,7 @@ export class EventsDisplay extends BasePlannerHandler {
             this.createCustomId({
               t: DisplayTabs.Shops,
               it: instance.shops.map((s) => s.guid).join(","),
+              d: "shops",
               b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f },
             }),
             { label: "Shop", emoji: { id: emojis.shopcart } },
