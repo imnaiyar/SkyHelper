@@ -30,7 +30,7 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
       }
     }
     const filtered = this.filterManager!.filterSpirits(this.data.returningSpirits);
-    return { components: [container(this.topComponents(`# Special Visits (${filtered.length})`), ...this.rslist(filtered))] };
+    return { components: [container(this.topComponents(`Special Visits (${filtered.length})`), ...this.rslist(filtered))] };
   }
 
   private rslist(rss: IReturningSpirits[]) {

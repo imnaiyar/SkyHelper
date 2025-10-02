@@ -17,6 +17,7 @@ export class BaseSpiritsDisplay extends BasePlannerHandler {
             this.createFilterIndicator() ?? "",
           )
         : textDisplay(`# ${title}`, this.createFilterIndicator() ?? ""),
+      separator(),
       row(
         this.viewbtn(this.createCustomId({ d: "normal", it: "", f: "", p: 1 }), {
           label: "Spirits",
@@ -34,9 +35,8 @@ export class BaseSpiritsDisplay extends BasePlannerHandler {
           disabled: selected("rs"),
           style: selected("rs") ? 3 : 2,
         }),
-        this.createFilterButton("Filters"),
-        this.homebtn(),
       ),
+      row(this.createFilterButton("Filters"), this.homebtn()),
       separator(),
     ];
   }

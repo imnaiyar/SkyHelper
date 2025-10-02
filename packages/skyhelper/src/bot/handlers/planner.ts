@@ -6,11 +6,12 @@ import { ItemsDisplay } from "./planner-displays/items.js";
 import { SeasonsDisplay } from "./planner-displays/seasons.js";
 import { EventsDisplay } from "./planner-displays/events.js";
 import { WingedLightsDisplay } from "./planner-displays/wingedlights.js";
-import { ShopsDisplay } from "./planner-displays/shops.js";
+import { ShopsDisplay } from "./planner-displays/shops/shops.js";
 import { AreasDisplay } from "./planner-displays/areas.js";
 import { HomeDisplay } from "./planner-displays/home.js";
 import { TSDisplay } from "./planner-displays/spirits/ts.js";
 import { ReturningSpiritDisplay } from "./planner-displays/spirits/rs.js";
+import { NestingWorkshopDisplay } from "./planner-displays/shops/nesting.js";
 
 // Navigation state interface to track user's position
 
@@ -25,13 +26,24 @@ export const getSpiritHandler = (d = "normal") => {
       return ReturningSpiritDisplay;
   }
 };
+
+function getShopDisplay(d = "nesting") {
+  switch (d) {
+    case "nesting":
+    default:
+      return NestingWorkshopDisplay;
+    case "shops":
+      return ShopsDisplay;
+  }
+}
+
 const displayClasses = (d?: string) => ({
   [DisplayTabs.Events]: EventsDisplay,
   [DisplayTabs.Realms]: RealmsDisplay,
   [DisplayTabs.Items]: ItemsDisplay,
   [DisplayTabs.Seasons]: SeasonsDisplay,
   [DisplayTabs.Spirits]: getSpiritHandler(d),
-  [DisplayTabs.Shops]: ShopsDisplay,
+  [DisplayTabs.Shops]: getShopDisplay(d),
   [DisplayTabs.WingedLights]: WingedLightsDisplay,
   [DisplayTabs.Areas]: AreasDisplay,
   [DisplayTabs.Home]: HomeDisplay,

@@ -400,7 +400,7 @@ export function formatCosts(costs: { h?: number; c?: number; sc?: number; sh?: n
   if (costs.sh) parts.push(`${costs.sh} <:SeasonHeart:${currency.sh}>`);
   if (costs.ac) parts.push(`${costs.ac} <:AC:${currency.ac}>`);
   if (costs.ec) parts.push(`${costs.ec} <:EventTicket:${currency.ec}>`);
-  return parts.join(" ");
+  return parts.join(" ") || "Free";
 }
 
 export function getFormattedTreeCost(tree: ISpiritTree) {

@@ -252,7 +252,7 @@ export abstract class BasePlannerHandler {
   formatemoji(id?: string, name?: string) {
     if (!id) return "";
     if (/^<a?:\w+:\d{17,19}>$/.test(id)) return id;
-    return `<:${name ? name.replaceAll(/[\s'\-,#,),(]+/g, "") : "_"}:${id}>`;
+    return `<:${name ? name.replaceAll(/[^\w]+/g, "") : "_"}:${id}>`;
   }
 
   /** Return view button for a an item, given a customid */
