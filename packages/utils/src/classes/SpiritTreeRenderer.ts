@@ -14,6 +14,7 @@ const skyplanner_baseurl = "https://sky-planner.com";
 const iconUrl = (icon: string) => (icon.startsWith("http") ? icon : `${skyplanner_baseurl}${icon}`);
 const emojiURl = (emoji: string) => `https://cdn.discordapp.com/emojis/${emoji}.png`;
 
+// #region image cache
 // LRU cache to reduce memory load
 class ImageCache {
   private cache = new Map<string, Image>();
@@ -102,7 +103,7 @@ function drawLine(ctx: SKRSContext2D, x1: number, y1: number, x2: number, y2: nu
   ctx.lineTo(x2, y2);
   ctx.stroke();
 }
-
+// #region connector
 // draw connector between two centers but stop short of the circles by gap
 function drawConnector(
   ctx: SKRSContext2D,
@@ -134,6 +135,7 @@ function drawConnector(
   drawLine(ctx, sx1, sy1, sx2, sy2, width, color);
 }
 
+// #region item render
 async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, node?: INode, season = false) {
   const { item } = node ?? {};
   const isUnlocked = !!(item && (item.unlocked ?? item.autoUnlocked));
@@ -144,7 +146,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
 
   const itemSize = size * 2.5;
 
-  // draw item icon
+  // #region draw item icon
   if (item?.icon) {
     try {
       const img = await getImage(iconUrl(item.icon));
@@ -162,7 +164,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
   const cx = Math.max(10, Math.floor(itemSize * 0.25));
   const padding = Math.max(4, Math.floor(itemSize * 0.06));
 
-  // season overlay
+  // #region season overlay
   if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate") && item.season?.iconUrl) {
     try {
       const badge = await getImage(iconUrl(item.season.iconUrl));
@@ -176,7 +178,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     }
   }
 
-  // item level
+  // #region item level
   if (item?.level) {
     const fontSize = Math.max(10, Math.floor(cx * 0.6));
     ctx.font = `${fontSize}px SegoeUIEmoji`;
@@ -186,7 +188,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     ctx.fillText(`Lvl${item.level}`, -itemSize / 5, itemSize / 2.25);
   }
 
-  // sheet number
+  // #region sheet number
   if (item?.sheet) {
     const fontSize = Math.max(10, Math.floor(cx * 0.5));
     ctx.font = `${fontSize}px SegoeUIEmoji`;
@@ -196,7 +198,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     ctx.fillText(`#${item.sheet}`, itemSize / 2, -itemSize / 4 - 5);
   }
 
-  // unlocked checkmark
+  // #region unlocked checkmark
   if (item && isUnlocked) {
     const checkRadius = Math.max(8, Math.floor(itemSize * 0.12));
     const badgeX = r * 0.5;
@@ -213,7 +215,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
     ctx.stroke();
   }
 
-  // cost overlay
+  // #region cost overlay
   if (node?.currency) {
     const cost = node.currency.amount;
     let iconCenterX = r - padding - cx / 2 + 15;
@@ -256,7 +258,7 @@ async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, 
 }
 
 // --------------------
-// Recursive renderer
+// #region Recursive renderer
 // --------------------
 async function renderNodeRecursive(
   ctx: SKRSContext2D,
@@ -296,7 +298,7 @@ async function renderNodeRecursive(
 }
 
 // --------------------
-// Main generator
+// #region Main generator
 // --------------------
 export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpiritTreeOptions = {}): Promise<Buffer> {
   const scale = options.scale ?? 0.5; // default slightly reduced for perf
@@ -319,12 +321,12 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   // if there are up to 3 center nodes, make the node size twice as large
   const size = centerCount > 0 && centerCount <= 3 ? baseSize * 2 : baseSize;
   const spacingY = size * 4;
-  const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit;
+  const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit?.spirit;
 
   // preload all images in parallel
   await preloadImages(tree);
 
-  // BFS to estimate dimensions
+  // #region BFS to estimate dimensions
   const queue: Array<{ node: INode; x: number; y: number; depth: number }> = [];
   const visited = new Set<string>();
   queue.push({ node: tree.node, x: 0, y: 0, depth: 0 });
@@ -352,7 +354,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   const canvas = createCanvas(width, height);
   const ctx: SKRSContext2D = canvas.getContext("2d");
 
-  // background
+  // #region background
   if (spirit?.imageUrl || options.spiritUrl) {
     try {
       const bgImg = await getImage(spirit?.imageUrl ?? options.spiritUrl!);
@@ -374,7 +376,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
     }
   }
 
-  // watermark
+  // #region watermark
   const watermarkText = "SkyHelper";
   const titleSize = Math.max(18, Math.floor(Math.min(width, height) / 20));
   const subSize = Math.max(12, Math.floor(titleSize / 2));
@@ -398,6 +400,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   const top = Math.floor((height - contentHeight) / 2);
   const startY = top + contentHeight - size;
 
+  // #region name
   if (spirit?.name || tree.name || options.spiritName) {
     const fontSize = Math.max(10, Math.floor(size * 1.15));
     ctx.font = `${fontSize}px SegoeUIEmoji`;

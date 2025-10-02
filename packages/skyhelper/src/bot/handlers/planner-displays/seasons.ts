@@ -15,7 +15,8 @@ import { ComponentType } from "discord-api-types/v10";
 import { resolveToLuxon, type ISeason } from "@skyhelperbot/constants/skygame-planner";
 import { DateTime } from "luxon";
 import type { RawFile } from "@discordjs/rest";
-import { FilterType } from "./filter.manager.js";
+import { FilterType, serializeFilters } from "./filter.manager.js";
+import { spiritTreeDisplay } from "./shared.js";
 
 export class SeasonsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any) {
@@ -106,11 +107,8 @@ export class SeasonsDisplay extends BasePlannerHandler {
       `Total: ${this.planner.formatGroupedCurrencies(trees)}`,
     ];
 
-    let file: RawFile | undefined;
-    if (tree) {
-      const buff = await generateSpiritTree(tree, { season: true });
-      file = { name: "tree.png", data: buff };
-    }
+    const gen = tree ? await spiritTreeDisplay(tree, this, { season: true }) : null;
+
     const components = [
       season.imageUrl ? section(thumbnail(season.imageUrl), ...title) : textDisplay(...title),
       row(
@@ -118,8 +116,8 @@ export class SeasonsDisplay extends BasePlannerHandler {
           this.createCustomId({
             t: DisplayTabs.Shops,
             d: "shops",
-            it: season.shops?.map((s) => s.guid).join(","),
-            b: { t: DisplayTabs.Spirits, it: this.state.it, f: this.state.f },
+            f: serializeFilters(new Map([[FilterType.Shops, season.shops?.map((s) => s.guid) ?? []]])),
+            b: { t: DisplayTabs.Seasons, it: this.state.it, f: this.state.f },
           }),
           { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !season.shops?.length },
         ),
@@ -128,27 +126,11 @@ export class SeasonsDisplay extends BasePlannerHandler {
       ),
       separator(),
       trees.length > 1 ? spiritRow : null,
-      tree
-        ? [
-            section(
-              this.viewbtn(this.createCustomId({ t: DisplayTabs.Spirits, it: tree.spirit?.guid }), {
-                label: "View",
-                disabled: !tree.spirit,
-              }),
-              `# ${tree.spirit?.name ?? "Unknown"}`,
-            ),
-            section(
-              this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-              this.planner.getFormattedTreeCost(tree),
-              "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
-            ),
-            mediaGallery(mediaGalleryItem("attachment://tree.png")),
-          ]
-        : null,
+      gen ? gen.components : null,
     ]
       .flat()
       .filter((s) => !!s);
-    return { files: file ? [file] : undefined, components: [container(components)] };
+    return { files: gen?.file ? [gen.file] : undefined, components: [container(components)] };
   }
 
   /**

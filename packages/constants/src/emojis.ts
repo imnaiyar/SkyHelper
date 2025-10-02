@@ -22,6 +22,7 @@ export const emojis = {
   downarrow: "1417189848133009610",
   location: "1417759157817180212",
   filter: "1422170806011559956",
+  spicon: "1423412547951788173",
 } as const;
 
 export const realms_emojis = {

@@ -57,15 +57,15 @@ export interface NavigationState {
 }
 
 export enum DisplayTabs {
-  Home = "home",
-  Realms = "realms",
-  Spirits = "spirits",
-  Seasons = "seasons",
-  Events = "events",
-  Items = "items",
-  WingedLights = "wingedLights",
-  Shops = "shops",
-  Areas = "areas",
+  Home = "h",
+  Realms = "r",
+  Spirits = "s",
+  Seasons = "se",
+  Events = "e",
+  Items = "i",
+  WingedLights = "w",
+  Shops = "sh",
+  Areas = "a",
 }
 
 const CATEGORY_EMOJI_MAP = {
@@ -142,12 +142,12 @@ export abstract class BasePlannerHandler {
   createTopCategoryRow(selected: DisplayTabs, user?: string, back?: { page?: number }) {
     const BUTTONS_PER_ROW = 5;
     const seasonIcon = this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji;
-    const categoryButtons = Object.values(DisplayTabs).map((category) => {
+    const categoryButtons = Object.entries(DisplayTabs).map(([title, category]) => {
       const icon =
         category === DisplayTabs.Seasons ? seasonIcon : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
 
       return button({
-        label: back && category === selected ? "Back" : category.charAt(0).toUpperCase() + category.slice(1),
+        label: back && category === selected ? "Back" : title,
         custom_id: this.createCustomId({
           t: category,
           it: "",
@@ -173,13 +173,13 @@ export abstract class BasePlannerHandler {
       type: ComponentType.StringSelect,
       custom_id: store.serialize(CustomId.PlannerSelectNav, { user }),
       placeholder: "Select category",
-      options: Object.values(DisplayTabs).map((category) => {
+      options: Object.entries(DisplayTabs).map(([label, category]) => {
         const icon =
           category === DisplayTabs.Seasons
             ? (this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji)
             : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
         return {
-          label: category.charAt(0).toUpperCase() + category.slice(1),
+          label,
           value: category,
           default: category === selected,
           emoji: icon ? { id: icon } : undefined,
@@ -234,6 +234,7 @@ export abstract class BasePlannerHandler {
       f = redirect(this.filterManager?.serializeFilters() ?? this.state.f),
       b = redirect(this.state.b),
       d = redirect(this.state.d),
+      i = redirect(this.state.i),
     } = opt;
     /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
     return store.serialize(CustomId.PlannerTopLevelNav, {
@@ -242,7 +243,8 @@ export abstract class BasePlannerHandler {
       p: p || null,
       f: f || null,
       d: d || null,
-      i: opt.i ?? Math.floor(Math.random() * 1e3).toString(),
+      i: i || null,
+      r: Math.floor(Math.random() * 1e3).toString(),
       back: b ? Utils.encodeCustomId({ ...b }) : null,
       user,
     });

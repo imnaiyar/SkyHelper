@@ -11,10 +11,11 @@ import {
   separator,
 } from "@skyhelperbot/utils";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { FilterType } from "./filter.manager.js";
+import { FilterType, serializeFilters } from "./filter.manager.js";
 import { ComponentType, type APIComponentInContainer, type APIContainerComponent } from "discord-api-types/v10";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import type { RawFile } from "@discordjs/rest";
+import { spiritTreeDisplay } from "./shared.js";
 
 export class EventsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any) {
@@ -113,13 +114,13 @@ export class EventsDisplay extends BasePlannerHandler {
         ...rows,
         i_display ? i_display.components : null,
       ]
-        .filter(Boolean)
-        .flat() as APIComponentInContainer[],
+        .filter((s) => !!s)
+        .flat(),
     };
   }
 
   async getinstancedisplay(instance: SkyPlannerData.IEventInstance) {
-    const [start, end] = [this.planner.resolveToLuxon(instance.date), this.planner.resolveToLuxon(instance.endDate)];
+    const [start] = [this.planner.resolveToLuxon(instance.date), this.planner.resolveToLuxon(instance.endDate)];
     const index = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
     const spirit = instance.spirits.length ? instance.spirits[index] : null;
     const selectRow = row({
@@ -133,22 +134,16 @@ export class EventsDisplay extends BasePlannerHandler {
       placeholder: "Select Spirit",
     });
 
-    let attachment: RawFile | undefined;
-    if (spirit?.tree) {
-      const buffer = await generateSpiritTree(spirit.tree, {
-        spiritName: spirit.name ?? spirit.spirit.name,
-        spiritUrl: spirit.spirit.imageUrl,
-      });
-      attachment = { name: "tree.png", data: buffer };
-    }
+    const gen = spirit?.tree ? await spiritTreeDisplay(spirit.tree, this) : null;
+
     return {
-      attachment,
+      attachment: gen?.file ?? undefined,
       components: [
         section(
           this.viewbtn(
             this.createCustomId({
               t: DisplayTabs.Shops,
-              it: instance.shops.map((s) => s.guid).join(","),
+              f: serializeFilters(new Map([[FilterType.Shops, instance.shops.map((s) => s.guid)]])),
               d: "shops",
               b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f },
             }),
@@ -158,16 +153,8 @@ export class EventsDisplay extends BasePlannerHandler {
         ),
         instance.spirits.length > 1 ? selectRow : null,
 
-        spirit
-          ? section(
-              this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-              `# ${spirit.name ?? spirit.spirit.name}`,
-              this.planner.getFormattedTreeCost(spirit.tree),
-              "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
-            )
-          : null,
-        attachment ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
-      ].filter(Boolean) as APIComponentInContainer[],
+        ...(gen ? gen.components : []),
+      ].filter((s) => !!s),
     };
   }
   private sortEvents(evs: SkyPlannerData.IEvent[], order: string) {

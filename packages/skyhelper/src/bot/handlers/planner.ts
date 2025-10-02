@@ -12,6 +12,8 @@ import { HomeDisplay } from "./planner-displays/home.js";
 import { TSDisplay } from "./planner-displays/spirits/ts.js";
 import { ReturningSpiritDisplay } from "./planner-displays/spirits/rs.js";
 import { NestingWorkshopDisplay } from "./planner-displays/shops/nesting.js";
+import { ShopHomeDisplay } from "./planner-displays/shops/home.js";
+import * as Sentry from "@sentry/node";
 
 // Navigation state interface to track user's position
 
@@ -27,13 +29,14 @@ export const getSpiritHandler = (d = "normal") => {
   }
 };
 
-function getShopDisplay(d = "nesting") {
+function getShopDisplay(d?: string) {
   switch (d) {
     case "nesting":
-    default:
       return NestingWorkshopDisplay;
     case "shops":
       return ShopsDisplay;
+    default:
+      return ShopHomeDisplay;
   }
 }
 
@@ -53,18 +56,20 @@ const displayClasses = (d?: string) => ({
  * Main handler for planner navigation
  */
 export async function handlePlannerNavigation(state: NavigationState) {
-  const { t, user } = state;
+  const { t } = state;
+  // for debugging purposes
+  Sentry.setContext("Planner Navigation State", { ...state });
 
   const data = await SkyPlannerData.getSkyGamePlannerData();
   const handler = displayClasses(state.d)[t];
   // eslint-disable-next-line
   if (!handler) throw new Error("Invalid display tab");
 
-  const instance = new handler(data, SkyPlannerData, { ...state, user });
+  const instance = new handler(data, SkyPlannerData, { ...state });
   const result = await instance.handle();
   return {
     ...result,
-    components: [t !== DisplayTabs.Home ? instance.createTopCategorySelect(t, user) : null, ...(result.components ?? [])].filter(
+    components: [t !== DisplayTabs.Home ? instance.createTopCategorySelect(t) : null, ...(result.components ?? [])].filter(
       (s) => !!s,
     ),
   };
