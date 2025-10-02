@@ -9,7 +9,7 @@ overrides:
 
 patchedDependencies:
   '@sapphire/string-store':
-    hash: 643d087195a65eaf572877fa521a6984b5057e797d98579c0f8194e3efdb62c0
+    hash: 7569934ff30dd3bbc9e9271ecc1e847b98bbe2e6f033ae2e181e253a4e95d31b
     path: patches/@sapphire__string-store.patch
 
 importers:
@@ -214,7 +214,7 @@ importers:
         version: 1.2.3
       '@sapphire/string-store':
         specifier: ^2.0.0
-        version: 2.0.0(patch_hash=643d087195a65eaf572877fa521a6984b5057e797d98579c0f8194e3efdb62c0)
+        version: 2.0.0(patch_hash=7569934ff30dd3bbc9e9271ecc1e847b98bbe2e6f033ae2e181e253a4e95d31b)
       '@skyhelperbot/constants':
         specifier: workspace:^
         version: link:../constants
@@ -296,7 +296,7 @@ importers:
         version: 3.4.4
       '@sapphire/string-store':
         specifier: ^2.0.0
-        version: 2.0.0(patch_hash=643d087195a65eaf572877fa521a6984b5057e797d98579c0f8194e3efdb62c0)
+        version: 2.0.0(patch_hash=7569934ff30dd3bbc9e9271ecc1e847b98bbe2e6f033ae2e181e253a4e95d31b)
       '@sentry/cli':
         specifier: ^2.37.0
         version: 2.43.0
@@ -8595,7 +8595,7 @@ snapshots:
 
   '@sapphire/snowflake@3.5.5': {}
 
-  '@sapphire/string-store@2.0.0(patch_hash=643d087195a65eaf572877fa521a6984b5057e797d98579c0f8194e3efdb62c0)': {}
+  '@sapphire/string-store@2.0.0(patch_hash=7569934ff30dd3bbc9e9271ecc1e847b98bbe2e6f033ae2e181e253a4e95d31b)': {}
 
   '@scalar/openapi-parser@0.18.3':
     dependencies:

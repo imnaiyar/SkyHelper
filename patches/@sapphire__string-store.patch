@@ -2,7 +2,7 @@ diff --git a/CHANGELOG.md b/CHANGELOG.md
 deleted file mode 100644
 index 9282a1c3dfac134cd885d59d21433c6f74444d64..0000000000000000000000000000000000000000
 diff --git a/dist/esm/index.mjs b/dist/esm/index.mjs
-index bf534ce2a90de7621d2c0c2fa75f1d5ee6f054ed..124e0061b7e2f16e4e20532e02e9d8131e937db2 100644
+index bf534ce2a90de7621d2c0c2fa75f1d5ee6f054ed..636fbac24825b1b20f3eee89a0ef49c9e201ace2 100644
 --- a/dist/esm/index.mjs
 +++ b/dist/esm/index.mjs	
 @@ -4,7 +4,7 @@ var __typeError = (msg) => {
@@ -14,55 +14,71 @@ index bf534ce2a90de7621d2c0c2fa75f1d5ee6f054ed..124e0061b7e2f16e4e20532e02e9d813
  var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
  var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
  var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-@@ -71,6 +71,7 @@ _value = new WeakMap();
- __name(_Pointer, "Pointer");
- var Pointer = _Pointer;
- 
-+
- // src/lib/buffer/UnalignedUint16Array.ts
- var ConverterUint8 = new Uint8Array(8);
- var ConverterUint16 = new Uint16Array(ConverterUint8.buffer);
-@@ -225,24 +226,30 @@ var _UnalignedUint16Array = class _UnalignedUint16Array {
+@@ -225,23 +225,56 @@ var _UnalignedUint16Array = class _UnalignedUint16Array {
      return ConverterDouble[0];
    }
    toString() {
 -    let result = "";
 -    for (let i = 0; i < this.length; i++) {
 -      result += String.fromCharCode(__privateGet(this, _buffer)[i]);
--    }
--    return result;
 +  let result = "";
++  const buffer = __privateGet(this, _buffer);
 +  for (let i = 0; i < this.length; i++) {
-+    const word = __privateGet(this, _buffer)[i];
-+    // Map surrogates to safe range for UTF-16 string transport
-+    const safeWord = (word >= 0xD800 && word <= 0xDFFF) ? (word + 0x1000) : word;
-+    result += String.fromCharCode(safeWord);
++    const word = buffer[i];
++    if (word >= 0xD800 && word <= 0xDFFF) {
++      // Encode as \uXXXX escape sequence
++      result += '\\u' + word.toString(16).padStart(4, '0');
++    } else if (word === 0x5C) { // backslash
++      result += '\\\\';
++    } else {
++      result += String.fromCharCode(word);
+     }
+-    return result;
    }
 +  return result;
 +}
    toArray() {
      return __privateGet(this, _buffer).slice(0, this.length);
    }
-   static from(value) {
+-  static from(value) {
 -    if (typeof value !== "string") return value;
 -    const buffer = new _UnalignedUint16Array(value.length);
 -    for (let i = 0; i < value.length; i++) {
 -      __privateGet(buffer, _buffer)[i] = value.charCodeAt(i);
--    }
++ static from(value) {
++  if (typeof value !== "string") return value;
++  const buffer = new _UnalignedUint16Array(value.length * 2); // Allocate extra space for escapes
++  let writeIndex = 0;
++  
++  for (let i = 0; i < value.length; i++) {
++    const char = value.charAt(i);
++    if (char === '\\' && i + 1 < value.length) {
++      const next = value.charAt(i + 1);
++      if (next === '\\') {
++        __privateGet(buffer, _buffer)[writeIndex++] = 0x5C;
++        i++;
++      } else if (next === 'u' && i + 5 < value.length) {
++        const hex = value.substr(i + 2, 4);
++        const code = parseInt(hex, 16);
++        if (!isNaN(code)) {
++          __privateGet(buffer, _buffer)[writeIndex++] = code;
++          i += 5;
++        } else {
++          __privateGet(buffer, _buffer)[writeIndex++] = value.charCodeAt(i);
++        }
++      } else {
++        __privateGet(buffer, _buffer)[writeIndex++] = value.charCodeAt(i);
++      }
++    } else {
++      __privateGet(buffer, _buffer)[writeIndex++] = value.charCodeAt(i);
+     }
 -    __privateSet(buffer, _bitLength, value.length << 4);
 -    return buffer;
--  }
-+  if (typeof value !== "string") return value;
-+  const buffer = new _UnalignedUint16Array(value.length);
-+  for (let i = 0; i < value.length; i++) {
-+    const safeWord = value.charCodeAt(i);
-+    // Unmap from safe range back to original
-+    const word = (safeWord >= 0xE800 && safeWord <= 0xEFFF) ? (safeWord - 0x1000) : safeWord;
-+    __privateGet(buffer, _buffer)[i] = word;
 +  }
-+  __privateSet(buffer, _bitLength, value.length << 4);
++  
++  __privateSet(buffer, _bitLength, writeIndex << 4);
++  __privateSet(buffer, _wordLength, writeIndex);
 +  return buffer;
-+}
+   }
  };
  _buffer = new WeakMap();
- _bitLength = new WeakMap();
