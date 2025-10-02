@@ -46,7 +46,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
     }
 
     if (this.state.f === "rotation") {
-      const legacy = this.state.i === "legacy";
+      const legacy = this.state.i === "l";
       if (this.state.it) {
         const rotation =
           this.legacyFreeItems.guid === this.state.it
@@ -62,7 +62,8 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       return this.showRotations([...this.rotations.values()]);
     }
 
-    if (this.state.f === "legacy") {
+    // l = legacy
+    if (this.state.f === "l") {
       return this.showLegacyItems();
     }
 
@@ -139,7 +140,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.homebtn(),
+            this.backbtn(this.createCustomId({ it: "", f: "", d: "", p: 1, ...this.state.b, b: null })),
             "# 🏠 Nesting Workshop",
             "A cozy workshop where you can craft home decoration props and furniture.",
             `**Estimated Current Rotation:** ${this.currentRotationIndex + 1}/${nestingconfigs.rotations.length}`,
@@ -163,7 +164,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
           ),
           row(
             button({
-              custom_id: this.createCustomId({ f: "legacy" }),
+              custom_id: this.createCustomId({ f: "l" }),
               label: "Workshop Legacy Rotations",
               style: 2,
               emoji: { name: "⏳" },
@@ -215,8 +216,9 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
                   this.createCustomId({
                     f: "rotation",
                     it: a.guid,
-                    i: legacy ? "legacy" : "",
-                    b: { ...this.state, b: null },
+                    d: "nesting",
+                    i: legacy ? "l" : "",
+                    b: { ...this.state, user: null, b: null },
                   }),
                 ),
                 "## " + a.title,
@@ -234,6 +236,30 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
     };
   }
   private showRotationItems(rotation: IRotationDisplay, legacy = false): ResponseData {
+    const rotationIndex = nestingconfigs.rotations.findIndex((r) => r.guid === rotation.guid);
+
+    const getNextRotationOccurrence = (): DateTime | null => {
+      if (legacy || rotationIndex === -1) return null;
+
+      const startDate = DateTime.fromISO("2024-04-15", { zone }).startOf("week");
+      const currentWeek = DateTime.now().setZone(zone).startOf("week");
+      const weeksBetween = Math.ceil(currentWeek.diff(startDate, "weeks").weeks);
+
+      if (rotationIndex === this.currentRotationIndex) {
+        const weeksUntilNextCycle = nestingconfigs.rotations.length;
+        return currentWeek.plus({ weeks: weeksUntilNextCycle });
+      }
+
+      let weeksUntilRotation = rotationIndex - (weeksBetween % nestingconfigs.rotations.length);
+      if (weeksUntilRotation <= 0) {
+        weeksUntilRotation += nestingconfigs.rotations.length;
+      }
+
+      return currentWeek.plus({ weeks: weeksUntilRotation });
+    };
+
+    const nextOccurrence = getNextRotationOccurrence();
+
     return {
       components: [
         container(
@@ -241,12 +267,23 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
             this.backbtn(this.createCustomId({ f: "", it: "", ...this.state.b, b: null })),
             `# ${rotation.title}`,
             `**Items:** ${rotation.items.length}`,
-            legacy
-              ? "Legacy workshop rotation"
-              : `**Rotates:** ${this.formatDateTimestamp(
-                  DateTime.now().setZone("America/Los_Angeles").startOf("week").plus({ weeks: 1 }),
-                  "R",
-                )}`,
+            [
+              legacy ? "Legacy workshop rotation" : null,
+              !legacy && rotationIndex === this.currentRotationIndex
+                ? `**Current Rotation** (Estimated) - Rotates: ${this.formatDateTimestamp(
+                    DateTime.now().setZone("America/Los_Angeles").startOf("week").plus({ weeks: 1 }),
+                    "R",
+                  )}`
+                : null,
+              !legacy && rotationIndex !== this.currentRotationIndex && nextOccurrence
+                ? `**Estimated Next Occurrence:** ${this.formatDateTimestamp(nextOccurrence, "R")}`
+                : null,
+              !legacy
+                ? "-# Current/Next Occurrence are only estimations. TGC is known to change things. Please verify from official sources or in-game."
+                : null,
+            ]
+              .filter((s) => !!s)
+              .join("\n"),
           ),
           separator(),
           ...this.displayPaginatedList({
@@ -265,7 +302,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ f: "", it: "" })),
+            this.backbtn(this.createCustomId({ f: "", it: "", p: 1, ...this.state.b, b: null })),
             "# Permanent Items",
             `**Items:** ${this.permanentItems.length}`,
             "These items are always available in the workshop.",

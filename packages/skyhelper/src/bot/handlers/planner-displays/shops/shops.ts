@@ -1,103 +1,173 @@
-import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { button, container, row, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "../base.js";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
-import type { IIAP, IItemListNode } from "@skyhelperbot/constants/skygame-planner";
-
-// Remember to not use `d` for shop routes, it is  used to reroute to permanent shops
+import { FilterType } from "../filter.manager.js";
+import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
+import { getIGCnIApDisplay } from "./shared.js";
+import { spiritTreeDisplay } from "../shared.js";
+import type { RawFile } from "@discordjs/rest";
+const name_mappings = {
+  event: "Aviary Event",
+  harmony: "Harmony Hall",
+  office: "Secret Area (Office",
+};
+// NOTE!: Remember to not use `d` for shop routes, it is  used to reroute to permanent shops
 export class ShopsDisplay extends BasePlannerHandler {
-  listItems: SkyPlannerData.IItemListNode[] = [];
+  igcs: SkyPlannerData.IItemList[] = [];
   iaps: SkyPlannerData.IIAP[] = [];
   shops: SkyPlannerData.IShop[] = [];
-  override handle() {
-    if (!this.state.it) throw new Error("No shop specified");
-    const shopIds = this.state.it.split(",");
-    this.shops = this.data.shops.filter((s) => shopIds.includes(s.guid));
-    for (const shop of this.shops) {
-      if (shop.itemList) this.listItems.push(...shop.itemList.items);
-      if (shop.iaps) this.iaps.push(...shop.iaps);
-    }
-    if (this.listItems.length && this.iaps.length) this.state.f ??= "store";
-    const shop = this.shops[0]!; // only used for names and location
-    return { components: [container(this.shopdisplay(shop))] };
+  trees: SkyPlannerData.ISpiritTree[] = [];
+  menu: "store" | "iap" | "trees" | null = null;
+  constructor(data: any, planner: any, state: any) {
+    super(data, planner, state);
+    this.initializeFilters([FilterType.Shops, FilterType.SpiritTrees]);
   }
+  override async handle() {
+    this.initializeShopData();
 
-  shopdisplay(shop: SkyPlannerData.IShop) {
-    return [
-      section(
-        this.homebtn(),
-        `# ${this.getshopname(shop)}`,
-        `${this.formatemoji(emojis.location, "Location")} ${this.getshoplocation(shop)}`,
+    const shop = this.shops[0]; // only used for names and location
+
+    const components: APIComponentInContainer[] = [
+      textDisplay(
+        `# ${shop ? this.getshopname(shop) : "Concert Hall" /* This will only happen for Concert hall shop, at least for now */}`,
+        `${this.formatemoji(emojis.location, "Location")} ${shop ? this.getshoplocation(shop) : "Aviary Village" /* Same */}`,
       ),
       separator(),
-      ...(this.state.f ? [this.getfilterrow()] : []),
+      ...this.getfilterrow(),
       textDisplay(
-        this.state.f === "store" ? "Store Items" + ` (${this.listItems.length})` : "In-App Purchases" + ` (${this.iaps.length})`,
+        this.menu === "store"
+          ? "In-game Currency (IGC)" + ` (${this.igcs.length})`
+          : "In-App Purchases" + ` (${this.iaps.length})`,
       ),
-      ...this.getItemsListDisplay(),
     ];
+    let files: RawFile[] | undefined = undefined;
+    switch (this.menu) {
+      case "store":
+      case "iap":
+      default:
+        components.push(...this.getItemsListDisplay());
+        break;
+      case "trees": {
+        const display = await this.treeDisplay();
+        files = display.files;
+        components.push(...display.components);
+        break;
+      }
+    }
+
+    return { files, components: [container(components)] };
   }
+
+  initializeShopData() {
+    if (this.state.i?.startsWith("shp")) this.menu = (this.state.i.substring(3) as any) ?? "store";
+
+    const shopIds = this.filterManager?.getFilterValues(FilterType.Shops) ?? [];
+
+    const treeIds = this.filterManager?.getFilterValues(FilterType.SpiritTrees) ?? [];
+
+    if (!shopIds.length && !treeIds.length) throw new Error("No shop or trees specified");
+
+    this.shops = this.data.shops.filter((s) => shopIds.includes(s.guid));
+    for (const shop of this.shops) {
+      if (shop.itemList) this.igcs.push(shop.itemList);
+      if (shop.iaps) this.iaps.push(...shop.iaps);
+    }
+
+    this.trees = this.data.spiritTrees.filter((t) => treeIds.includes(t.guid));
+
+    if (this.igcs.length) {
+      this.menu ??= "store";
+    } else if (this.iaps.length) {
+      this.menu ??= "iap";
+    } else if (this.trees.length) {
+      this.menu ??= "trees";
+    } else {
+      this.menu ??= "store";
+    }
+  }
+
   private getshopname(shop: SkyPlannerData.IShop) {
+    if (shop.permanent) return (name_mappings as Record<string, string>)[shop.permanent as any] ?? "Permanent Shop";
     if (shop.name) return shop.name;
     if (shop.event) return `${shop.event.event.name} Shop`;
     if (shop.season) return `${shop.season.name} Shop`;
     return "Shop";
   }
+
   private getshoplocation(shop: SkyPlannerData.IShop) {
     return shop.name ?? (shop.type === "Store" ? "Premium Candle Store" : (shop.spirit?.name ?? "Unknown"));
   }
+
   private getfilterrow() {
-    return row(
-      button({
-        custom_id: this.createCustomId({ f: "store" }),
-        label: "Store",
-        style: this.state.f === "store" ? 3 : 2,
-        disabled: this.state.f === "store",
-      }),
-      button({
-        custom_id: this.createCustomId({ f: "iap" }),
-        label: "IAP",
-        style: this.state.f === "iap" ? 3 : 2,
-        disabled: this.state.f === "iap",
-      }),
-      this.backbtn(this.createCustomId({ it: "", ...this.state.b, b: null }), {
-        disabled: !this.state.b,
-      }),
-    );
+    const comps = [];
+    if (this.igcs.length) {
+      comps.push(
+        button({
+          custom_id: this.createCustomId({ i: "shpstore" }),
+          label: "In-Game Currency (IGC)",
+          style: this.menu === "store" ? 3 : 2,
+          disabled: this.menu === "store",
+        }),
+      );
+    }
+
+    if (this.iaps.length) {
+      comps.push(
+        button({
+          custom_id: this.createCustomId({ i: "shpiap" }),
+          label: "In-App Purchases (IAP)",
+          style: this.menu === "iap" ? 3 : 2,
+          disabled: this.menu === "iap",
+        }),
+      );
+    }
+    if (this.trees.length) {
+      comps.push(
+        button({
+          custom_id: this.createCustomId({ i: "shptrees" }),
+          label: "Spirit Tree(s)",
+          style: this.menu === "trees" ? 3 : 2,
+          disabled: this.menu === "trees",
+        }),
+      );
+    }
+    return [
+      comps.length ? row(comps) : null,
+      row(this.backbtn(this.createCustomId({ it: "", f: "", d: "", p: 1, ...this.state.b, b: null }))),
+      separator(true, 1),
+    ].filter((c) => !!c);
   }
 
   getItemsListDisplay() {
-    return this.displayPaginatedList({
-      items: (this.state.f === "store" ? this.listItems.map((i) => ({ ...i, type: "list" })) : this.iaps) as Array<
-        (IItemListNode & { type: string }) | IIAP
-      >,
-      itemCallback: (as) => [
-        ...("type" in as
-          ? [
-              section(
-                // TODO: handle acquiring the item
-                this.viewbtn(this.createCustomId({ d: "sldjfh" }), { label: "Acquire" }),
-                `${this.formatemoji(as.item.emoji, as.item.name)} ${as.item.name}`,
-                this.planner.formatCosts(as),
-              ),
-              separator(false),
-            ].flat()
-          : [
-              textDisplay(
-                as.name ?? "In-App Purchase",
-                `$ ${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP`,
-                [as.items?.map((i) => `${this.formatemoji(i.emoji, i.name)} ${i.name}`), this.planner.formatCosts(as)]
-                  .flat()
-                  .filter(Boolean)
-                  .join(" \u2022 "),
-              ),
-
-              /** TODO:  handle buying/recieving the item */
-              row(
-                button({ custom_id: this.createCustomId({ it: as.guid, d: "Buy" }), label: "Bought", style: 3 }),
-                button({ custom_id: this.createCustomId({ it: as.guid, d: "Receive" }), label: "Received", style: 2 }),
-              ),
-            ]),
-      ],
+    return this.displayPaginatedList<APIComponentInContainer | APIComponentInContainer[]>({
+      items:
+        this.menu === "store"
+          ? this.igcs.flatMap((i) => getIGCnIApDisplay(i, this, "igc"))
+          : this.iaps.map((as) => getIGCnIApDisplay(as, this, "iap")),
+      perpage: 5,
+      page: this.state.p ?? 1,
+      user: this.state.user,
+      itemCallback: (as) => (Array.isArray(as) ? as : [as]),
     });
+  }
+
+  private async treeDisplay() {
+    const current = this.trees.find((t) => t.guid === this.state.v?.[0]) ?? this.trees[0]!;
+    const rows = row({
+      type: ComponentType.StringSelect,
+      custom_id: this.createCustomId({}),
+      options: this.trees.map((t) => ({
+        label: t.name ?? t.spirit?.name ?? t.eventInstanceSpirit?.name ?? "Unknown",
+        value: t.guid,
+        emoji: t.spirit?.emoji
+          ? { id: t.spirit.emoji }
+          : t.eventInstanceSpirit?.spirit.emoji
+            ? { id: t.eventInstanceSpirit.spirit.emoji }
+            : undefined,
+        default: t.guid === current.guid,
+      })),
+    });
+    const { file, components } = await spiritTreeDisplay(current, this);
+    return { files: [file], components: [this.trees.length > 1 ? rows : null, ...components].filter((c) => !!c) };
   }
 }

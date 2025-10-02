@@ -20,7 +20,8 @@ export enum FilterType {
   Events = "ev",
   Order = "o",
   ItemTypes = "it",
-  ShopTypes = "st",
+  Shops = "shp",
+  SpiritTrees = "st",
   Currencies = "cr",
 }
 export enum OrderType {
@@ -297,19 +298,6 @@ export class FilterManager {
             label: k,
             value: v,
           })),
-        };
-
-      case FilterType.ShopTypes:
-        return {
-          type: FilterType.ShopTypes,
-          label: "Shop Types",
-          description: "Filter by shop types",
-          multiSelect: true,
-          options: [
-            { label: "Regular Shop", value: "regular" },
-            { label: "IAP", value: "iap" },
-            { label: "Special Offers", value: "special" },
-          ],
         };
       case FilterType.Currencies:
         return {
