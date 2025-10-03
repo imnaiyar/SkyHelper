@@ -24,6 +24,9 @@ import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHan
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
+import { handlePlannerNavigation } from "@/handlers/planner";
+import type { DisplayTabs, NavigationState } from "@/handlers/planner-displays/base";
+import { setLoadingState } from "@/utils/loading";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -234,11 +237,48 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region selects
     if (helper.isSelect(interaction)) {
-      const { id } = client.utils.store.deserialize(interaction.data.custom_id);
+      const { id, data } = client.utils.store.deserialize(interaction.data.custom_id);
       switch (id) {
-        case client.utils.customId.TimesDetailsRow:
+        case CustomId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
           return;
+        case CustomId.PlannerTopLevelNav: {
+          const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+          await helper.update({ components: getLoading });
+          const values = interaction.data.values;
+          const { t: tab, p, d, f, it, back } = data;
+          const b = back ? (client.utils.parseCustomId(back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
+          const res = await handlePlannerNavigation({
+            v: values,
+            t: tab as DisplayTabs,
+            p: p ?? undefined,
+            f: f ?? undefined,
+            d: d ?? undefined,
+            it: it ?? undefined,
+            i: data.i ?? undefined,
+            b,
+            user: helper.user.id,
+          });
+          await helper.editReply({
+            ...res,
+            flags: MessageFlags.IsComponentsV2,
+          });
+          break;
+        }
+        case CustomId.PlannerSelectNav: {
+          const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+          await helper.update({ components: getLoading });
+          const values = interaction.data.values;
+          const res = await handlePlannerNavigation({
+            t: values[0] as DisplayTabs,
+            user: helper.user.id,
+          });
+          await helper.editReply({
+            ...res,
+            flags: MessageFlags.IsComponentsV2,
+          });
+          return;
+        }
         default:
           return;
       }

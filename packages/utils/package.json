@@ -8,6 +8,8 @@
   "scripts": {
     "build": "tsup && tsc --emitDeclarationOnly --declaration",
     "build:docs": "typedoc",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench",
     "lint": "eslint --fix src"
   },
   "repository": {
@@ -33,15 +35,19 @@
   "homepage": "https://github.com/imnaiyar/skyhelper/tree/main/packages/utils",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.51",
+    "@skyhelperbot/constants": "workspace:^",
     "discord-api-types": "0.38.10",
     "undici": "^7.10.0"
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
+    "@vitest/coverage-v8": "^3.2.4",
     "luxon": "^3.5.0",
     "mongoose": "^8.3.2",
     "tsup": "^8.5.0",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "luxon": "^3.5.0"

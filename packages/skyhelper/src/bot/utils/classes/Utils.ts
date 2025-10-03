@@ -25,6 +25,16 @@ export default class {
   static customId = CustomId;
 
   /**
+   * Capitalizes first letter (or all spaced ones) and returns it
+   */
+  static capitalize(text: string, includeSpaced = false): string {
+    if (includeSpaced) {
+      return text.replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  /**
    * Returns the creation date of the given ID.
    *
    * @param id - The ID to resolve.
@@ -109,14 +119,13 @@ export default class {
    * @param obj The object to encode
    */
   static encodeCustomId(obj: ParsedCustomId): string {
-    let customId = obj.id;
+    let customId = `${obj.id ?? ""}`;
     for (const [key, value] of Object.entries(obj)) {
       if (key === "id") continue;
-      customId += `;${key}:${value}`;
+      if (!value) continue;
+      customId += `;${key}=${value}`;
     }
-    if (customId.length > 100) {
-      throw new RangeError("The resulting string exceeded 100 characters. Value: " + `"${customId}"`);
-    }
+
     return customId;
   }
 
@@ -128,7 +137,7 @@ export default class {
     const parts = customId.split(";");
     const obj: ParsedCustomId = { id: parts[0]! };
     for (let i = 1; i < parts.length; i++) {
-      const [key, value] = parts[i]!.split(":");
+      const [key, value] = parts[i]!.split("=");
       obj[key!] = value!;
     }
     return obj;

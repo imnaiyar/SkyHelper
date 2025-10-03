@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Inject, Patch } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Inject, Patch, Param } from "@nestjs/common";
 import {
   ApiTags,
   ApiOperation,
@@ -14,6 +14,7 @@ import { EventDataSchema, TSDataSchema, type EventData, type TSData } from "../t
 import type { DailyQuestsSchema } from "@/types/schemas";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { toJSONSchema, z } from "zod/v4";
+import { SkyPlannerData } from "@skyhelperbot/constants";
 
 const QuestSchema = z.object({
   title: z.string(),

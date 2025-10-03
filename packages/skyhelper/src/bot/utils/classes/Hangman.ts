@@ -21,7 +21,7 @@ declare global {
 }
 // prettier-ignore
 Array.prototype.random = function() {
-// eslint-disable-next-line
+
   return this[Math.floor(Math.random() * this.length)];
 };
 type ModeType = "single" | "double";

@@ -44,7 +44,7 @@ export async function validateInteractions({ command, interaction, options, help
     return {
       status: false,
       message:
-        "This is a beta command. That means it is not fully release yet. To use beta commands, server admins need to enable it via `/bot manage` command (or via dashboard).",
+        "This is a beta command, which means it’s still being tested and might not always work as expected. As they can be unstable, so beta features are turned off by default, but server admins can enable them anytime using `/bot manage` or through the dashboard.",
     };
   }
   // Handle owner commands

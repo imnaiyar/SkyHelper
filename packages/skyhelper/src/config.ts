@@ -13,6 +13,8 @@ export default {
     GUILD_ID: "710502237717266491", // (QAR Server) This is not used, only included for documenting
   },
 
+  SKY_PLANNER_URL: "https://sky-planner.com",
+
   BOT_STATs: { MESSAGE_ID: "1179858980923768893", CHANNEL: "1158068842040414351" },
 
   BOT_ICON: "https://skyhelper.xyz/assets/img/boticon.png",

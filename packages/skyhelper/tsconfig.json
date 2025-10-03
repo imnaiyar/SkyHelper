@@ -5,15 +5,25 @@
     // from generated source code references.
     // This improves issue grouping in Sentry.
     "sourceRoot": "/",
-    "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
+    "outDir": "dist",
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
     "paths": {
-      "@/api/*": ["src/api/*.js"],
-      "@/structures": ["src/bot/structures/index.js"],
-      "@/types/*": ["src/bot/@types/*.js"],
-      "@/*": ["src/bot/*.js"],
-      "@/config": ["src/config.js"]
+      "@/api/*": ["./src/api/*.js"],
+      "@/structures": ["./src/bot/structures/index.js"],
+      "@/types/*": ["./src/bot/@types/*.js"],
+      "@/*": ["./src/bot/*.js"],
+      "@/config": ["./src/config.js"]
     }
   },
   "include": ["src"],
