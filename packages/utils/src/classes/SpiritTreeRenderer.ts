@@ -324,6 +324,25 @@ async function renderNodeRecursive(
 // --------------------
 // #region Main generator
 // --------------------
+/**
+ * Generates a spirit tree image as a Buffer.
+ *
+ * @param tree The spirit tree data to render.
+ * @param options rendering options.
+ * @returns A promise that resolves to a PNG image buffer of the rendered spirit tree.
+ *
+ * @example
+ * import { generateSpiritTree } from './SpiritTreeRenderer';
+ * import type { ISpiritTree } from '@skyhelperbot/constants/skygame-planner';
+ *
+ * const tree: ISpiritTree = getSpiritTreeData();
+ * const buffer = await generateSpiritTree(tree, {
+ *   season: true,
+ *   spiritName: "Grateful Spirit",
+ *   highlightItems: ["item1", "item2"],
+ *   scale: 1
+ * });
+ */
 export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpiritTreeOptions = {}): Promise<Buffer> {
   const scale = options.scale ?? 0.5; // default slightly reduced for perf
   const baseSize = 64 * scale;
