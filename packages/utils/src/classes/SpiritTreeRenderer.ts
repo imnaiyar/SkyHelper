@@ -5,7 +5,7 @@ import { currency as currencyEmojis } from "@skyhelperbot/constants";
 export interface GenerateSpiritTreeOptions {
   season?: boolean;
   spiritName?: string;
-  highlightNodes?: string[];
+  highlightItems?: string[];
   spiritUrl?: string;
   scale?: number; // multiplier for resolution
 }
@@ -144,11 +144,11 @@ async function drawItem(
   size: number,
   node?: INode,
   season = false,
-  highlightNodes?: string[],
+  highlightItems?: string[],
 ) {
   const { item } = node ?? {};
   const isUnlocked = !!(item && (item.unlocked ?? item.autoUnlocked));
-  const isHighlighted = !!(node && highlightNodes?.includes(node.guid));
+  const isHighlighted = !!(item && highlightItems?.includes(item.guid));
 
   ctx.save();
   ctx.translate(x, y);
@@ -291,33 +291,33 @@ async function renderNodeRecursive(
   spacingY: number,
   size: number,
   season: boolean,
-  highlightNodes?: string[],
+  highlightItems?: string[],
   visited = new Set<string>(),
 ) {
   if (visited.has(node.guid)) return;
   visited.add(node.guid);
   const gap = Math.max(10, size * 0.7);
 
-  await drawItem(ctx, x, y, size, node, season, highlightNodes);
+  await drawItem(ctx, x, y, size, node, season, highlightItems);
 
   if (node.n) {
     const ny = y + spacingY;
     drawConnector(ctx, x, y, x, ny, size / 2, gap);
-    await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, highlightNodes, visited);
+    await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, highlightItems, visited);
   }
 
   if (node.nw) {
     const bx = x + spacingY - 20;
     const by = y + spacingY / 1.5;
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
-    await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, highlightNodes, visited);
+    await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, highlightItems, visited);
   }
 
   if (node.ne) {
     const bx = x - spacingY + 20;
     const by = y + spacingY / 1.5;
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
-    await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, highlightNodes, visited);
+    await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, highlightItems, visited);
   }
 }
 
@@ -442,7 +442,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
     -spacingY,
     size,
     !!options.season,
-    options.highlightNodes,
+    options.highlightItems,
   );
 
   return canvas.toBuffer("image/png");

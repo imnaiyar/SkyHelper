@@ -23,6 +23,7 @@ export const emojis = {
   location: "1417759157817180212",
   filter: "1422170806011559956",
   spicon: "1423412547951788173",
+  leftarryello: "1207594669882613770",
 } as const;
 
 export const realms_emojis = {

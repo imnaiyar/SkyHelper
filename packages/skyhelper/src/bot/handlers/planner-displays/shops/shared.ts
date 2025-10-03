@@ -4,18 +4,31 @@ import { button, row, section, textDisplay } from "@skyhelperbot/utils";
 import type { APIComponentInContainer } from "discord-api-types/v10";
 import { emojis } from "@skyhelperbot/constants";
 
-export function getIGCnIApDisplay(item: IItemList, planner: BasePlannerHandler, type: "igc"): APIComponentInContainer[];
-export function getIGCnIApDisplay(item: IIAP, planner: BasePlannerHandler, type: "iap"): APIComponentInContainer[];
+export function getIGCnIApDisplay(
+  item: IItemList,
+  planner: BasePlannerHandler,
+  type: "igc",
+  highlighted?: boolean,
+): APIComponentInContainer[];
+export function getIGCnIApDisplay(
+  item: IIAP,
+  planner: BasePlannerHandler,
+  type: "iap",
+  highlighted?: boolean,
+): APIComponentInContainer[];
 export function getIGCnIApDisplay(
   item: IIAP | IItemList,
   planner: BasePlannerHandler,
   type: "iap" | "igc",
+  highlighted = false,
 ): APIComponentInContainer[] {
   if (type === "igc") {
     const as = item as IItemList;
     return [
-      as.shop ? textDisplay(`## ${getshopname(as.shop)}`) : null,
-      as.items.map((l) =>
+      textDisplay(
+        `${highlighted ? "#" : "##"} ${as.shop ? getshopname(as.shop) : "IGC"}${highlighted ? planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
+      ),
+      ...as.items.map((l) =>
         section(
           // TODO: handle acquiring the item
           planner.viewbtn(planner.createCustomId({ it: l.guid }), { label: "Acquire", disabled: true }),
@@ -23,14 +36,12 @@ export function getIGCnIApDisplay(
           planner.planner.formatCosts(l),
         ),
       ),
-    ]
-      .filter((s) => !!s)
-      .flat() as APIComponentInContainer[];
+    ];
   } else {
     const as = item as IIAP;
     return [
       textDisplay(
-        `**${as.name ?? "In-App Purchase"}**`,
+        `${highlighted ? "#" : "##"} ${as.name ?? "In-App Purchase"}${highlighted ? planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
         [
           `$ ${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP`,
           as.sc || as.c || as.sc ? planner.planner.formatCosts(as) : null,

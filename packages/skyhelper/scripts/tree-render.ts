@@ -41,9 +41,7 @@ function parseArgs(): ScriptOptions {
   let output = "";
   let spiritName;
 
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-
+  for (const arg of args) {
     if (arg === "--season") {
       season = true;
     } else if (arg.startsWith("--output=")) {
@@ -134,7 +132,7 @@ async function main() {
     }
 
     console.log(`✅ Found spirit: ${spirit.name}`);
-    const tree = spirit.tree || spirit.events?.at(-1)?.tree;
+    const tree = spirit.tree ?? spirit.events?.at(-1)?.tree;
     if (!tree) {
       console.error(`❌ Spirit "${spirit.name}" has no tree data available`);
       process.exit(1);
@@ -146,7 +144,10 @@ async function main() {
 
     // Render the tree
     console.time("Render time");
-    const imageBuffer = await generateSpiritTree(tree, { season: options.season, spiritName: options.spiritName });
+    const imageBuffer = await generateSpiritTree(tree, {
+      season: options.season,
+      spiritName: options.spiritName,
+    });
     console.timeEnd("Render time");
 
     // Save to file

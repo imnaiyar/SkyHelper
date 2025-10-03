@@ -51,7 +51,7 @@ export interface NavigationState {
    * For ex, imagine we go to a particular area from wl tab, providing this back btn, we can come back to wl tab
    * * b = back
    */
-  b?: Omit<NavigationState, "back" | "user"> | null;
+  b?: _Nullable<Omit<NavigationState, "back" | "user">> | null;
 
   /** any string to prevent custom_id duplication */
   i?: string;
@@ -202,6 +202,13 @@ export abstract class BasePlannerHandler {
     const endIndex = Math.min(startIndex + perpage, items.length);
     const displayedItems: T[] = items.slice(startIndex, endIndex);
     const components: APIComponentInContainer[] = [];
+    if (opt.scrollTo) {
+      const item = opt.scrollTo();
+      const index = items.indexOf(item);
+      if (index !== -1) {
+        page = Math.floor(index / perpage) + 1;
+      }
+    }
     for (const [i, item] of displayedItems.entries()) {
       components.push(...itemCallback(item, i));
     }
@@ -223,7 +230,7 @@ export abstract class BasePlannerHandler {
     return components;
   }
 
-  createCustomId(opt: Partial<_Nullable<NavigationState>> & { t?: DisplayTabs }) {
+  createCustomId(opt: Partial<_Nullable<NavigationState>>) {
     /** Check if provided tab is different from current, and reset extra tab specific fields if they are not given */
     const redirect = (data: any) => ((opt.t && this.state.t !== opt.t) || (opt.it && this.state.it !== opt.it) ? null : data);
 
@@ -239,7 +246,7 @@ export abstract class BasePlannerHandler {
     } = opt;
 
     return store.serialize(CustomId.PlannerTopLevelNav, {
-      t,
+      t: t ?? this.state.t,
       it,
       p,
       f,
@@ -393,6 +400,8 @@ interface IPaginatedProps<T> {
   /** Items to paginate */
   items: T[];
   user?: string;
+
+  scrollTo?: (items: T[]) => T;
 
   /** The current page */
   page?: number;

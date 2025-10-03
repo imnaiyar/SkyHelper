@@ -15,17 +15,20 @@ import {
 } from "@skyhelperbot/utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
-import type { RawFile } from "@discordjs/rest";
 import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import { BaseSpiritsDisplay } from "./base.js";
+import { spiritTreeDisplay } from "../shared.js";
 
 export class SpiritsDisplay extends BaseSpiritsDisplay {
   constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: any) {
     super(data, planner, state);
     this.state.d ??= "normal";
-    this.initializeFilters([FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons, FilterType.Areas], {
-      [FilterType.SpiritTypes]: { defaultValues: [SpiritType.Regular] },
-    });
+    this.initializeFilters(
+      [FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons, FilterType.Areas, FilterType.Highlight],
+      {
+        [FilterType.SpiritTypes]: { defaultValues: [SpiritType.Regular] },
+      },
+    );
   }
   override handle() {
     const spirits = this.data.spirits;
@@ -107,11 +110,8 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
     }
 
     const tree = trees[selected];
-    let attachment: RawFile | undefined;
-    if (tree) {
-      const buffer = await generateSpiritTree(tree.tree, { season: !!tree.season });
-      attachment = { name: "tree.png", data: buffer };
-    }
+    const highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
+    const gen = tree ? await spiritTreeDisplay(tree.tree, this, { season: !!tree.season, highlightItems: highlights }) : null;
 
     const title = [
       `# ${this.formatemoji(spirit.emoji)} ${spirit.name}`,
@@ -133,24 +133,19 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
       trees.length > 1
         ? row({
             type: ComponentType.StringSelect,
-            custom_id: this.createCustomId({}),
+            custom_id: this.createCustomId({ i: null /* reset i, so we don't keep the previous selection */ }),
             options: trees.map((t, i) => ({ label: t.name, value: i.toString(), default: selected === i })),
             placeholder: "Select a spirit tree",
           })
         : null,
-      tree
-        ? section(
-            this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-            this.planner.getFormattedTreeCost(tree.tree),
-            "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
-          )
-        : null,
-      tree ? mediaGallery(mediaGalleryItem("attachment://tree.png")) : null,
-    ].filter(Boolean) as APIComponentInContainer[];
+      gen ? gen.components : null,
+    ]
+      .filter((s) => !!s)
+      .flat();
 
     return {
       components: [container(compos)],
-      files: attachment ? [attachment] : undefined,
+      files: gen?.file ? [gen.file] : undefined,
     };
   }
 }

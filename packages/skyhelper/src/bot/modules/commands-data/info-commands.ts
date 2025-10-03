@@ -131,6 +131,9 @@ export const TRAVELING_SPIRITS_DATA: Omit<Command, "interactionRun" | "messageRu
   category: "Info",
 };
 
+// this is legacy command for planner temporary made to  be used in development
+// for now making it owner only, may refactor or remove
+// TODO: refactor or remove
 // #region SkyGamePlanner
 export const SKYGAME_PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "skygame-planner",
@@ -186,10 +189,13 @@ export const SKYGAME_PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"
     ],
     integration_types: [0, 1],
     contexts: [0, 1, 2],
+    guilds: ["852141490105090059", "1142926822598774814"],
   },
   category: "Info",
   prefix: {
     aliases: ["skyplanner", "sgp"],
   },
+  ownerOnly: true,
+  userPermissions: ["Administrator"],
   cooldown: 15,
 };

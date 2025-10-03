@@ -1,19 +1,9 @@
 import { BaseSpiritsDisplay } from "./base.js";
 import { FilterType, OrderType } from "../filter.manager.js";
 import { type IReturningSpirits } from "@skyhelperbot/constants/skygame-planner";
-import {
-  section,
-  container,
-  thumbnail,
-  textDisplay,
-  row,
-  separator,
-  generateSpiritTree,
-  mediaGallery,
-  mediaGalleryItem,
-} from "@skyhelperbot/utils";
+import { section, container, thumbnail, textDisplay, row, separator } from "@skyhelperbot/utils";
 import { ComponentType } from "@discordjs/core";
-import type { RawFile } from "@discordjs/rest";
+import { spiritTreeDisplay } from "../shared.js";
 export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
   constructor(data: any, planner: any, state: any) {
     super(data, planner, state);
@@ -64,8 +54,7 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
     const selected = parseInt(this.state.v?.[0] ?? "0");
     const spirit = rs.spirits[selected]!;
 
-    const buffer = await generateSpiritTree(spirit.tree);
-    const file: RawFile = { name: "tree.png", data: buffer };
+    const { file, components } = await spiritTreeDisplay(spirit.tree, this);
     return {
       components: [
         rs.imageUrl ? section(thumbnail(rs.imageUrl), title) : textDisplay(title),
@@ -87,13 +76,7 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
             emoji: s.spirit.emoji ? { id: s.spirit.emoji } : undefined,
           })),
         }),
-        section(
-          this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-          `## ${this.formatemoji(spirit.spirit.emoji, spirit.spirit.name)} ${spirit.spirit.name}`,
-          this.planner.getFormattedTreeCost(spirit.tree),
-          "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
-        ),
-        mediaGallery(mediaGalleryItem("attachment://tree.png")),
+        ...components,
       ],
       files: [file],
     };
