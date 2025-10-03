@@ -67,6 +67,18 @@ async function handleModal(helper: InteractionHelper) {
           },
         ],
       },
+      {
+        type: ComponentType.Label,
+        label: "Files",
+        description: "Any file attachments that should be sent with annoucements",
+        component: {
+          // @ts-expect-error https://github.com/discordjs/discord-api-types/pull/1372
+          type: ComponentType.FileUpload,
+          custom_id: "attachments",
+          max_values: 10,
+          required: false,
+        },
+      },
     ],
   };
 
@@ -85,13 +97,26 @@ async function handleModal(helper: InteractionHelper) {
   const modalHelper = new InteractionHelper(modalSubmit, helper.client);
   await modalHelper.defer();
   const text = helper.client.utils.getTextInput(modalSubmit, "announcement_text_input", true).value;
+  // prettier-ignore
+  // @ts-expect-error same as above
+  const atchs = helper.client.utils.getModalComponent(modalSubmit, "attachments", ComponentType.FileUpload).values as string[] | undefined; // TODO: remember to remove the case type errors are resolved
+  const files = await Promise.all(
+    atchs?.map(async (id) => {
+      const ats = modalSubmit.data.resolved!.attachments![id]!;
+      const arrayBuff = await fetch(ats.proxy_url).then((res) => res.arrayBuffer());
+      return { name: ats.filename, data: Buffer.from(arrayBuff) };
+    }) ?? [],
+  );
+
   const data = await helper.client.schemas.getAnnouncementGuilds();
 
   for (const { annoucement_channel } of data) {
     const channel = helper.client.channels.get(annoucement_channel!);
     if (!channel) continue;
     if (!SendableChannels.includes(channel.type)) continue;
-    await helper.client.api.channels.createMessage(channel.id, { content: text }).catch(() => null);
+    await helper.client.api.channels.createMessage(channel.id, { content: text, files }).catch(() => null);
+
+    await new Promise((r) => setTimeout(r, 2_000));
   }
   await modalHelper.editReply({ content: "Announcement sent to all the announcement channels.", components: [] }).catch(() => {});
 }
