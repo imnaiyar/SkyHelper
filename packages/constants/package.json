@@ -10,12 +10,12 @@
   "exports": {
     "./locales/*": "./locales/*",
     "./spirits-datas": {
-      "default": "./dist/spirits-datas/index.js",
-      "types": "./dist/types/spirits-datas/index.d.ts"
+      "types": "./dist/types/spirits-datas/index.d.ts",
+      "default": "./dist/spirits-datas/index.js"
     },
     ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
