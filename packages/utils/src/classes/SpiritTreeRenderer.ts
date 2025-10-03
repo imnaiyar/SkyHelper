@@ -5,6 +5,7 @@ import { currency as currencyEmojis } from "@skyhelperbot/constants";
 export interface GenerateSpiritTreeOptions {
   season?: boolean;
   spiritName?: string;
+  highlightNodes?: string[];
   spiritUrl?: string;
   scale?: number; // multiplier for resolution
 }
@@ -136,15 +137,37 @@ function drawConnector(
 }
 
 // #region item render
-async function drawItem(ctx: SKRSContext2D, x: number, y: number, size: number, node?: INode, season = false) {
+async function drawItem(
+  ctx: SKRSContext2D,
+  x: number,
+  y: number,
+  size: number,
+  node?: INode,
+  season = false,
+  highlightNodes?: string[],
+) {
   const { item } = node ?? {};
   const isUnlocked = !!(item && (item.unlocked ?? item.autoUnlocked));
+  const isHighlighted = !!(node && highlightNodes?.includes(node.guid));
 
   ctx.save();
   ctx.translate(x, y);
   if (item && !isUnlocked) ctx.globalAlpha = 0.5; // faded for unacquired items
 
   const itemSize = size * 2.5;
+
+  // #region highlight border for highlighted nodes
+  if (isHighlighted) {
+    const highlightRadius = itemSize * 0.55;
+    ctx.strokeStyle = "#FFD700"; // golden color
+    ctx.lineWidth = Math.max(4, Math.floor(itemSize * 0.05));
+    ctx.shadowColor = "#FFD700";
+    ctx.shadowBlur = Math.max(8, Math.floor(itemSize * 0.15));
+    ctx.beginPath();
+    ctx.arc(0, 0, highlightRadius, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.shadowBlur = 0; // reset shadow
+  }
 
   // #region draw item icon
   if (item?.icon) {
@@ -268,32 +291,33 @@ async function renderNodeRecursive(
   spacingY: number,
   size: number,
   season: boolean,
+  highlightNodes?: string[],
   visited = new Set<string>(),
 ) {
   if (visited.has(node.guid)) return;
   visited.add(node.guid);
   const gap = Math.max(10, size * 0.7);
 
-  await drawItem(ctx, x, y, size, node, season);
+  await drawItem(ctx, x, y, size, node, season, highlightNodes);
 
   if (node.n) {
     const ny = y + spacingY;
     drawConnector(ctx, x, y, x, ny, size / 2, gap);
-    await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, visited);
+    await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, highlightNodes, visited);
   }
 
   if (node.nw) {
     const bx = x + spacingY - 20;
     const by = y + spacingY / 1.5;
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
-    await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, visited);
+    await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, highlightNodes, visited);
   }
 
   if (node.ne) {
     const bx = x - spacingY + 20;
     const by = y + spacingY / 1.5;
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
-    await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, visited);
+    await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, highlightNodes, visited);
   }
 }
 
@@ -410,7 +434,16 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
     ctx.fillText(options.spiritName ?? tree.name ?? spirit!.name, centerX, startY);
   }
 
-  await renderNodeRecursive(ctx, tree.node, centerX, startY - size * 2.5, -spacingY, size, !!options.season);
+  await renderNodeRecursive(
+    ctx,
+    tree.node,
+    centerX,
+    startY - size * 2.5,
+    -spacingY,
+    size,
+    !!options.season,
+    options.highlightNodes,
+  );
 
   return canvas.toBuffer("image/png");
 }
