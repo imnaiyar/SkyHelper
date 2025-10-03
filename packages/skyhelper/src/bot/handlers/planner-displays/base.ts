@@ -196,14 +196,15 @@ export abstract class BasePlannerHandler {
 
   /** Returns a paginated list of given items */
   displayPaginatedList<T>(opt: IPaginatedProps<T>) {
-    const { items, user = this.state.user, page = this.state.p ?? 1, perpage = 5, itemCallback } = opt;
+    const { items, user = this.state.user, page: p, perpage = 5, itemCallback } = opt;
+    let page = p ?? this.state.p ?? 1;
     const total = Math.max(1, Math.ceil(items.length / perpage));
     const startIndex = (page - 1) * perpage;
     const endIndex = Math.min(startIndex + perpage, items.length);
     const displayedItems: T[] = items.slice(startIndex, endIndex);
     const components: APIComponentInContainer[] = [];
     if (opt.scrollTo) {
-      const item = opt.scrollTo();
+      const item = opt.scrollTo(items);
       const index = items.indexOf(item);
       if (index !== -1) {
         page = Math.floor(index / perpage) + 1;
