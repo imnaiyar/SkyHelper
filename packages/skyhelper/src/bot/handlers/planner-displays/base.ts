@@ -1,5 +1,6 @@
 import { emojis, realms_emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import {
+  type _Nullable,
   type APIButtonComponent,
   type APIButtonComponentWithCustomId,
   type APIComponentInContainer,
@@ -150,7 +151,7 @@ export abstract class BasePlannerHandler {
         label: back && category === selected ? "Back" : title,
         custom_id: this.createCustomId({
           t: category,
-          it: "",
+          it: null,
           p: back?.page ?? 1,
           user,
         }),
@@ -222,7 +223,7 @@ export abstract class BasePlannerHandler {
     return components;
   }
 
-  createCustomId(opt: Partial<NavigationState>) {
+  createCustomId(opt: Partial<_Nullable<NavigationState>> & { t?: DisplayTabs }) {
     /** Check if provided tab is different from current, and reset extra tab specific fields if they are not given */
     const redirect = (data: any) => ((opt.t && this.state.t !== opt.t) || (opt.it && this.state.it !== opt.it) ? null : data);
 
@@ -236,19 +237,18 @@ export abstract class BasePlannerHandler {
       d = redirect(this.state.d),
       i = redirect(this.state.i),
     } = opt;
-    /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+
     return store.serialize(CustomId.PlannerTopLevelNav, {
       t,
-      it: it || null,
-      p: p || null,
-      f: f || null,
-      d: d || null,
-      i: i || null,
+      it,
+      p,
+      f,
+      d,
+      i,
       r: Math.floor(Math.random() * 1e3).toString(),
       back: b ? Utils.encodeCustomId({ ...b }) : null,
       user,
     });
-    /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
   }
 
   formatemoji(id?: string, name?: string) {
@@ -264,11 +264,11 @@ export abstract class BasePlannerHandler {
   backbtn(custom_id: string, opt?: Partial<Omit<APIButtonComponentWithCustomId, "type">>) {
     return button({ label: "Back", style: 4, custom_id, emoji: { id: emojis.leftarrow }, ...opt });
   }
-  homebtn(user?: string) {
+  homebtn() {
     return button({
       label: "Home",
       style: 4,
-      custom_id: this.createCustomId({ t: DisplayTabs.Home, user }),
+      custom_id: this.createCustomId({ p: null, it: null, f: null, d: null, b: null }),
       emoji: { id: realms_emojis.Home },
     });
   }

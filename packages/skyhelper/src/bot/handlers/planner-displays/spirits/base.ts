@@ -19,18 +19,18 @@ export class BaseSpiritsDisplay extends BasePlannerHandler {
         : textDisplay(`# ${title}`, this.createFilterIndicator() ?? ""),
       separator(),
       row(
-        this.viewbtn(this.createCustomId({ d: "normal", it: "", f: "", p: 1 }), {
+        this.viewbtn(this.createCustomId({ d: "normal", it: null, f: null, p: 1 }), {
           label: "Spirits",
           disabled: selected("normal"),
           style: selected("normal") ? 3 : 2,
         }),
-        this.viewbtn(this.createCustomId({ d: "ts", it: "", f: "", p: 1 }), {
+        this.viewbtn(this.createCustomId({ d: "ts", it: null, f: null, p: 1 }), {
           label: "Traveling Spirits",
           disabled: selected("ts"),
           style: selected("ts") ? 3 : 2,
           emoji: { id: emojis.travelingspirit },
         }),
-        this.viewbtn(this.createCustomId({ d: "rs", it: "", f: "", p: 1 }), {
+        this.viewbtn(this.createCustomId({ d: "rs", it: null, f: null, p: 1 }), {
           label: "Special Visits",
           disabled: selected("rs"),
           style: selected("rs") ? 3 : 2,

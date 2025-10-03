@@ -125,7 +125,10 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
 
     const compos = [
       spirit.imageUrl ? section(thumbnail(spirit.imageUrl), ...title) : textDisplay(...title),
-      row(this.backbtn(this.createCustomId({ t: DisplayTabs.Spirits, f: "", it: "", ...this.state.b, b: null })), this.homebtn()),
+      row(
+        this.backbtn(this.createCustomId({ t: DisplayTabs.Spirits, f: null, it: null, ...this.state.b, b: null })),
+        this.homebtn(),
+      ),
       separator(true, 1),
       trees.length > 1
         ? row({

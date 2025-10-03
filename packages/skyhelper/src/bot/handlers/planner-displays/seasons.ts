@@ -121,7 +121,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
           }),
           { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !season.shops?.length },
         ),
-        this.backbtn(this.createCustomId({ it: "", f: "", ...this.state.b })),
+        this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })),
         this.homebtn(),
       ),
       separator(),
