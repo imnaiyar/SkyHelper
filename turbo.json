@@ -10,7 +10,7 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["__tests__/**", "src/**", "jest.config.js", "package.json", "tsconfig.json"],
+      "inputs": ["__tests__/**", "src/**", "vitest.config.ts", "package.json", "tsconfig.json"],
       "outputLogs": "full"
     },
     "lint": {

@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { getTranslator } from "../src/bot/i18n.js";
 
 describe("getTranslator", () => {
@@ -10,7 +11,7 @@ describe("getTranslator", () => {
 
   it("should throw an error if translation key is not found", () => {
     const translator = getTranslator("en-US");
-    // @ts-expect-error
+    // @ts-expect-error intentional error for testing
     expect(() => translator("common:nonexistentKey")).toThrow("Translation key invalid: nonexistentKey");
   });
 

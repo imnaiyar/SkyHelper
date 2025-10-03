@@ -1,4 +1,4 @@
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { InteractionCollector } from "../src/bot/utils/classes/Collector";
 import { InteractionType } from "@discordjs/core";
 import { EventEmitter } from "node:events";
@@ -13,11 +13,12 @@ describe("InteractionCollector", () => {
   });
 
   afterEach(() => {
-    jest.clearAllTimers();
+    vi.clearAllTimers();
+    vi.useRealTimers();
   });
 
   it("should collect interactions that pass the filter", () => {
-    const filter = jest.fn().mockReturnValue(true) as () => boolean;
+    const filter = vi.fn(() => true) as () => boolean;
     const collector = new InteractionCollector(client, { filter });
 
     const interaction = { type: InteractionType.MessageComponent, data: { component_type: 2 } };
@@ -28,7 +29,7 @@ describe("InteractionCollector", () => {
   });
 
   it("should not collect interactions that do not pass the filter", () => {
-    const filter = jest.fn().mockReturnValue(false) as () => boolean;
+    const filter = vi.fn(() => false) as () => boolean;
     const collector = new InteractionCollector(client, { filter });
 
     const interaction = { type: InteractionType.MessageComponent, data: { component_type: 2 } };
@@ -48,31 +49,33 @@ describe("InteractionCollector", () => {
   });
 
   it("should stop collecting after the timeout", () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const collector = new InteractionCollector(client, { timeout: 1000 });
     expect(collector.ended).toBe(false);
 
-    jest.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1000);
 
     expect(collector.ended).toBe(true);
+    vi.useRealTimers();
   });
 
   it("should stop collecting after being idle", () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const collector = new InteractionCollector(client, { idle: 1000 });
 
     const interaction = { type: InteractionType.MessageComponent, data: { component_type: 2 } };
     client.emit("INTERACTION_CREATE", { data: interaction });
     expect(collector.ended).toBe(false);
 
-    jest.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1000);
 
     expect(collector.ended).toBe(true);
+    vi.useRealTimers();
   });
 
   it("should emit 'collect' event when an interaction is collected", () => {
     const collector = new InteractionCollector(client, {});
-    const collectListener = jest.fn();
+    const collectListener = vi.fn();
     collector.on("collect", collectListener);
 
     const interaction = { type: InteractionType.MessageComponent, data: { component_type: 2 } };
@@ -83,7 +86,7 @@ describe("InteractionCollector", () => {
 
   it("should emit 'end' event when the collector stops", () => {
     const collector = new InteractionCollector(client, { max: 1 });
-    const endListener = jest.fn();
+    const endListener = vi.fn();
     collector.on("end", endListener);
 
     const interaction = { type: InteractionType.MessageComponent, data: { component_type: 2 } };

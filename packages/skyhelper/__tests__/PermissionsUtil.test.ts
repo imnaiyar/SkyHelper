@@ -1,4 +1,4 @@
-import { describe, it, expect } from "@jest/globals";
+import { describe, expect, it } from "vitest";
 import { PermissionsUtil } from "../src/bot/utils/classes/PermissionUtils";
 import { PermissionFlagsBits } from "@discordjs/core";
 
@@ -39,13 +39,13 @@ describe("PermissionsUtil", () => {
     });
 
     it("should resolve array of permissions", () => {
-      // @ts-expect-error
+      // @ts-expect-error - array intentionally mixes literal types for coverage
       const bits = PermissionsUtil.resolveBits(["Administrator", "8"]);
       expect(bits).toBe(PermissionFlagsBits.Administrator | 8n);
     });
 
     it("should return 0n for unknown permissions", () => {
-      // @ts-expect-error
+      // @ts-expect-error - unknown string should resolve to zero
       const bits = PermissionsUtil.resolveBits("UnknownPermission");
       expect(bits).toBe(0n);
     });

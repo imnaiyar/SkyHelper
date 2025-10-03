@@ -1,6 +1,7 @@
+import type { LocalizationMap } from "@discordjs/core";
+import { describe, expect, it } from "vitest";
 import { supportedLang } from "@skyhelperbot/constants";
 import { loadLocalization } from "../src/bot/utils/loaders.js";
-import type { LocalizationMap } from "@discordjs/core";
 const l = supportedLang.map((lang) => lang.value);
 
 describe("useTranslations", () => {
@@ -18,7 +19,7 @@ describe("useTranslations", () => {
 
   it("should throw an error if the translation key is not valid", () => {
     expect(() => {
-      // @ts-expect-error
+      // @ts-expect-error - useTranslations is intentionally undefined to assert failure
       useTranslations("common:nonexistent.key");
     }).toThrow();
   });

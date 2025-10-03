@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { MessageFlags } from "../src/bot/utils/classes/MessageFlags.js";
 
 describe("Flags", () => {

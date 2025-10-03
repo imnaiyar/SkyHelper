@@ -1,6 +1,6 @@
 import type { APIGuildMember, APIUser, APIModalSubmitInteraction, APIMessage } from "@discordjs/core";
+import { describe, expect, it } from "vitest";
 import Utils from "../src/bot/utils/classes/Utils";
-import { describe, it, expect } from "@jest/globals";
 
 describe("Utils", () => {
   describe("createdAt", () => {
@@ -83,7 +83,9 @@ describe("Utils", () => {
 
     it("should throw an error if the resulting string exceeds 100 characters", () => {
       const obj = { id: "1", key: "a".repeat(100) };
-      expect(() => Utils.encodeCustomId(obj)).toThrow(RangeError);
+      expect(() => {
+        Utils.encodeCustomId(obj);
+      }).toThrow(RangeError);
     });
   });
 
@@ -146,7 +148,9 @@ describe("Utils", () => {
 
     it("should throw an error if the command is not found", () => {
       const client = { applicationCommands: [] } as any;
-      expect(() => Utils.mentionCommand(client, "command")).toThrow(Error);
+      expect(() => {
+        Utils.mentionCommand(client, "command");
+      }).toThrow(Error);
     });
   });
 
@@ -167,7 +171,9 @@ describe("Utils", () => {
           components: [{ components: [{ custom_id: "otherinput", value: "value" }] }],
         },
       } as APIModalSubmitInteraction;
-      expect(() => Utils.getTextInput(interaction, "textinput", true)).toThrow(Error);
+      expect(() => {
+        Utils.getTextInput(interaction, "textinput", true);
+      }).toThrow(Error);
     });
   });
 });
