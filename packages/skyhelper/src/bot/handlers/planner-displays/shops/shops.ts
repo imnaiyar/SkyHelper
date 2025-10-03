@@ -18,9 +18,10 @@ export class ShopsDisplay extends BasePlannerHandler {
   shops: SkyPlannerData.IShop[] = [];
   trees: SkyPlannerData.ISpiritTree[] = [];
   menu: "store" | "iap" | "trees" | null = null;
+  highlights: string[] = [];
   constructor(data: any, planner: any, state: any) {
     super(data, planner, state);
-    this.initializeFilters([FilterType.Shops, FilterType.SpiritTrees]);
+    this.initializeFilters([FilterType.Shops, FilterType.SpiritTrees, FilterType.Highlight]);
   }
   override async handle() {
     this.initializeShopData();
@@ -64,6 +65,8 @@ export class ShopsDisplay extends BasePlannerHandler {
     const shopIds = this.filterManager?.getFilterValues(FilterType.Shops) ?? [];
 
     const treeIds = this.filterManager?.getFilterValues(FilterType.SpiritTrees) ?? [];
+
+    this.highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
 
     if (!shopIds.length && !treeIds.length) throw new Error("No shop or trees specified");
 
@@ -142,9 +145,24 @@ export class ShopsDisplay extends BasePlannerHandler {
     return this.displayPaginatedList<APIComponentInContainer | APIComponentInContainer[]>({
       items:
         this.menu === "store"
-          ? this.igcs.flatMap((i) => getIGCnIApDisplay(i, this, "igc"))
-          : this.iaps.map((as) => getIGCnIApDisplay(as, this, "iap")),
+          ? this.igcs.flatMap((i) =>
+              getIGCnIApDisplay(
+                i,
+                this,
+                "igc",
+                this.highlights.includes(i.guid) || this.highlights.some((h) => i.items.some((it) => it.guid === h)),
+              ),
+            )
+          : this.iaps.map((as) =>
+              getIGCnIApDisplay(
+                as,
+                this,
+                "iap",
+                this.highlights.includes(as.guid) || this.highlights.some((h) => as.items?.some((it) => it.guid === h)),
+              ),
+            ),
       perpage: 5,
+
       page: this.state.p ?? 1,
       user: this.state.user,
       itemCallback: (as) => (Array.isArray(as) ? as : [as]),

@@ -65,7 +65,7 @@ export async function handlePlannerNavigation(state: NavigationState) {
   // eslint-disable-next-line
   if (!handler) throw new Error("Invalid display tab");
 
-  const instance = new handler(data, SkyPlannerData, { ...state });
+  const instance = new handler(data, SkyPlannerData, state);
   const result = await instance.handle();
   return {
     ...result,

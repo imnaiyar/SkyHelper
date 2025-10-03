@@ -68,7 +68,7 @@ export function searchEntitiesByName(query: string, data: TransformedData) {
 
   // Search realms
   data.realms.forEach((realm) => {
-    if (realm.name.toLowerCase().includes(searchTerms)) {
+    if (realm.name.toLowerCase().includes(searchTerms) || realm.shortName.toLowerCase().includes(searchTerms)) {
       results.push({ type: "Realm", name: realm.name, guid: realm.guid });
     }
   });
@@ -89,7 +89,7 @@ export function searchEntitiesByName(query: string, data: TransformedData) {
 
   // Search seasons
   data.seasons.forEach((season) => {
-    if (season.name.toLowerCase().includes(searchTerms)) {
+    if (season.name.toLowerCase().includes(searchTerms) || season.shortName.toLowerCase().includes(searchTerms)) {
       results.push({ type: "Season", name: season.name, guid: season.guid });
     }
   });
@@ -101,10 +101,43 @@ export function searchEntitiesByName(query: string, data: TransformedData) {
     }
   });
 
-  // Search items
   data.items.forEach((item) => {
-    if (item.name.toLowerCase().includes(searchTerms)) {
+    const spiritName = item.nodes?.[0]?.root?.spiritTree?.spirit?.name.toLowerCase() ?? "";
+    const eventName = item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name?.toLowerCase() ?? "";
+    if (item.name.toLowerCase().includes(searchTerms) || spiritName.includes(searchTerms) || eventName.includes(searchTerms)) {
       results.push({ type: "Item", name: item.name, guid: item.guid });
+    }
+  });
+
+  data.travelingSpirits.forEach((ts) => {
+    if (
+      ts.number.toString().includes(searchTerms) ||
+      ts.spirit.name.toLowerCase().includes(searchTerms) ||
+      `ts${ts.number}`.includes(searchTerms) ||
+      `ts #${ts.number}`.includes(searchTerms)
+    ) {
+      results.push({ type: `TS#${ts.number}`, name: ts.spirit.name, guid: ts.guid });
+    }
+  });
+
+  data.returningSpirits.forEach((rs) => {
+    const spiritNames = rs.spirits.map((s) => s.spirit.name.toLowerCase()).join(" ");
+    if (rs.name?.toLowerCase().includes(searchTerms) || spiritNames.includes(searchTerms)) {
+      results.push({ type: "SV", name: rs.name ?? "Unknown", guid: rs.guid });
+    }
+  });
+
+  // Search IAPs
+  data.iaps.forEach((iap) => {
+    if (iap.name?.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "IAP", name: iap.name, guid: iap.guid });
+    }
+  });
+
+  // Search shops
+  data.shops.forEach((shop) => {
+    if (shop.name?.toLowerCase().includes(searchTerms)) {
+      results.push({ type: "Shop", name: shop.name, guid: shop.guid });
     }
   });
 

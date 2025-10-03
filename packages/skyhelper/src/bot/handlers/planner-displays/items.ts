@@ -40,6 +40,63 @@ export class ItemsDisplay extends BasePlannerHandler {
   createItemsNav() {
     return row(this.createFilterButton("Filter"), this.homebtn());
   }
+
+  /**
+   * Creates a navigation state for viewing the source of an item
+   * @param item The item to find the source for
+   * @returns NavigationState to navigate to the source, or null if no source found
+   */
+  private getItemSourceNavigation(item: IItem) {
+    const highlight = [FilterType.Highlight, [item.guid]] satisfies [FilterType.Highlight, string[]];
+    // Check if item comes from a spirit tree
+    const nodeWithSpirit = item.nodes?.find((n) => n.root?.spiritTree?.spirit);
+    if (nodeWithSpirit?.root?.spiritTree?.spirit) {
+      const spirit = nodeWithSpirit.root.spiritTree.spirit;
+      const tree = nodeWithSpirit.root.spiritTree;
+
+      // Find which tree index this is for the spirit
+      const allTrees = [spirit.tree, ...(spirit.treeRevisions ?? []), ...(spirit.returns ?? []), ...(spirit.ts ?? [])].filter(
+        Boolean,
+      );
+      const treeIndex = allTrees.findIndex((t) => t?.guid === tree.guid);
+
+      return this.createCustomId({
+        t: DisplayTabs.Spirits,
+        it: spirit.guid,
+        i: treeIndex >= 0 ? `tree${treeIndex}` : undefined,
+        f: this.filterManager?.serializeFilters(new Map([highlight])),
+        b: { t: DisplayTabs.Items, it: item.guid, f: "" },
+      });
+    }
+
+    // Check if item comes from a shop's item list
+    const listNodeWithShop = item.listNodes?.find((ls) => ls.itemList.shop);
+    if (listNodeWithShop?.itemList.shop) {
+      const shop = listNodeWithShop.itemList.shop;
+      return this.createCustomId({
+        t: DisplayTabs.Shops,
+        d: "shops",
+        i: "shpstore",
+        f: this.filterManager?.serializeFilters(new Map([[FilterType.Shops, [shop.guid]], highlight])),
+        b: { t: DisplayTabs.Items, it: item.guid, f: null },
+      });
+    }
+
+    // Check if item comes from an IAP
+    const iap = item.iaps?.find((ia) => ia.shop);
+    if (iap?.shop) {
+      return this.createCustomId({
+        t: DisplayTabs.Shops,
+        d: "shops",
+        i: "shpiap",
+        f: this.filterManager?.serializeFilters(new Map([[FilterType.Shops, [iap.shop.guid]], highlight])),
+        b: { t: DisplayTabs.Items, it: item.guid, f: null },
+      });
+    }
+
+    return null;
+  }
+
   itemslist(items: IItem[]) {
     return this.displayPaginatedList({
       items,
@@ -87,8 +144,17 @@ export class ItemsDisplay extends BasePlannerHandler {
           .join("\n"),
       ),
       row(
-        this.viewbtn(this.createCustomId({}), { label: "Find Source" }),
-        this.viewbtn(this.createCustomId({}), { label: "Favorite" }),
+        (() => {
+          const sourceNav = this.getItemSourceNavigation(item);
+          return this.viewbtn(sourceNav ?? "", { label: "Find Source", disabled: !sourceNav });
+        })(),
+        button({
+          custom_id: this.createCustomId({}),
+          label: "Add to Wishlist",
+          style: 2,
+          emoji: { name: "⭐" },
+          disabled: true,
+        }),
       ),
       separator(true, 1),
       item.dye

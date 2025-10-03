@@ -23,6 +23,7 @@ export enum FilterType {
   Shops = "shp",
   SpiritTrees = "st",
   Currencies = "cr",
+  Highlight = "h",
 }
 export enum OrderType {
   NameAsc = "name_asc",
