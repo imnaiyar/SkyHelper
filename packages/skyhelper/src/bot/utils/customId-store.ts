@@ -77,7 +77,7 @@ export const store = new SchemaStore()
       // previous state for back button
       .nullable("back", t.string)
       // random nonce to ensure uniqueness
-      .string("r")
+      .nullable("r", t.string)
       .nullable("user", t.string),
   )
   .add(new Schema(CustomId.PlannerFilters).string("tab").array("filters", t.string).nullable("user", t.string))

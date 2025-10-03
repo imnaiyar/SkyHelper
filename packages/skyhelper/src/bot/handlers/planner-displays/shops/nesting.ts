@@ -3,7 +3,7 @@
  * {@see https://github.com/Silverfeelin/SkyGame-Planner/blob/master/src/app/components/shops/shop-nesting/shop-nesting.component.ts} */
 // --------------------------------------------------------------------------------------------------------------------------------- //
 
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */ // idk what is wrong with this rule
+// idk what is wrong with this rule
 import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "../base.js";
 import { zone, type SkyPlannerData } from "@skyhelperbot/constants";
@@ -218,6 +218,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
                     it: a.guid,
                     d: "nesting",
                     i: legacy ? "l" : "",
+                    // @ts-expect-error - user is present in state, so need to override, even though the props don't have user
                     b: { ...this.state, user: null, b: null },
                   }),
                 ),

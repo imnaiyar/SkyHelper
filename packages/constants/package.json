@@ -13,6 +13,10 @@
       "types": "./dist/types/spirits-datas/index.d.ts",
       "default": "./dist/spirits-datas/index.js"
     },
+    "./skygame-planner": {
+      "types": "./dist/types/skygame-planner/index.d.ts",
+      "default": "./dist/skygame-planner/index.js"
+    },
     ".": {
       "types": "./dist/types/index.d.ts",
       "default": "./dist/index.js"
