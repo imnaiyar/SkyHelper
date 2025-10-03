@@ -111,7 +111,7 @@ async function handleModal(helper: InteractionHelper) {
     if (!SendableChannels.includes(channel.type)) continue;
     await helper.client.api.channels
       .createMessage(channel.id, { components: [textDisplay(text)], flags: MessageFlags.IsComponentsV2 })
-      .catch(console.error);
+      .catch(() => {});
   }
   await modalHelper.editReply({ content: "Announcement sent to all the announcement channels.", components: [] }).catch(() => {});
 }
