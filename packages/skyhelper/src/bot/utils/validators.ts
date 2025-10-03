@@ -38,6 +38,15 @@ export async function validateInteractions({ command, interaction, options, help
 > {
   const { client, user } = helper;
 
+  const guild = interaction.guild_id ? client.guilds.get(interaction.guild_id)! : null;
+  const settings = guild ? await client.schemas.getSettings(guild) : null;
+  if (command.beta && !settings?.beta) {
+    return {
+      status: false,
+      message:
+        "This is a beta command. That means it is not fully release yet. To use beta commands, server admins need to enable it via `/bot manage` command (or via dashboard).",
+    };
+  }
   // Handle owner commands
   if (command.ownerOnly && !client.config.OWNER.includes(user.id)) {
     return {

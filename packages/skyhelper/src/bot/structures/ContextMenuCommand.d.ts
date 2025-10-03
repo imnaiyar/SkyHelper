@@ -18,6 +18,7 @@ export interface ContextMenuCommand<T extends "UserContext" | "MessageContext"> 
     guilds?: string[];
   };
   userPermissions?: PermissionsResolvable;
+  beta?: boolean;
   botPermissions?: PermissionsResolvable;
   ownerOnly?: boolean;
   validations?: Array<InteractionValidation<true>>;
