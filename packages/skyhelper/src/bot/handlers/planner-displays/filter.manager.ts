@@ -155,7 +155,7 @@ export class FilterManager {
         this.filters.delete(type);
       }
     } else {
-      // add if doesn't exis
+      // add if doesn't exist
       this.filters.set(type, [...current, value]);
     }
   }

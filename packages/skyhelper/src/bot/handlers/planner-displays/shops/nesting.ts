@@ -67,7 +67,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       return this.showLegacyItems();
     }
 
-    if (this.state.f === "challange") {
+    if (this.state.f === "challenge") {
       return this.showChallengeSpirits();
     }
 
@@ -171,7 +171,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
             }),
             button({
               custom_id: this.createCustomId({
-                f: "challange",
+                f: "challenge",
               }),
               label: "Challenge Spirits",
               style: 2,

@@ -62,7 +62,7 @@ export function getIGCnIApDisplay(
         }),
         button({
           custom_id: planner.createCustomId({ it: as.guid, d: "Receive" }),
-          label: "Recieved",
+          label: "Received",
           emoji: { name: "🎁" },
           style: 2,
         }),
