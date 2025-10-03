@@ -25,7 +25,7 @@ export default defineConfig([
       ecmaVersion: 2023,
       sourceType: "module",
       parserOptions: {
-        project: ["./packages/*/tsconfig.json", "./apps/*/tsconfig.json", "./tsconfig.json"],
+        project: ["./packages/*/tsconfig.eslint.json", "./apps/*/tsconfig.json", "./tsconfig.json"],
         tsconfigRootDir: import.meta.dirname,
       },
     },

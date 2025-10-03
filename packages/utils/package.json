@@ -3,10 +3,10 @@
   "version": "2.1.1",
   "description": "Utilities for SkyHelper bot",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc && echo 'Files compiled'",
+    "build": "tsup && tsc --emitDeclarationOnly --declaration",
     "build:docs": "typedoc",
     "lint": "eslint --fix src"
   },
@@ -40,6 +40,7 @@
     "@types/luxon": "^3.4.2",
     "luxon": "^3.5.0",
     "mongoose": "^8.3.2",
+    "tsup": "^8.5.0",
     "typescript": "^5.4.3"
   },
   "peerDependencies": {

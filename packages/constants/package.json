@@ -9,11 +9,17 @@
   ],
   "exports": {
     "./locales/*": "./locales/*",
-    "./spirits-datas": "./dist/spirits-datas/index.js",
-    ".": "./dist/index.js"
+    "./spirits-datas": {
+      "types": "./dist/types/spirits-datas/index.d.ts",
+      "default": "./dist/spirits-datas/index.js"
+    },
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup && tsc --emitDeclarationOnly --declaration",
     "lint": "eslint --fix src"
   },
   "repository": {
@@ -32,6 +38,7 @@
     "discord-api-types": "0.38.10"
   },
   "devDependencies": {
+    "tsup": "^8.5.0",
     "typescript": "^5.7.3"
   }
 }
