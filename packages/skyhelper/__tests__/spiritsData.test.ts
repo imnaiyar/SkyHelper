@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import spiritsData from "@skyhelperbot/constants/spirits-datas";
 
 describe("spiritsData", () => {
@@ -11,7 +12,7 @@ describe("spiritsData", () => {
   });
 
   it("should contain correct data for specific spirit", () => {
-    const shaman = spiritsData["shaman"];
+    const shaman = spiritsData.shaman;
     expect(shaman).toBeDefined();
 
     expect(shaman.name).toBe("Greeting Shaman");
@@ -21,23 +22,23 @@ describe("spiritsData", () => {
     );
     expect(shaman.realm).toBe("Vault of Knowledge");
 
-    // @ts-ignore
+    // @ts-expect-error - seasonal data is optional in typings but present in dataset
     expect(shaman.season).toBe("Gratitude");
 
-    // @ts-ignore
+    // @ts-expect-error - test verifies optional timeline metadata
     expect(shaman.ts).toEqual({
       eligible: true,
       returned: true,
       total: "3",
       dates: ["May 26, 2022 (#62)", "July 23, 2020 (#14)", ["July 03, 2023 (SV#3)", "July 16, 2023"]],
     });
-    // @ts-ignore
+    // @ts-expect-error - tree data is optional in types but expected here
     expect(shaman.tree).toEqual({
       by: "Clement",
       total: "112 :RegularCandle: 13 :RegularHeart: 2 :AC:",
       image: "Greeting_Shaman_Tree.png",
     });
-    // @ts-ignore
+    // @ts-expect-error - location metadata isn't strictly typed in dataset definition
     expect(shaman.location).toEqual({
       by: "Clement",
       image: "Greeting_Shaman_Location.png",

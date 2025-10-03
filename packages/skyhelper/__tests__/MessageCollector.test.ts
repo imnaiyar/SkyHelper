@@ -2,7 +2,7 @@ import { EventEmitter } from "node:events";
 import { MessageCollector } from "../src/bot/utils/classes/Collector";
 import type { SkyHelper } from "../src/bot/structures/Client";
 import type { APIChannel, APIMessage, GatewayMessageCreateDispatchData, ToEventProps } from "@discordjs/core";
-import { describe, it, expect, jest, beforeEach } from "@jest/globals";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("MessageCollector", () => {
   let client: SkyHelper;
@@ -41,39 +41,39 @@ describe("MessageCollector", () => {
       max: 1,
     });
 
-    const stopSpy = jest.spyOn(collector, "stop");
+    const stopSpy = vi.spyOn(collector, "stop");
 
     client.emit("MESSAGE_CREATE", { data: message } as ToEventProps<GatewayMessageCreateDispatchData>);
     expect(stopSpy).toHaveBeenCalledWith("max");
   });
 
   it("should stop collecting after the timeout", () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const collector = new MessageCollector(client, {
       channel,
       timeout: 1000,
     });
 
-    const stopSpy = jest.spyOn(collector, "stop");
+    const stopSpy = vi.spyOn(collector, "stop");
 
-    jest.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1000);
     expect(stopSpy).toHaveBeenCalledWith("timeout");
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it("should stop collecting after being idle", () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const collector = new MessageCollector(client, {
       channel,
       idle: 1000,
     });
 
-    const stopSpy = jest.spyOn(collector, "stop");
+    const stopSpy = vi.spyOn(collector, "stop");
 
     client.emit("MESSAGE_CREATE", { data: message } as ToEventProps<GatewayMessageCreateDispatchData>);
-    jest.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1000);
     expect(stopSpy).toHaveBeenCalledWith("timeout");
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it("should emit 'collect' event when a message is collected", () => {
@@ -81,7 +81,7 @@ describe("MessageCollector", () => {
       channel,
     });
 
-    const collectSpy = jest.fn();
+    const collectSpy = vi.fn();
     collector.on("collect", collectSpy);
 
     client.emit("MESSAGE_CREATE", { data: message } as ToEventProps<GatewayMessageCreateDispatchData>);
@@ -93,7 +93,7 @@ describe("MessageCollector", () => {
       channel,
     });
 
-    const endSpy = jest.fn();
+    const endSpy = vi.fn();
     collector.on("end", endSpy);
 
     collector.stop("test");
