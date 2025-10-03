@@ -1,4 +1,4 @@
-import type { Command } from "@/structures";
+/* import type { Command } from "@/structures";
 import { MessageFlags } from "@discordjs/core";
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import { postToHaste, separator, textDisplay } from "@skyhelperbot/utils";
@@ -170,3 +170,4 @@ export default {
   },
   ...SKYGAME_PLANNER_DATA,
 } satisfies Command<true>;
+ */
