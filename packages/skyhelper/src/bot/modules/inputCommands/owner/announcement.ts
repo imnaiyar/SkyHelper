@@ -98,7 +98,7 @@ async function handleModal(helper: InteractionHelper) {
 
     if (!command) return match;
 
-    const subCommand = subCommandPath ? ` ${subCommandPath.replace(/ /g, " ")}` : "";
+    const subCommand = subCommandPath ? ` ${subCommandPath}` : "";
 
     return `</${command.name}${subCommand}:${command.id}>`;
   });
