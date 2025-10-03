@@ -11,7 +11,7 @@ export interface GenerateSpiritTreeOptions {
 
 const skyplanner_baseurl = "https://sky-planner.com";
 
-const iconUrl = (icon: string) => (icon.startsWith("http") ? icon : `${skyplanner_baseurl}${icon}`);
+const iconUrl = (icon: string) => (icon.startsWith("/") ? `${skyplanner_baseurl}${icon}` : icon);
 const emojiURl = (emoji: string) => `https://cdn.discordapp.com/emojis/${emoji}.png`;
 
 // #region image cache
