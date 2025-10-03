@@ -70,9 +70,10 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
       components: [
         rs.imageUrl ? section(thumbnail(rs.imageUrl), title) : textDisplay(title),
         row(
-          [this.state.b ? this.backbtn(this.createCustomId({ ...this.state.b, it: "", b: null })) : null, this.homebtn()].filter(
-            (c) => !!c,
-          ),
+          [
+            this.state.b ? this.backbtn(this.createCustomId({ ...this.state.b, it: null, b: null })) : null,
+            this.homebtn(),
+          ].filter((c) => !!c),
         ),
         separator(true, 1),
         textDisplay("## Spirits"),

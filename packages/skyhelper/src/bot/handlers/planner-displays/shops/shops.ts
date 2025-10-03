@@ -133,7 +133,7 @@ export class ShopsDisplay extends BasePlannerHandler {
     }
     return [
       comps.length ? row(comps) : null,
-      row(this.backbtn(this.createCustomId({ it: "", f: "", d: "", p: 1, ...this.state.b, b: null }))),
+      row(this.backbtn(this.createCustomId({ it: null, f: null, d: null, p: 1, ...this.state.b, b: null }))),
       separator(true, 1),
     ].filter((c) => !!c);
   }

@@ -82,7 +82,7 @@ export class EventsDisplay extends BasePlannerHandler {
         )
       : [];
 
-    instanceButtons.push(this.backbtn(this.createCustomId({ it: "", f: "", d: "", ...this.state.b })), this.homebtn());
+    instanceButtons.push(this.backbtn(this.createCustomId({ it: null, f: null, d: null, ...this.state.b })), this.homebtn());
     const rows =
       instanceButtons.length > 0
         ? Array.from({ length: Math.ceil(instanceButtons.length / 5) }, (_, i) => row(instanceButtons.slice(i * 5, i * 5 + 5)))

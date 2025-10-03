@@ -25,7 +25,7 @@ export class AreasDisplay extends BasePlannerHandler {
             [
               this.createFilterButton(),
               this.state.b
-                ? this.backbtn(this.createCustomId({ it: "", f: "", p: this.state.p, ...this.state.b, b: undefined }))
+                ? this.backbtn(this.createCustomId({ it: null, f: null, p: this.state.p, ...this.state.b, b: undefined }))
                 : null,
               this.homebtn(),
             ].filter((s) => !!s),
@@ -91,7 +91,7 @@ export class AreasDisplay extends BasePlannerHandler {
         this.createCustomId({ t: DisplayTabs.Realms, it: area.realm.guid, b: { ...this.state, v: undefined, b: undefined } }),
         { label: `Realm: ${area.realm.shortName}`, style: 2 },
       ),
-      this.backbtn(this.createCustomId({ it: "", f: "", p: this.state.p, ...this.state.b })),
+      this.backbtn(this.createCustomId({ it: null, f: null, p: this.state.p, ...this.state.b })),
       this.homebtn(),
     ].filter((s) => !!s);
     return [
@@ -101,7 +101,7 @@ export class AreasDisplay extends BasePlannerHandler {
             textDisplay("Connections", "-# This area connects to:"),
             row({
               type: ComponentType.StringSelect,
-              custom_id: this.createCustomId({ it: "" }),
+              custom_id: this.createCustomId({ it: null }),
               options: area.connections.map((c) => ({ label: c.area.name, value: c.area.guid })),
               max_values: 1,
               placeholder: "Select an area to view",

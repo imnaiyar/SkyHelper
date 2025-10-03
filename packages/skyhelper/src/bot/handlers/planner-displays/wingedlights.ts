@@ -95,7 +95,7 @@ export class WingedLightsDisplay extends BasePlannerHandler {
         this.createFilterButton("Filter"),
         this.viewbtn(this.createCustomId({}), { label: "All Found" + ` (${this.data.wingedLights.length})` }),
         this.viewbtn(this.createCustomId({}), { label: "Reset All", style: 4 }),
-        this.state.b ? this.backbtn(this.createCustomId({ it: "", f: "", ...this.state.b, b: undefined })) : null,
+        this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b, b: undefined })) : null,
         this.homebtn(),
       ].filter((s) => !!s),
     );

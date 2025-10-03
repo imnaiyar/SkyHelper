@@ -140,7 +140,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ it: "", f: "", d: "", p: 1, ...this.state.b, b: null })),
+            this.backbtn(this.createCustomId({ it: null, f: null, d: null, p: 1, ...this.state.b, b: null })),
             "# 🏠 Nesting Workshop",
             "A cozy workshop where you can craft home decoration props and furniture.",
             `**Estimated Current Rotation:** ${this.currentRotationIndex + 1}/${nestingconfigs.rotations.length}`,
@@ -194,7 +194,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ f: "", it: "", p: 1 })),
+            this.backbtn(this.createCustomId({ f: null, it: null, p: 1 })),
             `# Workshop Props ${legacy ? "(Legacy)" : ""}`,
             legacy
               ? [
@@ -265,7 +265,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ f: "", it: "", ...this.state.b, b: null })),
+            this.backbtn(this.createCustomId({ f: null, it: null, ...this.state.b, b: null })),
             `# ${rotation.title}`,
             `**Items:** ${rotation.items.length}`,
             [
@@ -303,7 +303,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ f: "", it: "", p: 1, ...this.state.b, b: null })),
+            this.backbtn(this.createCustomId({ f: null, it: null, p: 1, ...this.state.b, b: null })),
             "# Permanent Items",
             `**Items:** ${this.permanentItems.length}`,
             "These items are always available in the workshop.",
@@ -337,7 +337,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ it: "" })),
+            this.backbtn(this.createCustomId({ it: null })),
             `# ${this.formatemoji(item.item?.emoji, item.item?.name)} ${item.item?.name}`,
             "Nesting workshop item",
           ),
@@ -423,7 +423,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
       components: [
         container(
           section(
-            this.backbtn(this.createCustomId({ f: "", it: "", p: 1, ...this.state.b, b: null })),
+            this.backbtn(this.createCustomId({ f: null, it: null, p: 1, ...this.state.b, b: null })),
             "# Nesting Challenges",
             `${this.formatemoji(spirit.emoji, spirit.name)} ${spirit.name}`,
           ),
