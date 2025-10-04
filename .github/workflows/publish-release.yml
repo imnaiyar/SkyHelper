@@ -38,7 +38,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - uses: actions/setup-node@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "23"
 
       - name: Install dependencies
         run: |

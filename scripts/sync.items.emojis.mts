@@ -36,7 +36,7 @@ try {
   const res = await fetch("https://sky-planner.com/assets/data/items.json");
   if (!res.ok) {
     const body = await res.text().catch(() => "");
-    throw new Error(`Failed to fetch items.json: HTTP ${res.status} ${res.statusText}${body ? ` - ${body.slice(0,200)}` : ""}`);
+    throw new Error(`Failed to fetch items.json: HTTP ${res.status} ${res.statusText}${body ? ` - ${body.slice(0, 200)}` : ""}`);
   }
   const text = await res.text();
   data = jsonc.parse(text) as ItemsData;
@@ -45,7 +45,9 @@ try {
   }
 } catch (err) {
   const reason = err instanceof Error ? err.message : String(err);
-  try { core.setFailed(`Unable to load items.json: ${reason}`); } catch {}
+  try {
+    core.setFailed(`Unable to load items.json: ${reason}`);
+  } catch {}
   throw err;
 }
 
@@ -392,8 +394,7 @@ entries.forEach(([hashedName, items], index) => {
 });
 
 mappingLines.push("}");
-const header =
-  `// ----------------------------------------------------------------------------------------------- //
+const header = `// ----------------------------------------------------------------------------------------------- //
 // This is mapping of hashes used for emoji name whose name exceeded the 32 char limit,
 // the values are base 36 encoded id of item joined together by "_".
 // ----------------------------------------------------------------------------------------------- //\n`;
