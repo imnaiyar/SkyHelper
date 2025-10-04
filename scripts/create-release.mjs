@@ -55,18 +55,19 @@ try {
       (pr) => pr.merged_at && new Date(pr.merged_at).getTime() > lastTimestamp && pr.labels.some((l) => l.name === packageLabel),
     )
     .map((pr) => {
-      const titleMatch = pr.title.match(
-        /^(?<type>feat|fix|refactor|perf|types|docs|revert|style|test)(?:\((?<scope>[^)]+)\))?(?<breaking>!)?: (?<subject>.+)$/,
-      );
+      const titleMatch =
+        /^(?<type>feat|fix|refactor|perf|types|docs|revert|style|test)(?:\((?<scope>[^)]+)\))?(?<breaking>!)?: (?<subject>.+)$/.exec(
+          pr.title,
+        );
       if (!titleMatch) return null;
       const { type, scope, subject, breaking } = titleMatch.groups;
       return {
         title: subject ?? pr.title,
         number: pr.number,
         user: pr.user.login,
-        scope: scope || null,
+        scope: scope ?? null,
         breaking: Boolean(breaking),
-        type: type || "misc",
+        type: type ?? "misc",
       };
     })
     .filter((pr) => pr !== null);
@@ -89,7 +90,7 @@ try {
 
   const grouped = filteredPr.reduce((acc, { title, number, user, type, scope, breaking }) => {
     const key = typeMappings[type] ?? "misc";
-    acc[key] = acc[key] || [];
+    acc[key] = acc[key] ?? [];
     acc[key].push(`- ${scope ? `**${scope}**: ` : ""}${title} (#${number}) by @${user}${breaking ? " (BREAKING CHANGE)" : ""}`);
     return acc;
   }, {});
