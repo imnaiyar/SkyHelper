@@ -70,8 +70,8 @@ async function handleSpiritList(helper: InteractionHelper) {
         ...title,
         ...data.flatMap(([key, spirit]) => {
           // @ts-expect-error will be removed from planner
-          const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] : "";
-          const realmIcon = spirit.realm ? realms_emojis[spirit.realm] : "";
+          const seasonIcon = "ts" in spirit ? `<:_:${season_emojis[spirit.season]}>` : "";
+          const realmIcon = spirit.realm ? `<:_:${realms_emojis[spirit.realm]}>` : "";
 
           return [
             section(
