@@ -34,7 +34,7 @@ jobs:
 
       - name: Open pr if hash map is updated
         env:
-          GITHUB_TOKEN: ${{ secrets.OPENAPI_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
