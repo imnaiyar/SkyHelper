@@ -26,10 +26,10 @@ jobs:
           node-version: "23"
 
       - name: Install jsonc
-        run: pnpm add jsonc-parser -g # Only need this, no need to install an build everything
+        run: pnpm install --frozen-lockfile
 
       - name: Sync emojis
-        run: node --experimental-type-stripping ./scripts/sync.items.emojis.mts
+        run: node ./scripts/sync.items.emojis.mts
         env:
           APP_ID: ${{secrets.CLIENT_ID}}
           BOT_TOKEN: ${{secrets.TOKEN}}
