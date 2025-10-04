@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@octokit/action": "^7.0.0"
+    "@octokit/action": "^7.0.0",
+    "jsonc-parser": "^3.3.1"
   }
 }

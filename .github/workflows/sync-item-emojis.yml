@@ -1,0 +1,53 @@
+name: Syncs any new Items emojis to application's emojis
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "50 23 * * *" # 10 min edge case to midnight because skydata will refresh at midnight, so little leeway for emojis to update if any
+
+jobs:
+  update-openapi-spec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install jsonc
+        run: pnpm add jsonc-parser -g # Only need this, no need to install an build everything
+
+      - name: Sync emojis
+        run: node ./scripts/sync.items.emojis.mts
+        env:
+          APP_ID: ${{secrets.CLIENT_ID}}
+          BOT_TOKEN: ${{secrets.TOKEN}}
+
+      - name: Open pr if hash map is updated
+        env:
+          GITHUB_TOKEN: ${{ secrets.OPENAPI_REPO_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git checkout -b "chore/emoji-hashmap"
+            git add packages/constants/emoji_hashes.json
+            git commit -m "chore: update emoji_hashmap: -->> ${{ github.event_name }}"
+            echo "updated emoji hashmap. creating pr..."
+            pr_url=$(gh pr create --base main --head chore/emoji-hashmap --title "chore: update emoji_hashmap" --body "Update emoji hashes after emoji sync: Run type: >> ${{ github.event_name}}")
+            echo "Created the following pr: ${pr_url}"
+          else
+            echo "ℹ️ No changes to emoji hashes"
+          fi
