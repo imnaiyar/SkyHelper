@@ -4,10 +4,12 @@ import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { CustomId } from "@/utils/customId-store";
 import {
   ComponentType,
+  MessageFlags,
   type APIMessageComponentButtonInteraction,
   type APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
 import { SendableChannels } from "@skyhelperbot/constants";
+import { textDisplay } from "@skyhelperbot/utils";
 export default {
   ...ANNOUNCEMENT_DATA,
   async messageRun({ message, client }) {
@@ -84,14 +86,32 @@ async function handleModal(helper: InteractionHelper) {
   if (!modalSubmit) return;
   const modalHelper = new InteractionHelper(modalSubmit, helper.client);
   await modalHelper.defer();
-  const text = helper.client.utils.getTextInput(modalSubmit, "announcement_text_input", true).value;
+  let text = helper.client.utils.getTextInput(modalSubmit, "announcement_text_input", true).value;
+
+  // Parse and format command mentions
+  text = text.replace(/::cmd::(.*?)::/g, (match, commandPath) => {
+    const parts = commandPath.split(" ");
+    const commandName = parts.shift();
+    const subCommandPath = parts.join(" ");
+
+    const command = helper.client.applicationCommands.find((cmd) => cmd.name === commandName);
+
+    if (!command) return match;
+
+    const subCommand = subCommandPath ? ` ${subCommandPath}` : "";
+
+    return `</${command.name}${subCommand}:${command.id}>`;
+  });
+
   const data = await helper.client.schemas.getAnnouncementGuilds();
 
   for (const { annoucement_channel } of data) {
     const channel = helper.client.channels.get(annoucement_channel!);
     if (!channel) continue;
     if (!SendableChannels.includes(channel.type)) continue;
-    await helper.client.api.channels.createMessage(channel.id, { content: text }).catch(() => null);
+    await helper.client.api.channels
+      .createMessage(channel.id, { components: [textDisplay(text)], flags: MessageFlags.IsComponentsV2 })
+      .catch(() => {});
   }
   await modalHelper.editReply({ content: "Announcement sent to all the announcement channels.", components: [] }).catch(() => {});
 }

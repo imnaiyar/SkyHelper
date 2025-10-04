@@ -257,3 +257,69 @@ export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
     },
   ],
 };
+
+// #region planner
+export const PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "planner",
+  description: "track and plan your sky progress",
+  data: {
+    // TODO: change this once stable
+    integration_types: [ApplicationIntegrationType.GuildInstall],
+    contexts: [InteractionContextType.Guild],
+    name_localizations: "commands:PLANNER.name",
+    description_localizations: "commands:PLANNER.description",
+    options: [
+      {
+        name: "home",
+        name_localizations: "commands:PLANNER.options.home.name",
+        description_localizations: "commands:PLANNER.options.home.description",
+        description: "track and plan your sky progress",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "search",
+        name_localizations: "commands:PLANNER.options.search.name",
+        description_localizations: "commands:PLANNER.options.search.description",
+        description: "search and directly go to items/seasons/events/wls/etc... in the planner",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          {
+            name: "query",
+            name_localizations: "commands:PLANNER.options.query.name",
+            description_localizations: "commands:PLANNER.options.query.description",
+            description: "the query to search for",
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            autocomplete: true,
+          },
+        ],
+      },
+      {
+        name: "data",
+        name_localizations: "commands:PLANNER.options.data.name",
+        description_localizations: "commands:PLANNER.options.data.description",
+        description: "manage planner's data",
+        type: ApplicationCommandOptionType.SubcommandGroup,
+        options: [
+          {
+            name: "import",
+            name_localizations: "commands:PLANNER.options.import.name",
+            description_localizations: "commands:PLANNER.options.import.description",
+            description: "import data from sky-planner website or saved .json file",
+            type: ApplicationCommandOptionType.Subcommand,
+          },
+          {
+            name: "export",
+            name_localizations: "commands:PLANNER.options.export.name",
+            description_localizations: "commands:PLANNER.options.export.description",
+            description: "export your current data to a .json file",
+            type: ApplicationCommandOptionType.Subcommand,
+          },
+        ],
+      },
+    ],
+  },
+  beta: true,
+  cooldown: 15,
+  category: "Utility",
+};

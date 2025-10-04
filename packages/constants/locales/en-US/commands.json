@@ -408,5 +408,35 @@
         "description": "Personalize the bot for this server"
       }
     }
+  },
+  "PLANNER": {
+    "name": "planner",
+    "description": "track and plan your sky progress",
+    "options": {
+      "home": {
+        "name": "home",
+        "description": "track and plan your sky progress"
+      },
+      "search": {
+        "name": "search",
+        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+      },
+      "query": {
+        "name": "query",
+        "description": "the query to search for"
+      },
+      "data": {
+        "name": "data",
+        "description": "manage planner's data"
+      },
+      "import": {
+        "name": "import",
+        "description": "import data from sky-planner website or saved .json file"
+      },
+      "export": {
+        "name": "export",
+        "description": "export your data to a .json file"
+      }
+    }
   }
 }

@@ -1,4 +1,5 @@
 import type { Command } from "@/structures";
+import { SkyPlannerData as planner } from "@skyhelperbot/constants";
 import * as d from "@discordjs/core";
 
 import { postToHaste, resolveColor } from "@skyhelperbot/utils";
@@ -12,6 +13,7 @@ export default {
     const { author, member } = message;
     const channel = client.channels.get(message.channel_id);
     const guild = message.guild_id && client.guilds.get(message.guild_id);
+    const skygameData = await planner.getSkyGamePlannerData();
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
     let code = args.join(" ");

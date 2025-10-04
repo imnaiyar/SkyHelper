@@ -32,6 +32,8 @@ export default defineConfig([
 
     rules: {
       /** Turn of extreme strict ones lol */
+      "@typescript-eslint/no-unnecessary-type-parameters": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/restrict-plus-operands": "off",

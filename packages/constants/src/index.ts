@@ -42,6 +42,8 @@ export const SendableChannels = [
   ChannelType.GuildVoice,
 ];
 
+/** Timezone where TGC is based on */
+export const zone = "America/Los_Angeles";
 export const RemindersEventsMap: Record<string, string> = {
   eden: "Eden/Weekly Reset",
   geyser: "Geyser",
@@ -67,3 +69,5 @@ export const REMINDERS_KEY = [
   "fireworks-festival",
   "shards-eruption",
 ] as const;
+
+export * as SkyPlannerData from "./skygame-planner/index.js";

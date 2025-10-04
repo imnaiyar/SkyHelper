@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Inject } from "@nestjs/common";
+import { Controller, Get, Query, Inject, Param } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from "@nestjs/swagger";
 import { z } from "zod/v4";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
@@ -6,7 +6,8 @@ import { DateTime } from "luxon";
 import { getTimesEmbed, buildShardEmbed } from "@/utils/classes/Embeds";
 import { getTranslator } from "@/i18n";
 import type { SkyHelper } from "@/structures";
-import { supportedLang } from "@skyhelperbot/constants";
+import { supportedLang, SkyPlannerData } from "@skyhelperbot/constants";
+import utils from "node:util";
 const GetShardsParams = z.object({
   date: z
     .string()
@@ -98,4 +99,38 @@ export class AppController {
     const { locale } = query;
     return getTimesEmbed(this.bot, getTranslator(locale ?? "en-US"));
   }
+
+  // TODO: move this to admin protected route
+
+  @Get("planner/:query")
+  async getPlannerEntities(@Param("query") query: string) {
+    const data = await SkyPlannerData.getSkyGamePlannerData();
+
+    const results = SkyPlannerData.searchEntitiesByName(query, data);
+    return results;
+  }
+  @Get("planner/get/:entity")
+  async getPlannerEntity(@Param("entity") entity: string) {
+    const data = await SkyPlannerData.getSkyGamePlannerData();
+
+    const results = SkyPlannerData.getEntityByGuid(entity, data);
+    return utils.inspect(results, { depth: 3 });
+  }
+  @Get("planner")
+  async getPlannerData() {
+    const data = await SkyPlannerData.getSkyGamePlannerData();
+
+    return JSON.parse(JSON.stringify(data, removeCircular()));
+  }
+}
+
+function removeCircular() {
+  const seen = new WeakSet();
+  return (_key: string, value: any) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) return; // remove circular ref
+      seen.add(value);
+    }
+    return value;
+  };
 }

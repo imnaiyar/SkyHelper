@@ -29,6 +29,9 @@ export enum CustomId {
   ShardsRemindersDetails,
   RemindersManage,
   SpiritButton,
+  PlannerTopLevelNav,
+  PlannerFilters,
+  PlannerSelectNav,
 }
 
 export const store = new SchemaStore()
@@ -56,4 +59,27 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.SkyGameLeaderboard).string("type").nullable("user", t.string))
   .add(new Schema(CustomId.ShardsRemindersDetails).string("date").nullable("user", t.string))
   .add(new Schema(CustomId.RemindersManage).string("key").uint8("page").string("user"))
-  .add(new Schema(CustomId.SpiritButton).string("spirit_key").nullable("user", t.string));
+  .add(new Schema(CustomId.SpiritButton).string("spirit_key").nullable("user", t.string))
+  .add(
+    new Schema(CustomId.PlannerTopLevelNav)
+      // tab
+      .string("t")
+      // filter
+      .nullable("f", t.string)
+      // item
+      .nullable("it", t.string)
+      // data
+      .nullable("d", t.string)
+      // page
+      .nullable("p", t.uint8)
+      // random number or arbitrary data, for any use
+      .nullable("i", t.string)
+      // previous state for back button
+      .nullable("back", t.string)
+      // random nonce to ensure uniqueness
+      .nullable("r", t.string)
+      .nullable("user", t.string),
+  )
+  .add(new Schema(CustomId.PlannerFilters).string("tab").array("filters", t.string).nullable("user", t.string))
+
+  .add(new Schema(CustomId.PlannerSelectNav).nullable("user", t.string));

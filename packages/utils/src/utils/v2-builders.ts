@@ -13,6 +13,7 @@ import {
   type APITextDisplayComponent,
   type APIThumbnailComponent,
   type APIUnfurledMediaItem,
+  type APIButtonComponentWithCustomId,
 } from "discord-api-types/v10";
 
 export function container(
@@ -104,5 +105,14 @@ export function row(
   return {
     type: ComponentType.ActionRow,
     components,
+  };
+}
+
+export function button(b: Partial<Omit<APIButtonComponentWithCustomId, "type">> = {}): APIButtonComponent {
+  return {
+    type: ComponentType.Button,
+    style: 2,
+    custom_id: "button",
+    ...b,
   };
 }
