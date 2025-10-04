@@ -21,7 +21,12 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install jsonc
         run: pnpm add jsonc-parser -g # Only need this, no need to install an build everything
