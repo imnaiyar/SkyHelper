@@ -5,9 +5,9 @@ import * as path from "path";
 import * as crypto from "crypto";
 import core from "@actions/core";
 import * as jsonc from "jsonc-parser";
-const APP_ID = process.env.CLIENT_ID;
-const BOT_TOKEN = process.env.TOKEN;
-if (!APP_ID || !BOT_TOKEN) throw new Error("Missing required variables");
+const APP_ID = process.env.APP_ID;
+const BOT_TOKEN = process.env.BOT_TOKEN;
+if (!APP_ID || !BOT_TOKEN) throw new Error("Missing required variables: APP_ID and BOT_TOKEN");
 const EMOJI_MAPPINGS_PATH = "packages/constants/emoji_hashes.json";
 interface Item {
   id: number;
