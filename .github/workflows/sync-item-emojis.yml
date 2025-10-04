@@ -10,7 +10,7 @@ on:
     - cron: "50 23 * * *" # 10 min edge case to midnight because skydata will refresh at midnight, so little leeway for emojis to update if any
 
 jobs:
-  update-openapi-spec:
+  sync_item_emojis:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,17 +25,11 @@ jobs:
         with:
           node-version: "23"
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-
       - name: Install jsonc
         run: pnpm add jsonc-parser -g # Only need this, no need to install an build everything
 
       - name: Sync emojis
-        run: node ./scripts/sync.items.emojis.mts
+        run: node --experimental-type-stripping ./scripts/sync.items.emojis.mts
         env:
           APP_ID: ${{secrets.CLIENT_ID}}
           BOT_TOKEN: ${{secrets.TOKEN}}
