@@ -80,8 +80,8 @@ async function handleSpiritList(helper: InteractionHelper) {
                 custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: key, user: null }),
                 style: 2,
               },
-              `$**${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
-              `$${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") ?? ""}`,
+              `**${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
+              `${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") ?? ""}`,
             ),
           ];
         }),
