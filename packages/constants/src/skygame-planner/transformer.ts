@@ -25,6 +25,7 @@ import {
   type IWingedLight,
   type IGuid,
   SpiritType,
+  ItemType,
 } from "./interfaces.js";
 import type { FetchedData } from "./fetcher.js";
 import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
@@ -386,7 +387,7 @@ function getNodeTier(node: INode) {
   let tier = 0;
   const root = node.root || node;
   (function walk(n: INode) {
-    if (n.item?.type === "Wing Buff") tier++;
+    if (n.item?.type === ItemType.WingBuff) tier++;
     if (n === node) return;
     if (n.nw) walk(n.nw);
     if (n.ne) walk(n.ne);
