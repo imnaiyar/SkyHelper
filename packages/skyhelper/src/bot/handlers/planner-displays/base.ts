@@ -84,7 +84,7 @@ export abstract class BasePlannerHandler {
   protected customFilterConfigs?: CustomFilterConfigs;
 
   constructor(
-    public data: SkyPlannerData.TransformedData,
+    public data: SkyPlannerData.PlannerAssetData,
     public planner: typeof SkyPlannerData,
     public state: NavigationState,
   ) {}
@@ -220,7 +220,7 @@ export abstract class BasePlannerHandler {
           page,
           total,
           t: this.state.t,
-          f: this.filterManager?.serializeFilters() ?? this.state.f, // fallback if a specific tab is not using filters
+          f: this.filterManager?.serializeFilters() ?? this.state.f, // fallback if a specific tab is not using filters manager
           it: this.state.it,
           user,
           b: this.state.b,

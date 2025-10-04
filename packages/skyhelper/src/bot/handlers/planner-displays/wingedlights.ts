@@ -5,7 +5,7 @@ import config from "@/config";
 import { FilterType } from "./filter.manager.js";
 
 export class WingedLightsDisplay extends BasePlannerHandler {
-  constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: NavigationState) {
+  constructor(data: SkyPlannerData.PlannerAssetData, planner: typeof SkyPlannerData, state: NavigationState) {
     super(data, planner, state);
 
     this.initializeFilters(
@@ -96,7 +96,6 @@ export class WingedLightsDisplay extends BasePlannerHandler {
         this.viewbtn(this.createCustomId({}), { label: "All Found" + ` (${this.data.wingedLights.length})` }),
         this.viewbtn(this.createCustomId({}), { label: "Reset All", style: 4 }),
         this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b, b: undefined })) : null,
-        this.homebtn(),
       ].filter((s) => !!s),
     );
   }

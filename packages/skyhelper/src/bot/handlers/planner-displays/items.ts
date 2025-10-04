@@ -172,13 +172,13 @@ export class ItemsDisplay extends BasePlannerHandler {
           )
         : null,
       item.previewUrl && (this.state.f ?? "preview") === "preview"
-        ? mediaGallery(mediaGalleryItem(this.planner.resolveUrls(item.previewUrl), { description: item.name }))
+        ? mediaGallery(mediaGalleryItem(this.planner.resolvePlannerUrl(item.previewUrl), { description: item.name }))
         : null,
       this.state.f === "dye"
         ? mediaGallery(
             [item.dye?.previewUrl, item.dye?.infoUrl]
               .filter(Boolean)
-              .map((url) => mediaGalleryItem(this.planner.resolveUrls(url!), { description: item.name })),
+              .map((url) => mediaGalleryItem(this.planner.resolvePlannerUrl(url!), { description: item.name })),
           )
         : null,
     ]

@@ -7,15 +7,16 @@ import type { RawFile } from "@discordjs/rest";
 export async function spiritTreeDisplay(tree: ISpiritTree, planner: BasePlannerHandler, opts?: GenerateSpiritTreeOptions) {
   const buffer = await generateSpiritTree(tree, opts);
   const file: RawFile = { name: "tree.png", data: buffer };
+  const spirit = tree.spirit ?? tree.eventInstanceSpirit ?? tree.ts?.spirit ?? tree.visit?.spirit;
   return {
     file,
     components: [
       section(
-        planner.viewbtn(planner.createCustomId({ t: DisplayTabs.Spirits, it: tree.spirit?.guid }), {
+        planner.viewbtn(planner.createCustomId({ t: DisplayTabs.Spirits, it: spirit?.guid }), {
           label: "View",
-          disabled: !tree.spirit,
+          disabled: !spirit,
         }),
-        `# ${tree.name ?? tree.spirit?.name ?? tree.eventInstanceSpirit?.spirit.name ?? "Unknown"}`,
+        `# ${tree.name ?? spirit?.name ?? "Unknown"}`,
       ),
       section(
         planner.viewbtn(planner.createCustomId({}), { label: "Modify", disabled: true }),

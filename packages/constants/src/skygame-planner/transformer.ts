@@ -28,7 +28,7 @@ import {
 } from "./interfaces.js";
 import type { FetchedData } from "./fetcher.js";
 import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
-import { resolveToLuxon } from "./service.js";
+import { resolvePlannerUrl, resolveToLuxon } from "./service.js";
 
 /** Typeguard for filtering array */
 function notNull<T>(value: T | null | undefined): value is T {
@@ -45,7 +45,7 @@ export const currencyMap = {
   ec: "Event Tickets",
 };
 
-export interface TransformedData {
+export interface PlannerAssetData {
   areas: IArea[];
   events: IEvent[];
   eventInstances: IEventInstance[];
@@ -71,10 +71,10 @@ export interface TransformedData {
 /**
  * Main entrypoint: transform raw fetched data into resolved graph
  */
-export function transformData(fetchedData: FetchedData): TransformedData {
+export function transformData(fetchedData: FetchedData): PlannerAssetData {
   const guidMap = new Map<string, any>();
 
-  const transformedData: TransformedData = {
+  const transformedData: PlannerAssetData = {
     areas: fetchedData.areas.items,
     events: fetchedData.events.items,
     eventInstances: fetchedData.events.items.flatMap((e) => e.instances || []),
@@ -107,19 +107,15 @@ export function transformData(fetchedData: FetchedData): TransformedData {
 
 // #region helpers
 
-function resolveUrl(url: string) {
-  return url.startsWith("/assets") ? `https://sky-planner.com${url}` : url;
-}
-
 function fixUrl(obj: { imageUrl?: string }) {
-  if (obj.imageUrl) obj.imageUrl = resolveUrl(obj.imageUrl);
+  if (obj.imageUrl) obj.imageUrl = resolvePlannerUrl(obj.imageUrl);
 }
 
 function registerAll<T extends IGuid>(arr: T[], map: Map<string, any>) {
   for (const obj of arr) map.set(obj.guid, obj);
 }
 
-function registerGuids(data: TransformedData) {
+function registerGuids(data: PlannerAssetData) {
   (
     [
       data.areas,
@@ -147,7 +143,7 @@ function registerGuids(data: TransformedData) {
     .forEach((arr) => registerAll(arr, data.guidMap));
 }
 
-function resolveRef<T>(guidRef: string | undefined, data: TransformedData): T | undefined {
+function resolveRef<T>(guidRef: string | undefined, data: PlannerAssetData): T | undefined {
   if (!guidRef) return undefined;
   if (typeof guidRef === "object") return guidRef as T;
   return data.guidMap.get(guidRef) as T;
@@ -155,7 +151,7 @@ function resolveRef<T>(guidRef: string | undefined, data: TransformedData): T | 
 
 function resolveArray<T>(
   refs: Array<string | undefined> | undefined,
-  data: TransformedData,
+  data: PlannerAssetData,
   mapFn: (resolved: T) => void = () => {},
 ): T[] {
   return (refs || [])
@@ -171,7 +167,7 @@ function linkOne<T, P>(
   ref: string | undefined,
   parent: P,
   prop: keyof P,
-  data: TransformedData,
+  data: PlannerAssetData,
   backProp?: keyof T | ((ref: T) => void),
 ): T | undefined {
   const resolved = resolveRef<T>(ref, data);
@@ -189,11 +185,11 @@ function linkOne<T, P>(
 /*                          Reference Resolution Pass                         */
 /* -------------------------------------------------------------------------- */
 
-function resolveReferences(data: TransformedData): void {
+function resolveReferences(data: PlannerAssetData): void {
   /* ------------------------------ items ------------------------------ */
   // #region data.items
   for (const item of data.items) {
-    if (item.previewUrl) item.previewUrl = resolveUrl(item.previewUrl);
+    if (item.previewUrl) item.previewUrl = resolvePlannerUrl(item.previewUrl);
     const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
     if (emoji) item.emoji = emoji.id!;
   }

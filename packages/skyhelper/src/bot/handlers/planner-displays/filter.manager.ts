@@ -2,7 +2,7 @@ import { type SkyPlannerData as p, emojis, season_emojis, SkyPlannerData } from 
 import {
   SpiritType,
   ItemType,
-  type TransformedData,
+  type PlannerAssetData,
   currencyMap,
   type ISpirit,
   type ITravelingSpirit,
@@ -60,13 +60,13 @@ export type ParsedFilters = Map<string, string[]>;
  * Provides standardized filtering capabilities across all planner displays
  */
 export class FilterManager {
-  private data: p.TransformedData;
+  private data: p.PlannerAssetData;
   private filters: ParsedFilters = new Map();
   private customConfigs?: CustomFilterConfigs;
   private allowedFilters?: FilterType[];
 
   constructor(
-    data: p.TransformedData,
+    data: p.PlannerAssetData,
     initialFilters?: string,
     allowedFilters?: FilterType[],
     customConfigs?: CustomFilterConfigs,
@@ -193,7 +193,7 @@ export class FilterManager {
    */
   public static getFilterConfigs(
     types: FilterType[],
-    data: TransformedData,
+    data: PlannerAssetData,
     customConfigs?: CustomFilterConfigs,
   ): FilterConfig[] {
     const configs: FilterConfig[] = [];
@@ -222,7 +222,7 @@ export class FilterManager {
   /**
    * Create filter configuration for a specific type
    */
-  private static createFilterConfig(type: FilterType, data: TransformedData): FilterConfig | undefined {
+  private static createFilterConfig(type: FilterType, data: PlannerAssetData): FilterConfig | undefined {
     switch (type) {
       case FilterType.SpiritTypes:
         return {
@@ -319,7 +319,7 @@ export class FilterManager {
    * This can be overridden by display handlers that need custom configurations
    */
   public static tabsCustomConfig(
-    _data: p.TransformedData,
+    _data: p.PlannerAssetData,
     tab: DisplayTabs,
     _filters: string[],
   ): CustomFilterConfigs | undefined {

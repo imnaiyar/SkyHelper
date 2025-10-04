@@ -3,7 +3,6 @@
  * {@see https://github.com/Silverfeelin/SkyGame-Planner/blob/master/src/app/components/shops/shop-nesting/shop-nesting.component.ts} */
 // --------------------------------------------------------------------------------------------------------------------------------- //
 
-// idk what is wrong with this rule
 import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "../base.js";
 import { zone, type SkyPlannerData } from "@skyhelperbot/constants";
@@ -76,7 +75,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
   }
 
   private initializeNestingData(): void {
-    // Calculate current rotation based on weeks since April 15, 2024
+    // Calculate current rotation based on weeks since April 15, 2024 (SoNesting start date)
     const startDate = DateTime.fromISO("2024-04-15", { zone }).startOf("week");
     const currentWeek = DateTime.now().setZone(zone).startOf("week");
     const weeksBetween = Math.ceil(currentWeek.diff(startDate, "weeks").weeks);

@@ -4,12 +4,12 @@ import { PLANNER_DATA } from "@/modules/commands-data/utility-commands";
 import type { Command } from "@/structures";
 import { CustomId, store } from "@/utils/customId-store";
 import { SkyPlannerData } from "@skyhelperbot/constants";
-import type { TransformedData } from "@skyhelperbot/constants/skygame-planner";
+import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
 import { searchHelper } from "./sub/planner.helpers.js";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { MessageFlags } from "discord-api-types/v10";
 //  this is mappings of available display tabs that will show on search, which users can quick jump to
-const tab_mappings = (data: TransformedData) => [
+const tab_mappings = (data: PlannerAssetData) => [
   ...Object.entries(DisplayTabs).map(([n, v]) => ({ name: n, path: { t: v } })),
   { name: "Traveling Spirits", path: { t: DisplayTabs.Spirits, d: "ts" } },
   { name: "Special Visits", path: { t: DisplayTabs.Spirits, d: "rs" } },

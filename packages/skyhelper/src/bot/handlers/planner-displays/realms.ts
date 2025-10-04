@@ -14,6 +14,7 @@ import { ComponentType, type APIComponentInContainer } from "discord-api-types/v
 import { type IRealm, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import type { RawFile } from "@discordjs/rest";
 import { serializeFilters, FilterType } from "./filter.manager.js";
+import { spiritTreeDisplay } from "./shared.js";
 
 export class RealmsDisplay extends BasePlannerHandler {
   override handle() {
@@ -74,11 +75,7 @@ export class RealmsDisplay extends BasePlannerHandler {
       `${realm.areas?.length ?? 0} Areas \u2022 ${regular} regular and ${seasonal} seasonal spirits \u2022 ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} winged lights`,
     ];
 
-    let file: RawFile | undefined;
-    if (constellation) {
-      const buffer = await generateSpiritTree(constellation.tree!);
-      file = { name: "tree.png", data: buffer };
-    }
+    const gen = constellation ? await spiritTreeDisplay(constellation.tree!, this) : null;
     const components: APIComponentInContainer[] = [
       realm.imageUrl ? section(thumbnail(realm.imageUrl), ...title) : textDisplay(...title),
       row(
@@ -113,22 +110,9 @@ export class RealmsDisplay extends BasePlannerHandler {
     ];
     if (constellations.length) components.push(textDisplay("### Constellations"));
     if (constellations.length > 1) components.push(c_row);
-    if (constellation) {
-      components.push(
-        section(
-          this.viewbtn(this.createCustomId({ t: DisplayTabs.Spirits, it: constellation.guid }), {
-            label: "View",
-          }),
-          `# ${this.formatemoji(constellation.emoji, constellation.name)} ${constellation.name}`,
-        ),
-        section(
-          this.viewbtn(this.createCustomId({}), { label: "Modify" }),
-          this.planner.getFormattedTreeCost(constellation.tree!),
-          "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
-        ),
-        mediaGallery(mediaGalleryItem("attachment://tree.png")),
-      );
+    if (gen) {
+      components.push(...gen.components);
     }
-    return { files: file ? [file] : undefined, components: [container(components)] };
+    return { files: gen?.file ? [gen.file] : undefined, components: [container(components)] };
   }
 }

@@ -14,7 +14,7 @@ const setButtonState = (b: APIButtonComponentWithCustomId, id: string) => ({
   emoji: { id: "1228956650757427220", animated: true },
 });
 
-const setSelectMenuState = (s: APIStringSelectComponent, id: string) => ({
+const setSelectMenuState = (s: APIStringSelectComponent) => ({
   ...s,
   options: [
     {
@@ -26,7 +26,9 @@ const setSelectMenuState = (s: APIStringSelectComponent, id: string) => ({
   ],
   disabled: true,
 });
-// recursively find the button with the given custom_id and update it to `loading`
+/** recursively find the button with the given custom_id and update it to `loading`
+ * and disables all other interactive component to avoid clicks in between loading
+ */
 export function setLoadingState(components: APIMessageTopLevelComponent[], customId: string) {
   const cloned = [...components];
   for (const component of cloned) {
@@ -46,11 +48,13 @@ function setLoading(component: APIComponentInContainer, customId: string) {
     const comp = component.accessory;
     if (comp.type !== ComponentType.Button) return;
     if ("custom_id" in comp && comp.custom_id === customId) component.accessory = setButtonState(comp, customId);
+    comp.disabled = true;
   }
 
   // action row
   if (component.type === ComponentType.ActionRow) {
     for (const innerComponent of component.components) {
+      innerComponent.disabled = true; // disable the component
       // button
       if (innerComponent.type === ComponentType.Button) {
         if ("custom_id" in innerComponent && innerComponent.custom_id === customId) {
@@ -66,7 +70,7 @@ function setLoading(component: APIComponentInContainer, customId: string) {
         if ("custom_id" in innerComponent && innerComponent.custom_id === customId) {
           const index = component.components.indexOf(innerComponent);
           if (index !== -1) {
-            component.components[index] = setSelectMenuState(innerComponent, customId);
+            component.components[index] = setSelectMenuState(innerComponent);
           }
         }
       }

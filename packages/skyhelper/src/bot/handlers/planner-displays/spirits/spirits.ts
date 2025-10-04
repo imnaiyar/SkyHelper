@@ -1,18 +1,7 @@
 import { emojis, SkyPlannerData } from "@skyhelperbot/constants";
 import { DisplayTabs } from "../base.js";
 import { FilterType } from "../filter.manager.js";
-import {
-  button,
-  container,
-  generateSpiritTree,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  separator,
-  textDisplay,
-  thumbnail,
-} from "@skyhelperbot/utils";
+import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
@@ -20,7 +9,7 @@ import { BaseSpiritsDisplay } from "./base.js";
 import { spiritTreeDisplay } from "../shared.js";
 
 export class SpiritsDisplay extends BaseSpiritsDisplay {
-  constructor(data: SkyPlannerData.TransformedData, planner: typeof SkyPlannerData, state: any) {
+  constructor(data: SkyPlannerData.PlannerAssetData, planner: typeof SkyPlannerData, state: any) {
     super(data, planner, state);
     this.state.d ??= "normal";
     this.initializeFilters(
@@ -88,17 +77,16 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
   }
 
   async spiritdisplay(spirit: SkyPlannerData.ISpirit): Promise<ResponseData> {
-    // TODO: refactor this so we can add more details about ts visit that way (or rs too)...
     const trees = [
       spirit.tree ? { name: "Spirit Tree", tree: spirit.tree, season: !!spirit.season } : null,
       spirit.treeRevisions?.length
         ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t }))
         : null,
-      ...(spirit.returns?.map((r) => ({ name: r.return.name ?? "Special Visit", tree: r.tree })) ?? []),
-      ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree })) ?? []),
+      ...(spirit.returns?.map((r) => ({ name: r.return.name ?? "Special Visit", tree: r.tree, rs: r.guid })) ?? []),
+      ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree, ts: t.guid })) ?? []),
     ]
       .flat()
-      .filter(Boolean) as Array<{ name: string; tree: SkyPlannerData.ISpiritTree; season?: boolean }>;
+      .filter((s) => !!s);
 
     let selected = 0;
     // some places may  pass this value in `i`, like from ts display
@@ -111,7 +99,9 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
 
     const tree = trees[selected];
     const highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
-    const gen = tree ? await spiritTreeDisplay(tree.tree, this, { season: !!tree.season, highlightItems: highlights }) : null;
+    const gen = tree
+      ? await spiritTreeDisplay(tree.tree, this, { season: "season" in tree && tree.season, highlightItems: highlights })
+      : null;
 
     const title = [
       `# ${this.formatemoji(spirit.emoji)} ${spirit.name}`,
@@ -130,6 +120,9 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
         this.homebtn(),
       ),
       separator(true, 1),
+
+      tree && "ts" in tree ? textDisplay(this.tsdescription(tree.ts)) : null,
+      tree && "rs" in tree ? textDisplay(this.rssdescription(tree.rs)) : null,
       trees.length > 1
         ? row({
             type: ComponentType.StringSelect,
@@ -147,5 +140,20 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
       components: [container(compos)],
       files: gen?.file ? [gen.file] : undefined,
     };
+  }
+
+  private tsdescription(guid: string) {
+    const ts = this.data.travelingSpirits.find((d) => d.guid === guid);
+    if (!ts) throw new Error("Invalid TS");
+    const date = this.planner.resolveToLuxon(ts.date);
+    const endDate = this.planner.resolveToLuxon(ts.endDate ?? date.plus({ days: 3 }));
+    return `**Traveling Spirit #${ts.number}: ${this.formatDateTimestamp(date)} - ${this.formatDateTimestamp(endDate)} (${this.formatDateTimestamp(endDate, "R")})**`;
+  }
+  private rssdescription(guid: string) {
+    const rs = this.data.returningSpiritsVisits.find((d) => d.guid === guid);
+    if (!rs) throw new Error("Invalid rs");
+    const date = this.planner.resolveToLuxon(rs.return.date);
+    const endDate = this.planner.resolveToLuxon(rs.return.endDate);
+    return `**${rs.return.name}: ${this.formatDateTimestamp(date)} - ${this.formatDateTimestamp(endDate)} (${this.formatDateTimestamp(endDate, "R")})**`;
   }
 }

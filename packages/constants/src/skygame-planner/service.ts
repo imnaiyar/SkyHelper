@@ -5,10 +5,10 @@
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
 import type { IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
-import { transformData, type TransformedData } from "./transformer.js";
+import { transformData, type PlannerAssetData } from "./transformer.js";
 import { DateTime } from "luxon";
 
-let cachedData: TransformedData | null = null;
+let cachedData: PlannerAssetData | null = null;
 let lastFetchTime = 0;
 const CACHE_LIFETIME_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -17,7 +17,7 @@ const CACHE_LIFETIME_MS = 24 * 60 * 60 * 1000; // 24 hours
  * @param forceRefresh Force a refresh of the data, bypassing the cache
  * @returns The transformed SkyGame Planner data
  */
-export async function getSkyGamePlannerData(forceRefresh = false): Promise<TransformedData> {
+export async function getSkyGamePlannerData(forceRefresh = false): Promise<PlannerAssetData> {
   const now = Date.now();
   const cacheExpired = now - lastFetchTime > CACHE_LIFETIME_MS;
 
@@ -35,32 +35,12 @@ export async function getSkyGamePlannerData(forceRefresh = false): Promise<Trans
 }
 
 /**
- * Helper function to get a realm by its ID
- * @param realmId The ID of the realm to find
- * @param data The transformed data
- * @returns The realm or undefined if not found
- */
-export function getRealmById(realmId: string, data: TransformedData) {
-  return data.realms.find((r) => r.guid === realmId);
-}
-
-/**
- * Helper function to get a spirit by its ID
- * @param spiritId The ID of the spirit to find
- * @param data The transformed data
- * @returns The spirit or undefined if not found
- */
-export function getSpiritById(spiritId: string, data: TransformedData) {
-  return data.spirits.find((s) => s.guid === spiritId);
-}
-
-/**
  * Search for entities by name across all data types
  * @param query Search query string
  * @param data The transformed data
  * @returns Array of matching entities with type, name, and guid
  */
-export function searchEntitiesByName(query: string, data: TransformedData) {
+export function searchEntitiesByName(query: string, data: PlannerAssetData) {
   if (!query) return [];
 
   const searchTerms = query.toLowerCase();
@@ -150,7 +130,7 @@ export function searchEntitiesByName(query: string, data: TransformedData) {
  * @param data The transformed data
  * @returns The entity with its type or null if not found
  */
-export function getEntityByGuid(guid: string, data: TransformedData) {
+export function getEntityByGuid(guid: string, data: PlannerAssetData) {
   // Search through all entity types
   const entityTypes = [
     { type: "Realm", collection: data.realms },
@@ -179,43 +159,13 @@ export function getEntityByGuid(guid: string, data: TransformedData) {
 }
 
 /**
- * Helper function to get a season by its ID
- * @param seasonId The ID of the season to find
- * @param data The transformed data
- * @returns The season or undefined if not found
- */
-export function getSeasonById(seasonId: string, data: TransformedData) {
-  return data.seasons.find((s) => s.guid === seasonId);
-}
-
-/**
- * Helper function to get an area by its ID
- * @param areaId The ID of the area to find
- * @param data The transformed data
- * @returns The area or undefined if not found
- */
-export function getAreaById(areaId: string, data: TransformedData) {
-  return data.areas.find((a) => a.guid === areaId);
-}
-
-/**
- * Helper function to get an item by its ID
- * @param itemId The ID of the item to find
- * @param data The transformed data
- * @returns The item or undefined if not found
- */
-export function getItemById(itemId: string, data: TransformedData) {
-  return data.items.find((i) => i.guid === itemId);
-}
-
-/**
  * Helper function to get all spirits from a specific realm
  * @param realmId The ID of the realm
  * @param data The transformed data
  * @returns Array of spirits in the realm
  */
-export function getSpiritsInRealm(realmId: string, data: TransformedData) {
-  const realm = getRealmById(realmId, data);
+export function getSpiritsInRealm(realmId: string, data: PlannerAssetData) {
+  const realm = data.realms.find((d) => d.guid === realmId);
   if (!realm) return [];
 
   const spirits: ISpirit[] = [];
@@ -234,8 +184,8 @@ export function getSpiritsInRealm(realmId: string, data: TransformedData) {
  * @param data The transformed data
  * @returns Array of winged lights in the realm
  */
-export function getWingedLightsInRealm(realmId: string, data: TransformedData) {
-  const realm = getRealmById(realmId, data);
+export function getWingedLightsInRealm(realmId: string, data: PlannerAssetData) {
+  const realm = data.realms.find((d) => d.guid === realmId);
   if (!realm) return [];
 
   const wingedLights: any[] = [];
@@ -253,7 +203,7 @@ export function getWingedLightsInRealm(realmId: string, data: TransformedData) {
  * @param data The transformed data
  * @returns The current traveling spirit or undefined if none is active
  */
-export function getCurrentTravelingSpirit(data: TransformedData) {
+export function getCurrentTravelingSpirit(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
   return data.travelingSpirits.find((ts) => {
     const startDate = resolveToLuxon(ts.date);
@@ -268,8 +218,8 @@ export function getCurrentTravelingSpirit(data: TransformedData) {
  * @param data The transformed data
  * @returns Array of spirits in the season
  */
-export function getSpiritsInSeason(seasonId: string, data: TransformedData) {
-  const season = getSeasonById(seasonId, data);
+export function getSpiritsInSeason(seasonId: string, data: PlannerAssetData) {
+  const season = data.seasons.find((s) => s.guid === seasonId);
   if (!season) return [];
 
   return season.spirits;
@@ -281,8 +231,8 @@ export function getSpiritsInSeason(seasonId: string, data: TransformedData) {
  * @param data The transformed data
  * @returns Array of items in the spirit tree
  */
-export function getItemsInSpiritTree(spiritId: string, data: TransformedData) {
-  const spirit = getSpiritById(spiritId, data);
+export function getItemsInSpiritTree(spiritId: string, data: PlannerAssetData) {
+  const spirit = data.spirits.find((s) => s.guid === spiritId);
   if (!spirit?.tree?.node) return [];
 
   const items: any[] = [];
@@ -308,7 +258,7 @@ export function getItemsInSpiritTree(spiritId: string, data: TransformedData) {
  * @param data The transformed data
  * @returns Object containing current and upcoming events
  */
-export function getEvents(data: TransformedData) {
+export function getEvents(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
   const currentEvents: Array<{ event: IEvent; instance: IEventInstance }> = [];
   const upcomingEvents: Array<{ event: IEvent; instance: IEventInstance; startDate: DateTime }> = [];
@@ -343,20 +293,11 @@ export function getEvents(data: TransformedData) {
 }
 
 /**
- * Get all returning spirits that have visited
- * @param data The transformed data
- * @returns Array of all returning spirits
- */
-export function getAllReturningSpirits(data: TransformedData) {
-  return data.returningSpiritsVisits;
-}
-
-/**
  * Get the currently active season
  * @param data The transformed data
  * @returns The current season or undefined if none is active
  */
-export function getCurrentSeason(data: TransformedData) {
+export function getCurrentSeason(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
   return data.seasons.find((season) => {
     const startDate = resolveToLuxon(season.date);
@@ -370,11 +311,11 @@ export function getCurrentSeason(data: TransformedData) {
  * @param data The transformed data
  * @returns Array of currently active returning spirits
  */
-export function getCurrentReturningSpirits(data: TransformedData) {
+export function getCurrentReturningSpirits(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
-  return data.returningSpiritsVisits.filter((visit) => {
-    const startDate = resolveToLuxon(visit.return.date);
-    const endDate = resolveToLuxon(visit.return.endDate);
+  return data.returningSpirits.filter((visit) => {
+    const startDate = resolveToLuxon(visit.date);
+    const endDate = resolveToLuxon(visit.endDate);
     return now >= startDate && now <= endDate;
   });
 }
@@ -384,7 +325,7 @@ export function getCurrentReturningSpirits(data: TransformedData) {
  * @param data The transformed data
  * @returns Object with statistics about the data
  */
-export function getDataStats(data: TransformedData) {
+export function getDataStats(data: PlannerAssetData) {
   return {
     realms: data.realms.length,
     areas: data.areas.length,
@@ -456,4 +397,4 @@ export function formatGroupedCurrencies(
   return formatCosts(currencies);
 }
 
-export const resolveUrls = (url: string) => (url.startsWith("http") ? url : BASE_URL + url);
+export const resolvePlannerUrl = (url: string) => (url.startsWith("http") ? url : BASE_URL + url);

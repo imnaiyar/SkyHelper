@@ -4,7 +4,13 @@ import { CustomId, store } from "@/utils/customId-store";
 import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
 import { DateTime } from "luxon";
-import type { IEvent, IEventInstance, IItemListNode } from "@skyhelperbot/constants/skygame-planner";
+import type {
+  IEvent,
+  IEventInstance,
+  IItemListNode,
+  IReturningSpirits,
+  ITravelingSpirit,
+} from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 
 export class HomeDisplay extends BasePlannerHandler {
@@ -33,34 +39,32 @@ export class HomeDisplay extends BasePlannerHandler {
     };
   }
 
-  private createTravelingSpiritSection(travelingSpirit: any) {
+  private createTravelingSpiritSection(t: ITravelingSpirit) {
     return [
       section(
         {
           type: ComponentType.Button,
           label: "View Spirit",
-          custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-            t: "spirits",
-            it: travelingSpirit.guid,
-            i: "12",
-            f: null,
-            p: null,
-            d: null,
-            r: null,
-            user: this.state.user,
-            back: null,
+          custom_id: this.createCustomId({
+            t: DisplayTabs.Spirits,
+
+            it: t.spirit.guid,
+            // passing this in `i` because all the properties are used for one thing or another
+            // passing other tree so that index is correctly calculated based on how it is handled in spirits display
+            // TODO: eventually think of a better way to do this, maybe when the spirit tree selection is refactored
+            i: `tree${[t.tree, ...(t.spirit.treeRevisions ?? []), ...(t.spirit.returns ?? []), ...(t.spirit.ts ?? [])].findIndex((x) => x.guid === t.guid).toString()}`,
           }),
           style: 1,
         },
         `### Traveling Spirit`,
-        `**${travelingSpirit.spirit.icon ? `<:_:${travelingSpirit.spirit.icon}> ` : ""}${travelingSpirit.spirit.name}**`,
-        `Available until ${this.formatDateTimestamp(travelingSpirit.endDate)} (${this.formatDateTimestamp(travelingSpirit.endDate, "R")})`,
+        `**${t.spirit.emoji ? `<:_:${t.spirit.emoji}> ` : ""}${t.spirit.name}**`,
+        `Available until ${this.formatDateTimestamp(t.endDate ?? this.planner.resolveToLuxon(t.date).plus({ days: 3 }))} (${this.formatDateTimestamp(t.endDate ?? this.planner.resolveToLuxon(t.date).plus({ days: 3 }), "R")})`,
       ),
       separator(),
     ];
   }
 
-  private createReturningSpiritsSections(returningSpirits: any[]) {
+  private createReturningSpiritsSections(returningSpirits: IReturningSpirits[]) {
     const sections: APIComponentInContainer[] = [
       textDisplay(`### Returning Spirits - Special Visits (${returningSpirits.length})`),
       ...returningSpirits.slice(0, 3).flatMap((visit) => [
@@ -68,21 +72,11 @@ export class HomeDisplay extends BasePlannerHandler {
           {
             type: ComponentType.Button,
             label: "View Details",
-            custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-              t: "events",
-              it: visit.guid,
-              user: this.state.user,
-              i: "12",
-              f: null,
-              p: null,
-              d: null,
-              r: null,
-              back: null,
-            }),
+            custom_id: this.createCustomId({ t: DisplayTabs.Spirits, it: visit.guid, d: "rs" }),
             style: 1,
           },
-          `**${visit.return.name ?? "Returning Spirits"}**`,
-          `${visit.return.spirits.length} spirits • Until ${this.formatDateTimestamp(visit.return.endDate)} (${this.formatDateTimestamp(visit.return.endDate, "R")})`,
+          `**${visit.name ?? "Returning Spirits"}**`,
+          `${visit.spirits.length} spirits • Until ${this.formatDateTimestamp(visit.endDate)} (${this.formatDateTimestamp(visit.endDate, "R")})`,
         ),
       ]),
     ];
@@ -93,17 +87,7 @@ export class HomeDisplay extends BasePlannerHandler {
           {
             type: ComponentType.Button,
             label: "View All",
-            custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-              t: "returning",
-              user: this.state.user,
-              it: null,
-              i: "12",
-              f: null,
-              p: null,
-              d: null,
-              r: null,
-              back: null,
-            }),
+            custom_id: this.createCustomId({ t: DisplayTabs.Spirits, d: "rs" }),
             style: 2,
           },
           `_View all ${returningSpirits.length} returning spirit events..._`,
@@ -147,17 +131,7 @@ export class HomeDisplay extends BasePlannerHandler {
         {
           type: ComponentType.Button,
           label: "View Event",
-          custom_id: store.serialize(CustomId.PlannerTopLevelNav, {
-            user: this.state.user,
-            t: "events",
-            it: event.event.guid,
-            i: "123",
-            f: null,
-            p: null,
-            d: null,
-            r: null,
-            back: null,
-          }),
+          custom_id: this.createCustomId({ t: DisplayTabs.Events, it: event.event.guid }),
           style: 1,
         },
         `**${event.event.name}** (${event.startDate ? "Starts" : "Ends"} ${this.formatDateTimestamp(event.instance.endDate, "R")})`,
