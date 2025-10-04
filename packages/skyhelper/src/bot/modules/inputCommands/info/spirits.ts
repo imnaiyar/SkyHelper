@@ -71,13 +71,7 @@ async function handleSpiritList(helper: InteractionHelper) {
         ...data.flatMap(([key, spirit]) => {
           const seasonIcon = "ts" in spirit ? season_emojis[spirit.season] : "";
           const realmIcon = spirit.realm ? realms_emojis[spirit.realm] : "";
-          let icon = appMojis.filter((e) => e.name.split("_").slice(0, -1).join("_") === key.replaceAll("-", ""));
-          if (icon.length === 0) {
-            icon = appMojis.filter((e) => e.name.startsWith("ts"));
-          }
-          const mapped = icon
-            .sort((a, b) => Number(a.name.split("_").at(-1)) - Number(b.name.split("_").at(-1)))
-            .map((e) => `<${e.animated ? "a" : ""}:${e.name}:${e.id}>`);
+
           return [
             section(
               {
@@ -86,8 +80,8 @@ async function handleSpiritList(helper: InteractionHelper) {
                 custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: key, user: null }),
                 style: 2,
               },
-              `${mapped[0]}${mapped[1]} **${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
-              `${mapped[2]}${mapped[3]}${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") ?? ""}`,
+              `$**${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
+              `$${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") ?? ""}`,
             ),
           ];
         }),
