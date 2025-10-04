@@ -28,6 +28,9 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+
       - name: Install jsonc
         run: pnpm add jsonc-parser -g # Only need this, no need to install an build everything
 
