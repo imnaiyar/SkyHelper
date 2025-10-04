@@ -31,9 +31,23 @@ interface EmojiResponse {
 
 interface EmojiMapping extends Record<string, string> {}
 
-const data = await fetch("https://sky-planner.com/assets/data/items.json")
-  .then((res) => res.text())
-  .then((text) => jsonc.parse(text) as ItemsData);
+let data: ItemsData;
+try {
+  const res = await fetch("https://sky-planner.com/assets/data/items.json");
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`Failed to fetch items.json: HTTP ${res.status} ${res.statusText}${body ? ` - ${body.slice(0,200)}` : ""}`);
+  }
+  const text = await res.text();
+  data = jsonc.parse(text) as ItemsData;
+  if (!data || !Array.isArray(data.items)) {
+    throw new Error("Parsed items.json is invalid or missing 'items' array");
+  }
+} catch (err) {
+  const reason = err instanceof Error ? err.message : String(err);
+  try { core.setFailed(`Unable to load items.json: ${reason}`); } catch {}
+  throw err;
+}
 
 // Function to convert decimal to base36
 function decToBase36(num: number): string {
@@ -378,14 +392,12 @@ entries.forEach(([hashedName, items], index) => {
 });
 
 mappingLines.push("}");
-fs.writeFileSync(
-  EMOJI_MAPPINGS_PATH,
+const header =
   `// ----------------------------------------------------------------------------------------------- //
-// This is mapping of hashes used for emoji name whose name exceeded the 32 char limit, 
+// This is mapping of hashes used for emoji name whose name exceeded the 32 char limit,
 // the values are base 36 encoded id of item joined together by "_".
-// ----------------------------------------------------------------------------------------------- //+\n` +
-    mappingLines.join("\n"),
-);
+// ----------------------------------------------------------------------------------------------- //\n`;
+fs.writeFileSync(EMOJI_MAPPINGS_PATH, header + mappingLines.join("\n"));
 
 // Download and upload each unique icon
 let counter = 0;
