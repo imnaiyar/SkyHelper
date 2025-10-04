@@ -32,8 +32,8 @@ interface EmojiResponse {
 interface EmojiMapping extends Record<string, string> {}
 
 const data = await fetch("https://sky-planner.com/assets/data/items.json")
-  .then((n) => n.arrayBuffer())
-  .then((b) => jsonc.parse(Buffer.from(b).toString()) as ItemsData);
+  .then((res) => res.text())
+  .then((text) => jsonc.parse(text) as ItemsData);
 
 // Function to convert decimal to base36
 function decToBase36(num: number): string {
@@ -223,14 +223,8 @@ const cleanup = () => {
 };
 
 process.on("exit", cleanup);
-process.on("SIGINT", () => {
-  cleanup();
-  process.exit();
-});
-process.on("SIGTERM", () => {
-  cleanup();
-  process.exit();
-});
+process.on("SIGINT", () => process.exit());
+process.on("SIGTERM", () => process.exit());
 
 // Load existing emoji names
 let existingEmojis: Record<string, Emoji> = {};
