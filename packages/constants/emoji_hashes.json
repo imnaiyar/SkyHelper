@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------------------------- //
 // This is mapping of hashes used for emoji name whose name exceeded the 32 char limit,
 // the values are base 36 encoded id of item joined together by "_".
-// ----------------------------------------------------------------------------------------------- //+
+// ----------------------------------------------------------------------------------------------- //
 {
   // Icon: https://sky-planner.com/assets/icons/question.webp
   "h_7df56a33eb505ce": "0_1vb_1xl_1y0_1yc_1yg_214_24e_24l",
