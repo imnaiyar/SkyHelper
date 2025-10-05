@@ -134,8 +134,9 @@ export async function fetchEmojis() {
       Authorization: `Bot ${process.env.TOKEN}`,
       "Content-Type": "application/json",
     },
-  });
-  const appEmojis = (await appRes.json().then((r) => r.items)) as APIEmoji[];
+  }).then((res) => res.json());
+
+  const appEmojis = appRes.items as APIEmoji[];
   console.log(`Fetched ${appEmojis.length} application emojis`);
   fetchedEmojis.push(...appEmojis);
   return transformEmojis(fetchedEmojis);

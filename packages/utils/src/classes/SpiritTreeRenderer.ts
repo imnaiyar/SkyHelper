@@ -1,6 +1,8 @@
-import { createCanvas, loadImage, type SKRSContext2D, Image } from "@napi-rs/canvas";
+import { createCanvas, loadImage, type SKRSContext2D, Image, GlobalFonts } from "@napi-rs/canvas";
 import type { ISpiritTree, INode } from "@skyhelperbot/constants/skygame-planner";
 import { currency as currencyEmojis } from "@skyhelperbot/constants";
+import { resolvePlannerUrl as iconUrl } from "@skyhelperbot/constants/skygame-planner";
+import path from "node:path";
 
 export interface GenerateSpiritTreeOptions {
   season?: boolean;
@@ -10,10 +12,10 @@ export interface GenerateSpiritTreeOptions {
   scale?: number; // multiplier for resolution
 }
 
-const skyplanner_baseurl = "https://sky-planner.com";
+GlobalFonts.registerFromPath(path.join(import.meta.dirname, `../shared/fonts/NotoSans-Regular.ttf`), "noto-sans");
 
-const iconUrl = (icon: string) => (icon.startsWith("/") ? `${skyplanner_baseurl}${icon}` : icon);
-const emojiURl = (emoji: string) => `https://cdn.discordapp.com/emojis/${emoji}.png`;
+const emojiUrl = (emoji: string) => `https://cdn.discordapp.com/emojis/${emoji}.png`;
+const fontName = "noto-sans";
 
 // #region image cache
 // LRU cache to reduce memory load
@@ -79,7 +81,7 @@ async function preloadImages(tree: ISpiritTree) {
     if (node.item?.season?.iconUrl) urls.add(iconUrl(node.item.season.iconUrl));
     if (node.currency) {
       const curId = (currencyEmojis as any)[node.currency.type];
-      if (curId) urls.add(emojiURl(curId));
+      if (curId) urls.add(emojiUrl(curId));
     }
     collect(node.n);
     collect(node.nw);
@@ -175,7 +177,7 @@ async function drawItem(
       const img = await getImage(iconUrl(item.icon));
       ctx.drawImage(img, -itemSize * 0.45, -itemSize * 0.45, itemSize * 0.9, itemSize * 0.9);
     } catch {
-      ctx.font = `${Math.floor(size * 0.7)}px SegoeUIEmoji`;
+      ctx.font = `${Math.floor(size * 0.7)}px ${fontName}`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#F6EAE0";
@@ -204,7 +206,7 @@ async function drawItem(
   // #region item level
   if (item?.level) {
     const fontSize = Math.max(10, Math.floor(cx * 0.6));
-    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.font = `${fontSize}px ${fontName}`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
@@ -214,7 +216,7 @@ async function drawItem(
   // #region sheet number
   if (item?.sheet) {
     const fontSize = Math.max(10, Math.floor(cx * 0.5));
-    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.font = `${fontSize}px ${fontName}`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
@@ -249,7 +251,7 @@ async function drawItem(
 
     if (curEmojiId) {
       try {
-        const curImg = await getImage(emojiURl(curEmojiId));
+        const curImg = await getImage(emojiUrl(curEmojiId));
         ctx.drawImage(curImg, iconCenterX - cx / 2, iconCenterY - cx / 2, cx, cx);
       } catch {
         ctx.fillStyle = "#FFD966";
@@ -260,7 +262,7 @@ async function drawItem(
     }
 
     const fontSize = Math.max(10, Math.floor(cx * 0.9));
-    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.font = `${fontSize}px ${fontName}`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
@@ -424,12 +426,12 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   const titleSize = Math.max(18, Math.floor(Math.min(width, height) / 20));
   const subSize = Math.max(12, Math.floor(titleSize / 2));
 
-  ctx.font = `${titleSize}px SegoeUIEmoji`;
+  ctx.font = `${titleSize}px ${fontName}`;
   ctx.fillStyle = "rgba(246, 234, 224, 0.6)";
   ctx.textAlign = "right";
   ctx.textBaseline = "top";
   ctx.fillText(watermarkText, width - titleSize, 20);
-  ctx.font = `${subSize}px SegoeUIEmoji`;
+  ctx.font = `${subSize}px ${fontName}`;
   ctx.fillText("A Sky: COTL Discord Bot", width - subSize, titleSize + 20 + subSize / 2);
 
   // transparent overlay
@@ -446,7 +448,7 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
   // #region name
   if (spirit?.name || tree.name || options.spiritName) {
     const fontSize = Math.max(10, Math.floor(size * 1.15));
-    ctx.font = `${fontSize}px SegoeUIEmoji`;
+    ctx.font = `${fontSize}px ${fontName}`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";

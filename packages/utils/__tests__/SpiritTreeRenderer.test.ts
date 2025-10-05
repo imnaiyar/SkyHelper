@@ -3,7 +3,7 @@
  * Tests cover functionality, edge cases, error handling, and performance
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { generateSpiritTree } from "../src/classes/SpiritTreeRenderer";
 import {
   mockSimpleLinearTree,
@@ -20,6 +20,14 @@ import {
   allMockTrees,
   MOCK_SPIRIT_IMAGE,
 } from "./mocks/spiritTreeData.ts";
+
+vi.mock("@skyhelperbot/constants/skygame-planner", async (importOriginal) => {
+  const original = await importOriginal<typeof import("@skyhelperbot/constants/skygame-planner")>();
+  return {
+    ...original,
+    resolvePlannerUrl: vi.fn((url) => url), // mock to just return the url as it is local image path instead of an actual remote url
+  };
+});
 
 describe("SpiritTreeRenderer", () => {
   describe("Basic Functionality", () => {
