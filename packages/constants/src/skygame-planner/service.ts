@@ -206,9 +206,9 @@ export function getWingedLightsInRealm(realmId: string, data: PlannerAssetData) 
 export function getCurrentTravelingSpirit(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
   return data.travelingSpirits.find((ts) => {
-    const startDate = resolveToLuxon(ts.date);
+    const startDate = resolveToLuxon(ts.date).startOf("day");
     const endDate = !ts.endDate ? startDate.plus({ day: 3 }) : resolveToLuxon(ts.endDate);
-    return now >= startDate && now <= endDate;
+    return now >= startDate && now <= endDate.endOf("day");
   });
 }
 
@@ -265,8 +265,8 @@ export function getEvents(data: PlannerAssetData) {
 
   for (const event of data.events) {
     for (const instance of event.instances ?? []) {
-      const startDate = resolveToLuxon(instance.date);
-      const endDate = resolveToLuxon(instance.endDate);
+      const startDate = resolveToLuxon(instance.date).startOf("day");
+      const endDate = resolveToLuxon(instance.endDate).endOf("day");
 
       if (now >= startDate && now <= endDate) {
         currentEvents.push({
@@ -300,8 +300,8 @@ export function getEvents(data: PlannerAssetData) {
 export function getCurrentSeason(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
   return data.seasons.find((season) => {
-    const startDate = resolveToLuxon(season.date);
-    const endDate = resolveToLuxon(season.endDate);
+    const startDate = resolveToLuxon(season.date).startOf("day");
+    const endDate = resolveToLuxon(season.endDate).endOf("day");
     return now >= startDate && now <= endDate;
   });
 }
@@ -314,8 +314,8 @@ export function getCurrentSeason(data: PlannerAssetData) {
 export function getCurrentReturningSpirits(data: PlannerAssetData) {
   const now = DateTime.now().setZone(zone);
   return data.returningSpirits.filter((visit) => {
-    const startDate = resolveToLuxon(visit.date);
-    const endDate = resolveToLuxon(visit.endDate);
+    const startDate = resolveToLuxon(visit.date).startOf("day");
+    const endDate = resolveToLuxon(visit.endDate).endOf("day");
     return now >= startDate && now <= endDate;
   });
 }
