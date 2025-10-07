@@ -1,427 +1,173 @@
 ---
 title: Utilities
-description: Helpful utility commands for various tasks
+description: Helpful tools to make your Discord and Sky experience better
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Step, Steps } from "fumadocs-ui/components/steps";
 
 # Utilities
 
-Access helpful utility commands for timestamps, bot information, help, and more.
+SkyHelper includes several helpful utilities to make your Discord and Sky experience more convenient and enjoyable.
 
-## Overview
+## Timestamp Converter
 
-SkyHelper provides various utility commands to enhance your Discord experience:
+Create Discord timestamps that automatically adjust to everyone's timezone - perfect for coordinating events!
 
-- Timestamp conversion for scheduling
-- Bot information and status
-- Command help and documentation
-- Changelog viewing
-- Contact and support options
+### What It Does
 
-## Commands
+Converts any date and time into Discord's timestamp format. When you share it:
 
-### `/utils` - Utility Subcommands
+- Shows the correct time for everyone's timezone
+- Displays in their preferred format
+- No timezone confusion
+- Works globally
 
-A collection of utility functions.
+**[Image Placeholder: Timestamp converter interface]**
 
-**Subcommands**:
+### How to Use It
 
-- `timestamp` - Discord timestamp converter
-- `botinfo` - Bot information and stats
-- `changelog` - View latest updates
-- `contact-us` - Reach out to developers
+Provide your time information:
 
-### `/help` - Command Help
+- Time of day (hours, minutes, seconds)
+- Optional date (day, month, year)
+- Optional timezone (defaults to America/Los_Angeles)
 
-Get help information about bot commands.
+The bot gives you multiple Discord timestamp formats to choose from!
 
-**Options**:
+**[Image Placeholder: Different timestamp format options]**
 
-| Option      | Description                     |
-| ----------- | ------------------------------- |
-| `[command]` | Get help for a specific command |
+### Why It's Useful
 
-**Usage Examples**:
+**Event Planning**
 
-```
-/help
-```
+Planning a Sky event?
 
-Shows all available commands categorized.
+- Set the time in your timezone
+- Share the timestamp
+- Everyone sees it in their local time
+- No confusion about when to meet
 
-```
-/help command:shards
-```
+**Meeting Coordination**
 
-Shows detailed help for the shards command.
+Organizing across timezones?
 
-**[Image Placeholder: Help menu]**
+- Convert your meeting time
+- Post the timestamp
+- Participants see their local time
+- Perfect attendance
 
-## Timestamp Utility
+**Reminders**
 
-Convert dates and times to Discord-formatted timestamps for perfect scheduling.
+Need to schedule something?
 
-### Command
+- Create a future timestamp
+- Use it in announcements
+- Everyone knows when
+- Automatic timezone handling
 
-```
-/utils timestamp time:HH mm ss
-```
-
-**Options**:
-
-| Option       | Description                                                                                   |
-| ------------ | --------------------------------------------------------------------------------------------- |
-| `<time>`     | The time to convert to UNIX (format: `HH mm ss`, e.g., `04 32 44`)                            |
-| `[timezone]` | The timezone to use for conversion (format: `Continent/City`, default: `America/Los_Angeles`) |
-| `[date]`     | The date to convert (format: `DD`)                                                            |
-| `[month]`    | The month to convert (format: `MM`)                                                           |
-| `[year]`     | The year to convert (format: `YYYY`)                                                          |
-
-**[Image Placeholder: Timestamp converter]**
-
-### Usage Examples
-
-<Steps>
-
-<Step>
-
-#### Basic Time
-
-```
-/utils timestamp time:02 07 44
-```
-
-Converts 02:07:44 in default timezone (America/Los_Angeles).
-
-</Step>
-
-<Step>
-
-#### With Timezone
-
-```
-/utils timestamp time:04 22 30 timezone:Asia/Kolkata
-```
-
-Converts 04:22:30 in Asia/Kolkata timezone.
-
-</Step>
-
-<Step>
-
-#### Full Date and Time
-
-```
-/utils timestamp time:15 30 00 date:25 month:12 year:2024
-```
-
-Converts December 25, 2024 at 15:30:00.
-
-</Step>
-
-</Steps>
-
-### Why This Format?
-
-<Callout type="info">
-  **Space Separator**: The format `HH mm ss` (with spaces) is used instead of `HH:mm:ss` because Discord formats `:xx:` into
-  custom emoji format if it matches any emojis accessible to the user. This is a workaround to prevent that issue.
+<Callout type="tip">
+  Use the relative timestamp format (`<t:timestamp:R>`) to show "in 2 hours" or "3 days ago" - updates automatically!
 </Callout>
-
-### Discord Timestamp Formats
-
-The command provides all Discord timestamp formats:
-
-- **Short Time**: `16:20`
-- **Long Time**: `16:20:30`
-- **Short Date**: `20/04/2021`
-- **Long Date**: `20 April 2021`
-- **Short Date/Time**: `20 April 2021 16:20`
-- **Long Date/Time**: `Tuesday, 20 April 2021 16:20`
-- **Relative Time**: `2 months ago`
-
-**[Image Placeholder: Timestamp format examples]**
-
-### Common Use Cases
-
-<Steps>
-
-<Step>
-
-#### Event Planning
-
-Create timestamps for event announcements:
-
-```
-/utils timestamp time:18 00 00 date:15 month:03 year:2024 timezone:UTC
-```
-
-Share with community for automatic timezone conversion.
-
-</Step>
-
-<Step>
-
-#### Meeting Coordination
-
-Schedule meetings across timezones:
-
-```
-/utils timestamp time:14 30 00 timezone:America/New_York
-```
-
-Everyone sees the time in their local timezone.
-
-</Step>
-
-<Step>
-
-#### Reminder Scheduling
-
-Create timestamps for future reminders:
-
-```
-/utils timestamp time:12 00 00 date:01 month:05 year:2024
-```
-
-</Step>
-
-</Steps>
 
 ### Timezone Support
 
-Supported timezone format: `Continent/City`
+Works with worldwide timezones:
 
-**Examples**:
-
-- `America/Los_Angeles`
 - `America/New_York`
 - `Europe/London`
-- `Europe/Paris`
 - `Asia/Tokyo`
-- `Asia/Kolkata`
 - `Australia/Sydney`
+- And many more!
 
-<Callout type="tip">
-  **Find Your Timezone**: Use the format `Continent/City`. For example, if you're in Mumbai, use `Asia/Kolkata`.
-</Callout>
+Format: `Continent/City` (e.g., `Asia/Kolkata`, `America/Los_Angeles`)
 
 ## Bot Information
 
-Get comprehensive information about SkyHelper.
+Get detailed information about SkyHelper's status and performance.
 
-### Command
+### What You'll See
 
-```
-/utils botinfo
-```
+**Statistics**
 
-**[Image Placeholder: Bot info display]**
+- How long the bot's been running
+- Number of servers using it
+- Total users reached
+- Commands processed
 
-### Information Included
+**System Info**
 
-<Steps>
-
-<Step>
-
-#### Bot Statistics
-
-- Bot version
-- Uptime (how long running)
-- Total servers
-- Total users
-- Command usage count
-
-</Step>
-
-<Step>
-
-#### System Information
-
-- Memory usage
+- Current version
 - Response time
-- API latency
-- Shard information
+- Memory usage
+- Performance metrics
 
-</Step>
-
-<Step>
-
-#### Feature Status
-
-- Active features
-- Enabled modules
-- Configuration status
-- Service health
-
-</Step>
-
-<Step>
-
-#### Quick Links
+**Quick Links**
 
 - Support server
-- Website
-- Dashboard
+- Website and dashboard
 - Documentation
 - GitHub repository
 
-</Step>
+**[Image Placeholder: Bot info display]**
 
-</Steps>
+### When to Use It
 
-### When to Use
-
-- Check bot status and uptime
-- Verify bot is functioning
+- Check if bot is functioning properly
 - Get support links
-- Share bot information
+- Share bot statistics
 - Troubleshoot issues
+- Verify bot version
 
 ## Changelog
 
-View the latest changes and updates to SkyHelper.
-
-### Command
-
-```
-/utils changelog
-```
-
-**[Image Placeholder: Changelog display]**
+Stay informed about new features and improvements!
 
 ### What's Included
 
-The changelog shows:
+See the latest updates:
 
-- **Latest Updates**: Recent feature additions
-- **Bug Fixes**: Issues resolved
-- **Improvements**: Performance and UX enhancements
-- **New Commands**: Added functionality
-- **Changes**: Modified features
-- **Version Numbers**: Release tracking
+- ✨ **New Features** - Fresh functionality added
+- 🐛 **Bug Fixes** - Issues resolved
+- 🔧 **Improvements** - Enhanced performance
+- 📝 **Documentation** - Guide updates
+- ⚡ **Performance** - Speed optimizations
 
-### Update Categories
-
-Updates are categorized:
-
-- ✨ **Features**: New functionality
-- 🐛 **Bug Fixes**: Issue resolutions
-- 🔧 **Improvements**: Enhancements
-- 📝 **Documentation**: Doc updates
-- ⚡ **Performance**: Speed improvements
-
-<Callout type="info">**Stay Updated**: Check the changelog regularly to learn about new features and improvements!</Callout>
-
-## Contact & Support
-
-Reach out to the development team directly.
-
-### Command
-
-```
-/utils contact-us
-```
-
-**[Image Placeholder: Contact form]**
-
-### When to Use
-
-<Steps>
-
-<Step>
-
-#### Bug Reports
-
-Found a bug? Report it through contact-us with:
-
-- What happened
-- What you expected
-- Steps to reproduce
-- Screenshots if applicable
-
-</Step>
-
-<Step>
-
-#### Feature Requests
-
-Suggest new features or improvements:
-
-- Describe the feature
-- Explain use case
-- Provide examples
-- Share expected behavior
-
-</Step>
-
-<Step>
-
-#### General Questions
-
-Ask questions about:
-
-- Bot functionality
-- Feature usage
-- Configuration help
-- Best practices
-
-</Step>
-
-<Step>
-
-#### Feedback
-
-Share your thoughts on:
-
-- User experience
-- Feature usefulness
-- Documentation clarity
-- Suggestions for improvement
-
-</Step>
-
-</Steps>
-
-### Response Time
+**[Image Placeholder: Changelog display]**
 
 <Callout type="info">
-  The development team reviews all submissions. Response time varies but typically within 24-48 hours for urgent issues.
+  Check the changelog regularly to discover new features and learn about improvements that might benefit you!
 </Callout>
 
-## Help Command
+### Understanding Updates
 
-Access comprehensive help for all commands.
+Updates are categorized clearly:
 
-### Command
+- Feature additions you can start using
+- Fixes for problems that were affecting users
+- Performance improvements for better experience
+- Documentation to help you use the bot
 
-```
-/help
-```
+## Help System
 
-**[Image Placeholder: Help command overview]**
+Get assistance with any bot command or feature.
 
 ### General Help
 
-Running `/help` without options shows:
+Shows all available features:
 
-- All command categories
-- Brief command descriptions
+- Commands organized by category
+- Brief descriptions
 - Quick usage examples
-- Navigation to detailed help
+- Navigation to detailed info
+
+**[Image Placeholder: Help menu overview]**
 
 ### Specific Command Help
 
-```
-/help command:shards
-```
+Need details on one command?
 
-Shows detailed help for a specific command:
-
-- Command description
-- All options explained
+- Detailed explanation
+- All options described
 - Usage examples
 - Related commands
 - Tips and notes
@@ -430,237 +176,147 @@ Shows detailed help for a specific command:
 
 ### Help Categories
 
-Commands are organized by:
+Commands organized as:
 
-- **Information**: Shard, event, spirit commands
-- **Utility**: Tools and helpers
-- **Admin**: Server management
-- **Fun**: Games and entertainment
+- **Information** - Shard, event, and spirit features
+- **Utility** - Tools and helpers
+- **Admin** - Server management (if you have permission)
+- **Fun** - Games and entertainment
 
-<Callout type="tip">**First Time Users**: Start with `/help` to explore all available commands and their purposes.</Callout>
+<Callout type="tip">
+  New to SkyHelper? Start with general help to explore all features, then dive into specific command help as needed!
+</Callout>
 
-## Additional Utilities
+## Contact & Feedback
+
+Reach out to the development team directly through the bot!
+
+### When to Contact
+
+**Report Bugs**
+
+Found something broken?
+
+- Describe what happened
+- What you expected to happen
+- Steps to reproduce
+- Screenshots if helpful
+
+**Suggest Features**
+
+Have an idea?
+
+- Explain the feature
+- Describe the use case
+- Provide examples
+- Share expected behavior
+
+**Ask Questions**
+
+Need help understanding something?
+
+- What you're trying to do
+- What's confusing
+- What you've tried
+- How we can help
+
+**Share Feedback**
+
+Thoughts on the bot?
+
+- What you like
+- What could improve
+- User experience notes
+- Suggestions
+
+**[Image Placeholder: Contact form interface]**
+
+### Response Time
+
+<Callout type="info">
+  The development team reviews all submissions. Response time is typically within 24-48 hours for urgent issues.
+</Callout>
+
+## Additional Features
 
 ### Linked Role
 
-Manage your Sky: Children of the Light linked role connection.
+Connect your Sky profile to Discord:
 
-**Command**:
-
-```
-/linked-role
-```
-
-**Features**:
-
-- Connect Sky profile to Discord
-- Display Sky information on profile
-- Customize linked role appearance
-- Manage connection settings
+- Display Sky info on your profile
+- Customize how it appears
+- Manage the connection
+- Share your Sky identity
 
 Learn more in the [Linked Roles Guide](/docs/guides/linked-role).
 
-**[Image Placeholder: Linked role interface]**
-
-## Tips & Tricks
-
-### Timestamp Tips
+## Utility Tips
 
 <Callout type="tip">
-  **Copy Multiple Formats**: The timestamp command gives you all format options. Copy the one that fits your need!
+  **Timestamp Trick**: Save commonly used timestamps! If you frequently schedule events at the same time, keep the timestamp handy.
 </Callout>
 
 <Callout type="tip">
-  **Event Announcements**: Use relative timestamps (`<t:timestamp:R>`) in event posts so everyone knows when it starts in their timezone.
+  **Help Navigation**: Bookmark the help command patterns you use often. Makes finding information faster!
 </Callout>
-
-### Bot Info Usage
 
 <Callout type="tip">
-  **Share Stats**: Use botinfo to share impressive bot statistics with your community or when inviting to new servers.
+  **Feedback Detail**: When reporting issues, more detail is better. It helps the team fix problems faster.
 </Callout>
-
-### Help Navigation
 
 <Callout type="tip">
-  **Command Discovery**: Browse through `/help` regularly to discover commands you might not know about.
+  **Check Changelog**: Before reporting a bug, check if it was already fixed in a recent update!
 </Callout>
 
-### Contact Best Practices
+## How Utilities Help
 
-<Callout type="tip">
-  **Be Specific**: When reporting issues or requesting features, provide as much detail as possible for faster resolution.
-</Callout>
+### Save Time
+
+- Quick timezone conversions
+- Instant help lookup
+- Easy access to info
+- Fast problem reporting
+
+### Stay Informed
+
+- Know what's new
+- Understand features
+- Get support when needed
+- Track bot status
+
+### Better Coordination
+
+- Schedule events accurately
+- No timezone confusion
+- Smooth international planning
+- Clear communication
 
 ## Common Use Cases
 
-### Planning Server Events
+### Planning Events
 
-<Steps>
+1. Use timestamp converter for event time
+2. Share in your announcement
+3. Everyone sees correct local time
+4. Smooth event coordination
 
-<Step>
+### Learning Features
 
-Use `/utils timestamp` to create event time
+1. Check general help
+2. Explore categories
+3. Get specific command help
+4. Learn how to use features
 
-</Step>
+### Reporting Issues
 
-<Step>
-
-Post announcement with timestamp
-
-</Step>
-
-<Step>
-
-Everyone sees time in their timezone
-
-</Step>
-
-<Step>
-
-No confusion about event timing
-
-</Step>
-
-</Steps>
-
-### New User Onboarding
-
-<Steps>
-
-<Step>
-
-New member joins server
-
-</Step>
-
-<Step>
-
-Direct them to `/help`
-
-</Step>
-
-<Step>
-
-They explore available commands
-
-</Step>
-
-<Step>
-
-Use specific `/help command:name` for details
-
-</Step>
-
-</Steps>
-
-### Troubleshooting
-
-<Steps>
-
-<Step>
-
-Issue occurs with bot
-
-</Step>
-
-<Step>
-
-Check `/utils botinfo` for status
-
-</Step>
-
-<Step>
-
-Review `/utils changelog` for recent changes
-
-</Step>
-
-<Step>
-
-Use `/utils contact-us` if issue persists
-
-</Step>
-
-</Steps>
-
-## Keyboard Shortcuts & Quick Access
-
-### Command Autocomplete
-
-Discord's autocomplete helps with:
-
-- Finding commands quickly
-- Seeing available options
-- Getting suggestions as you type
-- Reducing typos
-
-**[Image Placeholder: Autocomplete example]**
-
-### Favorite Commands
-
-<Callout type="tip">**Frequent Commands**: Keep a note of your most-used utility commands for quick reference!</Callout>
-
-## Integration with Other Features
-
-### Utilities + Other Commands
-
-Utilities complement other features:
-
-- **Timestamp + Events**: Schedule event announcements
-- **Help + New Features**: Learn about new commands
-- **Botinfo + Troubleshooting**: Verify bot status
-- **Contact + Feedback**: Report issues or ideas
-
-## Alternative Access
-
-### Dashboard
-
-Many utilities are also available on the [web dashboard](https://dash.skyhelper.xyz):
-
-- Visual bot information
-- Web-based contact form
-- Settings management
-- Feature configuration
-
-### Support Server
-
-Join the [support server](https://discord.gg/skyhelper) for:
-
-- Direct support
-- Community help
-- Feature discussions
-- Update announcements
-
-## Troubleshooting
-
-### Timestamp Not Working
-
-<Callout type="warning">
-  **Format Check**: Ensure you're using spaces (`HH mm ss`) not colons (`HH:mm:ss`) in the time parameter.
-</Callout>
-
-### Timezone Invalid
-
-Use the format `Continent/City`. Examples:
-
-- ✅ `Asia/Tokyo`
-- ✅ `America/New_York`
-- ❌ `JST`
-- ❌ `EST`
-
-### Help Command Empty
-
-If help shows no commands:
-
-- Check bot permissions
-- Verify bot is fully connected
-- Try again in a few seconds
-- Report if issue persists
+1. Encounter a problem
+2. Check bot info for version
+3. Review changelog for fixes
+4. Contact if issue persists
 
 ## Related Features
 
-- **[Language Support](/guide/language)**: Change bot language
-- **[Commands Documentation](/docs/commands)**: Detailed command reference
-- **[Support Server](https://discord.gg/skyhelper)**: Get community help
-- **[Dashboard](https://dash.skyhelper.xyz)**: Web-based utilities
+Use utilities alongside:
+
+- **[Language Support](/guide/language)** - Use bot in your language
+- **[All Features](/guide)** - Explore everything SkyHelper offers

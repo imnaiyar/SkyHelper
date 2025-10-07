@@ -1,749 +1,280 @@
 ---
 title: Sky Game Planner
-description: Interactive planner for browsing spirits, items, events, shops, and game content
+description: Your interactive guide to exploring all of Sky's content
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Step, Steps } from "fumadocs-ui/components/steps";
 
 # Sky Game Planner
 
-An interactive, comprehensive planner for browsing and exploring all Sky: Children of the Light game content in one place.
+Explore everything Sky has to offer in one interactive place! The planner lets you browse spirits, items, events, shops, and more with powerful filtering and search.
 
-## Overview
+## What is the Planner?
 
-The Sky Game Planner is a powerful feature that lets you:
+Think of it as an interactive encyclopedia for Sky. Instead of searching through multiple sources, everything you need to know about the game is organized and accessible in one place.
 
-- Browse all spirits, items, events, and shops
-- Filter and search content interactively
-- Navigate through game areas and realms
-- Plan your Sky journey efficiently
-- Access detailed information quickly
+You can browse:
 
-<Callout type="info">
-  **All-in-One Tool**: The planner consolidates spirits, cosmetics, events, seasons, shops, and more into a single,
-  easy-to-navigate interface.
-</Callout>
+- All spirits and their friendship trees
+- Every cosmetic item in the game
+- In-game events and their schedules
+- All shops and what they sell
+- Game realms and their areas
+- Past and current seasons
 
-## Command
+**[Image Placeholder: Planner main interface showing categories]**
 
-### `/planner` - Interactive Game Planner
+## How to Use It
 
-Access the interactive planner with search and navigation features.
+### Search Anything
 
-**Subcommands**:
+Type what you're looking for and get instant results:
 
-#### `search` - Search for anything
+- **Spirit names**: "Dancing Performer" or just "Dancing"
+- **Item names**: Find specific cosmetics
+- **Shop names**: "Aviary", "Concert Hall", etc.
+- **Event names**: Seasonal events or special occasions
+- **Quick navigation**: Jump to specific sections
 
-```
-/planner search query:Dancing Performer
-```
+**[Image Placeholder: Search showing autocomplete results]**
 
-Search for spirits, items, events, shops, or navigate to specific sections.
+As you type, the bot shows matching results from all categories, making it super fast to find what you need.
 
-**[Image Placeholder: Planner search interface]**
+### Browse by Category
 
-## What You Can Browse
+Explore organized sections:
 
-### Content Categories
+**Spirits Tab**
 
-<Steps>
+- See all spirits in the game
+- Filter by realm, season, or type
+- View traveling spirits only
+- Explore special visit spirits
 
-<Step>
+**Items Tab**
 
-#### Spirits
+- Browse all cosmetics
+- Filter by type (cape, mask, hair, etc.)
+- See where items come from
+- Check availability status
 
-- All constellation spirits
-- Seasonal spirits
-- Traveling spirits
-- Special visit spirits
-- Complete friendship trees
+**Events Tab**
 
-</Step>
+- View seasonal events
+- See recurring events
+- Check special occasions
+- Review event schedules
 
-<Step>
+**Shops Tab**
 
-#### Items & Cosmetics
-
-- Capes and outfits
-- Masks and face items
-- Hairstyles
-- Props and accessories
-- Instruments
-
-</Step>
-
-<Step>
-
-#### Events
-
-- Seasonal events
-- Special occasions
-- Event instances
-- Schedules and timelines
-
-</Step>
-
-<Step>
-
-#### Realms & Areas
-
-- Six main realms
-- Sub-areas
-- Hidden locations
-- Special zones
-
-</Step>
-
-<Step>
-
-#### Shops
-
-- Regular shops
-- Event stores (Aviary)
-- Concert halls
+- Aviary Event Store
+- Concert Halls
 - Harmony Hall
-- Secret shops (Office)
+- Secret Office shop
 - Nesting Workshop
 
-</Step>
+**Realms Tab**
 
-<Step>
+- Navigate through all six realms
+- Explore sub-areas
+- See spirits in each location
+- Find points of interest
 
-#### Seasons
-
-- Current season
-- Past seasons
-- Season details
-- Seasonal quests
-
-</Step>
-
-</Steps>
-
-## How to Use
-
-### Search Functionality
-
-<Steps>
-
-<Step>
-
-#### Start a Search
-
-```
-/planner search query:your-search-term
-```
-
-The autocomplete will show matching results as you type.
-
-</Step>
-
-<Step>
-
-#### Browse Results
-
-Results are categorized by type:
-
-- **Tab:** Quick navigation to main sections
-- **Spirit:** Individual spirits
-- **Item:** Cosmetics and items
-- **Event:** Game events
-- **Shop:** Store locations
-
-</Step>
-
-<Step>
-
-#### Select Result
-
-Choose from the autocomplete suggestions to navigate directly to that content.
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Search autocomplete results]**
-
-### Navigation Interface
-
-When you open the planner, you'll see:
-
-<Steps>
-
-<Step>
-
-#### Tab Selection
-
-Main categories displayed as tabs:
-
-- Spirits
-- Seasons
-- Items
-- Events
-- Areas
-- Shops
-
-</Step>
-
-<Step>
-
-#### Interactive Filters
-
-Filter content by:
-
-- Realm
-- Season
-- Type
-- Availability
-- Cost range
-
-</Step>
-
-<Step>
-
-#### Content Display
-
-Selected content shown with:
-
-- Detailed information
-- Visual previews
-- Related items
-- Navigation options
-
-</Step>
-
-<Step>
-
-#### Back Navigation
-
-Navigate back through your browsing history with back buttons.
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Planner navigation tabs]**
-
-## Planner Features
-
-### Spirits Tab
-
-Browse all spirits with:
-
-<Steps>
-
-<Step>
-
-**Filter Options**:
-
-- By realm (Isle, Prairie, Forest, etc.)
-- By type (Regular, Seasonal, Traveling)
-- By season
-- Traveling spirits only
-- Special visits only
-
-</Step>
-
-<Step>
-
-**Display Information**:
-
-- Spirit name and icon
-- Location
-- Friendship tree
-- Costs and items
-- Quick links to guides
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Spirits tab view]**
-
-### Items Tab
-
-Browse cosmetics and items:
-
-<Steps>
-
-<Step>
-
-**Filter Options**:
-
-- By type (Cape, Mask, Hair, etc.)
-- By source (Spirit, Shop, Event)
-- By season
-- By cost
-
-</Step>
-
-<Step>
-
-**Display Information**:
-
-- Item preview
-- Source (which spirit/shop)
-- Cost details
-- Availability status
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Items tab view]**
-
-### Events Tab
-
-Browse game events:
-
-<Steps>
-
-<Step>
-
-**Event Types**:
-
-- Seasonal events
-- Recurring events
-- Special occasions
-- Limited-time events
-
-</Step>
-
-<Step>
-
-**Event Details**:
-
-- Event schedule
-- Instances/occurrences
-- Participation info
-- Rewards
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Events tab view]**
-
-### Shops Tab
-
-Explore all shops:
-
-<Steps>
-
-<Step>
-
-**Shop Categories**:
-
-- **Aviary Event Store**: Special event items
-- **Concert Halls**: Music-related items
-- **Harmony Hall**: Harmony season items
-- **Secret Area (Office)**: Hidden shop items
-- **Nesting Workshop**: Nestling items
-
-</Step>
-
-<Step>
-
-**Shop Information**:
-
-- Available items
-- Costs (candles/hearts)
-- Location guide
-- Refresh schedule
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Shops tab view]**
-
-### Realms/Areas Tab
-
-Navigate through realms:
-
-<Steps>
-
-<Step>
-
-**Realm Selection**:
-
-- Isle of Dawn
-- Daylight Prairie
-- Hidden Forest
-- Valley of Triumph
-- Golden Wasteland
-- Vault of Knowledge
-
-</Step>
-
-<Step>
-
-**Area Details**:
-
-- Sub-areas within realm
-- Spirits in area
-- Points of interest
-- Navigation guides
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Realms tab view]**
-
-### Seasons Tab
-
-Browse seasonal content:
-
-<Steps>
-
-<Step>
-
-**Season Selection**:
+**Seasons Tab**
 
 - Current active season
 - All past seasons
 - Season information
+- Seasonal spirits and items
 
-</Step>
+**[Image Placeholder: Category tabs and filtering options]**
 
-<Step>
+## Powerful Filtering
 
-**Season Details**:
-
-- Seasonal spirits
-- Seasonal quests
-- Ultimate gifts
-- Season timeline
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Seasons tab view]**
-
-## Advanced Features
-
-### Deep Navigation
-
-The planner maintains your navigation history:
-
-<Steps>
-
-<Step>
-
-Navigate to Spirits → Forest → Meditating Monastic
-
-</Step>
-
-<Step>
-
-View Monastic's friendship tree
-
-</Step>
-
-<Step>
-
-Click an item to see its details
-
-</Step>
-
-<Step>
-
-Use back button to return to tree
-
-</Step>
-
-<Step>
-
-Use back button again to return to Forest spirits
-
-</Step>
-
-</Steps>
-
-<Callout type="tip">
-  **Navigation State**: The planner remembers your path, making it easy to explore and return to previous views.
-</Callout>
+Narrow down exactly what you want:
 
 ### Filter Combinations
 
-Combine multiple filters:
+Mix and match filters to find specific content:
 
-- **Spirits in Forest realm + Traveling Spirits**: Shows only traveling spirits from Forest
-- **Items by Cape type + Season of Dreams**: Shows all capes from that season
-- **Events + Current Season**: Shows only current seasonal events
+- **Spirits in a specific realm**: See only Forest spirits
+- **Traveling spirits only**: Find which spirits visit
+- **Items from a season**: All Season of Dreams cosmetics
+- **Capes under 50 candles**: Budget-friendly options
 
-**[Image Placeholder: Filter combinations]**
+**[Image Placeholder: Filter combinations in action]**
 
-### Quick Jump Search
+### Smart Navigation
 
-Use search to jump quickly:
+The planner remembers your path:
 
-<Steps>
+1. Browse to Spirits → Forest Realm → Meditating Monastic
+2. View their friendship tree
+3. Click an item for details
+4. Use back button to return to tree
+5. Go back again to Forest spirits list
 
-<Step>
+This makes exploration smooth and intuitive!
 
-**Tab Quick Jump**:
-Search "Traveling Spirits" to jump directly to that filtered view
+## What You'll Discover
 
-</Step>
+### Spirit Information
 
-<Step>
+For any spirit, see:
 
-**Shop Quick Jump**:
-Search "Aviary" to jump to Aviary Event Store
+- Their location and how to find them
+- Complete friendship tree layout
+- All items they offer
+- Total costs and requirements
+- Related spirits in the same realm
 
-</Step>
+### Item Details
 
-<Step>
+For any cosmetic:
 
-**Spirit Quick Jump**:
-Search spirit name to go directly to their page
+- Visual preview
+- Which spirit or shop has it
+- Cost (candles/hearts/seasonal candles)
+- How to unlock it
+- When it's available
 
-</Step>
+### Shop Inventories
 
-</Steps>
+For each shop, view:
 
-## Search Tips
+- All items currently available
+- Costs and requirements
+- Location in the game
+- Refresh schedules (if applicable)
 
-### Effective Searching
+### Event Information
 
-<Callout type="tip">**Use Keywords**: Type distinctive words like "Concert", "Office", "Nesting" to find shops quickly.</Callout>
+For events:
+
+- Event schedule and timing
+- Instances and occurrences
+- How to participate
+- Rewards and benefits
+
+## Quick Access Features
+
+### Jump to Favorites
+
+Use search to instantly jump to:
+
+- A specific spirit's tree
+- A particular shop
+- An event you're interested in
+- A season you want to explore
+
+### Cross-References
+
+Everything is connected:
+
+- From a spirit, see their realm
+- From an item, see where to get it
+- From a shop, see all its items
+- From an event, see participating spirits
+
+## Why Use the Planner?
+
+### All-in-One Reference
+
+Instead of:
+
+- Searching Google for spirit locations
+- Looking up costs on different sites
+- Finding shop inventories elsewhere
+- Hunting for event info
+
+Just open the planner - it's all there!
+
+### Plan Your Journey
+
+Before playing, use the planner to:
+
+- Decide which spirits to visit
+- Choose items to unlock
+- Find the best shops to check
+- Schedule event participation
+
+### Discover New Content
+
+The planner helps you find:
+
+- Spirits you didn't know existed
+- Items you haven't seen before
+- Shops you haven't visited
+- Events you might have missed
 
 <Callout type="tip">
-  **Partial Matches**: "Medit" will find "Meditating Monastic", "assem" will find "Season of Assembly".
+  The planner is perfect for when you're away from the game but want to plan your next Sky session!
 </Callout>
 
-<Callout type="tip">**Tab Navigation**: Search "Tab: Spirits" to jump to the Spirits main view.</Callout>
-
-### What You Can Search
-
-The planner search finds:
-
-- Spirit names
-- Item names
-- Event names
-- Shop names
-- Season names
-- Area names
-- Tab names for quick navigation
-
-## Common Use Cases
-
-### Spirit Research
-
-<Steps>
-
-<Step>
-
-Search for a spirit you want to unlock
-
-</Step>
-
-<Step>
-
-View their location and tree
-
-</Step>
-
-<Step>
-
-Check item costs
-
-</Step>
-
-<Step>
-
-Navigate to similar spirits in same realm
-
-</Step>
-
-</Steps>
-
-### Item Shopping
-
-<Steps>
-
-<Step>
-
-Go to Items tab
-
-</Step>
-
-<Step>
-
-Filter by type (e.g., Capes)
-
-</Step>
-
-<Step>
-
-Browse available options
-
-</Step>
-
-<Step>
-
-Check which spirit/shop has them
-
-</Step>
-
-<Step>
-
-Plan your unlock path
-
-</Step>
-
-</Steps>
-
-### Shop Planning
-
-<Steps>
-
-<Step>
-
-Search for a specific shop
-
-</Step>
-
-<Step>
-
-View all available items
-
-</Step>
-
-<Step>
-
-Check costs and requirements
-
-</Step>
-
-<Step>
-
-Plan your purchases
-
-</Step>
-
-</Steps>
-
-### Event Preparation
-
-<Steps>
-
-<Step>
-
-Go to Events tab
-
-</Step>
-
-<Step>
-
-Find the event you're interested in
-
-</Step>
-
-<Step>
-
-View instances and schedule
-
-</Step>
-
-<Step>
-
-Prepare accordingly
-
-</Step>
-
-</Steps>
-
-## Integration with Other Features
-
-The planner works seamlessly with other bot features:
-
-### From Planner to Commands
-
-After browsing in the planner:
-
-- Use `/spirits` for detailed spirit guides
-- Use `/seasonal-calculator` for season planning
-- Use `/skytimes` for event schedules
-- Use `/daily-quests` for quest guides
-
-### From Commands to Planner
-
-When using other commands:
-
-- Spirit search results link to planner
-- Event info references planner content
-- Shop items connect to planner
-
-## Tips & Tricks
+## Navigation Tips
 
 <Callout type="tip">
-  **Bookmark Favorite Views**: Take note of filter combinations you use often. The search makes it easy to return to them.
+  **Use Search for Speed**: Instead of clicking through categories, just search for what you want. It's much faster!
 </Callout>
-
-<Callout type="tip">**Explore Systematically**: Go realm by realm to discover spirits and items you might have missed.</Callout>
 
 <Callout type="tip">
-  **Use for Planning**: Before starting Sky, browse the planner to plan which spirits or items to focus on during your session.
+  **Explore Systematically**: Go realm by realm to discover all spirits and ensure you haven't missed any.
 </Callout>
 
-<Callout type="tip">**Compare Items**: Use the Items tab to compare similar cosmetics before deciding which to unlock.</Callout>
-
-## Visual Navigation
-
-The planner uses visual elements:
-
-- **Icons**: Represent different content types
-- **Colors**: Indicate availability and status
-- **Badges**: Show special properties
-- **Thumbnails**: Preview items and spirits
-
-**[Image Placeholder: Visual elements in planner]**
-
-## State Persistence
-
-The planner maintains state across interactions:
-
-- **Filter Settings**: Remain active during navigation
-- **Pagination**: Remembers your page position
-- **Navigation History**: Full back-button support
-- **User Isolation**: Your planner state is independent
-
-<Callout type="info">
-  **Session Based**: Each user has their own planner session. Your navigation doesn't affect others using the planner in the same
-  channel.
+<Callout type="tip">
+  **Compare Items**: Use the Items tab to browse similar cosmetics and decide which you like best before spending resources.
 </Callout>
 
-## Performance & Limits
-
-The planner is optimized for:
-
-- **Fast Loading**: Quick response times
-- **Large Datasets**: Handles all game content
-- **Smooth Filtering**: Instant filter updates
-- **Pagination**: Manages large result sets
-
-<Callout type="warning">
-  **Discord Limits**: Due to Discord's interaction limits, very long browsing sessions may time out. Simply run the command again
-  to continue.
+<Callout type="tip">
+  **Filter Smart**: Combine filters to find exactly what you need. "Forest spirits that are traveling" or "Capes from Season of Flight".
 </Callout>
 
-## Future Enhancements
+## Understanding the Layout
 
-The planner is continuously improving with planned features:
+The planner uses visual cues:
 
-- **Favorites/Bookmarks**: Save frequently accessed content
-- **Comparison Tools**: Side-by-side item comparison
-- **Collection Tracking**: Track what you've unlocked
-- **Cost Calculator**: Built-in cost planning
+- **Icons**: Different types of content have unique icons
+- **Colors**: Indicate availability and special status
+- **Badges**: Show important properties
+- **Thumbnails**: Preview items and spirits visually
+
+**[Image Placeholder: Visual elements and their meanings]**
+
+Everything is designed to be intuitive and easy to understand at a glance.
+
+## What Makes It Special
+
+### Always Current
+
+The planner stays up to date with:
+
+- New seasonal content
+- Latest traveling spirits
+- Current shop rotations
+- Active events
+
+### User-Friendly
+
+Designed for ease of use:
+
+- Intuitive navigation
+- Clear organization
+- Helpful labels
+- Visual previews
+
+### Comprehensive
+
+Nothing is left out:
+
+- Every spirit in the game
+- All cosmetic items
+- Every shop and vendor
+- All events and activities
 
 ## Related Features
 
-- **[Spirits](/guide/spirits)**: Detailed spirit information
-- **[Items & Shops](/guide/planner#shops-tab)**: Browse all cosmetics
-- **[Seasonal Content](/guide/seasonal)**: Season planning
-- **[Events](/guide/events)**: Event schedules
+Enhance your planning with:
+
+- **[Spirit Information](/guide/spirits)** - Detailed spirit guides
+- **[Seasonal Content](/guide/seasonal)** - Current season planning
+- **[Events](/guide/events)** - Event schedules
