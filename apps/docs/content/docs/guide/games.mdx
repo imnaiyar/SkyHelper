@@ -1,0 +1,603 @@
+---
+title: Games & Fun
+description: Sky-themed games including hangman and word scramble
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Games & Fun
+
+Enjoy Sky: Children of the Light themed games and fun commands to engage with your community.
+
+## Overview
+
+SkyHelper offers entertainment features including:
+
+- **Sky-themed word games**: Test your Sky knowledge
+- **Multiplayer support**: Play with friends
+- **Leaderboards**: Compete globally or within your server
+- **Fun interactions**: Friendly community commands
+
+## Commands
+
+### `/skygame` - Sky-Themed Games
+
+Play interactive Sky: Children of the Light themed games.
+
+**Subcommands**:
+
+- `hangman` - Word guessing game
+- `scrambled` - Unscramble Sky words
+- `leaderboard` - View game rankings
+
+**[Image Placeholder: Skygame menu]**
+
+### `/hug` - Send a Virtual Hug
+
+Send a Sky-themed virtual hug to another user.
+
+**Options**:
+
+| Option   | Description              |
+| -------- | ------------------------ |
+| `<user>` | The user you want to hug |
+
+**Usage Example**:
+
+```
+/hug @username
+```
+
+**[Image Placeholder: Hug command result]**
+
+## Hangman Game
+
+A classic word-guessing game with Sky: Children of the Light vocabulary.
+
+### How to Play
+
+**Command**:
+
+```
+/skygame hangman mode:Single Player
+```
+
+or
+
+```
+/skygame hangman mode:Double Player
+```
+
+**[Image Placeholder: Hangman game interface]**
+
+### Single Player Mode
+
+<Steps>
+
+<Step>
+
+#### Game Setup
+
+- 6 lives total
+- 30 seconds per guess
+- Sky-themed word to guess
+- Visual hangman display
+
+</Step>
+
+<Step>
+
+#### Gameplay
+
+1. Word is displayed with blanks (`_ _ _ _ _`)
+2. Guess one letter at a time
+3. Correct guesses reveal letters
+4. Wrong guesses cost a life
+5. Timeout also costs a life
+6. Win by guessing the word before running out of lives
+
+</Step>
+
+<Step>
+
+#### Winning & Losing
+
+- **Win**: Guess all letters or the full word
+- **Lose**: Run out of lives (6 wrong guesses/timeouts)
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Single player hangman]**
+
+### Double Player Mode
+
+Play against another user!
+
+<Steps>
+
+<Step>
+
+#### Setup Configuration
+
+When starting double player mode:
+
+1. Choose the two players
+2. Select word type (Sky words or custom)
+3. If custom, provide the word (only if you're not playing)
+
+</Step>
+
+<Step>
+
+#### Game Rules
+
+- Players take turns guessing
+- Starting player is random
+- Correct guess = keep your turn
+- Wrong guess = turn passes to opponent
+- 30 seconds per turn
+- Can guess full word anytime
+
+</Step>
+
+<Step>
+
+#### Winning
+
+- First to guess the complete word wins
+- Type the full word (case insensitive) to solve
+- Or reveal all letters through guesses
+
+</Step>
+
+</Steps>
+
+<Callout type="warning">
+  **Custom Word Restriction**: You cannot choose custom word mode if you're one of the players. This prevents cheating!
+</Callout>
+
+<Callout type="error">**No Bots**: Neither player can be a bot. Only real users can participate.</Callout>
+
+**[Image Placeholder: Double player hangman]**
+
+### Word Categories
+
+Words come from Sky vocabulary:
+
+- Spirit names
+- Realm names
+- Area names
+- Item names
+- Event names
+- Sky terminology
+
+## Scrambled Game
+
+Unscramble letters to form Sky-related words.
+
+### How to Play
+
+**Command**:
+
+```
+/skygame scrambled mode:Single Player
+```
+
+or
+
+```
+/skygame scrambled mode:Double Player
+```
+
+**[Image Placeholder: Scrambled game interface]**
+
+### Single Player Mode
+
+<Steps>
+
+<Step>
+
+#### Game Start
+
+- Receive a scrambled word
+- Letters are randomly shuffled
+- 1 minute time limit
+- Sky-related word
+
+</Step>
+
+<Step>
+
+#### Gameplay
+
+1. Look at scrambled letters
+2. Figure out the correct word
+3. Type your answer
+4. Win if correct within time
+5. Lose if time runs out
+
+</Step>
+
+<Step>
+
+#### Difficulty
+
+Words vary in difficulty:
+
+- Short words (5-7 letters)
+- Medium words (8-10 letters)
+- Long words (11+ letters)
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Scrambled single player]**
+
+### Double Player Mode
+
+Compete to solve scrambled words first!
+
+<Steps>
+
+<Step>
+
+#### Setup
+
+1. Two players selected
+2. Both see the same scrambled word
+3. Race to solve it first
+
+</Step>
+
+<Step>
+
+#### Gameplay
+
+- Both players guess simultaneously
+- First correct answer wins the round
+- Multiple rounds possible
+- Keep track of round wins
+
+</Step>
+
+<Step>
+
+#### Winning
+
+- First to solve wins that round
+- Can play multiple rounds
+- Track overall score
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Scrambled double player]**
+
+### Strategy Tips
+
+<Callout type="tip">
+  **Look for Patterns**: Sky words often have common patterns. "Dancing" spirits, "Season of..." names, etc.
+</Callout>
+
+<Callout type="tip">**Start with Vowels**: Identify vowels first to narrow down possible words.</Callout>
+
+<Callout type="tip">**Know Your Sky**: Familiarity with Sky terminology gives you an advantage!</Callout>
+
+## Leaderboards
+
+Track your game performance and compete with others.
+
+### Command
+
+```
+/skygame leaderboard game:hangman
+```
+
+or
+
+```
+/skygame leaderboard game:scrambled leaderboard-type:server
+```
+
+**Options**:
+
+| Option               | Description                                                              |
+| -------------------- | ------------------------------------------------------------------------ |
+| `<game>`             | The game to get the leaderboard for (hangman or scrambled)               |
+| `[leaderboard-type]` | The type of leaderboard to get (`global` or `server`, default: `global`) |
+
+**[Image Placeholder: Leaderboard display]**
+
+### Leaderboard Types
+
+<Steps>
+
+<Step>
+
+#### Global Leaderboard
+
+- All players across all servers
+- Top performers worldwide
+- Highest scores shown
+- Updated in real-time
+
+</Step>
+
+<Step>
+
+#### Server Leaderboard
+
+- Only players in your server
+- Local competition
+- See server champions
+- Community rankings
+
+</Step>
+
+</Steps>
+
+### Statistics Tracked
+
+Leaderboards show:
+
+- **Total Games Played**: How many times played
+- **Wins**: Number of victories
+- **Losses**: Number of defeats
+- **Win Rate**: Percentage of wins
+- **Best Streaks**: Consecutive wins
+- **Rankings**: Position compared to others
+
+**[Image Placeholder: Detailed stats]**
+
+## Fun Commands
+
+### Hug Command
+
+Send a friendly Sky-themed hug!
+
+**Usage**:
+
+```
+/hug @friend
+```
+
+**Features**:
+
+- Sky-themed hug message
+- Beautiful embed design
+- Shows sender and recipient
+- Community bonding tool
+
+**[Image Placeholder: Hug command embed]**
+
+### When to Use
+
+- Congratulate achievements
+- Thank helpful players
+- Welcome new members
+- Show appreciation
+- Just because!
+
+<Callout type="tip">**Spread Positivity**: Use `/hug` to create a friendly, welcoming atmosphere in your Sky community!</Callout>
+
+## Game Statistics
+
+### Personal Stats
+
+Track your performance:
+
+- Games played per type
+- Overall win rate
+- Best performances
+- Improvement over time
+
+### Server Stats
+
+Server-wide statistics:
+
+- Most active players
+- Popular games
+- Server records
+- Community engagement
+
+**[Image Placeholder: Statistics overview]**
+
+## Competitive Play
+
+### Tournaments
+
+Organize game tournaments:
+
+<Steps>
+
+<Step>
+
+#### Setup
+
+- Announce tournament rules
+- Set game type (hangman or scrambled)
+- Define bracket or round-robin format
+
+</Step>
+
+<Step>
+
+#### Play Rounds
+
+- Use double player mode
+- Track wins manually or via leaderboard
+- Advance winners to next round
+
+</Step>
+
+<Step>
+
+#### Finals
+
+- Best performers compete
+- Community watches and cheers
+- Determine champion
+
+</Step>
+
+<Step>
+
+#### Rewards
+
+- Server roles for winners
+- Recognition in announcements
+- Custom prizes (optional)
+
+</Step>
+
+</Steps>
+
+### Friendly Challenges
+
+Challenge friends:
+
+```
+/skygame hangman mode:Double Player
+```
+
+Select each other as players and compete!
+
+## Tips & Tricks
+
+### Hangman Strategy
+
+<Callout type="tip">
+  **Common Letters First**: Start with common letters like E, A, T, O, I, N before trying less common ones.
+</Callout>
+
+<Callout type="tip">
+  **Word Length Clues**: The number of blanks helps narrow down possibilities. A 10-letter word is likely a spirit name!
+</Callout>
+
+<Callout type="tip">**Sky Knowledge**: The more you know about Sky, the better. Study spirit names, realms, and items.</Callout>
+
+### Scrambled Strategy
+
+<Callout type="tip">**Eliminate Impossible**: If you see "TGH" together, it's likely part of "LIGHT" or "FLIGHT".</Callout>
+
+<Callout type="tip">**Work Backwards**: Know the word length and think of Sky words that fit.</Callout>
+
+### Improving Your Score
+
+<Steps>
+
+<Step>
+
+#### Practice Regularly
+
+Play daily to improve skills and knowledge.
+
+</Step>
+
+<Step>
+
+#### Study Sky Terms
+
+Learn spirit names, realm names, and terminology.
+
+</Step>
+
+<Step>
+
+#### Play Both Modes
+
+Single player for practice, double player for competition.
+
+</Step>
+
+<Step>
+
+#### Check Leaderboards
+
+See what top players do and learn from them.
+
+</Step>
+
+</Steps>
+
+## Game Features
+
+### Current Features
+
+- ✅ Two game types (Hangman & Scrambled)
+- ✅ Single and double player modes
+- ✅ Global and server leaderboards
+- ✅ Statistics tracking
+- ✅ Sky-themed vocabulary
+- ✅ Time limits and turn system
+- ✅ Custom words (double player)
+
+### Planned Features
+
+<Callout type="info">
+  **Beta Status**: The games feature is in beta! More games and features are planned. Feedback is appreciated!
+</Callout>
+
+Future additions may include:
+
+- Trivia game mode
+- Team games
+- Daily challenges
+- Achievements
+- Seasonal events
+- More word categories
+
+## Community Engagement
+
+### Game Events
+
+Host game nights:
+
+1. Announce game event in advance
+2. Set specific time and date
+3. Choose game type
+4. Play together as community
+5. Give out prizes or recognition
+
+### Social Features
+
+Use games to:
+
+- Break the ice with new members
+- Create friendly competition
+- Encourage community interaction
+- Build server culture
+- Have fun together!
+
+**[Image Placeholder: Community game event]**
+
+## Fair Play
+
+### Rules
+
+<Callout type="warning">
+  **No Cheating**: Don't use external tools, multiple accounts, or share answers. Play fair for everyone's enjoyment!
+</Callout>
+
+### Reporting Issues
+
+If you encounter:
+
+- Bugs in games
+- Incorrect words
+- Unfair behavior
+- Technical problems
+
+Use `/utils contact-us` to report to developers.
+
+## Related Features
+
+- **[Spirits](/guide/spirits)**: Learn spirit names for games
+- **[Seasonal](/guide/seasonal)**: Know season names
+- **[Events](/guide/events)**: Understand event terminology
+- **[Utilities](/guide/utilities)**: Other fun and useful commands

@@ -1,0 +1,525 @@
+---
+title: Seasonal Content
+description: Season guides, currency calculator, and seasonal information
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Seasonal Content
+
+Make the most of Sky seasons with the seasonal currency calculator, season guides, and comprehensive seasonal information.
+
+## Overview
+
+Sky seasons bring new spirits, quests, cosmetics, and challenges. SkyHelper helps you:
+
+- Calculate seasonal candles needed
+- Plan your season completion
+- Access seasonal quest guides
+- Track seasonal spirit progress
+- Optimize your time and resources
+
+## Commands
+
+### `/seasonal-calculator` - Currency Calculator
+
+Calculate how many seasonal candles you need and how long it will take to complete the season.
+
+**Options**:
+
+| Option          | Description                                       |
+| --------------- | ------------------------------------------------- |
+| `<candles>`     | The amount of seasonal candles you currently have |
+| `<dailies>`     | Have you completed today's daily quests? (Yes/No) |
+| `[season-pass]` | Do you have the season pass? (default: `false`)   |
+
+**Usage Examples**:
+
+<Steps>
+
+<Step>
+
+#### Basic Calculation
+
+```
+/seasonal-calculator candles:45 dailies:true
+```
+
+Calculate completion time with 45 candles, dailies done today, no season pass.
+
+</Step>
+
+<Step>
+
+#### With Season Pass
+
+```
+/seasonal-calculator candles:120 dailies:false season-pass:true
+```
+
+Calculate with 120 candles, dailies not done, with season pass.
+
+</Step>
+
+<Step>
+
+#### Starting Fresh
+
+```
+/seasonal-calculator candles:0 dailies:false
+```
+
+Calculate from zero candles without season pass.
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Seasonal calculator interface]**
+
+### `/guides seasonal` - Seasonal Guides
+
+Access quest walkthroughs and spirit information for any season.
+
+**Options**:
+
+| Option     | Description                                   |
+| ---------- | --------------------------------------------- |
+| `<season>` | The season you want the guide for             |
+| `<type>`   | The type of guide (quests or spirits)         |
+| `[hide]`   | Whether to hide the response from other users |
+
+**Usage Examples**:
+
+```
+/guides seasonal season:Season of Assembly type:spirits
+```
+
+```
+/guides seasonal season:Season of Flight type:quests
+```
+
+**[Image Placeholder: Seasonal guides]**
+
+## How the Calculator Works
+
+### Calculation Process
+
+<Steps>
+
+<Step>
+
+#### Input Your Progress
+
+1. Enter current seasonal candle count
+2. Indicate if today's dailies are complete
+3. Specify if you have the season pass
+
+</Step>
+
+<Step>
+
+#### Select Items
+
+An interactive menu appears showing:
+
+- All seasonal items
+- Cosmetics from spirits
+- Items you've already acquired
+- Items you want to get
+
+</Step>
+
+<Step>
+
+#### Get Results
+
+The calculator shows:
+
+- Total candles needed
+- Days required to earn them
+- Completion date
+- Daily candle income
+- Whether completion is possible before season ends
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Calculator step-by-step]**
+
+### What Gets Calculated
+
+The calculator considers:
+
+1. **Daily Candle Income**
+
+   - 6 seasonal candles from daily quests
+   - Season pass bonus (if applicable)
+   - Seasonal quests completion
+
+2. **Item Costs**
+
+   - Selected cosmetics
+   - Spirit tree items
+   - Ultimate gifts
+   - Special seasonal items
+
+3. **Time Remaining**
+
+   - Days until season ends
+   - Your completion timeline
+   - Buffer for missed days
+
+4. **Feasibility Check**
+   - Can you complete in time?
+   - How many days of leeway?
+   - Recommendations if not possible
+
+**[Image Placeholder: Calculation results]**
+
+## Interactive Item Selection
+
+### Choosing Items
+
+The calculator provides an interactive interface:
+
+<Steps>
+
+<Step>
+
+#### Browse Items
+
+- All seasonal cosmetics listed
+- Organized by spirit
+- Shows item costs
+- Visual previews available
+
+</Step>
+
+<Step>
+
+#### Mark Owned Items
+
+- Select items you already have
+- Calculator excludes their cost
+- Accurate remaining cost
+
+</Step>
+
+<Step>
+
+#### Select Desired Items
+
+- Choose items you want
+- Calculator includes their cost
+- See updated totals
+
+</Step>
+
+<Step>
+
+#### Adjust Selection
+
+- Add or remove items
+- See real-time updates
+- Optimize your plan
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Item selection interface]**
+
+### Item Categories
+
+Items are organized by:
+
+- **Spirits**: Cosmetics from seasonal spirits
+- **Quests**: Quest reward items
+- **Ultimate Gifts**: High-tier seasonal items
+- **Special Items**: Limited seasonal exclusives
+
+## Season Pass Benefits
+
+### With Season Pass
+
+The season pass provides:
+
+- **Extra Seasonal Candles**: Bonus candles from quests
+- **Exclusive Items**: Pass-only cosmetics
+- **Faster Progression**: More resources per day
+- **Special Rewards**: Additional perks
+
+### Without Season Pass
+
+Free-to-play players can still:
+
+- Complete most seasonal content
+- Unlock seasonal spirits
+- Get majority of items
+- Progress at a steady pace
+
+<Callout type="info">
+  **Pass Impact**: The calculator adjusts candle income based on whether you have the season pass, providing accurate completion
+  estimates.
+</Callout>
+
+## Seasonal Guides
+
+### Quest Guides
+
+Access step-by-step walkthroughs for seasonal quests:
+
+1. **Quest Objectives**: What you need to do
+2. **Location Guides**: Where to go
+3. **Tips & Shortcuts**: Efficient completion
+4. **Rewards**: What you'll earn
+
+**[Image Placeholder: Quest guide walkthrough]**
+
+### Spirit Guides
+
+View information for all seasonal spirits:
+
+1. **Spirit Locations**: Where to find them
+2. **Friendship Trees**: All items and costs
+3. **Unlock Order**: Optimal progression
+4. **Special Items**: Unique cosmetics
+
+**[Image Placeholder: Seasonal spirit tree]**
+
+## Tips & Tricks
+
+### Calculator Optimization
+
+<Callout type="tip">
+  **Run Calculator Early**: Use the calculator at the start of each season to plan your approach. This helps you decide if the
+  season pass is worth it.
+</Callout>
+
+<Callout type="tip">
+  **Update Regularly**: Re-run the calculator weekly to adjust for changes in your progress and ensure you're on track.
+</Callout>
+
+<Callout type="tip">**Prioritize Favorites**: Select only the items you really want. You don't need everything!</Callout>
+
+### Season Completion Strategy
+
+<Steps>
+
+<Step>
+
+#### Week 1: Planning
+
+- Run seasonal calculator
+- Identify must-have items
+- Create shopping list
+- Decide on season pass
+
+</Step>
+
+<Step>
+
+#### Weeks 2-8: Grinding
+
+- Complete daily quests every day
+- Focus on seasonal candles
+- Unlock spirits in priority order
+- Track progress weekly
+
+</Step>
+
+<Step>
+
+#### Final Week: Finishing
+
+- Use calculator to verify completion
+- Get remaining items
+- Don't miss time-limited exclusives
+- Complete any unfinished quests
+
+</Step>
+
+</Steps>
+
+### Daily Routine
+
+For efficient seasonal progression:
+
+1. **Complete Daily Quests**: 6 seasonal candles
+2. **Do Seasonal Quests**: Additional candles
+3. **Unlock Priority Spirits**: Get favorites first
+4. **Save for Ultimate Gifts**: Don't spend all candles immediately
+
+<Callout type="warning">
+  **Don't Wait**: Start seasonal content early. Waiting until the last week often means you won't have time to complete
+  everything.
+</Callout>
+
+## Cost Optimization
+
+### Smart Spending
+
+<Callout type="tip">
+  **Hearts First**: If a spirit has both candle and heart items, unlock heart items first. Hearts are harder to get and don't
+  carry over to next season.
+</Callout>
+
+<Callout type="tip">**Essential Items Only**: Focus on items you'll actually use. Completionism can be expensive!</Callout>
+
+### When to Skip Items
+
+Consider skipping items if:
+
+- You won't use them
+- They're cosmetically similar to items you have
+- You need to save for ultimate gifts
+- The season pass would be required
+
+## Season Timeline
+
+### Typical Season Structure
+
+<Steps>
+
+<Step>
+
+**Weeks 1-2**: Season launch
+
+- New spirits appear
+- Initial quests available
+- Community excitement
+
+</Step>
+
+<Step>
+
+**Weeks 3-6**: Main content
+
+- All spirits unlockable
+- Full quest chain available
+- Peak activity period
+
+</Step>
+
+<Step>
+
+**Weeks 7-8**: Finale
+
+- Last chance for items
+- Community events
+- Preparation for season end
+
+</Step>
+
+<Step>
+
+**Week 9**: Season ends
+
+- Final day to purchase items
+- Spirits become traveling spirits
+- Next season preview
+
+</Step>
+
+</Steps>
+
+## Special Seasonal Events
+
+Some seasons include:
+
+- **Limited-Time Activities**: Special quests or challenges
+- **Community Goals**: Server-wide objectives
+- **Exclusive Days**: Special item availability
+- **Finale Events**: End-of-season celebrations
+
+**[Image Placeholder: Special seasonal event]**
+
+## After Season Ends
+
+### Spirit Returns
+
+- Seasonal spirits return as traveling spirits
+- Items cost regular candles instead
+- Same friendship tree structure
+- No time pressure
+
+### Missed Items
+
+If you missed items:
+
+1. Wait for traveling spirit visits
+2. Check special event returns
+3. Save hearts for when they return
+4. No seasonal candles needed later
+
+<Callout type="info">
+  **No FOMO**: All seasonal content eventually returns as traveling spirits. You can get missed items later!
+</Callout>
+
+## Season Pass Decision
+
+### Consider the Pass If:
+
+- You want exclusive cosmetics
+- You value faster progression
+- You have limited playtime
+- You want to support the game
+
+### Skip the Pass If:
+
+- You can grind daily
+- You only want specific items
+- Budget is a concern
+- You're okay with slower progression
+
+**Use the calculator to see if the pass is necessary for your goals!**
+
+## Common Use Cases
+
+### New Season Planning
+
+Day 1 of new season:
+
+1. Run `/seasonal-calculator candles:0 dailies:false`
+2. Browse all items
+3. Select must-haves
+4. Decide on season pass
+5. Create completion plan
+
+### Mid-Season Check
+
+Week 4 of season:
+
+1. Run calculator with current candles
+2. Update item selections
+3. Verify on-track for completion
+4. Adjust strategy if needed
+
+### Last-Minute Rush
+
+Final week of season:
+
+1. Run calculator to see what's possible
+2. Focus on priority items only
+3. Skip non-essential cosmetics
+4. Complete in time
+
+## Troubleshooting
+
+<Callout type="warning">
+  **Calculator Shows "Not Possible"**: If the calculator indicates you can't complete in time, prioritize your must-have items and
+  skip the rest. Or consider the season pass if that helps.
+</Callout>
+
+<Callout type="info">
+  **Daily Updates**: The calculator assumes you'll complete dailies every remaining day. Missing days will affect the timeline.
+</Callout>
+
+## Related Features
+
+- **[Daily Quests](/guide/events#daily-quests-feature)**: Seasonal candle sources
+- **[Spirits](/guide/spirits)**: Seasonal spirit details
+- **[Sky Game Planner](/guide/planner)**: Interactive seasonal content browser

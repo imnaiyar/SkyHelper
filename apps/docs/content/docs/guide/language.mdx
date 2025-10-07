@@ -1,0 +1,665 @@
+---
+title: Language Support
+description: Use SkyHelper in your preferred language with multilingual support
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Language Support
+
+SkyHelper supports multiple languages, allowing you to use the bot in your preferred language.
+
+## Overview
+
+The bot's multilingual system allows:
+
+- **User-Specific Languages**: Set your personal language preference
+- **Server-Wide Languages**: Configure server default language
+- **Priority System**: User settings override server settings
+- **Growing Language List**: Community-powered translations
+
+<Callout type="info">
+  **Community Translations**: SkyHelper's translations are provided by community volunteers. [Help us add more
+  languages!](/docs/guides/translating)
+</Callout>
+
+## Commands
+
+### `/language` - Language Management
+
+Manage language preferences for yourself or your server.
+
+**Subcommands**:
+
+- `set` - Set a language
+- `remove` - Remove language setting
+
+## Setting Languages
+
+### `/language set` - Configure Language
+
+Set a language preference for yourself or your server.
+
+**Options**:
+
+| Option       | Description                                           |
+| ------------ | ----------------------------------------------------- |
+| `<category>` | The category to set language for (`User` or `Server`) |
+| `<language>` | The language to set                                   |
+
+**Usage Examples**:
+
+<Steps>
+
+<Step>
+
+#### Set Personal Language
+
+```
+/language set category:User language:Spanish
+```
+
+Sets Spanish as your personal language preference.
+
+</Step>
+
+<Step>
+
+#### Set Server Language
+
+```
+/language set category:Server language:French
+```
+
+Sets French as the server's default language (requires Manage Server permission).
+
+</Step>
+
+<Step>
+
+#### Change Language
+
+```
+/language set category:User language:Japanese
+```
+
+Changes your language to Japanese (overwrites previous setting).
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Language set command]**
+
+## Removing Languages
+
+### `/language remove` - Clear Language Setting
+
+Remove a language preference to revert to defaults.
+
+**Options**:
+
+| Option       | Description                                              |
+| ------------ | -------------------------------------------------------- |
+| `<category>` | The category to remove language for (`User` or `Server`) |
+
+**Usage Examples**:
+
+<Steps>
+
+<Step>
+
+#### Remove Personal Language
+
+```
+/language remove category:User
+```
+
+Removes your personal language, reverting to server language or English.
+
+</Step>
+
+<Step>
+
+#### Remove Server Language
+
+```
+/language remove category:Server
+```
+
+Removes server language setting, reverting to English default.
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Language remove command]**
+
+## Language Priority
+
+The bot uses a priority system to determine which language to use:
+
+<Steps>
+
+<Step>
+
+#### 1. User Language (Highest Priority)
+
+If you've set a personal language with `/language set category:User`, this is used.
+
+</Step>
+
+<Step>
+
+#### 2. Server Language
+
+If no user language is set, the server's configured language is used (if set).
+
+</Step>
+
+<Step>
+
+#### 3. English (Default)
+
+If neither user nor server language is set, English is used.
+
+</Step>
+
+</Steps>
+
+**Priority Flow**:
+
+```
+User Language → Server Language → English (Default)
+```
+
+<Callout type="info">
+  **Override System**: Your personal language setting always overrides the server setting. This lets you use your preferred
+  language even in servers with different defaults.
+</Callout>
+
+## Supported Languages
+
+SkyHelper currently supports:
+
+- **English** (en) - Default
+- **Spanish** (es) - Español
+- **French** (fr) - Français
+- **German** (de) - Deutsch
+- **Japanese** (ja) - 日本語
+- **Chinese (Simplified)** (zh-CN) - 简体中文
+- **Chinese (Traditional)** (zh-TW) - 繁體中文
+- **Korean** (ko) - 한국어
+- **Russian** (ru) - Русский
+- **Portuguese** (pt-BR) - Português (Brasil)
+- **Italian** (it) - Italiano
+- **Hindi** (hi) - हिन्दी
+- **Indonesian** (id) - Bahasa Indonesia
+- **Turkish** (tr) - Türkçe
+- **Polish** (pl) - Polski
+- **Dutch** (nl) - Nederlands
+- **Czech** (cs) - Čeština
+
+<Callout type="warning">
+  **Translation Coverage**: Not all features may be fully translated in all languages. English fallbacks are used for untranslated
+  content.
+</Callout>
+
+**[Image Placeholder: Language selection menu]**
+
+## What Gets Translated
+
+### Bot Responses
+
+All bot responses are translated:
+
+- Command outputs
+- Error messages
+- Information displays
+- Interactive menus
+- Button labels
+- Embed content
+
+**[Image Placeholder: Response in different language]**
+
+### Command Help
+
+Help text is localized:
+
+- Command descriptions
+- Option explanations
+- Usage examples
+- Tips and notes
+
+### Embeds & Messages
+
+Visual content is translated:
+
+- Embed titles and descriptions
+- Field names and values
+- Footer text
+- Timestamps and dates
+
+### Interactive Elements
+
+UI components are localized:
+
+- Button text
+- Select menu options
+- Modal labels
+- Input placeholders
+
+## User Language Setup
+
+### For Individual Users
+
+<Steps>
+
+<Step>
+
+#### Choose Your Language
+
+Decide which language you prefer for bot interactions.
+
+</Step>
+
+<Step>
+
+#### Set User Language
+
+```
+/language set category:User language:YourLanguage
+```
+
+Replace `YourLanguage` with your choice (e.g., Spanish, French, Japanese).
+
+</Step>
+
+<Step>
+
+#### Verify Setting
+
+Use any command to see responses in your language.
+
+</Step>
+
+<Step>
+
+#### Update Anytime
+
+Run the set command again with a different language to change.
+
+</Step>
+
+</Steps>
+
+<Callout type="tip">
+  **Try Different Languages**: You can change your language preference anytime to try different translations!
+</Callout>
+
+## Server Language Setup
+
+### For Server Administrators
+
+<Steps>
+
+<Step>
+
+#### Determine Server Language
+
+Consider your server's primary language or majority preference.
+
+</Step>
+
+<Step>
+
+#### Set Server Language
+
+```
+/language set category:Server language:ServerLanguage
+```
+
+Requires **Manage Server** permission.
+
+</Step>
+
+<Step>
+
+#### Announce to Members
+
+Let members know the server language has been set.
+
+</Step>
+
+<Step>
+
+#### Inform About User Override
+
+Remind members they can set personal languages if needed.
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Server language announcement]**
+
+### Multilingual Servers
+
+For servers with multiple languages:
+
+<Callout type="tip">
+  **User Choice**: Set a server default (majority language) but encourage members to set their personal language if different. The
+  priority system handles this seamlessly!
+</Callout>
+
+## Use Cases
+
+### Personal Preference
+
+<Steps>
+
+<Step>
+
+You speak Spanish and want all bot responses in Spanish.
+
+</Step>
+
+<Step>
+
+```
+/language set category:User language:Spanish
+```
+
+</Step>
+
+<Step>
+
+All bot interactions are now in Spanish, regardless of server settings.
+
+</Step>
+
+</Steps>
+
+### Regional Server
+
+<Steps>
+
+<Step>
+
+You run a French Sky community server.
+
+</Step>
+
+<Step>
+
+```
+/language set category:Server language:French
+```
+
+</Step>
+
+<Step>
+
+All members see French by default unless they set personal preference.
+
+</Step>
+
+</Steps>
+
+### International Server
+
+<Steps>
+
+<Step>
+
+Your server has members from many countries.
+
+</Step>
+
+<Step>
+
+Keep server language as English (default).
+
+</Step>
+
+<Step>
+
+Members set personal languages as needed.
+
+</Step>
+
+<Step>
+
+Everyone sees bot responses in their preferred language.
+
+</Step>
+
+</Steps>
+
+## Translation Quality
+
+### Community-Powered
+
+<Callout type="info">
+  **Volunteer Translators**: All translations are provided by community volunteers. Quality and completeness vary by language.
+</Callout>
+
+### Reporting Issues
+
+If you notice translation errors:
+
+<Steps>
+
+<Step>
+
+Note the incorrect translation and context.
+
+</Step>
+
+<Step>
+
+Use `/utils contact-us` to report the issue.
+
+</Step>
+
+<Step>
+
+Or contribute directly via the [translation guide](/docs/guides/translating).
+
+</Step>
+
+</Steps>
+
+### Contributing Translations
+
+Help improve SkyHelper's language support!
+
+<Steps>
+
+<Step>
+
+#### Check Translation Guide
+
+Visit [Translation Guide](/docs/guides/translating) for instructions.
+
+</Step>
+
+<Step>
+
+#### Join Translation Effort
+
+Contribute to your language or add a new one.
+
+</Step>
+
+<Step>
+
+#### Review Process
+
+Translations are reviewed before being added to the bot.
+
+</Step>
+
+<Step>
+
+#### See Your Work Live
+
+Your translations help users worldwide!
+
+</Step>
+
+</Steps>
+
+<Callout type="tip">
+  **Native Speakers Needed**: We especially need native speakers to ensure accurate, natural translations. [Learn how to
+  contribute](/docs/guides/translating)!
+</Callout>
+
+## Fallback Behavior
+
+### Partial Translations
+
+When content isn't translated:
+
+- **Fallback to English**: Untranslated strings show in English
+- **Mixed Content**: Page may have both translated and English text
+- **Progressive Enhancement**: As translations are added, more content appears in your language
+
+### Missing Languages
+
+If a language isn't supported yet:
+
+- Bot responds in English
+- Language option won't appear in selection menu
+- [Contribute to add the language](/docs/guides/translating)
+
+<Callout type="info">**Growing Support**: New languages are regularly added based on community contributions and demand.</Callout>
+
+## Best Practices
+
+### For Users
+
+<Callout type="tip">
+  **Set and Forget**: Once you set your language preference, it persists across all servers. No need to configure it multiple
+  times!
+</Callout>
+
+<Callout type="tip">
+  **Test First**: Try the language setting with a simple command like `/help` to see if the translations work well for you.
+</Callout>
+
+### For Server Admins
+
+<Callout type="tip">
+  **Survey Members**: Before setting a server language, survey your members to choose the most appropriate default.
+</Callout>
+
+<Callout type="tip">
+  **Inform Members**: When changing server language, announce it and remind users they can override with personal settings.
+</Callout>
+
+### For Multilingual Communities
+
+<Callout type="tip">
+  **Embrace Diversity**: Don't force one language. Use the priority system to let users choose while having a sensible server
+  default.
+</Callout>
+
+## Troubleshooting
+
+### Language Not Changing
+
+<Steps>
+
+<Step>
+
+#### Verify Command Success
+
+Check if the command executed successfully (you should see a confirmation).
+
+</Step>
+
+<Step>
+
+#### Check Category
+
+Ensure you used the right category (User vs Server).
+
+</Step>
+
+<Step>
+
+#### Test with Command
+
+Run a simple command like `/help` to see the language.
+
+</Step>
+
+<Step>
+
+#### Clear and Reset
+
+If stuck, remove language and set it again.
+
+</Step>
+
+</Steps>
+
+### Partial Translation
+
+<Callout type="info">
+  **Expected Behavior**: Some content may still appear in English if not yet translated for your language. This is normal and
+  improves over time.
+</Callout>
+
+### Server Language Not Working
+
+- **Permission Check**: Setting server language requires Manage Server permission
+- **User Override**: Your personal language overrides server setting (this is by design)
+- **Verification**: Ask another member without personal language to test
+
+## Future Enhancements
+
+Planned language features:
+
+- More supported languages
+- Complete translation coverage
+- Context-aware translations
+- Regional variants (e.g., US vs UK English)
+- Translation management dashboard
+
+<Callout type="info">
+  **Help Shape the Future**: Your feedback and contributions directly influence which languages and features are prioritized!
+</Callout>
+
+## Language Codes Reference
+
+When contributing or requesting languages:
+
+| Language               | Code  | Native Name        |
+| ---------------------- | ----- | ------------------ |
+| English                | en    | English            |
+| Spanish                | es    | Español            |
+| French                 | fr    | Français           |
+| German                 | de    | Deutsch            |
+| Japanese               | ja    | 日本語             |
+| Chinese (Simplified)   | zh-CN | 简体中文           |
+| Chinese (Traditional)  | zh-TW | 繁體中文           |
+| Korean                 | ko    | 한국어             |
+| Russian                | ru    | Русский            |
+| Portuguese (Brazilian) | pt-BR | Português (Brasil) |
+| Italian                | it    | Italiano           |
+| Hindi                  | hi    | हिन्दी             |
+| Indonesian             | id    | Bahasa Indonesia   |
+| Turkish                | tr    | Türkçe             |
+| Polish                 | pl    | Polski             |
+| Dutch                  | nl    | Nederlands         |
+| Czech                  | cs    | Čeština            |
+
+## Related Features
+
+- **[Translation Guide](/docs/guides/translating)**: Contribute translations
+- **[Utilities](/guide/utilities)**: Help command in your language
+- **[Support](https://discord.gg/skyhelper)**: Get help in various languages
+- **[All Commands](/docs/commands)**: Command reference (translatable)

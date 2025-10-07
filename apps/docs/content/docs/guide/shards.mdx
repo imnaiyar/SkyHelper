@@ -1,0 +1,238 @@
+---
+title: Shards Tracking
+description: Complete guide to tracking shards with SkyHelper
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Shards Tracking
+
+Track and manage Sky: Children of the Light shards with detailed information, location guides, timelines, and interactive calendar views.
+
+## Overview
+
+Shards are special collectible items in Sky that appear at specific times and locations. SkyHelper helps you track them with:
+
+- Real-time shard information and countdowns
+- Detailed location guides with maps
+- Daily timeline of all shard occurrences
+- Monthly calendar overview
+- Interactive navigation and date selection
+
+## Commands
+
+### `/shards` - Get Shard Information
+
+Get detailed information about shards for a specific date.
+
+**Options**:
+
+| Option   | Description                                                               |
+| -------- | ------------------------------------------------------------------------- |
+| `[date]` | The date to get shard info for (format: `DD-MM-YYYY`, e.g., `22-07-2024`) |
+| `[hide]` | Whether to hide the response from other users (ephemeral response)        |
+
+**Usage Examples**:
+
+<Steps>
+
+<Step>
+
+#### Get Today's Shard
+
+```
+/shards
+```
+
+Returns shard information for the current date, including type, location, and next occurrence.
+
+</Step>
+
+<Step>
+
+#### Get Shard for Specific Date
+
+```
+/shards date:22-07-2024
+```
+
+Returns shard information for July 22, 2024.
+
+</Step>
+
+<Step>
+
+#### Private Response
+
+```
+/shards date:15-03-2024 hide:true
+```
+
+Gets shard info that only you can see.
+
+</Step>
+
+</Steps>
+
+<Callout type="info">
+  If you don't provide a date, the current date is automatically used for retrieving shard information.
+</Callout>
+
+### `/shards-calendar` - Monthly Calendar View
+
+View a monthly calendar with all shards for quick reference.
+
+**Options**:
+
+| Option   | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| `[hide]` | Whether to hide the response from other users (ephemeral response) |
+
+**Usage Example**:
+
+```
+/shards-calendar
+```
+
+<Callout type="info">
+  The calendar includes interactive select menus to adjust the date, month, and year. The year selector shows options within ±5
+  years from the currently selected year due to Discord's select menu option limit.
+</Callout>
+
+## What You Get
+
+### Shard Information Display
+
+When you use `/shards`, you'll receive:
+
+1. **Shard Type**: The type of shard (Red, Black, etc.)
+2. **Location**: Where the shard appears in Sky
+3. **Next Occurrence**: Countdown to the next shard event
+4. **Timeline**: All occurrence times for the day
+5. **Location Guide**: Interactive button to view location map/guide
+
+**[Image Placeholder: Shard command response showing all details]**
+
+### Calendar Display
+
+The `/shards-calendar` command shows:
+
+1. **Monthly Grid**: All shards for the selected month
+2. **Shard Details**: Type and location for each day
+3. **Navigation Controls**: Select menus for date, month, and year
+4. **Visual Overview**: Quick glance at the entire month
+
+**[Image Placeholder: Shards calendar showing monthly view]**
+
+## Features in Detail
+
+### Interactive Location Guides
+
+<Steps>
+
+<Step>
+
+When you receive shard information, an interactive button appears to view the location guide.
+
+</Step>
+
+<Step>
+
+Click the button to see:
+
+- Detailed location map
+- Step-by-step directions
+- Visual landmarks
+- Tips for finding the shard
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Location guide with map]**
+
+### Timeline View
+
+The timeline shows all shard occurrences for the selected day:
+
+- **Occurrence Times**: All scheduled times
+- **Status Indicator**: Whether each occurrence has passed or is upcoming
+- **Time Format**: In your local timezone
+- **Countdown**: Time remaining until next occurrence
+
+**[Image Placeholder: Timeline of shard occurrences]**
+
+### Calendar Navigation
+
+The calendar provides intuitive navigation:
+
+<Steps>
+
+<Step>
+
+**Date Selection**: Jump to any specific day in the current month
+
+</Step>
+
+<Step>
+
+**Month Selection**: Navigate between months
+
+</Step>
+
+<Step>
+
+**Year Selection**: Change the year (±5 years range)
+
+</Step>
+
+</Steps>
+
+## Tips & Tricks
+
+<Callout type="tip">
+  **Plan Ahead**: Use the calendar to plan your shard collection for the week or month. This helps you schedule your Sky time more
+  efficiently.
+</Callout>
+
+<Callout type="tip">
+  **Save Location Guides**: Screenshot or bookmark location guides for shards you frequently miss. This makes it quicker to find
+  them next time.
+</Callout>
+
+<Callout type="tip">
+  **Use Ephemeral Responses**: In busy channels, use the `hide:true` option to avoid cluttering the chat with shard lookups.
+</Callout>
+
+## Common Use Cases
+
+### Daily Shard Check
+
+Every day, use `/shards` to quickly see today's shard details and plan your collection time.
+
+### Planning for Rare Shards
+
+Use `/shards-calendar` to identify rare or specific shard types across the month and mark your calendar.
+
+### Sharing with Friends
+
+Use `/shards` without the `hide` option to share shard information with your server members.
+
+### Historical Lookup
+
+Need to know what shard was active on a past date? Use `/shards date:DD-MM-YYYY` to look it up.
+
+## Troubleshooting
+
+<Callout type="warning">**Date Format**: Always use DD-MM-YYYY format (e.g., 22-07-2024). Other formats won't work.</Callout>
+
+<Callout type="info">
+  **Timezone**: All times are automatically converted to your local timezone based on your Discord settings.
+</Callout>
+
+## Related Features
+
+- **[Live Updates](/guide/live-updates)**: Set up auto-updating shard messages in your server
+- **[Reminders](/guide/reminders)**: Get notified before shard events
+- **[Events](/guide/events)**: Track other in-game events alongside shards
