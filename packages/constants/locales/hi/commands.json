@@ -277,10 +277,6 @@
         "name": "चेंजलॉग",
         "description": "बोट का चेंजलॉग"
       },
-      "BOTINFO": {
-        "name": "बॉट-जानकारी",
-        "description": "बोट के कंफीग्र्ड सेटिंग्स और उसके बारे में जानकारी लें"
-      },
       "CONTACT-US": {
         "name": "comtact-us",
         "description": "कोई भी सुझाव/बग रिपोर्ट्स या फिर किसी और चीज़ के लिए हम संपर्क करें"
@@ -389,6 +385,54 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Get bot information"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
+      }
+    }
+  },
+  "PLANNER": {
+    "name": "planner",
+    "description": "track and plan your sky progress",
+    "options": {
+      "home": {
+        "name": "home",
+        "description": "track and plan your sky progress"
+      },
+      "search": {
+        "name": "search",
+        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+      },
+      "query": {
+        "name": "query",
+        "description": "the query to search for"
+      },
+      "data": {
+        "name": "data",
+        "description": "manage planner's data"
+      },
+      "import": {
+        "name": "import",
+        "description": "import data from sky-planner website or saved .json file"
+      },
+      "export": {
+        "name": "export",
+        "description": "export your data to a .json file"
       }
     }
   }
