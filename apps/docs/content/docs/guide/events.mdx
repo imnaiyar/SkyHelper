@@ -1,374 +1,178 @@
 ---
 title: In-Game Events
-description: Track all Sky in-game events with real-time schedules and countdowns
+description: Stay updated with all Sky events, from daily quests to traveling spirits
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Step, Steps } from "fumadocs-ui/components/steps";
 
 # In-Game Events
 
-Stay updated with all Sky: Children of the Light in-game events including geysers, grandma visits, daily quests, and more.
+Stay on top of all Sky: Children of the Light events! From daily quests to geyser eruptions, SkyHelper keeps you informed about everything happening in the game.
 
-## Overview
+## What You Can Track
 
-SkyHelper provides real-time information about various in-game events, helping you never miss important activities. Track event schedules, get countdowns, and access event-specific guides all in one place.
+### Daily Activities
 
-## Commands
+**Daily Quests**
 
-### `/skytimes` - Event Schedule & Countdown
+Get guides for today's daily quests as soon as they're available. The bot shows you:
 
-View upcoming occurrence times for various in-game events with real-time countdowns.
+- Quest instructions with step-by-step infographics
+- Rotating candle locations throughout the realms
+- Seasonal candle spots (when a season is active)
+- Visual guides created by the community
 
-**Options**:
+**[Image Placeholder: Daily quest guide with infographics]**
 
-| Option   | Description                                                        |
-| -------- | ------------------------------------------------------------------ |
-| `[hide]` | Whether to hide the response from other users (ephemeral response) |
+<Callout type="info">
+  Daily quest guides are sourced from the amazing Sky: CoTL Infographics Database community. Special thanks to creators like Clement and io who make these guides possible!
+</Callout>
 
-**Usage Examples**:
+**Daily Reset**
 
-```
-/skytimes
-```
+Know exactly when the day resets in Sky. This is when:
 
-```
-/skytimes hide:true
-```
-
-**[Image Placeholder: Skytimes command showing all events]**
-
-### `/daily-quests` - Daily Quest Guides
-
-Get today's daily quest guides, rotating candle locations, and seasonal candles.
-
-**Options**:
-
-| Option   | Description                                                        |
-| -------- | ------------------------------------------------------------------ |
-| `[hide]` | Whether to hide the response from other users (ephemeral response) |
-
-**Usage Example**:
-
-```
-/daily-quests
-```
-
-**[Image Placeholder: Daily quests guide with infographics]**
-
-### `/traveling-spirit` - Traveling Spirit Schedule
-
-View the schedule for the upcoming traveling spirit and their details.
-
-**Options**:
-
-| Option   | Description                                                        |
-| -------- | ------------------------------------------------------------------ |
-| `[hide]` | Whether to hide the response from other users (ephemeral response) |
-
-**Usage Example**:
-
-```
-/traveling-spirit
-```
-
-**[Image Placeholder: Traveling spirit schedule]**
-
-## Supported Events
+- New daily quests become available
+- Candle collection resets
+- Daily limits refresh
 
 ### Recurring Events
 
-<Steps>
+**Geyser Eruptions**
 
-<Step>
+The geyser in Prairie Cave erupts every 2 hours. You'll see:
 
-#### Geyser Eruptions
+- Countdown to the next eruption
+- All eruption times for the day
+- Duration of each event (~8 minutes)
 
-- **Frequency**: Every 2 hours
-- **Duration**: ~8 minutes
-- **Location**: Isle of Dawn (Prairie Cave)
-- **What You Get**: View all occurrence times throughout the day
+**Grandma Visits**
 
-</Step>
+Grandma appears in different realms every 2 hours. Track:
 
-<Step>
+- When she arrives next
+- Which realm she'll visit
+- What seasonal items she might have
 
-#### Grandma Visits
+**Turtle Migrations**
 
-- **Frequency**: Every 2 hours (different schedule from Geyser)
-- **Duration**: Until next visit
-- **Location**: Various realms (follows a rotation)
-- **What You Get**: Next occurrence time and location
+The sanctuary turtles migrate at specific times daily. Get:
 
-</Step>
+- Migration schedule for the day
+- Countdown to next migration
+- Duration information
 
-<Step>
-
-#### Turtle Migrations
-
-- **Frequency**: Daily at specific times
-- **Duration**: ~30 minutes
-- **Location**: Sanctuary Islands
-- **What You Get**: Occurrence schedule and countdown
-
-</Step>
-
-</Steps>
-
-### Daily Events
-
-<Steps>
-
-<Step>
-
-#### Daily Reset
-
-- **Time**: 00:00 UTC
-- **What Resets**: Candles, quests, seasonal candles
-- **What You Get**: Countdown to next reset
-
-</Step>
-
-<Step>
-
-#### Daily Quests
-
-- **Availability**: After daily reset
-- **Content**: 4 daily quests + rotating candles
-- **What You Get**: Quest guides with step-by-step instructions
-
-</Step>
-
-</Steps>
+**[Image Placeholder: Event schedule showing geyser, grandma, and turtle times]**
 
 ### Weekly Events
 
-<Steps>
+**Eden Reset**
 
-<Step>
+Every Sunday, Eden resets along with weekly activities. Know:
 
-#### Eden/Weekly Reset
+- Exact reset time (converts to your timezone)
+- Countdown to next reset
+- What resets with it
 
-- **Time**: Every Sunday 00:00 UTC
-- **What Resets**: Eden, weekly quests, candle earnings
-- **What You Get**: Countdown and preparation tips
+**Traveling Spirit**
 
-</Step>
+A special spirit visits every Thursday for 3 days. See:
 
-<Step>
+- When they arrive and leave
+- Which spirit is visiting (when revealed)
+- What items they're bringing
+- Cost information for planning
 
-#### Traveling Spirit
-
-- **Schedule**: Every Thursday for 3 days
-- **What You Get**: Spirit details, items, and schedule
-
-</Step>
-
-</Steps>
+**[Image Placeholder: Traveling spirit schedule and details]**
 
 ### Special Events
 
-<Steps>
+**Aurora's Concert**
 
-<Step>
+Track when Aurora performs in the Concert Hall:
 
-#### Aurora's Concert
+- Concert schedule
+- Countdown to performances
+- Timing for planning attendance
 
-- **Schedule**: Periodic performances
-- **Location**: Concert Hall
-- **What You Get**: Schedule and countdown
+**[Image Placeholder: Concert schedule display]**
 
-</Step>
+## How It Works
 
-</Steps>
+### Real-Time Countdowns
 
-## How Skytimes Works
+All event times include live countdowns showing exactly how much time remains. Times automatically convert to your timezone based on your Discord settings, so you never have to do timezone math!
 
-### Event Display
+### Interactive Event Details
 
-When you use `/skytimes`, you'll see:
+Click on any event to see its complete schedule for the day. This helps you plan your Sky sessions around multiple events.
 
-1. **Next Occurrence**: Countdown to the next event of each type
-2. **Event List**: All tracked events in one view
-3. **Interactive Selection**: Select menu to view full schedules
-4. **Refresh Button**: Update times without running the command again
+### Refresh Anytime
 
-**[Image Placeholder: Skytimes interface with select menu]**
+A refresh button lets you update all the countdowns and times instantly without running the command again. Perfect when you've had the info open for a while!
 
-### Event Details
+## Community-Powered Quest Guides
 
-Select an event from the dropdown to see:
+The daily quest guides come from dedicated community creators:
 
-- **All Occurrence Times**: Complete schedule for the day
-- **Status Indicators**: Past, current, or upcoming
-- **Guides**: Event-specific guides (when available)
-- **Location Information**: Where to find the event
-
-**[Image Placeholder: Detailed event schedule]**
-
-### Interactive Features
-
-<Steps>
-
-<Step>
-
-#### Select Menu
-
-Click the dropdown to choose which event schedule to view in detail.
-
-</Step>
-
-<Step>
-
-#### Refresh Button
-
-Click the refresh button to update all countdowns and times without running the command again.
-
-</Step>
-
-<Step>
-
-#### Guide Buttons
-
-For supported events, additional buttons appear to view detailed guides.
-
-</Step>
-
-</Steps>
-
-## Daily Quests Feature
-
-### How It Works
-
-<Callout type="info">
-  **Community-Powered**: Daily quest guides are sourced from the [Sky: CoTL Infographics
-  Database](https://discord.gg/skyinfographicsdatabase) community. Special thanks to Clement, io, and all content creators!
-</Callout>
-
-The daily quests feature:
-
-1. **Monitors Infographics**: Bot watches for daily quest guides
-2. **Auto-Captures**: Saves guides when posted
-3. **Presents to Users**: Displays guides via the command
-4. **Updates Daily**: New guides each day after reset
-
-### What You Get
-
-- **Daily Quest Guides**: Step-by-step infographics for all 4 quests
-- **Rotating Candles**: Location guides for daily candles
-- **Seasonal Candles**: When a season is active
-- **Bonus Information**: Tips and shortcuts
-
-**[Image Placeholder: Daily quest guide layout]**
-
-### Important Notes
+- **Real Infographics**: Actual screenshots and visual guides
+- **Clear Instructions**: Easy-to-follow quest walkthroughs
+- **Updated Daily**: Fresh guides after each reset
+- **Seasonal Content**: Includes seasonal candles when applicable
 
 <Callout type="warning">
-  **Timing Variance**: Guides are created by humans and may be posted later than usual or not at all on rare occasions. Typically,
-  there's a 1-2 hour grace period after reset.
+  Since guides are created by humans, they may occasionally be posted later than usual or not at all. The bot typically has a 1-2 hour grace period after reset for guides to appear.
+</Callout>
+
+## Traveling Spirit Information
+
+When a traveling spirit is revealed, you get complete details:
+
+- **Spirit Identity**: Which spirit from which season
+- **Items Available**: Full friendship tree with all cosmetics
+- **Costs**: Exactly how many candles and hearts you'll need
+- **Return Pattern**: Approximate timeline for next visit
+
+This helps you decide what to buy and plan your resources accordingly.
+
+## Understanding Event Patterns
+
+Events in Sky follow reliable schedules:
+
+- **2-Hour Events**: Geyser and Grandma alternate every 2 hours
+- **Daily Events**: Reset at 00:00 UTC every day
+- **Weekly Events**: Eden and Traveling Spirit on specific days
+- **Special Events**: Announced and tracked when they occur
+
+SkyHelper takes the guesswork out of tracking these patterns.
+
+## Planning Your Sky Time
+
+Use event tracking to:
+
+- **Maximize Candle Collection**: Hit daily quests and events efficiently
+- **Catch Traveling Spirits**: Never miss a visiting spirit
+- **Plan Eden Runs**: Know exactly when weekly reset happens
+- **Attend Special Events**: Get reminded about concerts and activities
+
+## Tips for Event Tracking
+
+<Callout type="tip">
+  **Check After Reset**: The first thing to check each day is the daily quests guide. It helps you plan your entire candle run efficiently.
 </Callout>
 
 <Callout type="tip">
-  **Alternative**: If daily quest guides aren't available, check the infographics server directly or use `/skytimes` for general
-  event info.
-</Callout>
-
-## Traveling Spirit Feature
-
-### What You See
-
-When a traveling spirit is active or upcoming:
-
-1. **Schedule**: Arrival and departure dates
-2. **Spirit Details**: Name and type (when revealed)
-3. **Items**: Cosmetics and emotes tree (when revealed)
-4. **Cost Information**: Hearts and candles needed
-
-**[Image Placeholder: Traveling spirit details]**
-
-### Revelation Status
-
-<Callout type="info">
-  Traveling spirit details are manually updated in the database when officially revealed. Before revelation, only the schedule is
-  shown.
-</Callout>
-
-### Planning Your Purchase
-
-- **Budget Calculator**: See total costs for items
-- **Priority Items**: Decide what to get based on hearts available
-- **Return Estimates**: Approximate next visit timeframe
-
-## Tips & Tricks
-
-<Callout type="tip">
-  **Set Up Reminders**: Use the [Reminders](/guide/reminders) feature to get notified before events happen. Perfect for not
-  missing Geyser or Grandma!
+  **Use the Refresh Button**: Instead of running the command again, just click refresh to update all the countdowns.
 </Callout>
 
 <Callout type="tip">
-  **Use Live Updates**: Set up [Live Updates](/guide/live-updates) for auto-refreshing event displays in your server channels.
+  **Plan Around Traveling Spirits**: Check Wednesday to see Thursday's traveling spirit so you can prepare hearts if needed.
 </Callout>
-
-<Callout type="tip">**Daily Routine**: Check `/daily-quests` every day after reset to plan your candle run efficiently.</Callout>
-
-<Callout type="tip">**Weekend Planning**: Use `/skytimes` on Saturday to prepare for Eden reset on Sunday.</Callout>
-
-## Event-Specific Guides
-
-### Geyser Event
-
-- **Preparation**: Arrive 5 minutes early
-- **Duration**: ~8 minutes active time
-- **Rewards**: Light fragments and potential cosmetics
-- **Location Guide**: Available via button in skytimes
-
-**[Image Placeholder: Geyser location guide]**
-
-### Grandma Event
-
-- **Timing**: Check skytimes for exact location rotation
-- **Rewards**: Seasonal or special items
-- **Location**: Changes each visit
-- **Tips**: Bookmark favorite grandma locations
-
-### Daily Quests Strategy
-
-1. **Morning Review**: Check quests after reset
-2. **Plan Route**: Optimize realm visits
-3. **Seasonal Priority**: Complete seasonal candles first
-4. **Friend Coordination**: Some quests are easier with friends
-
-## Common Use Cases
-
-### Morning Planning
-
-Start your day with `/daily-quests` to see what's available and plan your candle run.
-
-### Event Alerts
-
-Use `/skytimes` before play sessions to see which events are happening soon.
-
-### Spirit Preparation
-
-Check `/traveling-spirit` on Wednesday to prepare hearts for Thursday's arrival.
-
-### Weekly Reset
-
-Review `/skytimes` before Sunday to plan Eden runs and weekly activities.
-
-## Troubleshooting
-
-<Callout type="warning">
-  **No Daily Quest Guide**: If guides aren't available, it may be due to posting delays. Check back in 1-2 hours or visit the
-  infographics server.
-</Callout>
-
-<Callout type="info">**Time Display**: All times are in your local timezone based on Discord settings.</Callout>
 
 ## Related Features
 
-- **[Reminders](/guide/reminders)**: Get notified before events
-- **[Live Updates](/guide/live-updates)**: Auto-updating event displays
-- **[Shards](/guide/shards)**: Track shard events
-- **[Spirits](/guide/spirits)**: View traveling spirit details
+Enhance your event tracking with:
+
+- **[Reminders](/guide/reminders)** - Get notified before events start
+- **[Live Updates](/guide/live-updates)** - Auto-updating event displays for your server
+- **[Shards](/guide/shards)** - Track shard events too

@@ -1,639 +1,327 @@
 ---
 title: Live Updates
-description: Auto-updating messages for shards and skytimes in your Discord server
+description: Auto-updating displays keeping your server informed 24/7
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Step, Steps } from "fumadocs-ui/components/steps";
 
 # Live Updates
 
-Set up auto-updating messages that display real-time shard information and event schedules in your Discord server.
-
-## Overview
-
-Live updates provide persistent, automatically refreshing messages that keep your server informed about:
-
-- Current shard information
-- Event schedules and countdowns
-- Real-time updates without command spam
+Keep your server constantly informed with auto-updating messages! Live updates show real-time shard and event information that refreshes automatically, no commands needed.
 
 <Callout type="error">
-  **Server Only**: Live updates are **only available for servers** (not user installations) and require **Manage Server**
-  permissions to configure.
+  **Server Feature**: Live updates only work in Discord servers (not DMs) and require Manage Server permissions to set up.
 </Callout>
 
-<Callout type="info">
-  **Webhook Required**: The bot needs **Manage Webhooks** permission in the channel where live updates will be posted.
-</Callout>
+## What are Live Updates?
 
-## Commands
+Imagine having a message in your server that always shows current information - no need to run commands repeatedly. That's what live updates provide:
 
-### `/shards-live` - Live Shard Updates
+- **Auto-Refresh**: Updates every few minutes automatically
+- **Always Current**: Shows latest countdowns and info
+- **Set and Forget**: Works on its own once configured
+- **No Spam**: One message that updates, not repeated commands
 
-Set up auto-updating shard information messages.
+**[Image Placeholder: Live-updating message showing real-time info]**
 
-#### Start Live Updates
+## Two Types of Live Updates
 
-**Options**:
+### Live Shard Information
 
-| Option      | Description                                              |
-| ----------- | -------------------------------------------------------- |
-| `<channel>` | The channel where the live update message should be sent |
+Get constantly updated shard details:
 
-**Usage Example**:
+- Current shard type and location
+- Countdown to next occurrence
+- Full daily timeline
+- Location guide access
+- Updates every **5 minutes**
+
+**[Image Placeholder: Live shard message with countdown]**
+
+Perfect for servers focused on shard collecting!
+
+### Live Event Schedule
+
+Show all Sky events in real-time:
+
+- All tracked events listed
+- Countdown for each event
+- Daily schedules
+- Interactive event details
+- Updates every **2 minutes**
+
+**[Image Placeholder: Live events message with multiple countdowns]**
+
+Ideal for keeping your community informed about everything happening in Sky!
+
+## How It Works
+
+### Simple Setup
+
+Getting started is straightforward:
+
+1. Choose what you want (shards or events)
+2. Pick a channel for the live message
+3. Bot creates the message and webhook
+4. Automatic updates begin immediately
+
+**[Image Placeholder: Setup process]**
+
+The bot handles all the technical stuff - you just choose where you want the information.
+
+### Automatic Updates
+
+Once running:
+
+- Message updates on schedule (2-5 minute intervals)
+- Countdowns decrease in real-time
+- Information stays fresh
+- Interactive buttons remain functional
+- No maintenance needed
+
+### What Gets Updated
+
+**For Shards:**
+
+- Shard type for current date
+- Location information
+- Next occurrence countdown
+- Timeline status (past/upcoming)
+- Last updated timestamp
+
+**For Events:**
+
+- All event countdowns
+- Schedule changes
+- Status indicators
+- Event details
+- Refresh timestamps
+
+## Setting Up Your Server
+
+### Channel Recommendations
+
+**Read-Only Channels**
+
+Best practice is making live update channels read-only:
+
+- Members can view but not send messages
+- Prevents chat clutter
+- Keeps live message visible
+- Professional appearance
+
+**Channel Naming**
+
+Clear names help members understand:
+
+- `#live-shards` - Shard updates
+- `#live-events` - Event schedule
+- `#sky-info` - Combined information
+
+**Organization**
+
+Use categories to organize:
 
 ```
-/shards-live start channel:#live-shards
+📊 Sky Live Info
+  ├── #live-shards
+  ├── #live-events
+  └── #event-chat (for discussion)
 ```
 
-Starts live shard updates in the #live-shards channel.
+**[Image Placeholder: Organized channel structure]**
 
-**[Image Placeholder: Shards live command]**
+### Permission Setup
 
-#### Stop Live Updates
+For optimal performance:
 
-**Usage Example**:
-
-```
-/shards-live stop
-```
-
-Stops the live shard updates for your server.
-
-### `/skytimes-live` - Live Event Schedule
-
-Set up auto-updating event schedule messages.
-
-#### Start Live Updates
-
-**Options**:
-
-| Option      | Description                                              |
-| ----------- | -------------------------------------------------------- |
-| `<channel>` | The channel where the live update message should be sent |
-
-**Usage Example**:
-
-```
-/skytimes-live start channel:#live-events
-```
-
-Starts live skytimes updates in the #live-events channel.
-
-**[Image Placeholder: Skytimes live command]**
-
-#### Stop Live Updates
-
-**Usage Example**:
-
-```
-/skytimes-live stop
-```
-
-Stops the live skytimes updates for your server.
-
-## How Live Updates Work
-
-### Setup Process
-
-<Steps>
-
-<Step>
-
-#### Run Start Command
-
-Execute the start command with your chosen channel.
-
-</Step>
-
-<Step>
-
-#### Webhook Creation
-
-The bot creates a webhook in the specified channel named "SkyHelper Live Updates".
-
-</Step>
-
-<Step>
-
-#### Initial Message
-
-An initial message is posted with current information.
-
-</Step>
-
-<Step>
-
-#### Automatic Updates
-
-The message updates automatically at regular intervals.
-
-</Step>
-
-</Steps>
-
-### Update Frequency
-
-- **Shards Live**: Updates every **5 minutes**
-- **Skytimes Live**: Updates every **2 minutes**
-
-<Callout type="info">
-  Update intervals are optimized to balance freshness with Discord API rate limits. More frequent updates could cause issues.
-</Callout>
-
-**[Image Placeholder: Live update message with timestamp]**
-
-## Shards Live Updates
-
-### What's Displayed
-
-The live shard message shows:
-
-1. **Current Shard Type**: Red, Black, etc.
-2. **Location**: Where the shard appears
-3. **Next Occurrence**: Countdown to next shard
-4. **Daily Timeline**: All occurrences for the day
-5. **Location Guide Button**: Quick access to guides
-6. **Last Updated**: Timestamp of last update
-
-**[Image Placeholder: Live shards message]**
-
-### Message Features
-
-<Steps>
-
-<Step>
-
-#### Real-Time Countdown
-
-The countdown updates every 5 minutes, showing accurate time remaining.
-
-</Step>
-
-<Step>
-
-#### Status Indicators
-
-Visual indicators show:
-
-- Active shards (happening now)
-- Upcoming shards
-- Completed shards
-
-</Step>
-
-<Step>
-
-#### Interactive Elements
-
-Buttons for location guides remain functional in the live message.
-
-</Step>
-
-</Steps>
-
-## Skytimes Live Updates
-
-### What's Displayed
-
-The live skytimes message shows:
-
-1. **All Tracked Events**: Geyser, Grandma, Turtle, etc.
-2. **Next Occurrences**: Countdowns for each event
-3. **Event Schedule**: Daily timeline
-4. **Interactive Menus**: Select specific events
-5. **Refresh Button**: Manual refresh option
-6. **Last Updated**: Update timestamp
-
-**[Image Placeholder: Live skytimes message]**
-
-### Message Features
-
-<Steps>
-
-<Step>
-
-#### Multiple Events
-
-Displays all events simultaneously with individual countdowns.
-
-</Step>
-
-<Step>
-
-#### Color Coding
-
-Events are color-coded by:
-
-- Urgency (happening soon)
-- Type (recurring vs. special)
-- Status (active, upcoming, ended)
-
-</Step>
-
-<Step>
-
-#### Interactive Controls
-
-Select menus and buttons work in real-time, updated with each refresh.
-
-</Step>
-
-</Steps>
-
-## Channel Setup
-
-### Dedicated Live Channels
-
-Best practice is to create dedicated channels:
-
-<Steps>
-
-<Step>
-
-#### Shards Channel
-
-```
-#live-shards
-```
-
-Only for shard live updates, no chat allowed.
-
-</Step>
-
-<Step>
-
-#### Events Channel
-
-```
-#live-events
-```
-
-Only for skytimes live updates, no chat allowed.
-
-</Step>
-
-<Step>
-
-#### Combined Channel
-
-```
-#live-sky-updates
-```
-
-Both shards and skytimes in one channel (if preferred).
-
-</Step>
-
-</Steps>
-
-**[Image Placeholder: Channel setup examples]**
-
-### Channel Permissions
-
-Recommended permissions:
-
-- **Members**: Can view, cannot send messages
-- **Bot**: Can view, send messages, manage webhooks
+- **Members**: View channel only
+- **Bot**: View, send messages, manage webhooks
 - **Admins**: All permissions
 
-This prevents chat clutter in live update channels.
-
-<Callout type="tip">
-  **Read-Only Channels**: Make live update channels read-only for members to avoid message clutter between updates.
-</Callout>
+This prevents accidental disruptions.
 
 ## Managing Live Updates
 
-### Viewing Active Updates
-
-Check if live updates are active:
-
-1. Look for the webhook in channel settings
-2. Check for the live message in the channel
-3. Verify it's updating (check timestamp)
-
-### Updating Configuration
-
-To change the channel:
-
-<Steps>
-
-<Step>
-
-Stop current live updates:
-
-```
-/shards-live stop
-```
-
-</Step>
-
-<Step>
-
-Start in new channel:
-
-```
-/shards-live start channel:#new-channel
-```
-
-</Step>
-
-</Steps>
-
-### Multiple Live Updates
+### One Per Type
 
 You can have:
 
-- One shards live update per server
-- One skytimes live update per server
-- Both types in the same or different channels
+- One live shard update per server
+- One live event update per server
+- Both can be in the same or different channels
 
-<Callout type="warning">
-  **One Per Type**: You can only have one active shards-live and one active skytimes-live per server. Starting a new one
-  automatically stops the previous.
-</Callout>
+Starting a new live update automatically stops the previous one of that type.
+
+### Updating Configuration
+
+To change channels:
+
+1. Stop the current live update
+2. Start it in the new channel
+3. Old message stops updating
+4. New message begins
+
+### Viewing Active Updates
+
+Check if live updates are running:
+
+- Look for the message in the channel
+- Check the "last updated" timestamp
+- Verify it's refreshing on schedule
 
 ## Best Practices
 
-<Callout type="tip">**Pin the Message**: Pin live update messages so they're always visible at the top of the channel.</Callout>
+<Callout type="tip">
+  **Pin the Message**: Pin live update messages so they're always easy to find at the top of the channel.
+</Callout>
 
 <Callout type="tip">
-  **Channel Description**: Add channel descriptions explaining what the live updates show and update frequency.
+  **Channel Description**: Add a description explaining the channel's purpose and update frequency.
 </Callout>
 
 <Callout type="tip">
   **Combine with Reminders**: Use live updates for passive tracking and reminders for active notifications.
 </Callout>
 
-<Callout type="tip">**Mobile Widget**: On mobile, pin the channel for easy access to live info.</Callout>
+<Callout type="tip">
+  **Mobile Convenience**: On mobile, pin the channel to your favorites for quick access to current info.
+</Callout>
 
 ## Common Setups
 
-### Casual Server
+### Small Casual Server
 
-Single combined channel:
+Simple approach:
 
-```
-/shards-live start channel:#sky-info
-/skytimes-live start channel:#sky-info
-```
+- One `#sky-info` channel
+- Both shard and event live updates
+- Pinned for easy access
 
 ### Active Community
 
-Dedicated channels:
-
-```
-/shards-live start channel:#live-shards
-/skytimes-live start channel:#live-events
-```
-
-### Organization Setup
-
-Category organization:
-
-```
-📊 Sky Live Info
-  ├── #live-shards (shards-live)
-  ├── #live-events (skytimes-live)
-  └── #event-chat (for discussion)
-```
-
-**[Image Placeholder: Category organization]**
-
-## Webhook Details
-
-### Webhook Creation
-
-When you start live updates:
-
-<Steps>
-
-<Step>
-
-Bot checks for existing "SkyHelper Live Updates" webhook
-
-</Step>
-
-<Step>
-
-If not found, creates a new webhook
-
-</Step>
-
-<Step>
-
-Webhook is used to post the live message
-
-</Step>
-
-<Step>
-
-Webhook ID is stored for future updates
-
-</Step>
-
-</Steps>
-
-### Webhook Management
-
-<Callout type="warning">
-  **Do Not Delete Webhook**: If you delete the "SkyHelper Live Updates" webhook manually, live updates will automatically stop.
-</Callout>
-
-If webhook is deleted:
-
-1. Live updates stop automatically
-2. Run the start command again
-3. New webhook is created
-4. Live updates resume
-
-## Update Reliability
-
-### When Updates Happen
-
-Updates occur:
-
-- Every 5 minutes (shards)
-- Every 2 minutes (skytimes)
-- Automatically in the background
-- Even if bot appears offline temporarily
-
-### Update Failures
-
-If an update fails:
-
-- Bot retries automatically
-- Next scheduled update continues
-- Error logged for debugging
-- No notification to users
-
-<Callout type="info">
-  **Temporary Failures**: Occasional update failures are normal and self-recover. If updates stop completely, restart the live
-  update.
-</Callout>
-
-## Troubleshooting
-
-### Live Updates Not Updating
-
-<Steps>
-
-<Step>
-
-#### Check Timestamp
-
-Look at "Last Updated" in the message. If it's very old, updates may have stopped.
-
-</Step>
-
-<Step>
-
-#### Verify Webhook
-
-Check channel settings for "SkyHelper Live Updates" webhook.
-
-</Step>
-
-<Step>
-
-#### Check Permissions
-
-Ensure bot has Manage Webhooks permission.
-
-</Step>
-
-<Step>
-
-#### Restart Updates
-
-Stop and start the live update to reinitialize.
-
-</Step>
-
-</Steps>
-
-### Message Deleted
-
-<Callout type="warning">
-  **Auto-Disable**: If the live message is deleted, live updates automatically stop. Run the start command again to create a new
-  message.
-</Callout>
-
-### Wrong Channel
-
-To move live updates:
-
-```
-/shards-live stop
-/shards-live start channel:#correct-channel
-```
-
-### Permission Errors
-
-If you get permission errors:
-
-1. Verify Manage Server permission
-2. Check bot's Manage Webhooks permission in channel
-3. Ensure channel isn't in a restricted category
-
-## Advanced Usage
-
-### Custom Channel Setup
-
-<Steps>
-
-<Step>
-
-#### Create Category
-
-Create "Sky Live Info" category
-
-</Step>
-
-<Step>
-
-#### Set Permissions
-
-- `@everyone`: View channel only
-- Bot: All permissions
-- Admins: All permissions
-
-</Step>
-
-<Step>
-
-#### Add Channels
-
-Create live update channels in category
-
-</Step>
-
-<Step>
-
-#### Configure Updates
-
-Set up live updates in respective channels
-
-</Step>
-
-</Steps>
-
-### Integration with Other Features
-
-Live updates work well with:
-
-- **[Reminders](/guide/reminders)**: Active notifications + passive displays
-- **[Regular Commands](/guide/events)**: Ad-hoc lookups + persistent info
-- **Server Roles**: Different permissions for different user groups
-
-### Dashboard Management
-
-<Callout type="info">
-  Live updates can also be managed via the [bot dashboard](https://dash.skyhelper.xyz) for a visual interface.
-</Callout>
-
-Dashboard features:
-
-- Visual channel selection
-- Status overview
-- Quick enable/disable
-- Settings management
-
-## Use Cases
+Dedicated organization:
+
+- `#live-shards` for shard collectors
+- `#live-events` for event trackers
+- Separate discussion channels
+- Organized in category
 
 ### Information Hub
 
-Create a server information hub:
+Comprehensive setup:
 
-1. Live shards in #live-shards
-2. Live events in #live-events
-3. Pin both messages
-4. Set channels to read-only
-5. Server members always have current info
+- Live updates in read-only channels
+- Discussion channels for each topic
+- Links and guides in channel descriptions
+- Full Sky resource center
 
-### Mobile Quick Reference
+## Why Use Live Updates?
 
-For mobile users:
+### Constant Availability
 
-1. Set up live updates
-2. Pin the channel on mobile
-3. Quick swipe to check current info
-4. No commands needed
+Information is always there:
 
-### Community Coordination
+- New members see current info immediately
+- No need to ask "when's the next geyser?"
+- Always up-to-date without effort
+- Reliable reference point
 
-For active communities:
+### Reduces Command Spam
 
-1. Live updates show current status
-2. Reminders notify when events happen
-3. Members can plan activities together
-4. No repeated command usage
+Instead of everyone running commands:
+
+- One message serves everyone
+- Less channel clutter
+- More efficient
+- Better user experience
+
+### Mobile-Friendly
+
+Perfect for mobile users:
+
+- Quick swipe to check info
+- No typing commands
+- Instant access
+- Always current
+
+### Community Building
+
+Helps your community:
+
+- Stay coordinated
+- Plan together
+- Share current status
+- Build engagement
+
+## Technical Details
+
+### Update Frequency
+
+- **Shard Live**: Every 5 minutes
+- **Events Live**: Every 2 minutes
+
+These intervals balance freshness with Discord API limits.
+
+### Webhook System
+
+Live updates use webhooks:
+
+- Bot creates "SkyHelper Live Updates" webhook
+- Messages sent through webhook
+- Persists through bot restarts
+- Reliable delivery
+
+<Callout type="warning">
+  If the webhook or message gets deleted, live updates stop automatically. Simply set it up again to resume.
+</Callout>
+
+### Permissions Required
+
+Must have:
+
+- **You**: Manage Server permission
+- **Bot**: Manage Webhooks in the channel
+
+## Troubleshooting
+
+### Updates Not Refreshing
+
+If the message stops updating:
+
+1. Check the "last updated" timestamp
+2. Verify webhook still exists
+3. Confirm bot has permissions
+4. Try stopping and restarting
+
+### Message Deleted
+
+If someone deletes the message:
+
+- Live updates stop automatically
+- No error occurs
+- Simply set it up again
+- New message will begin updating
+
+### Wrong Channel
+
+To move to a different channel:
+
+- Stop the live update
+- Start it in the correct channel
+- Old message becomes static
+- New message is live
+
+## Alternative Management
+
+<Callout type="info">
+  Live updates can also be managed through the [web dashboard](https://dash.skyhelper.xyz) for easier visual configuration.
+</Callout>
 
 ## Related Features
 
-- **[Reminders](/guide/reminders)**: Active event notifications
-- **[Shards](/guide/shards)**: Shard tracking information
-- **[Events](/guide/events)**: Event schedules and details
-- **[Dashboard](https://dash.skyhelper.xyz)**: Web-based management
+Enhance your server information with:
+
+- **[Reminders](/guide/reminders)** - Active notifications for events
+- **[Shards](/guide/shards)** - Detailed shard information
+- **[Events](/guide/events)** - Comprehensive event guides

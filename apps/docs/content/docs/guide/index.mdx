@@ -1,6 +1,6 @@
 ---
 title: Feature Guide
-description: Comprehensive guide to all SkyHelper features and commands
+description: Learn about everything SkyHelper can do for you
 index: true
 ---
 
@@ -9,112 +9,184 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 # SkyHelper Feature Guide
 
-Welcome to the comprehensive guide for SkyHelper! This section provides detailed information about all features offered by the bot, how they work, and how to use them effectively.
-
-<Callout type="info">
-  **Getting Started**: If you're new to SkyHelper, we recommend starting with the [Shards](/guide/shards) and
-  [Events](/guide/events) guides to understand the core features.
-</Callout>
+Welcome! This guide explains all the features SkyHelper offers to enhance your Sky: Children of the Light experience.
 
 ## What is SkyHelper?
 
-SkyHelper is a feature-rich Discord bot designed specifically for the Sky: Children of the Light community. It provides real-time information, tracking, reminders, and utilities to enhance your Sky experience.
+SkyHelper is your companion for Sky: Children of the Light. It helps you:
+
+- Track shards and in-game events
+- Find spirits and plan unlocks
+- Calculate seasonal progress
+- Set up reminders and live updates
+- Play games and have fun
+- And much more!
+
+<Callout type="info">
+  **New to SkyHelper?** Start with [Shards](/guide/shards) and [Events](/guide/events) to understand the core features!
+</Callout>
 
 ## Core Features
 
 <Cards>
-  <Card
-    title="Shards Tracking"
-    description="Track shards with detailed location guides, timelines, and calendar views"
+  <Card 
+    title="Shards Tracking" 
+    description="Know when and where shards appear with real-time info and calendars"
     href="/guide/shards"
   />
-  <Card
-    title="In-Game Events"
-    description="Real-time event schedules, countdowns, and occurrence tracking"
+  <Card 
+    title="In-Game Events" 
+    description="Stay updated on geysers, grandma, daily quests, and more"
     href="/guide/events"
   />
-  <Card
-    title="Spirit Information"
-    description="Comprehensive spirit guides with locations, trees, and cosmetics"
+  <Card 
+    title="Spirit Information" 
+    description="Find spirits, view their trees, and plan your unlocks"
     href="/guide/spirits"
   />
-  <Card
-    title="Seasonal Content"
-    description="Season guides, currency calculator, and seasonal information"
+  <Card 
+    title="Seasonal Content" 
+    description="Calculate your season completion and access season guides"
     href="/guide/seasonal"
   />
-  <Card title="Sky Game Planner" description="Interactive planner for spirits, items, events, and shops" href="/guide/planner" />
+  <Card 
+    title="Sky Game Planner" 
+    description="Explore all Sky content in one interactive place"
+    href="/guide/planner"
+  />
 </Cards>
 
-## Community & Utility Features
+## Community & Utility
 
 <Cards>
-  <Card
-    title="Reminders"
-    description="Set up automated reminders for geysers, grandma, and other events"
+  <Card 
+    title="Reminders" 
+    description="Get notified before events happen so you never miss out"
     href="/guide/reminders"
   />
-  <Card title="Live Updates" description="Real-time auto-updating messages for shards and skytimes" href="/guide/live-updates" />
-  <Card title="Games & Fun" description="Sky-themed games including hangman and word scramble" href="/guide/games" />
-  <Card title="Utilities" description="Helpful tools for timestamps, bot info, and more" href="/guide/utilities" />
-  <Card
-    title="Language Support"
-    description="Use SkyHelper in your preferred language with multilingual support"
+  <Card 
+    title="Live Updates" 
+    description="Auto-updating messages keeping your server always informed"
+    href="/guide/live-updates"
+  />
+  <Card 
+    title="Games & Fun" 
+    description="Play Sky-themed games and have fun with your community"
+    href="/guide/games"
+  />
+  <Card 
+    title="Utilities" 
+    description="Helpful tools like timestamps, help, and bot info"
+    href="/guide/utilities"
+  />
+  <Card 
+    title="Language Support" 
+    description="Use SkyHelper in your preferred language"
     href="/guide/language"
   />
 </Cards>
 
 ## How to Use This Guide
 
-Each feature guide includes:
+Each feature guide explains:
 
-- **Overview**: What the feature does and why it's useful
-- **How to Use**: Step-by-step instructions with command examples
-- **Options**: Detailed explanation of all available options
-- **Visual Examples**: Screenshots and demonstrations (when available)
-- **Tips & Tricks**: Best practices and helpful hints
+- **What it does** - The feature's purpose
+- **What you can expect** - What information or functionality you get
+- **How it helps you** - Real benefits for your Sky experience
+- **Tips for best use** - How to make the most of it
 
 <Callout type="tip">
-  **Pro Tip**: Most commands support the `[hide]` option to make responses visible only to you (ephemeral). This is useful in busy
-  channels!
+  **Pro Tip**: Most features work great together! For example, use Live Updates for passive tracking and Reminders for active notifications.
 </Callout>
 
-## Command Basics
+## Getting Started
 
-<Callout>
-  **Command Reference**:
-  - **Required options**: Enclosed in `<` `>` are required, e.g., `<date>`
-  - **Optional options**: Enclosed in `[` `]` are optional, e.g., `[timezone]`
+### First Steps
+
+1. Pick a feature that interests you
+2. Read its guide to understand what it does
+3. Try it out in Discord
+4. Explore related features
+
+### Feature Combinations
+
+Features work great together:
+
+- **Shards + Reminders**: Track shards and get notified when they appear
+- **Events + Live Updates**: See schedules and get auto-updating displays
+- **Spirits + Planner**: Find spirits and explore their complete trees
+- **Seasonal + Events**: Plan seasons and track daily quest guides
+
+### Learning Path
+
+Suggested order for new users:
+
+1. **Shards** - Learn the basics of tracking
+2. **Events** - Understand all Sky events
+3. **Spirits** - Discover how to find and unlock spirits
+4. **Utilities** - Get helpful tools
+5. **Advanced Features** - Explore planner, reminders, etc.
+
+## Important Notes
+
+### Server vs User Features
+
+Most features work anywhere, but some require servers:
+
+- **Work Everywhere**: Shards, Events, Spirits, Seasonal, Planner, Games, Utilities, Language
+- **Server Only**: Live Updates, Reminders (need Manage Server permission)
+
+<Callout type="warning">
+  Server features require the bot to be added to the server and you need Manage Server permissions to set them up.
 </Callout>
 
-## User-Install vs Server Commands
+### Language Support
 
-Most SkyHelper commands work in both:
+SkyHelper works in multiple languages:
 
-- **User installations**: Install to your account and use anywhere
-- **Server installations**: Added to a specific Discord server
-
-However, some features require server installation:
-
-- **Live Updates** (`/shards-live`, `/skytimes-live`)
-- **Reminders** (`/reminders`)
-
-These server-specific commands use webhooks and require the bot to be a server member.
+- Set your personal language preference
+- Server admins can set server defaults
+- All features translate to your chosen language
+- Learn more in [Language Support](/guide/language)
 
 ## Getting Help
 
-If you need assistance:
+Need assistance?
 
-- Use `/help` command for quick command reference
-- Use `/help command:<command-name>` for specific command help
-- Use `/utils contact-us` to reach the development team
-- Visit the [Discord support server](https://discord.gg/skyhelper)
+- Use the help feature to learn about any command
+- Check troubleshooting sections in guides
+- Contact the support team through the bot
+- Join the [support server](https://discord.gg/skyhelper)
 
-<Callout type="warning">
-  **Disclaimer**: SkyHelper is not affiliated with Sky: Children of the Light or thatgamecompany. It is a community-developed
-  tool.
+<Callout type="info">
+  **Feedback Welcome**: Found something confusing? Have suggestions? The development team wants to hear from you!
 </Callout>
 
-## Ready to Start?
+## What Makes SkyHelper Special
 
-Explore the guides below to learn about each feature in detail. Happy adventuring! ✨
+### Always Up-to-Date
+
+- Current shard information
+- Latest traveling spirits
+- Active season tracking
+- Real-time event schedules
+
+### Community-Powered
+
+- Translations by volunteers
+- Daily quest guides from creators
+- Growing with user feedback
+- Built for the Sky community
+
+### Easy to Use
+
+- Simple, clear responses
+- Visual information displays
+- Helpful placeholders and guides
+- Intuitive interaction
+
+## Ready to Explore?
+
+Pick a feature from the cards above and start discovering what SkyHelper can do for you! Each guide is written to help you understand and use features effectively.
+
+Happy exploring! ✨
