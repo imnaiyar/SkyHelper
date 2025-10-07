@@ -130,7 +130,9 @@ export class ItemsDisplay extends BasePlannerHandler {
   itemDisplay(item: IItem) {
     return [
       section(
-        this.backbtn(this.createCustomId({ t: DisplayTabs.Items, it: null, f: null, ...this.state.b })),
+        ...(this.state.b
+          ? [this.backbtn(this.createCustomId({ t: DisplayTabs.Items, it: null, f: null, ...this.state.b }))]
+          : []),
         `# ${this.formatemoji(item.emoji, item.name)} ${item.name}${item.level ? ` (Lvl ${item.level})` : ""}`,
         [`Type: ${item.type}`, item.subtype ? `Subtype: ${item.subtype}` : null, item.group ? `Group: ${item.group}` : null]
           .filter(Boolean)
@@ -146,7 +148,10 @@ export class ItemsDisplay extends BasePlannerHandler {
       row(
         (() => {
           const sourceNav = this.getItemSourceNavigation(item);
-          return this.viewbtn(sourceNav ?? "", { label: "Find Source", disabled: !sourceNav });
+          return this.viewbtn(sourceNav ?? Math.floor(Math.random() * 1000).toString(), {
+            label: "Find Source",
+            disabled: !sourceNav,
+          });
         })(),
         button({
           custom_id: this.createCustomId({}),
