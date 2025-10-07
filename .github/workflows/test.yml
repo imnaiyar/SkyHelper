@@ -28,6 +28,8 @@ jobs:
 
       - name: Build packages
         run: pnpm build --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"
+        env:
+          DOCS_URL: ${{ secrets.DOCS_URL }}
 
       - name: ESLint
         run: pnpm lint --filter="...[origin/${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}]"
