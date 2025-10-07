@@ -277,6 +277,11 @@ export const PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         type: ApplicationCommandOptionType.Subcommand,
       },
       {
+        name: "stats",
+        description: "view your sky planner statistics and progress",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
         name: "search",
         name_localizations: "commands:PLANNER.options.search.name",
         description_localizations: "commands:PLANNER.options.search.description",

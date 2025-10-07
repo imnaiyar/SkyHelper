@@ -9,6 +9,7 @@ import { searchHelper } from "./sub/planner.helpers.js";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { MessageFlags } from "discord-api-types/v10";
 import { exportPlannerData } from "./sub/planner-data.js";
+import { renderPlannerStats } from "./sub/planner-stats.js";
 //  this is mappings of available display tabs that will show on search, which users can quick jump to
 const tab_mappings = (data: PlannerAssetData) => [
   ...Object.entries(DisplayTabs).map(([n, v]) => ({ name: n, path: { t: v } })),
@@ -114,6 +115,11 @@ export default {
       case "home": {
         const response = await handlePlannerNavigation({ t: DisplayTabs.Home, user: helper.user.id });
         await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
+        return;
+      }
+      case "stats": {
+        const statsResponse = await renderPlannerStats(helper.user.id);
+        await helper.editReply(statsResponse);
         return;
       }
       case "import": {
