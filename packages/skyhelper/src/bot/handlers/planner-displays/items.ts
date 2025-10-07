@@ -146,7 +146,7 @@ export class ItemsDisplay extends BasePlannerHandler {
       row(
         (() => {
           const sourceNav = this.getItemSourceNavigation(item);
-          return this.viewbtn(sourceNav ?? Math.floor(Math.random() * 1000).toString(), {
+          return this.viewbtn(sourceNav || "disabled-find-source", {
             label: "Find Source",
             disabled: !sourceNav,
           });
