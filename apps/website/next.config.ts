@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-const { DOCS_URL = "/docs" } = process.env;
+const { DOCS_URL = "/dos" } = process.env;
 
 const nextConfig: NextConfig = {
   images: {
