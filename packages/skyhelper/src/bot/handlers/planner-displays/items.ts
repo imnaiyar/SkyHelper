@@ -146,6 +146,7 @@ export class ItemsDisplay extends BasePlannerHandler {
       row(
         (() => {
           const sourceNav = this.getItemSourceNavigation(item);
+          // eslint-disable-next-line
           return this.viewbtn(sourceNav || "disabled-find-source", {
             label: "Find Source",
             disabled: !sourceNav,
