@@ -22,7 +22,7 @@ export default function Header() {
     { name: "Features", href: "/#features" },
     { name: "Dashboard", href: "/dashboard" },
     { name: "Commands", href: "/commands" },
-    { name: "Docs", href: "https://docs.skyhelper.xyz", external: true },
+    { name: "Docs", href: "/docs" },
     { name: "Support", href: "https://discord.com/invite/2rjCRKZsBb", external: true },
   ];
 

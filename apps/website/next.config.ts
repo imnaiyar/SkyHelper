@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+const { DOCS_URL } = process.env;
 
 const nextConfig: NextConfig = {
   images: {
@@ -54,6 +55,22 @@ const nextConfig: NextConfig = {
             value: "no-cache, no-store, must-revalidate",
           },
         ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/docs",
+        destination: `${DOCS_URL}/guide/docs`,
+      },
+      {
+        source: "/docs/:path+",
+        destination: `${DOCS_URL}/guide/docs/:path+`,
+      },
+      {
+        source: "/docs-static/_next/:path+",
+        destination: `${DOCS_URL}/docs-static/_next/:path+`,
       },
     ];
   },
