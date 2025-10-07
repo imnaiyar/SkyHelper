@@ -130,7 +130,7 @@ export class ItemsDisplay extends BasePlannerHandler {
   itemDisplay(item: IItem) {
     return [
       section(
-        this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })) : this.homebtn() // fallback to item home,
+        this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })) : this.homebtn(), // fallback to item home
         `# ${this.formatemoji(item.emoji, item.name)} ${item.name}${item.level ? ` (Lvl ${item.level})` : ""}`,
         [`Type: ${item.type}`, item.subtype ? `Subtype: ${item.subtype}` : null, item.group ? `Group: ${item.group}` : null]
           .filter(Boolean)
