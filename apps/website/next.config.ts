@@ -65,12 +65,12 @@ const nextConfig: NextConfig = {
         destination: `${DOCS_URL}/guide/docs`,
       },
       {
-        source: "/docs/:path+",
-        destination: `${DOCS_URL}/guide/docs/:path+`,
+        source: "/docs/:path*",
+        destination: `${DOCS_URL}/guide/docs/:path*`,
       },
       {
-        source: "/docs-static/_next/:path+",
-        destination: `${DOCS_URL}/docs-static/_next/:path+`,
+        source: "/docs-static/_next/:path*",
+        destination: `${DOCS_URL}/docs-static/_next/:path*`,
       },
     ];
   },
