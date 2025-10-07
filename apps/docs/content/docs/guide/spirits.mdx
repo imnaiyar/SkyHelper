@@ -1,0 +1,447 @@
+---
+title: Spirit Information
+description: Comprehensive spirit guides with locations, friendship trees, and cosmetics
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+# Spirit Information
+
+Access detailed information about all spirits in Sky: Children of the Light, including locations, friendship trees, cosmetics, and cost calculations.
+
+## Overview
+
+SkyHelper provides comprehensive spirit information to help you:
+
+- Find spirit locations with detailed guides
+- View complete friendship trees
+- Calculate costs for items
+- Preview cosmetics and emotes
+- Track your collection progress
+
+## Commands
+
+### `/spirits` - Spirit Search & Details
+
+Search for any spirit and get detailed information about them.
+
+**Options**:
+
+| Option     | Description                                   |
+| ---------- | --------------------------------------------- |
+| `<search>` | Search for a spirit by name                   |
+| `[hide]`   | Whether to hide the response from other users |
+
+**Usage Examples**:
+
+<Steps>
+
+<Step>
+
+#### Search by Full Name
+
+```
+/spirits search:Meditating Monastic
+```
+
+Returns complete information about the Meditating Monastic spirit.
+
+</Step>
+
+<Step>
+
+#### Search by Partial Name
+
+```
+/spirits search:Dancing
+```
+
+The bot will find the closest match (e.g., "Dancing Performer").
+
+</Step>
+
+<Step>
+
+#### Private Search
+
+```
+/spirits search:Pointing Candlemaker hide:true
+```
+
+Gets spirit info visible only to you.
+
+</Step>
+
+</Steps>
+
+<Callout type="info">
+  **Fuzzy Search**: You don't need to type the exact name. The bot uses intelligent matching to find the spirit you're looking
+  for, even with partial names or typos.
+</Callout>
+
+**[Image Placeholder: Spirit search results]**
+
+### `/guides` - Realm & Seasonal Spirit Guides
+
+Access comprehensive guides for spirits by realm or season.
+
+#### Realm Spirits
+
+```
+/guides realms realm:Valley of Triumph type:spirits
+```
+
+Shows all spirits in the selected realm with locations.
+
+#### Seasonal Spirits
+
+```
+/guides seasonal season:Season of Assembly type:spirits
+```
+
+Shows all spirits from the selected season.
+
+**[Image Placeholder: Realm spirits guide]**
+
+## What You Get
+
+### Spirit Information Display
+
+When you search for a spirit, you receive:
+
+1. **Spirit Details**
+
+   - Name and title
+   - Origin (realm or season)
+   - Type (regular, seasonal, traveling)
+   - Expression/Emote preview
+
+2. **Location Information**
+
+   - Realm and area
+   - Detailed location guide
+   - Interactive map (when available)
+   - Step-by-step directions
+
+3. **Friendship Tree**
+
+   - Complete tree layout
+   - All available items
+   - Unlock progression
+   - Heart requirements
+
+4. **Cost Calculation**
+   - Total candles needed
+   - Total hearts required
+   - Individual item costs
+   - Seasonal candles (for seasonal spirits)
+
+**[Image Placeholder: Complete spirit information display]**
+
+### Friendship Tree Details
+
+The friendship tree shows:
+
+<Steps>
+
+<Step>
+
+#### Tree Structure
+
+- Visual representation of the tree
+- Unlock order and path
+- Item positions
+- Expression/emote locations
+
+</Step>
+
+<Step>
+
+#### Item Information
+
+For each item in the tree:
+
+- Item name and type
+- Cost (candles/hearts)
+- Unlock requirements
+- Visual preview
+
+</Step>
+
+<Step>
+
+#### Progression Path
+
+- Which items unlock others
+- Optimal unlock order
+- Heart-locked vs candle-locked items
+- Total cost to complete
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Friendship tree layout]**
+
+## Spirit Types
+
+### Regular Spirits
+
+<Steps>
+
+<Step>
+
+**Constellation Spirits**: Found in the six main realms
+
+- Always available to unlock
+- Located in fixed positions
+- Cost: Candles and hearts
+- Part of the base game
+
+</Step>
+
+</Steps>
+
+### Seasonal Spirits
+
+<Steps>
+
+<Step>
+
+**Active Season Spirits**: From the current season
+
+- Available during the season
+- Cost: Seasonal candles and hearts
+- Become traveling spirits later
+- May return as special visitors
+
+</Step>
+
+</Steps>
+
+### Traveling Spirits
+
+<Steps>
+
+<Step>
+
+**Weekly Visitors**: Return on rotation
+
+- Visit every Thursday for 3 days
+- Cost: Candles and hearts (no seasonal candles)
+- Offer same items as original season
+- Schedule available via `/traveling-spirit`
+
+</Step>
+
+</Steps>
+
+### Special Visitors
+
+<Steps>
+
+<Step>
+
+**Event Spirits**: Return for special occasions
+
+- Limited-time availability
+- Anniversary or holiday events
+- May have exclusive items
+- Announced in advance
+
+</Step>
+
+</Steps>
+
+## Features in Detail
+
+### Location Guides
+
+<Steps>
+
+<Step>
+
+#### Realm Location
+
+Shows which realm the spirit is in and the general area.
+
+</Step>
+
+<Step>
+
+#### Detailed Directions
+
+Step-by-step instructions from the realm entrance to the spirit location.
+
+</Step>
+
+<Step>
+
+#### Visual Guides
+
+Maps and screenshots showing the exact location (when available).
+
+</Step>
+
+<Step>
+
+#### Landmarks
+
+Notable landmarks to help you navigate.
+
+</Step>
+
+</Steps>
+
+**[Image Placeholder: Spirit location map]**
+
+### Cosmetics Preview
+
+View all cosmetics offered by a spirit:
+
+- **Capes**: Different styles and colors
+- **Masks**: Various designs
+- **Hair**: Different hairstyles
+- **Pants**: Clothing options
+- **Accessories**: Props and special items
+- **Emotes**: Expressions and actions
+
+**[Image Placeholder: Cosmetics gallery]**
+
+### Cost Calculator
+
+The bot automatically calculates:
+
+1. **Total Candles**: Sum of all candle costs
+2. **Total Hearts**: Sum of all heart costs
+3. **Seasonal Candles**: For seasonal spirits
+4. **Item Breakdown**: Individual costs per item
+5. **Unlock Path**: Cost to reach specific items
+
+<Callout type="tip">
+  **Budget Planning**: Use the cost information to plan which spirits to unlock first based on your available resources.
+</Callout>
+
+## Search Tips
+
+### Finding Spirits
+
+<Callout type="tip">
+  **Use Keywords**: Search by distinctive words like "Dancing", "Meditating", or "Pointing" to quickly find spirits.
+</Callout>
+
+<Callout type="tip">
+  **Partial Matches**: The search is forgiving - "dance" will find "Dancing Performer", and "monk" will find "Meditating
+  Monastic".
+</Callout>
+
+### Realm-Based Search
+
+If you know the realm but not the spirit name:
+
+```
+/guides realms realm:Isle of Dawn type:spirits
+```
+
+Browse all spirits in that realm.
+
+### Seasonal Search
+
+For spirits from a specific season:
+
+```
+/guides seasonal season:Season of Performance type:spirits
+```
+
+View all spirits from that season.
+
+## Common Use Cases
+
+### Planning Your Unlock
+
+1. Search for a spirit you want
+2. View the total cost
+3. Check your current candles/hearts
+4. Plan farming if needed
+
+### Location Help
+
+1. Search for the spirit
+2. View the location guide
+3. Follow step-by-step directions
+4. Use landmarks to navigate
+
+### Cosmetics Preview
+
+1. Search for the spirit
+2. Browse their cosmetics
+3. Decide which items you want
+4. Calculate costs for selected items
+
+### Traveling Spirit Prep
+
+1. Check `/traveling-spirit` for who's coming
+2. Search for that spirit
+3. Review their items
+4. Prepare hearts in advance
+
+## Tips & Tricks
+
+<Callout type="tip">
+  **Screenshot Trees**: Take screenshots of friendship trees for spirits you're working on. This helps track your progress
+  offline.
+</Callout>
+
+<Callout type="tip">
+  **Prioritize Hearts**: Focus on heart-locked items first, as hearts are harder to obtain than candles.
+</Callout>
+
+<Callout type="tip">
+  **Seasonal Priority**: During active seasons, prioritize seasonal spirits as they're temporarily available with seasonal
+  candles.
+</Callout>
+
+<Callout type="tip">
+  **Use Planner**: Check out the [Sky Game Planner](/guide/planner) for interactive spirit browsing and filtering.
+</Callout>
+
+## Collectibles & Wings
+
+Some spirits offer collectibles:
+
+- **Wing Buffs**: Permanent wing energy increase
+- **Music Sheets**: Songs to play
+- **Special Items**: Unique collectibles
+
+These are shown in the spirit information with unlock requirements.
+
+**[Image Placeholder: Collectibles display]**
+
+## Seasonal Spirit Notes
+
+<Callout type="info">
+  **Seasonal Candles**: Seasonal spirits during their active season use seasonal candles instead of regular candles. When they
+  return as traveling spirits, they use regular candles.
+</Callout>
+
+<Callout type="warning">
+  **Limited Time**: Seasonal spirits are only available with seasonal candles during their season. Plan accordingly to unlock them
+  before the season ends!
+</Callout>
+
+## Realm Spirit Distribution
+
+- **Isle of Dawn**: Tutorial spirits
+- **Daylight Prairie**: Early-game spirits
+- **Hidden Forest**: Mid-game spirits
+- **Valley of Triumph**: Mid-game spirits
+- **Golden Wasteland**: Late-game spirits
+- **Vault of Knowledge**: Advanced spirits
+
+## Related Features
+
+- **[Traveling Spirit](/guide/events#traveling-spirit-feature)**: Check who's visiting this week
+- **[Seasonal Content](/guide/seasonal)**: Current season information
+- **[Sky Game Planner](/guide/planner)**: Interactive spirit browser
+- **[Guides](/guide/spirits#guides-realm--seasonal-spirit-guides)**: Realm and seasonal guides
