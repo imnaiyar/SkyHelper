@@ -8,6 +8,7 @@ import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
 import { searchHelper } from "./sub/planner.helpers.js";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { MessageFlags } from "discord-api-types/v10";
+import { exportPlannerData } from "./sub/planner-data.js";
 //  this is mappings of available display tabs that will show on search, which users can quick jump to
 const tab_mappings = (data: PlannerAssetData) => [
   ...Object.entries(DisplayTabs).map(([n, v]) => ({ name: n, path: { t: v } })),
@@ -113,6 +114,33 @@ export default {
       case "home": {
         const response = await handlePlannerNavigation({ t: DisplayTabs.Home, user: helper.user.id });
         await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
+        return;
+      }
+      case "import": {
+        // TODO: Implement file upload handling
+        await helper.editReply({
+          content:
+            "**Import Planner Data**\n\nTo import your data:\n1. Export your data from sky-planner.com or use a previously exported .json file\n2. Send the JSON data as a message in this channel\n\n-# Note: Full import functionality with file attachments will be available soon.",
+        });
+        return;
+      }
+      case "export": {
+        try {
+          const exportData = await exportPlannerData(helper.user.id);
+          const jsonString = JSON.stringify(exportData, null, 2);
+
+          // Create a file buffer
+          const buffer = Buffer.from(jsonString, "utf-8");
+
+          await helper.editReply({
+            content: "**Export Planner Data**\n\nHere's your planner data exported as a JSON file. You can:\n- Import it back to this bot later\n- Use it on sky-planner.com website\n\n-# Keep this file safe to backup your progress!",
+            files: [{ name: "planner-data.json", data: buffer }],
+          });
+        } catch (error) {
+          await helper.editReply({
+            content: `Failed to export data: ${error instanceof Error ? error.message : "Unknown error"}`,
+          });
+        }
         return;
       }
       default:

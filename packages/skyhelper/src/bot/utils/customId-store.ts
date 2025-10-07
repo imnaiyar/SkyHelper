@@ -32,6 +32,7 @@ export enum CustomId {
   PlannerTopLevelNav,
   PlannerFilters,
   PlannerSelectNav,
+  PlannerTreeModify,
 }
 
 export const store = new SchemaStore()
@@ -82,4 +83,6 @@ export const store = new SchemaStore()
   )
   .add(new Schema(CustomId.PlannerFilters).string("tab").array("filters", t.string).nullable("user", t.string))
 
-  .add(new Schema(CustomId.PlannerSelectNav).nullable("user", t.string));
+  .add(new Schema(CustomId.PlannerSelectNav).nullable("user", t.string))
+
+  .add(new Schema(CustomId.PlannerTreeModify).string("tree").nullable("user", t.string));
