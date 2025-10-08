@@ -28,7 +28,49 @@ Public endpoints (health checks, embeds) don't require authentication.
 
 ### Rate Limiting
 
-All API endpoints are subject to standard rate limiting. Please implement appropriate retry logic with exponential backoff.
+The API implements rate limiting to ensure fair usage and system stability:
+
+- **Limit**: 100 requests per minute per IP address
+- **Window**: 60 seconds (sliding window)
+- **Response**: `429 Too Many Requests` when limit is exceeded
+- **Headers**: `Retry-After` header indicates when to retry (in seconds)
+
+#### Exemptions
+
+Requests originating from trusted dashboard domains are exempt from rate limits:
+
+- `http://localhost:3000`
+- `https://dash.skyhelper.xyz`
+- `https://skyhelper.xyz`
+- `https://dashboard.skyhelper.xyz`
+- `https://preview.skyhelper.xyz`
+- `https://next.skyhelper.xyz`
+- `https://docs.skyhelper.xyz`
+
+<Callout type="info">
+  If you're building a dashboard or integration, ensure your `Origin` header is set correctly to benefit from the exemption.
+</Callout>
+
+#### Best Practices
+
+Please implement appropriate retry logic with exponential backoff when you receive rate limit errors:
+
+```typescript
+async function fetchWithRetry(url: string, options: RequestInit, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    const response = await fetch(url, options);
+
+    if (response.status === 429) {
+      const retryAfter = parseInt(response.headers.get("Retry-After") || "60");
+      await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+      continue;
+    }
+
+    return response;
+  }
+  throw new Error("Max retries exceeded");
+}
+```
 
 ### Response Format
 
@@ -38,6 +80,7 @@ All responses are in JSON format with appropriate HTTP status codes:
 - `400` - Bad Request (invalid parameters)
 - `401` - Unauthorized (missing/invalid token)
 - `404` - Not Found
+- `429` - Too Many Requests (rate limit exceeded)
 - `500` - Internal Server Error
 
 ## API Categories

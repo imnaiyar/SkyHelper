@@ -23,7 +23,11 @@ export function setupSwagger(app: INestApplication) {
       The token should be included in the Authorization header as: \`Bearer <token>\`
       
       ## Rate Limiting
-      API requests are rate-limited to prevent abuse. Please respect the limits and implement proper retry logic.
+      API requests are rate-limited to 100 requests per minute per IP address to prevent abuse. 
+      Requests from trusted dashboard origins (e.g., dash.skyhelper.xyz) are exempt from rate limits.
+      
+      When rate limited, you'll receive a 429 (Too Many Requests) response with a Retry-After header 
+      indicating when you can retry. Please implement proper retry logic with exponential backoff.
       
       ## Support
       For API support, join our Discord server or check the GitHub repository.

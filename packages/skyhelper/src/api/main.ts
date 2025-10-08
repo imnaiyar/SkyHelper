@@ -1,4 +1,4 @@
-import { APP_FILTER, NestFactory } from "@nestjs/core";
+import { APP_FILTER, APP_GUARD, NestFactory } from "@nestjs/core";
 import config from "@/config";
 import logger from "@/handlers/logger";
 import { SkyHelper } from "@/structures";
@@ -17,13 +17,24 @@ import * as _express from "express";
 import { Logger } from "./logger.service.js";
 import { SentryModule, SentryGlobalFilter } from "@sentry/nestjs/setup";
 import { setupSwagger } from "./swagger.config.js";
+import { ThrottlerModule } from "@nestjs/throttler";
+import { CustomThrottlerGuard } from "./guards/throttler.guard.js";
 
 export async function bootstrap(client: SkyHelper) {
   @Module({
-    imports: [SentryModule.forRoot()],
+    imports: [
+      SentryModule.forRoot(),
+      ThrottlerModule.forRoot([
+        {
+          ttl: 60000, // 60 seconds
+          limit: 100, // 100 requests per minute
+        },
+      ]),
+    ],
     controllers: [AppController, GuildController, BotController, UpdateController, UsersController, WebhookEventController],
     providers: [
       { provide: APP_FILTER, useValue: SentryGlobalFilter },
+      { provide: APP_GUARD, useClass: CustomThrottlerGuard },
       { provide: "BotClient", useValue: client },
     ],
   })
