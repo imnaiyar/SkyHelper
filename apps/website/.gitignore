@@ -45,3 +45,8 @@ certificates
 # sitemap
 public/sitemap.xml
 public/sitemap-*.xml
+
+# serwist
+public/sw.js
+public/sw.js.map
+public/serwist-worker-manifest.json
