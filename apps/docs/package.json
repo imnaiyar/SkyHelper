@@ -6,6 +6,7 @@
     "build": "next build",
     "dev": "next dev --turbo",
     "start": "next start",
+    "prebuild": "pnpm generate:openapi",
     "postinstall": "fumadocs-mdx",
     "generate:openapi": "node scripts/generate-docs.mjs && node scripts/group-openapi-docs.mjs",
     "generate:openapi:dev": "NODE_ENV=development node scripts/generate-docs.mjs && NODE_ENV=development node scripts/group-openapi-docs.mjs"

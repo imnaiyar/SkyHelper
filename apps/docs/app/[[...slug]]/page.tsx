@@ -29,7 +29,7 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
           <FaDiscord className="hover:text-indigo-500" />
         </a>
 
-        <GithubInfo owner="imnaiyar" repo="skyhelper" className="flex flex-row lg:-mx-2" />
+        <GithubInfo owner="imnaiyar" repo="skyhelper" className="flex flex-row lg:-mx-2" token={process.env.GITHUB_TOKEN} />
       </div>
       <DocsBody>
         <MDXContent

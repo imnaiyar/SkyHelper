@@ -4,6 +4,9 @@ import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Body } from "./layout.client";
+import { source } from "@/lib/source";
+import { baseOptions } from "./layout.config";
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,7 +51,41 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <Body>
-        <RootProvider>{children}</RootProvider>
+        <RootProvider>
+          {" "}
+          <DocsLayout
+            sidebar={{
+              tabs: {
+                transform(option, node) {
+                  const meta = source.getNodeMeta(node);
+                  if (!meta || !node.icon) return option;
+
+                  const color = `var(--${meta.path.split("/")[0]}-color, var(--color-fd-foreground))`;
+
+                  return {
+                    ...option,
+                    icon: (
+                      <div
+                        className="[&_svg]:size-full rounded-lg size-full text-(--tab-color) max-md:bg-(--tab-color)/10 max-md:border max-md:p-1.5"
+                        style={
+                          {
+                            "--tab-color": color,
+                          } as object
+                        }
+                      >
+                        {node.icon}
+                      </div>
+                    ),
+                  };
+                },
+              },
+            }}
+            tree={source.pageTree}
+            {...baseOptions}
+          >
+            {children}
+          </DocsLayout>
+        </RootProvider>
       </Body>
     </html>
   );
