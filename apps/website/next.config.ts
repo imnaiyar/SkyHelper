@@ -59,20 +59,18 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    return [
-      {
-        source: "/docs",
-        destination: `${DOCS_URL}/guide/docs`,
-      },
-      {
-        source: "/docs/:path*",
-        destination: `${DOCS_URL}/guide/docs/:path*`,
-      },
-      {
-        source: "/docs-static/_next/:path*",
-        destination: `${DOCS_URL}/docs-static/_next/:path*`,
-      },
-    ];
+    return {
+      fallback: [
+        {
+          source: "/:path*",
+          destination: `${DOCS_URL}/:path*`,
+        },
+        {
+          source: "/docs-static/_next/:path*",
+          destination: `${DOCS_URL}/docs-static/_next/:path*`,
+        },
+      ],
+    };
   },
 };
 

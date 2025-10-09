@@ -10,7 +10,6 @@ export function linkOptions(): BaseLayoutProps {
       {
         text: "Website",
         url: "https://skyhelper.xyz",
-        external: true,
         icon: <CgWebsite />,
       },
       {

@@ -18,7 +18,7 @@ export const source = loader({
     return undefined;
   },
   // it assigns a URL to your pages
-  baseUrl: "/guide",
+  baseUrl: "/",
   source: docs.toFumadocsSource(),
   pageTree: {
     attachFile,
