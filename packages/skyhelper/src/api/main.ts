@@ -1,4 +1,4 @@
-import { APP_FILTER, NestFactory } from "@nestjs/core";
+import { APP_FILTER, APP_GUARD, NestFactory } from "@nestjs/core";
 import config from "@/config";
 import logger from "@/handlers/logger";
 import { SkyHelper } from "@/structures";
@@ -10,20 +10,40 @@ import { BotController } from "./controllers/bot.controller.js";
 import { UpdateController } from "./controllers/update.controller.js";
 import { UsersController } from "./controllers/user.controller.js";
 import { GuildMiddleware } from "./middlewares/guild.middleware.js";
-import { UpdateMiddleware } from "./middlewares/update.middleware.js";
+import { AdminMiddleware } from "./middlewares/admin.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
+import { AdminController } from "./controllers/admin.controller.js";
 import * as _express from "express";
 import { Logger } from "./logger.service.js";
 import { SentryModule, SentryGlobalFilter } from "@sentry/nestjs/setup";
 import { setupSwagger } from "./swagger.config.js";
+import { ThrottlerModule } from "@nestjs/throttler";
+import { CustomThrottlerGuard } from "./guards/throttler.guard.js";
 
 export async function bootstrap(client: SkyHelper) {
   @Module({
-    imports: [SentryModule.forRoot()],
-    controllers: [AppController, GuildController, BotController, UpdateController, UsersController, WebhookEventController],
+    imports: [
+      SentryModule.forRoot(),
+      ThrottlerModule.forRoot([
+        {
+          ttl: 60000, // 60 seconds
+          limit: 60, // 60 requests per minute
+        },
+      ]),
+    ],
+    controllers: [
+      AppController,
+      GuildController,
+      BotController,
+      UpdateController,
+      UsersController,
+      WebhookEventController,
+      AdminController,
+    ],
     providers: [
       { provide: APP_FILTER, useValue: SentryGlobalFilter },
+      { provide: APP_GUARD, useClass: CustomThrottlerGuard },
       { provide: "BotClient", useValue: client },
     ],
   })
@@ -31,7 +51,7 @@ export async function bootstrap(client: SkyHelper) {
     configure(consumer: MiddlewareConsumer) {
       consumer.apply(AuthMiddleware).forRoutes("guilds", "update", "users");
       consumer.apply(GuildMiddleware).forRoutes("guilds");
-      consumer.apply(UpdateMiddleware).forRoutes("update");
+      consumer.apply(AdminMiddleware).forRoutes("update", "admin");
       consumer.apply(WebhookEventMiddleware).forRoutes("webhook-event");
     }
   }

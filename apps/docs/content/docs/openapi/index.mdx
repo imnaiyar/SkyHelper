@@ -8,11 +8,17 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 # SkyHelper OpenAPI Documentation
 
-Welcome to the comprehensive API documentation for SkyHelper, a Discord bot for Sky: Children of the Light. Our REST API provides programmatic access to bot statistics, guild management, user settings, event data, and more.
+This is the documentation for SkyHelper API.
 
 ```bash title="BaseURL"
 https://api.skyhelper.xyz/
 ```
+
+<Callout type="info">
+  Admin routes are intentionally not publicly documented as they can only be accessed by the bot's owner/admins. If you are
+  running your own instance, ensure your Discord ID is included in the `OWNER` array in the `config.ts` file. You can view the
+  available admin routes by inspecting `packages/skyhelper/src/api/controllers/admin.controller.ts`.
+</Callout>
 
 ## Getting Started
 
@@ -28,7 +34,17 @@ Public endpoints (health checks, embeds) don't require authentication.
 
 ### Rate Limiting
 
-All API endpoints are subject to standard rate limiting. Please implement appropriate retry logic with exponential backoff.
+The API implements rate limiting to ensure fair usage and system stability:
+
+- **Limit**: 60 requests per minute per IP address
+- **Window**: 60 seconds (sliding window)
+- **Response**: `429 Too Many Requests` when limit is exceeded
+- **Headers**: `Retry-After` header indicates when to retry (in seconds)
+
+<Callout type="info">
+  These rate limits do not apply to the bot's own services. If you are hosting your own instance, ensure you set the `x-api-key`
+  header in your requests with the value from the `API_ALLOWLIST_KEY` environment variable configured for your bot/API instance.
+</Callout>
 
 ### Response Format
 
@@ -38,6 +54,7 @@ All responses are in JSON format with appropriate HTTP status codes:
 - `400` - Bad Request (invalid parameters)
 - `401` - Unauthorized (missing/invalid token)
 - `404` - Not Found
+- `429` - Too Many Requests (rate limit exceeded)
 - `500` - Internal Server Error
 
 ## API Categories

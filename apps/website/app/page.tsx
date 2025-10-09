@@ -161,7 +161,11 @@ export default async function Home() {
     },
   ];
 
-  const stats = await fetch(process.env.NEXT_PUBLIC_API_URL! + "/stats").then((r) => r.json());
+  const stats = await fetch(process.env.NEXT_PUBLIC_API_URL! + "/stats", {
+    headers: {
+      "x-api-key": process.env.API_KEY ?? "",
+    },
+  }).then((r) => r.json());
 
   return (
     <>

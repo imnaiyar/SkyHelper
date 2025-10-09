@@ -9,18 +9,15 @@ import { DateTime } from "luxon";
 import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
 import { BASE_API } from "@/constants";
 
-import {
-  MessageFlags,
-  type APIActionRowComponent,
-  type APIComponentInMessageActionRow,
-  type APIMessageComponent,
-} from "discord-api-types/v10";
+import { MessageFlags, type APIActionRowComponent, type APIComponentInMessageActionRow } from "discord-api-types/v10";
 
 const getEmbed = async (
   type?: "shards" | "times",
   query: { locale?: string; date?: string; noBtn?: "true" | "false" } = { locale: "en-US" },
 ) => {
-  return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(query)}`).then((res) => res.json())) as {
+  return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(query)}`, {
+    headers: { "x-api-key": process.env.API_ALLOWLIST_KEY },
+  }).then((res) => res.json())) as {
     components: Array<APIActionRowComponent<APIComponentInMessageActionRow>>;
   };
 };

@@ -11,7 +11,7 @@ export interface AuthRequest extends Request {
 }
 
 @Injectable()
-export class UpdateMiddleware implements NestMiddleware {
+export class AdminMiddleware implements NestMiddleware {
   constructor(@Inject("BotClient") private readonly bot: SkyHelper) {}
 
   use(req: AuthRequest, _: Response, next: NextFunction) {

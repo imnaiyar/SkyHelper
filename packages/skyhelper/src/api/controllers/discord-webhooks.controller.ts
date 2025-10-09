@@ -7,7 +7,7 @@ import BlackList from "@/schemas/BlackList";
 
 // Handles webhook events from discord
 @Controller("/webhook-event")
-@ApiExcludeController() // Exclude this from public docs, only meant for discord
+@ApiExcludeController()
 export class WebhookEventController {
   constructor(@Inject("BotClient") private readonly bot: BotService) {}
 
