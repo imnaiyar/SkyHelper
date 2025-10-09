@@ -13,6 +13,7 @@ import { GuildMiddleware } from "./middlewares/guild.middleware.js";
 import { AdminMiddleware } from "./middlewares/admin.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
+import { AdminController } from "./controllers/admin.controller.js";
 import * as _express from "express";
 import { Logger } from "./logger.service.js";
 import { SentryModule, SentryGlobalFilter } from "@sentry/nestjs/setup";
@@ -31,7 +32,15 @@ export async function bootstrap(client: SkyHelper) {
         },
       ]),
     ],
-    controllers: [AppController, GuildController, BotController, UpdateController, UsersController, WebhookEventController],
+    controllers: [
+      AppController,
+      GuildController,
+      BotController,
+      UpdateController,
+      UsersController,
+      WebhookEventController,
+      AdminController,
+    ],
     providers: [
       { provide: APP_FILTER, useValue: SentryGlobalFilter },
       { provide: APP_GUARD, useClass: CustomThrottlerGuard },

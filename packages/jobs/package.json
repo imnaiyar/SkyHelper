@@ -44,6 +44,7 @@
     "i18next-fs-backend": "^2.3.1",
     "luxon": "^3.5.0",
     "mongoose": "^8.5.1",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "zod": "^4.1.12"
   }
 }

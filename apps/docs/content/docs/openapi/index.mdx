@@ -15,9 +15,9 @@ https://api.skyhelper.xyz/
 ```
 
 <Callout type="info">
-  Routes under admin category are intentionally not made public as they can only be used by the bot's owner/admins. If you have
-  your own running instances, make sure you have included your discord id in `OWNER` array in `config.ts` file. You can check what
-  routes are available to the admins by inspecting the `packages/skyhelper/src/api/controllers/admin.controller.ts`
+  Admin routes are intentionally not publicly documented as they can only be accessed by the bot's owner/admins. If you are
+  running your own instance, ensure your Discord ID is included in the `OWNER` array in the `config.ts` file. You can view the
+  available admin routes by inspecting `packages/skyhelper/src/api/controllers/admin.controller.ts`.
 </Callout>
 
 ## Getting Started
@@ -42,8 +42,8 @@ The API implements rate limiting to ensure fair usage and system stability:
 - **Headers**: `Retry-After` header indicates when to retry (in seconds)
 
 <Callout type="info">
-  These ratelimits are not applicable to bot's own services. If you are hosting your own instance, make sure that you have
-  properly set `x-api-key` headers to your requests with the key you set for `API_ALLOWLIST_KEY` for the running bot/api instance
+  These rate limits do not apply to the bot's own services. If you are hosting your own instance, ensure you set the `x-api-key`
+  header in your requests with the value from the `API_ALLOWLIST_KEY` environment variable configured for your bot/API instance.
 </Callout>
 
 ### Response Format

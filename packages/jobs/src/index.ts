@@ -1,3 +1,4 @@
+import "./validate-env.js";
 import { initializeMongoose } from "@/database/connect.js";
 import { reminderSchedules } from "@/functions/sendReminders.js";
 import { eventSchedules } from "@/functions/updateShardOrTimes.js";
