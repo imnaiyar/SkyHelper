@@ -16,7 +16,7 @@ const getEmbed = async (
   query: { locale?: string; date?: string; noBtn?: "true" | "false" } = { locale: "en-US" },
 ) => {
   return (await fetch(BASE_API + `/${type}-embed?${new URLSearchParams(query)}`, {
-    headers: { "x-api-key": process.env.API_ALLOWLIST_KEY ?? "" },
+    headers: { "x-api-key": process.env.API_ALLOWLIST_KEY },
   }).then((res) => res.json())) as {
     components: Array<APIActionRowComponent<APIComponentInMessageActionRow>>;
   };
