@@ -22,6 +22,7 @@ const EnvPredicate = z.object({
   GUILD: WebhookPredicate,
   READY_LOGS: WebhookPredicate,
   SUGGESTION: WebhookPredicate,
+  API_ALLOWLIST_KEY: z.string(),
 });
 
 const results = EnvPredicate.safeParse(process.env);

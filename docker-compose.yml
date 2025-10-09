@@ -34,6 +34,7 @@ services:
       - SENTRY_AUTH_TOKEN
       - SENTRY_RELEASE
       - NODE_OPTIONS
+      - API_ALLOWLIST_KEY
     ports:
       - 5000:5000
   jobs:
@@ -55,3 +56,4 @@ services:
       - JOBS_DEBUG_LOGS
       - TURBO_TEAM
       - TURBO_TOKEN
+      - API_ALLOWLIST_KEY

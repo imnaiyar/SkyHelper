@@ -10,7 +10,7 @@ import { BotController } from "./controllers/bot.controller.js";
 import { UpdateController } from "./controllers/update.controller.js";
 import { UsersController } from "./controllers/user.controller.js";
 import { GuildMiddleware } from "./middlewares/guild.middleware.js";
-import { UpdateMiddleware } from "./middlewares/update.middleware.js";
+import { AdminMiddleware } from "./middlewares/admin.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
 import * as _express from "express";
@@ -27,7 +27,7 @@ export async function bootstrap(client: SkyHelper) {
       ThrottlerModule.forRoot([
         {
           ttl: 60000, // 60 seconds
-          limit: 100, // 100 requests per minute
+          limit: 60, // 60 requests per minute
         },
       ]),
     ],
@@ -42,7 +42,7 @@ export async function bootstrap(client: SkyHelper) {
     configure(consumer: MiddlewareConsumer) {
       consumer.apply(AuthMiddleware).forRoutes("guilds", "update", "users");
       consumer.apply(GuildMiddleware).forRoutes("guilds");
-      consumer.apply(UpdateMiddleware).forRoutes("update");
+      consumer.apply(AdminMiddleware).forRoutes("update", "admin");
       consumer.apply(WebhookEventMiddleware).forRoutes("webhook-event");
     }
   }

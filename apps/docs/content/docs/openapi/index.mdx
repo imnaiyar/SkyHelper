@@ -8,11 +8,17 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 # SkyHelper OpenAPI Documentation
 
-Welcome to the comprehensive API documentation for SkyHelper, a Discord bot for Sky: Children of the Light. Our REST API provides programmatic access to bot statistics, guild management, user settings, event data, and more.
+This is the documentation for SkyHelper API.
 
 ```bash title="BaseURL"
 https://api.skyhelper.xyz/
 ```
+
+<Callout type="info">
+  Routes under admin category are intentionally not made public as they can only be used by the bot's owner/admins. If you have
+  your own running instances, make sure you have included your discord id in `OWNER` array in `config.ts` file. You can check what
+  routes are available to the admins by inspecting the `packages/skyhelper/src/api/controllers/admin.controller.ts`
+</Callout>
 
 ## Getting Started
 
@@ -30,47 +36,15 @@ Public endpoints (health checks, embeds) don't require authentication.
 
 The API implements rate limiting to ensure fair usage and system stability:
 
-- **Limit**: 100 requests per minute per IP address
+- **Limit**: 60 requests per minute per IP address
 - **Window**: 60 seconds (sliding window)
 - **Response**: `429 Too Many Requests` when limit is exceeded
 - **Headers**: `Retry-After` header indicates when to retry (in seconds)
 
-#### Exemptions
-
-Requests originating from trusted dashboard domains are exempt from rate limits:
-
-- `http://localhost:3000`
-- `https://dash.skyhelper.xyz`
-- `https://skyhelper.xyz`
-- `https://dashboard.skyhelper.xyz`
-- `https://preview.skyhelper.xyz`
-- `https://next.skyhelper.xyz`
-- `https://docs.skyhelper.xyz`
-
 <Callout type="info">
-  If you're building a dashboard or integration, ensure your `Origin` header is set correctly to benefit from the exemption.
+  These ratelimits are not applicable to bot's own services. If you are hosting your own instance, make sure that you have
+  properly set `x-api-key` headers to your requests with the key you set for `API_ALLOWLIST_KEY` for the running bot/api instance
 </Callout>
-
-#### Best Practices
-
-Please implement appropriate retry logic with exponential backoff when you receive rate limit errors:
-
-```typescript
-async function fetchWithRetry(url: string, options: RequestInit, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    const response = await fetch(url, options);
-
-    if (response.status === 429) {
-      const retryAfter = parseInt(response.headers.get("Retry-After") || "60");
-      await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
-      continue;
-    }
-
-    return response;
-  }
-  throw new Error("Max retries exceeded");
-}
-```
 
 ### Response Format
 

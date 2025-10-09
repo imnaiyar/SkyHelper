@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { ThrottlerGuard } from "@nestjs/throttler";
 import type { ExecutionContext } from "@nestjs/common";
-import config from "@/config";
 
 @Injectable()
 export class CustomThrottlerGuard extends ThrottlerGuard {
   protected override shouldSkip(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const origin = request.headers.origin as string | undefined;
+    const apiKey = request.headers["x-api-key"] as string | undefined;
 
-    // Skip rate limiting for requests from dashboard origins
-    if (origin && config.DASHBOARD.WEB_URL.includes(origin)) {
+    // skip rate limiting for requests with valid dashboard API key
+    // this is so our own services aren't subjected to ratelimits and can work properly
+    if (apiKey && apiKey === process.env.API_ALLOWLIST_KEY) {
       return Promise.resolve(true);
     }
 
