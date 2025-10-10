@@ -4,15 +4,6 @@ import path from "path";
 const OPENAPI_DIR = "./content/docs/openapi";
 const META_JSON_PATH = path.join(OPENAPI_DIR, "meta.json");
 
-// Mapping of OpenAPI tags to display names
-const TAG_TO_GROUP = {
-  Application: "Application",
-  "Bot Statistics": "Bot Statistics",
-  "Guild Management": "Guild Management",
-  "User Management": "User Management",
-  "Event Management": "Event Management",
-};
-
 async function fetchOpenAPISpec() {
   const specUrl =
     process.env.NODE_ENV === "development"
@@ -31,7 +22,7 @@ async function fetchOpenAPISpec() {
 }
 
 function extractTagFromOperation(operation) {
-  return operation.tags?.[0] || "Uncategorized";
+  return operation.tags?.[0] || "Misc";
 }
 
 async function groupOpenAPIDocsByTags() {
@@ -75,7 +66,7 @@ async function groupOpenAPIDocsByTags() {
             if (pathItem && pathItem[method]) {
               const operation = pathItem[method];
               const tag = extractTagFromOperation(operation);
-              const groupName = TAG_TO_GROUP[tag] || "Uncategorized";
+              const groupName = tag;
 
               if (!groupedEndpoints[groupName]) {
                 groupedEndpoints[groupName] = [];
@@ -104,11 +95,7 @@ async function groupOpenAPIDocsByTags() {
     // Build the new pages array with groups
     const pages = ["index"];
 
-    // Add separators and grouped endpoints in a specific order
-    const groupOrder = ["Application", "Bot Statistics", "Guild Management", "User Management", "Event Management"];
-
-    for (const groupName of groupOrder) {
-      const endpoints = groupedEndpoints[groupName];
+    for (const [groupName, endpoints] of Object.entries(groupedEndpoints)) {
       if (endpoints && endpoints.length > 0) {
         pages.push(`---${groupName}---`);
         pages.push(...endpoints.sort());
@@ -116,9 +103,9 @@ async function groupOpenAPIDocsByTags() {
     }
 
     // Add any uncategorized endpoints
-    if (groupedEndpoints["Uncategorized"] && groupedEndpoints["Uncategorized"].length > 0) {
-      pages.push("---Uncategorized---");
-      pages.push(...groupedEndpoints["Uncategorized"].sort());
+    if (groupedEndpoints["Misc"] && groupedEndpoints["Misc"].length > 0) {
+      pages.push("---Misc---");
+      pages.push(...groupedEndpoints["Misc"].sort());
     }
 
     // Read current meta.json
