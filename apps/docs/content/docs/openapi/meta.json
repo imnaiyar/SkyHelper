@@ -7,9 +7,6 @@
     "index",
     "---Application---",
     "AppController_getHello",
-    "AppController_getPlannerData",
-    "AppController_getPlannerEntities",
-    "AppController_getPlannerEntity",
     "AppController_getShardsEmbed",
     "AppController_getTimesEmbed",
     "---Bot Statistics---",
@@ -24,17 +21,17 @@
     "GuildController_getRoles",
     "GuildController_updateFeature",
     "GuildController_updateGuild",
-    "---User Management---",
-    "UsersController_getUser",
-    "UsersController_getUserRoleMetadata",
-    "UsersController_updateUser",
-    "UsersController_updateUserRoleMetadata",
     "---Event Management---",
     "UpdateController_getEvents",
     "UpdateController_getQuests",
     "UpdateController_getTS",
     "UpdateController_patchQuests",
     "UpdateController_updateEvent",
-    "UpdateController_updateTS"
+    "UpdateController_updateTS",
+    "---User Management---",
+    "UsersController_getUser",
+    "UsersController_getUserRoleMetadata",
+    "UsersController_updateUser",
+    "UsersController_updateUserRoleMetadata"
   ]
 }
