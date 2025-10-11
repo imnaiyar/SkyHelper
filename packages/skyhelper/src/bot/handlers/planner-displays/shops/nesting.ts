@@ -405,7 +405,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
   private async showChallengeSpirits(): Promise<ResponseData> {
     const guid = this.state.v?.[0];
     const spirit = guid ? this.challengeSpirits.find((s) => s.guid === guid)! : this.challengeSpirits[0]!;
-    const { file, components } = await spiritTreeDisplay(spirit.tree!, this);
+    const { file, components } = await spiritTreeDisplay({ tree: spirit.tree!, planner: this });
 
     const action = row({
       type: ComponentType.StringSelect,

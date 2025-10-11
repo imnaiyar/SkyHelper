@@ -100,7 +100,10 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
     const tree = trees[selected];
     const highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
     const gen = tree
-      ? await spiritTreeDisplay(tree.tree, this, { season: "season" in tree && tree.season, highlightItems: highlights })
+      ? await spiritTreeDisplay(
+          { tree: tree.tree, planner: this, spiritView: false },
+          { season: "season" in tree && tree.season, highlightItems: highlights, spiritSubtitle: tree.name },
+        )
       : null;
 
     const title = [

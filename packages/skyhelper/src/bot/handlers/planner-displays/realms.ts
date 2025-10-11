@@ -1,18 +1,7 @@
-import {
-  container,
-  generateSpiritTree,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  separator,
-  textDisplay,
-  thumbnail,
-} from "@skyhelperbot/utils";
+import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import { type IRealm, SpiritType } from "@skyhelperbot/constants/skygame-planner";
-import type { RawFile } from "@discordjs/rest";
 import { serializeFilters, FilterType } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
 
@@ -75,7 +64,7 @@ export class RealmsDisplay extends BasePlannerHandler {
       `${realm.areas?.length ?? 0} Areas \u2022 ${regular} regular and ${seasonal} seasonal spirits \u2022 ${this.planner.getWingedLightsInRealm(realm.guid, this.data).length} winged lights`,
     ];
 
-    const gen = constellation ? await spiritTreeDisplay(constellation.tree!, this) : null;
+    const gen = constellation ? await spiritTreeDisplay({ tree: constellation.tree!, planner: this }) : null;
     const components: APIComponentInContainer[] = [
       realm.imageUrl ? section(thumbnail(realm.imageUrl), ...title) : textDisplay(...title),
       row(

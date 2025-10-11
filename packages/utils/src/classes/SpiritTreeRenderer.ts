@@ -7,6 +7,7 @@ import path from "node:path";
 export interface GenerateSpiritTreeOptions {
   season?: boolean;
   spiritName?: string;
+  spiritSubtitle?: string;
   highlightItems?: string[];
   spiritUrl?: string;
   scale?: number; // multiplier for resolution
@@ -341,6 +342,7 @@ async function renderNodeRecursive(
  * const buffer = await generateSpiritTree(tree, {
  *   season: true,
  *   spiritName: "Grateful Spirit",
+ *   spiritSubtitle: "Season of Gratitude",
  *   highlightItems: ["item1", "item2"],
  *   scale: 1
  * });
@@ -447,12 +449,22 @@ export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpi
 
   // #region name
   if (spirit?.name || tree.name || options.spiritName) {
-    const fontSize = Math.max(10, Math.floor(size * 1.15));
+    const fontSize = Math.max(16, Math.min(40, Math.floor(size * 1.15)));
     ctx.font = `${fontSize}px ${fontName}`;
     ctx.fillStyle = "#F6EAE0";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(options.spiritName ?? tree.name ?? spirit!.name, centerX, startY);
+  }
+
+  // #region subtitle
+  if (options.spiritSubtitle) {
+    const fontSize = Math.max(12, Math.min(20, Math.floor(size * 0.7)));
+    ctx.font = `${fontSize}px ${fontName}`;
+    ctx.fillStyle = "rgba(246, 234, 224, 0.6)";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(options.spiritSubtitle, centerX, startY + fontSize + 12);
   }
 
   await renderNodeRecursive(

@@ -1,18 +1,7 @@
-import {
-  button,
-  container,
-  generateSpiritTree,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  textDisplay,
-  thumbnail,
-  separator,
-} from "@skyhelperbot/utils";
+import { button, container, row, section, textDisplay, thumbnail, separator } from "@skyhelperbot/utils";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { FilterType, OrderType, serializeFilters } from "./filter.manager.js";
-import { ComponentType, type APIComponentInContainer, type APIContainerComponent } from "discord-api-types/v10";
+import { ComponentType, type APIContainerComponent } from "discord-api-types/v10";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import type { RawFile } from "@discordjs/rest";
 import { spiritTreeDisplay } from "./shared.js";
@@ -134,7 +123,7 @@ export class EventsDisplay extends BasePlannerHandler {
       placeholder: "Select Spirit",
     });
 
-    const gen = spirit?.tree ? await spiritTreeDisplay(spirit.tree, this) : null;
+    const gen = spirit?.tree ? await spiritTreeDisplay({ tree: spirit.tree, planner: this }) : null;
 
     return {
       attachment: gen?.file ?? undefined,

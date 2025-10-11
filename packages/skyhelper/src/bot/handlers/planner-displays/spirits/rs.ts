@@ -54,7 +54,10 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
     const selected = parseInt(this.state.v?.[0] ?? "0");
     const spirit = rs.spirits[selected]!;
 
-    const { file, components } = await spiritTreeDisplay(spirit.tree, this);
+    const { file, components } = await spiritTreeDisplay(
+      { tree: spirit.tree, planner: this },
+      { spiritSubtitle: rs.name ?? "Special Visit" },
+    );
     return {
       components: [
         rs.imageUrl ? section(thumbnail(rs.imageUrl), title) : textDisplay(title),

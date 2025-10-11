@@ -1,20 +1,9 @@
 import { emojis, zone, type SkyPlannerData } from "@skyhelperbot/constants";
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import {
-  container,
-  generateSpiritTree,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  separator,
-  textDisplay,
-  thumbnail,
-} from "@skyhelperbot/utils";
+import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType } from "discord-api-types/v10";
 import { resolveToLuxon, type ISeason } from "@skyhelperbot/constants/skygame-planner";
 import { DateTime } from "luxon";
-import type { RawFile } from "@discordjs/rest";
 import { FilterType, serializeFilters } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
 
@@ -107,7 +96,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
       `Total: ${this.planner.formatGroupedCurrencies(trees)}`,
     ];
 
-    const gen = tree ? await spiritTreeDisplay(tree, this, { season: true }) : null;
+    const gen = tree ? await spiritTreeDisplay({ tree, planner: this }, { season: true }) : null;
 
     const components = [
       season.imageUrl ? section(thumbnail(season.imageUrl), ...title) : textDisplay(...title),

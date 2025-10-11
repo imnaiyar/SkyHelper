@@ -185,7 +185,7 @@ export class ShopsDisplay extends BasePlannerHandler {
         default: t.guid === current.guid,
       })),
     });
-    const { file, components } = await spiritTreeDisplay(current, this);
+    const { file, components } = await spiritTreeDisplay({ tree: current, planner: this });
     return { files: [file], components: [this.trees.length > 1 ? rows : null, ...components].filter((c) => !!c) };
   }
 }

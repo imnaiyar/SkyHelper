@@ -1,10 +1,9 @@
-import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { MessageFlags } from "@discordjs/core";
 import { Spirits } from "@/utils/classes/Spirits";
 import type { Command } from "@/structures";
 import { SPIRTIS_DATA } from "@/modules/commands-data/guide-commands";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
 import { paginate } from "@/utils/paginator";
 import { CustomId, store } from "@/utils/customId-store";
