@@ -99,6 +99,7 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_URL: ${{ secrets.SENTRY_URL }}
+          SENTRY_DSN_BUN: ${{ secrets.SENTRY_DSN_BUN }}
 
           # Turbo
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

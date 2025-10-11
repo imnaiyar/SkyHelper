@@ -61,6 +61,7 @@ services:
       - NODE_ENV
       - ERROR_WEBHOOK
       - JOBS_DEBUG_LOGS
+      - SENTRY_DSN_BUN
       - API_ALLOWLIST_KEY
     volumes:
       - /root/mybot-data:/app/data
