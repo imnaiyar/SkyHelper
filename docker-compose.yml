@@ -4,10 +4,11 @@ services:
       context: .
       dockerfile: ./Dockerfile
       target: skyhelper
+      secrets:
+        - sentry_auth_token
+        - turbo_token
       args:
-        SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
         TURBO_TEAM: ${TURBO_TEAM}
-        TURBO_TOKEN: ${TURBO_TOKEN}
         SENTRY_URL: ${SENTRY_URL}
         SENTRY_ORG: ${SENTRY_ORG}
         SENTRY_PROJECT: ${SENTRY_PROJECT}
@@ -19,8 +20,6 @@ services:
     environment:
       - NODE_ENV
       - TOKEN
-      - TURBO_TOKEN
-      - TURBO_TEAM
       - CLIENT_ID
       - MONGO_CONNECTION
       - PUBLIC_KEY
@@ -34,20 +33,25 @@ services:
       - CONTACT_US
       - BUG_REPORTS
       - SENTRY_DSN
-      - SENTRY_AUTH_TOKEN
       - SENTRY_RELEASE
       - NODE_OPTIONS
       - API_ALLOWLIST_KEY
     ports:
       - 5000:5000
+
   jobs:
     build:
       context: .
       dockerfile: ./Dockerfile
       target: jobs
+      secrets:
+        - sentry_auth_token
+        - turbo_token
       args:
         TURBO_TEAM: ${TURBO_TEAM}
-        TURBO_TOKEN: ${TURBO_TOKEN}
+        SENTRY_URL: ${SENTRY_URL}
+        SENTRY_ORG: ${SENTRY_ORG}
+        SENTRY_PROJECT: jobs
         TARGET: jobs
     container_name: skyhelper-jobs
     restart: unless-stopped
@@ -57,6 +61,12 @@ services:
       - NODE_ENV
       - ERROR_WEBHOOK
       - JOBS_DEBUG_LOGS
-      - TURBO_TEAM
-      - TURBO_TOKEN
       - API_ALLOWLIST_KEY
+    volumes:
+      - /root/mybot-data:/app/data
+
+secrets:
+  sentry_auth_token:
+    environment: SENTRY_AUTH_TOKEN
+  turbo_token:
+    environment: TURBO_TOKEN
