@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev",
+    "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@serwist/next": "^9.2.1",
+    "@serwist/window": "^9.2.1",
     "@tanstack/react-query": "^5.90.2",
     "@vercel/og": "^0.8.5",
     "discord-api-types": "0.38.10",
@@ -17,6 +19,7 @@
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "serwist": "^9.2.1",
     "zod": "^3.25.76"
   },
   "devDependencies": {

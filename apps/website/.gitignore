@@ -45,3 +45,7 @@ certificates
 # sitemap
 public/sitemap.xml
 public/sitemap-*.xml
+
+# Serwist
+public/sw*
+public/swe-worker*
