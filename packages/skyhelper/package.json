@@ -26,7 +26,7 @@
     "commands": "node dist/bot/handlers/registerCommands.js",
     "role-metadata": "node --env-file=.env dist/bot/commands/roleConnectionMetadata",
     "format": "prettier --write --ignore-unknown src",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper-09 --project node ./dist && sentry-cli sourcemaps upload --org skyhelper-09 --project node ./dist",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skyhelper --project skyhelper ./dist && sentry-cli sourcemaps upload --org skyhelper --project skyhelper ./dist",
     "setup": "node scripts/env-cli.js",
     "generate:openapi": "tsx scripts/generate-openapi.ts",
     "tree-render": "tsx --env-file=.env scripts/tree-render.ts"
