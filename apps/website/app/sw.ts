@@ -1,5 +1,5 @@
 import type { PrecacheEntry } from "serwist";
-import { NetworkFirst, ExpirationPlugin } from "serwist";
+import { NetworkFirst, ExpirationPlugin, CacheFirst } from "serwist";
 import { defaultCache } from "@serwist/next/worker";
 import { Serwist } from "serwist";
 
@@ -20,12 +20,12 @@ const servist = new Serwist({
     ...defaultCache,
     {
       matcher: /^https:\/\/cdn\.discordapp\.com\/.*/i,
-      handler: new NetworkFirst({
+      handler: new CacheFirst({
         cacheName: "discord-cdn-cache",
         plugins: [
           new ExpirationPlugin({
             maxEntries: 60,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+            maxAgeSeconds: 2 * 24 * 60 * 60, // 2 days
           }),
         ],
       }),
