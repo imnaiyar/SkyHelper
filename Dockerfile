@@ -41,7 +41,7 @@ RUN if [ "$TARGET" = "skyhelper" ]; then \
     fi
 
 # Skyhelper
-FROM node:22.13-alpine AS skyhelper
+FROM node:22.20-alpine AS skyhelper
 WORKDIR /app
 COPY --from=build /app/sky-out .
 RUN corepack enable
