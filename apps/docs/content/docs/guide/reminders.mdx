@@ -1,0 +1,298 @@
+---
+title: Reminders
+description: Never miss in-game events with automated notifications
+---
+
+# Reminders
+
+Never miss important Sky events again! Set up automated reminders that notify your Discord server when events are about to happen or are starting.
+
+<Callout type="error">
+  **Server Feature**: Reminders only work in Discord servers (not DMs) and require you to have Manage Server permissions to set them up.
+</Callout>
+
+## What You Can Get Reminded About
+
+### Recurring Events
+
+Get notifications for events that happen regularly:
+
+**Geyser Eruptions**
+
+- Alerts before each eruption
+- Happens every 2 hours
+- Perfect for coordinating group visits
+
+**Grandma Visits**
+
+- Notified when Grandma arrives
+- Every 2 hours at rotating realms
+- Never miss her seasonal items
+
+**Turtle Migrations**
+
+- Reminders before turtle events
+- Daily migration schedule
+- Plan your Sanctuary visits
+
+**[Image Placeholder: Reminder notification for geyser]**
+
+### Daily Events
+
+Stay on top of daily activities:
+
+**Daily Reset**
+
+- Notified right at reset time (00:00 UTC)
+- Signals new quests are available
+- Start your candle runs on time
+
+**Daily Quests**
+
+- Reminder when quests go live
+- Plan your daily Sky session
+- Maximize candle collection
+
+### Weekly Events
+
+Don't miss weekly opportunities:
+
+**Eden/Weekly Reset**
+
+- Every Sunday at 00:00 UTC
+- Prepare for Eden runs
+- Know when weekly activities refresh
+
+**Traveling Spirit**
+
+- Notified when they arrive (Thursdays)
+- 3-day visit window
+- Plan your purchases
+
+### Special Events
+
+Get alerts for special occasions:
+
+**Aurora's Concert**
+
+- Reminders before performances
+- Attend concerts on time
+- Enjoy the show
+
+**[Image Placeholder: Traveling spirit reminder notification]**
+
+## How Reminders Work
+
+### Simple Setup
+
+Setting up a reminder is easy:
+
+1. Choose which event you want reminders for
+2. Select a channel where notifications will appear
+3. Optionally pick a role to ping
+4. Done! The bot handles the rest
+
+**[Image Placeholder: Reminder setup interface]**
+
+The bot creates a webhook in your chosen channel and uses it to send reminder messages when events happen.
+
+### Automatic Notifications
+
+Once set up, reminders work automatically:
+
+- Bot monitors event schedules
+- Sends notifications at the right time
+- Includes relevant event information
+- Pings your chosen role (if you set one)
+
+### Role Pinging
+
+You can configure role pings for each event:
+
+- **With Role Ping**: Mentioned users get a notification
+- **Without Role**: Just a channel message, no pings
+- **Per-Event Control**: Different roles for different events
+
+<Callout type="info">
+  Create opt-in roles like @GeyserHunters or @SpiritCollectors so users can choose which reminders they want!
+</Callout>
+
+## Managing Your Reminders
+
+### Check Status
+
+See all configured reminders in your server:
+
+- Which events have reminders
+- Where notifications are sent
+- Which roles are pinged
+- When they were set up
+
+**[Image Placeholder: Reminders status overview]**
+
+### Update Settings
+
+Need to change something? Simply set it up again:
+
+- Change the channel: Set with new channel
+- Update the role: Set with different role
+- Modify anything: New setup replaces old
+
+### Stop Reminders
+
+Don't want reminders for an event anymore? Stop them anytime. The bot will remove that reminder and stop sending notifications.
+
+## Organizing Reminders
+
+### Channel Strategy
+
+Different approaches for different communities:
+
+**Dedicated Channels**
+
+Create specific channels for each event type:
+
+- `#geyser-alerts` - Just geyser reminders
+- `#spirit-visits` - Traveling spirit notifications
+- `#daily-reminders` - Daily reset and quests
+
+**Combined Channel**
+
+Use one channel for all reminders:
+
+- `#sky-reminders` - All events in one place
+- Simpler for small servers
+- Everything in one location
+
+**Priority-Based**
+
+Separate by importance:
+
+- `#important-events` - Traveling Spirit, Grandma
+- `#regular-events` - Geyser, Daily Reset
+
+**[Image Placeholder: Different channel organization examples]**
+
+### Role Strategies
+
+**Event-Specific Roles**
+
+- `@Geyser Fans` - Only geyser alerts
+- `@Grandma Squad` - Just Grandma visits
+- `@Spirit Collectors` - Traveling spirits
+
+**Tier System**
+
+- `@All Events` - Every reminder
+- `@Important Only` - Just special/limited events
+- `@Daily Stuff` - Resets and daily activities
+
+**Opt-In Approach**
+
+Make roles self-assignable:
+
+- Users choose their own notifications
+- No unwanted pings
+- Better engagement
+
+## Best Practices
+
+<Callout type="info">
+  **Start with Important Events**: Begin by setting up reminders for events you really don't want to miss, like Traveling Spirit and Grandma.
+</Callout>
+
+<Callout type="info">
+  **Use Clear Names**: Name channels descriptively like `#sky-geyser-alerts` so everyone knows what notifications to expect there.
+</Callout>
+
+<Callout type="info">
+  **Don't Over-Ping**: Reserve role pings for truly important or time-sensitive events. Too many pings lead to people muting.
+</Callout>
+
+<Callout type="info">
+  **Regular Cleanup**: Review your reminders occasionally and remove ones your community doesn't use.
+</Callout>
+
+## Common Setups
+
+### For Casual Communities
+
+Simple setup for casual players:
+
+- Traveling Spirit reminder with @everyone ping
+- Grandma reminder (no ping)
+- Daily Reset reminder (no ping)
+
+### For Active Communities
+
+Full setup for dedicated players:
+
+- All events configured
+- Dedicated channels for each type
+- Specific roles for opt-in notifications
+- Organized with category folders
+
+### For Competitive Groups
+
+Focused on efficiency:
+
+- Geyser and Grandma with role pings
+- Eden reset with @everyone ping
+- Daily quests (no ping, info only)
+- Coordinated group activities
+
+## Technical Details
+
+### Webhook System
+
+Reminders use Discord webhooks:
+
+- Bot creates "SkyHelper Reminders" webhook
+- Sends messages through the webhook
+- Works even if bot appears offline temporarily
+- Reliable notification delivery
+
+<Callout type="warn">
+  Don't delete the "SkyHelper Reminders" webhook! If deleted, reminders for that event will automatically stop.
+</Callout>
+
+### Permissions Required
+
+For reminders to work:
+
+- You need: **Manage Server** permission
+- Bot needs: **Manage Webhooks** in the channel
+
+Without these, reminder setup will fail.
+
+## Troubleshooting
+
+### Reminders Not Working
+
+If reminders stop:
+
+1. Check the webhook still exists
+2. Verify bot has Manage Webhooks permission
+3. Confirm reminder is still configured (check status)
+4. Try stopping and setting up again
+
+### Role Not Being Pinged
+
+If the role isn't mentioned:
+
+- Ensure role is mentionable (or bot can mention any role)
+- Check role is configured in reminder settings
+- Verify role wasn't deleted
+
+## Alternative: Dashboard
+
+<Callout type="info">
+  You can also manage reminders through the [web dashboard](https://dash.skyhelper.xyz) for a visual, user-friendly interface!
+</Callout>
+
+## Related Features
+
+Combine reminders with:
+
+- **[Live Updates](/guide/live-updates)** - Passive info + active notifications
+- **[In-Game Events](/guide/events)** - See event schedules
