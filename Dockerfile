@@ -44,6 +44,7 @@ RUN if [ "$TARGET" = "skyhelper" ]; then \
 FROM node:22.13-alpine AS skyhelper
 WORKDIR /app
 COPY --from=build /app/sky-out .
+RUN corepack enable
 EXPOSE 5000
 CMD [ "pnpm", "start" ]
 
