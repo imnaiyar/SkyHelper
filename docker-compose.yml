@@ -8,6 +8,9 @@ services:
         SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
         TURBO_TEAM: ${TURBO_TEAM}
         TURBO_TOKEN: ${TURBO_TOKEN}
+        SENTRY_URL: ${SENTRY_URL}
+        SENTRY_ORG: ${SENTRY_ORG}
+        SENTRY_PROJECT: ${SENTRY_PROJECT}
         TARGET: skyhelper
     container_name: skyhelper
     restart: unless-stopped

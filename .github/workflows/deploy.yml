@@ -68,16 +68,21 @@ jobs:
             docker compose up -d --build $DEPLOY_TARGET
           fi
         env:
+          # Misc
           DEPLOY_TARGET: ${{ needs.changes.outputs.target }}
+
+          # Bot envs
           TOKEN: ${{ secrets.TOKEN }}
           NODE_ENV: "production"
           NODE_OPTIONS: "--import ./scripts/register-loader.mjs"
           MONGO_CONNECTION: ${{ secrets.MONGO_CONNECTION }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+          API_ALLOWLIST_KEY: ${{ secrets.API_ALLOWLIST_KEY}}
           DBL_TOKEN: ${{ secrets.DBL_TOKEN }}
+          TOPGG_TOKEN: ${{ secrets.TOPGG_TOKEN }}
+          # Webhooks
           BUG_REPORTS: ${{ secrets.BUG_REPORTS }}
           COMMANDS_USED: ${{ secrets.COMMANDS_USED }}
           CONTACT_US: ${{ secrets.CONTACT_US }}
@@ -85,22 +90,18 @@ jobs:
           GUILD: ${{ secrets.GUILD }}
           READY_LOGS: ${{ secrets.READY_LOGS }}
           SUGGESTION: ${{ secrets.SUGGESTION }}
-          TOPGG_TOKEN: ${{ secrets.TOPGG_TOKEN }}
           ERROR_WEBHOOK: ${{ secrets.ERROR_LOGS }}
           JOBS_DEBUG_LOGS: ${{ secrets.JOBS_DEBUG_LOGS }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-          API_ALLOWLIST_KEY: ${{ secrets.API_ALLOWLIST_KEY}}
 
-      - name: Cleanup Unused Images
-        run: docker image prune -f
-
-      - name: Create sentry release
-        uses: getsentry/action-release@v2
-        env:
+          # Sentry
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_URL: ${{ secrets.SENTRY_URL }}
-        with:
-          environment: production
+
+          # Turbo
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+      - name: Cleanup Unused Images
+        run: docker image prune -f
