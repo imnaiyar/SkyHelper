@@ -1,6 +1,5 @@
 import { BasePlannerHandler, DisplayTabs } from "./base.js";
 import { SeasonsDisplay } from "./seasons.js";
-import { CustomId, store } from "@/utils/customId-store";
 import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
 import { DateTime } from "luxon";
@@ -26,6 +25,9 @@ export class HomeDisplay extends BasePlannerHandler {
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
         separator(),
+        textDisplay(
+          "-# This feature is in active development. Some things are not implemented yet, few things may even break. Feedback and bug reports are appreciated.",
+        ),
         ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
         ...(travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : []),
         ...(returningSpirits.length > 0 ? this.createReturningSpiritsSections(returningSpirits) : []),

@@ -70,7 +70,7 @@ function parseArgs(): ScriptOptions {
 /**
  * Find a spirit by name or ID in the planner data
  */
-function findSpirit(data: SkyPlannerData.TransformedData, query: string): SkyPlannerData.ISpirit | null {
+function findSpirit(data: SkyPlannerData.PlannerAssetData, query: string): SkyPlannerData.ISpirit | null {
   // First try exact GUID match
   const spiritByGuid = data.spirits.find((spirit) => spirit.guid === query);
   if (spiritByGuid) return spiritByGuid;
@@ -89,7 +89,7 @@ function findSpirit(data: SkyPlannerData.TransformedData, query: string): SkyPla
 /**
  * List available spirits
  */
-function listSpirits(data: SkyPlannerData.TransformedData, limit = 20) {
+function listSpirits(data: SkyPlannerData.PlannerAssetData, limit = 20) {
   console.log("\nAvailable spirits (showing first", limit, "):");
   console.log("==========================================");
 
@@ -147,6 +147,7 @@ async function main() {
     const imageBuffer = await generateSpiritTree(tree, {
       season: options.season,
       spiritName: options.spiritName,
+      spiritSubtitle: "Travleing Spirit #150",
     });
     console.timeEnd("Render time");
 
