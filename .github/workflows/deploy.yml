@@ -58,7 +58,8 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - name: Deploy selected package
         run: |
           echo "Deploying $DEPLOY_TARGET..."
