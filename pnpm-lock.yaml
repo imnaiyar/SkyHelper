@@ -144,9 +144,6 @@ importers:
       '@serwist/next':
         specifier: ^9.2.1
         version: 9.2.1(next@15.5.4(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)
-      '@serwist/sw':
-        specifier: ^9.2.1
-        version: 9.2.1(typescript@5.8.3)
       '@serwist/window':
         specifier: ^9.2.1
         version: 9.2.1(typescript@5.8.3)
@@ -2489,14 +2486,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       next: '>=14.0.0'
-      typescript: '>=5.0.0'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
-  '@serwist/sw@9.2.1':
-    resolution: {integrity: sha512-SQygNDTB4w4HRjKiGH+Ybme+dy2rynt6RPFHw27SANQRK1rEzqYUZ1S4SyKjiwJgIoy+mQOA7+T23OqAfW7Eqg==}
-    peerDependencies:
       typescript: '>=5.0.0'
     peerDependenciesMeta:
       typescript:
@@ -8891,12 +8880,6 @@ snapshots:
       typescript: 5.8.3
     transitivePeerDependencies:
       - webpack
-
-  '@serwist/sw@9.2.1(typescript@5.8.3)':
-    dependencies:
-      serwist: 9.2.1(typescript@5.8.3)
-    optionalDependencies:
-      typescript: 5.8.3
 
   '@serwist/webpack-plugin@9.2.1(typescript@5.8.3)':
     dependencies:

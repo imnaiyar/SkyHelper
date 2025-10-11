@@ -1,7 +1,7 @@
 import type { PrecacheEntry } from "serwist";
-import { CacheFirst, NetworkFirst, ExpirationPlugin } from "serwist";
+import { NetworkFirst, ExpirationPlugin } from "serwist";
 import { defaultCache } from "@serwist/next/worker";
-import { installSerwist } from "@serwist/sw";
+import { Serwist } from "serwist";
 
 declare global {
   interface WorkerGlobalScope {
@@ -11,7 +11,7 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
-installSerwist({
+const servist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
   skipWaiting: true,
   clientsClaim: true,
@@ -20,7 +20,7 @@ installSerwist({
     ...defaultCache,
     {
       matcher: /^https:\/\/cdn\.discordapp\.com\/.*/i,
-      handler: new CacheFirst({
+      handler: new NetworkFirst({
         cacheName: "discord-cdn-cache",
         plugins: [
           new ExpirationPlugin({
@@ -77,3 +77,5 @@ installSerwist({
     },
   ],
 });
+
+servist.addEventListeners();

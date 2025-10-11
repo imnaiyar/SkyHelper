@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@serwist/next": "^9.2.1",
-    "@serwist/sw": "^9.2.1",
     "@serwist/window": "^9.2.1",
     "@tanstack/react-query": "^5.90.2",
     "@vercel/og": "^0.8.5",

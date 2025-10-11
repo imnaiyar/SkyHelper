@@ -1,7 +1,7 @@
 "use client";
 import { useToast } from "@/app/hooks/useToast";
 import { useEffect } from "react";
-import { Serwist } from "@serwist/window";
+import { Serwist, SerwistLifecycleEvent } from "@serwist/window";
 
 export default function PWARegister() {
   const { info } = useToast();
@@ -9,35 +9,30 @@ export default function PWARegister() {
   useEffect(() => {
     if (process.env.NODE_ENV === "development") return; // do not register in dev mode
 
-    if ("serviceWorker" in navigator) {
-      const register = async () => {
-        try {
-          const serwist = new Serwist("/sw.js", {
-            scope: "/",
-            type: "classic",
-          });
+    if (!("serviceWorker" in navigator)) return;
 
-          // Listen for updates
-          serwist.addEventListener("installed", (event) => {
-            if (!event.isUpdate) return;
+    const serwist = new Serwist("/sw.js", {
+      scope: "/",
+      type: "classic",
+    });
 
-            info({
-              title: "Content Outdated!",
-              message: "Please refresh the page to get latest content",
-              duration: -1,
-            });
-          });
+    const confirmWait = (event: SerwistLifecycleEvent) => {
+      if (!event.isUpdate) return;
 
-          await serwist.register();
-          console.log("Service worker registered with Serwist");
-        } catch (err) {
-          console.warn("SW registration failed:", err);
-        }
-      };
+      info({
+        title: "Content Outdated!",
+        message: "Please refresh the page to get latest content",
+        duration: -1,
+      });
+    };
+    serwist.addEventListener("installed", confirmWait);
 
-      register();
-    }
-  }, [info]);
+    serwist.register().catch((err) => console.warn("SW Register Error", err));
+
+    return () => {
+      serwist.removeEventListener("installed", confirmWait);
+    };
+  }, []);
 
   return null;
 }
