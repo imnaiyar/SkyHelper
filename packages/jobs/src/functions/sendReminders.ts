@@ -45,11 +45,14 @@ export async function reminderSchedules(): Promise<void> {
 
         if (!isValid) continue;
       }
-      Sentry.setContext("GuildMeta[Reminders]", {
-        reminder: key,
-        guild: guild.data.name,
-        guildId: guild._id,
-        event: { ...event, webhook: null /* This is sensitive, so do not send */ },
+
+      Sentry.withScope((scope) => {
+        scope.setContext("GuildMeta[Reminders]", {
+          reminder: key,
+          guild: guild.data.name,
+          guildId: guild._id,
+          event: { ...event, webhook: null /* This is sensitive, so do not send */ },
+        });
       });
 
       try {

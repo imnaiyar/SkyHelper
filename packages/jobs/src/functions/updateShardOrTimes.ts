@@ -64,11 +64,15 @@ const update = async (
   await throttleRequests(data, async (guild) => {
     const event = guild[type];
     if (!event.webhook.id) return;
-    Sentry.setContext("GuildMeta[Live]", {
-      type,
-      guild: guild.data.name,
-      guildId: guild._id,
+
+    Sentry.withScope((scope) => {
+      scope.setContext("GuildMeta[Live]", {
+        type,
+        guild: guild.data.name,
+        guildId: guild._id,
+      });
     });
+
     const webhook = new Webhook({ token: event.webhook.token ?? undefined, id: event.webhook.id });
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
