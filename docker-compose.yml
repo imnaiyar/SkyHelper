@@ -48,6 +48,9 @@ services:
       args:
         TURBO_TEAM: ${TURBO_TEAM}
         TURBO_TOKEN: ${TURBO_TOKEN}
+        SENTRY_URL: ${SENTRY_URL}
+        SENTRY_ORG: ${SENTRY_ORG}
+        SENTRY_PROJECT: jobs
         TARGET: jobs
     container_name: skyhelper-jobs
     restart: unless-stopped
@@ -59,4 +62,7 @@ services:
       - JOBS_DEBUG_LOGS
       - TURBO_TEAM
       - TURBO_TOKEN
+      - SENTRY_AUTH_TOKEN
+      - SENTRY_URL
+      - SENTRY_ORG
       - API_ALLOWLIST_KEY

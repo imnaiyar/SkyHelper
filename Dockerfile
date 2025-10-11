@@ -34,11 +34,12 @@ RUN pnpm install -r --offline
 
 RUN pnpm build --filter=!./apps/docs --filter=!./apps/website
 
-# Create sentry release
-RUN pnpm --filter skyhelper exec chmod +x scripts/sentry-release.sh
-RUN pnpm --filter skyhelper exec ./scripts/sentry-release.sh
-
 ARG TARGET
+
+# Create sentry release
+RUN pnpm --filter ${TARGET} exec chmod +x scripts/sentry-release.sh
+RUN pnpm --filter ${TARGET} exec ./scripts/sentry-release.sh
+
 
 RUN if [ "$TARGET" = "skyhelper" ]; then \
     pnpm deploy --filter="./packages/skyhelper" sky-out --prod --legacy; \

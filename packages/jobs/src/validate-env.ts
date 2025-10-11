@@ -3,6 +3,7 @@ import { z } from "zod/v4";
 const EnvPredicate = z.object({
   TOKEN: z.string(),
   MONGO_CONNECTION: z.string(),
+  SENTRY_DSN_BUN: z.string(),
   NODE_ENV: z.enum(["development", "production"]).optional(),
   ERROR_WEBHOOK: z.string().optional(),
   JOBS_DEBUG_LOGS: z.string().optional(),

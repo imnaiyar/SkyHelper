@@ -10,6 +10,7 @@ import { checkReminderValid } from "./checkReminderValid.js";
 import { AllowedMentionsTypes, MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
 import { getResponse, getShardReminderResponse, getTSResponse } from "./getResponses.js";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
+import * as Sentry from "@sentry/bun";
 
 const speciallyHandledReminders = ["ts", "shards-eruption"];
 /**
@@ -44,6 +45,12 @@ export async function reminderSchedules(): Promise<void> {
 
         if (!isValid) continue;
       }
+      Sentry.setContext("GuildMeta[Reminders]", {
+        reminder: key,
+        guild: guild.data.name,
+        guildId: guild._id,
+        event: { ...event, webhook: null /* This is sensitive, so do not send */ },
+      });
 
       try {
         const wb = new Webhook({ token: webhook.token, id: webhook.id });
@@ -99,7 +106,8 @@ export async function reminderSchedules(): Promise<void> {
             if (err.message === "Unknown Webhook") {
               return "Unknown Webhook";
             } else {
-              logger.error(guild.data.name + " Reminder Error: ", err);
+              const id = Sentry.captureException(err);
+              logger.error(guild.data.name + " Reminder Error: ", err, id);
             }
           });
         if (last_messageId) await wb.deleteMessage(last_messageId, webhook.threadId).catch(() => {});
@@ -109,9 +117,13 @@ export async function reminderSchedules(): Promise<void> {
         } else if (msg) {
           guild.reminders.events[key]!.last_messageId = msg.id;
         }
-        await guild.save().catch((err) => logger.error(guild.data.name + " Error saving Last Message Id: ", err));
+        await guild.save().catch((err) => {
+          const id = Sentry.captureException(err);
+          logger.error(guild.data.name + " Error saving Last Message Id: ", err, id);
+        });
       } catch (err) {
-        logger.error(err);
+        const id = Sentry.captureException(err);
+        logger.error(err, id);
       }
     }
   });

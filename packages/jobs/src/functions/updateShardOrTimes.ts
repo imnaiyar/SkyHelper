@@ -8,6 +8,7 @@ import { DiscordAPIError } from "@discordjs/rest";
 import { DateTime } from "luxon";
 import { deleteWebhookAfterChecks } from "@/utils/deleteWebhookAfterChecks";
 import { BASE_API } from "@/constants";
+import * as Sentry from "@sentry/bun";
 
 import { MessageFlags, type APIActionRowComponent, type APIComponentInMessageActionRow } from "discord-api-types/v10";
 
@@ -63,6 +64,11 @@ const update = async (
   await throttleRequests(data, async (guild) => {
     const event = guild[type];
     if (!event.webhook.id) return;
+    Sentry.setContext("GuildMeta[Live]", {
+      type,
+      guild: guild.data.name,
+      guildId: guild._id,
+    });
     const webhook = new Webhook({ token: event.webhook.token ?? undefined, id: event.webhook.id });
     const t = getTranslator(guild.language?.value ?? "en-US");
     const now = DateTime.now();
@@ -91,14 +97,18 @@ const update = async (
       } else if (res.code === 10015) {
         logger.error(`Live ${type} disabled for ${guild.data.name}, webhook not found!`);
       } else {
-        logger.error(`Live ${type}: ${guild.data.name} (${guild.id})`, res);
+        const id = Sentry.captureException(res);
+        logger.error(`Live ${type}: ${guild.data.name} (${guild.id})`, res, id);
       }
       guild[type] = {
         active: false,
         webhook: { id: null, token: null },
         messageId: "",
       };
-      await guild.save().catch((er) => logger.error("Error Saving to Database" + ` ${type}[Guild: ${guild.data.name}]`, er));
+      await guild.save().catch((er) => {
+        const id = Sentry.captureException(er);
+        logger.error("Error Saving to Database" + ` ${type}[Guild: ${guild.data.name}]`, er, id);
+      });
     }
   });
 };
