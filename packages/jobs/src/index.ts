@@ -46,10 +46,10 @@ CronJob.schedule(
 logger.info("Logged in and Jobs have been started");
 
 process.on("uncaughtException", (err) => {
-  const id = Sentry.captureException(err, { level: "fatal" });
+  const id = Sentry.captureException(err);
   logger.error("Uncaught Exception:", err, id);
 });
 process.on("unhandledRejection", (reason) => {
-  const id = Sentry.captureException(reason, { level: "fatal" });
+  const id = Sentry.captureException(reason);
   logger.error("Unhandled Rejection:", reason, id);
 });
