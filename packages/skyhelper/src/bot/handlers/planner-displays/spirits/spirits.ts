@@ -9,8 +9,8 @@ import { BaseSpiritsDisplay } from "./base.js";
 import { spiritTreeDisplay } from "../shared.js";
 
 export class SpiritsDisplay extends BaseSpiritsDisplay {
-  constructor(data: SkyPlannerData.PlannerAssetData, planner: typeof SkyPlannerData, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.state.d ??= "normal";
     this.initializeFilters(
       [FilterType.SpiritTypes, FilterType.Order, FilterType.Realms, FilterType.Seasons, FilterType.Areas, FilterType.Highlight],

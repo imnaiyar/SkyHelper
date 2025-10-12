@@ -1,14 +1,17 @@
-import type { ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
+import { getAllTreeNodes, type ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
 import {
+  button,
   generateSpiritTree,
   type GenerateSpiritTreeOptions,
   mediaGallery,
   mediaGalleryItem,
+  row,
   section,
   textDisplay,
 } from "@skyhelperbot/utils";
 import { DisplayTabs, type BasePlannerHandler } from "./base.js";
 import type { RawFile } from "@discordjs/rest";
+import { CustomId, store } from "@/utils/customId-store";
 
 /** Displays spirit's rendered tree and a button to modify it wherever it is needed */
 export async function spiritTreeDisplay(
@@ -20,6 +23,10 @@ export async function spiritTreeDisplay(
   const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit;
   /* @ts-expect-error this is a fallback, so i'm not worried */
   const name = tree.name ?? spirit?.name ?? spirit?.spirit?.name ?? "Unknown";
+  const nodes = getAllTreeNodes(tree.node);
+
+  const unlockAll = nodes.some((n) => !n.item?.unlocked && !n.item?.autoUnlocked);
+
   return {
     file,
     components: [
@@ -30,12 +37,32 @@ export async function spiritTreeDisplay(
               disabled: !spirit,
             }),
             name,
+            planner.planner.getFormattedTreeCost(tree),
           )
-        : textDisplay(name),
-      section(
-        planner.viewbtn(planner.createCustomId({}), { label: "Modify", disabled: true }),
-        planner.planner.getFormattedTreeCost(tree),
-        "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
+        : textDisplay(name, planner.planner.getFormattedTreeCost(tree)),
+      row(
+        button({
+          label: `${unlockAll ? "Unlock" : "Lock"} All`,
+          style: unlockAll ? 3 : 4,
+          emoji: { name: "✅" },
+          custom_id: store.serialize(CustomId.PlannerActions, {
+            action: `${unlockAll ? "unlock" : "lock"}-all-tree`,
+            guid: tree.guid,
+            gifted: null,
+            actionType: null,
+            navState: JSON.stringify({
+              t: planner.state.t,
+              it: planner.state.it,
+              p: planner.state.p,
+              f: planner.state.f,
+              d: planner.state.d,
+              b: planner.state.b,
+              v: planner.state.v,
+            }),
+            user: planner.state.user,
+          }),
+        }),
+        planner.viewbtn(planner.createCustomId({})),
       ),
       mediaGallery(mediaGalleryItem("attachment://tree.png")),
     ],

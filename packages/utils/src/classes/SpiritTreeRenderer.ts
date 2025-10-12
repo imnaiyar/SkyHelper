@@ -230,7 +230,7 @@ async function drawItem(
     const badgeX = r * 0.5;
     const badgeY = r * 0.65;
 
-    ctx.strokeStyle = "#24A72B";
+    ctx.strokeStyle = node?.unlocked ? "#24A72B" : "#766a0eff";
     ctx.lineWidth = Math.max(3, Math.floor(checkRadius * 0.3));
     ctx.lineCap = "round";
     ctx.lineJoin = "round";

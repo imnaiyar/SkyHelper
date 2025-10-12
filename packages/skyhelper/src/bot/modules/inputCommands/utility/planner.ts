@@ -62,7 +62,7 @@ export default {
     if (sub !== "search") throw new Error("Invalid subcommand");
     const query = options.getString("query", true).toLowerCase();
     const data = await SkyPlannerData.getSkyGamePlannerData();
-    const createidentifier = (d: NavigationState) =>
+    const createidentifier = (d: Omit<NavigationState, "user">) =>
       store.serialize(CustomId.PlannerTopLevelNav, {
         back: null,
         r: null,
@@ -105,13 +105,17 @@ export default {
         }
         const dsl = store.deserialize(routehash);
         if (dsl.id !== CustomId.PlannerTopLevelNav) throw new Error("Got Wrong Id");
-        // @ts-expect-error maan, wtvsd
-        const response = await handlePlannerNavigation({ ...dsl.data, user: helper.user.id });
+
+        const response = await handlePlannerNavigation(
+          { ...(dsl.data as Omit<NavigationState, "user">) },
+          helper.user,
+          helper.client,
+        );
         await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
         return;
       }
       case "home": {
-        const response = await handlePlannerNavigation({ t: DisplayTabs.Home, user: helper.user.id });
+        const response = await handlePlannerNavigation({ t: DisplayTabs.Home }, helper.user, helper.client);
         await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
         return;
       }

@@ -2,8 +2,8 @@ import { BaseSpiritsDisplay } from "./base.js";
 import { FilterType, OrderType } from "../filter.manager.js";
 import { section, button, container } from "@skyhelperbot/utils";
 export class TSDisplay extends BaseSpiritsDisplay {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }
   override handle() {

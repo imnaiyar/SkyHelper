@@ -19,8 +19,8 @@ export class ShopsDisplay extends BasePlannerHandler {
   trees: SkyPlannerData.ISpiritTree[] = [];
   menu: "store" | "iap" | "trees" | null = null;
   highlights: string[] = [];
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.Shops, FilterType.SpiritTrees, FilterType.Highlight]);
   }
   override async handle() {

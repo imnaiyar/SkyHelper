@@ -14,6 +14,8 @@ import type { Awaitable } from "@/types/utils";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { FilterManager, FilterType, type CustomFilterConfigs, OrderMappings } from "./filter.manager.js";
 import { ComponentType } from "@discordjs/core";
+import type { UserSchema } from "@/types/schemas";
+import type { SkyHelper } from "@/structures";
 
 export interface NavigationState {
   /** Current page */
@@ -24,7 +26,8 @@ export interface NavigationState {
    */
   t: DisplayTabs;
 
-  user?: string;
+  /** Invoking user's id */
+  user: string;
 
   /** Specific item it should point to
    * * it =item
@@ -87,6 +90,8 @@ export abstract class BasePlannerHandler {
     public data: SkyPlannerData.PlannerAssetData,
     public planner: typeof SkyPlannerData,
     public state: NavigationState,
+    public settings: UserSchema,
+    public client: SkyHelper,
   ) {}
 
   /**
@@ -394,6 +399,111 @@ export abstract class BasePlannerHandler {
    */
   protected hasActiveFilters(): boolean {
     return !!this.filterManager && this.filterManager.serializeFilters().length > 0;
+  }
+
+  /**
+   * Create an action button for toggling IAP status
+   */
+  public createIAPButton(iap: { guid: string; name?: string; bought?: boolean; gifted?: boolean }, gifted = false) {
+    const isOwned = iap.bought ?? iap.gifted ?? false;
+    return button({
+      label: gifted ? (iap.gifted ? "Gifted" : "Mark Gifted") : iap.bought ? "Bought" : "Mark Bought",
+      style: isOwned ? 3 : 2,
+      emoji: gifted && iap.gifted ? { name: "🎁" } : isOwned ? { name: "✅" } : { name: "💰" },
+      custom_id: store.serialize(CustomId.PlannerActions, {
+        action: "toggle-iap",
+        guid: iap.guid,
+        gifted: gifted ? "true" : null,
+        navState: JSON.stringify({
+          t: this.state.t,
+          it: this.state.it,
+          p: this.state.p,
+          f: this.state.f,
+          d: this.state.d,
+          b: this.state.b,
+        }),
+        actionType: null,
+        user: this.state.user,
+      }),
+    });
+  }
+
+  /**
+   * Create an action button for toggling winged light collection status
+   */
+  public createWingedLightButton(wl: { guid: string; unlocked?: boolean }, actionType?: "all" | "filtered") {
+    return button({
+      label: wl.unlocked ? "Collected" : "Collect",
+      style: wl.unlocked ? 3 : 2,
+      emoji: wl.unlocked ? { name: "✅" } : { id: emojis.wingwedge },
+      custom_id: store.serialize(CustomId.PlannerActions, {
+        action: "toggle-wl",
+        guid: wl.guid,
+        gifted: null,
+        navState: JSON.stringify({
+          t: this.state.t,
+          it: this.state.it,
+          p: this.state.p,
+          f: this.state.f,
+          d: this.state.d,
+          b: this.state.b,
+        }),
+        actionType: actionType ?? null,
+        user: this.state.user,
+      }),
+    });
+  }
+
+  /**
+   * Create an action button for toggling item favorite status
+   */
+  public createFavoriteButton(item: { guid: string; favourited?: boolean }) {
+    return button({
+      label: item.favourited ? "Favorited" : "Favorite",
+      style: 2,
+      emoji: item.favourited ? { name: "⭐" } : { name: "☆" },
+      custom_id: store.serialize(CustomId.PlannerActions, {
+        action: "toggle-favorite",
+        guid: item.guid,
+        gifted: null,
+        navState: JSON.stringify({
+          t: this.state.t,
+          it: this.state.it,
+          p: this.state.p,
+          f: this.state.f,
+          d: this.state.d,
+          b: this.state.b,
+        }),
+        actionType: null,
+        user: this.state.user,
+      }),
+    });
+  }
+
+  /**
+   * Create an action button for toggling season pass
+   */
+  public createSeasonPassButton(seasonGuid: string, hasPass: boolean, gifted = false) {
+    return button({
+      label: gifted ? (hasPass ? "Gifted SP" : "Mark Gifted") : hasPass ? "Own SP" : "Mark Bought",
+      style: hasPass ? 3 : 2,
+      emoji: gifted && hasPass ? { name: "🎁" } : hasPass ? { name: "✅" } : { name: "💰" },
+      custom_id: store.serialize(CustomId.PlannerActions, {
+        action: "toggle-season-pass",
+        guid: seasonGuid,
+        gifted: gifted ? "true" : null,
+        navState: JSON.stringify({
+          t: this.state.t,
+          it: this.state.it,
+          p: this.state.p,
+          f: this.state.f,
+          d: this.state.d,
+          b: this.state.b,
+        }),
+        actionType: null,
+        user: this.state.user,
+      }),
+    });
   }
 }
 

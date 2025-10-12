@@ -414,6 +414,97 @@ export interface IReturningSpiritsConfig extends IConfig<IReturningSpirits> {}
  */
 export type ShopType = "Store" | "Spirit" | "Object";
 
+export interface IPlannerCurrencies {
+  candles: number;
+  hearts: number;
+  ascendedCandles: number;
+  giftPasses: number;
+  eventCurrencies: Record<string, { tickets: number }>;
+  seasonCurrencies: Record<string, { candles: number; hearts: number }>;
+}
+
+export interface UserPlannerData {
+  date: string;
+  currencies: IPlannerCurrencies;
+  /** Comma-separated list of unlocked item/node GUIDs */
+  unlocked: string;
+  /** Comma-separated list of unlocked winged light GUIDs */
+  wingedLights: string;
+  /** Comma-separated list of favorited item GUIDs */
+  favourites: string;
+  /** Comma-separated list of season GUIDs for which user has season pass */
+  seasonPasses: string;
+  /** Comma-separated list of gifted IAP/season pass GUIDs */
+  gifted: string;
+}
+
+/**
+ * Helper class for working with UserPlannerData
+ */
+export class PlannerDataHelper {
+  /**
+   * Parse a comma-separated string into a Set of GUIDs
+   */
+  static parseGuidSet(value?: string): Set<string> {
+    if (!value || value.length === 0) return new Set();
+    return new Set(value.split(",").filter((s) => s.length > 0));
+  }
+
+  /**
+   * Serialize a Set of GUIDs into a comma-separated string
+   */
+  static serializeGuidSet(set: Set<string>): string {
+    return Array.from(set).join(",");
+  }
+
+  /**
+   * Add GUIDs to a comma-separated string
+   */
+  static addToGuidString(current = "", ...guids: string[]): string {
+    const set = this.parseGuidSet(current);
+    guids.forEach((guid) => set.add(guid));
+    return this.serializeGuidSet(set);
+  }
+
+  /**
+   * Remove GUIDs from a comma-separated string
+   */
+  static removeFromGuidString(current = "", ...guids: string[]): string {
+    const set = this.parseGuidSet(current);
+    guids.forEach((guid) => set.delete(guid));
+    return this.serializeGuidSet(set);
+  }
+
+  /**
+   * Check if a GUID exists in a comma-separated string
+   */
+  static hasGuid(value = "", guid: string): boolean {
+    return this.parseGuidSet(value).has(guid);
+  }
+
+  /**
+   * Create an empty UserPlannerData object
+   */
+  static createEmpty(): UserPlannerData {
+    return {
+      date: new Date().toISOString(),
+      currencies: {
+        candles: 0,
+        hearts: 0,
+        ascendedCandles: 0,
+        giftPasses: 0,
+        eventCurrencies: {},
+        seasonCurrencies: {},
+      },
+      unlocked: "",
+      wingedLights: "",
+      favourites: "",
+      seasonPasses: "",
+      gifted: "",
+    };
+  }
+}
+
 export interface IShop extends IGuid {
   type: ShopType;
   name?: string;

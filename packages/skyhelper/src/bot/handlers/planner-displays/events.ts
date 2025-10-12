@@ -7,8 +7,8 @@ import type { RawFile } from "@discordjs/rest";
 import { spiritTreeDisplay } from "./shared.js";
 
 export class EventsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     // Initialize filters for events display
     this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }

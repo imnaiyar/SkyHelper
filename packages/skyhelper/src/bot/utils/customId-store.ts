@@ -32,6 +32,7 @@ export enum CustomId {
   PlannerTopLevelNav,
   PlannerFilters,
   PlannerSelectNav,
+  PlannerActions,
 }
 
 export const store = new SchemaStore()
@@ -82,4 +83,18 @@ export const store = new SchemaStore()
   )
   .add(new Schema(CustomId.PlannerFilters).string("tab").array("filters", t.string).nullable("user", t.string))
 
-  .add(new Schema(CustomId.PlannerSelectNav).nullable("user", t.string));
+  .add(new Schema(CustomId.PlannerSelectNav).nullable("user", t.string))
+  .add(
+    new Schema(CustomId.PlannerActions)
+      // action type: toggle-item, toggle-node, toggle-iap, etc.
+      .string("action")
+
+      .nullable("actionType", t.string)
+      // guid of the entity to act on
+      .string("guid")
+      // whether it's gifted (for IAPs, season passes)
+      .nullable("gifted", t.string)
+      // serialized navigation state to refresh after action
+      .string("navState")
+      .nullable("user", t.string),
+  );

@@ -5,8 +5,8 @@ import config from "@/config";
 import { FilterType } from "./filter.manager.js";
 
 export class WingedLightsDisplay extends BasePlannerHandler {
-  constructor(data: SkyPlannerData.PlannerAssetData, planner: typeof SkyPlannerData, state: NavigationState) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
 
     this.initializeFilters(
       [FilterType.Realms, FilterType.Areas] /* {

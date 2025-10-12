@@ -14,6 +14,10 @@ import { ReturningSpiritDisplay } from "./planner-displays/spirits/rs.js";
 import { NestingWorkshopDisplay } from "./planner-displays/shops/nesting.js";
 import { ShopHomeDisplay } from "./planner-displays/shops/home.js";
 import * as Sentry from "@sentry/node";
+import type { UserSchema } from "@/types/schemas";
+import type { SkyHelper } from "@/structures";
+import type { APIUser } from "discord-api-types/v10";
+import { enrichDataWithUserProgress, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 
 // Navigation state interface to track user's position
 
@@ -55,17 +59,28 @@ const displayClasses = (d?: string) => ({
 /**
  * Main handler for planner navigation
  */
-export async function handlePlannerNavigation(state: NavigationState) {
+export async function handlePlannerNavigation(state: Omit<NavigationState, "user">, user: APIUser, client: SkyHelper) {
   const { t } = state;
   // for debugging purposes
   Sentry.setContext("Planner Navigation State", { ...state });
 
-  const data = await SkyPlannerData.getSkyGamePlannerData();
+  const baseData = await SkyPlannerData.getSkyGamePlannerData();
+  const settings = await client.schemas.getUser(user);
+
+  // Initialize user planner data if it doesn't exist
+  if (!settings.plannerData) {
+    settings.plannerData = PlannerDataHelper.createEmpty();
+    await settings.save();
+  }
+
+  // Enrich data with user-specific progress
+  const data = enrichDataWithUserProgress(baseData, settings.plannerData);
+
   const handler = displayClasses(state.d)[t];
   // eslint-disable-next-line
   if (!handler) throw new Error("Invalid display tab");
 
-  const instance = new handler(data, SkyPlannerData, state);
+  const instance = new handler(data, SkyPlannerData, { ...state, user: user.id }, settings, client);
   const result = await instance.handle();
   return {
     ...result,

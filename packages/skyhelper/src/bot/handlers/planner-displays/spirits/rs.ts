@@ -5,8 +5,8 @@ import { section, container, thumbnail, textDisplay, row, separator } from "@sky
 import { ComponentType } from "@discordjs/core";
 import { spiritTreeDisplay } from "../shared.js";
 export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }
   override async handle() {

@@ -19,7 +19,13 @@ export class HomeDisplay extends BasePlannerHandler {
     const returningSpirits = this.planner.getCurrentReturningSpirits(this.data);
     const travelingSpirit = this.planner.getCurrentTravelingSpirit(this.data);
 
-    const s_display = new SeasonsDisplay(this.data, this.planner, { t: DisplayTabs.Seasons, user: this.state.user });
+    const s_display = new SeasonsDisplay(
+      this.data,
+      this.planner,
+      { t: DisplayTabs.Seasons, user: this.state.user },
+      this.settings,
+      this.client,
+    );
 
     const components = [
       container(

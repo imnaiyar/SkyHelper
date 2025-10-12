@@ -6,8 +6,8 @@ import { button, container, mediaGallery, mediaGalleryItem, row, section, separa
 import type { APIComponentInContainer } from "discord-api-types/v10";
 
 export class ItemsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.ItemTypes, FilterType.Seasons, FilterType.Order, FilterType.Currencies], {
       [FilterType.ItemTypes]: { defaultValues: [ItemType.Outfit] },
     });

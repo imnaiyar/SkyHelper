@@ -8,8 +8,8 @@ import { FilterType, serializeFilters } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
 
 export class SeasonsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.Order]);
   }
   override handle() {

@@ -4,8 +4,8 @@ import { FilterType, OrderType, serializeFilters } from "./filter.manager.js";
 import { section, container, row, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType } from "discord-api-types/v10";
 export class AreasDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.state.it ??= this.state.v?.[0];
     this.initializeFilters([FilterType.Realms, FilterType.Order], {
       [FilterType.Realms]: { defaultValues: ["E1RwpAdA8l"] }, // dawn guid
