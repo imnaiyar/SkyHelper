@@ -25,7 +25,7 @@ import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "@/handlers/planner";
-import type { DisplayTabs, NavigationState } from "@/handlers/planner-displays/base";
+import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 

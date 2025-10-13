@@ -1,6 +1,5 @@
 import { emojis, SkyPlannerData } from "@skyhelperbot/constants";
-import { DisplayTabs } from "../base.js";
-import { FilterType } from "../filter.manager.js";
+import { DisplayTabs, FilterType } from "@/types/planner";
 import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";

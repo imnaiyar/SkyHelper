@@ -1,4 +1,4 @@
-import { BasePlannerHandler, DisplayTabs } from "./base.js";
+import { BasePlannerHandler } from "./base.js";
 import { SeasonsDisplay } from "./seasons.js";
 import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
@@ -11,6 +11,7 @@ import type {
   ITravelingSpirit,
 } from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
+import { DisplayTabs } from "@/types/planner";
 
 export class HomeDisplay extends BasePlannerHandler {
   override handle(): ResponseData {

@@ -1,5 +1,5 @@
 import { BaseSpiritsDisplay } from "./base.js";
-import { FilterType, OrderType } from "../filter.manager.js";
+import { FilterType, OrderType } from "@/types/planner";
 import { type IReturningSpirits } from "@skyhelperbot/constants/skygame-planner";
 import { section, container, thumbnail, textDisplay, row, separator } from "@skyhelperbot/utils";
 import { ComponentType } from "@discordjs/core";

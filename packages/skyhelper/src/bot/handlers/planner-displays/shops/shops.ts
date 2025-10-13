@@ -1,11 +1,11 @@
 import { button, container, row, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "../base.js";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
-import { FilterType } from "../filter.manager.js";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import { getIGCnIApDisplay } from "./shared.js";
 import { spiritTreeDisplay } from "../shared.js";
 import type { RawFile } from "@discordjs/rest";
+import { FilterType } from "@/types/planner";
 const name_mappings = {
   event: "Aviary Event",
   harmony: "Harmony Hall",

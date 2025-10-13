@@ -11,9 +11,9 @@ import {
 } from "@/handlers/planner-utils";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData } from "@skyhelperbot/constants";
-import type { NavigationState } from "@/handlers/planner-displays/base";
 import { setLoadingState } from "@/utils/loading";
 import { getAllTreeNodes } from "@skyhelperbot/constants/skygame-planner";
+import { PlannerAction, type NavigationState } from "@/types/planner";
 
 /**
  * Button handler for Sky Game Planner user actions (unlock/lock items, nodes, etc.)
@@ -30,8 +30,8 @@ export default defineButton({
 
     let resultMessage = "";
 
-    switch (action) {
-      case "toggle-iap": {
+    switch (action as PlannerAction) {
+      case PlannerAction.ToggleIAP: {
         const iap = data.iaps.find((i) => i.guid === guid);
         if (iap) {
           const isGifted = gifted === "true";
@@ -47,7 +47,7 @@ export default defineButton({
         break;
       }
 
-      case "toggle-wl": {
+      case PlannerAction.ToggleWL: {
         let unlocked;
         if (actionType === "all") {
           unlocked = data.wingedLights.map((w) => toggleWingedLightUnlock(user, w))[0];
@@ -60,7 +60,7 @@ export default defineButton({
         break;
       }
 
-      case "toggle-favorite": {
+      case PlannerAction.ToggleFavorite: {
         const item = data.items.find((i) => i.guid === guid);
         if (item) {
           const favorited = toggleItemFavorite(user, item);
@@ -69,7 +69,7 @@ export default defineButton({
         break;
       }
 
-      case "toggle-season-pass": {
+      case PlannerAction.ToggleSeasonPass: {
         const isGifted = gifted === "true";
         const status = toggleSeasonPass(user, guid, isGifted);
         if (status === "owned") {
@@ -82,7 +82,7 @@ export default defineButton({
         break;
       }
 
-      case "unlock-all-tree": {
+      case PlannerAction.UnlockTree: {
         const tree = data.spiritTrees.find((t) => t.guid === guid);
         if (tree) {
           const allNodes = getAllTreeNodes(tree.node);
@@ -92,7 +92,7 @@ export default defineButton({
         break;
       }
 
-      case "lock-all-tree": {
+      case PlannerAction.LockTree: {
         const tree = data.spiritTrees.find((t) => t.guid === guid);
         if (tree) {
           const allNodes = getAllTreeNodes(tree.node);

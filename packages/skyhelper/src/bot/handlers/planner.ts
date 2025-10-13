@@ -1,6 +1,5 @@
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import { SpiritsDisplay } from "./planner-displays/spirits/spirits.js";
-import { DisplayTabs, type NavigationState } from "./planner-displays/base.js";
 import { RealmsDisplay } from "./planner-displays/realms.js";
 import { ItemsDisplay } from "./planner-displays/items.js";
 import { SeasonsDisplay } from "./planner-displays/seasons.js";
@@ -14,10 +13,10 @@ import { ReturningSpiritDisplay } from "./planner-displays/spirits/rs.js";
 import { NestingWorkshopDisplay } from "./planner-displays/shops/nesting.js";
 import { ShopHomeDisplay } from "./planner-displays/shops/home.js";
 import * as Sentry from "@sentry/node";
-import type { UserSchema } from "@/types/schemas";
 import type { SkyHelper } from "@/structures";
 import type { APIUser } from "discord-api-types/v10";
 import { enrichDataWithUserProgress, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import { DisplayTabs, type NavigationState } from "../@types/planner.js";
 
 // Navigation state interface to track user's position
 

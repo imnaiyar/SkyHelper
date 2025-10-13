@@ -9,28 +9,7 @@ import {
   type IReturningSpirits,
 } from "@skyhelperbot/constants/skygame-planner";
 import { type APISelectMenuOption } from "@discordjs/core";
-import { DisplayTabs } from "./base.js";
-
-// short values to save custom_id spaces
-export enum FilterType {
-  SpiritTypes = "sp",
-  Areas = "ar",
-  Realms = "rl",
-  Seasons = "sn",
-  Events = "ev",
-  Order = "o",
-  ItemTypes = "it",
-  Shops = "shp",
-  SpiritTrees = "st",
-  Currencies = "cr",
-  Highlight = "h",
-}
-export enum OrderType {
-  NameAsc = "name_asc",
-  NameDesc = "name_desc",
-  DateDesc = "date_desc",
-  DateAsc = "date_asc",
-}
+import { DisplayTabs, FilterType, OrderType } from "@/types/planner";
 
 export const OrderMappings = {
   [OrderType.NameAsc]: "Name (A-Z)",

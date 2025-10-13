@@ -1,5 +1,5 @@
 import { BaseSpiritsDisplay } from "./base.js";
-import { FilterType, OrderType } from "../filter.manager.js";
+import { FilterType, OrderType } from "@/types/planner";
 import { section, button, container } from "@skyhelperbot/utils";
 export class TSDisplay extends BaseSpiritsDisplay {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {

@@ -2,7 +2,7 @@ import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "../../../handlers/planner.js";
 import { defineButton } from "@/structures";
 import { MessageFlags } from "discord-api-types/v10";
-import type { NavigationState } from "@/handlers/planner-displays/base";
+import type { NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 import Utils from "@/utils/classes/Utils";
 

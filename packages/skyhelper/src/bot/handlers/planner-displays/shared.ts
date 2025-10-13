@@ -9,9 +9,10 @@ import {
   section,
   textDisplay,
 } from "@skyhelperbot/utils";
-import { DisplayTabs, type BasePlannerHandler } from "./base.js";
+import { type BasePlannerHandler } from "./base.js";
 import type { RawFile } from "@discordjs/rest";
 import { CustomId, store } from "@/utils/customId-store";
+import { DisplayTabs, PlannerAction } from "@/types/planner";
 
 /** Displays spirit's rendered tree and a button to modify it wherever it is needed */
 export async function spiritTreeDisplay(
@@ -46,7 +47,7 @@ export async function spiritTreeDisplay(
           style: unlockAll ? 3 : 4,
           emoji: { name: "✅" },
           custom_id: store.serialize(CustomId.PlannerActions, {
-            action: `${unlockAll ? "unlock" : "lock"}-all-tree`,
+            action: unlockAll ? PlannerAction.UnlockTree : PlannerAction.LockTree,
             guid: tree.guid,
             gifted: null,
             actionType: null,
