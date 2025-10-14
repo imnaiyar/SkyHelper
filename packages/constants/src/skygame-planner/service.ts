@@ -372,11 +372,11 @@ export function formatCosts(costs: ICost, remaining?: ICost) {
   const parts = [];
   /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
   if (costs.h) parts.push(`${remaining ? `${remaining.h || "✓"} (${costs.h})` : costs.h} <:Heart:${currency.h}>`);
-  if (costs.c) parts.push(`${remaining ? `${remaining.c || "✓"} (${costs.c})` : costs.h} <:Candle:${currency.c}>`);
-  if (costs.sc) parts.push(`${remaining ? `${remaining.sc || "✓"} (${costs.sc})` : costs.h} <:SeasonCandle:${currency.sc}>`);
-  if (costs.sh) parts.push(`${remaining ? `${remaining.sh || "✓"} (${costs.sh})` : costs.h} <:SeasonHeart:${currency.sh}>`);
-  if (costs.ac) parts.push(`${remaining ? `${remaining.ac || "✓"} (${costs.ac})` : costs.h} <:AC:${currency.ac}>`);
-  if (costs.ec) parts.push(`${remaining ? `${remaining.ec || "✓"} (${costs.ec})` : costs.h} <:EventTicket:${currency.ec}>`);
+  if (costs.c) parts.push(`${remaining ? `${remaining.c || "✓"} (${costs.c})` : costs.c} <:Candle:${currency.c}>`);
+  if (costs.sc) parts.push(`${remaining ? `${remaining.sc || "✓"} (${costs.sc})` : costs.sc} <:SeasonCandle:${currency.sc}>`);
+  if (costs.sh) parts.push(`${remaining ? `${remaining.sh || "✓"} (${costs.sh})` : costs.sh} <:SeasonHeart:${currency.sh}>`);
+  if (costs.ac) parts.push(`${remaining ? `${remaining.ac || "✓"} (${costs.ac})` : costs.ac} <:AC:${currency.ac}>`);
+  if (costs.ec) parts.push(`${remaining ? `${remaining.ec || "✓"} (${costs.ec})` : costs.ec} <:EventTicket:${currency.ec}>`);
   /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
   return parts.join(" ") || "Free";
 }
