@@ -56,7 +56,7 @@ If a node has branches, they're labeled L (left) or R (right). Any nodes above t
         default: l.node.item?.unlocked,
       })),
       max_values: chunk.length,
-      required: labeled.length < 26,
+      required: false,
     });
   }
   await helper.launchModal({
