@@ -31,6 +31,7 @@ export async function modifyTreeNode(
 
 Nodes are listed from the bottom to the top of the tree and labeled in order — for example, the first node is \`N1\`.
 If a node has branches, they're labeled L (left) or R (right). Any nodes above those are labeled like \`N1.1-L\`, \`N1.2-L\`, etc.
+-# 💡 Note: All nodes leading up to the selected top node will be unlocked automatically. This means even if you don't select a lower node, it will still be unlocked if you've chosen a node higher up on the same path.
 `;
 
   const selectMenus: APIStringSelectComponent[] = [];

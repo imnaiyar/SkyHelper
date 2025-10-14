@@ -10,12 +10,10 @@ import type { IIAP, IItem, IItemListNode, INode, IWingedLight } from "@skyhelper
 /**
  * Toggle an item's unlocked status for a user
  */
-export function toggleItemUnlock(user: UserSchema, item: IItem, forceUnlock = false) {
+export function toggleItemUnlock(user: UserSchema, item: IItem, unlock: boolean) {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.unlocked, item.guid);
-
-  if (isUnlocked && !forceUnlock) {
+  if (!unlock) {
     // Lock item and its nodes
     user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(
       user.plannerData.unlocked,
@@ -23,39 +21,46 @@ export function toggleItemUnlock(user: UserSchema, item: IItem, forceUnlock = fa
       ...(item.nodes?.map((n) => n.guid) ?? []),
       ...(item.hiddenNodes?.map((n) => n.guid) ?? []),
     );
+    item.unlocked = false;
+    item.nodes?.forEach((n) => (n.unlocked = false));
+    item.hiddenNodes?.forEach((n) => (n.unlocked = false));
   } else {
     // Unlock item
+    item.unlocked = true;
     user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, item.guid);
   }
 
   user.plannerData.date = new Date().toISOString();
-  return !isUnlocked;
+  return !unlock;
 }
 
 /**
  * Toggle a node's unlocked status for a user
  */
-export function toggleNodeUnlock(user: UserSchema, node: INode, forceUnlock = false) {
+export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean) {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.unlocked, node.item?.guid ?? node.guid);
-
-  if (isUnlocked && !forceUnlock) {
+  if (!unlock) {
     // Lock node
     const guidsToRemove = [node.guid];
+    node.unlocked = false;
 
     // Also lock the item if it exists
-    if (node.item) toggleItemUnlock(user, node.item);
+    if (node.item) toggleItemUnlock(user, node.item, false);
 
     // Lock hidden items
-    node.hiddenItems?.forEach((item) => toggleItemUnlock(user, item));
+    node.hiddenItems?.forEach((item) => toggleItemUnlock(user, item, false));
 
     user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
-  } else if (!node.item?.unlocked) {
+  } else {
     // Unlock node
-    const guidsToAdd = [node.guid];
-    // Also unlock the item if it exists
+    const guidsToAdd: string[] = [];
+
     const unlockNode = (n: INode) => {
+      if (!n.item?.unlocked) {
+        guidsToAdd.push(n.guid);
+        node.unlocked = true;
+      }
       if (n.item) toggleItemUnlock(user, n.item, true);
 
       // Unlock hidden items
@@ -67,19 +72,17 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, forceUnlock = fa
     // also unlock previous node
     let currentNode = node;
     while (currentNode.prev) {
-      if (!currentNode.prev.unlocked) unlockNode(currentNode.prev);
+      unlockNode(currentNode.prev);
 
       currentNode = currentNode.prev;
     }
 
     user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
-
-    // lock all nodes above the current
   }
 
   user.plannerData.date = new Date().toISOString();
 
-  return !isUnlocked;
+  return unlock;
 }
 
 /**

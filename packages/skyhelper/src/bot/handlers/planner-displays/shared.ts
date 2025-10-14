@@ -11,7 +11,6 @@ import {
 } from "@skyhelperbot/utils";
 import { type BasePlannerHandler } from "./base.js";
 import type { RawFile } from "@discordjs/rest";
-import { CustomId, store } from "@/utils/customId-store";
 import { DisplayTabs, PlannerAction } from "@/types/planner";
 import { createActionId } from "../planner-utils.js";
 
@@ -39,7 +38,7 @@ export async function spiritTreeDisplay(
               disabled: !spirit,
             }),
             name,
-            planner.planner.getFormattedTreeCost(tree),
+            planner.planner.getFormattedTreeCostWithProgress(tree),
           )
         : textDisplay(name, planner.planner.getFormattedTreeCostWithProgress(tree)),
       row(
