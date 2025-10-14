@@ -67,7 +67,7 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, forceUnlock = fa
     // also unlock previous node
     let currentNode = node;
     while (currentNode.prev) {
-      if (!node.unlocked) unlockNode(currentNode.prev);
+      if (!currentNode.prev.unlocked) unlockNode(currentNode.prev);
 
       currentNode = currentNode.prev;
     }
