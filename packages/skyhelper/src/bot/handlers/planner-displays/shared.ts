@@ -44,9 +44,8 @@ export async function spiritTreeDisplay(
         : textDisplay(name, planner.planner.getFormattedTreeCostWithProgress(tree)),
       row(
         button({
-          label: `${unlockAll ? "Unlock" : "Lock"} All`,
+          label: `${unlockAll ? "✓ Unlock" : "x Lock"} All`,
           style: unlockAll ? 3 : 4,
-          emoji: { name: unlockAll ? "✓" : "x" },
           custom_id: createActionId({
             action: unlockAll ? PlannerAction.UnlockTree : PlannerAction.LockTree,
             guid: tree.guid,
