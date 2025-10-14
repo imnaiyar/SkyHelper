@@ -12,8 +12,9 @@ import {
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import { setLoadingState } from "@/utils/loading";
-import { getAllTreeNodes } from "@skyhelperbot/constants/skygame-planner";
+import { enrichDataWithUserProgress, getAllTreeNodes } from "@skyhelperbot/constants/skygame-planner";
 import { PlannerAction, type NavigationState } from "@/types/planner";
+import { modifyTreeNode } from "./sub/modify.tree.js";
 
 /**
  * Button handler for Sky Game Planner user actions (unlock/lock items, nodes, etc.)
@@ -22,11 +23,15 @@ export default defineButton({
   id: CustomId.PlannerActions,
   data: { name: "planner-actions" },
   async execute(interaction, _t, helper, { action, guid, gifted, navState, actionType }) {
+    const user = await helper.client.schemas.getUser(helper.user);
+    const d = await SkyPlannerData.getSkyGamePlannerData();
+    const data = enrichDataWithUserProgress(d, user.plannerData);
+    if ((action as PlannerAction) === PlannerAction.ModifyTree) {
+      await modifyTreeNode(guid, data, user, helper, JSON.parse(navState));
+      return;
+    }
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
     await helper.update({ components: getLoading });
-
-    const user = await helper.client.schemas.getUser(helper.user);
-    const data = await SkyPlannerData.getSkyGamePlannerData();
 
     let resultMessage = "";
 

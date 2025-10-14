@@ -13,6 +13,7 @@ import { type BasePlannerHandler } from "./base.js";
 import type { RawFile } from "@discordjs/rest";
 import { CustomId, store } from "@/utils/customId-store";
 import { DisplayTabs, PlannerAction } from "@/types/planner";
+import { createActionId } from "../planner-utils.js";
 
 /** Displays spirit's rendered tree and a button to modify it wherever it is needed */
 export async function spiritTreeDisplay(
@@ -40,30 +41,21 @@ export async function spiritTreeDisplay(
             name,
             planner.planner.getFormattedTreeCost(tree),
           )
-        : textDisplay(name, planner.planner.getFormattedTreeCost(tree)),
+        : textDisplay(name, planner.planner.getFormattedTreeCostWithProgress(tree)),
       row(
         button({
           label: `${unlockAll ? "Unlock" : "Lock"} All`,
           style: unlockAll ? 3 : 4,
-          emoji: { name: "✅" },
-          custom_id: store.serialize(CustomId.PlannerActions, {
+          emoji: { name: unlockAll ? "✓" : "x" },
+          custom_id: createActionId({
             action: unlockAll ? PlannerAction.UnlockTree : PlannerAction.LockTree,
             guid: tree.guid,
-            gifted: null,
-            actionType: null,
-            navState: JSON.stringify({
-              t: planner.state.t,
-              it: planner.state.it,
-              p: planner.state.p,
-              f: planner.state.f,
-              d: planner.state.d,
-              b: planner.state.b,
-              v: planner.state.v,
-            }),
-            user: planner.state.user,
+            navState: planner.state,
           }),
         }),
-        planner.viewbtn(planner.createCustomId({})),
+        planner.viewbtn(createActionId({ action: PlannerAction.ModifyTree, navState: planner.state, guid: tree.guid }), {
+          label: "Unlock Nodes",
+        }),
       ),
       mediaGallery(mediaGalleryItem("attachment://tree.png")),
     ],

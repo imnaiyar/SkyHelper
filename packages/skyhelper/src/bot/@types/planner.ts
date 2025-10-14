@@ -7,6 +7,7 @@ export enum PlannerAction {
   ToggleFavorite = "toggle-fav",
   UnlockTree = "unlock-tree",
   LockTree = "lock-tree",
+  ModifyTree = "modify-tree",
 }
 
 export interface NavigationState {

@@ -4,7 +4,7 @@
  */
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
-import type { IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
+import type { ICost, IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
 import { transformData, type PlannerAssetData } from "./transformer.js";
 import { DateTime } from "luxon";
 import type { UserPlannerData } from "./interfaces.js";
@@ -368,20 +368,71 @@ export function calculateCost(node: INode) {
   return costs;
 }
 
-export function formatCosts(costs: { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number }) {
+export function formatCosts(costs: ICost, remaining?: ICost) {
   const parts = [];
-  if (costs.h) parts.push(`${costs.h} <:Heart:${currency.h}>`);
-  if (costs.c) parts.push(`${costs.c} <:Candle:${currency.c}>`);
-  if (costs.sc) parts.push(`${costs.sc} <:SeasonCandle:${currency.sc}>`);
-  if (costs.sh) parts.push(`${costs.sh} <:SeasonHeart:${currency.sh}>`);
-  if (costs.ac) parts.push(`${costs.ac} <:AC:${currency.ac}>`);
-  if (costs.ec) parts.push(`${costs.ec} <:EventTicket:${currency.ec}>`);
+  /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+  if (costs.h) parts.push(`${remaining ? `${remaining.h || "✓"} (${costs.h})` : costs.h} <:Heart:${currency.h}>`);
+  if (costs.c) parts.push(`${remaining ? `${remaining.c || "✓"} (${costs.c})` : costs.h} <:Candle:${currency.c}>`);
+  if (costs.sc) parts.push(`${remaining ? `${remaining.sc || "✓"} (${costs.sc})` : costs.h} <:SeasonCandle:${currency.sc}>`);
+  if (costs.sh) parts.push(`${remaining ? `${remaining.sh || "✓"} (${costs.sh})` : costs.h} <:SeasonHeart:${currency.sh}>`);
+  if (costs.ac) parts.push(`${remaining ? `${remaining.ac || "✓"} (${costs.ac})` : costs.h} <:AC:${currency.ac}>`);
+  if (costs.ec) parts.push(`${remaining ? `${remaining.ec || "✓"} (${costs.ec})` : costs.h} <:EventTicket:${currency.ec}>`);
+  /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
   return parts.join(" ") || "Free";
 }
 
 export function getFormattedTreeCost(tree: ISpiritTree) {
   const c = calculateCost(tree.node);
   return formatCosts(c);
+}
+
+/**
+ * Calculate remaining costs for a tree, excluding unlocked nodes
+ * @param node The root node to calculate from
+ * @returns Cost object with remaining amounts
+ */
+export function calculateRemainingCost(node: INode) {
+  const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
+
+  // Don't count this node if it's item is already unlocked
+  if (!(node.item?.unlocked ?? false)) {
+    for (const currencyKey of Object.keys(costs)) {
+      costs[currencyKey as keyof typeof costs] += node[currencyKey as keyof typeof costs] ?? 0;
+    }
+  }
+
+  // Recursively calculate for child nodes
+  if (node.nw) {
+    const childCosts = calculateRemainingCost(node.nw);
+    for (const key in costs) {
+      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
+    }
+  }
+  if (node.ne) {
+    const childCosts = calculateRemainingCost(node.ne);
+    for (const key in costs) {
+      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
+    }
+  }
+  if (node.n) {
+    const childCosts = calculateRemainingCost(node.n);
+    for (const key in costs) {
+      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
+    }
+  }
+
+  return costs;
+}
+
+/**
+ * Get formatted tree cost with user progress showing remaining and total costs
+ * @param tree The spirit tree
+ */
+export function getFormattedTreeCostWithProgress(tree: ISpiritTree) {
+  const totalCosts = calculateCost(tree.node);
+  const remainingCosts = calculateRemainingCost(tree.node);
+
+  return formatCosts(totalCosts, remainingCosts);
 }
 
 export function formatGroupedCurrencies(
@@ -503,4 +554,8 @@ export function getAllTreeNodes(node: INode, visited = new Set<string>()) {
   if (node.ne) nodes.push(...getAllTreeNodes(node.ne, visited));
 
   return nodes;
+}
+
+export function getTreeSpirit(tree: ISpiritTree) {
+  return tree.spirit ?? tree.eventInstanceSpirit?.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? null;
 }
