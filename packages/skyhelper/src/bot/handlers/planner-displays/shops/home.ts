@@ -1,8 +1,9 @@
 import type { IIAP, IItemList, IShop } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler } from "../base.js";
-import { FilterType, serializeFilters } from "../filter.manager.js";
+import { serializeFilters } from "../filter.manager.js";
 import { button, container, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { getIGCnIApDisplay } from "./shared.js";
+import { FilterType } from "@/types/planner";
 /** Configs for permanent shops */
 const configs = (planner: BasePlannerHandler): Array<{ title: string; description: string; custom_id: string }> => [
   {

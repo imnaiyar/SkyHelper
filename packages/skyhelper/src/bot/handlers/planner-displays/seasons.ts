@@ -1,16 +1,17 @@
 import { emojis, zone, type SkyPlannerData } from "@skyhelperbot/constants";
-import { BasePlannerHandler, DisplayTabs } from "./base.js";
+import { BasePlannerHandler } from "./base.js";
 import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType } from "discord-api-types/v10";
 import { resolveToLuxon, type ISeason } from "@skyhelperbot/constants/skygame-planner";
 import { DateTime } from "luxon";
-import { FilterType, serializeFilters } from "./filter.manager.js";
+import { serializeFilters } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
+import { DisplayTabs, FilterType, OrderType } from "@/types/planner";
 
 export class SeasonsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
-    this.initializeFilters([FilterType.Order]);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
+    this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }
   override handle() {
     const season = this.data.seasons.find((s) => s.guid === this.state.it);

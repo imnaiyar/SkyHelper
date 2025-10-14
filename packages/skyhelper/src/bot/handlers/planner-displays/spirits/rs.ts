@@ -1,12 +1,12 @@
 import { BaseSpiritsDisplay } from "./base.js";
-import { FilterType, OrderType } from "../filter.manager.js";
+import { FilterType, OrderType } from "@/types/planner";
 import { type IReturningSpirits } from "@skyhelperbot/constants/skygame-planner";
 import { section, container, thumbnail, textDisplay, row, separator } from "@skyhelperbot/utils";
 import { ComponentType } from "@discordjs/core";
 import { spiritTreeDisplay } from "../shared.js";
 export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }
   override async handle() {

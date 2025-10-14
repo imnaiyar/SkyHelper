@@ -1,11 +1,11 @@
-import { DisplayTabs, type NavigationState } from "@/handlers/planner-displays/base";
+import { DisplayTabs, type NavigationState, FilterType } from "@/types/planner";
 import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
-import { FilterType, serializeFilters } from "@/handlers/planner-displays/filter.manager";
+import { serializeFilters } from "@/handlers/planner-displays/filter.manager";
 
 export function searchHelper(
   data: { type: string; name: string; guid: string },
   pdata: PlannerAssetData,
-): NavigationState | null {
+): Omit<NavigationState, "user"> | null {
   // Handle type prefixes for special cases
   const typeRegex = /^(TS#|SV)/;
   const typeMatch = typeRegex.exec(data.type);

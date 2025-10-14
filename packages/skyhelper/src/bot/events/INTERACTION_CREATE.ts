@@ -25,7 +25,7 @@ import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "@/handlers/planner";
-import type { DisplayTabs, NavigationState } from "@/handlers/planner-displays/base";
+import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
@@ -248,17 +248,20 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           const values = interaction.data.values;
           const { t: tab, p, d, f, it, back } = data;
           const b = back ? (client.utils.parseCustomId(back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
-          const res = await handlePlannerNavigation({
-            v: values,
-            t: tab as DisplayTabs,
-            p: p ?? undefined,
-            f: f ?? undefined,
-            d: d ?? undefined,
-            it: it ?? undefined,
-            i: data.i ?? undefined,
-            b,
-            user: helper.user.id,
-          });
+          const res = await handlePlannerNavigation(
+            {
+              v: values,
+              t: tab as DisplayTabs,
+              p: p ?? undefined,
+              f: f ?? undefined,
+              d: d ?? undefined,
+              it: it ?? undefined,
+              i: data.i ?? undefined,
+              b,
+            },
+            helper.user,
+            client,
+          );
           await helper.editReply({
             ...res,
             flags: MessageFlags.IsComponentsV2,
@@ -269,10 +272,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
           await helper.update({ components: getLoading });
           const values = interaction.data.values;
-          const res = await handlePlannerNavigation({
-            t: values[0] as DisplayTabs,
-            user: helper.user.id,
-          });
+          const res = await handlePlannerNavigation(
+            {
+              t: values[0] as DisplayTabs,
+            },
+            helper.user,
+            client,
+          );
           await helper.editReply({
             ...res,
             flags: MessageFlags.IsComponentsV2,

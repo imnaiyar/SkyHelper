@@ -1,4 +1,4 @@
-import type { DisplayTabs, NavigationState } from "@/handlers/planner-displays/base";
+import { type DisplayTabs, type NavigationState, FilterType } from "@/types/planner";
 import { defineButton } from "@/structures";
 import Utils from "@/utils/classes/Utils";
 import { CustomId } from "@/utils/customId-store";
@@ -6,13 +6,13 @@ import { type APILabelComponent, ComponentType, type APITextDisplayComponent } f
 import { textDisplay } from "@skyhelperbot/utils";
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import { handlePlannerNavigation } from "@/handlers/planner";
-import { FilterManager, FilterType } from "@/handlers/planner-displays/filter.manager";
+import { FilterManager } from "@/handlers/planner-displays/filter.manager";
 
 export default defineButton({
   data: { name: "filter" },
   id: CustomId.PlannerFilters,
   async execute(_interaction, _t, helper, props) {
-    const { tab, filters, user } = props;
+    const { tab, filters } = props;
     const data = await SkyPlannerData.getSkyGamePlannerData();
 
     const filterManager = new FilterManager(data);
@@ -96,12 +96,15 @@ export default defineButton({
 
     const newFilterString = newFilterManager.serializeFilters();
     const state = Utils.parseCustomId(tab) as unknown as NavigationState;
-    const comps = await handlePlannerNavigation({
-      ...state,
-      user: user ?? helper.user.id,
-      f: newFilterString || undefined,
-      p: 1, // Reset to first page when filters change
-    });
+    const comps = await handlePlannerNavigation(
+      {
+        ...state,
+        f: newFilterString || undefined,
+        p: 1, // Reset to first page when filters change
+      },
+      helper.user,
+      helper.client,
+    );
 
     await helper.api.interactions.editReply(modalSubmission.application_id, modalSubmission.token, comps);
   },

@@ -1,14 +1,15 @@
 import { button, container, row, section, textDisplay, thumbnail, separator } from "@skyhelperbot/utils";
-import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { FilterType, OrderType, serializeFilters } from "./filter.manager.js";
+import { BasePlannerHandler } from "./base.js";
+import { serializeFilters } from "./filter.manager.js";
 import { ComponentType, type APIContainerComponent } from "discord-api-types/v10";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import type { RawFile } from "@discordjs/rest";
 import { spiritTreeDisplay } from "./shared.js";
+import { DisplayTabs, FilterType, OrderType } from "@/types/planner";
 
 export class EventsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     // Initialize filters for events display
     this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }

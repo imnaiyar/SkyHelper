@@ -1,14 +1,19 @@
-import type { ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
+import { getAllTreeNodes, type ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
 import {
+  button,
   generateSpiritTree,
   type GenerateSpiritTreeOptions,
   mediaGallery,
   mediaGalleryItem,
+  row,
   section,
   textDisplay,
 } from "@skyhelperbot/utils";
-import { DisplayTabs, type BasePlannerHandler } from "./base.js";
+import { type BasePlannerHandler } from "./base.js";
 import type { RawFile } from "@discordjs/rest";
+import { CustomId, store } from "@/utils/customId-store";
+import { DisplayTabs, PlannerAction } from "@/types/planner";
+import { createActionId } from "../planner-utils.js";
 
 /** Displays spirit's rendered tree and a button to modify it wherever it is needed */
 export async function spiritTreeDisplay(
@@ -20,6 +25,10 @@ export async function spiritTreeDisplay(
   const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit;
   /* @ts-expect-error this is a fallback, so i'm not worried */
   const name = tree.name ?? spirit?.name ?? spirit?.spirit?.name ?? "Unknown";
+  const nodes = getAllTreeNodes(tree.node);
+
+  const unlockAll = nodes.some((n) => !n.item?.unlocked && !n.item?.autoUnlocked);
+
   return {
     file,
     components: [
@@ -30,12 +39,23 @@ export async function spiritTreeDisplay(
               disabled: !spirit,
             }),
             name,
+            planner.planner.getFormattedTreeCost(tree),
           )
-        : textDisplay(name),
-      section(
-        planner.viewbtn(planner.createCustomId({}), { label: "Modify", disabled: true }),
-        planner.planner.getFormattedTreeCost(tree),
-        "-# Click the `Modify` button to mark/unmark items in this spirit tree as acquired",
+        : textDisplay(name, planner.planner.getFormattedTreeCostWithProgress(tree)),
+      row(
+        button({
+          label: `${unlockAll ? "Unlock" : "Lock"} All`,
+          style: unlockAll ? 3 : 4,
+          emoji: { name: unlockAll ? "✓" : "x" },
+          custom_id: createActionId({
+            action: unlockAll ? PlannerAction.UnlockTree : PlannerAction.LockTree,
+            guid: tree.guid,
+            navState: planner.state,
+          }),
+        }),
+        planner.viewbtn(createActionId({ action: PlannerAction.ModifyTree, navState: planner.state, guid: tree.guid }), {
+          label: "Unlock Nodes",
+        }),
       ),
       mediaGallery(mediaGalleryItem("attachment://tree.png")),
     ],

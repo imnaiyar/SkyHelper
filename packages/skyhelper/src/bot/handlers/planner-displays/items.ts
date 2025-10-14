@@ -1,13 +1,13 @@
 import { ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
-import { BasePlannerHandler, DisplayTabs } from "./base.js";
-import { FilterType } from "./filter.manager.js";
+import { BasePlannerHandler } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
 import type { APIComponentInContainer } from "discord-api-types/v10";
+import { DisplayTabs, FilterType } from "@/types/planner";
 
 export class ItemsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
     this.initializeFilters([FilterType.ItemTypes, FilterType.Seasons, FilterType.Order, FilterType.Currencies], {
       [FilterType.ItemTypes]: { defaultValues: [ItemType.Outfit] },
     });

@@ -1,9 +1,10 @@
 import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
-import { BasePlannerHandler, DisplayTabs } from "./base.js";
+import { BasePlannerHandler } from "./base.js";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import { type IRealm, SpiritType } from "@skyhelperbot/constants/skygame-planner";
-import { serializeFilters, FilterType } from "./filter.manager.js";
+import { serializeFilters } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
+import { DisplayTabs, FilterType } from "@/types/planner";
 
 export class RealmsDisplay extends BasePlannerHandler {
   override handle() {

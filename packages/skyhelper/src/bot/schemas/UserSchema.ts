@@ -43,6 +43,31 @@ const Schema = new mongoose.Schema<UserSchema>({
       eden: Boolean,
     },
   },
+  plannerData: {
+    date: String,
+    currencies: {
+      ascendedCandles: Number,
+      giftPasses: Number,
+      eventCurrencies: {
+        type: Map,
+        of: {
+          tickets: { type: Number, default: 0 },
+        },
+      },
+      seasonCurrencies: {
+        type: Map,
+        of: {
+          candles: { type: Number, default: 0 },
+          hearts: { type: Number, default: 0 },
+        },
+      },
+    },
+    unlocked: String,
+    wingedLights: String,
+    favourites: String,
+    seasonPasses: String,
+    gifted: String,
+  },
 });
 
 const Model = mongoose.model<UserSchema>("users", Schema);

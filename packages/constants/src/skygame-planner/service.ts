@@ -4,9 +4,11 @@
  */
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
-import type { IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
+import type { ICost, IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
 import { transformData, type PlannerAssetData } from "./transformer.js";
 import { DateTime } from "luxon";
+import type { UserPlannerData } from "./interfaces.js";
+import { PlannerDataHelper } from "./interfaces.js";
 
 let cachedData: PlannerAssetData | null = null;
 let lastFetchTime = 0;
@@ -366,20 +368,71 @@ export function calculateCost(node: INode) {
   return costs;
 }
 
-export function formatCosts(costs: { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number }) {
+export function formatCosts(costs: ICost, remaining?: ICost) {
   const parts = [];
-  if (costs.h) parts.push(`${costs.h} <:Heart:${currency.h}>`);
-  if (costs.c) parts.push(`${costs.c} <:Candle:${currency.c}>`);
-  if (costs.sc) parts.push(`${costs.sc} <:SeasonCandle:${currency.sc}>`);
-  if (costs.sh) parts.push(`${costs.sh} <:SeasonHeart:${currency.sh}>`);
-  if (costs.ac) parts.push(`${costs.ac} <:AC:${currency.ac}>`);
-  if (costs.ec) parts.push(`${costs.ec} <:EventTicket:${currency.ec}>`);
+  /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+  if (costs.h) parts.push(`${remaining ? `${remaining.h || "✓"} (${costs.h})` : costs.h} <:Heart:${currency.h}>`);
+  if (costs.c) parts.push(`${remaining ? `${remaining.c || "✓"} (${costs.c})` : costs.c} <:Candle:${currency.c}>`);
+  if (costs.sc) parts.push(`${remaining ? `${remaining.sc || "✓"} (${costs.sc})` : costs.sc} <:SeasonCandle:${currency.sc}>`);
+  if (costs.sh) parts.push(`${remaining ? `${remaining.sh || "✓"} (${costs.sh})` : costs.sh} <:SeasonHeart:${currency.sh}>`);
+  if (costs.ac) parts.push(`${remaining ? `${remaining.ac || "✓"} (${costs.ac})` : costs.ac} <:AC:${currency.ac}>`);
+  if (costs.ec) parts.push(`${remaining ? `${remaining.ec || "✓"} (${costs.ec})` : costs.ec} <:EventTicket:${currency.ec}>`);
+  /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
   return parts.join(" ") || "Free";
 }
 
 export function getFormattedTreeCost(tree: ISpiritTree) {
   const c = calculateCost(tree.node);
   return formatCosts(c);
+}
+
+/**
+ * Calculate remaining costs for a tree, excluding unlocked nodes
+ * @param node The root node to calculate from
+ * @returns Cost object with remaining amounts
+ */
+export function calculateRemainingCost(node: INode) {
+  const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
+
+  // Don't count this node if it's item is already unlocked
+  if (!(node.item?.unlocked ?? false)) {
+    for (const currencyKey of Object.keys(costs)) {
+      costs[currencyKey as keyof typeof costs] += node[currencyKey as keyof typeof costs] ?? 0;
+    }
+  }
+
+  // Recursively calculate for child nodes
+  if (node.nw) {
+    const childCosts = calculateRemainingCost(node.nw);
+    for (const key in costs) {
+      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
+    }
+  }
+  if (node.ne) {
+    const childCosts = calculateRemainingCost(node.ne);
+    for (const key in costs) {
+      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
+    }
+  }
+  if (node.n) {
+    const childCosts = calculateRemainingCost(node.n);
+    for (const key in costs) {
+      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
+    }
+  }
+
+  return costs;
+}
+
+/**
+ * Get formatted tree cost with user progress showing remaining and total costs
+ * @param tree The spirit tree
+ */
+export function getFormattedTreeCostWithProgress(tree: ISpiritTree) {
+  const totalCosts = calculateCost(tree.node);
+  const remainingCosts = calculateRemainingCost(tree.node);
+
+  return formatCosts(totalCosts, remainingCosts);
 }
 
 export function formatGroupedCurrencies(
@@ -398,3 +451,111 @@ export function formatGroupedCurrencies(
 }
 
 export const resolvePlannerUrl = (url: string) => (url.startsWith("http") ? url : BASE_URL + url);
+
+/**
+ * Enrich planner data with user-specific progress information
+ * @param data The base planner data
+ * @param userData The user's planner progress data
+ * @returns The same data object with unlocked/bought/received fields populated
+ */
+export function enrichDataWithUserProgress(data: PlannerAssetData, userData?: UserPlannerData): PlannerAssetData {
+  if (!userData) return data;
+
+  const unlockedSet = PlannerDataHelper.parseGuidSet(userData.unlocked);
+  const wingedLightsSet = PlannerDataHelper.parseGuidSet(userData.wingedLights);
+  const favouritesSet = PlannerDataHelper.parseGuidSet(userData.favourites);
+  const giftedSet = PlannerDataHelper.parseGuidSet(userData.gifted);
+
+  // Enrich items
+  data.items.forEach((item) => {
+    item.unlocked = unlockedSet.has(item.guid);
+    item.favourited = favouritesSet.has(item.guid);
+  });
+
+  // Enrich nodes
+  data.nodes.forEach((node) => {
+    node.unlocked = unlockedSet.has(node.guid);
+  });
+
+  // Enrich IAPs
+  data.iaps.forEach((iap) => {
+    const isUnlocked = unlockedSet.has(iap.guid);
+    const isGifted = giftedSet.has(iap.guid);
+    iap.bought = isUnlocked && !isGifted;
+    iap.gifted = isGifted;
+  });
+
+  // Enrich item list nodes
+  data.itemListNodes.forEach((node) => {
+    node.unlocked = unlockedSet.has(node.guid);
+  });
+
+  // Enrich winged lights
+  data.wingedLights.forEach((wl) => {
+    wl.unlocked = wingedLightsSet.has(wl.guid);
+  });
+
+  return data;
+}
+
+/**
+ * Calculate progress statistics for a user
+ * @param data The enriched planner data
+ * @returns Progress statistics
+ */
+export function calculateUserProgress(data: PlannerAssetData) {
+  const itemsTotal = data.items.length;
+  const itemsUnlocked = data.items.filter((i) => i.unlocked).length;
+
+  const nodesTotal = data.nodes.length;
+  const nodesUnlocked = data.nodes.filter((n) => n.unlocked).length;
+
+  const wingedLightsTotal = data.wingedLights.length;
+  const wingedLightsUnlocked = data.wingedLights.filter((wl) => wl.unlocked).length;
+
+  const iapsTotal = data.iaps.length;
+  const iapsBought = data.iaps.filter((iap) => (iap.bought ?? false) || (iap.gifted ?? false)).length;
+
+  return {
+    items: {
+      total: itemsTotal,
+      unlocked: itemsUnlocked,
+      percentage: itemsTotal > 0 ? Math.round((itemsUnlocked / itemsTotal) * 100) : 0,
+    },
+    nodes: {
+      total: nodesTotal,
+      unlocked: nodesUnlocked,
+      percentage: nodesTotal > 0 ? Math.round((nodesUnlocked / nodesTotal) * 100) : 0,
+    },
+    wingedLights: {
+      total: wingedLightsTotal,
+      unlocked: wingedLightsUnlocked,
+      percentage: wingedLightsTotal > 0 ? Math.round((wingedLightsUnlocked / wingedLightsTotal) * 100) : 0,
+    },
+    iaps: {
+      total: iapsTotal,
+      bought: iapsBought,
+      percentage: iapsTotal > 0 ? Math.round((iapsBought / iapsTotal) * 100) : 0,
+    },
+  };
+}
+
+/**
+ * Recursively get all nodes in a tree
+ */
+export function getAllTreeNodes(node: INode, visited = new Set<string>()) {
+  if (visited.has(node.guid)) return [];
+
+  visited.add(node.guid);
+  const nodes = [node];
+
+  if (node.n) nodes.push(...getAllTreeNodes(node.n, visited));
+  if (node.nw) nodes.push(...getAllTreeNodes(node.nw, visited));
+  if (node.ne) nodes.push(...getAllTreeNodes(node.ne, visited));
+
+  return nodes;
+}
+
+export function getTreeSpirit(tree: ISpiritTree) {
+  return tree.spirit ?? tree.eventInstanceSpirit?.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? null;
+}

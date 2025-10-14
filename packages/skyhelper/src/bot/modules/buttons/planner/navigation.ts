@@ -2,7 +2,7 @@ import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "../../../handlers/planner.js";
 import { defineButton } from "@/structures";
 import { MessageFlags } from "discord-api-types/v10";
-import type { NavigationState } from "@/handlers/planner-displays/base";
+import type { NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 import Utils from "@/utils/classes/Utils";
 
@@ -18,16 +18,19 @@ export default defineButton({
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
     await helper.update({ components: getLoading });
     const b = back ? (Utils.parseCustomId(back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
-    const response = await handlePlannerNavigation({
-      t: t as any,
-      it: it ?? undefined,
-      p: p ?? undefined,
-      d: d ?? undefined,
-      f: f ?? undefined,
-      i: i ?? undefined,
-      b,
-      user: helper.user.id,
-    });
+    const response = await handlePlannerNavigation(
+      {
+        t: t as any,
+        it: it ?? undefined,
+        p: p ?? undefined,
+        d: d ?? undefined,
+        f: f ?? undefined,
+        i: i ?? undefined,
+        b,
+      },
+      helper.user,
+      helper.client,
+    );
 
     await helper.editReply({
       ...response,

@@ -1,12 +1,12 @@
 import { mediaGallery, mediaGalleryItem, section, textDisplay, container, row, separator } from "@skyhelperbot/utils";
-import { BasePlannerHandler, type NavigationState } from "./base.js";
+import { BasePlannerHandler } from "./base.js";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import config from "@/config";
-import { FilterType } from "./filter.manager.js";
+import { FilterType } from "@/types/planner";
 
 export class WingedLightsDisplay extends BasePlannerHandler {
-  constructor(data: SkyPlannerData.PlannerAssetData, planner: typeof SkyPlannerData, state: NavigationState) {
-    super(data, planner, state);
+  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+    super(data, planner, state, settings, client);
 
     this.initializeFilters(
       [FilterType.Realms, FilterType.Areas] /* {
