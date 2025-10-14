@@ -44,7 +44,7 @@ If a node has branches, they're labeled L (left) or R (right). Any nodes above t
     selectMenus.push({
       type: ComponentType.StringSelect,
       custom_id: `tree_${menuIndex}`,
-      min_values: 1,
+      min_values: 0,
       placeholder: `Select nodes (Menu ${menuIndex} of ${totalMenus})`,
       options: chunk.map((l) => ({
         label: `${l.node.item?.name ?? "Unknown"}${l.node.item?.level ? ` Lvl${l.node.item.level}` : ""} (${l.label})`,
