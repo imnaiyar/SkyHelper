@@ -3,15 +3,17 @@ import { SeasonsDisplay } from "./seasons.js";
 import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
 import { DateTime } from "luxon";
-import type {
-  IEvent,
-  IEventInstance,
-  IItemListNode,
-  IReturningSpirits,
-  ITravelingSpirit,
+import {
+  calculateUserProgress,
+  type IEvent,
+  type IEventInstance,
+  type IItemListNode,
+  type IReturningSpirits,
+  type ITravelingSpirit,
 } from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { DisplayTabs } from "@/types/planner";
+import Utils from "@/utils/classes/Utils";
 
 export class HomeDisplay extends BasePlannerHandler {
   override handle(): ResponseData {
@@ -27,13 +29,17 @@ export class HomeDisplay extends BasePlannerHandler {
       this.settings,
       this.client,
     );
-
+    const progress = calculateUserProgress(this.data);
     const components = [
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
         separator(),
         textDisplay(
           "-# This feature is in active development. Some things are not implemented yet, few things may even break. Feedback and bug reports are appreciated.",
+          `### Progress`,
+          ...Object.entries(progress).map(
+            ([type, p]) => `${Utils.capitalize(type)}: ${"unlocked" in p ? p.unlocked : p.bought}/${p.total} (${p.percentage}%)`,
+          ),
         ),
         ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
         ...(travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : []),
