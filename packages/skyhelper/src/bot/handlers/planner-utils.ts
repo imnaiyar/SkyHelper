@@ -263,6 +263,7 @@ export function createActionId(opt: {
       f: opt.navState.f,
       d: opt.navState.d,
       b: opt.navState.b,
+      i: opt.navState.i,
       v: opt.navState.v,
     }),
     user: opt.navState.user,

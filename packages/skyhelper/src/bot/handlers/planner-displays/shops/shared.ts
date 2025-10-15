@@ -32,8 +32,14 @@ export function getIGCnIApDisplay(
       ),
       ...as.items.map((l) =>
         section(
-          // TODO: handle acquiring the item
-          planner.viewbtn(planner.createCustomId({ it: l.guid }), { label: "Acquire", disabled: true }),
+          planner.viewbtn(
+            // TODO: find a way to include back within discord's limit
+            createActionId({ action: PlannerAction.ToggleListNode, guid: l.guid, navState: { ...planner.state, b: undefined } }),
+            {
+              label: l.unlocked || l.item.unlocked ? "Unacquire" : "Acquire",
+              style: l.unlocked || l.item.unlocked ? 4 : 1,
+            },
+          ),
           `${planner.formatemoji(l.item.emoji, l.item.name)} ${l.item.name}`,
           planner.planner.formatCosts(l),
         ),
@@ -56,7 +62,12 @@ export function getIGCnIApDisplay(
 
       row(
         button({
-          custom_id: createActionId({ action: PlannerAction.ToggleIAP, navState: planner.state, guid: as.guid }),
+          custom_id: createActionId({
+            action: PlannerAction.ToggleIAP,
+            // TODO: same
+            navState: { ...planner.state, b: undefined },
+            guid: as.guid,
+          }),
           emoji: { name: "🛒" },
           label: "Bought",
           style: as.bought ? 4 : 2,
@@ -64,7 +75,7 @@ export function getIGCnIApDisplay(
         button({
           custom_id: createActionId({
             action: PlannerAction.ToggleIAP,
-            navState: planner.state,
+            navState: { ...planner.state, b: undefined },
             actionType: "gifted",
             guid: as.guid,
           }),

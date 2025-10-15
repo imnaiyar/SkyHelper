@@ -12,7 +12,7 @@ import {
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import { setLoadingState } from "@/utils/loading";
-import { enrichDataWithUserProgress, getAllTreeNodes } from "@skyhelperbot/constants/skygame-planner";
+import { enrichDataWithUserProgress, getAllTreeNodes, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import { PlannerAction, type NavigationState } from "@/types/planner";
 import { modifyTreeNode } from "./sub/modify.tree.js";
 import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";
@@ -122,6 +122,21 @@ export default defineButton({
           resultMessage = `🔒 Locked entire tree`;
         }
         break;
+      }
+
+      case PlannerAction.ToggleListNode: {
+        const ln = data.itemListNodes.find((l) => l.guid === guid);
+        if (ln) {
+          user.plannerData ??= PlannerDataHelper.createEmpty();
+          if (ln.item.unlocked) {
+            user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
+            resultMessage = `🔒 Removed ${ln.item.name}`;
+          } else {
+            user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
+            resultMessage = `✅ Marked ${ln.item.name} as acquired`;
+          }
+          user.plannerData.date = new Date().toISOString();
+        }
       }
     }
 

@@ -8,6 +8,7 @@ export enum PlannerAction {
   UnlockTree = "unlock-tree",
   LockTree = "lock-tree",
   ModifyTree = "modify-tree",
+  ToggleListNode = "tg-ln",
 }
 
 export interface NavigationState {
