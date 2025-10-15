@@ -559,3 +559,12 @@ export function getAllTreeNodes(node: INode, visited = new Set<string>()) {
 export function getTreeSpirit(tree: ISpiritTree) {
   return tree.spirit ?? tree.eventInstanceSpirit?.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? null;
 }
+
+export function getNodeSpirit(node: INode) {
+  return (
+    node.root?.spiritTree?.spirit ??
+    node.root?.spiritTree?.ts?.spirit ??
+    node.root?.spiritTree?.visit?.spirit ??
+    node.root?.spiritTree?.eventInstanceSpirit?.spirit
+  );
+}

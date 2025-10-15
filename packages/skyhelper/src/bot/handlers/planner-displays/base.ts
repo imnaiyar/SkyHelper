@@ -377,14 +377,14 @@ export abstract class BasePlannerHandler {
   /**
    * Create an action button for toggling winged light collection status
    */
-  public createWingedLightButton(wl: { guid: string; unlocked?: boolean }, actionType?: "all" | "filtered") {
+  public createWingedLightButton(wl: { guid?: string; unlocked?: boolean }, actionType?: "all" | "filtered") {
     return button({
       label: wl.unlocked ? "Collected" : "Collect",
       style: wl.unlocked ? 3 : 2,
       emoji: wl.unlocked ? { name: "✅" } : { id: emojis.wingwedge },
       custom_id: store.serialize(CustomId.PlannerActions, {
         action: PlannerAction.ToggleWL,
-        guid: wl.guid,
+        guid: wl.guid ?? "",
         gifted: null,
         navState: JSON.stringify({
           t: this.state.t,

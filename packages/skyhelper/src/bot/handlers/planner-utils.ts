@@ -154,19 +154,17 @@ export function toggleItemListNodeUnlock(user: UserSchema, node: IItemListNode) 
 /**
  * Toggle a winged light's unlocked status for a user
  */
-export function toggleWingedLightUnlock(user: UserSchema, wl: IWingedLight) {
+export function toggleWingedLightUnlock(user: UserSchema, wl: IWingedLight, unlock = false) {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.wingedLights, wl.guid);
-
-  if (isUnlocked) {
+  if (!unlock) {
     user.plannerData.wingedLights = PlannerDataHelper.removeFromGuidString(user.plannerData.wingedLights, wl.guid);
   } else {
     user.plannerData.wingedLights = PlannerDataHelper.addToGuidString(user.plannerData.wingedLights, wl.guid);
   }
 
   user.plannerData.date = new Date().toISOString();
-  return !isUnlocked;
+  return !unlock;
 }
 
 /**

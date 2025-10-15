@@ -1,4 +1,4 @@
-import { ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
+import { getNodeSpirit, ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
@@ -49,10 +49,10 @@ export class ItemsDisplay extends BasePlannerHandler {
   private getItemSourceNavigation(item: IItem) {
     const highlight = [FilterType.Highlight, [item.guid]] satisfies [FilterType.Highlight, string[]];
     // Check if item comes from a spirit tree
-    const nodeWithSpirit = item.nodes?.find((n) => n.root?.spiritTree?.spirit);
-    if (nodeWithSpirit?.root?.spiritTree?.spirit) {
-      const spirit = nodeWithSpirit.root.spiritTree.spirit;
-      const tree = nodeWithSpirit.root.spiritTree;
+    const nodeWithSpirit = item.nodes?.find((n) => getNodeSpirit(n));
+    if (nodeWithSpirit) {
+      const spirit = getNodeSpirit(nodeWithSpirit)!;
+      const tree = nodeWithSpirit.root!.spiritTree!;
 
       // Find which tree index this is for the spirit
       const allTrees = [spirit.tree, ...(spirit.treeRevisions ?? []), ...(spirit.returns ?? []), ...(spirit.ts ?? [])].filter(
@@ -117,11 +117,14 @@ export class ItemsDisplay extends BasePlannerHandler {
           `## ${this.formatemoji(item.emoji, item.name)} ${item.name}`,
           [
             item.group,
-            item.nodes?.[0]?.root?.spiritTree?.spirit?.name,
+            (() => {
+              const nodeWithSpirit = item.nodes?.find((n) => getNodeSpirit(n));
+              return nodeWithSpirit ? getNodeSpirit(nodeWithSpirit)?.name : null;
+            })(),
             item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
             item.season?.shortName,
           ]
-            .filter(Boolean)
+            .filter((s) => !!s)
             .join(" \u2022 "),
         ),
       ],
