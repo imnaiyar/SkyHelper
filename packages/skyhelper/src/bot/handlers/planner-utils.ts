@@ -91,41 +91,27 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean)
 export function toggleIAPStatus(user: UserSchema, iap: IIAP, gifted = false): "bought" | "gifted" | "locked" {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.unlocked, iap.guid);
-  const isGifted = PlannerDataHelper.hasGuid(user.plannerData.gifted, iap.guid);
-
-  if (isUnlocked) {
-    // Lock IAP
-    user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, iap.guid);
-    user.plannerData.gifted = PlannerDataHelper.removeFromGuidString(user.plannerData.gifted, iap.guid);
-
-    // Lock related items
-    iap.items?.forEach((item) => {
-      user.plannerData!.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData!.unlocked, item.guid);
-    });
-
-    user.plannerData.date = new Date().toISOString();
-
-    return "locked";
+  const isCurrentlyActive = gifted ? iap.gifted : iap.bought;
+  const targetField = gifted ? "gifted" : "unlocked";
+  const otherField = gifted ? "unlocked" : "gifted";
+  let status: "bought" | "gifted" | "locked";
+  if (isCurrentlyActive) {
+    // Remove from current field and lock items
+    user.plannerData[targetField] = PlannerDataHelper.removeFromGuidString(user.plannerData[targetField], iap.guid);
+    iap.items?.forEach((item) => toggleItemUnlock(user, item, false));
+    status = "locked";
   } else {
-    // Unlock IAP
-    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, iap.guid);
-
-    if (gifted) {
-      user.plannerData.gifted = PlannerDataHelper.addToGuidString(user.plannerData.gifted, iap.guid);
-    } else {
-      user.plannerData.gifted = PlannerDataHelper.removeFromGuidString(user.plannerData.gifted, iap.guid);
-    }
-
-    // Unlock related items
-    iap.items?.forEach((item) => {
-      user.plannerData!.unlocked = PlannerDataHelper.addToGuidString(user.plannerData!.unlocked, item.guid);
-    });
-
-    user.plannerData.date = new Date().toISOString();
-
-    return gifted ? "gifted" : "bought";
+    // Add to current field and unlock items
+    user.plannerData[targetField] = PlannerDataHelper.addToGuidString(user.plannerData[targetField], iap.guid);
+    iap.items?.forEach((item) => toggleItemUnlock(user, item, true));
+    status = gifted ? "gifted" : "bought";
   }
+
+  // remove from the other field to ensure mutual exclusivity
+  user.plannerData[otherField] = PlannerDataHelper.removeFromGuidString(user.plannerData[otherField], iap.guid);
+
+  user.plannerData.date = new Date().toISOString();
+  return status;
 }
 
 /**
@@ -269,7 +255,6 @@ export function createActionId(opt: {
   return store.serialize(CustomId.PlannerActions, {
     action: opt.action,
     guid: opt.guid ?? "",
-    gifted: opt.gifted ?? null,
     actionType: opt.actionType ?? null,
     navState: JSON.stringify({
       t: opt.navState.t,

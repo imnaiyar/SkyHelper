@@ -3,6 +3,8 @@ import type { BasePlannerHandler } from "../base.js";
 import { button, row, section, textDisplay } from "@skyhelperbot/utils";
 import type { APIComponentInContainer } from "discord-api-types/v10";
 import { emojis } from "@skyhelperbot/constants";
+import { createActionId } from "@/handlers/planner-utils";
+import { PlannerAction } from "@/types/planner";
 
 export function getIGCnIApDisplay(
   item: IItemList,
@@ -52,19 +54,23 @@ export function getIGCnIApDisplay(
           .join("\n"),
       ),
 
-      /** TODO:  handle buying/recieving the item */
       row(
         button({
-          custom_id: planner.createCustomId({ it: as.guid, d: "Buy" }),
+          custom_id: createActionId({ action: PlannerAction.ToggleIAP, navState: planner.state, guid: as.guid }),
           emoji: { name: "🛒" },
           label: "Bought",
-          style: 3,
+          style: as.bought ? 4 : 2,
         }),
         button({
-          custom_id: planner.createCustomId({ it: as.guid, d: "Receive" }),
+          custom_id: createActionId({
+            action: PlannerAction.ToggleIAP,
+            navState: planner.state,
+            actionType: "gifted",
+            guid: as.guid,
+          }),
           label: "Received",
           emoji: { name: "🎁" },
-          style: 2,
+          style: as.gifted ? 4 : 3,
         }),
       ),
     ];

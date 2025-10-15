@@ -23,7 +23,7 @@ import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";
 export default defineButton({
   id: CustomId.PlannerActions,
   data: { name: "planner-actions" },
-  async execute(interaction, _t, helper, { action, guid, gifted, navState, actionType }) {
+  async execute(interaction, _t, helper, { action, guid, navState, actionType }) {
     const user = await helper.client.schemas.getUser(helper.user);
     const d = await SkyPlannerData.getSkyGamePlannerData();
     const data = enrichDataWithUserProgress(d, user.plannerData);
@@ -40,7 +40,7 @@ export default defineButton({
       case PlannerAction.ToggleIAP: {
         const iap = data.iaps.find((i) => i.guid === guid);
         if (iap) {
-          const isGifted = gifted === "true";
+          const isGifted = actionType === "gifted";
           const status = toggleIAPStatus(user, iap, isGifted);
           if (status === "bought") {
             resultMessage = `✅ Marked ${iap.name ?? "IAP"} as bought`;
@@ -92,7 +92,7 @@ export default defineButton({
       }
 
       case PlannerAction.ToggleSeasonPass: {
-        const isGifted = gifted === "true";
+        const isGifted = actionType === "gifted";
         const status = toggleSeasonPass(user, guid, isGifted);
         if (status === "owned") {
           resultMessage = `✅ Season Pass marked as bought`;

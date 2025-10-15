@@ -92,8 +92,6 @@ export const store = new SchemaStore()
       .nullable("actionType", t.string)
       // guid of the entity to act on
       .string("guid")
-      // whether it's gifted (for IAPs, season passes)
-      .nullable("gifted", t.string)
       // serialized navigation state to refresh after action
       .string("navState")
       .nullable("user", t.string),
