@@ -117,10 +117,7 @@ export class ItemsDisplay extends BasePlannerHandler {
           `## ${this.formatemoji(item.emoji, item.name)} ${item.name}`,
           [
             item.group,
-            (() => {
-              const nodeWithSpirit = item.nodes?.find((n) => getNodeSpirit(n));
-              return nodeWithSpirit ? getNodeSpirit(nodeWithSpirit)?.name : null;
-            })(),
+            item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
             item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
             item.season?.shortName,
           ]
