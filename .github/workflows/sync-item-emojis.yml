@@ -31,8 +31,8 @@ jobs:
       - name: Sync emojis
         run: node ./scripts/sync.items.emojis.mts
         env:
-          APP_ID: ${{secrets.CLIENT_ID}}
-          BOT_TOKEN: ${{secrets.TOKEN}}
+          CLIENT_ID: ${{secrets.CLIENT_ID}}
+          TOKEN: ${{secrets.TOKEN}}
 
       - name: Open pr if hash map is updated
         env:

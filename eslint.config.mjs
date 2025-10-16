@@ -5,7 +5,15 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["**/node_modules", "**/logs", "**/website", "**/jest.config.js", "**/dist", ".devcontainer/**"]),
+  globalIgnores([
+    "**/node_modules",
+    "**/logs",
+    "**/website",
+    "**/jest.config.js",
+    "**/dist",
+    ".devcontainer/**",
+    "**/emoji_hashes.json",
+  ]),
   {
     extends: [
       js.configs.recommended,
