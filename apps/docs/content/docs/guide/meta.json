@@ -1,0 +1,21 @@
+{
+  "title": "Guide",
+  "description": "Comprehensive guides for all SkyHelper features",
+  "root": true,
+  "icon": "BookOpen",
+  "pages": [
+    "index",
+    "---Core Features---",
+    "shards",
+    "events",
+    "spirits",
+    "seasonal",
+    "planner",
+    "---Community & Utility---",
+    "reminders",
+    "live-updates",
+    "games",
+    "utilities",
+    "language"
+  ]
+}
