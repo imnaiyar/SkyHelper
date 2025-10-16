@@ -22,7 +22,7 @@ export type IdResolvalble = { id: string } | string | { user: { id: string } };
 export interface ParsedCustomId {
   id?: string | number;
   user?: string;
-  [key: string]: string | number | null;
+  [key: string]: string | number | null | string[];
 }
 
 export type TimestampStyles = "d" | "D" | "f" | "F" | "t" | "T" | "R";

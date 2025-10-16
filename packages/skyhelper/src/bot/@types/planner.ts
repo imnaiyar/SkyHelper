@@ -48,7 +48,7 @@ export interface NavigationState {
    * For ex, imagine we go to a particular area from wl tab, providing this back btn, we can come back to wl tab
    * * b = back
    */
-  b?: _Nullable<Omit<NavigationState, "back" | "user">> | null;
+  b?: _Nullable<Omit<NavigationState, "b" | "user">> | null;
 
   /** any string to prevent custom_id duplication */
   i?: string;

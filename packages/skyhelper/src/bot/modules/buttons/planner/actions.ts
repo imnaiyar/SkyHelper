@@ -27,8 +27,15 @@ export default defineButton({
     const user = await helper.client.schemas.getUser(helper.user);
     const d = await SkyPlannerData.getSkyGamePlannerData();
     const data = enrichDataWithUserProgress(d, user.plannerData);
+    const _state = JSON.parse(navState);
+    // b is encoded so if presented, parse it back
+    if (_state.b) _state.b = helper.client.utils.parseCustomId(_state.b);
+    // v is an array joined by `,` so return to original
+    if (_state.b?.v) _state.b.v = _state.b.v.split(",");
+
+    const state = _state as NavigationState;
     if ((action as PlannerAction) === PlannerAction.ModifyTree) {
-      await modifyTreeNode(guid, data, user, helper, JSON.parse(navState));
+      await modifyTreeNode(guid, data, user, helper, state);
       return;
     }
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
@@ -60,7 +67,7 @@ export default defineButton({
             resultMessage = `✅ Unlocked all (${data.wingedLights.filter((w) => !w.unlocked).length}) Winged Lights`;
             break;
           case "filtered": {
-            const display = new WingedLightsDisplay(data, SkyPlannerData, JSON.parse(navState), user, helper.client);
+            const display = new WingedLightsDisplay(data, SkyPlannerData, state, user, helper.client);
             const filtered = display.filterWls(data.wingedLights);
             filtered.forEach((wl) => toggleWingedLightUnlock(user, wl, true));
             resultMessage = `✅ Collected ${filtered.filter((w) => !w.unlocked).length} Winged Lights`;
@@ -142,8 +149,7 @@ export default defineButton({
 
     await user.save();
 
-    const parsedState = JSON.parse(navState) as Omit<NavigationState, "user">;
-    const response = await handlePlannerNavigation(parsedState, helper.user, helper.client);
+    const response = await handlePlannerNavigation(state, helper.user, helper.client);
 
     await helper.editReply({
       ...response,

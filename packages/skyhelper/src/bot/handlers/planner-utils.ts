@@ -3,6 +3,7 @@
  */
 import type { NavigationState } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
+import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
 import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import type { IIAP, IItem, IItemListNode, INode, IWingedLight } from "@skyhelperbot/constants/skygame-planner";
@@ -262,7 +263,7 @@ export function createActionId(opt: {
       p: opt.navState.p,
       f: opt.navState.f,
       d: opt.navState.d,
-      b: opt.navState.b,
+      b: opt.navState.b ? Utils.encodeCustomId({ ...opt.navState.b, b: null }) : null,
       i: opt.navState.i,
       v: opt.navState.v,
     }),
