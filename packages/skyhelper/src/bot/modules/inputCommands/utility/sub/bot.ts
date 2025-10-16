@@ -108,14 +108,16 @@ export async function botManage(helper: InteractionHelper) {
 
   if (!submit) return;
   await client.api.interactions.defer(submit.id, submit.token);
-  const guild_language = client.utils.getModalComponent(submit, "bot-manage-server-language", ComponentType.StringSelect)
-    ?.values[0];
-  const announcement_channel = client.utils.getModalComponent(
-    submit,
-    "bot-manage-announcement-channel",
-    ComponentType.ChannelSelect,
-  )?.values[0];
-
+  let guild_language: string | undefined;
+  let announcement_channel;
+  let beta;
+  // these components should be present for admins
+  if (isAdmin) {
+    guild_language = client.utils.getModalComponent(submit, "bot-manage-server-language", ComponentType.StringSelect)?.values[0];
+    announcement_channel = client.utils.getModalComponent(submit, "bot-manage-announcement-channel", ComponentType.ChannelSelect)
+      ?.values[0];
+    beta = client.utils.getModalComponent(submit, "bot-manage-beta", ComponentType.StringSelect)?.values[0];
+  }
   if (announcement_channel) {
     const channel = client.channels.get(announcement_channel)! as APITextChannel | APINewsChannel | APIGuildForumChannel;
     const hasPerms = PermissionsUtil.overwriteFor(guild!.clientMember, channel, guild!).has(["ViewChannel", "SendMessages"]);
@@ -126,7 +128,6 @@ export async function botManage(helper: InteractionHelper) {
     }
   }
 
-  const beta = client.utils.getModalComponent(submit, "bot-manage-beta", ComponentType.StringSelect)?.values[0];
   const user_language = client.utils.getModalComponent(submit, "bot-manage-user-language", ComponentType.StringSelect)?.values[0];
   if (guild_settings) {
     guild_settings.annoucement_channel = announcement_channel ?? null;
