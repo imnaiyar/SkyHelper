@@ -296,7 +296,7 @@ export function deserializeNavState(str: string) {
     state.b = deserializeNavState(bPart);
   }
 
-  // Clean up undefined values (optional)
+  // clean up empty fields
   Object.keys(state).forEach((key) => {
     if (!state[key as keyof typeof state]) {
       // eslint-disable-next-line
