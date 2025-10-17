@@ -34,7 +34,7 @@ export function getIGCnIApDisplay(
         section(
           planner.viewbtn(
             // TODO: find a way to include back within discord's limit
-            createActionId({ action: PlannerAction.ToggleListNode, guid: l.guid, navState: { ...planner.state, b: undefined } }),
+            createActionId({ action: PlannerAction.ToggleListNode, guid: l.guid, navState: planner.state }),
             {
               label: l.unlocked || l.item.unlocked ? "Unacquire" : "Acquire",
               style: l.unlocked || l.item.unlocked ? 4 : 1,
@@ -65,7 +65,7 @@ export function getIGCnIApDisplay(
           custom_id: createActionId({
             action: PlannerAction.ToggleIAP,
             // TODO: same
-            navState: { ...planner.state, b: undefined },
+            navState: planner.state,
             guid: as.guid,
           }),
           emoji: { name: "🛒" },
@@ -75,7 +75,7 @@ export function getIGCnIApDisplay(
         button({
           custom_id: createActionId({
             action: PlannerAction.ToggleIAP,
-            navState: { ...planner.state, b: undefined },
+            navState: planner.state,
             actionType: "gifted",
             guid: as.guid,
           }),

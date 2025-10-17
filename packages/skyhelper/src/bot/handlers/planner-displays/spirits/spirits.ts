@@ -54,7 +54,7 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
           custom_id: this.createCustomId({
             it: spirit.guid,
             /* Not passing filter because resulting custom id gets too long, ig it's a compromise */
-            b: { t: this.state.t, p: 1, f: "", d: this.state.d, b: null },
+            b: { t: this.state.t, p: 1, f: "", d: this.state.d },
           }),
           style: 1,
           label: "View",

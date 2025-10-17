@@ -31,7 +31,8 @@ export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
       page: this.state.p ?? 1,
       itemCallback: (rs) => [
         section(
-          this.viewbtn(this.createCustomId({ it: rs.guid, d: "rs", b: { ...this.state, b: null, v: undefined } })),
+          // @ts-expect-error typings don't allow b and user but they exist on state.
+          this.viewbtn(this.createCustomId({ it: rs.guid, d: "rs", b: { ...this.state, user: null, b: null, v: undefined } })),
           [
             `# ${rs.name ?? "Special Visit"}`,
             `-# ${rs.spirits.map((s) => `**${this.formatemoji(s.spirit.emoji, s.spirit.name)} ${s.spirit.name}**`).join(" | ")}`,
