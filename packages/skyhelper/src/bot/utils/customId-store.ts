@@ -88,10 +88,6 @@ export const store = new SchemaStore()
     new Schema(CustomId.PlannerActions)
       // action type: toggle-item, toggle-node, toggle-iap, etc.
       .string("action")
-
-      .nullable("actionType", t.string)
-      // guid of the entity to act on
-      .string("guid")
       // serialized navigation state to refresh after action
       .string("navState")
       .nullable("user", t.string),

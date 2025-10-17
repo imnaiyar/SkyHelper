@@ -61,7 +61,7 @@ const displayClasses = (d?: string) => ({
 export async function handlePlannerNavigation(state: Omit<NavigationState, "user">, user: APIUser, client: SkyHelper) {
   const { t } = state;
   // for debugging purposes
-  Sentry.setContext("Planner Navigation State", { ...state });
+  Sentry.setContext("Planner Navigation State", { ...state, user: user.id });
 
   const baseData = await SkyPlannerData.getSkyGamePlannerData();
   const settings = await client.schemas.getUser(user);

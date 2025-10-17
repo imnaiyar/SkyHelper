@@ -1,7 +1,7 @@
 /**
  * Utility functions for managing user planner data
  */
-import type { NavigationState } from "@/types/planner";
+import type { DisplayTabs, NavigationState, PlannerAction } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
 import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
@@ -247,26 +247,62 @@ export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
 }
 
 export function createActionId(opt: {
-  action: string;
+  action: PlannerAction;
   guid?: string;
   gifted?: string;
   actionType?: string;
   navState: NavigationState;
 }) {
   return store.serialize(CustomId.PlannerActions, {
-    action: opt.action,
-    guid: opt.guid ?? "",
-    actionType: opt.actionType ?? null,
-    navState: JSON.stringify({
-      t: opt.navState.t,
-      it: opt.navState.it,
-      p: opt.navState.p,
-      f: opt.navState.f,
-      d: opt.navState.d,
-      b: opt.navState.b ? Utils.encodeCustomId({ ...opt.navState.b, b: null }) : null,
-      i: opt.navState.i,
-      v: opt.navState.v,
-    }),
-    user: opt.navState.user,
+    action: opt.action + "|" + (opt.guid ?? "") + "|" + (opt.actionType ?? ""),
+    navState: serializeNavState(opt.navState),
+    user: null,
   });
+}
+export function serializeNavState(state: NavigationState) {
+  const parts = [state.t, state.it ?? "", state.p ?? "", state.f ?? "", state.d ?? "", state.i ?? "", state.v ?? ""];
+
+  let result = parts.join("|");
+
+  if (state.b) {
+    // Recursively encode the 'b' property (which is the same structure minus b and v)
+    result += "~" + serializeNavState(state.b as NavigationState);
+  }
+
+  return result;
+}
+
+export function deserializeNavState(str: string) {
+  // Split on the first '~' to separate main data from nested 'b'
+  const tildaIndex = str.indexOf("~");
+  const mainPart = tildaIndex === -1 ? str : str.substring(0, tildaIndex);
+  const bPart = tildaIndex === -1 ? null : str.substring(tildaIndex + 1);
+
+  // Parse main parts
+  const parts = mainPart.split("|");
+
+  const state: Omit<NavigationState, "user"> = {
+    t: parts[0]! as DisplayTabs,
+    it: parts[1],
+    p: parts[2] ? parseInt(parts[2]) : undefined,
+    f: parts[3],
+    d: parts[4],
+    i: parts[5],
+    v: parts[6] ? parts[6].split(",") : undefined,
+  };
+
+  // Recursively deserialize 'b' if present
+  if (bPart) {
+    state.b = deserializeNavState(bPart);
+  }
+
+  // Clean up undefined values (optional)
+  Object.keys(state).forEach((key) => {
+    if (!state[key as keyof typeof state]) {
+      // eslint-disable-next-line
+      delete state[key as keyof typeof state];
+    }
+  });
+
+  return state;
 }

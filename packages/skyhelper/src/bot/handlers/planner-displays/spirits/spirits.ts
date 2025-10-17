@@ -39,7 +39,8 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
         items: spiritsOfType,
         user: this.state.user,
         page: this.state.p ?? 1,
-        perpage: 7,
+        // back increases component count so lower limit for that
+        perpage: this.state.b?.t ? 6 : 7,
         itemCallback: this.spiritInList.bind(this),
       }),
     ];

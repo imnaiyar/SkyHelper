@@ -8,6 +8,7 @@ import {
   toggleSeasonPass,
   unlockAllTreeNodes,
   lockAllTreeNodes,
+  deserializeNavState,
 } from "@/handlers/planner-utils";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData } from "@skyhelperbot/constants";
@@ -23,19 +24,15 @@ import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";
 export default defineButton({
   id: CustomId.PlannerActions,
   data: { name: "planner-actions" },
-  async execute(interaction, _t, helper, { action, guid, navState, actionType }) {
+  async execute(interaction, _t, helper, { action: a, navState }) {
+    const [action, guid = "", actionType = ""] = a.split("|");
     const user = await helper.client.schemas.getUser(helper.user);
     const d = await SkyPlannerData.getSkyGamePlannerData();
     const data = enrichDataWithUserProgress(d, user.plannerData);
-    const _state = JSON.parse(navState);
-    // b is encoded so if presented, parse it back
-    if (_state.b) _state.b = helper.client.utils.parseCustomId(_state.b);
-    // v is an array joined by `,` so return to original
-    if (_state.b?.v) _state.b.v = _state.b.v.split(",");
+    const state = deserializeNavState(navState);
 
-    const state = _state as NavigationState;
     if ((action as PlannerAction) === PlannerAction.ModifyTree) {
-      await modifyTreeNode(guid, data, user, helper, state);
+      await modifyTreeNode(guid, data, user, helper, state as NavigationState);
       return;
     }
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
@@ -67,7 +64,13 @@ export default defineButton({
             resultMessage = `✅ Unlocked all (${data.wingedLights.filter((w) => !w.unlocked).length}) Winged Lights`;
             break;
           case "filtered": {
-            const display = new WingedLightsDisplay(data, SkyPlannerData, state, user, helper.client);
+            const display = new WingedLightsDisplay(
+              data,
+              SkyPlannerData,
+              { ...state, user: helper.user.id },
+              user,
+              helper.client,
+            );
             const filtered = display.filterWls(data.wingedLights);
             filtered.forEach((wl) => toggleWingedLightUnlock(user, wl, true));
             resultMessage = `✅ Collected ${filtered.filter((w) => !w.unlocked).length} Winged Lights`;

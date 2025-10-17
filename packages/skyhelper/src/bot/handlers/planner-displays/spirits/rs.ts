@@ -7,7 +7,8 @@ import { spiritTreeDisplay } from "../shared.js";
 export class ReturningSpiritDisplay extends BaseSpiritsDisplay {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
     super(data, planner, state, settings, client);
-    this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
+    // only initialize when needed, helps reduce final custom_id length when serialized
+    if (!state.it) this.initializeFilters([FilterType.Order], { [FilterType.Order]: { defaultValues: [OrderType.DateDesc] } });
   }
   override async handle() {
     if (this.state.it) {

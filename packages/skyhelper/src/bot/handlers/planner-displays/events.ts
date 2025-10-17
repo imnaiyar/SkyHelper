@@ -135,7 +135,7 @@ export class EventsDisplay extends BasePlannerHandler {
               t: DisplayTabs.Shops,
               f: serializeFilters(new Map([[FilterType.Shops, instance.shops.map((s) => s.guid)]])),
               d: "shops",
-              b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f },
+              b: { t: DisplayTabs.Events, it: this.state.it, f: this.state.f, d: this.state.d },
             }),
             { label: "Shop", emoji: { id: emojis.shopcart } },
           ),
