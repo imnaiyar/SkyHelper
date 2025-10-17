@@ -73,7 +73,8 @@ export class AreasDisplay extends BasePlannerHandler {
             this.createCustomId({
               t: DisplayTabs.Spirits,
               f: serializeFilters(filters),
-              b: { ...this.state, v: undefined, b: undefined },
+              // @ts-expect-error typings don't allow b and user but they exist on state.
+              b: { ...this.state, v: undefined, b: undefined, user: undefined },
             }),
             { label: `Spirits (${area.spirits.length})`, style: 2 },
           )
@@ -83,13 +84,20 @@ export class AreasDisplay extends BasePlannerHandler {
             this.createCustomId({
               t: DisplayTabs.WingedLights,
               f: serializeFilters(new Map([[FilterType.Areas, [area.guid]]])),
-              b: { ...this.state, v: undefined, b: undefined },
+              // @ts-expect-error typings don't allow b and user but they exist on state.
+              b: { ...this.state, v: undefined, b: undefined, user: undefined },
             }),
             { label: `Winged Lights (${area.wingedLights.length})`, style: 2 },
           )
         : null,
       this.viewbtn(
-        this.createCustomId({ t: DisplayTabs.Realms, it: area.realm.guid, b: { ...this.state, v: undefined, b: undefined } }),
+        this.createCustomId({
+          t: DisplayTabs.Realms,
+          it: area.realm.guid,
+
+          // @ts-expect-error typings don't allow b and user but they exist on state.
+          b: { ...this.state, v: undefined, b: undefined, user: undefined },
+        }),
         { label: `Realm: ${area.realm.shortName}`, style: 2 },
       ),
       this.backbtn(this.createCustomId({ it: null, f: null, p: this.state.p, ...this.state.b })),

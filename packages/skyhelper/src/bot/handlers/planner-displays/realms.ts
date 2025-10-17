@@ -75,7 +75,8 @@ export class RealmsDisplay extends BasePlannerHandler {
             f: serializeFilters(new Map([[FilterType.Realms, [realm.guid]]])),
             // `back` is not in the type but `state` may include `back` so reset it to prevent infinite depth
             // we only want to go one level back
-            b: { ...this.state, b: undefined },
+            // @ts-expect-error typings don't allow b and user but they exist on state.
+            b: { ...this.state, b: null, user: null },
           }),
           { label: `Areas (${realm.areas?.length ?? 0})`, disabled: !realm.areas?.length },
         ),
@@ -89,7 +90,8 @@ export class RealmsDisplay extends BasePlannerHandler {
               ]),
             ),
             // same as above
-            b: { ...this.state, b: undefined },
+            // @ts-expect-error typings don't allow b and user but they exist on state.
+            b: { ...this.state, b: undefined, user: null },
           }),
           { label: `Spirits (${realmSpirits.length})`, disabled: !realmSpirits.length },
         ),

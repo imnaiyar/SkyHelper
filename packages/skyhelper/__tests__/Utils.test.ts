@@ -86,7 +86,7 @@ describe("Utils", () => {
     it("should parse an encoded custom ID correctly", () => {
       const customId = "123;key1=value1;key2=value2";
       const parsed = Utils.parseCustomId(customId);
-      expect(parsed).toEqual({ id: "123", key1: "value1", key2: "value2" });
+      expect(parsed).toEqual({ key1: "value1", key2: "value2" });
     });
   });
 

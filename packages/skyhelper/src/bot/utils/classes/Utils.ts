@@ -135,7 +135,7 @@ export default class {
    */
   static parseCustomId(customId: string): ParsedCustomId {
     const parts = customId.split(";");
-    const obj: ParsedCustomId = { id: parts[0]! };
+    const obj: ParsedCustomId = {};
     for (let i = 1; i < parts.length; i++) {
       const [key, value] = parts[i]!.split("=");
       obj[key!] = value!;

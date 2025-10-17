@@ -2,10 +2,21 @@ import { mediaGallery, mediaGalleryItem, section, textDisplay, container, row, s
 import { BasePlannerHandler } from "./base.js";
 import { emojis, type SkyPlannerData } from "@skyhelperbot/constants";
 import config from "@/config";
-import { FilterType } from "@/types/planner";
+import { DisplayTabs, FilterType, PlannerAction, type NavigationState } from "@/types/planner";
+import { createActionId } from "../planner-utils.js";
+import { ItemType, type PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
+import type { UserSchema } from "@/types/schemas";
+import type { SkyHelper } from "@/structures";
+import { serializeFilters } from "./filter.manager.js";
 
 export class WingedLightsDisplay extends BasePlannerHandler {
-  constructor(data: any, planner: any, state: any, settings: any, client: any) {
+  constructor(
+    data: PlannerAssetData,
+    planner: typeof SkyPlannerData,
+    state: NavigationState,
+    settings: UserSchema,
+    client: SkyHelper,
+  ) {
     super(data, planner, state, settings, client);
 
     this.initializeFilters(
@@ -16,14 +27,16 @@ export class WingedLightsDisplay extends BasePlannerHandler {
   }
   override handle() {
     const wls = this.filterWls(this.data.wingedLights);
-
     return {
       components: [
         container(
           this.getTopBtns(),
           separator(true, 1),
           section(
-            this.viewbtn(this.createCustomId({}), { label: "All Found" }),
+            this.viewbtn(createActionId({ action: PlannerAction.ToggleWL, actionType: "filtered", navState: this.state }), {
+              label: "All Found" + ` (${wls.length})`,
+              disabled: wls.every((wl) => wl.unlocked),
+            }),
             `# Winged Lights (${wls.length})`,
             this.createFilterIndicator() ?? "",
           ),
@@ -41,8 +54,10 @@ export class WingedLightsDisplay extends BasePlannerHandler {
           `**${i + 1}\\. Area: ${wl.area.name} | Realm: ${wl.area.realm.name}**\n${wl.description ? `${emojis.tree_end} ${wl.description}` : ""}`,
         ),
         row(
-          // TODO: it's handling
-          this.viewbtn(this.createCustomId({ it: wl.guid }), { label: "Found" }),
+          this.viewbtn(createActionId({ action: PlannerAction.ToggleWL, guid: wl.guid, navState: this.state }), {
+            label: wl.unlocked ? "Uncollect" : "Collect",
+            style: wl.unlocked ? 4 : 1,
+          }),
           ...(wl.mapData?.videoUrl
             ? [
                 /** Keep it video, bcz initial data can be empty, that way it can fall back to `video` which is default state */
@@ -79,7 +94,7 @@ export class WingedLightsDisplay extends BasePlannerHandler {
     return config.SKY_PLANNER_URL + `/assets/game/col/${url}`;
   }
 
-  private filterWls(wls: SkyPlannerData.IWingedLight[]) {
+  public filterWls(wls: SkyPlannerData.IWingedLight[]) {
     let winged = [...wls];
     const realms = this.filterManager!.getFilterValues(FilterType.Realms);
     if (realms.length) winged = winged.filter((wl) => realms.includes(wl.area.realm.guid));
@@ -90,12 +105,27 @@ export class WingedLightsDisplay extends BasePlannerHandler {
   }
 
   private getTopBtns() {
+    const remainingWls = this.data.wingedLights.filter((wl) => !wl.unlocked);
     return row(
       [
         this.createFilterButton("Filter"),
-        this.viewbtn(this.createCustomId({}), { label: "All Found" + ` (${this.data.wingedLights.length})` }),
-        this.viewbtn(this.createCustomId({}), { label: "Reset All", style: 4 }),
+        this.viewbtn(createActionId({ action: PlannerAction.ToggleWL, actionType: "all", navState: this.state }), {
+          label: "All Found" + ` (${remainingWls.length}/${this.data.wingedLights.length})`,
+          disabled: remainingWls.length === 0,
+        }),
+        this.viewbtn(createActionId({ action: PlannerAction.ToggleWL, actionType: "reset", navState: this.state }), {
+          label: "Reset All",
+          style: 4,
+          disabled: remainingWls.length === this.data.wingedLights.length,
+        }),
         this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b, b: undefined })) : null,
+        this.viewbtn(
+          this.createCustomId({
+            t: DisplayTabs.Items,
+            f: serializeFilters(new Map([[FilterType.ItemTypes, [ItemType.WingBuff]]])),
+          }),
+          { label: "Wing Buffs" },
+        ),
       ].filter((s) => !!s),
     );
   }
