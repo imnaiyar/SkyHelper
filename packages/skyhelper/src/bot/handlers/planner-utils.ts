@@ -3,7 +3,6 @@
  */
 import type { DisplayTabs, NavigationState, PlannerAction } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
-import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
 import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import type { IIAP, IItem, IItemListNode, INode, IWingedLight } from "@skyhelperbot/constants/skygame-planner";
@@ -151,7 +150,7 @@ export function toggleWingedLightUnlock(user: UserSchema, wl: IWingedLight, unlo
   }
 
   user.plannerData.date = new Date().toISOString();
-  return !unlock;
+  return unlock;
 }
 
 /**
