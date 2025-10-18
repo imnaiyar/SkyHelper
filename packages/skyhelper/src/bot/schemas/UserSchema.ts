@@ -44,29 +44,32 @@ const Schema = new mongoose.Schema<UserSchema>({
     },
   },
   plannerData: {
-    date: String,
-    currencies: {
-      ascendedCandles: Number,
-      giftPasses: Number,
-      eventCurrencies: {
-        type: Map,
-        of: {
-          tickets: { type: Number, default: 0 },
+    type: {
+      date: String,
+      currencies: {
+        ascendedCandles: Number,
+        giftPasses: Number,
+        eventCurrencies: {
+          type: Map,
+          of: {
+            tickets: { type: Number, default: 0 },
+          },
+        },
+        seasonCurrencies: {
+          type: Map,
+          of: {
+            candles: { type: Number, default: 0 },
+            hearts: { type: Number, default: 0 },
+          },
         },
       },
-      seasonCurrencies: {
-        type: Map,
-        of: {
-          candles: { type: Number, default: 0 },
-          hearts: { type: Number, default: 0 },
-        },
-      },
+      unlocked: String,
+      wingedLights: String,
+      favourites: String,
+      seasonPasses: String,
+      gifted: String,
+      keys: { type: mongoose.Schema.Types.Mixed, default: {} },
     },
-    unlocked: String,
-    wingedLights: String,
-    favourites: String,
-    seasonPasses: String,
-    gifted: String,
   },
 });
 

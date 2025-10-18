@@ -4,8 +4,16 @@
 import type { DisplayTabs, NavigationState, PlannerAction } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
 import { CustomId, store } from "@/utils/customId-store";
-import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
-import type { IIAP, IItem, IItemListNode, INode, IWingedLight } from "@skyhelperbot/constants/skygame-planner";
+import { getCost, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import type {
+  IIAP,
+  IItem,
+  IItemListNode,
+  INode,
+  IWingedLight,
+  ICost,
+  IRotationItem,
+} from "@skyhelperbot/constants/skygame-planner";
 
 /**
  * Toggle an item's unlocked status for a user
@@ -243,6 +251,45 @@ export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
 
   user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
   user.plannerData.date = new Date().toISOString();
+}
+
+export function modifyNestingRotationItems(user: UserSchema, item: IRotationItem, type: "add" | "remove") {
+  user.plannerData ??= PlannerDataHelper.createEmpty();
+  // eslint-disable-next-line
+  user.plannerData.keys ??= {};
+  const itemState = (user.plannerData.keys["nesting-workshop"]?.unlocked?.[item.guid] ?? { q: 0, cost: {} }) as {
+    q: number;
+    cost: ICost;
+  };
+  const costType = getCost(item)!;
+  if (type === "add") {
+    itemState.q += 1;
+    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, item.guid, item.item?.guid ?? "");
+  } else {
+    itemState.q -= 1;
+    if (itemState.q <= 0) {
+      user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(
+        user.plannerData.unlocked,
+        item.guid,
+        item.item?.guid ?? "",
+      );
+    }
+  }
+
+  user.plannerData.keys["nesting-workshop"] ??= { unlocked: {} };
+  itemState.cost = { [costType]: item[costType]! * itemState.q };
+
+  if (itemState.q <= 0) {
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+    delete user.plannerData.keys["nesting-workshop"].unlocked[item.guid];
+  } else {
+    user.plannerData.keys["nesting-workshop"].unlocked[item.guid] = itemState;
+  }
+  console.log(itemState);
+
+  user.plannerData.date = new Date().toISOString();
+  user.markModified("plannerData.keys");
+  return type;
 }
 
 export function createActionId(opt: {

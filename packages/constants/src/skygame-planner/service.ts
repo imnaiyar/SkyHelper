@@ -386,6 +386,16 @@ export function getFormattedTreeCost(tree: ISpiritTree) {
   return formatCosts(c);
 }
 
+/** get the cost key from a tree node or listitem node */
+export function getCost(cost: ICost) {
+  if (cost.h) return "h";
+  if (cost.c) return "c";
+  if (cost.sc) return "sc";
+  if (cost.sh) return "sh";
+  if (cost.ac) return "ac";
+  if (cost.ec) return "ec";
+  return null;
+}
 /**
  * Calculate remaining costs for a tree, excluding unlocked nodes
  * @param node The root node to calculate from

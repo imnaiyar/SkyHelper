@@ -9,11 +9,17 @@ import {
   unlockAllTreeNodes,
   lockAllTreeNodes,
   deserializeNavState,
+  modifyNestingRotationItems,
 } from "@/handlers/planner-utils";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import { setLoadingState } from "@/utils/loading";
-import { enrichDataWithUserProgress, getAllTreeNodes, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import {
+  enrichDataWithUserProgress,
+  getAllTreeNodes,
+  nestingconfigs,
+  PlannerDataHelper,
+} from "@skyhelperbot/constants/skygame-planner";
 import { PlannerAction, type NavigationState } from "@/types/planner";
 import { modifyTreeNode } from "./sub/modify.tree.js";
 import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";
@@ -39,6 +45,8 @@ export default defineButton({
     await helper.update({ components: getLoading });
 
     let resultMessage = "";
+
+    let followUp = true;
 
     switch (action as PlannerAction) {
       case PlannerAction.ToggleIAP: {
@@ -140,12 +148,23 @@ export default defineButton({
           user.plannerData ??= PlannerDataHelper.createEmpty();
           if (ln.item.unlocked) {
             user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
-            resultMessage = `🔒 Removed ${ln.item.name}`;
           } else {
             user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
-            resultMessage = `✅ Marked ${ln.item.name} as acquired`;
           }
+          followUp = false;
           user.plannerData.date = new Date().toISOString();
+        }
+        break;
+      }
+      case PlannerAction.NestingRotation: {
+        const rotationItem = nestingconfigs.rotations
+          .find((r) => r.items.some((i) => i.guid === guid))
+          ?.items.find((i) => i.guid === guid);
+        if (rotationItem) rotationItem.item = data.items.find((i) => i.guid === rotationItem.guid);
+
+        if (rotationItem) {
+          modifyNestingRotationItems(user, rotationItem, actionType as "add" | "remove");
+          followUp = false;
         }
       }
     }
@@ -159,9 +178,11 @@ export default defineButton({
       flags: MessageFlags.IsComponentsV2,
     });
 
-    await helper.followUp({
-      content: resultMessage || "Action Completed",
-      flags: MessageFlags.Ephemeral,
-    });
+    if (followUp) {
+      await helper.followUp({
+        content: resultMessage || "Action Completed",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
   },
 });

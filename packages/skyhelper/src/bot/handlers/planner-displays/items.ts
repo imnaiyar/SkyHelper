@@ -4,6 +4,7 @@ import { button, container, mediaGallery, mediaGalleryItem, row, section, separa
 
 import type { APIComponentInContainer } from "discord-api-types/v10";
 import { DisplayTabs, FilterType } from "@/types/planner";
+import { emojis } from "@skyhelperbot/constants";
 
 export class ItemsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
@@ -114,7 +115,8 @@ export class ItemsDisplay extends BasePlannerHandler {
             }),
             style: 1,
           }),
-          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}`,
+          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}` +
+            (item.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : ""),
           [
             item.group,
             item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
@@ -139,6 +141,7 @@ export class ItemsDisplay extends BasePlannerHandler {
           item.group === "Ultimate" ? "- This is a season's ultimate item and may not return in the future." : "",
           item.group === "Limited" ? "- This is a limited item and may not return in the future." : "",
           item.group === "SeasonPass" ? "- This item was offered with season pass." : "",
+          item.unlocked ? `**Unlocked** ${this.formatemoji(emojis.checkmark)}` : "",
         ]
           .filter(Boolean)
           .join("\n"),

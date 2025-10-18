@@ -9,6 +9,7 @@ export enum PlannerAction {
   LockTree = "lock-tree",
   ModifyTree = "modify-tree",
   ToggleListNode = "tg-ln",
+  NestingRotation = "nr",
 }
 
 export interface NavigationState {

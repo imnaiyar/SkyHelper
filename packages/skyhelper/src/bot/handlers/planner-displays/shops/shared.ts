@@ -32,16 +32,14 @@ export function getIGCnIApDisplay(
       ),
       ...as.items.map((l) =>
         section(
-          planner.viewbtn(
-            // TODO: find a way to include back within discord's limit
-            createActionId({ action: PlannerAction.ToggleListNode, guid: l.guid, navState: planner.state }),
-            {
-              label: l.unlocked || l.item.unlocked ? "Unacquire" : "Acquire",
-              style: l.unlocked || l.item.unlocked ? 4 : 1,
-            },
-          ),
-          `${planner.formatemoji(l.item.emoji, l.item.name)} ${l.item.name}`,
+          planner.viewbtn(createActionId({ action: PlannerAction.ToggleListNode, guid: l.guid, navState: planner.state }), {
+            label: l.unlocked || l.item.unlocked ? "Unacquire" : "Acquire",
+            style: l.unlocked || l.item.unlocked ? 4 : 1,
+          }),
+          `${planner.formatemoji(l.item.emoji, l.item.name)} ${l.item.name}` +
+            (l.unlocked ? " " + planner.formatemoji(emojis.checkmark) : ""),
           planner.planner.formatCosts(l),
+          l.unlocked ? `**Unlocked** ${planner.formatemoji(emojis.checkmark)}` : "",
         ),
       ),
     ];
@@ -51,20 +49,25 @@ export function getIGCnIApDisplay(
       textDisplay(
         `${highlighted ? "#" : "##"} ${as.name ?? "In-App Purchase"}${highlighted ? planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
         [
-          `$ ${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP`,
+          `- **$${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP**` +
+            (as.gifted || as.bought ? " " + planner.formatemoji(emojis.checkmark) : ""),
           as.sc || as.c || as.sc ? planner.planner.formatCosts(as) : null,
           as.sp ? `${planner.formatemoji(emojis.spicon, "SeasonPass")} x${as.sp}` : null,
           as.items?.map((i) => `${planner.formatemoji(i.emoji, i.name)} ${i.name}`).join(" \u2022 ") ?? null,
+          as.gifted
+            ? `**Recieved** ${planner.formatemoji(emojis.spicon)}`
+            : as.bought
+              ? `**Bought** ${planner.formatemoji(emojis.shopcart)}`
+              : null,
         ]
           .filter((s) => !!s)
-          .join("\n"),
+          .join("\n- "),
       ),
 
       row(
         button({
           custom_id: createActionId({
             action: PlannerAction.ToggleIAP,
-            // TODO: same
             navState: planner.state,
             guid: as.guid,
           }),
@@ -80,8 +83,8 @@ export function getIGCnIApDisplay(
             guid: as.guid,
           }),
           label: "Received",
-          emoji: { name: "🎁" },
-          style: as.gifted ? 4 : 3,
+          emoji: { id: emojis.spicon },
+          style: as.gifted ? 4 : 2,
         }),
       ),
     ];
