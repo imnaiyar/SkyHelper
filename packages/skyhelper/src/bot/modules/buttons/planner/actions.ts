@@ -92,7 +92,7 @@ export default defineButton({
             const wl = data.wingedLights.find((w) => w.guid === guid);
             if (wl) {
               const unlocked = toggleWingedLightUnlock(user, wl, !wl.unlocked);
-              resultMessage = unlocked ? `✅ Collected Winged Light` : `🔒 Removed Winged Light`;
+              followUp = false;
             }
           }
         }
