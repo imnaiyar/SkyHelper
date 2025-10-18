@@ -1,9 +1,10 @@
-import { ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
+import { getNodeSpirit, ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
 import type { APIComponentInContainer } from "discord-api-types/v10";
 import { DisplayTabs, FilterType } from "@/types/planner";
+import { emojis } from "@skyhelperbot/constants";
 
 export class ItemsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
@@ -49,10 +50,10 @@ export class ItemsDisplay extends BasePlannerHandler {
   private getItemSourceNavigation(item: IItem) {
     const highlight = [FilterType.Highlight, [item.guid]] satisfies [FilterType.Highlight, string[]];
     // Check if item comes from a spirit tree
-    const nodeWithSpirit = item.nodes?.find((n) => n.root?.spiritTree?.spirit);
-    if (nodeWithSpirit?.root?.spiritTree?.spirit) {
-      const spirit = nodeWithSpirit.root.spiritTree.spirit;
-      const tree = nodeWithSpirit.root.spiritTree;
+    const nodeWithSpirit = item.nodes?.find((n) => getNodeSpirit(n));
+    if (nodeWithSpirit) {
+      const spirit = getNodeSpirit(nodeWithSpirit)!;
+      const tree = nodeWithSpirit.root!.spiritTree!;
 
       // Find which tree index this is for the spirit
       const allTrees = [spirit.tree, ...(spirit.treeRevisions ?? []), ...(spirit.returns ?? []), ...(spirit.ts ?? [])].filter(
@@ -114,14 +115,15 @@ export class ItemsDisplay extends BasePlannerHandler {
             }),
             style: 1,
           }),
-          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}`,
+          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}` +
+            (item.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : ""),
           [
             item.group,
-            item.nodes?.[0]?.root?.spiritTree?.spirit?.name,
+            item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
             item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
             item.season?.shortName,
           ]
-            .filter(Boolean)
+            .filter((s) => !!s)
             .join(" \u2022 "),
         ),
       ],
@@ -139,6 +141,7 @@ export class ItemsDisplay extends BasePlannerHandler {
           item.group === "Ultimate" ? "- This is a season's ultimate item and may not return in the future." : "",
           item.group === "Limited" ? "- This is a limited item and may not return in the future." : "",
           item.group === "SeasonPass" ? "- This item was offered with season pass." : "",
+          item.unlocked ? `**Unlocked** ${this.formatemoji(emojis.checkmark)}` : "",
         ]
           .filter(Boolean)
           .join("\n"),

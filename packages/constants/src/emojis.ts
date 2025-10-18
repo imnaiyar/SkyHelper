@@ -27,6 +27,7 @@ export const emojis = {
   filter: "1424038520347164765",
   spicon: "1424038529662451804",
   leftarryello: "1424038538562900029",
+  checkmark: "1429192156471492808",
 } as const;
 
 export const realms_emojis = {

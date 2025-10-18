@@ -3,6 +3,8 @@ import type { BasePlannerHandler } from "../base.js";
 import { button, row, section, textDisplay } from "@skyhelperbot/utils";
 import type { APIComponentInContainer } from "discord-api-types/v10";
 import { emojis } from "@skyhelperbot/constants";
+import { createActionId } from "@/handlers/planner-utils";
+import { PlannerAction } from "@/types/planner";
 
 export function getIGCnIApDisplay(
   item: IItemList,
@@ -30,10 +32,14 @@ export function getIGCnIApDisplay(
       ),
       ...as.items.map((l) =>
         section(
-          // TODO: handle acquiring the item
-          planner.viewbtn(planner.createCustomId({ it: l.guid }), { label: "Acquire", disabled: true }),
-          `${planner.formatemoji(l.item.emoji, l.item.name)} ${l.item.name}`,
+          planner.viewbtn(createActionId({ action: PlannerAction.ToggleListNode, guid: l.guid, navState: planner.state }), {
+            label: l.unlocked || l.item.unlocked ? "Unacquire" : "Acquire",
+            style: l.unlocked || l.item.unlocked ? 4 : 1,
+          }),
+          `${planner.formatemoji(l.item.emoji, l.item.name)} ${l.item.name}` +
+            (l.unlocked ? " " + planner.formatemoji(emojis.checkmark) : ""),
           planner.planner.formatCosts(l),
+          l.unlocked ? `**Unlocked** ${planner.formatemoji(emojis.checkmark)}` : "",
         ),
       ),
     ];
@@ -43,28 +49,42 @@ export function getIGCnIApDisplay(
       textDisplay(
         `${highlighted ? "#" : "##"} ${as.name ?? "In-App Purchase"}${highlighted ? planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
         [
-          `$ ${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP`,
+          `- **$${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP**` +
+            (as.gifted || as.bought ? " " + planner.formatemoji(emojis.checkmark) : ""),
           as.sc || as.c || as.sc ? planner.planner.formatCosts(as) : null,
           as.sp ? `${planner.formatemoji(emojis.spicon, "SeasonPass")} x${as.sp}` : null,
           as.items?.map((i) => `${planner.formatemoji(i.emoji, i.name)} ${i.name}`).join(" \u2022 ") ?? null,
+          as.gifted
+            ? `**Recieved** ${planner.formatemoji(emojis.spicon)}`
+            : as.bought
+              ? `**Bought** ${planner.formatemoji(emojis.shopcart)}`
+              : null,
         ]
           .filter((s) => !!s)
-          .join("\n"),
+          .join("\n- "),
       ),
 
-      /** TODO:  handle buying/recieving the item */
       row(
         button({
-          custom_id: planner.createCustomId({ it: as.guid, d: "Buy" }),
+          custom_id: createActionId({
+            action: PlannerAction.ToggleIAP,
+            navState: planner.state,
+            guid: as.guid,
+          }),
           emoji: { name: "🛒" },
           label: "Bought",
-          style: 3,
+          style: as.bought ? 4 : 2,
         }),
         button({
-          custom_id: planner.createCustomId({ it: as.guid, d: "Receive" }),
+          custom_id: createActionId({
+            action: PlannerAction.ToggleIAP,
+            navState: planner.state,
+            actionType: "gifted",
+            guid: as.guid,
+          }),
           label: "Received",
-          emoji: { name: "🎁" },
-          style: 2,
+          emoji: { id: emojis.spicon },
+          style: as.gifted ? 4 : 2,
         }),
       ),
     ];

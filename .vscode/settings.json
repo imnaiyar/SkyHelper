@@ -4,6 +4,7 @@
   "workbench.editor.customLabels.enabled": true,
   "workbench.editor.customLabels.patterns": {
     "**/app/**/page.tsx": "${dirname}/${filename}",
-    "**/app/**/route.ts": "${dirname}/${filename}"
+    "**/app/**/route.ts": "${dirname}/${filename}",
+    "**/planner.ts": "${dirname}/${filename}"
   }
 }

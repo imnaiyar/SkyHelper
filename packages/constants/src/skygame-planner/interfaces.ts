@@ -436,6 +436,8 @@ export interface UserPlannerData {
   seasonPasses: string;
   /** Comma-separated list of gifted IAP/season pass GUIDs */
   gifted: string;
+  /** Extra datas related to planner */
+  keys: Record<string, any>;
 }
 
 /**
@@ -501,6 +503,7 @@ export class PlannerDataHelper {
       favourites: "",
       seasonPasses: "",
       gifted: "",
+      keys: {},
     };
   }
 }

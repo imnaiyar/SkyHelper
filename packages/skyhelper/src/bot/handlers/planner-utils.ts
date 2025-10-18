@@ -1,11 +1,19 @@
 /**
  * Utility functions for managing user planner data
  */
-import type { NavigationState } from "@/types/planner";
+import type { DisplayTabs, NavigationState, PlannerAction } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
 import { CustomId, store } from "@/utils/customId-store";
-import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
-import type { IIAP, IItem, IItemListNode, INode, IWingedLight } from "@skyhelperbot/constants/skygame-planner";
+import { getCost, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import type {
+  IIAP,
+  IItem,
+  IItemListNode,
+  INode,
+  IWingedLight,
+  ICost,
+  IRotationItem,
+} from "@skyhelperbot/constants/skygame-planner";
 
 /**
  * Toggle an item's unlocked status for a user
@@ -91,41 +99,27 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean)
 export function toggleIAPStatus(user: UserSchema, iap: IIAP, gifted = false): "bought" | "gifted" | "locked" {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.unlocked, iap.guid);
-  const isGifted = PlannerDataHelper.hasGuid(user.plannerData.gifted, iap.guid);
-
-  if (isUnlocked) {
-    // Lock IAP
-    user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, iap.guid);
-    user.plannerData.gifted = PlannerDataHelper.removeFromGuidString(user.plannerData.gifted, iap.guid);
-
-    // Lock related items
-    iap.items?.forEach((item) => {
-      user.plannerData!.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData!.unlocked, item.guid);
-    });
-
-    user.plannerData.date = new Date().toISOString();
-
-    return "locked";
+  const isCurrentlyActive = gifted ? iap.gifted : iap.bought;
+  const targetField = gifted ? "gifted" : "unlocked";
+  const otherField = gifted ? "unlocked" : "gifted";
+  let status: "bought" | "gifted" | "locked";
+  if (isCurrentlyActive) {
+    // Remove from current field and lock items
+    user.plannerData[targetField] = PlannerDataHelper.removeFromGuidString(user.plannerData[targetField], iap.guid);
+    iap.items?.forEach((item) => toggleItemUnlock(user, item, false));
+    status = "locked";
   } else {
-    // Unlock IAP
-    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, iap.guid);
-
-    if (gifted) {
-      user.plannerData.gifted = PlannerDataHelper.addToGuidString(user.plannerData.gifted, iap.guid);
-    } else {
-      user.plannerData.gifted = PlannerDataHelper.removeFromGuidString(user.plannerData.gifted, iap.guid);
-    }
-
-    // Unlock related items
-    iap.items?.forEach((item) => {
-      user.plannerData!.unlocked = PlannerDataHelper.addToGuidString(user.plannerData!.unlocked, item.guid);
-    });
-
-    user.plannerData.date = new Date().toISOString();
-
-    return gifted ? "gifted" : "bought";
+    // Add to current field and unlock items
+    user.plannerData[targetField] = PlannerDataHelper.addToGuidString(user.plannerData[targetField], iap.guid);
+    iap.items?.forEach((item) => toggleItemUnlock(user, item, true));
+    status = gifted ? "gifted" : "bought";
   }
+
+  // remove from the other field to ensure mutual exclusivity
+  user.plannerData[otherField] = PlannerDataHelper.removeFromGuidString(user.plannerData[otherField], iap.guid);
+
+  user.plannerData.date = new Date().toISOString();
+  return status;
 }
 
 /**
@@ -154,19 +148,17 @@ export function toggleItemListNodeUnlock(user: UserSchema, node: IItemListNode) 
 /**
  * Toggle a winged light's unlocked status for a user
  */
-export function toggleWingedLightUnlock(user: UserSchema, wl: IWingedLight) {
+export function toggleWingedLightUnlock(user: UserSchema, wl: IWingedLight, unlock = false) {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.wingedLights, wl.guid);
-
-  if (isUnlocked) {
+  if (!unlock) {
     user.plannerData.wingedLights = PlannerDataHelper.removeFromGuidString(user.plannerData.wingedLights, wl.guid);
   } else {
     user.plannerData.wingedLights = PlannerDataHelper.addToGuidString(user.plannerData.wingedLights, wl.guid);
   }
 
   user.plannerData.date = new Date().toISOString();
-  return !isUnlocked;
+  return unlock;
 }
 
 /**
@@ -261,27 +253,102 @@ export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
   user.plannerData.date = new Date().toISOString();
 }
 
+export function modifyNestingRotationItems(user: UserSchema, item: IRotationItem, type: "add" | "remove") {
+  user.plannerData ??= PlannerDataHelper.createEmpty();
+  // eslint-disable-next-line
+  user.plannerData.keys ??= {};
+  const itemState = (user.plannerData.keys["nesting-workshop"]?.unlocked?.[item.guid] ?? { q: 0, cost: {} }) as {
+    q: number;
+    cost: ICost;
+  };
+  const costType = getCost(item)!;
+  if (type === "add") {
+    itemState.q += 1;
+    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, item.guid, item.item?.guid ?? "");
+  } else {
+    itemState.q -= 1;
+    if (itemState.q <= 0) {
+      user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(
+        user.plannerData.unlocked,
+        item.guid,
+        item.item?.guid ?? "",
+      );
+    }
+  }
+
+  user.plannerData.keys["nesting-workshop"] ??= { unlocked: {} };
+  itemState.cost = { [costType]: item[costType]! * itemState.q };
+
+  if (itemState.q <= 0) {
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+    delete user.plannerData.keys["nesting-workshop"].unlocked[item.guid];
+  } else {
+    user.plannerData.keys["nesting-workshop"].unlocked[item.guid] = itemState;
+  }
+  console.log(itemState);
+
+  user.plannerData.date = new Date().toISOString();
+  user.markModified("plannerData.keys");
+  return type;
+}
+
 export function createActionId(opt: {
-  action: string;
+  action: PlannerAction;
   guid?: string;
   gifted?: string;
   actionType?: string;
   navState: NavigationState;
 }) {
   return store.serialize(CustomId.PlannerActions, {
-    action: opt.action,
-    guid: opt.guid ?? "",
-    gifted: opt.gifted ?? null,
-    actionType: opt.actionType ?? null,
-    navState: JSON.stringify({
-      t: opt.navState.t,
-      it: opt.navState.it,
-      p: opt.navState.p,
-      f: opt.navState.f,
-      d: opt.navState.d,
-      b: opt.navState.b,
-      v: opt.navState.v,
-    }),
-    user: opt.navState.user,
+    action: opt.action + "|" + (opt.guid ?? "") + "|" + (opt.actionType ?? ""),
+    navState: serializeNavState(opt.navState),
+    user: null,
   });
+}
+export function serializeNavState(state: NavigationState) {
+  const parts = [state.t, state.it ?? "", state.p ?? "", state.f ?? "", state.d ?? "", state.i ?? "", state.v ?? ""];
+
+  let result = parts.join("|");
+
+  if (state.b) {
+    // Recursively encode the 'b' property (which is the same structure minus b and v)
+    result += "~" + serializeNavState(state.b as NavigationState);
+  }
+
+  return result;
+}
+
+export function deserializeNavState(str: string) {
+  // Split on the first '~' to separate main data from nested 'b'
+  const tildaIndex = str.indexOf("~");
+  const mainPart = tildaIndex === -1 ? str : str.substring(0, tildaIndex);
+  const bPart = tildaIndex === -1 ? null : str.substring(tildaIndex + 1);
+
+  // Parse main parts
+  const parts = mainPart.split("|");
+
+  const state: Omit<NavigationState, "user"> = {
+    t: parts[0]! as DisplayTabs,
+    it: parts[1],
+    p: parts[2] ? parseInt(parts[2]) : undefined,
+    f: parts[3],
+    d: parts[4],
+    i: parts[5],
+    v: parts[6] ? parts[6].split(",") : undefined,
+  };
+
+  // Recursively deserialize 'b' if present
+  if (bPart) {
+    state.b = deserializeNavState(bPart);
+  }
+
+  // clean up empty fields
+  Object.keys(state).forEach((key) => {
+    if (!state[key as keyof typeof state]) {
+      // eslint-disable-next-line
+      delete state[key as keyof typeof state];
+    }
+  });
+
+  return state;
 }

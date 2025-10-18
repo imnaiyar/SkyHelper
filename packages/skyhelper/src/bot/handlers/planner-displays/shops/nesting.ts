@@ -5,13 +5,15 @@
 
 import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "../base.js";
-import { zone, type SkyPlannerData } from "@skyhelperbot/constants";
-import { nestingconfigs, type IRotationItem, type IRotation } from "@skyhelperbot/constants/skygame-planner";
+import { emojis, zone, type SkyPlannerData } from "@skyhelperbot/constants";
+import { nestingconfigs, type IRotationItem, type IRotation, getCost } from "@skyhelperbot/constants/skygame-planner";
 import { DateTime } from "luxon";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
-import type { IItemListNode, INestingConfig } from "@skyhelperbot/constants/skygame-planner";
+import type { ICost, IItemListNode, INestingConfig } from "@skyhelperbot/constants/skygame-planner";
 import { ComponentType, MessageFlags } from "discord-api-types/v10";
 import { spiritTreeDisplay } from "../shared.js";
+import { createActionId } from "@/handlers/planner-utils";
+import { PlannerAction } from "@/types/planner";
 interface IRotationDisplay {
   guid: string;
   title: string;
@@ -31,6 +33,7 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
   private legacyRotations = new Map<string, IRotationDisplay>();
   private challengeSpirits: SkyPlannerData.ISpirit[] = [];
   private legacyFreeItems: IRotationDisplay = { guid: "QYzVVxhNlt", title: "Intro", items: [] };
+  private nestingRotationData: Record<string, { q: number; cost: ICost }> | null = null;
   private legacyCorrectionItems: IRotationDisplay = {
     guid: "b0c0trdeVx",
     title: "Corrections",
@@ -130,6 +133,9 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
     this.challengeSpirits = nestingconfigs.challengeSpirits
       .map((guid: string) => this.data.spirits.find((s: any) => s.guid === guid))
       .filter(Boolean) as SkyPlannerData.ISpirit[];
+
+    // initialize user nesting data
+    this.nestingRotationData = this.settings.plannerData?.keys["nesting-workshop"]?.unlocked ?? {};
   }
 
   private showOverview(): ResponseData {
@@ -369,15 +375,32 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
 
   private createItemTitle(item: IRotationItem | IItemListNode, showCosts = false) {
     // NOTE: quantity is only in IItemListNode and ListNode is only  passed from legacy rotations
-    return `${this.formatemoji(item.item?.emoji, item.item?.name)} **${item.item?.name}**${
-      "quantity" in item ? ` (x${item.quantity ?? 1})` : ""
-    }\n${showCosts ? this.planner.formatCosts(item) : ""}`;
+    const infos = [
+      `${this.formatemoji(item.item?.emoji, item.item?.name)} **${item.item?.name}**${
+        "quantity" in item ? ` (x${item.quantity ?? 1})` : ""
+      }` + (item.item?.unlocked ? this.formatemoji(emojis.checkmark) : ""),
+      showCosts ? this.planner.formatCosts(item) : "",
+      item.item?.unlocked ? "**Unlocked**" : "",
+      this.nestingRotationData?.[item.guid]
+        ? `**Inventory**: ${this.nestingRotationData[item.guid]?.q ?? 0} (Cost: ${this.planner.formatCosts(this.nestingRotationData[item.guid]!.cost)})`
+        : "",
+    ];
+    return infos.join("\n");
   }
 
   private createItemQuantityToggles(item: IRotationItem | IItemListNode) {
     return row(
-      this.viewbtn(this.createCustomId({ it: item.guid }), { label: "-", disabled: true }),
-      this.viewbtn(this.createCustomId({ it: item.guid }), { label: "+", disabled: true }),
+      this.viewbtn(
+        createActionId({ action: PlannerAction.NestingRotation, guid: item.guid, actionType: "remove", navState: this.state }),
+        {
+          label: "-",
+          disabled: (this.nestingRotationData?.[item.guid]?.q ?? 0) <= 0,
+        },
+      ),
+      this.viewbtn(
+        createActionId({ action: PlannerAction.NestingRotation, guid: item.guid, actionType: "add", navState: this.state }),
+        { label: "+" },
+      ),
     );
   }
 
@@ -388,11 +411,10 @@ export class NestingWorkshopDisplay extends BasePlannerHandler {
     return [
       legacy
         ? section(
-            this.viewbtn(this.createCustomId({}), {
-              label: "Mark as Acquired",
-              style: 3,
-              emoji: { name: "✅" },
-              disabled: true,
+            this.viewbtn(createActionId({ action: PlannerAction.ToggleListNode, guid: item.guid, navState: this.state }), {
+              label: (item as IItemListNode).unlocked ? "Unacquire" : "Acquire",
+              style: (item as IItemListNode).unlocked ? 4 : 3,
+              emoji: { name: (item as IItemListNode).unlocked ? "❌" : "✅" },
             }),
             title,
           )

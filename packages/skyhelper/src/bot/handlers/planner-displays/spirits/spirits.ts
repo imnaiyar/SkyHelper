@@ -3,7 +3,7 @@ import { DisplayTabs, FilterType } from "@/types/planner";
 import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
-import { SpiritType } from "@skyhelperbot/constants/skygame-planner";
+import { getAllTreeNodes, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import { BaseSpiritsDisplay } from "./base.js";
 import { spiritTreeDisplay } from "../shared.js";
 
@@ -39,7 +39,8 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
         items: spiritsOfType,
         user: this.state.user,
         page: this.state.p ?? 1,
-        perpage: 7,
+        // back increases component count so lower limit for that
+        perpage: this.state.b?.t ? 6 : 7,
         itemCallback: this.spiritInList.bind(this),
       }),
     ];
@@ -54,7 +55,7 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
           custom_id: this.createCustomId({
             it: spirit.guid,
             /* Not passing filter because resulting custom id gets too long, ig it's a compromise */
-            b: { t: this.state.t, p: 1, f: "", d: this.state.d, b: null },
+            b: { t: this.state.t, p: 1, f: "", d: this.state.d },
           }),
           style: 1,
           label: "View",
@@ -87,7 +88,16 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
       .flat()
       .filter((s) => !!s);
 
+    const highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
     let selected = 0;
+
+    // if highlighted items, then default select the tree that has the item
+    const index = trees.findIndex((t) => {
+      const nodes = getAllTreeNodes(t.tree.node);
+      return nodes.some((n) => highlights.includes(n.item?.guid ?? ""));
+    });
+    if (index > -1) selected = index;
+
     // some places may  pass this value in `i`, like from ts display
     if (this.state.i?.startsWith("tree")) {
       const treeIndex = parseInt(this.state.i.substring(4)) || 0;
@@ -95,9 +105,7 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
     } else if (this.state.v?.[0]) {
       selected = parseInt(this.state.v[0]);
     }
-
     const tree = trees[selected];
-    const highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
     const gen = tree
       ? await spiritTreeDisplay(
           { tree: tree.tree, planner: this, spiritView: false },
