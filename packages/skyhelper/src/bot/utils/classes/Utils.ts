@@ -232,9 +232,9 @@ export default class {
   }
 
   /** Formats an emoji id to discord's emoji markdown */
-  static formatEmoji(id?: string, name?: string) {
+  static formatEmoji(id?: string, name?: string, animated = false) {
     if (!id) return "";
     if (/^<a?:\w+:\d{17,19}>$/.test(id)) return id;
-    return `<:${name ? name.replaceAll(/[^\w]+/g, "") : "_"}:${id}>`;
+    return `<${animated ? "a" : ""}:${name ? name.replaceAll(/[^\w]+/g, "") : "_"}:${id}>`;
   }
 }
