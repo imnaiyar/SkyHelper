@@ -44,6 +44,10 @@ export const PlannerDataSchema = z.object({
     gifted: z.string(),
     keys: z.record(z.string(), z.any()),
   }),
+  user: z
+    .string()
+    .regex(/^\d{17,19}$/)
+    .optional(),
 });
 
 export interface NavigationState {

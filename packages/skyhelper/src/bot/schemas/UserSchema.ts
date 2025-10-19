@@ -5,6 +5,7 @@ import Utils from "@/utils/classes/Utils";
 import { LimitedCollection } from "@/utils/classes/LimitedCollection";
 import type { UserSchema } from "@/types/schemas";
 import type { SkyGameStatsData } from "@/types/custom";
+import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 
 const cache = new LimitedCollection<string, UserSchema>({ maxSize: config.CACHE_SIZE.USERS });
 export { cache as userSchemaCache };
@@ -44,32 +45,36 @@ const Schema = new mongoose.Schema<UserSchema>({
     },
   },
   plannerData: {
-    type: {
-      date: String,
-      currencies: {
-        ascendedCandles: Number,
-        giftPasses: Number,
-        eventCurrencies: {
-          type: Map,
-          of: {
-            tickets: { type: Number, default: 0 },
+    type: new mongoose.Schema(
+      {
+        date: String,
+        currencies: {
+          ascendedCandles: Number,
+          giftPasses: Number,
+          candles: Number,
+          hearts: Number,
+          eventCurrencies: {
+            type: {},
+            default: () => ({}),
+          },
+          seasonCurrencies: {
+            type: {},
+            default: () => ({}),
           },
         },
-        seasonCurrencies: {
-          type: Map,
-          of: {
-            candles: { type: Number, default: 0 },
-            hearts: { type: Number, default: 0 },
-          },
+        unlocked: String,
+        wingedLights: String,
+        favourites: String,
+        seasonPasses: String,
+        gifted: String,
+        keys: {
+          type: mongoose.Schema.Types.Mixed,
+          default: () => ({}),
         },
       },
-      unlocked: String,
-      wingedLights: String,
-      favourites: String,
-      seasonPasses: String,
-      gifted: String,
-      keys: { type: mongoose.Schema.Types.Mixed, default: {} },
-    },
+      { minimize: false, _id: false },
+    ),
+    default: PlannerDataHelper.createEmpty(),
   },
 });
 

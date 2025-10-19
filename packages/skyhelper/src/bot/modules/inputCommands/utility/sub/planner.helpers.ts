@@ -1,5 +1,5 @@
 import { DisplayTabs, type NavigationState, FilterType, PlannerDataSchema } from "@/types/planner";
-import { PlannerDataHelper, type PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
+import { PlannerDataHelper, type PlannerAssetData, type UserPlannerData } from "@skyhelperbot/constants/skygame-planner";
 import { serializeFilters } from "@/handlers/planner-displays/filter.manager";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
@@ -10,335 +10,545 @@ import { currency, emojis, SkyPlannerData, zone } from "@skyhelperbot/constants"
 import { CustomId, store } from "@/utils/customId-store";
 import { DateTime } from "luxon";
 import type { UserSchema } from "@/types/schemas";
-import Utils from "@/utils/classes/Utils";
+import utils from "@/utils/classes/Utils";
 
-export function searchHelper(
-  data: { type: string; name: string; guid: string },
-  pdata: PlannerAssetData,
-): Omit<NavigationState, "user"> | null {
-  // Handle type prefixes for special cases
-  const typeRegex = /^(TS#|SV)/;
-  const typeMatch = typeRegex.exec(data.type);
-  const baseType = typeMatch ? typeMatch[1] : data.type;
+// ============================================================================
+// Constants
+// ============================================================================
 
-  switch (baseType) {
-    case "Realm":
-      return { t: DisplayTabs.Realms, it: data.guid };
+const TIMEOUTS = {
+  MODAL: 3 * 60_000, // 3 minutes
+  COMPONENT: 2 * 60_000, // 2 minutes
+  SHORT_MODAL: 60_000, // 1 minute
+} as const;
 
-    case "Area":
-      return { t: DisplayTabs.Areas, it: data.guid };
+const MESSAGES = {
+  TIMEOUT:
+    "✨ *The stars have dimmed...* Your meditation took too long. The portal has closed! Please try summoning your data again. 🕯️",
+  INVALID_FILE_HEADER: "🌟 ***Hmm... This constellation doesn't quite align!*** 🌟",
+  INVALID_FILE_BODY:
+    "It seems the Spirits are having trouble reading your starlight message. The file you've shared appears to be from a different realm! ",
+  REQUIRED_FILE_FORMAT: "🕊️ **What I need from you:**",
+  JSON_PARSE_ERROR_HEADER: "🌟 **Oops! Your constellation seems a bit jumbled...** 🌟",
+  JSON_PARSE_ERROR_BODY:
+    "This file seems to have lost its starlight during the journey! The Spirits cannot decipher its message. 📜✨",
+  OTHER_USER_WARNING: "🌟 ***These memories belong to another Sky Kid...*** 🌟",
+  IMPORT_SUCCESS:
+    "✨ ***Your memories have been captured in starlight!*** 🌟\n\n*The Spirits have carefully preserved your journey across the realms. Keep this scroll safe, dear Sky Kid!* 🕯️📜",
+  DELETE_SUCCESS: "🌌 ***Your memories have been released to the stars...*** 🌌",
+  DELETE_BACKUP: "📜 ***A parting gift from the Spirits...***",
+  IMPORT_NOTE:
+    "\n-# NOTE: If you are importing data from [sky-planner.com](https://sky-planner.com), some things are not saved by the bot, mainly things related to website specific preferences. These includes but not limited to: Themes, Filters, Map Markers, Closet Settings, etc.",
+} as const;
 
-    case "Spirit":
-      return { t: DisplayTabs.Spirits, it: data.guid };
+const PLANNER_WEBSITE = {
+  URL: "https://sky-planner.com",
+  SETTINGS_URL: "https://sky-planner.com/settings",
+} as const;
 
-    case "Season":
-      return { t: DisplayTabs.Seasons, it: data.guid };
+const TYPE_PREFIX_REGEX = /^(TS#|SV)/;
 
-    case "Event":
-      return { t: DisplayTabs.Events, it: data.guid };
+// ============================================================================
+// Helper Functions
+// ============================================================================
 
-    case "Item":
-      return { t: DisplayTabs.Items, it: data.guid };
-
-    case "TS#": {
-      const t = pdata.travelingSpirits.find((ts) => ts.guid === data.guid);
-      const index = t
-        ? `tree${[t.tree, ...(t.spirit.treeRevisions ?? []), ...(t.spirit.returns ?? []), ...(t.spirit.ts ?? [])].findIndex((x) => x.guid === t.guid).toString()}`
-        : "";
-      // Traveling Spirit - navigate to Spirits tab with with ts tree selected
-      return { t: DisplayTabs.Spirits, i: index, it: t?.spirit.guid };
-    }
-
-    case "SV":
-      // Returning Spirit (Special Visit) - navigate to Spirits tab with RS display
-      return { t: DisplayTabs.Spirits, d: "rs", it: data.guid };
-
-    case "IAP": {
-      const shops = pdata.shops.filter((s) => s.iaps?.some((i) => i.guid === data.guid));
-      return { t: DisplayTabs.Shops, d: "shops", f: serializeFilters(new Map([[FilterType.Shops, shops.map((s) => s.guid)]])) };
-    }
-    case "Shop":
-      // Shop - navigate to Shops tab with specific shop filter
-      return {
-        t: DisplayTabs.Shops,
-        d: "shops",
-        f: serializeFilters(new Map([[FilterType.Shops, [data.guid]]])),
-      };
-
-    case "WingedLight":
-      return { t: DisplayTabs.WingedLights, it: data.guid };
-
-    default:
-      return null;
-  }
+/**
+ * Creates formatted file requirement instructions
+ */
+function getFileRequirementText(client: InteractionHelper["client"]): string {
+  return `${MESSAGES.REQUIRED_FILE_FORMAT}
+* Your exported \`.json\` file from the  ${utils.mentionCommand(client, "planner", "data")} (action:export) command, **or**
+* The \`.json\` file you received from [sky-planner.com](${PLANNER_WEBSITE.URL})
+-# You can get your exported file by going to [sky-planner.com/settings](${PLANNER_WEBSITE.SETTINGS_URL}) and selecting **"Export Data."**`;
 }
 
-export async function plannerData(helper: InteractionHelper, options: InteractionOptionResolver) {
-  const action = options.getString("action", true);
+/**
+ * Creates confirmation buttons with cancel and confirm actions
+ */
+function createConfirmationButtons(userId: string) {
+  return row(
+    button({
+      label: "Cancel",
+      custom_id: store.serialize(CustomId.Default, { data: "cancel", user: userId }),
+    }),
+    button({
+      label: "Confirm",
+      custom_id: store.serialize(CustomId.Default, { data: "confirm", user: userId }),
+      style: 4,
+    }),
+  );
+}
 
-  if (action === "import") {
-    const modal: APIModalInteractionResponseCallbackData = {
-      title: "Import Planner Data",
-      custom_id: "import" + helper.int.id,
-      components: [
-        {
-          type: ComponentType.TextDisplay,
-          content: `**Please upload your exported data file**
+/**
+ * Awaits and validates a confirmation response
+ */
+async function awaitConfirmation(
+  helper: InteractionHelper,
+  message: any,
+  timeout: number = TIMEOUTS.COMPONENT,
+): Promise<boolean> {
+  const collector = await helper.client
+    .awaitComponent({
+      message,
+      filter: (i) => (i.member?.user ?? i.user!).id === helper.user.id,
+      timeout,
+    })
+    .catch(() => null);
 
-If you're importing data from [**sky-planner.com**](https://sky-planner.com), follow these steps:
-1. Go to ⚙️ [**sky-planner.com/settings**](https://sky-planner.com/settings)
-2.  Select **“Export Data”**
-3. Then, **upload the downloaded .json file here** to import your data`,
-        },
-        {
-          type: ComponentType.Label,
-          label: "Data File",
-          description: "Please provide your saved .json file here",
-          component: { type: ComponentType.FileUpload, custom_id: "data_file", max_values: 1 },
-        },
-      ],
-    };
-    await helper.launchModal(modal);
-    const submission = await helper.client
-      .awaitModal({
-        filter: (i) => i.data.custom_id === "import" + helper.int.id,
-        timeout: 3 * 6e4,
+  if (!collector) return false;
+
+  const customId = store.deserialize(collector.data.custom_id);
+  return customId.id === CustomId.Default && customId.data.data === "confirm";
+}
+
+/**
+ * Formats currency display for user data
+ */
+function formatCurrencies(data: PlannerAssetData, storageData: UserPlannerData): string {
+  const { candles, hearts, seasonCurrencies, eventCurrencies, ascendedCandles, giftPasses } = storageData.currencies;
+
+  const seasonEntries = Object.entries(seasonCurrencies);
+  const eventEntries = Object.entries(eventCurrencies);
+
+  const parts = [
+    `${candles} ${utils.formatEmoji(currency.c)}`,
+    `${hearts} ${utils.formatEmoji(currency.h)}`,
+    `${ascendedCandles} ${utils.formatEmoji(currency.ac)}`,
+    `${giftPasses} ${utils.formatEmoji(emojis.spicon, "GiftPass")}`,
+  ];
+
+  if (seasonEntries.length > 0) {
+    const seasonText = seasonEntries
+      .map(([guid, sc]) => {
+        const season = data.seasons.find((s) => s.guid === guid);
+        return `${utils.formatEmoji(season?.emoji)}: ${sc.candles} ${utils.formatEmoji(currency.sc)} ${sc.hearts} ${utils.formatEmoji(currency.sh)}`;
       })
-      .catch(() => null);
-
-    if (!submission) {
-      await helper.followUp({
-        content:
-          "✨ *The stars have dimmed...* Your meditation took too long. The portal has closed! Please try summoning your data again. 🕯️",
-        flags: MessageFlags.Ephemeral,
-      });
-      return;
-    }
-    const file = helper.client.utils.getModalComponent(submission, "data_file", ComponentType.FileUpload, true);
-    const attachement = submission.data.resolved!.attachments![file.values[0]!]!;
-    const contents = await fetch(attachement.url).then((b) => b.text());
-    try {
-      const parsed = PlannerDataSchema.safeParse(JSON.parse(contents));
-      if (!parsed.success) {
-        await helper.client.api.interactions.reply(submission.id, submission.token, {
-          components: [
-            textDisplay(
-              "🌟 ***Hmm... This constellation doesn't quite align!*** 🌟",
-
-              "It seems the Spirits are having trouble reading your starlight message. The file you've shared appears to be from a different realm! ",
-
-              `\n🕊️ **What I need from you:**
-* Your exported \`.json\` file from the  ${Utils.mentionCommand(helper.client, "planner", "data")} (action:export) command, **or**
-* The \`.json\` file you received from [**sky-planner.com**](https://sky-planner.com/)
--# You can get your exported file by going to [**sky-planner.com/settings**](https://sky-planner.com/settings) and selecting **“Export Data.”**` +
-                `\n\n-# Technical whispers from the Elder Spirits:\n||>>> -# ${z.prettifyError(parsed.error).split("\n").join("\n-# ")}||`,
-            ),
-          ],
-          flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
-        });
-      }
-      const data = parsed.data;
-      await helper.client.api.interactions.defer(submission.id, submission.token);
-      const dd = SkyPlannerData.enrichDataWithUserProgress(await SkyPlannerData.getSkyGamePlannerData(), data?.storageData);
-      const progress = SkyPlannerData.calculateUserProgress(dd);
-      const unlocked = [
-        progress.items.unlocked > 0 ? `${progress.items.unlocked} items` : null,
-        progress.iaps.bought > 0 ? `${progress.iaps.bought} IAPs` : null,
-        progress.wingedLights.unlocked > 0 ? `${progress.wingedLights.unlocked} Winged Lights` : null,
-        progress.nodes.unlocked > 0 ? `${progress.nodes.unlocked} Spirit Tree Nodes` : null,
-      ]
-        .filter(Boolean)
-        .map((s) => `**${s}**`)
-        .join(", ");
-      const { candles, hearts, seasonCurrencies, eventCurrencies, ascendedCandles, giftPasses } = data!.storageData.currencies;
-      const scs = Object.entries(seasonCurrencies);
-      const evnts = Object.entries(eventCurrencies);
-      const utils = helper.client.utils;
-      const currencies = [
-        `${candles} ${utils.formatEmoji(currency.c)}`,
-        `${hearts} ${utils.formatEmoji(currency.h)}`,
-        `${ascendedCandles} ${utils.formatEmoji(currency.ac)}`,
-        `${giftPasses} ${utils.formatEmoji(emojis.spicon, "GiftPass")}`,
-        scs.length
-          ? "\n- Seasonal Currencies\n  - " +
-            scs
-              .map((s) => {
-                const season = dd.seasons.find((ssn) => ssn.guid === s[0]);
-                const sc = s[1];
-                return `${utils.formatEmoji(season?.emoji)}: ${sc.candles} ${utils.formatEmoji(currency.sc)} ${sc.hearts} ${utils.formatEmoji(currency.sh)}`;
-              })
-              .join("\n  - ")
-          : "",
-        evnts.length
-          ? "\n- Event Currencies\n  - " +
-            evnts
-              .map((ev) => {
-                const event = dd.events.find((e) => e.guid === ev[0]);
-                const { tickets } = ev[1];
-                return `**${event?.shortName ?? event?.name ?? "Unknown"}**: ${tickets} ${utils.formatEmoji(currency.ec)}`;
-              })
-              .join("\n  - ")
-          : "",
-      ]
-        .filter(Boolean)
-        .join(" ");
-      const components = [
-        container(
-          textDisplay(
-            "You have:",
-            `- ${currencies}`,
-            `- ${unlocked} unlocked.`,
-            "\n-# NOTE: If you are importing data from [sky-planner.com](https://sky-planner.com), some things are not saved by the bot, mainly things related to website specific preferences. These includes but not limited to: Themes, Filters, Map Markers, Closet Settings, etc.",
-          ),
-          separator(),
-          textDisplay("### This action will overwrite your current data, please confirm if you wish to proceed."),
-          row(
-            button({ label: "Cancel", custom_id: store.serialize(CustomId.Default, { data: "cancel", user: helper.user.id }) }),
-            button({
-              label: "Confirm",
-              custom_id: store.serialize(CustomId.Default, { data: "confirm", user: helper.user.id }),
-              style: 4,
-            }),
-          ),
-        ),
-      ];
-
-      const m = await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
-        components,
-        flags: MessageFlags.IsComponentsV2,
-      });
-
-      const response = await helper.client
-        .awaitComponent({
-          message: m,
-          filter: (i) => (i.member?.user ?? i.user!).id === helper.user.id,
-          timeout: 2 * 6e4,
-        })
-        .catch(() => null);
-      const customid = response ? store.deserialize(response.data.custom_id) : null;
-
-      components[0]?.components.splice(-3, 3);
-      if (!response || customid?.id !== CustomId.Default || customid.data.data === "cancel") {
-        await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
-          components: [textDisplay("Action Cancelled"), ...components],
-        });
-        return;
-      }
-      const settings = await helper.client.schemas.getUser(helper.user);
-      settings.plannerData = data?.storageData;
-      await settings.save();
-      await helper.client.api.interactions.updateMessage(response.id, response.token, {
-        components: [textDisplay("Successfuly Imported Planner Data"), ...components],
-      });
-      await helper.client.api.interactions.followUp(response.application_id, response.token, {
-        content: "Successfully Imported Planner Data",
-        flags: MessageFlags.Ephemeral,
-      });
-      return;
-    } catch (err) {
-      // JSON parse failed, meaning not a valid json file
-      if (err instanceof SyntaxError) {
-        await helper.client.api.interactions.reply(submission.id, submission.token, {
-          components: [
-            textDisplay(
-              "🌟 **Oops! Your constellation seems a bit jumbled...** 🌟",
-
-              "This file seems to have lost its starlight during the journey! The Spirits cannot decipher its message. 📜✨",
-
-              `🕊️ **What I need from you:**
-* Your exported \`.json\` file from the ${Utils.mentionCommand(helper.client, "planner", "data")} (action:export) command, **or**
-* The \`.json\` file you received from at [**sky-planner.com**](https://sky-planner.com/)
--# You can get your exported file by going to [**sky-planner.com/settings**](https://sky-planner.com/settings) and selecting **“Export Data.”**`,
-            ),
-          ],
-          flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
-        });
-      } else {
-        throw err;
-      }
-    }
+      .join("\n  - ");
+    parts.push(`\n- Seasonal Currencies\n  - ${seasonText}`);
   }
 
-  if (action === "export") {
-    await helper.defer();
-    const settings = await helper.client.schemas.getUser(helper.user);
-    const { ref, file } = createPlannerExport(settings);
-    await helper.editReply({
-      components: [
-        textDisplay(
-          "✨ ***Your memories have been captured in starlight!*** 🌟\n\n*The Spirits have carefully preserved your journey across the realms. Keep this scroll safe, dear Sky Kid!* 🕯️📜",
-        ),
-        separator(),
-        { type: ComponentType.File, file: { url: ref } },
-      ],
-      flags: MessageFlags.IsComponentsV2,
-      files: [file],
-    });
-    return;
+  if (eventEntries.length > 0) {
+    const eventText = eventEntries
+      .map(([guid, ev]) => {
+        const event = data.events.find((e) => e.guid === guid);
+        return `**${event?.shortName ?? event?.name ?? "Unknown"}**: ${ev.tickets} ${utils.formatEmoji(currency.ec)}`;
+      })
+      .join("\n  - ");
+    parts.push(`\n- Event Currencies\n  - ${eventText}`);
   }
 
-  if (action === "delete") {
-    const modal: APIModalInteractionResponseCallbackData = {
-      title: "Delete Planner Data",
-      custom_id: "delete" + helper.int.id,
-      components: [
-        {
-          type: ComponentType.TextDisplay,
-          content: `⚠️ **Warning: This action cannot be undone!** ⚠️
+  return parts.join(" ");
+}
+
+/**
+ * Formats unlocked items summary
+ */
+function formatUnlockedItems(progress: ReturnType<typeof SkyPlannerData.calculateUserProgress>): string {
+  const items = [
+    progress.items.unlocked > 0 ? `${progress.items.unlocked} items` : null,
+    progress.iaps.bought > 0 ? `${progress.iaps.bought} IAPs` : null,
+    progress.wingedLights.unlocked > 0 ? `${progress.wingedLights.unlocked} Winged Lights` : null,
+    progress.nodes.unlocked > 0 ? `${progress.nodes.unlocked} Spirit Tree Nodes` : null,
+  ]
+    .filter(Boolean)
+    .map((s) => `**${s}**`);
+
+  return items.length > 0 ? items.join(", ") : "No items unlocked";
+}
+
+/**
+ * Creates an import modal for planner data
+ */
+function createImportModal(interactionId: string): APIModalInteractionResponseCallbackData {
+  return {
+    title: "Import Planner Data",
+    custom_id: "import" + interactionId,
+    components: [
+      {
+        type: ComponentType.TextDisplay,
+        content: `**Please upload your exported data file**
+
+If you're importing data from [**sky-planner.com**](${PLANNER_WEBSITE.URL}), follow these steps:
+1. Go to ⚙️ [**sky-planner.com/settings**](${PLANNER_WEBSITE.SETTINGS_URL})
+2.  Select **"Export Data"**
+3. Then, **upload the downloaded .json file here** to import your data`,
+      },
+      {
+        type: ComponentType.Label,
+        label: "Data File",
+        description: "Please provide your saved .json file here",
+        component: { type: ComponentType.FileUpload, custom_id: "data_file", max_values: 1 },
+      },
+    ],
+  };
+}
+
+/**
+ * Creates a delete confirmation modal
+ */
+function createDeleteModal(interactionId: string): APIModalInteractionResponseCallbackData {
+  return {
+    title: "Delete Planner Data",
+    custom_id: "delete" + interactionId,
+    components: [
+      {
+        type: ComponentType.TextDisplay,
+        content: `⚠️ **Warning: This action cannot be undone!** ⚠️
  *The Spirits must know you understand...*
 
 Deleting your planner data will permanently erase all your saved progress
 *This is like going to eden...*
 
 **Click submit if you want to proceed**`,
-        },
-      ],
-    };
-
-    await helper.launchModal(modal);
-
-    const submission = await helper.client
-      .awaitModal({
-        filter: (i) => i.data.custom_id === "delete" + helper.int.id,
-        timeout: 6e4,
-      })
-      .catch(() => null);
-
-    if (!submission) return;
-
-    await helper.client.api.interactions.defer(submission.id, submission.token);
-
-    // Perform the deletion
-    const settings = await helper.client.schemas.getUser(helper.user);
-    const { ref, file } = createPlannerExport(settings);
-    settings.plannerData = undefined;
-    await settings.save();
-
-    await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
-      components: [
-        textDisplay(
-          "🌌 ***Your memories have been released to the stars...*** 🌌",
-          "\n*All planner data has been permanently deleted*",
-        ),
-        separator(),
-        textDisplay(
-          "📜 ***A parting gift from the Spirits...***",
-          `\n*Before your memories faded, the Elders captured them in this scroll. Should you ever wish to return to your previous journey, simply use ${Utils.mentionCommand(helper.client, "planner", "data")} (action:import) with the file below to restore everything!*`,
-        ),
-        { type: ComponentType.File, file: { url: ref } },
-      ],
-      files: [file],
-      flags: MessageFlags.IsComponentsV2,
-    });
-    return;
-  }
+      },
+    ],
+  };
 }
 
+/**
+ * Creates export file name and buffer
+ */
 function createPlannerExport(user: UserSchema) {
   const data = user.plannerData ?? PlannerDataHelper.createEmpty();
   const filename = `SkyHelper_Planner_${DateTime.now().setZone(zone).toFormat("yyyy-MM-dd")}.json`;
+
   return {
     ref: "attachment://" + filename,
-    file: { name: filename, data: Buffer.from(JSON.stringify({ version: "1.1.0", storageData: data })) },
+    file: {
+      name: filename,
+      data: Buffer.from(JSON.stringify({ version: "1.1.0", storageData: data, user: user._id })),
+    },
   };
+}
+
+/**
+ * Handles invalid file error response
+ */
+async function handleInvalidFileError(
+  helper: InteractionHelper,
+  submission: any,
+  error: z.ZodError | SyntaxError,
+): Promise<void> {
+  const isZodError = error instanceof z.ZodError;
+  const errorDetails = isZodError
+    ? `\n\n-# Technical whispers from the Elder Spirits:\n||>>> -# ${z.prettifyError(error).split("\n").join("\n-# ")}||`
+    : "";
+
+  await helper.client.api.interactions.reply(submission.id, submission.token, {
+    components: [
+      textDisplay(
+        isZodError ? MESSAGES.INVALID_FILE_HEADER : MESSAGES.JSON_PARSE_ERROR_HEADER,
+        isZodError ? MESSAGES.INVALID_FILE_BODY : MESSAGES.JSON_PARSE_ERROR_BODY,
+        `\n${getFileRequirementText(helper.client)}${errorDetails}`,
+      ),
+    ],
+    flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+  });
+}
+
+/**
+ * Handles confirmation for importing another user's data
+ */
+async function handleOtherUserConfirmation(helper: InteractionHelper, submission: any, dataUserId: string): Promise<boolean> {
+  const dataUser = await helper.client.api.users.get(dataUserId).catch(() => null);
+  if (!dataUser) return true; // Proceed if user cannot be fetched
+
+  const message = await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
+    content: [
+      MESSAGES.OTHER_USER_WARNING,
+      `The Spirits sense that this starlight scroll was woven by **${dataUser.global_name ?? dataUser.username}**. These are *their* planner data, not yours!`,
+      "\n*While you can still absorb these memories into your own journey, the Elders want to make sure you understand what this means...*",
+      "**Do you wish to proceed?**",
+    ].join("\n"),
+    components: [
+      row(
+        button({
+          label: "No",
+          custom_id: store.serialize(CustomId.Default, { data: "cancel", user: helper.user.id }),
+        }),
+        button({
+          label: "Yes, I Userstand.",
+          custom_id: store.serialize(CustomId.Default, { data: "confirm", user: helper.user.id }),
+          style: 4,
+        }),
+      ),
+    ],
+  });
+
+  const confirmed = await awaitConfirmation(helper, message);
+
+  await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
+    components: [],
+  });
+
+  return confirmed;
+}
+
+/**
+ * Creates import confirmation components with user data summary
+ */
+function createImportConfirmationComponents(
+  helper: InteractionHelper,
+  data: PlannerAssetData,
+  storageData: any,
+  progress: ReturnType<typeof SkyPlannerData.calculateUserProgress>,
+) {
+  const currencies = formatCurrencies(data, storageData);
+  const unlocked = formatUnlockedItems(progress);
+
+  return [
+    container(
+      textDisplay("You have:", `- ${currencies}`, `- ${unlocked} unlocked.`, MESSAGES.IMPORT_NOTE),
+      separator(),
+      textDisplay("### This action will overwrite your current data, please confirm if you wish to proceed."),
+      createConfirmationButtons(helper.user.id),
+    ),
+  ];
+}
+
+/**
+ * Handles the import action for planner data
+ */
+async function handleImportAction(helper: InteractionHelper): Promise<void> {
+  const modal = createImportModal(helper.int.id);
+  await helper.launchModal(modal);
+
+  const submission = await helper.client
+    .awaitModal({
+      filter: (i) => i.data.custom_id === "import" + helper.int.id,
+      timeout: TIMEOUTS.MODAL,
+    })
+    .catch(() => null);
+
+  if (!submission) {
+    await helper.followUp({
+      content: MESSAGES.TIMEOUT,
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
+
+  // Extract and fetch file
+  const fileComponent = helper.client.utils.getModalComponent(submission, "data_file", ComponentType.FileUpload, true);
+  const attachment = submission.data.resolved!.attachments![fileComponent.values[0]!]!;
+  const contents = await fetch(attachment.url).then((res) => res.text());
+
+  try {
+    // Parse and validate data
+    const parsed = PlannerDataSchema.safeParse(JSON.parse(contents));
+    if (!parsed.success) {
+      await handleInvalidFileError(helper, submission, parsed.error);
+      return;
+    }
+
+    const data = parsed.data;
+    await helper.client.api.interactions.defer(submission.id, submission.token);
+
+    // Check if data belongs to another user
+    if (data.user && data.user !== helper.user.id) {
+      const confirmed = await handleOtherUserConfirmation(helper, submission, data.user);
+      if (!confirmed) return;
+    }
+
+    // Enrich and calculate progress
+    const enrichedData = SkyPlannerData.enrichDataWithUserProgress(
+      await SkyPlannerData.getSkyGamePlannerData(),
+      data.storageData,
+    );
+    const progress = SkyPlannerData.calculateUserProgress(enrichedData);
+
+    // Show confirmation dialog
+    const components = createImportConfirmationComponents(helper, enrichedData, data.storageData, progress);
+
+    const message = await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
+      components,
+      content: "",
+      flags: MessageFlags.IsComponentsV2,
+    });
+
+    // Await final confirmation
+    const confirmed = await awaitConfirmation(helper, message);
+
+    // Remove confirmation buttons
+    components[0]?.components.splice(-3, 3);
+
+    if (!confirmed) {
+      await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
+        components: [textDisplay("Action Cancelled"), ...components],
+      });
+      return;
+    }
+
+    // Save data
+    const settings = await helper.client.schemas.getUser(helper.user);
+    settings.plannerData = data.storageData;
+    await settings.save();
+
+    await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
+      components: [textDisplay("Successfully Imported Planner Data"), ...components],
+    });
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      await handleInvalidFileError(helper, submission, err);
+    } else {
+      throw err;
+    }
+  }
+}
+
+/**
+ * Handles the export action for planner data
+ */
+async function handleExportAction(helper: InteractionHelper): Promise<void> {
+  await helper.defer({ flags: MessageFlags.Ephemeral });
+
+  const settings = await helper.client.schemas.getUser(helper.user);
+  const { ref, file } = createPlannerExport(settings);
+
+  await helper.editReply({
+    components: [textDisplay(MESSAGES.IMPORT_SUCCESS), separator(), { type: ComponentType.File, file: { url: ref } }],
+    flags: MessageFlags.IsComponentsV2,
+    files: [file],
+  });
+}
+
+/**
+ * Handles the delete action for planner data
+ */
+async function handleDeleteAction(helper: InteractionHelper): Promise<void> {
+  const modal = createDeleteModal(helper.int.id);
+  await helper.launchModal(modal);
+
+  const submission = await helper.client
+    .awaitModal({
+      filter: (i) => i.data.custom_id === "delete" + helper.int.id,
+      timeout: TIMEOUTS.SHORT_MODAL,
+    })
+    .catch(() => null);
+
+  if (!submission) return;
+
+  await helper.client.api.interactions.defer(submission.id, submission.token, { flags: MessageFlags.Ephemeral });
+
+  // Create backup before deletion
+  const settings = await helper.client.schemas.getUser(helper.user);
+  const { ref, file } = createPlannerExport(settings);
+
+  // Delete data
+  settings.plannerData = undefined;
+  await settings.save();
+
+  await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
+    components: [
+      textDisplay(MESSAGES.DELETE_SUCCESS, "\n*All planner data has been permanently deleted*"),
+      separator(),
+      textDisplay(
+        MESSAGES.DELETE_BACKUP,
+        `\n*Before your memories faded, the Elders captured them in this scroll. Should you ever wish to return to your previous journey, simply use ${utils.mentionCommand(helper.client, "planner", "data")} (action:import) with the file below to restore everything!*`,
+      ),
+      { type: ComponentType.File, file: { url: ref } },
+    ],
+    files: [file],
+    flags: MessageFlags.IsComponentsV2,
+  });
+}
+
+// ============================================================================
+// Exported Functions
+// ============================================================================
+
+/**
+ * Maps search data to navigation state for planner navigation
+ * @param data - The search result data
+ * @param pdata - The planner asset data
+ * @returns Navigation state or null if type is not supported
+ */
+export function searchHelper(
+  data: { type: string; name: string; guid: string },
+  pdata: PlannerAssetData,
+): Omit<NavigationState, "user"> | null {
+  const typeMatch = TYPE_PREFIX_REGEX.exec(data.type);
+  const baseType = typeMatch?.[1] ?? data.type;
+
+  // Simple direct mappings
+  const directMappings: Record<string, DisplayTabs> = {
+    Realm: DisplayTabs.Realms,
+    Area: DisplayTabs.Areas,
+    Spirit: DisplayTabs.Spirits,
+    Season: DisplayTabs.Seasons,
+    Event: DisplayTabs.Events,
+    Item: DisplayTabs.Items,
+    WingedLight: DisplayTabs.WingedLights,
+  };
+
+  if (baseType in directMappings) {
+    return { t: directMappings[baseType]!, it: data.guid };
+  }
+
+  // Complex type mappings
+  switch (baseType) {
+    case "TS#": {
+      const travelingSpirit = pdata.travelingSpirits.find((ts) => ts.guid === data.guid);
+      if (!travelingSpirit) return null;
+
+      const trees = [
+        travelingSpirit.tree,
+        ...(travelingSpirit.spirit.treeRevisions ?? []),
+        ...(travelingSpirit.spirit.returns ?? []),
+        ...(travelingSpirit.spirit.ts ?? []),
+      ];
+      const treeIndex = trees.findIndex((tree) => tree.guid === travelingSpirit.guid);
+      const index = treeIndex >= 0 ? `tree${treeIndex}` : "";
+
+      return { t: DisplayTabs.Spirits, i: index, it: travelingSpirit.spirit.guid };
+    }
+
+    case "SV":
+      return { t: DisplayTabs.Spirits, d: "rs", it: data.guid };
+
+    case "IAP": {
+      const relatedShops = pdata.shops.filter((shop) => shop.iaps?.some((iap) => iap.guid === data.guid));
+      return {
+        t: DisplayTabs.Shops,
+        d: "shops",
+        f: serializeFilters(new Map([[FilterType.Shops, relatedShops.map((shop) => shop.guid)]])),
+      };
+    }
+
+    case "Shop":
+      return {
+        t: DisplayTabs.Shops,
+        d: "shops",
+        f: serializeFilters(new Map([[FilterType.Shops, [data.guid]]])),
+      };
+
+    default:
+      return null;
+  }
+}
+
+/**
+ * Main handler for planner data management actions
+ * @param helper - Interaction helper instance
+ * @param options - Command options resolver
+ */
+export async function plannerData(helper: InteractionHelper, options: InteractionOptionResolver): Promise<void> {
+  const action = options.getString("action", true);
+
+  switch (action) {
+    case "import":
+      await handleImportAction(helper);
+      break;
+
+    case "export":
+      await handleExportAction(helper);
+      break;
+
+    case "delete":
+      await handleDeleteAction(helper);
+      break;
+
+    default:
+      throw new Error(`Unknown planner data action: ${action}`);
+  }
 }
