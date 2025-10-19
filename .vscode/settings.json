@@ -6,5 +6,7 @@
     "**/app/**/page.tsx": "${dirname}/${filename}",
     "**/app/**/route.ts": "${dirname}/${filename}",
     "**/planner.ts": "${dirname}/${filename}"
-  }
+  },
+  "editor.foldingStrategy": "auto",
+  "editor.foldingImportsByDefault": true
 }

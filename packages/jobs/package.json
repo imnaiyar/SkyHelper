@@ -40,7 +40,7 @@
     "@sentry/bun": "^10.19.0",
     "@skyhelperbot/constants": "workspace:^",
     "@skyhelperbot/utils": "workspace:^",
-    "discord-api-types": "0.38.10",
+    "discord-api-types": "latest",
     "i18next": "^23.12.2",
     "i18next-fs-backend": "^2.3.1",
     "luxon": "^3.5.0",

@@ -427,15 +427,16 @@
       },
       "data": {
         "name": "data",
-        "description": "manage planner's data"
+        "description": "mange/export/import your planner data"
       },
-      "import": {
-        "name": "import",
-        "description": "import data from sky-planner website or saved .json file"
+      "action": {
+        "name": "action",
+        "description": "the action you want to perform"
       },
-      "export": {
-        "name": "export",
-        "description": "export your data to a .json file"
+      "choices": {
+        "import": "Import Data",
+        "export": "Export Data",
+        "delete": "Delete Data"
       }
     }
   }
