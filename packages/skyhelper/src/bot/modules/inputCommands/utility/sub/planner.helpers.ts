@@ -4,7 +4,7 @@ import { serializeFilters } from "@/handlers/planner-displays/filter.manager";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { ComponentType, MessageFlags, type APIModalInteractionResponseCallbackData } from "discord-api-types/v10";
-import { emoji, z } from "zod/v4";
+import { z } from "zod/v4";
 import { button, container, row, separator, textDisplay } from "@skyhelperbot/utils";
 import { currency, emojis, SkyPlannerData, zone } from "@skyhelperbot/constants";
 import { CustomId, store } from "@/utils/customId-store";
@@ -93,7 +93,7 @@ If you're importing data from [**sky-planner.com**](https://sky-planner.com), fo
         {
           type: ComponentType.Label,
           label: "Data File",
-          description: "Please provide your savend .json file here",
+          description: "Please provide your saved .json file here",
           component: { type: ComponentType.FileUpload, custom_id: "data_file", max_values: 1 },
         },
       ],
