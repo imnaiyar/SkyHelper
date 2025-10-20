@@ -183,8 +183,6 @@ export async function generateSpiritTreeTier(
   const centerX = Math.floor(width / 2);
   const startY = height - size * 4;
 
-  // Preload all images in parallel
-  await preloadTierTreeImages(tree); // Render the tree first (from bottom to top)
   await renderTierTree(ctx, tree, centerX, startY - 40, size * 1.15, !!options.season, options.highlightItems);
 
   // Draw spirit name and subtitle at the bottom
