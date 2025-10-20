@@ -239,8 +239,8 @@ function resolveReferences(data: PlannerAssetData): void {
     for (const row of tier.rows) {
       row.forEach((n, i) => {
         if (!n) return;
-        const node = data.nodes.find((nn) => nn.guid === (n as any));
-        if (!node) throw new Error("Recieve unknown node");
+        const node = resolveRef<INode>(n as any, data);
+        if (!node) throw new Error(`Received unknown node GUID: ${n as any}`);
         row[i] = node;
         node.root = node;
       });
