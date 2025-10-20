@@ -5,6 +5,7 @@ import { ComponentType, MessageFlags, type APIComponentInContainer } from "disco
 import { DateTime } from "luxon";
 import {
   calculateUserProgress,
+  getSpiritEmoji,
   type IEvent,
   type IEventInstance,
   type IItemListNode,
@@ -128,7 +129,7 @@ export class HomeDisplay extends BasePlannerHandler {
       `From ${this.formatDateTimestamp(event.instance.date)} to ${this.formatDateTimestamp(event.instance.endDate)}`,
       event.instance.spirits.length
         ? [
-            ...event.instance.spirits.map((s) => s.tree.node.item?.emoji && `<:_:${s.tree.node.item.emoji}>`).filter(Boolean),
+            ...event.instance.spirits.map((s) => getSpiritEmoji(s) && `<:_:${getSpiritEmoji(s)}>`).filter(Boolean),
             this.planner.formatGroupedCurrencies(
               [
                 event.instance.spirits.map((c) => c.tree),

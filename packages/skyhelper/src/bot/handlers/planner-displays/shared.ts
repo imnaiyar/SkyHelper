@@ -1,4 +1,4 @@
-import { getAllTreeNodes, type ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
+import { getAllNodes, type INode, type ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
 import {
   button,
   generateSpiritTree,
@@ -19,12 +19,14 @@ export async function spiritTreeDisplay(
   { tree, planner, spiritView = true }: { tree: ISpiritTree; planner: BasePlannerHandler; spiritView?: boolean },
   opts?: GenerateSpiritTreeOptions,
 ) {
-  const buffer = await generateSpiritTree(tree, opts);
+  if (!tree.node) throw new Error("Not implement new system");
+
+  const buffer = await generateSpiritTree(tree as ISpiritTree & { node: INode }, opts);
   const file: RawFile = { name: "tree.png", data: buffer };
   const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit;
   /* @ts-expect-error this is a fallback, so i'm not worried */
   const name = tree.name ?? spirit?.name ?? spirit?.spirit?.name ?? "Unknown";
-  const nodes = getAllTreeNodes(tree.node);
+  const nodes = getAllNodes(tree);
 
   const unlockAll = nodes.some((n) => !n.item?.unlocked && !n.item?.autoUnlocked);
 

@@ -4,11 +4,21 @@
  */
 import { currency, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
-import type { ICost, IEvent, IEventInstance, INode, ISpirit, ISpiritTree } from "./interfaces.js";
+import type {
+  ICost,
+  IEvent,
+  IEventInstance,
+  IEventInstanceSpirit,
+  INode,
+  INodeTier,
+  ISpirit,
+  ISpiritTree,
+  ISpiritTreeTier,
+} from "./interfaces.js";
 import { transformData, type PlannerAssetData } from "./transformer.js";
 import { DateTime } from "luxon";
 import type { UserPlannerData } from "./interfaces.js";
-import { PlannerDataHelper } from "./interfaces.js";
+import { ItemType, PlannerDataHelper, SpiritType } from "./interfaces.js";
 
 let cachedData: PlannerAssetData | null = null;
 let lastFetchTime = 0;
@@ -353,17 +363,14 @@ export function resolveToLuxon(date: { day: number; month: number; year: number 
 /**
  * Calculate total costs of all nodes walking upwards to all the references
  */
-export function calculateCost(node: INode) {
+export function calculateCost(nodes: INode[]) {
   const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
   const addCurrency = (type: any) => {
     for (const currencyy of Object.keys(costs)) {
       costs[currencyy as keyof typeof costs] += type[currencyy as keyof typeof costs] ?? 0;
     }
   };
-  addCurrency(node);
-  if (node.nw) addCurrency(calculateCost(node.nw));
-  if (node.ne) addCurrency(calculateCost(node.ne));
-  if (node.n) addCurrency(calculateCost(node.n));
+  nodes.forEach(addCurrency);
 
   return costs;
 }
@@ -382,7 +389,8 @@ export function formatCosts(costs: ICost, remaining?: ICost) {
 }
 
 export function getFormattedTreeCost(tree: ISpiritTree) {
-  const c = calculateCost(tree.node);
+  const nodes = getAllNodes(tree);
+  const c = calculateCost(nodes);
   return formatCosts(c);
 }
 
@@ -401,35 +409,19 @@ export function getCost(cost: ICost) {
  * @param node The root node to calculate from
  * @returns Cost object with remaining amounts
  */
-export function calculateRemainingCost(node: INode) {
+export function calculateRemainingCost(nodes: INode[]) {
   const costs = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
 
-  // Don't count this node if it's item is already unlocked
-  if (!(node.item?.unlocked ?? false)) {
-    for (const currencyKey of Object.keys(costs)) {
-      costs[currencyKey as keyof typeof costs] += node[currencyKey as keyof typeof costs] ?? 0;
+  const calculate = (node: INode) => {
+    // Don't count this node if it's item is already unlocked
+    if (!(node.item?.unlocked ?? false)) {
+      for (const currencyKey of Object.keys(costs)) {
+        costs[currencyKey as keyof typeof costs] += node[currencyKey as keyof typeof costs] ?? 0;
+      }
     }
-  }
+  };
 
-  // Recursively calculate for child nodes
-  if (node.nw) {
-    const childCosts = calculateRemainingCost(node.nw);
-    for (const key in costs) {
-      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
-    }
-  }
-  if (node.ne) {
-    const childCosts = calculateRemainingCost(node.ne);
-    for (const key in costs) {
-      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
-    }
-  }
-  if (node.n) {
-    const childCosts = calculateRemainingCost(node.n);
-    for (const key in costs) {
-      costs[key as keyof typeof costs] += childCosts[key as keyof typeof costs];
-    }
-  }
+  nodes.forEach(calculate);
 
   return costs;
 }
@@ -439,19 +431,27 @@ export function calculateRemainingCost(node: INode) {
  * @param tree The spirit tree
  */
 export function getFormattedTreeCostWithProgress(tree: ISpiritTree) {
-  const totalCosts = calculateCost(tree.node);
-  const remainingCosts = calculateRemainingCost(tree.node);
+  const nodes = getAllNodes(tree);
+  const totalCosts = calculateCost(nodes);
+  const remainingCosts = calculateRemainingCost(nodes);
 
   return formatCosts(totalCosts, remainingCosts);
 }
 
 export function formatGroupedCurrencies(
-  obj: Array<ISpiritTree | INode | { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number }>,
+  obj: Array<
+    ISpiritTree | INode | { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number } | ISpiritTreeTier
+  >,
 ) {
   const currencies = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
 
   for (const item of obj) {
-    const costs = "node" in item ? calculateCost(item.node) : calculateCost(item as INode);
+    const costs =
+      "node" in item || "tier" in item
+        ? calculateCost(getAllNodes(item))
+        : "rows" in item
+          ? calculateCost(getTreeTierNodes(item))
+          : calculateCost([item as INode]);
     for (const key in currencies) {
       currencies[key as keyof typeof currencies] += costs[key as keyof typeof costs] || 0;
     }
@@ -551,19 +551,53 @@ export function calculateUserProgress(data: PlannerAssetData) {
 }
 
 /**
- * Recursively get all nodes in a tree
+ * Recursively get all nodes in a classic tree (one with linear nodes, not with tiers)
  */
-export function getAllTreeNodes(node: INode, visited = new Set<string>()) {
+export function getAllClassicTreeNodes(node: INode, visited = new Set<string>()) {
   if (visited.has(node.guid)) return [];
-
   visited.add(node.guid);
   const nodes = [node];
 
-  if (node.n) nodes.push(...getAllTreeNodes(node.n, visited));
-  if (node.nw) nodes.push(...getAllTreeNodes(node.nw, visited));
-  if (node.ne) nodes.push(...getAllTreeNodes(node.ne, visited));
+  if (node.n) nodes.push(...getAllClassicTreeNodes(node.n, visited));
+  if (node.nw) nodes.push(...getAllClassicTreeNodes(node.nw, visited));
+  if (node.ne) nodes.push(...getAllClassicTreeNodes(node.ne, visited));
 
   return nodes;
+}
+
+export function getAllNodes(tree: ISpiritTree) {
+  if (tree.node) return getAllClassicTreeNodes(tree.node);
+  if (tree.tier) return getTreeTierNodes(tree.tier);
+  return [];
+}
+
+export function getNodeTier(node: INode): INodeTier | null {
+  if (node.root?.spiritTree?.spirit?.type !== SpiritType.Regular) return null;
+
+  let tier = 0;
+  const root = node.root ?? node;
+  (function walk(n: INode) {
+    if (n.item?.type === ItemType.WingBuff) tier++;
+    if (n === node) return;
+    if (n.nw) walk(n.nw);
+    if (n.ne) walk(n.ne);
+    if (n.n) walk(n.n);
+  })(root);
+  return { ...node, tier };
+}
+
+export function getTreeTierNodes(tier: ISpiritTreeTier) {
+  const tiers = getTreeTiers(tier);
+  return tiers.flatMap((t) => t.rows.flat()).filter((s) => !!s);
+}
+export function getTreeTiers(tree: ISpiritTree) {
+  const tiers: ISpiritTreeTier[] = [];
+  let tier = tree.tier;
+  while (tier) {
+    tiers.push(tier);
+    tier = tier.next;
+  }
+  return tiers;
 }
 
 export function getTreeSpirit(tree: ISpiritTree) {
@@ -577,4 +611,16 @@ export function getNodeSpirit(node: INode) {
     node.root?.spiritTree?.visit?.spirit ??
     node.root?.spiritTree?.eventInstanceSpirit?.spirit
   );
+}
+
+/** Return spirit's emoji if present, or get's the first node in spirit's tree and returns the node's item if present, otherwise null */
+export function getSpiritEmoji(spirit: IEventInstanceSpirit | ISpirit): string | undefined {
+  const getFirstNodeEmoji = (tree: ISpiritTree) => {
+    const node = getAllNodes(tree)[0];
+    return node?.item?.emoji;
+  };
+  if ("spirit" in spirit) {
+    return spirit.spirit.emoji ?? getFirstNodeEmoji(spirit.tree);
+  }
+  return spirit.emoji ?? (spirit.tree ? getFirstNodeEmoji(spirit.tree) : undefined);
 }

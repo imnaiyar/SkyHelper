@@ -347,7 +347,10 @@ async function renderNodeRecursive(
  *   scale: 1
  * });
  */
-export async function generateSpiritTree(tree: ISpiritTree, options: GenerateSpiritTreeOptions = {}): Promise<Buffer> {
+export async function generateSpiritTree(
+  tree: ISpiritTree & { node: INode },
+  options: GenerateSpiritTreeOptions = {},
+): Promise<Buffer> {
   const scale = options.scale ?? 0.5; // default slightly reduced for perf
   const baseSize = 64 * scale;
   // count center nodes following the `.n` link from root

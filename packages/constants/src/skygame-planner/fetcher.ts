@@ -15,6 +15,7 @@ import type {
   IShopConfig,
   ISpiritConfig,
   ISpiritTreeConfig,
+  ISpiritTreeTierConfig,
   ITravelingSpiritConfig,
   IWingedLightConfig,
 } from "./interfaces.js";
@@ -38,6 +39,7 @@ const DATA_FILES = {
   shops: "shops.json",
   spirits: "spirits.json",
   spiritTrees: "spirit-trees.json",
+  spiritTreeTiers: "spirit-tree-tiers.json",
   travelingSpirits: "traveling-spirits.json",
   wingedLights: "winged-lights.json",
 };
@@ -58,6 +60,7 @@ export interface FetchedData {
   shops: IShopConfig;
   spirits: ISpiritConfig;
   spiritTrees: ISpiritTreeConfig;
+  spiritTreeTiers: ISpiritTreeTierConfig;
   travelingSpirits: ITravelingSpiritConfig;
   wingedLights: IWingedLightConfig;
 }
