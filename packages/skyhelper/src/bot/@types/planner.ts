@@ -27,7 +27,7 @@ export const PlannerCurrenciesSchema = z.object({
     z.string(),
     z.object({
       candles: z.number().min(0),
-      hearts: z.number().min(0),
+      hearts: z.number().min(0).optional(),
     }),
   ),
 });

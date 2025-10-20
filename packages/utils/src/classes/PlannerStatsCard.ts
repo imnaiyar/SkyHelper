@@ -1,5 +1,6 @@
 import { createCanvas, loadImage, GlobalFonts, type SKRSContext2D } from "@napi-rs/canvas";
 import type { APIUser } from "discord-api-types/v10";
+import { currency, emojis } from "@skyhelperbot/constants";
 import path from "node:path";
 
 GlobalFonts.registerFromPath(path.join(import.meta.dirname, `../shared/fonts/NotoSans-Regular.ttf`), "noto-sans");
@@ -28,9 +29,17 @@ export interface ProfileCardProgressData {
   };
 }
 
+export interface ProfileCardCurrencies {
+  candles: number;
+  hearts: number;
+  ascendedCandles: number;
+  giftPasses?: number;
+}
+
 export interface ProfileCardOptions {
   user: APIUser;
   progress: ProfileCardProgressData;
+  currencies?: ProfileCardCurrencies;
   botIcon?: string;
   botName?: string;
 }
@@ -49,7 +58,7 @@ const CATEGORY_COLORS = {
  * @returns Buffer containing the PNG image
  */
 export async function generatePlannerProfileCard(options: ProfileCardOptions): Promise<Buffer> {
-  const { user, progress, botIcon, botName = "SkyHelper" } = options;
+  const { user, progress, currencies, botIcon, botName = "SkyHelper" } = options;
 
   // Canvas dimensions - wider rectangle
   const width = 1000;
@@ -166,8 +175,54 @@ export async function generatePlannerProfileCard(options: ProfileCardOptions): P
     ctx.fillText(`@${username}`, nameX, profileY + 20);
   }
 
+  // Currencies display (below username/display name) with Discord emoji images
+  if (currencies) {
+    const currencyY = user.global_name ? profileY + 50 : profileY + 30;
+    const emojiSize = 20;
+    const spacing = 15;
+    let currencyX = nameX;
+
+    const currenciesToDisplay: Array<{ emojiId: string; value: number; label: string }> = [];
+    if (currencies.candles > 0) {
+      currenciesToDisplay.push({ emojiId: currency.c, value: currencies.candles, label: "C" });
+    }
+    if (currencies.hearts > 0) {
+      currenciesToDisplay.push({ emojiId: currency.h, value: currencies.hearts, label: "H" });
+    }
+    if (currencies.ascendedCandles > 0) {
+      currenciesToDisplay.push({ emojiId: currency.ac, value: currencies.ascendedCandles, label: "AC" });
+    }
+    if (currencies.giftPasses && currencies.giftPasses > 0) {
+      currenciesToDisplay.push({ emojiId: emojis.spicon, value: currencies.giftPasses, label: "GP" });
+    }
+
+    // Draw each currency with its emoji
+    for (const curr of currenciesToDisplay) {
+      try {
+        const emojiUrl = `https://cdn.discordapp.com/emojis/${curr.emojiId}.png?size=64`;
+        const emojiImg = await loadImage(emojiUrl);
+        ctx.drawImage(emojiImg, currencyX, currencyY - emojiSize / 2, emojiSize, emojiSize);
+        currencyX += emojiSize + 5;
+      } catch (error) {
+        console.error(`Failed to load emoji ${curr.label}:`, error);
+        // Fallback: just move forward
+        currencyX += emojiSize + 5;
+      }
+
+      // Draw the value
+      ctx.font = `bold 16px noto-sans-bold`;
+      ctx.fillStyle = "#F6EAE0";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.fillText(curr.value.toString(), currencyX, currencyY);
+
+      const textWidth = ctx.measureText(curr.value.toString()).width;
+      currencyX += textWidth + spacing;
+    }
+  }
+
   // Progress section with circular indicators
-  const progressStartY = profileY + 80;
+  const progressStartY = profileY + 100;
   const centerX = width / 2;
 
   // Title for progress section
@@ -188,7 +243,7 @@ export async function generatePlannerProfileCard(options: ProfileCardOptions): P
   const circleSpacing = 220;
   const circlesPerRow = 4;
   const startX = centerX - (circleSpacing * (circlesPerRow - 1)) / 2;
-  const startY = progressStartY + 80;
+  const startY = progressStartY + 100;
 
   categories.forEach((category, index) => {
     const row = Math.floor(index / circlesPerRow);

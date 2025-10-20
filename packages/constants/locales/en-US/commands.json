@@ -421,6 +421,10 @@
         "name": "search",
         "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
       },
+      "profile": {
+        "name": "profile",
+        "description": "Your planner profile & stats and currency usages"
+      },
       "query": {
         "name": "query",
         "description": "the query to search for"

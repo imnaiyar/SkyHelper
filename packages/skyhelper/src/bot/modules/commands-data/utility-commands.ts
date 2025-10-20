@@ -295,6 +295,14 @@ export const PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         ],
       },
       {
+        name: "profile",
+        name_localizations: "commands:PLANNER.options.profile.name",
+        description_localizations: "commands:PLANNER.options.profile.description",
+        description: "Your planner profile & stats and currency usages",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+
+      {
         name: "data",
         name_localizations: "commands:PLANNER.options.data.name",
         description_localizations: "commands:PLANNER.options.data.description",

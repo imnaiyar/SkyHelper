@@ -2,7 +2,7 @@
  * SkyGame Planner data service
  * This file provides the main interface for accessing SkyGame Planner data
  */
-import { currency, fetchEmojis, zone } from "../index.js";
+import { currency, emojis, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
 import type {
   ICost,
@@ -631,4 +631,60 @@ export function getSpiritEmoji(spirit: IEventInstanceSpirit | ISpirit): string |
     return spirit.spirit.emoji ?? getFirstNodeEmoji(spirit.tree);
   }
   return spirit.emoji ?? (spirit.tree ? getFirstNodeEmoji(spirit.tree) : undefined);
+}
+
+/**
+ * Formats currency display for user data
+ */
+export function formatCurrencies(data: PlannerAssetData, storageData: UserPlannerData): string {
+  const { candles, hearts, seasonCurrencies, eventCurrencies, ascendedCandles, giftPasses } = storageData.currencies;
+
+  const seasonEntries = Object.entries(seasonCurrencies);
+  const eventEntries = Object.entries(eventCurrencies);
+
+  const parts = [
+    `${candles} <:Candle:${currency.c}>`,
+    `${hearts} <:Heart:${currency.h}>`,
+    `${ascendedCandles} <:AC:${currency.ac}>`,
+    `${giftPasses} <:GiftPass:${emojis.spicon}>`,
+  ];
+
+  if (seasonEntries.length > 0) {
+    const seasonText = seasonEntries
+      .map(([guid, sc]) => {
+        const season = data.seasons.find((s) => s.guid === guid);
+        return `${season?.emoji ? `<:${season.shortName}:${season.emoji}>` : (season?.shortName ?? "")}: ${sc.candles} <:SeasonCandle:${currency.sc}> ${sc.hearts} <:SeasonHeart:${currency.sh}>`;
+      })
+      .join("\n  - ");
+    parts.push(`\n- Seasonal Currencies\n  - ${seasonText}`);
+  }
+
+  if (eventEntries.length > 0) {
+    const eventText = eventEntries
+      .map(([guid, ev]) => {
+        const event = data.events.find((e) => e.guid === guid);
+        return `**${event?.shortName ?? event?.name ?? "Unknown"}**: ${ev.tickets} <:EventTicket:${currency.ec}>`;
+      })
+      .join("\n  - ");
+    parts.push(`\n- Event Currencies\n  - ${eventText}`);
+  }
+
+  return parts.join(" ");
+}
+
+/**
+ * Formats unlocked items summary
+ */
+export function formatUnlockedItems(usrdata: PlannerAssetData): string {
+  const progress = calculateUserProgress(usrdata);
+  const items = [
+    progress.items.unlocked > 0 ? `${progress.items.unlocked} items` : null,
+    progress.iaps.bought > 0 ? `${progress.iaps.bought} IAPs` : null,
+    progress.wingedLights.unlocked > 0 ? `${progress.wingedLights.unlocked} Winged Lights` : null,
+    progress.nodes.unlocked > 0 ? `${progress.nodes.unlocked} Spirit Tree Nodes` : null,
+  ]
+    .filter(Boolean)
+    .map((s) => `**${s}**`);
+
+  return items.length > 0 ? items.join(", ") : "No items unlocked";
 }

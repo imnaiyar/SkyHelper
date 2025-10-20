@@ -1,12 +1,23 @@
 import { DisplayTabs, type NavigationState, FilterType, PlannerDataSchema } from "@/types/planner";
-import { PlannerDataHelper, type PlannerAssetData, type UserPlannerData } from "@skyhelperbot/constants/skygame-planner";
+import {
+  formatCurrencies,
+  formatUnlockedItems,
+  PlannerDataHelper,
+  type PlannerAssetData,
+  type UserPlannerData,
+} from "@skyhelperbot/constants/skygame-planner";
 import { serializeFilters } from "@/handlers/planner-displays/filter.manager";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import { ComponentType, MessageFlags, type APIModalInteractionResponseCallbackData } from "discord-api-types/v10";
+import {
+  ComponentType,
+  MessageFlags,
+  type APIModalInteractionResponseCallbackData,
+  type APIModalSubmitInteraction,
+} from "discord-api-types/v10";
 import { z } from "zod/v4";
 import { button, container, row, separator, textDisplay } from "@skyhelperbot/utils";
-import { currency, emojis, SkyPlannerData, zone } from "@skyhelperbot/constants";
+import { SkyPlannerData, zone } from "@skyhelperbot/constants";
 import { CustomId, store } from "@/utils/customId-store";
 import { DateTime } from "luxon";
 import type { UserSchema } from "@/types/schemas";
@@ -102,61 +113,6 @@ async function awaitConfirmation(
 }
 
 /**
- * Formats currency display for user data
- */
-function formatCurrencies(data: PlannerAssetData, storageData: UserPlannerData): string {
-  const { candles, hearts, seasonCurrencies, eventCurrencies, ascendedCandles, giftPasses } = storageData.currencies;
-
-  const seasonEntries = Object.entries(seasonCurrencies);
-  const eventEntries = Object.entries(eventCurrencies);
-
-  const parts = [
-    `${candles} ${utils.formatEmoji(currency.c)}`,
-    `${hearts} ${utils.formatEmoji(currency.h)}`,
-    `${ascendedCandles} ${utils.formatEmoji(currency.ac)}`,
-    `${giftPasses} ${utils.formatEmoji(emojis.spicon, "GiftPass")}`,
-  ];
-
-  if (seasonEntries.length > 0) {
-    const seasonText = seasonEntries
-      .map(([guid, sc]) => {
-        const season = data.seasons.find((s) => s.guid === guid);
-        return `${utils.formatEmoji(season?.emoji)}: ${sc.candles} ${utils.formatEmoji(currency.sc)} ${sc.hearts} ${utils.formatEmoji(currency.sh)}`;
-      })
-      .join("\n  - ");
-    parts.push(`\n- Seasonal Currencies\n  - ${seasonText}`);
-  }
-
-  if (eventEntries.length > 0) {
-    const eventText = eventEntries
-      .map(([guid, ev]) => {
-        const event = data.events.find((e) => e.guid === guid);
-        return `**${event?.shortName ?? event?.name ?? "Unknown"}**: ${ev.tickets} ${utils.formatEmoji(currency.ec)}`;
-      })
-      .join("\n  - ");
-    parts.push(`\n- Event Currencies\n  - ${eventText}`);
-  }
-
-  return parts.join(" ");
-}
-
-/**
- * Formats unlocked items summary
- */
-function formatUnlockedItems(progress: ReturnType<typeof SkyPlannerData.calculateUserProgress>): string {
-  const items = [
-    progress.items.unlocked > 0 ? `${progress.items.unlocked} items` : null,
-    progress.iaps.bought > 0 ? `${progress.iaps.bought} IAPs` : null,
-    progress.wingedLights.unlocked > 0 ? `${progress.wingedLights.unlocked} Winged Lights` : null,
-    progress.nodes.unlocked > 0 ? `${progress.nodes.unlocked} Spirit Tree Nodes` : null,
-  ]
-    .filter(Boolean)
-    .map((s) => `**${s}**`);
-
-  return items.length > 0 ? items.join(", ") : "No items unlocked";
-}
-
-/**
  * Creates an import modal for planner data
  */
 function createImportModal(interactionId: string): APIModalInteractionResponseCallbackData {
@@ -249,7 +205,11 @@ async function handleInvalidFileError(
 /**
  * Handles confirmation for importing another user's data
  */
-async function handleOtherUserConfirmation(helper: InteractionHelper, submission: any, dataUserId: string): Promise<boolean> {
+async function handleOtherUserConfirmation(
+  helper: InteractionHelper,
+  submission: APIModalSubmitInteraction,
+  dataUserId: string,
+): Promise<boolean> {
   const dataUser = await helper.client.api.users.get(dataUserId).catch(() => null);
   if (!dataUser) return true; // Proceed if user cannot be fetched
 
@@ -287,14 +247,9 @@ async function handleOtherUserConfirmation(helper: InteractionHelper, submission
 /**
  * Creates import confirmation components with user data summary
  */
-function createImportConfirmationComponents(
-  helper: InteractionHelper,
-  data: PlannerAssetData,
-  storageData: any,
-  progress: ReturnType<typeof SkyPlannerData.calculateUserProgress>,
-) {
+function createImportConfirmationComponents(helper: InteractionHelper, data: PlannerAssetData, storageData: UserPlannerData) {
   const currencies = formatCurrencies(data, storageData);
-  const unlocked = formatUnlockedItems(progress);
+  const unlocked = formatUnlockedItems(data);
 
   return [
     container(
@@ -355,10 +310,9 @@ async function handleImportAction(helper: InteractionHelper): Promise<void> {
       await SkyPlannerData.getSkyGamePlannerData(),
       data.storageData,
     );
-    const progress = SkyPlannerData.calculateUserProgress(enrichedData);
 
     // Show confirmation dialog
-    const components = createImportConfirmationComponents(helper, enrichedData, data.storageData, progress);
+    const components = createImportConfirmationComponents(helper, enrichedData, data.storageData);
 
     const message = await helper.client.api.interactions.editReply(submission.application_id, submission.token, {
       components,
