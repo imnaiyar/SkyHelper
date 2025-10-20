@@ -7,7 +7,9 @@ import {
   currencyMap,
   enrichDataWithUserProgress,
   getTreeSpirit,
+  getTreeTiers,
   type INode,
+  type ISpiritTree,
   type PlannerAssetData,
   PlannerDataHelper,
 } from "@skyhelperbot/constants/skygame-planner";
@@ -25,13 +27,17 @@ export async function modifyTreeNode(
   const tree = enriched.spiritTrees.find((t) => t.guid === guid);
   if (!tree) throw new Error("Invalid Tree");
   const spirit = getTreeSpirit(tree);
-  const labeled = getLabeledNodes(tree.node, 1);
+  const labeled = tree.node ? getLegacyLabeledNodes(tree.node, 1) : getTierTreeLabeledNodes(tree);
 
   const description = `Please choose all the nodes you want to unlock.
 
-Nodes are listed from the bottom to the top of the tree and labeled in order — for example, the first node is \`N1\`.
-If a node has branches, they're labeled L (left) or R (right). Any nodes above those are labeled like \`N1.1-L\`, \`N1.2-L\`, etc.
--# 💡 Note: All nodes leading up to the selected top node will be unlocked automatically. This means even if you don't select a lower node, it will still be unlocked if you've chosen a node higher up on the same path.
+Nodes are listed from the bottom to the top of the tree and labeled in order — for example, 
+${
+  tree.node
+    ? `- For classic spirit trees, the first node is \`N1\`. If a node has branches, they're labeled L (left) or R (right). Any nodes above those are labeled like \`N1.1-L\`, \`N1.2-L\`, etc.
+-# 💡 Note: All nodes leading up to the selected top node will be unlocked automatically. This means even if you don't select a lower node, it will still be unlocked if you've chosen a node higher up on the same path (This doesn't apply to new spirit friendship tree introduced in Season of Migration).`
+    : `For new friendship system, nodes are labeled by tier, row, and position (T#-R#-P#). Tiers (visualized by the separator in spirit tree) and rows are counted from bottom to top in the Spirit Tree and postion from left to right.`
+}
 `;
 
   const selectMenus: APIStringSelectComponent[] = [];
@@ -115,23 +121,37 @@ If a node has branches, they're labeled L (left) or R (right). Any nodes above t
   });
 }
 
-function getLabeledNodes(node: INode, index: number, dir?: "R" | "L", subIndex?: number) {
+function getLegacyLabeledNodes(node: INode, index: number, dir?: "R" | "L", subIndex?: number) {
   const nodes = [{ label: `N${index}` + (subIndex ? `.${subIndex}` : "") + (dir ? `-${dir}` : ""), node }];
 
   // If this node has branches, recursively label them with the same index
-  if (node.ne) nodes.push(...getLabeledNodes(node.ne, index, "R", subIndex));
-  if (node.nw) nodes.push(...getLabeledNodes(node.nw, index, "L", subIndex));
+  if (node.ne) nodes.push(...getLegacyLabeledNodes(node.ne, index, "R", subIndex));
+  if (node.nw) nodes.push(...getLegacyLabeledNodes(node.nw, index, "L", subIndex));
 
   // For the next node in the main path:
   // - If we're in a branch (dir is set), continue with subIndex incremented, starting from 1
   // - If not in a branch, increment the main index
   if (node.n) {
     if (dir) {
-      nodes.push(...getLabeledNodes(node.n, index, dir, (subIndex ?? 0) + 1));
+      nodes.push(...getLegacyLabeledNodes(node.n, index, dir, (subIndex ?? 0) + 1));
     } else {
-      nodes.push(...getLabeledNodes(node.n, index + 1));
+      nodes.push(...getLegacyLabeledNodes(node.n, index + 1));
     }
   }
 
   return nodes;
+}
+
+function getTierTreeLabeledNodes(tree: ISpiritTree) {
+  const tiers = getTreeTiers(tree);
+  const getLabel = (tier: number, row: number, position: number) => `T${tier}-R${row}-P${position}`;
+  const labels: Array<{ label: string; node: INode }> = [];
+  for (const [index, tier] of tiers.entries()) {
+    tier.rows.forEach((r, i) => {
+      r.forEach((n, ind) => {
+        if (n) labels.push({ label: getLabel(index + 1, i + 1, ind + 1), node: n });
+      });
+    });
+  }
+  return labels;
 }

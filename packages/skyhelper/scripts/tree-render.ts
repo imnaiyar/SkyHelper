@@ -14,7 +14,8 @@
  */
 
 import { SkyPlannerData } from "@skyhelperbot/constants";
-import { generateSpiritTree } from "@skyhelperbot/utils";
+import { getAllNodes } from "@skyhelperbot/constants/skygame-planner";
+import { generateSpiritTree, generateSpiritTreeTier } from "@skyhelperbot/utils";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
@@ -137,18 +138,19 @@ async function main() {
       console.error(`❌ Spirit "${spirit.name}" has no tree data available`);
       process.exit(1);
     }
-
+    const nodes = getAllNodes(tree);
     console.log(`📊 Rendering tree for: ${spirit.name}`);
-    console.log(`   Tree has ${countNodes(tree.node)} nodes`);
+    console.log(`   Tree has ${nodes.length} nodes`);
     console.log(`   Season pass items: ${options.season ? "enabled" : "disabled"}`);
 
     // Render the tree
     console.time("Render time");
-    const imageBuffer = await generateSpiritTree(tree, {
+    const option = {
       season: options.season,
       spiritName: options.spiritName,
       spiritSubtitle: "Travleing Spirit #150",
-    });
+    };
+    const imageBuffer = tree.node ? await generateSpiritTree(tree, option) : await generateSpiritTreeTier(tree, option);
     console.timeEnd("Render time");
 
     // Save to file
@@ -162,22 +164,6 @@ async function main() {
     console.error(error);
     process.exit(1);
   }
-}
-
-/**
- * Count nodes in a tree (for statistics)
- */
-function countNodes(node: SkyPlannerData.INode, visited = new Set<string>()): number {
-  if (visited.has(node.guid)) return 0;
-  visited.add(node.guid);
-
-  let count = 1;
-
-  if (node.nw) count += countNodes(node.nw, visited);
-  if (node.n) count += countNodes(node.n, visited);
-  if (node.ne) count += countNodes(node.ne, visited);
-
-  return count;
 }
 
 // Run the script

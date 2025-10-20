@@ -16,7 +16,7 @@ import { SkyPlannerData } from "@skyhelperbot/constants";
 import { setLoadingState } from "@/utils/loading";
 import {
   enrichDataWithUserProgress,
-  getAllTreeNodes,
+  getAllNodes,
   nestingconfigs,
   PlannerDataHelper,
 } from "@skyhelperbot/constants/skygame-planner";
@@ -91,7 +91,7 @@ export default defineButton({
           default: {
             const wl = data.wingedLights.find((w) => w.guid === guid);
             if (wl) {
-              const unlocked = toggleWingedLightUnlock(user, wl, !wl.unlocked);
+              toggleWingedLightUnlock(user, wl, !wl.unlocked);
               followUp = false;
             }
           }
@@ -125,7 +125,7 @@ export default defineButton({
       case PlannerAction.UnlockTree: {
         const tree = data.spiritTrees.find((t) => t.guid === guid);
         if (tree) {
-          const allNodes = getAllTreeNodes(tree.node);
+          const allNodes = getAllNodes(tree);
           unlockAllTreeNodes(user, allNodes);
           resultMessage = `✅ Unlocked entire tree`;
         }
@@ -135,7 +135,7 @@ export default defineButton({
       case PlannerAction.LockTree: {
         const tree = data.spiritTrees.find((t) => t.guid === guid);
         if (tree) {
-          const allNodes = getAllTreeNodes(tree.node);
+          const allNodes = getAllNodes(tree);
           lockAllTreeNodes(user, allNodes);
           resultMessage = `🔒 Locked entire tree`;
         }

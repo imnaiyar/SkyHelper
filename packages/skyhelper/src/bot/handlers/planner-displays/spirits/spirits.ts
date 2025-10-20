@@ -3,7 +3,7 @@ import { DisplayTabs, FilterType } from "@/types/planner";
 import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
-import { getAllTreeNodes, SpiritType } from "@skyhelperbot/constants/skygame-planner";
+import { getAllNodes, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import { BaseSpiritsDisplay } from "./base.js";
 import { spiritTreeDisplay } from "../shared.js";
 
@@ -93,7 +93,7 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
 
     // if highlighted items, then default select the tree that has the item
     const index = trees.findIndex((t) => {
-      const nodes = getAllTreeNodes(t.tree.node);
+      const nodes = getAllNodes(t.tree);
       return nodes.some((n) => highlights.includes(n.item?.guid ?? ""));
     });
     if (index > -1) selected = index;

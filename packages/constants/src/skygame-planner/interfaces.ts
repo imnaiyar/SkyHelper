@@ -126,30 +126,52 @@ export interface IItem extends IGuid {
   favourited?: boolean;
 }
 
-export interface IItemConfig extends IConfig<IItem> {}
+export type IItemConfig = IConfig<IItem>;
 
+// #region INode
 /**
  * Node interfaces
  */
 export interface INode extends IGuid, ICost {
-  // References to be added during data transformation
+  /** Item unlocked through this node. */
   item?: IItem;
+  /** Items unlocked through this node that are not visible in the node. Generally ones added retroactively. */
   hiddenItems?: IItem[];
+
+  /**
+   * Spirit tree containing this node.
+   * @remarks For normal spirit trees only the first node has this reference.
+   * Other nodes have a reference to their `prev` node.
+   * For spirit trees with friendship tiers, every node has this reference.
+   */
   spiritTree?: ISpiritTree;
+  /** Node north west of this node. */
   nw?: INode;
+  /** Node north east of this node. */
   ne?: INode;
+  /** Node north of this node. */
   n?: INode;
+  /** Previous node. */
   prev?: INode;
+  /**
+   * Root node.
+   * @remarks Can be a self-reference if this is the root node.
+   * For spirit trees with friendship tiers, every node is its own root.
+   */
   root?: INode;
-  currency?: { type: string; amount: number };
-  tier?: number;
 
   // Progress
   unlocked?: boolean;
+  currency?: { type: string; amount: number };
+}
+export interface INodeTier extends INode {
+  tier?: number;
 }
 
-export interface INodeConfig extends IConfig<INode> {}
+export type INodeConfig = IConfig<INode>;
+// #endregion
 
+// #region ISpiritTree
 /**
  * Spirit Tree interfaces
  */
@@ -159,8 +181,9 @@ export interface ISpiritTree extends IGuid {
 
   // References
   permanent?: boolean | string;
-  node: INode;
+  node?: INode;
   ts?: ITravelingSpirit;
+  tier?: ISpiritTreeTier;
   visit?: IReturningSpirit;
   spirit?: ISpirit;
   eventInstanceSpirit?: IEventInstanceSpirit;
@@ -170,7 +193,19 @@ export interface IRevisedSpiritTree extends ISpiritTree {
   revisionType: "DuringSeason" | "AfterSeason" | "Limited";
 }
 
-export interface ISpiritTreeConfig extends IConfig<ISpiritTree> {}
+export interface ISpiritTreeTier extends IGuid {
+  spiritTree?: ISpiritTree;
+  prev?: ISpiritTreeTier;
+  next?: ISpiritTreeTier;
+  root?: ISpiritTreeTier;
+  rows: SpiritTreeTierRow[];
+}
+
+export type SpiritTreeTierRow = [INode?, INode?, INode?];
+
+export type ISpiritTreeConfig = IConfig<ISpiritTree>;
+export type ISpiritTreeTierConfig = IConfig<ISpiritTreeTier>;
+// #endregion
 
 export enum SpiritType {
   Regular = "Regular",
@@ -233,7 +268,7 @@ export interface ICalendarFm {
   href?: string;
 }
 
-export interface ISpiritConfig extends IConfig<ISpirit> {}
+export type ISpiritConfig = IConfig<ISpirit>;
 
 /**
  * Area interfaces
@@ -257,7 +292,7 @@ export interface IAreaConnection {
   area: IArea;
 }
 
-export interface IAreaConfig extends IConfig<IArea> {}
+export type IAreaConfig = IConfig<IArea>;
 
 /**
  * Realm interfaces
@@ -288,7 +323,7 @@ export interface IRealmConstellationIcon {
   flag?: boolean;
 }
 
-export interface IRealmConfig extends IConfig<IRealm> {}
+export type IRealmConfig = IConfig<IRealm>;
 
 /**
  * Season interfaces
@@ -318,7 +353,7 @@ export interface ISeason extends IGuid, IPeriod {
   includedTrees?: ISpiritTree[];
 }
 
-export interface ISeasonConfig extends IConfig<ISeason> {}
+export type ISeasonConfig = IConfig<ISeason>;
 
 /**
  * Event interfaces
@@ -364,7 +399,7 @@ export interface IEventInstanceSpirit extends IGuid {
   eventInstance?: IEventInstance;
 }
 
-export interface IEventConfig extends IConfig<IEvent> {}
+export type IEventConfig = IConfig<IEvent>;
 
 /**
  * Traveling Spirit interfaces
@@ -384,7 +419,7 @@ export interface ITravelingSpirit extends IGuid {
   tree: ISpiritTree;
 }
 
-export interface ITravelingSpiritConfig extends IConfig<ITravelingSpirit> {}
+export type ITravelingSpiritConfig = IConfig<ITravelingSpirit>;
 
 /**
  * Returning Spirit interfaces
@@ -407,7 +442,7 @@ export interface IReturningSpirit extends IGuid {
   tree: ISpiritTree;
 }
 
-export interface IReturningSpiritsConfig extends IConfig<IReturningSpirits> {}
+export type IReturningSpiritsConfig = IConfig<IReturningSpirits>;
 
 /**
  * Shop interfaces
@@ -523,7 +558,7 @@ export interface IShop extends IGuid {
   season?: ISeason;
 }
 
-export interface IShopConfig extends IConfig<IShop> {}
+export type IShopConfig = IConfig<IShop>;
 
 /**
  * IAP interfaces
@@ -551,7 +586,7 @@ export interface IIAP extends IGuid {
   gifted?: boolean;
 }
 
-export interface IIAPConfig extends IConfig<IIAP> {}
+export type IIAPConfig = IConfig<IIAP>;
 
 /**
  * Item List interfaces
@@ -577,7 +612,7 @@ export interface IItemListNode extends IGuid, ICost {
   unlocked?: boolean;
 }
 
-export interface IItemListConfig extends IConfig<IItemList> {}
+export type IItemListConfig = IConfig<IItemList>;
 
 /**
  * Map interfaces
@@ -603,7 +638,7 @@ export interface IMapShrine extends IGuid {
   area: IArea;
 }
 
-export interface IMapShrineConfig extends IConfig<IMapShrine> {}
+export type IMapShrineConfig = IConfig<IMapShrine>;
 
 /**
  * Winged Light interfaces
@@ -620,4 +655,4 @@ export interface IWingedLight extends IGuid {
   unlocked?: boolean;
 }
 
-export interface IWingedLightConfig extends IConfig<IWingedLight> {}
+export type IWingedLightConfig = IConfig<IWingedLight>;

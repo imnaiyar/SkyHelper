@@ -24,12 +24,11 @@ import {
   type ITravelingSpirit,
   type IWingedLight,
   type IGuid,
-  SpiritType,
-  ItemType,
+  type ISpiritTreeTier,
 } from "./interfaces.js";
 import type { FetchedData } from "./fetcher.js";
 import { APPLICATION_EMOJIS, realms_emojis, season_emojis } from "../emojis.js";
-import { resolvePlannerUrl, resolveToLuxon } from "./service.js";
+import { getAllNodes, getTreeTierNodes, resolvePlannerUrl, resolveToLuxon } from "./service.js";
 
 /** Typeguard for filtering array */
 function notNull<T>(value: T | null | undefined): value is T {
@@ -64,6 +63,7 @@ export interface PlannerAssetData {
   shops: IShop[];
   spirits: ISpirit[];
   spiritTrees: ISpiritTree[];
+  spiritTreeTiers: ISpiritTreeTier[];
   travelingSpirits: ITravelingSpirit[];
   wingedLights: IWingedLight[];
   guidMap: Map<string, any>;
@@ -74,7 +74,6 @@ export interface PlannerAssetData {
  */
 export function transformData(fetchedData: FetchedData): PlannerAssetData {
   const guidMap = new Map<string, any>();
-
   const transformedData: PlannerAssetData = {
     areas: fetchedData.areas.items,
     events: fetchedData.events.items,
@@ -95,6 +94,7 @@ export function transformData(fetchedData: FetchedData): PlannerAssetData {
     shops: fetchedData.shops.items,
     spirits: fetchedData.spirits.items,
     spiritTrees: fetchedData.spiritTrees.items,
+    spiritTreeTiers: fetchedData.spiritTreeTiers.items,
     travelingSpirits: fetchedData.travelingSpirits.items,
     wingedLights: fetchedData.wingedLights.items,
     guidMap,
@@ -136,6 +136,7 @@ function registerGuids(data: PlannerAssetData) {
       data.shops,
       data.spirits,
       data.spiritTrees,
+      data.spiritTreeTiers,
       data.travelingSpirits,
       data.wingedLights,
     ] as IGuid[][]
@@ -191,7 +192,12 @@ function resolveReferences(data: PlannerAssetData): void {
   // #region data.items
   for (const item of data.items) {
     if (item.previewUrl) item.previewUrl = resolvePlannerUrl(item.previewUrl);
-    const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
+    // Try to find by identifiers first
+    let emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
+    // If not found, fall back to a specific placeholder emoji
+    if (!emoji) {
+      emoji = APPLICATION_EMOJIS.find((e) => e.name === "h_7df56a33eb505ce");
+    }
     if (emoji) item.emoji = emoji.id!;
   }
 
@@ -223,6 +229,34 @@ function resolveReferences(data: PlannerAssetData): void {
   for (const tree of data.spiritTrees) {
     const node = linkOne<INode, ISpiritTree>(tree.node as any, tree, "node", data, "spiritTree");
     if (node) node.spiritTree = tree;
+    const tier = linkOne<ISpiritTreeTier, ISpiritTree>(tree.tier as any, tree, "tier", data, "spiritTree");
+    if (tier) {
+      const nodes = getTreeTierNodes(tree);
+      nodes.forEach((n) => (n.spiritTree = tree));
+      tree.tier = tier;
+    }
+  }
+  /* -------------------------- spiritTreeTiers ------------------------ */
+  // #region data.spiritTreeTiers
+  for (const tier of data.spiritTreeTiers) {
+    for (const row of tier.rows) {
+      row.forEach((n, i) => {
+        if (!n) return;
+        const node = resolveRef<INode>(n as any, data);
+        if (!node) throw new Error(`Received unknown node GUID: ${n as any}`);
+        row[i] = node;
+        node.root = node;
+      });
+    }
+    if (!tier.prev) tier.root = tier;
+
+    if (typeof tier.next === "string") {
+      const next = data.spiritTreeTiers.find((t) => t.guid === (tier.next as any));
+      if (!next) throw new Error("unknown next tier", tier.next);
+      tier.next = next;
+      next.prev = tier;
+      next.root = tier.root;
+    }
   }
 
   /* --------------------------- itemListNodes ------------------------- */
@@ -243,9 +277,9 @@ function resolveReferences(data: PlannerAssetData): void {
       item.nodes.push(node);
     });
 
-    node.nw = linkOne<INode, INode>(node.nw as any, node, "nw", data, "prev");
-    node.ne = linkOne<INode, INode>(node.ne as any, node, "ne", data, "prev");
-    node.n = linkOne<INode, INode>(node.n as any, node, "n", data, "prev");
+    if (node.nw) node.nw = linkOne<INode, INode>(node.nw as any, node, "nw", data, "prev");
+    if (node.ne) node.ne = linkOne<INode, INode>(node.ne as any, node, "ne", data, "prev");
+    if (node.n) node.n = linkOne<INode, INode>(node.n as any, node, "n", data, "prev");
 
     // root discovery
     let current = node;
@@ -272,14 +306,10 @@ function resolveReferences(data: PlannerAssetData): void {
     const nn = data.nodes.find(
       (n) => ["Emote", "Stance", "Call"].includes(n.item?.type || "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
     );
-    spirit.emoji = nn?.item?.emoji || spirit.tree?.node.item?.emoji || spirit.emoji;
+    // get the first node for fallback emoji
+    const node = spirit.tree ? getAllNodes(spirit.tree)[0] : null;
+    spirit.emoji = nn?.item?.emoji || node?.item?.emoji || spirit.emoji;
   }
-
-  // Add tiers to regular spirit nodes
-  for (const node of data.nodes) {
-    if (node.root?.spiritTree?.spirit?.type === SpiritType.Regular) node.tier = getNodeTier(node);
-  }
-
   /* ------------------------------ seasons ---------------------------- */
   // #region data.seasons
   for (const season of data.seasons) {
@@ -362,16 +392,15 @@ function resolveReferences(data: PlannerAssetData): void {
 
   /* ---------------------- season → items linking --------------------- */
 
-  function walkNodeTree(node: INode, season: ISeason) {
-    if (node.item) node.item.season = season;
-    // eslint-disable-next-line
-    [node.nw, node.ne, node.n].filter(notNull).forEach((child) => walkNodeTree(child, season));
-  }
-
   for (const season of data.seasons) {
     // eslint-disable-next-line
     for (const spirit of season.spirits || []) {
-      if (spirit.tree?.node) walkNodeTree(spirit.tree.node, season);
+      if (spirit.tree) {
+        const nodes = getAllNodes(spirit.tree);
+        nodes.forEach((node) => {
+          if (node.item) node.item.season = season;
+        });
+      }
     }
     for (const shop of season.shops || []) {
       for (const iap of shop.iaps || []) {
@@ -381,17 +410,4 @@ function resolveReferences(data: PlannerAssetData): void {
       }
     }
   }
-}
-
-function getNodeTier(node: INode) {
-  let tier = 0;
-  const root = node.root || node;
-  (function walk(n: INode) {
-    if (n.item?.type === ItemType.WingBuff) tier++;
-    if (n === node) return;
-    if (n.nw) walk(n.nw);
-    if (n.ne) walk(n.ne);
-    if (n.n) walk(n.n);
-  })(root);
-  return tier;
 }

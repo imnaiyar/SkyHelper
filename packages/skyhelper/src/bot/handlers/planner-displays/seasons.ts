@@ -2,7 +2,7 @@ import { emojis, zone, type SkyPlannerData } from "@skyhelperbot/constants";
 import { BasePlannerHandler } from "./base.js";
 import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType } from "discord-api-types/v10";
-import { resolveToLuxon, type ISeason } from "@skyhelperbot/constants/skygame-planner";
+import { getAllNodes, resolveToLuxon, type ISeason } from "@skyhelperbot/constants/skygame-planner";
 import { DateTime } from "luxon";
 import { serializeFilters } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
@@ -42,8 +42,9 @@ export class SeasonsDisplay extends BasePlannerHandler {
   getSeasonInListDisplay(season: SkyPlannerData.ISeason) {
     const totalcosts = season.spirits.reduce(
       (acc, spirit) => {
-        if (!spirit.tree?.node) return acc;
-        const costs = this.planner.calculateCost(spirit.tree.node);
+        if (!spirit.tree) return acc;
+        const nodes = getAllNodes(spirit.tree);
+        const costs = this.planner.calculateCost(nodes);
         for (const key of Object.keys(acc)) {
           acc[key as keyof typeof acc] += costs[key as keyof typeof costs] || 0;
         }

@@ -4,3 +4,4 @@ export { ShardsUtil } from "./shardsUtil.js";
 export { SkytimesUtils } from "./SkytimesUtils.js";
 export * from "./SkytimesUtils.js";
 export * from "./SpiritTreeRenderer.js";
+export * from "./SpiritTreeTierRenderer.js";
