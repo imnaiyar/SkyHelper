@@ -231,7 +231,7 @@ function resolveReferences(data: PlannerAssetData): void {
     if (node) node.spiritTree = tree;
     const tier = linkOne<ISpiritTreeTier, ISpiritTree>(tree.tier as any, tree, "tier", data, "spiritTree");
     if (tier) {
-      const nodes = getTreeTierNodes(tier);
+      const nodes = getTreeTierNodes(tree);
       nodes.forEach((n) => (n.spiritTree = tree));
       tree.tier = tier;
     }
