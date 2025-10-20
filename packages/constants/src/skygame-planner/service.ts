@@ -567,7 +567,7 @@ export function getAllClassicTreeNodes(node: INode, visited = new Set<string>())
 
 export function getAllNodes(tree: ISpiritTree) {
   if (tree.node) return getAllClassicTreeNodes(tree.node);
-  if (tree.tier) return getTreeTierNodes(tree.tier);
+  if (tree.tier) return getTreeTierNodes(tree);
   return [];
 }
 
@@ -586,8 +586,8 @@ export function getNodeTier(node: INode): INodeTier | null {
   return { ...node, tier };
 }
 
-export function getTreeTierNodes(tier: ISpiritTreeTier) {
-  const tiers = getTreeTiers(tier);
+export function getTreeTierNodes(tree: ISpiritTree) {
+  const tiers = getTreeTiers(tree);
   return tiers.flatMap((t) => t.rows.flat()).filter((s) => !!s);
 }
 export function getTreeTiers(tree: ISpiritTree) {

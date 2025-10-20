@@ -274,9 +274,9 @@ function resolveReferences(data: PlannerAssetData): void {
       item.nodes.push(node);
     });
 
-    node.nw = linkOne<INode, INode>(node.nw as any, node, "nw", data, "prev");
-    node.ne = linkOne<INode, INode>(node.ne as any, node, "ne", data, "prev");
-    node.n = linkOne<INode, INode>(node.n as any, node, "n", data, "prev");
+    if (node.nw) node.nw = linkOne<INode, INode>(node.nw as any, node, "nw", data, "prev");
+    if (node.ne) node.ne = linkOne<INode, INode>(node.ne as any, node, "ne", data, "prev");
+    if (node.n) node.n = linkOne<INode, INode>(node.n as any, node, "n", data, "prev");
 
     // root discovery
     let current = node;
