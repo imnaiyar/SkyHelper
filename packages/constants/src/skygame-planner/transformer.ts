@@ -192,9 +192,12 @@ function resolveReferences(data: PlannerAssetData): void {
   // #region data.items
   for (const item of data.items) {
     if (item.previewUrl) item.previewUrl = resolvePlannerUrl(item.previewUrl);
-    const emoji = APPLICATION_EMOJIS.find(
-      (e) => e.identifiers?.includes(item.id!) ?? e.name === "h_7df56a33eb505ce" /* Placehoder emoji identifier, if none found */,
-    );
+    // Try to find by identifiers first
+    let emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
+    // If not found, fall back to a specific placeholder emoji
+    if (!emoji) {
+      emoji = APPLICATION_EMOJIS.find((e) => e.name === "h_7df56a33eb505ce");
+    }
     if (emoji) item.emoji = emoji.id!;
   }
 
