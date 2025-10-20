@@ -149,7 +149,7 @@ function getTierTreeLabeledNodes(tree: ISpiritTree) {
   for (const [index, tier] of tiers.entries()) {
     tier.rows.forEach((r, i) => {
       r.forEach((n, ind) => {
-        if (n) labels.push({ label: getLabel(index + 1, i + 1, ind), node: n });
+        if (n) labels.push({ label: getLabel(index + 1, i + 1, ind + 1), node: n });
       });
     });
   }

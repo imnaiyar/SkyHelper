@@ -440,23 +440,31 @@ export function getFormattedTreeCostWithProgress(tree: ISpiritTree) {
 
 export function formatGroupedCurrencies(
   obj: Array<
-    ISpiritTree | INode | { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number } | ISpiritTreeTier
+    ISpiritTree | INode | ISpiritTreeTier | { h?: number; c?: number; sc?: number; sh?: number; ac?: number; ec?: number }
   >,
 ) {
   const currencies = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
-
-  for (const item of obj) {
-    const costs =
-      "node" in item || "tier" in item
-        ? calculateCost(getAllNodes(item))
-        : "rows" in item
-          ? calculateCost(getTreeTierNodes(item))
-          : calculateCost([item as INode]);
+  const addCosts = (costs: ICost) => {
     for (const key in currencies) {
+      // eslint-disable-next-line
       currencies[key as keyof typeof currencies] += costs[key as keyof typeof costs] || 0;
     }
+  };
+  for (const item of obj) {
+    if (typeof (item as any)?.guid === "string" && "rows" in (item as any)) {
+      // ISpiritTreeTier
+      addCosts(calculateCost(getTreeTierNodes({ tier: item as ISpiritTreeTier } as unknown as ISpiritTree)));
+    } else if (typeof (item as any)?.guid === "string" && ("node" in (item as any) || "tier" in (item as any))) {
+      // ISpiritTree (classic or tiered)
+      addCosts(calculateCost(getAllNodes(item as ISpiritTree)));
+    } else if (typeof (item as any)?.guid === "string") {
+      // INode
+      addCosts(calculateCost([item as INode]));
+    } else {
+      // Plain cost-like object
+      addCosts(item as ICost);
+    }
   }
-
   return formatCosts(currencies);
 }
 
