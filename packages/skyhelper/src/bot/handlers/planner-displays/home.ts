@@ -129,7 +129,12 @@ export class HomeDisplay extends BasePlannerHandler {
       `From ${this.formatDateTimestamp(event.instance.date)} to ${this.formatDateTimestamp(event.instance.endDate)}`,
       event.instance.spirits.length
         ? [
-            ...event.instance.spirits.map((s) => getSpiritEmoji(s) && `<:_:${getSpiritEmoji(s)}>`).filter(Boolean),
+            ...event.instance.spirits
+              .map((s) => {
+                const emoji = getSpiritEmoji(s);
+                return emoji ? `<:_:${emoji}>` : null;
+              })
+              .filter(Boolean),
             this.planner.formatGroupedCurrencies(
               [
                 event.instance.spirits.map((c) => c.tree),
