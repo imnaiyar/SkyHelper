@@ -224,18 +224,6 @@ function resolveReferences(data: PlannerAssetData): void {
     area.mapShrines = resolveArray(area.mapShrines as any, data, (s) => (s.area = area));
   }
 
-  /* ---------------------------- spiritTrees -------------------------- */
-  // #region data.spiritTrees
-  for (const tree of data.spiritTrees) {
-    const node = linkOne<INode, ISpiritTree>(tree.node as any, tree, "node", data, "spiritTree");
-    if (node) node.spiritTree = tree;
-    const tier = linkOne<ISpiritTreeTier, ISpiritTree>(tree.tier as any, tree, "tier", data, "spiritTree");
-    if (tier) {
-      const nodes = getTreeTierNodes(tree);
-      nodes.forEach((n) => (n.spiritTree = tree));
-      tree.tier = tier;
-    }
-  }
   /* -------------------------- spiritTreeTiers ------------------------ */
   // #region data.spiritTreeTiers
   for (const tier of data.spiritTreeTiers) {
@@ -251,11 +239,25 @@ function resolveReferences(data: PlannerAssetData): void {
     if (!tier.prev) tier.root = tier;
 
     if (typeof tier.next === "string") {
-      const next = data.spiritTreeTiers.find((t) => t.guid === (tier.next as any));
+      const next = resolveRef<ISpiritTreeTier>(tier.next as any, data);
       if (!next) throw new Error("unknown next tier", tier.next);
       tier.next = next;
       next.prev = tier;
       next.root = tier.root;
+    }
+  }
+
+  /* ---------------------------- spiritTrees -------------------------- */
+  // #region data.spiritTrees
+  for (const tree of data.spiritTrees) {
+    const node = linkOne<INode, ISpiritTree>(tree.node as any, tree, "node", data, "spiritTree");
+    if (node) node.spiritTree = tree;
+    const tier = linkOne<ISpiritTreeTier, ISpiritTree>(tree.tier as any, tree, "tier", data, "spiritTree");
+    if (tier) {
+      // tiertree needs to be initialized first or this will not work
+      const nodes = getTreeTierNodes(tree);
+      nodes.forEach((n) => (n.spiritTree = tree));
+      tree.tier = tier;
     }
   }
 
