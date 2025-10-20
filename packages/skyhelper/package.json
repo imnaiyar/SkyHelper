@@ -39,7 +39,7 @@
     "@discordjs/rest": "dev",
     "@discordjs/ws": "dev",
     "@imnaiyar/framework": "latest",
-    "@napi-rs/canvas": "^0.1.65",
+    "@napi-rs/canvas": "^0.1.80",
     "@nestjs/common": "^11.0.6",
     "@nestjs/core": "^11.0.6",
     "@nestjs/platform-express": "^11.0.6",

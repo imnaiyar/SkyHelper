@@ -74,7 +74,6 @@ export interface PlannerAssetData {
  */
 export function transformData(fetchedData: FetchedData): PlannerAssetData {
   const guidMap = new Map<string, any>();
-
   const transformedData: PlannerAssetData = {
     areas: fetchedData.areas.items,
     events: fetchedData.events.items,
@@ -137,6 +136,7 @@ function registerGuids(data: PlannerAssetData) {
       data.shops,
       data.spirits,
       data.spiritTrees,
+      data.spiritTreeTiers,
       data.travelingSpirits,
       data.wingedLights,
     ] as IGuid[][]
@@ -192,7 +192,9 @@ function resolveReferences(data: PlannerAssetData): void {
   // #region data.items
   for (const item of data.items) {
     if (item.previewUrl) item.previewUrl = resolvePlannerUrl(item.previewUrl);
-    const emoji = APPLICATION_EMOJIS.find((e) => e.identifiers?.includes(item.id!));
+    const emoji = APPLICATION_EMOJIS.find(
+      (e) => e.identifiers?.includes(item.id!) ?? e.name === "h_7df56a33eb505ce" /* Placehoder emoji identifier, if none found */,
+    );
     if (emoji) item.emoji = emoji.id!;
   }
 

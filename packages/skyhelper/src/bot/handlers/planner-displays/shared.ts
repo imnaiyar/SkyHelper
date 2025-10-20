@@ -1,7 +1,8 @@
-import { getAllNodes, type INode, type ISpiritTree } from "@skyhelperbot/constants/skygame-planner";
+import { getAllNodes, type INode, type ISpiritTree, type ISpiritTreeTier } from "@skyhelperbot/constants/skygame-planner";
 import {
   button,
   generateSpiritTree,
+  generateSpiritTreeTier,
   type GenerateSpiritTreeOptions,
   mediaGallery,
   mediaGalleryItem,
@@ -19,9 +20,17 @@ export async function spiritTreeDisplay(
   { tree, planner, spiritView = true }: { tree: ISpiritTree; planner: BasePlannerHandler; spiritView?: boolean },
   opts?: GenerateSpiritTreeOptions,
 ) {
-  if (!tree.node) throw new Error("Not implement new system");
-
-  const buffer = await generateSpiritTree(tree as ISpiritTree & { node: INode }, opts);
+  // Check if tree uses tier system or classic node system
+  let buffer: Buffer;
+  if (tree.tier) {
+    // New tier-based system
+    buffer = await generateSpiritTreeTier(tree as ISpiritTree & { tier: ISpiritTreeTier }, opts);
+  } else if (tree.node) {
+    // Classic node-based system
+    buffer = await generateSpiritTree(tree as ISpiritTree & { node: INode }, opts);
+  } else {
+    throw new Error("Tree must have either tier or node structure");
+  }
   const file: RawFile = { name: "tree.png", data: buffer };
   const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit;
   /* @ts-expect-error this is a fallback, so i'm not worried */
