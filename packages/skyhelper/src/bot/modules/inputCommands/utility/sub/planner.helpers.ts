@@ -182,8 +182,8 @@ function createPlannerExport(user: UserSchema) {
  */
 async function handleInvalidFileError(
   helper: InteractionHelper,
-  submission: any,
-  error: z.ZodError | SyntaxError,
+  submission: APIModalSubmitInteraction,
+  error: z.ZodError | SyntaxError | string,
 ): Promise<void> {
   const isZodError = error instanceof z.ZodError;
   const errorDetails = isZodError
@@ -194,7 +194,7 @@ async function handleInvalidFileError(
     components: [
       textDisplay(
         isZodError ? MESSAGES.INVALID_FILE_HEADER : MESSAGES.JSON_PARSE_ERROR_HEADER,
-        isZodError ? MESSAGES.INVALID_FILE_BODY : MESSAGES.JSON_PARSE_ERROR_BODY,
+        isZodError ? MESSAGES.INVALID_FILE_BODY : typeof error === "string" ? error : MESSAGES.JSON_PARSE_ERROR_BODY,
         `\n${getFileRequirementText(helper.client)}${errorDetails}`,
       ),
     ],
@@ -286,6 +286,12 @@ async function handleImportAction(helper: InteractionHelper): Promise<void> {
   // Extract and fetch file
   const fileComponent = helper.client.utils.getModalComponent(submission, "data_file", ComponentType.FileUpload, true);
   const attachment = submission.data.resolved!.attachments![fileComponent.values[0]!]!;
+
+  if (attachment.size > 2_000_000 /* Max 2mb */) {
+    await handleInvalidFileError(helper, submission, "File larger than 2mb");
+    return;
+  }
+
   const contents = await fetch(attachment.url).then((res) => res.text());
 
   try {
