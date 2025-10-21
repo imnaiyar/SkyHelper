@@ -287,8 +287,10 @@ async function handleImportAction(helper: InteractionHelper): Promise<void> {
   const fileComponent = helper.client.utils.getModalComponent(submission, "data_file", ComponentType.FileUpload, true);
   const attachment = submission.data.resolved!.attachments![fileComponent.values[0]!]!;
 
-  if (attachment.size > 2_000_000 /* Max 2mb */) {
-    await handleInvalidFileError(helper, submission, "File larger than 2mb");
+  // 5 mb
+  const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
+  if (attachment.size > MAX_IMPORT_BYTES) {
+    await handleInvalidFileError(helper, submission, `File larger than 5MB`);
     return;
   }
 
