@@ -3,6 +3,11 @@ import { buildCalendarResponse } from "@/utils/classes/Embeds";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import Utils from "@/utils/classes/Utils";
 import { MessageFlags, type APIEmbed, type APIModalSubmitInteraction } from "@discordjs/core";
+import {
+  calculateCurrencyBreakdown,
+  enrichDataWithUserProgress,
+  getSkyGamePlannerData,
+} from "@skyhelperbot/constants/skygame-planner";
 import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 
@@ -61,4 +66,11 @@ export async function handleErrorModal(helper: InteractionHelper) {
       embeds: [embed],
     });
   }
+}
+
+// TODO: Handle this later
+export async function breakdownModalDisplay(helper: InteractionHelper, type: string) {
+  const settings = await helper.client.schemas.getUser(helper.user);
+  const data = enrichDataWithUserProgress(await getSkyGamePlannerData(), settings.plannerData);
+  const breakdowns = calculateCurrencyBreakdown(data);
 }

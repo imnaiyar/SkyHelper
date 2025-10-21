@@ -5,7 +5,7 @@ import type { Command } from "@/structures";
 import { CustomId, store } from "@/utils/customId-store";
 import { SkyPlannerData } from "@skyhelperbot/constants";
 import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
-import { searchHelper } from "./sub/planner.helpers.js";
+import { plannerData, searchHelper } from "./sub/planner.helpers.js";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { MessageFlags } from "discord-api-types/v10";
 //  this is mappings of available display tabs that will show on search, which users can quick jump to
@@ -93,16 +93,18 @@ export default {
   },
   interactionRun: async ({ helper, options }) => {
     const sub = options.getSubcommand();
-    await helper.defer();
     switch (sub) {
       case "search": {
         const routehash = options.getString("query", true);
         if (routehash === "unknown") {
-          await helper.editReply({
+          await helper.reply({
             content: "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",
+            flags: MessageFlags.Ephemeral,
           });
           return;
         }
+
+        await helper.defer();
         const dsl = store.deserialize(routehash);
         if (dsl.id !== CustomId.PlannerTopLevelNav) throw new Error("Got Wrong Id");
 
@@ -115,12 +117,22 @@ export default {
         return;
       }
       case "home": {
+        await helper.defer();
         const response = await handlePlannerNavigation({ t: DisplayTabs.Home }, helper.user, helper.client);
         await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
         return;
       }
+      case "data":
+        await plannerData(helper, options);
+        break;
+      case "profile": {
+        await helper.defer();
+        const response = await handlePlannerNavigation({ t: DisplayTabs.Profile, d: "profile" }, helper.user, helper.client);
+        await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
+        break;
+      }
       default:
-        await helper.editReply({ content: "Not Implemented Yet" });
+        await helper.reply({ content: "Not Implemented Yet", flags: MessageFlags.Ephemeral });
         return;
     }
   },

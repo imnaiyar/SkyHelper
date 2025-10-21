@@ -1,5 +1,5 @@
 import type { _Nullable, APIComponentInContainer } from "discord-api-types/v10";
-
+import { z } from "zod/v4";
 export enum PlannerAction {
   ToggleIAP = "toggle-iap",
   ToggleWL = "toggle-wl",
@@ -11,6 +11,44 @@ export enum PlannerAction {
   ToggleListNode = "tg-ln",
   NestingRotation = "nr",
 }
+
+export const PlannerCurrenciesSchema = z.object({
+  candles: z.number().min(0),
+  hearts: z.number().min(0),
+  ascendedCandles: z.number().min(0),
+  giftPasses: z.number().min(0),
+  eventCurrencies: z.record(
+    z.string(),
+    z.object({
+      tickets: z.number().min(0),
+    }),
+  ),
+  seasonCurrencies: z.record(
+    z.string(),
+    z.object({
+      candles: z.number().min(0),
+      hearts: z.number().min(0).optional(),
+    }),
+  ),
+});
+
+export const PlannerDataSchema = z.object({
+  version: z.string(),
+  storageData: z.object({
+    date: z.string(),
+    currencies: PlannerCurrenciesSchema,
+    unlocked: z.string(),
+    wingedLights: z.string(),
+    favourites: z.string(),
+    seasonPasses: z.string(),
+    gifted: z.string(),
+    keys: z.record(z.string(), z.any()),
+  }),
+  user: z
+    .string()
+    .regex(/^\d{17,19}$/)
+    .optional(),
+});
 
 export interface NavigationState {
   /** Current page */
@@ -65,6 +103,7 @@ export enum DisplayTabs {
   WingedLights = "w",
   Shops = "sh",
   Areas = "a",
+  Profile = "p",
 }
 
 export interface IPaginatedProps<T> {
@@ -100,6 +139,7 @@ export enum FilterType {
   SpiritTrees = "st",
   Currencies = "cr",
   Highlight = "h",
+  Any = "a",
 }
 export enum OrderType {
   NameAsc = "name_asc",

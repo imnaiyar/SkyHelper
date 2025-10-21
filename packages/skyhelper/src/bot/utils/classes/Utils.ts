@@ -230,4 +230,11 @@ export default class {
     if (required && !compo) throw new Error("Couldn't find the required text input");
     return compo;
   }
+
+  /** Formats an emoji id to discord's emoji markdown */
+  static formatEmoji(id?: string, name?: string, animated = false) {
+    if (!id) return "";
+    if (/^<a?:\w+:\d{17,19}>$/.test(id)) return id;
+    return `<${animated ? "a" : ""}:${name ? name.replaceAll(/[^\w]+/g, "") : "_"}:${id}>`;
+  }
 }

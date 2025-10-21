@@ -455,7 +455,7 @@ export interface IPlannerCurrencies {
   ascendedCandles: number;
   giftPasses: number;
   eventCurrencies: Record<string, { tickets: number }>;
-  seasonCurrencies: Record<string, { candles: number; hearts: number }>;
+  seasonCurrencies: Record<string, { candles: number; hearts?: number }>;
 }
 
 export interface UserPlannerData {
@@ -656,3 +656,22 @@ export interface IWingedLight extends IGuid {
 }
 
 export type IWingedLightConfig = IConfig<IWingedLight>;
+
+/**
+ * Currency breakdown interfaces for tracking spent resources
+ */
+export interface IBreakdownInstanceCost {
+  cost: ICost;
+  price: number;
+  nodes: INode[];
+  listNodes: IItemListNode[];
+  iaps: IIAP[];
+}
+
+export interface IBreakdownData {
+  total: IBreakdownInstanceCost;
+  regular: IBreakdownInstanceCost;
+  seasons: Map<string, IBreakdownInstanceCost>;
+  events: Map<string, IBreakdownInstanceCost>;
+  eventInstances: Map<string, IBreakdownInstanceCost>;
+}

@@ -74,7 +74,7 @@ export abstract class BasePlannerHandler {
       }),
       button({
         label: `Page ${page}/${total}`,
-        custom_id: "dummy_pagination_info",
+        custom_id: "dummy_pagination_info" + Math.floor(Math.random() * 100) /* Prevents duplication erros */,
         disabled: true,
       }),
       button({
@@ -94,23 +94,26 @@ export abstract class BasePlannerHandler {
   createTopCategoryRow(selected: DisplayTabs, user?: string, back?: { page?: number }) {
     const BUTTONS_PER_ROW = 5;
     const seasonIcon = this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji;
-    const categoryButtons = Object.entries(DisplayTabs).map(([title, category]) => {
-      const icon =
-        category === DisplayTabs.Seasons ? seasonIcon : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
+    const categoryButtons = Object.entries(DisplayTabs)
+      .map(([title, category]) => {
+        if (category === DisplayTabs.Profile) return null; // we don't want this to show up on main planner
+        const icon =
+          category === DisplayTabs.Seasons ? seasonIcon : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
 
-      return button({
-        label: back && category === selected ? "Back" : title,
-        custom_id: this.createCustomId({
-          t: category,
-          it: null,
-          p: back?.page ?? 1,
-          user,
-        }),
-        emoji: icon ? { id: icon } : undefined,
-        style: category === selected ? (back ? 4 : 3) : 2,
-        disabled: category === selected && !back,
-      });
-    });
+        return button({
+          label: back && category === selected ? "Back" : title,
+          custom_id: this.createCustomId({
+            t: category,
+            it: null,
+            p: back?.page ?? 1,
+            user,
+          }),
+          emoji: icon ? { id: icon } : undefined,
+          style: category === selected ? (back ? 4 : 3) : 2,
+          disabled: category === selected && !back,
+        });
+      })
+      .filter((s) => !!s);
 
     const rows = [];
     for (let i = 0; i < categoryButtons.length; i += BUTTONS_PER_ROW) {
@@ -125,18 +128,21 @@ export abstract class BasePlannerHandler {
       type: ComponentType.StringSelect,
       custom_id: store.serialize(CustomId.PlannerSelectNav, { user }),
       placeholder: "Select category",
-      options: Object.entries(DisplayTabs).map(([label, category]) => {
-        const icon =
-          category === DisplayTabs.Seasons
-            ? (this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji)
-            : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
-        return {
-          label,
-          value: category,
-          default: category === selected,
-          emoji: icon ? { id: icon } : undefined,
-        };
-      }),
+      options: Object.entries(DisplayTabs)
+        .map(([label, category]) => {
+          if (category === DisplayTabs.Profile) return null; // we don't want this to show up on main planner
+          const icon =
+            category === DisplayTabs.Seasons
+              ? (this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji)
+              : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
+          return {
+            label,
+            value: category,
+            default: category === selected,
+            emoji: icon ? { id: icon } : undefined,
+          };
+        })
+        .filter((s) => !!s),
     });
   }
 
@@ -146,8 +152,8 @@ export abstract class BasePlannerHandler {
   }
 
   /** Returns a paginated list of given items */
-  displayPaginatedList<T>(opt: IPaginatedProps<T>) {
-    const { items, user = this.state.user, page: p, perpage = 5, itemCallback } = opt;
+  displayPaginatedList<T>(opt: IPaginatedProps<T>, state?: Partial<NavigationState>) {
+    const { items, page: p, perpage = 5, itemCallback } = opt;
     let page = p ?? this.state.p ?? 1;
     const total = Math.max(1, Math.ceil(items.length / perpage));
     const startIndex = (page - 1) * perpage;
@@ -170,11 +176,9 @@ export abstract class BasePlannerHandler {
         this.paginationBtns({
           page,
           total,
-          t: this.state.t,
+          ...this.state,
           f: this.filterManager?.serializeFilters() ?? this.state.f, // fallback if a specific tab is not using filters manager
-          it: this.state.it,
-          user,
-          b: this.state.b,
+          ...state,
         }),
       );
     }

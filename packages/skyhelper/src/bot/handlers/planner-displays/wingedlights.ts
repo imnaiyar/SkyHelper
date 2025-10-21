@@ -52,7 +52,7 @@ export class WingedLightsDisplay extends BasePlannerHandler {
       itemCallback: (wl, i) => [
         textDisplay(
           `**${i + 1}\\. Area: ${wl.area.name} | Realm: ${wl.area.realm.name}**${wl.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : ""}\n${wl.description ? `${emojis.tree_end} ${wl.description}` : ""}`,
-          wl.unlocked ? `- **Found** ${this.formatemoji(emojis.checkmark)}` : "",
+          wl.unlocked ? `- **Found**` : "",
         ),
         row(
           this.viewbtn(createActionId({ action: PlannerAction.ToggleWL, guid: wl.guid, navState: this.state }), {

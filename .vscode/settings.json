@@ -5,6 +5,10 @@
   "workbench.editor.customLabels.patterns": {
     "**/app/**/page.tsx": "${dirname}/${filename}",
     "**/app/**/route.ts": "${dirname}/${filename}",
-    "**/planner.ts": "${dirname}/${filename}"
-  }
+    "**/planner.ts": "${dirname}/${filename}",
+    "**/shared.ts": "${dirname}/${filename}",
+    "**/base.ts": "${dirname}/${filename}"
+  },
+  "editor.foldingStrategy": "auto",
+  "editor.foldingImportsByDefault": true
 }

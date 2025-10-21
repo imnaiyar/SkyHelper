@@ -55,7 +55,7 @@
     "@skyhelperbot/utils": "workspace:^",
     "chalk": "^4.1.2",
     "cropify": "^1.0.9",
-    "discord-api-types": "0.38.10",
+    "discord-api-types": "latest",
     "express": "^4.20.0",
     "i18next": "^24.2.1",
     "i18next-fs-backend": "^2.3.1",

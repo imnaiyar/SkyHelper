@@ -264,15 +264,11 @@ export function modifyNestingRotationItems(user: UserSchema, item: IRotationItem
   const costType = getCost(item)!;
   if (type === "add") {
     itemState.q += 1;
-    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, item.guid, item.item?.guid ?? "");
+    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, item.guid);
   } else {
     itemState.q -= 1;
     if (itemState.q <= 0) {
-      user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(
-        user.plannerData.unlocked,
-        item.guid,
-        item.item?.guid ?? "",
-      );
+      user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, item.guid);
     }
   }
 

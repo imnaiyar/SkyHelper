@@ -10,7 +10,8 @@
     "build:docs": "typedoc",
     "test": "vitest run --coverage",
     "bench": "vitest bench",
-    "lint": "eslint --fix src"
+    "lint": "eslint --fix src",
+    "test:profile-card": "tsx scripts/test-profile-card.ts"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,7 @@
   "dependencies": {
     "@napi-rs/canvas": "^0.1.80",
     "@skyhelperbot/constants": "workspace:^",
-    "discord-api-types": "0.38.10",
+    "discord-api-types": "latest",
     "undici": "^7.10.0"
   },
   "devDependencies": {

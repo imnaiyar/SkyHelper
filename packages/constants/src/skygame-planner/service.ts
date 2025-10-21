@@ -2,7 +2,7 @@
  * SkyGame Planner data service
  * This file provides the main interface for accessing SkyGame Planner data
  */
-import { currency, fetchEmojis, zone } from "../index.js";
+import { currency, emojis, fetchEmojis, zone } from "../index.js";
 import { BASE_URL, fetchAllData } from "./fetcher.js";
 import type {
   ICost,
@@ -631,4 +631,221 @@ export function getSpiritEmoji(spirit: IEventInstanceSpirit | ISpirit): string |
     return spirit.spirit.emoji ?? getFirstNodeEmoji(spirit.tree);
   }
   return spirit.emoji ?? (spirit.tree ? getFirstNodeEmoji(spirit.tree) : undefined);
+}
+
+/**
+ * Formats currency display for user data
+ */
+export function formatCurrencies(data: PlannerAssetData, storageData: UserPlannerData): string {
+  const { candles, hearts, seasonCurrencies, eventCurrencies, ascendedCandles, giftPasses } = storageData.currencies;
+
+  const seasonEntries = Object.entries(seasonCurrencies);
+  const eventEntries = Object.entries(eventCurrencies);
+
+  const parts = [
+    `${candles} <:Candle:${currency.c}>`,
+    `${hearts} <:Heart:${currency.h}>`,
+    `${ascendedCandles} <:AC:${currency.ac}>`,
+    `${giftPasses} <:GiftPass:${emojis.spicon}>`,
+  ];
+
+  if (seasonEntries.length > 0) {
+    const seasonText = seasonEntries
+      .map(([guid, sc]) => {
+        const season = data.seasons.find((s) => s.guid === guid);
+        return `${season?.emoji ? `<:${season.shortName}:${season.emoji}>` : (season?.shortName ?? "")}: ${sc.candles} <:SeasonCandle:${currency.sc}> ${sc.hearts} <:SeasonHeart:${currency.sh}>`;
+      })
+      .join("\n  - ");
+    parts.push(`\n- Seasonal Currencies\n  - ${seasonText}`);
+  }
+
+  if (eventEntries.length > 0) {
+    const eventText = eventEntries
+      .map(([guid, ev]) => {
+        const event = data.events.find((e) => e.guid === guid);
+        return `**${event?.shortName ?? event?.name ?? "Unknown"}**: ${ev.tickets} <:EventTicket:${currency.ec}>`;
+      })
+      .join("\n  - ");
+    parts.push(`\n- Event Currencies\n  - ${eventText}`);
+  }
+
+  return parts.join(" ");
+}
+
+/**
+ * Formats unlocked items summary
+ */
+export function formatUnlockedItems(usrdata: PlannerAssetData): string {
+  const progress = calculateUserProgress(usrdata);
+  const items = [
+    progress.items.unlocked > 0 ? `${progress.items.unlocked} items` : null,
+    progress.iaps.bought > 0 ? `${progress.iaps.bought} IAPs` : null,
+    progress.wingedLights.unlocked > 0 ? `${progress.wingedLights.unlocked} Winged Lights` : null,
+    progress.nodes.unlocked > 0 ? `${progress.nodes.unlocked} Spirit Tree Nodes` : null,
+  ]
+    .filter(Boolean)
+    .map((s) => `**${s}**`);
+
+  return items.length > 0 ? items.join(", ") : "No items unlocked";
+}
+
+/**
+ * Calculate currency breakdown for all unlocked items
+ * Groups spent currencies by category: total, regular, seasons, events
+ */
+export function calculateCurrencyBreakdown(data: PlannerAssetData): import("./interfaces.js").IBreakdownData {
+  const createEmptyInstance = (): import("./interfaces.js").IBreakdownInstanceCost => ({
+    cost: { c: 0, h: 0, sc: 0, sh: 0, ac: 0, ec: 0 },
+    price: 0,
+    nodes: [],
+    listNodes: [],
+    iaps: [],
+  });
+
+  const breakdown: import("./interfaces.js").IBreakdownData = {
+    total: createEmptyInstance(),
+    regular: createEmptyInstance(),
+    seasons: new Map(),
+    events: new Map(),
+    eventInstances: new Map(),
+  };
+
+  const addCostToInstance = (instance: import("./interfaces.js").IBreakdownInstanceCost, cost: ICost) => {
+    instance.cost.c = (instance.cost.c ?? 0) + (cost.c ?? 0);
+    instance.cost.h = (instance.cost.h ?? 0) + (cost.h ?? 0);
+    instance.cost.sc = (instance.cost.sc ?? 0) + (cost.sc ?? 0);
+    instance.cost.sh = (instance.cost.sh ?? 0) + (cost.sh ?? 0);
+    instance.cost.ac = (instance.cost.ac ?? 0) + (cost.ac ?? 0);
+    instance.cost.ec = (instance.cost.ec ?? 0) + (cost.ec ?? 0);
+  };
+
+  const processNode = (node: import("./interfaces.js").INode, instance: import("./interfaces.js").IBreakdownInstanceCost) => {
+    addCostToInstance(instance, node);
+    instance.nodes.push(node);
+  };
+
+  const processListNode = (
+    listNode: import("./interfaces.js").IItemListNode,
+    instance: import("./interfaces.js").IBreakdownInstanceCost,
+  ) => {
+    addCostToInstance(instance, listNode);
+    instance.listNodes.push(listNode);
+  };
+
+  const processIAP = (iap: import("./interfaces.js").IIAP, instance: import("./interfaces.js").IBreakdownInstanceCost) => {
+    instance.price += iap.price ?? 0;
+    instance.iaps.push(iap);
+  };
+
+  // Process unlocked nodes
+  for (const node of data.nodes) {
+    if (!node.unlocked) continue;
+
+    const tree = node.root?.spiritTree;
+    const eventInstance = tree?.eventInstanceSpirit?.eventInstance;
+    const season = tree?.spirit?.season;
+
+    if (eventInstance) {
+      // Event instance node
+      const event = eventInstance.event;
+
+      // Get or create event instance entry
+      if (!breakdown.eventInstances.has(eventInstance.guid)) {
+        breakdown.eventInstances.set(eventInstance.guid, createEmptyInstance());
+      }
+      processNode(node, breakdown.eventInstances.get(eventInstance.guid)!);
+
+      // Get or create event entry
+      if (!breakdown.events.has(event.guid)) {
+        breakdown.events.set(event.guid, createEmptyInstance());
+      }
+      processNode(node, breakdown.events.get(event.guid)!);
+    } else if (season) {
+      // Season node
+      if (!breakdown.seasons.has(season.guid)) {
+        breakdown.seasons.set(season.guid, createEmptyInstance());
+      }
+      processNode(node, breakdown.seasons.get(season.guid)!);
+    } else {
+      // Regular node
+      processNode(node, breakdown.regular);
+    }
+
+    // Add to total
+    processNode(node, breakdown.total);
+  }
+
+  // Process unlocked item list nodes (shops)
+  for (const itemList of data.itemLists) {
+    const season = itemList.shop?.season;
+    const eventInstance = itemList.shop?.event;
+
+    for (const listNode of itemList.items) {
+      if (!listNode.unlocked) continue;
+
+      if (eventInstance) {
+        const event = eventInstance.event;
+
+        if (!breakdown.eventInstances.has(eventInstance.guid)) {
+          breakdown.eventInstances.set(eventInstance.guid, createEmptyInstance());
+        }
+        processListNode(listNode, breakdown.eventInstances.get(eventInstance.guid)!);
+
+        if (!breakdown.events.has(event.guid)) {
+          breakdown.events.set(event.guid, createEmptyInstance());
+        }
+        processListNode(listNode, breakdown.events.get(event.guid)!);
+      } else if (season) {
+        if (!breakdown.seasons.has(season.guid)) {
+          breakdown.seasons.set(season.guid, createEmptyInstance());
+        }
+        processListNode(listNode, breakdown.seasons.get(season.guid)!);
+      } else {
+        processListNode(listNode, breakdown.regular);
+      }
+
+      processListNode(listNode, breakdown.total);
+    }
+  }
+
+  // Process bought IAPs
+  for (const iap of data.iaps) {
+    if (!iap.bought && !iap.gifted) continue;
+    if (iap.gifted) continue; // Skip gifted IAPs from cost calculation
+
+    const season = iap.shop?.season;
+    const eventInstance = iap.shop?.event;
+
+    if (eventInstance) {
+      const event = eventInstance.event;
+
+      if (!breakdown.eventInstances.has(eventInstance.guid)) {
+        breakdown.eventInstances.set(eventInstance.guid, createEmptyInstance());
+      }
+      processIAP(iap, breakdown.eventInstances.get(eventInstance.guid)!);
+
+      if (!breakdown.events.has(event.guid)) {
+        breakdown.events.set(event.guid, createEmptyInstance());
+      }
+      processIAP(iap, breakdown.events.get(event.guid)!);
+    } else if (season) {
+      if (!breakdown.seasons.has(season.guid)) {
+        breakdown.seasons.set(season.guid, createEmptyInstance());
+      }
+      processIAP(iap, breakdown.seasons.get(season.guid)!);
+    } else {
+      processIAP(iap, breakdown.regular);
+    }
+
+    processIAP(iap, breakdown.total);
+  }
+
+  return breakdown;
+}
+
+/**
+ * Check if a cost object has any non-zero values
+ */
+export function isEmptyCost(cost: ICost): boolean {
+  return !cost.c && !cost.h && !cost.sc && !cost.sh && !cost.ac && !cost.ec;
 }
