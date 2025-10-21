@@ -227,7 +227,7 @@ async function handleOtherUserConfirmation(
           custom_id: store.serialize(CustomId.Default, { data: "cancel", user: helper.user.id }),
         }),
         button({
-          label: "Yes, I Userstand.",
+          label: "Yes, I Understand.",
           custom_id: store.serialize(CustomId.Default, { data: "confirm", user: helper.user.id }),
           style: 4,
         }),
