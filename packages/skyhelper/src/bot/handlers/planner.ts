@@ -17,6 +17,7 @@ import type { SkyHelper } from "@/structures";
 import type { APIUser } from "discord-api-types/v10";
 import { enrichDataWithUserProgress, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import { DisplayTabs, type NavigationState } from "../@types/planner.js";
+import { ProfileDisplay } from "./planner-displays/profile.js";
 
 // Navigation state interface to track user's position
 
@@ -53,6 +54,7 @@ const displayClasses = (d?: string) => ({
   [DisplayTabs.WingedLights]: WingedLightsDisplay,
   [DisplayTabs.Areas]: AreasDisplay,
   [DisplayTabs.Home]: HomeDisplay,
+  [DisplayTabs.Profile]: ProfileDisplay,
 });
 
 /**
@@ -83,8 +85,9 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
   const result = await instance.handle();
   return {
     ...result,
-    components: [t !== DisplayTabs.Home ? instance.createTopCategorySelect(t) : null, ...(result.components ?? [])].filter(
-      (s) => !!s,
-    ),
+    components: [
+      t !== DisplayTabs.Home && t !== DisplayTabs.Profile ? instance.createTopCategorySelect(t) : null,
+      ...(result.components ?? []),
+    ].filter((s) => !!s),
   };
 }

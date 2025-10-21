@@ -103,6 +103,7 @@ export enum DisplayTabs {
   WingedLights = "w",
   Shops = "sh",
   Areas = "a",
+  Profile = "p",
 }
 
 export interface IPaginatedProps<T> {
@@ -138,6 +139,7 @@ export enum FilterType {
   SpiritTrees = "st",
   Currencies = "cr",
   Highlight = "h",
+  Any = "a",
 }
 export enum OrderType {
   NameAsc = "name_asc",

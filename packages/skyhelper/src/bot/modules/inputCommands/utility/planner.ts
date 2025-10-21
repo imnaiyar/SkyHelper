@@ -8,7 +8,6 @@ import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
 import { plannerData, searchHelper } from "./sub/planner.helpers.js";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { MessageFlags } from "discord-api-types/v10";
-import { plannerProfile } from "@/handlers/planner.profile";
 //  this is mappings of available display tabs that will show on search, which users can quick jump to
 const tab_mappings = (data: PlannerAssetData) => [
   ...Object.entries(DisplayTabs).map(([n, v]) => ({ name: n, path: { t: v } })),
@@ -128,8 +127,8 @@ export default {
         break;
       case "profile": {
         await helper.defer();
-        const data = (await plannerProfile("profile", helper.user, helper.client))!;
-        await helper.editReply({ ...data, flags: MessageFlags.IsComponentsV2 });
+        const response = await handlePlannerNavigation({ t: DisplayTabs.Profile, d: "profile" }, helper.user, helper.client);
+        await helper.editReply({ ...response, flags: MessageFlags.IsComponentsV2 });
         break;
       }
       default:
