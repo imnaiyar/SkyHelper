@@ -1,10 +1,11 @@
 import { BasePlannerHandler } from "./base.js";
 import { SeasonsDisplay } from "./seasons.js";
-import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { button, container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import {
   calculateUserProgress,
+  formatCurrencies,
   getSpiritEmoji,
   type IEvent,
   type IEventInstance,
@@ -15,6 +16,7 @@ import {
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { DisplayTabs } from "@/types/planner";
 import Utils from "@/utils/classes/Utils";
+import { CustomId, store } from "@/utils/customId-store";
 
 export class HomeDisplay extends BasePlannerHandler {
   override handle(): ResponseData {
@@ -30,17 +32,17 @@ export class HomeDisplay extends BasePlannerHandler {
       this.settings,
       this.client,
     );
-    const progress = calculateUserProgress(this.data);
     const components = [
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
         separator(),
-        textDisplay(
-          "-# This feature is in active development. Some things are not implemented yet, few things may even break. Feedback and bug reports are appreciated.",
-          `### Progress`,
-          ...Object.entries(progress).map(
-            ([type, p]) => `${Utils.capitalize(type)}: ${"unlocked" in p ? p.unlocked : p.bought}/${p.total} (${p.percentage}%)`,
-          ),
+        section(
+          button({
+            label: "Update",
+            custom_id: store.serialize(CustomId.Default, { data: "currency_modify", user: this.state.user }),
+          }),
+          `# Currencies:`,
+          formatCurrencies(this.data, this.settings.plannerData ?? this.planner.PlannerDataHelper.createEmpty()),
         ),
         ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
         ...(travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : []),

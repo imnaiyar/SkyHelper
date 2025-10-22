@@ -15,9 +15,10 @@ import { ShopHomeDisplay } from "./planner-displays/shops/home.js";
 import * as Sentry from "@sentry/node";
 import type { SkyHelper } from "@/structures";
 import type { APIUser } from "discord-api-types/v10";
-import { enrichDataWithUserProgress, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import { enrichDataWithUserProgress, PlannerDataHelper, type PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
 import { DisplayTabs, type NavigationState } from "../@types/planner.js";
 import { ProfileDisplay } from "./planner-displays/profile.js";
+import type { UserSchema } from "@/types/schemas";
 
 // Navigation state interface to track user's position
 
@@ -65,17 +66,13 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
   // for debugging purposes
   Sentry.setContext("Planner Navigation State", { ...state, user: user.id });
 
-  const baseData = await SkyPlannerData.getSkyGamePlannerData();
   const settings = await client.schemas.getUser(user);
 
-  // Initialize user planner data if it doesn't exist
-  if (!settings.plannerData) {
-    settings.plannerData = PlannerDataHelper.createEmpty();
-    await settings.save();
-  }
+  settings.plannerData ??= PlannerDataHelper.createEmpty();
 
-  // Enrich data with user-specific progress
-  const data = enrichDataWithUserProgress(baseData, settings.plannerData);
+  const data = await SkyPlannerData.getSkyGamePlannerDataWithForUser(settings.plannerData);
+
+  await plannerPreChecks(settings, data);
 
   const handler = displayClasses(state.d)[t];
   // eslint-disable-next-line
@@ -90,4 +87,24 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
       ...(result.components ?? []),
     ].filter((s) => !!s),
   };
+}
+
+async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
+  const currentSeason = SkyPlannerData.getCurrentSeason(data);
+  for (const id of Object.keys(settings.plannerData!.currencies.seasonCurrencies)) {
+    // TODO: potentially convert this to regular candles to mimic game behaviour
+    // delete the entry if season has ended
+    // eslint-disable-next-line
+    if (id !== currentSeason?.guid) delete settings.plannerData!.currencies.seasonCurrencies[id];
+  }
+
+  for (const id of Object.keys(settings.plannerData!.currencies.eventCurrencies)) {
+    const events = SkyPlannerData.getEvents(data).current;
+    // delete the entry if event has ended
+    // eslint-disable-next-line
+    if (!events.find((e) => e.instance.guid === id)) delete settings.plannerData!.currencies.eventCurrencies[id];
+  }
+
+  // TODO: potentially add other relevent pre-checks
+  await settings.save();
 }

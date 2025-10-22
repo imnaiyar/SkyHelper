@@ -46,6 +46,13 @@ export async function getSkyGamePlannerData(forceRefresh = false): Promise<Plann
   return cachedData;
 }
 
+/** Get SkyGame Planner data enriched with user progress
+ * @param userData The user's planner progress data
+ */
+export async function getSkyGamePlannerDataWithForUser(userData: UserPlannerData) {
+  const data = await getSkyGamePlannerData();
+  return enrichDataWithUserProgress(data, userData);
+}
 /**
  * Search for entities by name across all data types
  * @param query Search query string
@@ -476,7 +483,8 @@ export const resolvePlannerUrl = (url: string) => (url.startsWith("http") ? url 
  * @param userData The user's planner progress data
  * @returns The same data object with unlocked/bought/received fields populated
  */
-export function enrichDataWithUserProgress(data: PlannerAssetData, userData?: UserPlannerData): PlannerAssetData {
+export function enrichDataWithUserProgress(d: PlannerAssetData, userData?: UserPlannerData): PlannerAssetData {
+  const data = structuredClone(d);
   if (!userData) return data;
 
   const unlockedSet = PlannerDataHelper.parseGuidSet(userData.unlocked);
@@ -653,7 +661,7 @@ export function formatCurrencies(data: PlannerAssetData, storageData: UserPlanne
     const seasonText = seasonEntries
       .map(([guid, sc]) => {
         const season = data.seasons.find((s) => s.guid === guid);
-        return `${season?.emoji ? `<:${season.shortName}:${season.emoji}>` : (season?.shortName ?? "")}: ${sc.candles} <:SeasonCandle:${currency.sc}> ${sc.hearts} <:SeasonHeart:${currency.sh}>`;
+        return `${season?.emoji ? `<:${season.shortName}:${season.emoji}>` : (season?.shortName ?? "")}: ${sc.candles} <:SeasonCandle:${currency.sc}> ${sc.hearts ?? 0} <:SeasonHeart:${currency.sh}>`;
       })
       .join("\n  - ");
     parts.push(`\n- Seasonal Currencies\n  - ${seasonText}`);
@@ -662,8 +670,8 @@ export function formatCurrencies(data: PlannerAssetData, storageData: UserPlanne
   if (eventEntries.length > 0) {
     const eventText = eventEntries
       .map(([guid, ev]) => {
-        const event = data.events.find((e) => e.guid === guid);
-        return `**${event?.shortName ?? event?.name ?? "Unknown"}**: ${ev.tickets} <:EventTicket:${currency.ec}>`;
+        const event = data.eventInstances.find((e) => e.guid === guid);
+        return `**${event?.shortName ?? event?.name ?? event?.event.shortName ?? event?.event.name ?? "Unknown"}**: ${ev.tickets} <:EventTicket:${currency.ec}>`;
       })
       .join("\n  - ");
     parts.push(`\n- Event Currencies\n  - ${eventText}`);
