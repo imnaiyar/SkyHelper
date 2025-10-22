@@ -653,7 +653,7 @@ export function formatCurrencies(data: PlannerAssetData, storageData: UserPlanne
     const seasonText = seasonEntries
       .map(([guid, sc]) => {
         const season = data.seasons.find((s) => s.guid === guid);
-        return `${season?.emoji ? `<:${season.shortName}:${season.emoji}>` : (season?.shortName ?? "")}: ${sc.candles} <:SeasonCandle:${currency.sc}> ${sc.hearts} <:SeasonHeart:${currency.sh}>`;
+        return `${season?.emoji ? `<:${season.shortName}:${season.emoji}>` : (season?.shortName ?? "")}: ${sc.candles} <:SeasonCandle:${currency.sc}> ${sc.hearts ?? 0} <:SeasonHeart:${currency.sh}>`;
       })
       .join("\n  - ");
     parts.push(`\n- Seasonal Currencies\n  - ${seasonText}`);

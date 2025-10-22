@@ -186,20 +186,20 @@ export default class {
 
   static getModalComponent<Type extends ComponentType = ComponentType>(
     int: APIModalSubmitInteraction,
-    customId: string,
+    customId: string | ((id: string) => boolean),
     type: Type,
     required: true,
   ): Extract<ModalSubmitComponent, { type: Type }>;
 
   static getModalComponent<Type extends ComponentType = ComponentType>(
     int: APIModalSubmitInteraction,
-    customId: string,
+    customId: string | ((id: string) => boolean),
     type?: Type,
     required?: boolean,
   ): Extract<ModalSubmitComponent, { type: Type }> | undefined;
   static getModalComponent<Type extends ComponentType = ComponentType>(
     int: APIModalSubmitInteraction,
-    customId: string,
+    customId: string | ((id: string) => boolean),
     type?: Type,
     required?: boolean,
   ): Extract<ModalSubmitComponent, { type: Type }> | undefined {
@@ -208,10 +208,12 @@ export default class {
       if ("component" in label) return acc.concat(label.component);
       return acc;
     }, []);
-    const comp = components.find((component) => component.custom_id === customId);
+    const comp = components.find((component) =>
+      typeof customId === "function" ? customId(component.custom_id) : component.custom_id === customId,
+    );
     if (required && !comp) throw new Error(`Couldn't find the required component with customId '${customId}'`);
-    if (type && comp?.type !== type) {
-      throw new Error(`Component with customId '${customId}' has type ${comp?.type} but expected type ${type}`);
+    if (type && comp && comp.type !== type) {
+      throw new Error(`Component with customId '${customId}' has type ${comp.type} but expected type ${type}`);
     }
     return comp as Extract<ModalSubmitComponent, { type: Type }> | undefined;
   }

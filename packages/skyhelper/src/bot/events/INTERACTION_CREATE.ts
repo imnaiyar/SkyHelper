@@ -9,24 +9,30 @@ import * as Sentry from "@sentry/node";
 import {
   ApplicationCommandType,
   ChannelType,
+  ComponentType,
   InteractionType,
   Utils as IntUtils,
   MessageFlags,
+  TextInputStyle,
   type APIApplicationCommandInteraction,
   type APIChatInputApplicationCommandInteraction,
   type APIEmbed,
+  type APILabelComponent,
+  type APIModalInteractionResponseCallbackData,
   type GatewayDispatchEvents,
 } from "@discordjs/core";
 import { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
-import { handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
+import { handleCurrencyModifyModal, handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
+import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import { SkyPlannerData } from "@skyhelperbot/constants";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -200,6 +206,92 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       }
 
+      if (id === CustomId.Default && data.data === "currency_modify") {
+        const settings = await client.schemas.getUser(helper.user);
+        const { currencies } = settings.plannerData ?? PlannerDataHelper.createEmpty();
+        const components: APILabelComponent[] = [];
+        const d = await SkyPlannerData.getSkyGamePlannerData();
+        const season = SkyPlannerData.getCurrentSeason(d);
+        // More than one events can exist at a time, but including all may reach modal component limits
+        // So for now only implementing modifying the first
+        // TODO: do something about this, or hopefully discord increases components limit in modals
+        // TODO: also add gift passes
+        const event = SkyPlannerData.getEvents(d).upcoming[0];
+        const sCurrency = currencies.seasonCurrencies[season?.guid ?? ""];
+        const eCurrency = currencies.eventCurrencies[event?.event.guid ?? ""];
+        if (season) {
+          components.push({
+            type: ComponentType.Label,
+            label: "Season Candle/Hearts",
+            description: "Season candles and hearts you have (seprated by `/`)",
+            component: {
+              type: ComponentType.TextInput,
+              custom_id: "season" + `/${season.guid}`,
+              style: TextInputStyle.Short,
+              value: `${sCurrency?.candles ?? 0}/${sCurrency?.hearts ?? 0}`,
+              required: false,
+            },
+          });
+        }
+        if (event) {
+          components.push({
+            type: ComponentType.Label,
+            label: "Event Tickets",
+            description: "Amount of event tickets you have",
+            component: {
+              type: ComponentType.TextInput,
+              custom_id: "event" + `/${event.event.guid}`,
+              style: TextInputStyle.Short,
+              value: `${eCurrency?.tickets ?? 0}`,
+              required: false,
+            },
+          });
+        }
+
+        const modal: APIModalInteractionResponseCallbackData = {
+          title: "Modify your currencies",
+          custom_id: "currency_modify",
+          components: [
+            {
+              type: ComponentType.Label,
+              label: "Candles",
+              description: "The amount of candles you have",
+              component: {
+                type: ComponentType.TextInput,
+                value: `${currencies.candles || 0}`,
+                custom_id: "candles",
+                style: TextInputStyle.Short,
+              },
+            },
+            {
+              type: ComponentType.Label,
+              label: "Hearts",
+              description: "The amount of hearts you have",
+              component: {
+                type: ComponentType.TextInput,
+                value: `${currencies.hearts || 0}`,
+                custom_id: "hearts",
+                style: TextInputStyle.Short,
+              },
+            },
+            {
+              type: ComponentType.Label,
+              label: "Ascended Candles",
+              description: "The amount of ACs you have",
+              component: {
+                type: ComponentType.TextInput,
+                value: `${currencies.ascendedCandles || 0}`,
+                custom_id: "ac",
+                style: TextInputStyle.Short,
+              },
+            },
+            ...components,
+          ],
+        };
+        await helper.launchModal(modal);
+        return;
+      }
+
       if (id === client.utils.customId.SkyGameEndGame && !client.gameData.has(interaction.channel.id)) {
         await helper.reply({ content: "It looks like this game has already ended!", flags: 64 });
         return;
@@ -222,7 +314,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
     // #region Modal
     if (helper.isModalSubmit(interaction)) {
-      const { id } = client.utils.parseCustomId(interaction.data.custom_id);
+      const id = interaction.data.custom_id;
       switch (id) {
         case "errorModal":
           await handleErrorModal(helper);
@@ -230,6 +322,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case "shards-calendar-modal-date":
           await handleShardsCalendarModal(helper);
           return;
+        case "currency_modify":
+          await handleCurrencyModifyModal(helper);
+          break;
         default:
           return;
       }
