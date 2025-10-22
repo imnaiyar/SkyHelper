@@ -218,7 +218,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         // TODO: also add gift passes
         const event = SkyPlannerData.getEvents(d).upcoming[0];
         const sCurrency = currencies.seasonCurrencies[season?.guid ?? ""];
-        const eCurrency = currencies.eventCurrencies[event?.event.guid ?? ""];
+        const eCurrency = currencies.eventCurrencies[event?.instance.guid ?? ""];
         if (season) {
           components.push({
             type: ComponentType.Label,
