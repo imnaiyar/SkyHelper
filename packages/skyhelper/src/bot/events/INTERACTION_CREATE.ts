@@ -240,7 +240,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             description: "Amount of event tickets you have",
             component: {
               type: ComponentType.TextInput,
-              custom_id: "event" + `/${event.event.guid}`,
+              custom_id: "event" + `/${event.instance.guid}`,
               style: TextInputStyle.Short,
               value: `${eCurrency?.tickets ?? 0}`,
               required: false,
