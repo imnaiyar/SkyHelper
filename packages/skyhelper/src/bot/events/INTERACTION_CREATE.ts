@@ -216,7 +216,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         // So for now only implementing modifying the first
         // TODO: do something about this, or hopefully discord increases components limit in modals
         // TODO: also add gift passes
-        const event = SkyPlannerData.getEvents(d).upcoming[0];
+        const event = SkyPlannerData.getEvents(d).current[0];
         const sCurrency = currencies.seasonCurrencies[season?.guid ?? ""];
         const eCurrency = currencies.eventCurrencies[event?.instance.guid ?? ""];
         if (season) {
