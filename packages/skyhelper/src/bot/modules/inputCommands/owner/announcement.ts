@@ -74,7 +74,6 @@ async function handleModal(helper: InteractionHelper) {
         label: "Files",
         description: "Any file attachments that should be sent with annoucements",
         component: {
-          // @ts-expect-error https://github.com/discordjs/discord-api-types/pull/1372
           type: ComponentType.FileUpload,
           custom_id: "attachments",
           max_values: 10,
@@ -101,27 +100,23 @@ async function handleModal(helper: InteractionHelper) {
   let text = helper.client.utils.getTextInput(modalSubmit, "announcement_text_input", true).value;
 
   // Parse and format command mentions
-  text = text.replace(/::cmd::(.*?)::/g, (match, commandPath) => {
+  text = text.replace(/::cmd::(.*?)::/g, (_match, commandPath) => {
     const parts = commandPath.split(" ");
     const commandName = parts.shift();
     const subCommandPath = parts.join(" ");
 
-    const command = helper.client.applicationCommands.find((cmd) => cmd.name === commandName);
-
-    if (!command) return match;
-
     const subCommand = subCommandPath ? ` ${subCommandPath}` : "";
 
-    return `</${command.name}${subCommand}:${command.id}>`;
+    return helper.client.utils.mentionCommand(helper.client, commandName, subCommand);
   });
-  // prettier-ignore
-  const atchs = helper.client.utils.getModalComponent(modalSubmit, "attachments", ComponentType.FileUpload).values as string[] | undefined; // TODO: remember to remove the case type errors are resolved
+
+  const atchs = helper.client.utils.getModalComponent(modalSubmit, "attachments", ComponentType.FileUpload, true).values;
   const files = await Promise.all(
-    atchs?.map(async (id) => {
+    atchs.map(async (id) => {
       const ats = modalSubmit.data.resolved!.attachments![id]!;
       const arrayBuff = await fetch(ats.proxy_url).then((res) => res.arrayBuffer());
       return { name: ats.filename, data: Buffer.from(arrayBuff) };
-    }) ?? [],
+    }),
   );
 
   const data = await helper.client.schemas.getAnnouncementGuilds();
