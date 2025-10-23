@@ -263,9 +263,8 @@ export const PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   name: "planner",
   description: "track and plan your sky progress",
   data: {
-    // TODO: change this once stable
-    integration_types: [ApplicationIntegrationType.GuildInstall],
-    contexts: [InteractionContextType.Guild],
+    integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+    contexts: [InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel],
     name_localizations: "commands:PLANNER.name",
     description_localizations: "commands:PLANNER.description",
     options: [
@@ -326,7 +325,6 @@ export const PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
       },
     ],
   },
-  beta: true,
   cooldown: 15,
   category: "Utility",
 };

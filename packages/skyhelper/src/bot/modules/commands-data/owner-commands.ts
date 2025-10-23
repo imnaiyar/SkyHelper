@@ -1,5 +1,5 @@
 import type { Command } from "@/structures/Command";
-import { ApplicationCommandOptionType } from "@discordjs/core";
+import { ApplicationCommandOptionType, ApplicationIntegrationType } from "@discordjs/core";
 
 // #region Annoouncement
 export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
@@ -168,4 +168,65 @@ export const SET_PREFIX_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   },
   userPermissions: ["ManageGuild"],
   category: "Owner",
+};
+
+// #region planner-manage
+export const PLANNER_MANAGE_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "planner-manage",
+  description: "Access SkyGame Planner data for Sky: Children of the Light",
+  data: {
+    options: [
+      {
+        name: "data",
+        description: "Retrieve data by GUID",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          {
+            name: "entity",
+            description: "Search for an entity by name",
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            autocomplete: true,
+          },
+          {
+            name: "depth",
+            description: "The depth to which nested objects should be displayed (default: 8)",
+            type: ApplicationCommandOptionType.Integer,
+            required: false,
+          },
+        ],
+      },
+      {
+        name: "stats",
+        description: "Get statistics about the SkyGame Planner data",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        type: ApplicationCommandOptionType.Subcommand,
+        name: "refresh",
+        description: "Refresh the SkyGame Planner data from the source",
+      },
+    ],
+    integration_types: [ApplicationIntegrationType.GuildInstall],
+    contexts: [0, 1],
+    guilds: ["852141490105090059", "1142926822598774814"],
+  },
+  category: "Owner",
+  prefix: {
+    subcommands: [
+      {
+        trigger: "data <entity> [depth]",
+        description: "Retrieve data by GUID",
+      },
+      {
+        trigger: "refresh",
+        description: "Refresh the SkyGame Planner data from the source",
+      },
+    ],
+    minimumArgs: 1,
+    aliases: ["pm", "sgp", "planner-manage"],
+  },
+  ownerOnly: true,
+  userPermissions: ["Administrator"],
+  cooldown: 15,
 };
