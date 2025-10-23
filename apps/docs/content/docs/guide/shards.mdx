@@ -3,29 +3,30 @@ title: Shards Tracking
 description: Never miss a shard with real-time tracking and location guides
 ---
 
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
 # Shards Tracking
 
 Never miss collecting shards again! SkyHelper provides real-time shard information, helping you know exactly when and where shards appear in Sky.
 
-## What are Shards?
-
-Shards are special collectible items that appear at specific times and locations throughout the Sky world. They come in different types (Red, Black, etc.) and each has its own timeline and location pattern.
-
-## What You Can Do
+**Commands**: `/shard`, `/shard calendar`
 
 ### Track Current Shards
 
 Get instant information about today's shard - its type, location, and when it will appear next. The bot shows you:
 
 - **Current shard type** - Know if it's a Red Shard, Black Shard, or another type
-- **Location details** - Exactly where in Sky the shard appears
-- **Next occurrence time** - Countdown to when it shows up next  
+- **Location details** - Exactly where in Sky the shard appears (Thanks to Clement and io)
+- **Shards data** - By Gale
+- **Next occurrence time** - Countdown to when it shows up next
 - **Full day schedule** - All times the shard appears throughout the day
-
-**[Image Placeholder: Shard information display showing type, location, and countdown]**
+  <Collapsible>
+    <ImageZoom src="/screenshots/shards-main.png" alt="Shards" width={200} height={200} />
+  </Collapsible>
 
 <Callout type="info">
-  The bot automatically shows information for today's date, but you can check any date if you're planning ahead!
+  The bot automatically shows information for today's date, but you can check any date if you're planning ahead by providing the
+  `date` option. The date option accepts date in `YYYY-MM-DD` format and max input is `275760-09-12`!
 </Callout>
 
 ### View Monthly Calendar
@@ -39,67 +40,21 @@ See the entire month's shard schedule at a glance. The calendar shows:
 
 **[Image Placeholder: Monthly calendar view with shards for each day]**
 
-The calendar is interactive - you can navigate to any month or year to see past or future shard schedules. This is perfect for planning your Sky sessions around specific shard types you need.
+The calendar is interactive - you can navigate to any month or year to see past or future shard schedules.
+
+<Callout type="info">You can navigate ±5 years from the current year using the calendar's year selector.</Callout>
+
+## Acknowlegements
 
 <Callout type="info">
-  You can navigate ±5 years from the current year using the calendar's year selector.
+  Fun fact: this bot was originally created to retrieve shard information, inspired by [Shards
+  Tracker](https://sky-shards.pages.dev) by Plutoy. Over time, it gradually evolved to include many more features.
 </Callout>
-
-### Location Guides
-
-When you get shard information, you'll also see a button to access detailed location guides. These guides include:
-
-- **Visual maps** - See exactly where the shard appears
-- **Step-by-step directions** - Navigate from the realm entrance to the shard
-- **Helpful landmarks** - Notable features to help you find your way
-- **Screenshots** - Visual references showing the exact location
-
-**[Image Placeholder: Shard location guide with map and directions]**
-
-This makes it easy to find even the trickiest shard locations, especially if you're new to collecting them.
-
-## How It Helps You
-
-### Plan Your Collection
-
-Use the calendar to see which shards are coming up and plan your Sky sessions accordingly. If you're looking for a specific shard type, you can browse ahead to find when it appears next.
-
-### Never Miss a Shard
-
-With real-time countdowns, you always know when the next shard occurrence is. Set aside time to collect it based on the countdown information.
-
-### Learn New Locations
-
-The location guides help you discover shard spots you might not know about. Over time, you'll become familiar with all the shard locations in Sky.
-
-## Tips for Shard Collecting
-
-<Callout type="info">
-  **Check Daily**: Make it a habit to check the shard info each day. Different shard types appear on different days, so daily checks ensure you don't miss the ones you need.
-</Callout>
-
-<Callout type="info">
-  **Use the Calendar for Planning**: If you know you'll be busy certain days, use the calendar to see when specific shards appear so you can plan around them.
-</Callout>
-
-<Callout type="info">
-  **Save Location Guides**: Take screenshots of location guides for shards you frequently miss. Having a quick reference can save time when you're in a hurry.
-</Callout>
-
-## Understanding Shard Patterns
-
-Shards follow predictable patterns:
-
-- **Daily Rotation**: Different shard types appear on different days
-- **Multiple Occurrences**: Most shards appear several times throughout the day
-- **Fixed Locations**: Each shard type has specific locations where it appears
-- **Timed Events**: Shards are active for limited periods during each occurrence
-
-SkyHelper helps you understand these patterns so you can collect shards more efficiently.
+Thanks to these individuals for discovering shards patterns which made it possible for this bot to exist: - **Zhii** (zhiiran4275)
+- **Christian** (christiankingfu) - **Hucker** (hucker\_) - **Plutoy** (plutoy) - **Kion** (kion_anzu) - **LN** (ln.cookie) -
+**Gale** (galerowfylery) - **Stoat** (.stoat.)
 
 ## Related Features
-
-Looking for more ways to stay on top of Sky events? Check out:
 
 - **[Reminders](/guide/reminders)** - Get notified before shard events happen
 - **[Live Updates](/guide/live-updates)** - Set up auto-updating shard displays in your server
