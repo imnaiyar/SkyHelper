@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/purple.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
 
@@ -15,6 +15,7 @@
 :root {
   --openapi-color: hsl(9, 75%, 26%);
   --docs-color: hsl(124, 74%, 30%);
+  --guide-color: hsl(0, 98%, 49%);
 }
 
 body {
@@ -25,6 +26,7 @@ body {
 .dark {
   --openapi-color: hsl(4, 98%, 68%);
   --docs-color: hsl(123, 73%, 68%);
+  --guide-color: hsl(0, 98%, 49%);
 }
 .openapi {
   --color-fd-primary: var(--openapi-color);

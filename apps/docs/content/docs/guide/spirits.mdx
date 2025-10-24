@@ -7,7 +7,14 @@ description: Discover everything about spirits, from locations to cosmetics
 
 Find any spirit in Sky and learn everything about them! SkyHelper provides comprehensive spirit information including where to find them, what they offer, and how much it costs.
 
+<Callout type="warn">
+  This is a legacy feature and will not recieve any more updates. Newer spirits will be not added. Please use
+  [`/planner`](/guide/planner)
+</Callout>
+
 ## What You Can Discover
+
+**Commands:** `/spirits`
 
 ### Spirit Search
 
@@ -18,183 +25,23 @@ Looking for a specific spirit? Search by name (even partial names work!) and get
 - **Friendship tree** - All items they offer
 - **Cost breakdown** - Candles and hearts needed
 
-**[Image Placeholder: Spirit search results showing complete information]**
+<Gallery
+  images={[
+    { url: "/screenshots/spirits.png", alt: "Spirits List" },
+    { url: "/screenshots/spirits-talented.png", alt: "Talented Builder" },
+    { url: "/screenshots/spirits-emotes.png", alt: "Spirits Emotes" },
+    { url: "/screenshots/spirits-cosmetics.png", alt: "Spirits Cosmetics" },
+  ]}
+/>
 
 <Callout type="info">
   You don't need the exact name! Searching "Dancing" will find "Dancing Performer", and "Medit" will find "Meditating Monastic".
-</Callout>
-
-### Friendship Trees
-
-See the complete friendship tree for any spirit:
-
-- **Item Layout**: Visual tree showing how items unlock
-- **Unlock Path**: Which items lead to others
-- **All Cosmetics**: Capes, masks, hair, accessories, and more
-- **Emotes & Expressions**: What actions you can learn
-- **Wing Buffs**: Permanent upgrades the spirit offers
-
-**[Image Placeholder: Spirit friendship tree display]**
-
-This helps you understand what you can get from each spirit and plan your unlock path.
-
-### Cost Calculation
-
-Know exactly what you'll need before you start unlocking:
-
-- **Total Candles**: Sum of all candle costs in the tree
-- **Total Hearts**: How many hearts required
-- **Individual Items**: Cost for each specific item
-- **Seasonal Candles**: For seasonal spirits (when applicable)
-
-**[Image Placeholder: Cost breakdown display]**
-
-Planning becomes easy when you know the full investment upfront.
-
-### Location Guides
-
-Never get lost looking for a spirit again:
-
-- **Realm Information**: Which realm they're in
-- **Area Details**: Specific location within the realm
-- **Visual Guides**: Maps showing exact placement
-- **Navigation Help**: How to get there from the entrance
-
-**[Image Placeholder: Spirit location guide with map]**
-
-## Spirit Types
-
-### Regular Spirits
-
-These are the constellation spirits found in the six main realms:
-
-- **Always Available**: You can find them anytime
-- **Fixed Locations**: They don't move
-- **Candles & Hearts**: Standard currency requirements
-
-### Seasonal Spirits
-
-Spirits from past seasons that now visit:
-
-- **Traveling Spirits**: Return every few months on rotation
-- **Special Visits**: Occasional returns for events
-- **Regular Candles**: No longer need seasonal candles when they return
-
-### Current Season
-
-Spirits from the active season (if there is one):
-
-- **Seasonal Candles**: Require seasonal currency
-- **Limited Time**: Available during the season
-- **Future Visitors**: Will become traveling spirits later
-
-## Exploring by Realm
-
-Browse all spirits from a specific realm to discover:
-
-- Who lives in each area
-- What cosmetics are available in that realm
-- How many spirits to unlock there
-- Total resources needed for the realm
-
-**[Image Placeholder: Realm spirits overview]**
-
-This is perfect when you're exploring a realm and want to know about all its spirits.
-
-## Cosmetics Preview
-
-See what you're getting before you unlock:
-
-- **Visual Previews**: What items look like
-- **Item Categories**: Organized by type (capes, masks, etc.)
-- **Matching Sets**: See if items are part of a collection
-- **Unique Features**: Special properties or animations
-
-## How Spirits Help You
-
-### Plan Your Unlocks
-
-With full cost information, you can:
-
-- Decide which spirits to prioritize
-- Save up the right amount of candles and hearts
-- Budget for expensive items
-- Skip things you don't want
-
-### Find New Spirits
-
-Use location guides to:
-
-- Discover spirits you haven't found yet
-- Navigate to spirits you know exist but can't locate
-- Help friends find specific spirits
-- Complete your spirit collection
-
-### Prepare for Traveling Spirits
-
-When you know who's visiting:
-
-- Check what they offer before they arrive
-- Prepare hearts in advance
-- Decide what to buy
-- Avoid last-minute rushes
-
-## Understanding Spirit Currency
-
-**Candles** 🕯️
-
-- Earned daily from collecting light
-- Used for most spirit items
-- Easier to obtain in larger quantities
-
-**Hearts** ❤️
-
-- Earned by trading candles with friends or completing quests
-- Required for premium items
-- More valuable and harder to get
-- Worth planning for in advance
-
-**Seasonal Candles** 🧡 (Active seasons only)
-
-- Earned from daily seasonal quests
-- Only during active seasons
-- Become regular candles for traveling spirits later
-
-<Callout type="info">
-  Hearts are the limiting factor for most players. Plan which spirits' heart-locked items you want most!
-</Callout>
-
-## Collection Tracking
-
-As you explore spirits, you can:
-
-- See what items are still available to unlock
-- Track your progress through friendship trees
-- Plan your next unlocks based on what you have
-- Discover items you might have missed
-
-## Tips for Spirit Collecting
-
-<Callout type="info">
-  **Hearts First**: When unlocking a spirit's tree, prioritize heart-locked items. Hearts are harder to get, so secure those items first.
-</Callout>
-
-<Callout type="info">
-  **Seasonal Priority**: During active seasons, focus on seasonal spirits. You can get regular spirits anytime, but seasonal ones have limited availability.
-</Callout>
-
-<Callout type="info">
-  **Use Partial Names**: Save time by searching with just part of a spirit's name. The bot's fuzzy search will find what you're looking for.
-</Callout>
-
-<Callout type="info">
-  **Check Trees Before Buying**: Always review the full friendship tree before starting to unlock. You might discover items you want deeper in the tree.
 </Callout>
 
 ## Related Features
 
 Explore spirits further with:
 
-- **[Traveling Spirits](/guide/events#traveling-spirit-information)** - See who's visiting this week  
+- **[Traveling Spirits](/guide/events#traveling-spirit-information)** - See who's visiting this week
 - **[Seasonal Content](/guide/seasonal)** - Current season spirits and planning
 - **[Sky Game Planner](/guide/planner)** - Interactive spirit browser with filtering

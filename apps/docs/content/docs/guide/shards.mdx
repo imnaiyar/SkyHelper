@@ -9,9 +9,11 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 Never miss collecting shards again! SkyHelper provides real-time shard information, helping you know exactly when and where shards appear in Sky.
 
-**Commands**: `/shard`, `/shard calendar`
+**Commands**: `/shards`, `/shards-calendar`
 
 ### Track Current Shards
+
+**Command**: `/shards`
 
 Get instant information about today's shard - its type, location, and when it will appear next. The bot shows you:
 
@@ -20,9 +22,13 @@ Get instant information about today's shard - its type, location, and when it wi
 - **Shards data** - By Gale
 - **Next occurrence time** - Countdown to when it shows up next
 - **Full day schedule** - All times the shard appears throughout the day
-  <Collapsible>
-    <ImageZoom src="/screenshots/shards-main.png" alt="Shards" width={200} height={200} />
-  </Collapsible>
+
+  <Gallery
+    images={[
+      { url: "/screenshots/shards-main.png", alt: "Shards" },
+      { url: "/screenshots/shards-timeline.png", alt: "Shards Timeline" },
+    ]}
+  />
 
 <Callout type="info">
   The bot automatically shows information for today's date, but you can check any date if you're planning ahead by providing the
@@ -31,6 +37,8 @@ Get instant information about today's shard - its type, location, and when it wi
 
 ### View Monthly Calendar
 
+**Command**: `/shards-calendar`
+
 See the entire month's shard schedule at a glance. The calendar shows:
 
 - All shards for each day of the month
@@ -38,7 +46,12 @@ See the entire month's shard schedule at a glance. The calendar shows:
 - Easy navigation between months and years
 - Visual layout making it simple to plan your shard collection
 
-**[Image Placeholder: Monthly calendar view with shards for each day]**
+  <Gallery
+    images={[
+      { url: "/screenshots/shards-calendar.png", alt: "Shards Calendar" },
+      { url: "/screenshots/shards-calendar-month-year.png", alt: "Shards Calendar Change Month/Year" },
+    ]}
+  />
 
 The calendar is interactive - you can navigate to any month or year to see past or future shard schedules.
 

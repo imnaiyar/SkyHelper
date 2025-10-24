@@ -5,13 +5,21 @@ description: Your interactive guide to exploring all of Sky's content
 
 # Sky Game Planner
 
-Explore everything Sky has to offer in one interactive place! The planner lets you browse spirits, items, events, shops, and more with powerful filtering and search.
+The Sky Game Planner is an interactive Discord bot feature that provides comprehensive access to Sky: Children of the Light game data. It allows you to browse spirits, items, events, shops, realms, seasons, track and plan you Sky progress directly through the bot.
+
+## Credits and Compatibility
+
+This planner is based on [Sky Planner](https://sky-planner.com) by Silverfeelin and uses its game data. It is fully compatible with the website, allowing you to import and export saved data seamlessly between the bot and the website.
+
+<Callout type="info">
+  Thanks to Silverfeelin for their awesome work on sky planner which made it possible for the bot to have this feature.
+</Callout>
 
 ## What is the Planner?
 
-Think of it as an interactive encyclopedia for Sky. Instead of searching through multiple sources, everything you need to know about the game is organized and accessible in one place.
+A comprehensive, interactive encyclopedia for Sky built into the Discord bot. Instead of searching through multiple sources, everything you need to know about the game is organized and accessible through simple slash commands.
 
-You can browse:
+You can explore:
 
 - All spirits and their friendship trees
 - Every cosmetic item in the game
@@ -19,88 +27,43 @@ You can browse:
 - All shops and what they sell
 - Game realms and their areas
 - Past and current seasons
+- Winged Lights and their locations
+- Traveling Spirits and special visits
+- And much more...
 
-**[Image Placeholder: Planner main interface showing categories]**
+**Some images showcasing planner**
+
+<Gallery
+  images={[
+    { url: "/screenshots/planner/planner-home.png", alt: "Planner Home Screen" },
+    { url: "/screenshots/planner/planner-spirits.png", alt: "Planner Spirits" },
+    { url: "/screenshots/planner/planner-events.png", alt: "Planner Events" },
+    { url: "/screenshots/planner/planner-seasons.png", alt: "Planner Seasons" },
+    { url: "/screenshots/planner/planner-profile.png", alt: "Planner Profile" },
+    { url: "/screenshots/planner/planner-currency-usage.png", alt: "Planner Currency Usage" },
+    { url: "/screenshots/planner/planner-tree-modify.png", alt: "Planner Tree Modification" },
+    { url: "/screenshots/planner/planner-wls.png", alt: "Planner Winged Lights" },
+  ]}
+/>
 
 ## How to Use It
 
-### Search Anything
+You can also use the `/planner` command for additional functionality:
 
-Type what you're looking for and get instant results:
+- `/planner home` - Opens the planner home screen
+- `/planner search <query>` - Search for specific content and jump directly to it
+- `/planner profile` - View your planner profile and progress
+- `/planner data <action>` - Import, export, or delete your planner data
 
-- **Spirit names**: "Dancing Performer" or just "Dancing"
-- **Item names**: Find specific cosmetics
-- **Shop names**: "Aviary", "Concert Hall", etc.
-- **Event names**: Seasonal events or special occasions
-- **Quick navigation**: Jump to specific sections
+## Interactive Features
 
-**[Image Placeholder: Search showing autocomplete results]**
+The planner uses Discord buttons for navigation. From the home screen, you can:
 
-As you type, the bot shows matching results from all categories, making it super fast to find what you need.
-
-### Browse by Category
-
-Explore organized sections:
-
-**Spirits Tab**
-
-- See all spirits in the game
-- Filter by realm, season, or type
-- View traveling spirits only
-- Explore special visit spirits
-
-**Items Tab**
-
-- Browse all cosmetics
-- Filter by type (cape, mask, hair, etc.)
-- See where items come from
-- Check availability status
-
-**Events Tab**
-
-- View seasonal events
-- See recurring events
-- Check special occasions
-- Review event schedules
-
-**Shops Tab**
-
-- Aviary Event Store
-- Concert Halls
-- Harmony Hall
-- Secret Office shop
-- Nesting Workshop
-
-**Realms Tab**
-
-- Navigate through all six realms
-- Explore sub-areas
-- See spirits in each location
-- Find points of interest
-
-**Seasons Tab**
-
-- Current active season
-- All past seasons
-- Season information
-- Seasonal spirits and items
-
-**[Image Placeholder: Category tabs and filtering options]**
-
-## Powerful Filtering
-
-Narrow down exactly what you want:
-
-### Filter Combinations
-
-Mix and match filters to find specific content:
-
-- **Spirits in a specific realm**: See only Forest spirits
-- **Traveling spirits only**: Find which spirits visit
-- **Items from a season**: All Season of Dreams cosmetics
-- **Capes under 50 candles**: Budget-friendly options
-
-**[Image Placeholder: Filter combinations in action]**
+- Browse different categories (Spirits, Items, Events, Shops, Realms, Seasons, Winged Lights)
+- Filter content by various criteria
+- Track your progress (unlocked items, currencies, etc.)
+- View detailed information about any entity
+- Navigate between related content
 
 ### Smart Navigation
 
@@ -112,167 +75,20 @@ The planner remembers your path:
 4. Use back button to return to tree
 5. Go back again to Forest spirits list
 
-This makes exploration smooth and intuitive!
-
-## What You'll Discover
-
-### Spirit Information
-
-For any spirit, see:
-
-- Their location and how to find them
-- Complete friendship tree layout
-- All items they offer
-- Total costs and requirements
-- Related spirits in the same realm
-
-### Item Details
-
-For any cosmetic:
-
-- Visual preview
-- Which spirit or shop has it
-- Cost (candles/hearts/seasonal candles)
-- How to unlock it
-- When it's available
-
-### Shop Inventories
-
-For each shop, view:
-
-- All items currently available
-- Costs and requirements
-- Location in the game
-- Refresh schedules (if applicable)
-
-### Event Information
-
-For events:
-
-- Event schedule and timing
-- Instances and occurrences
-- How to participate
-- Rewards and benefits
-
-## Quick Access Features
-
-### Jump to Favorites
-
-Use search to instantly jump to:
-
-- A specific spirit's tree
-- A particular shop
-- An event you're interested in
-- A season you want to explore
-
-### Cross-References
-
-Everything is connected:
-
-- From a spirit, see their realm
-- From an item, see where to get it
-- From a shop, see all its items
-- From an event, see participating spirits
-
-## Why Use the Planner?
-
-### All-in-One Reference
-
-Instead of:
-
-- Searching Google for spirit locations
-- Looking up costs on different sites
-- Finding shop inventories elsewhere
-- Hunting for event info
-
-Just open the planner - it's all there!
-
-### Plan Your Journey
-
-Before playing, use the planner to:
-
-- Decide which spirits to visit
-- Choose items to unlock
-- Find the best shops to check
-- Schedule event participation
-
-### Discover New Content
-
-The planner helps you find:
-
-- Spirits you didn't know existed
-- Items you haven't seen before
-- Shops you haven't visited
-- Events you might have missed
-
 <Callout type="info">
-  The planner is perfect for when you're away from the game but want to plan your next Sky session!
+  This is valid only for 1-level back due to the nature of how your choices are stored and discord limitations.
 </Callout>
 
-## Navigation Tips
+## Data Management
 
-<Callout type="info">
-  **Use Search for Speed**: Instead of clicking through categories, just search for what you want. It's much faster!
-</Callout>
+### Importing Data
 
-<Callout type="info">
-  **Explore Systematically**: Go realm by realm to discover all spirits and ensure you haven't missed any.
-</Callout>
+If you have saved data from the SkyGame Planner website or or the bot's, you can import it using `/planner data import`. This allows you to transfer your progress between platforms.
 
-<Callout type="info">
-  **Compare Items**: Use the Items tab to browse similar cosmetics and decide which you like best before spending resources.
-</Callout>
+### Exporting Data
 
-<Callout type="info">
-  **Filter Smart**: Combine filters to find exactly what you need. "Forest spirits that are traveling" or "Capes from Season of Flight".
-</Callout>
+Export your current planner data using `/planner data export` to back up your progress. You can use these either on [Sky Planner](https://sky-planner.com) (since it is compatible) or the bot.
 
-## Understanding the Layout
+### Deleting Data
 
-The planner uses visual cues:
-
-- **Icons**: Different types of content have unique icons
-- **Colors**: Indicate availability and special status
-- **Badges**: Show important properties
-- **Thumbnails**: Preview items and spirits visually
-
-**[Image Placeholder: Visual elements and their meanings]**
-
-Everything is designed to be intuitive and easy to understand at a glance.
-
-## What Makes It Special
-
-### Always Current
-
-The planner stays up to date with:
-
-- New seasonal content
-- Latest traveling spirits
-- Current shop rotations
-- Active events
-
-### User-Friendly
-
-Designed for ease of use:
-
-- Intuitive navigation
-- Clear organization
-- Helpful labels
-- Visual previews
-
-### Comprehensive
-
-Nothing is left out:
-
-- Every spirit in the game
-- All cosmetic items
-- Every shop and vendor
-- All events and activities
-
-## Related Features
-
-Enhance your planning with:
-
-- **[Spirit Information](/guide/spirits)** - Detailed spirit guides
-- **[Seasonal Content](/guide/seasonal)** - Current season planning
-- **[Events](/guide/events)** - Event schedules
+Use `/planner data delete` to permanently remove all your planner data from the bot.
