@@ -20,6 +20,7 @@ import {
 } from "@skyhelperbot/constants/skygame-planner";
 import { formatBreakdownCost } from "./breakdown.js";
 import { CustomId, store } from "@/utils/customId-store";
+import Utils from "@/utils/classes/Utils";
 
 export class ProfileDisplay extends BasePlannerHandler {
   override async handle(): Promise<ResponseData> {
@@ -129,13 +130,12 @@ export class ProfileDisplay extends BasePlannerHandler {
         cost,
       }))
       .filter((s) => s.season)
-      .sort((a, b) => (b.season!.number || 0) - (a.season!.number || 0));
+      .sort((a, b) => (a.season!.number ?? 0) - (b.season!.number ?? 0));
 
     for (const { season, cost } of sortedSeasons) {
       if (!season || (this.planner.isEmptyCost(cost.cost) && cost.price === 0)) continue;
 
-      const emoji = season.emoji ? `<:${season.shortName}:${season.emoji}>` : "";
-      texts.push(`**${emoji} ${season.name}**\n` + formatBreakdownCost(cost));
+      texts.push(`**${Utils.formatEmoji(season.emoji, season.name)} ${season.name}**\n` + formatBreakdownCost(cost));
     }
     return texts;
   }

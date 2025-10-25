@@ -96,13 +96,6 @@ ${
     if (select?.values.length) selected.push(...select.values);
   }
 
-  // If no nodes selected, just navigate back
-  if (!selected.length) {
-    const navigate = await handlePlannerNavigation(state, helper.user, helper.client);
-    await helper.client.api.interactions.editReply(submission.application_id, submission.token, navigate);
-    return;
-  }
-
   // Lock nodes above target
   labeled.forEach((l) => toggleNodeUnlock(user, l.node, selected.includes(l.node.guid)));
 

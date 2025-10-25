@@ -10,6 +10,7 @@ import {
   lockAllTreeNodes,
   deserializeNavState,
   modifyNestingRotationItems,
+  adjustCurrencies,
 } from "@/handlers/planner-utils";
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData } from "@skyhelperbot/constants";
@@ -147,8 +148,10 @@ export default defineButton({
           user.plannerData ??= PlannerDataHelper.createEmpty();
           if (ln.item.unlocked) {
             user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
+            adjustCurrencies(user, ln, true);
           } else {
             user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
+            adjustCurrencies(user, ln, false);
           }
           followUp = false;
           user.plannerData.date = new Date().toISOString();
