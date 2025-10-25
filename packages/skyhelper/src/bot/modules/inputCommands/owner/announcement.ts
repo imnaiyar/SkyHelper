@@ -122,7 +122,7 @@ async function handleModal(helper: InteractionHelper, options?: InteractionOptio
 
   const data = await helper.client.schemas.getAnnouncementGuilds();
   const guilds = options
-    ?.getString("string")
+    ?.getString("guilds")
     // eslint-disable-next-line
     ?.split(",")
     .map((s) => s.trim());
