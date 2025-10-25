@@ -277,10 +277,6 @@
         "name": "変更履歴",
         "description": "ボットの変更履歴"
       },
-      "BOTINFO": {
-        "name": "ボット情報",
-        "description": "ボットの情報を取得し、設定を行う"
-      },
       "CONTACT-US": {
         "name": "お問い合わせ",
         "description": "提案/バグ報告/連絡、またはその他何でも"
@@ -389,6 +385,59 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Get bot information"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
+      }
+    }
+  },
+  "PLANNER": {
+    "name": "planner",
+    "description": "track and plan your sky progress",
+    "options": {
+      "home": {
+        "name": "home",
+        "description": "track and plan your sky progress"
+      },
+      "search": {
+        "name": "search",
+        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+      },
+      "profile": {
+        "name": "profile",
+        "description": "Your planner profile & stats and currency usages"
+      },
+      "query": {
+        "name": "query",
+        "description": "the query to search for"
+      },
+      "data": {
+        "name": "data",
+        "description": "mange/export/import your planner data"
+      },
+      "action": {
+        "name": "action",
+        "description": "the action you want to perform"
+      },
+      "choices": {
+        "import": "Import Data",
+        "export": "Export Data",
+        "delete": "Delete Data"
       }
     }
   }
