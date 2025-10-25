@@ -98,13 +98,24 @@ async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
     if (id !== currentSeason?.guid) delete settings.plannerData!.currencies.seasonCurrencies[id];
   }
 
+  if (currentSeason && !settings.plannerData!.currencies.seasonCurrencies[currentSeason.guid]) {
+    settings.plannerData!.currencies.seasonCurrencies[currentSeason.guid] = { candles: 0, hearts: 0 };
+  }
+
+  const events = SkyPlannerData.getEvents(data).current;
   for (const id of Object.keys(settings.plannerData!.currencies.eventCurrencies)) {
-    const events = SkyPlannerData.getEvents(data).current;
     // delete the entry if event has ended
     // eslint-disable-next-line
     if (!events.find((e) => e.instance.guid === id)) delete settings.plannerData!.currencies.eventCurrencies[id];
   }
 
+  if (events.length) {
+    for (const { instance } of events) {
+      if (currentSeason && !settings.plannerData!.currencies.eventCurrencies[instance.guid]) {
+        settings.plannerData!.currencies.eventCurrencies[instance.guid] = { tickets: 0 };
+      }
+    }
+  }
   // TODO: potentially add other relevent pre-checks
   await settings.save();
 }

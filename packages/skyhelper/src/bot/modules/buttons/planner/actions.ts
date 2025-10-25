@@ -33,8 +33,7 @@ export default defineButton({
   async execute(interaction, _t, helper, { action: a, navState }) {
     const [action, guid = "", actionType = ""] = a.split("|");
     const user = await helper.client.schemas.getUser(helper.user);
-    const d = await SkyPlannerData.getSkyGamePlannerData();
-    const data = enrichDataWithUserProgress(d, user.plannerData);
+    const data = await SkyPlannerData.getSkyGamePlannerDataWithForUser(user.plannerData);
     const state = deserializeNavState(navState);
 
     if ((action as PlannerAction) === PlannerAction.ModifyTree) {
