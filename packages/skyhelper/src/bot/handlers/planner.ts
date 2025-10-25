@@ -90,7 +90,8 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
       ].filter((s) => !!s),
     };
   } catch (err) {
-    client.logger.error(err, scope);
+    Sentry.captureException(err, scope);
+    throw err;
   }
 }
 
