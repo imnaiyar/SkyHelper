@@ -110,6 +110,7 @@ async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
 
   if (currentSeason && !settings.plannerData!.currencies.seasonCurrencies[currentSeason.guid]) {
     settings.plannerData!.currencies.seasonCurrencies[currentSeason.guid] = { candles: 0, hearts: 0 };
+    settings.markModified("plannerData.currencies.seasonCurrencies");
   }
 
   const events = SkyPlannerData.getEvents(data).current;
@@ -123,6 +124,7 @@ async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
     for (const { instance } of events) {
       if (currentSeason && !settings.plannerData!.currencies.eventCurrencies[instance.guid]) {
         settings.plannerData!.currencies.eventCurrencies[instance.guid] = { tickets: 0 };
+        settings.markModified("plannerData.currencies.eventCurrencies");
       }
     }
   }
