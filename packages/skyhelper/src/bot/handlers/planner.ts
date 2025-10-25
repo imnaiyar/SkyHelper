@@ -122,7 +122,7 @@ async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
 
   if (events.length) {
     for (const { instance } of events) {
-      if (currentSeason && !settings.plannerData!.currencies.eventCurrencies[instance.guid]) {
+      if (!settings.plannerData!.currencies.eventCurrencies[instance.guid]) {
         settings.plannerData!.currencies.eventCurrencies[instance.guid] = { tickets: 0 };
         settings.markModified("plannerData.currencies.eventCurrencies");
       }
