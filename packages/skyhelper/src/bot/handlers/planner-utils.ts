@@ -348,6 +348,7 @@ export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
 
 export function modifyNestingRotationItems(user: UserSchema, item: IRotationItem, type: "add" | "remove") {
   user.plannerData ??= PlannerDataHelper.createEmpty();
+  // eslint-disable-next-line
   user.plannerData.keys ??= {};
   const itemState = (user.plannerData.keys["nesting-workshop"]?.unlocked?.[item.guid] ?? { q: 0, cost: {} }) as {
     q: number;
