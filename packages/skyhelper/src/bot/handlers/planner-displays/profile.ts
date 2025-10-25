@@ -130,7 +130,7 @@ export class ProfileDisplay extends BasePlannerHandler {
         cost,
       }))
       .filter((s) => s.season)
-      .sort((a, b) => (a.season!.number ?? 0) - (b.season!.number ?? 0));
+      .sort((a, b) => (b.season!.number || 0) - (a.season!.number || 0));
 
     for (const { season, cost } of sortedSeasons) {
       if (!season || (this.planner.isEmptyCost(cost.cost) && cost.price === 0)) continue;
@@ -165,7 +165,7 @@ export class ProfileDisplay extends BasePlannerHandler {
 
   private topBtns() {
     return row(
-      this.viewbtn(this.createCustomId({ d: "profile" }), {
+      this.viewbtn(this.createCustomId({ it: null, p: null, d: "profile" }), {
         label: "Profile",
         disabled: this.state.d === "profile",
         style: this.state.d === "profile" ? 3 : 2,
