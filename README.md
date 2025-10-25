@@ -69,13 +69,12 @@ skyhelper/
 
 ### Package Details
 
-| Package                              | Description                                                  | Technologies                |
-| ------------------------------------ | ------------------------------------------------------------ | --------------------------- |
-| **[skyhelper](packages/skyhelper/)** | Core Discord bot with slash commands, events, and API server | Discord.js, NestJS, MongoDB |
-| **[jobs](packages/jobs/)**           | Automated reminders and scheduled notifications              | Node-cron, Bun runtime      |
-| **[utils](packages/utils/)**         | Canvas operations, Discord utilities, shared functions       | Canvas API, TypeScript      |
-| **[constants](packages/constants/)** | Spirit data, realm information, localizations                | TypeScript definitions      |
-| **[docs](apps/docs/)**               | Interactive documentation and API reference                  | Next.js, Fumadocs           |
+- **[skyhelper](packages/skyhelper/)**
+- **[jobs](packages/jobs/)**
+- **[utils](packages/utils/)**
+- **[constants](packages/constants/)**
+- **[docs](apps/docs/)**
+- **[website](apps/website/)**
 
 ## 🚀 Quick Start
 
@@ -196,13 +195,6 @@ docs: update installation instructions
 refactor: optimize database queries
 ```
 
-### Development Environment
-
-- **VS Code** recommended with TypeScript extensions
-- **Git hooks** automatically format and lint code
-- **Test coverage** maintained above 80%
-- **Documentation** updated for all new features
-
 ## 📝 License
 
 This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) file for details.
@@ -212,14 +204,42 @@ This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) 
 - **[Discord Server](https://discord.com/invite/2rjCRKZsBb)** - Get help, report bugs, suggest features
 - **[Documentation](https://docs.skyhelper.xyz)** - Comprehensive guides and API reference
 - **[Website](https://skyhelper.xyz)** - Official website with bot information
+- **Support**: support@skyhelper.xyz
 - **[Issue Tracker](https://github.com/imnaiyar/SkyHelper/issues)** - Bug reports and feature requests
 
 ## 🙏 Acknowledgments
 
-- **Sky: Children of the Light** by thatgamecompany
-- **Amazing contributors** who help translate and improve the bot
-- **Sky community** for continuous feedback and support
-- **Open source libraries** that make this project possible
+# Planner
+
+Planner uses data from [Sky Planner](https://sky-planner.com) by Silverfeelin and is inspired by it.
+
+## Shard Predictions
+
+Special thanks to the dedicated community members who help provide accurate shard predictions:
+
+- **Zhii** (zhiiran4275)
+- **Christian** (christiankingfu)
+- **Hucker** (hucker\_)
+- **Plutoy** (plutoy)
+- **Kion** (kion_anzu)
+- **LN** (ln.cookie)
+- **Gale** (galerowfylery)
+- **Stoat** (.stoat.)
+
+## Seasonal and Other Guides
+
+Thanks to the content creators and guide makers who provide valuable resources:
+
+- **Clement** (clement8978)
+- **Mimi** (mimi4117)
+- **Sam** (sam6917)
+- **Zed** (zedlocked\_)
+- **Art** (lovecry)
+- **io** - Daily quest guides
+- **And all others who do the awesome job of creating guides**
+
+  Many of SkyHelper's guide features are powered by the incredible infographics and guides created by these community
+  contributors.
 
 ---
 

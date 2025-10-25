@@ -4,7 +4,6 @@ import { button, container, section, separator, textDisplay, thumbnail } from "@
 import { ComponentType, MessageFlags, type APIComponentInContainer } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import {
-  calculateUserProgress,
   formatCurrencies,
   getSpiritEmoji,
   type IEvent,
@@ -15,7 +14,6 @@ import {
 } from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { DisplayTabs } from "@/types/planner";
-import Utils from "@/utils/classes/Utils";
 import { CustomId, store } from "@/utils/customId-store";
 
 export class HomeDisplay extends BasePlannerHandler {
@@ -36,6 +34,7 @@ export class HomeDisplay extends BasePlannerHandler {
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
         separator(),
+        textDisplay("-# This is a new feature! Any bug reports and feedback are appreciated!"),
         section(
           button({
             label: "Update",

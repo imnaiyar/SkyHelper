@@ -231,3 +231,131 @@ Manage your Sky: Children of the Light linked role connection with Discord.
 - `/linked-role` (opens the linked role management interface)
 
 Learn more about linked roles in the [Linked Roles Guide](/docs/guides/linked-role).
+
+## `/planner`
+
+Track and plan your Sky: Children of the Light progress with a comprehensive planning system.
+
+<Callout type="info">Planner is powered by data from [sky-planner.com](https://sky-planner.com) by Silverfeelin.</Callout>
+
+**Subcommands**
+
+<Steps>
+
+<Step>
+
+### `home` - Access the main planner interface
+
+Opens the interactive planner dashboard where you can track spirits, seasons, events, items, and more.
+
+**Usage**:
+
+- `/planner home`
+
+**Features:**
+
+- Interactive navigation through all game content
+- Track spirits and their friendship trees
+- Browse seasonal content and events
+- View cosmetics and collectibles
+- Explore realms and areas
+- Monitor shops and traveling spirits
+- Filter and search capabilities
+- Progress tracking
+
+</Step>
+
+<Step>
+
+### `search` - Search and navigate directly to specific content
+
+**Options**
+
+| Option    | Description                                             |
+| --------- | ------------------------------------------------------- |
+| `<query>` | The query to search for (spirits, items, seasons, etc.) |
+
+Quickly jump to specific items, seasons, events, spirits, or other content in the planner using autocomplete search.
+
+**Usage**:
+
+- `/planner search query:Assembly` (finds Assembly Guide)
+- `/planner search query:Season of Prophecy`
+- `/planner search query:Days of Bloom`
+
+**Searchable Content:**
+
+- Spirits and their items
+- Seasonal content
+- Events and instances
+- Cosmetics and items
+- Realms and areas
+- Shops
+
+</Step>
+
+<Step>
+
+### `profile` - View your planner profile and statistics
+
+Displays your personal planner statistics, progress tracking, and currency usage analysis.
+
+**Usage**:
+
+- `/planner profile`
+
+**Profile Information:**
+
+- Overall progress statistics
+- Currency spending breakdown
+- Collected items count
+- Completed spirits
+- Seasonal progress
+- Event participation
+
+</Step>
+
+<Step>
+
+### `data` - Manage your planner data
+
+**Options**
+
+| Option     | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+| `<action>` | The action to perform (`Import Data`, `Export Data`, `Delete Data`) |
+
+Manage your planner data with import, export, and deletion capabilities.
+
+**Usage**:
+
+- `/planner data action:Export Data` (download your planner data)
+- `/planner data action:Import Data` (upload and restore planner data)
+- `/planner data action:Delete Data` (permanently delete your planner data)
+
+**Actions:**
+
+- **Import Data**: Upload a previously exported JSON file to restore your planner progress. (You can also import you exported [sky-planner.com](https://sky-planner.com) data.)
+- **Export Data**: Download your current planner data as a JSON file for backup
+- **Delete Data**: Permanently remove all your planner data from the bot
+
+<Callout type="warn">
+  Deleting your planner data is irreversible. Make sure to export your data first if you want to keep a backup!
+</Callout>
+
+</Step>
+
+</Steps>
+
+**Navigation Features:**
+
+- Deep navigation with back button support
+- Advanced filtering system (by realm, type, order, etc.)
+- Pagination for large datasets
+- User-specific state management
+- Persistent navigation state across interactions
+
+<Callout type="info">
+  The planner system uses interactive components with state preservation, allowing you to navigate complex content structures
+  without losing your place. This is valid only for 1-level back due to discord's limitation.
+</Callout>
