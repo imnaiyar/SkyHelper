@@ -65,29 +65,33 @@ const displayClasses = (d?: string) => ({
 export async function handlePlannerNavigation(state: Omit<NavigationState, "user">, user: APIUser, client: SkyHelper) {
   const { t } = state;
   // for debugging purposes
-  Sentry.setContext("Planner Navigation State", { ...state, user: user.id });
+  const scope = new Sentry.Scope();
+  scope.setContext("Planner Navigation State", { ...state, user: user.id });
+  try {
+    const settings = await client.schemas.getUser(user);
 
-  const settings = await client.schemas.getUser(user);
+    settings.plannerData ??= PlannerDataHelper.createEmpty();
 
-  settings.plannerData ??= PlannerDataHelper.createEmpty();
+    const data = await SkyPlannerData.getSkyGamePlannerDataWithForUser(settings.plannerData);
 
-  const data = await SkyPlannerData.getSkyGamePlannerDataWithForUser(settings.plannerData);
+    await plannerPreChecks(settings, data);
 
-  await plannerPreChecks(settings, data);
+    const handler = displayClasses(state.d)[t];
+    // eslint-disable-next-line
+    if (!handler) throw new Error("Invalid display tab");
 
-  const handler = displayClasses(state.d)[t];
-  // eslint-disable-next-line
-  if (!handler) throw new Error("Invalid display tab");
-
-  const instance = new handler(data, SkyPlannerData, { ...state, user: user.id }, settings, client);
-  const result = await instance.handle();
-  return {
-    ...result,
-    components: [
-      t !== DisplayTabs.Home && t !== DisplayTabs.Profile ? instance.createTopCategorySelect(t) : null,
-      ...(result.components ?? []),
-    ].filter((s) => !!s),
-  };
+    const instance = new handler(data, SkyPlannerData, { ...state, user: user.id }, settings, client);
+    const result = await instance.handle();
+    return {
+      ...result,
+      components: [
+        t !== DisplayTabs.Home && t !== DisplayTabs.Profile ? instance.createTopCategorySelect(t) : null,
+        ...(result.components ?? []),
+      ].filter((s) => !!s),
+    };
+  } catch (err) {
+    client.logger.error(err, scope);
+  }
 }
 
 async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
