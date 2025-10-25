@@ -1,4 +1,4 @@
-import { SkyPlannerData } from "@skyhelperbot/constants";
+import { SkyPlannerData, zone } from "@skyhelperbot/constants";
 import { SpiritsDisplay } from "./planner-displays/spirits/spirits.js";
 import { RealmsDisplay } from "./planner-displays/realms.js";
 import { ItemsDisplay } from "./planner-displays/items.js";
@@ -19,6 +19,7 @@ import { enrichDataWithUserProgress, PlannerDataHelper, type PlannerAssetData } 
 import { DisplayTabs, type NavigationState } from "../@types/planner.js";
 import { ProfileDisplay } from "./planner-displays/profile.js";
 import type { UserSchema } from "@/types/schemas";
+import { DateTime } from "luxon";
 
 // Navigation state interface to track user's position
 
@@ -91,11 +92,20 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
 
 async function plannerPreChecks(settings: UserSchema, data: PlannerAssetData) {
   const currentSeason = SkyPlannerData.getCurrentSeason(data);
-  for (const id of Object.keys(settings.plannerData!.currencies.seasonCurrencies)) {
-    // TODO: potentially convert this to regular candles to mimic game behaviour
+  const now = DateTime.now().setZone(zone);
+  for (const [id, value] of Object.entries(settings.plannerData!.currencies.seasonCurrencies)) {
+    const season = data.seasons.find((s) => s.guid === id);
+
     // delete the entry if season has ended
-    // eslint-disable-next-line
-    if (id !== currentSeason?.guid) delete settings.plannerData!.currencies.seasonCurrencies[id];
+    if (season && now > SkyPlannerData.resolveToLuxon(season.endDate).endOf("day")) {
+      // convert the currencies to regular candles
+      settings.plannerData!.currencies.candles += value.candles;
+      settings.plannerData!.currencies.hearts += value.hearts ?? 0;
+
+      // delete the entry
+      // eslint-disable-next-line
+      delete settings.plannerData!.currencies.seasonCurrencies[id];
+    }
   }
 
   if (currentSeason && !settings.plannerData!.currencies.seasonCurrencies[currentSeason.guid]) {
