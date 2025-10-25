@@ -15,6 +15,101 @@ import type {
   IRotationItem,
 } from "@skyhelperbot/constants/skygame-planner";
 
+// ============================================================================
+// Currency Adjustment Helpers
+// ============================================================================
+
+/**
+ * Adjust user currencies based on item cost
+ * @param user User schema to adjust currencies for
+ * @param cost The cost object containing currency amounts
+ * @param add Whether to add (refund) or subtract (spend) currencies
+ * @param seasonGuid Optional season GUID for season-specific currencies
+ * @param eventGuid Optional event GUID for event-specific currencies
+ */
+export function adjustCurrencies(
+  user: UserSchema,
+  cost: { c?: number; h?: number; sc?: number; sh?: number; ac?: number; ec?: number },
+  add: boolean,
+  seasonGuid?: string,
+  eventGuid?: string,
+) {
+  user.plannerData ??= PlannerDataHelper.createEmpty();
+  const currencies = user.plannerData.currencies;
+  const multiplier = add ? 1 : -1;
+  // Adjust regular currencies (candles, hearts, ascended candles)
+  if (cost.c) {
+    const newAmount = currencies.candles + cost.c * multiplier;
+    currencies.candles = Math.max(0, newAmount);
+  }
+
+  if (cost.h) {
+    const newAmount = currencies.hearts + cost.h * multiplier;
+    currencies.hearts = Math.max(0, newAmount);
+  }
+
+  if (cost.ac) {
+    const newAmount = currencies.ascendedCandles + cost.ac * multiplier;
+    currencies.ascendedCandles = Math.max(0, newAmount);
+  }
+
+  // Adjust season-specific currencies
+  if (seasonGuid && (cost.sc || cost.sh)) {
+    currencies.seasonCurrencies[seasonGuid] ??= { candles: 0, hearts: 0 };
+
+    if (cost.sc) {
+      const newAmount = currencies.seasonCurrencies[seasonGuid].candles + cost.sc * multiplier;
+      currencies.seasonCurrencies[seasonGuid].candles = Math.max(0, newAmount);
+    }
+
+    if (cost.sh) {
+      const currentHearts = currencies.seasonCurrencies[seasonGuid].hearts ?? 0;
+      const newAmount = currentHearts + cost.sh * multiplier;
+      currencies.seasonCurrencies[seasonGuid].hearts = Math.max(0, newAmount);
+    }
+    user.markModified("plannerData.currencies.seasonCurrencies");
+  }
+
+  // Adjust event-specific currencies
+  if (eventGuid && cost.ec) {
+    currencies.eventCurrencies[eventGuid] ??= { tickets: 0 };
+    const newAmount = currencies.eventCurrencies[eventGuid].tickets + cost.ec * multiplier;
+    currencies.eventCurrencies[eventGuid].tickets = Math.max(0, newAmount);
+    user.markModified("plannerData.currencies.eventCurrencies");
+  }
+}
+
+/**
+ * Get the season/event context for a node/item to determine which currency pool to adjust
+ */
+function getCurrencyContext(node?: INode, item?: IItem): { seasonGuid?: string; eventGuid?: string } {
+  // Check if this is from a spirit tree with season or event context
+  let seasonGuid: string | undefined;
+  let eventGuid: string | undefined;
+
+  if (node?.spiritTree) {
+    const tree = node.spiritTree;
+    // Check for season context
+    if (tree.spirit?.season) {
+      seasonGuid = tree.spirit.season.guid;
+    }
+    // Check for event context
+    if (tree.eventInstanceSpirit?.eventInstance) {
+      eventGuid = tree.eventInstanceSpirit.eventInstance.guid;
+    }
+  }
+
+  if (item?.season) {
+    seasonGuid = item.season.guid;
+  }
+
+  return { seasonGuid, eventGuid };
+}
+
+// ============================================================================
+// Item and Node Toggle Functions
+// ============================================================================
+
 /**
  * Toggle an item's unlocked status for a user
  */
@@ -48,9 +143,15 @@ export function toggleItemUnlock(user: UserSchema, item: IItem, unlock: boolean)
 export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean) {
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
+  // Get currency context (season/event) for this node
+  const { seasonGuid, eventGuid } = getCurrencyContext(node, node.item);
+
   if (!unlock) {
-    // Lock node
     const guidsToRemove = [node.guid];
+
+    // only add currency if it was previously unlocked
+    if (node.item?.unlocked) adjustCurrencies(user, node, true, seasonGuid, eventGuid);
+
     node.unlocked = false;
 
     // Also lock the item if it exists
@@ -61,13 +162,16 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean)
 
     user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
   } else {
-    // Unlock node
+    // Unlock node - spend currency
     const guidsToAdd: string[] = [];
 
     const unlockNode = (n: INode) => {
       if (!n.item?.unlocked) {
         guidsToAdd.push(n.guid);
         node.unlocked = true;
+
+        // Spend currency for this node
+        adjustCurrencies(user, node, false, seasonGuid, eventGuid);
       }
       if (n.item) toggleItemUnlock(user, n.item, true);
 
@@ -123,29 +227,6 @@ export function toggleIAPStatus(user: UserSchema, iap: IIAP, gifted = false): "b
 }
 
 /**
- * Toggle an item list node's unlocked status for a user
- */
-export function toggleItemListNodeUnlock(user: UserSchema, node: IItemListNode) {
-  user.plannerData ??= PlannerDataHelper.createEmpty();
-
-  const isUnlocked = PlannerDataHelper.hasGuid(user.plannerData.unlocked, node.guid);
-
-  if (isUnlocked) {
-    // Lock node and item
-    const guidsToRemove = [node.guid, node.item.guid];
-    user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
-  } else {
-    // Unlock node and item
-    const guidsToAdd = [node.guid, node.item.guid];
-    user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
-  }
-
-  user.plannerData.date = new Date().toISOString();
-
-  return !isUnlocked;
-}
-
-/**
  * Toggle a winged light's unlocked status for a user
  */
 export function toggleWingedLightUnlock(user: UserSchema, wl: IWingedLight, unlock = false) {
@@ -187,7 +268,6 @@ export function toggleSeasonPass(user: UserSchema, seasonGuid: string, gifted = 
   user.plannerData ??= PlannerDataHelper.createEmpty();
 
   const hasSeasonPass = PlannerDataHelper.hasGuid(user.plannerData.seasonPasses, seasonGuid);
-  const isGifted = PlannerDataHelper.hasGuid(user.plannerData.gifted, seasonGuid);
 
   if (hasSeasonPass) {
     // Remove season pass
@@ -220,6 +300,10 @@ export function unlockAllTreeNodes(user: UserSchema, nodes: INode[]) {
 
   const guidsToAdd: string[] = [];
 
+  // Get currency context from the first node (all nodes in tree should have same context)
+  const firstNode = nodes[0];
+  const { seasonGuid, eventGuid } = firstNode ? getCurrencyContext(firstNode, firstNode.item) : {};
+
   nodes.forEach((node) => {
     if (node.item?.unlocked) return;
     guidsToAdd.push(node.guid);
@@ -227,6 +311,9 @@ export function unlockAllTreeNodes(user: UserSchema, nodes: INode[]) {
       guidsToAdd.push(node.item.guid);
     }
     node.hiddenItems?.forEach((item) => guidsToAdd.push(item.guid));
+
+    // Spend currency for this node
+    adjustCurrencies(user, node, false, seasonGuid, eventGuid);
   });
 
   user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
@@ -241,10 +328,16 @@ export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
 
   const guidsToRemove: string[] = [];
 
+  // Get currency context from the first node (all nodes in tree should have same context)
+  const firstNode = nodes[0];
+  const { seasonGuid, eventGuid } = firstNode ? getCurrencyContext(firstNode, firstNode.item) : {};
+
   nodes.forEach((node) => {
     guidsToRemove.push(node.guid);
     if (node.item) {
       guidsToRemove.push(node.item.guid);
+
+      if (node.item.unlocked) adjustCurrencies(user, node, true, seasonGuid, eventGuid);
     }
     node.hiddenItems?.forEach((item) => guidsToRemove.push(item.guid));
   });
@@ -264,12 +357,15 @@ export function modifyNestingRotationItems(user: UserSchema, item: IRotationItem
   const costType = getCost(item)!;
   if (type === "add") {
     itemState.q += 1;
+    adjustCurrencies(user, item, false);
     user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, item.guid);
   } else {
     itemState.q -= 1;
     if (itemState.q <= 0) {
       user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, item.guid);
     }
+    // do not keep adding if it somehow goes into negatives
+    if (itemState.q >= 0) adjustCurrencies(user, item, true);
   }
 
   user.plannerData.keys["nesting-workshop"] ??= { unlocked: {} };
@@ -281,7 +377,6 @@ export function modifyNestingRotationItems(user: UserSchema, item: IRotationItem
   } else {
     user.plannerData.keys["nesting-workshop"].unlocked[item.guid] = itemState;
   }
-  console.log(itemState);
 
   user.plannerData.date = new Date().toISOString();
   user.markModified("plannerData.keys");

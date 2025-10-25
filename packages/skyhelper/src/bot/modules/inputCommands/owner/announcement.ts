@@ -6,10 +6,12 @@ import {
   ComponentType,
   MessageFlags,
   type APIMessageComponentButtonInteraction,
+  type APIMessageTopLevelComponent,
   type APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
+import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { SendableChannels } from "@skyhelperbot/constants";
-import { textDisplay } from "@skyhelperbot/utils";
+import { mediaGallery, mediaGalleryItem, textDisplay } from "@skyhelperbot/utils";
 export default {
   ...ANNOUNCEMENT_DATA,
   async messageRun({ message, client }) {
@@ -17,16 +19,16 @@ export default {
       content: "Please send the text you want to announce through the modal.",
       components: [
         {
-          type: 1, // ActionRow
+          type: 1,
           components: [
             {
-              type: 2, // Button
+              type: 2,
               label: "Announcement Text",
               custom_id: client.utils.store.serialize(CustomId.Default, {
                 data: "announcement_text_button",
                 user: message.author.id,
               }),
-              style: 2, // Secondary
+              style: 2,
             },
           ],
         },
@@ -46,12 +48,12 @@ export default {
     const helper = new InteractionHelper(collected, client);
     await handleModal(helper);
   },
-  async interactionRun({ helper }) {
-    await handleModal(helper);
+  async interactionRun({ helper, options }) {
+    await handleModal(helper, options);
   },
 } satisfies Command;
 
-async function handleModal(helper: InteractionHelper) {
+async function handleModal(helper: InteractionHelper, options?: InteractionOptionResolver) {
   const aModal: APIModalInteractionResponseCallbackData = {
     custom_id: "announcement_text_modal" + helper.int.id,
     title: "Announcement Text",
@@ -115,18 +117,40 @@ async function handleModal(helper: InteractionHelper) {
     atchs.map(async (id) => {
       const ats = modalSubmit.data.resolved!.attachments![id]!;
       const arrayBuff = await fetch(ats.proxy_url).then((res) => res.arrayBuffer());
-      return { name: ats.filename, data: Buffer.from(arrayBuff) };
+      return { ...ats, arrayBuff };
     }),
   );
-
   const data = await helper.client.schemas.getAnnouncementGuilds();
-
-  for (const { annoucement_channel } of data) {
+  const guilds = options
+    ?.getString("guilds")
+    // eslint-disable-next-line
+    ?.split(",")
+    .map((s) => s.trim());
+  for (const { annoucement_channel, _id } of data) {
     const channel = helper.client.channels.get(annoucement_channel!);
     if (!channel) continue;
     if (!SendableChannels.includes(channel.type)) continue;
+    if (guilds && !guilds.includes(_id)) continue;
+    const components: APIMessageTopLevelComponent[] = [textDisplay(text)];
+    const galleryItems = [];
+    const fileItmes = [];
+    for (const file of files) {
+      if (file.content_type?.startsWith("image/") || file.content_type?.startsWith("video/")) {
+        galleryItems.push(mediaGalleryItem("attachment://" + file.filename));
+      } else {
+        fileItmes.push(`attachment://${file.filename}`);
+      }
+    }
+    if (galleryItems.length) components.push(mediaGallery(galleryItems));
+    if (fileItmes.length) {
+      components.push(...fileItmes.map((s) => ({ type: ComponentType.File as const, file: { url: `attachment://${s}` } })));
+    }
     await helper.client.api.channels
-      .createMessage(channel.id, { components: [textDisplay(text)], files, flags: MessageFlags.IsComponentsV2 })
+      .createMessage(channel.id, {
+        components,
+        files: files.map((f) => ({ name: f.filename, data: Buffer.from(f.arrayBuff) })),
+        flags: MessageFlags.IsComponentsV2,
+      })
       .catch(() => {});
 
     await new Promise((r) => setTimeout(r, 2_000));

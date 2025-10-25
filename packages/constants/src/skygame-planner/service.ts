@@ -49,7 +49,7 @@ export async function getSkyGamePlannerData(forceRefresh = false): Promise<Plann
 /** Get SkyGame Planner data enriched with user progress
  * @param userData The user's planner progress data
  */
-export async function getSkyGamePlannerDataWithForUser(userData: UserPlannerData) {
+export async function getSkyGamePlannerDataWithForUser(userData?: UserPlannerData) {
   const data = await getSkyGamePlannerData();
   return enrichDataWithUserProgress(data, userData);
 }

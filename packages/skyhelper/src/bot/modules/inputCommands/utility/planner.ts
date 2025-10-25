@@ -96,7 +96,13 @@ export default {
     switch (sub) {
       case "search": {
         const routehash = options.getString("query", true);
-        if (routehash === "unknown") {
+        let routes;
+        try {
+          routes = store.deserialize(routehash);
+        } catch {
+          routes = null;
+        }
+        if (!routes) {
           await helper.reply({
             content: "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",
             flags: MessageFlags.Ephemeral,
@@ -105,11 +111,10 @@ export default {
         }
 
         await helper.defer();
-        const dsl = store.deserialize(routehash);
-        if (dsl.id !== CustomId.PlannerTopLevelNav) throw new Error("Got Wrong Id");
+        if (routes.id !== CustomId.PlannerTopLevelNav) throw new Error("Got Wrong Id");
 
         const response = await handlePlannerNavigation(
-          { ...(dsl.data as Omit<NavigationState, "user">) },
+          { ...(routes.data as Omit<NavigationState, "user">) },
           helper.user,
           helper.client,
         );

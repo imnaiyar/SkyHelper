@@ -64,6 +64,7 @@ export class WingedLightsDisplay extends BasePlannerHandler {
                 /** Keep it video, bcz initial data can be empty, that way it can fall back to `video` which is default state */
                 this.viewbtn(
                   this.createCustomId({
+                    ...this.state,
                     it: wl.guid,
                     d: this.verifyRefWl(wl, "video") ? "minimize" : "video",
                   }),

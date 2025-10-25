@@ -314,12 +314,13 @@ function resolveReferences(data: PlannerAssetData): void {
   }
   /* ------------------------------ seasons ---------------------------- */
   // #region data.seasons
-  for (const season of data.seasons) {
+  for (const [i, season] of data.seasons.entries()) {
     fixUrl(season);
     season.spirits = resolveArray(season.spirits as any, data, (s) => (s.season = season));
     season.shops = resolveArray(season.shops as any, data, (shop) => (shop.season = season));
     season.includedTrees = resolveArray(season.includedTrees as any, data);
     season.emoji = (season_emojis as any)[season.shortName] || season.emoji;
+    season.number = i + 1;
   }
 
   /* -------------------------- travelingSpirits ----------------------- */
