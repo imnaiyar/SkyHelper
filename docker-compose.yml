@@ -9,7 +9,6 @@ services:
         - turbo_token
       args:
         TURBO_TEAM: ${TURBO_TEAM}
-        SENTRY_URL: ${SENTRY_URL}
         SENTRY_ORG: ${SENTRY_ORG}
         SENTRY_PROJECT: ${SENTRY_PROJECT}
         TARGET: skyhelper
@@ -49,7 +48,6 @@ services:
         - turbo_token
       args:
         TURBO_TEAM: ${TURBO_TEAM}
-        SENTRY_URL: ${SENTRY_URL}
         SENTRY_ORG: ${SENTRY_ORG}
         SENTRY_PROJECT: jobs
         TARGET: jobs
