@@ -1,0 +1,74 @@
+---
+title: Shards Tracking
+description: Never miss a shard with real-time tracking and location guides
+---
+
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
+# Shards Tracking
+
+Never miss collecting shards again! SkyHelper provides real-time shard information, helping you know exactly when and where shards appear in Sky.
+
+**Commands**: `/shards`, `/shards-calendar`
+
+### Track Current Shards
+
+**Command**: `/shards`
+
+Get instant information about today's shard - its type, location, and when it will appear next. The bot shows you:
+
+- **Current shard type** - Know if it's a Red Shard, Black Shard, or another type
+- **Location details** - Exactly where in Sky the shard appears (Thanks to Clement and io)
+- **Shards data** - By Gale
+- **Next occurrence time** - Countdown to when it shows up next
+- **Full day schedule** - All times the shard appears throughout the day
+
+  <Gallery
+    images={[
+      { url: "/screenshots/shards-main.png", alt: "Shards" },
+      { url: "/screenshots/shards-timeline.png", alt: "Shards Timeline" },
+    ]}
+  />
+
+<Callout type="info">
+  The bot automatically shows information for today's date, but you can check any date if you're planning ahead by providing the
+  `date` option. The date option accepts date in `YYYY-MM-DD` format and max input is `275760-09-12`!
+</Callout>
+
+### View Monthly Calendar
+
+**Command**: `/shards-calendar`
+
+See the entire month's shard schedule at a glance. The calendar shows:
+
+- All shards for each day of the month
+- Quick overview of shard types and locations
+- Easy navigation between months and years
+- Visual layout making it simple to plan your shard collection
+
+  <Gallery
+    images={[
+      { url: "/screenshots/shards-calendar.png", alt: "Shards Calendar" },
+      { url: "/screenshots/shards-calendar-month-year.png", alt: "Shards Calendar Change Month/Year" },
+    ]}
+  />
+
+The calendar is interactive - you can navigate to any month or year to see past or future shard schedules.
+
+<Callout type="info">You can navigate ±5 years from the current year using the calendar's year selector.</Callout>
+
+## Acknowlegements
+
+<Callout type="info">
+  Fun fact: this bot was originally created to retrieve shard information, inspired by [Shards
+  Tracker](https://sky-shards.pages.dev) by Plutoy. Over time, it gradually evolved to include many more features.
+</Callout>
+Thanks to these individuals for discovering shards patterns which made it possible for this bot to exist: - **Zhii** (zhiiran4275)
+- **Christian** (christiankingfu) - **Hucker** (hucker\_) - **Plutoy** (plutoy) - **Kion** (kion_anzu) - **LN** (ln.cookie) -
+**Gale** (galerowfylery) - **Stoat** (.stoat.)
+
+## Related Features
+
+- **[Reminders](/guide/reminders)** - Get notified before shard events happen
+- **[Live Updates](/guide/live-updates)** - Set up auto-updating shard displays in your server
+- **[In-Game Events](/guide/events)** - Track other Sky events alongside shards
