@@ -8,6 +8,7 @@ import {
   type APIMessageComponentButtonInteraction,
   type APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
+import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { SendableChannels } from "@skyhelperbot/constants";
 import { textDisplay } from "@skyhelperbot/utils";
 export default {
@@ -17,16 +18,16 @@ export default {
       content: "Please send the text you want to announce through the modal.",
       components: [
         {
-          type: 1, // ActionRow
+          type: 1,
           components: [
             {
-              type: 2, // Button
+              type: 2,
               label: "Announcement Text",
               custom_id: client.utils.store.serialize(CustomId.Default, {
                 data: "announcement_text_button",
                 user: message.author.id,
               }),
-              style: 2, // Secondary
+              style: 2,
             },
           ],
         },
@@ -46,12 +47,12 @@ export default {
     const helper = new InteractionHelper(collected, client);
     await handleModal(helper);
   },
-  async interactionRun({ helper }) {
-    await handleModal(helper);
+  async interactionRun({ helper, options }) {
+    await handleModal(helper, options);
   },
 } satisfies Command;
 
-async function handleModal(helper: InteractionHelper) {
+async function handleModal(helper: InteractionHelper, options?: InteractionOptionResolver) {
   const aModal: APIModalInteractionResponseCallbackData = {
     custom_id: "announcement_text_modal" + helper.int.id,
     title: "Announcement Text",
@@ -120,11 +121,16 @@ async function handleModal(helper: InteractionHelper) {
   );
 
   const data = await helper.client.schemas.getAnnouncementGuilds();
-
-  for (const { annoucement_channel } of data) {
+  const guilds = options
+    ?.getString("string")
+    // eslint-disable-next-line
+    ?.split(",")
+    .map((s) => s.trim());
+  for (const { annoucement_channel, _id } of data) {
     const channel = helper.client.channels.get(annoucement_channel!);
     if (!channel) continue;
     if (!SendableChannels.includes(channel.type)) continue;
+    if (!guilds?.includes(_id)) continue;
     await helper.client.api.channels
       .createMessage(channel.id, { components: [textDisplay(text)], files, flags: MessageFlags.IsComponentsV2 })
       .catch(() => {});

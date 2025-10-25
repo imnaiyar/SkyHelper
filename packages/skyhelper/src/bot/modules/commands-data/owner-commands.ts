@@ -12,6 +12,14 @@ export const ANNOUNCEMENT_DATA: Omit<Command, "interactionRun" | "messageRun"> =
   category: "Owner",
   userPermissions: ["Administrator"],
   data: {
+    options: [
+      {
+        name: "guilds",
+        description: "comma seprated guild ids where announcement should be sent",
+        type: ApplicationCommandOptionType.String,
+        required: false,
+      },
+    ],
     guilds: ["852141490105090059"],
   },
 };
