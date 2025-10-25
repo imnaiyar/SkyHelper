@@ -6,11 +6,12 @@ import {
   ComponentType,
   MessageFlags,
   type APIMessageComponentButtonInteraction,
+  type APIMessageTopLevelComponent,
   type APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { SendableChannels } from "@skyhelperbot/constants";
-import { textDisplay } from "@skyhelperbot/utils";
+import { mediaGallery, mediaGalleryItem, textDisplay } from "@skyhelperbot/utils";
 export default {
   ...ANNOUNCEMENT_DATA,
   async messageRun({ message, client }) {
@@ -116,10 +117,9 @@ async function handleModal(helper: InteractionHelper, options?: InteractionOptio
     atchs.map(async (id) => {
       const ats = modalSubmit.data.resolved!.attachments![id]!;
       const arrayBuff = await fetch(ats.proxy_url).then((res) => res.arrayBuffer());
-      return { name: ats.filename, data: Buffer.from(arrayBuff) };
+      return { ...ats, arrayBuff };
     }),
   );
-
   const data = await helper.client.schemas.getAnnouncementGuilds();
   const guilds = options
     ?.getString("guilds")
@@ -130,9 +130,27 @@ async function handleModal(helper: InteractionHelper, options?: InteractionOptio
     const channel = helper.client.channels.get(annoucement_channel!);
     if (!channel) continue;
     if (!SendableChannels.includes(channel.type)) continue;
-    if (!guilds?.includes(_id)) continue;
+    if (guilds && !guilds.includes(_id)) continue;
+    const components: APIMessageTopLevelComponent[] = [textDisplay(text)];
+    const galleryItems = [];
+    const fileItmes = [];
+    for (const file of files) {
+      if (file.content_type?.startsWith("image/") || file.content_type?.startsWith("video/")) {
+        galleryItems.push(mediaGalleryItem("attachment://" + file.filename));
+      } else {
+        fileItmes.push(`attachment://${file.filename}`);
+      }
+    }
+    if (galleryItems.length) components.push(mediaGallery(galleryItems));
+    if (fileItmes.length) {
+      components.push(...fileItmes.map((s) => ({ type: ComponentType.File as const, file: { url: `attachment://${s}` } })));
+    }
     await helper.client.api.channels
-      .createMessage(channel.id, { components: [textDisplay(text)], files, flags: MessageFlags.IsComponentsV2 })
+      .createMessage(channel.id, {
+        components,
+        files: files.map((f) => ({ name: f.filename, data: Buffer.from(f.arrayBuff) })),
+        flags: MessageFlags.IsComponentsV2,
+      })
       .catch(() => {});
 
     await new Promise((r) => setTimeout(r, 2_000));
