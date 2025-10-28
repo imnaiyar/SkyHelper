@@ -381,6 +381,7 @@
             "description": "The game to view the leaderboard for",
             "choices": {
               "hangman": "Hangman",
+              "scrambled": "Scrambled",
               "guessing": "Guessing"
             }
           },
