@@ -25,7 +25,7 @@ const handler: Event<GatewayDispatchEvents.WebhooksUpdate> = async (client, { da
   for (let [key, entry] of targets) {
     if (entry?.webhook?.id && entry.webhook.channelId === channel_id && !existingWebhookIds.has(entry.webhook.id)) {
       if ("messageId" in entry) entry = { active: false, messageId: "null", webhook: { id: null, token: null, channelId: null } };
-      else guildSettings.reminders.events[key as (typeof REMINDERS_KEY)[number]] = null;
+      else guildSettings.reminders.events[key] = null;
       disabledEvents.push(key);
     }
   }

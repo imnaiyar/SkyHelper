@@ -1,11 +1,9 @@
 import { setTimeout as wait } from "timers/promises";
-import { emojis } from "@skyhelperbot/constants";
 import { getSkyGamePlannerData } from "@skyhelperbot/constants/skygame-planner";
 import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
 import {
   AllowedMentionsTypes,
   ComponentType,
-  MessageFlags,
   type APITextChannel,
   type APIUser,
   type RESTPostAPIChannelMessageJSONBody,
@@ -13,7 +11,6 @@ import {
 import type { SkyHelper } from "@/structures";
 import { updateUserGameStats } from "../utils.js";
 import { InteractionCollector } from "./Collector.js";
-import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { CustomId, store } from "../customId-store.js";
 import { DateTime } from "luxon";
 
@@ -25,7 +22,7 @@ declare global {
 }
 
 // prettier-ignore
-Array.prototype.random = function () {
+Array.prototype.random = function() {
   return this[Math.floor(Math.random() * this.length)];
 };
 
@@ -80,6 +77,7 @@ export class GuessingGame {
   private questions: Question[] = [];
 
   /** Planner data */
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   private plannerData: PlannerAssetData | null = null;
 
   /** Time limit per question in milliseconds */
@@ -225,7 +223,7 @@ export class GuessingGame {
     if (seasonsWithDates.length === 0) return null;
 
     const season = seasonsWithDates.random();
-    const startDate = DateTime.fromISO(season.date!);
+    const startDate = DateTime.fromISO(season.date);
     const correctAnswer = startDate.toFormat("MMMM yyyy");
 
     // Generate wrong dates (nearby months/years)
@@ -340,6 +338,7 @@ export class GuessingGame {
     await this._sendResponse(this._getQuestionMessage(question));
 
     const res = await this._getCollectorResponse();
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this._stopped) return;
 
     if (res === "Timeout") {
@@ -376,7 +375,7 @@ export class GuessingGame {
   }
 
   private _getQuestionMessage(question: Question): RESTPostAPIChannelMessageJSONBody {
-    const embed = {
+    const embed: any = {
       title: `Question ${this.currentQuestionIndex + 1}/${this.totalQuestions}`,
       description: question.question,
       color: 0x00aff4,
@@ -509,7 +508,6 @@ export class GuessingGame {
 
     // Update player stats
     for (const player of this.players) {
-      const stats = this.playerStats.get(player.id)!;
       const isWinner = winner?.id === player.id;
       await updateUserGameStats(player, "guessing", this.mode === "single" ? "singleMode" : "doubleMode", isWinner);
     }

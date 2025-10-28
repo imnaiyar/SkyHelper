@@ -91,7 +91,7 @@ const isSeasonal = (data: SpiritsData) => "ts" in data;
 export const getTSResponse = (ts: TSValue, t: ReturnType<typeof import("./getTranslator").getTranslator>) => {
   const visitingDates = `<t:${ts.nextVisit.toUnixInteger()}:D> - <t:${ts.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger()}:D>`;
   if (ts.value) {
-    const spirit: SpiritsData = spiritsData[ts.value]!;
+    const spirit: SpiritsData = spiritsData[ts.value];
     if (!isSeasonal(spirit)) return { content: t("commands:TRAVELING-SPIRIT.RESPONSES.NO_DATA") };
     const emote = spirit.expression?.icon ?? "<:spiritIcon:1206501060303130664>";
     const description = ts.visiting

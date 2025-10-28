@@ -36,8 +36,8 @@ export async function handleSeasional(helper: InteractionHelper, options: Intera
 async function handleQuests(helper: InteractionHelper, season: SeasonData) {
   const quests = season.quests;
   const now = DateTime.now().setZone(helper.client.timezone).startOf("day");
-  const start = DateTime.fromFormat(season.from[0]!, "dd-MM-yyyy", { zone: helper.client.timezone }).startOf("day");
-  const end = DateTime.fromFormat(season.from[1]!, "dd-MM-yyyy", { zone: helper.client.timezone }).endOf("day");
+  const start = DateTime.fromFormat(season.from[0], "dd-MM-yyyy", { zone: helper.client.timezone }).startOf("day");
+  const end = DateTime.fromFormat(season.from[1], "dd-MM-yyyy", { zone: helper.client.timezone }).endOf("day");
   const isActive = now >= start && now <= end;
 
   const t = helper.t;

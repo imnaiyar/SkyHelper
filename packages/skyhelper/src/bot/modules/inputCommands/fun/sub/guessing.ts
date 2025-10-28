@@ -1,8 +1,8 @@
 import { GuessingGame } from "@/utils/classes/GuessingGame";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import { ComponentType, MessageFlags, type APIActionRowComponent, type APIComponentInMessageActionRow } from "@discordjs/core";
-import { container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
+import { ComponentType, MessageFlags } from "@discordjs/core";
+import { container, section, textDisplay } from "@skyhelperbot/utils";
 import { CustomId, store } from "@/utils/customId-store";
 
 export async function handleGuessing(helper: InteractionHelper, options: InteractionOptionResolver) {
