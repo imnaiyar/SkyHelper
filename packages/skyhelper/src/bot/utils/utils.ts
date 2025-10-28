@@ -3,7 +3,7 @@ import type { APIUser } from "@discordjs/core";
 
 export async function updateUserGameStats(
   user: APIUser,
-  game: "hangman" | "scrambled",
+  game: "hangman" | "scrambled" | "guessing",
   mode: "singleMode" | "doubleMode",
   won?: boolean,
 ) {

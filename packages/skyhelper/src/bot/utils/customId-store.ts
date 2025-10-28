@@ -13,6 +13,7 @@ export enum CustomId {
   ShardsTimeline,
   SkyGamePlaySingle,
   SkyGameEndGame,
+  SkyGameStart,
   ShardsTimelineLeft,
   ShardsTimelineRight,
   TimesDetailsRow,
@@ -48,6 +49,7 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.ShardsTimeline).string("date").nullable("user", t.string))
   .add(new Schema(CustomId.SkyGamePlaySingle).nullable("user", t.string))
   .add(new Schema(CustomId.SkyGameEndGame).nullable("user", t.string))
+  .add(new Schema(CustomId.SkyGameStart).string("game").nullable("user", t.string))
   .add(new Schema(CustomId.ShardsTimelineLeft).nullable("user", t.string))
   .add(new Schema(CustomId.ShardsTimelineRight).nullable("user", t.string))
   .add(new Schema(CustomId.TimesDetailsRow).nullable("user", t.string))

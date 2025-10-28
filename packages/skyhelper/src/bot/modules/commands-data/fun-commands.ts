@@ -76,6 +76,14 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         options: SKYGAME_MODE_OPTION,
       },
       {
+        name: "guessing",
+        description: "Test your knowledge about Sky: Children of the Light",
+        name_localizations: "commands:SKYGAME.SUB.GUESSING.name",
+        description_localizations: "commands:SKYGAME.SUB.GUESSING.description",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: SKYGAME_MODE_OPTION,
+      },
+      {
         name: "leaderboard",
         name_localizations: "commands:SKYGAME.SUB.LEADERBOARD.name",
         description_localizations: "commands:SKYGAME.SUB.LEADERBOARD.description",
@@ -98,6 +106,11 @@ export const SKY_GAME_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
                 name: "Scrambled",
                 value: "scrambled",
                 name_localizations: "commands:SKYGAME.SUB.SCRAMBLE.name",
+              },
+              {
+                name: "Guessing",
+                value: "guessing",
+                name_localizations: "commands:SKYGAME.SUB.GUESSING.name",
               },
             ],
             required: true,
