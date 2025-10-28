@@ -368,6 +368,10 @@
         "name": "scrambled",
         "description": "Unscramble the word to win"
       },
+      "GUESSING": {
+        "name": "guessing",
+        "description": "Test your knowledge about Sky: Children of the Light"
+      },
       "LEADERBOARD": {
         "name": "leaderboard",
         "description": "View the leaderboard for the skygames",
@@ -376,7 +380,8 @@
             "name": "game",
             "description": "The game to view the leaderboard for",
             "choices": {
-              "hangman": "Hangman"
+              "hangman": "Hangman",
+              "guessing": "Guessing"
             }
           },
           "leaderboard-type": {
