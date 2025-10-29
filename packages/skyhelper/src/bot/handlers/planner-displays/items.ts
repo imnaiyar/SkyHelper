@@ -196,7 +196,7 @@ export class ItemsDisplay extends BasePlannerHandler {
         ? mediaGallery(
             [item.dye?.previewUrl, item.dye?.infoUrl]
               .filter(Boolean)
-              .map((url) => mediaGalleryItem(this.planner.resolvePlannerUrl(url!), { description: item.name })),
+              .map((url) => mediaGalleryItem(this.planner.resolvePlannerUrl(url), { description: item.name })),
           )
         : null,
     ]
