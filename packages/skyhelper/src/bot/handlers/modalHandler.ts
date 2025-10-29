@@ -126,12 +126,14 @@ export async function handleCurrencyModifyModal(helper: InteractionHelper) {
       candles: seasonData.values[0],
       hearts: seasonData.values[1],
     };
+    settings.markModified("plannerData.currencies.seasonCurrencies");
   }
 
   if (eventData && !Number.isNaN(eventData.tickets)) {
     plannerData.currencies.eventCurrencies[eventData.guid] = {
       tickets: eventData.tickets,
     };
+    settings.markModified("plannerData.currencies.eventCurrencies");
   }
   await settings.save();
 
