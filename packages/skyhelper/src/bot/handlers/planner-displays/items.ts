@@ -1,10 +1,11 @@
-import { getNodeSpirit, ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
+import { getNodeSpirit, ItemType, type IItem, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
 import type { APIComponentInContainer } from "discord-api-types/v10";
-import { DisplayTabs, FilterType } from "@/types/planner";
+import { DisplayTabs, FilterType, PlannerAction } from "@/types/planner";
 import { emojis } from "@skyhelperbot/constants";
+import { createActionId } from "../planner-utils.js";
 
 export class ItemsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
@@ -104,32 +105,38 @@ export class ItemsDisplay extends BasePlannerHandler {
       page: this.state.p ?? 1,
       perpage: 7,
       user: this.state.user,
-      itemCallback: (item) => [
-        section(
-          button({
-            label: "View",
-            custom_id: this.createCustomId({
-              it: item.guid,
-              /** filter can be too long sometimes to be passed, bummer */
-              b: { t: this.state.t, f: "", p: 1 },
+      itemCallback: (item) => {
+        const isFavorited = PlannerDataHelper.hasGuid(this.settings.plannerData?.favourites ?? "", item.guid);
+        return [
+          section(
+            button({
+              label: "View",
+              custom_id: this.createCustomId({
+                it: item.guid,
+                /** filter can be too long sometimes to be passed, bummer */
+                b: { t: this.state.t, f: "", p: 1 },
+              }),
+              style: 1,
             }),
-            style: 1,
-          }),
-          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}` +
-            (item.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : ""),
-          [
-            item.group,
-            item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
-            item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
-            item.season?.shortName,
-          ]
-            .filter((s) => !!s)
-            .join(" \u2022 "),
-        ),
-      ],
+            `## ${this.formatemoji(item.emoji, item.name)} ${item.name}` +
+              (item.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : "") +
+              (isFavorited ? ` ⭐` : ""),
+            [
+              item.group,
+              item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
+              item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
+              item.season?.shortName,
+            ]
+              .filter((s) => !!s)
+              .join(" \u2022 "),
+          ),
+        ];
+      },
     });
   }
   itemDisplay(item: IItem) {
+    const isFavorited = PlannerDataHelper.hasGuid(this.settings.plannerData?.favourites ?? "", item.guid);
+
     return [
       section(
         this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })) : this.homebtn(), // fallback to item home
@@ -142,6 +149,7 @@ export class ItemsDisplay extends BasePlannerHandler {
           item.group === "Limited" ? "- This is a limited item and may not return in the future." : "",
           item.group === "SeasonPass" ? "- This item was offered with season pass." : "",
           item.unlocked ? `**Unlocked** ${this.formatemoji(emojis.checkmark)}` : "",
+          isFavorited ? `⭐ **Favorited**` : "",
         ]
           .filter(Boolean)
           .join("\n"),
@@ -156,11 +164,14 @@ export class ItemsDisplay extends BasePlannerHandler {
           });
         })(),
         button({
-          custom_id: this.createCustomId({}),
-          label: "Add to Wishlist",
-          style: 2,
+          custom_id: createActionId({
+            action: PlannerAction.ToggleFavorite,
+            guid: item.guid,
+            navState: this.state,
+          }),
+          label: isFavorited ? "Remove from Wishlist" : "Add to Wishlist",
+          style: isFavorited ? 4 : 2,
           emoji: { name: "⭐" },
-          disabled: true,
         }),
       ),
       separator(true, 1),

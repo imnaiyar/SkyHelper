@@ -11,6 +11,8 @@ import {
   type IItemListNode,
   type IReturningSpirits,
   type ITravelingSpirit,
+  type IItem,
+  PlannerDataHelper,
 } from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { DisplayTabs } from "@/types/planner";
@@ -30,6 +32,9 @@ export class HomeDisplay extends BasePlannerHandler {
       this.settings,
       this.client,
     );
+
+    const availableFavorites = this.getAvailableFavoritedItems(activeSeasons, activeEvents, returningSpirits, travelingSpirit);
+
     const components = [
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
@@ -43,6 +48,7 @@ export class HomeDisplay extends BasePlannerHandler {
           `# Currencies:`,
           formatCurrencies(this.data, this.settings.plannerData ?? this.planner.PlannerDataHelper.createEmpty()),
         ),
+        ...(availableFavorites.length > 0 ? this.createFavoritesReminder(availableFavorites) : []),
         ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
         ...(travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : []),
         ...(returningSpirits.length > 0 ? this.createReturningSpiritsSections(returningSpirits) : []),
@@ -159,6 +165,129 @@ export class HomeDisplay extends BasePlannerHandler {
         `**${event.event.name}** (${event.startDate ? "Starts" : "Ends"} ${this.formatDateTimestamp(event.instance.endDate, "R")})`,
       ),
       event.event.imageUrl ? section(thumbnail(event.event.imageUrl), ...subtitles) : textDisplay(...subtitles),
+    ];
+  }
+
+  /**
+   * Get list of favorited items that are currently available through various sources
+   */
+  private getAvailableFavoritedItems(
+    activeSeasons: any,
+    activeEvents: any,
+    returningSpirits: IReturningSpirits[],
+    travelingSpirit: ITravelingSpirit | null,
+  ): Array<{ item: IItem; source: string; sourceDetails: string }> {
+    const favoritesString = this.settings.plannerData?.favourites ?? "";
+    if (!favoritesString) return [];
+
+    const availableItems: Array<{ item: IItem; source: string; sourceDetails: string }> = [];
+
+    // Get all favorited item GUIDs
+    const favoritedGuids = favoritesString.split(",").filter(Boolean);
+
+    // Check each favorited item
+    for (const guid of favoritedGuids) {
+      const item = this.data.items.find((i) => i.guid === guid);
+      if (!item || item.unlocked) continue; // Skip if not found or already unlocked
+
+      // Check if available via Traveling Spirit
+      if (travelingSpirit) {
+        const tsItems = travelingSpirit.tree.node?.items ?? [];
+        if (tsItems.some((i) => i.guid === guid)) {
+          availableItems.push({
+            item,
+            source: "Traveling Spirit",
+            sourceDetails: travelingSpirit.spirit.name,
+          });
+          continue;
+        }
+      }
+
+      // Check if available via Returning Spirits
+      for (const rs of returningSpirits) {
+        const rsItems = rs.spirits.flatMap((s) => s.tree?.node?.items ?? []);
+        if (rsItems.some((i) => i.guid === guid)) {
+          availableItems.push({
+            item,
+            source: "Returning Spirits",
+            sourceDetails: rs.name ?? "Special Visit",
+          });
+          break;
+        }
+      }
+
+      // Check if available via current Season
+      if (activeSeasons) {
+        const seasonItems = activeSeasons.spirits.flatMap((s: any) => s.tree?.node?.items ?? []);
+        if (seasonItems.some((i: any) => i.guid === guid)) {
+          availableItems.push({
+            item,
+            source: "Current Season",
+            sourceDetails: activeSeasons.name,
+          });
+          continue;
+        }
+      }
+
+      // Check if available via Events
+      for (const eventData of activeEvents.current) {
+        const eventItems = [
+          ...eventData.instance.spirits.flatMap((s: any) => s.tree?.node?.items ?? []),
+          ...eventData.instance.shops.flatMap((sh: any) => sh.itemList?.items.map((ln: any) => ln.item) ?? []),
+        ];
+        if (eventItems.some((i: any) => i?.guid === guid)) {
+          availableItems.push({
+            item,
+            source: "Event",
+            sourceDetails: eventData.event.name,
+          });
+          break;
+        }
+      }
+
+      // Check if available in permanent shops
+      const shopItems = this.data.shops.flatMap((shop) => shop.itemList?.items.map((ln) => ln.item) ?? []);
+      if (shopItems.some((i) => i?.guid === guid)) {
+        availableItems.push({
+          item,
+          source: "Shop",
+          sourceDetails: "Permanent Shop",
+        });
+      }
+    }
+
+    return availableItems;
+  }
+
+  /**
+   * Create a reminder section showing favorited items that are currently available
+   */
+  private createFavoritesReminder(
+    availableItems: Array<{ item: IItem; source: string; sourceDetails: string }>,
+  ): APIComponentInContainer[] {
+    const itemsToShow = availableItems.slice(0, 5); // Show max 5 items to avoid clutter
+
+    return [
+      textDisplay(`### ⭐ Favorited Items Available Now! (${availableItems.length})`),
+      ...itemsToShow.map((entry) =>
+        section(
+          button({
+            label: "View Item",
+            custom_id: this.createCustomId({ t: DisplayTabs.Items, it: entry.item.guid }),
+            style: 1,
+          }),
+          `**${this.formatemoji(entry.item.emoji, entry.item.name)} ${entry.item.name}**`,
+          `Available via ${entry.source}: ${entry.sourceDetails}`,
+        ),
+      ),
+      ...(availableItems.length > 5
+        ? [
+            textDisplay(
+              `-# +${availableItems.length - 5} more favorited item${availableItems.length - 5 > 1 ? "s" : ""} available`,
+            ),
+          ]
+        : []),
+      separator(),
     ];
   }
 }
