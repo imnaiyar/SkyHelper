@@ -82,6 +82,15 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
       spirit.treeRevisions?.length
         ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t }))
         : null,
+      spirit.events?.length
+        ? spirit.events.map((s) => ({
+            name:
+              (s.eventInstance?.name ?? s.eventInstance?.event.name ?? "Event Spirit") +
+              " " +
+              (s.eventInstance?.date ? `(${this.planner.resolveToLuxon(s.eventInstance.date).year.toString()})` : ""),
+            tree: s.tree,
+          }))
+        : null,
       ...(spirit.returns?.map((r) => ({ name: r.return.name ?? "Special Visit", tree: r.tree, rs: r.guid })) ?? []),
       ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree, ts: t.guid })) ?? []),
     ]
