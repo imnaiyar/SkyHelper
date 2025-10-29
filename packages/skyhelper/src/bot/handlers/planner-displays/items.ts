@@ -149,7 +149,9 @@ export class ItemsDisplay extends BasePlannerHandler {
           item.group === "Limited" ? "- This is a limited item and may not return in the future." : "",
           item.group === "SeasonPass" ? "- This item was offered with season pass." : "",
           item.unlocked ? `**Unlocked** ${this.formatemoji(emojis.checkmark)}` : "",
-          isFavorited ? `⭐ **Favorited**` : "",
+          isFavorited
+            ? `⭐ **Favorited**${!item.unlocked && !item.autoUnlocked ? ": We will remind you if this item is available for purchase again!" : ""}`
+            : "",
         ]
           .filter(Boolean)
           .join("\n"),
@@ -196,7 +198,7 @@ export class ItemsDisplay extends BasePlannerHandler {
         ? mediaGallery(
             [item.dye?.previewUrl, item.dye?.infoUrl]
               .filter(Boolean)
-              .map((url) => mediaGalleryItem(this.planner.resolvePlannerUrl(url), { description: item.name })),
+              .map((url) => mediaGalleryItem(this.planner.resolvePlannerUrl(url!), { description: item.name })),
           )
         : null,
     ]

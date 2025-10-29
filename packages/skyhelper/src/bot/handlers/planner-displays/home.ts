@@ -12,6 +12,9 @@ import {
   type IReturningSpirits,
   type ITravelingSpirit,
   type IItem,
+  allTreeItems,
+  type ISeason,
+  type IShop,
 } from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { DisplayTabs } from "@/types/planner";
@@ -19,7 +22,7 @@ import { CustomId, store } from "@/utils/customId-store";
 
 export class HomeDisplay extends BasePlannerHandler {
   override handle(): ResponseData {
-    const activeSeasons = this.planner.getCurrentSeason(this.data);
+    const activeSeason = this.planner.getCurrentSeason(this.data);
     const activeEvents = this.planner.getEvents(this.data);
     const returningSpirits = this.planner.getCurrentReturningSpirits(this.data);
     const travelingSpirit = this.planner.getCurrentTravelingSpirit(this.data);
@@ -32,7 +35,12 @@ export class HomeDisplay extends BasePlannerHandler {
       this.client,
     );
 
-    const availableFavorites = this.getAvailableFavoritedItems(activeSeasons, activeEvents, returningSpirits, travelingSpirit);
+    const availableFavorites = this.getAvailableFavoritedItems(
+      activeSeason,
+      activeEvents.current.map((e) => e.instance),
+      returningSpirits,
+      travelingSpirit,
+    );
 
     const components = [
       container(
@@ -48,7 +56,7 @@ export class HomeDisplay extends BasePlannerHandler {
           formatCurrencies(this.data, this.settings.plannerData ?? this.planner.PlannerDataHelper.createEmpty()),
         ),
         ...(availableFavorites.length > 0 ? this.createFavoritesReminder(availableFavorites) : []),
-        ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
+        ...(activeSeason ? s_display.getSeasonInListDisplay(activeSeason) : []),
         ...(travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : []),
         ...(returningSpirits.length > 0 ? this.createReturningSpiritsSections(returningSpirits) : []),
         ...(activeEvents.current.length || activeEvents.upcoming.length ? this.createEventsSection(activeEvents) : []),
@@ -171,10 +179,10 @@ export class HomeDisplay extends BasePlannerHandler {
    * Get list of favorited items that are currently available through various sources
    */
   private getAvailableFavoritedItems(
-    activeSeasons: any,
-    activeEvents: any,
-    returningSpirits: IReturningSpirits[],
-    travelingSpirit: ITravelingSpirit | null,
+    activeSeason?: ISeason,
+    activeEventInstances?: IEventInstance[],
+    returningSpirits?: IReturningSpirits[],
+    travelingSpirit?: ITravelingSpirit | null,
   ): Array<{ item: IItem; source: string; sourceDetails: string }> {
     const favoritesString = this.settings.plannerData?.favourites ?? "";
     if (!favoritesString) return [];
@@ -183,16 +191,36 @@ export class HomeDisplay extends BasePlannerHandler {
 
     // Get all favorited item GUIDs
     const favoritedGuids = favoritesString.split(",").filter(Boolean);
+    const getShopItem = (shop: IShop, guid: string, source: string) => {
+      const spItem = shop.itemList?.items.find((item) => item.item.guid === guid)?.item;
+      if (spItem) availableItems.push({ item: spItem, source, sourceDetails: shop.name ?? shop.spirit?.name ?? "Shop" });
 
+      const iap = shop.iaps?.find((ip) => ip.items?.some((item) => item.guid === guid));
+      if (iap) {
+        const item = iap.items!.find((it) => it.guid === guid)!;
+        availableItems.push({
+          item,
+          source,
+          sourceDetails: `${iap.name ?? "IAP"} (${iap.returning ? `Returning IAP` : "New IAP"})`,
+        });
+      }
+      if (shop.spirit?.tree) {
+        const items = allTreeItems(shop.spirit.tree);
+        const item = items.find((it) => it.guid === guid);
+        if (item) {
+          availableItems.push({ item, source, sourceDetails: `From: ${shop.spirit.name}` });
+        }
+      }
+    };
     // Check each favorited item
     for (const guid of favoritedGuids) {
-      const item = this.data.items.find((i) => i.guid === guid);
+      const item = this.data.guidMap.get(guid) as IItem | undefined;
       if (!item || item.unlocked) continue; // Skip if not found or already unlocked
 
       // Check if available via Traveling Spirit
       if (travelingSpirit) {
-        const tsItems = travelingSpirit.tree.node?.items ?? [];
-        if (tsItems.some((i) => i.guid === guid)) {
+        const hasItem = allTreeItems(travelingSpirit.tree).some((i) => i.guid === guid);
+        if (hasItem) {
           availableItems.push({
             item,
             source: "Traveling Spirit",
@@ -203,8 +231,8 @@ export class HomeDisplay extends BasePlannerHandler {
       }
 
       // Check if available via Returning Spirits
-      for (const rs of returningSpirits) {
-        const rsItems = rs.spirits.flatMap((s) => s.tree?.node?.items ?? []);
+      for (const rs of returningSpirits ?? []) {
+        const rsItems = rs.spirits.flatMap((s) => allTreeItems(s.tree));
         if (rsItems.some((i) => i.guid === guid)) {
           availableItems.push({
             item,
@@ -216,42 +244,35 @@ export class HomeDisplay extends BasePlannerHandler {
       }
 
       // Check if available via current Season
-      if (activeSeasons) {
-        const seasonItems = activeSeasons.spirits.flatMap((s: any) => s.tree?.node?.items ?? []);
+      if (activeSeason) {
+        const seasonItems = activeSeason.spirits.flatMap((sp) => (sp.tree ? allTreeItems(sp.tree) : []));
         if (seasonItems.some((i: any) => i.guid === guid)) {
           availableItems.push({
             item,
             source: "Current Season",
-            sourceDetails: activeSeasons.name,
+            sourceDetails: activeSeason.name,
           });
           continue;
+        }
+        if (activeSeason.shops) {
+          // eslint-disable-next-line
+          activeSeason.shops.forEach((sh) => getShopItem(sh, guid, `${activeSeason.name} Shop`));
         }
       }
 
       // Check if available via Events
-      for (const eventData of activeEvents.current) {
-        const eventItems = [
-          ...eventData.instance.spirits.flatMap((s: any) => s.tree?.node?.items ?? []),
-          ...eventData.instance.shops.flatMap((sh: any) => sh.itemList?.items.map((ln: any) => ln.item) ?? []),
-        ];
-        if (eventItems.some((i: any) => i?.guid === guid)) {
+      for (const instance of activeEventInstances ?? []) {
+        const eventItems = instance.spirits.flatMap((s) => allTreeItems(s.tree));
+        if (eventItems.some((i) => i.guid === guid)) {
           availableItems.push({
             item,
             source: "Event",
-            sourceDetails: eventData.event.name,
+            sourceDetails: instance.event.name,
           });
           break;
         }
-      }
-
-      // Check if available in permanent shops
-      const shopItems = this.data.shops.flatMap((shop) => shop.itemList?.items.map((ln) => ln.item) ?? []);
-      if (shopItems.some((i) => i?.guid === guid)) {
-        availableItems.push({
-          item,
-          source: "Shop",
-          sourceDetails: "Permanent Shop",
-        });
+        // eslint-disable-next-line
+        instance.shops.forEach((sh) => getShopItem(sh, guid, `${instance.name ?? instance.event.name} Shop`));
       }
     }
 

@@ -9,6 +9,7 @@ import type {
   IEvent,
   IEventInstance,
   IEventInstanceSpirit,
+  IItem,
   INode,
   INodeTier,
   ISpirit,
@@ -856,4 +857,10 @@ export function calculateCurrencyBreakdown(data: PlannerAssetData): import("./in
  */
 export function isEmptyCost(cost: ICost): boolean {
   return !cost.c && !cost.h && !cost.sc && !cost.sh && !cost.ac && !cost.ec;
+}
+
+/** Get all the items that a spirit tree holds */
+export function allTreeItems(tree: ISpiritTree): IItem[] {
+  const nodes = getAllNodes(tree);
+  return nodes.flatMap((s) => [s.item, ...(s.hiddenItems ?? [])].filter((k) => !!k));
 }
