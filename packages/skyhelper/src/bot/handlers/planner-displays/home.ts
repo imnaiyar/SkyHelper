@@ -11,14 +11,18 @@ import {
   type IItemListNode,
   type IReturningSpirits,
   type ITravelingSpirit,
+  type IItem,
+  type ICost,
+  formatGroupedCurrencies,
 } from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { DisplayTabs } from "@/types/planner";
 import { CustomId, store } from "@/utils/customId-store";
+import { FavouriteDisplay } from "./favourites.js";
 
 export class HomeDisplay extends BasePlannerHandler {
   override handle(): ResponseData {
-    const activeSeasons = this.planner.getCurrentSeason(this.data);
+    const activeSeason = this.planner.getCurrentSeason(this.data);
     const activeEvents = this.planner.getEvents(this.data);
     const returningSpirits = this.planner.getCurrentReturningSpirits(this.data);
     const travelingSpirit = this.planner.getCurrentTravelingSpirit(this.data);
@@ -30,6 +34,9 @@ export class HomeDisplay extends BasePlannerHandler {
       this.settings,
       this.client,
     );
+
+    const availableFavorites = FavouriteDisplay.getAvailableFavoritedItems(this.data, this.settings);
+
     const components = [
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
@@ -43,10 +50,19 @@ export class HomeDisplay extends BasePlannerHandler {
           `# Currencies:`,
           formatCurrencies(this.data, this.settings.plannerData ?? this.planner.PlannerDataHelper.createEmpty()),
         ),
-        ...(activeSeasons ? s_display.getSeasonInListDisplay(activeSeasons) : []),
-        ...(travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : []),
-        ...(returningSpirits.length > 0 ? this.createReturningSpiritsSections(returningSpirits) : []),
-        ...(activeEvents.current.length || activeEvents.upcoming.length ? this.createEventsSection(activeEvents) : []),
+        separator(),
+        ...this.displayPaginatedList({
+          items: [
+            availableFavorites.length > 0 ? this.createFavoritesReminder(availableFavorites) : [],
+            activeSeason ? s_display.getSeasonInListDisplay(activeSeason) : [],
+            travelingSpirit ? this.createTravelingSpiritSection(travelingSpirit) : [],
+            returningSpirits.length > 0 ? this.createReturningSpiritsSections(returningSpirits) : [],
+            activeEvents.current.length || activeEvents.upcoming.length ? this.createEventsSection(activeEvents) : [],
+          ].filter((s) => s.length > 0),
+          itemCallback: (i) => i,
+          perpage: 3,
+        }),
+        separator(),
       ),
     ];
 
@@ -76,8 +92,8 @@ export class HomeDisplay extends BasePlannerHandler {
         `### Traveling Spirit`,
         `**${t.spirit.emoji ? `<:_:${t.spirit.emoji}> ` : ""}${t.spirit.name}**`,
         `Available until ${this.formatDateTimestamp(t.endDate ?? this.planner.resolveToLuxon(t.date).plus({ days: 3 }))} (${this.formatDateTimestamp(t.endDate ?? this.planner.resolveToLuxon(t.date).plus({ days: 3 }), "R")})`,
+        "\u200b",
       ),
-      separator(),
     ];
   }
 
@@ -94,6 +110,7 @@ export class HomeDisplay extends BasePlannerHandler {
           },
           `**${visit.name ?? "Returning Spirits"}**`,
           `${visit.spirits.length} spirits • Until ${this.formatDateTimestamp(visit.endDate)} (${this.formatDateTimestamp(visit.endDate, "R")})`,
+          "\u200b",
         ),
       ]),
     ];
@@ -111,17 +128,13 @@ export class HomeDisplay extends BasePlannerHandler {
         ),
       );
     }
-
-    sections.push(separator());
     return sections;
   }
 
-  private createEventsSection(activeEvents: any) {
+  private createEventsSection(activeEvents: ReturnType<typeof import("@skyhelperbot/constants").SkyPlannerData.getEvents>) {
     return [
-      textDisplay("### Events"),
-      ...activeEvents.current.flatMap((event: any) => this.createEventInHome(event)),
-      ...activeEvents.upcoming.slice(0, 3).flatMap((event: any) => this.createEventInHome(event)),
-      separator(),
+      ...activeEvents.current.flatMap((event) => this.createEventInHome(event)),
+      ...activeEvents.upcoming.slice(0, 3).flatMap((event) => this.createEventInHome(event)),
     ];
   }
 
@@ -144,6 +157,7 @@ export class HomeDisplay extends BasePlannerHandler {
             ),
           ]
         : null,
+      "\u200b",
     ]
       .flat()
       .filter(Boolean) as [string, ...string[]];
@@ -159,6 +173,28 @@ export class HomeDisplay extends BasePlannerHandler {
         `**${event.event.name}** (${event.startDate ? "Starts" : "Ends"} ${this.formatDateTimestamp(event.instance.endDate, "R")})`,
       ),
       event.event.imageUrl ? section(thumbnail(event.event.imageUrl), ...subtitles) : textDisplay(...subtitles),
+    ];
+  }
+
+  /**
+   * Create a reminder section showing favorited items that are currently available
+   */
+  private createFavoritesReminder(
+    availableItems: Array<{ item: IItem; source: string; cost?: ICost; price?: number; sourceDetails: string }>,
+  ): APIComponentInContainer[] {
+    const itemsToShow = availableItems;
+    const igcCosts = formatGroupedCurrencies(itemsToShow.filter((i) => i.cost).map((c) => c.cost!));
+    const iapCost = itemsToShow.reduce((acc, item) => {
+      if (item.price) acc += item.price;
+      return acc;
+    }, 0);
+    return [
+      section(
+        this.viewbtn(this.createCustomId({ t: DisplayTabs.Favourite })),
+        `### ⭐ Favorited Items Available Now! (${availableItems.length})`,
+        "# " + itemsToShow.map((entry) => this.formatemoji(entry.item.emoji, entry.item.name)).join(" "),
+        `**Total:** ${igcCosts ?? ""}${iapCost ? ` $${iapCost}` : ""}\n\u200b`,
+      ),
     ];
   }
 }

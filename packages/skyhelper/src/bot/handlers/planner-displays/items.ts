@@ -1,10 +1,12 @@
-import { getNodeSpirit, ItemType, type IItem } from "@skyhelperbot/constants/skygame-planner";
+import { getNodeSpirit, ItemType, type IItem, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import { BasePlannerHandler } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
-import type { APIComponentInContainer } from "discord-api-types/v10";
-import { DisplayTabs, FilterType } from "@/types/planner";
+import type { _NonNullableFields, _Nullable, APIComponentInContainer } from "discord-api-types/v10";
+import { DisplayTabs, FilterType, PlannerAction, type NavigationState } from "@/types/planner";
 import { emojis } from "@skyhelperbot/constants";
+import { createActionId } from "../planner-utils.js";
+import { serializeFilters } from "./filter.manager.js";
 
 export class ItemsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
@@ -47,55 +49,104 @@ export class ItemsDisplay extends BasePlannerHandler {
    * @param item The item to find the source for
    * @returns NavigationState to navigate to the source, or null if no source found
    */
-  private getItemSourceNavigation(item: IItem) {
+  static getItemSourceNavigation(
+    item: IItem,
+    idGen: (opt: Partial<_Nullable<NavigationState>>) => string,
+    b?: NavigationState["b"],
+  ) {
     const highlight = [FilterType.Highlight, [item.guid]] satisfies [FilterType.Highlight, string[]];
-    // Check if item comes from a spirit tree
-    const nodeWithSpirit = item.nodes?.find((n) => getNodeSpirit(n));
-    if (nodeWithSpirit) {
-      const spirit = getNodeSpirit(nodeWithSpirit)!;
-      const tree = nodeWithSpirit.root!.spiritTree!;
 
-      // Find which tree index this is for the spirit
+    const getTimestamp = (dateStr?: string | { day: number; month: number; year: number }): number => {
+      if (!dateStr) return 0;
+      if (typeof dateStr === "string") {
+        return new Date(dateStr).getTime();
+      }
+      return new Date(dateStr.year, dateStr.month - 1, dateStr.day).getTime();
+    };
+
+    // Collect all possible sources with their dates
+    const sources: Array<{ type: string; date: number; nav: () => string }> = [];
+
+    // Collect spirit tree sources
+    item.nodes?.forEach((n) => {
+      const spirit = getNodeSpirit(n);
+      if (!spirit) return;
+
+      const tree = n.root!.spiritTree!;
       const allTrees = [spirit.tree, ...(spirit.treeRevisions ?? []), ...(spirit.returns ?? []), ...(spirit.ts ?? [])].filter(
         Boolean,
       );
       const treeIndex = allTrees.findIndex((t) => t?.guid === tree.guid);
 
-      return this.createCustomId({
-        t: DisplayTabs.Spirits,
-        it: spirit.guid,
-        i: treeIndex >= 0 ? `tree${treeIndex}` : undefined,
-        f: this.filterManager?.serializeFilters(new Map([highlight])),
-        b: { t: DisplayTabs.Items, it: item.guid, f: "" },
-      });
-    }
+      // Determine the date based on tree type
+      let date = 0;
+      if (tree.ts) {
+        date = getTimestamp(tree.ts.date);
+      } else if (tree.visit) {
+        date = getTimestamp(tree.visit.return.date);
+      } else if (tree.eventInstanceSpirit?.eventInstance) {
+        date = getTimestamp(tree.eventInstanceSpirit.eventInstance.date);
+      } else if (spirit.season) {
+        date = getTimestamp(spirit.season.date);
+      }
 
-    // Check if item comes from a shop's item list
-    const listNodeWithShop = item.listNodes?.find((ls) => ls.itemList.shop);
-    if (listNodeWithShop?.itemList.shop) {
-      const shop = listNodeWithShop.itemList.shop;
-      return this.createCustomId({
-        t: DisplayTabs.Shops,
-        d: "shops",
-        i: "shpstore",
-        f: this.filterManager?.serializeFilters(new Map([[FilterType.Shops, [shop.guid]], highlight])),
-        b: { t: DisplayTabs.Items, it: item.guid, f: null },
+      sources.push({
+        type: "spirit",
+        date,
+        nav: () =>
+          idGen({
+            t: DisplayTabs.Spirits,
+            it: spirit.guid,
+            i: treeIndex >= 0 ? `tree${treeIndex}` : undefined,
+            f: serializeFilters(new Map([highlight])),
+            b,
+          }),
       });
-    }
+    });
 
-    // Check if item comes from an IAP
-    const iap = item.iaps?.find((ia) => ia.shop);
-    if (iap?.shop) {
-      return this.createCustomId({
-        t: DisplayTabs.Shops,
-        d: "shops",
-        i: "shpiap",
-        f: this.filterManager?.serializeFilters(new Map([[FilterType.Shops, [iap.shop.guid]], highlight])),
-        b: { t: DisplayTabs.Items, it: item.guid, f: null },
+    // Collect shop item list sources
+    item.listNodes?.forEach((ls) => {
+      if (!ls.itemList.shop) return;
+      const shop = ls.itemList.shop;
+      const date = getTimestamp(shop.date);
+
+      sources.push({
+        type: "shop_list",
+        date,
+        nav: () =>
+          idGen({
+            t: DisplayTabs.Shops,
+            d: "shops",
+            i: "shpstore",
+            f: serializeFilters(new Map([[FilterType.Shops, [shop.guid]], highlight])),
+            b,
+          }),
       });
-    }
+    });
 
-    return null;
+    // Collect IAP sources
+    item.iaps?.forEach((iap) => {
+      if (!iap.shop) return;
+      const date = getTimestamp(iap.shop.date);
+
+      sources.push({
+        type: "iap",
+        date,
+        nav: () =>
+          idGen({
+            t: DisplayTabs.Shops,
+            d: "shops",
+            i: "shpiap",
+            f: serializeFilters(new Map([[FilterType.Shops, [iap.shop!.guid]], highlight])),
+            b,
+          }),
+      });
+    });
+
+    // Sort by date (most recent first) and return the first available source
+    sources.sort((a, bb) => bb.date - a.date);
+
+    return sources.length > 0 ? sources[0]!.nav() : null;
   }
 
   itemslist(items: IItem[]) {
@@ -104,32 +155,38 @@ export class ItemsDisplay extends BasePlannerHandler {
       page: this.state.p ?? 1,
       perpage: 7,
       user: this.state.user,
-      itemCallback: (item) => [
-        section(
-          button({
-            label: "View",
-            custom_id: this.createCustomId({
-              it: item.guid,
-              /** filter can be too long sometimes to be passed, bummer */
-              b: { t: this.state.t, f: "", p: 1 },
+      itemCallback: (item) => {
+        const isFavorited = PlannerDataHelper.hasGuid(this.settings.plannerData?.favourites ?? "", item.guid);
+        return [
+          section(
+            button({
+              label: "View",
+              custom_id: this.createCustomId({
+                it: item.guid,
+                /** filter can be too long sometimes to be passed, bummer */
+                b: { t: this.state.t, f: "", p: 1 },
+              }),
+              style: 1,
             }),
-            style: 1,
-          }),
-          `## ${this.formatemoji(item.emoji, item.name)} ${item.name}` +
-            (item.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : ""),
-          [
-            item.group,
-            item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
-            item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
-            item.season?.shortName,
-          ]
-            .filter((s) => !!s)
-            .join(" \u2022 "),
-        ),
-      ],
+            `## ${this.formatemoji(item.emoji, item.name)} ${item.name}` +
+              (item.unlocked ? ` ${this.formatemoji(emojis.checkmark)}` : "") +
+              (isFavorited ? ` ⭐` : ""),
+            [
+              item.group,
+              item.nodes?.map(getNodeSpirit).find(Boolean)?.name,
+              item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
+              item.season?.shortName,
+            ]
+              .filter((s) => !!s)
+              .join(" \u2022 "),
+          ),
+        ];
+      },
     });
   }
   itemDisplay(item: IItem) {
+    const isFavorited = PlannerDataHelper.hasGuid(this.settings.plannerData?.favourites ?? "", item.guid);
+
     return [
       section(
         this.state.b ? this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })) : this.homebtn(), // fallback to item home
@@ -142,13 +199,20 @@ export class ItemsDisplay extends BasePlannerHandler {
           item.group === "Limited" ? "- This is a limited item and may not return in the future." : "",
           item.group === "SeasonPass" ? "- This item was offered with season pass." : "",
           item.unlocked ? `**Unlocked** ${this.formatemoji(emojis.checkmark)}` : "",
+          isFavorited
+            ? `⭐ **Favorited**${!item.unlocked && !item.autoUnlocked ? ": We will remind you if this item is available for purchase again!" : ""}`
+            : "",
         ]
           .filter(Boolean)
           .join("\n"),
       ),
       row(
         (() => {
-          const sourceNav = this.getItemSourceNavigation(item);
+          const sourceNav = ItemsDisplay.getItemSourceNavigation(item, this.createCustomId.bind(this), {
+            t: DisplayTabs.Items,
+            it: item.guid,
+            f: null,
+          });
           // eslint-disable-next-line
           return this.viewbtn(sourceNav || "disabled-find-source", {
             label: "Find Source",
@@ -156,11 +220,14 @@ export class ItemsDisplay extends BasePlannerHandler {
           });
         })(),
         button({
-          custom_id: this.createCustomId({}),
-          label: "Add to Wishlist",
-          style: 2,
+          custom_id: createActionId({
+            action: PlannerAction.ToggleFavorite,
+            guid: item.guid,
+            navState: this.state,
+          }),
+          label: isFavorited ? "Remove from Wishlist" : "Add to Wishlist",
+          style: isFavorited ? 4 : 2,
           emoji: { name: "⭐" },
-          disabled: true,
         }),
       ),
       separator(true, 1),

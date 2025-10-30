@@ -34,7 +34,7 @@ export class TSDisplay extends BaseSpiritsDisplay {
           }),
           `**${this.formatemoji(t.spirit.emoji, t.spirit.name)} ${t.spirit.name} (#${t.number})**`,
           `From ${this.formatDateTimestamp(t.date)} to ${this.formatDateTimestamp(t.endDate ?? this.planner.resolveToLuxon(t.date).plus({ day: 3 }))}`,
-          this.planner.getFormattedTreeCost(t.tree),
+          this.planner.getFormattedTreeCost(t.tree) ?? "",
           "\u200b", // o-width for visual spacing, not using separator to save comp limit,
         ),
       ],

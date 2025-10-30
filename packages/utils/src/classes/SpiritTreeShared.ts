@@ -294,6 +294,39 @@ export async function drawItem(
     ctx.stroke();
   }
 
+  // #region favorite star
+  if (item?.favourited) {
+    const starSize = Math.max(12, Math.floor(itemSize * 0.15));
+    const starX = -r * 0.5;
+    const starY = r * 0.4;
+
+    ctx.fillStyle = "#FFD700"; // yellow/gold color
+    ctx.save();
+    ctx.translate(starX, starY);
+    ctx.beginPath();
+
+    // Draw a 5-pointed star
+    for (let i = 0; i < 5; i++) {
+      const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+      const pointX = Math.cos(angle) * starSize;
+      const pointY = Math.sin(angle) * starSize;
+      if (i === 0) {
+        ctx.moveTo(pointX, pointY);
+      } else {
+        ctx.lineTo(pointX, pointY);
+      }
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // Optional: Add a slight outline for better visibili"ty
+    ctx.strokeStyle = "rgba(239, 20, 20, 0.5)";
+    ctx.lineWidth = Math.max(1, Math.floor(starSize * 0.08));
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
   // #region cost overlay
   if (node?.currency) {
     const cost = node.currency.amount;

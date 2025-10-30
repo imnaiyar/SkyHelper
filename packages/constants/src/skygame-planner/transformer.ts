@@ -366,7 +366,10 @@ function resolveReferences(data: PlannerAssetData): void {
   }
 
   for (const es of data.eventInstanceSpirits) {
-    linkOne<ISpirit, IEventInstanceSpirit>(es.spirit as any, es, "spirit", data, "events");
+    linkOne<ISpirit, IEventInstanceSpirit>(es.spirit as any, es, "spirit", data, (sp) => {
+      sp.events ??= [];
+      sp.events.push(es);
+    });
     linkOne<ISpiritTree, IEventInstanceSpirit>(es.tree as any, es, "tree", data, "eventInstanceSpirit");
   }
 

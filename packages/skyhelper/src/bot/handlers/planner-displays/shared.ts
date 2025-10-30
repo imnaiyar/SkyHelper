@@ -49,9 +49,9 @@ export async function spiritTreeDisplay(
               disabled: !spirit,
             }),
             name,
-            planner.planner.getFormattedTreeCostWithProgress(tree),
+            planner.planner.getFormattedTreeCostWithProgress(tree) ?? "",
           )
-        : textDisplay(name, planner.planner.getFormattedTreeCostWithProgress(tree)),
+        : textDisplay(name, planner.planner.getFormattedTreeCostWithProgress(tree) ?? ""),
       row(
         button({
           label: `${unlockAll ? "✓ Unlock" : "x Lock"} All`,

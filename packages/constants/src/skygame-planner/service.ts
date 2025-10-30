@@ -9,6 +9,7 @@ import type {
   IEvent,
   IEventInstance,
   IEventInstanceSpirit,
+  IItem,
   INode,
   INodeTier,
   ISpirit,
@@ -392,7 +393,7 @@ export function formatCosts(costs: ICost, remaining?: ICost) {
   if (costs.ac) parts.push(`${remaining ? `${remaining.ac || "✓"} (${costs.ac})` : costs.ac} <:AC:${currency.ac}>`);
   if (costs.ec) parts.push(`${remaining ? `${remaining.ec || "✓"} (${costs.ec})` : costs.ec} <:EventTicket:${currency.ec}>`);
   /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
-  return parts.join(" ") || "Free";
+  return parts.join(" ") || null;
 }
 
 export function getFormattedTreeCost(tree: ISpiritTree) {
@@ -856,4 +857,10 @@ export function calculateCurrencyBreakdown(data: PlannerAssetData): import("./in
  */
 export function isEmptyCost(cost: ICost): boolean {
   return !cost.c && !cost.h && !cost.sc && !cost.sh && !cost.ac && !cost.ec;
+}
+
+/** Get all the items that a spirit tree holds */
+export function allTreeItems(tree: ISpiritTree): IItem[] {
+  const nodes = getAllNodes(tree);
+  return nodes.flatMap((s) => [s.item, ...(s.hiddenItems ?? [])].filter((k) => !!k));
 }
