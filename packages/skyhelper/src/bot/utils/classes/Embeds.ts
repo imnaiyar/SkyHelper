@@ -419,7 +419,7 @@ export async function handleRemindersStatus(helper: InteractionHelper, guildSett
         textDisplay(description),
       );
       for (const [k, name] of cdd) {
-        const event = guildSettings.reminders.events[k as keyof GuildSchema["reminders"]["events"]];
+        const event = guildSettings.reminders.events[k];
 
         const eventEmojis = appEmojis
           .filter((e) => e.name.startsWith(k.replaceAll("-", "")))

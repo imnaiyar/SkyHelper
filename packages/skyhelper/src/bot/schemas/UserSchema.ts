@@ -34,6 +34,7 @@ const Schema = new mongoose.Schema<UserSchema>({
   isBlacklisted: Boolean,
   hangman: gameModeSchema,
   scrambled: gameModeSchema,
+  guessing: gameModeSchema,
   linkedRole: {
     username: String,
     metadata: {
@@ -111,7 +112,7 @@ export async function getUser(user: APIUser): Promise<UserSchema> {
  * @param guildMembers Guild members for which to get leaderboard for
  */
 export const getGamesLeaderboard = async (
-  _game: "hangman" | "scrambled",
+  _game: "hangman" | "scrambled" | "guessing",
   guildMembers?: APIGuildMember[],
 ): Promise<SkyGameStatsData> => {
   const query = guildMembers ? { _id: { $in: guildMembers.map((m) => m.user.id) } } : {};

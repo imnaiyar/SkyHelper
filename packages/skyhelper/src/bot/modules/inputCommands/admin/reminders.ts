@@ -46,7 +46,7 @@ export default {
         }
         if (!(await checkClientPerms(channel))) return;
         const util = new RemindersUtils(client);
-        const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
+        const event = options.getString("event", true);
 
         let shard_type: Array<"red" | "black"> = [];
         if (event === "shards-eruption") {
@@ -63,7 +63,7 @@ export default {
           `For ${RemindersEventsMap[event]} Reminders`,
         );
         const role = options.getRole("role");
-        guildSettings.reminders.events[event as Exclude<typeof event, "shards-eruption">] = {
+        guildSettings.reminders.events[event] = {
           active: true,
           webhook: {
             channelId: wb.channel_id,
@@ -77,7 +77,7 @@ export default {
         };
 
         if (event === "shards-eruption") {
-          guildSettings.reminders.events[event]!.shard_type = shard_type;
+          guildSettings.reminders.events[event].shard_type = shard_type;
         }
         guildSettings.reminders.active = true;
 
@@ -111,7 +111,7 @@ export default {
         break;
       }
       case "stop": {
-        const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
+        const event = options.getString("event", true);
         const eventSettings = guildSettings.reminders.events[event];
         if (!eventSettings?.active) {
           return void (await helper.editReply({

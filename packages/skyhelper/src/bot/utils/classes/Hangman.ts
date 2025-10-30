@@ -217,7 +217,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     }
     if (this.guessedAlphabets.some((a) => a.toLowerCase() === word)) return HangmanResponseCodes.AlreadyGuessed;
 
-    this.guessedAlphabets.push(word as (typeof EnglishAlphabets)[number]);
+    this.guessedAlphabets.push(word);
 
     // prettier-ignore
     if (!this.alphabets) throw new Error("Alphabets not initialized, the game may have been started without proper initialization");

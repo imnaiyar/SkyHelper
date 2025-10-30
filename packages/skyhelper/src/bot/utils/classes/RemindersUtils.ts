@@ -28,11 +28,7 @@ export default class {
     const liveUse =
       (!excludeKeys.includes("autoShard") && settings.autoShard.webhook.id === webhook.id) ||
       (!excludeKeys.includes("autoTimes") && settings.autoTimes.webhook.id === webhook.id);
-    return (
-      keys.some(
-        (key) => settings.reminders.events[key as keyof GuildSchema["reminders"]["events"]]?.webhook?.id === webhook.id,
-      ) || liveUse
-    );
+    return keys.some((key) => settings.reminders.events[key]?.webhook?.id === webhook.id) || liveUse;
   }
 
   /**
@@ -72,7 +68,7 @@ export default class {
       if (!webhooks.has(event!.webhook!.id)) {
         webhooks.set(event!.webhook!.id, event!.webhook!);
       }
-      settings.reminders.events[k as (typeof REMINDERS_KEY)[number]] = null;
+      settings.reminders.events[k] = null;
     }
     settings.reminders.active = false;
     await settings.save();

@@ -18,7 +18,7 @@ export default defineButton({
   data: { name: "reminders-manage" },
   id: CustomId.RemindersManage,
   async execute(interaction, _t, helper, { key: event_key, page }) {
-    const key = event_key as (typeof REMINDERS_KEY)[number];
+    const key = event_key;
     const { client } = helper;
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const { getModalComponent: getMC } = client.utils;
