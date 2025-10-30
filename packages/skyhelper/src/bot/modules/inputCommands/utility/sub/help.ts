@@ -89,7 +89,7 @@ function formatCommand(command: APIApplicationCommand, client: SkyHelper): APIEm
     if (local_commands.botPermissions) desc += `\n- Required Bot Permissions: \`${(local_commands.botPermissions as []).join(", ")}\``;
     desc += `\n- Category: \`${local_commands.category}\``;
 
-    desc += `\n\n-# You can learn more about this command at our command documentations [here](${client.config.DOCS_URL}/guide/docs/commands/${local_commands.category.toLowerCase()}#${command.name})`;
+    desc += `\n\n-# You can learn more about this command at our command documentations [here](${client.config.DOCS_URL}/docs/commands/${local_commands.category.toLowerCase()}#${command.name})`;
   }
   return {
     title,
