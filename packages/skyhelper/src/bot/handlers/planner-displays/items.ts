@@ -2,10 +2,11 @@ import { getNodeSpirit, ItemType, type IItem, PlannerDataHelper } from "@skyhelp
 import { BasePlannerHandler } from "./base.js";
 import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 
-import type { APIComponentInContainer } from "discord-api-types/v10";
-import { DisplayTabs, FilterType, PlannerAction } from "@/types/planner";
+import type { _NonNullableFields, _Nullable, APIComponentInContainer } from "discord-api-types/v10";
+import { DisplayTabs, FilterType, PlannerAction, type NavigationState } from "@/types/planner";
 import { emojis } from "@skyhelperbot/constants";
 import { createActionId } from "../planner-utils.js";
+import { serializeFilters } from "./filter.manager.js";
 
 export class ItemsDisplay extends BasePlannerHandler {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
@@ -48,55 +49,104 @@ export class ItemsDisplay extends BasePlannerHandler {
    * @param item The item to find the source for
    * @returns NavigationState to navigate to the source, or null if no source found
    */
-  private getItemSourceNavigation(item: IItem) {
+  static getItemSourceNavigation(
+    item: IItem,
+    idGen: (opt: Partial<_Nullable<NavigationState>>) => string,
+    b?: NavigationState["b"],
+  ) {
     const highlight = [FilterType.Highlight, [item.guid]] satisfies [FilterType.Highlight, string[]];
-    // Check if item comes from a spirit tree
-    const nodeWithSpirit = item.nodes?.find((n) => getNodeSpirit(n));
-    if (nodeWithSpirit) {
-      const spirit = getNodeSpirit(nodeWithSpirit)!;
-      const tree = nodeWithSpirit.root!.spiritTree!;
 
-      // Find which tree index this is for the spirit
+    const getTimestamp = (dateStr?: string | { day: number; month: number; year: number }): number => {
+      if (!dateStr) return 0;
+      if (typeof dateStr === "string") {
+        return new Date(dateStr).getTime();
+      }
+      return new Date(dateStr.year, dateStr.month - 1, dateStr.day).getTime();
+    };
+
+    // Collect all possible sources with their dates
+    const sources: Array<{ type: string; date: number; nav: () => string }> = [];
+
+    // Collect spirit tree sources
+    item.nodes?.forEach((n) => {
+      const spirit = getNodeSpirit(n);
+      if (!spirit) return;
+
+      const tree = n.root!.spiritTree!;
       const allTrees = [spirit.tree, ...(spirit.treeRevisions ?? []), ...(spirit.returns ?? []), ...(spirit.ts ?? [])].filter(
         Boolean,
       );
       const treeIndex = allTrees.findIndex((t) => t?.guid === tree.guid);
 
-      return this.createCustomId({
-        t: DisplayTabs.Spirits,
-        it: spirit.guid,
-        i: treeIndex >= 0 ? `tree${treeIndex}` : undefined,
-        f: this.filterManager?.serializeFilters(new Map([highlight])),
-        b: { t: DisplayTabs.Items, it: item.guid, f: "" },
-      });
-    }
+      // Determine the date based on tree type
+      let date = 0;
+      if (tree.ts) {
+        date = getTimestamp(tree.ts.date);
+      } else if (tree.visit) {
+        date = getTimestamp(tree.visit.return.date);
+      } else if (tree.eventInstanceSpirit?.eventInstance) {
+        date = getTimestamp(tree.eventInstanceSpirit.eventInstance.date);
+      } else if (spirit.season) {
+        date = getTimestamp(spirit.season.date);
+      }
 
-    // Check if item comes from a shop's item list
-    const listNodeWithShop = item.listNodes?.find((ls) => ls.itemList.shop);
-    if (listNodeWithShop?.itemList.shop) {
-      const shop = listNodeWithShop.itemList.shop;
-      return this.createCustomId({
-        t: DisplayTabs.Shops,
-        d: "shops",
-        i: "shpstore",
-        f: this.filterManager?.serializeFilters(new Map([[FilterType.Shops, [shop.guid]], highlight])),
-        b: { t: DisplayTabs.Items, it: item.guid, f: null },
+      sources.push({
+        type: "spirit",
+        date,
+        nav: () =>
+          idGen({
+            t: DisplayTabs.Spirits,
+            it: spirit.guid,
+            i: treeIndex >= 0 ? `tree${treeIndex}` : undefined,
+            f: serializeFilters(new Map([highlight])),
+            b,
+          }),
       });
-    }
+    });
 
-    // Check if item comes from an IAP
-    const iap = item.iaps?.find((ia) => ia.shop);
-    if (iap?.shop) {
-      return this.createCustomId({
-        t: DisplayTabs.Shops,
-        d: "shops",
-        i: "shpiap",
-        f: this.filterManager?.serializeFilters(new Map([[FilterType.Shops, [iap.shop.guid]], highlight])),
-        b: { t: DisplayTabs.Items, it: item.guid, f: null },
+    // Collect shop item list sources
+    item.listNodes?.forEach((ls) => {
+      if (!ls.itemList.shop) return;
+      const shop = ls.itemList.shop;
+      const date = getTimestamp(shop.date);
+
+      sources.push({
+        type: "shop_list",
+        date,
+        nav: () =>
+          idGen({
+            t: DisplayTabs.Shops,
+            d: "shops",
+            i: "shpstore",
+            f: serializeFilters(new Map([[FilterType.Shops, [shop.guid]], highlight])),
+            b,
+          }),
       });
-    }
+    });
 
-    return null;
+    // Collect IAP sources
+    item.iaps?.forEach((iap) => {
+      if (!iap.shop) return;
+      const date = getTimestamp(iap.shop.date);
+
+      sources.push({
+        type: "iap",
+        date,
+        nav: () =>
+          idGen({
+            t: DisplayTabs.Shops,
+            d: "shops",
+            i: "shpiap",
+            f: serializeFilters(new Map([[FilterType.Shops, [iap.shop!.guid]], highlight])),
+            b,
+          }),
+      });
+    });
+
+    // Sort by date (most recent first) and return the first available source
+    sources.sort((a, bb) => bb.date - a.date);
+
+    return sources.length > 0 ? sources[0]!.nav() : null;
   }
 
   itemslist(items: IItem[]) {
@@ -158,7 +208,11 @@ export class ItemsDisplay extends BasePlannerHandler {
       ),
       row(
         (() => {
-          const sourceNav = this.getItemSourceNavigation(item);
+          const sourceNav = ItemsDisplay.getItemSourceNavigation(item, this.createCustomId.bind(this), {
+            t: DisplayTabs.Items,
+            it: item.guid,
+            f: null,
+          });
           // eslint-disable-next-line
           return this.viewbtn(sourceNav || "disabled-find-source", {
             label: "Find Source",
