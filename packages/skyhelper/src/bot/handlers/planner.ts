@@ -20,6 +20,7 @@ import { DisplayTabs, type NavigationState } from "../@types/planner.js";
 import { ProfileDisplay } from "./planner-displays/profile.js";
 import type { UserSchema } from "@/types/schemas";
 import { DateTime } from "luxon";
+import { FavouriteDisplay } from "./planner-displays/favourites.js";
 
 // Navigation state interface to track user's position
 
@@ -57,6 +58,7 @@ const displayClasses = (d?: string) => ({
   [DisplayTabs.Areas]: AreasDisplay,
   [DisplayTabs.Home]: HomeDisplay,
   [DisplayTabs.Profile]: ProfileDisplay,
+  [DisplayTabs.Favourite]: FavouriteDisplay,
 });
 
 /**

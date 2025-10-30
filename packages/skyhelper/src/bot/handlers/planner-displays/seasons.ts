@@ -40,24 +40,12 @@ export class SeasonsDisplay extends BasePlannerHandler {
   }
 
   getSeasonInListDisplay(season: SkyPlannerData.ISeason) {
-    const totalcosts = season.spirits.reduce(
-      (acc, spirit) => {
-        if (!spirit.tree) return acc;
-        const nodes = getAllNodes(spirit.tree);
-        const costs = this.planner.calculateCost(nodes);
-        for (const key of Object.keys(acc)) {
-          acc[key as keyof typeof acc] += costs[key as keyof typeof costs] || 0;
-        }
-        return acc;
-      },
-      { h: 0, c: 0, ac: 0, sc: 0, sh: 0, ec: 0 },
-    );
-    const formatted = this.planner.formatCosts(totalcosts);
+    const totalcosts = this.planner.formatGroupedCurrencies(season.spirits.filter((s) => s.tree).map((s) => s.tree!));
 
     const descriptions: [string, ...string[]] = [
       `From ${this.formatDateTimestamp(season.date)} to ${this.formatDateTimestamp(season.endDate)} (${this.formatDateTimestamp(season.endDate, "R")})`,
       season.spirits.map((s) => (s.emoji ? this.formatemoji(s.emoji, s.name) : "")).join(" "),
-      formatted,
+      totalcosts ?? "",
     ];
 
     return [
@@ -70,7 +58,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
         },
         `### ${season.emoji ? this.formatemoji(season.emoji, season.shortName) : ""} **${season.name}**`,
       ),
-      season.imageUrl ? section(thumbnail(season.imageUrl), ...descriptions) : textDisplay(...descriptions, "\u200b"),
+      season.imageUrl ? section(thumbnail(season.imageUrl), ...descriptions, "\u200b") : textDisplay(...descriptions, "\u200b"),
     ];
   }
 

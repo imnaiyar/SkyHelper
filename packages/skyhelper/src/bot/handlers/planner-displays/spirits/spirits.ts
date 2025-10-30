@@ -6,6 +6,7 @@ import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { getAllNodes, SpiritType } from "@skyhelperbot/constants/skygame-planner";
 import { BaseSpiritsDisplay } from "./base.js";
 import { spiritTreeDisplay } from "../shared.js";
+import { DateTime } from "luxon";
 
 export class SpiritsDisplay extends BaseSpiritsDisplay {
   constructor(data: any, planner: any, state: any, settings: any, client: any) {
@@ -70,7 +71,7 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
         ]
           .filter(Boolean)
           .join(" \u2022 "),
-        spirit.tree ? this.planner.getFormattedTreeCost(spirit.tree) : "",
+        spirit.tree ? (this.planner.getFormattedTreeCost(spirit.tree) ?? "") : "",
         "\u200b", // o-width for visual spacing, not using separator to save comp limit,,
       ),
     ];
@@ -78,24 +79,44 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
 
   async spiritdisplay(spirit: SkyPlannerData.ISpirit): Promise<ResponseData> {
     const trees = [
-      spirit.tree ? { name: "Spirit Tree", tree: spirit.tree, season: !!spirit.season } : null,
+      spirit.tree
+        ? {
+            name: "Spirit Tree",
+            tree: spirit.tree,
+            season: !!spirit.season,
+            date: spirit.season ? this.planner.resolveToLuxon(spirit.season.date) : undefined,
+          }
+        : null,
       spirit.treeRevisions?.length
-        ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t }))
+        ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t, date: undefined }))
         : null,
       spirit.events?.length
-        ? spirit.events.map((s) => ({
-            name:
-              (s.eventInstance?.name ?? s.eventInstance?.event.name ?? "Event Spirit") +
-              " " +
-              (s.eventInstance?.date ? `(${this.planner.resolveToLuxon(s.eventInstance.date).year.toString()})` : ""),
-            tree: s.tree,
-          }))
+        ? spirit.events.map((s) => {
+            const instance = s.eventInstance;
+            const date = instance?.date ? this.planner.resolveToLuxon(instance.date) : undefined;
+            return {
+              name: (instance?.name ?? instance?.event.name ?? "Event Spirit") + " " + (date ? `(${date.year.toString()})` : ""),
+              tree: s.tree,
+              date,
+            };
+          })
         : null,
-      ...(spirit.returns?.map((r) => ({ name: r.return.name ?? "Special Visit", tree: r.tree, rs: r.guid })) ?? []),
-      ...(spirit.ts?.map((t) => ({ name: `Traveling Spirit #${t.number}`, tree: t.tree, ts: t.guid })) ?? []),
+      ...(spirit.returns?.map((r) => ({
+        name: r.return.name ?? "Special Visit",
+        tree: r.tree,
+        rs: r.guid,
+        date: this.planner.resolveToLuxon(r.return.date),
+      })) ?? []),
+      ...(spirit.ts?.map((t) => ({
+        name: `Traveling Spirit #${t.number}`,
+        tree: t.tree,
+        ts: t.guid,
+        date: this.planner.resolveToLuxon(t.date),
+      })) ?? []),
     ]
       .flat()
-      .filter((s) => !!s);
+      .filter((s) => !!s)
+      .sort((a, b) => (b.date ?? DateTime.now()).toMillis() - (a.date ?? DateTime.now()).toMillis());
 
     const highlights = this.filterManager?.getFilterValues(FilterType.Highlight) ?? [];
     let selected = 0;

@@ -28,8 +28,10 @@ const CATEGORY_EMOJI_MAP = {
   [DisplayTabs.Spirits]: emojis.realmelders,
 };
 
+const IGNORED_TABS = [DisplayTabs.Favourite, DisplayTabs.Profile];
+
 export abstract class BasePlannerHandler {
-  protected filterManager?: FilterManager;
+  public filterManager?: FilterManager;
   protected customFilterConfigs?: CustomFilterConfigs;
 
   constructor(
@@ -96,7 +98,7 @@ export abstract class BasePlannerHandler {
     const seasonIcon = this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji;
     const categoryButtons = Object.entries(DisplayTabs)
       .map(([title, category]) => {
-        if (category === DisplayTabs.Profile) return null; // we don't want this to show up on main planner
+        if (IGNORED_TABS.includes(category)) return null; // we don't want this to show up on main planner
         const icon =
           category === DisplayTabs.Seasons ? seasonIcon : CATEGORY_EMOJI_MAP[category as keyof typeof CATEGORY_EMOJI_MAP];
 
@@ -130,7 +132,7 @@ export abstract class BasePlannerHandler {
       placeholder: "Select category",
       options: Object.entries(DisplayTabs)
         .map(([label, category]) => {
-          if (category === DisplayTabs.Profile) return null; // we don't want this to show up on main planner
+          if (IGNORED_TABS.includes(category)) return null; // we don't want this to show up on main planner
           const icon =
             category === DisplayTabs.Seasons
               ? (this.planner.getCurrentSeason(this.data)?.emoji ?? this.data.seasons[0]?.emoji)

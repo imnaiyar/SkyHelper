@@ -18,7 +18,8 @@
     "update": "pnpm --recursive update --interactive",
     "prepare": "husky",
     "check-locales": "node scripts/check-unused-locales.js",
-    "clean-locales": "node scripts/check-unused-locales.js --remove"
+    "clean-locales": "node scripts/check-unused-locales.js --remove",
+    "sync:planner-emojis": "tsx --env-file=packages/skyhelper/.env scripts/sync.items.emojis.mts"
   },
   "keywords": [],
   "author": "",

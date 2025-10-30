@@ -28,7 +28,7 @@ export function getIGCnIApDisplay(
     const as = item as IItemList;
     return [
       textDisplay(
-        `${highlighted ? "#" : "##"} ${as.shop ? getshopname(as.shop) : "IGC"}${highlighted ? planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
+        `${highlighted ? "#" : "##"} ${as.shop ? getshopname(as.shop) : "IGC"}${highlighted ? " " + planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
       ),
       ...as.items.map((l) =>
         section(
@@ -38,7 +38,7 @@ export function getIGCnIApDisplay(
           }),
           `${planner.formatemoji(l.item.emoji, l.item.name)} ${l.item.name}` +
             (l.unlocked ? " " + planner.formatemoji(emojis.checkmark) : ""),
-          planner.planner.formatCosts(l),
+          planner.planner.formatCosts(l) ?? "Free",
           l.unlocked ? `**Unlocked** ${planner.formatemoji(emojis.checkmark)}` : "",
         ),
       ),
@@ -47,7 +47,7 @@ export function getIGCnIApDisplay(
     const as = item as IIAP;
     return [
       textDisplay(
-        `${highlighted ? "#" : "##"} ${as.name ?? "In-App Purchase"}${highlighted ? planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
+        `${highlighted ? "#" : "##"} ${as.name ?? "In-App Purchase"}${highlighted ? " " + planner.formatemoji(emojis.leftarryello) + planner.formatemoji(emojis.leftarryello) : ""}`,
         [
           `- **$${as.price ?? "N/A"} | ${as.returning ? "Returning" : "New"} IAP**` +
             (as.gifted || as.bought ? " " + planner.formatemoji(emojis.checkmark) : ""),

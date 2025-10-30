@@ -137,6 +137,8 @@ The bot uses **Discord.js Core** (not discord.js) with a custom `SkyHelper` clie
 
 The bot features a sophisticated **Sky Game Planner** with modular display handlers:
 
+**Data**: The data used by planner is sourced from "https://github.com/Silverfeelin/SkyGame-Planner" and is handled in packages/constants/src/skygame-planner
+
 **Base Architecture:**
 
 - `BasePlannerHandler` - Abstract base class for all planner displays
@@ -154,6 +156,8 @@ Each game data type has its own display handler extending `BasePlannerHandler`:
 - `ItemsDisplay` - Cosmetics and collectibles
 - `RealmsDisplay` - Game realms navigation
 - `ShopsDisplay` - In-game shops
+- `ProfileDisplay` - User's progress Stats and currency usage breakdowns
+- `FavouriteDisplay` - Currently available favourite items for purchase
 
 **Key Patterns:**
 

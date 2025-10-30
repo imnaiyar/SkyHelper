@@ -104,6 +104,7 @@ export enum DisplayTabs {
   Shops = "sh",
   Areas = "a",
   Profile = "p",
+  Favourite = "fv",
 }
 
 export interface IPaginatedProps<T> {

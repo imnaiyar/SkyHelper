@@ -393,7 +393,7 @@ export function formatCosts(costs: ICost, remaining?: ICost) {
   if (costs.ac) parts.push(`${remaining ? `${remaining.ac || "✓"} (${costs.ac})` : costs.ac} <:AC:${currency.ac}>`);
   if (costs.ec) parts.push(`${remaining ? `${remaining.ec || "✓"} (${costs.ec})` : costs.ec} <:EventTicket:${currency.ec}>`);
   /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
-  return parts.join(" ") || "Free";
+  return parts.join(" ") || null;
 }
 
 export function getFormattedTreeCost(tree: ISpiritTree) {
