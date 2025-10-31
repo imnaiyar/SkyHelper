@@ -3,7 +3,7 @@ export default {
   theme: {
     extend: {
       breakpoint: {
-        xs: "30rem", // now you can use `xs:`
+        xs: "30rem",
       },
     },
   },

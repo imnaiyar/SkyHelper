@@ -5,6 +5,10 @@ interface BotStats {
   ping: number;
   commands: number;
   totalUserInstalls: number;
+  stats: {
+    commands: Array<{ _id: { data: string; commandName: string }; count: number }>;
+    guildEvents: Array<{ _id: { data: string; eventType: string }; count: number }>;
+  };
 }
 export default function useStats() {
   const [loading, setLoading] = useState<boolean>(true);

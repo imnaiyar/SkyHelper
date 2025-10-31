@@ -28,6 +28,9 @@ const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (clie
 
   await updateBotStatsMessage(client);
 
+  // update statistics
+  await client.schemas.StatisticsModel.create({ guildEvent: { event: "leave", guildId: guild.id }, timestamp: new Date() });
+
   await sendGuildLog(guild, client, "Left");
 };
 

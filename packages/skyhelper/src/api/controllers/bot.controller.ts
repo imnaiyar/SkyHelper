@@ -22,12 +22,61 @@ export class BotController {
     description: "Bot statistics retrieved successfully",
     schema: toJSONSchema(BotStatsSchema),
   })
-  async getGuild(): Promise<BotStats> {
+  async getStats(): Promise<BotStats> {
     const guilds = this.bot.guilds.size;
     const member = this.bot.guilds.reduce((acc, g) => acc + g.member_count, 0);
     const ping = this.bot.ping;
     const commands = this.bot.applicationCommands.size + 4;
     const application = await this.bot.api.applications.getCurrent();
+    const stats = await this.bot.schemas.StatisticsModel.aggregate([
+      {
+        $facet: {
+          commandStats: [
+            { $match: { command: { $exists: true } } },
+            {
+              $group: {
+                _id: {
+                  date: { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } },
+                  commandName: "$command.name",
+                },
+                count: { $sum: 1 },
+              },
+            },
+
+            {
+              $project: {
+                _id: 0,
+                date: "$_id.date",
+                commandName: "$_id.commandName",
+                count: 1,
+              },
+            },
+            { $sort: { "_id.date": 1, "_id.commandName": 1 } },
+          ],
+          guildEvents: [
+            {
+              $match: { guildEvent: { $exists: true } },
+            },
+            {
+              $group: {
+                _id: { date: { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } } },
+                join: { $sum: { $cond: [{ $eq: ["$guildEvent.event", "join"] }, 1, 0] } },
+                leave: { $sum: { $cond: [{ $eq: ["$guildEvent.event", "leave"] }, 1, 0] } },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                date: "$_id.date",
+                join: 1,
+                leave: 1,
+              },
+            },
+            { $sort: { date: 1 } },
+          ],
+        },
+      },
+    ]).then((r) => r[0]);
 
     return {
       totalServers: guilds,
@@ -35,6 +84,7 @@ export class BotController {
       ping: ping,
       totalUserInstalls: application.approximate_user_install_count ?? 1,
       commands: commands,
+      statistics: { commands: stats.commandStats, guildEvents: stats.guildEvents },
     };
   }
 
