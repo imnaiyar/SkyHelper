@@ -277,10 +277,6 @@
         "name": "registro",
         "description": "registro de cambios del bot"
       },
-      "BOTINFO": {
-        "name": "botinfo",
-        "description": "obten información del bot y configura sus opciones"
-      },
       "CONTACT-US": {
         "name": "contáctanos",
         "description": "para sugerencias, reporte, contactarnos o cualquier otra cosa."
@@ -340,7 +336,7 @@
     "description": "obten un vistazo a las misiones diarias",
     "RESPONSES": {
       "NO_DATA": "No se ha encontrado información sobre las misiones de hoy. Inténtalo de nuevo más tarde",
-      "TIME_FRAME": "Por favor, ten en cuenta que las misiones pueden tardar entre 30 minutos y 1 hora en actualizarse después de los reinicios diarios. El tiempo indicado es solo una estimación, ya que algunos días puede tardar más. Mira como funciona aquí[<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>]",
+      "TIME_FRAME": "Por favor ten en cuenta que puede tomar entre 30 minutos a 1 hora después de los reinicios diarios para que las misiones sean actualizadas. El marco de tiempo es solo una estimación, algunos días puede tomar más que eso. Mira como funciona [aquí!](<https://docs.skyhelper.xyz/docs/commands/info#how-does-this-work>)",
       "OUTDATED": "Esta misión está desactualizada. Por favor espera a que las misiones se actualicen",
       "EMBED_AUTHOR": "Misiones diarias",
       "BUTTON1": "Velas del tesoro",
@@ -389,6 +385,59 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "información",
+        "description": "Obtener información del bot"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
+      }
+    }
+  },
+  "PLANNER": {
+    "name": "planner",
+    "description": "track and plan your sky progress",
+    "options": {
+      "home": {
+        "name": "home",
+        "description": "track and plan your sky progress"
+      },
+      "search": {
+        "name": "search",
+        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+      },
+      "profile": {
+        "name": "perfil",
+        "description": "Your planner profile & stats and currency usages"
+      },
+      "query": {
+        "name": "query",
+        "description": "the query to search for"
+      },
+      "data": {
+        "name": "datos",
+        "description": "mange/export/import your planner data"
+      },
+      "action": {
+        "name": "acción",
+        "description": "the action you want to perform"
+      },
+      "choices": {
+        "import": "Importar datos",
+        "export": "Exportar datos",
+        "delete": "Eliminar datos"
       }
     }
   }
