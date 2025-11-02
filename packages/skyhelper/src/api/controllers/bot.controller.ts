@@ -62,12 +62,14 @@ export class BotController {
                 _id: { date: { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } } },
                 join: { $sum: { $cond: [{ $eq: ["$guildEvent.event", "join"] }, 1, 0] } },
                 leave: { $sum: { $cond: [{ $eq: ["$guildEvent.event", "leave"] }, 1, 0] } },
+                maxGuilds: { $max: "$guildEvent.guilds" },
               },
             },
             {
               $project: {
                 _id: 0,
                 date: "$_id.date",
+                guilds: "$maxGuilds",
                 join: 1,
                 leave: 1,
               },

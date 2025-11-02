@@ -44,7 +44,10 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
   await updateBotStatsMessage(client);
 
   // update statistics
-  await client.schemas.StatisticsModel.create({ guildEvent: { event: "join", guildId: guild.id }, timestamp: new Date() });
+  await client.schemas.StatisticsModel.create({
+    guildEvent: { event: "join", guildId: guild.id, guilds: client.guilds.size },
+    timestamp: new Date(),
+  });
 
   // Post stats to bot lists
   await postBotListStats(client);

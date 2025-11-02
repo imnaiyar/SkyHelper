@@ -5,9 +5,9 @@ interface BotStats {
   ping: number;
   commands: number;
   totalUserInstalls: number;
-  stats: {
-    commands: Array<{ _id: { data: string; commandName: string }; count: number }>;
-    guildEvents: Array<{ _id: { data: string; eventType: string }; count: number }>;
+  statistics: {
+    commands: Array<{ date: string; commandName: string; count: number }>;
+    guildEvents: Array<{ date: string; join: number; leave: number; guilds: number }>;
   };
 }
 export default function useStats() {

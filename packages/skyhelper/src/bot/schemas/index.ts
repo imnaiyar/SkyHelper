@@ -15,6 +15,7 @@ const StatisticSchema = new mongoose.Schema({
   guildEvent: {
     event: { type: String },
     guildId: { type: String },
+    guilds: { type: Number },
   },
   timestamp: { type: Date, required: true, default: Date.now, expires: "30d" },
 });
