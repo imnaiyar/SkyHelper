@@ -1,4 +1,4 @@
-import { getServerCookie } from "@/app/lib/auth/cookies";
+import { getServerCookie } from "@/lib/auth/cookies";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

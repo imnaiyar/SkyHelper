@@ -1,4 +1,4 @@
-import { getRoleConnections } from "@/app/lib/discord";
+import { getRoleConnections } from "@/lib/discord";
 import LinkedRolePage from "./LinkedRolePage";
 export default async function page() {
   const data = await getRoleConnections();

@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/ui/Header";
-import Footer from "./components/ui/Footer";
-import { DiscordAuthProvider } from "./components/auth/DiscordAuthContext";
-import { NotificationProvider } from "./components/NotificationContext";
-import NotificationContainer from "./components/NotificationContainer";
-import PWARegister from "./components/ui/PWARegister";
-import OfflineIndicator from "./components/ui/OfflineIndicator";
-import FloatingStarsBackground from "./components/ui/FloatingStarsBackground";
+import Header from "../components/ui/Header";
+import Footer from "../components/ui/Footer";
+import { DiscordAuthProvider } from "../components/auth/DiscordAuthContext";
+import { NotificationProvider } from "../components/NotificationContext";
+import NotificationContainer from "../components/NotificationContainer";
+import PWARegister from "../components/ui/PWARegister";
+import OfflineIndicator from "../components/ui/OfflineIndicator";
+import FloatingStarsBackground from "../components/ui/FloatingStarsBackground";
 import { generateOGMetadata } from "../lib/og";
-import { AuthUser } from "./lib/auth/types";
+import { AuthUser } from "../lib/auth/types";
 import { cookies } from "next/headers";
 
 const inter = Inter({

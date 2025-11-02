@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-interface BotStats {
+export interface BotStats {
   totalServers: number;
   totalMembers: number;
   ping: number;

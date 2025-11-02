@@ -121,7 +121,6 @@ const ChartTooltipContent = React.forwardRef<
     ref,
   ) => {
     const { config } = useChart();
-
     const tooltipLabel = React.useMemo(() => {
       if (hideLabel || !payload?.length) {
         return null;
@@ -147,7 +146,6 @@ const ChartTooltipContent = React.forwardRef<
     if (!active || !payload?.length) {
       return null;
     }
-
     const nestLabel = payload.length === 1 && indicator !== "dot";
 
     return (

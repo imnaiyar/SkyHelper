@@ -1,6 +1,6 @@
 @import "tailwindcss";
-
 @custom-variant dark (&:is(.dark *));
+@plugin "tailwindcss-animate";
 
 @theme {
   --breakpoint-xs: 30rem;

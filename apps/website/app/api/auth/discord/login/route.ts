@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { extractScopesFromToken } from "@/app/lib/auth/scopes";
-import { setCookie, COOKIE_NAMES } from "@/app/lib/auth/cookies";
+import { extractScopesFromToken } from "@/lib/auth/scopes";
+import { setCookie, COOKIE_NAMES } from "@/lib/auth/cookies";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;

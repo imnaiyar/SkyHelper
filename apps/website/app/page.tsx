@@ -1,8 +1,8 @@
 import Link from "next/link";
-import FeatureCard, { FeatureCardProps } from "./components/FeatureCard";
-import FeatureModal from "./components/FeatureModal";
+import FeatureCard, { FeatureCardProps } from "../components/FeatureCard";
+import FeatureModal from "../components/FeatureModal";
 import Image from "next/image";
-import { ModalContent, ModalProvider, ModalTrigger } from "./components/ui/Modal";
+import { ModalContent, ModalProvider, ModalTrigger } from "../components/ui/Modal";
 
 export default async function Home() {
   const featureImages = {

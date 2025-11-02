@@ -2,7 +2,7 @@
 
 import { useState, useEffect, JSX } from "react";
 import { ChevronDown, ChevronUp, Search, Filter, Command, Hash, Folder, SlashSquare } from "lucide-react";
-import useFetchHook from "../hooks/discord";
+import useFetchHook from "../../hooks/discord";
 import {
   APIApplicationCommand,
   APIApplicationCommandBasicOption,
@@ -14,8 +14,8 @@ import {
 import { PermissionsUtil } from "@/utils/PermissionUtils";
 import { parsePerms } from "@/utils/parsePerms";
 
-import { SecurityCallout } from "../components/ui/Callout";
-import Loading from "../components/ui/Loading";
+import { SecurityCallout } from "../../components/ui/Callout";
+import Loading from "../../components/ui/Loading";
 
 const CommandTypeMap = {
   [ApplicationCommandType.ChatInput]: "Slash",
