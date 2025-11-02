@@ -345,7 +345,8 @@ button,
   --background: #0f172a;
   --foreground: #f1f5f9;
   --card: oklch(20.8% 0.042 265.755);
-  --card-foreground: oklch(37.2% 0.044 257.287) --popover: oklch(0.205 0 0);
+  --card-foreground: oklch(37.2% 0.044 257.287);
+  --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -382,3 +383,4 @@ button,
     @apply bg-background text-foreground;
   }
 }
+
