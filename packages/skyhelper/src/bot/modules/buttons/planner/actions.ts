@@ -44,7 +44,7 @@ export default defineButton({
     if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
       await helper.deferUpdate();
 
-      const { currentShard, currentRealm } = ShardsUtil.shardsIndex(DateTime.now());
+      const { currentShard, currentRealm } = ShardsUtil.shardsIndex(DateTime.now().setZone(zone));
       const info = shardsInfo[currentRealm]![currentShard]!;
 
       // if same date then cleared status was removed
