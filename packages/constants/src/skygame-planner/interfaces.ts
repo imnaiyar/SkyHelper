@@ -3,6 +3,9 @@
  * Based on the interfaces from https://github.com/Silverfeelin/SkyGame-Planner
  */
 
+import { DateTime } from "luxon";
+import { zone } from "../index.js";
+
 /**
  * Base interfaces
  */
@@ -473,6 +476,9 @@ export interface UserPlannerData {
   gifted: string;
   /** Extra datas related to planner */
   keys: Record<string, any>;
+
+  /** Check-in for shards when user have cleared them */
+  "shards.checkin"?: string;
 }
 
 /**
@@ -540,6 +546,14 @@ export class PlannerDataHelper {
       gifted: "",
       keys: {},
     };
+  }
+
+  /** Has todays shards cleared */
+  static shardsCleared(plannerData?: UserPlannerData) {
+    return Boolean(
+      plannerData?.["shards.checkin"] &&
+        DateTime.now().setZone(zone).hasSame(DateTime.fromISO(plannerData["shards.checkin"], { zone }), "day"),
+    );
   }
 }
 

@@ -89,6 +89,6 @@ export const store = new SchemaStore()
       // action type: toggle-item, toggle-node, toggle-iap, etc.
       .string("action")
       // serialized navigation state to refresh after action
-      .string("navState")
+      .nullable("navState", t.string)
       .nullable("user", t.string),
   );

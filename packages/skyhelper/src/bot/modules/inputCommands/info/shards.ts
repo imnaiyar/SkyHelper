@@ -4,19 +4,20 @@ import type { getTranslator } from "@/i18n";
 import { SHARDS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
+import type { UserSchema } from "@/types/schemas";
+import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 
 export default {
   async interactionRun({ t, helper, options }) {
     const date = options.getString("date");
     const hide = options.getBoolean("hide") ?? false;
-    const shard = getShards(t, helper.user.id, date);
+    const shard = getShards(t, helper.user.id, await helper.getUserSettings(), date);
     if (typeof shard === "string") {
       return void (await helper.reply({
         content: shard,
         flags: MessageFlags.Ephemeral,
       }));
     }
-
     await helper.reply({ ...shard, flags: MessageFlags.IsComponentsV2 | (hide ? MessageFlags.Ephemeral : 0) });
   },
 
@@ -26,6 +27,7 @@ export default {
 const getShards = (
   t: ReturnType<typeof getTranslator>,
   user: string,
+  settings: UserSchema,
   date?: string | null,
 ): APIInteractionResponseCallbackData | string => {
   if (date && !/^\d{4,6}-\d{2}-\d{2}$/.test(date)) {
@@ -36,5 +38,5 @@ const getShards = (
   if (typeof currentDate === "string") {
     return t("commands:SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
   }
-  return buildShardEmbed(currentDate, t, false, user);
+  return buildShardEmbed(currentDate, t, false, user, PlannerDataHelper.shardsCleared(settings.plannerData));
 };
