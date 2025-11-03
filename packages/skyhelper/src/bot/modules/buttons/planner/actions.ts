@@ -66,7 +66,7 @@ export default defineButton({
       });
       return;
     }
-    if (!navState) throw new Error("Recieved undefined 'navState' where it was required");
+    if (!navState) throw new Error("Received undefined 'navState' where it was required");
 
     const state = deserializeNavState(navState);
 
