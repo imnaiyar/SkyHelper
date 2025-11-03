@@ -1,6 +1,7 @@
 import type { ComponentInteractionMap } from "@/@types/interactions";
 import { getTranslator } from "@/i18n";
 import type { SkyHelper } from "@/structures/Client";
+import type { UserSchema } from "@/types/schemas";
 import {
   API,
   ApplicationCommandType,
@@ -30,6 +31,7 @@ export class InteractionHelper {
   public api: API;
   public user: APIUser;
   public t: ReturnType<typeof getTranslator> = getTranslator("en-US");
+  private userSettings: UserSchema | null = null;
   constructor(
     public readonly int: APIInteraction,
     public readonly client: SkyHelper,
@@ -42,6 +44,12 @@ export class InteractionHelper {
     const guild = this.int.guild_id ? this.client.guilds.get(this.int.guild_id) : null;
     const guildSettings = guild ? await this.client.schemas.getSettings(guild) : null;
     this.t = getTranslator(userSettings.language?.value ?? guildSettings?.language?.value ?? "en-US");
+  }
+
+  async getUserSettings() {
+    if (this.userSettings) return this.userSettings;
+    this.userSettings = await this.client.schemas.getUser(this.user);
+    return this.userSettings;
   }
 
   async reply(data: ResponseData) {

@@ -10,6 +10,7 @@ export enum PlannerAction {
   ModifyTree = "modify-tree",
   ToggleListNode = "tg-ln",
   NestingRotation = "nr",
+  ShardsCleared = "shrdclr",
 }
 
 export const PlannerCurrenciesSchema = z.object({

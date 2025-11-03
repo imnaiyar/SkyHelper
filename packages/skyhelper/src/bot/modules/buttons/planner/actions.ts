@@ -13,7 +13,7 @@ import {
   adjustCurrencies,
 } from "@/handlers/planner-utils";
 import { handlePlannerNavigation } from "@/handlers/planner";
-import { SkyPlannerData } from "@skyhelperbot/constants";
+import { SkyPlannerData, zone } from "@skyhelperbot/constants";
 import { setLoadingState } from "@/utils/loading";
 import {
   enrichDataWithUserProgress,
@@ -24,6 +24,9 @@ import {
 import { PlannerAction, type NavigationState } from "@/types/planner";
 import { modifyTreeNode } from "./sub/modify.tree.js";
 import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";
+import { DateTime } from "luxon";
+import { shardsInfo, ShardsUtil } from "@skyhelperbot/utils";
+import { buildShardEmbed } from "@/utils/classes/Embeds";
 
 /**
  * Button handler for Sky Game Planner user actions (unlock/lock items, nodes, etc.)
@@ -35,12 +38,43 @@ export default defineButton({
     const [action, guid = "", actionType = ""] = a.split("|");
     const user = await helper.client.schemas.getUser(helper.user);
     const data = await SkyPlannerData.getSkyGamePlannerDataWithForUser(user.plannerData);
+    user.plannerData ??= PlannerDataHelper.createEmpty();
+
+    // #region shards cleared
+    if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
+      await helper.deferUpdate();
+
+      const { currentShard, currentRealm } = ShardsUtil.shardsIndex(DateTime.now().setZone(zone));
+      const info = shardsInfo[currentRealm]![currentShard]!;
+
+      // if same date then cleared status was removed
+      const cleared = PlannerDataHelper.shardsCleared(user.plannerData);
+      if (cleared) {
+        user.plannerData["shards.checkin"] = undefined;
+        // substract shards rewards that was granted for clearing
+        adjustCurrencies(user, { ac: info.ac }, false);
+      } else {
+        // otherwise cleared status was triggered
+        user.plannerData["shards.checkin"] = DateTime.now().setZone(zone).toFormat("yyyy-MM-dd");
+        adjustCurrencies(user, { ac: info.ac }, true);
+      }
+      await user.save();
+      await helper.editReply(buildShardEmbed(DateTime.now().setZone(zone), _t, false, helper.user.id, !cleared));
+      await helper.followUp({
+        content: `Marked today's red shard as ${cleared ? "Uncleared" : "Cleared"}! ${info.ac} was ${cleared ? "removed" : "added"} to your planner currencies.\n-# Use ${helper.client.utils.mentionCommand(helper.client, "planner", "home")} to plan and track your sky progress.`,
+        flags: 64,
+      });
+      return;
+    }
+    if (!navState) throw new Error("Received undefined 'navState' where it was required");
+
     const state = deserializeNavState(navState);
 
     if ((action as PlannerAction) === PlannerAction.ModifyTree) {
       await modifyTreeNode(guid, data, user, helper, state as NavigationState);
       return;
     }
+
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
     await helper.update({ components: getLoading });
 

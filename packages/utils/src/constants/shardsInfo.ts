@@ -1,16 +1,17 @@
 export const shardConfig = {
-  a: { type: "<:ShardBlue:1233057106903699497> Black Shard", colors: "#000000", weekdays: [6, 7] },
-  A: { type: "<:ShardRed:1233057065799254106> Red Shard", colors: "#FF0000", weekdays: [2, 3] },
-  b: { type: "<:ShardBlue:1233057106903699497> Black Shard", colors: "#000000", weekdays: [7, 1] },
-  B: { type: "<:ShardRed:1233057065799254106> Red Shard", colors: "#FF0000", weekdays: [3, 4] },
-  C: { type: "<:ShardRed:1233057065799254106> Red Shard", colors: "#FF0000", weekdays: [1, 2] },
+  a: { type: "black" as const, colors: "#000000", weekdays: [6, 7] },
+  A: { type: "red" as const, colors: "#FF0000", weekdays: [2, 3] },
+  b: { type: "black" as const, colors: "#000000", weekdays: [7, 1] },
+  B: { type: "red" as const, colors: "#FF0000", weekdays: [3, 4] },
+  C: { type: "red" as const, colors: "#FF0000", weekdays: [1, 2] },
 };
 
 export interface ShardInfo {
   area: string;
-  rewards: string;
+  wax?: number;
+  ac?: number;
   image: string;
-  type: string;
+  type: "red" | "black";
   colors: string;
   weekdays: number[];
   location: string;
@@ -28,7 +29,7 @@ export const shardsInfo: ShardsInfo = {
   prairie: {
     a: {
       area: "Butterfly Fields, <:r5Prairie:1150596314883690607> Daylight Prairie",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226741731119165/ButterflyFields.png",
       ...shardConfig.a,
       location:
@@ -37,7 +38,7 @@ export const shardsInfo: ShardsInfo = {
     },
     A: {
       area: "Bird's Nest, <:r5Prairie:1150596314883690607> Daylight Prairie",
-      rewards: "2.5 AC <a:ac5:1125338720183267390>",
+      ac: 2.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226742024708187/BirdsNest.png",
       ...shardConfig.A,
       location:
@@ -46,7 +47,7 @@ export const shardsInfo: ShardsInfo = {
     },
     b: {
       area: "Village Island, <:r5Prairie:1150596314883690607> Daylight Prairie",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226741412343989/VillageIsland.png",
       ...shardConfig.b,
       location:
@@ -55,7 +56,7 @@ export const shardsInfo: ShardsInfo = {
     },
     B: {
       area: "Sanctuary Island, <:r5Prairie:1150596314883690607> Daylight Prairie",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226740741263510/SanctuaryIsland.png",
       ...shardConfig.B,
       location: "https://media.discordapp.net/attachments/575827924343848960/1117348946390564934/IMG_4458.png",
@@ -63,7 +64,7 @@ export const shardsInfo: ShardsInfo = {
     },
     C: {
       area: "Prairie Caves, <:r5Prairie:1150596314883690607> Daylight Prairie",
-      rewards: "2 AC <a:ac5:1125338720183267390>",
+      ac: 2,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226741110349925/PrairieCave.png",
       ...shardConfig.C,
       location:
@@ -75,7 +76,7 @@ export const shardsInfo: ShardsInfo = {
   forest: {
     a: {
       area: "Forest Brook, <:r4Forest:1150596343354630235> Hidden Forest",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226847062671400/ForestBrook.png",
       ...shardConfig.a,
       location: "https://media.discordapp.net/attachments/575827924343848960/1117712849217781871/IMG_3543.png",
@@ -83,7 +84,7 @@ export const shardsInfo: ShardsInfo = {
     },
     A: {
       area: "Treehouse, <:r4Forest:1150596343354630235> Hidden Forest",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226739713650788/Treehouse.png",
       ...shardConfig.A,
       location:
@@ -92,7 +93,7 @@ export const shardsInfo: ShardsInfo = {
     },
     b: {
       area: "Boneyard, <:r4Forest:1150596343354630235> Hidden Forest",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226740472819793/Boneyard.png",
       ...shardConfig.b,
       location:
@@ -101,7 +102,7 @@ export const shardsInfo: ShardsInfo = {
     },
     B: {
       area: "Sunny Forest, <:r4Forest:1150596343354630235> Hidden Forest",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226659518558298/ElevatedClearing.png",
       ...shardConfig.B,
       location:
@@ -110,7 +111,7 @@ export const shardsInfo: ShardsInfo = {
     },
     C: {
       area: "Forest End, <:r4Forest:1150596343354630235> Hidden Forest",
-      rewards: "2.5 AC <a:ac5:1125338720183267390>",
+      ac: 2.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226740099534868/ForestEnd.png",
       ...shardConfig.C,
       location:
@@ -121,7 +122,7 @@ export const shardsInfo: ShardsInfo = {
   valley: {
     a: {
       area: "Ice Rink, <:r3Valley:1150596376930037850> Valley of Triumph",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226659262693446/IceRink.png",
       ...shardConfig.a,
       location:
@@ -130,7 +131,7 @@ export const shardsInfo: ShardsInfo = {
     },
     A: {
       area: "Village of Dreams, <:r3Valley:1150596376930037850> Valley of Triumph",
-      rewards: "2.5 AC <a:ac5:1125338720183267390>",
+      ac: 2.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226658918780948/VillageOfDreams.png",
       ...shardConfig.A,
       location:
@@ -139,7 +140,7 @@ export const shardsInfo: ShardsInfo = {
     },
     b: {
       area: "Ice Rink, <:r3Valley:1150596376930037850> Valley of Triumph",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226659262693446/IceRink.png",
       ...shardConfig.b,
       location:
@@ -148,7 +149,7 @@ export const shardsInfo: ShardsInfo = {
     },
     B: {
       area: "Hermit's Valley, <:r3Valley:1150596376930037850> Valley of Triumph",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226658629365770/HermitsValley.png",
       ...shardConfig.B,
       location:
@@ -157,7 +158,7 @@ export const shardsInfo: ShardsInfo = {
     },
     C: {
       area: "Village of Dreams, <:r3Valley:1150596376930037850> Valley of Triumph",
-      rewards: "2.5 AC <a:ac5:1125338720183267390>",
+      ac: 2.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226658918780948/VillageOfDreams.png",
       ...shardConfig.C,
       location:
@@ -168,7 +169,7 @@ export const shardsInfo: ShardsInfo = {
   wasteland: {
     a: {
       area: "Broken Temple, <:r2Wasteland:1150596423822356511> Golden Wasteland",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226658209923202/BrokenTemple.png",
       ...shardConfig.a,
       location:
@@ -177,7 +178,7 @@ export const shardsInfo: ShardsInfo = {
     },
     A: {
       area: "Crab Fields, <:r2Wasteland:1150596423822356511> Golden Wasteland",
-      rewards: "2.5 AC <a:ac5:1125338720183267390>",
+      ac: 2.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226846794231919/CrabFields.png",
       ...shardConfig.A,
       location:
@@ -186,7 +187,7 @@ export const shardsInfo: ShardsInfo = {
     },
     b: {
       area: "Battlefield, <:r2Wasteland:1150596423822356511> Golden Wasteland",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657148784680/Battlefield.png",
       ...shardConfig.b,
       location:
@@ -195,7 +196,7 @@ export const shardsInfo: ShardsInfo = {
     },
     B: {
       area: "Forgotten Ark, <:r2Wasteland:1150596423822356511> Golden Wasteland",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657933119508/ForgottenArk.png",
       ...shardConfig.B,
       location: "https://media.discordapp.net/attachments/575827924343848960/1112639178048548884/IMG_3148.png",
@@ -203,7 +204,7 @@ export const shardsInfo: ShardsInfo = {
     },
     C: {
       area: "Graveyard, <:r2Wasteland:1150596423822356511> Golden Wasteland",
-      rewards: "2 AC <a:ac5:1125338720183267390>",
+      ac: 2,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226742263787623/Graveyard.png",
       ...shardConfig.C,
       location:
@@ -214,7 +215,7 @@ export const shardsInfo: ShardsInfo = {
   vault: {
     a: {
       area: "Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657656287392/StarlightDesert.png",
       ...shardConfig.a,
       location: "https://media.discordapp.net/attachments/575827924343848960/1090896818604347392/IMG_1525.png",
@@ -222,7 +223,7 @@ export const shardsInfo: ShardsInfo = {
     },
     A: {
       area: "Jellyfish Cove, Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657404616756/JellyfishCove.png",
       ...shardConfig.A,
       location:
@@ -231,7 +232,7 @@ export const shardsInfo: ShardsInfo = {
     },
     b: {
       area: "Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge",
-      rewards: "200 Wax <:wax:1125091974869946369>",
+      wax: 200,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657656287392/StarlightDesert.png",
       ...shardConfig.b,
       location: "https://media.discordapp.net/attachments/575827924343848960/1090896818604347392/IMG_1525.png",
@@ -239,7 +240,7 @@ export const shardsInfo: ShardsInfo = {
     },
     B: {
       area: "Jellyfish Cove, Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657404616756/JellyfishCove.png",
       ...shardConfig.B,
       location:
@@ -248,7 +249,7 @@ export const shardsInfo: ShardsInfo = {
     },
     C: {
       area: "Jellyfish Cove, Starlight Desert, <:r1Vault:1150596447679553636> Vault of Knowledge",
-      rewards: "3.5 AC <a:ac5:1125338720183267390>",
+      ac: 3.5,
       image: "https://media.discordapp.net/attachments/867638574571323424/1159226657404616756/JellyfishCove.png",
       ...shardConfig.C,
       location:

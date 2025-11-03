@@ -1,4 +1,4 @@
-import { ShardsUtil as utils, shardsInfo, shardsTimeline } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, shardsInfo, shardsTimeline, row, button } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
@@ -28,10 +28,12 @@ import {
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema, GuildSchema } from "@/types/schemas";
 import { CalendarMonths } from "../constants.js";
-import { emojis, RemindersEventsMap } from "@skyhelperbot/constants";
+import { currency, emojis, RemindersEventsMap, zone } from "@skyhelperbot/constants";
 import { paginate } from "../paginator.js";
 import RemindersUtils from "./RemindersUtils.js";
 import type { InteractionHelper } from "./InteractionUtil.js";
+import { createActionId } from "@/handlers/planner-utils";
+import { PlannerAction } from "@/types/planner";
 
 /**
  * @param date The date for which the shards embed is to be built
@@ -43,6 +45,7 @@ export function buildShardEmbed(
   t: ReturnType<typeof import("@/i18n").getTranslator>,
   noBtn?: boolean,
   user?: string,
+  cleared?: boolean,
 ): {
   components: APIMessageTopLevelComponent[];
 } {
@@ -52,25 +55,34 @@ export function buildShardEmbed(
   const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
   const status = utils.getStatus(date);
 
-  let navBtns: APIActionRowComponent<APIButtonComponent> | null = null;
+  const navBtns: APIButtonComponent[] = [];
   if (!noBtn) {
-    navBtns = {
-      type: 1,
-      components: [
-        {
-          type: ComponentType.Button,
-          emoji: Utils.parseEmoji(emojis.left_chevron)!,
-          custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.minus({ days: 1 }).toISODate()!, user }),
-          style: ButtonStyle.Primary,
-        },
-        {
-          type: ComponentType.Button,
-          emoji: Utils.parseEmoji(emojis.right_chevron)!,
-          custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.plus({ days: 1 }).toISODate()!, user }),
-          style: ButtonStyle.Primary,
-        },
-      ],
-    };
+    navBtns.push(
+      {
+        type: ComponentType.Button,
+        emoji: Utils.parseEmoji(emojis.left_chevron)!,
+        custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.minus({ days: 1 }).toISODate()!, user }),
+        style: ButtonStyle.Primary,
+      },
+      {
+        type: ComponentType.Button,
+        emoji: Utils.parseEmoji(emojis.right_chevron)!,
+        custom_id: Utils.store.serialize(Utils.customId.ShardsScroll, { date: date.plus({ days: 1 }).toISODate()!, user }),
+        style: ButtonStyle.Primary,
+      },
+    );
+
+    // add cleared btn if red shard and curent day for planner
+    if (typeof cleared === "boolean" && info.type === "red" && DateTime.now().setZone(zone).hasSame(date, "day")) {
+      navBtns.push(
+        button({
+          label: cleared ? "Unclear" : "Cleared",
+          custom_id: createActionId({ action: PlannerAction.ShardsCleared, navState: { user } }),
+          emoji: { id: cleared ? emojis.red_shard : emojis.checkmark },
+          style: cleared ? 4 : 2,
+        }),
+      );
+    }
   }
 
   let comp1: APIContainerComponent;
@@ -84,14 +96,20 @@ export function buildShardEmbed(
       mediaGallery(
         mediaGalleryItem("https://media.discordapp.net/attachments/867638574571323424/1193308709183553617/20240107_0342171.gif"),
       ),
-      ...(navBtns ? [navBtns] : []),
     );
+    if (navBtns.length) comp1.components.push(row(navBtns));
   } else {
     const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
     comp2 = container(
       section(
         thumbnail(info.image, info.type),
-        `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${info.type} (${info.rewards})\n${emojis.tree_end} ${info.area}`,
+        `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${
+          info.type === "red"
+            ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard`
+            : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`
+        } (${
+          info.wax ? `${info.wax} ${Utils.formatEmoji(emojis.wax, "Wax")}` : `${info.ac} ${Utils.formatEmoji(currency.ac, "AC")}`
+        })\n${emojis.tree_end} ${info.area}`,
       ),
     );
     comp1 = container(
@@ -124,7 +142,7 @@ export function buildShardEmbed(
       separator(true, 1),
       section(thumbnail(info.location, t("features:shards-embed.LOCATION")), `**${t("features:shards-embed.LOCATION")}**`),
       section(thumbnail(info.data, t("features:shards-embed.DATA")), `**${t("features:shards-embed.DATA")}**`),
-      ...(navBtns ? [separator(true, 1), navBtns] : []),
+      ...(navBtns.length ? [separator(true, 1), row(navBtns)] : []),
     );
   }
 
@@ -209,7 +227,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     description += desc + "\n";
   }
   // Event select
-  const row: APIActionRowComponent<APIStringSelectComponent> = {
+  const select: APIActionRowComponent<APIStringSelectComponent> = {
     type: ComponentType.ActionRow,
     components: [
       {
@@ -231,7 +249,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
     textDisplay(`\n**${t("features:times-embed.EVENT_TITLE")}:**\n${eventDesc}`),
   );
   return {
-    components: [component, container(textDisplay(description), separator(), row)],
+    components: [component, container(textDisplay(description), separator(), select)],
   };
 }
 
@@ -287,12 +305,12 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof ge
     disabled: disabledSe,
     style: ButtonStyle.Success,
   };
-  const row: APIActionRowComponent<APIButtonComponent> = {
+  const btnRow: APIActionRowComponent<APIButtonComponent> = {
     type: ComponentType.ActionRow,
     components: [rotatingBtn],
   };
-  if (seasonal_candles) row.components.push(seasonalBtn);
-  component.components.push(separator(true, 1), row);
+  if (seasonal_candles) btnRow.components.push(seasonalBtn);
+  component.components.push(separator(true, 1), btnRow);
   return { components: [component] };
 }
 

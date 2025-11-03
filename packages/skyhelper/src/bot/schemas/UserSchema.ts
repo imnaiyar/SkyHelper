@@ -71,6 +71,7 @@ const Schema = new mongoose.Schema<UserSchema>({
           type: mongoose.Schema.Types.Mixed,
           default: () => ({}),
         },
+        "shards.checkin": String,
       },
       { minimize: false, _id: false },
     ),

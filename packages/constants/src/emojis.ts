@@ -28,6 +28,9 @@ export const emojis = {
   spicon: "1424038529662451804",
   leftarryello: "1424038538562900029",
   checkmark: "1429192156471492808",
+  wax: "1125091974869946369",
+  red_shard: "1233057065799254106",
+  black_shard: "1233057106903699497",
 } as const;
 
 export const realms_emojis = {

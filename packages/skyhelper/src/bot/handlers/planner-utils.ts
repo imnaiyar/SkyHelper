@@ -388,15 +388,15 @@ export function createActionId(opt: {
   guid?: string;
   gifted?: string;
   actionType?: string;
-  navState: NavigationState;
+  navState?: Partial<NavigationState>;
 }) {
   return store.serialize(CustomId.PlannerActions, {
     action: opt.action + "|" + (opt.guid ?? "") + "|" + (opt.actionType ?? ""),
-    navState: serializeNavState(opt.navState),
-    user: null,
+    navState: opt.navState && "t" in opt.navState ? serializeNavState(opt.navState) : null,
+    user: opt.navState?.user,
   });
 }
-export function serializeNavState(state: NavigationState) {
+export function serializeNavState(state: Partial<NavigationState>) {
   const parts = [state.t, state.it ?? "", state.p ?? "", state.f ?? "", state.d ?? "", state.i ?? "", state.v ?? ""];
 
   let result = parts.join("|");
