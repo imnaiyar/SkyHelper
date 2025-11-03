@@ -59,15 +59,7 @@ export default defineButton({
         adjustCurrencies(user, { ac: info.ac }, true);
       }
       await user.save();
-      await helper.editReply(
-        buildShardEmbed(
-          DateTime.now().setZone(zone),
-          _t,
-          false,
-          helper.user.id,
-          PlannerDataHelper.shardsCleared(user.plannerData),
-        ),
-      );
+      await helper.editReply(buildShardEmbed(DateTime.now().setZone(zone), _t, false, helper.user.id, !cleared));
       await helper.followUp({
         content: `Marked today's red shard as ${cleared ? "Uncleared" : "Cleared"}! ${info.ac} was ${cleared ? "removed" : "added"} to your planner currencies.\n-# Use ${helper.client.utils.mentionCommand(helper.client, "planner", "home")} to plan and track your sky progress.`,
         flags: 64,
