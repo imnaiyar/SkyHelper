@@ -110,7 +110,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             embeds: [buildInteractionLog(interaction, client, options)],
           });
         }
-        await updateStats(command, helper);
+        updateStats(command, helper).catch(client.logger.error);
         return;
       } catch (error) {
         const id = client.logger.error(error, scope);
@@ -174,7 +174,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
       try {
         await command.execute(interaction, helper, t, new InteractionOptionResolver(interaction));
-        await updateStats(command as any, helper);
+        updateStats(command as any, helper).catch(client.logger.error);
         return;
       } catch (error) {
         const id = client.logger.error(error, scope);
