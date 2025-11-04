@@ -50,7 +50,9 @@ export class SkytimesUtils {
    */
   public static getNextEventOccurrence(eventName: EventKey): DateTime {
     const event = eventData[eventName];
-    if (!event as boolean /* lol */) throw new Error("Unknown Event");
+    // Type guard for runtime safety, even though TypeScript ensures this through Record type
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!event) throw new Error("Unknown Event");
 
     const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
     const dayStart = this.getOccurrenceDay(event);
@@ -72,7 +74,7 @@ export class SkytimesUtils {
     // Calculate the number of complete intervals that have passed
     const intervalsPassed = Math.floor(minutesSinceDayStart / interval);
 
-    // Calculate the next occurrence by adding intervals from current time's perspective
+    // Calculate the next occurrence by adding intervals from day start
     const nextOccurrence = dayStart.plus({ minutes: (intervalsPassed + 1) * interval });
 
     return nextOccurrence;
