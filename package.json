@@ -14,7 +14,7 @@
     "lint": "turbo lint --filter=!@skyhelperbot/website",
     "lint:affected": "turbo lint --filter=...[origin/main]",
     "test:affected": "turbo test --filter=...[origin/main]",
-    "test": "turbo test --filter=!@skyhelperbot/utils",
+    "test": "turbo test",
     "update": "pnpm --recursive update --interactive",
     "prepare": "husky",
     "check-locales": "node scripts/check-unused-locales.js",

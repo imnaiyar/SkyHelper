@@ -14,7 +14,7 @@ export const MOCK_SPIRIT_IMAGE = path.join(import.meta.dirname, "navigator.png")
 /**
  * Simple linear spirit tree with 3 nodes in a vertical chain
  */
-export const mockSimpleLinearTree: ISpiritTree = {
+export const mockSimpleLinearTree = {
   guid: "tree-simple-linear",
   name: "Simple Spirit",
   node: {
@@ -64,12 +64,12 @@ export const mockSimpleLinearTree: ISpiritTree = {
     name: "Simple Spirit",
     type: "Regular" as any,
   } as ISpirit,
-};
+} as const;
 
 /**
  * Branching tree with nw and ne branches
  */
-export const mockBranchingTree: ISpiritTree = {
+export const mockBranchingTree = {
   guid: "tree-branching",
   name: "Branching Spirit",
   node: {
@@ -122,12 +122,12 @@ export const mockBranchingTree: ISpiritTree = {
     type: "Regular" as any,
     imageUrl: MOCK_SPIRIT_IMAGE as any,
   } as ISpirit,
-};
+} as const;
 
 /**
  * Complex tree with deep nesting and multiple branches
  */
-export const mockComplexTree: ISpiritTree = {
+export const mockComplexTree = {
   guid: "tree-complex",
   name: "Complex Spirit Tree",
   node: {
@@ -238,12 +238,12 @@ export const mockComplexTree: ISpiritTree = {
     type: "Regular" as any,
     imageUrl: MOCK_SPIRIT_IMAGE as any,
   } as ISpirit,
-};
+} as const;
 
 /**
  * Seasonal spirit tree with season badges
  */
-export const mockSeasonalTree: ISpiritTree = {
+export const mockSeasonalTree = {
   guid: "tree-seasonal",
   name: "Seasonal Spirit",
   node: {
@@ -298,12 +298,12 @@ export const mockSeasonalTree: ISpiritTree = {
     type: "Season" as any,
     imageUrl: MOCK_SPIRIT_IMAGE as any,
   } as ISpirit,
-};
+} as const;
 
 /**
  * Large tree with many nodes for performance testing
  */
-export const mockLargeTree: ISpiritTree = {
+export const mockLargeTree = {
   guid: "tree-large",
   name: "Large Spirit Tree",
   node: generateLargeTreeNode(0, 5, 3), // depth 5, branching factor 3
@@ -313,7 +313,7 @@ export const mockLargeTree: ISpiritTree = {
     type: "Regular" as any,
     imageUrl: MOCK_SPIRIT_IMAGE as any,
   } as ISpirit,
-};
+} as const;
 
 /**
  * Helper function to generate a large tree recursively
@@ -354,7 +354,7 @@ function generateLargeTreeNode(depth: number, maxDepth: number, branchFactor: nu
 /**
  * Edge case: Empty tree with only root node
  */
-export const mockEmptyTree: ISpiritTree = {
+export const mockEmptyTree = {
   guid: "tree-empty",
   name: "Empty Spirit",
   node: {
@@ -374,12 +374,12 @@ export const mockEmptyTree: ISpiritTree = {
     type: "Regular" as any,
     imageUrl: MOCK_SPIRIT_IMAGE as any,
   } as ISpirit,
-};
+} as const;
 
 /**
  * Edge case: Tree without spirit info
  */
-export const mockTreeWithoutSpirit: ISpiritTree = {
+export const mockTreeWithoutSpirit = {
   guid: "tree-no-spirit",
   name: "No Spirit Tree",
   node: {
@@ -393,14 +393,14 @@ export const mockTreeWithoutSpirit: ISpiritTree = {
     },
     currency: { type: "c", amount: 5 },
   },
-};
+} as const;
 
 /**
  * Edge case: Tree with circular reference prevention test
  * Note: We don't actually create a true circular reference as it would break JSON serialization
  * Instead, we test that the visited set prevents revisiting the same node
  */
-export const mockCircularRefTree: ISpiritTree = {
+export const mockCircularRefTree = {
   guid: "tree-circular",
   name: "Circular Test",
   node: {
@@ -442,12 +442,12 @@ export const mockCircularRefTree: ISpiritTree = {
     type: "Regular" as any,
     imageUrl: MOCK_ICON_URL(),
   } as ISpirit,
-};
+} as const;
 
 /**
  * Tree with items that have all possible properties
  */
-export const mockTreeWithAllProperties: ISpiritTree = {
+export const mockTreeWithAllProperties = {
   guid: "tree-all-props",
   name: "All Properties Tree",
   node: {
@@ -481,12 +481,12 @@ export const mockTreeWithAllProperties: ISpiritTree = {
     type: "Elder" as any,
     imageUrl: MOCK_ICON_URL(),
   } as ISpirit,
-};
+} as const;
 
 /**
  * Tree with high-cost items (edge case for rendering)
  */
-export const mockHighCostTree: ISpiritTree = {
+export const mockHighCostTree = {
   guid: "tree-high-cost",
   name: "High Cost Tree",
   node: {
@@ -517,7 +517,7 @@ export const mockHighCostTree: ISpiritTree = {
     type: "Regular" as any,
     imageUrl: MOCK_ICON_URL(),
   } as ISpirit,
-};
+} as const;
 
 /**
  * Tree with items that have no currency cost
@@ -541,7 +541,7 @@ export const mockNoCostTree: ISpiritTree = {
     type: "Guide" as any,
     imageUrl: MOCK_ICON_URL(),
   } as ISpirit,
-};
+} as const;
 
 /**
  * All mock trees for easy iteration in tests

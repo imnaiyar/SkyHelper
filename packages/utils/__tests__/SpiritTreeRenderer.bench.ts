@@ -13,7 +13,7 @@ import {
   mockLargeTree,
   mockEmptyTree,
 } from "./mocks/spiritTreeData.ts";
-import type { ISpiritTree, INode } from "@skyhelperbot/constants/skygame-planner";
+import type { INode } from "@skyhelperbot/constants/skygame-planner";
 
 describe("SpiritTreeRenderer - Performance Benchmarks", () => {
   describe("Tree Complexity Impact", () => {
@@ -243,7 +243,7 @@ describe("SpiritTreeRenderer - Performance Benchmarks", () => {
 
 // Helper functions for benchmark data generation
 
-function createTreeWithDepth(depth: number): ISpiritTree {
+function createTreeWithDepth(depth: number) {
   function createNode(currentDepth: number): INode {
     const node: INode = {
       guid: `depth-node-${currentDepth}-${Math.random()}`,
@@ -281,7 +281,7 @@ function createTreeWithDepth(depth: number): ISpiritTree {
   };
 }
 
-function createTreeWithBranching(depth: number, branchingFactor: number): ISpiritTree {
+function createTreeWithBranching(depth: number, branchingFactor: number) {
   function createNode(currentDepth: number): INode {
     const node: INode = {
       guid: `branch-node-${currentDepth}-${Math.random()}`,
@@ -320,7 +320,7 @@ function createTreeWithBranching(depth: number, branchingFactor: number): ISpiri
   };
 }
 
-function createWideTree(depth: number, branchesPerLevel: number): ISpiritTree {
+function createWideTree(depth: number, branchesPerLevel: number) {
   function createNode(currentDepth: number, branchIndex: number): INode {
     const node: INode = {
       guid: `wide-node-${currentDepth}-${branchIndex}-${Math.random()}`,
@@ -358,7 +358,7 @@ function createWideTree(depth: number, branchesPerLevel: number): ISpiritTree {
   };
 }
 
-function createHighCostTree(): ISpiritTree {
+function createHighCostTree() {
   return {
     guid: "high-cost-tree",
     name: "High Cost Tree",
@@ -393,7 +393,7 @@ function createHighCostTree(): ISpiritTree {
   };
 }
 
-function createFullPropertiesTree(): ISpiritTree {
+function createFullPropertiesTree() {
   return {
     guid: "full-props-tree",
     name: "Full Properties Tree",
@@ -425,7 +425,7 @@ function createFullPropertiesTree(): ISpiritTree {
         type: "ac",
         amount: 50,
       },
-    },
+    } as INode,
     spirit: {
       guid: "spirit-full",
       name: "Full Props Spirit",
