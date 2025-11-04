@@ -57,6 +57,46 @@ describe("SkytimesUtils", () => {
       }
     });
 
+    it("should evaluate times based on current hour, not start of day", () => {
+      // This test specifically validates the fix for the reported issue
+      // On DST day, times should be calculated from current time context
+      const testTime = DateTime.fromObject(
+        {
+          year: 2024,
+          month: 3,
+          day: 10,
+          hour: 14, // 2 PM PDT (after DST change)
+          minute: 45,
+        },
+        { zone: "America/Los_Angeles" },
+      );
+
+      Settings.now = () => testTime.toMillis();
+
+      try {
+        const details = SkytimesUtils.getEventDetails("geyser");
+
+        // Next occurrence should be within the next 2 hours
+        const diffMinutes = details.nextOccurence.diff(testTime, "minutes").minutes;
+
+        // Should be > 0 and <= 120 minutes (the interval)
+        expect(diffMinutes).toBeGreaterThan(0);
+        expect(diffMinutes).toBeLessThanOrEqual(120);
+
+        // Verify it's actually in the correct timezone (PDT, not PST)
+        expect(details.nextOccurence.zoneName).toBe("America/Los_Angeles");
+
+        // The calculated time should be 15:00
+        // On DST spring forward day, the 2 AM hour is skipped
+        // So times are: 0, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23
+        // At 14:45, next occurrence is 15:00
+        expect(details.nextOccurence.hour).toBe(15);
+        expect(details.nextOccurence.minute).toBe(0);
+      } finally {
+        Settings.now = () => Date.now();
+      }
+    });
+
     it("should handle fall back DST transition correctly", () => {
       // November 3, 2024: DST fall back in America/Los_Angeles (2 AM -> 1 AM)
       // Testing at 5 PM on the day when DST changed
