@@ -53,12 +53,27 @@ export class SkytimesUtils {
     if (!event as boolean /* lol */) throw new Error("Unknown Event");
 
     const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
-    let nextOccurrence = this.getOccurrenceDay(event);
+    const dayStart = this.getOccurrenceDay(event);
 
-    // Loop to calculate the next occurrence based on the interval
-    while (nextOccurrence < now) {
-      nextOccurrence = nextOccurrence.plus({ minutes: event.interval ?? 0 });
+    // If the event hasn't started today yet, return the first occurrence
+    if (dayStart > now) {
+      return dayStart;
     }
+
+    // Calculate how many intervals have passed since the day start
+    // Using current time ensures we account for DST correctly
+    const minutesSinceDayStart = now.diff(dayStart, "minutes").minutes;
+    const interval = event.interval ?? 0;
+
+    if (interval === 0) {
+      return dayStart;
+    }
+
+    // Calculate the number of complete intervals that have passed
+    const intervalsPassed = Math.floor(minutesSinceDayStart / interval);
+
+    // Calculate the next occurrence by adding intervals from current time's perspective
+    const nextOccurrence = dayStart.plus({ minutes: (intervalsPassed + 1) * interval });
 
     return nextOccurrence;
   }
