@@ -91,7 +91,7 @@ export class EventsDisplay extends BasePlannerHandler {
       : null;
     const subs = [
       `## ${event.name}`,
-      instance ? `From ${this.formatDateTimestamp(instance.date)} to ${this.formatDateTimestamp(instance.date)}` : null,
+      instance ? `From ${this.formatDateTimestamp(instance.date)} to ${this.formatDateTimestamp(instance.endDate)}` : null,
       totalCosts && `Total Cost: ${totalCosts}`,
     ].filter(Boolean) as [string, ...string[]];
 
