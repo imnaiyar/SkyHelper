@@ -87,8 +87,8 @@ function getCurrencyContext(node?: INode, item?: IItem): { seasonGuid?: string; 
   let seasonGuid: string | undefined;
   let eventGuid: string | undefined;
 
-  if (node?.spiritTree) {
-    const tree = node.spiritTree;
+  if (node?.root?.spiritTree) {
+    const tree = node.root.spiritTree;
     // Check for season context
     if (tree.spirit?.season) {
       seasonGuid = tree.spirit.season.guid;
