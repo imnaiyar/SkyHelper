@@ -1,6 +1,6 @@
 import type { Command, InteractionOptions, ValidationReturn } from "@/structures/Command";
 import type { Awaitable } from "@/types/utils";
-import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil } from "@skyhelperbot/utils";
 import {
   ApplicationCommandOptionType,
   ApplicationIntegrationType,
@@ -46,7 +46,7 @@ const commonCallback = ({
   const sub = options.getSubcommand();
   if (sub !== "start" && sub !== "configure") return { status: true };
 
-  if (!PermissionsUtil.overwriteFor(guild.clientMember, resolvedChannel, client).has("ManageWebhooks")) {
+  if (!PermissionsUtil.overwriteFor(guild.clientMember, resolvedChannel, guild).has("ManageWebhooks")) {
     return {
       status: false,
       message: t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${resolvedChannel.id}>` }),

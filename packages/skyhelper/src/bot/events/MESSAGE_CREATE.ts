@@ -1,7 +1,7 @@
 import updateDailyQuests from "@/handlers/updateDailyQuests";
 import { getTranslator } from "@/i18n";
 import type { Event } from "@/structures";
-import { MessageFlags } from "@/utils/classes/MessageFlags";
+import { MessageFlags } from "@skyhelperbot/utils";
 import { validateMessage } from "@/utils/validators";
 import * as Sentry from "@sentry/node";
 import {

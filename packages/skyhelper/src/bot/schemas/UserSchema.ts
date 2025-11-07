@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import config from "@/config";
 import type { APIUser, APIGuildMember } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
-import { LimitedCollection } from "@/utils/classes/LimitedCollection";
+import { LimitedCollection } from "@skyhelperbot/utils";
 import type { UserSchema } from "@/types/schemas";
 import type { SkyGameStatsData } from "@/types/custom";
 import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";

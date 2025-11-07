@@ -1,5 +1,5 @@
 import type { SkyHelper } from "@/structures";
-import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil } from "@skyhelperbot/utils";
 import type { APIUser } from "@discordjs/core";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import * as Sentry from "@sentry/node";

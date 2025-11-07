@@ -6,7 +6,7 @@ import type {
 } from "@discordjs/core";
 import type { InteractionValidation } from "./Command.js";
 import type { Category } from "./Category.ts";
-import { PermissionsResolvable } from "@/utils/classes/PermissionUtils";
+import { PermissionsResolvable } from "@skyhelperbot/utils";
 import type { OverrideLocalizations } from "@/types/utils";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";

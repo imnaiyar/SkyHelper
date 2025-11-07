@@ -10,8 +10,7 @@ import {
 } from "@discordjs/core";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { parsePerms, resolveColor, type Permission } from "@skyhelperbot/utils";
-import type { MessageFlags } from "./classes/MessageFlags.js";
-import { PermissionsUtil } from "./classes/PermissionUtils.js";
+import { PermissionsUtil, type MessageFlags } from "@skyhelperbot/utils";
 
 import type { InteractionHelper } from "./classes/InteractionUtil.js";
 
@@ -172,7 +171,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
   // Check send permission(s);
   if (message.guild_id) {
     const channel = client.channels.get(message.channel_id)!;
-    const botPerms = PermissionsUtil.overwriteFor(guild!.clientMember, channel as APITextChannel, client);
+    const botPerms = PermissionsUtil.overwriteFor(guild!.clientMember, channel as APITextChannel, guild!);
 
     if (!botPerms.has(["SendMessages", "ViewChannel"])) {
       const dm = await client.api.users.createDM(message.author.id);
@@ -296,7 +295,7 @@ export async function validateMessage({ command, message, args, prefix, flags, c
   if (message.guild_id && command.botPermissions) {
     let toCheck = true;
     const channel = client.channels.get(message.channel_id)!;
-    const perms = PermissionsUtil.overwriteFor(guild!.clientMember, channel as APITextChannel, client);
+    const perms = PermissionsUtil.overwriteFor(guild!.clientMember, channel as APITextChannel, guild!);
     const missing = perms.missing(command.botPermissions);
     if (command.forSubs) {
       toCheck = command.forSubs.includes(args[0]!);

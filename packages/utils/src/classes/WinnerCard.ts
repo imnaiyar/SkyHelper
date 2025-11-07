@@ -1,5 +1,6 @@
 import { createCanvas, loadImage, type SKRSContext2D } from "@napi-rs/canvas";
-import { colors, fancyCount, getUserAvatar } from "./utils.js";
+import { colors, fancyCount } from "./utils.js";
+import { DiscordUtils } from "../utils/discord-utils.js";
 import { join } from "path";
 import type { APIGuildMember, APIUser } from "discord-api-types/v10";
 const size = 100;
@@ -18,10 +19,10 @@ export class GameWinnerCard {
   ) {
     if ("user" in winner) {
       this.name = winner.nick ?? winner.user.global_name ?? winner.user.username;
-      this.thumbnail = getUserAvatar(winner.user);
+      this.thumbnail = DiscordUtils.getUserAvatar(winner.user);
     } else {
       this.name = winner.global_name ?? winner.username;
-      this.thumbnail = getUserAvatar(winner);
+      this.thumbnail = DiscordUtils.getUserAvatar(winner);
     }
     this.points = wins;
     this.total = total;

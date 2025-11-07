@@ -1,5 +1,3 @@
-import { CDNRoutes, type APIUser, type UserAvatarFormat, type DefaultUserAvatarAssets } from "discord-api-types/v10";
-
 export const colors = {
   blue: "#7289DA",
   white: "#FFFFFF",
@@ -22,10 +20,4 @@ export function fancyCount(n: number): string {
   }
 
   return Math.floor(n) + "";
-}
-
-export function getUserAvatar(user: APIUser): string {
-  return user.avatar
-    ? CDNRoutes.userAvatar(user.id, user.avatar, "png" as UserAvatarFormat)
-    : CDNRoutes.defaultUserAvatar(Number((BigInt(user.id) >> 22n) % 5n) as DefaultUserAvatarAssets);
 }

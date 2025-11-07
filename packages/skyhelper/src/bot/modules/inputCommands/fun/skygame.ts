@@ -5,9 +5,8 @@ import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { handleSingleMode, handleDoubleMode } from "./sub/scramble.js";
 import { SendableChannels } from "@skyhelperbot/constants";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import type { APITextChannel } from "@discordjs/core";
 import { type Permission, parsePerms } from "@skyhelperbot/utils";
-import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil } from "@skyhelperbot/utils";
 export default {
   ...SKY_GAME_DATA,
   async interactionRun({ interaction, helper, options }) {

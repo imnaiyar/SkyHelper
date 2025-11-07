@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import type { APIGuild, APIGuildMember } from "@discordjs/core";
 import type { GuildSchema } from "@/types/schemas";
-import { LimitedCollection } from "@/utils/classes/LimitedCollection";
+import { LimitedCollection } from "@skyhelperbot/utils";
 import { REMINDERS_KEY } from "@skyhelperbot/constants";
 import config from "@/config";
 const cache = new LimitedCollection<string, GuildSchema>({ maxSize: config.CACHE_SIZE.GUILDS });

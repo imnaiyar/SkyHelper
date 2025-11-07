@@ -1,15 +1,22 @@
+/** © @discordjs/collection */
 import { Collection } from "@discordjs/collection";
 
 export interface LimitedCollectionOptions<Key, Value> {
   maxSize?: number;
   keepOverLimit?: (value: Value, key: Key, collection: LimitedCollection<Key, Value>) => boolean;
 }
+
+/**
+ * A Collection with a maximum size that automatically removes old entries when the limit is reached.
+ */
 export class LimitedCollection<K, V> extends Collection<K, V> {
   maxSize: number;
   public keepOverLimit: ((value: V, key: K, collection: this) => boolean) | null;
+
   constructor(options: LimitedCollectionOptions<K, V> = {}, iterable?: Iterable<readonly [K, V]>) {
     super(iterable);
     const { maxSize = Infinity, keepOverLimit = null } = options;
+
     /**
      * The max size of the Collection.
      * @type {number}

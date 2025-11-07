@@ -35,7 +35,10 @@
   },
   "homepage": "https://github.com/imnaiyar/skyhelper/tree/main/packages/utils",
   "dependencies": {
+    "@discordjs/collection": "^2.1.1",
+    "@discordjs/rest": "^2.6.0",
     "@napi-rs/canvas": "^0.1.80",
+    "@sapphire/discord-utilities": "^3.4.4",
     "@skyhelperbot/constants": "workspace:^",
     "discord-api-types": "latest",
     "undici": "^7.10.0"

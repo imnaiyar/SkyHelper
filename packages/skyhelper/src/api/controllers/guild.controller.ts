@@ -24,7 +24,7 @@ import { supportedLang } from "@skyhelperbot/constants";
 import { toJSONSchema, z } from "zod/v4";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { ChannelType, type APITextChannel } from "@discordjs/core";
-import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil } from "@skyhelperbot/utils";
 const GuildIDPredicate = new ZodValidator(
   z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID"),
   "Invalid 'guild' Param",
@@ -298,7 +298,7 @@ export class GuildController {
     const channels = g?.channels;
     if (!g || channels == null) return null;
     const member = g.clientMember;
-    const memberPerm = (ch: APITextChannel) => PermissionsUtil.overwriteFor(member, ch, this.bot);
+    const memberPerm = (ch: APITextChannel) => PermissionsUtil.overwriteFor(member, ch, g);
     return [
       ...channels
         .filter((ch) => ch.type === ChannelType.GuildText && memberPerm(ch).has(["ViewChannel", "ManageWebhooks"]))

@@ -1,7 +1,7 @@
 import { defineButton } from "@/structures";
 import { handleRemindersStatus } from "@/utils/classes/Embeds";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil } from "@skyhelperbot/utils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { CustomId } from "@/utils/customId-store";
 import { RemindersEventsMap, type REMINDERS_KEY } from "@skyhelperbot/constants";
@@ -109,7 +109,7 @@ export default defineButton({
       });
     }
     const checkClientPerms = (ch: APITextChannel | APIGuildForumChannel) => {
-      const clientPerms = PermissionsUtil.overwriteFor(guild.clientMember, ch, client);
+      const clientPerms = PermissionsUtil.overwriteFor(guild.clientMember, ch, guild);
       if (!clientPerms.has("ManageWebhooks")) return false;
 
       return true;

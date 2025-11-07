@@ -14,7 +14,7 @@ import {
 } from "@discordjs/core";
 import type { Command } from "./Command.js";
 import chalk from "chalk";
-import { PermissionsUtil, type PermissionsResolvable } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil, type PermissionsResolvable } from "@skyhelperbot/utils";
 import { loadButtons, loadCommands, loadContextCmd, loadEvents } from "@/utils/loaders";
 import type { ContextMenuCommand } from "./ContextMenuCommand.js";
 import type { Button } from "./Button.js";

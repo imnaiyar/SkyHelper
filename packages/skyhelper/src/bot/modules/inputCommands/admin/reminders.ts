@@ -3,7 +3,7 @@ import type { Command } from "@/structures";
 import type { GuildSchema } from "@/types/schemas";
 import { handleRemindersStatus } from "@/utils/classes/Embeds";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
+import { PermissionsUtil } from "@skyhelperbot/utils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { store } from "@/utils/customId-store";
 import { getTSData } from "@/utils/getEventDatas";
@@ -22,7 +22,7 @@ export default {
     if (!guild) throw new Error("Somehow recieved reminders command in non-guild context");
     const guildSettings = await client.schemas.getSettings(guild);
     const checkClientPerms = async (ch: APITextChannel | APIGuildForumChannel) => {
-      const clientPerms = PermissionsUtil.overwriteFor(guild.clientMember, ch, client);
+      const clientPerms = PermissionsUtil.overwriteFor(guild.clientMember, ch, guild);
       if (!clientPerms.has("ManageWebhooks")) {
         await helper.editReply({
           content: t("common:NO-WB-PERM-BOT", { CHANNEL: `<#${ch.id}>` }),
