@@ -11,7 +11,6 @@ import {
 } from "@discordjs/core";
 import { DateTime } from "luxon";
 import Utils from "./Utils.js";
-import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { getSpecialEvent, getTSData } from "../getEventDatas.js";
 import type { getTranslator } from "@/i18n";
 import {
@@ -71,18 +70,6 @@ export function buildShardEmbed(
         style: ButtonStyle.Primary,
       },
     );
-
-    // add cleared btn if red shard and curent day for planner
-    if (typeof cleared === "boolean" && info.type === "red" && DateTime.now().setZone(zone).hasSame(date, "day")) {
-      navBtns.push(
-        button({
-          label: cleared ? "Unclear" : "Cleared",
-          custom_id: createActionId({ action: PlannerAction.ShardsCleared, navState: { user } }),
-          emoji: { id: cleared ? emojis.red_shard : emojis.checkmark },
-          style: cleared ? 4 : 2,
-        }),
-      );
-    }
   }
 
   let comp1: APIContainerComponent;
@@ -100,6 +87,19 @@ export function buildShardEmbed(
     if (navBtns.length) comp1.components.push(row(navBtns));
   } else {
     const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
+
+    // add cleared btn if red shard and curent day for planner
+    if (typeof cleared === "boolean" && info.type === "red" && DateTime.now().setZone(zone).hasSame(date, "day")) {
+      navBtns.push(
+        button({
+          label: cleared ? "Unclear" : "Cleared",
+          custom_id: createActionId({ action: PlannerAction.ShardsCleared, navState: { user } }),
+          emoji: { id: cleared ? emojis.red_shard : emojis.checkmark },
+          style: cleared ? 4 : 2,
+        }),
+      );
+    }
+
     comp2 = container(
       section(
         thumbnail(info.image, info.type),
