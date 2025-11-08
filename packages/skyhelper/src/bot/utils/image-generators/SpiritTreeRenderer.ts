@@ -23,32 +23,33 @@ async function renderNodeRecursive(
   size: number,
   season: boolean,
   highlightItems?: string[],
+  noOpacity = false,
   visited = new Set<string>(),
 ) {
   if (visited.has(node.guid)) return;
   visited.add(node.guid);
   const gap = Math.max(10, size * 0.7);
 
-  await drawItem(ctx, x, y, size, node, season, highlightItems);
+  await drawItem(ctx, x, y, size, node, season, highlightItems, noOpacity);
 
   if (node.n) {
     const ny = y + spacingY;
     drawConnector(ctx, x, y, x, ny, size / 2, gap);
-    await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, highlightItems, visited);
+    await renderNodeRecursive(ctx, node.n, x, ny, spacingY, size, season, highlightItems, noOpacity, visited);
   }
 
   if (node.nw) {
     const bx = x + spacingY - 20;
     const by = y + spacingY / 1.5;
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
-    await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, highlightItems, visited);
+    await renderNodeRecursive(ctx, node.nw, bx, by, spacingY, size, season, highlightItems, noOpacity, visited);
   }
 
   if (node.ne) {
     const bx = x - spacingY + 20;
     const by = y + spacingY / 1.5;
     drawConnector(ctx, x, y, bx, by, size / 2, gap);
-    await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, highlightItems, visited);
+    await renderNodeRecursive(ctx, node.ne, bx, by, spacingY, size, season, highlightItems, noOpacity, visited);
   }
 }
 
@@ -156,6 +157,7 @@ export async function generateSpiritTree(
     size,
     !!options.season,
     options.highlightItems,
+    options.noOpacity,
   );
 
   return canvas.toBuffer("image/png");

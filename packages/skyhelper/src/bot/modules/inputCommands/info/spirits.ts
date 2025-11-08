@@ -7,6 +7,15 @@ import { container, mediaGallery, mediaGalleryItem, section, separator, textDisp
 import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
 import { paginate } from "@/utils/paginator";
 import { CustomId, store } from "@/utils/customId-store";
+import {
+  CollectibleItems,
+  getItemsInSpiritTree,
+  getSkyGamePlannerData,
+  getSpiritsInRealm,
+  ItemType,
+  SpiritType,
+} from "@skyhelperbot/constants/skygame-planner";
+import Utils from "@/utils/classes/Utils";
 
 export default {
   async interactionRun({ t, helper, options }) {
@@ -16,9 +25,10 @@ export default {
       await handleSpiritList(helper);
       return;
     }
-    const data = helper.client.spiritsData[value];
+    const data = await getSkyGamePlannerData();
+    const spirit = data.spirits.find((s) => s.guid === value);
 
-    if (!data) {
+    if (!spirit) {
       await helper.editReply({
         content: t("commands:SPIRITS.RESPONSES.NO_DATA", {
           VALUE: value,
@@ -27,20 +37,23 @@ export default {
       });
       return;
     }
-    const manager = new Spirits(data, t, helper.client);
-    await helper.editReply({
-      components: [manager.getResponseEmbed(helper.user.id)],
-      flags: MessageFlags.IsComponentsV2,
-    });
+    const manager = new Spirits(spirit, t, helper.client, data);
+    await helper.editReply({ ...(await manager.getResponseEmbed(helper.user.id)), flags: MessageFlags.IsComponentsV2 });
   },
 
   async autocomplete({ helper, options }) {
     const focused = options.getFocusedOption() as { value: string };
-    const data = Object.entries(helper.client.spiritsData)
-      .filter(([, v]) => v.name.toLowerCase().includes(focused.value.toLowerCase()))
-      .map(([k, v]) => ({
-        name: `↪️ ${v.name}`,
-        value: k,
+    const spirits = await getSkyGamePlannerData();
+    const data = spirits.spirits
+      .filter(
+        (s) =>
+          s.type !== SpiritType.Special &&
+          s.type !== SpiritType.Event &&
+          s.name.toLowerCase().includes(focused.value.toLowerCase()),
+      )
+      .map((s) => ({
+        name: `↪️ ${s.name}`,
+        value: s.guid,
       }));
     await helper.respond({ choices: data.slice(0, 25) });
   },
@@ -49,8 +62,9 @@ export default {
 
 async function handleSpiritList(helper: InteractionHelper) {
   const { user, client } = helper;
-  const spirits = Object.entries(client.spiritsData);
-  const appMojis = [...helper.client.applicationEmojis.values()];
+
+  const pData = await getSkyGamePlannerData();
+  const spirits = pData.spirits.filter((s) => s.type !== SpiritType.Special && s.type !== SpiritType.Event);
   const title = [
     mediaGallery(
       mediaGalleryItem(
@@ -67,21 +81,24 @@ async function handleSpiritList(helper: InteractionHelper) {
     (data, navBtns) => {
       const comp = container(
         ...title,
-        ...data.flatMap(([key, spirit]) => {
-          // @ts-expect-error will be removed from planner
-          const seasonIcon = "ts" in spirit ? `<:_:${season_emojis[spirit.season]}>` : "";
-          const realmIcon = spirit.realm ? `<:_:${realms_emojis[spirit.realm]}>` : "";
-
+        ...data.flatMap((spirit) => {
+          const realm = pData.realms.find((r) => getSpiritsInRealm(r.guid, pData).some((sp) => sp.guid === spirit.guid));
+          const seasonIcon = spirit.season ? Utils.formatEmoji(spirit.season.emoji, spirit.season.shortName) : "";
+          const realmIcon = realm ? Utils.formatEmoji(realm.emoji, realm.name) : "";
+          const legacySpirit = Object.values(client.spiritsData).find((s) => s.name === spirit.name);
           return [
             section(
               {
                 type: 2,
                 label: "Info",
-                custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: key, user: null }),
+                custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: spirit.guid, user: null }),
                 style: 2,
               },
-              `**${spirit.name}${spirit.extra ? ` (${spirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
-              `${realmIcon}${seasonIcon}${spirit.collectibles?.map((c) => c.icon).join(" ") ?? ""}`,
+              `**${spirit.name}${legacySpirit?.extra ? ` (${legacySpirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
+              `${realmIcon}${seasonIcon}${getItemsInSpiritTree(spirit.guid, pData)
+                .filter((i) => CollectibleItems.includes(i.type as ItemType))
+                .map((c) => Utils.formatEmoji(c.emoji, c.name))
+                .join(" ")}`,
             ),
           ];
         }),

@@ -23,6 +23,16 @@ export interface GenerateSpiritTreeOptions {
   scale?: number; // multiplier for resolution
 }
 
+export interface GenerateSpiritTreeOptions {
+  season?: boolean;
+  spiritName?: string;
+  spiritSubtitle?: string;
+  highlightItems?: string[];
+  spiritUrl?: string;
+  /** Do not reduce the opacity for non unlocked node, which is the default */
+  noOpacity?: boolean;
+  scale?: number; // multiplier for resolution
+}
 // #region Image Cache
 /**
  * LRU cache to reduce memory load and avoid re-loading images
@@ -200,6 +210,7 @@ export async function drawItem(
   node?: INode,
   season = false,
   highlightItems?: string[],
+  noOpacity = false,
 ) {
   const { item } = node ?? {};
   const isUnlocked = !!(item && (item.unlocked ?? item.autoUnlocked));
@@ -207,7 +218,7 @@ export async function drawItem(
 
   ctx.save();
   ctx.translate(x, y);
-  if (item && !isUnlocked) ctx.globalAlpha = 0.5; // faded for unacquired items
+  if (item && !isUnlocked && !noOpacity) ctx.globalAlpha = 0.5; // faded for unacquired items
 
   const itemSize = size * 2.5;
 
