@@ -277,10 +277,6 @@
         "name": "журнал изменений",
         "description": "журнал изменений бота"
       },
-      "BOTINFO": {
-        "name": "информация о боте",
-        "description": "получить информацию о боте"
-      },
       "CONTACT-US": {
         "name": "свяжитесь с нами",
         "description": "для предложений/сообщений об ошибках/контактов с нами или просто для всего, что угодно"
@@ -340,7 +336,7 @@
     "description": "получать ежедневные задания",
     "RESPONSES": {
       "NO_DATA": "Не найдено данных для сегодняшних ежедневных заданий. Пожалуйста, повторите попытку позже.",
-      "TIME_FRAME": "Для сегодняшних ежедневных заданий данные не найдены. Пожалуйста, повторите попытку позже.\n- -# Обратите внимание, что обновление квестов может занять до 30 минут-1 часов после ежедневного сброса. Указанные сроки являются приблизительными, иногда это может занять больше времени. Посмотрите, как это работает [здесь](<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>)",
+      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/docs/commands/info#how-does-this-work>)",
       "OUTDATED": "Это задание устарело. Пожалуйста, дождитесь обновления заданий.",
       "EMBED_AUTHOR": "Ежедневные Задания",
       "BUTTON1": "Поворот свечи",
@@ -389,6 +385,59 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Get bot information"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
+      }
+    }
+  },
+  "PLANNER": {
+    "name": "planner",
+    "description": "track and plan your sky progress",
+    "options": {
+      "home": {
+        "name": "home",
+        "description": "track and plan your sky progress"
+      },
+      "search": {
+        "name": "search",
+        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+      },
+      "profile": {
+        "name": "profile",
+        "description": "Your planner profile & stats and currency usages"
+      },
+      "query": {
+        "name": "query",
+        "description": "the query to search for"
+      },
+      "data": {
+        "name": "data",
+        "description": "mange/export/import your planner data"
+      },
+      "action": {
+        "name": "action",
+        "description": "the action you want to perform"
+      },
+      "choices": {
+        "import": "Import Data",
+        "export": "Export Data",
+        "delete": "Delete Data"
       }
     }
   }

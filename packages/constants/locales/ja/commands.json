@@ -277,10 +277,6 @@
         "name": "変更履歴",
         "description": "ボットの変更履歴"
       },
-      "BOTINFO": {
-        "name": "ボット情報",
-        "description": "ボットの情報を取得し、設定を行う"
-      },
       "CONTACT-US": {
         "name": "お問い合わせ",
         "description": "提案/バグ報告/連絡、またはその他何でも"
@@ -340,7 +336,7 @@
     "description": "デイリークエストを取得",
     "RESPONSES": {
       "NO_DATA": "今日のデイリークエストのデータが見つかりません。後でもう一度お試しください。",
-      "TIME_FRAME": "クエストが毎日リセットされると、更新されるまで30分-1時間かかることがありますのでご注意ください。 与えられた時間枠は単なる推定値であり、いつかはそれよりも時間がかかることがあります。 [here](<https://docs.skyhelper.xyz/guide/docs/commands/info#how-does-this-work>)",
+      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/docs/commands/info#how-does-this-work>)",
       "OUTDATED": "このクエストは古くなっています。クエストが更新されるまでお待ちください。",
       "EMBED_AUTHOR": "デイリークエスト",
       "BUTTON1": "ローテーションキャンドルを回転させる",
@@ -389,6 +385,59 @@
             }
           }
         }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Bot related commands",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Get bot information"
+      },
+      "MANAGE": {
+        "name": "manage",
+        "description": "Manage the bot settings for the server"
+      },
+      "PERSONALIZE": {
+        "name": "personalize",
+        "description": "Personalize the bot for this server"
+      }
+    }
+  },
+  "PLANNER": {
+    "name": "planner",
+    "description": "track and plan your sky progress",
+    "options": {
+      "home": {
+        "name": "home",
+        "description": "track and plan your sky progress"
+      },
+      "search": {
+        "name": "search",
+        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+      },
+      "profile": {
+        "name": "profile",
+        "description": "Your planner profile & stats and currency usages"
+      },
+      "query": {
+        "name": "query",
+        "description": "the query to search for"
+      },
+      "data": {
+        "name": "data",
+        "description": "mange/export/import your planner data"
+      },
+      "action": {
+        "name": "action",
+        "description": "the action you want to perform"
+      },
+      "choices": {
+        "import": "Import Data",
+        "export": "Export Data",
+        "delete": "Delete Data"
       }
     }
   }
