@@ -189,8 +189,7 @@
         "TITLE": "Reminder status for {{SERVER_NAME}}",
         "STATUS": "Status: {{STATUS}}",
         "CHANNEL": "Channel: {{CHANNEL}}",
-        "ROLE": "Role: {{ROLE}}",
-        "BUTTON": "Manage"
+        "ROLE": "Role: {{ROLE}}"
       }
     }
   },
@@ -224,7 +223,6 @@
       "DISABLED": "{{TYPE}} is disabled"
     }
   },
-
   "HELP": {
     "name": "help",
     "description": "help menu",
@@ -297,7 +295,6 @@
   "LANGUAGE": {
     "name": "language",
     "description": "manage preferred language for the bot's response",
-
     "options": {
       "CATEGORY": {
         "name": "category",
@@ -363,7 +360,6 @@
           }
         }
       },
-
       "SCRAMBLE": {
         "name": "scrambled",
         "description": "Unscramble the word to win"
