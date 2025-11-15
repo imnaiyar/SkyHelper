@@ -189,8 +189,7 @@
         "TITLE": "Estado de los recordatorios en {{SERVER_NAME}}",
         "STATUS": "Estado: {{STATUS}}",
         "CHANNEL": "Canal: {{CHANNEL}}",
-        "ROLE": "Rol: {{ROLE}}",
-        "BUTTON": "Configurar"
+        "ROLE": "Rol: {{ROLE}}"
       }
     }
   },

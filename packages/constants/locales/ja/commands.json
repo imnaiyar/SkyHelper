@@ -189,8 +189,7 @@
         "TITLE": "{{SERVER_NAME}} の通知状態",
         "STATUS": "ステータス: {{STATUS}}",
         "CHANNEL": "チャンネル: {{CHANNEL}}",
-        "ROLE": "役割： {{ROLE}}",
-        "BUTTON": "管理"
+        "ROLE": "役割： {{ROLE}}"
       }
     }
   },

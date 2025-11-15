@@ -189,8 +189,7 @@
         "TITLE": "Статус напоминания для {{SERVER_NAME}}",
         "STATUS": "Статус: {{STATUS}}",
         "CHANNEL": "Канал: {{CHANNEL}}",
-        "ROLE": "Роль: {{ROLE}}",
-        "BUTTON": "Управление"
+        "ROLE": "Роль: {{ROLE}}"
       }
     }
   },

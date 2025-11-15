@@ -189,8 +189,7 @@
         "TITLE": "Reminder status for {{SERVER_NAME}}",
         "STATUS": "Status: {{STATUS}}",
         "CHANNEL": "Channel: {{CHANNEL}}",
-        "ROLE": "Role: {{ROLE}}",
-        "BUTTON": "Manage"
+        "ROLE": "Role: {{ROLE}}"
       }
     }
   },
