@@ -69,6 +69,10 @@ export const BotStatsSchema = z.object({
   ping: z.number(),
   commands: z.number(),
   totalUserInstalls: z.number(),
+  statistics: z.object({
+    commands: z.array(z.object({ date: z.string(), commandName: z.string(), count: z.number() })),
+    guildEvents: z.array(z.object({ date: z.string(), leave: z.number(), join: z.number() })),
+  }),
 });
 export type BotStats = z.infer<typeof BotStatsSchema>;
 

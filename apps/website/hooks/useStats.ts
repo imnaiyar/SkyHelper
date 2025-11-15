@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-interface BotStats {
+export interface BotStats {
   totalServers: number;
   totalMembers: number;
   ping: number;
   commands: number;
   totalUserInstalls: number;
+  statistics: {
+    commands: Array<{ date: string; commandName: string; count: number }>;
+    guildEvents: Array<{ date: string; join: number; leave: number; guilds: number }>;
+  };
 }
 export default function useStats() {
   const [loading, setLoading] = useState<boolean>(true);

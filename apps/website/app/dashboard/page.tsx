@@ -1,9 +1,9 @@
 "use client";
-import Loading from "@components/ui/Loading";
-import { useGuildsQuery } from "../hooks/discord";
-import { useToast } from "../hooks/useToast";
+import Loading from "@/components/ui/Loading";
+import { useGuildsQuery } from "../../hooks/discord";
+import { useToast } from "../../hooks/useToast";
 import { PermissionsUtil } from "@/utils/PermissionUtils";
-import GuildCard from "@components/cards/GuildCard";
+import GuildCard from "@/components/ui/GuildCard";
 
 export default function Page() {
   const data = useGuildsQuery();

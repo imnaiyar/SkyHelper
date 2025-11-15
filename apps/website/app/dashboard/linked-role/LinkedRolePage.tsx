@@ -1,6 +1,6 @@
 "use client";
-import { type getRoleConnections } from "@/app/lib/discord";
-import { ModalContent, ModalProvider, ModalTrigger } from "@components/ui/Modal";
+import { type getRoleConnections } from "@/lib/discord";
+import { ModalContent, ModalProvider, ModalTrigger } from "@/components/ui/Modal";
 import { BadgeQuestionMarkIcon } from "lucide-react";
 import { useState } from "react";
 

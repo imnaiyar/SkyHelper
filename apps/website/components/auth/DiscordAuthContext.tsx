@@ -1,7 +1,7 @@
 "use client";
 
-import { useToast } from "@/app/hooks/useToast";
-import { AuthUser, DiscordScope, BASE_SCOPES } from "@/app/lib/auth/types";
+import { useToast } from "@/hooks/useToast";
+import { AuthUser, DiscordScope, BASE_SCOPES } from "@/lib/auth/types";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type AuthState = "idle" | "loading" | "authenticating" | "success" | "error" | "redirecting";

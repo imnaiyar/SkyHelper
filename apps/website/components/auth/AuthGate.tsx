@@ -4,8 +4,8 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { useDiscordAuth } from "./DiscordAuthContext";
 import DiscordLogin from "./DiscordLogin";
-import { DiscordScope, ScopeValidationResult } from "@/app/lib/auth/types";
-import { validateUserScopes, validateUserScopesForRoute, getRequiredScopesForRoute } from "@/app/lib/auth/scopes";
+import { DiscordScope, ScopeValidationResult } from "@/lib/auth/types";
+import { validateUserScopes, validateUserScopesForRoute, getRequiredScopesForRoute } from "@/lib/auth/scopes";
 import Loading from "../ui/Loading";
 
 interface ScopeAuthGateProps {

@@ -15,12 +15,7 @@ import {
 import { handlePlannerNavigation } from "@/handlers/planner";
 import { SkyPlannerData, zone } from "@skyhelperbot/constants";
 import { setLoadingState } from "@/utils/loading";
-import {
-  enrichDataWithUserProgress,
-  getAllNodes,
-  nestingconfigs,
-  PlannerDataHelper,
-} from "@skyhelperbot/constants/skygame-planner";
+import { getAllNodes, nestingconfigs, PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
 import { PlannerAction, type NavigationState } from "@/types/planner";
 import { modifyTreeNode } from "./sub/modify.tree.js";
 import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";

@@ -1,5 +1,5 @@
 "use client";
-import { useToast } from "@/app/hooks/useToast";
+import { useToast } from "@/hooks/useToast";
 import { useEffect } from "react";
 import { Serwist, SerwistLifecycleEvent } from "@serwist/window";
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { extractScopesFromToken } from "@/app/lib/auth/scopes";
-import { COOKIE_NAMES, isTokenExpired, setCookie, clearCookies, getServerCookie } from "@/app/lib/auth/cookies";
+import { extractScopesFromToken } from "@/lib/auth/scopes";
+import { COOKIE_NAMES, isTokenExpired, setCookie, clearCookies, getServerCookie } from "@/lib/auth/cookies";
 
 export async function GET(req: NextRequest) {
   try {

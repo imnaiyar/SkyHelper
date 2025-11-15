@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { LogIn, ExternalLink, Shield, Bot, CheckCircle, AlertCircle, LogOut, ChevronDown, User } from "lucide-react";
 import Loading from "../ui/Loading";
 import { AuthState, useDiscordAuth } from "./DiscordAuthContext";
-import { AuthUser, DiscordScope, BASE_SCOPES, DISCORD_SCOPES } from "@/app/lib/auth/types";
+import { AuthUser, DiscordScope, BASE_SCOPES, DISCORD_SCOPES } from "@/lib/auth/types";
 import Image from "next/image";
 
 interface DiscordLoginProps {

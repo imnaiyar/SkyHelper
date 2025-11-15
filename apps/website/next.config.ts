@@ -29,18 +29,16 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    return {
-      fallback: [
-        {
-          source: "/:path*",
-          destination: `${DOCS_URL}/:path*`,
-        },
-        {
-          source: "/docs-static/_next/:path*",
-          destination: `${DOCS_URL}/docs-static/_next/:path*`,
-        },
-      ],
-    };
+    return [
+      {
+        source: "/:path*",
+        destination: `${DOCS_URL}/:path*`,
+      },
+      {
+        source: "/docs-static/_next/:path*",
+        destination: `${DOCS_URL}/docs-static/_next/:path*`,
+      },
+    ];
   },
 };
 

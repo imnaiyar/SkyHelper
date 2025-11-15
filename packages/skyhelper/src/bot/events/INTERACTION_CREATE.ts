@@ -110,6 +110,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             embeds: [buildInteractionLog(interaction, client, options)],
           });
         }
+        updateStats(command, helper).catch(client.logger.error);
         return;
       } catch (error) {
         const id = client.logger.error(error, scope);
@@ -173,6 +174,8 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
       try {
         await command.execute(interaction, helper, t, new InteractionOptionResolver(interaction));
+        updateStats(command as any, helper).catch(client.logger.error);
+        return;
       } catch (error) {
         const id = client.logger.error(error, scope);
         await helper
@@ -463,4 +466,11 @@ function buildInteractionLog(
     ],
     color: resolveColor("Blurple"),
   };
+}
+
+function updateStats(command: Command, helper: InteractionHelper) {
+  return helper.client.schemas.StatisticsModel.create({
+    command: { name: command.name, user: helper.user.id },
+    timestamp: new Date(),
+  });
 }
