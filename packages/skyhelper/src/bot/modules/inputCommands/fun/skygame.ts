@@ -3,6 +3,7 @@ import { getCardResponse, handleHangman } from "./sub/hangman.js";
 import { SKY_GAME_DATA } from "@/modules/commands-data/fun-commands";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { handleSingleMode, handleDoubleMode } from "./sub/scramble.js";
+import { handleGuessing } from "./sub/guessing.js";
 import { SendableChannels } from "@skyhelperbot/constants";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import type { APITextChannel } from "@discordjs/core";
@@ -36,11 +37,14 @@ export default {
         }
         return;
       }
+      case "guessing":
+        await handleGuessing(helper, options);
+        return;
       case "leaderboard":
         {
           const guild = client.guilds.get(interaction.guild_id ?? "");
           const type = options.getString("leaderboard-type") ?? "global";
-          const game = options.getString("game", true) as "hangman" | "scrambled";
+          const game = options.getString("game", true) as "hangman" | "scrambled" | "guessing";
           if (type === "server" && !guild) {
             return void (await helper.reply({
               content: "Run this command in a server when `type` is set to `Server`",
