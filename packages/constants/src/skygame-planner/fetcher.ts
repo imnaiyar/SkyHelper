@@ -20,8 +20,8 @@ import type {
   IWingedLightConfig,
 } from "./interfaces.js";
 import { parse as jsonc } from "jsonc-parser";
-export const BASE_URL = `https://sky-planner.com`;
-const DATA_PATH = "/assets/data";
+export const BASE_URL = `https://unpkg.com/skygame-data@latest`;
+const DATA_PATH = "/assets";
 
 // List of data files to fetch
 const DATA_FILES = {
