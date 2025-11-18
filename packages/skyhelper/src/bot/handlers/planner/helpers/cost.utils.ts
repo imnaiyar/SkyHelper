@@ -26,7 +26,7 @@ export class CostUtils {
     return nodes.reduce((acc, node) => {
       Object.keys(acc).forEach((k) => ((acc as any)[k] += (node as any)[k] ?? 0));
       return acc;
-    }, Empty_Cost);
+    }, { ...Empty_Cost });
   }
 
   /** Calcualte the combined remaining cost of the nodes based on progress */
@@ -36,7 +36,8 @@ export class CostUtils {
         Object.keys(acc).forEach((k) => ((acc as any)[k] += (node as any)[k] ?? 0));
       }
       return acc;
-    }, Empty_Cost);
+    }, { ...Empty_Cost });
+
   }
 
   /**
