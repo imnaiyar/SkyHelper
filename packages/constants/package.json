@@ -14,10 +14,6 @@
       "types": "./dist/types/spirits-datas/index.d.ts",
       "default": "./dist/spirits-datas/index.js"
     },
-    "./skygame-planner": {
-      "types": "./dist/types/skygame-planner/index.d.ts",
-      "default": "./dist/skygame-planner/index.js"
-    },
     ".": {
       "types": "./dist/types/index.d.ts",
       "default": "./dist/index.js"
@@ -40,8 +36,7 @@
   "author": "NyR",
   "license": "ISC",
   "dependencies": {
-    "discord-api-types": "latest",
-    "jsonc-parser": "^3.3.1"
+    "discord-api-types": "latest"
   },
   "devDependencies": {
     "@types/luxon": "^3.6.2",

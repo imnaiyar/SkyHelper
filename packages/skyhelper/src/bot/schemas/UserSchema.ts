@@ -5,7 +5,7 @@ import Utils from "@/utils/classes/Utils";
 import { LimitedCollection } from "@/utils/classes/LimitedCollection";
 import type { UserSchema } from "@/types/schemas";
 import type { SkyGameStatsData } from "@/types/custom";
-import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import { PlannerDataService } from "@/planner";
 
 const cache = new LimitedCollection<string, UserSchema>({ maxSize: config.CACHE_SIZE.USERS });
 export { cache as userSchemaCache };
@@ -75,7 +75,7 @@ const Schema = new mongoose.Schema<UserSchema>({
       },
       { minimize: false, _id: false },
     ),
-    default: PlannerDataHelper.createEmpty(),
+    default: PlannerDataService.createEmpty(),
   },
 });
 

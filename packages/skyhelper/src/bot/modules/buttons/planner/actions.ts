@@ -11,22 +11,16 @@ import {
   deserializeNavState,
   modifyNestingRotationItems,
   adjustCurrencies,
-} from "@/handlers/planner-utils";
-import { handlePlannerNavigation } from "@/handlers/planner";
-import { SkyPlannerData, zone } from "@skyhelperbot/constants";
+} from "@/planner/helpers/action.utils";
+import { fetchSkyData, handlePlannerNavigation, nestingconfigs, PlannerDataService, WingedLightsDisplay } from "@/planner";
 import { setLoadingState } from "@/utils/loading";
-import {
-  enrichDataWithUserProgress,
-  getAllNodes,
-  nestingconfigs,
-  PlannerDataHelper,
-} from "@skyhelperbot/constants/skygame-planner";
 import { PlannerAction, type NavigationState } from "@/types/planner";
 import { modifyTreeNode } from "./sub/modify.tree.js";
-import { WingedLightsDisplay } from "@/handlers/planner-displays/wingedlights";
 import { DateTime } from "luxon";
 import { shardsInfo, ShardsUtil } from "@skyhelperbot/utils";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
+import { zone } from "@skyhelperbot/constants";
+import { SpiritTreeHelper, type IItemListNode } from "skygame-data";
 
 /**
  * Button handler for Sky Game Planner user actions (unlock/lock items, nodes, etc.)
@@ -37,8 +31,8 @@ export default defineButton({
   async execute(interaction, _t, helper, { action: a, navState }) {
     const [action, guid = "", actionType = ""] = a.split("|");
     const user = await helper.client.schemas.getUser(helper.user);
-    const data = await SkyPlannerData.getSkyGamePlannerDataWithForUser(user.plannerData);
-    user.plannerData ??= PlannerDataHelper.createEmpty();
+    const data = PlannerDataService.resolveProgress(await fetchSkyData(helper.client));
+    user.plannerData ??= PlannerDataService.createEmpty();
 
     // #region shards cleared
     if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
@@ -48,7 +42,7 @@ export default defineButton({
       const info = shardsInfo[currentRealm]![currentShard]!;
 
       // if same date then cleared status was removed
-      const cleared = PlannerDataHelper.shardsCleared(user.plannerData);
+      const cleared = PlannerDataService.shardsCleared(user.plannerData);
       if (cleared) {
         user.plannerData["shards.checkin"] = undefined;
         // substract shards rewards that was granted for clearing
@@ -84,7 +78,7 @@ export default defineButton({
 
     switch (action as PlannerAction) {
       case PlannerAction.ToggleIAP: {
-        const iap = data.iaps.find((i) => i.guid === guid);
+        const iap = data.iaps.items.find((i) => i.guid === guid);
         if (iap) {
           const isGifted = actionType === "gifted";
           const status = toggleIAPStatus(user, iap, isGifted);
@@ -102,28 +96,22 @@ export default defineButton({
       case PlannerAction.ToggleWL: {
         switch (actionType) {
           case "all":
-            data.wingedLights.forEach((w) => toggleWingedLightUnlock(user, w, true));
-            resultMessage = `✅ Unlocked all (${data.wingedLights.filter((w) => !w.unlocked).length}) Winged Lights`;
+            data.wingedLights.items.forEach((w) => toggleWingedLightUnlock(user, w, true));
+            resultMessage = `✅ Unlocked all (${data.wingedLights.items.filter((w) => !w.unlocked).length}) Winged Lights`;
             break;
           case "filtered": {
-            const display = new WingedLightsDisplay(
-              data,
-              SkyPlannerData,
-              { ...state, user: helper.user.id },
-              user,
-              helper.client,
-            );
-            const filtered = display.filterWls(data.wingedLights);
+            const display = new WingedLightsDisplay(data, { ...state, user: helper.user.id }, user, helper.client);
+            const filtered = display.filterWls(data.wingedLights.items);
             filtered.forEach((wl) => toggleWingedLightUnlock(user, wl, true));
             resultMessage = `✅ Collected ${filtered.filter((w) => !w.unlocked).length} Winged Lights`;
             break;
           }
           case "reset":
-            data.wingedLights.forEach((w) => toggleWingedLightUnlock(user, w, false));
+            data.wingedLights.items.forEach((w) => toggleWingedLightUnlock(user, w, false));
             resultMessage = `🔒 Removed all Winged Lights`;
             break;
           default: {
-            const wl = data.wingedLights.find((w) => w.guid === guid);
+            const wl = data.wingedLights.items.find((w) => w.guid === guid);
             if (wl) {
               toggleWingedLightUnlock(user, wl, !wl.unlocked);
               followUp = false;
@@ -135,7 +123,7 @@ export default defineButton({
       }
 
       case PlannerAction.ToggleFavorite: {
-        const item = data.items.find((i) => i.guid === guid);
+        const item = data.items.items.find((i) => i.guid === guid);
         if (item) {
           const favorited = toggleItemFavorite(user, item);
           resultMessage = favorited ? `⭐ Favorited ${item.name}` : `Unfavorited ${item.name}`;
@@ -157,9 +145,9 @@ export default defineButton({
       }
 
       case PlannerAction.UnlockTree: {
-        const tree = data.spiritTrees.find((t) => t.guid === guid);
+        const tree = data.spiritTrees.items.find((t) => t.guid === guid);
         if (tree) {
-          const allNodes = getAllNodes(tree);
+          const allNodes = SpiritTreeHelper.getNodes(tree);
           unlockAllTreeNodes(user, allNodes);
           resultMessage = `✅ Unlocked entire tree`;
         }
@@ -167,9 +155,9 @@ export default defineButton({
       }
 
       case PlannerAction.LockTree: {
-        const tree = data.spiritTrees.find((t) => t.guid === guid);
+        const tree = data.spiritTrees.items.find((t) => t.guid === guid);
         if (tree) {
-          const allNodes = getAllNodes(tree);
+          const allNodes = SpiritTreeHelper.getNodes(tree);
           lockAllTreeNodes(user, allNodes);
           resultMessage = `🔒 Locked entire tree`;
         }
@@ -177,14 +165,14 @@ export default defineButton({
       }
 
       case PlannerAction.ToggleListNode: {
-        const ln = data.itemListNodes.find((l) => l.guid === guid);
+        const ln = data.guids.get(guid) as IItemListNode | undefined;
         if (ln) {
-          user.plannerData ??= PlannerDataHelper.createEmpty();
+          user.plannerData ??= PlannerDataService.createEmpty();
           if (ln.item.unlocked) {
-            user.plannerData.unlocked = PlannerDataHelper.removeFromGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
+            user.plannerData.unlocked = PlannerDataService.removeFromGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
             adjustCurrencies(user, ln, true);
           } else {
-            user.plannerData.unlocked = PlannerDataHelper.addToGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
+            user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ln.guid, ln.item.guid);
             adjustCurrencies(user, ln, false);
           }
           followUp = false;
@@ -196,7 +184,7 @@ export default defineButton({
         const rotationItem = nestingconfigs.rotations
           .find((r) => r.items.some((i) => i.guid === guid))
           ?.items.find((i) => i.guid === guid);
-        if (rotationItem) rotationItem.item = data.items.find((i) => i.guid === rotationItem.guid);
+        if (rotationItem) rotationItem.item = data.items.items.find((i) => i.guid === rotationItem.guid);
 
         if (rotationItem) {
           modifyNestingRotationItems(user, rotationItem, actionType as "add" | "remove");

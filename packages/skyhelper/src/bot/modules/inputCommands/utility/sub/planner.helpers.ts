@@ -1,12 +1,5 @@
 import { DisplayTabs, type NavigationState, FilterType, PlannerDataSchema } from "@/types/planner";
-import {
-  formatCurrencies,
-  formatUnlockedItems,
-  PlannerDataHelper,
-  type PlannerAssetData,
-  type UserPlannerData,
-} from "@skyhelperbot/constants/skygame-planner";
-import { serializeFilters } from "@/handlers/planner-displays/filter.manager";
+import { serializeFilters } from "@/planner/filter.manager";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import {
@@ -17,11 +10,13 @@ import {
 } from "discord-api-types/v10";
 import { z } from "zod/v4";
 import { button, container, row, separator, textDisplay } from "@skyhelperbot/utils";
-import { SkyPlannerData, zone } from "@skyhelperbot/constants";
+import { zone } from "@skyhelperbot/constants";
 import { CustomId, store } from "@/utils/customId-store";
 import { DateTime } from "luxon";
 import type { UserSchema } from "@/types/schemas";
 import utils from "@/utils/classes/Utils";
+import { fetchSkyData, PlannerDataService, type UserPlannerData } from "@/planner";
+import type { ISkyData } from "skygame-data";
 
 // ============================================================================
 // Constants
@@ -165,7 +160,7 @@ Deleting your planner data will permanently erase all your saved progress
  * Creates export file name and buffer
  */
 function createPlannerExport(user: UserSchema) {
-  const data = user.plannerData ?? PlannerDataHelper.createEmpty();
+  const data = user.plannerData ?? PlannerDataService.createEmpty();
   const filename = `SkyHelper_Planner_${DateTime.now().setZone(zone).toFormat("yyyy-MM-dd")}.json`;
 
   return {
@@ -247,9 +242,9 @@ async function handleOtherUserConfirmation(
 /**
  * Creates import confirmation components with user data summary
  */
-function createImportConfirmationComponents(helper: InteractionHelper, data: PlannerAssetData, storageData: UserPlannerData) {
-  const currencies = formatCurrencies(data, storageData);
-  const unlocked = formatUnlockedItems(data);
+function createImportConfirmationComponents(helper: InteractionHelper, data: ISkyData, storageData: UserPlannerData) {
+  const currencies = PlannerDataService.userCurrencyToEmoji(data, storageData);
+  const unlocked = PlannerDataService.formatUnlockedItems(data);
 
   return [
     container(
@@ -314,10 +309,7 @@ async function handleImportAction(helper: InteractionHelper): Promise<void> {
     }
 
     // Enrich and calculate progress
-    const enrichedData = SkyPlannerData.enrichDataWithUserProgress(
-      await SkyPlannerData.getSkyGamePlannerData(),
-      data.storageData,
-    );
+    const enrichedData = PlannerDataService.resolveProgress(await fetchSkyData(helper.client), data.storageData);
 
     // Show confirmation dialog
     const components = createImportConfirmationComponents(helper, enrichedData, data.storageData);
@@ -427,7 +419,7 @@ async function handleDeleteAction(helper: InteractionHelper): Promise<void> {
  */
 export function searchHelper(
   data: { type: string; name: string; guid: string },
-  pdata: PlannerAssetData,
+  pdata: ISkyData,
 ): Omit<NavigationState, "user"> | null {
   const typeMatch = TYPE_PREFIX_REGEX.exec(data.type);
   const baseType = typeMatch?.[1] ?? data.type;
@@ -450,13 +442,13 @@ export function searchHelper(
   // Complex type mappings
   switch (baseType) {
     case "TS#": {
-      const travelingSpirit = pdata.travelingSpirits.find((ts) => ts.guid === data.guid);
+      const travelingSpirit = pdata.travelingSpirits.items.find((ts) => ts.guid === data.guid);
       if (!travelingSpirit) return null;
 
       const trees = [
         travelingSpirit.tree,
         ...(travelingSpirit.spirit.treeRevisions ?? []),
-        ...(travelingSpirit.spirit.returns ?? []),
+        ...(travelingSpirit.spirit.visits ?? []),
         ...(travelingSpirit.spirit.ts ?? []),
       ];
       const treeIndex = trees.findIndex((tree) => tree.guid === travelingSpirit.guid);
@@ -466,10 +458,10 @@ export function searchHelper(
     }
 
     case "SV":
-      return { t: DisplayTabs.Spirits, d: "rs", it: data.guid };
+      return { t: DisplayTabs.Spirits, d: "sv", it: data.guid };
 
     case "IAP": {
-      const relatedShops = pdata.shops.filter((shop) => shop.iaps?.some((iap) => iap.guid === data.guid));
+      const relatedShops = pdata.shops.items.filter((shop) => shop.iaps?.some((iap) => iap.guid === data.guid));
       return {
         t: DisplayTabs.Shops,
         d: "shops",

@@ -51,6 +51,14 @@ export const PlannerDataSchema = z.object({
     .optional(),
 });
 
+export enum SpiritType {
+  Regular = "Regular",
+  Elder = "Elder",
+  Guide = "Guide",
+  Season = "Season",
+  Event = "Event",
+  Special = "Special",
+}
 export interface NavigationState {
   /** Current page */
   p?: number;

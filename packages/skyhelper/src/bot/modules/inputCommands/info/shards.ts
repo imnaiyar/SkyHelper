@@ -5,7 +5,7 @@ import { SHARDS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
 import type { UserSchema } from "@/types/schemas";
-import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
+import { PlannerDataService } from "@/planner";
 
 export default {
   async interactionRun({ t, helper, options }) {
@@ -38,5 +38,5 @@ const getShards = (
   if (typeof currentDate === "string") {
     return t("commands:SHARDS.RESPONSES.DATE_NONEXIST", { DATE: date });
   }
-  return buildShardEmbed(currentDate, t, false, user, PlannerDataHelper.shardsCleared(settings.plannerData));
+  return buildShardEmbed(currentDate, t, false, user, PlannerDataService.shardsCleared(settings.plannerData));
 };

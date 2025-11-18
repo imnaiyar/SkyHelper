@@ -28,11 +28,9 @@ import { handleCurrencyModifyModal, handleErrorModal, handleShardsCalendarModal 
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
-import { handlePlannerNavigation } from "@/handlers/planner";
+import { fetchSkyData, handlePlannerNavigation, PlannerDataService, PlannerService } from "@/planner";
 import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
-import { PlannerDataHelper } from "@skyhelperbot/constants/skygame-planner";
-import { SkyPlannerData } from "@skyhelperbot/constants";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -208,15 +206,15 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
       if (id === CustomId.Default && data.data === "currency_modify") {
         const settings = await client.schemas.getUser(helper.user);
-        const { currencies } = settings.plannerData ?? PlannerDataHelper.createEmpty();
+        const { currencies } = settings.plannerData ?? PlannerDataService.createEmpty();
         const components: APILabelComponent[] = [];
-        const d = await SkyPlannerData.getSkyGamePlannerData();
-        const season = SkyPlannerData.getCurrentSeason(d);
+        const d = await fetchSkyData(client);
+        const season = PlannerService.getCurrentSeason(d);
         // More than one events can exist at a time, but including all may reach modal component limits
         // So for now only implementing modifying the first
         // TODO: do something about this, or hopefully discord increases components limit in modals
         // TODO: also add gift passes
-        const event = SkyPlannerData.getEvents(d).current[0];
+        const event = PlannerService.getEvents(d).current[0];
         const sCurrency = currencies.seasonCurrencies[season?.guid ?? ""];
         const eCurrency = currencies.eventCurrencies[event?.instance.guid ?? ""];
         if (season) {

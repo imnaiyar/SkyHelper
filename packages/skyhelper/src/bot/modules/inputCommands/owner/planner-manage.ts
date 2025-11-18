@@ -1,10 +1,10 @@
-import type { Command } from "@/structures";
+import type { Command, SkyHelper } from "@/structures";
 import { MessageFlags, MessageReferenceType } from "@discordjs/core";
-import { SkyPlannerData } from "@skyhelperbot/constants";
 import { postToHaste, separator, textDisplay } from "@skyhelperbot/utils";
 import util from "util";
 import { PLANNER_MANAGE_DATA } from "@/modules/commands-data/owner-commands";
-import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
+import { fetchSkyData, PlannerService } from "@/planner";
+import type { ISkyData } from "skygame-data";
 
 export default {
   async autocomplete({ helper, options }) {
@@ -13,8 +13,8 @@ export default {
 
     if (focusedOption.name === "entity") {
       try {
-        const data = await SkyPlannerData.getSkyGamePlannerData();
-        const results = SkyPlannerData.searchEntitiesByName(focusedValue as string, data);
+        const data = await fetchSkyData(helper.client);
+        const results = PlannerService.searchEntitiesByName(focusedValue as string, data);
         await helper.respond({
           choices: results.slice(0, 25).map((result) => ({
             name: `${result.type}: ${result.name}`,
@@ -37,7 +37,7 @@ export default {
     const subcommand = options.getSubcommand();
 
     // Fetch the data
-    const data = await SkyPlannerData.getSkyGamePlannerData();
+    const data = await fetchSkyData(helper.client);
     let response;
     switch (subcommand) {
       case "stats": {
@@ -52,7 +52,7 @@ export default {
         break;
       }
       case "refresh": {
-        await refreshPlannerData();
+        await refreshPlannerData(helper.client);
         response = {
           components: [
             textDisplay("# SkyGame Planner Data Refreshed"),
@@ -71,7 +71,7 @@ export default {
     let response;
     switch (sub) {
       case "stats": {
-        const data = await SkyPlannerData.getSkyGamePlannerData();
+        const data = await fetchSkyData(client);
         response = getStats(data);
         break;
       }
@@ -83,12 +83,12 @@ export default {
         }
         const depth = args[2] ? parseInt(args[2], 10) : 3;
 
-        const data = await SkyPlannerData.getSkyGamePlannerData();
+        const data = await fetchSkyData(client);
         response = await getEntity(data, entityGuid, depth);
         break;
       }
       case "refresh": {
-        await refreshPlannerData();
+        await refreshPlannerData(client);
         response = {
           components: [
             textDisplay("# SkyGame Planner Data Refreshed"),
@@ -115,8 +115,19 @@ export default {
   ...PLANNER_MANAGE_DATA,
 } satisfies Command<true>;
 
-function getStats(data: PlannerAssetData) {
-  const stats = SkyPlannerData.getDataStats(data);
+function getStats(data: ISkyData) {
+  const stats = {
+    realms: data.realms.items.length,
+    areas: data.areas.items.length,
+    spirits: data.spirits.items.length,
+    seasons: data.seasons.items.length,
+    items: data.items.items.length,
+    wingedLights: data.wingedLights.items.length,
+    travelingSpirits: data.travelingSpirits.items.length,
+    returningSpirits: data.specialVisits.items.length,
+    events: data.events.items.length,
+    totalNodes: data.nodes.items.length,
+  };
 
   return {
     components: [
@@ -138,8 +149,8 @@ function getStats(data: PlannerAssetData) {
   };
 }
 
-function getEntity(data: PlannerAssetData, entityGuid: string, depth: number) {
-  const entity = SkyPlannerData.getEntityByGuid(entityGuid, data);
+function getEntity(data: ISkyData, entityGuid: string, depth: number) {
+  const entity = PlannerService.getEntityByGuid(entityGuid, data);
   if (!entity) {
     return {
       components: [
@@ -172,6 +183,6 @@ function getEntity(data: PlannerAssetData, entityGuid: string, depth: number) {
   });
 }
 
-function refreshPlannerData() {
-  return SkyPlannerData.getSkyGamePlannerData(true);
+function refreshPlannerData(client: SkyHelper) {
+  return fetchSkyData(client, true);
 }

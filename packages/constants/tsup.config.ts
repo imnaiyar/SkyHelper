@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/spirits-datas/index.ts", "src/skygame-planner/index.ts"],
+  entry: ["src/index.ts", "src/skygame-planner/index.ts"],
   format: ["esm"],
   minify: true,
   sourcemap: true,
