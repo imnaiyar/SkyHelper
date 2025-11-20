@@ -1,14 +1,4 @@
-import {
-  button,
-  generateSpiritTree,
-  generateSpiritTreeTier,
-  type GenerateSpiritTreeOptions,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  textDisplay,
-} from "@skyhelperbot/utils";
+import { button, mediaGallery, mediaGalleryItem, row, section, textDisplay } from "@skyhelperbot/utils";
 import { type BasePlannerHandler } from "./base.js";
 import type { RawFile } from "@discordjs/rest";
 import { DisplayTabs, PlannerAction } from "@/types/planner";
@@ -16,6 +6,9 @@ import { createActionId } from "./helpers/action.utils.js";
 import { SpiritTreeHelper, type ISpiritTree, type ISpiritTreeTier } from "skygame-data";
 import type { INode } from "skygame-data";
 import { CostUtils } from "./helpers/cost.utils.js";
+import generateSpiritTreeTier from "@/utils/image-generators/SpiritTreeTierRenderer";
+import type { GenerateSpiritTreeOptions } from "@/utils/image-generators/SpiritTreeShared";
+import { generateSpiritTree } from "@/utils/image-generators/SpiritTreeRenderer";
 
 /** Displays spirit's rendered tree and a button to modify it wherever it is needed */
 export async function spiritTreeDisplay(

@@ -192,7 +192,7 @@ export class PlannerService {
    * @returns The current season or undefined if none is active
    */
   static getCurrentSeason(data: ISkyData) {
-    const now: DateTime = DateTime.now().setZone(zone);
+    const now = DateTime.now().setZone(zone);
     return data.seasons.items.find((season) => {
       return now >= season.date && now <= season.endDate;
     });

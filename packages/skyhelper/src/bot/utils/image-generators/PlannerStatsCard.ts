@@ -3,8 +3,8 @@ import type { APIUser } from "discord-api-types/v10";
 import { currency, emojis } from "@skyhelperbot/constants";
 import path from "node:path";
 
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, `../shared/fonts/NotoSans-Regular.ttf`), "noto-sans");
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, `../shared/fonts/notosans-black.ttf`), "noto-sans-bold");
+GlobalFonts.registerFromPath(path.join(process.cwd(), `assets/fonts/NotoSans-Regular.ttf`), "noto-sans");
+GlobalFonts.registerFromPath(path.join(process.cwd(), `assets/fonts/notosans-black.ttf`), "noto-sans-bold");
 
 export interface ProfileCardProgressData {
   items: {

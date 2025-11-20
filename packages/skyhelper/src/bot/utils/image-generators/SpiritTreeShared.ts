@@ -2,9 +2,9 @@
  * Shared utilities for Spirit Tree renderers
  */
 import { loadImage, type SKRSContext2D, Image, GlobalFonts } from "@napi-rs/canvas";
-import type { ISpiritTree, ISpiritTreeTier, INode } from "@skyhelperbot/constants/skygame-planner";
+import type { ISpiritTree, ISpiritTreeTier, INode } from "skygame-data";
 import { currency as currencyEmojis } from "@skyhelperbot/constants";
-import { resolvePlannerUrl as iconUrl } from "@skyhelperbot/constants/skygame-planner";
+import { CostUtils, resolvePlannerUrl as iconUrl } from "@/planner";
 import path from "node:path";
 
 // #region Constants
@@ -12,7 +12,16 @@ export const FONT_NAME = "noto-sans";
 export const EMOJI_URL = (emoji: string) => `https://cdn.discordapp.com/emojis/${emoji}.png`;
 
 // Register font once
-GlobalFonts.registerFromPath(path.join(import.meta.dirname, `../shared/fonts/NotoSans-Regular.ttf`), FONT_NAME);
+GlobalFonts.registerFromPath(path.join(process.cwd(), `assets/fonts/NotoSans-Regular.ttf`), FONT_NAME);
+
+export interface GenerateSpiritTreeOptions {
+  season?: boolean;
+  spiritName?: string;
+  spiritSubtitle?: string;
+  highlightItems?: string[];
+  spiritUrl?: string;
+  scale?: number; // multiplier for resolution
+}
 
 // #region Image Cache
 /**
@@ -85,8 +94,9 @@ export async function preloadNodeTreeImages(tree: ISpiritTree & { node: INode })
     if (!node) return;
     if (node.item?.icon) urls.add(iconUrl(node.item.icon));
     if (node.item?.season?.iconUrl) urls.add(iconUrl(node.item.season.iconUrl));
-    if (node.currency) {
-      const curId = (currencyEmojis as any)[node.currency.type];
+    const currencyKey = CostUtils.getCostKey(node);
+    if (currencyKey) {
+      const curId = currencyEmojis[currencyKey];
       if (curId) urls.add(EMOJI_URL(curId));
     }
     collect(node.n);
@@ -114,8 +124,9 @@ export async function preloadTierTreeImages(tree: ISpiritTree & { tier: ISpiritT
         if (!node) continue;
         if (node.item?.icon) urls.add(iconUrl(node.item.icon));
         if (node.item?.season?.iconUrl) urls.add(iconUrl(node.item.season.iconUrl));
-        if (node.currency) {
-          const curId = (currencyEmojis as any)[node.currency.type];
+        const currencyKey = CostUtils.getCostKey(node);
+        if (currencyKey) {
+          const curId = currencyEmojis[currencyKey];
           if (curId) urls.add(EMOJI_URL(curId));
         }
       }
@@ -328,13 +339,13 @@ export async function drawItem(
   }
 
   // #region cost overlay
-  if (node?.currency) {
-    const cost = node.currency.amount;
+  const currencyKey = node && CostUtils.getCostKey(node);
+  if (currencyKey) {
+    const cost = node[currencyKey]!;
     let iconCenterX = r - padding - cx / 2 + 15;
     if (cost > 99) iconCenterX += itemSize * 0.2; // have more padding for 3 digits
     const iconCenterY = r + 5;
-    const curKey = node.currency.type;
-    const curEmojiId = (currencyEmojis as any)[curKey];
+    const curEmojiId = currencyEmojis[currencyKey];
 
     if (curEmojiId) {
       try {

@@ -160,6 +160,7 @@ export class FavouriteDisplay extends BasePlannerHandler {
 
       // Check if available via Events
       for (const instance of activeEventInstances) {
+        console.log(instance);
         const node = instance.spirits.flatMap((s) => SpiritTreeHelper.getNodes(s.tree)).find((n) => n.item?.guid === item.guid);
         const spirit = node ? node.root?.spiritTree?.eventInstanceSpirit : undefined;
         if (node) {

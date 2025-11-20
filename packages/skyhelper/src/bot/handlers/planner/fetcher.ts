@@ -6,7 +6,7 @@ import { parse as jsonc } from "jsonc-parser";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
-const URL = "https://unpkg.com/skygame-data@1.0.x/assets/everything.json";
+const URL = "https://unpkg.com/skygame-data@0.x.x/assets/everything.json";
 
 let cachedData: ISkyData | null = null;
 let lastFetchTime = 0;
@@ -25,7 +25,7 @@ export async function fetchSkyData(client: SkyHelper, force = false) {
     const parsed = SkyDataResolver.parse(fetchedData);
     // refresh emojis too in-case any emoji was updated
     client.applicationEmojis = await client.api.applications
-      .getEmojis(client.user.id)
+      .getEmojis(process.env.CLIENT_ID)
       .then((cmds) => new Collection(cmds.items.map((c) => [c.id, c])));
     cachedData = resolveData(parsed, [...client.applicationEmojis.values()]);
     lastFetchTime = now;

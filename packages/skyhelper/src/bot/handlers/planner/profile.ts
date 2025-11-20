@@ -1,20 +1,11 @@
-import {
-  button,
-  container,
-  generatePlannerProfileCard,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  separator,
-  textDisplay,
-} from "@skyhelperbot/utils";
+import { button, container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "./base.js";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
 import { formatBreakdownCost } from "./breakdown.js";
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
 import { PlannerDataService, type IBreakdownData } from "./helpers/data.service.js";
+import { generatePlannerProfileCard } from "@/utils/image-generators/PlannerStatsCard";
 
 export class ProfileDisplay extends BasePlannerHandler {
   override async handle(): Promise<ResponseData> {

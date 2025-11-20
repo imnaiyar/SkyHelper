@@ -8,44 +8,74 @@ import type { ISkyData } from "skygame-data";
 export class PlannerDataService {
   /** Resolve unlocked/bought/gifted, etc base on user progress */
   static resolveProgress(d: ISkyData, userData?: UserPlannerData) {
-    const data = structuredClone(d);
-    if (!userData) return data;
+    if (!userData) return d;
 
     const unlockedSet = this.parseGuidSet(userData.unlocked);
     const wingedLightsSet = this.parseGuidSet(userData.wingedLights);
     const favouritesSet = this.parseGuidSet(userData.favourites);
     const giftedSet = this.parseGuidSet(userData.gifted);
 
-    // Enrich items
-    data.items.items.forEach((item) => {
-      item.unlocked = unlockedSet.has(item.guid);
-      item.favourited = favouritesSet.has(item.guid);
-    });
+    // shallow cloning so that this data is unique for each user
+    // only clone things that are modified for performance and also structuredClone breaks custom class instances
+    // NOTE!: currently each data as only items prop, should this change,
+    // this will need to be revisited to preserve original structure by spreading the rest
+    // items
+    const items = {
+      items: d.items.items.map((item) => ({
+        ...item,
+        unlocked: unlockedSet.has(item.guid),
+        favourited: favouritesSet.has(item.guid),
+      })),
+    };
 
-    // Enrich nodes
-    data.nodes.items.forEach((node) => {
-      node.unlocked = unlockedSet.has(node.guid);
-    });
+    // nodes
+    const nodes = {
+      items: d.nodes.items.map((node) => ({
+        ...node,
+        unlocked: unlockedSet.has(node.guid),
+      })),
+    };
 
-    // Enrich IAPs
-    data.iaps.items.forEach((iap) => {
-      const isUnlocked = unlockedSet.has(iap.guid);
-      const isGifted = giftedSet.has(iap.guid);
-      iap.bought = isUnlocked && !isGifted;
-      iap.gifted = isGifted;
-    });
+    // iaps
+    const iaps = {
+      items: d.iaps.items.map((iap) => {
+        const isUnlocked = unlockedSet.has(iap.guid);
+        const isGifted = giftedSet.has(iap.guid);
+        return {
+          ...iap,
+          bought: isUnlocked && !isGifted,
+          gifted: isGifted,
+        };
+      }),
+    };
 
-    // Enrich item list nodes
-    data.itemLists.items.forEach((itemList) => {
-      itemList.items.forEach((itemNode) => (itemNode.unlocked = unlockedSet.has(itemNode.guid)));
-    });
+    // itemLists
+    const itemLists = {
+      items: d.itemLists.items.map((itemList) => ({
+        ...itemList,
+        items: itemList.items.map((itemNode) => ({
+          ...itemNode,
+          unlocked: unlockedSet.has(itemNode.guid),
+        })),
+      })),
+    };
 
-    // Enrich winged lights
-    data.wingedLights.items.forEach((wl) => {
-      wl.unlocked = wingedLightsSet.has(wl.guid);
-    });
+    // winged lights
+    const wingedLights = {
+      items: d.wingedLights.items.map((wl) => ({
+        ...wl,
+        unlocked: wingedLightsSet.has(wl.guid),
+      })),
+    };
 
-    return data;
+    return {
+      ...d,
+      items,
+      nodes,
+      iaps,
+      itemLists,
+      wingedLights,
+    };
   }
 
   /**

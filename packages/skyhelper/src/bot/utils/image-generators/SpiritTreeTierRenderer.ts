@@ -1,6 +1,5 @@
 import { createCanvas, type SKRSContext2D } from "@napi-rs/canvas";
-import type { ISpiritTree, ISpiritTreeTier, INode } from "@skyhelperbot/constants/skygame-planner";
-import { getTreeTiers } from "@skyhelperbot/constants/skygame-planner";
+import { type ISpiritTree, type ISpiritTreeTier, type INode, SpiritTreeHelper } from "skygame-data";
 import {
   preloadTierTreeImages,
   drawItem,
@@ -9,16 +8,8 @@ import {
   drawWatermarkAndOverlay,
   drawSpiritText,
   getSpirit,
+  type GenerateSpiritTreeOptions,
 } from "./SpiritTreeShared.js";
-
-export interface GenerateSpiritTreeTierOptions {
-  season?: boolean;
-  spiritName?: string;
-  spiritSubtitle?: string;
-  highlightItems?: string[];
-  spiritUrl?: string;
-  scale?: number; // multiplier for resolution
-}
 
 // --------------------
 // #region Tier Tree Renderer
@@ -38,7 +29,7 @@ function calculateTierLayout(tree: ISpiritTree, size: number, rowSpacing: number
   const tiers: TierLayout["tiers"] = [];
   let currentY = 0;
 
-  const allTiers = getTreeTiers(tree);
+  const allTiers = SpiritTreeHelper.getTiers(tree);
   for (const tier of allTiers) {
     const tierData: TierLayout["tiers"][0] = {
       rows: [],
@@ -148,14 +139,14 @@ async function renderTierTree(
  */
 export async function generateSpiritTreeTier(
   tree: ISpiritTree & { tier: ISpiritTreeTier },
-  options: GenerateSpiritTreeTierOptions = {},
+  options: GenerateSpiritTreeOptions = {},
 ): Promise<Buffer> {
   const scale = options.scale ?? 0.5;
   const baseSize = 64 * scale;
 
   // Count total rows across all tiers to determine node size
   let totalRows = 0;
-  const tiers = getTreeTiers(tree);
+  const tiers = SpiritTreeHelper.getTiers(tree);
   tiers.forEach((tier) => (totalRows += tier.rows.length));
 
   // Adjust node size based on tree complexity

@@ -77,7 +77,7 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
 
     settings.plannerData ??= PlannerDataService.createEmpty();
 
-    const data = PlannerDataService.resolveProgress(await fetchSkyData(client));
+    const data = PlannerDataService.resolveProgress(await fetchSkyData(client), settings.plannerData);
 
     await plannerPreChecks(settings, data);
 

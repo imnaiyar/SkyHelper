@@ -1,5 +1,5 @@
 import { createCanvas, loadImage, type SKRSContext2D } from "@napi-rs/canvas";
-import { colors, fancyCount, getUserAvatar } from "./utils.js";
+import { colors, fancyCount, getUserAvatar } from "@skyhelperbot/utils/src/classes/utils.js";
 import { join } from "path";
 import type { APIGuildMember, APIUser } from "discord-api-types/v10";
 const size = 100;

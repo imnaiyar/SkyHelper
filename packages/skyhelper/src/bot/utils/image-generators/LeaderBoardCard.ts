@@ -1,13 +1,48 @@
 import { createCanvas, loadImage, GlobalFonts, type SKRSContext2D } from "@napi-rs/canvas";
-import type { userData, colorsType, Background, LeaderboardOptions } from "../typings.js";
 import * as path from "node:path";
 
+/** Data of users provided for making a game leaderboard card */
+export interface LeaderboardUserData {
+  /** The position of the player in the leaderboard */
+  top: number;
+
+  /** The Avatar of the player */
+  avatar: string;
+
+  /** The username of the player */
+  tag: string;
+
+  /** The score of the player */
+  score: number;
+
+  /** Number of the games played by the user */
+  games: number;
+}
+
+/** Customize colors for the game Leaderboard Card */
+export interface colorsType {
+  box: string;
+  username: string;
+  score: string;
+  firstRank: string;
+  secondRank: string;
+  thirdRank: string;
+}
+export interface LeaderboardOptions {
+  usersData: LeaderboardUserData[];
+  colors?: colorsType;
+}
+
+export interface Background {
+  type: string;
+  background: string;
+}
 /**
  * Represents a Quiz Leaderboard Card. A class for generating a leaderboard card for a quiz or game.
  * @returns - The generated image buffer.
  */
 export class LeaderboardCard {
-  private usersData: userData[];
+  private usersData: LeaderboardUserData[];
   private background: Background;
   private abbreviateNumber: boolean;
   private opacity: number;
@@ -40,7 +75,7 @@ export class LeaderboardCard {
    * ```
    * @example setUsersData([{top:1,avatar:"https://someone-image.png",tag:"fivesobes",score:5, games:8}])
    */
-  setUsersData(usersData: userData[]): this {
+  setUsersData(usersData: LeaderboardUserData[]): this {
     if (usersData.length > 10) {
       throw new Error("setUsersData values cannot be greater than 10.");
     }

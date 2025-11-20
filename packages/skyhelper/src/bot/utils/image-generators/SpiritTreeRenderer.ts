@@ -1,5 +1,5 @@
 import { createCanvas, type SKRSContext2D } from "@napi-rs/canvas";
-import type { ISpiritTree, INode } from "@skyhelperbot/constants/skygame-planner";
+import type { ISpiritTree, INode } from "skygame-data";
 import {
   preloadNodeTreeImages,
   drawItem,
@@ -8,16 +8,8 @@ import {
   drawWatermarkAndOverlay,
   drawSpiritText,
   getSpirit,
+  type GenerateSpiritTreeOptions,
 } from "./SpiritTreeShared.js";
-
-export interface GenerateSpiritTreeOptions {
-  season?: boolean;
-  spiritName?: string;
-  spiritSubtitle?: string;
-  highlightItems?: string[];
-  spiritUrl?: string;
-  scale?: number; // multiplier for resolution
-}
 
 // --------------------
 // #region Recursive renderer

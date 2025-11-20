@@ -21,3 +21,5 @@ __tests__/**.map
 
 # genrated images most likely
 *.png
+# not ignore those in assets dir
+!assets/**.png
