@@ -56,6 +56,7 @@ export class PlannerDataService {
         items: itemList.items.map((itemNode) => ({
           ...itemNode,
           unlocked: unlockedSet.has(itemNode.guid),
+          item: { ...itemNode.item, unlocked: unlockedSet.has(itemNode.item.guid) },
         })),
       })),
     };

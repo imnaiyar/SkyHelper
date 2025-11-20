@@ -5,7 +5,7 @@ import type { UserSchema } from "@/types/schemas";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ComponentType, type APIStringSelectComponent } from "discord-api-types/v10";
 import { MessageFlags } from "discord-api-types/v10";
-import { SpiritTreeHelper, type INode, type ISkyData, type ISpiritTree } from "skygame-data";
+import { NodeHelper, SpiritTreeHelper, type INode, type ISkyData, type ISpiritTree } from "skygame-data";
 
 export async function modifyTreeNode(
   guid: string,
@@ -14,8 +14,7 @@ export async function modifyTreeNode(
   helper: InteractionHelper,
   state: NavigationState,
 ) {
-  const enriched = PlannerDataService.resolveProgress(data, user.plannerData ?? PlannerDataService.createEmpty());
-  const tree = enriched.spiritTrees.items.find((t) => t.guid === guid);
+  const tree = data.spiritTrees.items.find((t) => t.guid === guid);
   if (!tree) throw new Error("Invalid Tree");
   const spirit = PlannerService.getTreeSpirit(tree);
   const labeled = tree.node ? getLegacyLabeledNodes(tree.node, 1) : getTierTreeLabeledNodes(tree);
@@ -88,7 +87,8 @@ ${
   }
 
   // Lock nodes above target
-  labeled.forEach((l) => toggleNodeUnlock(user, l.node, selected.includes(l.node.guid)));
+  const nodes = NodeHelper.traceMany(data.nodes.items.filter((n) => selected.includes(n.guid))).map((n) => n.guid);
+  labeled.forEach((l) => toggleNodeUnlock(user, l.node, nodes.includes(l.node.guid)));
 
   user.plannerData.date = new Date().toISOString();
   await user.save();

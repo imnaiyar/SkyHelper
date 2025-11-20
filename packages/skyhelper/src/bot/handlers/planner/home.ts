@@ -96,7 +96,7 @@ export class HomeDisplay extends BasePlannerHandler {
           {
             type: ComponentType.Button,
             label: "View Details",
-            custom_id: this.createCustomId({ t: DisplayTabs.Spirits, it: visit.guid, d: "rs" }),
+            custom_id: this.createCustomId({ t: DisplayTabs.Spirits, it: visit.guid, d: "sv" }),
             style: 1,
           },
           `**${visit.name ?? "Returning Spirits"}**`,
@@ -132,7 +132,8 @@ export class HomeDisplay extends BasePlannerHandler {
   private createEventInHome(event: { event: IEvent; instance: IEventInstance; startDate?: DateTime }) {
     const subtitles = [
       `From ${this.formatDateTimestamp(event.instance.date)} to ${this.formatDateTimestamp(event.instance.endDate)}`,
-      event.instance.spirits.length
+      // eslint-disable-next-line
+      event.instance.spirits?.length
         ? [
             ...event.instance.spirits
               .map((s) => {
@@ -142,7 +143,8 @@ export class HomeDisplay extends BasePlannerHandler {
             CostUtils.groupedToCostEmoji(
               [
                 event.instance.spirits.map((c) => c.tree),
-                event.instance.shops.flatMap((sh) => sh.itemList?.items).filter(Boolean) as IItemListNode[],
+                // eslint-disable-next-line
+                event.instance.shops?.flatMap((sh) => sh.itemList?.items).filter(Boolean) as IItemListNode[],
               ].flat(),
             ),
           ]

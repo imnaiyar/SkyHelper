@@ -161,29 +161,17 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean)
     // Unlock node - spend currency
     const guidsToAdd: string[] = [];
 
-    const unlockNode = (n: INode) => {
-      if (!n.item?.unlocked) {
-        guidsToAdd.push(n.guid);
-        node.unlocked = true;
+    if (!node.item?.unlocked) {
+      guidsToAdd.push(node.guid);
+      node.unlocked = true;
 
-        // Spend currency for this node
-        adjustCurrencies(user, node, false, seasonGuid, eventGuid);
-      }
-      if (n.item) toggleItemUnlock(user, n.item, true);
-
-      // Unlock hidden items
-      n.hiddenItems?.forEach((item) => toggleItemUnlock(user, item, true));
-    };
-
-    unlockNode(node);
-
-    // also unlock previous node
-    let currentNode = node;
-    while (currentNode.prev) {
-      unlockNode(currentNode.prev);
-
-      currentNode = currentNode.prev;
+      // Spend currency for this node
+      adjustCurrencies(user, node, false, seasonGuid, eventGuid);
     }
+    if (node.item) toggleItemUnlock(user, node.item, true);
+
+    // Unlock hidden items
+    node.hiddenItems?.forEach((item) => toggleItemUnlock(user, item, true));
 
     user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
   }
