@@ -8,6 +8,7 @@ import { DisplayTabs, FilterType, OrderType } from "@/types/planner";
 import type { IEvent, IEventInstance } from "skygame-data";
 import { CostUtils } from "./helpers/cost.utils.js";
 import { emojis } from "@skyhelperbot/constants";
+import { PlannerService } from "./helpers/planner.service.js";
 
 export class EventsDisplay extends BasePlannerHandler {
   constructor(data: any, state: any, settings: any, client: any) {
@@ -65,7 +66,7 @@ export class EventsDisplay extends BasePlannerHandler {
 
   async eventDisplay(event: IEvent) {
     const instanceButtons = event.instances?.length
-      ? event.instances.map((instance) =>
+      ? PlannerService.sortByDates(event.instances).map((instance) =>
           button({
             custom_id: this.createCustomId({ d: instance.guid }),
             label: instance.date.year.toString(),
@@ -158,23 +159,15 @@ export class EventsDisplay extends BasePlannerHandler {
         return events.sort((a, b) => a.name.localeCompare(b.name));
       case "name_desc":
         return events.sort((a, b) => b.name.localeCompare(a.name));
+      case "date_desc":
       case "date_asc":
         return events.sort((a, b) => {
-          const aDate = a.instances?.[0]?.date;
-          const bDate = b.instances?.[0]?.date;
+          const aDate = PlannerService.sortByDates(a.instances ?? [])[0]?.date;
+          const bDate = PlannerService.sortByDates(b.instances ?? [])[0]?.date;
           if (!aDate && !bDate) return 0;
           if (!aDate) return 1;
           if (!bDate) return -1;
-          return aDate.toMillis() - bDate.toMillis();
-        });
-      case "date_desc":
-        return events.sort((a, b) => {
-          const aDate = a.instances?.[0]?.date;
-          const bDate = b.instances?.[0]?.date;
-          if (!aDate && !bDate) return 0;
-          if (!aDate) return 1;
-          if (!bDate) return -1;
-          return bDate.toMillis() - aDate.toMillis();
+          return order === "date_asc" ? aDate.toMillis() - bDate.toMillis() : bDate.toMillis() - aDate.toMillis();
         });
       default:
         return events;

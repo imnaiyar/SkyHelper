@@ -285,8 +285,6 @@ export function unlockAllTreeNodes(user: UserSchema, nodes: INode[]) {
   const guidsToAdd: string[] = [];
 
   // Get currency context from the first node (all nodes in tree should have same context)
-  const firstNode = nodes[0];
-  const { seasonGuid, eventGuid } = firstNode ? getCurrencyContext(firstNode, firstNode.item) : {};
 
   nodes.forEach((node) => {
     if (node.item?.unlocked) return;
@@ -297,9 +295,10 @@ export function unlockAllTreeNodes(user: UserSchema, nodes: INode[]) {
     node.hiddenItems?.forEach((item) => guidsToAdd.push(item.guid));
 
     // Spend currency for this node
+
+    const { seasonGuid, eventGuid } = getCurrencyContext(node, node.item);
     adjustCurrencies(user, node, false, seasonGuid, eventGuid);
   });
-
   user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
   user.plannerData.date = new Date().toISOString();
 }

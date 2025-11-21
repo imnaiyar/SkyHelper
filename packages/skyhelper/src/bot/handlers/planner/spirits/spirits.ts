@@ -129,10 +129,12 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
     });
     if (index > -1) selected = index;
 
-    // some places may  pass this value in `i`, like from ts display
+    // some places may pass this value in `i`, like from, passing the default selected tree id ts display
     if (this.state.i?.startsWith("tree")) {
-      const treeIndex = parseInt(this.state.i.substring(4)) || 0;
-      selected = Math.min(treeIndex, trees.length - 1);
+      const treeGuid = this.state.i.slice(4);
+      const treeIndex = trees.findIndex((tt) => tt.tree.guid === treeGuid);
+
+      selected = Math.min(treeIndex, 0);
     } else if (this.state.v?.[0]) {
       selected = parseInt(this.state.v[0]);
     }
@@ -155,7 +157,6 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
         : null,
       `Type: ${spirit.type}`,
     ].filter(Boolean) as [string, ...string[]];
-
     const compos = [
       spirit.imageUrl ? section(thumbnail(spirit.imageUrl), ...title) : textDisplay(...title),
       row(

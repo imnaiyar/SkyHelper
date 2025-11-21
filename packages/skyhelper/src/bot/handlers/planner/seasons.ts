@@ -129,16 +129,11 @@ export class SeasonsDisplay extends BasePlannerHandler {
       case "name_desc":
         return sns.sort((a, b) => b.name.localeCompare(a.name));
       case "date_asc":
-        return sns.sort((a, b) => {
-          const aDate = a.date;
-          const bDate = b.date;
-          return aDate.toMillis() - bDate.toMillis();
-        });
       case "date_desc":
         return sns.sort((a, b) => {
           const aDate = a.date;
           const bDate = b.date;
-          return bDate.toMillis() - aDate.toMillis();
+          return order === "date_asc" ? aDate.toMillis() - bDate.toMillis() : bDate.toMillis() - aDate.toMillis();
         });
       default:
         return sns;

@@ -12,6 +12,7 @@ import { ComponentType } from "@discordjs/core";
 import { CDN } from "@discordjs/rest";
 import { EmojiRegex, WebhookRegex } from "@sapphire/discord-utilities";
 import { CustomId, store } from "../customId-store.js";
+import { DateTime } from "luxon";
 
 export default class {
   /**
@@ -143,17 +144,25 @@ export default class {
     return obj;
   }
 
-  static time(date: Date | number): `<t:${number}>`;
+  static time(date: Date | DateTime | number): `<t:${number}>`;
   /**
    * Formats given Date or timestamp to Discord timestamp format.
    *
    * @param date The date to format
    * @param style The style to use
    */
-  static time<T extends TimestampStyles>(date: Date | number, style: T): `t:${number}:${T}>`;
+  static time<T extends TimestampStyles>(date: Date | DateTime | number, style: T): `t:${number}:${T}>`;
 
-  static time(date: Date | number, style?: string) {
-    return `<t:${Math.floor(date instanceof Date ? date.getTime() / 1_000 : date)}${style ? `:${style}` : ""}>`;
+  static time(date: Date | DateTime | number, style?: string) {
+    return `<t:${Math.floor(
+      date instanceof Date
+        ? date.getTime() / 1_000
+        : // Doing this check bc sometimes datetime instance can come from diff package,
+          // and instanceof may not hold true across versions
+          typeof date === "object" && "toMillis" in date
+          ? date.toMillis() / 1_000
+          : date,
+    )}${style ? `:${style}` : ""}>`;
   }
 
   /**

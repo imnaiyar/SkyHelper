@@ -8,7 +8,8 @@ import * as jsonc from "jsonc-parser";
 const APP_ID = process.env.CLIENT_ID;
 const BOT_TOKEN = process.env.TOKEN;
 if (!APP_ID || !BOT_TOKEN) throw new Error("Missing required variables: APP_ID and BOT_TOKEN");
-const EMOJI_MAPPINGS_PATH = "packages/constants/emoji_hashes.json";
+const EMOJI_MAPPINGS_PATH = "packages/skyhelper/assets/emoji_hashes.json";
+const ITEMS_DATA_URL = "https://unpkg.com/skygame-data@0.x.x/assets/items.json";
 interface Item {
   id: number;
   icon?: string;
@@ -31,15 +32,15 @@ interface EmojiResponse {
 
 interface EmojiMapping extends Record<string, string> {}
 
-let data: ItemsData;
+let data: ItemsData | null = null;
 try {
-  const res = await fetch("https://sky-planner.com/assets/data/items.json");
+  const res = await fetch(ITEMS_DATA_URL);
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     throw new Error(`Failed to fetch items.json: HTTP ${res.status} ${res.statusText}${body ? ` - ${body.slice(0, 200)}` : ""}`);
   }
   const text = await res.text();
-  data = jsonc.parse(text) as ItemsData;
+  data = jsonc.parse(text) as ItemsData | null;
   if (!data || !Array.isArray(data.items)) {
     throw new Error("Parsed items.json is invalid or missing 'items' array");
   }

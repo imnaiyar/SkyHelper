@@ -28,9 +28,7 @@ export class TSDisplay extends BaseSpiritsDisplay {
             custom_id: this.createCustomId({
               it: t.spirit.guid,
               // passing this in `i` because all the properties are used for one thing or another
-              // passing other tree so that index is correctly calculated based on how it is handled in spirits display
-              // TODO: eventually think of a better way to do this, maybe when the spirit tree selection is refactored
-              i: `tree${[t.tree, ...(t.spirit.treeRevisions ?? []), ...(t.spirit.specialVisitSpirits ?? []), ...(t.spirit.travelingSpirits ?? [])].findIndex((x) => x.guid === t.guid).toString()}`,
+              i: `tree${t.tree.guid}`,
               b: { t: this.state.t, p: this.state.p, it: "", f: this.state.f, d: this.state.d },
             }),
             style: 1,

@@ -6,77 +6,92 @@ import type { ICost, IItemListNode } from "skygame-data";
 import type { ISkyData } from "skygame-data";
 
 export class PlannerDataService {
-  /** Resolve unlocked/bought/gifted, etc base on user progress */
-  static resolveProgress(d: ISkyData, userData?: UserPlannerData) {
-    if (!userData) return d;
+  /**
+   * Deep clone object while preserving class instances like DateTime
+   *
+   * @remarks Structured clone breaks custom class instances, like DateTime, so here's this
+   */
+  private static deepClone<T>(obj: T, visited = new WeakMap()): T {
+    // Handle primitives and null
+    if (obj === null || typeof obj !== "object") return obj;
 
+    // Preserve special class instances
+    // instanceof check may not hold true bcz data is from another package
+    // DateTime
+    if (typeof obj === "object" && "toMillis" in obj) return obj as T;
+    if (obj instanceof Date) return new Date(obj.getTime()) as T;
+
+    // Check if we've already cloned this object (circular reference)
+    if (visited.has(obj as object)) {
+      return visited.get(obj as object) as T;
+    }
+
+    // Handle arrays
+    if (Array.isArray(obj)) {
+      const arrClone = [] as unknown as T;
+      visited.set(obj as object, arrClone);
+      (obj as unknown as unknown[]).forEach((item, index) => {
+        (arrClone as unknown[])[index] = this.deepClone(item, visited);
+      });
+      return arrClone;
+    }
+
+    // Handle objects
+    const cloned = {} as T;
+    visited.set(obj as object, cloned);
+
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        cloned[key] = this.deepClone(obj[key], visited);
+      }
+    }
+
+    return cloned;
+  }
+
+  /** Resolve unlocked/bought/gifted, etc base on user progress */
+  static resolveProgress(data: ISkyData, userData?: UserPlannerData) {
+    if (!userData) return data;
+    const d = this.deepClone(data);
     const unlockedSet = this.parseGuidSet(userData.unlocked);
     const wingedLightsSet = this.parseGuidSet(userData.wingedLights);
     const favouritesSet = this.parseGuidSet(userData.favourites);
     const giftedSet = this.parseGuidSet(userData.gifted);
 
-    // shallow cloning so that this data is unique for each user
-    // only clone things that are modified for performance and also structuredClone breaks custom class instances
-    // NOTE!: currently each data as only items prop, should this change,
-    // this will need to be revisited to preserve original structure by spreading the rest
     // items
-    const items = {
-      items: d.items.items.map((item) => ({
-        ...item,
-        unlocked: unlockedSet.has(item.guid),
-        favourited: favouritesSet.has(item.guid),
-      })),
-    };
+    d.items.items.forEach((item) => {
+      item.unlocked = unlockedSet.has(item.guid);
+      item.favourited = favouritesSet.has(item.guid);
+    });
 
     // nodes
-    const nodes = {
-      items: d.nodes.items.map((node) => ({
-        ...node,
-        unlocked: unlockedSet.has(node.guid),
-      })),
-    };
+    d.nodes.items.forEach((node) => {
+      node.unlocked = unlockedSet.has(node.guid);
+    });
 
     // iaps
-    const iaps = {
-      items: d.iaps.items.map((iap) => {
-        const isUnlocked = unlockedSet.has(iap.guid);
-        const isGifted = giftedSet.has(iap.guid);
-        return {
-          ...iap,
-          bought: isUnlocked && !isGifted,
-          gifted: isGifted,
-        };
-      }),
-    };
+    d.iaps.items.forEach((iap) => {
+      const isUnlocked = unlockedSet.has(iap.guid);
+      const isGifted = giftedSet.has(iap.guid);
+
+      iap.bought = isUnlocked && !isGifted;
+      iap.gifted = isGifted;
+    });
 
     // itemLists
-    const itemLists = {
-      items: d.itemLists.items.map((itemList) => ({
-        ...itemList,
-        items: itemList.items.map((itemNode) => ({
-          ...itemNode,
-          unlocked: unlockedSet.has(itemNode.guid),
-          item: { ...itemNode.item, unlocked: unlockedSet.has(itemNode.item.guid) },
-        })),
-      })),
-    };
+    d.itemLists.items.forEach((itemList) => {
+      itemList.items.forEach((itemNode) => {
+        itemNode.unlocked = unlockedSet.has(itemNode.guid);
+        itemNode.item.unlocked = unlockedSet.has(itemNode.item.guid);
+      });
+    });
 
     // winged lights
-    const wingedLights = {
-      items: d.wingedLights.items.map((wl) => ({
-        ...wl,
-        unlocked: wingedLightsSet.has(wl.guid),
-      })),
-    };
+    d.wingedLights.items.map((wl) => {
+      wl.unlocked = wingedLightsSet.has(wl.guid);
+    });
 
-    return {
-      ...d,
-      items,
-      nodes,
-      iaps,
-      itemLists,
-      wingedLights,
-    };
+    return d;
   }
 
   /**

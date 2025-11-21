@@ -6,6 +6,7 @@ import { currencyMap } from "./base.js";
 import type { ISpecialVisit, ITravelingSpirit } from "skygame-data";
 import type { IItem } from "skygame-data";
 import { CostUtils } from "./helpers/cost.utils.js";
+import { PlannerService } from "./helpers/planner.service.js";
 
 export const OrderMappings = {
   [OrderType.NameAsc]: "Name (A-Z)",
@@ -408,34 +409,21 @@ export class FilterManager {
 
     switch (order) {
       case "name_asc":
-        return spirits.sort((a, b) => {
-          const nameA = "name" in a ? (a.name ?? "") : (getSpirit(a)?.name ?? "");
-          const nameB = "name" in b ? (b.name ?? "") : (getSpirit(b)?.name ?? "");
-          return nameA.localeCompare(nameB);
-        });
       case "name_desc":
         return spirits.sort((a, b) => {
           const nameA = "name" in a ? (a.name ?? "") : (getSpirit(a)?.name ?? "");
           const nameB = "name" in b ? (b.name ?? "") : (getSpirit(b)?.name ?? "");
-          return nameB.localeCompare(nameA);
+          return order === "name_asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
         });
       case "date_asc":
-        return spirits.sort((a, b) => {
-          const aDate = "date" in a ? a.date : (a.season?.date ?? a.travelingSpirits?.[0]?.date);
-          const bDate = "date" in b ? b.date : (b.season?.date ?? b.travelingSpirits?.[0]?.date);
-          if (!aDate && !bDate) return 0;
-          if (!aDate) return 1;
-          if (!bDate) return -1;
-          return aDate.toMillis() - bDate.toMillis();
-        });
       case "date_desc":
         return spirits.sort((a, b) => {
-          const aDate = "date" in a ? a.date : (a.season?.date ?? a.travelingSpirits?.[0]?.date);
-          const bDate = "date" in b ? b.date : (b.season?.date ?? b.travelingSpirits?.[0]?.date);
+          const aDate = "date" in a ? a.date : (a.season?.date ?? PlannerService.sortByDates(a.travelingSpirits ?? [])[0]?.date);
+          const bDate = "date" in b ? b.date : (b.season?.date ?? PlannerService.sortByDates(b.travelingSpirits ?? [])[0]?.date);
           if (!aDate && !bDate) return 0;
           if (!aDate) return 1;
           if (!bDate) return -1;
-          return bDate.toMillis() - aDate.toMillis();
+          return order === "date_asc" ? aDate.toMillis() - bDate.toMillis() : bDate.toMillis() - aDate.toMillis();
         });
       default:
         return spirits;

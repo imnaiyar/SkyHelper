@@ -234,4 +234,47 @@ export class PlannerService {
       tree.spirit ?? tree.eventInstanceSpirit?.spirit ?? tree.travelingSpirit?.spirit ?? tree.specialVisitSpirit?.spirit ?? null
     );
   }
+
+  /**
+   * Sorts the given planner structure according to their dates in descending order
+   * @param datas The structures to sort
+   * @param datePaths Optional paths in the object to look for the date (tries each in order)
+   */
+  static sortByDates<
+    T extends BuildDatePath<Path> | { date: DateTime },
+    const Path extends readonly string[] | undefined = undefined,
+  >(datas: T[], datePaths?: Path) {
+    const getDate = (data: BuildDatePath<Path> | { date?: DateTime }): DateTime => {
+      if ("date" in data && data.date) return data.date as DateTime; // return if it already includes date
+      const paths = datePaths ?? [];
+
+      for (const datePath of paths) {
+        try {
+          const parts = datePath.split(".");
+          let current: any = data;
+          for (const part of parts) {
+            current = current?.[part];
+            if (!current) break;
+          }
+
+          if (current?.date) {
+            return current.date;
+          }
+        } catch {
+          continue;
+        }
+      }
+
+      throw new Error(`Could not find date in any of the provided paths: ${paths.join(", ")}`);
+    };
+    return datas.sort((a, b) => (getDate(a) > getDate(b) ? -1 : 1));
+  }
 }
+
+type BuildDatePath<Path extends readonly string[] | undefined = undefined> = Path extends readonly string[]
+  ? Path extends readonly [infer First extends string, ...infer Rest extends string[]]
+    ? First extends `${infer Key}.${infer Nested}`
+      ? { [K in Key]: BuildDatePath<[Nested, ...Rest]> }
+      : { [K in First]: { date: DateTime } } | (Rest extends [] ? never : BuildDatePath<Rest>)
+    : { date: DateTime }
+  : { date: DateTime };

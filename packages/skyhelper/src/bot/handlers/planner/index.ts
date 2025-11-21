@@ -24,6 +24,7 @@ import { PlannerService } from "./helpers/planner.service.js";
 import { PlannerDataService } from "./helpers/data.service.js";
 import { fetchSkyData } from "./fetcher.js";
 import type { ISkyData } from "skygame-data";
+import { performance } from "node:perf_hooks";
 
 // Navigation state interface to track user's position
 
@@ -76,9 +77,7 @@ export async function handlePlannerNavigation(state: Omit<NavigationState, "user
     const settings = await client.schemas.getUser(user);
 
     settings.plannerData ??= PlannerDataService.createEmpty();
-
     const data = PlannerDataService.resolveProgress(await fetchSkyData(client), settings.plannerData);
-
     await plannerPreChecks(settings, data);
 
     const handler = displayClasses(state.d)[t];

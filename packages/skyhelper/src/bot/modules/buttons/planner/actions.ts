@@ -31,8 +31,9 @@ export default defineButton({
   async execute(interaction, _t, helper, { action: a, navState }) {
     const [action, guid = "", actionType = ""] = a.split("|");
     const user = await helper.client.schemas.getUser(helper.user);
-    const data = PlannerDataService.resolveProgress(await fetchSkyData(helper.client), user.plannerData);
+
     user.plannerData ??= PlannerDataService.createEmpty();
+    const data = PlannerDataService.resolveProgress(await fetchSkyData(helper.client), user.plannerData);
 
     // #region shards cleared
     if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
