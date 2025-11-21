@@ -8,10 +8,7 @@
   "scripts": {
     "build": "tsup && tsc --emitDeclarationOnly --declaration",
     "build:docs": "typedoc",
-    "test": "vitest run --coverage",
-    "bench": "vitest bench",
-    "lint": "eslint --fix src",
-    "test:profile-card": "tsx scripts/test-profile-card.ts"
+    "lint": "eslint --fix src"
   },
   "repository": {
     "type": "git",
