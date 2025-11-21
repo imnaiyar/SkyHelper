@@ -4,16 +4,15 @@ import Utils from "@/utils/classes/Utils";
 import { CustomId } from "@/utils/customId-store";
 import { type APILabelComponent, ComponentType, type APITextDisplayComponent } from "@discordjs/core";
 import { textDisplay } from "@skyhelperbot/utils";
-import { SkyPlannerData } from "@skyhelperbot/constants";
-import { handlePlannerNavigation } from "@/handlers/planner";
-import { FilterManager } from "@/handlers/planner-displays/filter.manager";
+import { fetchSkyData, handlePlannerNavigation } from "@/planner";
+import { FilterManager } from "@/planner/filter.manager";
 
 export default defineButton({
   data: { name: "filter" },
   id: CustomId.PlannerFilters,
   async execute(_interaction, _t, helper, props) {
     const { tab, filters } = props;
-    const data = await SkyPlannerData.getSkyGamePlannerData();
+    const data = await fetchSkyData(helper.client);
 
     const filterManager = new FilterManager(data);
 
@@ -99,6 +98,7 @@ export default defineButton({
     const comps = await handlePlannerNavigation(
       {
         ...state,
+        // eslint-disable-next-line
         f: newFilterString || undefined,
         p: 1, // Reset to first page when filters change
       },

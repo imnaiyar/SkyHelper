@@ -1,15 +1,14 @@
 import { DisplayTabs, type NavigationState, FilterType } from "@/types/planner";
-import { serializeFilters } from "@/handlers/planner-displays/filter.manager";
+import { serializeFilters } from "@/planner/filter.manager";
 import { PLANNER_DATA } from "@/modules/commands-data/utility-commands";
 import type { Command } from "@/structures";
 import { CustomId, store } from "@/utils/customId-store";
-import { SkyPlannerData } from "@skyhelperbot/constants";
-import type { PlannerAssetData } from "@skyhelperbot/constants/skygame-planner";
 import { plannerData, searchHelper } from "./sub/planner.helpers.js";
-import { handlePlannerNavigation } from "@/handlers/planner";
+import { fetchSkyData, handlePlannerNavigation, PlannerService } from "@/planner";
 import { MessageFlags } from "discord-api-types/v10";
+import type { ISkyData } from "skygame-data";
 //  this is mappings of available display tabs that will show on search, which users can quick jump to
-const tab_mappings = (data: PlannerAssetData) => [
+const tab_mappings = (data: ISkyData) => [
   ...Object.entries(DisplayTabs).map(([n, v]) => ({ name: n, path: { t: v } })),
   { name: "Traveling Spirits", path: { t: DisplayTabs.Spirits, d: "ts" } },
   { name: "Special Visits", path: { t: DisplayTabs.Spirits, d: "rs" } },
@@ -20,7 +19,7 @@ const tab_mappings = (data: PlannerAssetData) => [
       d: "shops",
       f: serializeFilters(
         new Map([
-          [FilterType.Shops, data.shops.filter((s) => s.permanent === "event").map((s) => s.guid)],
+          [FilterType.Shops, data.shops.items.filter((s) => s.permanent === "event").map((s) => s.guid)],
           [FilterType.SpiritTrees, ["TbheKd0E45"]],
         ]),
       ),
@@ -37,7 +36,7 @@ const tab_mappings = (data: PlannerAssetData) => [
       d: "shops",
       f: serializeFilters(
         new Map([
-          [FilterType.Shops, data.shops.filter((s) => s.permanent === "harmony").map((s) => s.guid)],
+          [FilterType.Shops, data.shops.items.filter((s) => s.permanent === "harmony").map((s) => s.guid)],
           [FilterType.SpiritTrees, ["bkdgyeUcbZ"]],
         ]),
       ),
@@ -48,7 +47,9 @@ const tab_mappings = (data: PlannerAssetData) => [
     path: {
       t: DisplayTabs.Shops,
       d: "shops",
-      f: serializeFilters(new Map([[FilterType.Shops, data.shops.filter((s) => s.permanent === "office").map((s) => s.guid)]])),
+      f: serializeFilters(
+        new Map([[FilterType.Shops, data.shops.items.filter((s) => s.permanent === "office").map((s) => s.guid)]]),
+      ),
     },
   },
   {
@@ -61,7 +62,7 @@ export default {
     const sub = options.getSubcommand();
     if (sub !== "search") throw new Error("Invalid subcommand");
     const query = options.getString("query", true).toLowerCase();
-    const data = await SkyPlannerData.getSkyGamePlannerData();
+    const data = await fetchSkyData(helper.client);
     const createidentifier = (d: Omit<NavigationState, "user">) =>
       store.serialize(CustomId.PlannerTopLevelNav, {
         back: null,
@@ -82,7 +83,7 @@ export default {
           value: createidentifier(t.path),
         };
       });
-    const results = SkyPlannerData.searchEntitiesByName(query, data).map((op) => {
+    const results = PlannerService.searchEntitiesByName(query, data).map((op) => {
       const route = searchHelper(op, data);
       return {
         name: `${op.type}: ${op.name}`,

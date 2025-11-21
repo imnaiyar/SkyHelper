@@ -19,6 +19,8 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "paths": {
+      "@/planner": ["./src/bot/handlers/planner/index.js"],
+      "@/planner/*": ["./src/bot/handlers/planner/*.js"],
       "@/api/*": ["./src/api/*.js"],
       "@/structures": ["./src/bot/structures/index.js"],
       "@/types/*": ["./src/bot/@types/*.js"],

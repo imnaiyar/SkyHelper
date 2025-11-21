@@ -32,7 +32,7 @@ import { currency, emojis, RemindersEventsMap, zone } from "@skyhelperbot/consta
 import { paginate } from "../paginator.js";
 import RemindersUtils from "./RemindersUtils.js";
 import type { InteractionHelper } from "./InteractionUtil.js";
-import { createActionId } from "@/handlers/planner-utils";
+import { createActionId } from "@/planner/helpers/action.utils";
 import { PlannerAction } from "@/types/planner";
 
 /**

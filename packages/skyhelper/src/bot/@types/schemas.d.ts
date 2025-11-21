@@ -2,7 +2,7 @@ import type { DateTime } from "luxon";
 import type { Document } from "mongoose";
 import type { DailyQuest } from "./custom.js";
 import type { REMINDERS_KEY } from "@skyhelperbot/constants";
-import type { UserPlannerData } from "@skyhelperbot/constants/skygame-planner";
+import type { UserPlannerData } from "@/planner/helpers/data.service";
 
 // #region User
 export interface UserSchema extends Document {

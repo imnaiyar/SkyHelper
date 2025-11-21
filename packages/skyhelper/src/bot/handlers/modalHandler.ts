@@ -3,16 +3,9 @@ import { buildCalendarResponse } from "@/utils/classes/Embeds";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import Utils from "@/utils/classes/Utils";
 import { ComponentType, MessageFlags, type APIEmbed, type APIModalSubmitInteraction } from "@discordjs/core";
-import {
-  calculateCurrencyBreakdown,
-  enrichDataWithUserProgress,
-  formatCurrencies,
-  getSkyGamePlannerData,
-  PlannerDataHelper,
-} from "@skyhelperbot/constants/skygame-planner";
 import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
-import { handlePlannerNavigation } from "./planner.js";
+import { fetchSkyData, handlePlannerNavigation, PlannerDataService } from "@/planner";
 import { DisplayTabs } from "@/types/planner";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
@@ -75,8 +68,8 @@ export async function handleErrorModal(helper: InteractionHelper) {
 // TODO: Handle this later
 export async function breakdownModalDisplay(helper: InteractionHelper, type: string) {
   const settings = await helper.client.schemas.getUser(helper.user);
-  const data = enrichDataWithUserProgress(await getSkyGamePlannerData(), settings.plannerData);
-  const breakdowns = calculateCurrencyBreakdown(data);
+  const data = PlannerDataService.resolveProgress(await fetchSkyData(helper.client), settings.plannerData);
+  const breakdowns = PlannerDataService.calculateCurrencyBreakdown(data);
 }
 
 export async function handleCurrencyModifyModal(helper: InteractionHelper) {
@@ -115,7 +108,7 @@ export async function handleCurrencyModifyModal(helper: InteractionHelper) {
   const invalidFields = validations.filter((v) => Number.isNaN(v.value)).map((v) => v.name);
 
   const settings = await client.schemas.getUser(helper.user);
-  const plannerData = settings.plannerData ?? PlannerDataHelper.createEmpty();
+  const plannerData = settings.plannerData ?? PlannerDataService.createEmpty();
 
   if (!Number.isNaN(candles)) plannerData.currencies.candles = candles ?? 0;
   if (!Number.isNaN(hearts)) plannerData.currencies.hearts = hearts ?? 0;
@@ -138,11 +131,11 @@ export async function handleCurrencyModifyModal(helper: InteractionHelper) {
   await settings.save();
 
   const [skyData, navData] = await Promise.all([
-    getSkyGamePlannerData(),
+    fetchSkyData(helper.client),
     handlePlannerNavigation({ t: DisplayTabs.Home }, helper.user, client),
   ]);
 
-  const formatted = formatCurrencies(skyData, plannerData);
+  const formatted = PlannerDataService.userCurrencyToEmoji(skyData, plannerData);
 
   await helper.editReply(navData);
   await helper.followUp({

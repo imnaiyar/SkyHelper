@@ -1,6 +1,5 @@
 import { Hangman } from "@/utils/classes/Hangman";
 
-import { LeaderboardCard, type userData } from "@skyhelperbot/utils";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import {
@@ -24,6 +23,7 @@ import type { SkyGameStatsData } from "@/types/custom";
 import { emojis } from "@skyhelperbot/constants";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { CustomId } from "@/utils/customId-store";
+import { LeaderboardCard, type LeaderboardUserData } from "@/utils/image-generators/LeaderBoardCard";
 const BASE =
   "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
 const constants = {
@@ -289,7 +289,7 @@ export const getCardResponse = async (
 ): Promise<RESTPostAPIChannelMessageJSONBody & { files?: RawFile[] }> => {
   const { client } = helper;
   const players = await Promise.all(
-    data[btnType].map(async (d, i): Promise<userData> => {
+    data[btnType].map(async (d, i): Promise<LeaderboardUserData> => {
       const member: APIGuildMember | APIUser =
         type === "server" ? guildMembers.members.find((m) => m.user.id === d.id)! : await client.api.users.get(d.id);
       return {

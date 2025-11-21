@@ -12,13 +12,16 @@
  *   pnpm tree-render "Stretching Guru"
  *   pnpm tree-render "lumberjack" --season --output=forest_spirit.png
  */
-
-import { SkyPlannerData } from "@skyhelperbot/constants";
-import { getAllNodes } from "@skyhelperbot/constants/skygame-planner";
-import { generateSpiritTree, generateSpiritTreeTier } from "@skyhelperbot/utils";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
-
+import { ISpirit, SpiritTreeHelper, type ISkyData } from "skygame-data";
+import { SpiritType } from "../src/bot/@types/planner.js";
+import { fetchSkyData } from "../src/bot/handlers/planner/index.js";
+import { SkyHelper } from "../src/bot/structures/Client.js";
+import { REST } from "@discordjs/rest";
+import { WebSocketManager } from "@discordjs/ws";
+import { generateSpiritTree } from "../src/bot/utils/image-generators/SpiritTreeRenderer.js";
+import { generateSpiritTreeTier } from "../src/bot/utils/image-generators/SpiritTreeTierRenderer.js";
 interface ScriptOptions {
   spiritQuery: string;
   season: boolean;
@@ -71,17 +74,17 @@ function parseArgs(): ScriptOptions {
 /**
  * Find a spirit by name or ID in the planner data
  */
-function findSpirit(data: SkyPlannerData.PlannerAssetData, query: string): SkyPlannerData.ISpirit | null {
+function findSpirit(data: ISkyData, query: string): ISpirit | null {
   // First try exact GUID match
-  const spiritByGuid = data.spirits.find((spirit) => spirit.guid === query);
+  const spiritByGuid = data.spirits.items.find((spirit) => spirit.guid === query);
   if (spiritByGuid) return spiritByGuid;
 
   // Then try exact name match (case insensitive)
-  const spiritByName = data.spirits.find((spirit) => spirit.name.toLowerCase().includes(query.toLowerCase()));
+  const spiritByName = data.spirits.items.find((spirit) => spirit.name.toLowerCase().includes(query.toLowerCase()));
   if (spiritByName) return spiritByName;
 
   // Finally try partial name match
-  const spiritByPartialName = data.spirits.find((spirit) => spirit.name.toLowerCase().includes(query.toLowerCase()));
+  const spiritByPartialName = data.spirits.items.find((spirit) => spirit.name.toLowerCase().includes(query.toLowerCase()));
   if (spiritByPartialName) return spiritByPartialName;
 
   return null;
@@ -90,26 +93,26 @@ function findSpirit(data: SkyPlannerData.PlannerAssetData, query: string): SkyPl
 /**
  * List available spirits
  */
-function listSpirits(data: SkyPlannerData.PlannerAssetData, limit = 20) {
+function listSpirits(data: ISkyData, limit = 20) {
   console.log("\nAvailable spirits (showing first", limit, "):");
   console.log("==========================================");
 
-  const spirits = data.spirits.slice(0, limit);
+  const spirits = data.spirits.items.slice(0, limit);
   for (const spirit of spirits) {
     const type =
-      spirit.type === SkyPlannerData.SpiritType.Regular
+      spirit.type === SpiritType.Regular
         ? "Regular"
-        : spirit.type === SkyPlannerData.SpiritType.Season
+        : spirit.type === SpiritType.Season
           ? "Seasonal"
-          : spirit.type === SkyPlannerData.SpiritType.Elder
+          : spirit.type === SpiritType.Elder
             ? "Elder"
             : "Guide";
     const area = spirit.area ? ` (${spirit.area.realm.name})` : "";
     console.log(`  • ${spirit.name}${area} [${type}]`);
   }
 
-  if (data.spirits.length > limit) {
-    console.log(`  ... and ${data.spirits.length - limit} more spirits`);
+  if (data.spirits.items.length > limit) {
+    console.log(`  ... and ${data.spirits.items.length - limit} more spirits`);
   }
 }
 
@@ -121,7 +124,11 @@ async function main() {
     const options = parseArgs();
 
     console.log("Loading SkyGame Planner data...");
-    const data = await SkyPlannerData.getSkyGamePlannerData();
+    // only basic client since we do not need to fully connect and only needed for emojis
+    const rest = new REST().setToken(process.env.TOKEN!);
+    const gateway = new WebSocketManager({ fetchGatewayInformation: () => "" as any, intents: 1 });
+    const client = new SkyHelper({ gateway: gateway, rest });
+    const data = await fetchSkyData(client);
 
     console.log(`Searching for spirit: "${options.spiritQuery}"`);
     const spirit = findSpirit(data, options.spiritQuery);
@@ -138,7 +145,7 @@ async function main() {
       console.error(`❌ Spirit "${spirit.name}" has no tree data available`);
       process.exit(1);
     }
-    const nodes = getAllNodes(tree);
+    const nodes = SpiritTreeHelper.getNodes(tree);
     console.log(`📊 Rendering tree for: ${spirit.name}`);
     console.log(`   Tree has ${nodes.length} nodes`);
     console.log(`   Season pass items: ${options.season ? "enabled" : "disabled"}`);
@@ -150,6 +157,7 @@ async function main() {
       spiritName: options.spiritName,
       spiritSubtitle: "Travleing Spirit #150",
     };
+    // @ts-expect-error i dont need to be robust here
     const imageBuffer = tree.node ? await generateSpiritTree(tree, option) : await generateSpiritTreeTier(tree, option);
     console.timeEnd("Render time");
 

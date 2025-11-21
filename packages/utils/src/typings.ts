@@ -1,43 +1,6 @@
 import type { DateTime } from "luxon";
 import { Document } from "mongoose";
 
-/** Data of users provided for making a game leaderboard card */
-export interface userData {
-  /** The position of the player in the leaderboard */
-  top: number;
-
-  /** The Avatar of the player */
-  avatar: string;
-
-  /** The username of the player */
-  tag: string;
-
-  /** The score of the player */
-  score: number;
-
-  /** Number of the games played by the user */
-  games: number;
-}
-
-/** Customize colors for the game Leaderboard Card */
-export interface colorsType {
-  box: string;
-  username: string;
-  score: string;
-  firstRank: string;
-  secondRank: string;
-  thirdRank: string;
-}
-export interface LeaderboardOptions {
-  usersData: userData[];
-  colors?: colorsType;
-}
-
-export interface Background {
-  type: string;
-  background: string;
-}
-
 export interface SkyEvent {
   eventActive: boolean;
   eventName: string;

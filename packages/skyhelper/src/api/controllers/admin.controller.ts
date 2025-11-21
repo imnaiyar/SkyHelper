@@ -1,6 +1,7 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { fetchSkyData, PlannerService } from "@/planner";
+import type { SkyHelper } from "@/structures";
+import { Controller, Get, Inject, Param } from "@nestjs/common";
 import { ApiTags, ApiBearerAuth, ApiExcludeController, ApiParam } from "@nestjs/swagger";
-import { SkyPlannerData } from "@skyhelperbot/constants";
 import { inspect } from "node:util";
 
 @ApiTags("Admin Routes")
@@ -8,21 +9,22 @@ import { inspect } from "node:util";
 @Controller("/admin")
 @ApiExcludeController()
 export class AdminController {
+  constructor(@Inject("BotClient") private readonly bot: SkyHelper) {}
   @ApiParam({ name: "query", description: "The query to search for", example: "sassy" })
   @Get("planner/:query")
   async getPlannerEntities(@Param("query") query: string) {
-    const data = await SkyPlannerData.getSkyGamePlannerData();
+    const data = await fetchSkyData(this.bot);
 
-    const results = SkyPlannerData.searchEntitiesByName(query, data);
+    const results = PlannerService.searchEntitiesByName(query, data);
     return results;
   }
 
   @ApiParam({ name: "entity", description: "The guid of entity to get", example: "sdfjnf-srb" })
   @Get("planner/get/:entity")
   async getPlannerEntity(@Param("entity") entity: string) {
-    const data = await SkyPlannerData.getSkyGamePlannerData();
+    const data = await fetchSkyData(this.bot);
 
-    const results = SkyPlannerData.getEntityByGuid(entity, data);
+    const results = PlannerService.getEntityByGuid(entity, data);
     return inspect(results, { depth: 3 });
   }
 }

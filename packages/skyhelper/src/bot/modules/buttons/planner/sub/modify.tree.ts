@@ -1,32 +1,22 @@
-import { handlePlannerNavigation } from "@/handlers/planner";
-import { toggleNodeUnlock } from "@/handlers/planner-utils";
+import { CostUtils, currencyMap, handlePlannerNavigation, PlannerDataService, PlannerService } from "@/planner";
+import { toggleNodeUnlock } from "@/planner/helpers/action.utils";
 import type { NavigationState } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import {
-  currencyMap,
-  enrichDataWithUserProgress,
-  getTreeSpirit,
-  getTreeTiers,
-  type INode,
-  type ISpiritTree,
-  type PlannerAssetData,
-  PlannerDataHelper,
-} from "@skyhelperbot/constants/skygame-planner";
 import { ComponentType, type APIStringSelectComponent } from "discord-api-types/v10";
 import { MessageFlags } from "discord-api-types/v10";
+import { NodeHelper, SpiritTreeHelper, type INode, type ISkyData, type ISpiritTree } from "skygame-data";
 
 export async function modifyTreeNode(
   guid: string,
-  data: PlannerAssetData,
+  data: ISkyData,
   user: UserSchema,
   helper: InteractionHelper,
   state: NavigationState,
 ) {
-  const enriched = enrichDataWithUserProgress(data, user.plannerData ?? PlannerDataHelper.createEmpty());
-  const tree = enriched.spiritTrees.find((t) => t.guid === guid);
+  const tree = data.spiritTrees.items.find((t) => t.guid === guid);
   if (!tree) throw new Error("Invalid Tree");
-  const spirit = getTreeSpirit(tree);
+  const spirit = PlannerService.getTreeSpirit(tree);
   const labeled = tree.node ? getLegacyLabeledNodes(tree.node, 1) : getTierTreeLabeledNodes(tree);
 
   const description = `Please choose all the nodes you want to unlock.
@@ -55,8 +45,8 @@ ${
       placeholder: `Select nodes (Menu ${menuIndex} of ${totalMenus})`,
       options: chunk.map((l) => ({
         label: `${l.node.item?.name ?? "Unknown"}${l.node.item?.level ? ` Lvl${l.node.item.level}` : ""} (${l.label})`,
-        description: l.node.currency
-          ? `${l.node.currency.amount} ${(currencyMap as Record<string, string>)[l.node.currency.type]}`
+        description: l.node[CostUtils.getCostKey(l.node)!]
+          ? `${l.node[CostUtils.getCostKey(l.node)!]} ${currencyMap[CostUtils.getCostKey(l.node)!]}`
           : undefined,
         value: l.node.guid,
         emoji: l.node.item?.emoji ? { id: l.node.item.emoji } : undefined,
@@ -86,7 +76,7 @@ ${
   await helper.client.api.interactions.deferMessageUpdate(submission.id, submission.token);
 
   // Get user and extract selected node GUIDs from all select menus
-  user.plannerData ??= PlannerDataHelper.createEmpty();
+  user.plannerData ??= PlannerDataService.createEmpty();
 
   const selected: string[] = [];
 
@@ -97,7 +87,8 @@ ${
   }
 
   // Lock nodes above target
-  labeled.forEach((l) => toggleNodeUnlock(user, l.node, selected.includes(l.node.guid)));
+  const nodes = NodeHelper.traceMany(data.nodes.items.filter((n) => selected.includes(n.guid))).map((n) => n.guid);
+  labeled.forEach((l) => toggleNodeUnlock(user, l.node, nodes.includes(l.node.guid)));
 
   user.plannerData.date = new Date().toISOString();
   await user.save();
@@ -136,7 +127,7 @@ function getLegacyLabeledNodes(node: INode, index: number, dir?: "R" | "L", subI
 }
 
 function getTierTreeLabeledNodes(tree: ISpiritTree) {
-  const tiers = getTreeTiers(tree);
+  const tiers = SpiritTreeHelper.getTiers(tree);
   const getLabel = (tier: number, row: number, position: number) => `T${tier}-R${row}-P${position}`;
   const labels: Array<{ label: string; node: INode }> = [];
   for (const [index, tier] of tiers.entries()) {
