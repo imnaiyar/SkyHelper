@@ -20,7 +20,7 @@ import { DateTime } from "luxon";
 import { shardsInfo, ShardsUtil } from "@skyhelperbot/utils";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
 import { zone } from "@skyhelperbot/constants";
-import { SpiritTreeHelper, type IItemListNode } from "skygame-data";
+import { SpiritTreeHelper } from "skygame-data";
 
 /**
  * Button handler for Sky Game Planner user actions (unlock/lock items, nodes, etc.)

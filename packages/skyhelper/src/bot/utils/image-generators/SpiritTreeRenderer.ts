@@ -7,9 +7,9 @@ import {
   drawBackground,
   drawWatermarkAndOverlay,
   drawSpiritText,
-  getSpirit,
   type GenerateSpiritTreeOptions,
 } from "./SpiritTreeShared.js";
+import { PlannerService } from "@/planner";
 
 // --------------------
 // #region Recursive renderer
@@ -99,7 +99,7 @@ export async function generateSpiritTree(
   // if there are up to 3 center nodes, make the node size twice as large
   const size = centerCount > 0 && centerCount <= 3 ? baseSize * 2 : baseSize;
   const spacingY = size * 4;
-  const spirit = getSpirit(tree);
+  const spirit = PlannerService.getTreeSpirit(tree);
 
   // preload all images in parallel
   await preloadNodeTreeImages(tree);

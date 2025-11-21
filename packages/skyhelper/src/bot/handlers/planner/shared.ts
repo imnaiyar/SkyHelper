@@ -27,7 +27,8 @@ export async function spiritTreeDisplay(
     throw new Error("Tree must have either tier or node structure");
   }
   const file: RawFile = { name: "tree.png", data: buffer };
-  const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit;
+  const spirit = tree.spirit ?? tree.travelingSpirit?.spirit ?? tree.specialVisitSpirit?.spirit ?? tree.eventInstanceSpirit;
+
   /* @ts-expect-error this is a fallback, so i'm not worried */
   const name = tree.name ?? spirit?.name ?? spirit?.spirit?.name ?? "Unknown";
   const nodes = SpiritTreeHelper.getNodes(tree);

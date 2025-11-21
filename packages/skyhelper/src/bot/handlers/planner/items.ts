@@ -75,18 +75,21 @@ export class ItemsDisplay extends BasePlannerHandler {
       const spirit = PlannerService.getNodeSpirit(n);
       if (!spirit) return;
 
-      const tree = n.root!.spiritTree!;
-      const allTrees = [spirit.tree, ...(spirit.treeRevisions ?? []), ...(spirit.visits ?? []), ...(spirit.ts ?? [])].filter(
-        Boolean,
-      );
+      const tree = n.root!.tree!;
+      const allTrees = [
+        spirit.tree,
+        ...(spirit.treeRevisions ?? []),
+        ...(spirit.specialVisitSpirits ?? []),
+        ...(spirit.travelingSpirits ?? []),
+      ].filter(Boolean);
       const treeIndex = allTrees.findIndex((t) => t?.guid === tree.guid);
 
       // Determine the date based on tree type
       let date = 0;
-      if (tree.ts) {
-        date = getTimestamp(tree.ts.date);
-      } else if (tree.visit) {
-        date = getTimestamp(tree.visit.visit.date);
+      if (tree.travelingSpirit) {
+        date = getTimestamp(tree.travelingSpirit.date);
+      } else if (tree.specialVisitSpirit) {
+        date = getTimestamp(tree.specialVisitSpirit.visit.date);
       } else if (tree.eventInstanceSpirit?.eventInstance) {
         date = getTimestamp(tree.eventInstanceSpirit.eventInstance.date);
       } else if (spirit.season) {
@@ -178,7 +181,7 @@ export class ItemsDisplay extends BasePlannerHandler {
               item.group,
               // eslint-disable-next-line @typescript-eslint/unbound-method
               item.nodes?.map(PlannerService.getNodeSpirit).find(Boolean)?.name,
-              item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name,
+              item.nodes?.[0]?.root?.tree?.eventInstanceSpirit?.eventInstance?.name,
               item.season?.shortName,
             ]
               .filter((s) => !!s)

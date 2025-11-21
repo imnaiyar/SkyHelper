@@ -7,9 +7,9 @@ import {
   drawBackground,
   drawWatermarkAndOverlay,
   drawSpiritText,
-  getSpirit,
   type GenerateSpiritTreeOptions,
 } from "./SpiritTreeShared.js";
+import { PlannerService } from "@/planner";
 
 // --------------------
 // #region Tier Tree Renderer
@@ -154,7 +154,7 @@ export async function generateSpiritTreeTier(
   const rowSpacing = size * 4;
   const tierSpacing = size * 3;
 
-  const spirit = getSpirit(tree);
+  const spirit = PlannerService.getTreeSpirit(tree);
 
   // Preload all images in parallel
   await preloadTierTreeImages(tree);

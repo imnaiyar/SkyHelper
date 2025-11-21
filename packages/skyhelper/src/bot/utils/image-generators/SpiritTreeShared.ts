@@ -4,7 +4,7 @@
 import { loadImage, type SKRSContext2D, Image, GlobalFonts } from "@napi-rs/canvas";
 import type { ISpiritTree, ISpiritTreeTier, INode } from "skygame-data";
 import { currency as currencyEmojis } from "@skyhelperbot/constants";
-import { CostUtils, resolvePlannerUrl as iconUrl } from "@/planner";
+import { CostUtils, resolvePlannerUrl as iconUrl, PlannerService } from "@/planner";
 import path from "node:path";
 
 // #region Constants
@@ -105,7 +105,7 @@ export async function preloadNodeTreeImages(tree: ISpiritTree & { node: INode })
   }
 
   collect(tree.node);
-  const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit?.spirit;
+  const spirit = PlannerService.getTreeSpirit(tree);
   if (spirit?.imageUrl) urls.add(spirit.imageUrl);
 
   await Promise.all([...urls].map(getImage));
@@ -135,7 +135,7 @@ export async function preloadTierTreeImages(tree: ISpiritTree & { tier: ISpiritT
   }
 
   collectTier(tree.tier);
-  const spirit = tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit?.spirit;
+  const spirit = PlannerService.getTreeSpirit(tree);
   if (spirit?.imageUrl) urls.add(spirit.imageUrl);
 
   await Promise.all([...urls].map(getImage));
@@ -457,11 +457,4 @@ export function drawSpiritText(
       ctx.fillText(spiritSubtitle, x, y + fontSize + 12);
     }
   }
-}
-
-/**
- * Get spirit from tree
- */
-export function getSpirit(tree: ISpiritTree) {
-  return tree.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? tree.eventInstanceSpirit?.spirit;
 }

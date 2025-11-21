@@ -448,8 +448,8 @@ export function searchHelper(
       const trees = [
         travelingSpirit.tree,
         ...(travelingSpirit.spirit.treeRevisions ?? []),
-        ...(travelingSpirit.spirit.visits ?? []),
-        ...(travelingSpirit.spirit.ts ?? []),
+        ...(travelingSpirit.spirit.specialVisitSpirits ?? []),
+        ...(travelingSpirit.spirit.travelingSpirits ?? []),
       ];
       const treeIndex = trees.findIndex((tree) => tree.guid === travelingSpirit.guid);
       const index = treeIndex >= 0 ? `tree${treeIndex}` : "";

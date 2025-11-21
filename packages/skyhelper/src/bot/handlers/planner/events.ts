@@ -84,10 +84,10 @@ export class EventsDisplay extends BasePlannerHandler {
     const totalCosts = instance
       ? CostUtils.groupedToCostEmoji(
           [
-            instance.spirits.map((s) => s.tree),
+            instance.spirits?.map((s) => s.tree) ?? [],
 
             /* Items bought by candles in shops */
-            instance.shops.flatMap((sh) => sh.itemList?.items).filter(Boolean) as IItemListNode[],
+            instance.shops?.flatMap((sh) => sh.itemList?.items).filter((s) => !!s) ?? [],
           ].flat(),
         )
       : null;
@@ -113,15 +113,16 @@ export class EventsDisplay extends BasePlannerHandler {
 
   async getinstancedisplay(instance: IEventInstance) {
     const index = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
-    const spirit = instance.spirits.length ? instance.spirits[index] : null;
+    const spirit = instance.spirits?.length ? instance.spirits[index] : null;
     const selectRow = row({
       type: ComponentType.StringSelect,
       custom_id: this.createCustomId({}),
-      options: instance.spirits.map((s, i) => ({
-        label: s.name ?? s.spirit.name,
-        value: i.toString(),
-        default: index === i,
-      })),
+      options:
+        instance.spirits?.map((s, i) => ({
+          label: s.name ?? s.spirit.name,
+          value: i.toString(),
+          default: index === i,
+        })) ?? [],
       placeholder: "Select Spirit",
     });
 
@@ -134,7 +135,9 @@ export class EventsDisplay extends BasePlannerHandler {
           this.viewbtn(
             this.createCustomId({
               t: DisplayTabs.Shops,
-              f: serializeFilters(new Map([[FilterType.Shops, instance.shops.map((s) => s.guid)]])),
+              f: instance.shops?.length
+                ? serializeFilters(new Map([[FilterType.Shops, instance.shops.map((s) => s.guid)]]))
+                : undefined,
               d: "shops",
               b: { t: DisplayTabs.Events, it: this.state.it },
             }),
@@ -142,7 +145,7 @@ export class EventsDisplay extends BasePlannerHandler {
           ),
           `## ${instance.name ?? ""} Year ${instance.date.year}`,
         ),
-        instance.spirits.length > 1 ? selectRow : null,
+        (instance.spirits?.length ?? 0) > 1 ? selectRow : null,
 
         ...(gen ? gen.components : []),
       ].filter((s) => !!s),

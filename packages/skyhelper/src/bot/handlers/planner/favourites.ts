@@ -67,7 +67,7 @@ export class FavouriteDisplay extends BasePlannerHandler {
   ): Array<{ item: IItem; source: string; cost?: ICost; price?: number; sourceDetails: string }> {
     const activeSeason = PlannerService.getCurrentSeason(data);
     const activeEventInstances = PlannerService.getEvents(data).current.map((e) => e.instance);
-    const returningSpirits = PlannerService.getCurrentSpecialVisits(data);
+    const specialVisits = PlannerService.getCurrentSpecialVisits(data);
     const travelingSpirit = PlannerService.getCurrentTravelingSpirit(data);
     const favoritesString = settings.plannerData?.favourites ?? "";
     if (!favoritesString) return [];
@@ -123,15 +123,15 @@ export class FavouriteDisplay extends BasePlannerHandler {
       }
 
       // Check if available via Returning Spirits
-      for (const rs of returningSpirits) {
-        const node = rs.spirits.flatMap((s) => SpiritTreeHelper.getNodes(s.tree)).find((n) => n.item?.guid === item.guid);
-        const spirit = node ? node.root?.spiritTree?.spirit : undefined;
+      for (const sv of specialVisits) {
+        const node = sv.spirits.flatMap((s) => SpiritTreeHelper.getNodes(s.tree)).find((n) => n.item?.guid === item.guid);
+        const spirit = node ? node.root?.tree?.spirit : undefined;
         if (node) {
           availableItems.push({
             item,
             cost: node,
-            source: "Returning Spirits",
-            sourceDetails: `${rs.name ?? "Special Visit"}${spirit ? ` (Offered by ${spirit.name})` : ""}`,
+            source: "Special Visit",
+            sourceDetails: `${sv.name ?? "Special Visit"}${spirit ? ` (Offered by ${spirit.name})` : ""}`,
           });
           break;
         }
@@ -142,7 +142,7 @@ export class FavouriteDisplay extends BasePlannerHandler {
         const node = activeSeason.spirits
           .flatMap((sp) => (sp.tree ? SpiritTreeHelper.getNodes(sp.tree) : []))
           .find((n) => n.item?.guid === item.guid);
-        const spirit = node ? node.root?.spiritTree?.spirit : undefined;
+        const spirit = node ? node.root?.tree?.spirit : undefined;
         if (node) {
           availableItems.push({
             item,
@@ -160,10 +160,8 @@ export class FavouriteDisplay extends BasePlannerHandler {
 
       // Check if available via Events
       for (const instance of activeEventInstances) {
-        // typings is incorrect, should be fixed in next version
-        // eslint-disable-next-line
         const node = instance.spirits?.flatMap((s) => SpiritTreeHelper.getNodes(s.tree)).find((n) => n.item?.guid === item.guid);
-        const spirit = node ? node.root?.spiritTree?.eventInstanceSpirit : undefined;
+        const spirit = node ? node.root?.tree?.eventInstanceSpirit : undefined;
         if (node) {
           availableItems.push({
             item,
@@ -173,8 +171,7 @@ export class FavouriteDisplay extends BasePlannerHandler {
           });
           break;
         }
-        // same
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
         instance.shops?.forEach((sh) => getShopItem(sh, guid, `${instance.name ?? instance.event.name} Shop`));
       }
     }

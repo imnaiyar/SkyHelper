@@ -226,7 +226,7 @@ export class PlannerDataService {
     for (const node of data.nodes.items) {
       if (!node.unlocked) continue;
 
-      const tree = node.root?.spiritTree;
+      const tree = node.root?.tree;
       const eventInstance = tree?.eventInstanceSpirit?.eventInstance;
       const season = tree?.spirit?.season;
 

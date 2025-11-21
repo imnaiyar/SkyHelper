@@ -63,7 +63,7 @@ function resolveData(data: ISkyData, emojis: APIApplicationEmoji[]) {
   for (const spirit of resolved.spirits.items) {
     const node = SpiritTreeHelper.getNodes(spirit.tree)[0];
     const emoteN = resolved.nodes.items.find(
-      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type ?? "") && n.root?.spiritTree?.guid === spirit.tree?.guid,
+      (n) => ["Emote", "Stance", "Call"].includes(n.item?.type ?? "") && n.root?.tree?.guid === spirit.tree?.guid,
     );
     spirit.emoji = emoteN?.item?.emoji ?? node?.item?.emoji;
   }

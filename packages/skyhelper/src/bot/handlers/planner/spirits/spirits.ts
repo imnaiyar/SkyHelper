@@ -91,8 +91,8 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
       spirit.treeRevisions?.length
         ? spirit.treeRevisions.map((t, i) => ({ name: t.name ?? `Spirit Tree (#${i + 2})`, tree: t, date: undefined }))
         : null,
-      spirit.events?.length
-        ? spirit.events.map((s) => {
+      spirit.eventInstanceSpirits?.length
+        ? spirit.eventInstanceSpirits.map((s) => {
             const instance = s.eventInstance;
             const date = instance?.date ?? undefined;
             return {
@@ -102,13 +102,13 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
             };
           })
         : null,
-      ...(spirit.visits?.map((r) => ({
+      ...(spirit.specialVisitSpirits?.map((r) => ({
         name: r.visit.name ?? "Special Visit",
         tree: r.tree,
         sv: r.guid,
         date: r.visit.date,
       })) ?? []),
-      ...(spirit.ts?.map((t) => ({
+      ...(spirit.travelingSpirits?.map((t) => ({
         name: `Traveling Spirit #${t.number}`,
         tree: t.tree,
         ts: t.guid,
@@ -150,7 +150,9 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
         ? `${this.formatemoji(emojis.location)} ${spirit.area.name} ( ${this.formatemoji(spirit.area.realm.emoji)} ${spirit.area.realm.name})`
         : null,
       spirit.season ? `${this.formatemoji(spirit.season.emoji)} ${spirit.season.name}` : null,
-      spirit.events?.length ? `${this.formatemoji(emojis.eventticket)} ${spirit.events.at(-1)!.eventInstance?.event.name}` : null,
+      spirit.eventInstanceSpirits?.length
+        ? `${this.formatemoji(emojis.eventticket)} ${spirit.eventInstanceSpirits.at(-1)!.eventInstance?.event.name}`
+        : null,
       `Type: ${spirit.type}`,
     ].filter(Boolean) as [string, ...string[]];
 

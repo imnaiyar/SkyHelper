@@ -54,8 +54,8 @@ export class PlannerService {
     });
 
     data.items.items.forEach((item) => {
-      const spiritName = item.nodes?.[0]?.root?.spiritTree?.spirit?.name.toLowerCase() ?? "";
-      const eventName = item.nodes?.[0]?.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.name?.toLowerCase() ?? "";
+      const spiritName = item.nodes?.[0]?.root?.tree?.spirit?.name.toLowerCase() ?? "";
+      const eventName = item.nodes?.[0]?.root?.tree?.eventInstanceSpirit?.eventInstance?.name?.toLowerCase() ?? "";
       if (item.name.toLowerCase().includes(searchTerms) || spiritName.includes(searchTerms) || eventName.includes(searchTerms)) {
         results.push({ type: "Item", name: item.name, guid: item.guid });
       }
@@ -224,16 +224,14 @@ export class PlannerService {
 
   /** Get spirit instance that offers this node */
   static getNodeSpirit(node: INode) {
-    return (
-      node.root?.spiritTree?.spirit ??
-      node.root?.spiritTree?.ts?.spirit ??
-      node.root?.spiritTree?.visit?.spirit ??
-      node.root?.spiritTree?.eventInstanceSpirit?.spirit
-    );
+    const tree = node.root?.tree;
+    return tree?.spirit ?? tree?.travelingSpirit?.spirit ?? tree?.specialVisitSpirit?.spirit ?? tree?.eventInstanceSpirit?.spirit;
   }
 
   /** Get spirit instance from the provided tree */
   static getTreeSpirit(tree: ISpiritTree) {
-    return tree.spirit ?? tree.eventInstanceSpirit?.spirit ?? tree.ts?.spirit ?? tree.visit?.spirit ?? null;
+    return (
+      tree.spirit ?? tree.eventInstanceSpirit?.spirit ?? tree.travelingSpirit?.spirit ?? tree.specialVisitSpirit?.spirit ?? null
+    );
   }
 }

@@ -335,7 +335,11 @@ export class FilterManager {
     // events
     const events = this.getFilterValues(FilterType.Events);
     if (events.length > 0) {
-      filtered = filtered.filter((spirit) => "events" in spirit && spirit.events?.some((event) => events.includes(event.guid)));
+      filtered = filtered.filter(
+        (spirit) =>
+          "eventInstanceSpirits" in spirit &&
+          spirit.eventInstanceSpirits?.some((event) => events.includes(event.eventInstance?.event.guid ?? "")),
+      );
     }
 
     // sorting
@@ -380,7 +384,7 @@ export class FilterManager {
     const events = this.getFilterValues(FilterType.Events);
     if (events.length > 0) {
       filtered = filtered.filter((item) =>
-        item.nodes?.some((node) => events.includes(node.root?.spiritTree?.eventInstanceSpirit?.eventInstance?.event.guid ?? "")),
+        item.nodes?.some((node) => events.includes(node.root?.tree?.eventInstanceSpirit?.eventInstance?.event.guid ?? "")),
       );
     }
     const currencies = this.getFilterValues(FilterType.Currencies);
@@ -417,8 +421,8 @@ export class FilterManager {
         });
       case "date_asc":
         return spirits.sort((a, b) => {
-          const aDate = "date" in a ? a.date : (a.season?.date ?? a.ts?.[0]?.date);
-          const bDate = "date" in b ? b.date : (b.season?.date ?? b.ts?.[0]?.date);
+          const aDate = "date" in a ? a.date : (a.season?.date ?? a.travelingSpirits?.[0]?.date);
+          const bDate = "date" in b ? b.date : (b.season?.date ?? b.travelingSpirits?.[0]?.date);
           if (!aDate && !bDate) return 0;
           if (!aDate) return 1;
           if (!bDate) return -1;
@@ -426,8 +430,8 @@ export class FilterManager {
         });
       case "date_desc":
         return spirits.sort((a, b) => {
-          const aDate = "date" in a ? a.date : (a.season?.date ?? a.ts?.[0]?.date);
-          const bDate = "date" in b ? b.date : (b.season?.date ?? b.ts?.[0]?.date);
+          const aDate = "date" in a ? a.date : (a.season?.date ?? a.travelingSpirits?.[0]?.date);
+          const bDate = "date" in b ? b.date : (b.season?.date ?? b.travelingSpirits?.[0]?.date);
           if (!aDate && !bDate) return 0;
           if (!aDate) return 1;
           if (!bDate) return -1;
