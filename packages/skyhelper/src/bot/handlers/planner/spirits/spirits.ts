@@ -134,7 +134,7 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
       const treeGuid = this.state.i.slice(4);
       const treeIndex = trees.findIndex((tt) => tt.tree.guid === treeGuid);
 
-      selected = Math.min(treeIndex, 0);
+      selected = Math.max(treeIndex, 0);
     } else if (this.state.v?.[0]) {
       selected = parseInt(this.state.v[0]);
     }
@@ -197,3 +197,4 @@ export class SpiritsDisplay extends BaseSpiritsDisplay {
     return `**${sv.visit.name}: ${this.formatDateTimestamp(sv.visit.date)} - ${this.formatDateTimestamp(sv.visit.endDate)} (${this.formatDateTimestamp(sv.visit.endDate, "R")})**`;
   }
 }
+
