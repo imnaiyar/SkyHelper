@@ -5,7 +5,7 @@ import { ComponentType, type APIContainerComponent } from "discord-api-types/v10
 import type { RawFile } from "@discordjs/rest";
 import { spiritTreeDisplay } from "./shared.js";
 import { DisplayTabs, FilterType, OrderType } from "@/types/planner";
-import type { IEvent, IEventInstance, IItemListNode } from "skygame-data";
+import type { IEvent, IEventInstance } from "skygame-data";
 import { CostUtils } from "./helpers/cost.utils.js";
 import { emojis } from "@skyhelperbot/constants";
 
@@ -141,7 +141,7 @@ export class EventsDisplay extends BasePlannerHandler {
               d: "shops",
               b: { t: DisplayTabs.Events, it: this.state.it },
             }),
-            { label: "Shop", emoji: { id: emojis.shopcart } },
+            { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !instance.shops?.length },
           ),
           `## ${instance.name ?? ""} Year ${instance.date.year}`,
         ),
