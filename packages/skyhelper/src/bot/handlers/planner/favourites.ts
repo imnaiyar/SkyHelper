@@ -105,7 +105,7 @@ export class FavouriteDisplay extends BasePlannerHandler {
     };
     // Check each favorited item
     for (const guid of favoritedGuids) {
-      const item = data.guids.get(guid) as IItem | undefined;
+      const item = data.items.items.find((ii) => ii.guid === guid);
       if (!item || item.unlocked) continue; // Skip if not found or already unlocked
 
       // Check if available via Traveling Spirit

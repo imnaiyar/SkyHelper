@@ -18,8 +18,10 @@ export class PlannerDataService {
     // Preserve special class instances
     // instanceof check may not hold true bcz data is from another package
     // DateTime
-    if (typeof obj === "object" && "toMillis" in obj) return obj as T;
+    if (typeof obj === "object" && obj.constructor.name === "DateTime") return obj as T;
     if (obj instanceof Date) return new Date(obj.getTime()) as T;
+    // return as is (this is for <ISkyData>.guids) since we rarely use this for progress related stuff, it is fine
+    if (obj instanceof Map) return obj as T;
 
     // Check if we've already cloned this object (circular reference)
     if (visited.has(obj as object)) {
