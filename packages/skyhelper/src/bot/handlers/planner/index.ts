@@ -24,7 +24,6 @@ import { PlannerService } from "./helpers/planner.service.js";
 import { PlannerDataService } from "./helpers/data.service.js";
 import { fetchSkyData } from "./fetcher.js";
 import type { ISkyData } from "skygame-data";
-import { performance } from "node:perf_hooks";
 
 // Navigation state interface to track user's position
 
