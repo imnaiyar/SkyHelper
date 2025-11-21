@@ -1,2 +1,2 @@
-export { ShardsUtil } from "./shardsUtil.js";
-export { SkytimesUtils } from "./SkytimesUtils.js";
+export * from "./shardsUtil.js";
+export * from "./SkytimesUtils.js";
