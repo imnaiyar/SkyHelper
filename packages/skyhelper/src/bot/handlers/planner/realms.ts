@@ -17,31 +17,30 @@ export class RealmsDisplay extends BasePlannerHandler {
     return { components: [this.realmslist()] };
   }
   realmslist() {
-    const realmsWithProgress = this.data.realms.items.map((realm) => {
-      const tier1 = this.tiernodes(realm).tier1nodes;
-      const progress = this.getTierProgress(tier1, false);
-      return { ...realm, progress };
-    });
-
+    const realms = this.data.realms.items;
     return container(
-      textDisplay(`# Realms (${realmsWithProgress.length})`),
+      textDisplay(`# Realms (${realms.length})`),
       ...this.displayPaginatedList({
-        items: realmsWithProgress,
+        items: realms,
         page: this.state.p ?? 1,
         perpage: 7,
-        itemCallback: (realm) => [
-          section(
-            {
-              type: ComponentType.Button,
-              label: "View",
-              custom_id: this.createCustomId({ it: realm.guid }),
-              style: 1,
-            },
-            `**${realm.name}**`,
-            `${realm.areas?.length ?? 0} Areas • ${PlannerService.getSpiritsInRealm(realm.guid, this.data).length} Spirits • ${realm.areas?.reduce((acc, ar) => (acc += ar.wingedLights?.length ?? 0), 0) ?? 0} Winged Light`,
-            realm.progress ?? "",
-          ),
-        ],
+        itemCallback: (realm) => {
+          const tier1 = this.tiernodes(realm).tier1nodes;
+          const progress = this.getTierProgress(tier1, false);
+          return [
+            section(
+              {
+                type: ComponentType.Button,
+                label: "View",
+                custom_id: this.createCustomId({ it: realm.guid }),
+                style: 1,
+              },
+              `**${realm.name}**`,
+              `${realm.areas?.length ?? 0} Areas • ${PlannerService.getSpiritsInRealm(realm.guid, this.data).length} Spirits • ${realm.areas?.reduce((acc, ar) => (acc += ar.wingedLights?.length ?? 0), 0) ?? 0} Winged Light`,
+              progress ?? "",
+            ),
+          ];
+        },
       }),
     );
   }
