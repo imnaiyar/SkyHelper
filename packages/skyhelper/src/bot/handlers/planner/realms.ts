@@ -17,30 +17,31 @@ export class RealmsDisplay extends BasePlannerHandler {
     return { components: [this.realmslist()] };
   }
   realmslist() {
-    const realms = this.data.realms.items;
+    const realmsWithProgress = this.data.realms.items.map((realm) => {
+      const tier1 = this.tiernodes(realm).tier1nodes;
+      const progress = this.getTierProgress(tier1, false);
+      return { ...realm, progress };
+    });
+
     return container(
-      textDisplay(`# Realms (${realms.length})`),
+      textDisplay(`# Realms (${realmsWithProgress.length})`),
       ...this.displayPaginatedList({
-        items: realms,
+        items: realmsWithProgress,
         page: this.state.p ?? 1,
         perpage: 7,
-        itemCallback: (realm) => {
-          const tier1 = this.tiernodes(realm).tier1nodes;
-          const progress = this.getTierProgress(tier1, false);
-          return [
-            section(
-              {
-                type: ComponentType.Button,
-                label: "View",
-                custom_id: this.createCustomId({ it: realm.guid }),
-                style: 1,
-              },
-              `**${realm.name}**`,
-              `${realm.areas?.length ?? 0} Areas • ${PlannerService.getSpiritsInRealm(realm.guid, this.data).length} Spirits • ${realm.areas?.reduce((acc, ar) => (acc += ar.wingedLights?.length ?? 0), 0) ?? 0} Winged Light`,
-              progress ?? "",
-            ),
-          ];
-        },
+        itemCallback: (realm) => [
+          section(
+            {
+              type: ComponentType.Button,
+              label: "View",
+              custom_id: this.createCustomId({ it: realm.guid }),
+              style: 1,
+            },
+            `**${realm.name}**`,
+            `${realm.areas?.length ?? 0} Areas • ${PlannerService.getSpiritsInRealm(realm.guid, this.data).length} Spirits • ${realm.areas?.reduce((acc, ar) => (acc += ar.wingedLights?.length ?? 0), 0) ?? 0} Winged Light`,
+            realm.progress ?? "",
+          ),
+        ],
       }),
     );
   }
@@ -126,14 +127,15 @@ export class RealmsDisplay extends BasePlannerHandler {
   }
 
   private tiernodes(realm: IRealm) {
-    const tiers = realm.areas
-      ?.flatMap((a) => a.spirits?.filter((s) => s.type === SpiritType.Regular).map((s) => s.tree?.node))
-      .filter((s) => !!s)
-      .flatMap((node) => NodeHelper.allTier(node))
-      .filter((s) => typeof s.tier === "number");
+    const tiers =
+      realm.areas
+        ?.flatMap((a) => a.spirits?.filter((s) => s.type === SpiritType.Regular).map((s) => s.tree?.node))
+        .filter((s) => !!s)
+        .flatMap((node) => NodeHelper.allTier(node))
+        .filter((s) => typeof s.tier === "number") ?? [];
     return {
-      tier1nodes: tiers?.filter((s) => s.tier! < 2) ?? [],
-      tier2nodes: tiers?.filter((s) => s.tier! >= 2) ?? [],
+      tier1nodes: tiers.filter((s) => s.tier! < 2),
+      tier2nodes: tiers.filter((s) => s.tier! >= 2),
     };
   }
 
@@ -162,8 +164,8 @@ export class RealmsDisplay extends BasePlannerHandler {
    * @returns
    */
   private getTierProgress(tierNodes: ITierNode[], withCost = true) {
-    const progress = tierNodes.length ? Math.ceil((tierNodes.filter((n) => n.unlocked).length / tierNodes.length) * 100) : null;
-
+    const progress = tierNodes.length ? Math.round((tierNodes.filter((n) => n.unlocked).length / tierNodes.length) * 100) : null;
+    if (progress === null) return null;
     const formatCurrency = (c: ReturnType<RealmsDisplay["calculateTierCosts"]>) => {
       const formatted: string[] = [];
       if (c.candles.cost) formatted.push(`${c.candles.spent}/${c.candles.cost} ${Utils.formatEmoji(currency.c, "Candles")}`);
@@ -171,8 +173,6 @@ export class RealmsDisplay extends BasePlannerHandler {
       if (c.acs.cost) formatted.push(`${c.acs.spent}/${c.acs.cost} ${Utils.formatEmoji(currency.ac, "ACs")}`);
       return formatted.join(" ");
     };
-    return progress !== null
-      ? `${createEmojiProgressBar(progress)}${withCost ? ` (${formatCurrency(this.calculateTierCosts(tierNodes))})` : ""}`
-      : null;
+    return `${createEmojiProgressBar(progress)}${withCost ? ` (${formatCurrency(this.calculateTierCosts(tierNodes))})` : ""}`;
   }
 }
