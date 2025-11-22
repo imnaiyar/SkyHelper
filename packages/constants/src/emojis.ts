@@ -26,6 +26,12 @@ export const emojis = {
   wax: "1125091974869946369",
   red_shard: "1233057065799254106",
   black_shard: "1233057106903699497",
+  progress_filled_start: "1441861662440292393",
+  progress_filled_middle: "1441861595704721511",
+  progress_filled_end: "1441861525022314553",
+  progress_empty_start: "1441861421066485811",
+  progress_empty_middle: "1441861361393991800",
+  progress_empty_end: "1441861259246174368",
 } as const;
 
 export const realms_emojis = {
