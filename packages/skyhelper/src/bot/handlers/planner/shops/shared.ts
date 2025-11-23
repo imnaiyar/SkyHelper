@@ -72,7 +72,7 @@ export function getIGCnIApDisplay(
             navState: planner.state,
             guid: as.guid,
           }),
-          emoji: { name: "🛒" },
+          emoji: { id: emojis.shopcart },
           label: "Bought",
           style: as.bought ? 4 : 2,
         }),

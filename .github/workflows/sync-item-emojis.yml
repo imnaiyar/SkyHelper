@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "23"
 
-      - name: Install jsonc
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Sync emojis
@@ -44,7 +44,7 @@ jobs:
            if [ -n "$(git status --porcelain)" ]; then
             BRANCH_NAME="chore/emoji-hashmap"
             git checkout -B "$BRANCH_NAME"
-            git add packages/constants/emoji_hashes.json
+            git add ./**/*.json
             git commit -m "chore: update emoji_hashmap: -->> ${{ github.event_name }}"
             git push --force origin "$BRANCH_NAME"
 

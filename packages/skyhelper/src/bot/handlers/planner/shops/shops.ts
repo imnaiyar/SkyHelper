@@ -13,6 +13,7 @@ const name_mappings = {
   harmony: "Harmony Hall",
   office: "Secret Area (Office",
 };
+
 // NOTE!: Remember to not use `d` for shop routes, it is  used to reroute to permanent shops
 export class ShopsDisplay extends BasePlannerHandler {
   igcs: IItemList[] = [];

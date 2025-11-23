@@ -37,6 +37,17 @@ const configs = (planner: BasePlannerHandler): Array<{ title: string; descriptio
     }),
   },
   {
+    title: "Cinema",
+    description:
+      "The Cinema was introduced in the Season of Two Embers - Part One. The place can be accessed through the collaboration room accessed from Aviary Village. ",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "cinema").map((s) => s.guid)]]),
+      ),
+    }),
+  },
+  {
     title: "Harmony Hall",
     description:
       "Harmony Hall was introduced in the Season of Performance. The building can be accessed through Aviary Village, the Village of Dreams and the Village Theatre.",
