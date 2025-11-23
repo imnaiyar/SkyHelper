@@ -4,18 +4,12 @@ import type { Command } from "@/structures";
 import { SPIRTIS_DATA } from "@/modules/commands-data/guide-commands";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay } from "@skyhelperbot/utils";
-import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
 import { paginate } from "@/utils/paginator";
 import { CustomId, store } from "@/utils/customId-store";
-import {
-  CollectibleItems,
-  getItemsInSpiritTree,
-  getSkyGamePlannerData,
-  getSpiritsInRealm,
-  ItemType,
-  SpiritType,
-} from "@skyhelperbot/constants/skygame-planner";
 import Utils from "@/utils/classes/Utils";
+import { fetchSkyData, NonCollectibles, PlannerService } from "@/planner";
+import { SpiritType } from "@/types/planner";
+import { SpiritTreeHelper } from "skygame-data";
 
 export default {
   async interactionRun({ t, helper, options }) {
@@ -25,8 +19,8 @@ export default {
       await handleSpiritList(helper);
       return;
     }
-    const data = await getSkyGamePlannerData();
-    const spirit = data.spirits.find((s) => s.guid === value);
+    const data = await fetchSkyData(helper.client);
+    const spirit = data.spirits.items.find((s) => s.guid === value);
 
     if (!spirit) {
       await helper.editReply({
@@ -38,13 +32,14 @@ export default {
       return;
     }
     const manager = new Spirits(spirit, t, helper.client, data);
-    await helper.editReply({ ...(await manager.getResponseEmbed(helper.user.id)), flags: MessageFlags.IsComponentsV2 });
+    const res = await manager.getResponseEmbed(helper.user.id);
+    await helper.editReply({ ...res, flags: MessageFlags.IsComponentsV2 });
   },
 
   async autocomplete({ helper, options }) {
     const focused = options.getFocusedOption() as { value: string };
-    const spirits = await getSkyGamePlannerData();
-    const data = spirits.spirits
+    const spirits = await fetchSkyData(helper.client);
+    const data = spirits.spirits.items
       .filter(
         (s) =>
           s.type !== SpiritType.Special &&
@@ -63,8 +58,8 @@ export default {
 async function handleSpiritList(helper: InteractionHelper) {
   const { user, client } = helper;
 
-  const pData = await getSkyGamePlannerData();
-  const spirits = pData.spirits.filter((s) => s.type !== SpiritType.Special && s.type !== SpiritType.Event);
+  const pData = await fetchSkyData(helper.client);
+  const spirits = pData.spirits.items.filter((s) => s.type !== SpiritType.Special && s.type !== SpiritType.Event);
   const title = [
     mediaGallery(
       mediaGalleryItem(
@@ -82,7 +77,9 @@ async function handleSpiritList(helper: InteractionHelper) {
       const comp = container(
         ...title,
         ...data.flatMap((spirit) => {
-          const realm = pData.realms.find((r) => getSpiritsInRealm(r.guid, pData).some((sp) => sp.guid === spirit.guid));
+          const realm = pData.realms.items.find((r) =>
+            PlannerService.getSpiritsInRealm(r.guid, pData).some((sp) => sp.guid === spirit.guid),
+          );
           const seasonIcon = spirit.season ? Utils.formatEmoji(spirit.season.emoji, spirit.season.shortName) : "";
           const realmIcon = realm ? Utils.formatEmoji(realm.emoji, realm.name) : "";
           const legacySpirit = Object.values(client.spiritsData).find((s) => s.name === spirit.name);
@@ -95,8 +92,8 @@ async function handleSpiritList(helper: InteractionHelper) {
                 style: 2,
               },
               `**${spirit.name}${legacySpirit?.extra ? ` (${legacySpirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
-              `${realmIcon}${seasonIcon}${getItemsInSpiritTree(spirit.guid, pData)
-                .filter((i) => CollectibleItems.includes(i.type as ItemType))
+              `${realmIcon}${seasonIcon}${SpiritTreeHelper.getItems(spirit.tree, true)
+                .filter((i) => !NonCollectibles.includes(i.type))
                 .map((c) => Utils.formatEmoji(c.emoji, c.name))
                 .join(" ")}`,
             ),

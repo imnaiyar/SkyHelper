@@ -1,18 +1,18 @@
+import { fetchSkyData } from "@/planner";
 import { defineButton } from "@/structures";
 import { Spirits } from "@/utils/classes/Spirits";
 import { CustomId } from "@/utils/customId-store";
-import { getSkyGamePlannerData, type ISpirit } from "@skyhelperbot/constants/skygame-planner";
-import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { row } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
+import type { ISpirit } from "skygame-data";
 
 export default defineButton({
   data: { name: "spirit_info_button" },
   id: CustomId.SpiritButton,
   async execute(interaction, t, helper, { spirit_key }) {
     await helper.deferUpdate();
-    const data = await getSkyGamePlannerData();
-    const spirit = data.guidMap.get(spirit_key) as ISpirit | undefined;
+    const data = await fetchSkyData(helper.client);
+    const spirit = data.guids.get(spirit_key) as ISpirit | undefined;
 
     if (!spirit) {
       await helper.reply({

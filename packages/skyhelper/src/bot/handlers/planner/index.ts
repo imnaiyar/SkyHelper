@@ -23,7 +23,7 @@ import { FavouriteDisplay } from "./favourites.js";
 import { PlannerService } from "./helpers/planner.service.js";
 import { PlannerDataService } from "./helpers/data.service.js";
 import { fetchSkyData } from "./fetcher.js";
-import type { ISkyData } from "skygame-data";
+import { ItemType, type ISkyData } from "skygame-data";
 
 // Navigation state interface to track user's position
 
@@ -170,3 +170,13 @@ export * from "./helpers/action.utils.js";
 export * from "./helpers/cost.utils.js";
 export * from "./helpers/data.service.js";
 export * from "./helpers/planner.service.js";
+
+export const NonCollectibles = [
+  ItemType.Call,
+  ItemType.Emote,
+  ItemType.WingBuff,
+  ItemType.Special,
+  ItemType.Spell,
+  ItemType.Quest,
+  ItemType.Stance,
+];

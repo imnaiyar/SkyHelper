@@ -3,34 +3,23 @@ import type { SkyHelper } from "@/structures";
 import { getTranslator } from "@/i18n";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
 import utils from "./Utils.js";
-import {
-  button,
-  container,
-  generateSpiritTree,
-  generateSpiritTreeTier,
-  section,
-  separator,
-  textDisplay,
-  thumbnail,
-} from "@skyhelperbot/utils";
+import { button, container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 import { CustomId } from "../customId-store.js";
-import {
-  CollectibleItems,
-  formatGroupedCurrencies,
-  getItemsInSpiritTree,
-  getSpiritsInRealm,
-  ItemType,
-  resolveToLuxon,
-  sortDates,
-  type IReturningSpirit,
-  type ISpirit,
-  type ITravelingSpirit,
-  type PlannerAssetData,
-} from "@skyhelperbot/constants/skygame-planner";
 import type { ResponseData } from "./InteractionUtil.js";
 import type { RawFile } from "@discordjs/rest";
 import { DisplayTabs } from "@/types/planner";
+import {
+  ItemType,
+  SpiritTreeHelper,
+  type ISkyData,
+  type ISpecialVisitSpirit,
+  type ISpirit,
+  type ITravelingSpirit,
+} from "skygame-data";
+import { CostUtils, NonCollectibles, PlannerService } from "@/planner";
+import generateSpiritTreeTier from "../image-generators/SpiritTreeTierRenderer.js";
+import { generateSpiritTree } from "../image-generators/SpiritTreeRenderer.js";
 
 const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonComponent => ({
   type: 2,
@@ -40,7 +29,7 @@ const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonC
   label: "Collectible(s)",
 });
 
-const getExpressionBtn = (data: ISpirit, t: ReturnType<typeof getTranslator>, user: string): APIButtonComponent => ({
+const getExpressionBtn = (data: ISpirit, user: string): APIButtonComponent => ({
   type: 2,
   custom_id: utils.store.serialize(CustomId.SpiritExpression, { spirit: data.guid, user }),
   label: "Expression",
@@ -57,7 +46,7 @@ export class Spirits {
     private data: ISpirit,
     private t: ReturnType<typeof getTranslator>,
     private client: SkyHelper,
-    private plannerData: PlannerAssetData,
+    private plannerData: ISkyData,
   ) {
     this.legacyData = Object.values(client.spiritsData).find((s) => s.name === data.name) ?? null;
   }
@@ -72,8 +61,8 @@ export class Spirits {
     const description = [this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })];
 
     // spirit realm
-    const realm = this.plannerData.realms.find((r) =>
-      getSpiritsInRealm(r.guid, this.plannerData).some((sp) => sp.guid === data.guid),
+    const realm = this.plannerData.realms.items.find((r) =>
+      PlannerService.getSpiritsInRealm(r.guid, this.plannerData).some((sp) => sp.guid === data.guid),
     );
     if (realm) description.push(this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: realm.name }));
 
@@ -96,23 +85,26 @@ export class Spirits {
       ),
     );
     let file: RawFile | undefined;
-    if (data.ts || data.returns) {
+    if (data.travelingSpirits || data.specialVisitSpirits) {
       comp.components.push(
         separator(true, 1),
         textDisplay(
           `**${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE")}**\n${
-            data.ts?.length || data.returns?.length
-              ? `${emojis.tree_middle}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: [...(data.ts ?? []), ...(data.returns ?? [])].length })}\n${emojis.tree_end}${this.t(
+            data.travelingSpirits?.length || data.specialVisitSpirits?.length
+              ? `${emojis.tree_middle}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: [...(data.travelingSpirits ?? []), ...(data.specialVisitSpirits ?? [])].length })}\n${emojis.tree_end}${this.t(
                   "commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_RETURNED_DATE",
-                )}\n${this._formatDates([...(data.ts ?? []), ...(data.returns ?? [])])}`
+                )}\n${this._formatDates([...(data.travelingSpirits ?? []), ...(data.specialVisitSpirits ?? [])])}`
               : `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`
           }`,
         ),
       );
     }
     comp.components.push(separator(true, 1));
-    if (data.tree || data.returns?.length || data.ts?.length) {
-      const visits = sortDates([...(data.ts ?? []), ...(data.returns ?? [])], ["return"]);
+    if (data.tree || data.specialVisitSpirits?.length || data.travelingSpirits?.length) {
+      const visits = PlannerService.sortByDates(
+        [...(data.travelingSpirits ?? []), ...(data.specialVisitSpirits ?? [])],
+        ["visit"],
+      );
       // priorotize the latest visit first to preserve the legacy behaviour
       const tree = visits[0]?.tree ?? data.tree;
       if (!tree) throw new Error("Something fell off");
@@ -120,7 +112,7 @@ export class Spirits {
         ? generateSpiritTreeTier(tree as any, { noOpacity: true })
         : generateSpiritTree(tree as any, { noOpacity: true }));
       file = { data: image, name: "tree.png" };
-      const costs = formatGroupedCurrencies([tree]);
+      const costs = CostUtils.groupedToCostEmoji([tree]);
       comp.components.push(section(thumbnail(`attachment://tree.png`), emojis.right_chevron + "Spirit Tree\n" + costs));
     }
     if (this.legacyData && "location" in this.legacyData) {
@@ -168,10 +160,10 @@ export class Spirits {
   public getButtons(userid: string): APIActionRowComponent<APIButtonComponent> {
     const components: APIButtonComponent[] = [];
     const data = this.data;
-    const items = getItemsInSpiritTree(data.guid, this.plannerData);
-    const emoteNode = items.find((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type as ItemType));
-    if (this.legacyData?.expression || emoteNode) components.push(getExpressionBtn(data, this.t, userid));
-    const collectibles = items.filter((i) => CollectibleItems.includes(i.type as ItemType));
+    const items = SpiritTreeHelper.getItems(data.tree);
+    const emoteNode = items.find((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type));
+    if (this.legacyData?.expression || emoteNode?.previewUrl) components.push(getExpressionBtn(data, userid));
+    const collectibles = items.filter((i) => !NonCollectibles.includes(i.type));
     if (this.legacyData?.collectibles?.length || collectibles.length) {
       components.push(
         collectiblesBtn(
@@ -202,13 +194,11 @@ export class Spirits {
    * Formats the spirit's return dates in discord timestamp
    * @param dates
    */
-  private _formatDates(ts: Array<ITravelingSpirit | IReturningSpirit>) {
-    return sortDates(ts, ["return"])
+  private _formatDates(ts: Array<ITravelingSpirit | ISpecialVisitSpirit>) {
+    return PlannerService.sortByDates(ts, ["visit"])
       .map((visit) => {
-        const rr = "return" in visit ? visit.return : visit;
-        const date = resolveToLuxon(rr.date);
-        const end = resolveToLuxon(rr.endDate ?? date.plus({ days: 3 }));
-        return `- ${utils.time(date.toJSDate())} - ${utils.time(end.toJSDate())} (${"return" in visit ? `SV` : `#${visit.number}`})`;
+        const rr = "number" in visit ? visit : visit.visit;
+        return `- ${utils.time(rr.date.toJSDate())} - ${utils.time(rr.endDate.toJSDate())} (${"number" in visit ? `#${visit.number}` : `SV`})`;
       })
       .join("\n");
   }

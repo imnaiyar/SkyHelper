@@ -20,19 +20,11 @@ export interface GenerateSpiritTreeOptions {
   spiritSubtitle?: string;
   highlightItems?: string[];
   spiritUrl?: string;
-  scale?: number; // multiplier for resolution
-}
-
-export interface GenerateSpiritTreeOptions {
-  season?: boolean;
-  spiritName?: string;
-  spiritSubtitle?: string;
-  highlightItems?: string[];
-  spiritUrl?: string;
   /** Do not reduce the opacity for non unlocked node, which is the default */
   noOpacity?: boolean;
   scale?: number; // multiplier for resolution
 }
+
 // #region Image Cache
 /**
  * LRU cache to reduce memory load and avoid re-loading images
