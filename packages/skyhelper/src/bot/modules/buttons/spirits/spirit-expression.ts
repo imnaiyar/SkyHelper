@@ -7,16 +7,19 @@ import Utils from "@/utils/classes/Utils";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
 import config from "@/config";
 import { CustomId } from "@/utils/customId-store";
+import { fetchSkyData } from "@/planner";
+import { ItemType, NodeHelper, SpiritTreeHelper, type ISpirit } from "skygame-data";
 export default defineButton({
   data: {
     name: "spirit_expression",
   },
   id: CustomId.SpiritExpression,
-  async execute(interaction, t, helper, { spirit }) {
+  async execute(interaction, t, helper, { spirit: guid }) {
     const { client } = helper;
-    const { user } = helper,
-      data = client.spiritsData[spirit];
-    if (!data) {
+    const { user } = helper;
+    const spirit = (await fetchSkyData(client)).spirits.items.find((s) => s.guid === guid),
+      legacySpirit = Object.values(client.spiritsData).find((s) => s.name === spirit?.name);
+    if (!spirit) {
       return void (await helper.reply({ content: "Something went wrong! No data found", flags: 64 }));
     }
     await helper.deferUpdate();
@@ -27,7 +30,9 @@ export default defineButton({
         components: message.components,
         files: message.attachments.map((m) => ({ data: m.url, name: m.filename })),
       },
-      reply = await helper.editReply(getCommonResponse(data, t, user.id)),
+      reply = await helper.editReply(
+        legacySpirit?.expression ? getLegacyResponse(legacySpirit, t, user.id) : getEmoteResponse(spirit, t, user.id),
+      ),
       collector = client.componentCollector({
         filter: (i) =>
           // @ts-expect-error data is present, but wtv
@@ -57,7 +62,7 @@ export default defineButton({
   },
 });
 
-const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator>, user: string) => {
+const getLegacyResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator>, user: string) => {
   // prettier-ignore
   if (!data.expression) throw new Error(`Expected Spirit expression to be present, but recieved ${typeof data.expression} [${data.name}]`);
   const exprsn = data.expression;
@@ -74,15 +79,39 @@ const getCommonResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator
     separator(),
     mediaGallery(exprsn.level.map((level) => mediaGalleryItem(`${config.CDN_URL}/${level.image}`, { description: level.title }))),
     separator(),
-    { type: 1, components: [getBackBtn(exprsn.icon, user)] },
+    { type: 1, components: [getBackBtn(user, exprsn.icon)] },
   );
   return { components: [components] };
 };
 
-const getBackBtn = (emote: string, user: string): APIButtonComponent => ({
+const getEmoteResponse = (spirit: ISpirit, t: ReturnType<typeof getTranslator>, user: string) => {
+  const expressions = SpiritTreeHelper.getItems(spirit.tree, true)
+    .filter((item) => [ItemType.Emote, ItemType.Call, ItemType.Stance].includes(item.type))
+    .filter((e) => e.previewUrl);
+  if (!expressions.length) throw new Error("No expression nodes found for spirit: " + spirit.guid);
+  const components = container(
+    textDisplay(
+      `-# ${t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE")} - ${spirit.name}`,
+      `### [${Utils.formatEmoji(expressions[0]!.emoji)} ${expressions[0]?.name ?? ""}](${expressions[0]?._wiki?.href ?? "https://sky-children-of-the-light.fandom.com/wiki"})`,
+      expressions[0]?.type ?? "Expressions",
+    ),
+
+    separator(),
+    mediaGallery(
+      expressions.map((exp) =>
+        mediaGalleryItem(exp.previewUrl!, { description: exp.name + (exp.level ? ` (Lvl: ${exp.level})` : "") }),
+      ),
+    ),
+    { type: 1, components: [getBackBtn(user, expressions[0]!.emoji)] },
+  );
+
+  return { components: [components] };
+};
+
+const getBackBtn = (user: string, emote?: string): APIButtonComponent => ({
   type: ComponentType.Button,
   custom_id: Utils.store.serialize(CustomId.Default, { data: "spirit_exprsn_back", user }),
-  emoji: Utils.parseEmoji(emote)!,
+  emoji: emote ? Utils.parseEmoji(emote)! : undefined,
   label: "Back",
   style: ButtonStyle.Danger,
 });

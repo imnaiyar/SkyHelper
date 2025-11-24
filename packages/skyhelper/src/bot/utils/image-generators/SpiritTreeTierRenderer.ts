@@ -85,6 +85,7 @@ async function renderTierTree(
   size: number,
   season: boolean,
   highlightItems?: string[],
+  noOpacity = false,
 ) {
   const rowSpacing = size * 4; // spacing between rows
   const tierSpacing = size * 2; // spacing for separator between tiers
@@ -98,7 +99,7 @@ async function renderTierTree(
     for (const row of tier.rows) {
       for (const { node, x } of row.nodes) {
         if (node) {
-          await drawItem(ctx, centerX + x, currentY - 80, size, node, season, highlightItems);
+          await drawItem(ctx, centerX + x, currentY - 80, size, node, season, highlightItems, noOpacity);
         }
       }
       currentY -= rowSpacing; // Move up for next row
@@ -174,7 +175,7 @@ export async function generateSpiritTreeTier(
   const centerX = Math.floor(width / 2);
   const startY = height - size * 4;
 
-  await renderTierTree(ctx, tree, centerX, startY - 40, size * 1.15, !!options.season, options.highlightItems);
+  await renderTierTree(ctx, tree, centerX, startY - 40, size * 1.15, !!options.season, options.highlightItems, options.noOpacity);
 
   // Draw spirit name and subtitle at the bottom
   const spiritName = options.spiritName ?? tree.name ?? spirit?.name;

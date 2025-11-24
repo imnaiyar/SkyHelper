@@ -1,14 +1,25 @@
-import { season_emojis, seasonsData } from "@skyhelperbot/constants";
 import type { SpiritsData, SeasonalSpiritData, RegularSpiritData } from "@skyhelperbot/constants/spirits-datas";
 import type { SkyHelper } from "@/structures";
-import config from "@/config";
 import { getTranslator } from "@/i18n";
-import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent, type APIContainerComponent } from "@discordjs/core";
+import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
 import utils from "./Utils.js";
-import { DateTime } from "luxon";
-import { container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { button, container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 import { CustomId } from "../customId-store.js";
+import type { ResponseData } from "./InteractionUtil.js";
+import type { RawFile } from "@discordjs/rest";
+import { DisplayTabs } from "@/types/planner";
+import {
+  ItemType,
+  SpiritTreeHelper,
+  type ISkyData,
+  type ISpecialVisitSpirit,
+  type ISpirit,
+  type ITravelingSpirit,
+} from "skygame-data";
+import { CostUtils, NonCollectibles, PlannerService } from "@/planner";
+import generateSpiritTreeTier from "../image-generators/SpiritTreeTierRenderer.js";
+import { generateSpiritTree } from "../image-generators/SpiritTreeRenderer.js";
 
 const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonComponent => ({
   type: 2,
@@ -18,24 +29,11 @@ const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonC
   label: "Collectible(s)",
 });
 
-const getExpressionBtn = (
-  data: SpiritsData,
-  spirit: string,
-  t: ReturnType<typeof getTranslator>,
-  icon: string,
-  user: string,
-): APIButtonComponent => ({
+const getExpressionBtn = (data: ISpirit, user: string): APIButtonComponent => ({
   type: 2,
-  custom_id: utils.store.serialize(CustomId.SpiritExpression, { spirit, user }),
-  label:
-    data.expression!.type === "Emote"
-      ? t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE")
-      : data.expression!.type === "Stance"
-        ? t("commands:SPIRITS.RESPONSES.BUTTONS.STANCE")
-        : data.expression!.type === "Call"
-          ? t("commands:SPIRITS.RESPONSES.BUTTONS.CALL")
-          : t("commands:SPIRITS.RESPONSES.BUTTONS.ACTION"),
-  emoji: utils.parseEmoji(icon)!,
+  custom_id: utils.store.serialize(CustomId.SpiritExpression, { spirit: data.guid, user }),
+  label: "Expression",
+  emoji: data.emoji ? utils.parseEmoji(data.emoji)! : undefined,
   style: ButtonStyle.Primary,
 });
 
@@ -43,38 +41,42 @@ const getExpressionBtn = (
  * Handle Spirit data and interactions
  */
 export class Spirits {
+  legacyData: SpiritsData | null = null;
   constructor(
-    private data: SpiritsData,
+    private data: ISpirit,
     private t: ReturnType<typeof getTranslator>,
     private client: SkyHelper,
-  ) {}
+    private plannerData: ISkyData,
+  ) {
+    this.legacyData = Object.values(client.spiritsData).find((s) => s.name === data.name) ?? null;
+  }
 
   /**
    * Get the embed for the spirit response
    */
-  public getResponseEmbed(userid: string): APIContainerComponent {
+  public async getResponseEmbed(userid: string): Promise<ResponseData> {
     const data = this.data;
-    const icon = data.expression?.icon ?? data.icon ?? "<:spiritIcon:1206501060303130664>";
+    const icon = utils.formatEmoji(data.emoji ?? "<:spiritIcon:1206501060303130664>", data.name);
     // Spirit type
     const description = [this.t("commands:SPIRITS.RESPONSES.EMBED.TYPE", { SPIRIT_TYPE: data.type })];
 
     // spirit realm
-    if (data.realm) description.push(this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: data.realm }));
+    const realm = this.plannerData.realms.items.find((r) =>
+      PlannerService.getSpiritsInRealm(r.guid, this.plannerData).some((sp) => sp.guid === data.guid),
+    );
+    if (realm) description.push(this.t("commands:SPIRITS.RESPONSES.EMBED.REALM", { REALM: realm.name }));
 
     // if seasonal, then the season
-    if (this.isSeasonal(data)) {
-      description.push(
-        // @ts-expect-error this class will eventually be removed in favor of /game-planner
-        season_emojis[data.season] + ` ${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}`,
-      );
+    if (data.season) {
+      description.push(utils.formatEmoji(data.season.emoji) + " " + data.season.name);
     }
 
     const headerTitle = `-# ${this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR")}\n### [${icon} ${data.name}${
-      data.extra ? ` (${data.extra})` : ""
+      this.legacyData?.extra ? ` (${this.legacyData.extra})` : ""
     }](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`;
 
     const comp = container(
-      data.image ? section(thumbnail(data.image, data.name), headerTitle) : textDisplay(headerTitle),
+      data.imageUrl ? section(thumbnail(data.imageUrl, data.name), headerTitle) : textDisplay(headerTitle),
       separator(true, 1),
       textDisplay(
         description
@@ -82,69 +84,74 @@ export class Spirits {
           .join("\n"),
       ),
     );
-
-    if ("ts" in data && !data.current) {
+    let file: RawFile | undefined;
+    if (data.travelingSpirits || data.specialVisitSpirits) {
       comp.components.push(
         separator(true, 1),
         textDisplay(
           `**${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_TITLE")}**\n${
-            !data.ts.eligible
-              ? `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_ELIGIBLE", {
-                  SEASON:
-                    (Object.values(seasonsData).find((v) => v.name === data.season)?.icon ?? "") +
-                    ` **__${this.t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: data.season })}__**`,
-                })}`
-              : data.ts.returned
-                ? `${emojis.tree_middle}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: data.ts.dates.length })}\n${emojis.tree_end}${this.t(
-                    "commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_RETURNED_DATE",
-                  )}\n${this._formatDates(data.ts.dates)}`
-                : `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`
+            data.travelingSpirits?.length || data.specialVisitSpirits?.length
+              ? `${emojis.tree_middle}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_RETURNED", { VISITS: [...(data.travelingSpirits ?? []), ...(data.specialVisitSpirits ?? [])].length })}\n${emojis.tree_end}${this.t(
+                  "commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_RETURNED_DATE",
+                )}\n${this._formatDates([...(data.travelingSpirits ?? []), ...(data.specialVisitSpirits ?? [])])}`
+              : `${emojis.tree_end}${this.t("commands:SPIRITS.RESPONSES.EMBED.FIELDS.SUMMARY_DESC_NO_VISIT")}`
           }`,
         ),
       );
     }
     comp.components.push(separator(true, 1));
-
-    if (!this.isSeasonal(data)) {
-      comp.components.push(
-        section(thumbnail(`${config.CDN_URL}/${data.main.image}`), this.t("commands:SPIRITS.RESPONSES.EMBED.CREDIT")),
+    if (data.tree || data.specialVisitSpirits?.length || data.travelingSpirits?.length) {
+      const visits = PlannerService.sortByDates(
+        [...(data.travelingSpirits ?? []), ...(data.specialVisitSpirits ?? [])],
+        ["visit"],
       );
-    } else {
-      let url = data.tree?.image;
-      if (!url?.startsWith("https://")) url = config.CDN_URL + "/" + url!;
-      if (url) {
-        const totalCosts = data
-          .tree!.total.replaceAll(":RegularCandle:", "<:RegularCandle:1207793250895794226>")
-          .replaceAll(":RegularHeart:", "<:regularHeart:1207793247792013474>")
-          .replaceAll(":AC:", "<:AscendedCandle:1207793254301433926>")
-          .trim();
-        comp.components.push(
-          section(
-            thumbnail(url),
-            emojis.right_chevron +
-              " " +
-              (data.ts.returned
-                ? this.t("features:SPIRITS.TREE_TITLE", { CREDIT: data.tree!.by })
-                : this.t("features:SPIRITS.SEASONAL_CHART", { CREDIT: data.tree!.by })),
-            totalCosts ? `-# ${totalCosts}` : "",
-          ),
-        );
-      }
+      // priorotize the latest visit first to preserve the legacy behaviour
+      const tree = visits[0]?.tree ?? data.tree;
+      if (!tree) throw new Error("Something fell off");
+      const image = await (tree.tier
+        ? generateSpiritTreeTier(tree as any, { noOpacity: true })
+        : generateSpiritTree(tree as any, { noOpacity: true }));
+      file = { data: image, name: "tree.png" };
+      const costs = CostUtils.groupedToCostEmoji([tree]);
+      comp.components.push(section(thumbnail(`attachment://tree.png`), emojis.right_chevron + "Spirit Tree\n" + costs));
     }
-    if ("location" in data) {
-      let url = data.location!.image;
+    if (this.legacyData && "location" in this.legacyData) {
+      let url = this.legacyData.location!.image;
       if (!url.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
       comp.components.push(
         section(
           thumbnail(url),
-          `${emojis.right_chevron} ${this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: data.location!.by })}`,
-          data.location!.description ? `-# ${emojis.tree_end}${data.location!.description}` : "",
+          `${emojis.right_chevron} ${this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: this.legacyData.location!.by })}`,
+          this.legacyData.location!.description ? `-# ${emojis.tree_end}${this.legacyData.location!.description}` : "",
         ),
       );
     }
     comp.components.push(separator(true, 1), this.getButtons(userid));
 
-    return comp;
+    return {
+      components: [
+        comp,
+        section(
+          button({
+            custom_id: this.client.utils.store.serialize(this.client.utils.customId.PlannerTopLevelNav, {
+              user: userid,
+              t: DisplayTabs.Spirits,
+              it: data.guid,
+              i: null,
+              p: null,
+              back: null,
+              r: null,
+              // go through normal page
+              d: "normal",
+              f: null,
+            }),
+            label: "Planner",
+          }),
+          "See this spirit in Sky Planner?",
+        ),
+      ],
+      files: file ? [file] : undefined,
+    };
   }
 
   /**
@@ -153,16 +160,19 @@ export class Spirits {
   public getButtons(userid: string): APIActionRowComponent<APIButtonComponent> {
     const components: APIButtonComponent[] = [];
     const data = this.data;
-    const [value] = Object.entries(this.client.spiritsData).find(([, v]) => {
-      if (v.extra) return data.extra === v.extra && data.name === v.name;
-      return v.name === data.name;
-    })!;
-
-    if (data.expression) components.push(getExpressionBtn(data, value, this.t, data.expression.icon, userid));
-
-    if (data.collectibles?.length) {
+    const items = SpiritTreeHelper.getItems(data.tree);
+    const emoteNode = items.find((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type));
+    if (this.legacyData?.expression || emoteNode?.previewUrl) components.push(getExpressionBtn(data, userid));
+    const collectibles = items.filter((i) => !NonCollectibles.includes(i.type));
+    if (this.legacyData?.collectibles?.length || collectibles.length) {
       components.push(
-        collectiblesBtn(data.collectibles[Math.floor(Math.random() * data.collectibles.length)]!.icon, value, userid),
+        collectiblesBtn(
+          (this.legacyData?.collectibles?.length ? this.legacyData.collectibles : collectibles)[
+            Math.floor(Math.random() * (this.legacyData?.collectibles?.length ?? collectibles.length))
+          ]!.icon!,
+          data.guid,
+          userid,
+        ),
       );
     }
 
@@ -181,57 +191,14 @@ export class Spirits {
   }
 
   /**
-   * Returns sorted visit dates in descending order
-   * (Because my lazy ass put it in random order for some spirits)
-   * @param dates Areay of visit datas
-   */
-  private _sortDates(dates: Array<string | string[]>) {
-    return dates.sort((a, b) => {
-      const aDate = DateTime.fromFormat((this._isArray(a) ? a[0]! : a).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
-        zone: "America/Los_Angeles",
-      }).startOf("day");
-      const bDate = DateTime.fromFormat((this._isArray(b) ? b[0]! : b).replace(/\([^)]+\)/g, "").trim(), "LLLL dd, yyyy", {
-        zone: "America/Los_Angeles",
-      }).startOf("day");
-      if (aDate > bDate) return -1;
-      else return 1;
-    });
-  }
-
-  /**
-   * Returns if given element is an array or not
-   * @param element
-   */
-  private _isArray(element: string | string[]) {
-    return Array.isArray(element);
-  }
-
-  /**
    * Formats the spirit's return dates in discord timestamp
    * @param dates
    */
-  private _formatDates(dates: Array<string | string[]>) {
-    return this._sortDates(dates)
-      .map((date) => {
-        let index;
-        // Check if the date is an array or a string
-        // (it's array for special visits as their stay duration can be longer, 1st elemnt is the visit date and second their departure)
-        const isArray = this._isArray(date);
-
-        // Only first element should have the SV tag (if an array) so use that to get it
-        const formatDate = (isArray ? date[0]! : date)
-          .replace(/\([^)]+\)/g, (match) => {
-            index = match.trim().replaceAll("SV", "[SV](https://sky-children-of-the-light.fandom.com/wiki/Returning_Spirits)");
-            return "";
-          })
-          .trim();
-        const dateM = DateTime.fromFormat(formatDate, "LLLL dd, yyyy", { zone: "America/Los_Angeles" }).startOf("day");
-
-        // Use the 2nd element in the array as the end date, or add 3 days to the start date
-        const dateE = isArray
-          ? DateTime.fromFormat(date[1]!, "LLLL dd, yyyy", { zone: "America/Los_Angeles" }).endOf("day")
-          : dateM.plus({ days: 3 }).endOf("day");
-        return `- ${utils.time(dateM.toJSDate())} - ${utils.time(dateE.toJSDate())} ${index}`;
+  private _formatDates(ts: Array<ITravelingSpirit | ISpecialVisitSpirit>) {
+    return PlannerService.sortByDates(ts, ["visit"])
+      .map((visit) => {
+        const rr = "number" in visit ? visit : visit.visit;
+        return `- ${utils.time(rr.date.toJSDate())} - ${utils.time(rr.endDate.toJSDate())} (${"number" in visit ? `#${visit.number}` : `SV`})`;
       })
       .join("\n");
   }

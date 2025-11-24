@@ -1,17 +1,20 @@
+import { fetchSkyData } from "@/planner";
 import { defineButton } from "@/structures";
 import { Spirits } from "@/utils/classes/Spirits";
 import { CustomId } from "@/utils/customId-store";
-import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { row } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
+import type { ISpirit } from "skygame-data";
 
 export default defineButton({
   data: { name: "spirit_info_button" },
   id: CustomId.SpiritButton,
   async execute(interaction, t, helper, { spirit_key }) {
-    const data = helper.client.spiritsData[spirit_key];
+    await helper.deferUpdate();
+    const data = await fetchSkyData(helper.client);
+    const spirit = data.guids.get(spirit_key) as ISpirit | undefined;
 
-    if (!data) {
+    if (!spirit) {
       await helper.reply({
         content: t("commands:SPIRITS.RESPONSES.NO_DATA", {
           VALUE: spirit_key,
@@ -20,25 +23,25 @@ export default defineButton({
       });
       return;
     }
-    const manager = new Spirits(data, t, helper.client);
+    const manager = new Spirits(spirit, t, helper.client, data);
 
-    const message = await helper
-      .update({
-        components: [
-          manager.getResponseEmbed(helper.user.id),
-          row({
-            type: 2,
-            custom_id: helper.client.utils.store.serialize(CustomId.Default, {
-              user: helper.user.id,
-              data: "spirit-button-back",
-            }),
-            label: "Back",
-            style: 4,
+    const response = await manager.getResponseEmbed(helper.user.id);
+    const message = await helper.editReply({
+      ...response,
+      components: [
+        ...response.components!,
+        row({
+          type: 2,
+          custom_id: helper.client.utils.store.serialize(CustomId.Default, {
+            user: helper.user.id,
+            data: "spirit-button-back",
           }),
-        ],
-        flags: MessageFlags.IsComponentsV2,
-      })
-      .then((m) => m.resource!.message!);
+          label: "Back",
+          style: 4,
+        }),
+      ],
+      flags: MessageFlags.IsComponentsV2,
+    });
 
     const collector = helper.client.componentCollector({ idle: 60_000, message, userId: helper.user.id });
 

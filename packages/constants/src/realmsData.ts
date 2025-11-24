@@ -1,6 +1,6 @@
 // This data is from before I restructured the bot and move to typescript, I am too lazy to change it around, probably the reason for messed up guides commands as it is using old codes
 export const MapsData = {
-  maps_isle: {
+  maps_dawn: {
     realm: "Isle of Dawn",
     content:
       "-# **Isle of Dawn Comprehensive Maps by Clement**\n-# Updated on: 14th October 2022 (Some guides maybe outdated, new areas might have been added in later realeases)",
@@ -352,7 +352,7 @@ export const MapsData = {
 } as const;
 
 export const SummaryData = {
-  summary_isle: {
+  summary_dawn: {
     main: {
       title: "Isle of Dawn",
       description:

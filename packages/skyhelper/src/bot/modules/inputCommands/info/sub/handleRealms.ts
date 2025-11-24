@@ -14,14 +14,9 @@ import type { ComponentInteractionMap } from "@/types/interactions";
 import Utils from "@/utils/classes/Utils";
 import { container, mediaGallery, mediaGalleryItem, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { CustomId } from "@/utils/customId-store";
-const realms = {
-  isle: "Isle of Dawn",
-  prairie: "Daylight Prairie",
-  forest: "Hidden Forest",
-  vault: "Valut of Knowledge",
-  wasteland: "Golden Wasteland",
-  valley: "Valley of Triumph",
-};
+import { fetchSkyData } from "@/planner";
+import type { IRealm } from "skygame-data";
+
 const expired_row = row({
   type: ComponentType.StringSelect,
   custom_id: "xxx",
@@ -31,34 +26,57 @@ const expired_row = row({
 });
 export async function handleRealms(helper: InteractionHelper, options: InteractionOptionResolver) {
   const t = helper.t;
-  const realm = options.getString("realm");
-  const type = options.getString("type");
+  const realmId = options.getString("realm", true);
+  const type = options.getString("type", true);
+
+  const data = await fetchSkyData(helper.client);
+  const realm = data.guids.get(realmId) as IRealm | undefined;
+
+  if (!realm) {
+    await helper.editReply({
+      content: t("commands:SPIRITS.RESPONSES.NO_DATA", {
+        VALUE: realmId,
+        COMMAND: helper.client.utils.mentionCommand(helper.client, "utils", "contact-us"),
+      }),
+    });
+    return;
+  }
+
   switch (type) {
     case "summary": {
-      await handleSummary(helper, `summary_${realm}` as keyof typeof SummaryData);
+      // TODO: refactor this to use <IREALM>.areas
+      await handleSummary(helper, `summary_${realm.shortName.toLowerCase()}` as keyof typeof SummaryData);
       return;
     }
     case "maps": {
-      await handleMaps(helper, `maps_${realm}` as keyof typeof MapsData);
+      // TODO: refactor this to possibly use <IRealm>.maps, though may require image generations
+      await handleMaps(helper, `maps_${realm.shortName.toLowerCase()}` as keyof typeof MapsData);
       return;
     }
     case "spirits": {
-      if (realm === "eden") {
+      if (realm.shortName === "Eden") {
         await helper.editReply({ content: t("commands:GUIDES.RESPONSES.NO-SPIRITS") });
         return;
       }
-      await handleSpirits(helper, realms[realm as keyof typeof realms]);
+      await handleSpirits(helper, realm, data);
     }
   }
 }
 async function handleSummary(helper: InteractionHelper, realm: keyof typeof SummaryData) {
   const data = getSummary(realm);
-  const t = helper.t;
-  const client = helper.client;
+  if (!(data as any)) {
+    // TODO: for now, should no longer be the case when migrated to planer data
+    await helper.editReply({
+      content:
+        "No Summary found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions.",
+    });
+    return;
+  }
+  const { t, client } = helper;
   let page = 1;
   const total = data.areas.length - 1;
   const author = `Summary of ${data.main.title}`;
-  const emoji = realms_emojis[data.main.title];
+  const emoji = client.utils.formatEmoji(realms_emojis[data.main.title]);
 
   const component = container(
     section(
@@ -142,6 +160,14 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
 
 async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsData) {
   const data = getMaps(realm);
+  if (!(data as any)) {
+    // TODO: for now, should no longer be the case when migrated to planer data
+    await helper.editReply({
+      content:
+        "No Maps found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions.",
+    });
+    return;
+  }
   const t = helper.t;
   let page = 1;
   const total = data.maps.length - 1;
