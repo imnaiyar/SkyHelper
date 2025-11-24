@@ -13,12 +13,16 @@ import {
 } from "@discordjs/core";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { CustomId } from "@/utils/customId-store";
+import { fetchSkyData } from "@/planner";
+import type { ISeason } from "skygame-data";
 
 export async function handleSeasional(helper: InteractionHelper, options: InteractionOptionResolver) {
   const value = options.getString("season")!;
   const type = options.getString("type")!;
-  const season = seasonsData[value as keyof typeof seasonsData];
-  if (!season as boolean) {
+  const data = await fetchSkyData(helper.client);
+  const season = data.guids.get(value) as ISeason | undefined;
+
+  if (!season) {
     return await helper.editReply({ content: helper.t("commands:GUIDES.RESPONSES.INVALID_SEASON_VALUE", { VALUE: value }) });
   }
   switch (type) {
@@ -27,35 +31,42 @@ export async function handleSeasional(helper: InteractionHelper, options: Intera
       break;
     }
     case "spirits": {
-      await handleSpirits(helper, season);
+      await handleSpirits(helper, season, data);
       break;
     }
   }
 }
 
-async function handleQuests(helper: InteractionHelper, season: SeasonData) {
-  const quests = season.quests;
-  const now = DateTime.now().setZone(helper.client.timezone).startOf("day");
-  const start = DateTime.fromFormat(season.from[0]!, "dd-MM-yyyy", { zone: helper.client.timezone }).startOf("day");
-  const end = DateTime.fromFormat(season.from[1]!, "dd-MM-yyyy", { zone: helper.client.timezone }).endOf("day");
-  const isActive = now >= start && now <= end;
-
-  const t = helper.t;
+async function handleQuests(helper: InteractionHelper, ssn: ISeason) {
+  const season = Object.values(seasonsData).find((s) => s.name === ssn.shortName) as SeasonData | undefined;
+  const quests = season?.quests;
+  const {
+    t,
+    client: { utils },
+  } = helper;
   if (!quests?.length) {
     return void helper.editReply({
-      content: t("commands:GUIDES.RESPONSES.NO_QUEST", { SEASON: `${season.icon} ${season.name}` }),
+      content: t("commands:GUIDES.RESPONSES.NO_QUEST", { SEASON: `${utils.formatEmoji(ssn.emoji)} ${ssn.shortName}` }),
     });
   }
+  const now = DateTime.now().setZone(helper.client.timezone).startOf("day");
+  const isActive = now >= ssn.date && now <= ssn.endDate;
+
   const total = quests.length;
   let page = 1;
   const getResponse = () => {
     const quest = quests[page - 1];
     if (!quest) throw new Error("Unknown quests");
-    const emojiUrl = helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(season.icon)!.id!);
+    const emojiUrl = helper.client.rest.cdn.emoji(utils.parseEmoji(ssn.emoji!)!.id!);
     const comp = container(
       section(
-        thumbnail(emojiUrl, season.name),
-        `-# ${t("commands:GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", { SEASON: season.name })}\n### [${season.icon} ${quest.title}](https://sky-children-of-the-light.fandom.com/wiki/Season_of_${season.name
+        thumbnail(emojiUrl, ssn.shortName),
+        `-# ${t("commands:GUIDES.RESPONSES.QUEST_EMBED_AUTHOR", {
+          SEASON: ssn.shortName,
+        })}`,
+        `### [${helper.client.utils.formatEmoji(
+          ssn.emoji,
+        )} ${quest.title}](https://sky-children-of-the-light.fandom.com/wiki/Season_of_${ssn.shortName
           .split(" ")
           .join("_")}#${quest.title.split(" ").join("_")})`,
       ),
@@ -65,7 +76,7 @@ async function handleQuests(helper: InteractionHelper, season: SeasonData) {
       comp.components.push(
         textDisplay(
           (isActive
-            ? `Season is currently active.\n- **Start Date**: ${helper.client.utils.time(start.toUnixInteger(), "F")} (${helper.client.utils.time(start.toUnixInteger(), "R")})\n- **End Date:** ${helper.client.utils.time(end.toUnixInteger(), "F")} (${helper.client.utils.time(end.toUnixInteger(), "R")})\n- **Duration**: ${Math.round(end.diff(start, "days").days)} days`
+            ? `Season is currently active.\n- **Start Date**: ${utils.time(ssn.date.toUnixInteger(), "F")} (${utils.time(ssn.date.toUnixInteger(), "R")})\n- **End Date:** ${utils.time(ssn.endDate.toUnixInteger(), "F")} (${utils.time(ssn.endDate.toUnixInteger(), "R")})\n- **Duration**: ${Math.round(ssn.endDate.diff(ssn.date, "days").days)} days`
             : "") + quest.description,
         ),
       );

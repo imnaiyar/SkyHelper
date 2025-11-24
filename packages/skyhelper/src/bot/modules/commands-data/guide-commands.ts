@@ -69,43 +69,7 @@ export const GUIDES_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
             description: "directly search for a base spirit`s tree/location",
             description_localizations: "commands:GUIDES.options.REALMS.options.realms.description",
             type: ApplicationCommandOptionType.String,
-            choices: [
-              {
-                name: "↪️ Isle of Dawn",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.isle",
-                value: "isle",
-              },
-              {
-                name: "↪️ Daylight Prairie",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.daylight",
-                value: "prairie",
-              },
-              {
-                name: "↪️ Hidden Forest",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.forest",
-                value: "forest",
-              },
-              {
-                name: "↪️ Valley of Triumph",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.valley",
-                value: "valley",
-              },
-              {
-                name: "↪️ Golden Wasteland",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.wasteland",
-                value: "wasteland",
-              },
-              {
-                name: "↪️ Vault of Knowledge",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.vault",
-                value: "vault",
-              },
-              {
-                name: "↪️ Eye of Eden",
-                name_localizations: "commands:GUIDES.options.REALMS.options.realms.choices.eden",
-                value: "eden",
-              },
-            ],
+            autocomplete: true,
             required: true,
           },
           {

@@ -50,6 +50,7 @@ export default defineButton({
     let index = 1;
     const total = collectibles.length;
 
+    // TODO: perhaps add more nfo, like shhet no, levels, etc..
     const getResponse = () => {
       const d = collectibles[index - 1]!;
 
