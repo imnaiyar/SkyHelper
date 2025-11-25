@@ -73,7 +73,12 @@ export function buildShardEmbed(
     );
 
     // add cleared btn if red shard and curent day for planner
-    if (typeof cleared === "boolean" && info.type === "red" && DateTime.now().setZone(zone).hasSame(date, "day")) {
+    if (
+      typeof cleared === "boolean" &&
+      info.type === "red" &&
+      DateTime.now().setZone(zone).hasSame(date, "day") &&
+      status !== "No Shard"
+    ) {
       navBtns.push(
         button({
           label: cleared ? "Unclear" : "Cleared",
