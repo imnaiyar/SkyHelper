@@ -1,4 +1,3 @@
-import type { DateTime } from "luxon";
 import type { Document } from "mongoose";
 import type { DailyQuest } from "./custom.js";
 import type { REMINDERS_KEY } from "@skyhelperbot/constants";
@@ -86,43 +85,6 @@ export interface GuildSchema extends Document {
   autoShard: LiveUpdates;
   autoTimes: LiveUpdates;
   isPremium?: boolean;
-}
-
-// #region SpecialEvent
-
-export interface EventData extends Document {
-  /** Start date of the event */
-  startDate: string;
-
-  /** End date of the event */
-  endDate: string;
-
-  /** Name of the event */
-  name: string;
-}
-
-// #region TS
-export interface TSData extends Document {
-  /** Name of the returning TS */
-  name: string;
-
-  /** The value of spirit in the spiritsData */
-  value: string;
-
-  /** Date of the visit */
-  visitDate: string;
-
-  /** TS returning Index */
-  index: number;
-}
-
-export interface TSValue {
-  visiting: boolean;
-  name?: string;
-  nextVisit: DateTime;
-  index?: number;
-  duration: string;
-  value?: string;
 }
 
 // #region Daily quests

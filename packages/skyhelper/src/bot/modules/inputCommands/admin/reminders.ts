@@ -6,10 +6,9 @@ import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { PermissionsUtil } from "@/utils/classes/PermissionUtils";
 import RemindersUtils from "@/utils/classes/RemindersUtils";
 import { store } from "@/utils/customId-store";
-import { getTSData } from "@/utils/getEventDatas";
 import { MessageFlags, type APIGuildForumChannel, type APITextChannel, ComponentType } from "@discordjs/core";
 import { REMINDERS_KEY, SendableChannels, RemindersEventsMap } from "@skyhelperbot/constants";
-import { SkytimesUtils, type EventKey, textDisplay, row, separator, ShardsUtil, section } from "@skyhelperbot/utils";
+import { SkytimesUtils, type EventKey, textDisplay, row, separator, ShardsUtil, section, getNextTs } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 
 export default {
@@ -83,7 +82,7 @@ export default {
 
         await guildSettings.save();
         const eventToGet = ["dailies", "reset"].includes(event) ? "daily-reset" : event;
-        const nextOccurence = await getRemindersNextOccurence(eventToGet, offset, shard_type);
+        const nextOccurence = getRemindersNextOccurence(eventToGet, offset, shard_type);
         await helper.editReply({
           components: [
             textDisplay(
@@ -215,14 +214,14 @@ async function awaitShardTypeResponse(helper: InteractionHelper, settings: Guild
   return response.data.values as Array<"black" | "red">;
 }
 
-async function getRemindersNextOccurence(
+function getRemindersNextOccurence(
   event: (typeof REMINDERS_KEY)[number] | "daily-reset",
   offset: number,
   shardType: Array<"red" | "black"> = [],
 ) {
   let nextOccurence: DateTime;
   if (event === "ts") {
-    nextOccurence = (await getTSData())!.nextVisit;
+    nextOccurence = getNextTs()!.nextVisit;
   } else if (event === "shards-eruption") {
     const nextShard = ShardsUtil.getNextShardFromNow(shardType);
     nextOccurence = nextShard.start;

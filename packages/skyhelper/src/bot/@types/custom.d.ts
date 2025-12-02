@@ -1,14 +1,3 @@
-import type { DateTime } from "luxon";
-
-export interface EventType {
-  active: boolean;
-  name: string;
-  start: DateTime;
-  end: DateTime;
-  duration: string;
-  days: number;
-}
-
 /** Reperesents a daily quest data */
 export interface DailyQuest {
   /* Title for the quest */

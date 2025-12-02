@@ -1,4 +1,4 @@
-import { ShardsUtil as utils, shardsInfo, shardsTimeline, row, button } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, shardsInfo, shardsTimeline, row, button, getNextTs } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
@@ -11,7 +11,6 @@ import {
 } from "@discordjs/core";
 import { DateTime } from "luxon";
 import Utils from "./Utils.js";
-import { getSpecialEvent, getTSData } from "../getEventDatas.js";
 import type { getTranslator } from "@/i18n";
 import {
   eventData,
@@ -33,6 +32,7 @@ import RemindersUtils from "./RemindersUtils.js";
 import type { InteractionHelper } from "./InteractionUtil.js";
 import { createActionId } from "@/planner/helpers/action.utils";
 import { PlannerAction } from "@/types/planner";
+import { fetchSkyData, PlannerService } from "@/planner";
 
 /**
  * @param date The date for which the shards embed is to be built
@@ -160,36 +160,33 @@ export function buildShardEmbed(
  * @returns
  */
 export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getTranslator>) {
-  const tsData = await getTSData();
-  const specialEvent = await getSpecialEvent();
+  const plannerData = await fetchSkyData(client);
+  const tsData = getNextTs();
+  const specialEvent = PlannerService.getEvents(plannerData).upcoming[0];
   // Special Events
-  const eventDesc =
-    typeof specialEvent === "string"
-      ? t("features:times-embed.EVENT_INACTIVE")
-      : t("features:times-embed.EVENT_ACTIVE", {
-          EVENT_NAME: specialEvent.name,
-          DATE1: Utils.time(specialEvent.start.toUnixInteger(), "F"),
-          DATE2: Utils.time(specialEvent.end.toUnixInteger(), "F"),
-          DAYS: specialEvent.days,
-          DURATION: specialEvent.duration,
-          STARTS_ENDS: specialEvent.active ? t("features:times-embed.ENDS") : t("features:times-embed.STARTS"),
-        });
+  const eventDesc = specialEvent
+    ? t("features:times-embed.EVENT_ACTIVE", {
+        EVENT_NAME: specialEvent.event.name,
+        DATE1: Utils.time(specialEvent.instance.date.toUnixInteger(), "F"),
+        DATE2: Utils.time(specialEvent.instance.endDate.toUnixInteger(), "F"),
+        DAYS: Math.floor(specialEvent.instance.endDate.diff(specialEvent.instance.date, "days").days),
+      })
+    : t("features:times-embed.EVENT_INACTIVE");
 
   // Traveling spirit
   let tsDesc: string;
   if (!tsData) {
     tsDesc = "Unknown!";
   } else {
-    const spirit = client.spiritsData[tsData.value!];
-    const emote = spirit?.expression?.icon ?? "❓";
+    const spirit = PlannerService.getCurrentTravelingSpirit(plannerData);
     // TODO: update tree emojis from localization in this for prod
     const strVisiting = t("features:times-embed.TS_VISITING", {
-      TS_NAME: `${emote} ${spirit?.name ?? t("features:times-embed.TS_UPDATED")}`,
+      TS_NAME: `${Utils.formatEmoji(spirit?.spirit.emoji)} ${spirit?.spirit.name ?? t("features:times-embed.TS_UPDATED")}`,
       DATE: Utils.time(tsData.nextVisit.plus({ days: 3 }).endOf("day").toUnixInteger(), "F"),
       DURATION: tsData.duration,
     });
     const strExpected = t("features:times-embed.TS_EXPECTED", {
-      TS_NAME: `${emote} ${spirit?.name ?? t("features:times-embed.TS_UNKNOWN")}`,
+      TS_NAME: `${Utils.formatEmoji(spirit?.spirit.emoji)} ${spirit?.spirit.name ?? t("features:times-embed.TS_UNKNOWN")}`,
       DATE: Utils.time(tsData.nextVisit.toUnixInteger(), "F"),
       DURATION: tsData.duration,
     });

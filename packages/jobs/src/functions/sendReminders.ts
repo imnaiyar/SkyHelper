@@ -2,9 +2,8 @@ import { getActiveReminders } from "@/database/getGuildDBValues.js";
 import { Webhook } from "@/structures/Webhook.js";
 import { getTranslator } from "./getTranslator.js";
 import { logger } from "@/structures/Logger.js";
-import { container, separator, SkytimesUtils, textDisplay } from "@skyhelperbot/utils";
+import { container, getNextTs, separator, SkytimesUtils, textDisplay } from "@skyhelperbot/utils";
 import { throttleRequests } from "./throttleRequests.js";
-import getTS from "@/utils/getTS.js";
 import { DateTime } from "luxon";
 import { checkReminderValid } from "./checkReminderValid.js";
 import { AllowedMentionsTypes, MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
@@ -22,7 +21,7 @@ export async function reminderSchedules(): Promise<void> {
 
   const eventDetails = Object.fromEntries(SkytimesUtils.allEventDetails());
 
-  const ts = await getTS();
+  const ts = getNextTs();
 
   const activeGuilds = await getActiveReminders();
 

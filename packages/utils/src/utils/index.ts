@@ -7,6 +7,7 @@ export * from "./parseDateFormat.js";
 export * from "./resolveColors.js";
 export * from "./v2-builders.js";
 export * from "./PermissionUtils.js";
+export * from "./getNextTs.js";
 
 /**
  * Creates a progress bar using emoji segments (start, middle, end)

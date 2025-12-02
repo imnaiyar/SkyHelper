@@ -71,19 +71,3 @@ export const BotStatsSchema = z.object({
   totalUserInstalls: z.number(),
 });
 export type BotStats = z.infer<typeof BotStatsSchema>;
-
-export const EventDataSchema = z.object({
-  name: z.string(),
-  startDate: z.string().regex(/^\d{2}-\d{2}-\d{4}$/, "Date must be in the format DD-MM-YYYY"),
-  endDate: z.string().regex(/^\d{2}-\d{2}-\d{4}$/, "Date must be in the format DD-MM-YYYY"),
-});
-
-export type EventData = z.infer<typeof EventDataSchema>;
-
-export const TSDataSchema = z.object({
-  spirit: z.string(),
-  visitDate: z.string().regex(/^\d{2}-\d{2}-\d{4}$/, "Date must be in the format DD-MM-YYYY"),
-  index: z.string(),
-});
-
-export type TSData = z.infer<typeof TSDataSchema>;
