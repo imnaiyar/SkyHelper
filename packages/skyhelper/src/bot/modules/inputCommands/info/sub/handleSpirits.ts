@@ -1,6 +1,4 @@
-import type { SeasonData } from "@skyhelperbot/constants";
 import { Spirits } from "@/utils/classes/Spirits";
-import type { SpiritsData, SeasonalSpiritData } from "@skyhelperbot/constants/spirits-datas";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import {
   ComponentType,
@@ -10,19 +8,16 @@ import {
   type APIStringSelectComponent,
 } from "@discordjs/core";
 import { CustomId } from "@/utils/customId-store";
+import type { IRealm, ISeason, ISkyData, ISpirit } from "skygame-data";
 
-function isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
-  return "ts" in data;
-}
-export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: SeasonData | string) {
+export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: IRealm | ISeason, data: ISkyData) {
   const client = helper.client;
   const t = helper.t;
-  const spirits = Object.entries(client.spiritsData).filter(([, v]) => {
-    if (typeof seasonOrRealm !== "string") {
-      return isSeasonal(v) && v.season.toLowerCase() === seasonOrRealm.name.toLowerCase();
-    }
-    return v.realm && v.realm.toLowerCase() === seasonOrRealm.toLowerCase();
-  });
+  const spirits =
+    ("areas" in seasonOrRealm
+      ? seasonOrRealm.areas?.flatMap((area) => area.spirits ?? [])
+      : (seasonOrRealm as ISeason).spirits) ?? [];
+
   if (!spirits.length) {
     return await helper.editReply({
       content:
@@ -31,14 +26,14 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
         client.utils.mentionCommand(client, "utils", "contact-us"),
     });
   }
-  let value = spirits[0]![0];
+  let value = spirits[0]!.guid;
   const placehoder =
-    typeof seasonOrRealm === "string"
-      ? t("commands:GUIDES.RESPONSES.REALM_SELECT_PLACEHOLDER", { REALM: seasonOrRealm })
+    "areas" in seasonOrRealm
+      ? t("commands:GUIDES.RESPONSES.REALM_SELECT_PLACEHOLDER", { REALM: seasonOrRealm.name })
       : t("commands:GUIDES.RESPONSES.SPIRIT_SELECT_PLACEHOLDER", { SEASON: seasonOrRealm.name });
 
   const getUpdate = async (commandHelper: InteractionHelper) => {
-    const data = client.spiritsData[value]!;
+    const spirit = data.guids.get(value) as ISpirit;
     const row: APIActionRowComponent<APIStringSelectComponent> = {
       type: ComponentType.ActionRow,
       components: [
@@ -46,19 +41,20 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: Se
           type: ComponentType.StringSelect,
           custom_id: client.utils.store.serialize(CustomId.SeasonalSpiritRow, { user: helper.user.id }),
           placeholder: placehoder,
-          options: spirits.map(([k, v]) => ({
-            label: v.name + (v.extra ? ` (${v.extra})` : ""),
-            value: k,
-            emoji: client.utils.parseEmoji(v.expression?.icon ?? v.icon ?? (seasonOrRealm as SeasonData).icon)!,
-            default: value === k,
+          options: spirits.map((sp) => ({
+            label: sp.name,
+            value: sp.guid,
+            emoji: sp.emoji ? helper.client.utils.parseEmoji(sp.emoji)! : undefined,
+            default: value === sp.guid,
           })),
         },
       ],
     };
-    const component = new Spirits(data, t, client).getResponseEmbed(commandHelper.user.id);
+    const res = await new Spirits(spirit, t, client, data).getResponseEmbed(commandHelper.user.id);
 
     const msg = await commandHelper.editReply({
-      components: [component, row],
+      ...res,
+      components: [...(res.components ?? []), row],
       flags: MessageFlags.IsComponentsV2,
     });
     return msg;

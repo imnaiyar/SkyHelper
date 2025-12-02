@@ -9,6 +9,8 @@ import {
   type APIStringSelectComponent,
 } from "@discordjs/core";
 import { CustomId } from "@/utils/customId-store";
+import { fetchSkyData, NonCollectibles } from "@/planner";
+import { SpiritTreeHelper, type ISpirit, type IItem } from "skygame-data";
 
 export default defineButton({
   data: {
@@ -16,13 +18,23 @@ export default defineButton({
   },
   id: CustomId.SpiritCollectible,
   async execute(interaction, _t, helper, { spirit: value }) {
-    const data = helper.client.spiritsData[value];
-    if (!data?.collectibles?.length) {
+    const data = await fetchSkyData(helper.client);
+    const spirit = data.guids.get(value) as ISpirit | undefined;
+
+    const legacyData = Object.values(helper.client.spiritsData).find((s) => s.name === spirit?.name);
+    const items = SpiritTreeHelper.getItems(spirit?.tree).filter((item) => !NonCollectibles.includes(item.type));
+
+    // Determine which collectibles to use
+    const useLegacyData = legacyData?.collectibles?.length;
+    const collectibles = useLegacyData ? legacyData.collectibles : items;
+
+    if (!spirit || !collectibles?.length) {
       return void (await helper.reply({
         content: "No collectibles found for this spirit, or something went wrong!",
         flags: 64,
       }));
     }
+
     const { user } = helper;
     await helper.deferUpdate();
     const orgData = {
@@ -34,11 +46,17 @@ export default defineButton({
       })),
       components: interaction.message.components,
     };
-    const collectibles = data.collectibles;
+
     let index = 1;
     const total = collectibles.length;
+
+    // TODO: perhaps add more nfo, like shhet no, levels, etc..
     const getResponse = () => {
       const d = collectibles[index - 1]!;
+
+      const itemName = d.name;
+      const itemIcon = "emoji" in d ? d.emoji : d.icon;
+
       const stringSelect: APIActionRowComponent<APIStringSelectComponent> = {
         type: ComponentType.ActionRow,
         components: [
@@ -52,36 +70,53 @@ export default defineButton({
             options: collectibles.map((c, i) => ({
               label: c.name,
               value: i.toString(),
-              emoji: helper.client.utils.parseEmoji(c.icon)!,
+              emoji: c.icon ? helper.client.utils.parseEmoji(c.icon)! : undefined,
               default: index - 1 === i,
             })),
           },
         ],
       };
+
+      // Build content based on data source
+      const contentLines: string[] = [`- **Type**: ${d.type}`];
+
+      if (useLegacyData) {
+        const legacyItem = d as any;
+        if (legacyItem.price) contentLines.push(`- **Cost**: ${legacyItem.price}`);
+        if (legacyItem.spPrice) contentLines.push(`- **Season Cost**: ${legacyItem.spPrice}`);
+        if (legacyItem.isSP) contentLines.push(`- This item was season pass exclusive`);
+        if (legacyItem.notes?.length) {
+          contentLines.push("\n**Notes**:\n" + legacyItem.notes.map((n: string) => `-# - ${n}`).join("\n") + "\n");
+        }
+      } else {
+        const item = d as IItem;
+        if (item.group === "SeasonPass") contentLines.push(`- This item was season pass exclusive`);
+      }
+
+      // Get images based on data source
+      const imgs = useLegacyData ? (d as any).images : [{ image: (d as IItem).previewUrl, description: d.name }];
+
+      // add dye previews too if present
+      if ("dye" in d && d.dye?.previewUrl) imgs.push({ images: d.dye.previewUrl, description: d.name + " Dye" });
+      const images = (imgs ?? []).filter((img: any) => img.image);
+
       const comp = container(
         section(
-          thumbnail(helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(d.icon)!.id!), d.name),
-          `-# ${data.name} Collectibles (${index}/${total})\n### [${d.icon} ${d.name || d.type}](https://sky-children-of-the-light.fandom.com/wiki/${data.name
+          thumbnail(
+            helper.client.rest.cdn.emoji(helper.client.utils.parseEmoji(itemIcon ?? "1424103034371313924")!.id!),
+            itemName,
+          ),
+          `-# ${spirit.name} Collectibles (${index}/${total})\n### [${helper.client.utils.formatEmoji(itemIcon)} ${itemName || d.type}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name
             .split(" ")
-            .join("_")}#${(d.type ?? d.name).split(" ").join("_")})`,
+            .join("_")}#${(d.type ?? itemName).split(" ").join("_")})`,
         ),
         separator(),
-        textDisplay(
-          [
-            d.type ? `- **Type**: ${d.type}` : "",
-            d.price ? `- **Cost**: ${d.price}` : "",
-            d.spPrice ? `- **Season Cost**: ${d.spPrice}` : "",
-            d.isSP ? `- This item was season pass exclusive` : "",
-            d.notes?.length ? "\n**Notes**:\n" + d.notes.map((n) => `-# - ${n}`).join("\n") + "\n" : "",
-          ]
-            .filter(Boolean)
-            .join("\n"),
-        ),
-        ...(d.images.length
+        textDisplay(contentLines.filter(Boolean).join("\n")),
+        ...(images.length
           ? [
               separator(),
               textDisplay("**Preview**"),
-              mediaGallery(d.images.map((img) => mediaGalleryItem(img.image, { description: img.description }))),
+              mediaGallery(images.map((img: any) => mediaGalleryItem(img.image, { description: img.description }))),
             ]
           : []),
         separator(),
@@ -93,7 +128,7 @@ export default defineButton({
               type: ComponentType.Button,
               custom_id: helper.client.utils.store.serialize(CustomId.Default, { data: "collectibles-back", user: user.id }),
               label: "Back",
-              emoji: helper.client.utils.parseEmoji(data.expression?.icon ?? "<:spiritIcon:1206501060303130664>")!,
+              emoji: helper.client.utils.parseEmoji(legacyData?.expression?.icon ?? "<:spiritIcon:1206501060303130664>")!,
               style: ButtonStyle.Danger,
             },
           ],
@@ -102,7 +137,9 @@ export default defineButton({
 
       return { components: [comp], flags: MessageFlags.IsComponentsV2 };
     };
+
     const message = await helper.editReply(getResponse());
+
     const collector = helper.client.componentCollector({
       filter: (i) =>
         ["spirit-collectibles-select", "collectibles-back"].includes(
@@ -112,6 +149,7 @@ export default defineButton({
       message,
       idle: 60_000,
     });
+
     collector.on("collect", async (int) => {
       const { id, data: v } = helper.client.utils.store.deserialize(int.data.custom_id);
       const compHelper = new InteractionHelper(int, helper.client);

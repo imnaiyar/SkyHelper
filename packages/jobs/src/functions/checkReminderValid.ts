@@ -1,8 +1,11 @@
 import { DateTime } from "luxon";
 import { type EventDetails } from "@skyhelperbot/utils";
-import type { TSValue } from "@/utils/getTS";
 
-export function checkReminderValid(now: DateTime, details: EventDetails | TSValue, offset = 0): boolean {
+export function checkReminderValid(
+  now: DateTime,
+  details: EventDetails | NonNullable<ReturnType<typeof import("@skyhelperbot/utils").getNextTs>>,
+  offset = 0,
+): boolean {
   const previousMinute = now.minus({ seconds: 15 });
   const isTS = "nextVisit" in details;
 
