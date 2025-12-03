@@ -16,7 +16,7 @@
   "times-embed": {
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
     "EMBED_TITLE": "इवेंट्स का समय",
-    "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}} में",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}",
     "STARTS": "शुरू होगा",
     "ENDS": "खत्म",
     "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
