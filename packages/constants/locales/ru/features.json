@@ -16,7 +16,7 @@
   "times-embed": {
     "EVENT_INACTIVE": "Нет активных событий",
     "EMBED_TITLE": "Время событий",
-    "EVENT_ACTIVE": "**Событие**: {{EVENT_NAME}}\n**Длительность**: {{DATE1}} – {{DATE2}}\n**Всего дней**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}",
     "STARTS": "Начнётся через",
     "ENDS": "Окончание",
     "TS_VISITING": "<:tree_top:1339963618111782985>**В настоящее время посещение:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Отправка:** На {{DATE}} ({{DURATION}})",

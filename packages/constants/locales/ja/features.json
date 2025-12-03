@@ -16,7 +16,7 @@
   "times-embed": {
     "EVENT_INACTIVE": "アクティブなイベントなし",
     "EMBED_TITLE": "イベント時間",
-    "EVENT_ACTIVE": "**イベント**: {{EVENT_NAME}}\n**期間**: {{DATE1}} - {{DATE2}}\n**合計日数**: {{DAYS}}\n**{{STARTS_ENDS}}**: {{DURATION}}",
+    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}",
     "STARTS": "開始まで",
     "ENDS": "終了",
     "TS_VISITING": "<:tree_top:133996361818111782985>**現在の訪問:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**出発:** {{DATE}} ({{DURATION}})",
