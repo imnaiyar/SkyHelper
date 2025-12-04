@@ -17,7 +17,7 @@ This allows the bot to update user's role connection data to display specific in
         mediaGallery(mediaGalleryItem("https://docs.skyhelper.xyz/linked-role/linked-role-profile.png")),
         separator(true, 1),
         textDisplay(
-          "Due to the complicated nature of linked roles, it is difficult to explain everything here, so we have prepared some guides to help you understand how to use linked roles.\n- [What is a linked?](https://docs.skyhelper.xyz/linked-role)\n- [How you can enable linked roles in your server?](https://docs.skyhelper.xyz/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [How to get/link/update your sky profile with the bot?](https://docs.skyhelper.xyz/linked-role#for-users-how-to-get-a-linked-role)",
+          "Due to the complicated nature of linked roles, it is difficult to explain everything here, so we have prepared some guides to help you understand how to use linked roles.\n- [What is a linked?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [How you can enable linked roles in your server?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [How to get/link/update your sky profile with the bot?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
         ),
         separator(true, 1),
         textDisplay(
