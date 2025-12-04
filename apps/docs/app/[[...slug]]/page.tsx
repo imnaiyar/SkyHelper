@@ -18,6 +18,7 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
   return (
     <DocsPage
       toc={page.data.toc}
+      tableOfContent={{ style: "clerk" }}
       full={page.data.full}
       lastUpdate={page.data.lastModified ? new Date(page.data.lastModified.toLocaleString()) : new Date()}
     >

@@ -1,0 +1,96 @@
+---
+title: Sky Game Planner
+description: Your interactive guide to exploring all of Sky's content
+---
+
+# Sky Game Planner
+
+The Sky Game Planner is an interactive Discord bot feature that provides comprehensive access to Sky: Children of the Light game data. It allows you to browse spirits, items, events, shops, realms, seasons, track and plan you Sky progress directly through the bot.
+
+## Credits and Compatibility
+
+This planner is based on [Sky Planner](https://sky-planner.com) by Silverfeelin and uses its game data. It is fully compatible with the website, allowing you to import and export saved data seamlessly between the bot and the website.
+
+<Callout type="info">
+  Thanks to Silverfeelin for their awesome work on sky planner which made it possible for the bot to have this feature.
+</Callout>
+
+## What is the Planner?
+
+A comprehensive, interactive encyclopedia for Sky built into the Discord bot. Instead of searching through multiple sources, everything you need to know about the game is organized and accessible through simple slash commands.
+
+You can explore:
+
+- All spirits and their friendship trees
+- Every cosmetic item in the game
+- In-game events and their schedules
+- All shops and what they sell
+- Game realms and their areas
+- Past and current seasons
+- Winged Lights and their locations
+- Traveling Spirits and special visits
+- And much more...
+
+**Some images showcasing planner**
+
+<Gallery
+  images={[
+    { url: "/screenshots/planner/planner-home.png", alt: "Planner Home Screen" },
+    { url: "/screenshots/planner/planner-spirits.png", alt: "Planner Spirits" },
+    { url: "/screenshots/planner/planner-events.png", alt: "Planner Events" },
+    { url: "/screenshots/planner/planner-seasons.png", alt: "Planner Seasons" },
+    { url: "/screenshots/planner/planner-profile.png", alt: "Planner Profile" },
+    { url: "/screenshots/planner/planner-currency-usage.png", alt: "Planner Currency Usage" },
+    { url: "/screenshots/planner/planner-tree-modify.png", alt: "Planner Tree Modification" },
+    { url: "/screenshots/planner/planner-wls.png", alt: "Planner Winged Lights" },
+  ]}
+/>
+
+And video preview showcasing some of it's capabilities.
+
+<VideoPreview src="/screenshots/planner/planner-preview.mp4" thumbnail="/screenshots/planner/planner-wls.png" />
+
+## How to Use It
+
+- `/planner home` - Opens the planner home screen
+- `/planner search <query>` - Search for specific content and jump directly to it
+- `/planner profile` - View your planner profile and progress
+- `/planner data <action>` - Import, export, or delete your planner data
+
+## Interactive Features
+
+The planner uses Discord buttons for navigation. From the home screen, you can:
+
+- Browse different categories (Spirits, Items, Events, Shops, Realms, Seasons, Winged Lights)
+- Filter content by various criteria
+- Track your progress (unlocked items, currencies, etc.)
+- View detailed information about any entity
+- Navigate between related content
+
+### Smart Navigation
+
+The planner remembers your path:
+
+1. Browse to Spirits → Forest Realm → Meditating Monastic
+2. View their friendship tree
+3. Click an item for details
+4. Use back button to return to tree
+5. Go back again to Forest spirits list
+
+<Callout type="info">
+  This is valid only for 1-level back due to the nature of how your choices are stored and discord limitations.
+</Callout>
+
+## Data Management
+
+### Importing Data
+
+If you have saved data from the SkyGame Planner website or or the bot's, you can import it using `/planner data import`. This allows you to transfer your progress between platforms.
+
+### Exporting Data
+
+Export your current planner data using `/planner data export` to back up your progress. You can use these either on [Sky Planner](https://sky-planner.com) (since it is compatible) or the bot.
+
+### Deleting Data
+
+Use `/planner data delete` to permanently remove all your planner data from the bot.
