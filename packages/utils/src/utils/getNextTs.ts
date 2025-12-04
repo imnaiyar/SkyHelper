@@ -5,7 +5,7 @@ import { zone } from "@skyhelperbot/constants";
  * Returns TS status
  */
 export function getNextTs() {
-  const refrenceDate = DateTime.fromISO("2024-11-04").startOf("day"); // reference date to calculate the next ts from
+  const refrenceDate = DateTime.fromISO("2025-11-20", { zone }).startOf("day"); // reference date to calculate the next ts from
   const now = DateTime.now().setZone(zone);
   const refrenceDeparture = refrenceDate.plus({ days: 3 }).endOf("day");
   let nextDepartDate = refrenceDeparture;
