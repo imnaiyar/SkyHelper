@@ -4,13 +4,12 @@ import { ReactNode } from "react";
 interface CollapsibleProps {
   title: string;
   children: ReactNode;
-  defaultOpen?: boolean;
   className?: string;
 }
 
-export function Collapsible({ title, children, defaultOpen = false, className = "" }: CollapsibleProps) {
+export function Collapsible({ title, children, className = "" }: CollapsibleProps) {
   return (
-    <Accordions orientation="horizontal" type="single">
+    <Accordions className={className} orientation="horizontal" type="single">
       <Accordion title={title ?? "Placeholder"}>{children}</Accordion>
     </Accordions>
   );

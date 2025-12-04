@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import Collapsible from "./collapsible";
 
 export function Card({
   className = "",
