@@ -1,6 +1,6 @@
-import { Card } from "./gallery";
+import { Card } from "./card";
 
-export const VideoPreview = ({ src, thumbnail }: { src: string; thumbnail: string }) => {
+export const VideoPreview = ({ src }: { src: string }) => {
   return (
     <Card height={300} width={400}>
       <div className="relative w-full h-auto">

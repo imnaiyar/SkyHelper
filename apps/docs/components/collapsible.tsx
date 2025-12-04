@@ -8,7 +8,7 @@ interface CollapsibleProps {
   className?: string;
 }
 
-export default function Collapsible({ title, children, defaultOpen = false, className = "" }: CollapsibleProps) {
+export function Collapsible({ title, children, defaultOpen = false, className = "" }: CollapsibleProps) {
   return (
     <Accordions orientation="horizontal" type="single">
       <Accordion title={title ?? "Placeholder"}>{children}</Accordion>
