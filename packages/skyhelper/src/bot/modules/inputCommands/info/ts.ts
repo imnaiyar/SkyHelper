@@ -9,8 +9,8 @@ import { getNextTs } from "@skyhelperbot/utils";
 export default {
   async interactionRun({ t, helper }) {
     await helper.defer();
-
-    await helper.editReply(await getTSResponse(helper.client, t, helper.user));
+    const data = await getTSResponse(helper.client, t, helper.user);
+    await helper.editReply({ ...data, flags: MessageFlags.IsComponentsV2 });
   },
   ...TRAVELING_SPIRITS_DATA,
 } satisfies Command;

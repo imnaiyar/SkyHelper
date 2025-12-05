@@ -19,7 +19,7 @@
     "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}",
     "STARTS": "Starts In",
     "ENDS": "Ends",
-    "TS_VISITING": "<:tree_top:1339963618111782985>**Currently Visiting:** {{TS_NAME}}\n<:tree_end:1339963596850860104>**Departure:** At {{DATE}} ({{DURATION}})",
+    "TS_VISITING": "- **Currently Visiting:** {{TS_NAME}}\n- **Departure:** At {{DATE}} ({{DURATION}})",
     "TS_EXPECTED": "{{TS_NAME}} arriving at {{DATE}} (in {{DURATION}})",
     "TS_UPDATED": "Yet to be updated",
     "TS_UNKNOWN": "Unknown Spirit",
