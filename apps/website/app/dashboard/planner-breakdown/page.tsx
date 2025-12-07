@@ -18,7 +18,7 @@ export default function PlannerBreakdownPage() {
       try {
         setLoading(true);
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
-        const response = await makeRequest<PlannerBreakdownData>(`${apiUrl}/users/${session.user.id}/planner/breakdown`, {
+        const response = await makeRequest<PlannerBreakdownData>(`${apiUrl}/users/planner/breakdown`, {
           headers: {
             Authorization: `Bearer ${session.access_token}`,
           },

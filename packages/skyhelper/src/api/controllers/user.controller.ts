@@ -180,7 +180,7 @@ export class UsersController {
     };
   }
 
-  @Get(":user/planner/breakdown")
+  @Get("planner/breakdown")
   @ApiOperation({
     summary: "Get user planner breakdown",
     description: "Retrieves detailed breakdown of user's planner items, currencies spent, and statistics",
@@ -192,11 +192,8 @@ export class UsersController {
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiNotFoundResponse({ description: "User not found" })
-  async getPlannerBreakdown(@Param("user", UserIDPredicate) userId: string, @Req() req: AuthRequest) {
-    const user = await this.bot.api.users.get(userId).catch(() => null);
-    if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
-
-    const userData = await this.bot.schemas.getUser(user);
+  async getPlannerBreakdown(@Req() req: AuthRequest) {
+    const userData = await this.bot.schemas.getUser(req.user);
     if (!userData.plannerData) {
       throw new HttpException("No planner data found for this user", HttpStatus.NOT_FOUND);
     }
