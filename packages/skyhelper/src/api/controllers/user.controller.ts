@@ -17,6 +17,8 @@ import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { z, toJSONSchema } from "zod/v4";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { Routes } from "@discordjs/core";
+import { PlannerDataService } from "@/planner";
+import { fetchSkyData } from "@/planner/fetcher.js";
 const RoleMetadataKeySchema = z.object({
   username: z.string().optional(),
   metadata: z
@@ -174,6 +176,147 @@ export class UsersController {
         cr: (res.metadata?.cr ?? "0") === "1",
         eden: (res.metadata?.eden ?? "0") === "1",
         hangout: (res.metadata?.hangout ?? "0") === "1",
+      },
+    };
+  }
+
+  @Get(":user/planner/breakdown")
+  @ApiOperation({
+    summary: "Get user planner breakdown",
+    description: "Retrieves detailed breakdown of user's planner items, currencies spent, and statistics",
+  })
+  @ApiParam({ name: "user", description: "Discord user ID", example: "123456789012345678" })
+  @ApiResponse({
+    status: 200,
+    description: "Planner breakdown retrieved successfully",
+  })
+  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  @ApiNotFoundResponse({ description: "User not found" })
+  async getPlannerBreakdown(@Param("user", UserIDPredicate) userId: string, @Req() req: AuthRequest) {
+    // Verify the requesting user is accessing their own data
+    if (req.session.user.id !== userId) {
+      throw new HttpException("Unauthorized to access this user's planner data", HttpStatus.FORBIDDEN);
+    }
+
+    const user = await this.bot.api.users.get(userId).catch(() => null);
+    if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+
+    const userData = await this.bot.schemas.getUser(user);
+    if (!userData.plannerData) {
+      throw new HttpException("No planner data found for this user", HttpStatus.NOT_FOUND);
+    }
+
+    // Fetch sky data and resolve progress
+    const skyData = await fetchSkyData(this.bot);
+    const resolvedData = PlannerDataService.resolveProgress(skyData, userData.plannerData);
+
+    // Calculate breakdown
+    const breakdown = PlannerDataService.calculateCurrencyBreakdown(resolvedData);
+    const progress = PlannerDataService.calculateUserProgress(resolvedData);
+
+    // Transform breakdown data for web consumption
+    const transformBreakdown = (cost: any) => ({
+      cost: {
+        candles: cost.cost.c || 0,
+        hearts: cost.cost.h || 0,
+        seasonCandles: cost.cost.sc || 0,
+        seasonHearts: cost.cost.sh || 0,
+        ascendedCandles: cost.cost.ac || 0,
+        eventCurrency: cost.cost.ec || 0,
+      },
+      price: cost.price || 0,
+      items: {
+        nodes: cost.nodes.map((node: any) => ({
+          guid: node.guid,
+          name: node.item?.name || "Unknown",
+          cost: {
+            candles: node.c || 0,
+            hearts: node.h || 0,
+            seasonCandles: node.sc || 0,
+            seasonHearts: node.sh || 0,
+            ascendedCandles: node.ac || 0,
+            eventCurrency: node.ec || 0,
+          },
+          spirit: node.root?.tree?.spirit
+            ? {
+                guid: node.root.tree.spirit.guid,
+                name: node.root.tree.spirit.name,
+                imageUrl: node.root.tree.spirit.imageUrl,
+              }
+            : null,
+        })),
+        shopItems: cost.listNodes.map((listNode: any) => ({
+          guid: listNode.guid,
+          name: listNode.item?.name || "Unknown",
+          quantity: listNode.quantity || 1,
+          cost: {
+            candles: listNode.c || 0,
+            hearts: listNode.h || 0,
+            seasonCandles: listNode.sc || 0,
+            seasonHearts: listNode.sh || 0,
+            ascendedCandles: listNode.ac || 0,
+            eventCurrency: listNode.ec || 0,
+          },
+          shop: listNode.itemList?.shop?.name || "Unknown Shop",
+        })),
+        iaps: cost.iaps.map((iap: any) => ({
+          guid: iap.guid,
+          name: iap.name,
+          price: iap.price || 0,
+        })),
+      },
+    });
+
+    // Transform seasons
+    const seasons = Array.from(breakdown.seasons.entries()).map(([guid, cost]) => {
+      const season = resolvedData.seasons.items.find((s) => s.guid === guid);
+      return {
+        guid,
+        name: season?.name || "Unknown Season",
+        number: season?.number,
+        imageUrl: season?.imageUrl,
+        ...transformBreakdown(cost),
+      };
+    });
+
+    // Transform events
+    const events = Array.from(breakdown.events.entries()).map(([guid, cost]) => {
+      const event = resolvedData.events.items.find((e) => e.guid === guid);
+      return {
+        guid,
+        name: event?.name || "Unknown Event",
+        imageUrl: event?.imageUrl,
+        ...transformBreakdown(cost),
+      };
+    });
+
+    // Transform event instances
+    const eventInstances = Array.from(breakdown.eventInstances.entries()).map(([guid, cost]) => {
+      const eventInstance = resolvedData.eventInstances.items.find((ei) => ei.guid === guid);
+      return {
+        guid,
+        name: eventInstance?.name || eventInstance?.event?.name || "Unknown Event Instance",
+        eventName: eventInstance?.event?.name,
+        date: eventInstance?.date?.toISO(),
+        imageUrl: eventInstance?.event?.imageUrl,
+        ...transformBreakdown(cost),
+      };
+    });
+
+    return {
+      user: {
+        id: user.id,
+        username: user.username,
+        avatar: user.avatar,
+      },
+      progress,
+      currencies: userData.plannerData.currencies,
+      breakdown: {
+        total: transformBreakdown(breakdown.total),
+        regular: transformBreakdown(breakdown.regular),
+        seasons,
+        events,
+        eventInstances,
       },
     };
   }

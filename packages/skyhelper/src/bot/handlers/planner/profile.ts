@@ -56,9 +56,9 @@ export class ProfileDisplay extends BasePlannerHandler {
     const seasonSpent = this.seasonsSpent(breakdown);
     const breakdownBtn = (id: string) => {
       return button({
-        label: "Breakdown (Not implemented yet)",
-        custom_id: store.serialize(CustomId.Default, { data: "breakdown_" + id, user: this.state.user }),
-        disabled: true,
+        label: "View Detailed Breakdown",
+        url: `${this.client.config.DASHBOARD.WEB_URL}/dashboard/planner-breakdown`,
+        disabled: false,
       });
     };
     const eventsSpent = this.eventsSpent(breakdown);
@@ -101,6 +101,13 @@ export class ProfileDisplay extends BasePlannerHandler {
             !PlannerDataService.isEmptyCost(breakdown.regular.cost) || breakdown.regular.price > 0
               ? `# Regular:\n${formatBreakdownCost(breakdown.regular)}`
               : "",
+          ),
+          row(
+            button({
+              label: "📊 View Detailed Breakdown on Website",
+              url: `${this.client.config.DASHBOARD.WEB_URL}/dashboard/planner-breakdown`,
+              style: 5,
+            }),
           ),
         ),
         ...(hasSpentData
