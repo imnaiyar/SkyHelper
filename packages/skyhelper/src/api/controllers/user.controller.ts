@@ -18,7 +18,7 @@ import { z, toJSONSchema } from "zod/v4";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { Routes } from "@discordjs/core";
 import { PlannerDataService } from "@/planner";
-import { fetchSkyData } from "@/planner/fetcher.js";
+import { fetchSkyData } from "@/planner";
 const RoleMetadataKeySchema = z.object({
   username: z.string().optional(),
   metadata: z
@@ -193,11 +193,6 @@ export class UsersController {
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiNotFoundResponse({ description: "User not found" })
   async getPlannerBreakdown(@Param("user", UserIDPredicate) userId: string, @Req() req: AuthRequest) {
-    // Verify the requesting user is accessing their own data
-    if (req.session.user.id !== userId) {
-      throw new HttpException("Unauthorized to access this user's planner data", HttpStatus.FORBIDDEN);
-    }
-
     const user = await this.bot.api.users.get(userId).catch(() => null);
     if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
 
