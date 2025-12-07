@@ -39,7 +39,7 @@ export default function PlannerBreakdownPage() {
     fetchBreakdown();
   }, [session]);
 
-  if (loading) {
+  if (loading || !data) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Loading size="lg" variant="bot" />
@@ -47,15 +47,15 @@ export default function PlannerBreakdownPage() {
     );
   }
 
-  if (!session?.user) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-        <div className="text-red-400 text-xl mb-2">🔒 Authentication Required</div>
-        <div className="text-slate-300">Please log in to view your planner breakdown.</div>
-      </div>
-    );
-  }
-
+  //   if (!session?.user) {
+  //     return (
+  //       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+  //         <div className="text-red-400 text-xl mb-2">🔒 Authentication Required</div>
+  //         <div className="text-slate-300">Please log in to view your planner breakdown.</div>
+  //       </div>
+  //     );
+  //   }
+  //
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
