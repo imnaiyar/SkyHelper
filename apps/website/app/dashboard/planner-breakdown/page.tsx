@@ -14,6 +14,9 @@ export default function PlannerBreakdownPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
     async function fetchBreakdown() {
       try {
         setLoading(true);
