@@ -17,6 +17,8 @@ import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { z, toJSONSchema } from "zod/v4";
 import type { AuthRequest } from "../middlewares/auth.middleware.js";
 import { Routes } from "@discordjs/core";
+import { fetchSkyData, PlannerDataService } from "@/planner";
+import { ItemType } from "skygame-data";
 const RoleMetadataKeySchema = z.object({
   username: z.string().optional(),
   metadata: z
@@ -58,6 +60,81 @@ export class UsersController {
     const user_settings = await this.bot.schemas.getUser(user);
     return {
       language: user_settings.language?.value ?? "en-US",
+    };
+  }
+
+  @Get(":user/planner/breakdown")
+  @ApiOperation({
+    summary: "Get user planner breakdown",
+    description: "Retrieves detailed breakdown of user's items and costs",
+  })
+  @ApiParam({ name: "user", description: "Discord user ID", example: "123456789012345678" })
+  @ApiResponse({
+    status: 200,
+    description: "Planner breakdown retrieved successfully",
+  })
+  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
+  async getUserBreakdown(@Param("user", UserIDPredicate) userId: string) {
+    const user = await this.bot.api.users.get(userId).catch(() => null);
+    if (!user) throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+
+    const user_settings = await this.bot.schemas.getUser(user);
+    const plannerData = user_settings.plannerData;
+
+    const skyData = await fetchSkyData(this.bot);
+
+    const resolvedData = PlannerDataService.resolveProgress(skyData, plannerData);
+    const breakdown = PlannerDataService.calculateCurrencyBreakdown(resolvedData);
+    const sanitizeItem = (item: any) => ({
+      name: item.name,
+      type: item.type,
+      emoji: item.emoji,
+      icon: item.icon,
+    });
+
+    const sanitizeCost = (cost: any) => ({
+      c: cost.c,
+      h: cost.h,
+      ac: cost.ac,
+      sc: cost.sc,
+      sh: cost.sh,
+      ec: cost.ec,
+    });
+
+    const sanitizeInstance = (instance: any) => ({
+      cost: sanitizeCost(instance.cost),
+      price: instance.price,
+      nodes: instance.nodes.map((n: any) => ({
+        ...sanitizeCost(n),
+        item: n.item ? sanitizeItem(n.item) : undefined,
+      })),
+      listNodes: instance.listNodes.map((n: any) => ({
+        ...sanitizeCost(n),
+        quantity: n.quantity,
+        item: n.item ? sanitizeItem(n.item) : undefined,
+      })),
+      iaps: instance.iaps.map((iap: any) => ({
+        name: iap.name,
+        price: iap.price,
+      })),
+    });
+
+    const serializeMap = (map: Map<string, any>) => {
+      const obj: Record<string, any> = {};
+      for (const [key, value] of map) {
+        // @ts-expect-error bcs of dynamic keys
+        const name = skyData.guids.get(key)?.name ?? key;
+        obj[key] = { name, ...sanitizeInstance(value) };
+      }
+      return obj;
+    };
+
+    return {
+      total: sanitizeInstance(breakdown.total),
+      regular: sanitizeInstance(breakdown.regular),
+      seasons: serializeMap(breakdown.seasons),
+      events: serializeMap(breakdown.events),
+      eventInstances: serializeMap(breakdown.eventInstances),
     };
   }
 

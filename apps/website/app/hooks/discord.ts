@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "./auth";
 import { useQuery } from "@tanstack/react-query";
-import { APIGuild, Routes } from "discord-api-types/v10";
+import { APIGuild, APIUser, Routes } from "discord-api-types/v10";
 export default function useFetchHook<T>(route: string) {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<T | null>(null);
@@ -36,6 +36,18 @@ export function useGuildsQuery() {
     queryKey: ["guilds"],
     queryFn: () =>
       makeRequest(`https://discord.com/api/v10` + Routes.userGuilds() + "?with_counts=true", {
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      }),
+    enabled: !!session?.access_token,
+  });
+}
+
+export function useUserQuery() {
+  const { session } = useSession();
+  return useQuery<APIUser>({
+    queryKey: ["user"],
+    queryFn: () =>
+      makeRequest(`https://discord.com/api/v10` + Routes.user("@me"), {
         headers: { Authorization: `Bearer ${session?.access_token}` },
       }),
     enabled: !!session?.access_token,
