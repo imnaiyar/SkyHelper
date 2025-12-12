@@ -1,13 +1,12 @@
-import { container, createEmojiProgressBar, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { BasePlannerHandler } from "./base.js";
 import { ComponentType, type APIComponentInContainer } from "discord-api-types/v10";
 import { serializeFilters } from "./filter.manager.js";
 import { spiritTreeDisplay } from "./shared.js";
 import { DisplayTabs, FilterType, SpiritType } from "@/types/planner";
 import { PlannerService } from "./helpers/planner.service.js";
-import { NodeHelper, type ICost, type IRealm, type ITierNode } from "skygame-data";
-import { currency } from "@skyhelperbot/constants";
-import Utils from "@/utils/classes/Utils";
+import { NodeHelper, type IRealm } from "skygame-data";
+import { getNodeProgress } from "./helpers/tree.progress.js";
 export class RealmsDisplay extends BasePlannerHandler {
   override handle() {
     const realm = this.data.realms.items.find((r) => r.guid === this.state.it);
@@ -26,7 +25,7 @@ export class RealmsDisplay extends BasePlannerHandler {
         perpage: 7,
         itemCallback: (realm) => {
           const tier1 = this.tiernodes(realm).tier1nodes;
-          const progress = this.getTierProgress(tier1, false);
+          const progress = getNodeProgress(tier1, false);
           return [
             section(
               {
@@ -72,8 +71,8 @@ export class RealmsDisplay extends BasePlannerHandler {
 
     // tier progress
     const tierNodes = this.tiernodes(realm);
-    const tier1 = this.getTierProgress(tierNodes.tier1nodes);
-    const tier2 = this.getTierProgress(tierNodes.tier2nodes);
+    const tier1 = getNodeProgress(tierNodes.tier1nodes);
+    const tier2 = getNodeProgress(tierNodes.tier2nodes);
     const title = [
       `# ${this.formatemoji(realm.emoji, realm.name)} ${realm.name}`,
       `${realm.areas?.length ?? 0} Areas \u2022 ${regular} regular and ${seasonal} seasonal spirits \u2022 ${realm.areas?.reduce((acc, ar) => (acc += ar.wingedLights?.length ?? 0), 0) ?? 0} winged lights`,
@@ -136,42 +135,5 @@ export class RealmsDisplay extends BasePlannerHandler {
       tier1nodes: tiers.filter((s) => s.tier! < 2),
       tier2nodes: tiers.filter((s) => s.tier! >= 2),
     };
-  }
-
-  private calculateTierCosts(nodes: ITierNode[]) {
-    const getNodeCosts = (type: keyof ICost) => {
-      return nodes.reduce(
-        (acc, tn) => {
-          acc.cost += tn[type] ?? 0;
-          acc.spent += tn[type] && tn.unlocked ? tn[type] : 0;
-          return acc;
-        },
-        { cost: 0, spent: 0 },
-      );
-    };
-    return {
-      candles: getNodeCosts("c"),
-      hearts: getNodeCosts("h"),
-      acs: getNodeCosts("ac"),
-    };
-  }
-
-  /**
-   * Returns progress bar (in the form of emojis) and cost progress for the given tier nodes
-   * @param tier The tier nodes to calculate progress for
-   * @param withCost whether to include cost stats or not
-   * @returns
-   */
-  private getTierProgress(tierNodes: ITierNode[], withCost = true) {
-    const progress = tierNodes.length ? Math.round((tierNodes.filter((n) => n.unlocked).length / tierNodes.length) * 100) : null;
-    if (progress === null) return null;
-    const formatCurrency = (c: ReturnType<RealmsDisplay["calculateTierCosts"]>) => {
-      const formatted: string[] = [];
-      if (c.candles.cost) formatted.push(`${c.candles.spent}/${c.candles.cost} ${Utils.formatEmoji(currency.c, "Candles")}`);
-      if (c.hearts.cost) formatted.push(`${c.hearts.spent}/${c.hearts.cost} ${Utils.formatEmoji(currency.h, "Hearts")}`);
-      if (c.acs.cost) formatted.push(`${c.acs.spent}/${c.acs.cost} ${Utils.formatEmoji(currency.ac, "ACs")}`);
-      return formatted.join(" ");
-    };
-    return `${createEmojiProgressBar(progress)}${withCost ? ` (${formatCurrency(this.calculateTierCosts(tierNodes))})` : ""}`;
   }
 }

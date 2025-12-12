@@ -24,7 +24,12 @@ import {
 import { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
-import { handleCurrencyModifyModal, handleErrorModal, handleShardsCalendarModal } from "@/handlers/modalHandler";
+import {
+  handleCurrencyModifyModal,
+  handleErrorModal,
+  handlePlannerFriendNameModal,
+  handleShardsCalendarModal,
+} from "@/handlers/modalHandler";
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
@@ -323,8 +328,13 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case "currency_modify":
           await handleCurrencyModifyModal(helper);
           break;
-        default:
+        default: {
+          if (id.startsWith("planner-friend-name-modal")) {
+            await handlePlannerFriendNameModal(helper);
+            return;
+          }
           return;
+        }
       }
     }
 

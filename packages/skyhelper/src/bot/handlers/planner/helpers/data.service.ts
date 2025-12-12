@@ -11,7 +11,7 @@ export class PlannerDataService {
    *
    * @remarks Structured clone breaks custom class instances, like DateTime, so here's this
    */
-  private static deepClone<T>(obj: T, visited = new WeakMap()): T {
+  static deepClone<T>(obj: T, visited = new WeakMap()): T {
     // Handle primitives and null
     if (obj === null || typeof obj !== "object") return obj;
 

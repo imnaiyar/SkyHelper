@@ -1,4 +1,5 @@
 import { CostUtils, currencyMap, handlePlannerNavigation, PlannerDataService, PlannerService } from "@/planner";
+import { FriendsDisplay } from "@/planner/friends";
 import { toggleNodeUnlock } from "@/planner/helpers/action.utils";
 import type { NavigationState } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
@@ -13,8 +14,15 @@ export async function modifyTreeNode(
   user: UserSchema,
   helper: InteractionHelper,
   state: NavigationState,
+  actionType?: string,
 ) {
-  const tree = data.spiritTrees.items.find((t) => t.guid === guid);
+  let tree = data.spiritTrees.items.find((t) => t.guid === guid);
+  // actionType is friend guid for friends tree
+  if (actionType) {
+    const friend = user.plannerData?.keys.friends?.friends.find((f: any) => f.guid === actionType);
+    // re-assing populate friend tree
+    if (friend) tree = FriendsDisplay.treeUnlocked(friend, data);
+  }
   if (!tree) throw new Error("Invalid Tree");
   const spirit = PlannerService.getTreeSpirit(tree);
   const labeled = tree.node ? getLegacyLabeledNodes(tree.node, 1) : getTierTreeLabeledNodes(tree);
@@ -88,7 +96,7 @@ ${
 
   // Lock nodes above target
   const nodes = NodeHelper.traceMany(data.nodes.items.filter((n) => selected.includes(n.guid))).map((n) => n.guid);
-  labeled.forEach((l) => toggleNodeUnlock(user, l.node, nodes.includes(l.node.guid)));
+  labeled.forEach((l) => toggleNodeUnlock(user, l.node, nodes.includes(l.node.guid), actionType));
 
   user.plannerData.date = new Date().toISOString();
   await user.save();

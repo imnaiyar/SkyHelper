@@ -9,10 +9,19 @@ import { CostUtils } from "./helpers/cost.utils.js";
 import generateSpiritTreeTier from "@/utils/image-generators/SpiritTreeTierRenderer";
 import type { GenerateSpiritTreeOptions } from "@/utils/image-generators/SpiritTreeShared";
 import { generateSpiritTree } from "@/utils/image-generators/SpiritTreeRenderer";
-
+interface ITreeGenProps {
+  /* The spirit tree */
+  tree: ISpiritTree;
+  /* The planner handler instance */
+  planner: BasePlannerHandler;
+  /* Whether to show spirit view btn */
+  spiritView?: boolean;
+  /* Friend guid if this is friend's tree */
+  friendGuid?: string;
+}
 /** Displays spirit's rendered tree and a button to modify it wherever it is needed */
 export async function spiritTreeDisplay(
-  { tree, planner, spiritView = true }: { tree: ISpiritTree; planner: BasePlannerHandler; spiritView?: boolean },
+  { tree, planner, spiritView = true, friendGuid }: ITreeGenProps,
   opts?: GenerateSpiritTreeOptions,
 ) {
   // Check if tree uses tier system or classic node system
@@ -30,7 +39,7 @@ export async function spiritTreeDisplay(
   const spirit = tree.spirit ?? tree.travelingSpirit?.spirit ?? tree.specialVisitSpirit?.spirit ?? tree.eventInstanceSpirit;
 
   /* @ts-expect-error this is a fallback, so i'm not worried */
-  const name = tree.name ?? spirit?.name ?? spirit?.spirit?.name ?? "Unknown";
+  const name = tree.name ?? spirit?.name ?? spirit?.spirit?.name ?? opts?.spiritName ?? "Unknown";
   const nodes = SpiritTreeHelper.getNodes(tree);
 
   const unlockAll = nodes.some((n) => !n.item?.unlocked && !n.item?.autoUnlocked);
@@ -56,11 +65,15 @@ export async function spiritTreeDisplay(
             action: unlockAll ? PlannerAction.UnlockTree : PlannerAction.LockTree,
             guid: tree.guid,
             navState: planner.state,
+            actionType: friendGuid,
           }),
         }),
-        planner.viewbtn(createActionId({ action: PlannerAction.ModifyTree, navState: planner.state, guid: tree.guid }), {
-          label: "Unlock Nodes",
-        }),
+        planner.viewbtn(
+          createActionId({ action: PlannerAction.ModifyTree, navState: planner.state, guid: tree.guid, actionType: friendGuid }),
+          {
+            label: "Unlock Nodes",
+          },
+        ),
       ),
       mediaGallery(mediaGalleryItem("attachment://tree.png")),
     ],

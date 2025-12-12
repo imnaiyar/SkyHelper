@@ -1,6 +1,6 @@
 import { CustomId } from "@/utils/customId-store";
 import { defineButton } from "@/structures";
-import { MessageFlags } from "discord-api-types/v10";
+import { ComponentType, MessageFlags, type APIModalInteractionResponseCallbackData } from "discord-api-types/v10";
 import {
   toggleIAPStatus,
   toggleWingedLightUnlock,
@@ -21,6 +21,8 @@ import { shardsInfo, ShardsUtil } from "@skyhelperbot/utils";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
 import { zone } from "@skyhelperbot/constants";
 import { SpiritTreeHelper } from "skygame-data";
+import { title } from "process";
+import type { IPlannerFriend } from "@/planner/friends";
 
 /**
  * Button handler for Sky Game Planner user actions (unlock/lock items, nodes, etc.)
@@ -61,19 +63,40 @@ export default defineButton({
       });
       return;
     }
+
+    let resultMessage = "";
+
     if (!navState) throw new Error("Received undefined 'navState' where it was required");
 
     const state = deserializeNavState(navState);
+    if ((action as PlannerAction) === PlannerAction.Friends) {
+      switch (actionType) {
+        case "add":
+          await helper.launchModal(friendNameModal());
+          return;
+        case "edit": {
+          const friend = user.plannerData.keys.friends?.friends.find((f: any) => f.guid === guid) as IPlannerFriend | undefined;
+          if (!friend) throw new Error("Unknown friend: " + guid);
+          await helper.launchModal(friendNameModal(friend));
+          return;
+        }
+        case "delete":
+          user.plannerData.keys.friends!.friends = (user.plannerData.keys.friends?.friends ?? []).filter(
+            (f: any) => f.guid !== guid,
+          );
+          resultMessage = `✅ Removed friend`;
+          state.it = undefined;
+          break;
+      }
+    }
 
     if ((action as PlannerAction) === PlannerAction.ModifyTree) {
-      await modifyTreeNode(guid, data, user, helper, state as NavigationState);
+      await modifyTreeNode(guid, data, user, helper, state as NavigationState, actionType);
       return;
     }
 
     const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
     await helper.update({ components: getLoading });
-
-    let resultMessage = "";
 
     let followUp = true;
 
@@ -149,7 +172,7 @@ export default defineButton({
         const tree = data.spiritTrees.items.find((t) => t.guid === guid);
         if (tree) {
           const allNodes = SpiritTreeHelper.getNodes(tree);
-          unlockAllTreeNodes(user, allNodes);
+          unlockAllTreeNodes(user, allNodes, actionType);
           resultMessage = `✅ Unlocked entire tree`;
         }
         break;
@@ -159,7 +182,7 @@ export default defineButton({
         const tree = data.spiritTrees.items.find((t) => t.guid === guid);
         if (tree) {
           const allNodes = SpiritTreeHelper.getNodes(tree);
-          lockAllTreeNodes(user, allNodes);
+          lockAllTreeNodes(user, allNodes, actionType);
           resultMessage = `🔒 Locked entire tree`;
         }
         break;
@@ -182,6 +205,7 @@ export default defineButton({
         }
         break;
       }
+
       case PlannerAction.NestingRotation: {
         const rotationItem = nestingconfigs.rotations
           .find((r) => r.items.some((i) => i.guid === guid))
@@ -192,6 +216,7 @@ export default defineButton({
           modifyNestingRotationItems(user, rotationItem, actionType as "add" | "remove");
           followUp = false;
         }
+        break;
       }
     }
 
@@ -212,3 +237,26 @@ export default defineButton({
     }
   },
 });
+
+function friendNameModal(friend?: IPlannerFriend): APIModalInteractionResponseCallbackData {
+  return {
+    title: friend ? "Edit Friend Name" : "Add New Friend",
+    custom_id: "planner-friend-name-modal" + `|${friend ? friend.guid : ""}`,
+    components: [
+      {
+        type: ComponentType.Label,
+        label: "Friend Name",
+        description: "Enter a custom name for your friend",
+        component: {
+          type: ComponentType.TextInput,
+          custom_id: "friend-name-input",
+          style: 1,
+          min_length: 1,
+          max_length: 50,
+          placeholder: "Friend Name",
+          value: friend?.name ?? undefined,
+        },
+      },
+    ],
+  };
+}
