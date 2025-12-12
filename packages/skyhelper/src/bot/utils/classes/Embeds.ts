@@ -381,7 +381,7 @@ export function buildCalendarResponse(
       desc +=
         typeof noShard === "string"
           ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => client.utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
+          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => client.utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
       return desc;
     })
     .join("\n\n");
