@@ -37,6 +37,7 @@ const CATEGORY_EMOJI_MAP = {
   [DisplayTabs.Items]: "1412842595737931859", // Memory whisperer cape icon
   [DisplayTabs.Shops]: emojis.shopcart,
   [DisplayTabs.Spirits]: emojis.realmelders,
+  [DisplayTabs.Friends]: emojis.friends,
 };
 
 const IGNORED_TABS = [DisplayTabs.Favourite, DisplayTabs.Profile];

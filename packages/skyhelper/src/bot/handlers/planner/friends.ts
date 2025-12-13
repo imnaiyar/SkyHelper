@@ -17,6 +17,7 @@ import {
 import { createActionId, FriendsTreeGuid, PlannerDataService, spiritTreeDisplay } from "./index.js";
 import { getNodeProgress } from "./helpers/tree.progress.js";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";
+import { emojis } from "@skyhelperbot/constants";
 
 export interface IPlannerFriend {
   guid: string;
@@ -44,7 +45,10 @@ export class FriendsDisplay extends BasePlannerHandler {
       components: [
         container(
           textDisplay("# Friends", this.createFilterIndicator() ?? ""),
-          row(this.createFilterButton(), button({ custom_id: this.getAction("", "add"), label: "Add Friend", style: 3 })),
+          row(
+            this.createFilterButton(),
+            button({ custom_id: this.getAction("", "add"), label: "Add Friend", emoji: { id: emojis.add }, style: 3 }),
+          ),
           separator(),
           ...(this.friends.length ? this.friendsList() : [textDisplay("No friends added yet.")]),
         ),
@@ -82,10 +86,12 @@ export class FriendsDisplay extends BasePlannerHandler {
             button({
               custom_id: this.getAction(friend.guid, "edit"),
               label: "Edit Name",
+              emoji: { id: emojis.edit },
             }),
             button({
               custom_id: this.getAction(friend.guid, "delete"),
               label: "Delete",
+              emoji: { id: emojis.delete_icon },
               style: 4,
             }),
             this.backbtn(this.createCustomId({ t: DisplayTabs.Friends, it: null })),

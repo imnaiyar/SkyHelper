@@ -165,7 +165,9 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean,
       // TODO: this is not working correctly, fix
       if (index !== -1) {
         user.plannerData.keys.friends.friends[index].unlocked = Array.from(
-          new Set(friend.unlocked.match(/.{1,3}/g)?.map((s: string) => s !== node.item!.id!.toString(36).padStart(3, "0")) ?? []),
+          new Set(
+            friend.unlocked.match(/.{1,3}/g)?.filter((s: string) => s !== node.item!.id!.toString(36).padStart(3, "0")) ?? [],
+          ),
         ).join("");
         user.markModified("plannerData.keys");
       }
