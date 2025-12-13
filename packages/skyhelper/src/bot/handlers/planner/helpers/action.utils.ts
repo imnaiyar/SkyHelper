@@ -162,7 +162,7 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean,
       user.plannerData.keys.friends ??= { friends: [] };
       const index = user.plannerData.keys.friends.friends.findIndex((f: any) => f.guid === friendGuid);
       const friend = user.plannerData.keys.friends.friends[index];
-      // TODO: this is not working correctly, fix
+
       if (index !== -1) {
         user.plannerData.keys.friends.friends[index].unlocked = Array.from(
           new Set(
