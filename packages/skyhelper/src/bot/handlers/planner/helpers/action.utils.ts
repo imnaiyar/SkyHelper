@@ -10,6 +10,7 @@ import type { IItem } from "skygame-data";
 import type { IIAP } from "skygame-data";
 import type { IRotationItem } from "../shops/config.js";
 import { CostUtils } from "./cost.utils.js";
+import { guid } from "zod/v4";
 
 // ============================================================================
 // Currency Adjustment Helpers
@@ -136,7 +137,7 @@ export function toggleItemUnlock(user: UserSchema, item: IItem, unlock: boolean)
 /**
  * Toggle a node's unlocked status for a user
  */
-export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean) {
+export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean, friendGuid?: string) {
   user.plannerData ??= PlannerDataService.createEmpty();
 
   // Get currency context (season/event) for this node
@@ -155,8 +156,24 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean)
 
     // Lock hidden items
     node.hiddenItems?.forEach((item) => toggleItemUnlock(user, item, false));
+    if (friendGuid) {
+      // eslint-disable-next-line
+      user.plannerData.keys ??= {};
+      user.plannerData.keys.friends ??= { friends: [] };
+      const index = user.plannerData.keys.friends.friends.findIndex((f: any) => f.guid === friendGuid);
+      const friend = user.plannerData.keys.friends.friends[index];
 
-    user.plannerData.unlocked = PlannerDataService.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
+      if (index !== -1) {
+        user.plannerData.keys.friends.friends[index].unlocked = Array.from(
+          new Set(
+            friend.unlocked.match(/.{1,3}/g)?.filter((s: string) => s !== node.item!.id!.toString(36).padStart(3, "0")) ?? [],
+          ),
+        ).join("");
+        user.markModified("plannerData.keys");
+      }
+    } else {
+      user.plannerData.unlocked = PlannerDataService.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
+    }
   } else {
     // Unlock node - spend currency
     const guidsToAdd: string[] = [];
@@ -173,7 +190,24 @@ export function toggleNodeUnlock(user: UserSchema, node: INode, unlock: boolean)
     // Unlock hidden items
     node.hiddenItems?.forEach((item) => toggleItemUnlock(user, item, true));
 
-    user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
+    if (friendGuid) {
+      // eslint-disable-next-line
+      user.plannerData.keys ??= {};
+      user.plannerData.keys.friends ??= { friends: [] };
+      const index = user.plannerData.keys.friends.friends.findIndex((f: any) => f.guid === friendGuid);
+      const friend = user.plannerData.keys.friends.friends[index];
+      if (index !== -1) {
+        user.plannerData.keys.friends.friends[index].unlocked = Array.from(
+          new Set(friend.unlocked.match(/.{1,3}/g)?.map((s: string) => s) ?? []).add(
+            node.item!.id!.toString(36).padStart(3, "0"),
+          ),
+        ).join("");
+
+        user.markModified("plannerData.keys");
+      }
+    } else {
+      user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
+    }
   }
 
   user.plannerData.date = new Date().toISOString();
@@ -279,11 +313,9 @@ export function toggleSeasonPass(user: UserSchema, seasonGuid: string, gifted = 
 /**
  * Unlock all nodes in a spirit tree for a user
  */
-export function unlockAllTreeNodes(user: UserSchema, nodes: INode[]) {
+export function unlockAllTreeNodes(user: UserSchema, nodes: INode[], friendGuid?: string) {
   user.plannerData ??= PlannerDataService.createEmpty();
-
   const guidsToAdd: string[] = [];
-
   // Get currency context from the first node (all nodes in tree should have same context)
 
   nodes.forEach((node) => {
@@ -299,14 +331,29 @@ export function unlockAllTreeNodes(user: UserSchema, nodes: INode[]) {
     const { seasonGuid, eventGuid } = getCurrencyContext(node, node.item);
     adjustCurrencies(user, node, false, seasonGuid, eventGuid);
   });
-  user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
+
+  if (friendGuid) {
+    // eslint-disable-next-line
+    user.plannerData.keys ??= {};
+    user.plannerData.keys.friends ??= { friends: [] };
+
+    const index = user.plannerData.keys.friends.friends.findIndex((f: any) => f.guid === friendGuid);
+    if (index !== -1) {
+      user.plannerData.keys.friends.friends[index].unlocked = nodes
+        .map((n) => n.item!.id!.toString(36).padStart(3, "0"))
+        .join("");
+      user.markModified("plannerData.keys");
+    }
+  } else {
+    user.plannerData.unlocked = PlannerDataService.addToGuidString(user.plannerData.unlocked, ...guidsToAdd);
+  }
   user.plannerData.date = new Date().toISOString();
 }
 
 /**
  * Lock all nodes in a spirit tree for a user
  */
-export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
+export function lockAllTreeNodes(user: UserSchema, nodes: INode[], friendGuid?: string) {
   user.plannerData ??= PlannerDataService.createEmpty();
 
   const guidsToRemove: string[] = [];
@@ -325,7 +372,18 @@ export function lockAllTreeNodes(user: UserSchema, nodes: INode[]) {
     node.hiddenItems?.forEach((item) => guidsToRemove.push(item.guid));
   });
 
-  user.plannerData.unlocked = PlannerDataService.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
+  if (friendGuid) {
+    // eslint-disable-next-line
+    user.plannerData.keys ??= {};
+    user.plannerData.keys.friends ??= { friends: [] };
+    const index = user.plannerData.keys.friends.friends.findIndex((f: any) => f.guid === friendGuid);
+    if (index !== -1) {
+      user.plannerData.keys.friends.friends[index].unlocked = "";
+      user.markModified("plannerData.keys");
+    }
+  } else {
+    user.plannerData.unlocked = PlannerDataService.removeFromGuidString(user.plannerData.unlocked, ...guidsToRemove);
+  }
   user.plannerData.date = new Date().toISOString();
 }
 

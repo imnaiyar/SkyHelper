@@ -32,6 +32,10 @@ export const emojis = {
   progress_empty_start: "1441861421066485811",
   progress_empty_middle: "1441861361393991800",
   progress_empty_end: "1441861259246174368",
+  edit: "1449173734421430344",
+  add: "1449173594486603877",
+  delete_icon: "1449173663302680676",
+  friends: "1448782354452578504",
 } as const;
 
 export const realms_emojis = {

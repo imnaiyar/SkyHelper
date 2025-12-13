@@ -11,6 +11,7 @@ export enum PlannerAction {
   ToggleListNode = "tg-ln",
   NestingRotation = "nr",
   ShardsCleared = "shrdclr",
+  Friends = "fr",
 }
 
 export const PlannerCurrenciesSchema = z.object({
@@ -112,6 +113,7 @@ export enum DisplayTabs {
   WingedLights = "w",
   Shops = "sh",
   Areas = "a",
+  Friends = "fr",
   Profile = "p",
   Favourite = "fv",
 }

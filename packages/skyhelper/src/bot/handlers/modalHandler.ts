@@ -7,6 +7,7 @@ import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import { fetchSkyData, handlePlannerNavigation, PlannerDataService } from "@/planner";
 import { DisplayTabs } from "@/types/planner";
+import { nanoid } from "nanoid";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
   const date = Utils.getTextInput(helper.int as APIModalSubmitInteraction, "date-month", true);
@@ -149,4 +150,46 @@ export async function handleCurrencyModifyModal(helper: InteractionHelper) {
       .join("\n\n"),
     flags: 64,
   });
+}
+
+export async function handlePlannerFriendNameModal(helper: InteractionHelper) {
+  const int = helper.int as APIModalSubmitInteraction;
+  await helper.deferUpdate();
+  const friendNameInput = helper.client.utils.getModalComponent(int, "friend-name-input", ComponentType.TextInput, true);
+  const friendName = friendNameInput.value.trim();
+  const settings = await helper.client.schemas.getUser(helper.user);
+
+  // eslint-disable-next-line
+  settings.plannerData!.keys ??= {};
+  settings.plannerData!.keys.friends ??= { friends: [] };
+
+  const existingFriendIndex = settings.plannerData!.keys.friends.friends.findIndex(
+    // friend guid is added to modal's custom id separated by `|` if its for name edit
+    (f: any) => f.guid === (int.data.custom_id.split("|")[1] ?? ""),
+  );
+  if (existingFriendIndex !== -1) {
+    // Edit existing friend
+    settings.plannerData!.keys.friends.friends[existingFriendIndex].name = friendName;
+  } else {
+    // Add new friend
+    settings.plannerData!.keys.friends.friends.push({
+      guid: nanoid(10),
+      date: new Date().toISOString(),
+      name: friendName,
+      unlocked: "",
+    });
+  }
+
+  settings.markModified("plannerData.keys");
+  await settings.save();
+  const data = await handlePlannerNavigation(
+    {
+      t: DisplayTabs.Friends,
+      // if this is present, then this should be for editing names and redirect approp.
+      it: existingFriendIndex !== -1 ? int.data.custom_id.split("|")[1] : undefined,
+    },
+    helper.user,
+    helper.client,
+  );
+  await helper.editReply(data);
 }

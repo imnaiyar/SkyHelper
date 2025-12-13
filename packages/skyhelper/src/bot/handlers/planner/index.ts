@@ -24,6 +24,7 @@ import { PlannerService } from "./helpers/planner.service.js";
 import { PlannerDataService } from "./helpers/data.service.js";
 import { fetchSkyData } from "./fetcher.js";
 import { ItemType, type ISkyData } from "skygame-data";
+import { FriendsDisplay } from "./friends.js";
 
 // Navigation state interface to track user's position
 
@@ -62,6 +63,7 @@ const displayClasses = (d?: string) => ({
   [DisplayTabs.Home]: HomeDisplay,
   [DisplayTabs.Profile]: ProfileDisplay,
   [DisplayTabs.Favourite]: FavouriteDisplay,
+  [DisplayTabs.Friends]: FriendsDisplay,
 });
 
 /**
@@ -171,6 +173,7 @@ export * from "./helpers/cost.utils.js";
 export * from "./helpers/data.service.js";
 export * from "./helpers/planner.service.js";
 
+// #region constants
 export const NonCollectibles = [
   ItemType.Call,
   ItemType.Emote,
@@ -180,3 +183,5 @@ export const NonCollectibles = [
   ItemType.Quest,
   ItemType.Stance,
 ];
+
+export const FriendsTreeGuid = "Ne9qn6B0kB" as const;

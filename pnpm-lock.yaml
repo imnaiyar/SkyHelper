@@ -155,7 +155,7 @@ importers:
         version: 0.8.5
       discord-api-types:
         specifier: latest
-        version: 0.38.36
+        version: 0.38.37
       lucide-react:
         specifier: ^0.540.0
         version: 0.540.0(react@19.1.0)
@@ -207,7 +207,7 @@ importers:
     dependencies:
       discord-api-types:
         specifier: latest
-        version: 0.38.36
+        version: 0.38.37
     devDependencies:
       '@types/luxon':
         specifier: ^3.6.2
@@ -253,7 +253,7 @@ importers:
         version: link:../utils
       discord-api-types:
         specifier: latest
-        version: 0.38.36
+        version: 0.38.37
       i18next:
         specifier: ^23.12.2
         version: 23.16.8
@@ -299,13 +299,13 @@ importers:
         version: 2.1.1
       '@discordjs/core':
         specifier: dev
-        version: 3.0.0-dev.1764547345-ec7047572
+        version: 3.0.0-dev.1765454516-df0c28afc
       '@discordjs/rest':
         specifier: dev
-        version: 3.0.0-dev.1764547345-ec7047572
+        version: 3.0.0-dev.1765454516-df0c28afc
       '@discordjs/ws':
         specifier: dev
-        version: 3.0.0-dev.1764547345-ec7047572
+        version: 3.0.0-dev.1765454516-df0c28afc
       '@imnaiyar/framework':
         specifier: latest
         version: 1.2.3
@@ -359,7 +359,7 @@ importers:
         version: 1.0.9
       discord-api-types:
         specifier: latest
-        version: 0.38.36
+        version: 0.38.37
       express:
         specifier: ^4.22.0
         version: 4.22.0
@@ -375,6 +375,9 @@ importers:
       mongoose:
         specifier: ^8.9.5
         version: 8.13.2
+      nanoid:
+        specifier: ^5.1.6
+        version: 5.1.6
       skygame-data:
         specifier: ^0.2.1
         version: 0.2.1
@@ -423,7 +426,7 @@ importers:
         version: link:../constants
       discord-api-types:
         specifier: latest
-        version: 0.38.36
+        version: 0.38.37
       undici:
         specifier: ^7.11.0
         version: 7.16.0
@@ -587,32 +590,32 @@ packages:
     resolution: {integrity: sha512-LiSusze9Tc7qF03sLCujF5iZp7K+vRNEDBZ86FT9aQAv3vxMLihUvKvpsCWiQ2DJq1tVckopKm1rxomgNUc9hg==}
     engines: {node: '>=18'}
 
-  '@discordjs/collection@3.0.0-dev.1764547345-ec7047572':
-    resolution: {integrity: sha512-jpfYQjUdqB3JnpJ6yE8cSFgMPCg1q1hbTcVUYhWgq8t/fwpk/jT9/hIUeF0kaeEErWjDgyloTtoNVLf+zEERaA==}
+  '@discordjs/collection@3.0.0-dev.1765454516-df0c28afc':
+    resolution: {integrity: sha512-dek7NiSu3WEMnrmymlNi8IeQ9Z8K7uzAxwX1Zssvk/Nie/1pKVnOzr4DvxilQfz9yVfRsZ8Xt4OXnUL3jJFbrw==}
     engines: {node: '>=22.12.0'}
 
-  '@discordjs/core@3.0.0-dev.1764547345-ec7047572':
-    resolution: {integrity: sha512-OEQKyU6n9gRYv3HPPYl5wvI5hKEiRhlMuR8FoyCuahSXCrEwIFF9hW01uvy9GdAKKqJo3qESwlGPSU75A7qyJQ==}
+  '@discordjs/core@3.0.0-dev.1765454516-df0c28afc':
+    resolution: {integrity: sha512-l8KwS5iD3iNqxDN5ZuicXGuKBH06g9hA1rjq7f3Kpg7eIwDnuzX9+gmbvdmdM6lllRN2MD9Cktz36HcU8DVrnA==}
     engines: {node: '>=22.12.0'}
 
   '@discordjs/rest@2.4.3':
     resolution: {integrity: sha512-+SO4RKvWsM+y8uFHgYQrcTl/3+cY02uQOH7/7bKbVZsTfrfpoE62o5p+mmV+s7FVhTX82/kQUGGbu4YlV60RtA==}
     engines: {node: '>=18'}
 
-  '@discordjs/rest@3.0.0-dev.1764547345-ec7047572':
-    resolution: {integrity: sha512-QQGmaq8v41guwGLkC89bXno+3QYRdQtutokBepO2qHK3ZGKhfsdzSL4f23YiBUNWW5v0conQzc0V+ufa8SVeaw==}
+  '@discordjs/rest@3.0.0-dev.1765454516-df0c28afc':
+    resolution: {integrity: sha512-tmXJ5UnVs+s/JZ3Yj8Sgok43k6pFssIPS5LAWXsFgw66hJcCCvVCzmmklypMwhV7kVdYOnWcxq6PIxR2r8tNew==}
     engines: {node: '>=22.12.0'}
 
   '@discordjs/util@1.1.1':
     resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
     engines: {node: '>=18'}
 
-  '@discordjs/util@2.0.0-dev.1764547345-ec7047572':
-    resolution: {integrity: sha512-JvU5RdsMkOdWzIZyyitI1voUrR+uEd/d11SiYA2X4AkCjjfPdlFPO/J3qo6UNijZehIAIbRiwCpSdgT+79VmKA==}
+  '@discordjs/util@2.0.0-dev.1765454516-df0c28afc':
+    resolution: {integrity: sha512-D+ucbMphdmtNYN9aUsQCByFkLILWQ1ieX0XF/CbzaEO6b4uMJr74wWgMFi+XK8PxVyFvKahgvjPcY8uhAPg24Q==}
     engines: {node: '>=22.12.0'}
 
-  '@discordjs/ws@3.0.0-dev.1764547345-ec7047572':
-    resolution: {integrity: sha512-prVqPQZAAzPXUDZxf+iPENd+hnFB2XR9/Z6mH/JM+X+rWZmbHrCjj0a41+ZIdRV+XntNPJT3e/07EkpNpiOLvA==}
+  '@discordjs/ws@3.0.0-dev.1765454516-df0c28afc':
+    resolution: {integrity: sha512-nvyeR44dAEgecQsjjZxfeuY1d/4sBHoU7ulJ842RxBeANJk/n65F4lVire/ehOZkesInYkbMqW63L+/66cOEvg==}
     engines: {node: '>=22.12.0'}
 
   '@emnapi/core@1.4.5':
@@ -3622,8 +3625,8 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  discord-api-types@0.38.36:
-    resolution: {integrity: sha512-qrbUbjjwtyeBg5HsAlm1C859epfOyiLjPqAOzkdWlCNsZCWJrertnETF/NwM8H+waMFU58xGSc5eXUfXah+WTQ==}
+  discord-api-types@0.38.37:
+    resolution: {integrity: sha512-Cv47jzY1jkGkh5sv0bfHYqGgKOWO1peOrGMkDFM4UmaGMOTgOW8QSexhvixa9sVOiz8MnVOBryWYyw/CEVhj7w==}
 
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
@@ -5240,6 +5243,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.6:
+    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   napi-postinstall@0.3.3:
     resolution: {integrity: sha512-uTp172LLXSxuSYHv/kou+f6KW3SMppU9ivthaVTXian9sOt3XM/zHYHpRZiLgQoxeWfYUnslNWQHF1+G71xcow==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
@@ -5265,6 +5273,7 @@ packages:
   next@15.4.7:
     resolution: {integrity: sha512-OcqRugwF7n7mC8OSYjvsZhhG1AYSvulor1EIUsIkbbEbf1qoE5EbH36Swj8WhF4cHqmDgkiam3z1c1W0J1Wifg==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -5286,6 +5295,7 @@ packages:
   next@15.5.4:
     resolution: {integrity: sha512-xH4Yjhb82sFYQfY3vbkJfgSDgXvBB6a8xPs9i35k6oZJRoQRihZH+4s9Yo2qsWpzBmZ3lPXaJ2KPXLfkvW4LnA==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -6518,8 +6528,8 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
-  uuid@11.1.0:
-    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
     hasBin: true
 
   uuid@8.3.2:
@@ -6935,16 +6945,16 @@ snapshots:
 
   '@discordjs/collection@2.1.1': {}
 
-  '@discordjs/collection@3.0.0-dev.1764547345-ec7047572': {}
+  '@discordjs/collection@3.0.0-dev.1765454516-df0c28afc': {}
 
-  '@discordjs/core@3.0.0-dev.1764547345-ec7047572':
+  '@discordjs/core@3.0.0-dev.1765454516-df0c28afc':
     dependencies:
-      '@discordjs/rest': 3.0.0-dev.1764547345-ec7047572
-      '@discordjs/util': 2.0.0-dev.1764547345-ec7047572
-      '@discordjs/ws': 3.0.0-dev.1764547345-ec7047572
+      '@discordjs/rest': 3.0.0-dev.1765454516-df0c28afc
+      '@discordjs/util': 2.0.0-dev.1765454516-df0c28afc
+      '@discordjs/ws': 3.0.0-dev.1765454516-df0c28afc
       '@sapphire/snowflake': 3.5.5
       '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.36
+      discord-api-types: 0.38.37
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6956,38 +6966,38 @@ snapshots:
       '@sapphire/async-queue': 1.5.5
       '@sapphire/snowflake': 3.5.5
       '@vladfrangu/async_event_emitter': 2.4.6
-      discord-api-types: 0.38.36
+      discord-api-types: 0.38.37
       magic-bytes.js: 1.11.0
       tslib: 2.8.1
       undici: 6.21.1
 
-  '@discordjs/rest@3.0.0-dev.1764547345-ec7047572':
+  '@discordjs/rest@3.0.0-dev.1765454516-df0c28afc':
     dependencies:
-      '@discordjs/collection': 3.0.0-dev.1764547345-ec7047572
-      '@discordjs/util': 2.0.0-dev.1764547345-ec7047572
+      '@discordjs/collection': 3.0.0-dev.1765454516-df0c28afc
+      '@discordjs/util': 2.0.0-dev.1765454516-df0c28afc
       '@sapphire/async-queue': 1.5.5
       '@sapphire/snowflake': 3.5.5
       '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.36
+      discord-api-types: 0.38.37
       magic-bytes.js: 1.12.1
       tslib: 2.8.1
       undici: 7.16.0
-      uuid: 11.1.0
+      uuid: 13.0.0
 
   '@discordjs/util@1.1.1': {}
 
-  '@discordjs/util@2.0.0-dev.1764547345-ec7047572':
+  '@discordjs/util@2.0.0-dev.1765454516-df0c28afc':
     dependencies:
-      discord-api-types: 0.38.36
+      discord-api-types: 0.38.37
 
-  '@discordjs/ws@3.0.0-dev.1764547345-ec7047572':
+  '@discordjs/ws@3.0.0-dev.1765454516-df0c28afc':
     dependencies:
-      '@discordjs/collection': 3.0.0-dev.1764547345-ec7047572
-      '@discordjs/util': 2.0.0-dev.1764547345-ec7047572
+      '@discordjs/collection': 3.0.0-dev.1765454516-df0c28afc
+      '@discordjs/util': 2.0.0-dev.1765454516-df0c28afc
       '@sapphire/async-queue': 1.5.5
       '@types/ws': 8.18.1
       '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.36
+      discord-api-types: 0.38.37
       tslib: 2.8.1
       ws: 8.18.3
     transitivePeerDependencies:
@@ -8651,7 +8661,7 @@ snapshots:
 
   '@sapphire/discord-utilities@3.4.4':
     dependencies:
-      discord-api-types: 0.38.36
+      discord-api-types: 0.38.37
 
   '@sapphire/snowflake@3.5.5': {}
 
@@ -10089,7 +10099,7 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  discord-api-types@0.38.36: {}
+  discord-api-types@0.38.37: {}
 
   doctrine@2.1.0:
     dependencies:
@@ -12444,6 +12454,8 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  nanoid@5.1.6: {}
+
   napi-postinstall@0.3.3: {}
 
   natural-compare@1.4.0: {}
@@ -13924,7 +13936,7 @@ snapshots:
 
   utils-merge@1.0.1: {}
 
-  uuid@11.1.0: {}
+  uuid@13.0.0: {}
 
   uuid@8.3.2: {}
 
