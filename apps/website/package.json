@@ -15,7 +15,7 @@
     "@vercel/og": "^0.8.5",
     "discord-api-types": "latest",
     "lucide-react": "^0.540.0",
-    "next": "15.5.4",
+    "next": "15.5.9",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "serwist": "^9.2.1",
