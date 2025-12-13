@@ -164,6 +164,7 @@ export async function handlePlannerFriendNameModal(helper: InteractionHelper) {
   settings.plannerData!.keys.friends ??= { friends: [] };
 
   const existingFriendIndex = settings.plannerData!.keys.friends.friends.findIndex(
+    // friend guid is added to modal's custom id separated by `|` if its for name edit
     (f: any) => f.guid === (int.data.custom_id.split("|")[1] ?? ""),
   );
   if (existingFriendIndex !== -1) {
@@ -184,6 +185,7 @@ export async function handlePlannerFriendNameModal(helper: InteractionHelper) {
   const data = await handlePlannerNavigation(
     {
       t: DisplayTabs.Friends,
+      // if this is present, then this should be for editing names and redirect approp.
       it: existingFriendIndex !== -1 ? int.data.custom_id.split("|")[1] : undefined,
     },
     helper.user,
