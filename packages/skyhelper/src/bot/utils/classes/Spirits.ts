@@ -1,4 +1,3 @@
-import type { SpiritsData, SeasonalSpiritData, RegularSpiritData } from "@skyhelperbot/constants/spirits-datas";
 import type { SkyHelper } from "@/structures";
 import { getTranslator } from "@/i18n";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
@@ -21,10 +20,10 @@ import { CostUtils, NonCollectibles, PlannerService } from "@/planner";
 import generateSpiritTreeTier from "../image-generators/SpiritTreeTierRenderer.js";
 import { generateSpiritTree } from "../image-generators/SpiritTreeRenderer.js";
 
-const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonComponent => ({
+const collectiblesBtn = (spirit: string, user: string, icon?: string): APIButtonComponent => ({
   type: 2,
   custom_id: utils.store.serialize(CustomId.SpiritCollectible, { spirit, user }),
-  emoji: utils.parseEmoji(icon)!,
+  emoji: icon ? utils.parseEmoji(icon)! : undefined,
   style: ButtonStyle.Success,
   label: "Collectible(s)",
 });
@@ -41,15 +40,12 @@ const getExpressionBtn = (data: ISpirit, user: string): APIButtonComponent => ({
  * Handle Spirit data and interactions
  */
 export class Spirits {
-  legacyData: SpiritsData | null = null;
   constructor(
     private data: ISpirit,
     private t: ReturnType<typeof getTranslator>,
     private client: SkyHelper,
     private plannerData: ISkyData,
-  ) {
-    this.legacyData = Object.values(client.spiritsData).find((s) => s.name === data.name) ?? null;
-  }
+  ) {}
 
   /**
    * Get the embed for the spirit response
@@ -71,9 +67,7 @@ export class Spirits {
       description.push(utils.formatEmoji(data.season.emoji) + " " + data.season.name);
     }
 
-    const headerTitle = `-# ${this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR")}\n### [${icon} ${data.name}${
-      this.legacyData?.extra ? ` (${this.legacyData.extra})` : ""
-    }](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`;
+    const headerTitle = `-# ${this.t("commands:SPIRITS.RESPONSES.EMBED.AUTHOR")}\n### [${icon} ${data.name}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")})`;
 
     const comp = container(
       data.imageUrl ? section(thumbnail(data.imageUrl, data.name), headerTitle) : textDisplay(headerTitle),
@@ -115,18 +109,8 @@ export class Spirits {
       const costs = CostUtils.groupedToCostEmoji([tree]);
       comp.components.push(section(thumbnail(`attachment://tree.png`), emojis.right_chevron + "Spirit Tree\n" + costs));
     }
-    if (this.legacyData && "location" in this.legacyData) {
-      let url = this.legacyData.location!.image;
-      if (!url.startsWith("https://")) url = this.client.config.CDN_URL + "/" + url;
-      comp.components.push(
-        section(
-          thumbnail(url),
-          `${emojis.right_chevron} ${this.t("features:SPIRITS.LOCATION_TITLE", { CREDIT: this.legacyData.location!.by })}`,
-          this.legacyData.location!.description ? `-# ${emojis.tree_end}${this.legacyData.location!.description}` : "",
-        ),
-      );
-    }
-    comp.components.push(separator(true, 1), this.getButtons(userid));
+    const btns = this.getButtons(userid);
+    if (btns) comp.components.push(separator(true, 1), btns);
 
     return {
       components: [
@@ -157,37 +141,23 @@ export class Spirits {
   /**
    * Get the buttons for the spirit response
    */
-  public getButtons(userid: string): APIActionRowComponent<APIButtonComponent> {
+  public getButtons(userid: string): APIActionRowComponent<APIButtonComponent> | null {
     const components: APIButtonComponent[] = [];
     const data = this.data;
     const items = SpiritTreeHelper.getItems(data.tree);
-    const emoteNode = items.find((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type));
-    if (this.legacyData?.expression || emoteNode?.previewUrl) components.push(getExpressionBtn(data, userid));
+    const emoteNode = items.filter((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type));
+    if (emoteNode.some((s) => s.previewUrl)) components.push(getExpressionBtn(data, userid));
     const collectibles = items.filter((i) => !NonCollectibles.includes(i.type));
-    if (this.legacyData?.collectibles?.length || collectibles.length) {
-      components.push(
-        collectiblesBtn(
-          (this.legacyData?.collectibles?.length ? this.legacyData.collectibles : collectibles)[
-            Math.floor(Math.random() * (this.legacyData?.collectibles?.length ?? collectibles.length))
-          ]!.icon!,
-          data.guid,
-          userid,
-        ),
-      );
+
+    if (collectibles.length) {
+      components.push(collectiblesBtn(data.guid, userid, collectibles[Math.floor(Math.random() * collectibles.length)]!.emoji));
     }
+    if (!components.length) return null;
 
     return {
       type: 1,
       components,
     };
-  }
-
-  isSeasonal(data: SpiritsData): data is SeasonalSpiritData {
-    return "ts" in data;
-  }
-
-  isRegular(data: SpiritsData): data is RegularSpiritData {
-    return "ts" in data;
   }
 
   /**

@@ -29,7 +29,6 @@ import {
   type InteractionCollectorOptions,
   type MessageCollectorOptions,
 } from "@/utils/classes/Collector";
-import spiritsData from "@skyhelperbot/constants/spirits-datas";
 import type { CustomId } from "@/utils/customId-store";
 
 export class SkyHelper extends Client {
@@ -62,8 +61,6 @@ export class SkyHelper extends Client {
 
   /** Bot's config */
   public config = config;
-
-  public spiritsData = spiritsData;
 
   public readTimestamp = 0;
 

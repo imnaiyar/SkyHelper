@@ -1,14 +1,12 @@
-import type { SpiritsData } from "@skyhelperbot/constants/spirits-datas";
 import { defineButton } from "@/structures";
 import type { getTranslator } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ButtonStyle, ComponentType, type APIButtonComponent } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
 import { container, mediaGallery, mediaGalleryItem, separator, textDisplay } from "@skyhelperbot/utils";
-import config from "@/config";
 import { CustomId } from "@/utils/customId-store";
 import { fetchSkyData } from "@/planner";
-import { ItemType, NodeHelper, SpiritTreeHelper, type ISpirit } from "skygame-data";
+import { ItemType, SpiritTreeHelper, type ISpirit } from "skygame-data";
 export default defineButton({
   data: {
     name: "spirit_expression",
@@ -17,8 +15,7 @@ export default defineButton({
   async execute(interaction, t, helper, { spirit: guid }) {
     const { client } = helper;
     const { user } = helper;
-    const spirit = (await fetchSkyData(client)).spirits.items.find((s) => s.guid === guid),
-      legacySpirit = Object.values(client.spiritsData).find((s) => s.name === spirit?.name);
+    const spirit = (await fetchSkyData(client)).spirits.items.find((s) => s.guid === guid);
     if (!spirit) {
       return void (await helper.reply({ content: "Something went wrong! No data found", flags: 64 }));
     }
@@ -30,9 +27,7 @@ export default defineButton({
         components: message.components,
         files: message.attachments.map((m) => ({ data: m.url, name: m.filename })),
       },
-      reply = await helper.editReply(
-        legacySpirit?.expression ? getLegacyResponse(legacySpirit, t, user.id) : getEmoteResponse(spirit, t, user.id),
-      ),
+      reply = await helper.editReply(getEmoteResponse(spirit, t, user.id)),
       collector = client.componentCollector({
         filter: (i) =>
           // @ts-expect-error data is present, but wtv
@@ -61,28 +56,6 @@ export default defineButton({
     });
   },
 });
-
-const getLegacyResponse = (data: SpiritsData, t: ReturnType<typeof getTranslator>, user: string) => {
-  // prettier-ignore
-  if (!data.expression) throw new Error(`Expected Spirit expression to be present, but recieved ${typeof data.expression} [${data.name}]`);
-  const exprsn = data.expression;
-  const components = container(
-    textDisplay(
-      `-# ${exprsn.icon ? t("commands:SPIRITS.RESPONSES.BUTTONS.EMOTE") : t("commands:SPIRITS.RESPONSES.BUTTONS.ACTION")} - ${
-        data.name
-      }\n### [${
-        exprsn.icon
-      } ${exprsn.level[0]?.title.replace(/ Level [1-6]/, "")}](https://sky-children-of-the-light.fandom.com/wiki/${data.name.split(" ").join("_")}#${
-        exprsn.type === "Emote" ? "Expression" : exprsn.type.split(" ").join("_")
-      })`,
-    ),
-    separator(),
-    mediaGallery(exprsn.level.map((level) => mediaGalleryItem(`${config.CDN_URL}/${level.image}`, { description: level.title }))),
-    separator(),
-    { type: 1, components: [getBackBtn(user, exprsn.icon)] },
-  );
-  return { components: [components] };
-};
 
 const getEmoteResponse = (spirit: ISpirit, t: ReturnType<typeof getTranslator>, user: string) => {
   const expressions = SpiritTreeHelper.getItems(spirit.tree, true)
