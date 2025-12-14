@@ -23,7 +23,7 @@ export default defineButton({
 
     if (!spirit) {
       return void (await helper.reply({
-        content: "No collectibles found for this spirit, or something went wrong!",
+        content: "No spirit found!",
         flags: 64,
       }));
     }

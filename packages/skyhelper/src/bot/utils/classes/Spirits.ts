@@ -20,10 +20,10 @@ import { CostUtils, NonCollectibles, PlannerService } from "@/planner";
 import generateSpiritTreeTier from "../image-generators/SpiritTreeTierRenderer.js";
 import { generateSpiritTree } from "../image-generators/SpiritTreeRenderer.js";
 
-const collectiblesBtn = (icon: string, spirit: string, user: string): APIButtonComponent => ({
+const collectiblesBtn = (spirit: string, user: string, icon?: string): APIButtonComponent => ({
   type: 2,
   custom_id: utils.store.serialize(CustomId.SpiritCollectible, { spirit, user }),
-  emoji: utils.parseEmoji(icon)!,
+  emoji: icon ? utils.parseEmoji(icon)! : undefined,
   style: ButtonStyle.Success,
   label: "Collectible(s)",
 });
@@ -109,7 +109,8 @@ export class Spirits {
       const costs = CostUtils.groupedToCostEmoji([tree]);
       comp.components.push(section(thumbnail(`attachment://tree.png`), emojis.right_chevron + "Spirit Tree\n" + costs));
     }
-    comp.components.push(separator(true, 1), this.getButtons(userid));
+    const btns = this.getButtons(userid);
+    if (btns) comp.components.push(separator(true, 1), btns);
 
     return {
       components: [
@@ -140,22 +141,18 @@ export class Spirits {
   /**
    * Get the buttons for the spirit response
    */
-  public getButtons(userid: string): APIActionRowComponent<APIButtonComponent> {
+  public getButtons(userid: string): APIActionRowComponent<APIButtonComponent> | null {
     const components: APIButtonComponent[] = [];
     const data = this.data;
     const items = SpiritTreeHelper.getItems(data.tree);
-    const emoteNode = items.find((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type));
-    if (emoteNode?.previewUrl) components.push(getExpressionBtn(data, userid));
+    const emoteNode = items.filter((i) => [ItemType.Stance, ItemType.Call, ItemType.Emote].includes(i.type));
+    if (emoteNode.some((s) => s.previewUrl)) components.push(getExpressionBtn(data, userid));
     const collectibles = items.filter((i) => !NonCollectibles.includes(i.type));
+
     if (collectibles.length) {
-      components.push(
-        collectiblesBtn(
-          collectibles[Math.floor(Math.random() * collectibles.length)]!.emoji!,
-          data.guid,
-          userid,
-        ),
-      );
+      components.push(collectiblesBtn(data.guid, userid, collectibles[Math.floor(Math.random() * collectibles.length)]!.emoji));
     }
+    if (!components.length) return null;
 
     return {
       type: 1,
