@@ -98,7 +98,7 @@ export default defineButton({
     const comps = await handlePlannerNavigation(
       {
         ...state,
-        // eslint-disable-next-line
+
         f: newFilterString || undefined,
         p: 1, // Reset to first page when filters change
       },

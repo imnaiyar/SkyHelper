@@ -56,7 +56,7 @@ export default {
 } satisfies Command<true>;
 
 async function handleSpiritList(helper: InteractionHelper) {
-  const { user, client } = helper;
+  const { user } = helper;
 
   const pData = await fetchSkyData(helper.client);
   const spirits = pData.spirits.items.filter((s) => s.type !== SpiritType.Special && s.type !== SpiritType.Event);

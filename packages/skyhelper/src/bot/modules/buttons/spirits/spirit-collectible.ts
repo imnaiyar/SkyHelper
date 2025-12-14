@@ -10,7 +10,7 @@ import {
 } from "@discordjs/core";
 import { CustomId } from "@/utils/customId-store";
 import { fetchSkyData, NonCollectibles } from "@/planner";
-import { SpiritTreeHelper, type ISpirit, type IItem } from "skygame-data";
+import { SpiritTreeHelper, type ISpirit } from "skygame-data";
 
 export default defineButton({
   data: {
@@ -21,9 +21,16 @@ export default defineButton({
     const data = await fetchSkyData(helper.client);
     const spirit = data.guids.get(value) as ISpirit | undefined;
 
-    const collectibles = SpiritTreeHelper.getItems(spirit?.tree).filter((item) => !NonCollectibles.includes(item.type));
+    if (!spirit) {
+      return void (await helper.reply({
+        content: "No collectibles found for this spirit, or something went wrong!",
+        flags: 64,
+      }));
+    }
 
-    if (!spirit || !collectibles?.length) {
+    const collectibles = SpiritTreeHelper.getItems(spirit.tree).filter((item) => !NonCollectibles.includes(item.type));
+
+    if (!collectibles.length) {
       return void (await helper.reply({
         content: "No collectibles found for this spirit, or something went wrong!",
         flags: 64,
@@ -75,15 +82,15 @@ export default defineButton({
       // Build content based on data source
       const contentLines: string[] = [`- **Type**: ${d.type}`];
 
-      const item = d as IItem;
+      const item = d;
       if (item.group === "SeasonPass") contentLines.push(`- This item was season pass exclusive`);
 
       // Get images based on planner data
-      const imgs = [{ image: (d as IItem).previewUrl, description: d.name }];
+      const imgs = [{ image: d.previewUrl, description: d.name }];
 
       // add dye previews too if present
       if ("dye" in d && d.dye?.previewUrl) imgs.push({ image: d.dye.previewUrl, description: d.name + " Dye" });
-      const images = (imgs ?? []).filter((img: any) => img.image);
+      const images = imgs.filter((img) => img.image);
 
       const comp = container(
         section(
@@ -93,7 +100,7 @@ export default defineButton({
           ),
           `-# ${spirit.name} Collectibles (${index}/${total})\n### [${helper.client.utils.formatEmoji(itemIcon)} ${itemName || d.type}](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name
             .split(" ")
-            .join("_")}#${(d.type ?? itemName).split(" ").join("_")})`,
+            .join("_")}#${(itemName || d.type).split(" ").join("_")})`,
         ),
         separator(),
         textDisplay(contentLines.filter(Boolean).join("\n")),
