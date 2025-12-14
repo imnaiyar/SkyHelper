@@ -82,7 +82,6 @@ async function handleSpiritList(helper: InteractionHelper) {
           );
           const seasonIcon = spirit.season ? Utils.formatEmoji(spirit.season.emoji, spirit.season.shortName) : "";
           const realmIcon = realm ? Utils.formatEmoji(realm.emoji, realm.name) : "";
-          const legacySpirit = Object.values(client.spiritsData).find((s) => s.name === spirit.name);
           return [
             section(
               {
@@ -91,7 +90,7 @@ async function handleSpiritList(helper: InteractionHelper) {
                 custom_id: store.serialize(CustomId.SpiritButton, { spirit_key: spirit.guid, user: null }),
                 style: 2,
               },
-              `**${spirit.name}${legacySpirit?.extra ? ` (${legacySpirit.extra})` : ""} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
+              `**${spirit.name} [↗](https://sky-children-of-the-light.fandom.com/wiki/${spirit.name.split(" ").join("_")})**`,
               `${realmIcon}${seasonIcon}${SpiritTreeHelper.getItems(spirit.tree, true)
                 .filter((i) => !NonCollectibles.includes(i.type))
                 .map((c) => Utils.formatEmoji(c.emoji, c.name))

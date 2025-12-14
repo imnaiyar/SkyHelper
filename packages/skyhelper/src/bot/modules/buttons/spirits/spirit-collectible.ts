@@ -21,12 +21,7 @@ export default defineButton({
     const data = await fetchSkyData(helper.client);
     const spirit = data.guids.get(value) as ISpirit | undefined;
 
-    const legacyData = Object.values(helper.client.spiritsData).find((s) => s.name === spirit?.name);
-    const items = SpiritTreeHelper.getItems(spirit?.tree).filter((item) => !NonCollectibles.includes(item.type));
-
-    // Determine which collectibles to use
-    const useLegacyData = legacyData?.collectibles?.length;
-    const collectibles = useLegacyData ? legacyData.collectibles : items;
+    const collectibles = SpiritTreeHelper.getItems(spirit?.tree).filter((item) => !NonCollectibles.includes(item.type));
 
     if (!spirit || !collectibles?.length) {
       return void (await helper.reply({
@@ -55,7 +50,7 @@ export default defineButton({
       const d = collectibles[index - 1]!;
 
       const itemName = d.name;
-      const itemIcon = "emoji" in d ? d.emoji : d.icon;
+      const itemIcon = d.emoji;
 
       const stringSelect: APIActionRowComponent<APIStringSelectComponent> = {
         type: ComponentType.ActionRow,
@@ -70,7 +65,7 @@ export default defineButton({
             options: collectibles.map((c, i) => ({
               label: c.name,
               value: i.toString(),
-              emoji: c.icon ? helper.client.utils.parseEmoji(c.icon)! : undefined,
+              emoji: c.emoji ? helper.client.utils.parseEmoji(c.emoji)! : undefined,
               default: index - 1 === i,
             })),
           },
@@ -80,24 +75,14 @@ export default defineButton({
       // Build content based on data source
       const contentLines: string[] = [`- **Type**: ${d.type}`];
 
-      if (useLegacyData) {
-        const legacyItem = d as any;
-        if (legacyItem.price) contentLines.push(`- **Cost**: ${legacyItem.price}`);
-        if (legacyItem.spPrice) contentLines.push(`- **Season Cost**: ${legacyItem.spPrice}`);
-        if (legacyItem.isSP) contentLines.push(`- This item was season pass exclusive`);
-        if (legacyItem.notes?.length) {
-          contentLines.push("\n**Notes**:\n" + legacyItem.notes.map((n: string) => `-# - ${n}`).join("\n") + "\n");
-        }
-      } else {
-        const item = d as IItem;
-        if (item.group === "SeasonPass") contentLines.push(`- This item was season pass exclusive`);
-      }
+      const item = d as IItem;
+      if (item.group === "SeasonPass") contentLines.push(`- This item was season pass exclusive`);
 
-      // Get images based on data source
-      const imgs = useLegacyData ? (d as any).images : [{ image: (d as IItem).previewUrl, description: d.name }];
+      // Get images based on planner data
+      const imgs = [{ image: (d as IItem).previewUrl, description: d.name }];
 
       // add dye previews too if present
-      if ("dye" in d && d.dye?.previewUrl) imgs.push({ images: d.dye.previewUrl, description: d.name + " Dye" });
+      if ("dye" in d && d.dye?.previewUrl) imgs.push({ image: d.dye.previewUrl, description: d.name + " Dye" });
       const images = (imgs ?? []).filter((img: any) => img.image);
 
       const comp = container(
@@ -128,7 +113,7 @@ export default defineButton({
               type: ComponentType.Button,
               custom_id: helper.client.utils.store.serialize(CustomId.Default, { data: "collectibles-back", user: user.id }),
               label: "Back",
-              emoji: helper.client.utils.parseEmoji(legacyData?.expression?.icon ?? "<:spiritIcon:1206501060303130664>")!,
+              emoji: helper.client.utils.parseEmoji(spirit.emoji ?? "<:spiritIcon:1206501060303130664>")!,
               style: ButtonStyle.Danger,
             },
           ],

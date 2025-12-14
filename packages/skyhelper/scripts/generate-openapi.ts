@@ -23,7 +23,6 @@ const mockBotClient = {
   user: { id: "123456789012345678" },
   ping: 50,
   applicationCommands: new Map(),
-  spiritsData: {},
   api: {
     applications: {
       getCurrent: () => Promise.resolve({ approximate_user_install_count: 1000 }),
