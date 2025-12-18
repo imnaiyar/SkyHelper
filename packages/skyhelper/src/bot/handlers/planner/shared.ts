@@ -9,6 +9,7 @@ import { CostUtils } from "./helpers/cost.utils.js";
 import generateSpiritTreeTier from "@/utils/image-generators/SpiritTreeTierRenderer";
 import type { GenerateSpiritTreeOptions } from "@/utils/image-generators/SpiritTreeShared";
 import { generateSpiritTree } from "@/utils/image-generators/SpiritTreeRenderer";
+import Utils from "@/utils/classes/Utils";
 interface ITreeGenProps {
   /* The spirit tree */
   tree: ISpiritTree;
@@ -26,12 +27,13 @@ export async function spiritTreeDisplay(
 ) {
   // Check if tree uses tier system or classic node system
   let buffer: Buffer;
+  const options = { botIcon: Utils.getUserAvatar(planner.client.user), ...opts };
   if (tree.tier) {
     // New tier-based system
-    buffer = await generateSpiritTreeTier(tree as ISpiritTree & { tier: ISpiritTreeTier }, opts);
+    buffer = await generateSpiritTreeTier(tree as ISpiritTree & { tier: ISpiritTreeTier }, options);
   } else if (tree.node) {
     // Classic node-based system
-    buffer = await generateSpiritTree(tree as ISpiritTree & { node: INode }, opts);
+    buffer = await generateSpiritTree(tree as ISpiritTree & { node: INode }, options);
   } else {
     throw new Error("Tree must have either tier or node structure");
   }

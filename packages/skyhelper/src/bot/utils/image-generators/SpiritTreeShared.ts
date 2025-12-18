@@ -23,6 +23,8 @@ export interface GenerateSpiritTreeOptions {
   /** Do not reduce the opacity for non unlocked node, which is the default */
   noOpacity?: boolean;
   scale?: number; // multiplier for resolution
+  botIcon?: string;
+  botName?: string;
 }
 
 // #region Image Cache
@@ -408,28 +410,6 @@ export async function drawBackground(ctx: SKRSContext2D, width: number, height: 
   } catch {
     // ignore
   }
-}
-
-/**
- * Draw the watermark and overlay
- */
-export function drawWatermarkAndOverlay(ctx: SKRSContext2D, width: number, height: number) {
-  // Watermark
-  const watermarkText = "SkyHelper";
-  const titleSize = Math.max(18, Math.floor(Math.min(width, height) / 20));
-  const subSize = Math.max(12, Math.floor(titleSize / 2));
-
-  ctx.font = `${titleSize}px ${FONT_NAME}`;
-  ctx.fillStyle = "rgba(246, 234, 224, 0.6)";
-  ctx.textAlign = "right";
-  ctx.textBaseline = "top";
-  ctx.fillText(watermarkText, width - titleSize, 20);
-  ctx.font = `${subSize}px ${FONT_NAME}`;
-  ctx.fillText("A Sky: COTL Discord Bot", width - subSize, titleSize + 20 + subSize / 2);
-
-  // Transparent overlay
-  ctx.fillStyle = "rgba(14, 43, 51, 0.35)";
-  ctx.fillRect(0, 0, width, height);
 }
 
 /**

@@ -5,11 +5,11 @@ import {
   drawItem,
   drawConnector,
   drawBackground,
-  drawWatermarkAndOverlay,
   drawSpiritText,
   type GenerateSpiritTreeOptions,
 } from "./SpiritTreeShared.js";
 import { PlannerService } from "@/planner";
+import { drawBotTitleHeader } from "./shared.js";
 
 // --------------------
 // #region Recursive renderer
@@ -135,7 +135,13 @@ export async function generateSpiritTree(
 
   // Draw background and watermark
   await drawBackground(ctx, width, height, spirit?.imageUrl ?? options.spiritUrl);
-  drawWatermarkAndOverlay(ctx, width, height);
+
+  await drawBotTitleHeader({
+    ctx,
+    botIcon: options.botIcon,
+    botName: options.botName ?? "SkyHelper",
+    size: Math.max(16, Math.floor(Math.min(width, height) / 20)),
+  });
 
   const centerX = Math.floor(width / 2);
   // compute the ideal content height for the tree (all depths stacked)

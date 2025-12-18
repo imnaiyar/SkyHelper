@@ -2,6 +2,7 @@ import { createCanvas, loadImage, GlobalFonts, type SKRSContext2D } from "@napi-
 import type { APIUser } from "discord-api-types/v10";
 import { currency, emojis } from "@skyhelperbot/constants";
 import path from "node:path";
+import { drawBotTitleHeader } from "./shared.js";
 
 GlobalFonts.registerFromPath(path.join(process.cwd(), `assets/fonts/NotoSans-Regular.ttf`), "noto-sans");
 GlobalFonts.registerFromPath(path.join(process.cwd(), `assets/fonts/notosans-black.ttf`), "noto-sans-bold");
@@ -83,45 +84,8 @@ export async function generatePlannerProfileCard(options: ProfileCardOptions): P
   }
   ctx.globalAlpha = 1;
 
-  // Header section with bot info (top right)
-  const headerY = 20;
-  const headerRightX = width - 20;
-
   // Bot icon and name (top right)
-  if (botIcon) {
-    try {
-      const icon = await loadImage(botIcon);
-      const iconSize = 40;
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(headerRightX - iconSize / 2, headerY + iconSize / 2, iconSize / 2, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-      ctx.drawImage(icon, headerRightX - iconSize, headerY, iconSize, iconSize);
-      ctx.restore();
-
-      // Bot name
-      ctx.font = `bold 16px noto-sans-bold`;
-      ctx.fillStyle = "#F6EAE0";
-      ctx.textAlign = "right";
-      ctx.textBaseline = "middle";
-      ctx.fillText(botName, headerRightX - iconSize - 10, headerY + iconSize / 2);
-    } catch (error) {
-      console.error("Failed to load bot icon:", error);
-      // Just show bot name if icon fails
-      ctx.font = `bold 16px noto-sans-bold`;
-      ctx.fillStyle = "#F6EAE0";
-      ctx.textAlign = "right";
-      ctx.textBaseline = "top";
-      ctx.fillText(botName, headerRightX, headerY);
-    }
-  } else {
-    ctx.font = `bold 16px noto-sans-bold`;
-    ctx.fillStyle = "#F6EAE0";
-    ctx.textAlign = "right";
-    ctx.textBaseline = "top";
-    ctx.fillText(botName, headerRightX, headerY);
-  }
+  await drawBotTitleHeader({ botIcon, botName, ctx });
 
   // User profile section (left side with avatar and name side by side)
   const profileY = 110;
