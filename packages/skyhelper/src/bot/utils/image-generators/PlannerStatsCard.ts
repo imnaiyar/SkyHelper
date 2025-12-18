@@ -85,7 +85,7 @@ export async function generatePlannerProfileCard(options: ProfileCardOptions): P
   ctx.globalAlpha = 1;
 
   // Bot icon and name (top right)
-  await drawBotTileHeader({ botIcon, botName, ctx });
+  await drawBotTitleHeader({ botIcon, botName, ctx });
 
   // User profile section (left side with avatar and name side by side)
   const profileY = 110;
