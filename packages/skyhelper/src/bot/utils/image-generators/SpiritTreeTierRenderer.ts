@@ -174,7 +174,6 @@ export async function generateSpiritTreeTier(
     ctx,
     botIcon: options.botIcon,
     botName: options.botName ?? "SkyHelper",
-    size: Math.max(16, Math.floor(Math.min(width, height) / 20)),
   });
 
   const centerX = Math.floor(width / 2);
