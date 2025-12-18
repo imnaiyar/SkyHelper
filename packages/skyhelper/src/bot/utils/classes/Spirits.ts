@@ -102,9 +102,8 @@ export class Spirits {
       // priorotize the latest visit first to preserve the legacy behaviour
       const tree = visits[0]?.tree ?? data.tree;
       if (!tree) throw new Error("Something fell off");
-      const image = await (tree.tier
-        ? generateSpiritTreeTier(tree as any, { noOpacity: true })
-        : generateSpiritTree(tree as any, { noOpacity: true }));
+      const options = { noOpacity: true, botName: "SkyHelper", botIcon: utils.getUserAvatar(this.client.user) };
+      const image = await (tree.tier ? generateSpiritTreeTier(tree as any, options) : generateSpiritTree(tree as any, options));
       file = { data: image, name: "tree.png" };
       const costs = CostUtils.groupedToCostEmoji([tree]);
       comp.components.push(section(thumbnail(`attachment://tree.png`), emojis.right_chevron + "Spirit Tree\n" + costs));
