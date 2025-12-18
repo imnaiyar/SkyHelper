@@ -134,7 +134,8 @@ export async function generateSpiritTree(
   const ctx: SKRSContext2D = canvas.getContext("2d");
 
   // Draw background and watermark
-  await drawBackground(ctx, width, height, spirit?.imageUrl ?? options.spiritUrl);
+  // remove this for now and see how well it is reveived
+  // await drawBackground(ctx, width, height, spirit?.imageUrl ?? options.spiritUrl);
 
   await drawBotTitleHeader({
     ctx,

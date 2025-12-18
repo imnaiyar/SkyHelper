@@ -169,7 +169,7 @@ export async function generateSpiritTreeTier(
   const ctx: SKRSContext2D = canvas.getContext("2d");
 
   // Draw background and watermark
-  await drawBackground(ctx, width, height, spirit?.imageUrl ?? options.spiritUrl);
+  // await drawBackground(ctx, width, height, spirit?.imageUrl ?? options.spiritUrl);
   await drawBotTitleHeader({
     ctx,
     botIcon: options.botIcon,
