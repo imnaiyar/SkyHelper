@@ -138,8 +138,9 @@ export async function generateSpiritTree(
 
   await drawBotTitleHeader({
     ctx,
-    botIcon: options.botIcon,
     botName: options.botName ?? "SkyHelper",
+    botIcon: options.botIcon,
+    size: Math.max(18, Math.floor(Math.min(width, height) / 30)),
   });
 
   const centerX = Math.floor(width / 2);
