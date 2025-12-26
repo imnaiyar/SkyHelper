@@ -162,7 +162,7 @@ export function buildShardEmbed(
 export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getTranslator>) {
   const plannerData = await fetchSkyData(client);
   const tsData = getNextTs();
-  const specialEvent = PlannerService.getEvents(plannerData).upcoming[0];
+  const specialEvent = PlannerService.getEvents(plannerData).current[0];
   // Special Events
   const eventDesc = specialEvent
     ? t("features:times-embed.EVENT_ACTIVE", {
