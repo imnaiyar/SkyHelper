@@ -1,89 +1,9 @@
 import { BasePlannerHandler } from "../base.js";
-import { serializeFilters } from "../filter.manager.js";
 import { button, container, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { getIGCnIApDisplay } from "./shared.js";
-import { FilterType } from "@/types/planner";
-import type { IItemList } from "skygame-data";
-import type { IIAP } from "skygame-data";
-import type { IShop } from "skygame-data";
-/** Configs for permanent shops */
-const configs = (planner: BasePlannerHandler): Array<{ title: string; description: string; custom_id: string }> => [
-  {
-    title: "Aviary Event Store",
-    description:
-      "The Aviary Event Store was introduced in the Season of Revival. The building can be accessed through Aviary Village.",
-    custom_id: planner.createCustomId({
-      d: "shops",
-      f: serializeFilters(
-        new Map([
-          [FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "event").map((s) => s.guid)],
-          [FilterType.SpiritTrees, ["TbheKd0E45"]],
-        ]),
-      ),
-    }),
-  },
-  {
-    title: "Nesting Workshop",
-    description:
-      "The Nesting Workshop was introduced in the Season of Nesting. The building can be accessed through Aviary Village.",
-    custom_id: planner.createCustomId({ d: "nesting" }),
-  },
-  {
-    title: "Concert Halls",
-    description: "Concert Hall was introduced in the Season of Duets. The hall can be accessed through Aviary Village.",
-    custom_id: planner.createCustomId({
-      d: "shops",
-      f: serializeFilters(new Map([[FilterType.SpiritTrees, ["4uhy67a14a"]]])),
-    }),
-  },
-  {
-    title: "Cinema",
-    description:
-      "The Cinema was introduced in the Season of Two Embers - Part One. The place can be accessed through the collaboration room accessed from Aviary Village. ",
-    custom_id: planner.createCustomId({
-      d: "shops",
-      f: serializeFilters(
-        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "cinema").map((s) => s.guid)]]),
-      ),
-    }),
-  },
-  {
-    title: "Harmony Hall",
-    description:
-      "Harmony Hall was introduced in the Season of Performance. The building can be accessed through Aviary Village, the Village of Dreams and the Village Theatre.",
-    custom_id: planner.createCustomId({
-      d: "shops",
-      f: serializeFilters(
-        new Map([
-          [FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "harmony").map((s) => s.guid)],
-          [FilterType.SpiritTrees, ["bkdgyeUcbZ"]],
-        ]),
-      ),
-    }),
-  },
-  {
-    title: "Secret Area",
-    description:
-      "The Secret Area is only available with a certain cape or during some events. The location can be accessed through the Vault of Knowledge.",
-    custom_id: planner.createCustomId({
-      d: "shops",
-      f: serializeFilters(
-        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "office").map((s) => s.guid)]]),
-      ),
-    }),
-  },
-  {
-    title: "Wonderland Cafe",
-    description:
-      "The Wonderland Cafe was introduced in Days of Feast 2024 and can be accessed through Aviary Village during the event or via Cafe Corridor prop.",
-    custom_id: planner.createCustomId({
-      d: "shops",
-      f: serializeFilters(
-        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "wonderland").map((s) => s.guid)]]),
-      ),
-    }),
-  },
-];
+import type { IIAP, IItemList, IShop } from "skygame-data";
+import { permanentShopConfigs } from "./config.js";
+
 export class ShopHomeDisplay extends BasePlannerHandler {
   igcs: IItemList[] = [];
   iaps: IIAP[] = [];
@@ -102,7 +22,7 @@ export class ShopHomeDisplay extends BasePlannerHandler {
   }
 
   display() {
-    const storeconfigs = configs(this);
+    const storeconfigs = permanentShopConfigs(this);
     return [
       textDisplay("# Permanent Shops", "These shops are available all year round."),
       separator(),

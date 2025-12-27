@@ -1,6 +1,8 @@
 import type { DateTime } from "luxon";
 import type { ICost, IItem } from "skygame-data";
-
+import type { BasePlannerHandler } from "../base.js";
+import { serializeFilters } from "../filter.manager.js";
+import { FilterType } from "@/types/planner";
 export interface IRotationItem extends ICost {
   /** Item guid */
   guid: string;
@@ -142,3 +144,84 @@ export const nestingconfigs: INestingConfig = {
   legacyFreeItems: ["_qe1M1aTek"],
   legacyCorrectionItems: ["M-n46rmsiI", "521NL_oVIS"],
 };
+
+/** Configs for permanent shops */
+export const permanentShopConfigs = (
+  planner: BasePlannerHandler,
+): Array<{ title: string; description: string; custom_id: string }> => [
+  {
+    title: "Aviary Event Store",
+    description:
+      "The Aviary Event Store was introduced in the Season of Revival. The building can be accessed through Aviary Village.",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([
+          [FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "event").map((s) => s.guid)],
+          [FilterType.SpiritTrees, ["TbheKd0E45"]],
+        ]),
+      ),
+    }),
+  },
+  {
+    title: "Nesting Workshop",
+    description:
+      "The Nesting Workshop was introduced in the Season of Nesting. The building can be accessed through Aviary Village.",
+    custom_id: planner.createCustomId({ d: "nesting" }),
+  },
+  {
+    title: "Concert Halls",
+    description: "Concert Hall was introduced in the Season of Duets. The hall can be accessed through Aviary Village.",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(new Map([[FilterType.SpiritTrees, ["4uhy67a14a"]]])),
+    }),
+  },
+  {
+    title: "Cinema",
+    description:
+      "The Cinema was introduced in the Season of Two Embers - Part One. The place can be accessed through the collaboration room accessed from Aviary Village. ",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "cinema").map((s) => s.guid)]]),
+      ),
+    }),
+  },
+  {
+    title: "Harmony Hall",
+    description:
+      "Harmony Hall was introduced in the Season of Performance. The building can be accessed through Aviary Village, the Village of Dreams and the Village Theatre.",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([
+          [FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "harmony").map((s) => s.guid)],
+          [FilterType.SpiritTrees, ["bkdgyeUcbZ"]],
+        ]),
+      ),
+    }),
+  },
+  {
+    title: "Secret Area",
+    description:
+      "The Secret Area is only available with a certain cape or during some events. The location can be accessed through the Vault of Knowledge.",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "office").map((s) => s.guid)]]),
+      ),
+    }),
+  },
+  {
+    title: "Wonderland Cafe",
+    description:
+      "The Wonderland Cafe was introduced in Days of Feast 2024 and can be accessed through Aviary Village during the event or via Cafe Corridor prop.",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "wonderland").map((s) => s.guid)]]),
+      ),
+    }),
+  },
+];
