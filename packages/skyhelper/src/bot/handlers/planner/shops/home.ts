@@ -72,6 +72,17 @@ const configs = (planner: BasePlannerHandler): Array<{ title: string; descriptio
       ),
     }),
   },
+  {
+    title: "Wonderland Cafe",
+    description:
+      "The Wonderland Cafe was introduced in Days of Feast 2024 and can be accessed through Aviary Village during the event or via Cafe Corridor prop.",
+    custom_id: planner.createCustomId({
+      d: "shops",
+      f: serializeFilters(
+        new Map([[FilterType.Shops, planner.data.shops.items.filter((s) => s.permanent === "wonderland").map((s) => s.guid)]]),
+      ),
+    }),
+  },
 ];
 export class ShopHomeDisplay extends BasePlannerHandler {
   igcs: IItemList[] = [];
