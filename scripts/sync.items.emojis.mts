@@ -9,7 +9,7 @@ const APP_ID = process.env.CLIENT_ID;
 const BOT_TOKEN = process.env.TOKEN;
 if (!APP_ID || !BOT_TOKEN) throw new Error("Missing required variables: APP_ID and BOT_TOKEN");
 const EMOJI_MAPPINGS_PATH = "packages/skyhelper/assets/emoji_hashes.json";
-const ITEMS_DATA_URL = "https://unpkg.com/skygame-data@0.x.x/assets/items.json";
+const ITEMS_DATA_URL = "https://unpkg.com/skygame-data@1.x.x/assets/items.json";
 interface Item {
   id: number;
   icon?: string;

@@ -6,7 +6,7 @@ import { parse as jsonc } from "jsonc-parser";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { realms_emojis, season_emojis } from "@skyhelperbot/constants";
-const URL = "https://unpkg.com/skygame-data@0.x.x/assets/everything.json";
+const URL = "https://unpkg.com/skygame-data@1.x.x/assets/everything.json";
 
 let cachedData: ISkyData | null = null;
 let lastFetchTime = 0;
