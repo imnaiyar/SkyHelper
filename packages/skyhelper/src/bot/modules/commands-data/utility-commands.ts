@@ -234,6 +234,7 @@ export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
         description: "Manage the bot settings for the server",
         type: ApplicationCommandOptionType.Subcommand,
       },
+      /*
       {
         name: "personalize",
         name_localizations: "commands:BOT.options.PERSONALIZE.name",
@@ -241,6 +242,7 @@ export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
         description: "Personalize the bot for this server",
         type: ApplicationCommandOptionType.Subcommand,
       },
+      */
     ],
     integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
     contexts: [InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel],
