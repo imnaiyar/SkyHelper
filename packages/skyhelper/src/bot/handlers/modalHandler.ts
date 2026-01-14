@@ -10,10 +10,21 @@ import { DisplayTabs } from "@/types/planner";
 import { nanoid } from "nanoid";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
-  const [month, year] = [
-    Utils.getModalComponent(helper.int as APIModalSubmitInteraction, "month", ComponentType.StringSelect, true).values[0],
-    Utils.getTextInput(helper.int as APIModalSubmitInteraction, "year", true).value,
-  ].map(Number);
+  const monthValue = Utils.getModalComponent(helper.int as APIModalSubmitInteraction, "month", ComponentType.StringSelect, true).values[0];
+  const yearValue = Utils.getTextInput(helper.int as APIModalSubmitInteraction, "year", true).value;
+
+  const month = Number(monthValue);
+  const year = Number(yearValue);
+
+  if (isNaN(year) || !Number.isInteger(year)) {
+    await helper.reply({
+      content: helper.t("commands:SHARDS_CALENDAR.RESPONSES.INVALID_DATE", {
+        DATE: `${monthValue}-${yearValue}`,
+      }),
+      flags: 64,
+    });
+    return;
+  }
 
   const testDate = DateTime.fromObject({ month, year });
   if (!testDate.isValid) {
