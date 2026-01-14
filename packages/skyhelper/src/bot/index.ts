@@ -1,4 +1,4 @@
-import "./instrument.js"; // sentry
+//import "./instrument.js"; // sentry
 CustomLogger.log({ level: { name: "Sentry", color: "\x1b[36m" } }, "Sentry Initialized\n\n");
 
 import "./validate-env.js"; // validate env variables
