@@ -22,7 +22,7 @@ export default defineButton({
             placeholder: _t("commands:SHARDS_CALENDAR.RESPONSES.MODAL_MONTH"),
             options: CalendarMonths.map((m, i) => ({
               label: m,
-              value: i + 1,
+              value: String(i + 1),
               default: i + 1 === month,
             })),
             required: true,
