@@ -17,7 +17,7 @@ export default defineButton({
           type: ComponentType.Label,
           label: _t("commands:SHARDS_CALENDAR.RESPONSES.MODAL_MONTH"),
           component: {
-            type: ComponentType.SelectMenu,
+            type: ComponentType.StringSelect,
             custom_id: "month",
             placeholder: _t("commands:SHARDS_CALENDAR.RESPONSES.MODAL_MONTH"),
             options: CalendarMonths.map((m, i) => ({
