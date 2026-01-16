@@ -51,6 +51,7 @@ export const realms_emojis = {
 } as const;
 
 export const season_emojis = {
+  Lightmending: "1461790726907101215",
   Migration: "1429896923526992092",
   "Two Embers - Part 1": "1424038546091671574",
   "Blue Bird": "1424038554820153457",
