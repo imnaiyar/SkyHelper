@@ -106,7 +106,8 @@
       "EMBED_DESCRIPTION": "詳細なシャード情報は{{shardsCmd}}を使用してください",
       "EMBED_FOOTER": "ページ {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "月/年を変更",
-      "MODAL_TITLE": "月/年を入力 (フォーマット: MM-YYYY)",
+      "MODAL_MONTH": "Select Month",
+      "MODAL_YEAR": "Enter Year (Format: YYYY)",
       "INVALID_DATE": "無効な日付形式 (`{{DATE}}`) です。月と年をこの形式で入力してください：MM-YYYY (例: 01-2022)"
     }
   },

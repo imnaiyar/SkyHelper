@@ -106,7 +106,8 @@
       "EMBED_DESCRIPTION": "Para información detallada, usa {{shardsCmd}}",
       "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "Cambiar Mes/Año",
-      "MODAL_TITLE": "Introduzca el Mes/Año (Formato: MM-AAAA)",
+      "MODAL_MONTH": "Select Month",
+      "MODAL_YEAR": "Enter Year (Format: YYYY)",
       "INVALID_DATE": "Fecha no valida ({{DATE}}). Por favor introduzca el mes y año en este formato: MM-AAAA (e.j. 01-2022)"
     }
   },
