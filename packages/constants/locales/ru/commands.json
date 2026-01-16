@@ -106,7 +106,8 @@
       "EMBED_DESCRIPTION": "Для получения подробной информации об осколках используйте {{shardsCmd}}",
       "EMBED_FOOTER": "Страница {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "Изменить месяц/год",
-      "MODAL_TITLE": "Введите месяц / год (Формат: ММ-ГГГГ)",
+      "MODAL_MONTH": "Select Month",
+      "MODAL_YEAR": "Enter Year (Format: YYYY)",
       "INVALID_DATE": "Неверный формат даты (`{{DATE}}`). Пожалуйста, введите месяц и год в этом формате: ММ-ГГГГ (например, 01-2022)"
     }
   },
