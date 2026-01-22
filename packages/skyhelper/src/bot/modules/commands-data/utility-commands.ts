@@ -330,3 +330,34 @@ export const PLANNER_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
   cooldown: 15,
   category: "Utility",
 };
+
+// #region calculator
+export const CALCULATOR_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
+  name: "calculator",
+  description: "calculate regular, seasonal and ascended candles",
+  data: {
+    integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
+    contexts: [InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel],
+    options: [
+      {
+        name: "candle-type",
+        description: "select the candle type to calculate",
+        type: ApplicationCommandOptionType.String,
+        choices: [
+          {
+            name: "Regular Candle",
+            value: "regular"
+          },
+          {
+            name: "Seasonal Candle",
+            value: "seasonal"
+          },
+          {
+            name: "Ascended Candle",
+            value: "ac"
+          }
+          ]
+      }
+      ]
+  }
+}
