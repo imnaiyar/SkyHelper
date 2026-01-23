@@ -1,6 +1,8 @@
 import { DateTime } from "luxon";
 import type { ShardsCountdown } from "../typings.js";
 import { shardsTimeline, shardConfig, shardsInfo, type ShardInfo } from "../constants/index.js";
+import { getDatesBetween } from "./utils.js";
+import { zone } from "@skyhelperbot/constants";
 /**
  * Sequence of Shards pattern
  */
@@ -126,6 +128,15 @@ export class ShardsUtil {
     return toReturn;
   }
 
+  static getShard(date: DateTime) {
+    const { currentRealm, currentShard } = this.shardsIndex(date);
+    const info = shardsInfo[currentRealm]![currentShard]!;
+    const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
+    if (isNoShard) return null;
+    const timings = shardsTimeline(date)[currentShard];
+    return { info, timings };
+  }
+
   /**
    * Get the next occuring black/red shard from the given date;
    * @param shardType The type of shard to get the next occuring shard for
@@ -135,21 +146,19 @@ export class ShardsUtil {
     date: DateTime,
     shardType?: Array<"black" | "red">,
   ): null | { index: number; start: DateTime; end: DateTime; duration: string; info: ShardInfo } {
-    const { currentRealm, currentShard } = this.shardsIndex(date);
-    const info = shardsInfo[currentRealm]![currentShard]!;
-    const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
-    if (isNoShard) return null;
+    const shard = this.getShard(date);
+    if (!shard) return null;
 
-    if (shardType && !shardType.some((s) => info.type.toLowerCase().includes(s))) return null;
-    const timings = shardsTimeline(date)[currentShard];
-    for (const [i, eventTiming] of timings.entries()) {
+    if (shardType && !shardType.some((s) => shard.info.type.toLowerCase().includes(s))) return null;
+
+    for (const [i, eventTiming] of shard.timings.entries()) {
       if (date <= eventTiming.start) {
         return {
           index: i + 1,
           start: eventTiming.start,
           end: eventTiming.end,
           duration: eventTiming.start.diff(date, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
-          info,
+          info: shard.info,
         };
       }
     }
@@ -169,5 +178,18 @@ export class ShardsUtil {
       nextShard = this.getNextShard(present, shardType);
     }
     return nextShard;
+  }
+
+  /**
+   * Get shards between given range
+   */
+  static getShardsBetween(start = DateTime.now().setZone(zone), end: DateTime) {
+    const dates = getDatesBetween(start, end);
+    const shards: Array<{ date: DateTime; shard: ReturnType<typeof ShardsUtil.getNextShard> }> = [];
+
+    for (const date of dates) {
+      shards.push({ date, shard: this.getNextShard(date) });
+    }
+    return shards;
   }
 }
