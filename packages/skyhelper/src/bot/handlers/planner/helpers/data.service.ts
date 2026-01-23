@@ -354,6 +354,15 @@ export class PlannerDataService {
   }
 
   /**
+   * Check if todays dailies was done
+   */
+  static hasDoneDailies(data = PlannerDataService.createEmpty(), guid: string, type: "season" | "event" | "dailies") {
+    const checkins = data[`${type}.checkin`] ?? {};
+    const date = typeof checkins === "string" ? checkins : checkins[guid];
+    return date ? DateTime.now().setZone(zone).hasSame(DateTime.fromISO(date, { zone }), "day") : false;
+  }
+
+  /**
    * Serialize a Set of GUIDs into a comma-separated string
    */
   static serializeGuidSet(set: Set<string>): string {
@@ -440,6 +449,15 @@ export interface UserPlannerData {
 
   /** Check-in for shards when user have cleared them */
   "shards.checkin"?: string;
+
+  /** Check-in for when users have done dailies */
+  "season.checkin"?: Record<string, string>;
+
+  /** Check-in for when users have done dailies */
+  "event.checkin"?: Record<string, string>;
+
+  /** Dailies checkin when season is not active */
+  "dailies.checkin"?: string;
 }
 
 export interface IPlannerCurrencies {

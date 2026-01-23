@@ -346,17 +346,18 @@ export const CALCULATOR_DATA: Omit<Command, "interactionRun" | "messageRun"> = {
         choices: [
           {
             name: "Regular Candle",
-            value: "regular",
+            value: "c",
           },
           {
             name: "Seasonal Candle",
-            value: "seasonal",
+            value: "sc",
           },
           {
             name: "Ascended Candle",
             value: "ac",
           },
         ],
+        required: true,
       },
     ],
   },

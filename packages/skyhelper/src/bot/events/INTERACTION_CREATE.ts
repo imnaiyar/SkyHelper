@@ -36,6 +36,7 @@ import { CustomId } from "@/utils/customId-store";
 import { fetchSkyData, handlePlannerNavigation, PlannerDataService, PlannerService } from "@/planner";
 import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
+import { handleCalculatorModal } from "@/handlers/calculator";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -331,6 +332,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         default: {
           if (id.startsWith("planner-friend-name-modal")) {
             await handlePlannerFriendNameModal(helper);
+            return;
+          }
+
+          if (id.startsWith("calculator_modal;")) {
+            await handleCalculatorModal(helper);
             return;
           }
           return;

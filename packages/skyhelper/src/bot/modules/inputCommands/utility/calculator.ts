@@ -1,62 +1,141 @@
 import { CALCULATOR_DATA } from "@/modules/commands-data/utility-commands";
-import { type Command } from "@/structures";
-import { ComponentType } from "@discordjs/core";
+import { currencyMap, fetchSkyData, PlannerDataService, PlannerService } from "@/planner";
+import type { Command } from "@/structures";
+import type { UserSchema } from "@/types/schemas";
+import {
+  ComponentType,
+  TextInputStyle,
+  type APICheckboxGroupOption,
+  type APIModalInteractionResponseCallbackData,
+} from "@discordjs/core";
+
+type CandleType = "c" | "ac" | "sc";
+
 export default {
   ...CALCULATOR_DATA,
   async interactionRun({ helper, options }) {
-    const type = options.getString("candle-type", true);
-    const settings = helper.client.schemas.getUser(helper.user);
-    helper.launchModal(getCandlesModal(type, settings));
+    const type = options.getString("candle-type", true) as CandleType;
+    const [settings, skyData] = await Promise.all([helper.client.schemas.getUser(helper.user), fetchSkyData(helper.client)]);
+    await helper.launchModal(getCandlesModal(type, settings, skyData));
   },
 } satisfies Command;
 
-function getCandlesModal(type: string, settings) {
-  const modal = {
-    custom_id: "sjsj",
+function getCandlesModal(
+  type: CandleType,
+  settings: UserSchema,
+  skyData: Awaited<ReturnType<typeof fetchSkyData>>,
+): APIModalInteractionResponseCallbackData {
+  const activeSeason = PlannerService.getCurrentSeason(skyData);
+
+  const currentValue = getCurrencyValue(type, settings.plannerData);
+  const checkboxes = buildCheckboxes(type, settings, activeSeason);
+
+  return {
+    custom_id: `calculator_modal;${type}` + (type === "sc" ? `;${activeSeason?.guid ?? ""}` : ""),
     title: "Calculator",
     components: [
       {
         type: ComponentType.TextDisplay,
-        content: `The following values may have been pre-filled based on your planner data. If they are in-accurate, provide the correct values.`,
+        content:
+          "The following values may have been pre-filled based on your planner data. If they are inaccurate, provide the correct values.",
       },
       {
         type: ComponentType.Label,
-        label: (type === "regular" ? "Regular" : type === "seasonal" ? "Seasonal" : "Ascended") + " Candles",
+        label: currencyMap[type],
         description: "Enter the amount of candle(s) you currently have!",
         component: {
           type: ComponentType.TextInput,
-          custom_id: "input",
-          placeholder: "2",
-          style: 1,
+          custom_id: "input_have",
+          value: String(currentValue),
+          style: TextInputStyle.Short,
         },
       },
+      ...(type !== "sc"
+        ? [
+            {
+              type: ComponentType.Label as const,
+              label: currencyMap[type],
+              description: "Enter the amount of candle(s) you need",
+              component: {
+                type: ComponentType.TextInput as const,
+                custom_id: "input_need",
+                value: String(currentValue),
+                style: TextInputStyle.Short,
+              },
+            },
+          ]
+        : []),
       {
         type: ComponentType.Label,
-        label: "Do you season pass?",
+        label: "Select all that applies!",
         component: {
-          type: 23,
-          custom_id: "pass",
-        },
-      },
-      {
-        type: ComponentType.Label,
-        label: "Did you complete your dailies today?",
-        component: {
-          type: 23,
-          custom_id: "dailies",
-        },
-      },
-      {
-        type: ComponentType.Label,
-        label: "Sync with the planner?",
-        description: "Data provided here will be used to sync/update currecies and pass with planner data.",
-        component: {
-          type: 23,
-          custom_id: "sync",
-          default: true,
+          type: ComponentType.CheckboxGroupAction,
+          custom_id: "checkboxes",
+          options: checkboxes,
+          required: false,
         },
       },
     ],
   };
-  return modal;
+}
+
+function getCurrencyValue(type: CandleType, data: UserSchema["plannerData"]): number {
+  const currencies = data?.currencies;
+  if (!currencies) return 0;
+
+  switch (type) {
+    case "c":
+      return currencies.candles;
+    case "ac":
+      return currencies.ascendedCandles;
+    case "sc": {
+      const seasonCurrencies = currencies.seasonCurrencies;
+
+      const firstSeason = Object.values(seasonCurrencies)[0];
+      return firstSeason?.candles ?? 0;
+    }
+  }
+}
+
+function buildCheckboxes(
+  type: CandleType,
+  settings: UserSchema,
+  activeSeason: ReturnType<typeof PlannerService.getCurrentSeason>,
+): APICheckboxGroupOption[] {
+  const checkboxes: APICheckboxGroupOption[] = [];
+
+  // eslint-disable-next-line
+  const showDailies = (activeSeason && type === "sc") || (type === "c" && !activeSeason);
+  if (showDailies) {
+    checkboxes.push({
+      label: "Did you complete your dailies today?",
+      value: "dailies",
+      default: PlannerDataService.hasDoneDailies(
+        settings.plannerData,
+        activeSeason?.guid ?? "",
+        type === "c" ? "season" : "dailies",
+      ),
+    });
+  }
+
+  if (activeSeason && type === "sc") {
+    checkboxes.push({
+      label: "Do you have the season pass?",
+      value: "pass",
+      default: PlannerDataService.hasGuid(settings.plannerData?.seasonPasses, activeSeason.guid),
+    });
+  }
+
+  if (type === "ac") {
+    checkboxes.push({ label: "Have you done Eden this week?", value: "weekly" });
+  }
+
+  checkboxes.push({
+    label: "Sync with the planner?",
+    value: "sync",
+    description: "Data provided here will be used to sync/update currencies and pass with planner data.",
+    default: true,
+  });
+
+  return checkboxes;
 }
