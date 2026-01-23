@@ -8,6 +8,9 @@ import {
   type APICheckboxGroupOption,
   type APIModalInteractionResponseCallbackData,
 } from "@discordjs/core";
+import { zone } from "@skyhelperbot/constants";
+import { ShardsUtil } from "@skyhelperbot/utils";
+import { DateTime } from "luxon";
 
 type CandleType = "c" | "ac" | "sc";
 
@@ -128,6 +131,14 @@ function buildCheckboxes(
 
   if (type === "ac") {
     checkboxes.push({ label: "Have you done Eden this week?", value: "weekly" });
+    const shard = ShardsUtil.getShard(DateTime.now().setZone(zone));
+    if (shard && shard.type === "red") {
+      checkboxes.push({
+        label: "Have you cleared today's shard?",
+        value: "today_shard",
+        default: PlannerDataService.shardsCleared(settings.plannerData),
+      });
+    }
   }
 
   checkboxes.push({

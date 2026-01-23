@@ -38,7 +38,12 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
     case "ac": {
       const target = client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value;
       const { daysWithWeeklyOnly, daysCombined, daysWithShardOnly, shardCountCombined, shardCountCombinedAc, shardCountOnly } =
-        calculateAscendedCandles(Number(current), Number(target), checkboxes?.includes("weekly") ?? false);
+        calculateAscendedCandles(
+          Number(current),
+          Number(target),
+          checkboxes?.includes("weekly") ?? false,
+          checkboxes?.includes("today_shard") ?? false,
+        );
 
       component = container(
         textDisplay(`Your Current ACs: ${current}`, `Target ACs Needed: ${target}`),
@@ -93,7 +98,12 @@ interface RewardDaysResult {
 }
 
 // TODO: implement if cleared shards today
-export function calculateAscendedCandles(currentValue: number, targetValue: number, weeklyDone = false): RewardDaysResult {
+export function calculateAscendedCandles(
+  currentValue: number,
+  targetValue: number,
+  weeklyDone = false,
+  shardsCleared = false,
+): RewardDaysResult {
   const needed = targetValue - currentValue;
   const currentDate = DateTime.now().setZone(zone);
 
@@ -137,14 +147,16 @@ export function calculateAscendedCandles(currentValue: number, targetValue: numb
       dailyWeekly = MAX_WEEKLY_AC;
     }
 
-    const dailyShard = ShardsUtil.getNextShard(simDate, ["red"])?.info.ac ?? 0;
+    let dailyShard = ShardsUtil.getNextShard(simDate, ["red"])?.info.ac ?? 0;
+
+    // reset to zero if already cleared for todays shard
+    if (daysPassed === 0 && shardsCleared) dailyShard = 0;
+    else shardCount++;
 
     // Update Accumulators
     accWeekly += dailyWeekly;
     accShard += dailyShard;
     accCombined += dailyWeekly + dailyShard;
-
-    if (dailyShard > 0) shardCount++;
 
     // We only set the result if it hasn't been set yet (to capture the earliest day)
     if (resWeekly === null && accWeekly >= needed) {
