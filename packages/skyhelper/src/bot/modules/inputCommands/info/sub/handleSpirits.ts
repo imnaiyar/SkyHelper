@@ -34,14 +34,23 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: IR
 
   const getUpdate = async (commandHelper: InteractionHelper) => {
     const spirit = data.guids.get(value) as ISpirit;
-    const row: APIActionRowComponent<APIStringSelectComponent> = {
+
+    // Split spirits into chunks of 25 to comply with Discord's select menu limit
+    const chunkSize = 25;
+    const spiritChunks: ISpirit[][] = [];
+    for (let i = 0; i < spirits.length; i += chunkSize) {
+      spiritChunks.push(spirits.slice(i, i + chunkSize));
+    }
+
+    // Create a row for each chunk
+    const rows: APIActionRowComponent<APIStringSelectComponent>[] = spiritChunks.map((chunk, index) => ({
       type: ComponentType.ActionRow,
       components: [
         {
           type: ComponentType.StringSelect,
-          custom_id: client.utils.store.serialize(CustomId.SeasonalSpiritRow, { user: helper.user.id }),
-          placeholder: placehoder,
-          options: spirits.map((sp) => ({
+          custom_id: client.utils.store.serialize(CustomId.SeasonalSpiritRow, { user: helper.user.id, chunk: index }),
+          placeholder: spiritChunks.length > 1 ? `${placehoder} (${index + 1}/${spiritChunks.length})` : placehoder,
+          options: chunk.map((sp) => ({
             label: sp.name,
             value: sp.guid,
             emoji: sp.emoji ? helper.client.utils.parseEmoji(sp.emoji)! : undefined,
@@ -49,12 +58,12 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: IR
           })),
         },
       ],
-    };
+    }));
     const res = await new Spirits(spirit, t, client, data).getResponseEmbed(commandHelper.user.id);
 
     const msg = await commandHelper.editReply({
       ...res,
-      components: [...(res.components ?? []), row],
+      components: [...(res.components ?? []), ...rows],
       flags: MessageFlags.IsComponentsV2,
     });
     return msg;
