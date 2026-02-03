@@ -45,7 +45,7 @@
   "packageManager": "pnpm@10.15.1",
   "pnpm": {
     "overrides": {
-      "discord-api-types": "link:../../.local/share/pnpm/global/5/node_modules/discord-api-types"
+      "discord-api-types": "0.38.38"
     },
     "onlyBuiltDependencies": [
       "@nestjs/core",
@@ -64,7 +64,7 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@octokit/action": "^7.0.0",
-    "discord-api-types": "link:../../.local/share/pnpm/global/5/node_modules/discord-api-types",
+    "discord-api-types": "^0.38.38",
     "jsonc-parser": "^3.3.1"
   }
 }

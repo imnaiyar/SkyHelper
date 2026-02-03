@@ -72,7 +72,7 @@ function getCandlesModal(
         type: ComponentType.Label,
         label: "Select all that applies!",
         component: {
-          type: ComponentType.CheckboxGroupAction,
+          type: ComponentType.CheckboxGroup,
           custom_id: "checkboxes",
           options: checkboxes,
           required: false,

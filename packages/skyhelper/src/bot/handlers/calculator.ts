@@ -3,6 +3,10 @@ import { zone } from "@skyhelperbot/constants";
 import { container, separator, ShardsUtil, textDisplay } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIContainerComponent, type APIModalSubmitInteraction } from "discord-api-types/v10";
 import { DateTime } from "luxon";
+const BASE_DAILY_CANDLES = 15;
+const MAX_DAILY_CANDLES = 21;
+const MAX_DAILY_SC = 5;
+const MAX_WEEKLY_AC = 15.75;
 
 export async function handleCalculatorModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction,
@@ -37,13 +41,21 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
     }
     case "ac": {
       const target = client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value;
-      const { daysWithWeeklyOnly, daysCombined, daysWithShardOnly, shardCountCombined, shardCountCombinedAc, shardCountOnly } =
-        calculateAscendedCandles(
-          Number(current),
-          Number(target),
-          checkboxes?.includes("weekly") ?? false,
-          checkboxes?.includes("today_shard") ?? false,
-        );
+      const {
+        daysWithWeeklyOnly,
+        daysCombined,
+        daysWithShardOnly,
+        shardCountCombined,
+        shardCountCombinedAc,
+        shardCountOnly,
+        edenCount,
+        edenCountCombined,
+      } = calculateAscendedCandles(
+        Number(current),
+        Number(target),
+        checkboxes?.includes("weekly") ?? false,
+        checkboxes?.includes("today_shard") ?? false,
+      );
 
       component = container(
         textDisplay(`Your Current ACs: ${current}`, `Target ACs Needed: ${target}`),
@@ -52,8 +64,10 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
           `### Days Needed to get the target ascended candles?`,
           `**If you do:**`,
           `- Only eden weekly: It'll take \`${daysWithWeeklyOnly}\` days`,
+          `  -# - There will be total ${edenCount} eden resets giving you: \`${MAX_WEEKLY_AC} × ${edenCount} = ${MAX_WEEKLY_AC * edenCount} AC\``,
           `- Eden + All red shards: It'll take \`${daysCombined}\` days`,
-          `  -# - There will be total \`${shardCountCombined}\` shards giving you \`${shardCountCombinedAc}\` ACs`,
+          `  -# - There will be total \`${shardCountCombined}\` shards giving you \`${shardCountCombinedAc}\` ACs and total ${edenCountCombined} eden resets giving you \`${MAX_WEEKLY_AC} × ${edenCountCombined} = ${MAX_WEEKLY_AC * edenCountCombined} AC\`.`,
+          `  -# - Total: \`${shardCountCombinedAc} + ${MAX_WEEKLY_AC * edenCountCombined} = ${shardCountCombinedAc + MAX_WEEKLY_AC * edenCountCombined} AC\``,
           `- Red Shards only: It'll take \`${daysWithShardOnly}\``,
           `  -# - Assuming you complete all shard events, you'll have to do a sum total of \`${shardCountOnly}\` red shards`,
         ),
@@ -66,10 +80,6 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
   }
   await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
 }
-const BASE_DAILY_CANDLES = 15;
-const MAX_DAILY_CANDLES = 21;
-const MAX_DAILY_SC = 5;
-const MAX_WEEKLY_AC = 15.75;
 
 // #region Candles
 function calculateCandles(current: number, target: number, dailiesDone = false) {
@@ -94,6 +104,8 @@ interface RewardDaysResult {
   daysCombined: number;
   shardCountCombined: number;
   shardCountOnly: number;
+  edenCount: number;
+  edenCountCombined: number;
   shardCountCombinedAc: number;
 }
 
@@ -115,6 +127,8 @@ export function calculateAscendedCandles(
       shardCountCombined: 0,
       shardCountCombinedAc: 0,
       shardCountOnly: 0,
+      edenCount: 0,
+      edenCountCombined: 0,
     };
   }
 
@@ -132,6 +146,8 @@ export function calculateAscendedCandles(
   let shardCountCombined = 0;
   let shardCountCombinedAc = 0;
   let shardCountOnly = 0;
+  let edenCount = 0;
+  let edenCountCombined = 0;
 
   let daysPassed = 0;
   let simDate = currentDate;
@@ -142,9 +158,13 @@ export function calculateAscendedCandles(
   while ((resWeekly === null || resShard === null || resCombined === null) && daysPassed < MAX_DAYS) {
     let dailyWeekly = 0;
     if (daysPassed === 0) {
-      if (!weeklyDone) dailyWeekly = MAX_WEEKLY_AC;
+      if (!weeklyDone) {
+        dailyWeekly = MAX_WEEKLY_AC;
+        edenCount++;
+      }
     } else if (simDate.weekday === 7) {
       dailyWeekly = MAX_WEEKLY_AC;
+      edenCount++;
     }
 
     let dailyShard = ShardsUtil.getNextShard(simDate, ["red"])?.info.ac ?? 0;
@@ -172,6 +192,7 @@ export function calculateAscendedCandles(
       resCombined = daysPassed;
       shardCountCombined = shardCount;
       shardCountCombinedAc = accShard;
+      edenCountCombined = edenCount;
     }
 
     // If all three scenarios are satisfied, we can stop early.
@@ -190,5 +211,7 @@ export function calculateAscendedCandles(
     shardCountCombined,
     shardCountCombinedAc,
     shardCountOnly,
+    edenCount,
+    edenCountCombined,
   };
 }
