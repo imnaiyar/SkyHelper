@@ -6,7 +6,9 @@ import * as Sentry from "@sentry/node";
  * For Dashboard, validate dashboard admin
  * @param user
  */
-export function checkAdmin(user: APIUser) {
+export function checkAdmin(user?: APIUser) {
+  if (!user) return false;
+
   Sentry.addBreadcrumb({
     category: "user",
     message: "Checking if user is admin",

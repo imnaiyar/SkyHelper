@@ -7,7 +7,7 @@ import { checkAdmin } from "../utils/checkAdmin.js";
 
 export interface AuthRequest extends Request {
   session: UserSession;
-  user: APIUser;
+  user?: APIUser;
 }
 
 @Injectable()
