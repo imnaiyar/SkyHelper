@@ -58,7 +58,7 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
       );
 
       component = container(
-        textDisplay(`Your Current ACs: ${current}`, `Target ACs Needed: ${target}`),
+        textDisplay(`## Your Current ACs: ${current}`, `Target ACs Needed: ${target}`, `Total neede \`${target - current}\` ACs`),
         separator(),
         textDisplay(
           `### Days Needed to get the target ascended candles?`,
@@ -70,6 +70,10 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
           `  -# - Total: \`${shardCountCombinedAc} + ${MAX_WEEKLY_AC * edenCountCombined} = ${shardCountCombinedAc + MAX_WEEKLY_AC * edenCountCombined} AC\``,
           `- Red Shards only: It'll take \`${daysWithShardOnly}\``,
           `  -# - Assuming you complete all shard events, you'll have to do a sum total of \`${shardCountOnly}\` red shards`,
+        ),
+        separator(),
+        textDisplay(
+          `-# Disclaimer: Shard rewards are calculated based on normal shard schedule. Shard schedule may change due to ongoing events resulting in varying rewards. Please verify in-game.`,
         ),
       );
       break;
@@ -136,6 +140,7 @@ export function calculateAscendedCandles(
   let accWeekly = 0;
   let accShard = 0;
   let accCombined = 0;
+  let edenCounts = 0;
 
   // Trackers for results (null means not yet reached)
   let resWeekly: number | null = null;
@@ -160,11 +165,11 @@ export function calculateAscendedCandles(
     if (daysPassed === 0) {
       if (!weeklyDone) {
         dailyWeekly = MAX_WEEKLY_AC;
-        edenCount++;
+        edenCounts++;
       }
     } else if (simDate.weekday === 7) {
       dailyWeekly = MAX_WEEKLY_AC;
-      edenCount++;
+      edenCounts++;
     }
 
     let dailyShard = ShardsUtil.getNextShard(simDate, ["red"])?.info.ac ?? 0;
@@ -181,6 +186,7 @@ export function calculateAscendedCandles(
     // We only set the result if it hasn't been set yet (to capture the earliest day)
     if (resWeekly === null && accWeekly >= needed) {
       resWeekly = daysPassed;
+      edenCount = edenCounts;
     }
 
     if (resShard === null && accShard >= needed) {
@@ -192,7 +198,7 @@ export function calculateAscendedCandles(
       resCombined = daysPassed;
       shardCountCombined = shardCount;
       shardCountCombinedAc = accShard;
-      edenCountCombined = edenCount;
+      edenCountCombined = edenCounts;
     }
 
     // If all three scenarios are satisfied, we can stop early.
