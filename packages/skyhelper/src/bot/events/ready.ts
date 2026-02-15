@@ -5,6 +5,7 @@ import chalk from "chalk";
 import { bootstrap } from "@/api/main";
 import { ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
+import { fetchSkyData } from "@/planner";
 
 const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.logger.custom(`Logged in as ${client.user.username}`, "BOT");
@@ -28,8 +29,11 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.readTimestamp = Date.now();
   client.ready = true;
 
+  // fetch planner data on ready so its cached;
+  await fetchSkyData(client);
+
   // send ready log
-  await wait(5000); // wait 3s for guilds cache to fill;
+  await wait(5000); // wait 5s for guilds cache to fill;
   const readyalertemb: APIEmbed = {
     fields: [
       {
