@@ -91,6 +91,14 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         });
         return;
       }
+      // metrics
+      Sentry.metrics.count("commands_usage", 1, {
+        attributes: {
+          command: command.name,
+          guild: interaction.guild_id ?? "dm",
+          user: helper.user.id,
+        },
+      });
       const options = new InteractionOptionResolver(interaction);
       const validate = await validateInteractions({ command, interaction, options, helper, t });
       if (!validate.status) {
