@@ -96,7 +96,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         attributes: {
           command: command.name,
           guild: interaction.guild_id ?? "dm",
-          user: helper.user.id,
+          user: `${helper.user.username} (${helper.user.id})`,
         },
       });
       const options = new InteractionOptionResolver(interaction);
