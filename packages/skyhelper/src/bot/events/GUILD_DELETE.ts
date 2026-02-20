@@ -1,6 +1,7 @@
 import type { Event } from "@/structures/Event";
 import type { GatewayDispatchEvents } from "@discordjs/core";
 import { sendGuildLog, updateBotStatsMessage } from "./GUILD_CREATE.js";
+import * as Sentry from "@sentry/node";
 
 const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (client, { data: g }) => {
   // if guild is unavailable due to outage, add to unavailable guilds and return
@@ -20,6 +21,9 @@ const guildDeleteHandler: Event<GatewayDispatchEvents.GuildDelete> = async (clie
   }
 
   client.logger.custom(`Guild: ${guild.name} (${guild.id}); Members: ${guild.member_count}`, "Guild Left");
+
+  // sentry metrics
+  Sentry.metrics.gauge("guild_count", client.guilds.size);
 
   // Delete from db
   await client.schemas.GuildModel.deleteOne({ _id: g.id });

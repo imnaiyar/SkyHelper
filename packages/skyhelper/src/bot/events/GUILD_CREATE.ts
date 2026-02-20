@@ -3,6 +3,7 @@ import type { Event } from "../structures/Event.js";
 import { postBotListStats } from "@/utils/postBotLists";
 import { resolveColor } from "@skyhelperbot/utils";
 import type { SkyHelper } from "@/structures/Client";
+import * as Sentry from "@sentry/node";
 
 const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (client, { data: guild }) => {
   if (guild.unavailable) return; // this will never be sent to create event, but still ig
@@ -36,6 +37,9 @@ const guildCreateHandler: Event<GatewayDispatchEvents.GuildCreate> = async (clie
   }
 
   client.logger.custom(`Guild: ${guild.name} (${guild.id}); Members: ${guild.member_count}`, "Guild Joined");
+
+  // sentry metrics
+  Sentry.metrics.gauge("guild_count", client.guilds.size);
 
   // register guild on db
   await client.schemas.getSettings({ ...guild, clientMember });
