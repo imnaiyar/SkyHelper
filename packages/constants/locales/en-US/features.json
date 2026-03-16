@@ -75,6 +75,22 @@
   "hangman": {
     "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
     "GAME_ACTIVE": "There is already a game running in this channel, please wait for it to finish. Or run in a different channel!",
-    "DOUBLE_MODE_GUILD": "Double mode can only be played in servers I'm a member of."
+    "DOUBLE_MODE_GUILD": "Double mode can only be played in servers I'm a member of.",
+    "CUSTOM_WORD_DISALLOWED": "Custom words are not allowed in single player mode.",
+    "INSTRUCTIONS_BASE": "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.",
+    "INSTRUCTIONS_SINGLE": "Each wrong answer will cost lives. The embed will show how many lives you have left. You'll lose if you fail to guess the word correctly before your lives runs out.",
+    "INSTRUCTIONS_DOUBLE": "Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins."
+  },
+  "skygame": {
+    "LEADERBOARD_SERVER_ONLY": "Run this command in a server when `type` is set to `Server`"
+  },
+  "planner": {
+    "SEARCH_FAILED": "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",
+    "NOT_IMPLEMENTED": "Not Implemented Yet"
+  },
+  "linked-role": {
+    "INTRO": "Linked role is a special kind of roles that can be used to connect a user account with an application (in this case, the SkyHelper bot).\nThis allows the bot to update user's role connection data to display specific information on a user's profile in a server (see the attached pic). In this case, we can use this to display basic sky profile (Preferred name, preferences, etc.).",
+    "GUIDES": "Due to the complicated nature of linked roles, it is difficult to explain everything here, so we have prepared some guides to help you understand how to use linked roles.\n- [What is a linked?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [How you can enable linked roles in your server?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [How to get/link/update your sky profile with the bot?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
+    "NAVIGATE": "-# If Linked Role connection is enabled for SkyHelper in this server, you can get it by navigating to <id:linked-roles>."
   }
 }

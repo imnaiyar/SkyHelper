@@ -43,7 +43,7 @@ export default {
           const game = options.getString("game", true) as "hangman" | "scrambled";
           if (type === "server" && !guild) {
             return void (await helper.reply({
-              content: "Run this command in a server when `type` is set to `Server`",
+              content: helper.t("features:skygame.LEADERBOARD_SERVER_ONLY"),
               flags: 64,
             }));
           }
