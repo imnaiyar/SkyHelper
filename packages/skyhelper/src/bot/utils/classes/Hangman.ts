@@ -13,7 +13,6 @@ import type { SkyHelper } from "@/structures";
 import { updateUserGameStats } from "../utils.js";
 import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { CustomId, store } from "../customId-store.js";
-import { getTranslator } from "@/i18n";
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Array<T> {
@@ -72,9 +71,6 @@ export class Hangman<T extends ModeType, K extends WordType> {
   /** Collector listening for stop */
   private _stopCollector: InteractionCollector<ComponentType.Button> | null = null;
 
-  /** Translator function bound to the game initiator's locale */
-  private t: ReturnType<typeof getTranslator> = getTranslator("en-US");
-
   // #region constructor
   constructor(
     private readonly channel: APITextChannel,
@@ -105,7 +101,6 @@ export class Hangman<T extends ModeType, K extends WordType> {
       this.word = hangmanWords.random();
     }
     if (option.gameInitiator) this.initiator = option.gameInitiator;
-    if (option.t) this.t = option.t;
   }
 
   public async inititalize() {
@@ -363,7 +358,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
     this._stopCollector.on("collect", async (i) => {
       if ((i.member?.user ?? i.user!).id !== initiator.id) {
         await this.client.api.interactions.reply(i.id, i.token, {
-          content: this.t("features:hangman.INITIATOR_ONLY"),
+          content: "Only this game's initiator can end the game.",
           flags: 64,
         });
         return;
@@ -371,7 +366,7 @@ export class Hangman<T extends ModeType, K extends WordType> {
       this._stopped = true;
 
       await this.client.api.interactions.reply(i.id, i.token, {
-        content: this.t("features:hangman.GAME_STOPPED"),
+        content: "The game was stopped by the game initiator!",
       });
 
       if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
@@ -386,7 +381,6 @@ interface HangmanOptionsBase<T extends ModeType, K extends WordType> {
   type: K;
   players: APIUser[];
   gameInitiator?: APIUser;
-  t?: ReturnType<typeof getTranslator>;
 }
 
 type HangmanOptions<T extends ModeType, K extends WordType> = HangmanOptionsBase<T, K> &

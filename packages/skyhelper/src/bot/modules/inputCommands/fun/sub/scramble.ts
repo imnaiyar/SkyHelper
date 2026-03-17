@@ -206,7 +206,6 @@ export async function handleDoubleMode(helper: InteractionHelper) {
         {
           players,
           gameInitiator: helper.user,
-          t: helper.t,
         },
         helper.client,
       );

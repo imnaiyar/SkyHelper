@@ -80,15 +80,12 @@
     "INSTRUCTIONS_BASE": "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.",
     "INSTRUCTIONS_SINGLE": "Each wrong answer will cost lives. The embed will show how many lives you have left. You'll lose if you fail to guess the word correctly before your lives runs out.",
     "INSTRUCTIONS_DOUBLE": "Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.",
-    "INITIATOR_ONLY": "Only this game's initiator can end the game.",
-    "GAME_STOPPED": "The game was stopped by the game initiator!",
     "NO_LEADERBOARD_DATA": "Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!",
     "GUESSED_CORRECTLY": "You guessed correctly! 🎉",
     "GUESSED_INCORRECTLY": "You guessed incorrectly! 😢\nThe correct word was `{{WORD}}`"
   },
   "skygame": {
-    "LEADERBOARD_SERVER_ONLY": "Run this command in a server when `type` is set to `Server`",
-    "GAME_ENDED": "It looks like this game has already ended!"
+    "LEADERBOARD_SERVER_ONLY": "Run this command in a server when `type` is set to `Server`"
   },
   "planner": {
     "SEARCH_FAILED": "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",

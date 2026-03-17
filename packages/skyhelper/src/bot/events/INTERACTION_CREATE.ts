@@ -313,7 +313,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       }
 
       if (id === client.utils.customId.SkyGameEndGame && !client.gameData.has(interaction.channel.id)) {
-        await helper.reply({ content: t("features:skygame.GAME_ENDED"), flags: 64 });
+        await helper.reply({ content: "It looks like this game has already ended!", flags: 64 });
         return;
       }
 
