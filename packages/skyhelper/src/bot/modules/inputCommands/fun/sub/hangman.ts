@@ -118,6 +118,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
             ...(word ? { word } : {}),
             ...(mode === "single" ? { totalLives: maxLives } : {}),
             gameInitiator: helper.user,
+            t: helper.t,
           },
           client,
         );

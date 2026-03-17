@@ -13,6 +13,7 @@ import { updateUserGameStats } from "../utils.js";
 import { InteractionCollector } from "./Collector.js";
 import { container, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { CustomId, store } from "../customId-store.js";
+import { getTranslator } from "@/i18n";
 /** Base class for game controllers */
 export abstract class GameController {
   /** Players participating in this game */
@@ -27,14 +28,19 @@ export abstract class GameController {
   /** Collector listening for stop */
   protected _stopCollector: InteractionCollector<ComponentType.Button> | null = null;
 
+  /** Translator function bound to the game initiator's locale */
+  protected t: ReturnType<typeof getTranslator> = getTranslator("en-US");
+
   constructor(
     protected readonly channel: APITextChannel,
     players: APIUser[],
     gameInitiator: APIUser | null,
     protected readonly client: SkyHelper,
+    t?: ReturnType<typeof getTranslator>,
   ) {
     this.players = players;
     this.initiator = gameInitiator;
+    if (t) this.t = t;
   }
 
   /** Initialize the game */
@@ -63,7 +69,7 @@ export abstract class GameController {
     this._stopCollector.on("collect", async (i) => {
       if ((i.member?.user ?? i.user!).id !== initiator.id) {
         await this.client.api.interactions.reply(i.id, i.token, {
-          content: "Only this game's initiator can end the game.",
+          content: this.t("features:hangman.INITIATOR_ONLY"),
           flags: 64,
         });
         return;
@@ -71,7 +77,7 @@ export abstract class GameController {
       this._stopped = true;
 
       await this.client.api.interactions.reply(i.id, i.token, {
-        content: "The game was stopped by the game initiator!",
+        content: this.t("features:hangman.GAME_STOPPED"),
       });
 
       if (this._stopCollector && !this._stopCollector.ended) this._stopCollector.stop();
@@ -108,7 +114,7 @@ export class Scrambled extends GameController {
   private roundWinner: APIUser | null = null;
 
   constructor(channel: APITextChannel, option: ScrambledRoundsOptions, client: SkyHelper) {
-    super(channel, option.players, option.gameInitiator ?? null, client);
+    super(channel, option.players, option.gameInitiator ?? null, client, option.t);
     this.currentWord = scrambleWord();
     this.words.push(this.currentWord);
     if (option.players.length !== 2) {
@@ -365,6 +371,7 @@ interface ScrambledRoundsOptions {
   gameInitiator?: APIUser;
   maxRounds?: number;
   timePerRound?: number;
+  t?: ReturnType<typeof getTranslator>;
 }
 
 interface PlayerRoundStats {
