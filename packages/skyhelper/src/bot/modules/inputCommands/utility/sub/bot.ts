@@ -123,7 +123,7 @@ export async function botManage(helper: InteractionHelper) {
     const hasPerms = PermissionsUtil.overwriteFor(guild!.clientMember, channel, guild!).has(["ViewChannel", "SendMessages"]);
     if (!hasPerms) {
       return await client.api.interactions.editReply(int.application_id, submit.token, {
-        content: `I do not have permission to access <#${announcement_channel}>. Please make sure I have \`View Channel\` and \`Send Messages\` permissions in that channel.`,
+        content: helper.t("errors:NO_CHANNEL_PERM", { CHANNEL: announcement_channel }),
       });
     }
   }

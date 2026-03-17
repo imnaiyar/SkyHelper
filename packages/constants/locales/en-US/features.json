@@ -44,17 +44,6 @@
     "NEXT-OCC": "Next Occurence: {{TIME}} (in {{DURATION}})",
     "NEXT-OCC-IDLE": "Next Occurence: {{TIME}}"
   },
-  "reminders": {
-    "ROLE_MENTION": "Hey, {{ROLE}}",
-    "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
-    "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
-    "TITLE": "{{TYPE}} Reminder",
-    "DAILY_QUESTS": "Daily Quests",
-    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})",
-    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
-    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}"
-  },
   "REALMS": {
     "ISLE": "Isle of Dawn",
     "PRAIRIE": "Daylight Prairie",
@@ -70,7 +59,10 @@
     "REALM_TITLE": "Realm",
     "TREE_TITLE": "Friendship Tree (Last Visit) by {{CREDIT}}",
     "SEASONAL_CHART": "Seasonal Price Chart by {{CREDIT}}",
-    "LOCATION_TITLE": "Location by {{CREDIT}}"
+    "LOCATION_TITLE": "Location by {{CREDIT}}",
+    "NO_SPIRIT": "No spirit found!",
+    "NO_COLLECTIBLES": "No collectibles found for this spirit, or something went wrong!",
+    "NO_EXPRESSION": "Something went wrong! No data found"
   },
   "hangman": {
     "NOT_PLAYABLE": "This game can only be played in channels where I can send messages. This command is in accessible in user-app context, make sure you run the command in a server I am a member of or in my DM.",
@@ -123,11 +115,6 @@
     "TOGGLE_UPDATED": "Successfully updated {{EVENT}} reminders!",
     "INVALID_CHANNEL": "Invalid channel type. Please provide a valid text channel or thread channel."
   },
-  "spirits": {
-    "NO_SPIRIT": "No spirit found!",
-    "NO_COLLECTIBLES": "No collectibles found for this spirit, or something went wrong!",
-    "NO_EXPRESSION": "Something went wrong! No data found"
-  },
   "quests": {
     "NO_CANDLE_DATA": "No data found for this type of candles.",
     "NO_QUEST_DATA": "No data found for this quest."
@@ -139,9 +126,5 @@
   "utils": {
     "TIMEOUT": "Did not receive any response. Cancelling...",
     "NO_CHANGELOG": "Sorry! No changelog found for this version. Please try again later"
-  },
-  "bot": {
-    "NOT_IMPLEMENTED": "Not implemented yet. Sorry!",
-    "NO_CHANNEL_PERM": "I do not have permission to access <#{{CHANNEL}}>. Please make sure I have `View Channel` and `Send Messages` permissions in that channel."
   }
 }
