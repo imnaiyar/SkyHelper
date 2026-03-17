@@ -108,6 +108,15 @@
     "NAVIGATE": "-# If Linked Role connection is enabled for SkyHelper in this server, you can get it by navigating to <id:linked-roles>."
   },
   "reminders": {
+    "ROLE_MENTION": "Hey, {{ROLE}}",
+    "EDEN_RESET": "Eye of Eden just got reset, statues have been refreshed and can again be saved for ACs!",
+    "DAILY_RESET": "The world of Sky just reset and daily quests have been refreshed!",
+    "TITLE": "{{TYPE}} Reminder",
+    "DAILY_QUESTS": "Daily Quests",
+    "COMMON": "{{TYPE}} just started (at {{TIME}}) and will end at {{TIME-END}} ({{TIME-END-R}})",
+    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
+    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}",
     "MANAGE_TIMEOUT": "Response timed out. I didn't receive a response in time",
     "TOGGLE_TIMEOUT": "You did not respond in time. Please try again.",
     "TOGGLE_DISABLED": "No channel selected! Reminders for {{EVENT}} have been disabled.",
