@@ -17,13 +17,13 @@ export default defineButton({
     name: "spirit_collectible",
   },
   id: CustomId.SpiritCollectible,
-  async execute(interaction, _t, helper, { spirit: value }) {
+  async execute(interaction, t, helper, { spirit: value }) {
     const data = await fetchSkyData(helper.client);
     const spirit = data.guids.get(value) as ISpirit | undefined;
 
     if (!spirit) {
       return void (await helper.reply({
-        content: "No spirit found!",
+        content: t("features:SPIRITS.NO_SPIRIT"),
         flags: 64,
       }));
     }
@@ -32,7 +32,7 @@ export default defineButton({
 
     if (!collectibles.length) {
       return void (await helper.reply({
-        content: "No collectibles found for this spirit, or something went wrong!",
+        content: t("features:SPIRITS.NO_COLLECTIBLES"),
         flags: 64,
       }));
     }

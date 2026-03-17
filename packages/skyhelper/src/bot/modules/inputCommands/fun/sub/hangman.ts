@@ -24,12 +24,7 @@ import { emojis } from "@skyhelperbot/constants";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { CustomId } from "@/utils/customId-store";
 import { LeaderboardCard, type LeaderboardUserData } from "@/utils/image-generators/LeaderBoardCard";
-const BASE =
-  "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.";
-const constants = {
-  ["single"]: `${BASE}\n- Each wrong answer will cost lives. The embed will show how many live you have left. You'll loose if you fail to guess the word correctly before your lives runs out.`,
-  ["double"]: `${BASE}\n- Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.`,
-};
+import type { getTranslator } from "@/i18n";
 const modalComponent = (id: string, word: string): APIModalInteractionResponseCallbackData => ({
   custom_id: "skygame_hangman_word_modal" + `-${id}`,
   title: "Provide a Word",
@@ -96,7 +91,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
       if (action === "word") {
         if (mode === "single") {
           return await compoHelper.reply({
-            content: "Custom words are not allowed in single player mode.",
+            content: helper.t("features:hangman.CUSTOM_WORD_DISALLOWED"),
             flags: MessageFlags.Ephemeral,
           });
         }
@@ -140,7 +135,7 @@ export const handleHangman = async (helper: InteractionHelper, options: Interact
       }
       if (action === "instructions") {
         await compoHelper.reply({
-          components: [createGameInstrunctionEmbed(mode)],
+          components: [createGameInstrunctionEmbed(mode, helper.t)],
           flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral,
         });
       }
@@ -343,10 +338,9 @@ export const getCardResponse = async (
   return { files, components: [comp], attachments: [], flags: MessageFlags.IsComponentsV2 };
 };
 
-function createGameInstrunctionEmbed(mode: string) {
-  return container(
-    textDisplay("### SkyGame Instructions\n-# How to Play"),
-    separator(),
-    textDisplay(constants[mode as "single" | "double"]),
-  );
+function createGameInstrunctionEmbed(mode: string, t: ReturnType<typeof getTranslator>) {
+  const modeInstruction =
+    mode === "single" ? t("features:hangman.INSTRUCTIONS_SINGLE") : t("features:hangman.INSTRUCTIONS_DOUBLE");
+  const instructions = `${t("features:hangman.INSTRUCTIONS_BASE")}\n- ${modeInstruction}`;
+  return container(textDisplay("### SkyGame Instructions\n-# How to Play"), separator(), textDisplay(instructions));
 }
