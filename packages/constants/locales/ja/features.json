@@ -43,17 +43,6 @@
     "NEXT-OCC": "次の発生: {{TIME}}",
     "NEXT-OCC-IDLE": "次の発生: {{TIME}}"
   },
-  "reminders": {
-    "ROLE_MENTION": "こんにちは、{{ROLE}}",
-    "EDEN_RESET": "エデンの目がリセットされました。像が更新され、再びACのために救済できます！",
-    "DAILY_RESET": "Skyの世界がリセットされ、デイリークエストが更新されました！",
-    "TITLE": "{{TYPE}}リマインダー",
-    "DAILY_QUESTS": "デイリークエスト",
-    "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します",
-    "PRE": "{{TYPE}} は {{TIME}} ({{TIME-R}}) から始まります。",
-    "PRE-RESET": "{{TYPE}} は {{TIME}} ({{TIME-R}}) で発生します。",
-    "SHARDS": "**{{SHARD_NUMBER}} シャード** は {{TIME}} に落ちます"
-  },
   "REALMS": {
     "ISLE": "夜明けの島",
     "PRAIRIE": "光の草原",
@@ -69,11 +58,72 @@
     "REALM_TITLE": "領域",
     "TREE_TITLE": "友好ツリー（最後の訪問）by {{CREDIT}}",
     "SEASONAL_CHART": "シーズン価格チャート by {{CREDIT}}",
-    "LOCATION_TITLE": "場所 by {{CREDIT}}"
+    "LOCATION_TITLE": "場所 by {{CREDIT}}",
+    "NO_SPIRIT": "精神が見つかりませんでした！",
+    "NO_COLLECTIBLES": "この精神の収集品は見つかりませんでした、あるいは何かが間違っていました!",
+    "NO_EXPRESSION": "何か問題が発生しました！データが見つかりませんでした"
   },
   "hangman": {
     "NOT_PLAYABLE": "このゲームは、メッセージを送信できるチャンネルでのみ再生できます。 このコマンドはユーザーアプリコンテキストからアクセスできます。 私がDMのメンバーまたはメンバーであるサーバーでコマンドを実行することを確認してください。",
     "GAME_ACTIVE": "このチャンネルではすでにゲームが実行されています。ゲームが終了するまでお待ちください。または別のチャンネルで実行してください！",
-    "DOUBLE_MODE_GUILD": "ダブルモードは私がメンバーになっているサーバーでのみプレイできます。"
+    "DOUBLE_MODE_GUILD": "ダブルモードは私がメンバーになっているサーバーでのみプレイできます。",
+    "CUSTOM_WORD_DISALLOWED": "シングルプレイヤーモードでは、カスタムワードは使用できません。",
+    "INSTRUCTIONS_BASE": "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.",
+    "INSTRUCTIONS_SINGLE": "間違った答えごとに命がかかります。埋め込みは残りの命の数を表示します。 命がなくなる前に単語を正しく推測できなければ、失うことになります。",
+    "INSTRUCTIONS_DOUBLE": "各プレイヤーは順番に答え、ランダムに最初のラウンドを選びます。 正しく推測するプレーヤーは間違って推測するまでラウンドに留まります (または時間内に失敗します) 次の人にはラウンドが通過します その単語を最初に当てる人は誰でも勝ちます。",
+    "NO_LEADERBOARD_DATA": "おっと！このタイプのデータが利用できないようです。リーダーボードにアクセスするにはプレイを開始してください！",
+    "GUESSED_CORRECTLY": "正しく推測しました！🎉",
+    "GUESSED_INCORRECTLY": "間違って推測しました！😢\n正しい単語は`{{WORD}}`でした"
+  },
+  "skygame": {
+    "LEADERBOARD_SERVER_ONLY": "`type`が`Server`に設定されている場合、サーバーでこのコマンドを実行します。"
+  },
+  "planner": {
+    "SEARCH_FAILED": "おっと！どこから来たのか見つけられませんでした。\n-# 風洞で迷子になったようです。",
+    "NOT_IMPLEMENTED": "まだ実装されていません",
+    "IMPORT_TIMEOUT": "✨ *星が暗くなりました...* 瞑想に時間がかかりすぎました。ポータルが閉じました！もう一度データを召喚してみてください。 🕯️",
+    "INVALID_FILE_HEADER": "🌟 ***Hmm... この星座は完全に整列しません!*** 🌟",
+    "INVALID_FILE_BODY": "御霊が星明かりのメッセージを読むのに苦労しているようです。あなたが共有したファイルは別の領域からのものであるようです！",
+    "REQUIRED_FILE_FORMAT": "🕊️ **あなたに必要なもの:**",
+    "JSON_PARSE_ERROR_HEADER": "🌟 **おっと！あなたの星座は少し揺れているようです...** 🌟",
+    "JSON_PARSE_ERROR_BODY": "このファイルは旅中に星の光を失ったようです! スピリッツはメッセージを解読できません。 📜✨",
+    "OTHER_USER_WARNING": "🌟 ***これらの思い出は別のスカイキッズに属します...*** 🌟",
+    "IMPORT_SUCCESS": "✨ ***あなたの記憶は星明かりの中でとらえられました!*** 🌟\n\n*霊は世界中のあなたの旅を慎重に保存しております。 このスクロールを安全に保ちましょう!* 🕯️📜",
+    "DELETE_SUCCESS": "🌌 ***あなたの記憶は星に解放されました...*** 🌌",
+    "DELETE_BACKUP": "📜 ***霊からの別れのギフト...***",
+    "IMPORT_NOTE": "\n-# 注意: [sky-planner.com](https://sky-planner.com) からデータをインポートしている場合。 ボットによって保存されていないものもあります。主にウェブサイト特有の設定に関連するものです。 これらには、テーマ、フィルター、マップマーカー、クローゼット設定などが含まれますが、これらに限定されません。"
+  },
+  "linked-role": {
+    "INTRO": "Linked role は、ユーザーアカウントとアプリケーションを接続するために使用できる特別な種類のロールです(この場合は、ユーザーアカウントをアプリケーションと接続するために使用できます)。 SkyHelper ボット)。\nこれにより、ボットはユーザーのロール接続データを更新して、サーバー内のユーザーのプロファイルに特定の情報を表示することができます(添付の写真を参照)。 この場合、基本的なスカイプロファイル(好みの名前、好みなど)を表示するために使用できます。",
+    "GUIDES": "リンクされた役割の複雑な性質のために、ここですべてを説明することは困難です。 リンクされた役割の使い方を理解するためのガイドを用意しました\n- [リンクとは何ですか?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [サーバでリンクされたロールを有効にするには? (https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [空のプロフィールをボットで取得/リンク/更新する方法?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
+    "NAVIGATE": "-# このサーバーで SkyHelper に対してリンクされたロール接続が有効になっている場合、 <id:linked-roles> に移動して取得できます。"
+  },
+  "reminders": {
+    "ROLE_MENTION": "こんにちは、{{ROLE}}",
+    "EDEN_RESET": "エデンの目がリセットされました。像が更新され、再びACのために救済できます！",
+    "DAILY_RESET": "Skyの世界がリセットされ、デイリークエストが更新されました！",
+    "TITLE": "{{TYPE}}リマインダー",
+    "DAILY_QUESTS": "デイリークエスト",
+    "COMMON": "{{TYPE}}が開始しました（{{TIME}}に）。{{TIME-END}}（{{TIME-END-R}}）に終了します",
+    "PRE": "{{TYPE}} は {{TIME}} ({{TIME-R}}) から始まります。",
+    "PRE-RESET": "{{TYPE}} は {{TIME}} ({{TIME-R}}) で発生します。",
+    "SHARDS": "**{{SHARD_NUMBER}} シャード** は {{TIME}} に落ちます",
+    "MANAGE_TIMEOUT": "応答がタイムアウトしました。時間内に応答がありませんでした。",
+    "TOGGLE_TIMEOUT": "時間内に応答しませんでした。もう一度やり直してください。",
+    "TOGGLE_DISABLED": "チャンネルが選択されていません！ {{EVENT}} のリマインダーが無効になりました。",
+    "TOGGLE_UPDATED": "{{EVENT}} のリマインダーを更新しました！",
+    "INVALID_CHANNEL": "無効なチャンネルタイプです。有効なテキストチャンネルまたはスレッドチャンネルを入力してください。"
+  },
+  "quests": {
+    "NO_CANDLE_DATA": "このタイプのろうそくのデータが見つかりませんでした。",
+    "NO_QUEST_DATA": "このクエストのデータが見つかりませんでした。"
+  },
+  "guides": {
+    "NO_SUMMARY": "このレルムの概要が見つかりません！この機能はレガシーとみなされ、更新は行われず、新しい追加のためのデータが欠落している可能性があります。",
+    "NO_MAPS": "このレルムのマップが見つかりません！この機能はレガシーとみなされ、更新は行われず、新しい追加のためのデータが不足している可能性があります。"
+  },
+  "utils": {
+    "TIMEOUT": "応答を受信できませんでした。キャンセル中...",
+    "NO_CHANGELOG": "申し訳ありません！このバージョンの更新履歴が見つかりませんでした。後でもう一度お試しください"
   }
 }

@@ -14,6 +14,7 @@
   "EMBED_DESCRIPTION": "A ocurrido un error al ejecutar este comando. Por favor incluye el ID del error al enviar el reporte",
   "BUTTON_LABEL": "Reportar un Bug",
   "NOT-ALLOWED": "No puedes usar menús generados por otros!",
+  "NO_CHANNEL_PERM": "No tengo permiso para acceder a <#{{CHANNEL}}>. Por favor, asegúrate de que tengo permisos de `Ver canal` y `Enviar mensajes` en ese canal.",
   "ERROR_MODAL": {
     "SUCCESS": "Tu reporte se ha enviado exitosamente!",
     "TITLE": "Informe de Bug(s)",
