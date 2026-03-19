@@ -43,17 +43,6 @@
     "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
     "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}"
   },
-  "reminders": {
-    "ROLE_MENTION": "हेय, {{ROLE}}",
-    "EDEN_RESET": "आई ऑफ ईडन अभी-अभी रीसेट हो चुका है, statues सारे रीसेट हो चुके है और इन्हें ACs के लिए फिर से save किए जा सकते है!",
-    "DAILY_RESET": "स्काई की दुनिया रीसेट हो गई है और सारे quests रिफ्रेश हो गई है!",
-    "TITLE": "{{TYPE}} रिमाइंडर",
-    "DAILY_QUESTS": "डेली क्वेस्ट्स",
-    "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा",
-    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
-    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}"
-  },
   "REALMS": {
     "ISLE": "आईल ऑफ डाॅन",
     "PRAIRIE": "डेलाइट प्रेयरी",
@@ -69,11 +58,72 @@
     "REALM_TITLE": "रेलम",
     "TREE_TITLE": "{{CREDIT}} के तरफ से फ्रेंडशिप ट्री (पिछला विजिट का)",
     "SEASONAL_CHART": "{{CREDIT}} के तरफ से सीजनल चार्ट",
-    "LOCATION_TITLE": "{{CREDIT}} के तरफ से लोकेशन"
+    "LOCATION_TITLE": "{{CREDIT}} के तरफ से लोकेशन",
+    "NO_SPIRIT": "No spirit found!",
+    "NO_COLLECTIBLES": "No collectibles found for this spirit, or something went wrong!",
+    "NO_EXPRESSION": "Something went wrong! No data found"
   },
   "hangman": {
     "NOT_PLAYABLE": "यह खेल केवल उसी चैनल में खेल जा सकता है जहां पे मैं मैसेज सेंड कर सकता हूं। यह कमांड यूजर ऐप में उपलब्ध नही है, आप यह कमांड उन सर्वर्स में इस्तेमाल कर सकतें है जहां पे मैं सदस्य हूं या फिर मेरे DM में।",
     "GAME_ACTIVE": "इस चैनल में पहले से ही एक खेल जारी है, कृपया उसकी समाप्ति का इंतजार करें। या यह कमांड किसी और चैनल में उसे करें।",
-    "DOUBLE_MODE_GUILD": "डबल मोड केवल उन सर्वरों में चलाया जा सकता है जिनका मैं सदस्य हूं।"
+    "DOUBLE_MODE_GUILD": "डबल मोड केवल उन सर्वरों में चलाया जा सकता है जिनका मैं सदस्य हूं।",
+    "CUSTOM_WORD_DISALLOWED": "Custom words are not allowed in single player mode.",
+    "INSTRUCTIONS_BASE": "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.",
+    "INSTRUCTIONS_SINGLE": "Each wrong answer will cost lives. The embed will show how many lives you have left. You'll lose if you fail to guess the word correctly before your lives runs out.",
+    "INSTRUCTIONS_DOUBLE": "Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.",
+    "NO_LEADERBOARD_DATA": "Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!",
+    "GUESSED_CORRECTLY": "You guessed correctly! 🎉",
+    "GUESSED_INCORRECTLY": "You guessed incorrectly! 😢\nThe correct word was `{{WORD}}`"
+  },
+  "skygame": {
+    "LEADERBOARD_SERVER_ONLY": "Run this command in a server when `type` is set to `Server`"
+  },
+  "planner": {
+    "SEARCH_FAILED": "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",
+    "NOT_IMPLEMENTED": "Not Implemented Yet",
+    "IMPORT_TIMEOUT": "✨ *The stars have dimmed...* Your meditation took too long. The portal has closed! Please try summoning your data again. 🕯️",
+    "INVALID_FILE_HEADER": "🌟 ***Hmm... This constellation doesn't quite align!*** 🌟",
+    "INVALID_FILE_BODY": "It seems the Spirits are having trouble reading your starlight message. The file you've shared appears to be from a different realm!",
+    "REQUIRED_FILE_FORMAT": "🕊️ **What I need from you:**",
+    "JSON_PARSE_ERROR_HEADER": "🌟 **Oops! Your constellation seems a bit jumbled...** 🌟",
+    "JSON_PARSE_ERROR_BODY": "This file seems to have lost its starlight during the journey! The Spirits cannot decipher its message. 📜✨",
+    "OTHER_USER_WARNING": "🌟 ***These memories belong to another Sky Kid...*** 🌟",
+    "IMPORT_SUCCESS": "✨ ***Your memories have been captured in starlight!*** 🌟\n\n*The Spirits have carefully preserved your journey across the realms. Keep this scroll safe, dear Sky Kid!* 🕯️📜",
+    "DELETE_SUCCESS": "🌌 ***Your memories have been released to the stars...*** 🌌",
+    "DELETE_BACKUP": "📜 ***A parting gift from the Spirits...***",
+    "IMPORT_NOTE": "\n-# NOTE: If you are importing data from [sky-planner.com](https://sky-planner.com), some things are not saved by the bot, mainly things related to website specific preferences. These includes but not limited to: Themes, Filters, Map Markers, Closet Settings, etc."
+  },
+  "linked-role": {
+    "INTRO": "Linked role is a special kind of roles that can be used to connect a user account with an application (in this case, the SkyHelper bot).\nThis allows the bot to update user's role connection data to display specific information on a user's profile in a server (see the attached pic). In this case, we can use this to display basic sky profile (Preferred name, preferences, etc.).",
+    "GUIDES": "Due to the complicated nature of linked roles, it is difficult to explain everything here, so we have prepared some guides to help you understand how to use linked roles.\n- [What is a linked?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [How you can enable linked roles in your server?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [How to get/link/update your sky profile with the bot?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
+    "NAVIGATE": "-# If Linked Role connection is enabled for SkyHelper in this server, you can get it by navigating to <id:linked-roles>."
+  },
+  "reminders": {
+    "ROLE_MENTION": "हेय, {{ROLE}}",
+    "EDEN_RESET": "आई ऑफ ईडन अभी-अभी रीसेट हो चुका है, statues सारे रीसेट हो चुके है और इन्हें ACs के लिए फिर से save किए जा सकते है!",
+    "DAILY_RESET": "स्काई की दुनिया रीसेट हो गई है और सारे quests रिफ्रेश हो गई है!",
+    "TITLE": "{{TYPE}} रिमाइंडर",
+    "DAILY_QUESTS": "डेली क्वेस्ट्स",
+    "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा",
+    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
+    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}",
+    "MANAGE_TIMEOUT": "Response timed out. I didn't receive a response in time",
+    "TOGGLE_TIMEOUT": "You did not respond in time. Please try again.",
+    "TOGGLE_DISABLED": "No channel selected! Reminders for {{EVENT}} have been disabled.",
+    "TOGGLE_UPDATED": "Successfully updated {{EVENT}} reminders!",
+    "INVALID_CHANNEL": "Invalid channel type. Please provide a valid text channel or thread channel."
+  },
+  "quests": {
+    "NO_CANDLE_DATA": "No data found for this type of candles.",
+    "NO_QUEST_DATA": "No data found for this quest."
+  },
+  "guides": {
+    "NO_SUMMARY": "No Summary found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions.",
+    "NO_MAPS": "No Maps found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions."
+  },
+  "utils": {
+    "TIMEOUT": "Did not receive any response. Cancelling...",
+    "NO_CHANGELOG": "Sorry! No changelog found for this version. Please try again later"
   }
 }
