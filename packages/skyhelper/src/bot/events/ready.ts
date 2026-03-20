@@ -31,7 +31,12 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.ready = true;
 
   // sentry metrics every 10 hrs
-  setInterval(() => Sentry.metrics.gauge("guild_count", client.guilds.size), 10 * 60 * 6_0000);
+  setInterval(
+    () => {
+      Sentry.metrics.gauge("guild_count", client.guilds.size);
+    },
+    10 * 60 * 6_0000,
+  );
 
   // fetch planner data on ready so its cached;
   await fetchSkyData(client);

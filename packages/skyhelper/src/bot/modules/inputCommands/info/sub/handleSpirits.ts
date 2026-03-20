@@ -43,7 +43,7 @@ export async function handleSpirits(helper: InteractionHelper, seasonOrRealm: IR
     }
 
     // Create a row for each chunk
-    const rows: APIActionRowComponent<APIStringSelectComponent>[] = spiritChunks.map((chunk, index) => ({
+    const rows: Array<APIActionRowComponent<APIStringSelectComponent>> = spiritChunks.map((chunk, index) => ({
       type: ComponentType.ActionRow,
       components: [
         {
