@@ -42,7 +42,7 @@
     "@imnaiyar/framework": "latest",
     "@napi-rs/canvas": "^0.1.80",
     "@nestjs/common": "^11.0.6",
-    "@nestjs/core": "^11.0.6",
+    "@nestjs/core": "^11.1.18",
     "@nestjs/platform-express": "^11.0.6",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/throttler": "^6.4.0",
