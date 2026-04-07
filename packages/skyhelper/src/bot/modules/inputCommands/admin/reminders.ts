@@ -65,7 +65,7 @@ export default {
         guildSettings.reminders.events[event as Exclude<typeof event, "shards-eruption">] = {
           active: true,
           webhook: {
-            channelId: wb.channel_id,
+            channelId: wb.channel_id!,
             id: wb.id,
             token: wb.token!,
             threadId: isThread ? ch.id : undefined,

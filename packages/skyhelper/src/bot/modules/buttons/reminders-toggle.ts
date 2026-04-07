@@ -196,7 +196,7 @@ export default defineButton({
       webhook: {
         id: webhook.id,
         token: webhook.token!,
-        channelId: webhook.channel_id,
+        channelId: webhook.channel_id!,
         threadId: isThread ? ch.id : undefined,
       },
     };
