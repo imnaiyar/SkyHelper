@@ -71,7 +71,6 @@ export async function bootstrap(client: SkyHelper) {
   app.enableCors({
     credentials: true,
     maxAge: 40,
-    origin: config.DASHBOARD.WEB_URL,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "HEAD", "POST", "DELETE", "PATCH"],
   });
