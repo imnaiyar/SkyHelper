@@ -1,25 +1,24 @@
-import { APP_FILTER, APP_GUARD, NestFactory } from "@nestjs/core";
 import config from "@/config";
 import logger from "@/handlers/logger";
 import { SkyHelper } from "@/structures";
-import { type MiddlewareConsumer, Module, type NestModule } from "@nestjs/common";
+import { type MiddlewareConsumer, Module, type NestModule, RequestMethod } from "@nestjs/common";
+import { APP_FILTER, APP_GUARD, NestFactory } from "@nestjs/core";
+import { ThrottlerModule } from "@nestjs/throttler";
+import { SentryGlobalFilter, SentryModule } from "@sentry/nestjs/setup";
+import { AdminController } from "./controllers/admin.controller.js";
 import { AppController } from "./controllers/app.controller.js";
-import { GuildController } from "./controllers/guild.controller.js";
-import { AuthMiddleware } from "./middlewares/auth.middleware.js";
 import { BotController } from "./controllers/bot.controller.js";
+import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
+import { GuildController } from "./controllers/guild.controller.js";
 import { UpdateController } from "./controllers/update.controller.js";
 import { UsersController } from "./controllers/user.controller.js";
-import { GuildMiddleware } from "./middlewares/guild.middleware.js";
-import { AdminMiddleware } from "./middlewares/admin.middleware.js";
-import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
-import { WebhookEventController } from "./controllers/discord-webhooks.controller.js";
-import { AdminController } from "./controllers/admin.controller.js";
-import * as _express from "express";
-import { Logger } from "./logger.service.js";
-import { SentryModule, SentryGlobalFilter } from "@sentry/nestjs/setup";
-import { setupSwagger } from "./swagger.config.js";
-import { ThrottlerModule } from "@nestjs/throttler";
 import { CustomThrottlerGuard } from "./guards/throttler.guard.js";
+import { Logger } from "./logger.service.js";
+import { AdminMiddleware } from "./middlewares/admin.middleware.js";
+import { AuthMiddleware } from "./middlewares/auth.middleware.js";
+import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
+import { GuildMiddleware } from "./middlewares/guild.middleware.js";
+import { setupSwagger } from "./swagger.config.js";
 
 export async function bootstrap(client: SkyHelper) {
   @Module({
@@ -49,9 +48,12 @@ export async function bootstrap(client: SkyHelper) {
   })
   class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-      consumer.apply(AuthMiddleware).forRoutes("guilds", "update", "users", "admin");
+      consumer
+        .apply(AuthMiddleware)
+        .exclude({ path: "update/quests", method: RequestMethod.GET })
+        .forRoutes("guilds", "update", "users", "admin");
       consumer.apply(GuildMiddleware).forRoutes("guilds");
-      consumer.apply(AdminMiddleware).forRoutes("update", "admin");
+      consumer.apply(AdminMiddleware).exclude({ path: "update/quests", method: RequestMethod.GET }).forRoutes("update", "admin");
       consumer.apply(WebhookEventMiddleware).forRoutes("webhook-event");
     }
   }

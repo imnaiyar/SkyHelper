@@ -1,17 +1,17 @@
-import { Body, Controller, Get, Inject, Patch } from "@nestjs/common";
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBody,
-  ApiBearerAuth,
-  ApiUnauthorizedResponse,
-  ApiBadRequestResponse,
-} from "@nestjs/swagger";
 import { SkyHelper as BotService } from "@/structures";
 import type { DailyQuestsSchema } from "@/types/schemas";
-import { ZodValidator } from "../pipes/zod-validator.pipe.js";
+import { Body, Controller, Get, Inject, Patch } from "@nestjs/common";
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 import { toJSONSchema, z } from "zod/v4";
+import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 
 const QuestSchema = z.object({
   title: z.string(),
@@ -44,13 +44,13 @@ export class UpdateController {
   @ApiOperation({
     summary: "Get daily quests data",
     description: "Retrieves current daily quests information",
+    security: [],
   })
   @ApiResponse({
     status: 200,
     description: "Daily quests data retrieved successfully",
     schema: toJSONSchema(QuestsSchema),
   })
-  @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getQuests(): Promise<DailyQuestsSchema> {
     const data = await this.bot.schemas.getDailyQuests();
     return data;
