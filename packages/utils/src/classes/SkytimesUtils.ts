@@ -1,6 +1,6 @@
 import { eventData, type EventKey } from "../constants/eventDatas.js";
 import { DateTime } from "luxon";
-
+import { zone } from "../constants/index.js";
 /**
  * Utilities for skytimes
  */
@@ -24,7 +24,7 @@ export class SkytimesUtils {
    * @param event The event for which to get the date-time
    */
   private static getOccurrenceDay(event: (typeof eventData)[EventKey]): DateTime {
-    let nextOccurrence = DateTime.now().setZone("America/Los_Angeles").startOf("day").plus({ minutes: event.offset }); // Start with the offset from the beginning of the day
+    let nextOccurrence = DateTime.now().setZone(zone).startOf("day").plus({ minutes: event.offset }); // Start with the offset from the beginning of the day
 
     if (event.occursOn) {
       // If the event occurs on specific weekdays
@@ -52,7 +52,7 @@ export class SkytimesUtils {
     const event = eventData[eventName];
     if (!event as boolean /* lol */) throw new Error("Unknown Event");
 
-    const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
+    const now = DateTime.now().setZone(zone); // Current time
     let nextOccurrence = this.getOccurrenceDay(event);
 
     // Loop to calculate the next occurrence based on the interval
@@ -98,11 +98,10 @@ export class SkytimesUtils {
    * @returns The event status (or null if there is no active duration)
    */
   public static getEventStatus(event: (typeof eventData)[keyof typeof eventData], nextOccurrence: DateTime): Times {
-    const now = DateTime.now().setZone("America/Los_Angeles");
+    const now = DateTime.now().setZone(zone);
     const BASE: NotActiveTimes = {
       active: false,
       nextTime: nextOccurrence,
-      duration: nextOccurrence.diff(now).toFormat("d'd' h'h' m'm' s's'"),
     };
     if (!event.duration) return BASE;
 
@@ -118,7 +117,6 @@ export class SkytimesUtils {
         startTime: start,
         endTime: end,
         nextTime: nextOccurrence,
-        duration: end.diff(now).toFormat("d'd' h'h' m'm' s's'"),
       };
     } else {
       return BASE;
@@ -132,11 +130,6 @@ export interface BaseTimes {
 
   /** The time when the event starts */
   nextTime: DateTime;
-
-  /** This will be the countdown for when the event ends if it's active,
-   *  otherwise it'll be the countdown to the next occurence
-   */
-  duration: string;
 }
 
 export interface ActiveTimes extends BaseTimes {

@@ -1,6 +1,6 @@
 {
   "name": "@skyhelperbot/utils",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Utilities for SkyHelper bot",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/imnaiyar/skyhelper/tree/main/packages/utils",
   "dependencies": {
-    "@skyhelperbot/constants": "workspace:^",
     "discord-api-types": "latest",
     "undici": "^7.24.7"
   },

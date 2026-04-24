@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { zone } from "@skyhelperbot/constants";
+import { zone } from "../constants/index.js";
 
 /**
  * Returns TS status
@@ -17,12 +17,10 @@ export function getNextTs() {
   const nextVisitDay = nextDepartDate.minus({ days: 3 }).startOf("day");
 
   if (now < nextVisitDay) {
-    const duration = nextVisitDay.diffNow(["days", "hours", "minutes", "seconds"]).toFormat("d'd' h'h' m'm' s's'");
     if (nextVisitDay > refrenceDate) {
       return {
         visiting: false,
         nextVisit: nextVisitDay,
-        duration: duration,
       };
     }
 
@@ -30,18 +28,15 @@ export function getNextTs() {
       return {
         visiting: false,
         nextVisit: nextVisitDay,
-        duration: duration,
       };
     }
   }
 
   if (now >= nextVisitDay && now <= nextDepartDate) {
-    const duration = nextDepartDate.diffNow(["days", "hours", "minutes", "seconds"]).toFormat("d'd' h'h' m'm' s's'");
     if (refrenceDeparture < nextDepartDate) {
       return {
         visiting: true,
         nextVisit: nextVisitDay,
-        duration: duration,
       };
     }
 
@@ -49,7 +44,6 @@ export function getNextTs() {
       return {
         visiting: true,
         nextVisit: nextVisitDay,
-        duration: duration,
       };
     }
   }
