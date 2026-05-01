@@ -26,6 +26,6 @@ export function fancyCount(n: number): string {
 
 export function getUserAvatar(user: APIUser): string {
   return user.avatar
-    ? CDNRoutes.userAvatar(user.id, user.avatar, "png" as UserAvatarFormat)
+    ? CDNRoutes.userAvatar(user.id, user.avatar, "webp" as UserAvatarFormat)
     : CDNRoutes.defaultUserAvatar(Number((BigInt(user.id) >> 22n) % 5n) as DefaultUserAvatarAssets);
 }
