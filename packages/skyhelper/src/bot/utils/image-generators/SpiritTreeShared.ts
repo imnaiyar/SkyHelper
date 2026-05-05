@@ -82,7 +82,7 @@ export async function getImage(url: string): Promise<Image> {
   const cached = imageCache.get(url);
   if (cached) return cached;
 
-  const img = await loadImage(url);
+  const img = await loadImage(url).catch(() => loadImage(path.resolve(import.meta.dirname, "../../../../assets/question.png")));
   imageCache.set(url, img);
   return img;
 }
