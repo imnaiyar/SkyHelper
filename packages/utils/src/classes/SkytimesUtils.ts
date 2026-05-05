@@ -70,9 +70,9 @@ export class SkytimesUtils {
   public static getEventDetails(key: EventKey): EventDetails {
     const nextOccurence = this.getNextEventOccurrence(key);
     return {
+      key,
       event: eventData[key],
-      nextOccurence,
-      allOccurences: this.getAllTimes(this.getOccurrenceDay(eventData[key]), eventData[key].interval),
+      nextOccurence: nextOccurence.toMillis(),
       status: this.getEventStatus(eventData[key], nextOccurence),
     };
   }
@@ -81,12 +81,12 @@ export class SkytimesUtils {
    * Same as {@apilink SkytimesUtils.getEventDetails | getEventDetails} but for all of the events
    * @returns An array of event details
    */
-  public static allEventDetails(): Array<[EventKey, EventDetails]> {
+  public static allEventDetails(): Array<EventDetails> {
     const keys = (Object.keys(eventData) as EventKey[]).sort((a, b) => eventData[a].index - eventData[b].index);
-    const occurrences: Array<[EventKey, EventDetails]> = [];
+    const occurrences: Array<EventDetails> = [];
 
     for (const key of keys) {
-      occurrences.push([key, this.getEventDetails(key)]);
+      occurrences.push(this.getEventDetails(key));
     }
     return occurrences;
   }
@@ -101,7 +101,7 @@ export class SkytimesUtils {
     const now = DateTime.now().setZone(zone);
     const BASE: NotActiveTimes = {
       active: false,
-      nextTime: nextOccurrence,
+      nextTime: nextOccurrence.toMillis(),
     };
     if (!event.duration) return BASE;
 
@@ -114,9 +114,9 @@ export class SkytimesUtils {
     if (now >= start && now <= end) {
       return {
         active: true,
-        startTime: start,
-        endTime: end,
-        nextTime: nextOccurrence,
+        startTime: start.toMillis(),
+        endTime: end.toMillis(),
+        nextTime: nextOccurrence.toMillis(),
       };
     } else {
       return BASE;
@@ -129,30 +129,31 @@ export interface BaseTimes {
   active: boolean;
 
   /** The time when the event starts */
-  nextTime: DateTime;
+  nextTime: number;
 }
 
 export interface ActiveTimes extends BaseTimes {
   active: true;
   /** The time when the event started if active */
-  startTime: DateTime;
+  startTime: number;
 
   /** The time when the event ends if active */
-  endTime: DateTime;
+  endTime: number;
 }
 export interface NotActiveTimes extends BaseTimes {
   active: false;
   /** The time when the event started if active */
-  startTime?: DateTime;
+  startTime?: number;
 
   /** The time when the event ends if active */
-  endTime?: DateTime;
+  endTime?: number;
 }
 export type Times = ActiveTimes | NotActiveTimes;
 
 export interface EventDetails {
+  /** Event key */
+  key: EventKey;
   event: (typeof eventData)[EventKey];
-  nextOccurence: DateTime;
-  allOccurences: string;
+  nextOccurence: number;
   status: Times;
 }

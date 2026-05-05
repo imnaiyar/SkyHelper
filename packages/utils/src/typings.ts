@@ -35,7 +35,4 @@ export interface ShardsCountdown {
 
   // THe end time for the given shard
   end: DateTime;
-
-  // THe countdown for the shard end/land
-  duration: string;
 }

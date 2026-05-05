@@ -98,7 +98,6 @@ export class ShardsUtil {
           active: true,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: eventTiming.end.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
         // Yet to fall
@@ -108,7 +107,6 @@ export class ShardsUtil {
           active: false,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: eventTiming.start.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
         // All ended
@@ -118,12 +116,19 @@ export class ShardsUtil {
           ended: true,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: present.diff(eventTiming.end, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
       }
     }
     return toReturn;
+  }
+
+  static getShard(date: DateTime) {
+    const { currentRealm, currentShard } = this.shardsIndex(date);
+    const info = shardsInfo[currentRealm]![currentShard]!;
+    const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
+    if (isNoShard) return null;
+    return info;
   }
 
   /**
@@ -134,7 +139,7 @@ export class ShardsUtil {
   static getNextShard(
     date: DateTime,
     shardType?: Array<"black" | "red">,
-  ): null | { index: number; start: DateTime; end: DateTime; duration: string; info: ShardInfo } {
+  ): null | { index: number; start: DateTime; end: DateTime; info: ShardInfo } {
     const { currentRealm, currentShard } = this.shardsIndex(date);
     const info = shardsInfo[currentRealm]![currentShard]!;
     const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
@@ -148,7 +153,6 @@ export class ShardsUtil {
           index: i + 1,
           start: eventTiming.start,
           end: eventTiming.end,
-          duration: eventTiming.start.diff(date, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
           info,
         };
       }
