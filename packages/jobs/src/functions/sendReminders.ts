@@ -74,7 +74,8 @@ export async function reminderSchedules(): Promise<void> {
             response = getTSResponse(ts, t);
             break;
           default: {
-            const data = getResponse(key, t, details!, offset ?? 0);
+            if (!details) continue;
+            const data = getResponse(key, t, details, offset ?? 0);
             response = {
               components: [
                 container(

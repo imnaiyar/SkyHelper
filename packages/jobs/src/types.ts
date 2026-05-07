@@ -1,7 +1,7 @@
-import { Document } from "mongoose";
+import type { Document } from "mongoose";
 import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 
-export interface GuildSchema extends Document {
+export interface GuildSchema extends Document<string> {
   _id: string;
   data: {
     name: string;

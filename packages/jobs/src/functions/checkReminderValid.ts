@@ -1,9 +1,15 @@
 import { DateTime } from "luxon";
-import { type EventDetails } from "@skyhelperbot/utils";
+
+interface EventReminderDetails {
+  event: {
+    interval?: number;
+  };
+  nextOccurence: DateTime;
+}
 
 export function checkReminderValid(
   now: DateTime,
-  details: EventDetails | NonNullable<ReturnType<typeof import("@skyhelperbot/utils").getNextTs>>,
+  details: EventReminderDetails | NonNullable<ReturnType<typeof import("@skyhelperbot/utils").getNextTs>>,
   offset = 0,
 ): boolean {
   const previousMinute = now.minus({ seconds: 15 });
