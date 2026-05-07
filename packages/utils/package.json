@@ -34,13 +34,13 @@
   "dependencies": {
     "@skyhelperbot/constants": "workspace:^",
     "discord-api-types": "latest",
-    "undici": "^7.25.0"
+    "undici": "^8.0.0"
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
     "@vitest/coverage-v8": "^3.2.4",
     "luxon": "^3.5.0",
-    "mongoose": "^8.3.2",
+    "mongoose": "^8.22.1",
     "tsup": "^8.5.0",
     "typescript": "^5.4.3",
     "vite-tsconfig-paths": "^5.1.4",

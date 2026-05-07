@@ -61,7 +61,7 @@
     "i18next": "^24.2.1",
     "i18next-fs-backend": "^2.6.4",
     "luxon": "^3.5.0",
-    "mongoose": "^8.9.5",
+    "mongoose": "^8.22.1",
     "nanoid": "^5.1.6",
     "skygame-data": "^0.2.1",
     "swagger-ui-express": "^5.0.1",
