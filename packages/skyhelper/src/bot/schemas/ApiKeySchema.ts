@@ -14,7 +14,8 @@ const SchemaDef = new Schema<ApiKeySchema>(
   {
     name: { type: String, required: true },
     keyHash: { type: String, required: true, index: true, unique: true },
-    keyPrefix: { type: String, required: true },
+    keySalt: { type: String, required: true },
+    keyPrefix: { type: String, required: true, index: true, unique: true },
     createdBy: { type: String, required: true },
     rateLimit: { type: RateLimitSchema, default: undefined },
     isActive: { type: Boolean, default: true },
@@ -26,15 +27,17 @@ const Model = model<ApiKeySchema>("api-keys", SchemaDef);
 
 export { Model as ApiKeyModel };
 
-export function hashApiKey(apiKey: string) {
-  return crypto.createHash("sha256").update(apiKey).digest("hex");
+export function hashApiKey(apiKey: string, salt: string) {
+  return crypto.scryptSync(apiKey, salt, 64).toString("hex");
 }
 
 export function generateApiKey() {
   const apiKey = crypto.randomBytes(32).toString("base64url");
+  const keySalt = crypto.randomBytes(16).toString("hex");
   return {
     apiKey,
     keyPrefix: apiKey.slice(0, 8),
-    keyHash: hashApiKey(apiKey),
+    keyHash: hashApiKey(apiKey, keySalt),
+    keySalt,
   };
 }

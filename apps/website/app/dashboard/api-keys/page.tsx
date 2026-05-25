@@ -9,7 +9,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type ApiKeyRateLimit = {
   limit: number;
-  ttl: number;
+  ttl: number; // milliseconds
 };
 
 type ApiKey = {
@@ -42,6 +42,8 @@ const ownerIds = (process.env.NEXT_PUBLIC_OWNER_IDS ?? "")
   .filter(Boolean);
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+const toMilliseconds = (seconds: number) => seconds * 1000;
 
 async function apiRequest<T>(url: string, token: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -135,7 +137,7 @@ export default function ApiKeysPage() {
         error({ message: "Enter valid rate limit values." });
         return;
       }
-      payload.rateLimit = { limit, ttl: ttl * 1000 };
+      payload.rateLimit = { limit, ttl: toMilliseconds(ttl) };
     }
 
     try {
@@ -178,7 +180,7 @@ export default function ApiKeysPage() {
         error({ message: "Enter valid rate limit values." });
         return;
       }
-      payload.rateLimit = { limit, ttl: ttl * 1000 };
+      payload.rateLimit = { limit, ttl: toMilliseconds(ttl) };
     } else {
       payload.rateLimit = null;
     }

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ThrottlerGuard } from "@nestjs/throttler";
 import type { ExecutionContext } from "@nestjs/common";
+import crypto from "node:crypto";
 import mongoose from "mongoose";
 import { ApiKeyModel, hashApiKey } from "@/schemas/ApiKeySchema";
 import type { ApiKeySchema } from "@/types/schemas";
@@ -26,8 +27,21 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
       return req.apiKeyContext as ApiKeyContext;
     }
 
-    const keyHash = hashApiKey(apiKey);
-    const record = await ApiKeyModel.findOne({ keyHash, isActive: true }).lean<ApiKeySchema>().exec();
+    const keyPrefix = apiKey.slice(0, 8);
+    let record = await ApiKeyModel.findOne({ keyPrefix, isActive: true }).lean<ApiKeySchema>().exec();
+    let keyHash: string | undefined;
+
+    if (record) {
+      keyHash = hashApiKey(apiKey, record.keySalt);
+      const recordedHash = Buffer.from(record.keyHash, "hex");
+      const computedHash = Buffer.from(keyHash, "hex");
+      const matches = recordedHash.length === computedHash.length && crypto.timingSafeEqual(recordedHash, computedHash);
+      if (!matches) {
+        record = null;
+        keyHash = undefined;
+      }
+    }
+
     req.apiKeyContext = { resolved: true, record, keyHash, apiKey };
     return req.apiKeyContext as ApiKeyContext;
   }

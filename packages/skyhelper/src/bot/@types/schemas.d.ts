@@ -38,6 +38,7 @@ export interface ApiKeySchema extends Document {
   _id: Types.ObjectId;
   name: string;
   keyHash: string;
+  keySalt: string;
   keyPrefix: string;
   createdBy: string;
   rateLimit?: {

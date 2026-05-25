@@ -93,10 +93,11 @@ export class AdminController {
     @Req() req: AuthRequest,
     @Body(new ZodValidator(ApiKeyCreateSchema)) body: z.infer<typeof ApiKeyCreateSchema>,
   ) {
-    const { apiKey, keyHash, keyPrefix } = generateApiKey();
+    const { apiKey, keyHash, keyPrefix, keySalt } = generateApiKey();
     const key = new ApiKeyModel({
       name: body.name,
       keyHash,
+      keySalt,
       keyPrefix,
       createdBy: req.user.id,
       rateLimit: body.rateLimit,
@@ -123,7 +124,8 @@ export class AdminController {
     }
 
     if (body.name !== undefined) key.name = body.name;
-    if (body.rateLimit !== undefined) key.rateLimit = body.rateLimit ?? undefined;
+    if (body.rateLimit === null) key.rateLimit = undefined;
+    if (body.rateLimit !== undefined && body.rateLimit !== null) key.rateLimit = body.rateLimit;
     if (body.isActive !== undefined) key.isActive = body.isActive;
     await key.save();
     return this.mapApiKey(key);
