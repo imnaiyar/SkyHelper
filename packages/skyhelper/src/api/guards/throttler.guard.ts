@@ -9,6 +9,7 @@ import type { ApiKeySchema } from "@/types/schemas";
 @Injectable()
 export class CustomThrottlerGuard extends ThrottlerGuard {
   private async resolveApiKey(req: Record<string, any>) {
+    // Cache per request to avoid duplicate DB lookups during throttling.
     if (req.apiKeyContext?.resolved) return req.apiKeyContext as ApiKeyContext;
 
     const apiKey = req.headers["x-api-key"];
