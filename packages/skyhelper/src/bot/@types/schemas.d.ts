@@ -1,4 +1,4 @@
-import type { Document } from "mongoose";
+import type { Document, Types } from "mongoose";
 import type { DailyQuest } from "./custom.js";
 import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 import type { UserPlannerData } from "@/planner/helpers/data.service";
@@ -32,6 +32,22 @@ export interface UserSchema extends Document {
     };
   };
   plannerData?: UserPlannerData;
+}
+
+export interface ApiKeySchema extends Document {
+  _id: Types.ObjectId;
+  name: string;
+  keyHash: string;
+  keySalt: string;
+  keyPrefix: string;
+  createdBy: string;
+  rateLimit?: {
+    limit: number;
+    ttl: number;
+  };
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // #region Guild

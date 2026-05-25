@@ -13,7 +13,7 @@ export async function getUser(accessToken: string) {
       Authorization: "Bearer " + accessToken,
     },
   });
-  if (!res.ok) throw new HttpException("Failed to get user data", HttpStatus.INTERNAL_SERVER_ERROR);
+  if (!res.ok) throw new HttpException("Missing Access", HttpStatus.UNAUTHORIZED);
 
   const user = (await res.json()) as APIUser;
   return user;

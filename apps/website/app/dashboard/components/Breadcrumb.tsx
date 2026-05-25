@@ -16,6 +16,7 @@ const routeMap: Record<string, string> = {
   activity: "Activity",
   "linked-role": "Linked Role",
   profile: "Profile",
+  "api-keys": "API Keys",
 };
 
 export default function Breadcrumb() {
