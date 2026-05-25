@@ -42,8 +42,8 @@ The API implements rate limiting to ensure fair usage and system stability:
 - **Headers**: `Retry-After` header indicates when to retry (in seconds)
 
 <Callout type="info">
-  These rate limits do not apply to the bot's own services. If you are hosting your own instance, ensure you set the `x-api-key`
-  header in your requests with the value from the `API_ALLOWLIST_KEY` environment variable configured for your bot/API instance.
+  Bot owners can create API keys with custom rate limits and supply them in the `x-api-key` header. The legacy `API_ALLOWLIST_KEY`
+  value still bypasses rate limits entirely for trusted internal services.
 </Callout>
 
 ### Response Format
