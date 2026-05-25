@@ -125,7 +125,7 @@ export class AdminController {
 
     if (body.name !== undefined) key.name = body.name;
     if (body.rateLimit !== undefined) {
-      key.rateLimit = body.rateLimit === null ? undefined : body.rateLimit;
+      key.rateLimit = body.rateLimit ?? undefined;
     }
     if (body.isActive !== undefined) key.isActive = body.isActive;
     await key.save();
