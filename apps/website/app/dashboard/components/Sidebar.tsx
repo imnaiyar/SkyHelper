@@ -5,11 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Shield, Menu, X, User, Activity, KeyRound } from "lucide-react";
 import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
-
-const ownerIds = (process.env.NEXT_PUBLIC_OWNER_IDS ?? "")
-  .split(",")
-  .map((id) => id.trim())
-  .filter(Boolean);
+import { isOwner } from "@/app/lib/owners";
 const main = [
   {
     href: "/dashboard",
@@ -53,7 +49,7 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { user: authUser } = useDiscordAuth();
-  const isOwner = useMemo(() => (!!authUser?.id ? ownerIds.includes(authUser.id) : false), [authUser?.id]);
+  const isOwnerUser = useMemo(() => isOwner(authUser?.id), [authUser?.id]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -169,7 +165,7 @@ export default function Sidebar() {
                 );
               })}
             </div>
-            {isOwner && (
+            {isOwnerUser && (
               <div>
                 <h3 className="text-xs uppercase tracking-wider text-slate-500 font-medium mb-3 px-2 mt-6">Owner</h3>
                 {admin.map((link) => {

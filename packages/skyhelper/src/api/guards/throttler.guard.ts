@@ -28,21 +28,21 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
     }
 
     const keyPrefix = apiKey.slice(0, 8);
-    let record = await ApiKeyModel.findOne({ keyPrefix, isActive: true }).lean<ApiKeySchema>().exec();
+    let apiKeyRecord = await ApiKeyModel.findOne({ keyPrefix, isActive: true }).lean<ApiKeySchema>().exec();
     let keyHash: string | undefined;
 
-    if (record) {
-      keyHash = hashApiKey(apiKey, record.keySalt);
-      const recordedHash = Buffer.from(record.keyHash, "hex");
+    if (apiKeyRecord) {
+      keyHash = hashApiKey(apiKey, apiKeyRecord.keySalt);
+      const recordedHash = Buffer.from(apiKeyRecord.keyHash, "hex");
       const computedHash = Buffer.from(keyHash, "hex");
       const matches = recordedHash.length === computedHash.length && crypto.timingSafeEqual(recordedHash, computedHash);
       if (!matches) {
-        record = null;
+        apiKeyRecord = null;
         keyHash = undefined;
       }
     }
 
-    req.apiKeyContext = { resolved: true, record, keyHash, apiKey };
+    req.apiKeyContext = { resolved: true, record: apiKeyRecord, keyHash, apiKey };
     return req.apiKeyContext as ApiKeyContext;
   }
 

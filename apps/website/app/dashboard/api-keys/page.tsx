@@ -6,6 +6,7 @@ import { useToast } from "../../hooks/useToast";
 import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
 import Loading from "@components/ui/Loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { isOwner } from "@/app/lib/owners";
 
 type ApiKeyRateLimit = {
   limit: number;
@@ -35,11 +36,6 @@ type ApiKeyUpdatePayload = {
 };
 
 type ApiKeyCreateResponse = ApiKey & { apiKey: string };
-
-const ownerIds = (process.env.NEXT_PUBLIC_OWNER_IDS ?? "")
-  .split(",")
-  .map((id) => id.trim())
-  .filter(Boolean);
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
 
@@ -85,7 +81,7 @@ export default function ApiKeysPage() {
     isActive: true,
   });
 
-  const isOwner = useMemo(() => (user?.id ? ownerIds.includes(user.id) : false), [user?.id]);
+  const isOwnerUser = useMemo(() => isOwner(user?.id), [user?.id]);
 
   const {
     data,
@@ -95,14 +91,14 @@ export default function ApiKeysPage() {
   } = useQuery<ApiKey[]>({
     queryKey: ["api-keys"],
     queryFn: () => apiRequest<ApiKey[]>(`${apiBaseUrl}/admin/api-keys`, session?.access_token ?? ""),
-    enabled: !!session?.access_token && isOwner && !!apiBaseUrl,
+    enabled: !!session?.access_token && isOwnerUser && !!apiBaseUrl,
   });
 
   if (status === "loading" || authState === "loading") {
     return <Loading size="lg" variant="bot" />;
   }
 
-  if (!isOwner) {
+  if (!isOwnerUser) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
         <div className="text-slate-300 text-xl mb-2">🔒 Owner Only</div>

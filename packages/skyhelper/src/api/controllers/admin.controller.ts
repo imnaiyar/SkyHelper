@@ -124,8 +124,9 @@ export class AdminController {
     }
 
     if (body.name !== undefined) key.name = body.name;
-    if (body.rateLimit === null) key.rateLimit = undefined;
-    if (body.rateLimit !== undefined && body.rateLimit !== null) key.rateLimit = body.rateLimit;
+    if (body.rateLimit !== undefined) {
+      key.rateLimit = body.rateLimit === null ? undefined : body.rateLimit;
+    }
     if (body.isActive !== undefined) key.isActive = body.isActive;
     await key.save();
     return this.mapApiKey(key);
