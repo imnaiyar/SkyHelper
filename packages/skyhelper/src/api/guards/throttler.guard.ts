@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ThrottlerGuard } from "@nestjs/throttler";
+import { ThrottlerGuard, type ThrottlerRequest } from "@nestjs/throttler";
 import type { ExecutionContext } from "@nestjs/common";
 import crypto from "node:crypto";
 import mongoose from "mongoose";
@@ -74,7 +74,12 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
     const apiKeyContext = await this.resolveApiKey(req);
     if (apiKeyContext.record?.rateLimit) {
       const { limit, ttl } = apiKeyContext.record.rateLimit;
-      const blockDuration = requestProps.throttler.blockDuration ?? ttl;
+      let blockDuration = requestProps.throttler.blockDuration ?? ttl;
+
+      if (typeof blockDuration === "function") {
+        blockDuration = await blockDuration(requestProps.context);
+      }
+
       return super.handleRequest({
         ...requestProps,
         limit,
@@ -93,5 +98,3 @@ interface ApiKeyContext {
   keyHash?: string;
   record: ApiKeySchema | null;
 }
-
-type ThrottlerRequest = Parameters<ThrottlerGuard["handleRequest"]>[0];

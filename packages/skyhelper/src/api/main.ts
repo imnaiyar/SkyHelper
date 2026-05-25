@@ -18,7 +18,6 @@ import { AdminMiddleware } from "./middlewares/admin.middleware.js";
 import { AuthMiddleware } from "./middlewares/auth.middleware.js";
 import { WebhookEventMiddleware } from "./middlewares/discord-webhook.middleware.js";
 import { GuildMiddleware } from "./middlewares/guild.middleware.js";
-import { OwnerMiddleware } from "./middlewares/owner.middleware.js";
 import { setupSwagger } from "./swagger.config.js";
 
 export async function bootstrap(client: SkyHelper) {
@@ -55,7 +54,6 @@ export async function bootstrap(client: SkyHelper) {
         .forRoutes("guilds", "update", "users", "admin");
       consumer.apply(GuildMiddleware).forRoutes("guilds");
       consumer.apply(AdminMiddleware).exclude({ path: "update/quests", method: RequestMethod.GET }).forRoutes("update", "admin");
-      consumer.apply(OwnerMiddleware).forRoutes("admin/api-keys");
       consumer.apply(WebhookEventMiddleware).forRoutes("webhook-event");
     }
   }

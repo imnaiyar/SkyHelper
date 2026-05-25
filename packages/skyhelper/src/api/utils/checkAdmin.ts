@@ -14,6 +14,6 @@ export function checkAdmin(user: APIUser) {
     level: "info",
   });
 
-  if (!config.DASHBOARD.ADMINS.includes(user.id) && !config.OWNER.includes(user.id)) return false;
+  if (!config.DASHBOARD.ADMINS.includes(user.id)) return false;
   return true;
 }
