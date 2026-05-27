@@ -17,6 +17,7 @@ const routeMap: Record<string, string> = {
   "linked-role": "Linked Role",
   profile: "Profile",
   "api-keys": "API Keys",
+  "daily-quests": "Daily Quests",
 };
 
 export default function Breadcrumb() {

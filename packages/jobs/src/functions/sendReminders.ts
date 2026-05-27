@@ -31,7 +31,7 @@ export async function reminderSchedules(): Promise<void> {
     const reminders = guild.reminders;
     for (const key of REMINDERS_KEY) {
       const event = reminders.events[key];
-      if (!event || !event.active || !event.webhook) continue;
+      if (!event?.active || !event.webhook) continue;
 
       const { webhook, role, last_messageId, offset } = event;
       const details = eventDetails[key === "reset" ? "daily-reset" : key];

@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Shield, Menu, X, User, Activity, KeyRound } from "lucide-react";
+import { Home, Shield, Menu, X, User, Activity, KeyRound, ListChecks } from "lucide-react";
 import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
 import { isOwner } from "@/app/lib/owners";
 const main = [
@@ -42,6 +42,12 @@ const admin = [
     label: "API Keys",
     icon: KeyRound,
     description: "Manage API access keys",
+  },
+  {
+    href: "/dashboard/daily-quests",
+    label: "Daily Quests",
+    icon: ListChecks,
+    description: "Update daily quest data",
   },
 ];
 
