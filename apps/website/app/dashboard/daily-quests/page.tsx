@@ -46,10 +46,15 @@ type DailyQuestForm = {
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-const createId = () =>
-  typeof crypto !== "undefined" && "randomUUID" in crypto
-    ? crypto.randomUUID()
-    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+const createId = () => {
+  if (typeof crypto !== "undefined") {
+    if ("randomUUID" in crypto) return crypto.randomUUID();
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
 
 async function apiRequest<T>(url: string, token: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -104,13 +109,15 @@ const toIsoDate = (value: string) => {
   return date.toISOString();
 };
 
-const normalizeQuest = (quest: DailyQuestForm, label: string, requireImage: boolean) => {
+const normalizeQuest = (quest: DailyQuestForm, label: string, requireAtLeastOneImage: boolean) => {
   const title = quest.title.trim();
   if (!title) throw new Error(`${label} title is required.`);
   const dateValue = quest.date.trim();
   if (!dateValue) throw new Error(`${label} date is required.`);
   const parsed = new Date(dateValue);
-  if (Number.isNaN(parsed.getTime())) throw new Error(`${label} date is invalid.`);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`${label} date is invalid. Use YYYY-MM-DD.`);
+  }
   const images = quest.images.map((image, index) => {
     const url = image.url.trim();
     const by = image.by.trim();
@@ -120,7 +127,7 @@ const normalizeQuest = (quest: DailyQuestForm, label: string, requireImage: bool
     const source = image.source.trim();
     return { url, by, source: source || undefined };
   });
-  if (requireImage && images.length === 0) {
+  if (requireAtLeastOneImage && images.length === 0) {
     throw new Error(`${label} requires at least one image.`);
   }
   const description = quest.description.trim();
@@ -331,9 +338,11 @@ export default function DailyQuestsPage() {
     if (!session?.access_token) return;
     try {
       setIsSaving(true);
-      const normalizedQuests = quests.map((quest, index) => normalizeQuest(quest, `Quest ${index + 1}`, false));
-      const normalizedRotating = normalizeQuest(rotatingCandles, "Rotating treasure candle", true);
-      const normalizedSeasonal = seasonalEnabled ? normalizeQuest(seasonalCandles, "Seasonal candle", true) : undefined;
+      const imagesOptional = false;
+      const imagesRequired = true;
+      const normalizedQuests = quests.map((quest, index) => normalizeQuest(quest, `Quest ${index + 1}`, imagesOptional));
+      const normalizedRotating = normalizeQuest(rotatingCandles, "Rotating treasure candle", imagesRequired);
+      const normalizedSeasonal = seasonalEnabled ? normalizeQuest(seasonalCandles, "Seasonal candle", imagesRequired) : undefined;
       const payload: DailyQuestsResponse = {
         quests: normalizedQuests,
         rotating_candles: normalizedRotating,
