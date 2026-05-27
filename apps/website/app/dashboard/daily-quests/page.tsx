@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useSession } from "../../hooks/auth";
 import { useToast } from "../../hooks/useToast";
 import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
@@ -147,6 +148,9 @@ type QuestEditorProps = {
 };
 
 const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [imagesExpanded, setImagesExpanded] = useState(true);
+  const [collapsedImages, setCollapsedImages] = useState<Set<string>>(new Set());
   const update = (changes: Partial<DailyQuestForm>) => onChange({ ...quest, ...changes });
 
   const updateImage = (index: number, changes: Partial<QuestImageForm>) => {
@@ -154,17 +158,54 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
     update({ images });
   };
 
-  const addImage = () => update({ images: [...quest.images, { id: createId(), url: "", by: "", source: "" }] });
+  const addImage = () => {
+    const nextImage = { id: createId(), url: "", by: "", source: "" };
+    setImagesExpanded(true);
+    setCollapsedImages((prev) => {
+      const next = new Set(prev);
+      next.delete(nextImage.id);
+      return next;
+    });
+    update({ images: [...quest.images, nextImage] });
+  };
 
   const removeImage = (index: number) => {
+    const imageId = quest.images[index]?.id;
     const images = quest.images.filter((_, idx) => idx !== index);
+    if (imageId) {
+      setCollapsedImages((prev) => {
+        const next = new Set(prev);
+        next.delete(imageId);
+        return next;
+      });
+    }
     update({ images });
+  };
+
+  const toggleImageCollapsed = (id: string) => {
+    setCollapsedImages((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
   return (
     <div className="border border-slate-700/60 rounded-xl p-5 bg-slate-900/60 space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-lg font-semibold text-white">{label}</h3>
+        <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          className="flex items-center gap-2 text-lg font-semibold text-white"
+          aria-expanded={isExpanded}
+        >
+          <ChevronDown className={`h-4 w-4 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
+          <span>{label}</span>
+        </button>
         {onDelete && (
           <button onClick={onDelete} className="px-3 py-2 bg-red-600/80 hover:bg-red-600 text-white rounded-lg">
             Delete
@@ -172,89 +213,122 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm text-slate-300 mb-2">Title</label>
-          <input
-            className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
-            value={quest.title}
-            onChange={(event) => update({ title: event.target.value })}
-            placeholder="Quest title"
-          />
-        </div>
-        <div>
-          <label className="block text-sm text-slate-300 mb-2">Date</label>
-          <input
-            type="date"
-            className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
-            value={formatDateInput(quest.date)}
-            onChange={(event) => update({ date: toIsoDate(event.target.value) })}
-          />
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-sm text-slate-300 mb-2">Description</label>
-        <textarea
-          className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white min-h-[90px]"
-          value={quest.description}
-          onChange={(event) => update({ description: event.target.value })}
-          placeholder="Optional description"
-        />
-      </div>
-
-      <div className="space-y-3">
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-sm text-slate-300">Images</div>
-          <button onClick={addImage} className="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">
-            Add Image
-          </button>
-        </div>
-
-        {quest.images.length === 0 && <div className="text-sm text-slate-500">No images added yet.</div>}
-
-        {quest.images.map((image, index) => (
-          <div key={image.id} className="border border-slate-700 rounded-lg p-4 space-y-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Image URL</label>
-                <input
-                  className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
-                  value={image.url}
-                  onChange={(event) => updateImage(index, { url: event.target.value })}
-                  placeholder="https://"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Credit</label>
-                <input
-                  className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
-                  value={image.by}
-                  onChange={(event) => updateImage(index, { by: event.target.value })}
-                  placeholder="@creator"
-                />
-              </div>
+      {isExpanded && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm text-slate-300 mb-2">Title</label>
+              <input
+                className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                value={quest.title}
+                onChange={(event) => update({ title: event.target.value })}
+                placeholder="Quest title"
+              />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 items-end">
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Source</label>
-                <input
-                  className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
-                  value={image.source}
-                  onChange={(event) => updateImage(index, { source: event.target.value })}
-                  placeholder="Optional link"
-                />
-              </div>
-              <button
-                onClick={() => removeImage(index)}
-                className="px-3 py-2 bg-red-600/80 hover:bg-red-600 text-white rounded-lg"
-              >
-                Remove
-              </button>
+            <div>
+              <label className="block text-sm text-slate-300 mb-2">Date</label>
+              <input
+                type="date"
+                className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                value={formatDateInput(quest.date)}
+                onChange={(event) => update({ date: toIsoDate(event.target.value) })}
+              />
             </div>
           </div>
-        ))}
-      </div>
+
+          <div>
+            <label className="block text-sm text-slate-300 mb-2">Description</label>
+            <textarea
+              className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white min-h-[90px]"
+              value={quest.description}
+              onChange={(event) => update({ description: event.target.value })}
+              placeholder="Optional description"
+            />
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => setImagesExpanded((prev) => !prev)}
+                className="flex items-center gap-2 text-sm text-slate-300"
+                aria-expanded={imagesExpanded}
+              >
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${imagesExpanded ? "rotate-180" : ""}`} />
+                <span>Images</span>
+              </button>
+              <button onClick={addImage} className="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">
+                Add Image
+              </button>
+            </div>
+
+            {imagesExpanded && (
+              <>
+                {quest.images.length === 0 && <div className="text-sm text-slate-500">No images added yet.</div>}
+
+                {quest.images.map((image, index) => {
+                  const isImageCollapsed = collapsedImages.has(image.id);
+                  return (
+                    <div key={image.id} className="border border-slate-700 rounded-lg p-4 space-y-3">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <button
+                          type="button"
+                          onClick={() => toggleImageCollapsed(image.id)}
+                          className="flex items-center gap-2 text-sm text-slate-300"
+                          aria-expanded={!isImageCollapsed}
+                        >
+                          <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isImageCollapsed ? "" : "rotate-180"}`} />
+                          <span>Image {index + 1}</span>
+                        </button>
+                        <button
+                          onClick={() => removeImage(index)}
+                          className="px-3 py-2 bg-red-600/80 hover:bg-red-600 text-white rounded-lg"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      {!isImageCollapsed && (
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs text-slate-400 mb-1">Image URL</label>
+                              <input
+                                className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                                value={image.url}
+                                onChange={(event) => updateImage(index, { url: event.target.value })}
+                                placeholder="https://"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs text-slate-400 mb-1">Credit</label>
+                              <input
+                                className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                                value={image.by}
+                                onChange={(event) => updateImage(index, { by: event.target.value })}
+                                placeholder="@creator"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-xs text-slate-400 mb-1">Source</label>
+                            <input
+                              className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                              value={image.source}
+                              onChange={(event) => updateImage(index, { source: event.target.value })}
+                              placeholder="Optional link"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -272,6 +346,9 @@ export default function DailyQuestsPage() {
   const [lastMessage, setLastMessage] = useState<string | undefined>();
   const [lastUpdated, setLastUpdated] = useState<string | undefined>();
   const [isSaving, setIsSaving] = useState(false);
+  const [questListExpanded, setQuestListExpanded] = useState(true);
+  const [rotatingExpanded, setRotatingExpanded] = useState(true);
+  const [seasonalExpanded, setSeasonalExpanded] = useState(true);
 
   const {
     data,
@@ -375,37 +452,82 @@ export default function DailyQuestsPage() {
 
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl font-semibold text-white">Quest List</h2>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setQuestListExpanded((prev) => !prev)}
+              className="text-white"
+              aria-expanded={questListExpanded}
+              aria-label={questListExpanded ? "Collapse quest list" : "Expand quest list"}
+            >
+              <ChevronDown className={`h-4 w-4 transition-transform ${questListExpanded ? "rotate-180" : ""}`} />
+            </button>
+            <h2 className="text-xl font-semibold text-white">Quest List</h2>
+          </div>
           <button onClick={addQuest} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
             Add Quest
           </button>
         </div>
-        {isLoading && <Loading size="md" variant="bot" />}
-        {isError && (
-          <div className="text-red-400">{loadError instanceof Error ? loadError.message : "Failed to load daily quests."}</div>
+        {questListExpanded && (
+          <>
+            {isLoading && <Loading size="md" variant="bot" />}
+            {isError && (
+              <div className="text-red-400">
+                {loadError instanceof Error ? loadError.message : "Failed to load daily quests."}
+              </div>
+            )}
+            {!isLoading && !isError && quests.length === 0 && <div className="text-slate-400">No daily quests added yet.</div>}
+            {!isLoading &&
+              !isError &&
+              quests.map((quest, index) => (
+                <QuestEditor
+                  key={quest.id}
+                  quest={quest}
+                  label={`Quest ${index + 1}`}
+                  onChange={(next) => updateQuest(index, next)}
+                  onDelete={() => deleteQuest(index)}
+                />
+              ))}
+          </>
         )}
-        {!isLoading && !isError && quests.length === 0 && <div className="text-slate-400">No daily quests added yet.</div>}
-        {!isLoading &&
-          !isError &&
-          quests.map((quest, index) => (
-            <QuestEditor
-              key={quest.id}
-              quest={quest}
-              label={`Quest ${index + 1}`}
-              onChange={(next) => updateQuest(index, next)}
-              onDelete={() => deleteQuest(index)}
-            />
-          ))}
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-white">Rotating Treasure Candle</h2>
-        <QuestEditor quest={rotatingCandles} label="Rotating Treasure Candle" onChange={setRotatingCandles} />
       </div>
 
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl font-semibold text-white">Seasonal Candle</h2>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setRotatingExpanded((prev) => !prev)}
+              className="text-white"
+              aria-expanded={rotatingExpanded}
+              aria-label={
+                rotatingExpanded ? "Collapse rotating treasure candle section" : "Expand rotating treasure candle section"
+              }
+            >
+              <ChevronDown className={`h-4 w-4 transition-transform ${rotatingExpanded ? "rotate-180" : ""}`} />
+            </button>
+            <h2 className="text-xl font-semibold text-white">Rotating Treasure Candle</h2>
+          </div>
+        </div>
+        {rotatingExpanded && (
+          <QuestEditor quest={rotatingCandles} label="Rotating Treasure Candle" onChange={setRotatingCandles} />
+        )}
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setSeasonalExpanded((prev) => !prev)}
+              className="text-white"
+              aria-expanded={seasonalExpanded}
+              aria-label={seasonalExpanded ? "Collapse seasonal candle section" : "Expand seasonal candle section"}
+            >
+              <ChevronDown className={`h-4 w-4 transition-transform ${seasonalExpanded ? "rotate-180" : ""}`} />
+            </button>
+            <h2 className="text-xl font-semibold text-white">Seasonal Candle</h2>
+          </div>
           <label className="flex items-center gap-2 text-sm text-slate-300">
             <input
               type="checkbox"
@@ -416,11 +538,12 @@ export default function DailyQuestsPage() {
             Enabled
           </label>
         </div>
-        {seasonalEnabled ? (
-          <QuestEditor quest={seasonalCandles} label="Seasonal Candle" onChange={setSeasonalCandles} />
-        ) : (
-          <div className="text-sm text-slate-400">Seasonal candle data will be omitted.</div>
-        )}
+        {seasonalExpanded &&
+          (seasonalEnabled ? (
+            <QuestEditor quest={seasonalCandles} label="Seasonal Candle" onChange={setSeasonalCandles} />
+          ) : (
+            <div className="text-sm text-slate-400">Seasonal candle data will be omitted.</div>
+          ))}
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-700/60 pt-6">
