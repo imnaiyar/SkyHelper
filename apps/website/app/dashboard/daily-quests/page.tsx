@@ -50,9 +50,6 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
 const createId = () => {
   if (typeof crypto !== "undefined") {
     if ("randomUUID" in crypto) return crypto.randomUUID();
-    const bytes = new Uint8Array(16);
-    crypto.getRandomValues(bytes);
-    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
   }
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 };
