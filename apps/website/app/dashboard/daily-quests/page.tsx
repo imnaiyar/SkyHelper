@@ -338,11 +338,13 @@ export default function DailyQuestsPage() {
     if (!session?.access_token) return;
     try {
       setIsSaving(true);
-      const imagesOptional = false;
-      const imagesRequired = true;
-      const normalizedQuests = quests.map((quest, index) => normalizeQuest(quest, `Quest ${index + 1}`, imagesOptional));
-      const normalizedRotating = normalizeQuest(rotatingCandles, "Rotating treasure candle", imagesRequired);
-      const normalizedSeasonal = seasonalEnabled ? normalizeQuest(seasonalCandles, "Seasonal candle", imagesRequired) : undefined;
+      const questsRequireImages = false;
+      const candlesRequireImages = true;
+      const normalizedQuests = quests.map((quest, index) => normalizeQuest(quest, `Quest ${index + 1}`, questsRequireImages));
+      const normalizedRotating = normalizeQuest(rotatingCandles, "Rotating treasure candle", candlesRequireImages);
+      const normalizedSeasonal = seasonalEnabled
+        ? normalizeQuest(seasonalCandles, "Seasonal candle", candlesRequireImages)
+        : undefined;
       const payload: DailyQuestsResponse = {
         quests: normalizedQuests,
         rotating_candles: normalizedRotating,
