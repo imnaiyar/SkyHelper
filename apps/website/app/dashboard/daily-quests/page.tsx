@@ -30,12 +30,14 @@ type DailyQuestsResponse = {
 };
 
 type QuestImageForm = {
+  id: string;
   url: string;
   by: string;
   source: string;
 };
 
 type DailyQuestForm = {
+  id: string;
   title: string;
   date: string;
   description: string;
@@ -43,6 +45,11 @@ type DailyQuestForm = {
 };
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+const createId = () =>
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
 async function apiRequest<T>(url: string, token: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, {
@@ -63,6 +70,7 @@ async function apiRequest<T>(url: string, token: string, options?: RequestInit):
 }
 
 const emptyQuest = (): DailyQuestForm => ({
+  id: createId(),
   title: "",
   date: new Date().toISOString(),
   description: "",
@@ -70,11 +78,13 @@ const emptyQuest = (): DailyQuestForm => ({
 });
 
 const toQuestForm = (quest?: DailyQuest): DailyQuestForm => ({
+  id: createId(),
   title: quest?.title ?? "",
   date: quest?.date ?? new Date().toISOString(),
   description: quest?.description ?? "",
   images:
     quest?.images?.map((image) => ({
+      id: createId(),
       url: image.url ?? "",
       by: image.by ?? "",
       source: image.source ?? "",
@@ -108,7 +118,7 @@ const normalizeQuest = (quest: DailyQuestForm, label: string, requireImage: bool
       throw new Error(`${label} image ${index + 1} must include a URL and credit.`);
     }
     const source = image.source.trim();
-    return { url, by, source: source ? source : undefined };
+    return { url, by, source: source || undefined };
   });
   if (requireImage && images.length === 0) {
     throw new Error(`${label} requires at least one image.`);
@@ -117,7 +127,7 @@ const normalizeQuest = (quest: DailyQuestForm, label: string, requireImage: bool
   return {
     title,
     date: parsed.toISOString(),
-    description: description ? description : undefined,
+    description: description || undefined,
     images,
   };
 };
@@ -137,7 +147,7 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
     update({ images });
   };
 
-  const addImage = () => update({ images: [...quest.images, { url: "", by: "", source: "" }] });
+  const addImage = () => update({ images: [...quest.images, { id: createId(), url: "", by: "", source: "" }] });
 
   const removeImage = (index: number) => {
     const images = quest.images.filter((_, idx) => idx !== index);
@@ -197,7 +207,7 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
         {quest.images.length === 0 && <div className="text-sm text-slate-500">No images added yet.</div>}
 
         {quest.images.map((image, index) => (
-          <div key={`${label}-image-${index}`} className="border border-slate-700 rounded-lg p-4 space-y-3">
+          <div key={image.id} className="border border-slate-700 rounded-lg p-4 space-y-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs text-slate-400 mb-1">Image URL</label>
@@ -368,7 +378,7 @@ export default function DailyQuestsPage() {
           !isError &&
           quests.map((quest, index) => (
             <QuestEditor
-              key={`quest-${index}`}
+              key={quest.id}
               quest={quest}
               label={`Quest ${index + 1}`}
               onChange={(next) => updateQuest(index, next)}
