@@ -21,7 +21,7 @@ export default function FeatureCard({ icon, title, description, features, images
     <div className="group relative cursor-pointer">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
 
-      <div className="relative bg-slate-800 p-6 rounded-2xl border border-slate-700 group-hover:border-slate-600 transition-all duration-300 h-full transform group-hover:scale-[1.02]">
+      <div className="relative bg-slate-700/20 backdrop-blur-lg p-6 rounded-2xl border border-slate-700 group-hover:border-slate-600 group-hover:bg-slate-700 transition-all duration-300 h-full transform group-hover:scale-[1.02]">
         <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
           <span className="text-2xl">{icon}</span>
         </div>

@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="flex-1 min-w-0 ml-0 md:ml-4">
-              <main className=" bg-slate-900 border border-slate-700/50 rounded-xl min-h-[calc(100vh-2rem)]">
+              <main className=" bg-slate-700/20 backdrop-blur-lg border border-slate-600/50 rounded-xl min-h-[calc(100vh-2rem)]">
                 <div className="p-6 md:p-8">
                   <div className="hidden md:block sm:mb-4">
                     <Breadcrumb />

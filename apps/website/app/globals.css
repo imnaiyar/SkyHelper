@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/** Override tailwind v4 default hover behavior which disables it on touch devices */
+@custom-variant hover (&:hover);
+
 :root {
   --background: #0f172a;
   --foreground: #f1f5f9;
