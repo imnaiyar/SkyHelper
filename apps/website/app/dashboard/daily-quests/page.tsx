@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { useSession } from "../../hooks/auth";
 import { useToast } from "../../hooks/useToast";
 import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
+import { Plus, Trash } from "lucide-react";
 import Loading from "@components/ui/Loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isOwner } from "@/app/lib/owners";
@@ -145,8 +146,8 @@ type QuestEditorProps = {
 };
 
 const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [imagesExpanded, setImagesExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [imagesExpanded, setImagesExpanded] = useState(false);
   const [collapsedImages, setCollapsedImages] = useState<Set<string>>(new Set());
   const update = (changes: Partial<DailyQuestForm>) => onChange({ ...quest, ...changes });
 
@@ -204,8 +205,8 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
           <span>{label}</span>
         </button>
         {onDelete && (
-          <button onClick={onDelete} className="px-3 py-2 bg-red-600/80 hover:bg-red-600 text-white rounded-lg">
-            Delete
+          <button onClick={onDelete} className="text-red-600/50 hover:text-red-600">
+            <Trash size={18} />
           </button>
         )}
       </div>
@@ -254,8 +255,8 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
                 <ChevronDown className={`h-3.5 w-3.5 transition-transform ${imagesExpanded ? "rotate-180" : ""}`} />
                 <span>Images</span>
               </button>
-              <button onClick={addImage} className="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">
-                Add Image
+              <button onClick={addImage} className="p-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">
+                <Plus size={12} />
               </button>
             </div>
 
@@ -277,11 +278,8 @@ const QuestEditor = ({ quest, label, onChange, onDelete }: QuestEditorProps) => 
                           <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isImageCollapsed ? "" : "rotate-180"}`} />
                           <span>Image {index + 1}</span>
                         </button>
-                        <button
-                          onClick={() => removeImage(index)}
-                          className="px-3 py-2 bg-red-600/80 hover:bg-red-600 text-white rounded-lg"
-                        >
-                          Remove
+                        <button onClick={() => removeImage(index)} className="text-red-600/50 hover:text-red-600">
+                          <Trash size={16} />
                         </button>
                       </div>
 
@@ -461,8 +459,8 @@ export default function DailyQuestsPage() {
             </button>
             <h2 className="text-xl font-semibold text-white">Quest List</h2>
           </div>
-          <button onClick={addQuest} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-            Add Quest
+          <button onClick={addQuest} className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+            <Plus size={18} />
           </button>
         </div>
         {questListExpanded && (
