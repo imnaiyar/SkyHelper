@@ -9,6 +9,7 @@ import NotificationContainer from "./components/NotificationContainer";
 import PWARegister from "./components/ui/PWARegister";
 import OfflineIndicator from "./components/ui/OfflineIndicator";
 import FloatingStarsBackground from "./components/ui/FloatingStarsBackground";
+import AnimatedBg from "./components/ui/animated-bg";
 import { generateOGMetadata } from "../lib/og";
 import { AuthUser } from "./lib/auth/types";
 import { cookies } from "next/headers";
@@ -51,6 +52,7 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="SkyHelper" />
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-slate-900 text-white`}>
+        <AnimatedBg />
         <FloatingStarsBackground />
         <NotificationProvider>
           <DiscordAuthProvider user={"id" in data ? data : undefined}>
