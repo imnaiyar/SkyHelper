@@ -138,7 +138,7 @@ export default function DiscordLogin({
     }
 
     return (
-      <div className={`bg-slate-800 border border-red-600 rounded-xl ${sizeClasses[size].card} ${className}`}>
+      <div className={`bg-slate-700/20 backdrop-blur-lg border border-red-600 rounded-xl ${sizeClasses[size].card} ${className}`}>
         <div className="text-center">
           <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-white" />
@@ -255,7 +255,7 @@ const CardLogin = ({
   return (
     <div
       className={`
-      bg-slate-800 border border-slate-700 rounded-xl
+      bg-slate-700/20 backdrop-blur-lg border border-slate-600 rounded-xl
       ${cardDimensions}
       ${sizeClasses[size].card} 
       mx-auto flex flex-col justify-center
