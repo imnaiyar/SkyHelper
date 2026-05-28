@@ -195,7 +195,7 @@ export default function TermsPage() {
           </div>
 
           <div className="prose prose-invert prose-lg max-w-none">
-            <div className="bg-slate-700/20 backdrop-blur-lg rounded-xl p-8 border border-slate-600">
+            <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-xl p-8">
               {toss.map((t, i) => (
                 <section className="mb-8" key={`${t.title}-${i}`}>
                   <h2 className="text-2xl font-bold text-white mb-4">

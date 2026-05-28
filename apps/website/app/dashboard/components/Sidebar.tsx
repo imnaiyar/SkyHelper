@@ -70,7 +70,12 @@ export default function Sidebar() {
     <>
       <button
         onClick={toggleSidebar}
-        className="md:hidden p-2 items-center gap-2 flex border bg-slate-700/20 backdrop-blur-lg border-slate-600/50 rounded-lg text-white hover:bg-slate-700/30 transition-colors"
+        className="md:hidden p-2 items-center gap-2 flex 
+  bg-white/5
+  border border-white/10
+  backdrop-blur-xl
+  shadow-[0_8px_32px_rgba(0,0,0,0.37)]
+  rounded-lg text-white hover:bg-white/30 transition-colors"
         aria-label="Toggle sidebar"
       >
         {" "}
@@ -82,7 +87,12 @@ export default function Sidebar() {
 
       <aside
         className={`
-          fixed md:sticky top-20 left-0 w-80  bg-slate-700/20 backdrop-blur-lg border border-slate-600/50 rounded-xl
+          fixed md:sticky top-20 left-0 w-80
+          bg-white/5
+  border border-white/10
+  backdrop-blur-xl
+  shadow-[0_8px_32px_rgba(0,0,0,0.37)]
+          rounded-xl
           transform transition-transform duration-300 ease-in-out z-49 md:z-0
           ${isOpen ? "translate-x-0 left-4" : "-translate-x-full md:translate-x-0"}
           md:block overflow-y-auto

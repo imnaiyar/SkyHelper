@@ -2,60 +2,86 @@
 
 import { motion } from "framer-motion";
 
-export default function AnimatedBackground() {
+export default function AuroraBackground() {
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden bg-slate-900">
-      {/* Base gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.12),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(168,85,247,0.10),transparent_35%)]" />
+      {/* Base background */}
+      <div className="absolute inset-0 bg-slate-900" />
 
-      {/* Noise texture */}
-      <div className="absolute inset-0 opacity-[0.035] [background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22 viewBox=%220 0 200 200%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22 opacity=%221%22/%3E%3C/svg%3E')]" />
-
-      {/* Animated glowing blobs */}
+      {/* Aurora */}
       <motion.div
-        className="absolute -top-40 -left-32 h-[32rem] w-[32rem] rounded-full bg-cyan-500/15 blur-3xl"
+        className="
+          absolute
+          left-1/2
+          top-1/2
+          h-[160vh]
+          w-[160vw]
+          -translate-x-1/2
+          -translate-y-1/2
+          opacity-40
+          blur-[120px]
+          will-change-transform
+        "
         animate={{
-          x: [0, 80, -40, 0],
-          y: [0, 40, 80, 0],
-          scale: [1, 1.15, 0.9, 1],
+          rotate: [0, 360],
         }}
         transition={{
-          duration: 18,
+          duration: 120,
           repeat: Infinity,
-          ease: "easeInOut",
+          ease: "linear",
+        }}
+        style={{
+          background: `
+            conic-gradient(
+              from 180deg,
+              rgba(59,130,246,0.15),
+              rgba(99,102,241,0.12),
+              rgba(168,85,247,0.15),
+              rgba(14,165,233,0.12),
+              rgba(59,130,246,0.15)
+            )
+          `,
         }}
       />
 
-      <motion.div
-        className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-indigo-500/15 blur-3xl"
-        animate={{
-          x: [0, -120, 60, 0],
-          y: [0, 100, -60, 0],
-          scale: [1, 0.85, 1.1, 1],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut",
+      {/* Top glow */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12), transparent 45%)",
         }}
       />
 
-      <motion.div
-        className="absolute bottom-0 left-1/3 h-[24rem] w-[24rem] rounded-full bg-fuchsia-500/10 blur-3xl"
-        animate={{
-          x: [0, 60, -80, 0],
-          y: [0, -80, 40, 0],
-          scale: [1, 1.2, 0.95, 1],
+      {/* Left glow */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 0% 50%, rgba(168,85,247,0.08), transparent 40%)",
         }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut",
+      />
+
+      {/* Right glow */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 100% 50%, rgba(14,165,233,0.08), transparent 40%)",
         }}
+      />
+
+      {/* Noise */}
+      <div
+        className="
+          absolute inset-0
+          opacity-[0.03]
+          bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22 viewBox=%220 0 160 160%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22/%3E%3C/filter%3E%3Crect width=%22160%22 height=%22160%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')]
+        "
       />
 
       {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_35%,rgba(2,6,23,0.9))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(2,6,23,0.85)_100%)]" />
     </div>
   );
 }

@@ -200,7 +200,10 @@ export default function CommandsPage() {
 
         <div className="space-y-4">
           {filteredCommands.map((command) => (
-            <div key={command.id} className="bg-slate-700/20 backdrop-blur-lg border border-slate-600 rounded-lg overflow-hidden">
+            <div key={command.id} className="bg-white/5
+  border border-white/10
+  backdrop-blur-xl
+  shadow-[0_8px_32px_rgba(0,0,0,0.37)] rounded-lg overflow-hidden">
               <div className="p-4 cursor-pointer hover:bg-slate-750 transition-colors" onClick={() => toggleCommand(command.id)}>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">

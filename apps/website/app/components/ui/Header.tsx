@@ -30,7 +30,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-2 left-4 right-4 z-50  transition-all duration-300 ${
-        isScrolled ? "bg-slate-700/20 backdrop-blur-lg border border-slate-600/50 rounded-lg" : ""
+        isScrolled ? "bg-white/5 border border-white/10 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.37)] rounded-lg" : ""
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
