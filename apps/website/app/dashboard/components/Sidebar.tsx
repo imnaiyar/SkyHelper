@@ -93,13 +93,13 @@ export default function Sidebar() {
         Menu
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
-
-      {isScrolled && (
-        <div className="md:hidden p bg-white/5 border border-white/10 rounded-l-lg backdrop-blur-xl fixed right-0 top-21 z-49 shadow-[0_8px_32px_rgba(0,0,0,0.37)]">
-          <MenuButton size={14} open={isOpen} onClick={toggleSidebar} />
-        </div>
-      )}
-
+      
+       {isScrolled && (
+          <div className="md:hidden p bg-white/5 border border-white/10 rounded-l-lg backdrop-blur-xl fixed right-0 top-21 z-49 shadow-[0_8px_32px_rgba(0,0,0,0.37)]">
+          <MenuButton open={isOpen} onClick={(toggleSidebar)} />
+          </div>
+          )}
+          
       {isOpen && <div className="md:hidden fixed inset-0 bg-black/50 z-40 " onClick={toggleSidebar} />}
 
       <aside
