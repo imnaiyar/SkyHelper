@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Shield, Menu, X, User, Activity, KeyRound, ListChecks } from "lucide-react";
 import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
 import { isOwner } from "@/app/lib/owners";
+import MenuButton from "@/app/components/ui/menu-button";
+
 const main = [
   {
     href: "/dashboard",
@@ -56,9 +58,18 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { user: authUser } = useDiscordAuth();
   const isOwnerUser = useMemo(() => isOwner(authUser?.id), [authUser?.id]);
+  const [isScrolled, setScrolled] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const isActiveLink = (href: string) => {
     if (href === "/dashboard") {
       return pathname === href;
@@ -83,7 +94,13 @@ export default function Sidebar() {
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
-      {isOpen && <div className="md:hidden fixed inset-0 bg-black/50 z-40" onClick={toggleSidebar} />}
+      {isScrolled && (
+        <div className="md:hidden p bg-white/5 border border-white/10 rounded-l-lg backdrop-blur-xl fixed right-0 top-21 z-49 shadow-[0_8px_32px_rgba(0,0,0,0.37)]">
+          <MenuButton size={14} open={isOpen} onClick={toggleSidebar} />
+        </div>
+      )}
+
+      {isOpen && <div className="md:hidden fixed inset-0 bg-black/50 z-40 " onClick={toggleSidebar} />}
 
       <aside
         className={`
