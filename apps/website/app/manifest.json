@@ -66,13 +66,11 @@
   "shortcuts": [
     {
       "name": "Dashboard",
-      "short_name": "dash",
       "description": "Manage bot's configuration through the dashboard",
       "url": "/dashboard"
     },
     {
       "name": "Commands",
-      "short_name": "commands",
       "description": "Browse all the bot's commands",
       "url": "/commands"
     }
