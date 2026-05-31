@@ -124,7 +124,7 @@ export const getGamesLeaderboard = async (
     .sort((a, b) => (b[_game]?.singleMode.gamesWon ?? 0) - (a[_game]?.singleMode.gamesWon ?? 0))
     .slice(0, 10)
     .map((user) => ({
-      id: user.data.id,
+      id: user.data.id ?? user._id,
       username: user.data.username,
       gamesPlayed: user[_game]?.singleMode.gamesPlayed ?? 0,
       gamesWon: user[_game]?.singleMode.gamesWon ?? 0,
@@ -135,7 +135,7 @@ export const getGamesLeaderboard = async (
     .sort((a, b) => (b[_game]?.doubleMode.gamesWon ?? 0) - (a[_game]?.doubleMode.gamesWon ?? 0))
     .slice(0, 10)
     .map((user) => ({
-      id: user.data.id,
+      id: user.data.id ?? user._id,
       username: user.data.username,
       gamesPlayed: user[_game]?.doubleMode.gamesPlayed ?? 0,
       gamesWon: user[_game]?.doubleMode.gamesWon ?? 0,
