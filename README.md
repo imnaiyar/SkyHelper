@@ -21,50 +21,52 @@
 </p>
 
 <p align="center">
-  <a href="https://skyhelper.xyz">🌐 Website</a>
+  <a href="https://skyhelper.xyz">Website</a>
   •
-  <a href="https://dash.skyhelper.xyz">📊 Dashboard</a>
+  <a href="https://dash.skyhelper.xyz">Dashboard</a>
   •
-  <a href="https://skyhelper.xyz/invite">➕ Invite Bot</a>
+  <a href="https://skyhelper.xyz/invite">Invite Bot</a>
   •
-  <a href="https://skyhelper.xyz/vote">⭐ Vote</a>
+  <a href="https://skyhelper.xyz/vote">Vote</a>
   •
-  <a href="https://docs.skyhelper.xyz">📚 Documentation</a>
+  <a href="https://docs.skyhelper.xyz">Documentation</a>
   •
-  <a href="https://discord.com/invite/2rjCRKZsBb">💬 Support Server</a>
+  <a href="https://discord.com/invite/2rjCRKZsBb">Support Server</a>
 </p>
 
 ---
 
-## 🌟 About SkyHelper
+## About SkyHelper
 
 SkyHelper is a comprehensive Discord bot designed specifically for the Sky: Children of the Light community. It provides essential tools and information to enhance your Sky experience, from tracking daily events to managing spirit guides and seasonal content.
 
-### ✨ Key Features
+### Key Features
 
-- **📅 Event Tracking**: Stay updated with daily quests, seasonal events, and special occasions
-- **👻 Spirit Information**: Comprehensive database of all spirits, their locations, and cosmetics
-- **🗓️ Shards Calendar**: Never miss a shard event with automated reminders
-- **🌍 Multi-language Support**: Available in multiple languages thanks to our amazing community
-- **⚡ Real-time Updates**: Get instant notifications for game events and updates
-- **🎨 Interactive Commands**: Rich embeds and user-friendly slash commands
-- **📊 Statistics**: Track your progress and server activity
+- **Event Tracking**: Stay updated with daily quests, seasonal events, and special occasions
+- **Spirit Information**: Comprehensive database of all spirits, their locations, and cosmetics
+- **Shards Calendar**: Never miss a shard event with automated reminders
+- **Multi-language Support**: Available in multiple languages thanks to our amazing community
+- **Real-time Updates**: Get instant notifications for game events and updates
+- **Interactive Commands**: Rich embeds and user-friendly slash commands
+- **Planner**: Plan and track your sky progress.
+- and much more...
 
-## 🏗️ Project Structure
+## Project Structure
 
 This monorepo contains all components of the SkyHelper ecosystem:
 
 ```
 skyhelper/
-├── 📦 packages/
-│   ├── 🤖 skyhelper/          # Main Discord bot application
-│   ├── ⏰ jobs/               # Scheduled tasks and reminders
-│   ├── 🛠️ utils/              # Shared utility functions
-│   └── 📋 constants/          # Game data, localizations, and constants
-├── 📱 apps/
-│   └── 📚 docs/              # Documentation website (Next.js)
-├── 🐳 docker-compose.yml     # Production deployment
-└── ⚙️ Configuration files
+├── packages/
+│   ├── skyhelper/          # Main Discord bot application
+│   ├── jobs/               # Scheduled tasks and reminders
+│   ├── utils/              # Shared utility functions
+│   └── constants/          # Game data, localizations, and constants
+├── apps/
+│   └──  docs/              # Documentation website
+|   └──  website/           # Website and dashboard for the skyhelper bot
+├──  docker-compose.yml     # Production deployment
+└── Configuration files
 ```
 
 ### Package Details
@@ -76,7 +78,7 @@ skyhelper/
 - **[docs](apps/docs/)**
 - **[website](apps/website/)**
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -122,7 +124,7 @@ skyhelper/
    pnpm bot
    ```
 
-### 🐳 Docker Deployment (Recommended)
+### Docker Deployment (Recommended)
 
 For production deployment, use Docker Compose:
 
@@ -137,7 +139,7 @@ docker compose up -d --build skyhelper
 docker compose up -d --build jobs
 ```
 
-## 🛠️ Development
+## Development
 
 ### Development Workflow
 
@@ -167,7 +169,7 @@ This project maintains high code quality through:
 - **Husky** for git hooks
 - **Conventional Commits** for clear commit messages
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from the Sky community! Here's how to get started:
 
@@ -195,19 +197,11 @@ docs: update installation instructions
 refactor: optimize database queries
 ```
 
-## 📝 License
+## License
 
 This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) file for details.
 
-## 🌍 Community & Support
-
-- **[Discord Server](https://discord.com/invite/2rjCRKZsBb)** - Get help, report bugs, suggest features
-- **[Documentation](https://docs.skyhelper.xyz)** - Comprehensive guides and API reference
-- **[Website](https://skyhelper.xyz)** - Official website with bot information
-- **Support**: support@skyhelper.xyz
-- **[Issue Tracker](https://github.com/imnaiyar/SkyHelper/issues)** - Bug reports and feature requests
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 # Planner
 
