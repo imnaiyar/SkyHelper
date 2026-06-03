@@ -25,10 +25,10 @@ export type LinkedRoleFormValues = {
 };
 
 const optionalNumber = z.preprocess((value) => {
-  if (value === null || value === undefined || value === \"\") return undefined;
+  if (value === null || value === undefined || value === "") return undefined;
   const parsed = Number(value);
   return Number.isNaN(parsed) ? value : parsed;
-}, z.number().min(1, \"Wings must be at least 1.\").max(240, \"Wings cannot exceed 240.\").optional());
+}, z.number().min(1, "Wings must be at least 1.").max(240, "Wings cannot exceed 240.").optional());
 
 export const linkedRoleSchema = z.object({
   username: z.string(),
@@ -42,15 +42,15 @@ export const linkedRoleSchema = z.object({
 });
 
 const formatOptional = (value?: string) => {
-  const trimmed = value?.trim() ?? \"\";
+  const trimmed = value?.trim() ?? "";
   return trimmed.length ? trimmed : undefined;
 };
 
 export const toLinkedRoleFormValues = (connections?: LinkedRoleConnection): LinkedRoleFormValues => ({
-  username: connections?.username ?? \"\",
+  username: connections?.username ?? "",
   metadata: {
     wings: connections?.metadata?.wings ?? undefined,
-    since: connections?.metadata?.since ?? \"\",
+    since: connections?.metadata?.since ?? "",
     eden: connections?.metadata?.eden ?? false,
     cr: connections?.metadata?.cr ?? false,
     hangout: connections?.metadata?.hangout ?? false,

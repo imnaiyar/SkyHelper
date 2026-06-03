@@ -1,6 +1,6 @@
 "use client";
 
-import { useFieldArray, useFormContext, useWatch, type FieldErrors } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch, type FieldErrors, type FieldArrayPath } from "react-hook-form";
 import { motion } from "framer-motion";
 import { ImageUp, Plus, Trash2, Copy } from "lucide-react";
 import EditableField from "@components/ui/EditableField";
@@ -8,7 +8,7 @@ import { formatDateDisplay, type DailyQuestsFormValues, type QuestFormValues } f
 import CodeBlock from "@components/ui/codeblock";
 
 type QuestCardProps = {
-  name: string;
+  name: `quests.${number}` | "seasonal_candles" | "rotating_candles";
   label: string;
   editing: boolean;
   onRemove?: () => void;
@@ -19,8 +19,8 @@ const inputClasses = "w-full rounded-lg border border-slate-700 bg-slate-900/70 
 const viewClasses = "min-h-[38px] rounded-lg px-3 py-2 text-slate-200";
 
 export default function QuestCard({ name, label, editing, onRemove, errors }: QuestCardProps) {
-  const { control, register, setValue } = useFormContext<DailyQuestsFormValues>();
-  const quest = useWatch({ control, name }) as QuestFormValues | undefined;
+  const { control, register } = useFormContext<DailyQuestsFormValues>();
+  const quest = useWatch({ control, name });
   const { fields, append, remove } = useFieldArray({
     control,
     name: `${name}.images` as const,
@@ -29,22 +29,6 @@ export default function QuestCard({ name, label, editing, onRemove, errors }: Qu
 
   const addImage = () => append({ url: "", by: "", source: "" });
 
-  const handleUpload = (index: number, file?: File) => {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setValue(`${name}.images.${index}.url` as const, String(reader.result ?? ""), {
-        shouldDirty: true,
-        shouldValidate: true,
-      });
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleUploadClick = (id: string) => {
-    const input = document.getElementById(id) as HTMLInputElement | null;
-    input?.click();
-  };
   const imagesError = (errors?.images as { message?: string } | undefined)?.message;
 
   return (
@@ -145,36 +129,15 @@ export default function QuestCard({ name, label, editing, onRemove, errors }: Qu
                 <div key={field.fieldId} className="border border-slate-700 rounded-lg p-4 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-sm text-slate-300">Image {index + 1}</span>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleUploadClick(uploadId)}
-                        aria-label={`Upload image ${index + 1}`}
-                        className="text-slate-300 hover:text-white"
-                      >
-                        <ImageUp size={16} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        aria-label={`Remove image ${index + 1}`}
-                        className="text-red-400 hover:text-red-300"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      aria-label={`Remove image ${index + 1}`}
+                      className="text-red-400 hover:text-red-300"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
-
-                  <input
-                    id={uploadId}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(event) => {
-                      handleUpload(index, event.target.files?.[0]);
-                      event.currentTarget.value = "";
-                    }}
-                  />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>

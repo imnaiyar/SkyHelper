@@ -23,27 +23,9 @@ export type DailyQuestsResponse = {
   seasonal_candles?: DailyQuest;
 };
 
-export type QuestImageFormValues = {
-  url: string;
-  by: string;
-  source: string;
-};
-
-export type QuestFormValues = {
-  title: string;
-  date: string;
-  description: string;
-  images: QuestImageFormValues[];
-};
-
-export type DailyQuestsFormValues = {
-  quests: QuestFormValues[];
-  rotating_candles: QuestFormValues;
-  seasonal_candles: QuestFormValues;
-  seasonal_enabled: boolean;
-  last_message: string;
-  last_updated: string;
-};
+export type QuestImageFormValues = z.infer<typeof questImageSchema>;
+export type QuestFormValues = z.infer<typeof questSchema>;
+export type DailyQuestsFormValues = z.infer<typeof dailyQuestsSchema>;
 
 const dateSchema = z
   .string()
