@@ -2,9 +2,10 @@
 
 import { useFieldArray, useFormContext, useWatch, type FieldErrors } from "react-hook-form";
 import { motion } from "framer-motion";
-import { ImageUp, Plus, Trash2 } from "lucide-react";
+import { ImageUp, Plus, Trash2, Copy } from "lucide-react";
 import EditableField from "@components/ui/EditableField";
 import { formatDateDisplay, type DailyQuestsFormValues, type QuestFormValues } from "../quest-form";
+import CodeBlock from "@components/ui/codeblock";
 
 type QuestCardProps = {
   name: string;
@@ -77,12 +78,7 @@ export default function QuestCard({ name, label, editing, onRemove, errors }: Qu
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-wide text-slate-500">Date</span>
           <EditableField editing={editing} display={<div className={viewClasses}>{formatDateDisplay(quest?.date)}</div>}>
-            <input
-              type="date"
-              {...register(`${name}.date` as const)}
-              className={inputClasses}
-              aria-label={`${label} date`}
-            />
+            <input type="date" {...register(`${name}.date` as const)} className={inputClasses} aria-label={`${label} date`} />
           </EditableField>
           {errors?.date?.message && <p className="text-xs text-red-400">{errors.date.message}</p>}
         </div>
@@ -92,7 +88,9 @@ export default function QuestCard({ name, label, editing, onRemove, errors }: Qu
         <span className="text-xs uppercase tracking-wide text-slate-500">Description</span>
         <EditableField
           editing={editing}
-          display={<div className="min-h-[70px] rounded-lg px-3 py-2 text-slate-300">{quest?.description || "No description."}</div>}
+          display={
+            <div className="min-h-[70px] rounded-lg px-3 py-2 text-slate-300">{quest?.description || "No description."}</div>
+          }
         >
           <textarea
             {...register(`${name}.description` as const)}
@@ -128,7 +126,7 @@ export default function QuestCard({ name, label, editing, onRemove, errors }: Qu
                     />
                     <div className="text-sm text-slate-300">
                       <div>{image.by || "Unknown"}</div>
-                      {image.source && <div className="text-xs text-slate-500">{image.source}</div>}
+                      {image.source && <CodeBlock text={image.source} inline />}
                     </div>
                   </div>
                 ))

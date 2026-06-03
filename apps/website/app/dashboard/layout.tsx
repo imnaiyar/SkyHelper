@@ -22,11 +22,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="flex-1 min-w-0 ml-0 md:ml-4">
-              <main className="bg-white/5
+              <main
+                className="bg-white/5
   border border-white/10
   backdrop-blur-xl
-  shadow-[0_8px_32px_rgba(0,0,0,0.37)] rounded-xl min-h-[calc(100vh-2rem)]">
-                <div className="p-6 md:p-8">
+  shadow-[0_8px_32px_rgba(0,0,0,0.37)] rounded-xl min-h-[calc(100vh-2rem)]"
+              >
+                <div className="relative overflow-hidden p-6 md:p-8">
                   <div className="hidden md:block sm:mb-4">
                     <Breadcrumb />
                   </div>

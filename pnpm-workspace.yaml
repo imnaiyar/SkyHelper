@@ -9,3 +9,8 @@ hoistPattern:
 publicHoistPattern:
   - "*@nextui-org/*" # https://github.com/pnpm/pnpm/issues/8878#issuecomment-2546442011
   - "*eslint*"
+
+packageExtensions:
+  "@hookform/resolvers":
+    peerDependencies:
+      zod: "*"

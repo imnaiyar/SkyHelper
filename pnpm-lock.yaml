@@ -7,6 +7,8 @@ settings:
 overrides:
   discord-api-types: latest
 
+packageExtensionsChecksum: sha256-7EyWhva5Lcamo6pe18OzfUc27A7xbWt39+G/ofluF9k=
+
 patchedDependencies:
   '@sapphire/string-store':
     hash: 7569934ff30dd3bbc9e9271ecc1e847b98bbe2e6f033ae2e181e253a4e95d31b
@@ -143,7 +145,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ^5.4.0
-        version: 5.4.0(react-hook-form@7.77.0(react@19.1.0))
+        version: 5.4.0(react-hook-form@7.77.0(react@19.1.0))(zod@3.25.76)
       '@serwist/next':
         specifier: ^9.2.1
         version: 9.2.1(next@15.5.18(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)
@@ -887,6 +889,7 @@ packages:
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
     peerDependencies:
       react-hook-form: ^7.55.0
+      zod: '*'
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -7180,10 +7183,11 @@ snapshots:
     dependencies:
       hono: 4.12.18
 
-  '@hookform/resolvers@5.4.0(react-hook-form@7.77.0(react@19.1.0))':
+  '@hookform/resolvers@5.4.0(react-hook-form@7.77.0(react@19.1.0))(zod@3.25.76)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.77.0(react@19.1.0)
+      zod: 3.25.76
 
   '@humanfs/core@0.19.1': {}
 
@@ -10330,7 +10334,7 @@ snapshots:
       tinyglobby: 0.2.14
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.44.0(eslint@9.26.0(jiti@2.5.1))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.26.0(jiti@2.5.1))
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@9.26.0(jiti@2.5.1))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.26.0(jiti@2.5.1))
     transitivePeerDependencies:
       - supports-color
 
