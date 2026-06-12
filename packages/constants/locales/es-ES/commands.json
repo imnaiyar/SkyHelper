@@ -180,7 +180,7 @@
       }
     },
     "RESPONSES": {
-      "CONFIGURED": "Los recordatorios `{{TYPE}}` aparecerán en {{CHANNEL}}",
+      "CONFIGURED": "Recordatorios configurados con éxito `{{EVENT}}` en {{CHANNEL}}",
       "CONFIGURED_ROLE": "Recordatorio `{{EVENT}}` configurado para el rol {{ROLE}} en {{CHANNEL}} exitosamente",
       "ALREADY_NOT_CONFIGURED": "Los recordatorios para {{EVENT}} ya están desactivados",
       "NEXT_TIME": "El siguiente recordatorio para {{EVENT}} sera enviado a las {{TIME}}",
