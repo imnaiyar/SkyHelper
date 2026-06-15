@@ -59,7 +59,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
     }
     data.last_updated = today.toISO()!;
     data.save().catch(client.logger.error);
-  }); // Ten minute timeout, assuming all the quests are posted within 10 minutes
+  }, 6e5); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
 
 // Send quests reminder
