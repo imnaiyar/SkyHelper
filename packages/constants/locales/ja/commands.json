@@ -180,7 +180,7 @@
       }
     },
     "RESPONSES": {
-      "CONFIGURED": "`{{TYPE}}`リマインダーが {{CHANNEL}}に設定されました",
+      "CONFIGURED": "Successfully configured `{{EVENT}}` reminders in {{CHANNEL}}",
       "CONFIGURED_ROLE": "{{EVENT}}のロール {{ROLE}} のリマインダー「 {{CHANNEL}}」を正常に設定しました",
       "ALREADY_NOT_CONFIGURED": "{{EVENT}} のリマインダーは既に非アクティブです",
       "NEXT_TIME": "次のリマインダー「{{EVENT}}」は {{TIME}}に送信されます",
