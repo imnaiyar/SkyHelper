@@ -59,7 +59,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
     }
     data.last_updated = today.toISO()!;
     data.save().catch(client.logger.error);
-  }, 6e5); // Ten minute timeout, assuming all the quests are posted within 10 minutes
+  }); // Ten minute timeout, assuming all the quests are posted within 10 minutes
 };
 
 // Send quests reminder
@@ -89,6 +89,14 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
         response = {
           components: [...(role ? [textDisplay(`${role}\u200B`)] : []), ...d.components],
         };
+
+        // delete previous quest message if exists
+        if (event.last_messageId) {
+          client.api.webhooks
+            .deleteMessage(webhook.id, webhook.token, event.last_messageId, { thread_id: webhook.threadId })
+            .catch(() => {});
+        }
+
         await client.api.webhooks
           .execute(webhook.id, webhook.token, {
             username: t("features:reminders.DAILY_QUESTS"),
@@ -116,11 +124,6 @@ export async function dailyQuestRemindersSchedules(client: SkyHelper): Promise<v
             }
             client.logger.error(guild.data.name + " Reminder Error: ", err);
           });
-        if (event.last_messageId) {
-          client.api.webhooks
-            .deleteMessage(webhook.id, webhook.token, event.last_messageId, { thread_id: webhook.threadId })
-            .catch(() => {});
-        }
       } catch (err) {
         client.logger.error(err);
       }
