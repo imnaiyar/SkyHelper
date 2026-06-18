@@ -14,7 +14,7 @@
   "EMBED_DESCRIPTION": "यह कमांड को execute करते समय एक एरर उत्पन्न हुई | कृपया बग रिपोर्ट करते समय एरर ID शामिल करें",
   "BUTTON_LABEL": "रिपोर्ट बग",
   "NOT-ALLOWED": "आप दूसरों का generate किया हुआ मेन्यू इस्तेमाल नहीं कर सकते |",
-  "NO_CHANNEL_PERM": "I do not have permission to access <#{{CHANNEL}}>. Please make sure I have `View Channel` and `Send Messages` permissions in that channel.",
+  "NO_CHANNEL_PERM": "मुझे <#{{CHANNEL}}> तक पहुँचने की अनुमति नहीं है। कृपया सुनिश्चित करें कि उस चैनल में मेरे पास `View Channel` और `Send Messages` अनुमतियाँ हैं।",
   "ERROR_MODAL": {
     "SUCCESS": "आपका सबमिशन सफलतापूर्वक प्राप्त हो गया!",
     "TITLE": "बग रिपोर्ट",

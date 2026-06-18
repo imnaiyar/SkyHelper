@@ -10,16 +10,16 @@
       "EXPECTED": "{{DURATION}} में लैंड होगा"
     },
     "TIMELINE": "टाइमलाइन",
-    "LOCATION": "Shard Location",
-    "DATA": "Shard Data"
+    "LOCATION": "शारड का जगह",
+    "DATA": "शारड का डाटा"
   },
   "times-embed": {
     "EVENT_INACTIVE": "कोई भी एक्टिव इवेंट्स नहीं",
     "EMBED_TITLE": "इवेंट्स का समय",
-    "EVENT_ACTIVE": "**Event**: {{EVENT_NAME}}\n**From**: {{DATE1}} - {{DATE2}}\n**Total Days**: {{DAYS}}",
+    "EVENT_ACTIVE": "**इवेंट**: {{EVENT_NAME}}\n**तारिख**: {{DATE1}} - {{DATE2}}\n**कुल दिन**: {{DAYS}}",
     "STARTS": "शुरू होगा",
     "ENDS": "खत्म",
-    "TS_VISITING": "- **Currently Visiting:** {{TS_NAME}}\n- **Departure:** At {{DATE}} ({{DURATION}})",
+    "TS_VISITING": "**अभी विजिट में**: {{TS_NAME}}\n**वापिस जाएंगे**: {{DATE}} को ({{DURATION}})",
     "TS_EXPECTED": "{{DATE}} को {{TS_NAME}} आने वाले हैं ({{DURATION}} में)",
     "TS_UPDATED": "अभी अपडेट होने को है",
     "TS_UNKNOWN": "अनजान स्पिरिट",
@@ -39,7 +39,7 @@
     },
     "TS_TITLE": "ट्रैवलिंग स्पिरिट",
     "EVENT_TITLE": "स्पेशल इवेंट (Days of ...)",
-    "ACTIVE": "<a:uptime:1228956558113771580> Active. Ends in {{END_TIME}} (`Next:` {{NEXT_TIME}})",
+    "ACTIVE": "<a:uptime:1228956558113771580> अभी ऐक्टिव है | {{END_TIME}} मे समाप्त होगा (अगला: {{NEXT_TIME}})",
     "NEXT-OCC": "इसके बाद का समय: {{TIME}}",
     "NEXT-OCC-IDLE": "अगली घटना: {{TIME}}"
   },
@@ -59,44 +59,44 @@
     "TREE_TITLE": "{{CREDIT}} के तरफ से फ्रेंडशिप ट्री (पिछला विजिट का)",
     "SEASONAL_CHART": "{{CREDIT}} के तरफ से सीजनल चार्ट",
     "LOCATION_TITLE": "{{CREDIT}} के तरफ से लोकेशन",
-    "NO_SPIRIT": "No spirit found!",
-    "NO_COLLECTIBLES": "No collectibles found for this spirit, or something went wrong!",
-    "NO_EXPRESSION": "Something went wrong! No data found"
+    "NO_SPIRIT": "कोई स्पिरिट नही मिला:",
+    "NO_COLLECTIBLES": "इस स्पिरिट के लिए कोई कलेक्टिबल्स नहीं मिला, या कुछ गलत हो गया!",
+    "NO_EXPRESSION": "कुछ गलत हो गया! कोई भी डाटा नही मिला"
   },
   "hangman": {
     "NOT_PLAYABLE": "यह खेल केवल उसी चैनल में खेल जा सकता है जहां पे मैं मैसेज सेंड कर सकता हूं। यह कमांड यूजर ऐप में उपलब्ध नही है, आप यह कमांड उन सर्वर्स में इस्तेमाल कर सकतें है जहां पे मैं सदस्य हूं या फिर मेरे DM में।",
     "GAME_ACTIVE": "इस चैनल में पहले से ही एक खेल जारी है, कृपया उसकी समाप्ति का इंतजार करें। या यह कमांड किसी और चैनल में उसे करें।",
     "DOUBLE_MODE_GUILD": "डबल मोड केवल उन सर्वरों में चलाया जा सकता है जिनका मैं सदस्य हूं।",
-    "CUSTOM_WORD_DISALLOWED": "Custom words are not allowed in single player mode.",
-    "INSTRUCTIONS_BASE": "**Here are some things that you can keep in mind during the game!**\n- You will have 30 seconds to answer in each round. Every attempt (or lack of within the specified time) will count as a wrong answer.\n- If you think you know the full word, you can type it so (like `Ascended Candles`).\n- The game initiator can stop the game anytime by typing `>stopgame` in the channel. Only finished games will count towards the leaderboard.",
-    "INSTRUCTIONS_SINGLE": "Each wrong answer will cost lives. The embed will show how many lives you have left. You'll lose if you fail to guess the word correctly before your lives runs out.",
-    "INSTRUCTIONS_DOUBLE": "Each player will answer in turn, randomly picking for the first round, the player who guesses correctly will stay in the round until they guess incorrectly (or fail to do so within time), the round will pass to next person. Whoever guesses the word first wins.",
-    "NO_LEADERBOARD_DATA": "Oops! Looks like no data is available for this type. Start playing to get on the leaderboard!",
-    "GUESSED_CORRECTLY": "You guessed correctly! 🎉",
-    "GUESSED_INCORRECTLY": "You guessed incorrectly! 😢\nThe correct word was `{{WORD}}`"
+    "CUSTOM_WORD_DISALLOWED": "सिन्गल प्लेयर मोड मे कस्टम शब्द ईस्तेमाल नही कर सकते।",
+    "INSTRUCTIONS_BASE": "**खेल के दौरान ध्यान रखने योग्य कुछ बातें:**\n- हर राउंड में जवाब देने के लिए आपके पास 30 सेकंड होंगे। निर्धारित समय के भीतर किया गया हर गलत प्रयास (या कोई जवाब न देना) गलत उत्तर माना जाएगा।\n- यदि आपको लगता है कि आपको पूरा शब्द पता है, तो आप उसे सीधे टाइप कर सकते हैं (उदाहरण: `Ascended Candles`)।\n- खेल शुरू करने वाला खिलाड़ी किसी भी समय चैनल में `>stopgame` टाइप करके खेल समाप्त कर सकता है। केवल पूरी तरह समाप्त हुए खेल ही लीडरबोर्ड में जोड़े जाएंगे।",
+    "INSTRUCTIONS_SINGLE": "हर गलत उत्तर पर आपकी एक जान (Life) कम हो जाएगी। एम्बेड में दिखाया जाएगा कि आपके पास कितनी जानें शेष हैं। यदि आपकी सभी जानें समाप्त होने से पहले आप सही शब्द का अनुमान नहीं लगा पाते हैं, तो आप खेल हार जाएंगे।",
+    "INSTRUCTIONS_DOUBLE": "सभी खिलाड़ी बारी-बारी से उत्तर देंगे। पहले राउंड में शुरुआत करने वाला खिलाड़ी रैंडम रूप से चुना जाएगा। सही उत्तर देने वाला खिलाड़ी तब तक खेलता रहेगा जब तक वह गलत उत्तर न दे या समय सीमा के भीतर उत्तर न दे पाए। उसके बाद बारी अगले खिलाड़ी को मिल जाएगी। जो खिलाड़ी सबसे पहले सही शब्द का अनुमान लगाएगा, वही जीत जाएगा।",
+    "NO_LEADERBOARD_DATA": "अभी इस श्रेणी के लिए कोई डेटा उपलब्ध नहीं है। लीडरबोर्ड में शामिल होने के लिए खेलना शुरू करें!",
+    "GUESSED_CORRECTLY": "आपने सही अनुमान लगाया! 🎉",
+    "GUESSED_INCORRECTLY": "आपका अनुमान गलत था! 😢  \nसही शब्द `{{WORD}}` था।"
   },
   "skygame": {
-    "LEADERBOARD_SERVER_ONLY": "Run this command in a server when `type` is set to `Server`"
+    "LEADERBOARD_SERVER_ONLY": "जब `type` को `Server` पर सेट किया गया हो, तो इस कमांड को किसी सर्वर में चलाएँ।"
   },
   "planner": {
-    "SEARCH_FAILED": "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",
-    "NOT_IMPLEMENTED": "Not Implemented Yet",
-    "IMPORT_TIMEOUT": "✨ *The stars have dimmed...* Your meditation took too long. The portal has closed! Please try summoning your data again. 🕯️",
-    "INVALID_FILE_HEADER": "🌟 ***Hmm... This constellation doesn't quite align!*** 🌟",
-    "INVALID_FILE_BODY": "It seems the Spirits are having trouble reading your starlight message. The file you've shared appears to be from a different realm!",
-    "REQUIRED_FILE_FORMAT": "🕊️ **What I need from you:**",
-    "JSON_PARSE_ERROR_HEADER": "🌟 **Oops! Your constellation seems a bit jumbled...** 🌟",
-    "JSON_PARSE_ERROR_BODY": "This file seems to have lost its starlight during the journey! The Spirits cannot decipher its message. 📜✨",
-    "OTHER_USER_WARNING": "🌟 ***These memories belong to another Sky Kid...*** 🌟",
-    "IMPORT_SUCCESS": "✨ ***Your memories have been captured in starlight!*** 🌟\n\n*The Spirits have carefully preserved your journey across the realms. Keep this scroll safe, dear Sky Kid!* 🕯️📜",
-    "DELETE_SUCCESS": "🌌 ***Your memories have been released to the stars...*** 🌌",
-    "DELETE_BACKUP": "📜 ***A parting gift from the Spirits...***",
-    "IMPORT_NOTE": "\n-# NOTE: If you are importing data from [sky-planner.com](https://sky-planner.com), some things are not saved by the bot, mainly things related to website specific preferences. These includes but not limited to: Themes, Filters, Map Markers, Closet Settings, etc."
+    "SEARCH_FAILED": "उफ़! हम यह पता नहीं लगा पाए कि यह कहाँ से आया है।\n-# लगता है कि परिणाम विंड टनल्स में कहीं खो गया।",
+    "NOT_IMPLEMENTED": "अभी तक लागू नहीं किया गया है।",
+    "IMPORT_TIMEOUT": "✨ *सितारों की चमक फीकी पड़ गई है...* आपका ध्यान बहुत देर तक चलता रहा। पोर्टल बंद हो गया है! कृपया अपना डेटा फिर से बुलाने का प्रयास करें। 🕯️",
+    "INVALID_FILE_HEADER": "🌟 ***हम्म... लगता है यह नक्षत्र सही तरह से नहीं जुड़ रहा है!*** 🌟",
+    "INVALID_FILE_BODY": "लगता है कि स्पिरिट्स आपके तारों की रोशनी से भेजे गए संदेश को पढ़ने में कठिनाई महसूस कर रहे हैं। आपके द्वारा साझा की गई फ़ाइल किसी दूसरे लोक (Realm) की प्रतीत होती है!",
+    "REQUIRED_FILE_FORMAT": "**मुझे आपसे क्या चाहिए:**",
+    "JSON_PARSE_ERROR_HEADER": "🌟 **उफ़! लगता है आपका नक्षत्र कुछ गड़बड़ हो गया है...** 🌟",
+    "JSON_PARSE_ERROR_BODY": "लगता है कि यात्रा के दौरान इस फ़ाइल की स्टरलाइट कहीं खो गई है! स्पिरिट्स इसके संदेश को पढ़ या समझ नहीं पा रहे हैं। 📜✨",
+    "OTHER_USER_WARNING": "🌟 ***लगता है ये यादें किसी दूसरे स्काई किड की हैं...*** 🌟",
+    "IMPORT_SUCCESS": "✨ ***आपकी यादों को स्टरलाइट में संजो लिया गया है!*** 🌟\n\n*स्पिरिट्स ने विभिन्न रियल्म्स में आपकी यात्रा को सावधानीपूर्वक सुरक्षित रखा है। इस स्क्रॉल को संभालकर रखें, प्रिय स्काई किड!* 🕯️📜",
+    "DELETE_SUCCESS": "🌌 ***आपकी यादों को सितारों के हवाले कर दिया गया है...*** 🌌",
+    "DELETE_BACKUP": "📜 ***स्पिरिट्स की ओर से आपके लिए एक अंतिम उपहार...***",
+    "IMPORT_NOTE": "-# नोट: यदि आप [sky-planner.com](https://sky-planner.com) से डेटा इम्पोर्ट कर रहे हैं, तो कुछ चीज़ें बॉट द्वारा सहेजी नहीं जाती हैं, मुख्य रूप से वे जो वेबसाइट-विशिष्ट प्राथमिकताओं (preferences) से संबंधित हैं। इनमें शामिल हैं, लेकिन इन्हीं तक सीमित नहीं हैं: थीम्स, फ़िल्टर्स, मैप मार्कर्स, क्लोसेट सेटिंग्स आदि।"
   },
   "linked-role": {
-    "INTRO": "Linked role is a special kind of roles that can be used to connect a user account with an application (in this case, the SkyHelper bot).\nThis allows the bot to update user's role connection data to display specific information on a user's profile in a server (see the attached pic). In this case, we can use this to display basic sky profile (Preferred name, preferences, etc.).",
-    "GUIDES": "Due to the complicated nature of linked roles, it is difficult to explain everything here, so we have prepared some guides to help you understand how to use linked roles.\n- [What is a linked?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [How you can enable linked roles in your server?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [How to get/link/update your sky profile with the bot?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
-    "NAVIGATE": "-# If Linked Role connection is enabled for SkyHelper in this server, you can get it by navigating to <id:linked-roles>."
+    "INTRO": "Linked Role एक विशेष प्रकार की भूमिका (Role) है जो उपयोगकर्ता के खाते को किसी एप्लिकेशन (जैसे SkyHelper बॉट) से जोड़ने की सुविधा प्रदान करती है।\n\nइसके माध्यम से बॉट उपयोगकर्ता के Role Connection डेटा को अपडेट कर सकता है और सर्वर में उसकी प्रोफ़ाइल पर विशेष जानकारी प्रदर्शित कर सकता है (संलग्न चित्र देखें)।\n\nउदाहरण के लिए, इसका उपयोग Sky प्रोफ़ाइल की मूल जानकारी, जैसे पसंदीदा नाम (Preferred Name), प्राथमिकताएँ (Preferences) आदि दिखाने के लिए किया जा सकता है।",
+    "GUIDES": "Linked Roles की जटिल प्रकृति के कारण यहाँ सब कुछ विस्तार से समझाना कठिन है। इसलिए, हमने कुछ मार्गदर्शिकाएँ (Guides) तैयार की हैं जो आपको Linked Roles को समझने और उनका उपयोग करने में मदद करेंगी।\n\n- [Linked Role क्या है?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [अपने सर्वर में Linked Roles कैसे सक्षम (Enable) करें?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [बॉट के साथ अपनी Sky प्रोफ़ाइल कैसे प्राप्त करें, लिंक करें या अपडेट करें?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
+    "NAVIGATE": "-# यदि इस सर्वर में SkyHelper के लिए Linked Role कनेक्शन सक्षम है, तो आप इसे <id:linked-roles> पर जाकर प्राप्त कर सकते हैं।"
   },
   "reminders": {
     "ROLE_MENTION": "हेय, {{ROLE}}",
@@ -105,25 +105,25 @@
     "TITLE": "{{TYPE}} रिमाइंडर",
     "DAILY_QUESTS": "डेली क्वेस्ट्स",
     "COMMON": "{{TYPE}} अभी शुरू हो चुका है ({{TIME}} बजे) और वो {{TIME-END}} ({{TIME-END-R}}) पे खत्म होगा",
-    "PRE": "{{TYPE}} will start at {{TIME}} ({{TIME-R}}).",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
-    "SHARDS": "**{{SHARD_NUMBER}} shard** will fall at {{TIME}}",
-    "MANAGE_TIMEOUT": "Response timed out. I didn't receive a response in time",
-    "TOGGLE_TIMEOUT": "You did not respond in time. Please try again.",
-    "TOGGLE_DISABLED": "No channel selected! Reminders for {{EVENT}} have been disabled.",
-    "TOGGLE_UPDATED": "Successfully updated {{EVENT}} reminders!",
-    "INVALID_CHANNEL": "Invalid channel type. Please provide a valid text channel or thread channel."
+    "PRE": "{{TYPE}} की शुरुआत {{TIME}} ({{TIME-R}}) पर होगी।",
+    "PRE-RESET": "{{TYPE}} की शुरुआत {{TIME}} ({{TIME-R}}) पर होगी।",
+    "SHARDS": "**{{SHARD_NUMBER}} शार्ड** {{TIME}} पर गिरेगा।",
+    "MANAGE_TIMEOUT": "उत्तर का समय समाप्त हो गया। मुझे समय पर कोई उत्तर प्राप्त नहीं हुआ।",
+    "TOGGLE_TIMEOUT": "आपने समय पर उत्तर नहीं दिया। कृपया पुनः प्रयास करें।",
+    "TOGGLE_DISABLED": "कोई चैनल चुना नहीं गया! {{EVENT}} के लिए रिमाइंडर बंद कर दिए गए हैं।",
+    "TOGGLE_UPDATED": "{{EVENT}} के लिए रिमाइंडर्स सफलतापूर्वक अपडेट कर दिए गए हैं!",
+    "INVALID_CHANNEL": "अमान्य चैनल प्रकार। कृपया कोई वैध टेक्स्ट चैनल या थ्रेड चैनल चुनें।"
   },
   "quests": {
-    "NO_CANDLE_DATA": "No data found for this type of candles.",
-    "NO_QUEST_DATA": "No data found for this quest."
+    "NO_CANDLE_DATA": "इस प्रकार की कैंडल्स के लिए कोई डेटा उपलब्ध नहीं है।",
+    "NO_QUEST_DATA": "इस क्वेस्ट के लिए कोई डेटा नहीं मिला।"
   },
   "guides": {
-    "NO_SUMMARY": "No Summary found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions.",
-    "NO_MAPS": "No Maps found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions."
+    "NO_SUMMARY": "इस रियल्म के लिए कोई सारांश उपलब्ध नहीं है!\n\n-# यह एक लेगेसी सुविधा है। इसे अब अपडेट नहीं किया जाएगा और नए अतिरिक्त कंटेंट के लिए कुछ जानकारी गायब हो सकती है।",
+    "NO_MAPS": "इस रियल्म के लिए कोई मैप नहीं मिला!\n\n-# यह एक लेगेसी सुविधा है। इसे अब अपडेट नहीं किया जाएगा और नए अतिरिक्त कंटेंट के लिए कुछ जानकारी गायब हो सकती है।"
   },
   "utils": {
-    "TIMEOUT": "Did not receive any response. Cancelling...",
-    "NO_CHANGELOG": "Sorry! No changelog found for this version. Please try again later"
+    "TIMEOUT": "कोई उत्तर प्राप्त नहीं हुआ। रद्द किया जा रहा है...",
+    "NO_CHANGELOG": "क्षमा करें! इस संस्करण के लिए कोई चेंजलॉग नहीं मिला। कृपया बाद में पुनः प्रयास करें।"
   }
 }
