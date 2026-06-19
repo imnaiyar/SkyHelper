@@ -1,0 +1,26 @@
+{
+  "SHARD_TIMELINE": {
+    "MUSIC_CREDIT": "Mudanças do céu e música do Fragmento por {{CREDIT}}",
+    "TIMESTAMP_CREDIT": "Horários do Fragmento por {{CREDIT}}",
+    "COLOR": {
+      "LABEL": "Mudança inicial do céu",
+      "VALUE": "A cor do céu muda às: {{TIME}}"
+    },
+    "GATE": {
+      "LABEL": "Fragmento no portão",
+      "VALUE": "O cristal do Fragmento no portão aparece às: {{TIME}}"
+    },
+    "LANDS": {
+      "LABEL": "Queda do Fragmento",
+      "VALUE": "O Fragmento cai às: {{TIME}}"
+    },
+    "ENDS": {
+      "LABEL": "Fim do Fragmento",
+      "VALUE": "O Fragmento termina às: {{TIME}}"
+    },
+    "MUSIC": {
+      "LABEL": "Música do Fragmento",
+      "VALUE": "{{MUSIC}} vai tocar durante este Fragmento."
+    }
+  }
+}

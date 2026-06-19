@@ -1,0 +1,35 @@
+{
+  "COMMAND_NOT_FOUND": "Comando inexistente ou desatualizado",
+  "autoCompleteCOMMAND_NOT_FOUND": "Nenhuma opção foi encontrada para esta escolha.",
+  "AUTOCOMPLETE_ERROR": "Ops! Ocorreu um erro ao procurar as opções.",
+  "ERROR_ID": "ID do erro: `{{ID}}`",
+  "EMBED_TITLE": "ERRO",
+  "MESSAGE_BOT_NO_PERM": "Oi, parece que você tentou usar meu comando em um canal/servidor onde eu não tenho {{PERMISSIONS}}. Peça a um administrador do servidor para me conceder as permissões necessárias antes de tentar usar meus comandos.\n\nOrigem :-\n- Servidor: {{SERVER}}\n- Canal: {{CHANNEL}}\n- Comando usado: `{{COMMAND}}`",
+  "MINIMUM_ARGS": "Você precisa fornecer no mínimo `{{LIMIT}}` argumentos para este comando",
+  "INVALID_USAGE": "Uso inválido!",
+  "NO_PERMS_USER": "Você não tem as permissões necessárias ({{PERMISSIONS}}) para usar este comando.",
+  "NOT_A_SERVER": "Ops! Parece que você executou este comando em um servidor onde eu não estou ou como um comando de aplicativo de usuário. Este comando só deve ser usado em um servidor do qual eu faço parte.",
+  "NO_PERMS_BOT": "Não tenho as permissões necessárias ({{PERMISSIONS}}) para realizar esta ação. Tente executar o comando novamente depois de me conceder as permissões necessárias.",
+  "COOLDOWN": "Segura aí, você tá em tempo de espera para {{COMMAND}}. Você poderá usar esse comando novamente {{TIME}}",
+  "EMBED_DESCRIPTION": "Ocorreu um erro ao executar este comando. Inclua o ID do erro ao enviar o relatório de bug",
+  "BUTTON_LABEL": "Reportar Bug",
+  "NOT-ALLOWED": "Você não pode usar menus gerados por outras pessoas!",
+  "NO_CHANNEL_PERM": "Eu não tenho permissão para acessar <#{{CHANNEL}}>. Por favor, certifique-se de que eu tenho as permissões `Ver Canal` e `Enviar mensagens` nesse canal.",
+  "ERROR_MODAL": {
+    "SUCCESS": "Sua resposta foi recebida com sucesso!",
+    "TITLE": "Relatório de Erro",
+    "FIELDS": {
+      "COMMAN_USED": {
+        "LABEL": "Nome do comando.",
+        "PLACEHOLDER": "O comando que gerou o erro mencionado."
+      },
+      "WHAT_HAPPENED": {
+        "LABEL": "Explicar o que aconteceu?",
+        "PLACEHOLDER": "Explique brevemente o que aconteceu. Que resultado você esperava?"
+      },
+      "ERROR_ID": {
+        "LABEL": "ID do erro"
+      }
+    }
+  }
+}
