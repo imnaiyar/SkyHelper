@@ -34,7 +34,7 @@
   "dependencies": {
     "@skyhelperbot/constants": "workspace:^",
     "discord-api-types": "latest",
-    "undici": "^8.0.0"
+    "undici": "^8.5.0"
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
