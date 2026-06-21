@@ -1,0 +1,27 @@
+{
+  "bot": {
+    "name": "SkyHelper",
+    "intro": "Esse cara sou eu...",
+    "EMBED_TITLE": "Informações do bot",
+    "TOTAL_SERVER": "Total de servidores",
+    "TOTAL_AUTHORIZED": "Total de instalações de usuários",
+    "TOTAL_USERS": "Usuários totais",
+    "LATENCY": "Latência",
+    "VERSION": "Versão",
+    "UPTIME": "Tempo online",
+    "PING": "Ping do WebSocket",
+    "GUILD_SETTINGS": "Configurações do servidor",
+    "LANGUAGE": "Idioma",
+    "ANNOUNCEMENT_CHANNEL": "Canal de anúncios",
+    "NOT_SET": "Nada por aqui (você pode configurar isso pelo dashboard do bot)",
+    "USER_SETTINGS": "Configurações de usuário",
+    "INVITE": "Convidar",
+    "SUPPORT": "Servidor de suporte",
+    "DASHBOARD": "Painel"
+  },
+  "NO-WB-PERM-BOT": "Eu não tenho a permissão `Gerenciar Webhooks` em {{CHANNEL}}. Dá uma olhada se alguma permissão específica do canal não está sobrescrevendo isso. Se estiver, me concede as permissões necessárias nesse canal antes de rodar o comando de novo.",
+  "hide-options": {
+    "name": "ocultar",
+    "description": "oculta a resposta"
+  }
+}

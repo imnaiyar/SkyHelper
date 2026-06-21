@@ -1,0 +1,444 @@
+{
+  "GUIDES": {
+    "name": "guias",
+    "description": "vários guias",
+    "options": {
+      "SEASONAL": {
+        "name": "sazonais",
+        "description": "guias de diferentes temporadas",
+        "options": {
+          "season": {
+            "name": "temporada",
+            "description": "escolha a temporada do guia"
+          },
+          "type": {
+            "name": "tipo",
+            "description": "guias de missões ou de espíritos",
+            "choices": {
+              "quests": "↪️ Missões",
+              "spirits": "↪️ Espíritos"
+            }
+          }
+        }
+      },
+      "REALMS": {
+        "name": "reinos",
+        "description": "guias variados de reinos",
+        "options": {
+          "realms": {
+            "name": "reino",
+            "description": "busque diretamente a árvore ou localização de um espírito permanente",
+            "choices": {
+              "isle": "↪️ Ilha do Alvorecer",
+              "daylight": "↪️ Campina da Aurora",
+              "forest": "↪️ Floresta Oculta",
+              "valley": "↪️ Vale do Triunfo",
+              "wasteland": "↪️ Sertão Dourado",
+              "vault": "↪️ Relicário do Conhecimento",
+              "eden": "↪️ Olho do Éden"
+            }
+          },
+          "type": {
+            "name": "tipo",
+            "description": "guias de resumo, de mapas ou de espíritos",
+            "choices": {
+              "realm": "↪️ Resumo do Reino",
+              "maps": "↪️ Mapas",
+              "spirits": "↪️ Espíritos"
+            }
+          }
+        }
+      }
+    },
+    "RESPONSES": {
+      "NO_QUEST": "Nenhuma missão disponível para {{SEASON}}",
+      "QUEST_EMBED_AUTHOR": "Missões da Temporada de {{SEASON}}",
+      "QUEST_SELECT_PLACEHOLDER": "Escolha uma missão",
+      "SPIRIT_SELECT_PLACEHOLDER": "Temporada de {{SEASON}}",
+      "REALM_SELECT_PLACEHOLDER": "Espíritos de {{REALM}}",
+      "NO-SPIRITS": "O Éden não tem nenhum espírito. Vai ver eles não curtem lugares assustadores.",
+      "REALM-BUTTON-LABEL": "Outras áreas",
+      "INVALID-CHOICE": "Escolha inválida ou o guia ainda não foi atualizado",
+      "REALM_AREA_SELECT_PLACEHOLDER": "Escolha uma área.",
+      "INVALID_SEASON_VALUE": "Temporada inválida! Não foi possível encontrar uma temporada com a chave `{{VALUE}}`"
+    }
+  },
+  "SPIRITS": {
+    "name": "espíritos",
+    "description": "pesquisar espíritos",
+    "options": {
+      "name": "pesquisar",
+      "description": "pesquisar espíritos específicos"
+    },
+    "RESPONSES": {
+      "NO_DATA": "Nenhum dado encontrado para {{VALUE}}! Se você acha que isso é um erro, avise a gente pelo {{COMMAND}}",
+      "BUTTONS": {
+        "ACTION": "Ação de Amizade",
+        "CALL": "Chamar",
+        "STANCE": "Postura",
+        "EMOTE": "Emote"
+      },
+      "EMBED": {
+        "AUTHOR": "Resumo do Espírito",
+        "TYPE": "**Tipo**: {{SPIRIT_TYPE}}",
+        "REALM": "**Reino**: {{REALM}}",
+        "FIELDS": {
+          "SUMMARY_TITLE": "Resumo do EV",
+          "SUMMARY_DESC_NO_ELIGIBLE": "Este espírito ainda não pode retornar como Espírito Viajante e poderá retornar quando a temporada seguinte à {{SEASON}} terminar!",
+          "SUMMARY_DESC_RETURNED": "Visitas totais: {{VISITS}}",
+          "SUMMARY_RETURNED_DATE": "Datas em que retornou",
+          "SUMMARY_DESC_NO_VISIT": "Este espírito ainda não retornou. Quando retornar, ele oferecerá os mesmos itens oferecidos durante a temporada, mas em uma árvore de desbloqueios reestruturada."
+        },
+        "CREDIT": "Infográfico por Ed.7"
+      }
+    }
+  },
+  "SHARDS_CALENDAR": {
+    "name": "calendario-fragmentos",
+    "description": "Exibe o calendário de fragmentos",
+    "RESPONSES": {
+      "INFO": {
+        "NO_SHARD": "Sem fragmento",
+        "SHARD-INFO": "**Info:** {{INFO}} em {{AREA}}",
+        "SHARD-TIMES": "**Horários:** {{TIME}}"
+      },
+      "EMBED_AUTHOR": "Calendário de fragmentos de {{MONTH}}, {{YEAR}}",
+      "EMBED_DESCRIPTION": "Para detalhes dos fragmentos, use {{shardsCmd}}",
+      "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}",
+      "CHANGE_BUTTON": "Alterar mês/ano",
+      "MODAL_MONTH": "Selecione o mês",
+      "MODAL_YEAR": "Insira o ano (formato: YYYY)",
+      "INVALID_DATE": "Formato de data inválido (`{{DATE}}`). Insira o mês e o ano neste formato: MM-YYYY (ex.: 01-2022)"
+    }
+  },
+  "SHARDS": {
+    "name": "fragmentos",
+    "description": "Obtenha informações de um fragmento específico",
+    "options": {
+      "DATE": {
+        "name": "data",
+        "description": "Data para consultar as informações do fragmento"
+      }
+    },
+    "RESPONSES": {
+      "INVALID_DATE": "Formato de data inválido. Use o formato YYYY-MM-DD (ex.: `2024-09-13`). Data máxima: **275760-09-12**",
+      "DATE_NONEXIST": "{{DATE}} não existe. Insira uma data válida."
+    }
+  },
+  "SKYTIMES": {
+    "name": "horarios",
+    "description": "contagens regressivas de vários eventos do jogo"
+  },
+  "TRAVELING-SPIRIT": {
+    "name": "espirito-viajante",
+    "description": "ver detalhes sobre o Espírito Viajante atual ou por vir.",
+    "RESPONSES": {
+      "NO_DATA": "Ops! Parece que não encontramos nenhum dado do Espírito Viajante. Tente novamente mais tarde.",
+      "VISITING": "{{SPIRIT}} está visitando os reinos de Sky no momento. Ele vai embora às {{TIME}} (em {{DURATION}})",
+      "EXPECTED": "{{SPIRIT}} vai visitar os reinos de Sky em {{DATE}} (em {{DURATION}})",
+      "EMBED_AUTHOR": "Resumo do Espírito Viajante #{{INDEX}}!",
+      "VISITING_TITLE": "Datas de visita:"
+    }
+  },
+  "REMINDERS": {
+    "name": "lembretes",
+    "description": "definir lembretes",
+    "options": {
+      "CONFIGURE": {
+        "name": "configurar",
+        "description": "configure os lembretes",
+        "options": {
+          "CHANNEL": {
+            "description": "canal para enviar os lembretes"
+          },
+          "EVENT": {
+            "name": "evento",
+            "description": "evento a notificar"
+          },
+          "ROLE": {
+            "name": "cargo",
+            "description": "cargo a mencionar"
+          },
+          "OFFSET": {
+            "name": "antecedencia",
+            "description": "quantos minutos antes do evento o lembrete deve ser enviado."
+          }
+        }
+      },
+      "STOP": {
+        "name": "parar",
+        "description": "parar lembretes",
+        "options": {
+          "EVENT": {
+            "description": "evento sobre o qual quer parar de receber notificações"
+          }
+        }
+      },
+      "STATUS": {
+        "name": "status",
+        "description": "configurações dos lembretes deste servidor"
+      }
+    },
+    "RESPONSES": {
+      "CONFIGURED": "Lembretes{{EVENT}}configurados com sucesso em {{CHANNEL}}",
+      "CONFIGURED_ROLE": "Tá feito! Os lembretes de `{{EVENT}}` foram configurados para o cargo {{ROLE}} em {{CHANNEL}}",
+      "ALREADY_NOT_CONFIGURED": "Os lembretes de {{EVENT}} já estavam desativados",
+      "NEXT_TIME": "O próximo lembrete de `{{EVENT}}` será enviado {{TIME}}",
+      "OFFSET": "Antecedência: `{{OFFSET}}` minutos",
+      "SHARD_TYPE": "Tipo de fragmento: {{SHARD_TYPE}}",
+      "STATUS": {
+        "TITLE": "Status dos lembretes de {{SERVER_NAME}}",
+        "STATUS": "Status: {{STATUS}}",
+        "CHANNEL": "Canal: {{CHANNEL}}",
+        "ROLE": "Cargo: {{ROLE}}"
+      }
+    }
+  },
+  "LIVE_UPDATES": {
+    "name": "tempo-real",
+    "description": "atualização em tempo real de fragmentos ou horários, com mensagem automática periódica",
+    "group": "atualizacoes",
+    "group-desc": "atualização em tempo real de fragmentos ou horários",
+    "options": {
+      "START": {
+        "name": "iniciar",
+        "description": "iniciar atualizações em tempo real com mensagem automática periódica",
+        "option": {
+          "CHANNEL": {
+            "name": "canal",
+            "description": "canal onde as atualizações em tempo real serão enviadas"
+          }
+        }
+      },
+      "STOP": {
+        "name": "parar",
+        "description": "interromper atualizações em tempo real"
+      }
+    },
+    "RESPONSES": {
+      "NOT_GUILD": "Esse comando só pode ser usado em um servidor",
+      "ALREADY_CONFIGURED": "Já existe uma configuração de {{TYPE}} em {{CHANNEL}} para esta mensagem {{MESSAGE}}.",
+      "INVALID_CHANNEL": "{{CHANNEL}} não é um canal de texto. Envie um canal de texto válido",
+      "CONFIGURED": "Tá feito! A configuração de {{TYPE}} foi feita em {{CHANNEL}}. Esta mensagem {{MESSAGE}} será atualizada com os detalhes relevantes.",
+      "ALREADY_DISABLED": "{{TYPE}} já está desativado neste servidor",
+      "DISABLED": "{{TYPE}} está desativado"
+    }
+  },
+  "HELP": {
+    "name": "ajuda",
+    "description": "menu de ajuda",
+    "options": {
+      "COMMAND": {
+        "name": "comando",
+        "description": "ajuda sobre um comando específico"
+      }
+    },
+    "RESPONSES": {
+      "MESSAGE_APP_DESC": "Comando de mensagem",
+      "USER_APP_DESC": "Comando de usuário",
+      "REQUESTED_BY": "Solicitado por {{USER}}",
+      "FOOTER_SINGLE": "Comando de ajuda",
+      "FOOTER": "use /ajuda <comando> para ver detalhes. | Página {{PAGE}}/{{TOTAL}}",
+      "BTN-PREV": "Anterior",
+      "BTN-NEXT": "Próximo"
+    }
+  },
+  "UTILS": {
+    "name": "utilitarios",
+    "description": "Utilitários",
+    "options": {
+      "TIMESTAMP": {
+        "name": "timestamp",
+        "description": "gera o timestamp Unix da data informada",
+        "options": {
+          "TIME": {
+            "name": "hora",
+            "description": "Hora a ser convertida (formato: HH mm ss)"
+          },
+          "TIMEZONE": {
+            "name": "fuso-horario",
+            "description": "Seu fuso horário no formato: Continent/City"
+          },
+          "DATE": {
+            "name": "dia",
+            "description": "Dia a ser convertido (formato: DD)"
+          },
+          "MONTH": {
+            "name": "mes",
+            "description": "Mês a ser convertido (formato: MM)"
+          },
+          "YEAR": {
+            "name": "ano",
+            "description": "Ano a ser convertido (formato: YYYY)"
+          }
+        }
+      },
+      "CHANGELOG": {
+        "name": "changelog",
+        "description": "changelog do bot"
+      },
+      "CONTACT-US": {
+        "name": "fale-conosco",
+        "description": "para sugestões, relatos de bugs, falar com a gente ou qualquer outra coisa"
+      }
+    },
+    "RESPONSES": {
+      "INVALID-FORMAT": "Formato de hora inválido. Insira a hora no formato `HH mm ss`. (ex.: `02 12 44`)",
+      "INVALID-TIMEZONE": "Fuso horário inválido. Insira um fuso horário correto. Use o formato: `Continent/City` (ex.: `America/Sao_Paulo`).\nUse este link para encontrar seu fuso horário se não tiver certeza: <https://timezonedb.com/time-zones>",
+      "SUGGESTION_TITLE": "Título",
+      "TITLE_PLACEHOLDER": "Título da sugestão",
+      "SUGGESTION_MODAL_TITLE": "Fale conosco",
+      "SUGGESTION": "Sugestão/Relato de bug/Outros",
+      "SUGGESTION_PLACEHOLDER": "Explique resumidamente.",
+      "RECIEVED": "Tá feito! Recebemos sua mensagem. Aqui está uma prévia!"
+    }
+  },
+  "LANGUAGE": {
+    "name": "idioma",
+    "description": "gerencie o idioma preferido para as respostas do bot",
+    "options": {
+      "CATEGORY": {
+        "name": "categoria",
+        "description": "selecione uma categoria para definir o idioma",
+        "choices": {
+          "GUILD": "Servidor",
+          "USER": "Usuário"
+        }
+      },
+      "LANGUAGES": {
+        "name": "idiomas",
+        "description": "selecione um idioma"
+      },
+      "SUB": {
+        "SET": {
+          "name": "definir",
+          "description": "defina seu idioma ou o idioma do servidor para o bot"
+        },
+        "REMOVE": {
+          "name": "remover",
+          "description": "remover idioma definido",
+          "options": {
+            "description": "selecione a categoria da qual quer remover o idioma"
+          }
+        }
+      },
+      "RESPONSES": {
+        "NO-PERM": "Você não tem as permissões necessárias ({{PERMISSION}}) para definir o idioma do servidor",
+        "SUCCESS": "Tá feito! O idioma de {{TYPE}} foi definido como {{Language}}. Você ainda poderá ver inglês em alguns lugares, já que não é possível traduzir tudo.\n\nConsidere contribuir com a tradução deste bot acessando {{LINK}} e nos ajudando a adicionar suporte a mais idiomas.\n\nObservação: as configurações de idioma no nível do usuário terão prioridade sobre as configurações do servidor (se houver).",
+        "ALREADY_SET": "O idioma de {{TYPE}} já está definido como {{LANGUAGE}}",
+        "ALREADY_NOT_SET": "{{CATEGORY}} já não tem nenhum idioma definido.",
+        "SUCCESS_REMOVED": "Tá feito! {{LANGUAGE}} foi removido de {{CATEGORY}}."
+      }
+    }
+  },
+  "DAILY_QUESTS": {
+    "name": "missoes-diarias",
+    "description": "Veja as missões diárias de hoje",
+    "RESPONSES": {
+      "NO_DATA": "Não encontramos dados para as missões diárias de hoje. Tente novamente mais tarde.",
+      "TIME_FRAME": "Pode levar de 30 minutos a 1 hora após o reset diário para que as missões sejam atualizadas. Esse prazo é apenas uma estimativa. Em alguns dias, pode levar mais tempo. Veja como funciona [aqui](<https://docs.skyhelper.xyz/docs/commands/info#how-does-this-work>)",
+      "OUTDATED": "Esta missão está desatualizada. Aguarde a atualização das missões.",
+      "EMBED_AUTHOR": "Missões Diárias",
+      "BUTTON1": "Velas Rotativas",
+      "BUTTON2": "Velas Sazonais"
+    }
+  },
+  "SKYGAME": {
+    "name": "jogos-sky",
+    "description": "Vários minijogos divertidos baseados em Sky: CotL",
+    "SUB": {
+      "HANGMAN": {
+        "name": "forca",
+        "description": "Jogue forca com palavras relacionadas a Sky ou com uma palavra personalizada",
+        "options": {
+          "mode": {
+            "name": "modo",
+            "description": "O modo deste jogo",
+            "choices": {
+              "single": "Um jogador",
+              "double": "Dois jogadores"
+            }
+          }
+        }
+      },
+      "SCRAMBLE": {
+        "name": "embaralhada",
+        "description": "Desembaralhe a palavra para vencer"
+      },
+      "LEADERBOARD": {
+        "name": "ranking",
+        "description": "Veja o ranking dos minijogos de Sky",
+        "options": {
+          "game": {
+            "name": "jogo",
+            "description": "O jogo do qual quer ver o ranking",
+            "choices": {
+              "hangman": "Forca"
+            }
+          },
+          "leaderboard-type": {
+            "name": "tipo-de-ranking",
+            "description": "Ranking global ou específico do servidor (padrão: global)",
+            "choices": {
+              "global": "Global",
+              "server": "Servidor"
+            }
+          }
+        }
+      }
+    }
+  },
+  "BOT": {
+    "name": "bot",
+    "description": "Comandos relacionados ao bot",
+    "options": {
+      "INFO": {
+        "name": "info",
+        "description": "Ver informações do bot"
+      },
+      "MANAGE": {
+        "name": "gerenciar",
+        "description": "Gerencie as configurações do bot para o servidor"
+      },
+      "PERSONALIZE": {
+        "name": "personalizar",
+        "description": "Personalize o bot para este servidor"
+      }
+    }
+  },
+  "PLANNER": {
+    "name": "planejador",
+    "description": "acompanhe e planeje seu progresso no Sky",
+    "options": {
+      "home": {
+        "name": "inicio",
+        "description": "acompanhe e planeje seu progresso no Sky"
+      },
+      "search": {
+        "name": "buscar",
+        "description": "pesquise e abra diretamente itens, temporadas, eventos, luzes aladas etc. no planejador"
+      },
+      "profile": {
+        "name": "perfil",
+        "description": "Seu perfil e estatísticas do planejador, além dos gastos com velas, corações e etc"
+      },
+      "query": {
+        "name": "termo",
+        "description": "o termo a pesquisar"
+      },
+      "data": {
+        "name": "dados",
+        "description": "gerencie, exporte ou importe seus dados do planejador"
+      },
+      "action": {
+        "name": "acao",
+        "description": "a ação que você quer realizar"
+      },
+      "choices": {
+        "import": "Importar dados",
+        "export": "Exportar dados",
+        "delete": "Excluir dados"
+      }
+    }
+  }
+}
