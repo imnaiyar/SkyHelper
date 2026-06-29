@@ -85,8 +85,8 @@
         "FIELDS": {
           "SUMMARY_TITLE": "TS संचेप",
           "SUMMARY_DESC_NO_ELIGIBLE": "यह स्पिरिट अभी TS के तौर पे लौटने के लिए योग्य नही है और {{SEASON}} के बाद वाले सीज़न के ख़त्म होने पर योग्य होगा!",
-          "SUMMARY_DESC_RETURNED": "Total Visits: {{VISITS}}",
-          "SUMMARY_RETURNED_DATE": "Returned Dates",
+          "SUMMARY_DESC_RETURNED": "पूरा विजिट: {{VISITS}}",
+          "SUMMARY_RETURNED_DATE": "लौटने की तारीख",
           "SUMMARY_DESC_NO_VISIT": "यह स्पिरिट अभी लाॅटें नहिं हैं, जब वे वापस आएंगे, तो वे सीज़न के दौरान दी जाने वाली वही वस्तुएं पेश करेंगे, लेकिन एक पुनर्गठित फ्रेंडशिप ट्री के रूप में।"
         },
         "CREDIT": "Ed.7 के तरफ से इंफोग्राफ़िक"
@@ -105,10 +105,10 @@
       "EMBED_AUTHOR": "{{MONTH}}, {{YEAR}} का शार्ड कैलेंडर",
       "EMBED_DESCRIPTION": "डीटेल में shard की जानकारी के लिए {{shardsCmd}} use करे",
       "EMBED_FOOTER": "पन्ना {{INDEX}}/{{TOTAL}}",
-      "CHANGE_BUTTON": "Change Month/Year",
-      "MODAL_MONTH": "Select Month",
-      "MODAL_YEAR": "Enter Year (Format: YYYY)",
-      "INVALID_DATE": "Invalid date format (`{{DATE}}`). Please enter the month and year in this format: MM-YYYY (e.g. 01-2022)"
+      "CHANGE_BUTTON": "महिना या साल बदलें",
+      "MODAL_MONTH": "महीना चुनिए",
+      "MODAL_YEAR": "वर्ष दर्ज करें (प्रारूप: YYYY)",
+      "INVALID_DATE": "तारिख का प्रारूप सही नही है (`{{DATE}}`). कृपया महीना और वर्ष इस प्रारूप में भरें: MM-YYYY (e.g. 01-2022)"
     }
   },
   "SHARDS": {
@@ -145,83 +145,83 @@
     "description": "रिमाइंडर सेट करें",
     "options": {
       "CONFIGURE": {
-        "name": "configure",
-        "description": "configure reminders",
+        "name": "कॉन्फ़िगर",
+        "description": "रिमाइंडर कॉन्फ़िगर करें",
         "options": {
           "CHANNEL": {
-            "description": "channel where reminders should be sent"
+            "description": "चैनल जहां पर रिमाइंडर भेजा जाएगा"
           },
           "EVENT": {
-            "name": "event",
-            "description": "event to remind"
+            "name": "इवेंट",
+            "description": "रिवाइंड करने के लिए इवेंट"
           },
           "ROLE": {
-            "name": "role",
-            "description": "role to ping"
+            "name": "रोल",
+            "description": "पिंग करने के लिए रोल"
           },
           "OFFSET": {
             "name": "offset",
-            "description": "how many minutes before the event should the reminder be sent."
+            "description": "इवेंट शुरू होने के कितने मिनट पहले रिमाइंडर भेजा जाना चाहिए।"
           }
         }
       },
       "STOP": {
-        "name": "stop",
-        "description": "stop reminders",
+        "name": "स्टॉप",
+        "description": "रिमाइंडर बंद करें",
         "options": {
           "EVENT": {
-            "description": "event to stop reminding"
+            "description": "रिमाइंडर बंद करने के लिए इवेंट"
           }
         }
       },
       "STATUS": {
-        "name": "status",
-        "description": "reminders configurations for this server"
+        "name": "स्टैटस",
+        "description": "इस सर्वर के लिए रिमाइंडर का कॉन्फ़िगरेशन"
       }
     },
     "RESPONSES": {
-      "CONFIGURED": "Successfully configured `{{TYPE}}` reminders in {{CHANNEL}}",
-      "CONFIGURED_ROLE": "Successfully configured `{{EVENT}}` reminders for role {{ROLE}} in {{CHANNEL}}",
-      "ALREADY_NOT_CONFIGURED": "Reminders for {{EVENT}} are already inactive",
-      "NEXT_TIME": "Next reminder for `{{EVENT}}` will be sent {{TIME}}",
-      "OFFSET": "Offset: `{{OFFSET}}` minutes",
-      "SHARD_TYPE": "Shard Type: {{SHARD_TYPE}}",
+      "CONFIGURED": "`{{EVENT}}`, {{CHANNEL}} के लिए कॉन्फ़िगर हो चुका है",
+      "CONFIGURED_ROLE": "{{EVENT}}, {{ROLE}} रोल के साथ {{CHANNEL}} के liye कॉन्फ़िगर हो चुका है",
+      "ALREADY_NOT_CONFIGURED": "{{EVENT}} का रिमाइंडर पहले से ही बंद है",
+      "NEXT_TIME": "{{EVENT}} के लिए अगला रिमाइंडर {{TIME}} पर भेजा जाएगा",
+      "OFFSET": "ऑफसेट: `{{OFFSET}}` मिनट",
+      "SHARD_TYPE": "शार्ड का टाइप: {{SHARD_TYPE}}",
       "STATUS": {
-        "TITLE": "Reminder status for {{SERVER_NAME}}",
-        "STATUS": "Status: {{STATUS}}",
-        "CHANNEL": "Channel: {{CHANNEL}}",
-        "ROLE": "Role: {{ROLE}}"
+        "TITLE": "{{SERVER_NAME}} के लिए रिमाइंडर का स्टैटस",
+        "STATUS": "स्टैटस: {{STATUS}}",
+        "CHANNEL": "चैनल: {{CHANNEL}}",
+        "ROLE": "रोल: {{ROLE}}"
       }
     }
   },
   "LIVE_UPDATES": {
     "name": "live",
-    "description": "live shards or skytimes update with auto updating message at regular interval",
+    "description": "नियमित अंतराल पर ऑटो अपडेट करने वाले संदेश के साथ लाइव शार्ड या स्काईटाइम्स अपडेट",
     "group": "updates",
-    "group-desc": "live shards or skytimes update with auto updating message at regular interval",
+    "group-desc": "नियमित अंतराल पर ऑटो अपडेट करने वाले संदेश के साथ लाइव शार्ड या स्काईटाइम्स अपडेट",
     "options": {
       "START": {
-        "name": "start",
-        "description": "start live shards or skytimes update with auto updating message at regular interval",
+        "name": "स्टार्ट",
+        "description": "नियमित अंतराल पर ऑटो अपडेट करने वाले संदेश के साथ लाइव शार्ड या स्काईटाइम्स अपडेट शुरु करें",
         "option": {
           "CHANNEL": {
-            "name": "channel",
-            "description": "channel where live updates should be updated"
+            "name": "चैनल",
+            "description": "चैनल जहां पे लाइव अपडेट भेजा जाएगा"
           }
         }
       },
       "STOP": {
-        "name": "stop",
-        "description": "stop live updates"
+        "name": "स्टॉप",
+        "description": "लाइव अपडेट रोकें"
       }
     },
     "RESPONSES": {
-      "NOT_GUILD": "This command can only be used in a server",
-      "ALREADY_CONFIGURED": "{{TYPE}} is already configured in {{CHANNEL}} for this this message {{MESSAGE}}.",
-      "INVALID_CHANNEL": "{{CHANNEL}} is not a text channel. Please provide a valid text channel",
-      "CONFIGURED": "{{TYPE}} configured for {{CHANNEL}}. This message {{MESSAGE}} will be updated with relevant details.",
-      "ALREADY_DISABLED": "{{TYPE}} is already disabled for this server",
-      "DISABLED": "{{TYPE}} is disabled"
+      "NOT_GUILD": "यह कमांड सिर्फ एक सर्वर में इस्तेमाल हो सकता है",
+      "ALREADY_CONFIGURED": "{{TYPE}} पहले से ही {{CHANNEL}} में इस मैसेज {{MESSAGE}} के लिए कंफिगर हो चुका है।",
+      "INVALID_CHANNEL": "{{CHANNEL}} एक टेक्स्ट चैनल नहीं है, कृपया एक सही टेक्स्ट चैनल चुनें",
+      "CONFIGURED": "{{TYPE}}, {{CHANNEL}} के लिए कॉन्फ़िगर हो चूका! यह {{MESSAGE}} जानकारी के साथ अपडेट होते रहेगा|",
+      "ALREADY_DISABLED": "{{TYPE}} पहले से ही इस सर्वर के लिए डिसेबल्ड है",
+      "DISABLED": "{{TYPE}} बंद हो चुका है"
     }
   },
   "HELP": {
@@ -335,12 +335,12 @@
     "name": "डेली-क्वेस्टस",
     "description": "आज के डेली क्वेस्ट्स के बारे में जाने",
     "RESPONSES": {
-      "NO_DATA": "No data found for today's daily quests. Please try again later.",
-      "TIME_FRAME": "Please note that it can take upto 30min-1hrs after daily resets for quests to be updated. The time frame given is just an estimate, on somedays, it can take longer than that. See how it works [here](<https://docs.skyhelper.xyz/docs/commands/info#how-does-this-work>)",
+      "NO_DATA": "आज के डेली क्वेस्ट्स के लिए कोई डेटा नहीं मिला। कृपया बाद में पुनः प्रयास करें।",
+      "TIME_FRAME": "कृपया ध्यान दें कि डेली रीसेट के बाद क्वेस्ट्स को अपडेट होने में 30 मिनट से 1 घंटे तक का समय लग सकता है। दिया गया समय केवल एक अनुमान है; कुछ दिनों में इसमें इससे अधिक समय भी लग सकता है।\n\nयह कैसे काम करता है, यहाँ देखें: [यहाँ](<https://docs.skyhelper.xyz/docs/commands/info#how-does-this-work>)",
       "OUTDATED": "यह क्वेस्ट पुराना है। कृपया नए क्वेस्ट के अपडेट होने का इंतजार करें।",
       "EMBED_AUTHOR": "डेली क्वेस्ट्स",
-      "BUTTON1": "Rotating Candles",
-      "BUTTON2": "Seasonal Candles"
+      "BUTTON1": "रोटेटिंग कैंडल्स",
+      "BUTTON2": "सीज़नल कैंडल्स"
     }
   },
   "SKYGAME": {
@@ -363,7 +363,7 @@
       },
       "SCRAMBLE": {
         "name": "scrambled",
-        "description": "Unscramble the word to win"
+        "description": "जीतने के लिए शब्द को सही क्रम में लगाएँ।"
       },
       "LEADERBOARD": {
         "name": "लीडरबोर्ड",
@@ -389,55 +389,55 @@
     }
   },
   "BOT": {
-    "name": "bot",
-    "description": "Bot related commands",
+    "name": "बॉट",
+    "description": "बॉट से संबंधित कमांड्स",
     "options": {
       "INFO": {
         "name": "info",
-        "description": "Get bot information"
+        "description": "बॉट की जानकारी प्राप्त करें"
       },
       "MANAGE": {
-        "name": "manage",
-        "description": "Manage the bot settings for the server"
+        "name": "प्रबंधन",
+        "description": "सर्वर के लिए बॉट की सेटिंग्स प्रबंधित करें।"
       },
       "PERSONALIZE": {
-        "name": "personalize",
-        "description": "Personalize the bot for this server"
+        "name": "पर्सनलाइज",
+        "description": "इस सर्वर के लिए बॉट को अनुकूलित करें।"
       }
     }
   },
   "PLANNER": {
-    "name": "planner",
-    "description": "track and plan your sky progress",
+    "name": "प्लानर",
+    "description": "अपनी Sky प्रगति को ट्रैक करें और उसकी योजना बनाएँ।",
     "options": {
       "home": {
-        "name": "home",
-        "description": "track and plan your sky progress"
+        "name": "होम",
+        "description": "अपनी Sky प्रगति को ट्रैक करें और उसकी योजना बनाएँ।"
       },
       "search": {
-        "name": "search",
-        "description": "search and directly go to items/seasons/events/wls/etc... in the planner"
+        "name": "खोजें",
+        "description": "प्लानर में आइटम्स, सीज़न्स, इवेंट्स, WLs आदि खोजें और सीधे उन तक जाएँ।"
       },
       "profile": {
-        "name": "profile",
-        "description": "Your planner profile & stats and currency usages"
+        "name": "प्रोफ़ाइल",
+        "description": "आपकी प्लानर प्रोफ़ाइल, आँकड़े और करेंसी उपयोग विवरण।"
       },
       "query": {
-        "name": "query",
-        "description": "the query to search for"
+        "name": "निर्देश",
+        "description": "खोजने के लिए क्वेरी"
       },
       "data": {
-        "name": "data",
-        "description": "mange/export/import your planner data"
+        "name": "डाटा",
+        "description": "अपने प्लानर डेटा का प्रबंधन करें, उसे एक्सपोर्ट करें या इम्पोर्ट करें।"
       },
       "action": {
-        "name": "action",
-        "description": "the action you want to perform"
+        "name": "कार्य",
+        "description": "वह कार्रवाई चुनें जिसे आप करना चाहते हैं।"
       },
       "choices": {
-        "import": "Import Data",
-        "export": "Export Data",
-        "delete": "Delete Data"
+        "import": "डेटा इम्पोर्ट करें",
+        "export": "एक्सपोर्ट डेटा",
+        "delete": "डेटा हटाएँ"
       }
     }
   }

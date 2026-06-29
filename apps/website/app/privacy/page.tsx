@@ -161,7 +161,7 @@ export default function PrivacyPage() {
           </div>
 
           <div className="prose prose-invert prose-lg max-w-none">
-            <div className="bg-slate-800 rounded-xl p-8 border border-slate-700">
+            <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-xl p-8">
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mb-4">Introduction</h2>
                 <p className="text-slate-300 leading-relaxed mb-4">

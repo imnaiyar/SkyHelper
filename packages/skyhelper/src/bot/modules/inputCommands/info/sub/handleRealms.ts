@@ -67,8 +67,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   if (!(data as any)) {
     // TODO: for now, should no longer be the case when migrated to planer data
     await helper.editReply({
-      content:
-        "No Summary found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions.",
+      content: helper.t("features:guides.NO_SUMMARY"),
     });
     return;
   }
@@ -163,8 +162,7 @@ async function handleMaps(helper: InteractionHelper, realm: keyof typeof MapsDat
   if (!(data as any)) {
     // TODO: for now, should no longer be the case when migrated to planer data
     await helper.editReply({
-      content:
-        "No Maps found for this realm! This feature is considered legacy and no updates will be done and may have missing data for newer additions.",
+      content: helper.t("features:guides.NO_MAPS"),
     });
     return;
   }

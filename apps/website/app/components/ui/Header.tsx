@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import DiscordLogin from "../auth/DiscordLogin";
+import MenuButton from "./menu-button";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,8 +29,8 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed bg-slate-900/95 border-2 border-slate-800/50 rounded-lg top-2 left-4 right-4 z-50 transition-all duration-300 ${
-        isScrolled ? "backdrop-blur-md border-slate-800/80" : ""
+      className={`fixed top-2 left-4 right-4 z-50  transition-all duration-300 ${
+        isScrolled ? "bg-white/5 border border-white/10 backdrop-blur-xl rounded-lg" : ""
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,15 +65,7 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-300 hover:text-white p-2">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+            <MenuButton open={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
           </div>
         </div>
       </nav>
@@ -80,8 +73,8 @@ export default function Header() {
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="md:hidden">
-          <div className="border-t-2 border-slate-800/50"></div>
-          <div className="px-4 py-4 space-y-4">
+          <div className="border-t border-slate-600/50"></div>
+          <div className={`px-4 py-4 space-y-4 ${isScrolled ? "" : "bg-slate-700/20 backdrop-blur-lg"}`}>
             {navItems.map((item) => (
               <Link
                 key={item.name}

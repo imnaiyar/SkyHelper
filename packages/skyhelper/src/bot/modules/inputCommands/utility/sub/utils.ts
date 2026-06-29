@@ -50,7 +50,7 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
   const filter = (i: APIModalSubmitInteraction) => i.data.custom_id === `suggestionModal-${helper.int.id}`;
   const modalInt = await client.awaitModal({ filter, timeout: 2 * 6e4 }).catch((err: any) => {
     if (err.message === "timeout") {
-      helper.followUp({ content: "Did not recieve any response. Cancelling...", flags: 64 }).catch(() => {});
+      helper.followUp({ content: helper.t("features:utils.TIMEOUT"), flags: 64 }).catch(() => {});
       return null;
     } else {
       throw err;
@@ -102,7 +102,7 @@ export async function getChangelog(helper: InteractionHelper) {
 
   if (!latest) {
     await helper.editReply({
-      content: "Sorry! No changelog found for this version. Please try again later",
+      content: helper.t("features:utils.NO_CHANGELOG"),
     });
     return;
   }

@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Settings, Shield, Menu, X, ExternalLink, User, Activity } from "lucide-react";
+import { Home, Shield, Menu, X, User, Activity, KeyRound, ListChecks } from "lucide-react";
+import { useDiscordAuth } from "@components/auth/DiscordAuthContext";
+import { isOwner } from "@/app/lib/owners";
+import MenuButton from "@/app/components/ui/menu-button";
+
 const main = [
   {
     href: "/dashboard",
@@ -34,12 +38,38 @@ const user = [
   },
 ];
 
+const admin = [
+  {
+    href: "/dashboard/api-keys",
+    label: "API Keys",
+    icon: KeyRound,
+    description: "Manage API access keys",
+  },
+  {
+    href: "/dashboard/daily-quests",
+    label: "Daily Quests",
+    icon: ListChecks,
+    description: "Update daily quest data",
+  },
+];
+
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { user: authUser } = useDiscordAuth();
+  const isOwnerUser = useMemo(() => isOwner(authUser?.id), [authUser?.id]);
+  const [isScrolled, setScrolled] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const isActiveLink = (href: string) => {
     if (href === "/dashboard") {
       return pathname === href;
@@ -51,20 +81,36 @@ export default function Sidebar() {
     <>
       <button
         onClick={toggleSidebar}
-        className="md:hidden p-2 items-center gap-2 flex border bg-slate-900 border-slate-700/50 rounded-lg text-white hover:bg-slate-700 transition-colors"
+        className="md:hidden p-2 items-center gap-2 flex 
+  bg-white/5
+  border border-white/10
+  backdrop-blur-xl
+  shadow-[0_8px_32px_rgba(0,0,0,0.37)]
+  rounded-lg text-white hover:bg-white/30 transition-colors"
         aria-label="Toggle sidebar"
       >
         {" "}
         Menu
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
-
-      {isOpen && <div className="md:hidden fixed inset-0 bg-black/50 z-40" onClick={toggleSidebar} />}
+      
+       {isScrolled && (
+          <div className="md:hidden p bg-white/5 border border-white/10 rounded-l-lg backdrop-blur-xl fixed right-0 top-21 z-49 shadow-[0_8px_32px_rgba(0,0,0,0.37)]">
+          <MenuButton open={isOpen} onClick={(toggleSidebar)} />
+          </div>
+          )}
+          
+      {isOpen && <div className="md:hidden fixed inset-0 bg-black/50 z-40 " onClick={toggleSidebar} />}
 
       <aside
         className={`
-          fixed md:sticky top-20 left-0 w-80  bg-slate-900 border border-slate-700/50 rounded-xl
-          transform transition-transform duration-300 ease-in-out z-50 md:z-0
+          fixed md:sticky top-20 left-0 w-80
+          bg-white/5
+  border border-white/10
+  backdrop-blur-xl
+  shadow-[0_8px_32px_rgba(0,0,0,0.37)]
+          rounded-xl
+          transform transition-transform duration-300 ease-in-out z-49 md:z-0
           ${isOpen ? "translate-x-0 left-4" : "-translate-x-full md:translate-x-0"}
           md:block overflow-y-auto
         `}
@@ -152,6 +198,43 @@ export default function Sidebar() {
                 );
               })}
             </div>
+            {isOwnerUser && (
+              <div>
+                <h3 className="text-xs uppercase tracking-wider text-slate-500 font-medium mb-3 px-2 mt-6">Owner</h3>
+                {admin.map((link) => {
+                  const Icon = link.icon;
+                  const active = isActiveLink(link.href);
+
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`
+                      flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group
+                      ${
+                        active
+                          ? "bg-blue-600/20 text-blue-400 border border-blue-600/30"
+                          : "text-slate-300 hover:text-white hover:bg-slate-700/50"
+                      }
+                    `}
+                    >
+                      <Icon
+                        size={18}
+                        className={`
+                        transition-colors
+                        ${active ? "text-blue-400" : "text-slate-400 group-hover:text-slate-300"}
+                      `}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className={`font-medium ${active ? "text-blue-400" : ""}`}>{link.label}</div>
+                        <div className="text-xs text-slate-500 truncate">{link.description}</div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </nav>
 
           {/* <div className="mt-8 pt-6 border-t border-slate-700">

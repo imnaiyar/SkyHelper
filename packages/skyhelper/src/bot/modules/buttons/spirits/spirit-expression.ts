@@ -17,7 +17,7 @@ export default defineButton({
     const { user } = helper;
     const spirit = (await fetchSkyData(client)).spirits.items.find((s) => s.guid === guid);
     if (!spirit) {
-      return void (await helper.reply({ content: "Something went wrong! No data found", flags: 64 }));
+      return void (await helper.reply({ content: t("features:SPIRITS.NO_EXPRESSION"), flags: 64 }));
     }
     await helper.deferUpdate();
     const message = interaction.message,

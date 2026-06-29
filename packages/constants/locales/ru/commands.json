@@ -180,7 +180,7 @@
       }
     },
     "RESPONSES": {
-      "CONFIGURED": "Напоминания `{{TYPE}} успешно настроены в {{CHANNEL}}",
+      "CONFIGURED": "Напоминания `{{EVENT}}успешно настроены в {{CHANNEL}}",
       "CONFIGURED_ROLE": "Напоминания `{{EVENT}} для роли {{ROLE}} в {{CHANNEL}} успешно настроены",
       "ALREADY_NOT_CONFIGURED": "Напоминания для {{EVENT}} уже неактивны",
       "NEXT_TIME": "Следующее напоминание о `{{EVENT}}` будет отправлено {{TIME}}",

@@ -5,6 +5,8 @@ import chalk from "chalk";
 import { bootstrap } from "@/api/main";
 import { ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
+import { fetchSkyData } from "@/planner";
+import * as Sentry from "@sentry/node";
 
 const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.logger.custom(`Logged in as ${client.user.username}`, "BOT");
@@ -28,8 +30,19 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.readTimestamp = Date.now();
   client.ready = true;
 
+  // sentry metrics every 10 hrs
+  setInterval(
+    () => {
+      Sentry.metrics.gauge("guild_count", client.guilds.size);
+    },
+    10 * 60 * 6_0000,
+  );
+
+  // fetch planner data on ready so its cached;
+  await fetchSkyData(client);
+
   // send ready log
-  await wait(5000); // wait 3s for guilds cache to fill;
+  await wait(5000); // wait 5s for guilds cache to fill;
   const readyalertemb: APIEmbed = {
     fields: [
       {

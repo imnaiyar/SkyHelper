@@ -105,7 +105,7 @@ export default {
         }
         if (!routes) {
           await helper.reply({
-            content: "Ooops! We failed to find where this came from.\n-# Looks like the result got lost in the wind tunnels.",
+            content: helper.t("features:planner.SEARCH_FAILED"),
             flags: MessageFlags.Ephemeral,
           });
           return;
@@ -138,7 +138,7 @@ export default {
         break;
       }
       default:
-        await helper.reply({ content: "Not Implemented Yet", flags: MessageFlags.Ephemeral });
+        await helper.reply({ content: helper.t("features:planner.NOT_IMPLEMENTED"), flags: MessageFlags.Ephemeral });
         return;
     }
   },

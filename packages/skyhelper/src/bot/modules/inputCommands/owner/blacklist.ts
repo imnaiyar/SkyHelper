@@ -18,7 +18,7 @@ export default {
       case "g":
         await blacklist(client, message, ID, "guild");
         break;
-      case "rmG":
+      case "rmg":
         await removeBlacklist(client, message, ID, "guild");
         break;
       case "u": {
@@ -26,12 +26,12 @@ export default {
         await blacklist(client, message, user.id, "user");
         break;
       }
-      case "rmU": {
+      case "rmu": {
         const userR = await client.api.users.get(args[1]!);
         await removeBlacklist(client, message, userR.id, "user");
         break;
       }
-      case "gList":
+      case "glist":
         await getBlacklisted(client, message);
         break;
       default:

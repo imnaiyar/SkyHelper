@@ -32,7 +32,6 @@ export class HomeDisplay extends BasePlannerHandler {
       container(
         this.createTopCategoryRow(DisplayTabs.Home, this.state.user),
         separator(),
-        textDisplay("-# This is a new feature! Any bug reports and feedback are appreciated!"),
         section(
           button({
             label: "Update",
@@ -53,7 +52,6 @@ export class HomeDisplay extends BasePlannerHandler {
           itemCallback: (i) => i,
           perpage: 3,
         }),
-        separator(),
       ),
     ];
 

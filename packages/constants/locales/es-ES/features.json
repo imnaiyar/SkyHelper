@@ -43,17 +43,6 @@
     "NEXT-OCC": "Próxima aparición: {{TIME}} (en: {{DURATION}})",
     "NEXT-OCC-IDLE": "Próxima aparición: {{TIME}}"
   },
-  "reminders": {
-    "ROLE_MENTION": "Oye, {{ROLE}}",
-    "EDEN_RESET": "Se reinició el Ojo de Edén, las estatuas han sido actualizadas y puedes salvarlas de nuevo por AC!",
-    "DAILY_RESET": "El mundo de Sky ha sido reiniciado y las misiones diarias se actualizaron!",
-    "TITLE": "Recordatorio: {{TYPE}}",
-    "DAILY_QUESTS": "Misiones diarias",
-    "COMMON": "{{TYPE}} acaba de empezar (a la(s) {{TIME}} y terminará {{TIME-END}}) ({{TIME-END-R}})",
-    "PRE": "{{TYPE}} empezará a la(s) {{TIME}}",
-    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
-    "SHARDS": "**{{SHARD_NUMBER}} fragmento** caera {{TIME}}"
-  },
   "REALMS": {
     "ISLE": "Isla del amanecer",
     "PRAIRIE": "Planicie de luz de día",
@@ -69,11 +58,72 @@
     "REALM_TITLE": "Reino",
     "TREE_TITLE": "Árbol de amistad (Última visita) de {{CREDIT}}",
     "SEASONAL_CHART": "Gráfico de precios por {{CREDIT}}",
-    "LOCATION_TITLE": "Ubicación por {{CREDIT}}"
+    "LOCATION_TITLE": "Ubicación por {{CREDIT}}",
+    "NO_SPIRIT": "¡No se encontró espíritu!",
+    "NO_COLLECTIBLES": "No se encontraron coleccionables para este espíritu, ¡o algo salió mal!",
+    "NO_EXPRESSION": "¡Algo salió mal! No se encontraron datos"
   },
   "hangman": {
     "NOT_PLAYABLE": "Este juego solo se puede ejecutar en canales donde puedo enviar mensajes. Este comando no está disponible en el contexto de aplicación, así que asegúrate de ejecutarlo en un servidor del que sea miembro o en mi DM",
     "GAME_ACTIVE": "Ya hay un juego en curso en este canal, por favor, espera a que termine. O juega en otro canal!",
-    "DOUBLE_MODE_GUILD": "Solo se puede jugar en servidores de los que soy miembro"
+    "DOUBLE_MODE_GUILD": "Solo se puede jugar en servidores de los que soy miembro",
+    "CUSTOM_WORD_DISALLOWED": "Las palabras personalizadas no están permitidas en el modo de un solo jugador.",
+    "INSTRUCTIONS_BASE": "**¡Aquí tienes algunas cosas que puedes tener en cuenta durante el juego!**\n- Tendrás 30 segundos para responder en cada ronda. Cada intento (o falta dentro del tiempo especificado) contará como una respuesta equivocada.\n- Si crees que conoces la palabra completa, puedes escribirla (como `Ascended Candles`).\n- El iniciador del juego puede detener el juego en cualquier momento escribiendo `>stopgame` en el canal. Solo los juegos terminados contarán en el tablero de liderazgo.",
+    "INSTRUCTIONS_SINGLE": "Cada respuesta equivocada costará vidas. El incrustado mostrará cuántas vidas te quedan. Perderás si no conjeturas la palabra correctamente antes de que te acaben tus vidas.",
+    "INSTRUCTIONS_DOUBLE": "Cada jugador responderá por turno, eligiendo aleatoriamente para la primera ronda, el jugador que adivine correctamente permanecerá en la ronda hasta que adivine incorrectamente (o no lo haga dentro del tiempo), la ronda pasará a la siguiente persona. Quien adivine la palabra gana.",
+    "NO_LEADERBOARD_DATA": "¡Vaya! Parece que no hay datos disponibles para este tipo. ¡Empieza a jugar para ponerse en la tabla de posiciones!",
+    "GUESSED_CORRECTLY": "¡Has adivinado correctamente! 🎉",
+    "GUESSED_INCORRECTLY": "¡Has adivinado incorrectamente! 😢\nLa palabra correcta era `{{WORD}}`"
+  },
+  "skygame": {
+    "LEADERBOARD_SERVER_ONLY": "Ejecuta este comando en un servidor cuando `type` esté establecido en `Server`"
+  },
+  "planner": {
+    "SEARCH_FAILED": "¡Vaya! No pudimos encontrar de dónde vino esto.\n-# Parece que el resultado se perdió en los túneles de viento.",
+    "NOT_IMPLEMENTED": "Aún no implementado",
+    "IMPORT_TIMEOUT": "✨ *Las estrellas se han atenuado...* Tu meditación ha tardado demasiado. ¡El portal se ha cerrado! Por favor intenta invocar tus datos de nuevo. 🕯️",
+    "INVALID_FILE_HEADER": "🌟 ***Hmm... ¡Esta constelación no se alinea!*** 🌟",
+    "INVALID_FILE_BODY": "Parece que los Espíritus están teniendo problemas para leer tu mensaje de luz de estrellas. ¡El archivo que has compartido parece ser de un reino diferente!",
+    "REQUIRED_FILE_FORMAT": "🕊️ **Lo que necesito de ti:**",
+    "JSON_PARSE_ERROR_HEADER": "🌟 **¡Uy! Tu constelación parece un poco saltada...** 🌟",
+    "JSON_PARSE_ERROR_BODY": "¡Este archivo parece haber perdido su luz de estrella durante el viaje! Los Espíritus no pueden descifrar su mensaje. 📜✨",
+    "OTHER_USER_WARNING": "🌟 ***Estos recuerdos pertenecen a otro Niño del Cielo...*** 🌟",
+    "IMPORT_SUCCESS": "✨ ***¡Tus recuerdos han sido capturados con luz de estrella!*** 🌟\n\n*Los Espíritus han preservado cuidadosamente tu viaje a través de los reinos. ¡Mantén este desplazamiento seguro, querido Sky Kid!* 🕯️📜",
+    "DELETE_SUCCESS": "🌌 ***Tus recuerdos han sido liberados a las estrellas...*** 🌌",
+    "DELETE_BACKUP": "📜 ***Un regalo de despedida de los espíritus...***",
+    "IMPORT_NOTE": "\n-# NOTA: Si estás importando datos de [sky-planner.com](https://sky-planner.com), algunas cosas no son guardadas por el bot, principalmente cosas relacionadas con preferencias específicas del sitio web. Estos incluyen, pero no se limitan a: Temas, Filtros, Marcadores de Mapa, Configuración de Closet, etc."
+  },
+  "linked-role": {
+    "INTRO": "Linked role is a special kind of roles that can be used to connect a user account with an application (in this case, the SkyHelper bot).\nThis allows the bot to update user's role connection data to display specific information on a user's profile in a server (see the attached pic). In this case, we can use this to display basic sky profile (Preferred name, preferences, etc.).",
+    "GUIDES": "Debido a la compleja naturaleza de las funciones vinculadas, es difícil explicar todo aquí, así que hemos preparado algunas guías para ayudarte a entender cómo usar los roles vinculados.\n- [¿Qué es un enlazado?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [¿Cómo puedes habilitar los roles enlazados en tu servidor? (https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [¿Cómo obtener/enlazar/actualizar tu perfil de cielo con el bot?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
+    "NAVIGATE": "-# Si la conexión vinculada está habilitada para SkyHelper en este servidor, puedes obtenerla navegando a <id:linked-roles>."
+  },
+  "reminders": {
+    "ROLE_MENTION": "Oye, {{ROLE}}",
+    "EDEN_RESET": "Se reinició el Ojo de Edén, las estatuas han sido actualizadas y puedes salvarlas de nuevo por AC!",
+    "DAILY_RESET": "El mundo de Sky ha sido reiniciado y las misiones diarias se actualizaron!",
+    "TITLE": "Recordatorio: {{TYPE}}",
+    "DAILY_QUESTS": "Misiones diarias",
+    "COMMON": "{{TYPE}} acaba de empezar (a la(s) {{TIME}} y terminará {{TIME-END}}) ({{TIME-END-R}})",
+    "PRE": "{{TYPE}} empezará a la(s) {{TIME}}",
+    "PRE-RESET": "{{TYPE}} will occur at {{TIME}} ({{TIME-R}}).",
+    "SHARDS": "**{{SHARD_NUMBER}} fragmento** caera {{TIME}}",
+    "MANAGE_TIMEOUT": "Tiempo de respuesta agotado. No recibí una respuesta a tiempo",
+    "TOGGLE_TIMEOUT": "No has respondido a tiempo. Por favor, inténtalo de nuevo.",
+    "TOGGLE_DISABLED": "¡Ningún canal seleccionado! Los recordatorios de {{EVENT}} han sido deshabilitados.",
+    "TOGGLE_UPDATED": "¡Recordatorios {{EVENT}} actualizados con éxito!",
+    "INVALID_CHANNEL": "Tipo de canal no válido. Por favor, proporcione un canal de texto o canal de subprocesos válido."
+  },
+  "quests": {
+    "NO_CANDLE_DATA": "No se encontraron datos para este tipo de velas.",
+    "NO_QUEST_DATA": "No se encontraron datos para esta misión."
+  },
+  "guides": {
+    "NO_SUMMARY": "¡No se encontró ningún resumen para este reino! Esta característica se considera heredada y no se harán actualizaciones y puede que falten datos para nuevas adiciones.",
+    "NO_MAPS": "¡No se encontraron mapas para este reino! Esta característica se considera heredada y no se harán actualizaciones, y puede que falten datos para nuevas adiciones."
+  },
+  "utils": {
+    "TIMEOUT": "No se ha recibido ninguna respuesta. Cancelando...",
+    "NO_CHANGELOG": "¡Lo sentimos! No se ha encontrado registro de cambios para esta versión. Inténtalo de nuevo más tarde"
   }
 }

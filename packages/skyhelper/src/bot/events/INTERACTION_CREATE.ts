@@ -92,6 +92,14 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         });
         return;
       }
+      // metrics
+      Sentry.metrics.count("commands_usage", 1, {
+        attributes: {
+          command: command.name,
+          guild: interaction.guild_id ?? "dm",
+          user: helper.user.id,
+        },
+      });
       const options = new InteractionOptionResolver(interaction);
       const validate = await validateInteractions({ command, interaction, options, helper, t });
       if (!validate.status) {
@@ -102,12 +110,21 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       }
       try {
+        const start = Date.now();
+
         await command.interactionRun({
           interaction,
           helper,
           options,
           t,
         });
+
+        // log command perfs
+        Sentry.metrics.distribution("commands_perf", Date.now() - start, {
+          unit: "millisecond",
+          attributes: { command: command.name, user: helper.user.id, guild: interaction.guild_id ?? "dm" },
+        });
+
         // Log the interaction
         if (interactionLogWebhook && !client.config.OWNER.includes(helper.user.id)) {
           await api.webhooks.execute(interactionLogWebhook.id, interactionLogWebhook.token, {

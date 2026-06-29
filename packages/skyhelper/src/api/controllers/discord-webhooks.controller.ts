@@ -16,8 +16,8 @@ export class WebhookEventController {
     res.status(204).send();
     // Ideally only this application authrization event will be sent as it's the only one that's subscribed, but return still for safety
     if (
-      body.event.type !== ApplicationWebhookEventType.ApplicationAuthorized &&
-      body.event.type !== ApplicationWebhookEventType.ApplicationDeauthorized
+      body.event?.type !== ApplicationWebhookEventType.ApplicationAuthorized &&
+      body.event?.type !== ApplicationWebhookEventType.ApplicationDeauthorized
     ) {
       return;
     }

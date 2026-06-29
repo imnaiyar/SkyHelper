@@ -1,0 +1,129 @@
+{
+  "shards-embed": {
+    "TODAY": "Hoje",
+    "AUTHOR": "Informação de Fragmentos",
+    "CONTENT": "Última Atualização: {{TIME}}",
+    "NO-SHARD": "Hoje os fragmentos tiraram folga.",
+    "COUNTDOWN": {
+      "ENDED": "Terminou {{DURATION}} atrás",
+      "ACTIVE": "Termina em {{DURATION}}",
+      "EXPECTED": "Cai em {{DURATION}}"
+    },
+    "TIMELINE": "Intervalo",
+    "LOCATION": "Onde está o Fragmento",
+    "DATA": "Detalhes do Fragmento"
+  },
+  "times-embed": {
+    "EVENT_INACTIVE": "Sem eventos agora",
+    "EMBED_TITLE": "Agenda de eventos",
+    "EVENT_ACTIVE": "**Evento**: {{EVENT_NAME}}\n**Período**: {{DATE1}} - {{DATE2}}\n**Total de dias**: {{DAYS}}",
+    "STARTS": "Começa em",
+    "ENDS": "Termina em",
+    "TS_VISITING": "- **Visitante atual:** {{TS_NAME}}\n- **Partida:** em {{DATE}} ({{DURATION}})",
+    "TS_EXPECTED": "{{TS_NAME}} chegará em {{DATE}} (em {{DURATION}})",
+    "TS_UPDATED": "Ainda sem atualização",
+    "TS_UNKNOWN": "Espírito Desconhecido",
+    "EVENTS": {
+      "GEYSER": "Gêiser",
+      "GRANDMA": "Vovó",
+      "TURTLE": "Tartaruga/Pôr do Sol do Santuário",
+      "AURORA": "Concerto da Aurora",
+      "DREAM-SKATER": "Patinadora dos sonhos",
+      "PASSAGE-QUESTS": "Missões da Passagem",
+      "NEST-SUNSET": "Pôr do Sol no Ninho",
+      "FIREWORKS-FESTIVAL": "Festival de Fogos de Artifício do Aviário",
+      "FAIRY-RING": "Círculo de Fadas",
+      "BROOK-RAINBOW": "Arco-íris do Riacho da Floresta",
+      "DAILY-RESET": "Reset Diário",
+      "EDEN": "Éden/Reset Semanal"
+    },
+    "TS_TITLE": "Espírito Viajante",
+    "EVENT_TITLE": "Evento Especial (Dias de...)",
+    "ACTIVE": "<a:uptime:1228956558113771580> Rolando. Termina em {{END_TIME}} (`Próximo:` {{NEXT_TIME}})",
+    "NEXT-OCC": "Próxima aparição: {{TIME}} (em {{DURATION}})",
+    "NEXT-OCC-IDLE": "Próxima aparição: {{TIME}}"
+  },
+  "REALMS": {
+    "ISLE": "Ilha do Alvorecer",
+    "PRAIRIE": "Campina da Aurora",
+    "FOREST": "Floresta Oculta",
+    "VALLEY": "Vale do Triunfo",
+    "WASTELAND": "Sertão Dourado",
+    "VAULT": "Relicário do Conhecimento",
+    "EDEN": "Olho do Éden"
+  },
+  "SPIRITS": {
+    "SEASON_TITLE": "Temporada",
+    "UNKNOWN": "Espírito Desconhecido",
+    "REALM_TITLE": "Reino",
+    "TREE_TITLE": "Árvore da amizade (última visita) por {{CREDIT}}",
+    "SEASONAL_CHART": "Tabela de preços da temporada por {{CREDIT}}",
+    "LOCATION_TITLE": "Localização por {{CREDIT}}",
+    "NO_SPIRIT": "Nenhum espírito encontrado!",
+    "NO_COLLECTIBLES": "Nenhum colecionável encontrado para este espírito, ou algo deu errado!",
+    "NO_EXPRESSION": "Algo deu errado! Nenhum dado encontrado"
+  },
+  "hangman": {
+    "NOT_PLAYABLE": "Este jogo só pode ser jogado em canais onde eu consiga enviar mensagens. Este comando não está disponível nesse contexto; use-o em um servidor do qual eu faço parte ou em uma DM comigo.",
+    "GAME_ACTIVE": "Já há uma partida em andamento neste canal. Aguarde ela terminar ou use outro canal!",
+    "DOUBLE_MODE_GUILD": "O modo duplo só pode ser jogado em servidores dos quais eu faço parte.",
+    "CUSTOM_WORD_DISALLOWED": "Palavras personalizadas não são permitidas no modo jogador único.",
+    "INSTRUCTIONS_BASE": "**Aqui estão algumas coisas que você pode ter em mente durante o jogo!**\n- Você terá 30 segundos para responder a cada rodada. Cada tentativa (ou falta de dentro do tempo especificado) vai contar como uma resposta errada.\n- Se você acha que sabe a palavra completa, você pode digitá-la assim (como `Velas Ascendidas`).\n- O iniciador do jogo pode parar o jogo a qualquer momento digitando `>parar` no canal. Somente jogos acabados contarão para a tabela de classificação.",
+    "INSTRUCTIONS_SINGLE": "Cada resposta errada custará vidas. A incorporação mostrará quantas vidas você partiu. Você vai perder se não conseguir adivinhar a palavra corretamente antes que suas vidas acabem.",
+    "INSTRUCTIONS_DOUBLE": "Cada jogador vai responder, escolhendo aleatoriamente para a primeira rodada, o jogador que adivinhar corretamente ficará na rodada até que ele adivinhe incorretamente (ou não faça isso dentro do tempo), a rodada irá passar para a próxima pessoa. Quem adivinhar a palavra primeiro ganha.",
+    "NO_LEADERBOARD_DATA": "Opa! Parece que nenhum dado está disponível para este tipo. Comece a jogar para ficar no quadro de classificações!",
+    "GUESSED_CORRECTLY": "Você adivinhou corretamente! 🎉",
+    "GUESSED_INCORRECTLY": "Você adivinhou incorretamente! 😢\nA palavra correta era `{{WORD}}`"
+  },
+  "skygame": {
+    "LEADERBOARD_SERVER_ONLY": "Execute este comando em um servidor quando `tipo` é definido como `Servidor`"
+  },
+  "planner": {
+    "SEARCH_FAILED": "Ooops! Não conseguimos encontrar de onde veio isso.\n-# Parece que o resultado se perdeu nos túneis eólicos.",
+    "NOT_IMPLEMENTED": "Não implementado ainda",
+    "IMPORT_TIMEOUT": "✨ *As estrelas escurecem...* Sua meditação levou muito tempo. O portal fechou! Por favor, tente invocar seus dados novamente. 🕯️",
+    "INVALID_FILE_HEADER": "🌟 ***Hmm... Essa constelação não está bem alinhada!*** 🌟",
+    "INVALID_FILE_BODY": "Parece que os Espíritos estão tendo problemas para ler sua mensagem estrelada. O arquivo que você compartilhou parece ser de um reino diferente!",
+    "REQUIRED_FILE_FORMAT": "🕊️ **Do que preciso de você:**",
+    "JSON_PARSE_ERROR_HEADER": "🌟 **Oops! Sua constelação parece um pouco saltada...** 🌟",
+    "JSON_PARSE_ERROR_BODY": "Este arquivo parece ter perdido a sua luz das estrelas durante a jornada! Os Espíritos não podem decifrar a sua mensagem. 📜✨",
+    "OTHER_USER_WARNING": "🌟 ***Estas memórias pertencem a outro Kid...*** 🌟",
+    "IMPORT_SUCCESS": "✨ ***Suas memórias foram capturadas à luz das estrelas!*** 🌟\n\n*Os Espíritos preservaram cuidadosamente sua jornada pelo reino. Mantenha esse scroll seguro, caro Sky Kid!* 🕯️📜",
+    "DELETE_SUCCESS": "🌌 ***Suas memórias foram liberadas para as estrelas...*** 🌌",
+    "DELETE_BACKUP": "📜 ***Um presente de separação dos Espinhos...***",
+    "IMPORT_NOTE": "\n-# NOTA: Se você estiver importando dados de [sky-planner.com](https://sky-planner.com), algumas coisas não são salvas pelo bot, principalmente coisas relacionadas com preferências específicas do site. Isso inclui, mas não se limita a: Temas, Filtros, Marcadores de Mapas, Configurações de Closets, etc."
+  },
+  "linked-role": {
+    "INTRO": "Um cargo vinculado é um tipo especial de cargo que pode ser usado para conectar uma conta de usuário a um aplicativo (neste caso, o bot SkyHelper).\nIsso permite que o bot atualize os dados vinculados ao cargo do usuário para exibir informações específicas no perfil dele em um servidor (veja a imagem anexada). Neste caso, podemos usar isso para exibir um perfil básico do Sky (nome preferido, estatísticas e interesses de jogo, entre outras informações).",
+    "GUIDES": "Devido à complexidade dos cargos vinculados, é difícil explicar tudo aqui. Por isso, preparamos alguns guias para ajudar você a entender como usar os cargos vinculados.\n\n- [O que é um cargo vinculado?](https://docs.skyhelper.xyz/docs/guides/linked-role)\n- [Como ativar cargos vinculados no seu servidor?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-server-administrators-how-to-enable-linked-roles)\n- [Como obter, vincular ou atualizar seu perfil do Sky com o bot?](https://docs.skyhelper.xyz/docs/guides/linked-role#for-users-how-to-get-a-linked-role)",
+    "NAVIGATE": "-# Se a conexão de Cargo Vinculado estiver ativada para SkyHelper neste servidor, você pode obtê-la navegando até <id:linked-roles>."
+  },
+  "reminders": {
+    "ROLE_MENTION": "Ei, {{ROLE}}",
+    "EDEN_RESET": "O Olho do Éden acabou de resetar. As estátuas foram restauradas e podem ser salvas novamente por Velas Ascendidas!",
+    "DAILY_RESET": "O mundo de Sky acabou de resetar e as missões diárias foram renovadas!",
+    "TITLE": "Lembrete de {{TYPE}}",
+    "DAILY_QUESTS": "Missões Diárias",
+    "COMMON": "{{TYPE}} acabou de começar (às {{TIME}}) e termina às {{TIME-END}} ({{TIME-END-R}})",
+    "PRE": "{{TYPE}} vai começar às {{TIME}} ({{TIME-R}}).",
+    "PRE-RESET": "{{TYPE}} acontecerá às {{TIME}} ({{TIME-R}}).",
+    "SHARDS": "**Fragmento {{SHARD_NUMBER}}** vai cair às {{TIME}}",
+    "MANAGE_TIMEOUT": "Tempo de resposta excedido. Eu não recebi uma resposta a tempo",
+    "TOGGLE_TIMEOUT": "Você não respondeu a tempo. Por favor, tente novamente.",
+    "TOGGLE_DISABLED": "Nenhum canal selecionado! Os lembretes de {{EVENT}} foram desativados.",
+    "TOGGLE_UPDATED": "Lembretes de {{EVENT}} atualizados com sucesso!",
+    "INVALID_CHANNEL": "Tipo de canal inválido. Por favor, forneça um canal de texto válido ou canal de tópico."
+  },
+  "quests": {
+    "NO_CANDLE_DATA": "Não foram encontrados dados para este tipo de vela.",
+    "NO_QUEST_DATA": "Nenhum dado encontrado para esta missão."
+  },
+  "guides": {
+    "NO_SUMMARY": "Nenhum resumo encontrado para este reino! Este recurso é considerado legado e nenhuma atualização será feita e poderá ter falta de dados para adições mais recentes.",
+    "NO_MAPS": "Nenhum mapa encontrado para este reino! Este recurso é considerado legado e nenhuma atualização será feita e poderá ter falta de dados para adições mais recentes."
+  },
+  "utils": {
+    "TIMEOUT": "Não recebeu nenhuma resposta. Cancelando...",
+    "NO_CHANGELOG": "Desculpe! Nenhum registro de alterações foi encontrado para esta versão. Por favor, tente novamente mais tarde"
+  }
+}

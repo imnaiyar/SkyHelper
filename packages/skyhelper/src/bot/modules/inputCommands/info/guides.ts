@@ -25,7 +25,7 @@ export default {
     if (sub === "seasonal" && focusedValue.name === "season") {
       await helper.respond({
         choices: data.seasons.items
-          .filter((s) => s.name.includes(focusedValue.value as string))
+          .filter((s) => s.name.toLowerCase().includes((focusedValue.value as string).toLowerCase()))
           .map((season) => ({
             name: `↪️ ${season.name}`,
             value: season.guid,
@@ -38,7 +38,7 @@ export default {
     if (sub === "realms" && focusedValue.name === "realm") {
       await helper.respond({
         choices: data.realms.items
-          .filter((s) => s.name.includes(focusedValue.value as string))
+          .filter((s) => s.name.toLowerCase().includes((focusedValue.value as string).toLowerCase()))
           .map((realm) => ({
             name: `↪️ ${realm.name}`,
             value: realm.guid,

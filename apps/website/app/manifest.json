@@ -62,5 +62,17 @@
       "sizes": "512x512",
       "purpose": "any"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "description": "Manage bot's configuration through the dashboard",
+      "url": "/dashboard"
+    },
+    {
+      "name": "Commands",
+      "description": "Browse all the bot's commands",
+      "url": "/commands"
+    }
   ]
 }

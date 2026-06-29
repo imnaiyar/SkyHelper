@@ -120,10 +120,10 @@ export async function handleSingleMode(helper: InteractionHelper) {
   });
 
   if (guessedCorrectly) {
-    await modalHelper.followUp({ content: "You guessed correctly! 🎉", flags: MessageFlags.Ephemeral });
+    await modalHelper.followUp({ content: modalHelper.t("features:hangman.GUESSED_CORRECTLY"), flags: MessageFlags.Ephemeral });
   } else {
     await modalHelper.followUp({
-      content: `You guessed incorrectly! 😢\n The correct word was \`${original}\``,
+      content: modalHelper.t("features:hangman.GUESSED_INCORRECTLY", { WORD: original }),
       flags: MessageFlags.Ephemeral,
     });
   }

@@ -180,7 +180,7 @@
       }
     },
     "RESPONSES": {
-      "CONFIGURED": "Successfully configured `{{TYPE}}` reminders in {{CHANNEL}}",
+      "CONFIGURED": "Successfully configured `{{EVENT}}` reminders in {{CHANNEL}}",
       "CONFIGURED_ROLE": "Successfully configured `{{EVENT}}` reminders for role {{ROLE}} in {{CHANNEL}}",
       "ALREADY_NOT_CONFIGURED": "Reminders for {{EVENT}} are already inactive",
       "NEXT_TIME": "Next reminder for `{{EVENT}}` will be sent {{TIME}}",

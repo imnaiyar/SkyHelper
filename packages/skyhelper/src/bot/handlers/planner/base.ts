@@ -18,6 +18,7 @@ import type { SkyHelper } from "@/structures";
 import { DisplayTabs, FilterType, type IPaginatedProps, type NavigationState } from "@/types/planner";
 import { PlannerService } from "./helpers/planner.service.js";
 import type { ISkyData } from "skygame-data";
+import { emoji } from "zod/v4";
 
 /** Mappings of currency keys with thier names */
 export const currencyMap = {
@@ -30,13 +31,14 @@ export const currencyMap = {
 };
 
 const CATEGORY_EMOJI_MAP = {
-  [DisplayTabs.Home]: realms_emojis.Home,
-  [DisplayTabs.Realms]: realms_emojis["Isle of Dawn"],
-  [DisplayTabs.Events]: emojis.eventticket,
-  [DisplayTabs.WingedLights]: emojis.wingwedge,
-  [DisplayTabs.Items]: "1412842595737931859", // Memory whisperer cape icon
-  [DisplayTabs.Shops]: emojis.shopcart,
-  [DisplayTabs.Spirits]: emojis.realmelders,
+  [DisplayTabs.Home]: "1448782389559033856",
+  [DisplayTabs.Realms]: "1448782042702676170",
+  [DisplayTabs.Events]: "1448782021554999356",
+  [DisplayTabs.WingedLights]: "1448782167328030801",
+  [DisplayTabs.Items]: "1448782001690902569",
+  [DisplayTabs.Shops]: "1448782309854806077",
+  [DisplayTabs.Spirits]: "1449474281611460618",
+  [DisplayTabs.Areas]: "1448781976957095966",
   [DisplayTabs.Friends]: emojis.friends,
 };
 

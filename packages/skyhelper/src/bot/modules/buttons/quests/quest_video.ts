@@ -13,7 +13,7 @@ export default defineButton({
     await helper.defer({ flags: 64 });
     const data = await client.schemas.getDailyQuests();
     const d = data.quests[index];
-    if (!d) return void (await helper.editReply({ content: "No data found for this quest." }));
+    if (!d) return void (await helper.editReply({ content: t("features:quests.NO_QUEST_DATA") }));
     const isValid = checkQuestValidity(d.date);
     if (!isValid || !checkQuestButtonValidToday(date)) {
       return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
