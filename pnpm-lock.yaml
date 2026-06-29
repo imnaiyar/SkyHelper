@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  discord-api-types: 0.38.38
+  discord-api-types: latest
 
 patchedDependencies:
   '@sapphire/string-store':
@@ -22,9 +22,6 @@ importers:
       '@octokit/action':
         specifier: ^7.0.0
         version: 7.0.2
-      discord-api-types:
-        specifier: 0.38.38
-        version: 0.38.38
       jsonc-parser:
         specifier: ^3.3.1
         version: 3.3.1
