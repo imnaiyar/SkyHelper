@@ -23,7 +23,7 @@ export default {
   },
 } satisfies Command;
 
-function getCandlesModal(
+export function getCandlesModal(
   type: CandleType,
   settings: UserSchema,
   skyData: Awaited<ReturnType<typeof fetchSkyData>>,

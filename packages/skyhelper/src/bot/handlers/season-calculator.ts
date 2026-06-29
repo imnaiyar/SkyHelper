@@ -1,17 +1,11 @@
 import { CostUtils, fetchSkyData, PlannerDataService, PlannerService } from "@/planner";
-import { SpiritType } from "@/types/planner";
+import { DisplayTabs, SpiritType } from "@/types/planner";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import Utils from "@/utils/classes/Utils";
 import { CustomId } from "@/utils/customId-store";
-import { currency, zone } from "@skyhelperbot/constants";
+import { currency, emojis, zone } from "@skyhelperbot/constants";
 import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
-import {
-  ButtonStyle,
-  ComponentType,
-  MessageFlags,
-  type APIMessageComponentButtonInteraction,
-  type APIStringSelectComponent,
-} from "discord-api-types/v10";
+import { ButtonStyle, ComponentType, MessageFlags, type APIStringSelectComponent } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import { SpiritTreeHelper, type INode, type ISeason, type ISkyData, type ISpiritTree } from "skygame-data";
 
@@ -29,6 +23,8 @@ interface SeasonCalculatorState {
   user: string;
   createdAt: number;
   selectedNodeGuids: Record<string, string[]>;
+  /** displays a back button to go to the season's planner page, usually when user's are directed to the calculator from planner */
+  plannerBack?: boolean;
 }
 
 interface SeasonCalculatorCustomIdData {
@@ -43,6 +39,7 @@ export async function startSeasonCalculator(
   currentCandles: number,
   checkboxes: string[] = [],
   seasonGuid?: string,
+  plannerBack?: boolean,
 ) {
   const data = await fetchSkyData(helper.client);
   const season = PlannerService.getCurrentSeason(data);
@@ -65,6 +62,7 @@ export async function startSeasonCalculator(
     user: helper.user.id,
     createdAt: Date.now(),
     selectedNodeGuids: {},
+    plannerBack,
   });
 
   cleanupStates();
@@ -79,17 +77,16 @@ export async function startSeasonCalculator(
   });
 }
 
-export async function handleSeasonCalculatorButton(
-  helper: InteractionHelper,
-  data: SeasonCalculatorCustomIdData,
-  interaction: APIMessageComponentButtonInteraction,
-) {
+export async function handleSeasonCalculatorButton(helper: InteractionHelper, data: SeasonCalculatorCustomIdData) {
   const state = states.get(data.key);
   if (!state || state.user !== helper.user.id || Date.now() - state.createdAt > STATE_TTL) {
     states.delete(data.key);
     await helper.update({ content: helper.t("features:calculator.SEASON_STATE_EXPIRED") });
     return;
   }
+
+  // reset time if it's actively used
+  state.createdAt = Date.now();
 
   const skyData = await fetchSkyData(helper.client);
   const season = PlannerService.getCurrentSeason(skyData);
@@ -120,7 +117,7 @@ export async function handleSeasonCalculatorButton(
     return;
   }
 
-  await launchTreeSelectionModal(helper, skyData, season, tree, state, data.key, interaction);
+  await launchTreeSelectionModal(helper, skyData, season, tree, state, data.key);
 }
 
 function renderSeasonCalculator(
@@ -134,24 +131,38 @@ function renderSeasonCalculator(
   const selectedNodes = getSelectedNodes(data, state);
   const selectedTotal = selectedNodes.reduce((total, node) => total + (node.sc ?? 0), 0);
 
+  const headerDisplay = `## ${helper.t("features:calculator.SC")} ${Utils.formatEmoji(currency.sc)}
+**${formatEmoji(season.emoji, season.shortName)} ${season.name}**
+${helper.t("features:calculator.SEASON_SELECTOR_HEADER", {
+  current: formatSeasonCandles(state.currentCandles),
+  selected: formatSeasonCandles(selectedTotal),
+  end: Utils.time(season.endDate, "R"),
+})}`;
+
   return container(
-    textDisplay(
-      `## ${helper.t("features:calculator.SC")} ${Utils.formatEmoji(currency.sc)}`,
-      `**${formatEmoji(season.emoji, season.shortName)} ${season.name}**`,
-      helper.t("features:calculator.SEASON_SELECTOR_HEADER", {
-        current: formatSeasonCandles(state.currentCandles),
-        selected: formatSeasonCandles(selectedTotal),
-        end: Utils.time(season.endDate, "R"),
-      }),
-    ),
+    state.plannerBack
+      ? section(
+          button({
+            style: ButtonStyle.Danger,
+            label: "Planner",
+            emoji: { name: "back", id: emojis.leftarrow },
+            // @ts-expect-error type error, other fields or not required but typing expect me to explitly provide them as undefined lol
+            custom_id: helper.client.utils.store.serialize(CustomId.PlannerTopLevelNav, {
+              t: DisplayTabs.Seasons,
+              it: state.seasonGuid,
+            }),
+          }),
+          headerDisplay,
+        )
+      : textDisplay(headerDisplay),
     separator(),
     ...trees.flatMap(({ tree, name }) => {
       const nodes = getNodesByGuid(data, state.selectedNodeGuids[tree.guid] ?? []);
       const summary = nodes.length
         ? nodes
             .slice(0, 8)
-            .map((node) => Utils.formatEmoji(node.item?.emoji))
-            .join(" ") + (nodes.length > 8 ? ` +${nodes.length - 8}` : "")
+            .map((node) => Utils.formatEmoji(node.item?.emoji) + " " + (node.item?.name ?? "Unknown"))
+            .join(" \u25e6 ") + (nodes.length > 8 ? ` +${nodes.length - 8}` : "")
         : helper.t("features:calculator.SEASON_NO_ITEMS_SELECTED");
 
       return [
@@ -229,11 +240,6 @@ function renderSeasonResult(
         style: ButtonStyle.Secondary,
         custom_id: createCustomId(helper, "view", key),
       }),
-      button({
-        label: "Recalculate",
-        style: ButtonStyle.Success,
-        custom_id: createCustomId(helper, "calculate", key),
-      }),
     ),
   );
 }
@@ -245,7 +251,6 @@ async function launchTreeSelectionModal(
   tree: ISpiritTree,
   state: SeasonCalculatorState,
   key: string,
-  interaction: APIMessageComponentButtonInteraction,
 ) {
   const nodes = SpiritTreeHelper.getNodes(tree).filter((node) => node.sc ?? node.sh ?? node.item);
   const menus: APIStringSelectComponent[] = [];
@@ -265,7 +270,7 @@ async function launchTreeSelectionModal(
       placeholder: `Select items (${index}/${total})`,
       options: chunk.map((node) => ({
         label: trimLabel(`${node.item?.name ?? "Unknown"}${node.item?.level ? ` Lvl${node.item.level}` : ""}`),
-        description: trimLabel(`${CostUtils.costToEmoji(node)}${isPassItem(node) ? " • Requires season pass" : ""}`, 100),
+        description: trimLabel(`${formatNodeCost(node)}${isPassItem(node) ? " • Requires season pass" : ""}`, 100),
         value: node.guid,
         emoji: node.item?.emoji ? { id: node.item.emoji } : undefined,
         default: selected.has(node.guid),
@@ -273,7 +278,7 @@ async function launchTreeSelectionModal(
     });
   }
 
-  const modalId = `season_calculator_tree;${interaction.id};${tree.guid}`;
+  const modalId = `season_calculator_tree;${helper.int.id};${tree.guid}`;
   await helper.launchModal({
     custom_id: modalId,
     title: trimLabel(`Select ${getTreeName(tree)} Items`, 45),
@@ -332,11 +337,13 @@ async function syncPlannerData(
   if (dailiesDone) {
     settings.plannerData["season.checkin"] ??= {};
     settings.plannerData["season.checkin"][seasonGuid] = DateTime.now().setZone(zone).toISODate()!;
-    settings.markModified("plannerData.season.checkin");
-  }
+    // eslint-disable-next-line
+  } else delete settings.plannerData["season.checkin"]?.[seasonGuid];
 
   settings.plannerData.date = new Date().toISOString();
   settings.markModified("plannerData.currencies.seasonCurrencies");
+
+  settings.markModified("plannerData.season.checkin");
   await settings.save();
 }
 
@@ -382,6 +389,13 @@ function isPassItem(node: INode) {
 
 function formatSeasonCandles(amount: number) {
   return `${amount} ${Utils.formatEmoji(currency.sc)}`;
+}
+
+function formatNodeCost(node: INode) {
+  const parts = [];
+  if (node.sc) parts.push(`${node.sc} SC`);
+  if (node.sh) parts.push(`${node.sh} SH`);
+  return parts.join(" • ") || "Free";
 }
 
 function formatEmoji(id?: string, name?: string) {

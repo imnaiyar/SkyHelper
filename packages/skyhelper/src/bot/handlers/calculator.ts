@@ -6,6 +6,8 @@ import { currency, zone } from "@skyhelperbot/constants";
 import { container, separator, ShardsUtil, textDisplay } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIContainerComponent, type APIModalSubmitInteraction } from "discord-api-types/v10";
 import { DateTime } from "luxon";
+
+import { PlannerDataService } from "@/planner";
 const BASE_DAILY_CANDLES = 15;
 const MAX_DAILY_CANDLES = 21;
 const DAILY_QUESTS_CANDLES = 4;
@@ -16,7 +18,9 @@ const withEmojiCount = (count: number, emoji: string) => `${count} ${Utils.forma
 export async function handleCalculatorModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction,
     client = helper.client;
-  await helper.defer();
+
+  // if it was on a message, then assume it came from season display page, we'd want to update the original page then instead of creating another reply
+  await (helper.int.message ? helper.deferUpdate() : helper.defer());
 
   const [_, type = "c", guid = ""] = int.data.custom_id.split(";");
   const current = Number(client.utils.getModalComponent(int, "input_have", ComponentType.TextInput, true).value);
@@ -26,6 +30,12 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
     await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: current }));
     return;
   }
+
+  if (type === "sc") {
+    await startSeasonCalculator(helper, current, checkboxes ?? [], guid, !!helper.int.message);
+    return;
+  }
+
   let component: APIContainerComponent = container(textDisplay("Sorry this feature is not implemented yet!"));
 
   switch (type) {
@@ -115,14 +125,21 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
       );
       break;
     }
-    case "sc": {
-      await startSeasonCalculator(helper, current, checkboxes ?? [], guid);
-      return;
-    }
   }
   await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
+
+  if (checkboxes?.includes("sync")) syncCandles(helper, current, type).catch((er) => helper.client.logger.error(er));
 }
 
+async function syncCandles(helper: InteractionHelper, current: number, type: string) {
+  const schema = await helper.client.schemas.getUser(helper.user);
+  schema.plannerData ??= PlannerDataService.createEmpty();
+
+  if (type === "c") schema.plannerData.currencies.candles = current;
+  if (type === "ac") schema.plannerData.currencies.ascendedCandles = current;
+
+  await schema.save();
+}
 // #region Candles
 function calculateCandles(current: number, target: number) {
   const required = target - current;
@@ -155,7 +172,6 @@ interface RewardDaysResult {
   shardCountCombinedAc: number;
 }
 
-// TODO: implement if cleared shards today
 export function calculateAscendedCandles(
   currentValue: number,
   targetValue: number,
