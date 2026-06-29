@@ -31,5 +31,6 @@
         "LABEL": "Error ID"
       }
     }
-  }
+  },
+  "NOT_A_NUMBER": "The supplied value is not a number, please provide a valid number; supplied value: {{VALUE}}"
 }

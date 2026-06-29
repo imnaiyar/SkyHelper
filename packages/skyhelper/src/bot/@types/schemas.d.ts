@@ -4,6 +4,11 @@ import type { REMINDERS_KEY } from "@skyhelperbot/constants";
 import type { UserPlannerData } from "@/planner/helpers/data.service";
 
 // #region User
+interface SkygameModeShchema {
+  singleMode: { gamesPlayed: number; gamesWon: number };
+  doubleMode: { gamesPlayed: number; gamesWon: number };
+}
+
 export interface UserSchema extends Document {
   _id: string;
   data: {
@@ -17,10 +22,9 @@ export interface UserSchema extends Document {
     flag?: string;
   };
   isBlacklisted: boolean;
-  hangman?: {
-    singleMode: { gamesPlayed: number; gamesWon: number };
-    doubleMode: { gamesPlayed: number; gamesWon: number };
-  };
+
+  hangman?: SkygameModeShchema;
+  scrambled?: SkygameModeShchema;
   linkedRole?: {
     username?: string;
     metadata?: {
@@ -110,36 +114,4 @@ export interface DailyQuestsSchema extends Document {
   last_message?: string;
   rotating_candles: DailyQuest;
   seasonal_candles?: DailyQuest;
-}
-
-// #region User
-interface SkygameModeShchema {
-  singleMode: { gamesPlayed: number; gamesWon: number };
-  doubleMode: { gamesPlayed: number; gamesWon: number };
-}
-interface UserSchema extends Document {
-  _id: string;
-  data: {
-    id: string;
-    username: string;
-    createdAt: Date;
-  };
-  language?: {
-    name: string;
-    value: string;
-    flag?: string;
-  };
-  isBlacklisted: boolean;
-  hangman?: SkygameModeShchema;
-  scrambled?: SkygameModeShchema;
-  linkedRole?: {
-    username?: string;
-    metadata?: {
-      wings?: number;
-      since?: string;
-      hangout?: boolean;
-      cr?: boolean;
-      eden?: boolean;
-    };
-  };
 }

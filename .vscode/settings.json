@@ -10,5 +10,6 @@
     "**/base.ts": "${dirname}/${filename}"
   },
   "editor.foldingStrategy": "auto",
-  "editor.foldingImportsByDefault": true
+  "editor.foldingImportsByDefault": true,
+  "js/ts.experimental.useTsgo": false
 }

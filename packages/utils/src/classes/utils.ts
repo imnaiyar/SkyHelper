@@ -1,4 +1,5 @@
 import { CDNRoutes, type APIUser, type UserAvatarFormat, type DefaultUserAvatarAssets } from "discord-api-types/v10";
+import type { DateTime } from "luxon";
 
 export const colors = {
   blue: "#7289DA",
@@ -28,4 +29,17 @@ export function getUserAvatar(user: APIUser): string {
   return user.avatar
     ? CDNRoutes.userAvatar(user.id, user.avatar, "png" as UserAvatarFormat)
     : CDNRoutes.defaultUserAvatar(Number((BigInt(user.id) >> 22n) % 5n) as DefaultUserAvatarAssets);
+}
+
+export function getDatesBetween(start: DateTime, end: DateTime): DateTime[] {
+  const dates: DateTime[] = [];
+  let current = start.startOf("day");
+  const endDate = end.startOf("day");
+
+  while (current <= endDate) {
+    dates.push(current);
+    current = current.plus({ days: 1 });
+  }
+
+  return dates;
 }

@@ -1,6 +1,6 @@
 import { emojis, zone } from "@skyhelperbot/constants";
 import { BasePlannerHandler } from "./base.js";
-import { container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
+import { button, container, row, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { ComponentType } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 import { serializeFilters } from "./filter.manager.js";
@@ -8,6 +8,8 @@ import { spiritTreeDisplay } from "./shared.js";
 import { DisplayTabs, FilterType, OrderType } from "@/types/planner";
 import type { ISeason } from "skygame-data";
 import { CostUtils } from "./helpers/cost.utils.js";
+import { PlannerService } from "./helpers/planner.service.js";
+import { CustomId, store } from "@/utils/customId-store";
 
 export class SeasonsDisplay extends BasePlannerHandler {
   constructor(data: any, state: any, settings: any, client: any) {
@@ -19,6 +21,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
     if (season) return this.seasondisplay(season);
 
     const filtered = this.filterSeasons(this.data.seasons.items);
+
     return {
       components: [
         container(
@@ -67,6 +70,8 @@ export class SeasonsDisplay extends BasePlannerHandler {
     const trees = [...season.spirits.map((s) => s.tree).filter((t) => !!t), ...(season.includedTrees ?? [])];
     const index = this.state.v?.[0] ? parseInt(this.state.v[0]) : 0;
 
+    const isActive = season.guid === PlannerService.getCurrentSeason(this.data)?.guid;
+
     const spiritRow = row({
       type: ComponentType.StringSelect,
       custom_id: this.createCustomId({}),
@@ -91,17 +96,26 @@ export class SeasonsDisplay extends BasePlannerHandler {
     const components = [
       season.imageUrl ? section(thumbnail(season.imageUrl), ...title) : textDisplay(...title),
       row(
-        this.viewbtn(
-          this.createCustomId({
-            t: DisplayTabs.Shops,
-            d: "shops",
-            f: serializeFilters(new Map([[FilterType.Shops, season.shops?.map((s) => s.guid) ?? []]])),
-            b: { t: DisplayTabs.Seasons, it: this.state.it, f: this.state.f },
-          }),
-          { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !season.shops?.length },
-        ),
-        this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })),
-        this.homebtn(),
+        [
+          isActive
+            ? button({
+                label: "Calculator",
+                custom_id: store.serialize(CustomId.Default, { data: `calculator-season`, user: this.state.user }),
+                emoji: { name: "calculator", id: emojis.calculator },
+              })
+            : null,
+          this.viewbtn(
+            this.createCustomId({
+              t: DisplayTabs.Shops,
+              d: "shops",
+              f: serializeFilters(new Map([[FilterType.Shops, season.shops?.map((s) => s.guid) ?? []]])),
+              b: { t: DisplayTabs.Seasons, it: this.state.it, f: this.state.f },
+            }),
+            { label: "Shop", emoji: { id: emojis.shopcart }, disabled: !season.shops?.length },
+          ),
+          this.backbtn(this.createCustomId({ it: null, f: null, ...this.state.b })),
+          this.homebtn(),
+        ].filter((b) => !!b),
       ),
       separator(),
       trees.length > 1 ? spiritRow : null,

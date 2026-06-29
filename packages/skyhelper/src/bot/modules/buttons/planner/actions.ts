@@ -47,12 +47,12 @@ export default defineButton({
       // if same date then cleared status was removed
       const cleared = PlannerDataService.shardsCleared(user.plannerData);
       if (cleared) {
-        user.plannerData["shards.checkin"] = undefined;
+        user.plannerData.shards_checkin = undefined;
         // substract shards rewards that was granted for clearing
         adjustCurrencies(user, { ac: info.ac }, false);
       } else {
         // otherwise cleared status was triggered
-        user.plannerData["shards.checkin"] = DateTime.now().setZone(zone).toFormat("yyyy-MM-dd");
+        user.plannerData.shards_checkin = DateTime.now().setZone(zone).toFormat("yyyy-MM-dd");
         adjustCurrencies(user, { ac: info.ac }, true);
       }
       await user.save();

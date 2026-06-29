@@ -56,9 +56,9 @@ export async function spiritTreeDisplay(
               disabled: !spirit,
             }),
             name,
-            CostUtils.treeToCostEmoji(tree, true) ?? "",
+            CostUtils.treeToCostEmoji(tree, [], true) ?? "",
           )
-        : textDisplay(name, CostUtils.treeToCostEmoji(tree, true) ?? ""),
+        : textDisplay(name, CostUtils.treeToCostEmoji(tree, [], true) ?? ""),
       row(
         button({
           label: `${unlockAll ? "✓ Unlock" : "x Lock"} All`,

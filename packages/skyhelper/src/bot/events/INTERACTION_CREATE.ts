@@ -36,6 +36,8 @@ import { CustomId } from "@/utils/customId-store";
 import { fetchSkyData, handlePlannerNavigation, PlannerDataService, PlannerService } from "@/planner";
 import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
+import { handleCalculatorModal } from "@/handlers/calculator";
+import { handleSeasonCalculatorButton } from "@/handlers/season-calculator";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -226,89 +228,8 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         return;
       }
 
-      if (id === CustomId.Default && data.data === "currency_modify") {
-        const settings = await client.schemas.getUser(helper.user);
-        const { currencies } = settings.plannerData ?? PlannerDataService.createEmpty();
-        const components: APILabelComponent[] = [];
-        const d = await fetchSkyData(client);
-        const season = PlannerService.getCurrentSeason(d);
-        // More than one events can exist at a time, but including all may reach modal component limits
-        // So for now only implementing modifying the first
-        // TODO: do something about this, or hopefully discord increases components limit in modals
-        // TODO: also add gift passes
-        const event = PlannerService.getEvents(d).current[0];
-        const sCurrency = currencies.seasonCurrencies[season?.guid ?? ""];
-        const eCurrency = currencies.eventCurrencies[event?.instance.guid ?? ""];
-        if (season) {
-          components.push({
-            type: ComponentType.Label,
-            label: "Season Candle/Hearts",
-            description: "Season candles and hearts you have (seprated by `/`)",
-            component: {
-              type: ComponentType.TextInput,
-              custom_id: "season" + `/${season.guid}`,
-              style: TextInputStyle.Short,
-              value: `${sCurrency?.candles ?? 0}/${sCurrency?.hearts ?? 0}`,
-              required: false,
-            },
-          });
-        }
-        if (event) {
-          components.push({
-            type: ComponentType.Label,
-            label: "Event Tickets",
-            description: "Amount of event tickets you have",
-            component: {
-              type: ComponentType.TextInput,
-              custom_id: "event" + `/${event.instance.guid}`,
-              style: TextInputStyle.Short,
-              value: `${eCurrency?.tickets ?? 0}`,
-              required: false,
-            },
-          });
-        }
-
-        const modal: APIModalInteractionResponseCallbackData = {
-          title: "Modify your currencies",
-          custom_id: "currency_modify",
-          components: [
-            {
-              type: ComponentType.Label,
-              label: "Candles",
-              description: "The amount of candles you have",
-              component: {
-                type: ComponentType.TextInput,
-                value: `${currencies.candles || 0}`,
-                custom_id: "candles",
-                style: TextInputStyle.Short,
-              },
-            },
-            {
-              type: ComponentType.Label,
-              label: "Hearts",
-              description: "The amount of hearts you have",
-              component: {
-                type: ComponentType.TextInput,
-                value: `${currencies.hearts || 0}`,
-                custom_id: "hearts",
-                style: TextInputStyle.Short,
-              },
-            },
-            {
-              type: ComponentType.Label,
-              label: "Ascended Candles",
-              description: "The amount of ACs you have",
-              component: {
-                type: ComponentType.TextInput,
-                value: `${currencies.ascendedCandles || 0}`,
-                custom_id: "ac",
-                style: TextInputStyle.Short,
-              },
-            },
-            ...components,
-          ],
-        };
-        await helper.launchModal(modal);
+      if (id === CustomId.SeasonCalculator) {
+        await handleSeasonCalculatorButton(helper, data as any);
         return;
       }
 
@@ -348,6 +269,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         default: {
           if (id.startsWith("planner-friend-name-modal")) {
             await handlePlannerFriendNameModal(helper);
+            return;
+          }
+
+          if (id.startsWith("calculator_modal;")) {
+            await handleCalculatorModal(helper);
             return;
           }
           return;

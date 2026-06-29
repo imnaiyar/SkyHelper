@@ -5,7 +5,7 @@ import { parseCommands } from "@/utils/parseCommands";
 import { Routes, type RESTPutAPIApplicationCommandsJSONBody, type RESTPutAPIApplicationCommandsResult } from "@discordjs/core";
 import { REST } from "@discordjs/rest";
 import { Collection } from "@discordjs/collection";
-
+import fs from "fs";
 const commands = await loadCommands();
 const contexts = await loadContextCmd();
 const toRegister: RESTPutAPIApplicationCommandsJSONBody = [];
@@ -25,7 +25,7 @@ contexts
   .forEach((s) => toRegister.push(s));
 
 if (!process.env.CLIENT_ID) throw new Error("Cliend ID is missing from env");
-
+fs.writeFileSync("commands.json", JSON.stringify(toRegister, null, 2));
 const data = (await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
   body: toRegister,
 })) as RESTPutAPIApplicationCommandsResult;
