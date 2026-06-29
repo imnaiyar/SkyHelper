@@ -133,7 +133,7 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
   await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
 
   if (checkboxes?.includes("sync")) {
-    syncPlanner(helper, current, type, checkboxes?.includes("today_shard")).catch((er) => helper.client.logger.error(er));
+    syncPlanner(helper, current, type, checkboxes.includes("today_shard")).catch((er) => helper.client.logger.error(er));
   }
 }
 
