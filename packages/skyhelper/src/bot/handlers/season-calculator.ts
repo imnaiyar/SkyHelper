@@ -335,15 +335,15 @@ async function syncPlannerData(
     : PlannerDataService.removeFromGuidString(settings.plannerData.seasonPasses, seasonGuid);
 
   if (dailiesDone) {
-    settings.plannerData["season.checkin"] ??= {};
-    settings.plannerData["season.checkin"][seasonGuid] = DateTime.now().setZone(zone).toISODate()!;
+    settings.plannerData.season_checkin ??= {};
+    settings.plannerData.season_checkin[seasonGuid] = DateTime.now().setZone(zone).toISODate()!;
     // eslint-disable-next-line
-  } else delete settings.plannerData["season.checkin"]?.[seasonGuid];
+  } else delete settings.plannerData.season_checkin?.[seasonGuid];
 
   settings.plannerData.date = new Date().toISOString();
   settings.markModified("plannerData.currencies.seasonCurrencies");
 
-  settings.markModified("plannerData.season.checkin");
+  settings.markModified("plannerData.season_checkin");
   await settings.save();
 }
 

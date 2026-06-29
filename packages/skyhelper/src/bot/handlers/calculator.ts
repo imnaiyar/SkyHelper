@@ -132,15 +132,19 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
   }
   await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
 
-  if (checkboxes?.includes("sync")) syncCandles(helper, current, type).catch((er) => helper.client.logger.error(er));
+  if (checkboxes?.includes("sync")) syncPlanner(helper, current, type).catch((er) => helper.client.logger.error(er));
 }
 
-async function syncCandles(helper: InteractionHelper, current: number, type: string) {
+async function syncPlanner(helper: InteractionHelper, current: number, type: string, shardDone = false) {
   const schema = await helper.client.schemas.getUser(helper.user);
   schema.plannerData ??= PlannerDataService.createEmpty();
 
   if (type === "c") schema.plannerData.currencies.candles = current;
-  if (type === "ac") schema.plannerData.currencies.ascendedCandles = current;
+  if (type === "ac") {
+    schema.plannerData.currencies.ascendedCandles = current;
+
+    schema.plannerData.shards_checkin = shardDone ? new Date().toISOString() : "";
+  }
 
   await schema.save();
 }

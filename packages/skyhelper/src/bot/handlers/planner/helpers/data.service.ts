@@ -357,7 +357,7 @@ export class PlannerDataService {
    * Check if todays dailies was done
    */
   static hasDoneDailies(data = PlannerDataService.createEmpty(), guid: string, type: "season" | "event" | "dailies") {
-    const checkins = data[`${type}.checkin`] ?? {};
+    const checkins = data[`${type}_checkin`] ?? {};
     const date = typeof checkins === "string" ? checkins : checkins[guid];
     return date ? DateTime.now().setZone(zone).hasSame(DateTime.fromISO(date, { zone }), "day") : false;
   }
@@ -420,8 +420,8 @@ export class PlannerDataService {
   /** Has todays shards cleared */
   static shardsCleared(plannerData?: UserPlannerData) {
     return Boolean(
-      plannerData?.["shards.checkin"] &&
-        DateTime.now().setZone(zone).hasSame(DateTime.fromISO(plannerData["shards.checkin"], { zone }), "day"),
+      plannerData?.shards_checkin &&
+        DateTime.now().setZone(zone).hasSame(DateTime.fromISO(plannerData.shards_checkin, { zone }), "day"),
     );
   }
 
@@ -448,16 +448,16 @@ export interface UserPlannerData {
   keys: Record<string, any>;
 
   /** Check-in for shards when user have cleared them */
-  "shards.checkin"?: string;
+  shards_checkin?: string;
 
   /** Check-in for when users have done dailies */
-  "season.checkin"?: Record<string, string>;
+  season_checkin?: Record<string, string>;
 
   /** Check-in for when users have done dailies */
-  "event.checkin"?: Record<string, string>;
+  event_checkin?: Record<string, string>;
 
   /** Dailies checkin when season is not active */
-  "dailies.checkin"?: string;
+  dailies_checkin?: string;
 }
 
 export interface IPlannerCurrencies {
