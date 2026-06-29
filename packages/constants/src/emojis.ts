@@ -36,6 +36,7 @@ export const emojis = {
   add: "1449173594486603877",
   delete_icon: "1449173663302680676",
   friends: "1448782354452578504",
+  calculator: "1521130902883668038",
 } as const;
 
 export const realms_emojis = {

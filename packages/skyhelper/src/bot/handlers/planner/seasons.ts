@@ -101,6 +101,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
             ? button({
                 label: "Calculator",
                 custom_id: store.serialize(CustomId.Default, { data: `calculator-season`, user: this.state.user }),
+                emoji: { name: "calculator", id: emojis.calculator },
               })
             : null,
           this.viewbtn(
