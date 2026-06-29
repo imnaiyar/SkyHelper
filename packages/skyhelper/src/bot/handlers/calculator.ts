@@ -15,6 +15,7 @@ const MAX_WEEKLY_AC = 15.75;
 
 const withEmojiCount = (count: number, emoji: string) => `${count} ${Utils.formatEmoji(emoji)}`;
 
+// #region handler
 export async function handleCalculatorModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction,
     client = helper.client;
@@ -23,11 +24,12 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
   await (helper.int.message ? helper.deferUpdate() : helper.defer());
 
   const [_, type = "c", guid = ""] = int.data.custom_id.split(";");
-  const current = Number(client.utils.getModalComponent(int, "input_have", ComponentType.TextInput, true).value);
+  const rawCurrent = client.utils.getModalComponent(int, "input_have", ComponentType.TextInput, true).value;
+  const current = Number(rawCurrent);
   const checkboxes = client.utils.getModalComponent(int, "checkboxes", ComponentType.CheckboxGroup)?.values;
 
   if (Number.isNaN(current)) {
-    await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: current }));
+    await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: rawCurrent }));
     return;
   }
 
@@ -71,10 +73,12 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
       break;
     }
     case "ac": {
-      const target = Number(client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value);
+      const rawTarget = client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value;
+
+      const target = Number(rawTarget);
 
       if (Number.isNaN(target)) {
-        await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: target }));
+        await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: rawTarget }));
         return;
       }
 
@@ -234,7 +238,7 @@ export function calculateAscendedCandles(
 
     // reset to zero if already cleared for todays shard
     if (daysPassed === 0 && shardsCleared) dailyShard = 0;
-    else shardCount++;
+    else if (dailyShard) shardCount++;
 
     // Update Accumulators
     accWeekly += dailyWeekly;
@@ -265,7 +269,9 @@ export function calculateAscendedCandles(
     }
 
     daysPassed++;
-    simDate = simDate.plus({ days: 1 });
+
+    // reset to start of the after current date so time sensitive calculation like shards would be accurate
+    simDate = simDate.plus({ days: 1 }).startOf("day");
   }
 
   return {

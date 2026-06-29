@@ -138,7 +138,7 @@ export class ShardsUtil {
   }
 
   /**
-   * Get the next occuring black/red shard from the given date;
+   * Get the next occuring black/red shard timing for the given date;
    * @param shardType The type of shard to get the next occuring shard for
    * @returns the shard details or null if no shard is found
    */
@@ -166,7 +166,7 @@ export class ShardsUtil {
   }
 
   /**
-   * Get the next occuring shard from the given date
+   * Get the next occuring shard timing from today
    * @param shardType The type of shard to get the next occuring shard for
    * @returns an upcoming shard relative from now
    */
