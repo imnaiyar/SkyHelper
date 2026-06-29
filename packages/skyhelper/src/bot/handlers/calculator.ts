@@ -1,46 +1,73 @@
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { zone } from "@skyhelperbot/constants";
+import { startSeasonCalculator } from "@/handlers/season-calculator";
+import Utils from "@/utils/classes/Utils";
+import { fallbackResponse } from "@/utils/interactions";
+import { currency, zone } from "@skyhelperbot/constants";
 import { container, separator, ShardsUtil, textDisplay } from "@skyhelperbot/utils";
 import { ComponentType, MessageFlags, type APIContainerComponent, type APIModalSubmitInteraction } from "discord-api-types/v10";
 import { DateTime } from "luxon";
 const BASE_DAILY_CANDLES = 15;
 const MAX_DAILY_CANDLES = 21;
-const MAX_DAILY_SC = 5;
+const DAILY_QUESTS_CANDLES = 4;
 const MAX_WEEKLY_AC = 15.75;
+
+const withEmojiCount = (count: number, emoji: string) => `${count} ${Utils.formatEmoji(emoji)}`;
 
 export async function handleCalculatorModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction,
     client = helper.client;
-  await helper.defer({ flags: 64 });
-  const [_, type = "c", guid = ""] = int.data.custom_id.split(";");
-  const current = client.utils.getModalComponent(int, "input_have", ComponentType.TextInput, true).value;
-  const checkboxes = client.utils.getModalComponent(int, "checkboxes", ComponentType.CheckboxGroupAction)?.values;
+  await helper.defer();
 
-  let component: APIContainerComponent;
+  const [_, type = "c", guid = ""] = int.data.custom_id.split(";");
+  const current = Number(client.utils.getModalComponent(int, "input_have", ComponentType.TextInput, true).value);
+  const checkboxes = client.utils.getModalComponent(int, "checkboxes", ComponentType.CheckboxGroup)?.values;
+
+  if (Number.isNaN(current)) {
+    await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: current }));
+    return;
+  }
+  let component: APIContainerComponent = container(textDisplay("Sorry this feature is not implemented yet!"));
+
   switch (type) {
     case "c": {
-      const target = client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value;
+      const target = Number(client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value);
 
-      const { daysWithBase, daysWithBaseQuests, daysWithMax, daysWithMaxQuests } =
-        calculateCandles(Number(current), Number(target)) ?? {};
+      if (Number.isNaN(target)) {
+        await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: target }));
+        return;
+      }
+
+      const { daysWithBase, daysWithBaseQuests, daysWithMax, daysWithMaxQuests } = calculateCandles(current, target);
 
       component = container(
-        textDisplay(`Your Current Candles: ${current}`, `Target Candle Needed: ${target}`),
+        textDisplay(
+          `## ${helper.t("features:calculator.CANDLE")} ${Utils.formatEmoji(currency.c)}`,
+          helper.t("features:calculator.CANDLES_HEADER", {
+            current: withEmojiCount(current, currency.c),
+            target: withEmojiCount(target, currency.c),
+            total: withEmojiCount(target - current, currency.c),
+          }),
+        ),
         separator(),
         textDisplay(
-          `### Days Needed to get the target candles?`,
-          `**If you collect candles upto:**`,
-          `- 3 Chevrons (15 Candles): It'll take you \`${daysWithBase ?? 0}\` days.`,
-          `- Until gray (21 candles): It'll take you \`${daysWithMax ?? 0}\` days.`,
-          "**Assuming you can also get candles from daily quests and there are no season in between**:",
-          `- 3 Chevron: \`${daysWithBaseQuests ?? 0}\` days`,
-          `- Until gray: \`${daysWithMaxQuests ?? 0}\` days`,
+          helper.t("features:calculator.NORMAL_CANDLES_RESULT", {
+            daysWithBase,
+            daysWithMax,
+            daysWithBaseQuests,
+            daysWithMaxQuests,
+          }),
         ),
       );
       break;
     }
     case "ac": {
-      const target = client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value;
+      const target = Number(client.utils.getModalComponent(int, "input_need", ComponentType.TextInput, true).value);
+
+      if (Number.isNaN(target)) {
+        await fallbackResponse(helper, helper.t("errors:NOT_A_NUMBER", { VALUE: target }));
+        return;
+      }
+
       const {
         daysWithWeeklyOnly,
         daysCombined,
@@ -51,47 +78,62 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
         edenCount,
         edenCountCombined,
       } = calculateAscendedCandles(
-        Number(current),
-        Number(target),
+        current,
+        target,
         checkboxes?.includes("weekly") ?? false,
         checkboxes?.includes("today_shard") ?? false,
       );
 
+      const acEmoji = Utils.formatEmoji(currency.ac);
       component = container(
-        textDisplay(`## Your Current ACs: ${current}`, `Target ACs Needed: ${target}`, `Total neede \`${target - current}\` ACs`),
-        separator(),
         textDisplay(
-          `### Days Needed to get the target ascended candles?`,
-          `**If you do:**`,
-          `- Only eden weekly: It'll take \`${daysWithWeeklyOnly}\` days`,
-          `  -# - There will be total ${edenCount} eden resets giving you: \`${MAX_WEEKLY_AC} × ${edenCount} = ${MAX_WEEKLY_AC * edenCount} AC\``,
-          `- Eden + All red shards: It'll take \`${daysCombined}\` days`,
-          `  -# - There will be total \`${shardCountCombined}\` shards giving you \`${shardCountCombinedAc}\` ACs and total ${edenCountCombined} eden resets giving you \`${MAX_WEEKLY_AC} × ${edenCountCombined} = ${MAX_WEEKLY_AC * edenCountCombined} AC\`.`,
-          `  -# - Total: \`${shardCountCombinedAc} + ${MAX_WEEKLY_AC * edenCountCombined} = ${shardCountCombinedAc + MAX_WEEKLY_AC * edenCountCombined} AC\``,
-          `- Red Shards only: It'll take \`${daysWithShardOnly}\``,
-          `  -# - Assuming you complete all shard events, you'll have to do a sum total of \`${shardCountOnly}\` red shards`,
+          `## ${helper.t("features:calculator.AC")} ${acEmoji}`,
+          helper.t("features:calculator.CANDLES_HEADER", {
+            current: withEmojiCount(current, currency.ac),
+            target: withEmojiCount(target, currency.ac),
+            total: withEmojiCount(target - current, currency.ac),
+          }),
         ),
         separator(),
         textDisplay(
-          `-# Disclaimer: Shard rewards are calculated based on normal shard schedule. Shard schedule may change due to ongoing events resulting in varying rewards. Please verify in-game.`,
+          helper.t("features:calculator.AC_RESULT", {
+            daysWithWeeklyOnly,
+            daysWithShardOnly,
+            edenCount,
+            edenTotal: `\`${MAX_WEEKLY_AC} × ${edenCount} = ${MAX_WEEKLY_AC * edenCount}\` ${acEmoji}`,
+            daysCombined,
+            edenCountCombined,
+            edenCombinedTotal: `\`${MAX_WEEKLY_AC} × ${edenCountCombined} = ${MAX_WEEKLY_AC * edenCountCombined}\` ${acEmoji}`,
+            shardCountCombined,
+            shardCountCombinedAc,
+            combinedTotal: `\`${shardCountCombinedAc} + ${MAX_WEEKLY_AC * edenCountCombined} = ${shardCountCombinedAc + MAX_WEEKLY_AC * edenCountCombined}\` ${acEmoji}`,
+            shardCountOnly,
+          }),
         ),
+        separator(),
+        textDisplay(`-# ${helper.t("features:calculator.SHARD_DISCLAIMER")}`),
       );
       break;
     }
     case "sc": {
-      break;
+      await startSeasonCalculator(helper, current, checkboxes ?? [], guid);
+      return;
     }
   }
   await helper.editReply({ components: [component], flags: MessageFlags.IsComponentsV2 });
 }
 
 // #region Candles
-function calculateCandles(current: number, target: number, dailiesDone = false) {
+function calculateCandles(current: number, target: number) {
   const required = target - current;
-  if (required <= 0) return null;
+  if (required <= 0) return { daysWithBase: 0, daysWithBaseQuests: 0, daysWithMax: 0, daysWithMaxQuests: 0 };
 
-  const [daysWithBase, daysWithBaseQuests] = [BASE_DAILY_CANDLES, BASE_DAILY_CANDLES + 4].map((num) => Math.ceil(required / num));
-  const [daysWithMax, daysWithMaxQuests] = [MAX_DAILY_CANDLES, MAX_DAILY_CANDLES + 4].map((num) => Math.ceil(required / num));
+  const [daysWithBase, daysWithBaseQuests] = [BASE_DAILY_CANDLES, BASE_DAILY_CANDLES + DAILY_QUESTS_CANDLES].map((num) =>
+    Math.ceil(required / num),
+  ) as [number, number];
+  const [daysWithMax, daysWithMaxQuests] = [MAX_DAILY_CANDLES, MAX_DAILY_CANDLES + DAILY_QUESTS_CANDLES].map((num) =>
+    Math.ceil(required / num),
+  ) as [number, number];
 
   return {
     daysWithBase,

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SkyHelper"
+  short_description: "Work effectively in the SkyHelper bot repo"
+  default_prompt: "Use $skyhelper to modify the SkyHelper Discord bot."

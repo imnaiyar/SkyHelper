@@ -33,6 +33,7 @@ export enum CustomId {
   PlannerFilters,
   PlannerSelectNav,
   PlannerActions,
+  SeasonCalculator,
 }
 
 export const store = new SchemaStore()
@@ -91,4 +92,7 @@ export const store = new SchemaStore()
       // serialized navigation state to refresh after action
       .nullable("navState", t.string)
       .nullable("user", t.string),
+  )
+  .add(
+    new Schema(CustomId.SeasonCalculator).string("action").string("key").nullable("tree", t.string).nullable("user", t.string),
   );

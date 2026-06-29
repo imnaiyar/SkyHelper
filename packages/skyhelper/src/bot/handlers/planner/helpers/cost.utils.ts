@@ -1,5 +1,6 @@
 import { currency } from "@skyhelperbot/constants";
 import { SpiritTreeHelper, type ICost, type INode, type ISkyData, type ISpiritTree, type ISpiritTreeTier } from "skygame-data";
+import { keyof } from "zod/v4";
 
 const Empty_Cost = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
 export class CostUtils {
@@ -23,30 +24,37 @@ export class CostUtils {
 
   /** Calculate total costs of given nodes, returning the cost object */
   static calculateCosts(nodes: INode[]): NonNullable<ICost> {
-    return nodes.reduce((acc, node) => {
-      Object.keys(acc).forEach((k) => ((acc as any)[k] += (node as any)[k] ?? 0));
-      return acc;
-    }, { ...Empty_Cost });
+    return nodes.reduce(
+      (acc, node) => {
+        Object.keys(acc).forEach((k) => ((acc as any)[k] += (node as any)[k] ?? 0));
+        return acc;
+      },
+      { ...Empty_Cost },
+    );
   }
 
   /** Calcualte the combined remaining cost of the nodes based on progress */
   static calculateRemainingCosts(nodes: INode[]) {
-    return nodes.reduce((acc, node) => {
-      if (!(node.item?.unlocked ?? false)) {
-        Object.keys(acc).forEach((k) => ((acc as any)[k] += (node as any)[k] ?? 0));
-      }
-      return acc;
-    }, { ...Empty_Cost });
-
+    return nodes.reduce(
+      (acc, node) => {
+        if (!(node.item?.unlocked ?? false)) {
+          Object.keys(acc).forEach((k) => ((acc as any)[k] += (node as any)[k] ?? 0));
+        }
+        return acc;
+      },
+      { ...Empty_Cost },
+    );
   }
 
   /**
    * Returns to formatted cost of all the nodes in the spirit tree
    * @param tree The spirit tree
+   * @param excludedCurrencies The type of currencies excluded from the final calculations
    * @param withProgress Whether to also include remaining cost
    */
-  static treeToCostEmoji(tree: ISpiritTree, withProgress = false) {
-    const nodes = SpiritTreeHelper.getNodes(tree);
+  static treeToCostEmoji(tree: ISpiritTree, excludedCurrencies: Array<keyof ICost> = [], withProgress = false) {
+    const nodes = SpiritTreeHelper.getNodes(tree).filter((node) => !excludedCurrencies.some((c) => node[c]));
+
     return this.costToEmoji(this.calculateCosts(nodes), withProgress ? this.calculateRemainingCosts(nodes) : undefined);
   }
 

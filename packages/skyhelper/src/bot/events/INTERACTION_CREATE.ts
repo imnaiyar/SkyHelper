@@ -37,6 +37,7 @@ import { fetchSkyData, handlePlannerNavigation, PlannerDataService, PlannerServi
 import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 import { handleCalculatorModal } from "@/handlers/calculator";
+import { handleSeasonCalculatorButton } from "@/handlers/season-calculator";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -310,6 +311,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           ],
         };
         await helper.launchModal(modal);
+        return;
+      }
+
+      if (id === CustomId.SeasonCalculator) {
+        await handleSeasonCalculatorButton(helper, data as any, interaction);
         return;
       }
 

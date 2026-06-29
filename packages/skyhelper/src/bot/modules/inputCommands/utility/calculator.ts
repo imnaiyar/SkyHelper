@@ -30,7 +30,7 @@ function getCandlesModal(
 ): APIModalInteractionResponseCallbackData {
   const activeSeason = PlannerService.getCurrentSeason(skyData);
 
-  const currentValue = getCurrencyValue(type, settings.plannerData);
+  const currentValue = getCurrencyValue(type, settings.plannerData, activeSeason?.guid);
   const checkboxes = buildCheckboxes(type, settings, activeSeason);
 
   return {
@@ -82,7 +82,7 @@ function getCandlesModal(
   };
 }
 
-function getCurrencyValue(type: CandleType, data: UserSchema["plannerData"]): number {
+function getCurrencyValue(type: CandleType, data: UserSchema["plannerData"], seasonGuid?: string): number {
   const currencies = data?.currencies;
   if (!currencies) return 0;
 
@@ -93,9 +93,7 @@ function getCurrencyValue(type: CandleType, data: UserSchema["plannerData"]): nu
       return currencies.ascendedCandles;
     case "sc": {
       const seasonCurrencies = currencies.seasonCurrencies;
-
-      const firstSeason = Object.values(seasonCurrencies)[0];
-      return firstSeason?.candles ?? 0;
+      return seasonCurrencies[seasonGuid ?? ""]?.candles ?? 0;
     }
   }
 }
@@ -116,7 +114,7 @@ function buildCheckboxes(
       default: PlannerDataService.hasDoneDailies(
         settings.plannerData,
         activeSeason?.guid ?? "",
-        type === "c" ? "season" : "dailies",
+        type === "sc" ? "season" : "dailies",
       ),
     });
   }
@@ -132,7 +130,7 @@ function buildCheckboxes(
   if (type === "ac") {
     checkboxes.push({ label: "Have you done Eden this week?", value: "weekly" });
     const shard = ShardsUtil.getShard(DateTime.now().setZone(zone));
-    if (shard && shard.type === "red") {
+    if (shard && shard.info.type === "red") {
       checkboxes.push({
         label: "Have you cleared today's shard?",
         value: "today_shard",
