@@ -53,7 +53,7 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
 
       component = container(
         textDisplay(
-          `## ${helper.t("features:calculator.CANDLE")} ${Utils.formatEmoji(currency.c)}`,
+          `## ${helper.t("CANDLE")} ${Utils.formatEmoji(currency.c)}`,
           helper.t("features:calculator.CANDLES_HEADER", {
             current: withEmojiCount(current, currency.c),
             target: withEmojiCount(target, currency.c),
@@ -101,7 +101,7 @@ export async function handleCalculatorModal(helper: InteractionHelper) {
       const acEmoji = Utils.formatEmoji(currency.ac);
       component = container(
         textDisplay(
-          `## ${helper.t("features:calculator.AC")} ${acEmoji}`,
+          `## ${helper.t("AC")} ${acEmoji}`,
           helper.t("features:calculator.CANDLES_HEADER", {
             current: withEmojiCount(current, currency.ac),
             target: withEmojiCount(target, currency.ac),

@@ -26,7 +26,7 @@ export default defineButton({
     // button redirect to season calculator from a season display page in planner
     if (data === "calculator-season") {
       const [settings, skyData] = await Promise.all([helper.client.schemas.getUser(helper.user), fetchSkyData(helper.client)]);
-      await helper.launchModal(getCandlesModal("sc", settings, skyData));
+      await helper.launchModal(getCandlesModal("sc", settings, skyData, t));
     }
   },
 });

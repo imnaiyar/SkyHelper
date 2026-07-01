@@ -131,7 +131,7 @@ function renderSeasonCalculator(
   const selectedNodes = getSelectedNodes(data, state);
   const selectedTotal = selectedNodes.reduce((total, node) => total + (node.sc ?? 0), 0);
 
-  const headerDisplay = `## ${helper.t("features:calculator.SC")} ${Utils.formatEmoji(currency.sc)}
+  const headerDisplay = `## ${helper.t("SC")} ${Utils.formatEmoji(currency.sc)}
 **${formatEmoji(season.emoji, season.shortName)} ${season.name}**
 ${helper.t("features:calculator.SEASON_SELECTOR_HEADER", {
   current: formatSeasonCandles(state.currentCandles),
@@ -207,7 +207,7 @@ function renderSeasonResult(
 
   return container(
     textDisplay(
-      `## ${helper.t("features:calculator.SC")} ${Utils.formatEmoji(currency.sc)}`,
+      `## ${helper.t("SC")} ${Utils.formatEmoji(currency.sc)}`,
       `**${formatEmoji(season.emoji, season.shortName)} ${season.name}**`,
       helper.t("features:calculator.SEASON_RESULT", {
         current: formatSeasonCandles(state.currentCandles),
