@@ -59,7 +59,7 @@
     "discord-api-types": "latest",
     "express": "^4.22.0",
     "i18next": "^24.2.1",
-    "i18next-fs-backend": "^2.6.4",
+    "i18next-fs-backend": "^2.6.6",
     "luxon": "^3.5.0",
     "mongoose": "^8.22.1",
     "nanoid": "^5.1.6",
