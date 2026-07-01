@@ -132,9 +132,6 @@
     "NORMAL_CANDLES_RESULT": "### Days Needed to get the target candles?\n**If you collect candles upto:**\n- 3 Chevrons (15 Candles): It'll take you `{{daysWithBase}}` days.\n- Until gray (21 candles): It'll take you `{{daysWithMax}}` days.\n**Assuming you can also get candles from daily quests and there are no season in between**:\n- 3 Chevron: `{{daysWithBaseQuests}}` days\n- Until gray: `{{daysWithMaxQuests}}` days",
     "AC_RESULT": "### Days Needed to get the target ascended candles?\n**If you do:**\n- Only eden weekly: It'll take `{{daysWithWeeklyOnly}}` days\n  -# - There will be total `{{edenCount}}` eden resets giving you: {{edenTotal}}\n- Eden + All red shards: It'll take `{{daysCombined}}` days\n  -# - There will be total `{{shardCountCombined}}` shards giving you {{shardCountCombinedAc}} and total {{edenCountCombined}} eden resets giving you {{edenCombinedTotal}}.\n  -# - Total: {{combinedTotal}}\n- Red Shards only: It'll take `{{daysWithShardOnly}}` days\n  -# - Assuming you complete all shard events, you'll have to do a sum total of `{{shardCountOnly}}` red shards",
     "SHARD_DISCLAIMER": "Disclaimer: Shard rewards are calculated based on normal shard schedule. Shard schedule may change due to ongoing events resulting in varying rewards. Please verify in-game.",
-    "CANDLE": "Regular Candle",
-    "SC": "Seasonal Candle",
-    "AC": "Ascended Candle",
     "SEASON_NO_ACTIVE": "No season is currently active.",
     "SEASON_STATE_EXPIRED": "This season calculator session has expired. Please run the calculator again.",
     "SEASON_TREE_MISSING": "Could not find that season tree.",
@@ -142,6 +139,11 @@
     "SEASON_NO_ITEMS_SELECTED": "No items selected",
     "SEASON_RESULT": "Current candles: {{current}}\nSelected item total: {{selected}}\nRemaining candles needed: {{remaining}}\nDaily rate: {{daily}} seasonal candles\nDays needed: `{{days}}`\nDays left this season: `{{daysLeft}}` (ends {{end}})\n{{status}}",
     "SEASON_RESULT_CAN_FINISH": "You can get enough seasonal candles before the season ends.",
-    "SEASON_RESULT_CANNOT_FINISH": "You cannot get enough seasonal candles before the season ends at this rate."
+    "SEASON_RESULT_CANNOT_FINISH": "You cannot get enough seasonal candles before the season ends at this rate.",
+    "PREFILLED": "The following values may have been pre-filled based on your planner data. If they are inaccurate, provide the correct values.",
+    "CANDLE_AMOUNT": "Enter the amount of candle(s) you currently have!",
+    "CANDLE_NEEDED": "Enter the amount of candle(s) you need!",
+    "CURRENT_C": "Current Candle(s)",
+    "TARGET_C": "Target Candle(s)"
   }
 }
