@@ -31,5 +31,6 @@
         "LABEL": "ID del bug"
       }
     }
-  }
+  },
+  "NOT_A_NUMBER": "El valor proporcionado no es un número, por favor ingrese un número válido; valor proporcionado: {{VALUE}}"
 }

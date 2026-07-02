@@ -440,5 +440,13 @@
         "delete": "Delete Data"
       }
     }
+  },
+  "CALCULATOR": {
+    "name": "電卓|計算ツール",
+    "description": "定期的な季節のロウソクを計算し",
+    "options.candle-type": {
+      "name": "キャンドルタイプ",
+      "description": "計算するろうそくの種類を選択します"
+    }
   }
 }

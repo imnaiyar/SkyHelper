@@ -125,5 +125,24 @@
   "utils": {
     "TIMEOUT": "Не получено никакого ответа. Отмена...",
     "NO_CHANGELOG": "Извините! Список изменений для этой версии не найден. Пожалуйста, повторите попытку позже"
+  },
+  "calculator": {
+    "CANDLES_HEADER": "Ваши текущие свечи: {{current}}\nЦелевые свечи: {{target}}\nНеобходимые свечи: {{total}}",
+    "NORMAL_CANDLES_RESULT": "### Нужно дней, чтобы получить целевые свечи?\n**Если вы собираете свечи вверх:**\n- 3 Chevrons (15 свечений): Это займет у вас `{{daysWithBase}}дней.\n- До серой (21 свечка): Она займет вас `{{daysWithMax}}дня.\n**Предположим, что вы можете получать свечи от ежедневных заданий, а сезона между ними нет**:\n- 3 Chevron: `{{daysWithBaseQuests}}` дней\n- До серых дней: `{{daysWithMaxQuests}}` дней",
+    "AC_RESULT": "### Нужно дней, чтобы получить целевые свечи?\n**Если вы делаете:**\n- Только еженедельно: это займет `{{daysWithWeeklyOnly}}` дней\n  -# - Всего будет `{{edenCount}}` рефераты, дающие вам результат: {{edenTotal}}\n- Eden + все красные осколки: это займет `{{daysCombined}}` дней\n  -# - Всего будет ` осколков{{shardCountCombined}}`, дающих вам {{shardCountCombinedAc}} и всего {{edenCountCombined}} рефератов, дающих вам {{edenCombinedTotal}}.\n  -# - Всего: {{combinedTotal}}\n- Только красные осколки: это займет `{{daysWithShardOnly}}` дней\n  -# - Предполагается, что вы завершите все осколки событий, сумма красных осколков{{shardCountOnly}}будет равна сумме",
+    "SHARD_DISCLAIMER": "Отказ от ответственности: Вознаграждения за фрагмент рассчитываются в зависимости от нормального графика шарда. График шарда может быть изменен из-за текущих событий, в результате чего различные награды. Пожалуйста, проверьте в игре.",
+    "SEASON_NO_ACTIVE": "В настоящее время нет активности.",
+    "SEASON_STATE_EXPIRED": "Сессия этого сезона истекла. Пожалуйста, запустите калькулятор снова.",
+    "SEASON_TREE_MISSING": "Не удалось найти это дерево сезона.",
+    "SEASON_SELECTOR_HEADER": "Текущие свечи: {{current}}\nВыбранный предмет: {{selected}}\nСезон заканчивается {{end}}",
+    "SEASON_NO_ITEMS_SELECTED": "Элементы не выбраны",
+    "SEASON_RESULT": "Текущие свечи: {{current}}\nВыбранный предмет всего: {{selected}}\nОстающиеся свечи: {{remaining}}\nЕжедневная скорость: {{daily}} сезонных свечей\nНеобходимые: `{{days}}`\nДней осталось в этом сезоне: `{{daysLeft}}` (заканчивается {{end}})\n{{status}}",
+    "SEASON_RESULT_CAN_FINISH": "Вы можете получить достаточное количество сезонных свечей до окончания сезона.",
+    "SEASON_RESULT_CANNOT_FINISH": "Вы не можете получить достаточное количество сезонных свечей до окончания сезона по этой ставке.",
+    "PREFILLED": "The following values may have been pre-filled based on your planner data. If they are inaccurate, provide the correct values.",
+    "CANDLE_AMOUNT": "Enter the amount of candle(s) you currently have!",
+    "CANDLE_NEEDED": "Enter the amount of candle(s) you need!",
+    "CURRENT_C": "Current Candle(s)",
+    "TARGET_C": "Target Candle(s)"
   }
 }
