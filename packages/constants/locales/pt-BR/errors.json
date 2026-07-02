@@ -31,5 +31,6 @@
         "LABEL": "ID do erro"
       }
     }
-  }
+  },
+  "NOT_A_NUMBER": "O valor fornecido não é um número, por favor forneça um número válido; valor fornecido: {{VALUE}}"
 }

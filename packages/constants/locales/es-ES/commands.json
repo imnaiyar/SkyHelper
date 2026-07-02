@@ -440,5 +440,13 @@
         "delete": "Eliminar datos"
       }
     }
+  },
+  "CALCULATOR": {
+    "name": "calculadora",
+    "description": "calcular velas regulares, estacionales y ascendidas",
+    "options.candle-type": {
+      "name": "tipo de vela",
+      "description": "seleccione el tipo de vela a calcular"
+    }
   }
 }

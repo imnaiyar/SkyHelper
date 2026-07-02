@@ -125,5 +125,24 @@
   "utils": {
     "TIMEOUT": "Não recebeu nenhuma resposta. Cancelando...",
     "NO_CHANGELOG": "Desculpe! Nenhum registro de alterações foi encontrado para esta versão. Por favor, tente novamente mais tarde"
+  },
+  "calculator": {
+    "CANDLES_HEADER": "Suas velas atuais: {{current}}\nNordas Alvo: {{target}}\nTotal de velas necessárias: {{total}}",
+    "NORMAL_CANDLES_RESULT": "### Days Needed to get the target candles?\n**If you collect candles upto:**\n- 3 Chevrons (15 Candles): It'll take you `{{daysWithBase}}` days.\n- Until gray (21 candles): It'll take you `{{daysWithMax}}` days.\n**Assuming you can also get candles from daily quests and there are no season in between**:\n- 3 Chevron: `{{daysWithBaseQuests}}` days\n- Until gray: `{{daysWithMaxQuests}}` days",
+    "AC_RESULT": "### Dias Necessários para obter as velas ascendidas pelo alvo?\n**Se você fazer:**\n- Apenas semanalmente: Vai levar `{{daysWithWeeklyOnly}}` dias\n  -# - Haverá um total `{{edenCount}}` eden redefine o que te dando: {{edenTotal}}\n- Eden + Todos os fragmentos vermelhos: Vai levar `{{daysCombined}}` dias\n  -# - Haverá um total de `{{shardCountCombined}}` fragmentos te dando um total de {{shardCountCombinedAc}} e um total de {{edenCountCombined}} resets de {{edenCombinedTotal}}.\n  -# - Total: {{combinedTotal}}\n- Apenas Fragmentos Vermelhos: Vai levar `{{daysWithShardOnly}}` dias\n  -# - Assumindo que você complete todos os eventos de fragmento, você terá que fazer uma soma total de `{{shardCountOnly}}`fragmentos vermelhos",
+    "SHARD_DISCLAIMER": "Aviso: As recompensas de fragmentos são calculadas com base na agenda de fragmentos normal. O cronograma de fragmentos pode mudar devido a eventos em curso, resultando em recompensas variadas. Por favor, verifique em jogo.",
+    "SEASON_NO_ACTIVE": "Nenhuma temporada está ativa no momento.",
+    "SEASON_STATE_EXPIRED": "Esta sessão de calculadora da temporada expirou. Por favor, execute a calculadora novamente.",
+    "SEASON_TREE_MISSING": "Não foi possível encontrar aquela árvore de estação.",
+    "SEASON_SELECTOR_HEADER": "Balas atuais: {{current}}\nTotal do item: {{selected}}\nFim da temporada {{end}}",
+    "SEASON_NO_ITEMS_SELECTED": "Nenhum item selecionado",
+    "SEASON_RESULT": "Vapas atuais: {{current}}\nTotal do item: {{selected}}\nVelas restantes necessárias: {{remaining}}\nTaxa Diária: {{daily}} Velas sazonais\nDias necessários: `{{days}}`\nDias restantes esta temporada: `{{daysLeft}}` (termina {{end}})\n{{status}}",
+    "SEASON_RESULT_CAN_FINISH": "Você pode ter velas sazonais suficientes antes do fim da temporada.",
+    "SEASON_RESULT_CANNOT_FINISH": "Não é possível obter velas sazonais suficientes antes que a temporada termine a esse ritmo.",
+    "PREFILLED": "The following values may have been pre-filled based on your planner data. If they are inaccurate, provide the correct values.",
+    "CANDLE_AMOUNT": "Enter the amount of candle(s) you currently have!",
+    "CANDLE_NEEDED": "Enter the amount of candle(s) you need!",
+    "CURRENT_C": "Current Candle(s)",
+    "TARGET_C": "Target Candle(s)"
   }
 }
