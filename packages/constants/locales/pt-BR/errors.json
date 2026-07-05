@@ -31,5 +31,6 @@
         "LABEL": "ID do erro"
       }
     }
-  }
+  },
+  "NOT_A_NUMBER": "O valor informado não é um número. Informe um número válido. Valor informado: {{VALUE}}"
 }

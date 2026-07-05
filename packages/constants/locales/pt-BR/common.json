@@ -23,5 +23,17 @@
   "hide-options": {
     "name": "ocultar",
     "description": "oculta a resposta"
-  }
+  },
+  "SELECT_ALL": "Selecionar tudo que se aplica!",
+  "DAILIES_COMPLETE_Q": "Você completou suas missões diárias hoje?",
+  "SEASON_PASS_Q": "Você tem o passe da temporada?",
+  "EDEN_COMPLETED_Q": "Você fez o Éden esta semana?",
+  "SHARD_COMPLETED_Q": "Você fez o fragmento de hoje?",
+  "SYNC_PLANNER": "Sincronizar com o planejador?",
+  "SYNC_INFO": "Os dados informados aqui serão usados para sincronizar ou atualizar suas velas, corações e Passe da Temporada com os dados do Planejador.",
+  "CANDLE": "Vela",
+  "SC": "Vela Sazonal",
+  "AC": "Vela Ascendida",
+  "HEART": "Coração",
+  "SH": "Coração Sazonal"
 }

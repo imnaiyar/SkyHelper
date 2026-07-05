@@ -68,7 +68,7 @@
     "GAME_ACTIVE": "Já há uma partida em andamento neste canal. Aguarde ela terminar ou use outro canal!",
     "DOUBLE_MODE_GUILD": "O modo duplo só pode ser jogado em servidores dos quais eu faço parte.",
     "CUSTOM_WORD_DISALLOWED": "Palavras personalizadas não são permitidas no modo jogador único.",
-    "INSTRUCTIONS_BASE": "**Aqui estão algumas coisas que você pode ter em mente durante o jogo!**\n- Você terá 30 segundos para responder a cada rodada. Cada tentativa (ou falta de dentro do tempo especificado) vai contar como uma resposta errada.\n- Se você acha que sabe a palavra completa, você pode digitá-la assim (como `Velas Ascendidas`).\n- O iniciador do jogo pode parar o jogo a qualquer momento digitando `>parar` no canal. Somente jogos acabados contarão para a tabela de classificação.",
+    "INSTRUCTIONS_BASE": "**Aqui estão algumas coisas que você pode ter em mente durante o jogo!**\n- Você terá 30 segundos para responder a cada rodada. Cada tentativa (ou falta de dentro do tempo especificado) vai contar como uma resposta errada.\n- Se você acha que sabe a palavra completa, você pode digitá-la assim (como `Ascended Candles`).\n- O iniciador do jogo pode parar o jogo a qualquer momento digitando `>stopgame` no canal. Somente jogos acabados contarão para a tabela de classificação.",
     "INSTRUCTIONS_SINGLE": "Cada resposta errada custará vidas. A incorporação mostrará quantas vidas você partiu. Você vai perder se não conseguir adivinhar a palavra corretamente antes que suas vidas acabem.",
     "INSTRUCTIONS_DOUBLE": "Cada jogador vai responder, escolhendo aleatoriamente para a primeira rodada, o jogador que adivinhar corretamente ficará na rodada até que ele adivinhe incorretamente (ou não faça isso dentro do tempo), a rodada irá passar para a próxima pessoa. Quem adivinhar a palavra primeiro ganha.",
     "NO_LEADERBOARD_DATA": "Opa! Parece que nenhum dado está disponível para este tipo. Comece a jogar para ficar no quadro de classificações!",
@@ -125,5 +125,24 @@
   "utils": {
     "TIMEOUT": "Não recebeu nenhuma resposta. Cancelando...",
     "NO_CHANGELOG": "Desculpe! Nenhum registro de alterações foi encontrado para esta versão. Por favor, tente novamente mais tarde"
+  },
+  "calculator": {
+    "CANDLES_HEADER": "Velas atuais: {{current}}\nVelas desejadas: {{target}}\nTotal de velas necessárias: {{total}}",
+    "NORMAL_CANDLES_RESULT": "### Quantos dias são necessários para alcançar a quantidade desejada de velas?\n**Se você coletar velas até:**\n- 3 Chevrons (15 velas): levará `{{daysWithBase}}` dias.\n- Até cinzar (21 velas): levará `{{daysWithMax}}` dias.\n**Considerando que você também faça as missões diárias e que não haja nenhuma temporada nesse período**:\n- 3 Chevron: `{{daysWithBaseQuests}}` dias.\n- Até cinzar: `{{daysWithMaxQuests}}` dias.",
+    "AC_RESULT": "### Quantos dias são necessários para alcançar a quantidade desejada de Velas Ascendidas?\n**Se você fizer:**\n- Apenas o Éden semanal: levará `{{daysWithWeeklyOnly}}` dias.\n  -# - Serão `{{edenCount}}` resets do Éden, rendendo {{edenTotal}}.\n- Éden + todos os Fragmentos Vermelhos: levará `{{daysCombined}}` dias.\n  -# - Serão `{{shardCountCombined}}` Fragmentos Vermelhos, rendendo {{shardCountCombinedAc}}, além de {{edenCountCombined}} resets do Éden, rendendo {{edenCombinedTotal}}.\n  -# - Total: {{combinedTotal}}.\n- Apenas Fragmentos Vermelhos: levará `{{daysWithShardOnly}}` dias.\n  -# - Considerando que você complete todos os eventos de Fragmentos Vermelhos, será necessário concluir `{{shardCountOnly}}` no total.",
+    "SHARD_DISCLAIMER": "Aviso: As recompensas dos Fragmentos são calculadas com base no cronograma normal. Esse cronograma pode mudar devido a eventos em andamento, fazendo com que as recompensas variem. Confira as informações no jogo para confirmar.",
+    "SEASON_NO_ACTIVE": "Sem temporada por enquanto.",
+    "SEASON_STATE_EXPIRED": "Parece que essa temporada acabou... digo, a sessão da calculadora. Execute-a novamente.",
+    "SEASON_TREE_MISSING": "Não foi possível encontrar essa árvore da temporada.",
+    "SEASON_SELECTOR_HEADER": "Velas atuais: {{current}}\nTotal dos itens selecionados: {{selected}}\nA temporada termina {{end}}",
+    "SEASON_NO_ITEMS_SELECTED": "Nenhum item selecionado",
+    "SEASON_RESULT": "Velas atuais: {{current}}\nTotal dos itens selecionados: {{selected}}\nVelas restantes: {{remaining}}\nGanho diário: {{daily}} velas sazonais\nDias necessários: `{{days}}`\nDias restantes da temporada: `{{daysLeft}}` (termina {{end}})\n{{status}}",
+    "SEASON_RESULT_CAN_FINISH": "Você consegue juntar velas sazonais suficientes antes da temporada acabar.",
+    "SEASON_RESULT_CANNOT_FINISH": "Nesse ritmo, você não conseguirá juntar velas sazonais suficientes antes do fim da temporada.",
+    "PREFILLED": "Os valores abaixo podem ter sido preenchidos automaticamente com base nos dados do seu Planejador. Se algum deles estiver incorreto, informe os valores corretos.",
+    "CANDLE_AMOUNT": "Digite a quantidade de velas que você tem atualmente!",
+    "CANDLE_NEEDED": "Digite a quantidade de velas de que você precisa!",
+    "CURRENT_C": "Velas Atuais",
+    "TARGET_C": "Objetivo de Velas"
   }
 }
