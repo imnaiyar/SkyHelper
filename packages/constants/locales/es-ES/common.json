@@ -23,5 +23,17 @@
   "hide-options": {
     "name": "ocultar",
     "description": "ocultar la respuesta"
-  }
+  },
+  "SELECT_ALL": "¡Selecciona todo lo que aplique!",
+  "DAILIES_COMPLETE_Q": "¿Has completado tus diarios hoy?",
+  "SEASON_PASS_Q": "¿Tienes el pase de temporada?",
+  "EDEN_COMPLETED_Q": "¿Has hecho Eden esta semana?",
+  "SHARD_COMPLETED_Q": "¿Has limpiado el fragmento de hoy?",
+  "SYNC_PLANNER": "¿Sincronizar con el planificador?",
+  "SYNC_INFO": "Los datos proporcionados aquí se utilizarán para sincronizar/actualizar monedas y pasar con los datos del planificador.",
+  "CANDLE": "Cándalo",
+  "SC": "Varita estacional",
+  "AC": "Vela Ascendida",
+  "HEART": "Corazón",
+  "SH": "Corazón estacional"
 }

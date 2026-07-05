@@ -125,5 +125,24 @@
   "utils": {
     "TIMEOUT": "応答を受信できませんでした。キャンセル中...",
     "NO_CHANGELOG": "申し訳ありません！このバージョンの更新履歴が見つかりませんでした。後でもう一度お試しください"
+  },
+  "calculator": {
+    "CANDLES_HEADER": "現在のろうそく: {{current}}\nターゲットキャンドル: {{target}}\n必要なろうそくの合計: {{total}}",
+    "NORMAL_CANDLES_RESULT": "### Days Needed to get the target candles?\n**If you collect candles upto:**\n- 3 Chevrons (15 Candles): It'll take you `{{daysWithBase}}` days.\n- Until gray (21 candles): It'll take you `{{daysWithMax}}` days.\n**Assuming you can also get candles from daily quests and there are no season in between**:\n- 3 Chevron: `{{daysWithBaseQuests}}` days\n- Until gray: `{{daysWithMaxQuests}}` days",
+    "AC_RESULT": "### Days Needed to get the target ascended candles?\n**If you do:**\n- Only eden weekly: It'll take `{{daysWithWeeklyOnly}}` days\n  -# - There will be total `{{edenCount}}` eden resets giving you: {{edenTotal}}\n- Eden + All red shards: It'll take `{{daysCombined}}` days\n  -# - There will be total `{{shardCountCombined}}` shards giving you {{shardCountCombinedAc}} and total {{edenCountCombined}} eden resets giving you {{edenCombinedTotal}}.\n  -# - Total: {{combinedTotal}}\n- Red Shards only: It'll take `{{daysWithShardOnly}}` days\n  -# - Assuming you complete all shard events, you'll have to do a sum total of `{{shardCountOnly}}` red shards",
+    "SHARD_DISCLAIMER": "免責事項：シャード報酬は通常のシャードスケジュールに基づいて計算されます。シャードのスケジュールは進行中のイベントによって変更される可能性があります。ゲーム内で確認してください。",
+    "SEASON_NO_ACTIVE": "現在アクティブなシーズンはありません。",
+    "SEASON_STATE_EXPIRED": "このシーズンのカルキュレータセッションの有効期限が切れました。もう一度計算を実行してください。",
+    "SEASON_TREE_MISSING": "その季節の木が見つかりませんでした。",
+    "SEASON_SELECTOR_HEADER": "現在のろうそく: {{current}}\n選択したアイテムの合計: {{selected}}\nシーズンは {{end}}",
+    "SEASON_NO_ITEMS_SELECTED": "アイテムが選択されていません",
+    "SEASON_RESULT": "Current candles: {{current}}\nSelected item total: {{selected}}\nRemaining candles needed: {{remaining}}\nDaily rate: {{daily}} seasonal candles\nDays needed: `{{days}}`\nDays left this season: `{{daysLeft}}` (ends {{end}})\n{{status}}",
+    "SEASON_RESULT_CAN_FINISH": "季節のロウソクは季節の終わりまでに十分に手に入ります。",
+    "SEASON_RESULT_CANNOT_FINISH": "このレートでシーズンが終わる前に、十分な季節のろうそくを手に入れることはできません。",
+    "PREFILLED": "プランナーのデータに基づいて、次の値が事前に入力されている可能性があります。正確でない場合は、正しい値を入力してください。",
+    "CANDLE_AMOUNT": "現在持っているろうそくの量を入力してください！",
+    "CANDLE_NEEDED": "必要なろうそくの量を入力してください！",
+    "CURRENT_C": "Current Candle(s)",
+    "TARGET_C": "ターゲットのロウソク(s)"
   }
 }

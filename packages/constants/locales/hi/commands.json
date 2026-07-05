@@ -440,5 +440,13 @@
         "delete": "डेटा हटाएँ"
       }
     }
+  },
+  "CALCULATOR": {
+    "name": "कैलकुलेटर",
+    "description": "calculate regular, seasonal and ascended candles",
+    "options.candle-type": {
+      "name": "candle-type",
+      "description": "select the candle type to calculate"
+    }
   }
 }

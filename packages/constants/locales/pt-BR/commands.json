@@ -440,5 +440,13 @@
         "delete": "Excluir dados"
       }
     }
+  },
+  "CALCULATOR": {
+    "name": "calculadora",
+    "description": "calcular velas regulares, sazonais e ascendentes",
+    "options.candle-type": {
+      "name": "tipo de vela",
+      "description": "selecione o tipo de vela para calcular"
+    }
   }
 }

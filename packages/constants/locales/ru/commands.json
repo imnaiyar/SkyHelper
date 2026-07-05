@@ -440,5 +440,13 @@
         "delete": "Delete Data"
       }
     }
+  },
+  "CALCULATOR": {
+    "name": "калькулятор",
+    "description": "подсчитать обычные, сезонные и поднимающиеся свечи",
+    "options.candle-type": {
+      "name": "тип свечи",
+      "description": "выберите тип свечи для вычисления"
+    }
   }
 }
