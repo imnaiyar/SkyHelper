@@ -81,7 +81,7 @@ export async function handleSeasonCalculatorButton(helper: InteractionHelper, da
   const state = states.get(data.key);
   if (!state || state.user !== helper.user.id || Date.now() - state.createdAt > STATE_TTL) {
     states.delete(data.key);
-    await helper.update({ content: helper.t("features:calculator.SEASON_STATE_EXPIRED") });
+    await helper.update({ components: [textDisplay(helper.t("features:calculator.SEASON_STATE_EXPIRED"))] });
     return;
   }
 
