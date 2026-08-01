@@ -16,15 +16,7 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   if (client.config.DASHBOARD.enabled) await bootstrap(client);
 
   setInterval(() => {
-    client.gateway.send(0, {
-      op: GatewayOpcodes.PresenceUpdate,
-      d: {
-        activities: [getActivity()],
-        status: PresenceUpdateStatus.Online,
-        since: Date.now(),
-        afk: false,
-      },
-    });
+    void updatePresence(client);
   }, 2 * 60_000);
   // mark client ready;
   client.readTimestamp = Date.now();
@@ -76,6 +68,21 @@ const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
 };
 
 export default readyHandler;
+
+async function updatePresence(client: Parameters<typeof readyHandler>[0]) {
+  const shardIds = client.shardIds.length ? client.shardIds : [0];
+  const payload = {
+    op: GatewayOpcodes.PresenceUpdate,
+    d: {
+      activities: [getActivity()],
+      status: PresenceUpdateStatus.Online,
+      since: Date.now(),
+      afk: false,
+    },
+  };
+
+  await Promise.allSettled(shardIds.map((shardId) => client.gateway.send(shardId, payload)));
+}
 
 function getActivity() {
   const status = ShardsUtil.getStatus(DateTime.now().setZone("America/Los_Angeles"));
