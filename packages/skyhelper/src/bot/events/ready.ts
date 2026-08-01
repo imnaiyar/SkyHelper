@@ -7,6 +7,7 @@ import { ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import { fetchSkyData } from "@/planner";
 import * as Sentry from "@sentry/node";
+import type { GatewayUpdatePresence } from "discord-api-types/v10";
 
 const readyHandler: Event<GatewayDispatchEvents.Ready> = async (client) => {
   client.logger.custom(`Logged in as ${client.user.username}`, "BOT");
@@ -71,7 +72,7 @@ export default readyHandler;
 
 async function updatePresence(client: Parameters<typeof readyHandler>[0]) {
   const shardIds = client.shardIds.length ? client.shardIds : [0];
-  const payload = {
+  const payload: GatewayUpdatePresence = {
     op: GatewayOpcodes.PresenceUpdate,
     d: {
       activities: [getActivity()],
@@ -81,7 +82,7 @@ async function updatePresence(client: Parameters<typeof readyHandler>[0]) {
     },
   };
 
-  await Promise.allSettled(shardIds.map((shardId) => client.gateway.send(shardId, payload)));
+  await Promise.allSettled(shardIds.map((shardId) => Promise.resolve(client.gateway.send(shardId, payload))));
 }
 
 function getActivity() {

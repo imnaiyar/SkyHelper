@@ -27,7 +27,7 @@ const gateway = new WebSocketManager({
   token: process.env.TOKEN,
   shardCount,
   shardIds,
-  fetchGatewayInformation: async () => gatewayInformation,
+  fetchGatewayInformation: () => Promise.resolve(gatewayInformation),
 });
 
 console.log("\n\n");
@@ -85,9 +85,9 @@ process.on("uncaughtException", (err) => {
   client.logger.error("Uncaught: ", err);
 });
 
-function resolveShardCount(recommendedShardCount: number) {
+function resolveShardCount(recommendedCount: number) {
   const raw = process.env.SHARD_COUNT;
-  if (!raw) return recommendedShardCount;
+  if (!raw) return recommendedCount;
 
   const parsed = Number(raw);
   if (!Number.isInteger(parsed) || parsed <= 0) {
@@ -97,23 +97,23 @@ function resolveShardCount(recommendedShardCount: number) {
   return parsed;
 }
 
-function resolveShardIds(shardCount: number) {
+function resolveShardIds(totalShardCount: number) {
   const raw = process.env.SHARD_IDS;
-  if (!raw) return Array.from({ length: shardCount }, (_, index) => index);
+  if (!raw) return Array.from({ length: totalShardCount }, (_, index) => index);
 
-  const shardIds = raw
+  const parsedShardIds = raw
     .split(",")
     .map((segment) => Number(segment.trim()))
     .filter((segment) => !Number.isNaN(segment));
 
-  if (shardIds.length === 0) {
+  if (parsedShardIds.length === 0) {
     throw new Error(`Invalid SHARD_IDS value "${raw}". It must contain at least one shard id.`);
   }
 
-  const uniqueShardIds = [...new Set(shardIds)];
-  const invalidShardId = uniqueShardIds.find((id) => !Number.isInteger(id) || id < 0 || id >= shardCount);
+  const uniqueShardIds = [...new Set(parsedShardIds)];
+  const invalidShardId = uniqueShardIds.find((id) => !Number.isInteger(id) || id < 0 || id >= totalShardCount);
   if (invalidShardId !== undefined) {
-    throw new Error(`Invalid shard id "${invalidShardId}" in SHARD_IDS. Expected values between 0 and ${shardCount - 1}.`);
+    throw new Error(`Invalid shard id "${invalidShardId}" in SHARD_IDS. Expected values between 0 and ${totalShardCount - 1}.`);
   }
 
   return uniqueShardIds.sort((a, b) => a - b);
