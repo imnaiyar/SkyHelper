@@ -32,6 +32,15 @@ import {
 import type { CustomId } from "@/utils/customId-store";
 
 export class SkyHelper extends Client {
+  /** The shard ids this process is responsible for */
+  public shardIds: number[] = [];
+
+  /** The set of shards that have emitted READY in this process */
+  public readyShards = new Set<number>();
+
+  /** Last known latency by shard id */
+  public shardPings = new Collection<number, number>();
+
   /** Set of unavailable guilds recieved when client first became ready */
   public unavailableGuilds = new Set<string>();
 
