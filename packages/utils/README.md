@@ -7,5 +7,3 @@ Run this to install
 ```
 npm install skyhelper-utils
 ```
-
-**Documentation**: https://utils.skyhelper.xyz/
