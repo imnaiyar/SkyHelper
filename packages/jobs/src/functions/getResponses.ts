@@ -1,5 +1,5 @@
 import { emojis, type REMINDERS_KEY } from "@skyhelperbot/constants";
-import type { getTranslator, LangKeys, TranslatorType } from "./getTranslator";
+import type { LangKeys, TranslatorType } from "./getTranslator";
 import { container, section, separator, ShardsUtil, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
 import type { DateTime } from "luxon";

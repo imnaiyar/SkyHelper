@@ -1,4 +1,4 @@
-import { getTranslator, type TranslatorType } from "@/i18n";
+import { type TranslatorType } from "@/i18n";
 import type { SkyHelper } from "@/structures/Client";
 import type { Command } from "@/structures/Command";
 import type { Event } from "@/structures/Event";

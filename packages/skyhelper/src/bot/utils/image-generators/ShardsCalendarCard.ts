@@ -388,7 +388,10 @@ export async function generateShardsCalendarCard(options: ShardsCalendarCardOpti
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(
-    `All timings shown after the daily reset (12 AM Los Angeles time; UTC ${now.toFormat("ZZ")})`,
+    `All timings shown after the daily reset (12 AM Los Angeles time; UTC ${
+      // construct an object for passed month and year, so DTS offset hare handled properly
+      DateTime.fromObject({ month, year }, { zone }).toFormat("ZZ")
+    })`,
     width / 2,
     titleY + px(100),
   );

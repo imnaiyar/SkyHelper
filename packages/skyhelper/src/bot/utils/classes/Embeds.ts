@@ -315,6 +315,7 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: TranslatorType) {
 
 const calendarCache = new LRUCache<string, Buffer>({
   max: 200,
+  ttlAutopurge: true,
   /* // only for debugging
   onInsert: (value: Buffer, key: string) => {
     console.log(key);
@@ -353,22 +354,24 @@ function getLegacyCalendarDescription(
   const toDisplay = dates.slice(start, end);
 
   const description =
-    toDisplay.map((d) => {
-      const { currentRealm, currentShard } = utils.shardsIndex(d);
-      const timelines = shardsTimeline(d)[currentShard];
-      const noShard = utils.getStatus(d);
-      const info = shardsInfo[currentRealm]![currentShard]!;
-      let desc = `**${
-        d.hasSame(now, "day")
-          ? Utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
-          : Utils.time(d.toUnixInteger(), "D")
-      }**\n`;
-      desc +=
-        typeof noShard === "string"
-          ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => Utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
-      return desc;
-    }) + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`;
+    toDisplay
+      .map((d) => {
+        const { currentRealm, currentShard } = utils.shardsIndex(d);
+        const timelines = shardsTimeline(d)[currentShard];
+        const noShard = utils.getStatus(d);
+        const info = shardsInfo[currentRealm]![currentShard]!;
+        let desc = `**${
+          d.hasSame(now, "day")
+            ? Utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
+            : Utils.time(d.toUnixInteger(), "D")
+        }**\n`;
+        desc +=
+          typeof noShard === "string"
+            ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
+            : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => Utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
+        return desc;
+      })
+      .join("\n\n") + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`;
 
   const navBtn: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
@@ -424,9 +427,18 @@ export async function buildCalendarResponse(
     calendarDisplay = [textDisplay(description), separator(), navBtn];
     title = legacyTitle;
   } else {
-    const cacheKey = `${month}-${year}`;
+    const baseKey = `${month}-${year}`;
 
-    calendarBuffer = (await calendarCache.fetch(cacheKey, { allowStale: true }))!;
+    const isCurrentMonth = now.month === month && now.year === year;
+
+    // cache per-day basis for the current month since it highlights current day differently
+    // caching on month basis may show incorrect today's date
+    const cacheKey = isCurrentMonth ? baseKey + `-${now.toFormat("dd")}` : baseKey;
+
+    calendarBuffer = (await calendarCache.fetch(cacheKey, {
+      // cache for 1 day if current month
+      ttl: isCurrentMonth ? 10000 * 6 * 6 * 24 : undefined,
+    }))!;
 
     title = "Shards Calendar";
 
