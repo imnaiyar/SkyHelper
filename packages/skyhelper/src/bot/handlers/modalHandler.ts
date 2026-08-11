@@ -2,16 +2,27 @@ import type { SkyHelper } from "@/structures";
 import { buildCalendarResponse } from "@/utils/classes/Embeds";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import Utils from "@/utils/classes/Utils";
-import { ComponentType, MessageFlags, type APIEmbed, type APIModalSubmitInteraction } from "@discordjs/core";
+import {
+  ComponentType,
+  MessageFlags,
+  type APIButtonComponentWithCustomId,
+  type APIContainerComponent,
+  type APIEmbed,
+  type APIModalSubmitInteraction,
+} from "@discordjs/core";
 import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import { fetchSkyData, handlePlannerNavigation, PlannerDataService } from "@/planner";
 import { DisplayTabs } from "@/types/planner";
 import { nanoid } from "nanoid";
+import { setLoadingState } from "@/utils/loading";
+import { CustomId, store } from "@/utils/customId-store";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
-  const monthValue = Utils.getModalComponent(helper.int as APIModalSubmitInteraction, "month", ComponentType.StringSelect, true).values[0];
-  const yearValue = Utils.getTextInput(helper.int as APIModalSubmitInteraction, "year", true).value;
+  const int = helper.int as APIModalSubmitInteraction;
+
+  const monthValue = Utils.getModalComponent(int, "month", ComponentType.StringSelect, true).values[0];
+  const yearValue = Utils.getTextInput(int, "year", true).value;
 
   const month = Number(monthValue);
   const year = Number(yearValue);
@@ -37,8 +48,19 @@ export async function handleShardsCalendarModal(helper: InteractionHelper) {
     return;
   }
 
-  const data = buildCalendarResponse(helper.t, helper.client, helper.user.id, { month, year, index: 0 });
-  await helper.update({ ...data, flags: MessageFlags.IsComponentsV2 });
+  const legacy = int.data.custom_id.split(";")[1] === "true";
+
+  const accessory = (int.message?.components?.[0] as APIContainerComponent).components.find(
+    (c) => c.type == ComponentType.Section,
+  )?.accessory;
+
+  const loadingState = setLoadingState(int.message!.components!, (accessory as APIButtonComponentWithCustomId).custom_id);
+
+  await helper.update({ components: loadingState });
+
+  const data = await buildCalendarResponse(helper.t, helper.user.id, { month, year, index: 0 }, legacy);
+
+  await helper.editReply({ ...data, flags: MessageFlags.IsComponentsV2 });
   return;
 }
 

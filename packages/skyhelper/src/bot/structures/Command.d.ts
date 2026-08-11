@@ -9,7 +9,7 @@ import type {
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import type { SkyHelper } from "./Client.ts";
 import type { Awaitable, OverrideLocalizations } from "@/types/utils";
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import type { PermissionsResolvable } from "@/utils/classes/PermissionUtils";
 import type { MessageFlags } from "@/utils/classes/MessageFlags";
 import type { Category } from "./Category.ts";
@@ -19,7 +19,7 @@ interface MessageParams {
   message: GatewayMessageCreateDispatchData;
   args: string[];
   flags: MessageFlags;
-  t: ReturnType<typeof getTranslator>;
+  t: TranslatorType;
   client: SkyHelper;
 }
 
@@ -107,7 +107,7 @@ interface InteractionOptions<
 > {
   interaction: TType;
   helper: InteractionHelper;
-  t: ReturnType<typeof getTranslator>;
+  t: TranslatorType;
   options: InteractionOptionResolver;
 }
 export type Command<Autocomplete extends boolean = false> = (Autocomplete extends true

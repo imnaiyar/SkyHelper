@@ -5,13 +5,14 @@ import {
   MessageFlags,
   type APIActionRowComponent,
   type APIButtonComponent,
+  type APIComponentInContainer,
   type APIContainerComponent,
   type APIMessageTopLevelComponent,
   type APIStringSelectComponent,
 } from "@discordjs/core";
 import { DateTime } from "luxon";
 import Utils from "./Utils.js";
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import {
   eventData,
   SkytimesUtils as skyutils,
@@ -33,7 +34,8 @@ import type { InteractionHelper } from "./InteractionUtil.js";
 import { createActionId } from "@/planner/helpers/action.utils";
 import { PlannerAction } from "@/types/planner";
 import { fetchSkyData, PlannerService } from "@/planner";
-
+import { LRUCache } from "lru-cache";
+import { generateShardsCalendarCard } from "../image-generators/ShardsCalendarCard.js";
 /**
  * @param date The date for which the shards embed is to be built
  * @param footer The footer text for the embed
@@ -159,7 +161,7 @@ export function buildShardEmbed(
  * @param text text to include in the footer
  * @returns
  */
-export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getTranslator>) {
+export async function getTimesEmbed(client: SkyHelper, t: TranslatorType) {
   const plannerData = await fetchSkyData(client);
   const tsData = getNextTs();
   const specialEvent = PlannerService.getEvents(plannerData).current[0];
@@ -250,7 +252,7 @@ export async function getTimesEmbed(client: SkyHelper, t: ReturnType<typeof getT
   };
 }
 
-export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof getTranslator>) {
+export function dailyQuestEmbed(data: DailyQuestsSchema, t: TranslatorType) {
   const { quests, seasonal_candles } = data;
   const total = quests.length;
   const now = DateTime.now().setZone("America/Los_Angeles").startOf("day");
@@ -311,19 +313,31 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: ReturnType<typeof ge
   return { components: [component] };
 }
 
-export function buildCalendarResponse(
-  t: ReturnType<typeof getTranslator>,
-  client: SkyHelper,
+const calendarCache = new LRUCache<string, Buffer>({
+  max: 200,
+  /* // only for debugging
+  onInsert: (value: Buffer, key: string) => {
+    console.log(key);
+  }, */
+  fetchMethod: async (key: string) => {
+    const [month, year] = key.split("-").map(Number);
+
+    return await generateShardsCalendarCard({ month, year });
+  },
+});
+
+/**
+ * Returns legacy way of displaying shards calendar
+ */
+function getLegacyCalendarDescription(
+  { index, month, year }: Required<Omit<ResponseParams, "index">> & Pick<ResponseParams, "index">,
+  now: DateTime,
+  t: TranslatorType,
   userId: string,
-  { index, month, year }: ResponseParams = {},
 ) {
-  const now = DateTime.now().setZone("America/Los_Angeles");
-  const date = 1;
-  month ??= now.month;
-  const monthStr = CalendarMonths[month - 1];
-  year ??= now.year;
   const datesArray = getDates(now);
 
+  const date = 1;
   const setsOfDates = [];
   for (let i = 0; i < datesArray.length; i += 5) {
     setsOfDates.push(datesArray.slice(i, i + 5));
@@ -337,7 +351,25 @@ export function buildCalendarResponse(
   const start = index * 5;
   const end = start + 5;
   const toDisplay = dates.slice(start, end);
-  const title = `${toDisplay[0]!.toFormat("DD")} - ${toDisplay[toDisplay.length - 1]!.toFormat("DD")}`;
+
+  const description =
+    toDisplay.map((d) => {
+      const { currentRealm, currentShard } = utils.shardsIndex(d);
+      const timelines = shardsTimeline(d)[currentShard];
+      const noShard = utils.getStatus(d);
+      const info = shardsInfo[currentRealm]![currentShard]!;
+      let desc = `**${
+        d.hasSame(now, "day")
+          ? Utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
+          : Utils.time(d.toUnixInteger(), "D")
+      }**\n`;
+      desc +=
+        typeof noShard === "string"
+          ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
+          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => Utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
+      return desc;
+    }) + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`;
+
   const navBtn: APIActionRowComponent<APIButtonComponent> = {
     type: 1,
     components: [
@@ -367,35 +399,51 @@ export function buildCalendarResponse(
       },
     ],
   };
-  const description = toDisplay
-    .map((d) => {
-      const { currentRealm, currentShard } = utils.shardsIndex(d);
-      const timelines = shardsTimeline(d)[currentShard];
-      const noShard = utils.getStatus(d);
-      const info = shardsInfo[currentRealm]![currentShard]!;
-      let desc = `**${
-        d.hasSame(now, "day")
-          ? client.utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
-          : client.utils.time(d.toUnixInteger(), "D")
-      }**\n`;
-      desc +=
-        typeof noShard === "string"
-          ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => client.utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
-      return desc;
-    })
-    .join("\n\n");
+
+  const title = `${toDisplay[0]!.toFormat("DD")} - ${toDisplay[toDisplay.length - 1]!.toFormat("DD")}`;
+  return { description: description, navBtn, title };
+}
+
+export async function buildCalendarResponse(
+  t: TranslatorType,
+  userId: string,
+  { index, month, year }: ResponseParams = {},
+  legacy = false,
+) {
+  const now = DateTime.now().setZone("America/Los_Angeles");
+  month ??= now.month;
+  const monthStr = CalendarMonths[month - 1];
+  year ??= now.year;
+
+  let calendarDisplay: APIComponentInContainer[];
+  let calendarBuffer: Buffer | null = null;
+  let title: string;
+  if (legacy) {
+    const { description, navBtn, title: legacyTitle } = getLegacyCalendarDescription({ index, month, year }, now, t, userId);
+
+    calendarDisplay = [textDisplay(description), separator(), navBtn];
+    title = legacyTitle;
+  } else {
+    const cacheKey = `${month}-${year}`;
+
+    calendarBuffer = (await calendarCache.fetch(cacheKey, { allowStale: true }))!;
+
+    title = "Shards Calendar";
+
+    calendarDisplay = [mediaGallery(mediaGalleryItem("attachment://calendar.png"))];
+  }
 
   const component = container(
     section(
       {
         type: 2,
-        custom_id: Utils.store.serialize(Utils.customId.CalendarDate, {
+        custom_id: Utils.store.serialize(Utils.customId.CalendarToggle, {
           month: month,
           year: year,
           user: userId,
+          legacy,
         }),
-        label: t("commands:SHARDS_CALENDAR.RESPONSES.CHANGE_BUTTON"),
+        label: `${monthStr}/${year}`,
         style: 2,
       },
       `-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_AUTHOR", { MONTH: monthStr, YEAR: year })}\n### ${title}\n${t(
@@ -404,11 +452,33 @@ export function buildCalendarResponse(
       )}\n`,
     ),
     separator(),
-    textDisplay(
-      description + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`,
-    ),
+    ...calendarDisplay,
   );
-  return { components: [component, container(navBtn)] };
+
+  return {
+    components: [
+      component,
+      row({
+        type: ComponentType.StringSelect,
+        custom_id: Utils.store.serialize(Utils.customId.CalendarToggle, { month, year, user: userId, legacy: null }),
+        options: [
+          {
+            label: t("commands:SHARDS_CALENDAR.RESPONSES.SELECT_INFOGRAPHICS"),
+            value: "infographics",
+            default: !legacy,
+            description: t("commands:SHARDS_CALENDAR.RESPONSES.SELECT_INFOGRAPHICS_DESCRIPTION").slice(0, 100),
+          },
+          {
+            label: t("commands:SHARDS_CALENDAR.RESPONSES.SELECT_LEGACY"),
+            value: "legacy",
+            default: legacy,
+            description: t("commands:SHARDS_CALENDAR.RESPONSES.SELECT_LEGACY_DESCRIPTION").slice(0, 100),
+          },
+        ],
+      }),
+    ],
+    files: calendarBuffer ? [{ data: calendarBuffer, name: "calendar.png" }] : [],
+  };
 }
 
 export async function handleRemindersStatus(helper: InteractionHelper, guildSettings: GuildSchema, guildName: string, page = 0) {

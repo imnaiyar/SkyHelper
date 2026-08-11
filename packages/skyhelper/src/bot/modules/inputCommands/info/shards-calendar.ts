@@ -5,9 +5,13 @@ import { MessageFlags } from "@discordjs/core";
 export default {
   async interactionRun({ t, helper, options }) {
     const hide = options.getBoolean("hide") ?? false;
-    await helper.reply({
-      ...buildCalendarResponse(t, helper.client, helper.user.id),
-      flags: MessageFlags.IsComponentsV2 | (hide ? MessageFlags.Ephemeral : 0),
+    await helper.defer({ flags: hide ? MessageFlags.Ephemeral : undefined });
+
+    const response = await buildCalendarResponse(t, helper.user.id);
+
+    await helper.editReply({
+      ...response,
+      flags: MessageFlags.IsComponentsV2,
     });
   },
   ...SHARDS_CALENDAR_DATA,

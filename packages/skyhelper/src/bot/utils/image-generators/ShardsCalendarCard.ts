@@ -29,7 +29,7 @@ const CELL_HEIGHT = 162;
 const BOTTOM_PAD = 30;
 
 // Weekday labels
-const WEEKDAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"] as const;
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
 // Short realm labels used on the image
 const REALM_SHORT_NAMES: Record<string, string> = {
@@ -61,7 +61,7 @@ export interface ShardsCalendarDayData {
   location: string;
   /** Short realm name (e.g. "Prairie") */
   realm: string;
-  /** Reward string (e.g. "200 wax" / "3.5 AC"), or null when unknown */
+  /** Reward, or null when unknown */
   reward: number | null;
   /** Shard time windows formatted as "HH:mm-HH:mm" (absolute, shard timezone) */
   timings: string[];
@@ -163,51 +163,6 @@ function drawBackground(ctx: SKRSContext2D, width: number, height: number) {
     }
   }
   ctx.restore();
-}
-
-/** Draw the tiny reference legend (red/black/no-shard swatches) top-left, above the weekday divider */
-function drawLegend(ctx: SKRSContext2D, padding: number, px: (n: number) => number) {
-  const items = [
-    { colors: CARD_COLORS.red, label: "Red Shard" },
-    { colors: CARD_COLORS.black, label: "Black Shard" },
-    { colors: CARD_COLORS.none, label: "No Shard" },
-  ] as const;
-
-  const swatchSize = px(25);
-  const gap = px(14);
-  const textSize = px(20);
-  const rowHeight = px(22);
-  const startY = px(HEADER_TOP + 20);
-
-  ctx.font = font(textSize, FONT_BOLD);
-  ctx.fillStyle = "#bdb6cc";
-  ctx.textAlign = "left";
-  ctx.textBaseline = "middle";
-
-  items.forEach((item, i) => {
-    const y = startY + i * (rowHeight + gap);
-    // tiny reference swatch (only color, no content)
-    ctx.save();
-    roundedRectPath(ctx, padding, y, swatchSize, swatchSize, px(4));
-    ctx.fillStyle = item.colors.tint;
-    ctx.fill();
-    ctx.strokeStyle = item.colors.border;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.restore();
-    // label beside the swatch, separated by a hyphen
-    ctx.fillText(`- ${item.label}`, padding + swatchSize + px(8), y + swatchSize / 2);
-  });
-
-  const todayX = padding + swatchSize + px(8) + ctx.measureText(`- ${items[0].label}`).width + px(60);
-  ctx.save();
-  roundedRectPath(ctx, todayX, startY, swatchSize, swatchSize, px(4));
-
-  ctx.strokeStyle = CARD_COLORS.todayColor;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.restore();
-  ctx.fillText(`- Today's date`, todayX + swatchSize + px(8), startY + swatchSize / 2);
 }
 
 /** Wrap text to fit `maxWidth`, at most `maxLines` lines (last line ellipsized on overflow) */
@@ -416,7 +371,7 @@ export async function generateShardsCalendarCard(options: ShardsCalendarCardOpti
   // #region Header (bot logo + name, centered title)
   await drawBotTitleHeader({ botIcon, botName, headerY: px(28), size: px(18), ctx });
 
-  const titleY = px(HEADER_TOP + 62);
+  const titleY = px(HEADER_TOP + 30);
   ctx.font = `${px(54)}px ${FONT_BOLD}`;
   ctx.fillStyle = "#F6EAE0";
   ctx.textAlign = "center";
@@ -427,6 +382,24 @@ export async function generateShardsCalendarCard(options: ShardsCalendarCardOpti
   ctx.fillStyle = "#c9c2d9";
   ctx.fillText(`${CalendarMonths[month - 1]} ${year}`, width / 2, titleY + px(52));
 
+  // timing disclaimer
+  ctx.font = `${px(20)}px ${FONT_NAME}`;
+  ctx.fillStyle = "#6e6e7e";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(
+    `All timings shown after the daily reset (12 AM Los Angeles time; UTC ${now.toFormat("ZZ")})`,
+    width / 2,
+    titleY + px(100),
+  );
+
+  // generated on text
+  ctx.font = `${px(20)}px ${FONT_NAME}`;
+  ctx.fillStyle = "#6e6e7e";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText(`Generated on: ${now.toFormat("dd/MM/yyyy")}`, padding, 20);
+
   // divider
   ctx.strokeStyle = "rgba(255,255,255,0.08)";
   ctx.lineWidth = 1;
@@ -434,10 +407,6 @@ export async function generateShardsCalendarCard(options: ShardsCalendarCardOpti
   ctx.moveTo(padding, px(HEADER_TOP + HEADER_HEIGHT - 6));
   ctx.lineTo(width - padding, px(HEADER_TOP + HEADER_HEIGHT - 6));
   ctx.stroke();
-
-  // reference legend
-  drawLegend(ctx, padding, px);
-  // #endregion
 
   // #region Weekday headers
   const weekdayY = px(HEADER_TOP + HEADER_HEIGHT + 24);
@@ -477,14 +446,6 @@ export async function generateShardsCalendarCard(options: ShardsCalendarCardOpti
       drawCell(render, cellX, rowY, cellW, cellH, cell, icon);
     }
   }
-  // #endregion
-
-  // #region Footer note
-  ctx.font = `${px(20)}px ${FONT_NAME}`;
-  ctx.fillStyle = "#6e6e7e";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("All timings shown after the daily reset (12 AM Los Angeles time)", width / 2, height - px(BOTTOM_PAD / 2));
   // #endregion
 
   return canvas.encode("png");

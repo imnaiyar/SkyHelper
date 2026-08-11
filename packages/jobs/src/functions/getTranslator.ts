@@ -46,3 +46,5 @@ export const getTranslator =
   (lang: string) =>
   (key: LangKeys, options = {}) =>
     i18next.t(key, { ...options, lng: lang });
+
+export type TranslatorType = ReturnType<typeof getTranslator>;

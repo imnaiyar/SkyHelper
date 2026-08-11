@@ -1,5 +1,5 @@
 import { emojis, type REMINDERS_KEY } from "@skyhelperbot/constants";
-import type { getTranslator, LangKeys } from "./getTranslator";
+import type { getTranslator, LangKeys, TranslatorType } from "./getTranslator";
 import { container, section, separator, ShardsUtil, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
 import type { DateTime } from "luxon";
@@ -109,12 +109,7 @@ export const getTSResponse = (
   return { components: [component], flags: MessageFlags.IsComponentsV2 };
 };
 
-export function getShardReminderResponse(
-  now: DateTime,
-  t: ReturnType<typeof getTranslator>,
-  offset = 0,
-  shardType?: Array<"red" | "black">,
-) {
+export function getShardReminderResponse(now: DateTime, t: TranslatorType, offset = 0, shardType?: Array<"red" | "black">) {
   const nextShard = ShardsUtil.getNextShard(now, shardType);
   if (!nextShard) return null;
 
