@@ -7,7 +7,6 @@
   "type": "module",
   "scripts": {
     "build": "tsup && tsc --emitDeclarationOnly --declaration",
-    "build:docs": "typedoc",
     "lint": "eslint --fix src"
   },
   "repository": {
