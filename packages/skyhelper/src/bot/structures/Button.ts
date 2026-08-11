@@ -1,5 +1,5 @@
 import type { APIMessageComponentButtonInteraction } from "@discordjs/core";
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { Awaitable } from "@/types/utils";
 import type { CustomId, store } from "@/utils/customId-store";
@@ -20,7 +20,7 @@ export interface Button<T extends CustomId> {
   /** The callback for when the button is clicked */
   execute: (
     interaction: APIMessageComponentButtonInteraction,
-    t: ReturnType<typeof getTranslator>,
+    t: TranslatorType,
     helper: InteractionHelper,
     props: (ReturnType<typeof store.deserialize> & { id: T })["data"],
   ) => Awaitable<void>;

@@ -6,7 +6,10 @@ export enum CustomId {
   SpiritCollectible,
   SpiritExpression,
   BugReports,
-  CalendarDate,
+  /**
+   * Used for both calendar type selection select and button that launches modal for month/year selection
+   */
+  CalendarToggle,
   CalenderNav,
   ShardsScroll,
   TimesRefresh,
@@ -42,7 +45,14 @@ export const store = new SchemaStore()
   .add(new Schema(CustomId.SpiritCollectible).string("spirit").nullable("user", t.string))
   .add(new Schema(CustomId.SpiritExpression).string("spirit").nullable("user", t.string))
   .add(new Schema(CustomId.BugReports).string("error").nullable("user", t.string))
-  .add(new Schema(CustomId.CalendarDate).uint4("month").uint32("year").nullable("user", t.string))
+  .add(
+    new Schema(CustomId.CalendarToggle)
+      .uint4("month")
+      .uint32("year")
+      // nullable because the same schema is used for calendar type select menu, and legacy is set by it's option's selection
+      .nullable("legacy", t.boolean)
+      .nullable("user", t.string),
+  )
   .add(new Schema(CustomId.CalenderNav).uint4("month").uint32("year").uint4("index").nullable("user", t.string))
   .add(new Schema(CustomId.ShardsScroll).string("date").nullable("user", t.string))
   .add(new Schema(CustomId.TimesRefresh).nullable("user", t.string))

@@ -1,5 +1,5 @@
 import type { SkyHelper } from "@/structures";
-import { getTranslator } from "@/i18n";
+import { getTranslator, type TranslatorType } from "@/i18n";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
 import utils from "./Utils.js";
 import { button, container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
@@ -42,7 +42,7 @@ const getExpressionBtn = (data: ISpirit, user: string): APIButtonComponent => ({
 export class Spirits {
   constructor(
     private data: ISpirit,
-    private t: ReturnType<typeof getTranslator>,
+    private t: TranslatorType,
     private client: SkyHelper,
     private plannerData: ISkyData,
   ) {}

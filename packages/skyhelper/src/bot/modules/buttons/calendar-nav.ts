@@ -9,12 +9,21 @@ export default defineButton({
   },
   id: CustomId.CalenderNav,
   async execute(_interaction, t, helper, { index, month, year }) {
-    await helper.update({
-      ...buildCalendarResponse(t, helper.client, helper.user.id, {
+    await helper.deferUpdate();
+
+    const response = await buildCalendarResponse(
+      t,
+      helper.user.id,
+      {
         index: index,
         month: month,
         year: year,
-      }),
+      },
+      true,
+    );
+
+    await helper.editReply({
+      ...response,
       flags: MessageFlags.IsComponentsV2,
     });
   },

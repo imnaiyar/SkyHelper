@@ -24,7 +24,7 @@ import { emojis } from "@skyhelperbot/constants";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { CustomId } from "@/utils/customId-store";
 import { LeaderboardCard, type LeaderboardUserData } from "@/utils/image-generators/LeaderBoardCard";
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 const modalComponent = (id: string, word: string): APIModalInteractionResponseCallbackData => ({
   custom_id: "skygame_hangman_word_modal" + `-${id}`,
   title: "Provide a Word",
@@ -338,7 +338,7 @@ export const getCardResponse = async (
   return { files, components: [comp], attachments: [], flags: MessageFlags.IsComponentsV2 };
 };
 
-function createGameInstrunctionEmbed(mode: string, t: ReturnType<typeof getTranslator>) {
+function createGameInstrunctionEmbed(mode: string, t: TranslatorType) {
   const modeInstruction =
     mode === "single" ? t("features:hangman.INSTRUCTIONS_SINGLE") : t("features:hangman.INSTRUCTIONS_DOUBLE");
   const instructions = `${t("features:hangman.INSTRUCTIONS_BASE")}\n- ${modeInstruction}`;

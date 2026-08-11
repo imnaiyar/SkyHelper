@@ -8,6 +8,7 @@
 **/test.mjs
 **/test.ts
 **/deployed
+AGENTS.md
 
 # Turborepo
 .turbo

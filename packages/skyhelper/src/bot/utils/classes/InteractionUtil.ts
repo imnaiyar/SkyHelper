@@ -1,5 +1,5 @@
 import type { ComponentInteractionMap } from "@/@types/interactions";
-import { getTranslator } from "@/i18n";
+import { getTranslator, type TranslatorType } from "@/i18n";
 import type { SkyHelper } from "@/structures/Client";
 import type { UserSchema } from "@/types/schemas";
 import {
@@ -30,7 +30,7 @@ export class InteractionHelper {
   public deferred = false;
   public api: API;
   public user: APIUser;
-  public t: ReturnType<typeof getTranslator> = getTranslator("en-US");
+  public t: TranslatorType = getTranslator("en-US");
   private userSettings: UserSchema | null = null;
   constructor(
     public readonly int: APIInteraction,

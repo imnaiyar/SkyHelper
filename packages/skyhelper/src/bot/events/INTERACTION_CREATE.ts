@@ -1,4 +1,4 @@
-import { getTranslator } from "@/i18n";
+import { type TranslatorType } from "@/i18n";
 import type { SkyHelper } from "@/structures/Client";
 import type { Command } from "@/structures/Command";
 import type { Event } from "@/structures/Event";
@@ -38,6 +38,7 @@ import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 import { handleCalculatorModal } from "@/handlers/calculator";
 import { handleSeasonCalculatorButton } from "@/handlers/season-calculator";
+import { buildCalendarResponse } from "@/utils/classes/Embeds";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -260,9 +261,6 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case "errorModal":
           await handleErrorModal(helper);
           return;
-        case "shards-calendar-modal-date":
-          await handleShardsCalendarModal(helper);
-          return;
         case "currency_modify":
           await handleCurrencyModifyModal(helper);
           break;
@@ -276,6 +274,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             await handleCalculatorModal(helper);
             return;
           }
+
+          if (id.startsWith("shards-calendar-modal-date")) {
+            await handleShardsCalendarModal(helper);
+            return;
+          }
           return;
         }
       }
@@ -284,6 +287,8 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     // #region selects
     if (helper.isSelect(interaction)) {
       const { id, data } = client.utils.store.deserialize(interaction.data.custom_id);
+      const values = interaction.data.values;
+
       switch (id) {
         case CustomId.TimesDetailsRow:
           await handleSkyTimesSelect(interaction, helper);
@@ -291,9 +296,9 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case CustomId.PlannerTopLevelNav: {
           const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
           await helper.update({ components: getLoading });
-          const values = interaction.data.values;
           const { t: tab, p, d, f, it, back } = data;
           const b = back ? (client.utils.parseCustomId(back) as unknown as Omit<NavigationState, "back" | "values">) : undefined;
+
           const res = await handlePlannerNavigation(
             {
               v: values,
@@ -308,6 +313,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             helper.user,
             client,
           );
+
           await helper.editReply({
             ...res,
             flags: MessageFlags.IsComponentsV2,
@@ -317,7 +323,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
         case CustomId.PlannerSelectNav: {
           const getLoading = setLoadingState(interaction.message.components!, interaction.data.custom_id);
           await helper.update({ components: getLoading });
-          const values = interaction.data.values;
+
           const res = await handlePlannerNavigation(
             {
               t: values[0] as DisplayTabs,
@@ -329,6 +335,20 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
             ...res,
             flags: MessageFlags.IsComponentsV2,
           });
+          return;
+        }
+
+        case CustomId.CalendarToggle: {
+          const { month, year } = data;
+
+          const loadingState = setLoadingState(interaction.message.components!, interaction.data.custom_id);
+
+          await helper.update({ components: loadingState });
+
+          const response = await buildCalendarResponse(helper.t, helper.user.id, { month, year }, values[0] === "legacy");
+
+          await helper.editReply(response);
+
           return;
         }
         default:
@@ -343,7 +363,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 export default interactionHandler;
 
 // Ugly codes begin...uggh
-function getErrorResponse(id: string, t: ReturnType<typeof getTranslator>) {
+function getErrorResponse(id: string, t: TranslatorType) {
   return {
     content: t("errors:ERROR_ID", { ID: id }),
     embeds: [{ title: t("errors:EMBED_TITLE"), description: t("errors:EMBED_DESCRIPTION") }],

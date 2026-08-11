@@ -3,7 +3,7 @@ import type { Command, SkyHelper } from "@/structures";
 import { DateTime } from "luxon";
 import { textDisplay, separator } from "@skyhelperbot/utils";
 
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import { DAILY_QUESTS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags } from "@discordjs/core";
 export default {
@@ -15,7 +15,7 @@ export default {
   ...DAILY_QUESTS_DATA,
 } satisfies Command;
 
-const getQuestResponse = async (client: SkyHelper, t: ReturnType<typeof getTranslator>) => {
+const getQuestResponse = async (client: SkyHelper, t: TranslatorType) => {
   const data = await client.schemas.getDailyQuests();
   const now = DateTime.now().setZone(client.timezone).startOf("day");
   const lastUpdated = DateTime.fromISO(data.last_updated, { zone: client.timezone }).startOf("day");

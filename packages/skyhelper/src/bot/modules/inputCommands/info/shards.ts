@@ -1,6 +1,6 @@
 import type { Command } from "@/structures";
 import { ShardsUtil } from "@skyhelperbot/utils";
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import { SHARDS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
@@ -25,7 +25,7 @@ export default {
 } satisfies Command;
 
 const getShards = (
-  t: ReturnType<typeof getTranslator>,
+  t: TranslatorType,
   user: string,
   settings: UserSchema,
   date?: string | null,

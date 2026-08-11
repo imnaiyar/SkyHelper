@@ -1,4 +1,4 @@
-import { getTranslator } from "@/i18n";
+import { getTranslator, type TranslatorType } from "@/i18n";
 import type { GuildSchema } from "@/types/schemas";
 import { SkyHelper } from "@/structures";
 import { getTimesEmbed, buildShardEmbed } from "@/utils/classes/Embeds";
@@ -18,7 +18,7 @@ export const handleLive = async (
   type: string,
   sub: string,
   config: GuildSchema,
-  t: ReturnType<typeof getTranslator>,
+  t: TranslatorType,
   resolvedChannel?: APIInteractionDataResolvedChannel,
 ) => {
   const liveType = type === "shards" ? "autoShard" : "autoTimes";

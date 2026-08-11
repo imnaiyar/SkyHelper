@@ -106,6 +106,10 @@
       "EMBED_DESCRIPTION": "For detailed shard info, use {{shardsCmd}}",
       "EMBED_FOOTER": "Page {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "Change Month/Year",
+      "SELECT_INFOGRAPHICS": "Infographics",
+      "SELECT_INFOGRAPHICS_DESCRIPTION": "Show the shard calendar as a calendar-style infographic",
+      "SELECT_LEGACY": "Legacy",
+      "SELECT_LEGACY_DESCRIPTION": "Show the shard calendar in the legacy text-only view",
       "MODAL_MONTH": "Select Month",
       "MODAL_YEAR": "Enter Year (Format: YYYY)",
       "INVALID_DATE": "Invalid date format (`{{DATE}}`). Please enter the month and year in this format: MM-YYYY (e.g. 01-2022)"

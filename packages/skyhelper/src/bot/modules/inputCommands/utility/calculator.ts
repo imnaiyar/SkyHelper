@@ -1,4 +1,4 @@
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import { CALCULATOR_DATA } from "@/modules/commands-data/utility-commands";
 import { fetchSkyData, PlannerDataService, PlannerService } from "@/planner";
 import type { Command } from "@/structures";
@@ -28,7 +28,7 @@ export function getCandlesModal(
   type: CandleType,
   settings: UserSchema,
   skyData: Awaited<ReturnType<typeof fetchSkyData>>,
-  t: ReturnType<typeof getTranslator>,
+  t: TranslatorType,
 ): APIModalInteractionResponseCallbackData {
   const activeSeason = PlannerService.getCurrentSeason(skyData);
 
@@ -104,7 +104,7 @@ function buildCheckboxes(
   type: CandleType,
   settings: UserSchema,
   activeSeason: ReturnType<typeof PlannerService.getCurrentSeason>,
-  t: ReturnType<typeof getTranslator>,
+  t: TranslatorType,
 ): APICheckboxGroupOption[] {
   const checkboxes: APICheckboxGroupOption[] = [];
 

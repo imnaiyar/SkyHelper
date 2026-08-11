@@ -1,5 +1,5 @@
 import { defineButton } from "@/structures";
-import type { getTranslator } from "@/i18n";
+import type { getTranslator, TranslatorType } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ButtonStyle, ComponentType, type APIButtonComponent } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";
@@ -57,7 +57,7 @@ export default defineButton({
   },
 });
 
-const getEmoteResponse = (spirit: ISpirit, t: ReturnType<typeof getTranslator>, user: string) => {
+const getEmoteResponse = (spirit: ISpirit, t: TranslatorType, user: string) => {
   const expressions = SpiritTreeHelper.getItems(spirit.tree, true)
     .filter((item) => [ItemType.Emote, ItemType.Call, ItemType.Stance].includes(item.type))
     .filter((e) => e.previewUrl);
