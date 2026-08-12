@@ -47,7 +47,7 @@ export function getCandlesModal(
       {
         type: ComponentType.Label,
         label: t("features:calculator.CURRENT_C"),
-        description: t("features:calculator.CANDLE_AMOUNT"),
+        description: t("features:calculator.CANDLE_AMOUNT").slice(0, 100),
         component: {
           type: ComponentType.TextInput,
           custom_id: "input_have",
@@ -60,7 +60,7 @@ export function getCandlesModal(
             {
               type: ComponentType.Label as const,
               label: t("features:calculator.TARGET_C"),
-              description: t("features:calculator.CANDLE_NEEDED"),
+              description: t("features:calculator.CANDLE_NEEDED").slice(0, 100),
               component: {
                 type: ComponentType.TextInput as const,
                 custom_id: "input_need",
@@ -145,7 +145,7 @@ function buildCheckboxes(
   checkboxes.push({
     label: t("SYNC_PLANNER"),
     value: "sync",
-    description: t("SYNC_INFO"),
+    description: t("SYNC_INFO").slice(0, 100),
     default: true,
   });
 
