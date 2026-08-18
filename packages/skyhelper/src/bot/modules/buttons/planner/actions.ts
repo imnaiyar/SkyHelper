@@ -17,7 +17,7 @@ import { setLoadingState } from "@/utils/loading";
 import { PlannerAction, type NavigationState } from "@/types/planner";
 import { modifyTreeNode } from "./sub/modify.tree.js";
 import { DateTime } from "luxon";
-import { shardsInfo, ShardsUtil } from "@skyhelperbot/utils";
+import { ShardsUtil } from "@skyhelperbot/utils";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
 import { zone } from "@skyhelperbot/constants";
 import { SpiritTreeHelper } from "skygame-data";
@@ -40,24 +40,25 @@ export default defineButton({
     if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
       await helper.deferUpdate();
 
-      const { currentShard, currentRealm } = ShardsUtil.shardsIndex(DateTime.now().setZone(zone));
-      const info = shardsInfo[currentRealm]![currentShard]!;
+      const shard = ShardsUtil.getShard(DateTime.now().setZone(zone))!;
+
+      if (shard.type !== "red") throw new Error("Got non-red shard type for shard cleared action");
 
       // if same date then cleared status was removed
       const cleared = PlannerDataService.shardsCleared(user.plannerData);
       if (cleared) {
         user.plannerData.shards_checkin = undefined;
         // substract shards rewards that was granted for clearing
-        adjustCurrencies(user, { ac: info.ac }, false);
+        adjustCurrencies(user, { ac: shard.reward }, false);
       } else {
         // otherwise cleared status was triggered
         user.plannerData.shards_checkin = DateTime.now().setZone(zone).toFormat("yyyy-MM-dd");
-        adjustCurrencies(user, { ac: info.ac }, true);
+        adjustCurrencies(user, { ac: shard.reward }, true);
       }
       await user.save();
       await helper.editReply(buildShardEmbed(DateTime.now().setZone(zone), _t, false, helper.user.id, !cleared));
       await helper.followUp({
-        content: `Marked today's red shard as ${cleared ? "Uncleared" : "Cleared"}! ${info.ac} was ${cleared ? "removed" : "added"} to your planner currencies.\n-# Use ${helper.client.utils.mentionCommand(helper.client, "planner", "home")} to plan and track your sky progress.`,
+        content: `Marked today's red shard as ${cleared ? "Uncleared" : "Cleared"}! ${shard.reward} was ${cleared ? "removed" : "added"} to your planner currencies.\n-# Use ${helper.client.utils.mentionCommand(helper.client, "planner", "home")} to plan and track your sky progress.`,
         flags: 64,
       });
       return;

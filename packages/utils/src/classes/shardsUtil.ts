@@ -1,17 +1,8 @@
 import { DateTime } from "luxon";
 import type { ShardsCountdown } from "../typings.js";
-import { shardsTimeline, shardConfig, shardsInfo, type ShardInfo } from "../constants/index.js";
 import { getDatesBetween } from "./utils.js";
 import { zone } from "@skyhelperbot/constants";
-/**
- * Sequence of Shards pattern
- */
-const shardSequence = ["C", "b", "A", "a", "B", "b", "C", "a", "A", "b", "B", "a"] as const;
-
-/**
- * Sequence of realms pattern of shard
- */
-const realmSequence = ["prairie", "forest", "valley", "wasteland", "vault"] as const;
+import { getShardData, type ShardData } from "../constants/shard_data.js";
 /**
  * @class shardsUtil
  * @classdesc A class to handle shards and realms indexing.
@@ -41,22 +32,7 @@ export class ShardsUtil {
     }
   }
 
-  /**
-   * Returns shards index for a given date
-   * @param date
-   */
-  static shardsIndex(date: DateTime): {
-    currentShard: (typeof shardSequence)[number];
-    currentRealm: (typeof realmSequence)[number];
-  } {
-    const dayOfMonth = date.day;
-    const shardIndex = (dayOfMonth - 1) % shardSequence.length;
-    const currentShard = shardSequence[shardIndex]!;
-    const realmIndex = (dayOfMonth - 1) % realmSequence.length;
-    const currentRealm = realmSequence[realmIndex]!;
-
-    return { currentShard, currentRealm };
-  }
+  static getShard = getShardData;
 
   /**
    * Returns suffix for a given number
@@ -82,59 +58,56 @@ export class ShardsUtil {
   /**
    * Get all three shards status for a given date relative to the current time
    * @param date The date for which to get the status for
+   * @returns ShardCountdown object or null if no shard
    */
-  static getStatus(date: DateTime): ShardsCountdown[] | "No Shard" {
-    const timezone = "America/Los_Angeles";
-    const { currentShard } = this.shardsIndex(date);
-    const timings = shardsTimeline(date)[currentShard];
-    const present = DateTime.now().setZone(timezone);
-    const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
-    if (isNoShard) return "No Shard";
+  static getStatus(date: DateTime): ShardsCountdown[] | null {
+    const shard = this.getShard(date);
+    if (!shard) return null;
+
+    const present = DateTime.now().setZone(zone);
+
     const toReturn: ShardsCountdown[] = [];
-    for (let i = 0; i < timings.length; i++) {
-      const eventTiming = timings[i]!;
+    for (let i = 0; i < shard.occurrences.length; i++) {
+      const occurrence = shard.occurrences[i]!;
       // Active
-      if (present >= eventTiming.start && present <= eventTiming.end) {
+      if (present >= occurrence.shardLand && present <= occurrence.shardEnd) {
         toReturn.push({
           index: i + 1,
           active: true,
-          start: eventTiming.start,
-          end: eventTiming.end,
-          duration: eventTiming.end.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
+          start: occurrence.shardLand,
+          end: occurrence.shardEnd,
+          duration: occurrence.shardEnd
+            .diff(present, ["days", "hours", "minutes", "seconds"])
+            .toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
         // Yet to fall
-      } else if (present < eventTiming.start) {
+      } else if (present < occurrence.shardLand) {
         toReturn.push({
           index: i + 1,
           active: false,
-          start: eventTiming.start,
-          end: eventTiming.end,
-          duration: eventTiming.start.diff(present, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
+          start: occurrence.shardLand,
+          end: occurrence.shardEnd,
+          duration: occurrence.shardLand
+            .diff(present, ["days", "hours", "minutes", "seconds"])
+            .toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
         // All ended
-      } else if (present > eventTiming.end) {
+      } else if (present > occurrence.shardEnd) {
         toReturn.push({
           index: i + 1,
           ended: true,
-          start: eventTiming.start,
-          end: eventTiming.end,
-          duration: present.diff(eventTiming.end, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
+          start: occurrence.shardLand,
+          end: occurrence.shardEnd,
+          duration: present
+            .diff(occurrence.shardEnd, ["days", "hours", "minutes", "seconds"])
+            .toFormat("dd'd' hh'h' mm'm' ss's'"),
         });
         continue;
       }
     }
     return toReturn;
-  }
-
-  static getShard(date: DateTime) {
-    const { currentRealm, currentShard } = this.shardsIndex(date);
-    const info = shardsInfo[currentRealm]![currentShard]!;
-    const isNoShard = shardConfig[currentShard].weekdays.includes(date.weekday);
-    if (isNoShard) return null;
-    const timings = shardsTimeline(date)[currentShard];
-    return { info, timings };
   }
 
   /**
@@ -145,20 +118,20 @@ export class ShardsUtil {
   static getNextShard(
     date: DateTime,
     shardType?: Array<"black" | "red">,
-  ): null | { index: number; start: DateTime; end: DateTime; duration: string; info: ShardInfo } {
+  ): null | { index: number; start: DateTime; end: DateTime; duration: string; info: ShardData } {
     const shard = this.getShard(date);
     if (!shard) return null;
 
-    if (shardType && !shardType.some((s) => shard.info.type.toLowerCase().includes(s))) return null;
+    if (shardType && !shardType.some((s) => shard.type.toLowerCase().includes(s))) return null;
 
-    for (const [i, eventTiming] of shard.timings.entries()) {
-      if (date <= eventTiming.start) {
+    for (const [i, eventTiming] of shard.occurrences.entries()) {
+      if (date <= eventTiming.shardLand) {
         return {
           index: i + 1,
-          start: eventTiming.start,
-          end: eventTiming.end,
-          duration: eventTiming.start.diff(date, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
-          info: shard.info,
+          start: eventTiming.shardLand,
+          end: eventTiming.shardEnd,
+          duration: eventTiming.shardEnd.diff(date, ["days", "hours", "minutes", "seconds"]).toFormat("dd'd' hh'h' mm'm' ss's'"),
+          info: shard,
         };
       }
     }

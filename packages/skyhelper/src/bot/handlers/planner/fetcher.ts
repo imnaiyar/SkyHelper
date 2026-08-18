@@ -57,7 +57,7 @@ function resolveData(data: ISkyData, emojis: APIApplicationEmoji[]) {
   }
 
   for (const realm of resolved.realms.items) {
-    realm.emoji = (realms_emojis as any)[realm.name];
+    realm.emoji = (realms_emojis as any)[realm.shortName];
   }
 
   for (const spirit of resolved.spirits.items) {

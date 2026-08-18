@@ -1,4 +1,4 @@
-import { MapsData, SummaryData, getMaps, getSummary, realms_emojis } from "@skyhelperbot/constants";
+import { MapsData, RealmValue, SummaryData, getMaps, getSummary, realms_emojis } from "@skyhelperbot/constants";
 import { handleSpirits } from "./handleSpirits.js";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
@@ -75,7 +75,7 @@ async function handleSummary(helper: InteractionHelper, realm: keyof typeof Summ
   let page = 1;
   const total = data.areas.length - 1;
   const author = `Summary of ${data.main.title}`;
-  const emoji = client.utils.formatEmoji(realms_emojis[data.main.title]);
+  const emoji = client.utils.formatEmoji(realms_emojis[realm.replace("summary_", "") as RealmValue]);
 
   const component = container(
     section(

@@ -89,7 +89,7 @@ function getActivity() {
   const status = ShardsUtil.getStatus(DateTime.now().setZone("America/Los_Angeles"));
   let shardStatus = "";
 
-  if (status === "No Shard") {
+  if (!status) {
     shardStatus = "😟 No shard today";
   } else {
     const isActive = status.find((s) => s.active);

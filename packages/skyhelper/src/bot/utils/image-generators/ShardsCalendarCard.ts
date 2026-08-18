@@ -85,18 +85,16 @@ export function buildDayData(date: DateTime): ShardsCalendarDayData | null {
   if (!shard) {
     return { date, type: null, location: "", realm: "", reward: null, timings: [] };
   }
-  const { info, timings } = shard;
-  const { currentRealm } = ShardsUtil.shardsIndex(date);
-  // `info.area` embeds a custom emoji,so strip it
-  // TODO: This should be temporary, instead of hardcoding stuff, refactor shard data to be generated dynamically with only necessary info
-  const shortName = info.area.split(",")[0]?.trim() ?? info.area;
+
+  const shortName = shard.area.displayName;
+
   return {
     date,
-    type: info.type,
+    type: shard.type,
     location: shortName,
-    realm: REALM_SHORT_NAMES[currentRealm] ?? currentRealm,
-    reward: info.wax ?? info.ac ?? null,
-    timings: timings.map((t) => `${t.start.toFormat("HH:mm")}-${t.end.toFormat("HH:mm")}`),
+    realm: shard.realmKey.charAt(0).toUpperCase() + shard.realmKey.slice(0),
+    reward: shard.reward ?? null,
+    timings: shard.occurrences.map((t) => `${t.shardLand.toFormat("HH:mm")}-${t.shardEnd.toFormat("HH:mm")}`),
   };
 }
 

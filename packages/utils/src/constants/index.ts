@@ -1,5 +1,2 @@
-export * from "./shardsTimeline.js";
-export * from "./shardsInfo.js";
-export * from "./shardsInfo.js";
-export * from "./shardsTimeline.js";
+export * from "./shard_data.js";
 export * from "./eventDatas.js";
