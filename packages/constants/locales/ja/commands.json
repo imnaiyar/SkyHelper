@@ -106,6 +106,10 @@
       "EMBED_DESCRIPTION": "詳細なシャード情報は{{shardsCmd}}を使用してください",
       "EMBED_FOOTER": "ページ {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "月/年を変更",
+      "SELECT_INFOGRAPHICS": "インフォグラフィック",
+      "SELECT_INFOGRAPHICS_DESCRIPTION": "シャードカレンダーをカレンダースタイルのインフォグラフィックとして表示する",
+      "SELECT_LEGACY": "Legacy",
+      "SELECT_LEGACY_DESCRIPTION": "従来のテキストのみ表示でシャードカレンダーを表示する",
       "MODAL_MONTH": "Select Month",
       "MODAL_YEAR": "Enter Year (Format: YYYY)",
       "INVALID_DATE": "無効な日付形式 (`{{DATE}}`) です。月と年をこの形式で入力してください：MM-YYYY (例: 01-2022)"
