@@ -25,6 +25,7 @@ const EnvPredicate = z.object({
   API_ALLOWLIST_KEY: z.string(),
   SHARD_COUNT: z.string().optional(),
   SHARD_IDS: z.string().optional(),
+  GITHUB_ACCESS_TOKEN: z.string().optional(),
 });
 
 const results = EnvPredicate.safeParse(process.env);

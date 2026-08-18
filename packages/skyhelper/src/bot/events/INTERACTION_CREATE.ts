@@ -39,6 +39,8 @@ import { setLoadingState } from "@/utils/loading";
 import { handleCalculatorModal } from "@/handlers/calculator";
 import { handleSeasonCalculatorButton } from "@/handlers/season-calculator";
 import { buildCalendarResponse } from "@/utils/classes/Embeds";
+import { getChangelog } from "@/modules/inputCommands/utility/sub/utils";
+import { fallbackResponse } from "@/utils/interactions";
 const interactionLogWebhook = process.env.COMMANDS_USED ? Utils.parseWebhookURL(process.env.COMMANDS_USED) : null;
 
 const formatCommandOptions = (int: APIChatInputApplicationCommandInteraction, options: InteractionOptionResolver) =>
@@ -350,6 +352,19 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
           await helper.editReply(response);
 
           return;
+        }
+
+        case CustomId.RELEASE_SELECT: {
+          await helper.deferUpdate();
+          const changelog = await getChangelog(values[0]);
+
+          if (!changelog) {
+            await fallbackResponse(helper, t("features:utils.NO_CHANGELOG"));
+            return;
+          }
+
+          await helper.editReply(changelog);
+          break;
         }
         default:
           return;

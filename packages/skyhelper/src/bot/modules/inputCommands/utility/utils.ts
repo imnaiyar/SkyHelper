@@ -2,14 +2,24 @@ import type { Command } from "@/structures";
 import { handleTimestamp } from "./sub/timestamp.js";
 import { getChangelog, getSuggestion } from "./sub/utils.js";
 import { UTILS_DATA } from "@/modules/commands-data/utility-commands";
+import { fallbackResponse } from "@/utils/interactions";
 
 export default {
   async interactionRun({ helper, options }) {
     const sub = options.getSubcommand();
     switch (sub) {
-      case "changelog":
-        await getChangelog(helper);
+      case "changelog": {
+        await helper.defer();
+        const response = await getChangelog();
+
+        if (!response) {
+          await fallbackResponse(helper, helper.t("features:utils.NO_CHANGELOG"));
+          return;
+        }
+
+        await helper.editReply(response);
         break;
+      }
       case "contact-us":
         await getSuggestion(helper, options);
         break;

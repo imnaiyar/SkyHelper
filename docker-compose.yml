@@ -21,6 +21,7 @@ services:
       - TOKEN
       - CLIENT_ID
       - MONGO_CONNECTION
+      - GITHUB_ACCESS_TOKEN
       - PUBLIC_KEY
       - TOPGG_TOKEN
       - DBL_TOKEN
