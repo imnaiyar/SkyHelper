@@ -1,16 +1,21 @@
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
+import Utils from "@/utils/classes/Utils";
 import {
+  ComponentType,
   MessageFlags,
   type APIEmbed,
   type APIModalInteractionResponseCallbackData,
   type APIModalSubmitInteraction,
+  type APISelectMenuOption,
 } from "@discordjs/core";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
-import { container, separator, textDisplay } from "@skyhelperbot/utils";
+import { container, row, separator, textDisplay } from "@skyhelperbot/utils";
 import { readFile } from "node:fs/promises";
 
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res) as Record<string, any>);
-const version = pkg.version;
+const currentVersion = pkg.version;
+
+// #region suggestion
 export async function getSuggestion(helper: InteractionHelper, options: InteractionOptionResolver) {
   const { client, t } = helper;
   const attachment = options.getAttachment("attachment");
@@ -94,27 +99,25 @@ export async function getSuggestion(helper: InteractionHelper, options: Interact
     });
 }
 
-export async function getChangelog(helper: InteractionHelper) {
-  await helper.defer();
-  const releases = (await fetch("https://api.github.com/repos/imnaiyar/SkyHelper/releases").then((res) => res.json())) as any[];
+// #region changelog
+export async function getChangelog(tag?: string) {
+  const access_token = process.env.GITHUB_ACCESS_TOKEN;
 
-  const latest = releases.find((r: { tag_name: string }) => r.tag_name === `skyhelper@${version}`);
+  const releases = (await fetch("https://api.github.com/repos/imnaiyar/SkyHelper/releases", {
+    headers: access_token ? { Authorization: `Bearer ${access_token}` } : {},
+  }).then((res) => res.json())) as Array<{ tag_name: string; body: string; published_at: string }>;
 
-  if (!latest) {
-    await helper.editReply({
-      content: helper.t("features:utils.NO_CHANGELOG"),
-    });
-    return;
-  }
+  const release = releases.find((r) => r.tag_name === (tag ?? `skyhelper@${currentVersion}`));
+
+  if (!release) return null;
+
+  const version = release.tag_name.replace("skyhelper@", "v");
 
   const components = container(
-    textDisplay(
-      `# Release \`v${version}\``,
-      `-# Released on: ${helper.client.utils.time(new Date(latest.published_at as string), "d")}`,
-    ),
+    textDisplay(`# Release \`${version}\``, `-# Released on: ${Utils.time(new Date(release.published_at), "d")}`),
     separator(true, 1),
     textDisplay(
-      (latest.body as string)
+      release.body
         .replace(/by @\w+/g, "")
         .replace(/\(#\d+\)/g, "")
         .replace(/^\s*Full Changelog:.*$/gm, "")
@@ -127,5 +130,28 @@ export async function getChangelog(helper: InteractionHelper) {
     separator(true, 1),
     textDisplay("-# See the full/previous releases on [GitHub](https://github.com/imnaiyar/SkyHelper/releases)"),
   );
-  await helper.editReply({ components: [components], flags: MessageFlags.IsComponentsV2 });
+
+  // release version select
+  const release_select: APISelectMenuOption[] = releases
+    .filter((r) => r.tag_name.startsWith("skyhelper"))
+    .map((r) => ({
+      // strip `skyhelper@` from tag name so only version tag remains, like `v7.9.0`
+      label: r.tag_name.replace("skyhelper@", "v"),
+      value: r.tag_name,
+      default: release.tag_name === r.tag_name,
+      description: new Date(r.published_at).toDateString(),
+    }))
+    .slice(0, 25);
+
+  return {
+    components: [
+      components,
+      row({
+        type: ComponentType.StringSelect,
+        custom_id: Utils.store.serialize(Utils.customId.RELEASE_SELECT, { user: null }),
+        options: release_select,
+      }),
+    ],
+    flags: MessageFlags.IsComponentsV2,
+  };
 }
