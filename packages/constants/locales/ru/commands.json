@@ -106,6 +106,10 @@
       "EMBED_DESCRIPTION": "Для получения подробной информации об осколках используйте {{shardsCmd}}",
       "EMBED_FOOTER": "Страница {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "Изменить месяц/год",
+      "SELECT_INFOGRAPHICS": "Инфографика",
+      "SELECT_INFOGRAPHICS_DESCRIPTION": "Показать календарь как инфографический календарь в стиле календаря",
+      "SELECT_LEGACY": "Наследие",
+      "SELECT_LEGACY_DESCRIPTION": "Показывать календарь шарда в тексте старого текста",
       "MODAL_MONTH": "Select Month",
       "MODAL_YEAR": "Enter Year (Format: YYYY)",
       "INVALID_DATE": "Неверный формат даты (`{{DATE}}`). Пожалуйста, введите месяц и год в этом формате: ММ-ГГГГ (например, 01-2022)"
