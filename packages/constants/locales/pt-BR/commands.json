@@ -106,6 +106,10 @@
       "EMBED_DESCRIPTION": "Para detalhes dos fragmentos, use {{shardsCmd}}",
       "EMBED_FOOTER": "Página {{INDEX}}/{{TOTAL}}",
       "CHANGE_BUTTON": "Alterar mês/ano",
+      "SELECT_INFOGRAPHICS": "Infográficos",
+      "SELECT_INFOGRAPHICS_DESCRIPTION": "Mostrar o calendário como um infográfico estilo calendário",
+      "SELECT_LEGACY": "Antigo",
+      "SELECT_LEGACY_DESCRIPTION": "Mostrar o calendário de fragmentos na visualização de texto legado",
       "MODAL_MONTH": "Selecione o mês",
       "MODAL_YEAR": "Insira o ano (formato: YYYY)",
       "INVALID_DATE": "Formato de data inválido (`{{DATE}}`). Insira o mês e o ano neste formato: MM-YYYY (ex.: 01-2022)"
