@@ -1,6 +1,5 @@
 import config from "@/config";
 import type { APIUser } from "@discordjs/core";
-import { HttpException, HttpStatus } from "@nestjs/common";
 import * as Sentry from "@sentry/node";
 /**
  * For Dashboard, validate dashboard admin

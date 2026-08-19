@@ -16,7 +16,6 @@ import { fetchSkyData, handlePlannerNavigation, PlannerDataService } from "@/pla
 import { DisplayTabs } from "@/types/planner";
 import { nanoid } from "nanoid";
 import { setLoadingState } from "@/utils/loading";
-import { CustomId, store } from "@/utils/customId-store";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction;
@@ -102,10 +101,10 @@ export async function handleErrorModal(helper: InteractionHelper) {
 }
 
 // TODO: Handle this later
-export async function breakdownModalDisplay(helper: InteractionHelper, type: string) {
+export async function breakdownModalDisplay(helper: InteractionHelper, _type: string) {
   const settings = await helper.client.schemas.getUser(helper.user);
   const data = PlannerDataService.resolveProgress(await fetchSkyData(helper.client), settings.plannerData);
-  const breakdowns = PlannerDataService.calculateCurrencyBreakdown(data);
+  const _breakdowns = PlannerDataService.calculateCurrencyBreakdown(data);
 }
 
 export async function handleCurrencyModifyModal(helper: InteractionHelper) {

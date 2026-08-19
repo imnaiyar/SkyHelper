@@ -24,7 +24,7 @@ import { emojis } from "@skyhelperbot/constants";
 import { container, mediaGallery, mediaGalleryItem, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";
 import { CustomId } from "@/utils/customId-store";
 import { LeaderboardCard, type LeaderboardUserData } from "@/utils/image-generators/LeaderBoardCard";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 const modalComponent = (id: string, word: string): APIModalInteractionResponseCallbackData => ({
   custom_id: "skygame_hangman_word_modal" + `-${id}`,
   title: "Provide a Word",

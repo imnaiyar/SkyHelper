@@ -1,5 +1,5 @@
 import type { Command, SkyHelper } from "@/structures";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import { TRAVELING_SPIRITS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData, type APIUser } from "@discordjs/core";
 import { container, separator, textDisplay } from "@skyhelperbot/utils";

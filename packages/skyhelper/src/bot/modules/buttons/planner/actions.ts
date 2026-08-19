@@ -21,7 +21,6 @@ import { shardsInfo, ShardsUtil } from "@skyhelperbot/utils";
 import { buildShardEmbed } from "@/utils/classes/Embeds";
 import { zone } from "@skyhelperbot/constants";
 import { SpiritTreeHelper } from "skygame-data";
-import { title } from "process";
 import type { IPlannerFriend } from "@/planner/friends";
 
 /**

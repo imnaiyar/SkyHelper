@@ -12,7 +12,7 @@ import {
 } from "@discordjs/core";
 import { DateTime } from "luxon";
 import Utils from "./Utils.js";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import {
   eventData,
   SkytimesUtils as skyutils,

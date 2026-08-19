@@ -1,5 +1,5 @@
 import type { APIMessageComponentButtonInteraction } from "@discordjs/core";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { Awaitable } from "@/types/utils";
 import type { CustomId, store } from "@/utils/customId-store";

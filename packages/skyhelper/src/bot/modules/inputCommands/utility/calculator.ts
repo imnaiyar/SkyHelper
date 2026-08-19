@@ -1,4 +1,4 @@
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import { CALCULATOR_DATA } from "@/modules/commands-data/utility-commands";
 import { fetchSkyData, PlannerDataService, PlannerService } from "@/planner";
 import type { Command } from "@/structures";

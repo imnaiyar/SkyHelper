@@ -1,13 +1,6 @@
 import { createCanvas, type SKRSContext2D } from "@napi-rs/canvas";
 import { type ISpiritTree, type ISpiritTreeTier, type INode, SpiritTreeHelper } from "skygame-data";
-import {
-  preloadTierTreeImages,
-  drawItem,
-  drawLine,
-  drawBackground,
-  drawSpiritText,
-  type GenerateSpiritTreeOptions,
-} from "./SpiritTreeShared.js";
+import { preloadTierTreeImages, drawItem, drawLine, drawSpiritText, type GenerateSpiritTreeOptions } from "./SpiritTreeShared.js";
 import { PlannerService } from "@/planner";
 import { drawBotTitleHeader } from "./shared.js";
 

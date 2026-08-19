@@ -10,7 +10,7 @@ export default defineButton({
     name: "shards-scroll",
   },
   id: CustomId.ShardsScroll,
-  async execute(interaction, t, helper, { date }) {
+  async execute(_interaction, t, helper, { date }) {
     const givenDate = utils.getDate(date) as DateTime;
     await helper.deferUpdate();
     const res = buildShardEmbed(givenDate, t);

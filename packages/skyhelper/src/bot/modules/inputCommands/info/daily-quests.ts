@@ -3,7 +3,7 @@ import type { Command, SkyHelper } from "@/structures";
 import { DateTime } from "luxon";
 import { textDisplay, separator } from "@skyhelperbot/utils";
 
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import { DAILY_QUESTS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags } from "@discordjs/core";
 export default {
