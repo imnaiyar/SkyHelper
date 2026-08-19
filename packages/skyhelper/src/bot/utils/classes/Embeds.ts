@@ -1,4 +1,4 @@
-import { ShardsUtil as utils, shardsInfo, shardsTimeline, row, button, getNextTs } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, row, button, getNextTs } from "@skyhelperbot/utils";
 import {
   ButtonStyle,
   ComponentType,
@@ -27,7 +27,7 @@ import {
 import type { SkyHelper } from "@/structures/Client";
 import type { DailyQuestsSchema, GuildSchema } from "@/types/schemas";
 import { CalendarMonths } from "../constants.js";
-import { currency, emojis, RemindersEventsMap, zone } from "@skyhelperbot/constants";
+import { currency, emojis, realms_emojis, RemindersEventsMap, zone } from "@skyhelperbot/constants";
 import { paginate } from "../paginator.js";
 import RemindersUtils from "./RemindersUtils.js";
 import type { InteractionHelper } from "./InteractionUtil.js";
@@ -36,6 +36,8 @@ import { PlannerAction } from "@/types/planner";
 import { fetchSkyData, PlannerService } from "@/planner";
 import { LRUCache } from "lru-cache";
 import { generateShardsCalendarCard } from "../image-generators/ShardsCalendarCard.js";
+
+const CDN_PREFIX = "https://cdn.skyhelper.xyz/shards/";
 /**
  * @param date The date for which the shards embed is to be built
  * @param footer The footer text for the embed
@@ -50,8 +52,8 @@ export function buildShardEmbed(
 ): {
   components: APIMessageTopLevelComponent[];
 } {
-  const { currentShard, currentRealm } = utils.shardsIndex(date);
-  const info = shardsInfo[currentRealm]![currentShard]!;
+  const shard = utils.getShard(date);
+
   const today = DateTime.now().setZone("America/Los_Angeles").startOf("day");
   const formatted = date.hasSame(today, "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd MMMM yyyy");
   const status = utils.getStatus(date);
@@ -77,7 +79,7 @@ export function buildShardEmbed(
   let comp1: APIContainerComponent;
   let comp2: APIContainerComponent;
 
-  if (status === "No Shard") {
+  if (!shard) {
     comp2 = container(textDisplay(`-# ${t("features:shards-embed.AUTHOR")}\n${formatted}`));
 
     comp1 = container(
@@ -91,11 +93,11 @@ export function buildShardEmbed(
     const getIndex = (i: number) => i.toString() + utils.getSuffix(i);
 
     // add cleared btn if red shard and curent day for planner
-    if (typeof cleared === "boolean" && info.type === "red" && DateTime.now().setZone(zone).hasSame(date, "day")) {
+    if (typeof cleared === "boolean" && shard.type === "red" && DateTime.now().setZone(zone).hasSame(date, "day")) {
       navBtns.push(
         button({
           label: cleared ? "Unclear" : "Cleared",
-          custom_id: createActionId({ action: PlannerAction.ShardsCleared, navState: { user } }),
+          custom_id: createActionId({ action: PlannerAction.ShardsCleared, actionType: date.toISO() ?? "", navState: { user } }),
           emoji: { id: cleared ? emojis.red_shard : emojis.checkmark },
           style: cleared ? 4 : 2,
         }),
@@ -103,15 +105,19 @@ export function buildShardEmbed(
     }
 
     comp2 = container(
-      section(
-        thumbnail(info.image, info.type),
-        `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}\n### ${
-          info.type === "red"
+      textDisplay(
+        `-# ${t("features:shards-embed.AUTHOR")} - ${formatted}`,
+        `### ${
+          shard.type === "red"
             ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard`
             : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`
-        } (${
-          info.wax ? `${info.wax} ${Utils.formatEmoji(emojis.wax, "Wax")}` : `${info.ac} ${Utils.formatEmoji(currency.ac, "AC")}`
-        })\n${emojis.tree_end} ${info.area}`,
+        } (${shard.reward} ${Utils.formatEmoji(
+          shard.type === "black" ? emojis.wax : currency.ac,
+          "Shard Reward",
+        )})\n${emojis.tree_end} ${t(`features:AREAS.${shard.areaKey}`)}, ${Utils.formatEmoji(realms_emojis[shard.realmKey])} ${
+          // @ts-expect-error key should be valid
+          t(`features:REALMS.${shard.realmKey.toUpperCase()}`)
+        }`,
       ),
     );
     comp1 = container(
@@ -127,7 +133,7 @@ export function buildShardEmbed(
         },
         `**${t("features:shards-embed.TIMELINE")}**` +
           "\n" +
-          status
+          status!
             .map((s, i, arr) => {
               const prefix = `${s.ended ? "-# " : ""}${i === arr.length - 1 ? emojis.tree_end : emojis.tree_middle}**${getIndex(i + 1)} Shard:** `;
               // prettier-ignore
@@ -142,8 +148,14 @@ export function buildShardEmbed(
             .join("\n"),
       ),
       separator(true, 1),
-      section(thumbnail(info.location, t("features:shards-embed.LOCATION")), `**${t("features:shards-embed.LOCATION")}**`),
-      section(thumbnail(info.data, t("features:shards-embed.DATA")), `**${t("features:shards-embed.DATA")}**`),
+      section(
+        thumbnail(CDN_PREFIX + `location/${shard.areaKey}.png`, t("features:shards-embed.LOCATION")),
+        `**${t("features:shards-embed.LOCATION")}**`,
+      ),
+      section(
+        thumbnail(CDN_PREFIX + `data/${shard.areaKey}.png`, t("features:shards-embed.DATA")),
+        `**${t("features:shards-embed.DATA")}**`,
+      ),
       ...(navBtns.length ? [separator(true, 1), row(navBtns)] : []),
     );
   }
@@ -356,19 +368,24 @@ function getLegacyCalendarDescription(
   const description =
     toDisplay
       .map((d) => {
-        const { currentRealm, currentShard } = utils.shardsIndex(d);
-        const timelines = shardsTimeline(d)[currentShard];
-        const noShard = utils.getStatus(d);
-        const info = shardsInfo[currentRealm]![currentShard]!;
+        const shard = utils.getShard(d);
+        const occurrences = shard?.occurrences;
         let desc = `**${
           d.hasSame(now, "day")
             ? Utils.time(d.toUnixInteger(), "D") + ` (${t("features:shards-embed.TODAY")}) <a:uptime:1228956558113771580>`
             : Utils.time(d.toUnixInteger(), "D")
         }**\n`;
-        desc +=
-          typeof noShard === "string"
-            ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-            : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: info.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${info.area}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: timelines.map((ti) => Utils.time(ti.start.toUnixInteger(), "T")).join(" • ") })}`;
+        desc += !shard
+          ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
+          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", {
+              INFO:
+                shard.type === "red"
+                  ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard`
+                  : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`,
+              AREA: `*${t(`features:AREAS.${shard.areaKey}`)}*`,
+            })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", {
+              TIME: occurrences?.map((ti) => Utils.time(ti.shardLand.toUnixInteger(), "T")).join(" • "),
+            })}`;
         return desc;
       })
       .join("\n\n") + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`;

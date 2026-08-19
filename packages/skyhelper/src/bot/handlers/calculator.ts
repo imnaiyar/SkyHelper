@@ -240,7 +240,7 @@ export function calculateAscendedCandles(
       edenCounts++;
     }
 
-    let dailyShard = ShardsUtil.getNextShard(simDate, ["red"])?.info.ac ?? 0;
+    let dailyShard = ShardsUtil.getNextShard(simDate, ["red"])?.info.reward ?? 0;
 
     // reset to zero if already cleared for todays shard
     if (daysPassed === 0 && shardsCleared) dailyShard = 0;

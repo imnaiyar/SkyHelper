@@ -246,7 +246,7 @@ export abstract class BasePlannerHandler {
       label: "Home",
       style: 4,
       custom_id: this.createCustomId({ p: null, it: null, f: null, d: null, b: null }),
-      emoji: { id: realms_emojis.Home },
+      emoji: { id: realms_emojis.home },
     });
   }
 

@@ -6,6 +6,7 @@ import { currency, emojis, zone } from "@skyhelperbot/constants";
 import config from "@/config";
 import { CalendarMonths } from "@/utils/constants";
 import { drawBotTitleHeader } from "./shared.js";
+import { getTranslator } from "@/i18n";
 
 // #region Constants
 const ZONE = zone;
@@ -31,15 +32,6 @@ const BOTTOM_PAD = 30;
 // Weekday labels
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
-// Short realm labels used on the image
-const REALM_SHORT_NAMES: Record<string, string> = {
-  prairie: "Prairie",
-  forest: "Forest",
-  valley: "Valley",
-  wasteland: "Wasteland",
-  vault: "Vault",
-};
-
 const CARD_COLORS = {
   red: { tint: "rgba(224, 90, 90, 0.14)", border: "#e06a6a" },
   black: { tint: "rgba(18, 18, 26, 0.4)", border: "#777783" },
@@ -61,8 +53,7 @@ export interface ShardsCalendarDayData {
   location: string;
   /** Short realm name (e.g. "Prairie") */
   realm: string;
-  /** Reward, or null when unknown */
-  reward: number | null;
+  reward: number;
   /** Shard time windows formatted as "HH:mm-HH:mm" (absolute, shard timezone) */
   timings: string[];
 }
@@ -83,20 +74,19 @@ export function getMonthDays(month: number, year: number): DateTime[] {
 export function buildDayData(date: DateTime): ShardsCalendarDayData | null {
   const shard = ShardsUtil.getShard(date);
   if (!shard) {
-    return { date, type: null, location: "", realm: "", reward: null, timings: [] };
+    return { date, type: null, location: "", realm: "", reward: 0, timings: [] };
   }
-  const { info, timings } = shard;
-  const { currentRealm } = ShardsUtil.shardsIndex(date);
-  // `info.area` embeds a custom emoji,so strip it
-  // TODO: This should be temporary, instead of hardcoding stuff, refactor shard data to be generated dynamically with only necessary info
-  const shortName = info.area.split(",")[0]?.trim() ?? info.area;
+
+  // get the english name for the area
+  const shortName = getTranslator("en-US")(`features:AREAS.${shard.areaKey}`);
+
   return {
     date,
-    type: info.type,
+    type: shard.type,
     location: shortName,
-    realm: REALM_SHORT_NAMES[currentRealm] ?? currentRealm,
-    reward: info.wax ?? info.ac ?? null,
-    timings: timings.map((t) => `${t.start.toFormat("HH:mm")}-${t.end.toFormat("HH:mm")}`),
+    realm: shard.realmKey.charAt(0).toUpperCase() + shard.realmKey.slice(0),
+    reward: shard.reward,
+    timings: shard.occurrences.map((t) => `${t.shardLand.toFormat("HH:mm")}-${t.shardEnd.toFormat("HH:mm")}`),
   };
 }
 

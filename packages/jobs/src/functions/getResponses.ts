@@ -1,6 +1,6 @@
-import { emojis, type REMINDERS_KEY } from "@skyhelperbot/constants";
+import { emojis, realms_emojis, type REMINDERS_KEY } from "@skyhelperbot/constants";
 import type { LangKeys, TranslatorType } from "./getTranslator";
-import { container, section, separator, ShardsUtil, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
+import { container, section, separator, ShardsUtil, textDisplay, type EventDetails } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
 import type { DateTime } from "luxon";
 import { Schema, SchemaStore, t as tt } from "@sapphire/string-store";
@@ -129,7 +129,7 @@ export function getShardReminderResponse(now: DateTime, t: TranslatorType, offse
   });
 
   return [
-    section(thumbnail(nextShard.info.image), text, emojis.tree_end + nextShard.info.type),
+    textDisplay(text, emojis.tree_end + (nextShard.info.type === "red" ? "Red Shard" : "Black Shard")),
     separator(true, 1),
     section(
       {
@@ -138,7 +138,10 @@ export function getShardReminderResponse(now: DateTime, t: TranslatorType, offse
         label: "Info",
         style: 2,
       },
-      `Location: ${nextShard.info.area}`,
+      `Location: ${t(`features:AREAS.${nextShard.info.areaKey}`)}, <:Realm:${realms_emojis[nextShard.info.realmKey]}> ${
+        // @ts-expect-error realmkey is lowercased locale name, it should exist
+        t(`features:REALMS.${nextShard.info.realmKey.toUpperCase()}`)
+      }`,
       `Timeline: <t:${nextShard.start.toUnixInteger()}:T> - <t:${nextShard.end.toUnixInteger()}:T>`,
     ),
   ];

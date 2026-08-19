@@ -2,7 +2,7 @@ import { defineButton } from "@/structures";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { CustomId } from "@/utils/customId-store";
 import type { APIActionRowComponent, APIButtonComponent, APIEmbed } from "@discordjs/core";
-import { ShardsUtil as utils, shardsTimeline } from "@skyhelperbot/utils";
+import { ShardsUtil as utils, ShardsUtil } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 export default defineButton({
   data: {
@@ -15,12 +15,15 @@ export default defineButton({
     const Zhii = await client.api.users.get("650487047160725508");
     const Christian = await client.api.users.get("594485678625128466");
     const date = utils.getDate(shardDate) as DateTime;
-    const { currentShard } = utils.shardsIndex(date);
     let page = 0;
-    const datas = shardsTimeline(date)[currentShard];
-    const total = datas.length - 1;
+    const shard = ShardsUtil.getShard(date);
+    if (!shard) throw new Error(`Invalid Shard Date (possibly no shard): ${date}`);
+
+    const occurrences = shard.occurrences;
+    const total = occurrences.length - 1;
+
     const getResponse = () => {
-      const data = datas[page]!;
+      const data = occurrences[page]!;
       const shardEmbed: APIEmbed = {
         title: "__" + (page + 1).toString() + utils.getSuffix(page + 1) + " Shard__",
         description: `**${DateTime.now().setZone(client.timezone).startOf("day").hasSame(date.startOf("day"), "day") ? t("features:shards-embed.TODAY") : date.toFormat("dd LLLL yyyy")}**`,
@@ -32,7 +35,7 @@ export default defineButton({
         fields: [
           {
             name: t("buttons:SHARD_TIMELINE.COLOR.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.COLOR.VALUE", { TIME: client.utils.time(data.earlySky.toUnixInteger(), "T") }),
+            value: t("buttons:SHARD_TIMELINE.COLOR.VALUE", { TIME: client.utils.time(data.skyChange.toUnixInteger(), "T") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.GATE.LABEL"),
@@ -40,15 +43,15 @@ export default defineButton({
           },
           {
             name: t("buttons:SHARD_TIMELINE.LANDS.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.LANDS.VALUE", { TIME: client.utils.time(data.start.toUnixInteger(), "T") }),
+            value: t("buttons:SHARD_TIMELINE.LANDS.VALUE", { TIME: client.utils.time(data.shardLand.toUnixInteger(), "T") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.ENDS.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.ENDS.VALUE", { TIME: client.utils.time(data.end.toUnixInteger(), "t") }),
+            value: t("buttons:SHARD_TIMELINE.ENDS.VALUE", { TIME: client.utils.time(data.shardEnd.toUnixInteger(), "t") }),
           },
           {
             name: t("buttons:SHARD_TIMELINE.MUSIC.LABEL"),
-            value: t("buttons:SHARD_TIMELINE.MUSIC.VALUE", { MUSIC: `**${data.shardMusic}**` }),
+            value: t("buttons:SHARD_TIMELINE.MUSIC.VALUE", { MUSIC: `**[${shard.music.name}](${shard.music.spotifyLink})**` }),
           },
         ],
         author: {

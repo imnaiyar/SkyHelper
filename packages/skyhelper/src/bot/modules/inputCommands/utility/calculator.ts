@@ -133,7 +133,7 @@ function buildCheckboxes(
   if (type === "ac") {
     checkboxes.push({ label: t("EDEN_COMPLETED_Q"), value: "weekly" });
     const shard = ShardsUtil.getShard(DateTime.now().setZone(zone));
-    if (shard && shard.info.type === "red") {
+    if (shard && shard.type === "red") {
       checkboxes.push({
         label: t("SHARD_COMPLETED_Q"),
         value: "today_shard",

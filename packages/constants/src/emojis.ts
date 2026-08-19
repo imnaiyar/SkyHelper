@@ -1,3 +1,5 @@
+import { RealmValue, type RealmKey } from "./realmsData.js";
+
 export const emojis = {
   tree_top: "<:tree_top:1424038331716604017>",
   tree_middle: "<:tree_middle:1424038339958407301> ",
@@ -40,16 +42,16 @@ export const emojis = {
 } as const;
 
 export const realms_emojis = {
-  "Isle of Dawn": "1424053501285236867",
-  "Daylight Prairie": "1424053517215076553",
-  "Hidden Forest": "1424053534063595644",
-  "Valley of Triumph": "1424053551679930429",
-  "Golden Wasteland": "1424053568238915645",
-  "Vault of Knowledge": "1424053585116925993",
-  "Eye of Eden": "1424053600883048639",
-  "Aviary Village": "1424053618100797605",
-  Home: "1424053634429354099",
-} as const;
+  [RealmValue.Isle]: "1424053501285236867",
+  [RealmValue.Prairie]: "1424053517215076553",
+  [RealmValue.Forest]: "1424053534063595644",
+  [RealmValue.Valley]: "1424053551679930429",
+  [RealmValue.Wasteland]: "1424053568238915645",
+  [RealmValue.Vault]: "1424053585116925993",
+  [RealmValue.Eden]: "1424053600883048639",
+  [RealmValue.Aviary]: "1424053618100797605",
+  [RealmValue.Home]: "1424053634429354099",
+} satisfies Record<RealmKey, string>;
 
 export const season_emojis = {
   Lightmending: "1461790726907101215",
