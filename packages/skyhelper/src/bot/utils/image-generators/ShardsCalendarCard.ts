@@ -32,15 +32,6 @@ const BOTTOM_PAD = 30;
 // Weekday labels
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
-// Short realm labels used on the image
-const REALM_SHORT_NAMES: Record<string, string> = {
-  prairie: "Prairie",
-  forest: "Forest",
-  valley: "Valley",
-  wasteland: "Wasteland",
-  vault: "Vault",
-};
-
 const CARD_COLORS = {
   red: { tint: "rgba(224, 90, 90, 0.14)", border: "#e06a6a" },
   black: { tint: "rgba(18, 18, 26, 0.4)", border: "#777783" },

@@ -1,4 +1,4 @@
-import { MapsData, RealmValue, SummaryData, getMaps, getSummary, realms_emojis, type RealmKey } from "@skyhelperbot/constants";
+import { MapsData, SummaryData, getMaps, getSummary, realms_emojis, type RealmKey } from "@skyhelperbot/constants";
 import { handleSpirits } from "./handleSpirits.js";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
