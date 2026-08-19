@@ -1,4 +1,3 @@
-import { startSeasonCalculator } from "@/handlers/season-calculator";
 import { fetchSkyData, PlannerDataService, PlannerService } from "@/planner";
 import { defineButton } from "@/structures";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
@@ -16,7 +15,7 @@ export default defineButton({
     name: "default",
   },
   id: CustomId.Default,
-  async execute(interaction, t, helper, { data }) {
+  async execute(_interaction, t, helper, { data }) {
     // currency modify btn
     if (data === "currency_modify") {
       await handleCurrencyModify(helper);

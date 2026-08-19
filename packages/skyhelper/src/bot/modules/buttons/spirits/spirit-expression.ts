@@ -1,5 +1,5 @@
 import { defineButton } from "@/structures";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import { ButtonStyle, ComponentType, type APIButtonComponent } from "@discordjs/core";
 import Utils from "@/utils/classes/Utils";

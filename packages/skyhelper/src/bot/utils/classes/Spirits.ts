@@ -1,5 +1,5 @@
 import type { SkyHelper } from "@/structures";
-import { getTranslator, type TranslatorType } from "@/i18n";
+import { type TranslatorType } from "@/i18n";
 import { ButtonStyle, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
 import utils from "./Utils.js";
 import { button, container, section, separator, textDisplay, thumbnail } from "@skyhelperbot/utils";

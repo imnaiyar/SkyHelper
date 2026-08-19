@@ -4,7 +4,6 @@ import {
   preloadNodeTreeImages,
   drawItem,
   drawConnector,
-  drawBackground,
   drawSpiritText,
   type GenerateSpiritTreeOptions,
 } from "./SpiritTreeShared.js";

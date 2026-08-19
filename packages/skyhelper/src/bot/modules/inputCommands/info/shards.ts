@@ -1,6 +1,6 @@
 import type { Command } from "@/structures";
 import { ShardsUtil } from "@skyhelperbot/utils";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import { SHARDS_DATA } from "@/modules/commands-data/info-commands";
 import { MessageFlags, type APIInteractionResponseCallbackData } from "@discordjs/core";
 import { buildShardEmbed } from "@/utils/classes/Embeds";

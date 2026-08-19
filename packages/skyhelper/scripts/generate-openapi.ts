@@ -68,7 +68,7 @@ async function generateSpec() {
     });
 
     // Get output path from command line args or use default
-    const outputPath = process.argv[2] || join(process.cwd(), "./openapi.json");
+    const outputPath = process.argv[2] ?? join(process.cwd(), "./openapi.json");
     generateOpenApiSpec(app, outputPath);
 
     await app.close();
@@ -80,4 +80,4 @@ async function generateSpec() {
 }
 
 // Run the script
-generateSpec();
+void generateSpec();

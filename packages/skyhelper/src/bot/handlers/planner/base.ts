@@ -18,7 +18,6 @@ import type { SkyHelper } from "@/structures";
 import { DisplayTabs, FilterType, type IPaginatedProps, type NavigationState } from "@/types/planner";
 import { PlannerService } from "./helpers/planner.service.js";
 import type { ISkyData } from "skygame-data";
-import { emoji } from "zod/v4";
 
 /** Mappings of currency keys with thier names */
 export const currencyMap = {

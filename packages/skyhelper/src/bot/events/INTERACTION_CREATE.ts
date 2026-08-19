@@ -9,16 +9,12 @@ import * as Sentry from "@sentry/node";
 import {
   ApplicationCommandType,
   ChannelType,
-  ComponentType,
   InteractionType,
   Utils as IntUtils,
   MessageFlags,
-  TextInputStyle,
   type APIApplicationCommandInteraction,
   type APIChatInputApplicationCommandInteraction,
   type APIEmbed,
-  type APILabelComponent,
-  type APIModalInteractionResponseCallbackData,
   type GatewayDispatchEvents,
 } from "@discordjs/core";
 import { InteractionOptionResolver } from "@sapphire/discord-utilities";
@@ -33,7 +29,7 @@ import {
 import { handleSkyTimesSelect } from "@/handlers/handleSelectInteraction";
 import { handleSingleMode } from "@/modules/inputCommands/fun/sub/scramble";
 import { CustomId } from "@/utils/customId-store";
-import { fetchSkyData, handlePlannerNavigation, PlannerDataService, PlannerService } from "@/planner";
+import { handlePlannerNavigation } from "@/planner";
 import type { DisplayTabs, NavigationState } from "@/types/planner";
 import { setLoadingState } from "@/utils/loading";
 import { handleCalculatorModal } from "@/handlers/calculator";

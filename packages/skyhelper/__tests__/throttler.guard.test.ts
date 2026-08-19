@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { describe, expect, it, beforeEach, afterEach } from "vitest";
 import { CustomThrottlerGuard } from "../src/api/guards/throttler.guard.js";
 import { ExecutionContext } from "@nestjs/common";
 

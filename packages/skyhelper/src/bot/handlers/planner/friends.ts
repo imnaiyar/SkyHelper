@@ -3,17 +3,7 @@ import { BasePlannerHandler } from "./base.js";
 import { DisplayTabs, FilterType, OrderType, PlannerAction, type NavigationState } from "@/types/planner";
 import type { UserSchema } from "@/types/schemas";
 import type { SkyHelper } from "@/structures";
-import {
-  button,
-  container,
-  createEmojiProgressBar,
-  mediaGallery,
-  mediaGalleryItem,
-  row,
-  section,
-  separator,
-  textDisplay,
-} from "@skyhelperbot/utils";
+import { button, container, row, section, separator, textDisplay } from "@skyhelperbot/utils";
 import { createActionId, FriendsTreeGuid, PlannerDataService, spiritTreeDisplay } from "./index.js";
 import { getNodeProgress } from "./helpers/tree.progress.js";
 import type { ResponseData } from "@/utils/classes/InteractionUtil";

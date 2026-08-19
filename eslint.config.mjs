@@ -75,7 +75,7 @@ export default defineConfig([
       "@typescript-eslint/no-empty-object-type": "off",
 
       "@typescript-eslint/no-unused-vars": [
-        "warn",
+        "error",
         {
           vars: "all",
           args: "all",

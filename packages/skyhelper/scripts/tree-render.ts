@@ -125,7 +125,7 @@ async function main() {
 
     console.log("Loading SkyGame Planner data...");
     // only basic client since we do not need to fully connect and only needed for emojis
-    const rest = new REST().setToken(process.env.TOKEN!);
+    const rest = new REST().setToken(process.env.TOKEN);
     const gateway = new WebSocketManager({ fetchGatewayInformation: () => "" as any, intents: 1 });
     const client = new SkyHelper({ gateway: gateway, rest });
     const data = await fetchSkyData(client);
@@ -157,7 +157,6 @@ async function main() {
       spiritName: options.spiritName,
       spiritSubtitle: "Travleing Spirit #150",
     };
-    // @ts-expect-error i dont need to be robust here
     const imageBuffer = tree.node ? await generateSpiritTree(tree, option) : await generateSpiritTreeTier(tree, option);
     console.timeEnd("Render time");
 

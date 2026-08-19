@@ -1,6 +1,5 @@
 import { currency } from "@skyhelperbot/constants";
-import { SpiritTreeHelper, type ICost, type INode, type ISkyData, type ISpiritTree, type ISpiritTreeTier } from "skygame-data";
-import { keyof } from "zod/v4";
+import { SpiritTreeHelper, type ICost, type INode, type ISpiritTree, type ISpiritTreeTier } from "skygame-data";
 
 const Empty_Cost = { h: 0, c: 0, sc: 0, sh: 0, ac: 0, ec: 0 };
 export class CostUtils {

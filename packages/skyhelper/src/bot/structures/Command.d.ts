@@ -9,7 +9,7 @@ import type {
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import type { SkyHelper } from "./Client.ts";
 import type { Awaitable, OverrideLocalizations } from "@/types/utils";
-import type { getTranslator, TranslatorType } from "@/i18n";
+import type { TranslatorType } from "@/i18n";
 import type { PermissionsResolvable } from "@/utils/classes/PermissionUtils";
 import type { MessageFlags } from "@/utils/classes/MessageFlags";
 import type { Category } from "./Category.ts";

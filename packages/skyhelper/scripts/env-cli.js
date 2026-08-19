@@ -23,7 +23,7 @@ function generateEnvFile() {
     rl.question(chalk.bold.cyanBright`Enter your MongoDB connection URL${chalk.red`*`}: `, (dbUrl) => {
       const mongoUrlRegex = /^mongodb\+srv:\/\//;
       if (mongoUrlRegex.test(dbUrl)) {
-        envData["MONGO_CONNECTION"] = dbUrl;
+        envData.MONGO_CONNECTION = dbUrl;
         askClientIdUrl();
       } else {
         console.log(chalk.red`ERROR: ` + `Invalid MongoDB URL format. Please enter a valid MongoDB URL. Tutorials are above.`);
@@ -35,7 +35,7 @@ function generateEnvFile() {
   function askClientIdUrl() {
     rl.question(chalk.bold.cyanBright`Enter your Discord bot id${chalk.red`*`}: `, (clientId) => {
       if (clientId.trim().length) {
-        envData["CLIENT_ID"] = clientId;
+        envData.CLIENT_ID = clientId;
         askPublicKey();
       } else {
         console.log(
@@ -49,7 +49,7 @@ function generateEnvFile() {
   function askPublicKey() {
     rl.question(chalk.bold.cyanBright`Enter your Discord bot public key${chalk.red`*`}: `, (publicKey) => {
       if (publicKey.trim().length === 64) {
-        envData["PUBLIC_KEY"] = publicKey;
+        envData.PUBLIC_KEY = publicKey;
         askBotToken();
       } else {
         console.log(
@@ -64,7 +64,7 @@ function generateEnvFile() {
   function askBotToken() {
     rl.question(chalk.bold.cyanBright`Enter your bot token${chalk.red`*`}: `, (botToken) => {
       if (botToken.trim().length >= 40) {
-        envData["TOKEN"] = botToken;
+        envData.TOKEN = botToken;
         askSentryDSN();
       } else {
         console.log(chalk.red`ERROR: ` + "Invalid bot token. Please enter a valid token. Tutorials are above.");
@@ -76,7 +76,7 @@ function generateEnvFile() {
   function askSentryDSN() {
     rl.question(chalk.bold.cyanBright`Enter your Sentry.io DSN${chalk.red`*`}: `, (dsn) => {
       if (/https:\/\/[a-zA-Z0-9]+@o\d+\.ingest\.(?:de\.)?sentry\.io\/\d+/.test(dsn.trim())) {
-        envData["SENTRY_DSN"] = dsn;
+        envData.SENTRY_DSN = dsn;
         askWebhookErrors();
       } else {
         console.log(chalk.red`ERROR: ` + "Invalid Sentry.io DSN. Please enter a valid dsn. Tutorials are above.");
@@ -88,10 +88,10 @@ function generateEnvFile() {
   function askWebhookErrors() {
     rl.question(chalk.bold.cyanBright`Enter the Webhook URL for error logs: [Hit enter to skip]`, (errLogs) => {
       const webhookUrlRegex = /^https:\/\/discord\.com\/api\/webhooks/;
-      if (!errLogs?.length) {
+      if (!errLogs.length) {
         askWebhookJoinLeave();
       } else if (webhookUrlRegex.test(errLogs)) {
-        envData["ERROR_LOGS"] = errLogs;
+        envData.ERROR_LOGS = errLogs;
         askWebhookJoinLeave();
       } else {
         console.log(chalk.red`ERROR: ` + "Invalid Webhook URL format. Please enter a valid Webhook URL. Tutorials are above.");
@@ -103,10 +103,10 @@ function generateEnvFile() {
   function askWebhookJoinLeave() {
     rl.question(chalk.bold.cyanBright`Enter the Webhook URL for join/leave logs: [Hit enter to skip]`, (joinLeaveLogs) => {
       const webhookUrlRegex = /^https:\/\/discord\.com\/api\/webhooks/;
-      if (!joinLeaveLogs?.length) {
+      if (!joinLeaveLogs.length) {
         writeEnvFile();
       } else if (webhookUrlRegex.test(joinLeaveLogs)) {
-        envData["JOIN_LEAVE_LOGS"] = joinLeaveLogs;
+        envData.JOIN_LEAVE_LOGS = joinLeaveLogs;
         writeEnvFile();
       } else {
         console.log(chalk.red`ERROR: ` + "Invalid Webhook URL format. Please enter a valid Webhook URL. Tutorials are above.");
