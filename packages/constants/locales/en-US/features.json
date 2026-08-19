@@ -53,6 +53,28 @@
     "VAULT": "Vault of Knowledge",
     "EDEN": "Eye of Eden"
   },
+  "AREAS": {
+    "prairie.butterfly": "Butterfly Fields",
+    "prairie.village": "Prairie Village",
+    "prairie.cave": "Prairie Cave",
+    "prairie.bird": "Bird's Nest",
+    "prairie.island": "Sanctuary Island",
+    "forest.brook": "Forest Brook",
+    "forest.boneyard": "Boneyard",
+    "forest.end": "Forest's End",
+    "forest.tree": "Treehouse",
+    "forest.sunny": "Sunny Forest",
+    "valley.rink": "Ice Rink",
+    "valley.dreams": "Village of Dreams",
+    "valley.hermit": "Hermit's Valley",
+    "wasteland.temple": "Wasteland Temple",
+    "wasteland.battlefield": "Battlefield",
+    "wasteland.graveyard": "Graveyard",
+    "wasteland.crab": "Crab Fields",
+    "wasteland.ark": "Forgotten Ark",
+    "vault.starlight": "Starlight Desert",
+    "vault.jelly": "Jellyfish Cove"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "Season",
     "UNKNOWN": "Unknown Spirit",

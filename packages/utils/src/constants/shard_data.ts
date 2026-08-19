@@ -1,55 +1,39 @@
-import { RealmValue, zone } from "@skyhelperbot/constants";
+import { RealmValue, zone, type RealmKey } from "@skyhelperbot/constants";
 import { DateTime, Duration } from "luxon";
 
-export interface RealmInfo {
-  displayName: string;
-}
-
 const realms = Object.values(RealmValue).slice(4); // remove first 4 that are `home`, `eden`, `aviary`, and `isle` where shard doesn't land
-export const Realm = {
-  PRAIRIE: { displayName: "Daylight Prairie" },
-  FOREST: { displayName: "Hidden Forest" },
-  VALLEY: { displayName: "Valley of Triumph" },
-  WASTELAND: { displayName: "Golden Wasteland" },
-  VAULT: { displayName: "Vault of Knowledge" },
-} as const satisfies Record<string, RealmInfo>;
-
-export interface AreaInfo {
-  displayName: string;
-  key: string;
-}
 
 export const Areas = {
-  PRAIRIE_BUTTERFLY: { displayName: "Butterfly Fields", key: "prairie.butterfly" },
-  PRAIRIE_VILLAGE: { displayName: "Prairie Village", key: "prairie.village" },
-  PRAIRIE_CAVE: { displayName: "Prairie Cave", key: "prairie.cave" },
-  PRAIRIE_BIRD: { displayName: "Bird's Nest", key: "prairie.bird" },
-  PRAIRIE_ISLAND: { displayName: "Sanctuary Island", key: "prairie.island" },
-  FOREST_BROOK: { displayName: "Forest Brook", key: "forest.brook" },
-  FOREST_BONEYARD: { displayName: "Boneyard", key: "forest.boneyard" },
-  FOREST_END: { displayName: "Forest's End", key: "forest.end" },
-  FOREST_TREE: { displayName: "Treehouse", key: "forest.tree" },
-  FOREST_SUNNY: { displayName: "Sunny Forest", key: "forest.sunny" },
-  VALLEY_RINK: { displayName: "Ice Rink", key: "valley.rink" },
-  VALLEY_DREAMS: { displayName: "Village of Dreams", key: "valley.dreams" },
-  VALLEY_HERMIT: { displayName: "Hermit's Valley", key: "valley.hermit" },
-  WASTELAND_TEMPLE: { displayName: "Wasteland Temple", key: "wasteland.temple" },
-  WASTELAND_BATTLEFIELD: { displayName: "Battlefield", key: "wasteland.battlefield" },
-  WASTELAND_GRAVEYARD: { displayName: "Graveyard", key: "wasteland.graveyard" },
-  WASTELAND_CRAB: { displayName: "Crab Fields", key: "wasteland.crab" },
-  WASTELAND_ARK: { displayName: "Forgotten Ark", key: "wasteland.ark" },
-  VAULT_STARLIGHT: { displayName: "Starlight Desert", key: "vault.starlight" },
-  VAULT_JELLY: { displayName: "Jellyfish Cove", key: "vault.jelly" },
-} as const satisfies Record<string, AreaInfo>;
+  PRAIRIE_BUTTERFLY: "prairie.butterfly",
+  PRAIRIE_VILLAGE: "prairie.village",
+  PRAIRIE_CAVE: "prairie.cave",
+  PRAIRIE_BIRD: "prairie.bird",
+  PRAIRIE_ISLAND: "prairie.island",
+  FOREST_BROOK: "forest.brook",
+  FOREST_BONEYARD: "forest.boneyard",
+  FOREST_END: "forest.end",
+  FOREST_TREE: "forest.tree",
+  FOREST_SUNNY: "forest.sunny",
+  VALLEY_RINK: "valley.rink",
+  VALLEY_DREAMS: "valley.dreams",
+  VALLEY_HERMIT: "valley.hermit",
+  WASTELAND_TEMPLE: "wasteland.temple",
+  WASTELAND_BATTLEFIELD: "wasteland.battlefield",
+  WASTELAND_GRAVEYARD: "wasteland.graveyard",
+  WASTELAND_CRAB: "wasteland.crab",
+  WASTELAND_ARK: "wasteland.ark",
+  VAULT_STARLIGHT: "vault.starlight",
+  VAULT_JELLY: "vault.jelly",
+} as const;
 
-export type AreaValue = (typeof Areas)[keyof typeof Areas];
+export type AreaKey = (typeof Areas)[keyof typeof Areas];
 
 interface ShardInfo {
   offset: Duration;
   /** ISO weekday numbers: Monday = 1 ... Sunday = 7 (matches Luxon's `weekday`). */
   noShardDays: number[];
   rewards: number;
-  areas: AreaValue[];
+  areas: AreaKey[];
 }
 
 export interface ShardMusic {
@@ -120,14 +104,14 @@ export interface ShardOccurrence {
 export interface ShardData {
   type: "red" | "black";
   reward: number;
-  area: AreaValue;
+  areaKey: AreaKey;
   /** Realm key used to get localization */
-  realmKey: RealmValue;
+  realmKey: RealmKey;
   occurrences: ShardOccurrence[];
   music: ShardMusic;
 }
 
-const rewardsOverride = new Map<AreaValue, number>([
+const rewardsOverride = new Map<AreaKey, number>([
   [Areas.FOREST_END, 2.0],
   [Areas.VALLEY_DREAMS, 2.5],
   [Areas.VAULT_JELLY, 3.5],
@@ -155,7 +139,7 @@ export function getShardData(date: DateTime): ShardData | null {
   // Luxon's `weekday` is already ISO: Monday = 1 ... Sunday = 7.
   if (shard.noShardDays.includes(today.weekday)) return null;
 
-  const area = shard.areas[realmIndex]!;
+  const areaKey = shard.areas[realmIndex]!;
 
   let firstInstant = today.plus(shard.offset);
   const interval = isRedShard ? redShardInterval : blackShardInterval;
@@ -186,9 +170,9 @@ export function getShardData(date: DateTime): ShardData | null {
 
   return {
     type: isRedShard ? "red" : "black",
-    reward: rewardsOverride.get(area) ?? shard.rewards,
+    reward: rewardsOverride.get(areaKey) ?? shard.rewards,
     occurrences,
-    area,
+    areaKey,
     realmKey: realms[realmIndex]!,
     music,
   };

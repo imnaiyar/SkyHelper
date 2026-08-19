@@ -114,7 +114,7 @@ export function buildShardEmbed(
         } (${shard.reward} ${Utils.formatEmoji(
           shard.type === "black" ? emojis.wax : currency.ac,
           "Shard Reward",
-        )})\n${emojis.tree_end} ${shard.area.displayName}, ${Utils.formatEmoji(realms_emojis[shard.realmKey])} ${
+        )})\n${emojis.tree_end} ${t(`features:AREAS.${shard.areaKey}`)}, ${Utils.formatEmoji(realms_emojis[shard.realmKey])} ${
           // @ts-expect-error key should be valid
           t(`features:REALMS.${shard.realmKey.toUpperCase()}`)
         }`,
@@ -149,11 +149,11 @@ export function buildShardEmbed(
       ),
       separator(true, 1),
       section(
-        thumbnail(CDN_PREFIX + `location/${shard.area.key}.png`, t("features:shards-embed.LOCATION")),
+        thumbnail(CDN_PREFIX + `location/${shard.areaKey}.png`, t("features:shards-embed.LOCATION")),
         `**${t("features:shards-embed.LOCATION")}**`,
       ),
       section(
-        thumbnail(CDN_PREFIX + `data/${shard.area.key}.png`, t("features:shards-embed.DATA")),
+        thumbnail(CDN_PREFIX + `data/${shard.areaKey}.png`, t("features:shards-embed.DATA")),
         `**${t("features:shards-embed.DATA")}**`,
       ),
       ...(navBtns.length ? [separator(true, 1), row(navBtns)] : []),
@@ -377,7 +377,15 @@ function getLegacyCalendarDescription(
         }**\n`;
         desc += !shard
           ? emojis.tree_end + t("commands:SHARDS_CALENDAR.RESPONSES.INFO.NO_SHARD")
-          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", { INFO: shard.type === "red" ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard` : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`, AREA: `*${shard.area.displayName}*` })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", { TIME: occurrences?.map((ti) => Utils.time(ti.shardLand.toUnixInteger(), "T")).join(" • ") })}`;
+          : `${emojis.tree_middle}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-INFO", {
+              INFO:
+                shard.type === "red"
+                  ? `${Utils.formatEmoji(emojis.red_shard, "RedShard")} Red Shard`
+                  : `${Utils.formatEmoji(emojis.black_shard, "BlackShard")} Black Shard`,
+              AREA: `*${t(`features:AREAS.${shard.areaKey}`)}*`,
+            })}\n${emojis.tree_end}${t("commands:SHARDS_CALENDAR.RESPONSES.INFO.SHARD-TIMES", {
+              TIME: occurrences?.map((ti) => Utils.time(ti.shardLand.toUnixInteger(), "T")).join(" • "),
+            })}`;
         return desc;
       })
       .join("\n\n") + `\n-# ${t("commands:SHARDS_CALENDAR.RESPONSES.EMBED_FOOTER", { INDEX: index + 1, TOTAL: totalPages })}`;

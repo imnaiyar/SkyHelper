@@ -1,4 +1,4 @@
-import { RealmValue } from "./realmsData.js";
+import { RealmValue, type RealmKey } from "./realmsData.js";
 
 export const emojis = {
   tree_top: "<:tree_top:1424038331716604017>",
@@ -51,7 +51,7 @@ export const realms_emojis = {
   [RealmValue.Eden]: "1424053600883048639",
   [RealmValue.Aviary]: "1424053618100797605",
   [RealmValue.Home]: "1424053634429354099",
-} as const;
+} satisfies Record<RealmKey, string>;
 
 export const season_emojis = {
   Lightmending: "1461790726907101215",

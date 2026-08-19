@@ -138,7 +138,7 @@ export function getShardReminderResponse(now: DateTime, t: TranslatorType, offse
         label: "Info",
         style: 2,
       },
-      `Location: ${nextShard.info.area.displayName}, <:Realm:${realms_emojis[nextShard.info.realmKey]}> ${
+      `Location: ${t(`features:AREAS.${nextShard.info.areaKey}`)}, <:Realm:${realms_emojis[nextShard.info.realmKey]}> ${
         // @ts-expect-error realmkey is lowercased locale name, it should exist
         t(`features:REALMS.${nextShard.info.realmKey.toUpperCase()}`)
       }`,

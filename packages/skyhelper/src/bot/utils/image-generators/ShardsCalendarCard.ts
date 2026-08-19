@@ -6,6 +6,7 @@ import { currency, emojis, zone } from "@skyhelperbot/constants";
 import config from "@/config";
 import { CalendarMonths } from "@/utils/constants";
 import { drawBotTitleHeader } from "./shared.js";
+import { getTranslator } from "@/i18n";
 
 // #region Constants
 const ZONE = zone;
@@ -61,8 +62,7 @@ export interface ShardsCalendarDayData {
   location: string;
   /** Short realm name (e.g. "Prairie") */
   realm: string;
-  /** Reward, or null when unknown */
-  reward: number | null;
+  reward: number;
   /** Shard time windows formatted as "HH:mm-HH:mm" (absolute, shard timezone) */
   timings: string[];
 }
@@ -83,17 +83,18 @@ export function getMonthDays(month: number, year: number): DateTime[] {
 export function buildDayData(date: DateTime): ShardsCalendarDayData | null {
   const shard = ShardsUtil.getShard(date);
   if (!shard) {
-    return { date, type: null, location: "", realm: "", reward: null, timings: [] };
+    return { date, type: null, location: "", realm: "", reward: 0, timings: [] };
   }
 
-  const shortName = shard.area.displayName;
+  // get the english name for the area
+  const shortName = getTranslator("en-US")(`features:AREAS.${shard.areaKey}`);
 
   return {
     date,
     type: shard.type,
     location: shortName,
     realm: shard.realmKey.charAt(0).toUpperCase() + shard.realmKey.slice(0),
-    reward: shard.reward ?? null,
+    reward: shard.reward,
     timings: shard.occurrences.map((t) => `${t.shardLand.toFormat("HH:mm")}-${t.shardEnd.toFormat("HH:mm")}`),
   };
 }

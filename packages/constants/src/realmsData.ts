@@ -878,14 +878,16 @@ export function getSummary(value: keyof typeof SummaryData) {
   return SummaryData[value];
 }
 
-export enum RealmValue {
-  Eden = "eden",
-  Home = "home",
-  Aviary = "aviary",
-  Isle = "isle",
-  Prairie = "prairie",
-  Forest = "forest",
-  Valley = "valley",
-  Wasteland = "wasteland",
-  Vault = "vault",
-}
+export const RealmValue = {
+  Eden: "eden",
+  Home: "home",
+  Aviary: "aviary",
+  Isle: "isle",
+  Prairie: "prairie",
+  Forest: "forest",
+  Valley: "valley",
+  Wasteland: "wasteland",
+  Vault: "vault",
+} as const;
+
+export type RealmKey = (typeof RealmValue)[keyof typeof RealmValue];
