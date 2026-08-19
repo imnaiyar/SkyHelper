@@ -40,9 +40,9 @@ export default defineButton({
     if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
       await helper.deferUpdate();
 
-      const shard = ShardsUtil.getShard(DateTime.now().setZone(zone))!;
+      const shard = ShardsUtil.getShard(DateTime.now().setZone(zone));
 
-      if (shard.type !== "red") throw new Error("Got non-red shard type for shard cleared action");
+      if (shard?.type !== "red") throw new Error("Got non-red shard type for shard cleared action");
 
       // if same date then cleared status was removed
       const cleared = PlannerDataService.shardsCleared(user.plannerData);

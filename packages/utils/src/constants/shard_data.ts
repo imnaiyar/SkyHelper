@@ -124,7 +124,7 @@ const rewardsOverride = new Map<AreaKey, number>([
 export function getShardData(date: DateTime): ShardData | null {
   const today = date.setZone(zone).startOf("day");
 
-  const day = date.day;
+  const day = today.day;
 
   // Red shards occur on odd days, black on even days.
   // @see https://github.com/PlutoyDev/sky-shards/blob/production/ShardPredictionRule.md

@@ -1,6 +1,6 @@
 import { emojis, realms_emojis, type REMINDERS_KEY } from "@skyhelperbot/constants";
 import type { LangKeys, TranslatorType } from "./getTranslator";
-import { container, section, separator, ShardsUtil, textDisplay, thumbnail, type EventDetails } from "@skyhelperbot/utils";
+import { container, section, separator, ShardsUtil, textDisplay, type EventDetails } from "@skyhelperbot/utils";
 import { MessageFlags } from "discord-api-types/v10";
 import type { DateTime } from "luxon";
 import { Schema, SchemaStore, t as tt } from "@sapphire/string-store";
@@ -129,7 +129,7 @@ export function getShardReminderResponse(now: DateTime, t: TranslatorType, offse
   });
 
   return [
-    textDisplay(text, emojis.tree_end + nextShard.info.type),
+    textDisplay(text, emojis.tree_end + (nextShard.info.type === "red" ? "Red Shard" : "Black Shard")),
     separator(true, 1),
     section(
       {
