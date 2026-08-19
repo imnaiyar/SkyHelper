@@ -114,7 +114,8 @@
     "IMPORT_SUCCESS": "✨ ***Your memories have been captured in starlight!*** 🌟\n\n*The Spirits have carefully preserved your journey across the realms. Keep this scroll safe, dear Sky Kid!* 🕯️📜",
     "DELETE_SUCCESS": "🌌 ***Your memories have been released to the stars...*** 🌌",
     "DELETE_BACKUP": "📜 ***A parting gift from the Spirits...***",
-    "IMPORT_NOTE": "\n-# NOTE: If you are importing data from [sky-planner.com](https://sky-planner.com), some things are not saved by the bot, mainly things related to website specific preferences. These includes but not limited to: Themes, Filters, Map Markers, Closet Settings, etc."
+    "IMPORT_NOTE": "\n-# NOTE: If you are importing data from [sky-planner.com](https://sky-planner.com), some things are not saved by the bot, mainly things related to website specific preferences. These includes but not limited to: Themes, Filters, Map Markers, Closet Settings, etc.",
+    "SHARD_CLEARED_ACTION_ERROR": "This action is outdated and triggered for an older shard date. Shard cleared action only works for the current day!"
   },
   "linked-role": {
     "INTRO": "Linked role is a special kind of roles that can be used to connect a user account with an application (in this case, the SkyHelper bot).\nThis allows the bot to update user's role connection data to display specific information on a user's profile in a server (see the attached pic). In this case, we can use this to display basic sky profile (Preferred name, preferences, etc.).",

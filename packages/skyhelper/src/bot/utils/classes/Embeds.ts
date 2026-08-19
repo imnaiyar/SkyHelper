@@ -97,7 +97,7 @@ export function buildShardEmbed(
       navBtns.push(
         button({
           label: cleared ? "Unclear" : "Cleared",
-          custom_id: createActionId({ action: PlannerAction.ShardsCleared, navState: { user } }),
+          custom_id: createActionId({ action: PlannerAction.ShardsCleared, actionType: date.toISO() ?? "", navState: { user } }),
           emoji: { id: cleared ? emojis.red_shard : emojis.checkmark },
           style: cleared ? 4 : 2,
         }),

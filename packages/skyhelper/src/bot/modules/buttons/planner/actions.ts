@@ -29,7 +29,7 @@ import type { IPlannerFriend } from "@/planner/friends";
 export default defineButton({
   id: CustomId.PlannerActions,
   data: { name: "planner-actions" },
-  async execute(interaction, _t, helper, { action: a, navState }) {
+  async execute(interaction, t, helper, { action: a, navState }) {
     const [action, guid = "", actionType = ""] = a.split("|");
     const user = await helper.client.schemas.getUser(helper.user);
 
@@ -40,7 +40,20 @@ export default defineButton({
     if ((action as PlannerAction) === PlannerAction.ShardsCleared) {
       await helper.deferUpdate();
 
-      const shard = ShardsUtil.getShard(DateTime.now().setZone(zone));
+      const now = DateTime.now().setZone(zone);
+
+      // shard date is passed to actionType bcz i didnt feel like introducing another prop just for this
+      const shardDate = DateTime.fromISO(actionType, { zone });
+
+      // return error response for stale btns
+      if (!now.hasSame(shardDate, "day")) {
+        await helper.editReply({});
+
+        await helper.followUp({ content: t("features:planner.SHARD_CLEARED_ACTION_ERROR"), flags: MessageFlags.Ephemeral });
+        return;
+      }
+
+      const shard = ShardsUtil.getShard(shardDate);
 
       if (shard?.type !== "red") throw new Error("Got non-red shard type for shard cleared action");
 
@@ -56,7 +69,7 @@ export default defineButton({
         adjustCurrencies(user, { ac: shard.reward }, true);
       }
       await user.save();
-      await helper.editReply(buildShardEmbed(DateTime.now().setZone(zone), _t, false, helper.user.id, !cleared));
+      await helper.editReply(buildShardEmbed(DateTime.now().setZone(zone), t, false, helper.user.id, !cleared));
       await helper.followUp({
         content: `Marked today's red shard as ${cleared ? "Uncleared" : "Cleared"}! ${shard.reward} was ${cleared ? "removed" : "added"} to your planner currencies.\n-# Use ${helper.client.utils.mentionCommand(helper.client, "planner", "home")} to plan and track your sky progress.`,
         flags: 64,
@@ -169,7 +182,7 @@ export default defineButton({
       }
 
       case PlannerAction.UnlockTree: {
-        const tree = data.spiritTrees.items.find((t) => t.guid === guid);
+        const tree = data.spiritTrees.items.find((item) => item.guid === guid);
         if (tree) {
           const allNodes = SpiritTreeHelper.getNodes(tree);
           unlockAllTreeNodes(user, allNodes, actionType);
@@ -179,7 +192,7 @@ export default defineButton({
       }
 
       case PlannerAction.LockTree: {
-        const tree = data.spiritTrees.items.find((t) => t.guid === guid);
+        const tree = data.spiritTrees.items.find((item) => item.guid === guid);
         if (tree) {
           const allNodes = SpiritTreeHelper.getNodes(tree);
           lockAllTreeNodes(user, allNodes, actionType);
