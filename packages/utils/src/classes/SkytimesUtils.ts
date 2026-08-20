@@ -1,10 +1,36 @@
-import { eventData, type EventKey } from "../constants/eventDatas.js";
+import { zone } from "@skyhelperbot/constants";
+import { eventData, type EventData, type EventKey } from "../constants/eventDatas.js";
 import { DateTime } from "luxon";
 
 /**
  * Utilities for skytimes
  */
 export class SkytimesUtils {
+  public static getNow(): DateTime {
+    return DateTime.now().setZone(zone);
+  }
+
+  /**
+   * Add minutes to the given time adjusting for any dst shift
+   */
+  private static plusMinutes(time: DateTime, minutes: number): DateTime {
+    const wasInDST = time.isInDST;
+    const next = time.plus({ minutes });
+
+    if (wasInDST !== next.isInDST) {
+      const adjusted = next.plus({ hours: next.isInDST ? -1 : 1 });
+
+      // guard to prevent infinite loop should the interval minute be 60 minutes
+      // dst check will remove 60 minute, and lopp will add 60, causing infinite loop
+      // so only return adjusted if it's more or less than the passed time
+      if ((minutes > 0 && adjusted > time) || (minutes < 0 && adjusted < time)) {
+        return adjusted;
+      }
+    }
+
+    return next;
+  }
+
   /** Get all occurrences of an event for the given date
    * @param eventTime The DateTime for which to get all occurrences
    * @param interval The interval between the event occurrences
@@ -14,7 +40,7 @@ export class SkytimesUtils {
     const timeBuilt = [];
     while (eventTime.hasSame(clonedTime, "day")) {
       timeBuilt.push(`<t:${clonedTime.toUnixInteger()}:t>`);
-      clonedTime = clonedTime.plus({ minutes: interval ?? 0 });
+      clonedTime = this.plusMinutes(clonedTime, interval ?? 0);
     }
     return timeBuilt.join(" • ");
   }
@@ -23,8 +49,8 @@ export class SkytimesUtils {
    * Get the date in DateTime on which the event will occur (if it's not a daily event)
    * @param event The event for which to get the date-time
    */
-  private static getOccurrenceDay(event: (typeof eventData)[EventKey]): DateTime {
-    let nextOccurrence = DateTime.now().setZone("America/Los_Angeles").startOf("day").plus({ minutes: event.offset }); // Start with the offset from the beginning of the day
+  private static getOccurrenceDay(event: EventData): DateTime {
+    let nextOccurrence = this.getNow().startOf("day").plus({ minutes: event.offset }); // Start with the offset from the beginning of the day
 
     if (event.occursOn) {
       // If the event occurs on specific weekdays
@@ -52,12 +78,12 @@ export class SkytimesUtils {
     const event = eventData[eventName];
     if (!event as boolean /* lol */) throw new Error("Unknown Event");
 
-    const now = DateTime.now().setZone("America/Los_Angeles"); // Current time
+    const now = this.getNow(); // Current time
     let nextOccurrence = this.getOccurrenceDay(event);
 
     // Loop to calculate the next occurrence based on the interval
     while (nextOccurrence < now) {
-      nextOccurrence = nextOccurrence.plus({ minutes: event.interval ?? 0 });
+      nextOccurrence = this.plusMinutes(nextOccurrence, event.interval ?? 0);
     }
 
     return nextOccurrence;
@@ -97,8 +123,8 @@ export class SkytimesUtils {
    * @param nextOccurrence The next occurrence of the event relative to "now"
    * @returns The event status (or null if there is no active duration)
    */
-  public static getEventStatus(event: (typeof eventData)[keyof typeof eventData], nextOccurrence: DateTime): Times {
-    const now = DateTime.now().setZone("America/Los_Angeles");
+  public static getEventStatus(event: EventData, nextOccurrence: DateTime): Times {
+    const now = this.getNow();
     const BASE: NotActiveTimes = {
       active: false,
       nextTime: nextOccurrence,
@@ -108,7 +134,7 @@ export class SkytimesUtils {
 
     // Subtract the interval because nextOccurrence always calculates the next upcoming event
     // So we subtract the interval to get the last occurrence, and add the active duration to it, and check if now is between those
-    const start = nextOccurrence.minus({ minutes: event.interval ?? 0 });
+    const start = this.plusMinutes(nextOccurrence, -(event.interval ?? 0));
     const end = start.plus({ minutes: event.duration });
 
     // When active
