@@ -50,7 +50,7 @@ export class SkytimesUtils {
    * @param event The event for which to get the date-time
    */
   private static getOccurrenceDay(event: EventData): DateTime {
-    let nextOccurrence = this.getNow().startOf("day").plus({ minutes: event.offset }); // Start with the offset from the beginning of the day
+    let nextOccurrence = this.plusMinutes(this.getNow().startOf("day"), event.offset); // Start with the offset from the beginning of the day
 
     if (event.occursOn) {
       // If the event occurs on specific weekdays
