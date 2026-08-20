@@ -59,9 +59,19 @@ git clone https://github.com/imnaiyar/SkyHelper
 ```
 
 - Move to this directory `cd packages/skyhelper`
-- Rename `example.env` to `.env` and fill all the required fields. (We have CLI to streamline this process. Run `pnpm run setup` and it'll setup the .env file for you)
+- Copy `.env.example` to `.env` and fill the required fields. You can also run `pnpm setup` to generate it interactively.
 - You can get your sentry auth token from you sentry project settings. You can learn [here](https://docs.sentry.io/concepts/key-terms/dsn-explainer/) how to get sentry DSN.
-- Run `pnpm build:prod` && afterwards `pnpm start`
+- Run `pnpm dev` for development, or `pnpm build` followed by `pnpm start` for production.
+
+## Running individually
+
+- Bot only: `cd packages/skyhelper && pnpm dev`
+- Commands registration only: `cd packages/skyhelper && pnpm commands:dev`
+- Production bot: `cd packages/skyhelper && pnpm build && pnpm start`
+
+## Docker
+
+If you prefer Docker, use the root `docker compose` workflow instead of running this package directly. The compose service is named `skyhelper`.
 
 > [!IMPORTANT]
 > If you plan to use live updates/Reminders feature, you'll have to also host/run [@skyhelperbot/jobs](../jobs/) as cron jobs to send the reminders/updates are hosted on a different process to reduce the load on the main bot. Intructions to set it up is given on the repo's README
@@ -79,7 +89,7 @@ DASHBOARD: {
 ```
 
 > [!NOTE]
-> There are other benifits of having the api besides the dashboard, such as recieving updates when someone installs the bot to their user account. If you want such features, then you can keep the api running
+> There are other benifits of having the api besides the dashboard, such as recieving updates when someone installs the bot to their user account through discord's webhook event. If you want such features, then you can keep the api running. You'll have set up webhook endpoint url on the bot's developer portal pointing the bot's api
 
 ### Endpoints
 

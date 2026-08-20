@@ -101,7 +101,7 @@ skyhelper/
    pnpm install --frozen-lockfile
    ```
 
-3. **Build all packages**
+3. **Build the project**
 
    ```bash
    pnpm build
@@ -111,20 +111,44 @@ skyhelper/
 
    ```bash
    cp packages/skyhelper/.env.example packages/skyhelper/.env
-   # Edit .env with your Discord token, MongoDB URI, etc.
+   cp packages/jobs/.env.example packages/jobs/.env
+   # Edit both files with your Discord token, MongoDB URI, API key, webhook URLs, etc.
    ```
 
-5. **Run the bot**
-
+5. **Run the workspace**
    ```bash
-   # Development mode
-   pnpm bot:dev
-
-   # Production mode
-   pnpm bot
+   pnpm dev
    ```
 
-### Docker Deployment (Recommended)
+## Running packages individually
+
+```bash
+# Bot only
+pnpm bot:dev
+
+# Jobs only
+pnpm jobs:dev
+
+# Production bot
+pnpm bot
+```
+
+From the package directories, you can also run them directly:
+
+```bash
+cd packages/skyhelper && pnpm dev
+cd packages/jobs && pnpm dev
+```
+
+## Building and validating
+
+```bash
+pnpm build
+pnpm test
+pnpm lint
+```
+
+## Docker Deployment (Recommended)
 
 For production deployment, use Docker Compose:
 
@@ -138,6 +162,16 @@ docker compose up -d --build skyhelper
 # Deploy only scheduled jobs
 docker compose up -d --build jobs
 ```
+
+The compose file passes the runtime environment through from your shell, so set the same variables you use locally before starting the services.
+Compose file can also pick up env variables through `.env` file so you can have that at package root (or you can specify the file path with `--env-file` cli flag like `docker compose --env-file ./path/to/.env up -d --build`) with all the variables required by [docker-compose.yml](./docker-compose.yml) depending on services you use
+
+## What each package does
+
+- [packages/skyhelper](packages/skyhelper/) is the main Discord bot and API process.
+- [packages/jobs](packages/jobs/) is the separate scheduler process for reminders and live updates.
+
+If you only need the bot without scheduled tasks, you can skip `packages/jobs`. If you rely on reminders or live updates, run both services together.
 
 ## Development
 

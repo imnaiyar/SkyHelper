@@ -106,7 +106,7 @@ function generateEnvFile() {
       if (!joinLeaveLogs.length) {
         writeEnvFile();
       } else if (webhookUrlRegex.test(joinLeaveLogs)) {
-        envData.JOIN_LEAVE_LOGS = joinLeaveLogs;
+        envData.GUILD = joinLeaveLogs;
         writeEnvFile();
       } else {
         console.log(chalk.red`ERROR: ` + "Invalid Webhook URL format. Please enter a valid Webhook URL. Tutorials are above.");

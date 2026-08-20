@@ -9,7 +9,7 @@ Running cron jobs is not resources exhaustive itself, but sending reminders/live
 > [!NOTE]  
 > If your instance of the bot does not have any live updates/reminders set up, then you do not need to concern yourself with running this project
 
-## Runing the project
+## Running the project
 
 ### Requirements
 
@@ -17,19 +17,28 @@ Running cron jobs is not resources exhaustive itself, but sending reminders/live
 
 ### Running
 
-- Clone the repo and move to this direcotry
+- Clone the repo and move to this directory
 
 ```bash
 git clone https://github.com/imnaiyar/skyhelper
 cd packages/jobs
 ```
 
-- Make sure to rename `.env.example` and fill the required values.
+- Copy `.env.example` to `.env` and fill the required values.
 
 > [!IMPORTANT]  
-> Make sure that bot token and Mongo connection url is the same as the one you used to run the main bot
+> Make sure the bot token and Mongo connection URL match the values used by the main bot.
 
-- Run the project with docker `bun run start`
+- Start the jobs process in development with `pnpm dev`.
+- Start the jobs process in production with `pnpm start`.
+
+## When to run this
+
+Run this package alongside [@skyhelperbot/skyhelper](../skyhelper/) whenever you want reminders, live updates, or other scheduled tasks to continue independently from the bot process.
+
+## Docker
+
+If you prefer Docker, use the root `docker compose` workflow instead of running this package directly. The compose service is named `jobs`.
 
 > [!WARNING]  
 > TODO: Lot's of the codes are cloned/duplicated from the main bot, find a way to effectively reuse it and reduce duplications
