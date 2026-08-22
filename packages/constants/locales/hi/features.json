@@ -52,6 +52,28 @@
     "VAULT": "वाल्ट ऑफ नावलेडज",
     "EDEN": "आई ऑफ ईडन"
   },
+  "AREAS": {
+    "prairie.butterfly": "Butterfly Fields",
+    "prairie.village": "Prairie Village",
+    "prairie.cave": "Prairie Cave",
+    "prairie.bird": "Bird's Nest",
+    "prairie.island": "Sanctuary Island",
+    "forest.brook": "Forest Brook",
+    "forest.boneyard": "Boneyard",
+    "forest.end": "Forest's End",
+    "forest.tree": "Treehouse",
+    "forest.sunny": "Sunny Forest",
+    "valley.rink": "Ice Rink",
+    "valley.dreams": "Village of Dreams",
+    "valley.hermit": "Hermit's Valley",
+    "wasteland.temple": "Wasteland Temple",
+    "wasteland.battlefield": "Battlefield",
+    "wasteland.graveyard": "Graveyard",
+    "wasteland.crab": "Crab Fields",
+    "wasteland.ark": "Forgotten Ark",
+    "vault.starlight": "Starlight Desert",
+    "vault.jelly": "Jellyfish Cove"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "सीजन",
     "UNKNOWN": "अनजान स्पिरिट",
@@ -91,7 +113,8 @@
     "IMPORT_SUCCESS": "✨ ***आपकी यादों को स्टरलाइट में संजो लिया गया है!*** 🌟\n\n*स्पिरिट्स ने विभिन्न रियल्म्स में आपकी यात्रा को सावधानीपूर्वक सुरक्षित रखा है। इस स्क्रॉल को संभालकर रखें, प्रिय स्काई किड!* 🕯️📜",
     "DELETE_SUCCESS": "🌌 ***आपकी यादों को सितारों के हवाले कर दिया गया है...*** 🌌",
     "DELETE_BACKUP": "📜 ***स्पिरिट्स की ओर से आपके लिए एक अंतिम उपहार...***",
-    "IMPORT_NOTE": "-# नोट: यदि आप [sky-planner.com](https://sky-planner.com) से डेटा इम्पोर्ट कर रहे हैं, तो कुछ चीज़ें बॉट द्वारा सहेजी नहीं जाती हैं, मुख्य रूप से वे जो वेबसाइट-विशिष्ट प्राथमिकताओं (preferences) से संबंधित हैं। इनमें शामिल हैं, लेकिन इन्हीं तक सीमित नहीं हैं: थीम्स, फ़िल्टर्स, मैप मार्कर्स, क्लोसेट सेटिंग्स आदि।"
+    "IMPORT_NOTE": "-# नोट: यदि आप [sky-planner.com](https://sky-planner.com) से डेटा इम्पोर्ट कर रहे हैं, तो कुछ चीज़ें बॉट द्वारा सहेजी नहीं जाती हैं, मुख्य रूप से वे जो वेबसाइट-विशिष्ट प्राथमिकताओं (preferences) से संबंधित हैं। इनमें शामिल हैं, लेकिन इन्हीं तक सीमित नहीं हैं: थीम्स, फ़िल्टर्स, मैप मार्कर्स, क्लोसेट सेटिंग्स आदि।",
+    "SHARD_CLEARED_ACTION_ERROR": "This action is outdated and triggered for an older shard date. Shard cleared action only works for the current day!"
   },
   "linked-role": {
     "INTRO": "Linked Role एक विशेष प्रकार की भूमिका (Role) है जो उपयोगकर्ता के खाते को किसी एप्लिकेशन (जैसे SkyHelper बॉट) से जोड़ने की सुविधा प्रदान करती है।\n\nइसके माध्यम से बॉट उपयोगकर्ता के Role Connection डेटा को अपडेट कर सकता है और सर्वर में उसकी प्रोफ़ाइल पर विशेष जानकारी प्रदर्शित कर सकता है (संलग्न चित्र देखें)।\n\nउदाहरण के लिए, इसका उपयोग Sky प्रोफ़ाइल की मूल जानकारी, जैसे पसंदीदा नाम (Preferred Name), प्राथमिकताएँ (Preferences) आदि दिखाने के लिए किया जा सकता है।",
