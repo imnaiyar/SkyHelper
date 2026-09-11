@@ -43,7 +43,7 @@ export class UpdateController {
   @Get("quests")
   @ApiOperation({
     summary: "Get daily quests data",
-    description: "Retrieves current daily quests information",
+    description: "Retrieves current daily quests information. The api doesn't perform any validations on the quests, it simply returns what's saved in the database. It's upto you to verify `last_updated` and `date` field of each quest to determine if the quest is outdated.",
     security: [],
   })
   @ApiResponse({
