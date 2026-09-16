@@ -10,18 +10,20 @@ export default {
     const guild = helper.client.guilds.get(helper.int.guild_id ?? "");
     if (type === "server") {
       if (!guild) {
-        return void (await helper.reply({
+        await helper.reply({
           content: t("errors:NOT_A_SERVER"),
           flags: 64,
-        }));
+        });
+        return;
       }
       if (!client.permUtils(helper.int.member!.permissions as `${number}`).has("ManageGuild")) {
-        return void (await helper.reply({
+        await helper.reply({
           content: t("commands:LANGUAGE.options.RESPONSES.NO-PERM", {
             PERMISSION: "`Manage Server`",
           }),
           flags: 64,
-        }));
+        });
+        return;
       }
     }
     await helper.defer();
@@ -32,36 +34,39 @@ export default {
         case "server": {
           const settings = await client.schemas.getSettings(guild!);
           if (settings.language?.value === lang) {
-            return void (await helper.editReply({
+            await helper.editReply({
               content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_SET", {
                 TYPE: "The server's",
                 LANGUAGE: `${language.name} (${settings.language.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
               }),
-            }));
+            });
+            return;
           }
           settings.language = language;
           await settings.save();
           const user_settings = await client.schemas.getUser(helper.user);
           const ts = getTranslator(user_settings.language?.value ?? lang);
-          return void (await helper.editReply({
+          await helper.editReply({
             content: ts("commands:LANGUAGE.options.RESPONSES.SUCCESS", {
               TYPE: `\`${guild!.name}\``,
               Language: `${language.name} (${settings.language.flag ? settings.language.flag + " " : ""}\`${language.value}\`)`,
               LINK: "<https://docs.skyhelper.xyz/pages/translating>",
             }),
-          }));
+          });
+          return;
         }
         case "user": {
           const user_settings = await client.schemas.getUser(helper.user);
           if (lang === user_settings.language?.value) {
-            return void (await helper.editReply({
+            await helper.editReply({
               content: t("commands:LANGUAGE.options.RESPONSES.ALREADY_SET", {
                 TYPE: "Your",
                 LANGUAGE: `${language.name} (${
                   user_settings.language.flag ? user_settings.language.flag + " " : ""
                 }\`${language.value}\`)`,
               }),
-            }));
+            });
+            return;
           }
           user_settings.language = language;
           await user_settings.save();

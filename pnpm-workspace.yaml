@@ -9,3 +9,23 @@ hoistPattern:
 publicHoistPattern:
   - "*@nextui-org/*" # https://github.com/pnpm/pnpm/issues/8878#issuecomment-2546442011
   - "*eslint*"
+
+preferWorkspacePackages: true
+linkWorkspacePackages: true
+enablePrePostScripts: true
+injectWorkspacePackages: true
+
+overrides:
+  "discord-api-types": "latest"
+
+patchedDependencies:
+  "@sapphire/string-store": "patches/@sapphire__string-store.patch"
+minimumReleaseAgeExclude:
+  - browserslist@4.29.0
+allowBuilds:
+  "@scarf/scarf": true
+  "@sentry/cli": true
+  "@sentry/node-cpu-profiler": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

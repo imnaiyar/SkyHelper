@@ -51,7 +51,7 @@ const messageHandler: Event<GatewayDispatchEvents.MessageCreate> = async (client
     const args = msg.slice(prefix.length).trim().split(/ +/g);
     const commandName = args.shift()!.toLowerCase();
     const command = client.commands.get(commandName) ?? client.commands.find((cmd) => cmd.prefix?.aliases?.includes(commandName));
-    if (!command || !command.messageRun) return;
+    if (!command?.messageRun) return;
     const scope = new Sentry.Scope();
     scope.setUser({ id: message.author.id, username: message.author.username });
 

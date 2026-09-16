@@ -1,5 +1,5 @@
 import { CostUtils, fetchSkyData, PlannerDataService, PlannerService } from "@/planner";
-import { DisplayTabs, SpiritType } from "@/types/planner";
+import { DisplayTabs } from "@/types/planner";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import Utils from "@/utils/classes/Utils";
 import { CustomId } from "@/utils/customId-store";
@@ -79,7 +79,7 @@ export async function startSeasonCalculator(
 
 export async function handleSeasonCalculatorButton(helper: InteractionHelper, data: SeasonCalculatorCustomIdData) {
   const state = states.get(data.key);
-  if (!state || state.user !== helper.user.id || Date.now() - state.createdAt > STATE_TTL) {
+  if (state?.user !== helper.user.id || Date.now() - state.createdAt > STATE_TTL) {
     states.delete(data.key);
     await helper.update({ components: [textDisplay(helper.t("features:calculator.SEASON_STATE_EXPIRED"))] });
     return;
@@ -90,7 +90,7 @@ export async function handleSeasonCalculatorButton(helper: InteractionHelper, da
 
   const skyData = await fetchSkyData(helper.client);
   const season = PlannerService.getCurrentSeason(skyData);
-  if (!season || season.guid !== state.seasonGuid) {
+  if (season?.guid !== state.seasonGuid) {
     await helper.update({ content: helper.t("features:calculator.SEASON_NO_ACTIVE") });
     return;
   }
@@ -358,7 +358,7 @@ function calculateSeasonDays(remaining: number, hasPass: boolean, dailiesDone: b
 function getSeasonTrees(season: ISeason): Array<{ tree: ISpiritTree; name: string }> {
   return [
     ...season.spirits.map((spirit) =>
-      spirit.tree && spirit.type !== SpiritType.Guide ? { tree: spirit.tree, name: getTreeName(spirit.tree) } : null,
+      spirit.tree && spirit.type !== "Guide" ? { tree: spirit.tree, name: getTreeName(spirit.tree) } : null,
     ),
     ...(season.includedTrees ?? []).map((tree) => ({ tree, name: getTreeName(tree) })),
   ].filter((item): item is { tree: ISpiritTree; name: string } => Boolean(item));

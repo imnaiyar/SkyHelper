@@ -4,14 +4,13 @@ export interface SeasonData {
   from: string[];
   icon: string;
   active?: boolean;
-  quests?: Array<{
+  quests: Array<{
     title: string;
     description?: string;
     image?: string;
   }>;
 }
-
-export default {
+const d: Record<string, SeasonData> = {
   moomin: {
     name: "Moomin",
     icon: "<:SeasonofMoominIcon:1295323276612206602>",
@@ -594,20 +593,25 @@ export default {
     name: "Rhythm",
     icon: "<:rhythm:1S130958345352777849>",
     from: ["24-01-2020", "05-04-2020"],
+    quests: [],
   },
   belonging: {
     name: "Belonging",
     icon: "<:belonging:1130958323823423509>",
     from: ["18-11-2019", "12-01-2020"],
+    quests: [],
   },
   lightseekers: {
     name: "Lightseekers",
     icon: "<:lightseekers:1130958300293365870>",
     from: ["23-09-2019", "10-11-2019"],
+    quests: [],
   },
   gratitude: {
     name: "Gratitude",
     icon: "<:gratitude:1130958261349261435>",
     from: ["19-07-2019", "02-09-2019"],
+    quests: [],
   },
-} satisfies Record<string, SeasonData>;
+};
+export default d;

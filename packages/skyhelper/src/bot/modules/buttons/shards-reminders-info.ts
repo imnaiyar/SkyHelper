@@ -11,10 +11,11 @@ export default defineButton({
     const [day, month, year] = date.split("-").map(Number);
     const shardDate = DateTime.fromObject({ year, month, day }, { zone: "America/Los_Angeles" });
     if (!shardDate.isValid) {
-      return void (await helper.editReply({
+      await helper.editReply({
         content: t("commands:SHARDS.RESPONSES.INVALID_DATE"),
         flags: MessageFlags.Ephemeral,
-      }));
+      });
+      return;
     }
     await helper.reply({ ...buildShardEmbed(shardDate, t, true), flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral });
   },

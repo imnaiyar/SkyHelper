@@ -8,7 +8,7 @@ export default defineButton({
     name: "shards-calendar-date-update",
   },
   id: CustomId.CalendarToggle,
-  async execute(_interaction, _t, helper, { month, year, legacy = false }) {
+  async execute(_interaction, _t, helper, { month, year, legacy }) {
     const modal: APIModalInteractionResponseCallbackData = {
       title: "Change Date/Month",
       custom_id: "shards-calendar-modal-date" + `;${legacy}`,

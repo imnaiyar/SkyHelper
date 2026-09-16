@@ -136,7 +136,7 @@ export async function botManage(helper: InteractionHelper) {
     guild_settings.language = supportedLang.find((l) => l.value === guild_language);
   }
   user_settings.language = supportedLang.find((l) => l.value === user_language);
-  // eslint-disable-next-line @typescript-eslint/await-thenable
+
   await Promise.all([guild_settings?.save(), user_settings.save()]);
 
   await client.api.interactions.editReply(int.application_id, submit.token, {

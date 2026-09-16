@@ -8,6 +8,7 @@ import {
   ApiBearerAuth,
   ApiUnauthorizedResponse,
   ApiBadRequestResponse,
+  type SchemaObject,
 } from "@nestjs/swagger";
 import { SkyHelper as BotService } from "@/structures";
 import { LiveUpdates as Updates, Reminders } from "../managers/index.js";
@@ -34,7 +35,7 @@ const FeaturePredicate = new ZodValidator(z.enum(["live-updates", "reminders"]),
 const GuildParam = ApiParam({
   name: "guild",
   description: "Discord guild ID",
-  schema: toJSONSchema(z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID")),
+  schema: toJSONSchema(z.string().regex(/^\d{17,19}$/, "Must be a valid snowflake ID")) as SchemaObject,
 });
 const FeatureParam = ApiParam({
   name: "feature",
@@ -67,7 +68,7 @@ export class GuildController {
   @ApiResponse({
     status: 200,
     description: "Guild information retrieved successfully",
-    schema: toJSONSchema(GuildInfoSchema),
+    schema: toJSONSchema(GuildInfoSchema) as SchemaObject,
   })
   @ApiResponse({
     status: 200,
@@ -102,12 +103,12 @@ export class GuildController {
   })
   @GuildParam
   @ApiBody({
-    schema: toJSONSchema(GuildInfoSchema),
+    schema: toJSONSchema(GuildInfoSchema) as SchemaObject,
   })
   @ApiResponse({
     status: 200,
     description: "Guild settings updated successfully",
-    schema: toJSONSchema(GuildInfoSchema),
+    schema: toJSONSchema(GuildInfoSchema) as SchemaObject,
   })
   @ApiResponse({
     status: 200,
@@ -150,7 +151,7 @@ export class GuildController {
   @ApiResponse({
     status: 200,
     description: "Feature settings retrieved successfully",
-    schema: FeatureSchema,
+    schema: FeatureSchema as SchemaObject,
   })
   @ApiResponse({
     status: 200,
@@ -183,7 +184,7 @@ export class GuildController {
   @ApiResponse({
     status: 201,
     description: "Feature enabled successfully",
-    schema: FeatureSchema,
+    schema: FeatureSchema as SchemaObject,
   })
   @UnauthorizedResponse
   async enableFeature(@Param("guild", GuildIDPredicate) guild: string, @Param("feature", FeaturePredicate) feature: string) {
@@ -207,12 +208,12 @@ export class GuildController {
   @FeatureParam
   @ApiBody({
     description: "Feature settings to update",
-    schema: FeatureSchema,
+    schema: FeatureSchema as SchemaObject,
   })
   @ApiResponse({
     status: 200,
     description: "Feature settings updated successfully",
-    schema: FeatureSchema,
+    schema: FeatureSchema as SchemaObject,
   })
   @UnauthorizedResponse
   @BadRequestResponse

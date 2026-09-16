@@ -16,10 +16,14 @@ export default defineButton({
     const data = await client.schemas.getDailyQuests();
     const d = type === "rotating" ? data.rotating_candles : data.seasonal_candles;
     const title = type === "rotating" ? "Rotating Candles Location" : "Seasonal Candles Location";
-    if (!d) return void (await helper.editReply({ content: t("features:quests.NO_CANDLE_DATA") }));
+    if (!d) {
+      await helper.editReply({ content: t("features:quests.NO_CANDLE_DATA") });
+      return;
+    }
     const isValid = checkQuestValidity(d.date);
     if (!isValid || !checkQuestButtonValidToday(date)) {
-      return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
+      await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") });
+      return;
     }
     const comp = container(
       textDisplay(

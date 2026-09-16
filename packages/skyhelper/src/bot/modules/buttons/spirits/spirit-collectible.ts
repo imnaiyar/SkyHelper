@@ -22,19 +22,21 @@ export default defineButton({
     const spirit = data.guids.get(value) as ISpirit | undefined;
 
     if (!spirit) {
-      return void (await helper.reply({
+      await helper.reply({
         content: t("features:SPIRITS.NO_SPIRIT"),
         flags: 64,
-      }));
+      });
+      return;
     }
 
     const collectibles = SpiritTreeHelper.getItems(spirit.tree).filter((item) => !NonCollectibles.includes(item.type));
 
     if (!collectibles.length) {
-      return void (await helper.reply({
+      await helper.reply({
         content: t("features:SPIRITS.NO_COLLECTIBLES"),
         flags: 64,
-      }));
+      });
+      return;
     }
 
     const { user } = helper;

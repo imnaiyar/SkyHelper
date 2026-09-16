@@ -1,4 +1,4 @@
-import { type SeasonData, seasonsData } from "@skyhelperbot/constants";
+import { seasonsData } from "@skyhelperbot/constants";
 import { handleSpirits } from "./handleSpirits.js";
 import { InteractionHelper } from "@/utils/classes/InteractionUtil";
 import type { InteractionOptionResolver } from "@sapphire/discord-utilities";
@@ -38,7 +38,7 @@ export async function handleSeasional(helper: InteractionHelper, options: Intera
 }
 
 async function handleQuests(helper: InteractionHelper, ssn: ISeason) {
-  const season = Object.values(seasonsData).find((s) => s.name === ssn.shortName) as SeasonData | undefined;
+  const season = Object.values(seasonsData).find((s) => s.name === ssn.shortName);
   const quests = season?.quests;
   const {
     t,

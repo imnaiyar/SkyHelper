@@ -39,9 +39,10 @@ export default {
 
         // Check if channel is a valid channel type (will never happen)
         if (!SendableChannels.includes(ch.type)) {
-          return void (await helper.editReply({
+          await helper.editReply({
             content: "Invalid channel type. Please provide a valid text channel or thread channel.",
-          }));
+          });
+          return;
         }
         if (!(await checkClientPerms(channel))) return;
         const util = new RemindersUtils(client);
@@ -113,11 +114,12 @@ export default {
         const event = options.getString("event", true) as (typeof REMINDERS_KEY)[number];
         const eventSettings = guildSettings.reminders.events[event];
         if (!eventSettings?.active) {
-          return void (await helper.editReply({
+          await helper.editReply({
             content: t("commands:REMINDERS.RESPONSES.ALREADY_NOT_CONFIGURED", {
               EVENT: RemindersEventsMap[event],
             }),
-          }));
+          });
+          return;
         }
         const util = new RemindersUtils(client);
         await util.deleteAfterChecks(

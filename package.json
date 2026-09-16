@@ -43,25 +43,7 @@
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.70.0"
   },
-  "packageManager": "pnpm@10.15.1",
-  "pnpm": {
-    "overrides": {
-      "discord-api-types": "latest"
-    },
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "@scarf/scarf",
-      "@sentry/cli",
-      "@sentry/profiling-node",
-      "@tailwindcss/oxide",
-      "esbuild",
-      "sharp",
-      "unrs-resolver"
-    ],
-    "patchedDependencies": {
-      "@sapphire/string-store": "patches/@sapphire__string-store.patch"
-    }
-  },
+  "packageManager": "pnpm@12.4.2",
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@octokit/action": "^7.0.0",

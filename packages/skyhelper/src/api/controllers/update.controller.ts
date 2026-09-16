@@ -9,6 +9,7 @@ import {
   ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  type SchemaObject,
 } from "@nestjs/swagger";
 import { toJSONSchema, z } from "zod/v4";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
@@ -43,13 +44,14 @@ export class UpdateController {
   @Get("quests")
   @ApiOperation({
     summary: "Get daily quests data",
-    description: "Retrieves current daily quests information. The api doesn't perform any validations on the quests, it simply returns what's saved in the database. It's upto you to verify `last_updated` and `date` field of each quest to determine if the quest is outdated.",
+    description:
+      "Retrieves current daily quests information. The api doesn't perform any validations on the quests, it simply returns what's saved in the database. It's upto you to verify `last_updated` and `date` field of each quest to determine if the quest is outdated.",
     security: [],
   })
   @ApiResponse({
     status: 200,
     description: "Daily quests data retrieved successfully",
-    schema: toJSONSchema(QuestsSchema),
+    schema: toJSONSchema(QuestsSchema) as SchemaObject,
   })
   async getQuests(): Promise<DailyQuestsSchema> {
     const data = await this.bot.schemas.getDailyQuests();
@@ -63,7 +65,7 @@ export class UpdateController {
   })
   @ApiBody({
     description: "Daily quests data to update",
-    schema: toJSONSchema(QuestsSchema),
+    schema: toJSONSchema(QuestsSchema) as SchemaObject,
   })
   @ApiResponse({
     status: 200,

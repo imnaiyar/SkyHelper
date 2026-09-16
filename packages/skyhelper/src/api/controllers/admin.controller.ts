@@ -1,7 +1,7 @@
 import { fetchSkyData, PlannerService } from "@/planner";
 import type { SkyHelper } from "@/structures";
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, Patch, Post, Req } from "@nestjs/common";
-import { ApiTags, ApiBearerAuth, ApiExcludeController, ApiParam, ApiBody, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiBearerAuth, ApiExcludeController, ApiParam, ApiBody, ApiResponse, type SchemaObject } from "@nestjs/swagger";
 import { inspect } from "node:util";
 import { z, toJSONSchema } from "zod/v4";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
@@ -73,21 +73,21 @@ export class AdminController {
   }
 
   @Get("api-keys")
-  @ApiResponse({ status: 200, schema: toJSONSchema(z.array(ApiKeyResponseSchema)) })
+  @ApiResponse({ status: 200, schema: toJSONSchema(z.array(ApiKeyResponseSchema)) as SchemaObject })
   async listApiKeys() {
     const keys = await ApiKeyModel.find().sort({ createdAt: -1 }).exec();
     return keys.map((key) => this.mapApiKey(key));
   }
 
   @Post("api-keys")
-  @ApiBody({ schema: toJSONSchema(ApiKeyCreateSchema) })
+  @ApiBody({ schema: toJSONSchema(ApiKeyCreateSchema) as SchemaObject })
   @ApiResponse({
     status: 201,
     schema: toJSONSchema(
       ApiKeyResponseSchema.extend({
         apiKey: z.string(),
       }),
-    ),
+    ) as SchemaObject,
   })
   async createApiKey(
     @Req() req: AuthRequest,
@@ -112,8 +112,8 @@ export class AdminController {
 
   @Patch("api-keys/:id")
   @ApiParam({ name: "id", description: "API key ID" })
-  @ApiBody({ schema: toJSONSchema(ApiKeyUpdateSchema) })
-  @ApiResponse({ status: 200, schema: toJSONSchema(ApiKeyResponseSchema) })
+  @ApiBody({ schema: toJSONSchema(ApiKeyUpdateSchema) as SchemaObject })
+  @ApiResponse({ status: 200, schema: toJSONSchema(ApiKeyResponseSchema) as SchemaObject })
   async updateApiKey(
     @Param("id") id: string,
     @Body(new ZodValidator(ApiKeyUpdateSchema)) body: z.infer<typeof ApiKeyUpdateSchema>,
@@ -134,7 +134,7 @@ export class AdminController {
 
   @Delete("api-keys/:id")
   @ApiParam({ name: "id", description: "API key ID" })
-  @ApiResponse({ status: 200, schema: toJSONSchema(z.object({ id: z.string() })) })
+  @ApiResponse({ status: 200, schema: toJSONSchema(z.object({ id: z.string() })) as SchemaObject })
   async deleteApiKey(@Param("id") id: string) {
     const key = await ApiKeyModel.findByIdAndDelete(id).exec();
     if (!key) {

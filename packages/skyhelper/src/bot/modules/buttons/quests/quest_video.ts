@@ -13,10 +13,14 @@ export default defineButton({
     await helper.defer({ flags: 64 });
     const data = await client.schemas.getDailyQuests();
     const d = data.quests[index];
-    if (!d) return void (await helper.editReply({ content: t("features:quests.NO_QUEST_DATA") }));
+    if (!d) {
+      await helper.editReply({ content: t("features:quests.NO_QUEST_DATA") });
+      return;
+    }
     const isValid = checkQuestValidity(d.date);
     if (!isValid || !checkQuestButtonValidToday(date)) {
-      return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
+      await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") });
+      return;
     }
     let quest_title = d.title;
     if (d.images?.[0]?.source) quest_title = `[${quest_title}](${d.images[0].source})`;

@@ -9,9 +9,10 @@ export default {
     const sub = args[0];
 
     if (args[1] && isNaN(parseInt(args[1]))) {
-      return void (await client.api.channels.createMessage(message.channel_id, {
+      await client.api.channels.createMessage(message.channel_id, {
         content: "ID must only contain Numbers",
-      }));
+      });
+      return;
     }
     const ID = args[1]!;
     switch (sub) {
@@ -59,9 +60,10 @@ async function blacklist(client: SkyHelper, message: APIMessage, ID: string, typ
 
   let data = await Blacklist.findById(ID).catch(() => {});
   if (data) {
-    return void (await client.api.channels.createMessage(message.channel_id, {
+    await client.api.channels.createMessage(message.channel_id, {
       content: "This server is already blacklisted",
-    }));
+    });
+    return;
   }
   const user = type === "user" ? await client.api.users.get(ID) : null;
   if (user) {
@@ -94,9 +96,10 @@ __Details__
 async function removeBlacklist(client: SkyHelper, message: APIMessage, ID: string, type: "guild" | "user") {
   const data = await Blacklist.findOneAndDelete({ _id: ID }).catch(() => {});
   if (!data) {
-    return void (await client.api.channels.createMessage(message.channel_id, {
+    await client.api.channels.createMessage(message.channel_id, {
       content: `This ${type}  is not blacklisted`,
-    }));
+    });
+    return;
   }
   if (type === "user") {
     const user = await client.api.users.get(ID);

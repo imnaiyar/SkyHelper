@@ -13,10 +13,11 @@ export default {
     const hide = options.getBoolean("hide") ?? false;
     const shard = getShards(t, helper.user.id, await helper.getUserSettings(), date);
     if (typeof shard === "string") {
-      return void (await helper.reply({
+      await helper.reply({
         content: shard,
         flags: MessageFlags.Ephemeral,
-      }));
+      });
+      return;
     }
     await helper.reply({ ...shard, flags: MessageFlags.IsComponentsV2 | (hide ? MessageFlags.Ephemeral : 0) });
   },

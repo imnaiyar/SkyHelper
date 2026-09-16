@@ -1,6 +1,5 @@
 # Base build image
-FROM node:22.20.0 AS build
-RUN corepack enable
+FROM node:26 AS build
 WORKDIR /app
 
 ARG TURBO_TEAM
@@ -12,7 +11,7 @@ ENV TURBO_TEAM=${TURBO_TEAM}
 ENV SENTRY_ORG="${SENTRY_ORG}"
 ENV SENTRY_PROJECT="${SENTRY_PROJECT}"
 
-RUN npm i -g @sentry/cli
+RUN npm i -g @sentry/cli pnpm
 COPY package.json pnpm-lock.yaml .npmrc ./
 COPY pnpm-workspace.yaml ./
 COPY patches patches
@@ -39,10 +38,10 @@ RUN if [ "$TARGET" = "skyhelper" ]; then \
     fi
 
 # Skyhelper
-FROM node:22.20-alpine AS skyhelper
+FROM node:26-alpine AS skyhelper
 WORKDIR /app
 COPY --from=build /app/sky-out .
-RUN corepack enable
+RUN npm i pnpm
 EXPOSE 5000
 CMD [ "pnpm", "start" ]
 

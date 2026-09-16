@@ -8,7 +8,6 @@ import { paginate } from "@/utils/paginator";
 import { CustomId, store } from "@/utils/customId-store";
 import Utils from "@/utils/classes/Utils";
 import { fetchSkyData, NonCollectibles, PlannerService } from "@/planner";
-import { SpiritType } from "@/types/planner";
 import { SpiritTreeHelper } from "skygame-data";
 
 export default {
@@ -40,12 +39,7 @@ export default {
     const focused = options.getFocusedOption() as { value: string };
     const spirits = await fetchSkyData(helper.client);
     const data = spirits.spirits.items
-      .filter(
-        (s) =>
-          s.type !== SpiritType.Special &&
-          s.type !== SpiritType.Event &&
-          s.name.toLowerCase().includes(focused.value.toLowerCase()),
-      )
+      .filter((s) => s.type !== "Special" && s.type !== "Event" && s.name.toLowerCase().includes(focused.value.toLowerCase()))
       .map((s) => ({
         name: `↪️ ${s.name}`,
         value: s.guid,
@@ -59,7 +53,7 @@ async function handleSpiritList(helper: InteractionHelper) {
   const { user } = helper;
 
   const pData = await fetchSkyData(helper.client);
-  const spirits = pData.spirits.items.filter((s) => s.type !== SpiritType.Special && s.type !== SpiritType.Event);
+  const spirits = pData.spirits.items.filter((s) => s.type !== "Special" && s.type !== "Event");
   const title = [
     mediaGallery(
       mediaGalleryItem(

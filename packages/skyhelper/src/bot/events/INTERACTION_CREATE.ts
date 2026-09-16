@@ -85,7 +85,7 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
     // #region Chat input
     if (helper.isChatInput(interaction)) {
       const command = client.commands.get(interaction.data.name);
-      if (!command || !command.interactionRun) {
+      if (!command?.interactionRun) {
         await helper.reply({
           content: t("errors:COMMAND_NOT_FOUND"),
           flags: MessageFlags.Ephemeral,
@@ -186,10 +186,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       const options = new InteractionOptionResolver(interaction);
       const validate = await validateInteractions({ command, interaction, options, helper, t });
       if (!validate.status) {
-        return void (await helper.reply({
+        await helper.reply({
           content: validate.message,
           flags: MessageFlags.Ephemeral,
-        }));
+        });
+        return;
       }
 
       try {
@@ -209,10 +210,11 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
       const serialized = client.utils.store.deserialize(interaction.data.custom_id);
 
       if (serialized.data.user && serialized.data.user !== helper.user.id) {
-        return void (await helper.reply({
+        await helper.reply({
           content: t("errors:NOT-ALLOWED"),
           flags: MessageFlags.Ephemeral,
-        }));
+        });
+        return;
       }
     }
 

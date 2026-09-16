@@ -9,6 +9,7 @@ import {
   ApiUnauthorizedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  type SchemaObject,
 } from "@nestjs/swagger";
 import { SkyHelper as BotService } from "@/structures";
 import { UserInfoSchema } from "../types.js";
@@ -49,7 +50,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: "User information retrieved successfully",
-    schema: toJSONSchema(UserInfoSchema),
+    schema: toJSONSchema(UserInfoSchema) as SchemaObject,
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getUser(@Param("user", UserIDPredicate) userId: string): Promise<z.infer<typeof UserInfoSchema>> {
@@ -68,12 +69,12 @@ export class UsersController {
   })
   @ApiParam({ name: "user", description: "Discord user ID", example: "123456789012345678" })
   @ApiBody({
-    schema: toJSONSchema(UserInfoSchema),
+    schema: toJSONSchema(UserInfoSchema) as SchemaObject,
   })
   @ApiResponse({
     status: 200,
     description: "User settings updated successfully",
-    schema: toJSONSchema(UserInfoSchema),
+    schema: toJSONSchema(UserInfoSchema) as SchemaObject,
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiBadRequestResponse({ description: "Invalid request body" })
@@ -103,12 +104,12 @@ export class UsersController {
   @ApiParam({ name: "user", description: "Discord user ID", example: "123456789012345678" })
   @ApiBody({
     description: "Role metadata to update",
-    schema: toJSONSchema(RoleMetadataKeySchema),
+    schema: toJSONSchema(RoleMetadataKeySchema) as SchemaObject,
   })
   @ApiResponse({
     status: 200,
     description: "Role metadata updated successfully",
-    schema: toJSONSchema(RoleMetadataKeySchema),
+    schema: toJSONSchema(RoleMetadataKeySchema) as SchemaObject,
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   @ApiNotFoundResponse({ description: "User not found" })
@@ -155,7 +156,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: "Role metadata retrieved successfully",
-    schema: toJSONSchema(RoleMetadataKeySchema),
+    schema: toJSONSchema(RoleMetadataKeySchema) as SchemaObject,
   })
   @ApiUnauthorizedResponse({ description: "Missing or invalid authentication" })
   async getUserRoleMetadata(@Req() req: AuthRequest): Promise<RoleMetadataKey> {

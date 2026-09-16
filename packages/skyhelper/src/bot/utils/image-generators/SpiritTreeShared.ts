@@ -405,7 +405,7 @@ export async function drawBackground(ctx: SKRSContext2D, width: number, height: 
     ctx.save();
     ctx.filter = `blur(${Math.max(8, Math.round(Math.min(width, height) / 120))}px)`;
     ctx.globalAlpha = 0.35;
-    ctx.drawImage(bgImg as any, dx, dy, drawW, drawH);
+    ctx.drawImage(bgImg, dx, dy, drawW, drawH);
     ctx.restore();
   } catch {
     // ignore

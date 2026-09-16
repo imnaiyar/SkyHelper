@@ -18,14 +18,14 @@ export class PlannerDataService {
     // Preserve special class instances
     // instanceof check may not hold true bcz data is from another package
     // DateTime
-    if (typeof obj === "object" && obj.constructor.name === "DateTime") return obj as T;
+    if (typeof obj === "object" && obj.constructor.name === "DateTime") return obj;
     if (obj instanceof Date) return new Date(obj.getTime()) as T;
     // return as is (this is for <ISkyData>.guids) since we rarely use this for progress related stuff, it is fine
     if (obj instanceof Map) return obj as T;
 
     // Check if we've already cloned this object (circular reference)
-    if (visited.has(obj as object)) {
-      return visited.get(obj as object) as T;
+    if (visited.has(obj)) {
+      return visited.get(obj) as T;
     }
 
     // Handle arrays
@@ -40,7 +40,7 @@ export class PlannerDataService {
 
     // Handle objects
     const cloned = {} as T;
-    visited.set(obj as object, cloned);
+    visited.set(obj, cloned);
 
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -421,7 +421,7 @@ export class PlannerDataService {
   static shardsCleared(plannerData?: UserPlannerData) {
     return Boolean(
       plannerData?.shards_checkin &&
-        DateTime.now().setZone(zone).hasSame(DateTime.fromISO(plannerData.shards_checkin, { zone }), "day"),
+      DateTime.now().setZone(zone).hasSame(DateTime.fromISO(plannerData.shards_checkin, { zone }), "day"),
     );
   }
 

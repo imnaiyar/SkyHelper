@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Inject } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery, type SchemaObject } from "@nestjs/swagger";
 import { z } from "zod/v4";
 import { ZodValidator } from "../pipes/zod-validator.pipe.js";
 import { DateTime } from "luxon";
@@ -46,10 +46,10 @@ export class AppController {
     summary: "Get shards embed data",
     description: "Retrieves Discord embed data for shard information on a specific date",
   })
-  @ApiQuery({ name: "date", schema: z.toJSONSchema(GetShardsParams.shape.date) })
-  @ApiQuery({ name: "noBtn", schema: z.toJSONSchema(GetShardsParams.shape.noBtn) })
-  @ApiQuery({ name: "user", schema: z.toJSONSchema(GetShardsParams.shape.user) })
-  @ApiQuery({ name: "locale", schema: z.toJSONSchema(GetShardsParams.shape.locale) })
+  @ApiQuery({ name: "date", schema: z.toJSONSchema(GetShardsParams.shape.date) as SchemaObject })
+  @ApiQuery({ name: "noBtn", schema: z.toJSONSchema(GetShardsParams.shape.noBtn) as SchemaObject })
+  @ApiQuery({ name: "user", schema: z.toJSONSchema(GetShardsParams.shape.user) as SchemaObject })
+  @ApiQuery({ name: "locale", schema: z.toJSONSchema(GetShardsParams.shape.locale) as SchemaObject })
   @ApiResponse({
     status: 200,
     description: "Discord embed object for shard information",
@@ -80,7 +80,7 @@ export class AppController {
     summary: "Get event times embed data",
     description: "Retrieves Discord embed data for Sky game event times",
   })
-  @ApiQuery({ name: "locale", schema: z.toJSONSchema(GetTimesParams.shape.locale) })
+  @ApiQuery({ name: "locale", schema: z.toJSONSchema(GetTimesParams.shape.locale) as SchemaObject })
   @ApiResponse({
     status: 200,
     description: "Discord embed object for event times",

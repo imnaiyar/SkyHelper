@@ -50,7 +50,7 @@ export class RealmsDisplay extends BasePlannerHandler {
       realmSpirits = PlannerService.getSpiritsInRealm(realm.guid, this.data),
       { regular, seasonal } = realmSpirits.reduce(
         (acc, spirit) => {
-          if (spirit.type === SpiritType.Season || spirit.type === SpiritType.Guide) acc.seasonal++;
+          if (spirit.type === "Season" || spirit.type === "Guide") acc.seasonal++;
           else acc.regular++;
           return acc;
         },
@@ -127,7 +127,7 @@ export class RealmsDisplay extends BasePlannerHandler {
   private tiernodes(realm: IRealm) {
     const tiers =
       realm.areas
-        ?.flatMap((a) => a.spirits?.filter((s) => s.type === SpiritType.Regular).map((s) => s.tree?.node))
+        ?.flatMap((a) => a.spirits?.filter((s) => s.type === "Regular").map((s) => s.tree?.node))
         .filter((s) => !!s)
         .flatMap((node) => NodeHelper.allTier(node))
         .filter((s) => typeof s.tier === "number") ?? [];

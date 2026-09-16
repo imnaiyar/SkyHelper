@@ -9,18 +9,20 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
 
   const Time = options.getString("time", true);
   if (!isTimeStringValid(Time)) {
-    return void (await helper.reply({
+    await helper.reply({
       content: t("commands:UTILS.RESPONSES.INVALID-FORMAT"),
       flags: 64,
-    }));
+    });
+    return;
   }
   const [hour, minute, second] = Time.split(" ").map(Number);
   const timezone = options.getString("timezone") ?? "America/Los_Angeles";
   if (!isTimezoneValid(timezone)) {
-    return void (await helper.reply({
+    await helper.reply({
       content: t("commands:UTILS.RESPONSES.INVALID-TIMEZONE"),
       flags: 64,
-    }));
+    });
+    return;
   }
 
   const currentDate = DateTime.now().setZone(timezone);
@@ -31,10 +33,11 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
   const timestamp = DateTime.fromObject({ day, month, year, hour, minute, second }, { zone: timezone });
 
   if (!timestamp.isValid) {
-    return void (await helper.reply({
+    await helper.reply({
       content: `\`${fDate}\` does not exist, please provide a valid date.`,
       flags: 64,
-    }));
+    });
+    return;
   }
 
   const offset = currentDate.offset;
@@ -64,11 +67,11 @@ export async function handleTimestamp(helper: InteractionHelper, options: Intera
   };
 
   const offset1 = `\nOffset: \` ${offsetString} \``;
-  return void (await helper.reply({
+  await helper.reply({
     content: `${offset1}\nTimestamp: \`${timestamp.toUnixInteger()}\``,
     embeds: [result],
     flags: 64,
-  }));
+  });
 }
 
 const isTimezoneValid = (timezone: string) => {

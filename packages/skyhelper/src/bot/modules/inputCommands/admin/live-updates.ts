@@ -7,7 +7,8 @@ export default {
     await helper.defer({ flags: 64 });
     const guild = client.guilds.get(interaction.guild_id ?? "");
     if (!guild) {
-      return void (await helper.editReply({ content: t("commands:LIVE_UPDATES.RESPONSES.NOT_GUILD") }));
+      await helper.editReply({ content: t("commands:LIVE_UPDATES.RESPONSES.NOT_GUILD") });
+      return;
     }
     const sub = options.getSubcommand(true);
     const type = options.getString("type", true);

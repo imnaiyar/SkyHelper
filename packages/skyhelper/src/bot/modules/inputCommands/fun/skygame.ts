@@ -41,10 +41,11 @@ export default {
           const type = options.getString("leaderboard-type") ?? "global";
           const game = options.getString("game", true) as "hangman" | "scrambled";
           if (type === "server" && !guild) {
-            return void (await helper.reply({
+            await helper.reply({
               content: helper.t("features:skygame.LEADERBOARD_SERVER_ONLY"),
               flags: 64,
-            }));
+            });
+            return;
           }
           await helper.defer();
           const gMembers =

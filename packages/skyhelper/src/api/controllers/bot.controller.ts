@@ -1,10 +1,9 @@
 import { Controller, Get, Inject } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse, type SchemaObject } from "@nestjs/swagger";
 import { SkyHelper as BotService } from "@/structures";
 import { BotStatsSchema, SpiritSchema, type BotStats, type SpiritData } from "../types.js";
 import { toJSONSchema, z } from "zod/v4";
 import { fetchSkyData } from "@/planner";
-import { SpiritType } from "@/types/planner";
 @ApiTags("Bot Statistics")
 @Controller("/stats")
 export class BotController {
@@ -18,7 +17,7 @@ export class BotController {
   @ApiResponse({
     status: 200,
     description: "Bot statistics retrieved successfully",
-    schema: toJSONSchema(BotStatsSchema),
+    schema: toJSONSchema(BotStatsSchema) as SchemaObject,
   })
   async getGuild(): Promise<BotStats> {
     const guilds = this.bot.guilds.size;
@@ -44,13 +43,11 @@ export class BotController {
   @ApiResponse({
     status: 200,
     description: "Spirits list retrieved successfully",
-    schema: toJSONSchema(z.array(SpiritSchema)),
+    schema: toJSONSchema(z.array(SpiritSchema)) as SchemaObject,
   })
   async getSpirits(): Promise<SpiritData[]> {
     const data = await fetchSkyData(this.bot);
-    const spirits = data.spirits.items.filter(
-      (s) => s.type !== SpiritType.Special && s.type !== SpiritType.Event,
-    );
+    const spirits = data.spirits.items.filter((s) => s.type !== "Special" && s.type !== "Event");
     const toReturn = spirits.map((s) => {
       const emoji = s.emoji ?? "<:spiritIcon:1206501060303130664>";
       const id = this.bot.utils.parseEmoji(emoji)?.id;
