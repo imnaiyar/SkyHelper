@@ -50,6 +50,7 @@
     "onlyBuiltDependencies": [
       "@nestjs/core",
       "@scarf/scarf",
+      "@sentry-internal/node-cpu-profiler",
       "@sentry/cli",
       "@sentry/profiling-node",
       "@tailwindcss/oxide",
