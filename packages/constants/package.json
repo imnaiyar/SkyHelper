@@ -40,12 +40,13 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.6.2",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "@vitest/coverage-v8": "^3.2.7",
     "luxon": "^3.6.1",
     "tsup": "^8.5.0",
-    "typescript": "^5.7.3",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.6"
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "vite-tsconfig-paths": "7.0.0-alpha.3",
+    "vitest": "^3.2.7"
   },
   "peerDependencies": {
     "luxon": "^3.6.1"

@@ -1,15 +1,15 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "workbench.editor.customLabels.enabled": true,
   "workbench.editor.customLabels.patterns": {
     "**/app/**/page.tsx": "${dirname}/${filename}",
     "**/app/**/route.ts": "${dirname}/${filename}",
     "**/planner.ts": "${dirname}/${filename}",
     "**/shared.ts": "${dirname}/${filename}",
-    "**/base.ts": "${dirname}/${filename}"
+    "**/base.ts": "${dirname}/${filename}",
+    "**/index.ts": "${dirname}/${filename}"
   },
   "editor.foldingStrategy": "auto",
-  "editor.foldingImportsByDefault": true,
-  "js/ts.experimental.useTsgo": false
+  "editor.foldingImportsByDefault": true
 }
