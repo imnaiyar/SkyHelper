@@ -35,7 +35,7 @@
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   },
   "dependencies": {
-    "@discordjs/rest": "^2.3.0",
+    "@discordjs/rest": "^2.6.3",
     "@imnaiyar/framework": "latest",
     "@sapphire/string-store": "^2.0.0",
     "@sentry/bun": "^10.27.0",

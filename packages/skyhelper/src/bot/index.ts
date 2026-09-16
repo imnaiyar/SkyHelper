@@ -27,7 +27,6 @@ const gateway = new WebSocketManager({
   token: process.env.TOKEN,
   shardCount,
   shardIds,
-  fetchGatewayInformation: () => Promise.resolve(gatewayInformation),
 });
 
 console.log("\n\n");
@@ -75,7 +74,7 @@ gateway.on(WebSocketShardEvents.HeartbeatComplete, (d, shardId) => {
   client.ping = latencies.length ? Math.round(latencies.reduce((sum, latency) => sum + latency, 0) / latencies.length) : -1;
 });
 
-gateway.connect().catch(client.logger.error);
+gateway.connect({ gatewayInformation }).catch(client.logger.error);
 
 process.on("unhandledRejection", (err) => {
   client.logger.error("Unhandled: ", err);
