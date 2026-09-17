@@ -6,6 +6,7 @@ import type { ISpiritTree, ISpiritTreeTier, INode } from "skygame-data";
 import { currency as currencyEmojis } from "@skyhelperbot/constants";
 import { CostUtils, resolvePlannerUrl as iconUrl, PlannerService } from "@/planner";
 import path from "node:path";
+import { LRUCache } from "lru-cache";
 
 // #region Constants
 export const FONT_NAME = "noto-sans";
@@ -28,64 +29,20 @@ export interface GenerateSpiritTreeOptions {
 }
 
 // #region Image Cache
-/**
- * LRU cache to reduce memory load and avoid re-loading images
- */
-export class ImageCache {
-  private cache = new Map<string, Image>();
-  private readonly maxSize: number;
-
-  constructor(maxSize = 100) {
-    this.maxSize = maxSize;
-  }
-
-  get(key: string): Image | undefined {
-    const value = this.cache.get(key);
-    if (value !== undefined) {
-      this.cache.delete(key);
-      this.cache.set(key, value);
-    }
-    return value;
-  }
-
-  set(key: string, value: Image): void {
-    if (this.cache.has(key)) {
-      this.cache.delete(key);
-    } else if (this.cache.size >= this.maxSize) {
-      const firstKey = this.cache.keys().next().value;
-      if (firstKey !== undefined) {
-        this.cache.delete(firstKey);
-      }
-    }
-    this.cache.set(key, value);
-  }
-
-  has(key: string): boolean {
-    return this.cache.has(key);
-  }
-
-  clear(): void {
-    this.cache.clear();
-  }
-
-  get size(): number {
-    return this.cache.size;
-  }
-}
-
-export const imageCache = new ImageCache(250);
-
-/**
- * Get an image from cache or load it
- */
-export async function getImage(url: string): Promise<Image> {
-  const cached = imageCache.get(url);
-  if (cached) return cached;
-
-  const img = await loadImage(url).catch(() => loadImage(path.resolve(import.meta.dirname, "../../../../assets/question.png")));
-  imageCache.set(url, img);
-  return img;
-}
+const imageCache = new LRUCache<string, Image>({
+  max: 1000,
+  fetchMethod: async (url: string) => {
+    return await loadImage(url, {
+      requestOptions: {
+        headers: {
+          "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:155.0) Gecko/20100101 Firefox/155.0",
+          origin: "https://skyhelper.xyz",
+          referer: "https://skyhelper.xyz",
+        },
+      },
+    }).catch(() => loadImage(path.resolve(import.meta.dirname, "../../../../assets/question.png")));
+  },
+});
 
 // #region Image Preloading
 /**
@@ -112,7 +69,7 @@ export async function preloadNodeTreeImages(tree: ISpiritTree & { node: INode })
   const spirit = PlannerService.getTreeSpirit(tree);
   if (spirit?.imageUrl) urls.add(spirit.imageUrl);
 
-  await Promise.all([...urls].map(getImage));
+  await Promise.all([...urls].map((url) => imageCache.fetch(url)));
 }
 
 /**
@@ -142,7 +99,7 @@ export async function preloadTierTreeImages(tree: ISpiritTree & { tier: ISpiritT
   const spirit = PlannerService.getTreeSpirit(tree);
   if (spirit?.imageUrl) urls.add(spirit.imageUrl);
 
-  await Promise.all([...urls].map(getImage));
+  await Promise.all([...urls].map((url) => imageCache.fetch(url)));
 }
 
 // #region Drawing Helpers
@@ -232,8 +189,8 @@ export async function drawItem(
   // #region draw item icon
   if (item?.icon) {
     try {
-      const img = await getImage(iconUrl(item.icon));
-      ctx.drawImage(img, -itemSize * 0.45, -itemSize * 0.45, itemSize * 0.9, itemSize * 0.9);
+      const img = await imageCache.fetch(iconUrl(item.icon));
+      ctx.drawImage(img!, -itemSize * 0.45, -itemSize * 0.45, itemSize * 0.9, itemSize * 0.9);
     } catch {
       ctx.font = `${Math.floor(size * 0.7)}px ${FONT_NAME}`;
       ctx.textAlign = "center";
@@ -244,8 +201,8 @@ export async function drawItem(
   } else {
     // Placeholder for empty nodes
     try {
-      const img = await getImage(EMOJI_URL("1424103034371313924"));
-      ctx.drawImage(img, -itemSize * 0.45, -itemSize * 0.45, itemSize * 0.9, itemSize * 0.9);
+      const img = await imageCache.fetch(EMOJI_URL("1424103034371313924"));
+      ctx.drawImage(img!, -itemSize * 0.45, -itemSize * 0.45, itemSize * 0.9, itemSize * 0.9);
     } catch {
       ctx.font = `${Math.floor(size * 0.7)}px ${FONT_NAME}`;
       ctx.textAlign = "center";
@@ -262,9 +219,9 @@ export async function drawItem(
   // #region season overlay
   if (season && item && (item.group === "SeasonPass" || item.group === "Ultimate") && item.season?.iconUrl) {
     try {
-      const badge = await getImage(iconUrl(item.season.iconUrl));
+      const badge = await imageCache.fetch(iconUrl(item.season.iconUrl));
       const bsize = itemSize * 0.4;
-      ctx.drawImage(badge, -itemSize / 2, -itemSize / 2, bsize, bsize);
+      ctx.drawImage(badge!, -itemSize / 2, -itemSize / 2, bsize, bsize);
     } catch {
       ctx.fillStyle = "#FFD966";
       ctx.beginPath();
@@ -354,8 +311,8 @@ export async function drawItem(
 
     if (curEmojiId) {
       try {
-        const curImg = await getImage(EMOJI_URL(curEmojiId));
-        ctx.drawImage(curImg, iconCenterX - cx / 2, iconCenterY - cx / 2, cx, cx);
+        const curImg = await imageCache.fetch(EMOJI_URL(curEmojiId));
+        ctx.drawImage(curImg!, iconCenterX - cx / 2, iconCenterY - cx / 2, cx, cx);
       } catch {
         ctx.fillStyle = "#FFD966";
         ctx.beginPath();
@@ -393,7 +350,7 @@ export async function drawBackground(ctx: SKRSContext2D, width: number, height: 
   if (!spiritImageUrl) return;
 
   try {
-    const bgImg = await getImage(spiritImageUrl);
+    const bgImg = (await imageCache.fetch(spiritImageUrl))!;
     const imgW = (bgImg as any).width ?? bgImg.width;
     const imgH = (bgImg as any).height ?? bgImg.height;
     const scaleBg = Math.max(width / imgW, height / imgH);

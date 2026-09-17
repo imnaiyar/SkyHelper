@@ -56,7 +56,7 @@ export class SeasonsDisplay extends BasePlannerHandler {
       section(
         {
           type: ComponentType.Button,
-          label: "View Season",
+          label: "View",
           custom_id: this.createCustomId({ it: season.guid }),
           style: 1,
         },

@@ -66,7 +66,7 @@ export class HomeDisplay extends BasePlannerHandler {
       section(
         {
           type: ComponentType.Button,
-          label: "View Spirit",
+          label: "View",
           custom_id: this.createCustomId({
             t: DisplayTabs.Spirits,
 
@@ -91,7 +91,7 @@ export class HomeDisplay extends BasePlannerHandler {
         section(
           {
             type: ComponentType.Button,
-            label: "View Details",
+            label: "View",
             custom_id: this.createCustomId({ t: DisplayTabs.Spirits, it: visit.guid, d: "sv" }),
             style: 1,
           },
@@ -107,7 +107,7 @@ export class HomeDisplay extends BasePlannerHandler {
         section(
           {
             type: ComponentType.Button,
-            label: "View All",
+            label: "View",
             custom_id: this.createCustomId({ t: DisplayTabs.Spirits, d: "rs" }),
             style: 2,
           },
@@ -154,7 +154,7 @@ export class HomeDisplay extends BasePlannerHandler {
       section(
         {
           type: ComponentType.Button,
-          label: "View Event",
+          label: "View",
           custom_id: this.createCustomId({ t: DisplayTabs.Events, it: event.event.guid, d: event.instance.guid }),
           style: 1,
         },
