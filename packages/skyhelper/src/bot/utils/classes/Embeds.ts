@@ -279,12 +279,12 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: TranslatorType) {
     if (quest.images?.[0]?.source) quest_title = `[${quest_title}](${quest.images[0].source})`;
     if (quest.images?.length) {
       const ext = quest.images[0]?.url.split("?")[0]?.split(".").pop();
-      const isVideo = ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext);
+      const isVideo = (ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext)) ?? quest.images.length > 1;
       component.components.push(
         section(
           isVideo
             ? {
-                label: "Video",
+                label: quest.images.length > 1 ? "Guide" : "Video",
                 custom_id: Utils.store.serialize(Utils.customId.QuestVideo, { index, date: nowFormatted, user: null }),
                 type: 2,
                 style: 2,

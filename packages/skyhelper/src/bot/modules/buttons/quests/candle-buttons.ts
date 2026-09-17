@@ -18,16 +18,16 @@ export default defineButton({
     const title = type === "rotating" ? "Rotating Candles Location" : "Seasonal Candles Location";
     if (!d) return void (await helper.editReply({ content: t("features:quests.NO_CANDLE_DATA") }));
     const isValid = checkQuestValidity(d.date);
-    if (!isValid || !checkQuestButtonValidToday(date)) {
+    if (!isValid || !checkQuestButtonValidToday(date) || !d.images?.length) {
       return void (await helper.editReply({ content: t("commands:DAILY_QUESTS.RESPONSES.OUTDATED") }));
     }
     const comp = container(
       textDisplay(
         `### ${title}\n${DateTime.now().setZone("America/Los_Angeles").toFormat("dd-MM-yyyy")}` +
-          `\n${emojis.tree_middle}By: ${d.images![0]?.by}\n${emojis.tree_end}Source: ${d.images![0]?.source ?? "Unknown"}`,
+          `\n${emojis.tree_middle}By: ${d.images[0]?.by}\n${emojis.tree_end}Source: ${d.images[0]?.source ?? "Unknown"}`,
       ),
       separator(),
-      mediaGallery(mediaGalleryItem(d.images![0]!.url, { spoiler: true, description: d.title })),
+      mediaGallery(d.images.map((i) => mediaGalleryItem(i.url, { spoiler: true, description: d.title }))),
     );
 
     await helper.editReply({ components: [comp], flags: MessageFlags.IsComponentsV2 });
