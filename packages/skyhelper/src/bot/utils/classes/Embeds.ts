@@ -279,7 +279,11 @@ export function dailyQuestEmbed(data: DailyQuestsSchema, t: TranslatorType) {
     if (quest.images?.[0]?.source) quest_title = `[${quest_title}](${quest.images[0].source})`;
     if (quest.images?.length) {
       const ext = quest.images[0]?.url.split("?")[0]?.split(".").pop();
-      const isVideo = (ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext)) ?? quest.images.length > 1;
+      const isVideo =
+        (ext && ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv"].includes(ext)) ??
+        // if more than one image, then route it to video quest handler, bcz handling it isn't that different
+        quest.images.length > 1;
+
       component.components.push(
         section(
           isVideo
