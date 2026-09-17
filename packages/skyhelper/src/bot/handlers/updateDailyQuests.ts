@@ -6,7 +6,7 @@ import type { DailyQuest } from "@/types/custom";
 import { DateTime } from "luxon";
 import { textDisplay } from "@skyhelperbot/utils";
 
-const titleRegex = /(?:\*\*[^*]*\*\*|[^*])(?<=\*\*)(.*?)(?=\*\*| by)/g;
+const titleRegex = /^(.*?)\s+by\b/g;
 const creditRegex = /by @?\w+/g;
 const linkRegex = /https:\/\/discord\.com\/channels\/\d+\/\d+\/\d+/g;
 let timer: NodeJS.Timeout | null = null;
@@ -23,9 +23,10 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
   const title =
     message.content
       .replaceAll(/<a?:\w+:\d+>/g, "")
-      .match(titleRegex)?.[0]
       .replaceAll(/[*_~]/g, "")
+      .match(titleRegex)?.[0]
       .trim() ?? "[Quest Title Error]: Unknown";
+
   const credit = message.content.replaceAll(linkRegex, "").trim().match(creditRegex)?.[0].slice(3);
   const source = linkRegex.exec(message.content)?.[0];
   const images = message.attachments.map((attachment) => attachment.url);
@@ -40,7 +41,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
     })),
   };
 
-  if (/Rotating Treasure Candle/i.test(message.content)) data.rotating_candles = guide;
+  if (/Treasure Candle/i.test(message.content)) data.rotating_candles = guide;
   else if (/Seasonal Candle/i.test(message.content)) data.seasonal_candles = guide;
   else if (message.content.includes("by")) data.quests.push(guide);
 
