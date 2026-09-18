@@ -6,7 +6,7 @@ import type { DailyQuest } from "@/types/custom";
 import { DateTime } from "luxon";
 import { textDisplay } from "@skyhelperbot/utils";
 
-const titleRegex = /^(.*?)\s+by\b/g;
+const titleRegex = /^(.*?)\s+by\b/;
 const creditRegex = /by @?\w+/g;
 const linkRegex = /https:\/\/discord\.com\/channels\/\d+\/\d+\/\d+/g;
 let timer: NodeJS.Timeout | null = null;
@@ -21,11 +21,15 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
   // prettier-ignore
   if (message.content === "**Daily Quests**" || message.content === "`**Daily Quest**" || /^\*?\*?daily quests?\*?\*? by/i.test(message.content)) return;
   const title =
-    message.content
-      .replaceAll(/<a?:\w+:\d+>/g, "")
-      .replaceAll(/[*_~]/g, "")
-      .match(titleRegex)?.[0]
-      .trim() ?? "[Quest Title Error]: Unknown";
+    titleRegex
+      .exec(
+        message.content
+          // emoji
+          .replaceAll(/<a?:\w+:\d+>/g, "")
+          // markdown
+          .replaceAll(/[*_~]/g, ""),
+      )?.[1]
+      ?.trim() ?? "[Quest Title Error]: Unknown";
 
   const credit = message.content.replaceAll(linkRegex, "").trim().match(creditRegex)?.[0].slice(3);
   const source = linkRegex.exec(message.content)?.[0];
