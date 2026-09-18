@@ -6,7 +6,7 @@ import type { DailyQuest } from "@/types/custom";
 import { DateTime } from "luxon";
 import { textDisplay } from "@skyhelperbot/utils";
 
-const titleRegex = /^(.*?)\s+by\b/g;
+const titleRegex = /^(.*?)\s+by\b/;
 const creditRegex = /by @?\w+/g;
 const linkRegex = /https:\/\/discord\.com\/channels\/\d+\/\d+\/\d+/g;
 let timer: NodeJS.Timeout | null = null;
@@ -24,7 +24,7 @@ export default async (message: GatewayMessageCreateDispatchData, client: SkyHelp
     message.content
       .replaceAll(/<a?:\w+:\d+>/g, "")
       .replaceAll(/[*_~]/g, "")
-      .match(titleRegex)?.[0]
+      .match(titleRegex)?.[1]
       .trim() ?? "[Quest Title Error]: Unknown";
 
   const credit = message.content.replaceAll(linkRegex, "").trim().match(creditRegex)?.[0].slice(3);
