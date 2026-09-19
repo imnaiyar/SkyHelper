@@ -52,6 +52,28 @@
     "VAULT": "Relicário do Conhecimento",
     "EDEN": "Olho do Éden"
   },
+  "AREAS": {
+    "prairie.butterfly": "Campos de Borboleta",
+    "prairie.village": "Aldeia Prairie",
+    "prairie.cave": "Caverna de Oração",
+    "prairie.bird": "Ninho de passarinhos",
+    "prairie.island": "Ilha Santuária",
+    "forest.brook": "Broche da Floresta",
+    "forest.boneyard": "Prateleira",
+    "forest.end": "Fim da Floresta",
+    "forest.tree": "Casa",
+    "forest.sunny": "Sunny Forest",
+    "valley.rink": "Pista de Gelo",
+    "valley.dreams": "Vila dos Sonhos",
+    "valley.hermit": "Vale do Hermit's",
+    "wasteland.temple": "Templo Estalajado",
+    "wasteland.battlefield": "Campo de batalha",
+    "wasteland.graveyard": "Cemitério",
+    "wasteland.crab": "Campos de Caranguejo",
+    "wasteland.ark": "Ark Esquecido",
+    "vault.starlight": "Deserto Luz Estelar",
+    "vault.jelly": "Enxameira de Água-viva"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "Temporada",
     "UNKNOWN": "Espírito Desconhecido",
@@ -91,7 +113,8 @@
     "IMPORT_SUCCESS": "✨ ***Suas memórias foram capturadas à luz das estrelas!*** 🌟\n\n*Os Espíritos preservaram cuidadosamente sua jornada pelo reino. Mantenha esse scroll seguro, caro Sky Kid!* 🕯️📜",
     "DELETE_SUCCESS": "🌌 ***Suas memórias foram liberadas para as estrelas...*** 🌌",
     "DELETE_BACKUP": "📜 ***Um presente de separação dos Espinhos...***",
-    "IMPORT_NOTE": "\n-# NOTA: Se você estiver importando dados de [sky-planner.com](https://sky-planner.com), algumas coisas não são salvas pelo bot, principalmente coisas relacionadas com preferências específicas do site. Isso inclui, mas não se limita a: Temas, Filtros, Marcadores de Mapas, Configurações de Closets, etc."
+    "IMPORT_NOTE": "\n-# NOTA: Se você estiver importando dados de [sky-planner.com](https://sky-planner.com), algumas coisas não são salvas pelo bot, principalmente coisas relacionadas com preferências específicas do site. Isso inclui, mas não se limita a: Temas, Filtros, Marcadores de Mapas, Configurações de Closets, etc.",
+    "SHARD_CLEARED_ACTION_ERROR": "Esta ação está desatualizada e acionada para uma data mais antiga. A ação de fragmentos removida só funciona no dia atual!"
   },
   "linked-role": {
     "INTRO": "Um cargo vinculado é um tipo especial de cargo que pode ser usado para conectar uma conta de usuário a um aplicativo (neste caso, o bot SkyHelper).\nIsso permite que o bot atualize os dados vinculados ao cargo do usuário para exibir informações específicas no perfil dele em um servidor (veja a imagem anexada). Neste caso, podemos usar isso para exibir um perfil básico do Sky (nome preferido, estatísticas e interesses de jogo, entre outras informações).",
