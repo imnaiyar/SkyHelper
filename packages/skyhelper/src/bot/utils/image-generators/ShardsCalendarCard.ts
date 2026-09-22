@@ -84,7 +84,7 @@ export function buildDayData(date: DateTime): ShardsCalendarDayData | null {
     date,
     type: shard.type,
     location: shortName,
-    realm: shard.realmKey.charAt(0).toUpperCase() + shard.realmKey.slice(0),
+    realm: shard.realmKey.charAt(0).toUpperCase() + shard.realmKey.slice(1),
     reward: shard.reward,
     timings: shard.occurrences.map((t) => `${t.shardLand.toFormat("HH:mm")}-${t.shardEnd.toFormat("HH:mm")}`),
   };
