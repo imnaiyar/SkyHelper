@@ -14,10 +14,9 @@ CronJob.schedule(
   () => {
 /**
     eventSchedules("times").catch((err) => logger.error("SkyTimes Job Error: ", err));
-    logger.info("Ran SkyTimes Job");
+    logger.info("Ran SkyTimes Job"); */
   },
   { name: "SkyTimes" },
-*/
 );
 
 // Shards job
@@ -29,10 +28,9 @@ CronJob.schedule(
       const id = Sentry.captureException(err);
       logger.error("Shards Job Error: ", err, id);
     });
-    logger.info("Ran Shards Job");
+    logger.info("Ran Shards Job");*/
   },
   { name: "Shards" },
-*/
 );
 
 CronJob.schedule(
