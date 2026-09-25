@@ -21,6 +21,7 @@ import { InteractionOptionResolver } from "@sapphire/discord-utilities";
 import { resolveColor } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import {
+  botManageModal,
   handleCurrencyModifyModal,
   handleErrorModal,
   handlePlannerFriendNameModal,
@@ -275,6 +276,10 @@ const interactionHandler: Event<GatewayDispatchEvents.InteractionCreate> = async
 
           if (id.startsWith("shards-calendar-modal-date")) {
             await handleShardsCalendarModal(helper);
+            return;
+          }
+          if (id.startsWith("bot-manage;")) {
+            await botManageModal(helper);
             return;
           }
           return;

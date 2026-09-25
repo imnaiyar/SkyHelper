@@ -234,15 +234,13 @@ export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
         description: "Manage the bot settings for the server",
         type: ApplicationCommandOptionType.Subcommand,
       },
-      /*
       {
-        name: "personalize",
-        name_localizations: "commands:BOT.options.PERSONALIZE.name",
-        description_localizations: "commands:BOT.options.PERSONALIZE.description",
+        name: "customize",
+        name_localizations: "commands:BOT.options.CUSTOMIZE.name",
+        description_localizations: "commands:BOT.options.CUSTOMIZE.description",
         description: "Personalize the bot for this server",
         type: ApplicationCommandOptionType.Subcommand,
       },
-      */
     ],
     integration_types: [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall],
     contexts: [InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel],
@@ -253,7 +251,8 @@ export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
       type: "interaction",
       callback: ({ options, helper, t }) => {
         const sub = options.getSubcommand();
-        if (sub === "personalize" && !helper.int.guild_id) return { status: false, message: t("errors:NOT_A_SERVER") };
+        const guild = helper.client.guilds.get(helper.int.guild_id ?? "");
+        if (sub === "customize" && !guild) return { status: false, message: t("errors:NOT_A_SERVER") };
         return { status: true };
       },
     },

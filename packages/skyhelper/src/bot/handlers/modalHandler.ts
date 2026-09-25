@@ -8,14 +8,21 @@ import {
   type APIButtonComponentWithCustomId,
   type APIContainerComponent,
   type APIEmbed,
+  type APIGuildForumChannel,
+  type APIGuildMember,
   type APIModalSubmitInteraction,
+  type APINewsChannel,
+  type APITextChannel,
 } from "@discordjs/core";
-import { resolveColor } from "@skyhelperbot/utils";
+import { PermissionsUtil, resolveColor, separator, textDisplay } from "@skyhelperbot/utils";
 import { DateTime } from "luxon";
 import { fetchSkyData, handlePlannerNavigation, PlannerDataService } from "@/planner";
 import { DisplayTabs } from "@/types/planner";
 import { nanoid } from "nanoid";
 import { setLoadingState } from "@/utils/loading";
+import { supportedLang } from "@skyhelperbot/constants";
+import { DiscordAPIError } from "@discordjs/rest";
+import { customizeEmbed } from "@/modules/inputCommands/utility/sub/bot";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction;
@@ -226,4 +233,119 @@ export async function handlePlannerFriendNameModal(helper: InteractionHelper) {
     helper.client,
   );
   await helper.editReply(data);
+}
+
+export async function botManageModal(helper: InteractionHelper) {
+  const int = helper.int as APIModalSubmitInteraction;
+  const action = int.data.custom_id.split(";")[1]!;
+  const client = helper.client;
+  switch (action) {
+    case "manage": {
+      await helper.defer({ flags: MessageFlags.Ephemeral });
+      const guild = client.guilds.get(int.guild_id ?? "");
+      const guild_settings = guild && (await client.schemas.getSettings(guild));
+      const user_settings = await client.schemas.getUser(helper.user);
+
+      let isAdmin = false;
+      if (guild && int.member && client.permUtils(int.member.permissions as `${number}`).has("ManageGuild")) isAdmin = true;
+      let guild_language: string | undefined;
+      let announcement_channel;
+      let beta;
+      // these components should be present for admins
+      if (isAdmin) {
+        guild_language = client.utils.getModalComponent(int, "bot-manage-server-language", ComponentType.StringSelect)?.values[0];
+        announcement_channel = client.utils.getModalComponent(int, "bot-manage-announcement-channel", ComponentType.ChannelSelect)
+          ?.values[0];
+        beta = client.utils.getModalComponent(int, "bot-manage-beta", ComponentType.StringSelect)?.values[0];
+      }
+      if (announcement_channel) {
+        const channel = client.channels.get(announcement_channel)! as APITextChannel | APINewsChannel | APIGuildForumChannel;
+        const hasPerms = PermissionsUtil.overwriteFor(guild!.clientMember, channel, guild!).has(["ViewChannel", "SendMessages"]);
+        if (!hasPerms) {
+          return await helper.editReply({
+            content: helper.t("errors:NO_CHANNEL_PERM", { CHANNEL: announcement_channel }),
+          });
+        }
+      }
+
+      const user_language = client.utils.getModalComponent(int, "bot-manage-user-language", ComponentType.StringSelect)
+        ?.values[0];
+      if (guild_settings) {
+        guild_settings.annoucement_channel = announcement_channel ?? null;
+        if (beta === "enable") guild_settings.beta = true;
+        else guild_settings.beta = false;
+        guild_settings.language = supportedLang.find((l) => l.value === guild_language);
+      }
+      user_settings.language = supportedLang.find((l) => l.value === user_language);
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await Promise.all([guild_settings?.save(), user_settings.save()]);
+
+      await helper.editReply({
+        components: [
+          textDisplay("# Bot Settings Updated"),
+          separator(),
+          textDisplay(
+            "### Settings",
+            `User: <@${helper.user.id}>${guild ? ` | Server: **${guild.name}**` : ""}\n`,
+            `- Server Language: ${guild_language ? supportedLang.find((l) => l.value === guild_language)?.name : "Default (English)"}`,
+            `- Announcement Channel: ${announcement_channel ? `<#${announcement_channel}>` : "Not Set"}`,
+            `- Beta Features: ${beta === "enable" ? "Enabled" : "Disabled"}`,
+            `- User Language: ${user_language ? supportedLang.find((l) => l.value === user_language)?.name : "Default (English)"}`,
+          ),
+        ],
+        flags: MessageFlags.IsComponentsV2,
+        allowed_mentions: { parse: [] },
+      });
+      break;
+    }
+    case "customize": {
+      await helper.update({});
+
+      const followUpMsg = await helper.followUp({
+        content: "Applying elder's magic on the bot...",
+        flags: MessageFlags.Ephemeral,
+      });
+      const nick = client.utils.getModalComponent(int, "nick", ComponentType.TextInput)?.value;
+      const bio = client.utils.getModalComponent(int, "bio", ComponentType.TextInput)?.value;
+      const avatar = client.utils.getModalComponent(int, "avatar", ComponentType.FileUpload)?.values[0];
+      const banner = client.utils.getModalComponent(int, "banner", ComponentType.FileUpload)?.values[0];
+
+      const avatarAtt = int.data.resolved?.attachments?.[avatar ?? ""];
+      const bannerAtt = int.data.resolved?.attachments?.[banner ?? ""];
+      const avatarBase =
+        avatarAtt && (await fetch(avatarAtt.url).then((b) => b.arrayBuffer().then((c) => Buffer.from(c).toString("base64"))));
+
+      const bannerBase =
+        bannerAtt && (await fetch(bannerAtt.url).then((b) => b.arrayBuffer().then((c) => Buffer.from(c).toString("base64"))));
+      /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+      const response = await helper.client.api.users
+        .editCurrentGuildMember(int.guild_id!, {
+          nick: nick || null,
+          bio: bio || null,
+          avatar: avatarBase ? `data:${avatarAtt.content_type ?? "image/png"};base64,${avatarBase}` : null,
+          banner: bannerBase ? `data:${bannerAtt.content_type ?? "image/png"};base64,${bannerBase}` : null,
+        })
+        .catch((c: DiscordAPIError) => c);
+      /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
+
+      if (response instanceof DiscordAPIError) {
+        if (response.message.includes("RATE_LIMIT")) {
+          await helper.editReply({ content: helper.t("commands:BOT.responses.customize.ratelimit") }, followUpMsg.id);
+          return;
+        }
+        await helper.editReply(
+          {
+            content: `Oops! An error returned from discord's side!\n\n\`\`\`\n${response.message}\n\`\`\``,
+          },
+          followUpMsg.id,
+        );
+        return;
+      }
+
+      await helper.editReply({ content: helper.t("commands:BOT.responses.customize.success") }, followUpMsg.id);
+
+      // update the original embed with changes
+      await helper.editReply({ components: customizeEmbed(helper.t, response as APIGuildMember & { bio: string }) });
+    }
+  }
 }

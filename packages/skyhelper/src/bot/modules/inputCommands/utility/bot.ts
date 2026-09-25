@@ -1,12 +1,12 @@
 import { BOT_COMMAND_DATA } from "@/modules/commands-data/utility-commands";
 import type { Command } from "@/structures";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { MessageFlags, type APIActionRowComponent, type APIButtonComponent } from "@discordjs/core";
+import { MessageFlags, type APIActionRowComponent, type APIButtonComponent, type APIGuildMember } from "@discordjs/core";
 import { container, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 import os from "node:os";
 import { readFile } from "node:fs/promises";
-import { botManage } from "./sub/bot.js";
+import { botManage, customizeEmbed } from "./sub/bot.js";
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res) as Record<string, any>);
 
 export default {
@@ -19,6 +19,16 @@ export default {
       }
       case "manage": {
         await botManage(helper);
+        break;
+      }
+      case "customize": {
+        const botMember = (await helper.client.api.users.editCurrentGuildMember(helper.int.guild_id!, {})) as APIGuildMember & {
+          bio: string;
+        };
+        await helper.reply({
+          components: customizeEmbed(helper.t, botMember),
+          flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+        });
         break;
       }
       default:

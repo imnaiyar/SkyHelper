@@ -1,15 +1,15 @@
+import type { TranslatorType } from "@/i18n";
 import type { InteractionHelper } from "@/utils/classes/InteractionUtil";
-import { supportedLang } from "@skyhelperbot/constants";
-import { PermissionsUtil, separator, textDisplay } from "@skyhelperbot/utils";
+import { CustomId, store } from "@/utils/customId-store";
+import { emojis, supportedLang } from "@skyhelperbot/constants";
+import { button, container, row, separator, textDisplay } from "@skyhelperbot/utils";
 import {
+  ButtonStyle,
   ChannelType,
   ComponentType,
-  MessageFlags,
   SelectMenuDefaultValueType,
-  type APIGuildForumChannel,
+  type APIGuildMember,
   type APIModalInteractionResponseCallbackData,
-  type APINewsChannel,
-  type APITextChannel,
 } from "discord-api-types/v10";
 
 export async function botManage(helper: InteractionHelper) {
@@ -23,7 +23,7 @@ export async function botManage(helper: InteractionHelper) {
 
   const modal: APIModalInteractionResponseCallbackData = {
     title: "Manage Bot's Settings",
-    custom_id: "bot-manage-" + helper.int.id,
+    custom_id: "bot-manage;manage",
     components: [
       guild && isAdmin
         ? [
@@ -101,58 +101,41 @@ export async function botManage(helper: InteractionHelper) {
   };
 
   await helper.launchModal(modal);
+}
 
-  const submit = await client
-    .awaitModal({ filter: (i) => i.data.custom_id === modal.custom_id, timeout: 3 * 60 * 1000 })
-    .catch(() => null);
+export function customizeEmbed(t: TranslatorType, botMember: APIGuildMember & { bio: string }) {
+  const { nick, bio, avatar, banner } = botMember;
+  const hasChanges = Boolean(nick ?? banner ?? avatar ?? bio);
 
-  if (!submit) return;
-  await client.api.interactions.defer(submit.id, submit.token);
-  let guild_language: string | undefined;
-  let announcement_channel;
-  let beta;
-  // these components should be present for admins
-  if (isAdmin) {
-    guild_language = client.utils.getModalComponent(submit, "bot-manage-server-language", ComponentType.StringSelect)?.values[0];
-    announcement_channel = client.utils.getModalComponent(submit, "bot-manage-announcement-channel", ComponentType.ChannelSelect)
-      ?.values[0];
-    beta = client.utils.getModalComponent(submit, "bot-manage-beta", ComponentType.StringSelect)?.values[0];
-  }
-  if (announcement_channel) {
-    const channel = client.channels.get(announcement_channel)! as APITextChannel | APINewsChannel | APIGuildForumChannel;
-    const hasPerms = PermissionsUtil.overwriteFor(guild!.clientMember, channel, guild!).has(["ViewChannel", "SendMessages"]);
-    if (!hasPerms) {
-      return await client.api.interactions.editReply(int.application_id, submit.token, {
-        content: helper.t("errors:NO_CHANNEL_PERM", { CHANNEL: announcement_channel }),
-      });
-    }
+  const actions = row(
+    button({
+      label: t("commands:BOT.responses.customize.btn"),
+      custom_id: store.serialize(CustomId.BotCustomize, { action: "edit", user: null }),
+      emoji: { name: "edit", id: emojis.edit },
+    }),
+  );
+
+  if (hasChanges) {
+    actions.components.push(
+      button({
+        label: t("commands:BOT.responses.customize.delete"),
+        custom_id: store.serialize(CustomId.BotCustomize, { action: "delete", user: null }),
+        emoji: { name: "delete", id: emojis.delete_icon },
+        style: ButtonStyle.Danger,
+      }),
+    );
   }
 
-  const user_language = client.utils.getModalComponent(submit, "bot-manage-user-language", ComponentType.StringSelect)?.values[0];
-  if (guild_settings) {
-    guild_settings.annoucement_channel = announcement_channel ?? null;
-    if (beta === "enable") guild_settings.beta = true;
-    else guild_settings.beta = false;
-    guild_settings.language = supportedLang.find((l) => l.value === guild_language);
-  }
-  user_settings.language = supportedLang.find((l) => l.value === user_language);
-  // eslint-disable-next-line @typescript-eslint/await-thenable
-  await Promise.all([guild_settings?.save(), user_settings.save()]);
-
-  await client.api.interactions.editReply(int.application_id, submit.token, {
-    components: [
-      textDisplay("# Bot Settings Updated"),
-      separator(),
+  return [
+    container(
       textDisplay(
-        "### Settings",
-        `User: <@${helper.user.id}>${guild ? ` | Server: **${guild.name}**` : ""}\n`,
-        `- Server Language: ${guild_language ? supportedLang.find((l) => l.value === guild_language)?.name : "Default (English)"}`,
-        `- Announcement Channel: ${announcement_channel ? `<#${announcement_channel}>` : "Not Set"}`,
-        `- Beta Features: ${beta === "enable" ? "Enabled" : "Disabled"}`,
-        `- User Language: ${user_language ? supportedLang.find((l) => l.value === user_language)?.name : "Default (English)"}`,
+        t("commands:BOT.responses.customize.description"),
+        "\n",
+        hasChanges ? t("commands:BOT.responses.customize.delete.warn") : "",
       ),
-    ],
-    flags: MessageFlags.IsComponentsV2,
-    allowed_mentions: { parse: [] },
-  });
+      actions,
+      separator(),
+      textDisplay(`-# ${t("commands:BOT.responses.customize.disclaimer")}`),
+    ),
+  ];
 }
