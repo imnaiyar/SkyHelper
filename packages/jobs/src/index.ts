@@ -12,9 +12,8 @@ const CronJob = Sentry.cron.instrumentNodeCron(cron);
 CronJob.schedule(
   "*/2 * * * *",
   () => {
-/**
     eventSchedules("times").catch((err) => logger.error("SkyTimes Job Error: ", err));
-    logger.info("Ran SkyTimes Job"); */
+    logger.info("Ran SkyTimes Job"); 
   },
   { name: "SkyTimes" },
 );
@@ -23,12 +22,11 @@ CronJob.schedule(
 CronJob.schedule(
   "*/5 * * * *",
   () => {
-/**
     eventSchedules("shard").catch((err) => {
       const id = Sentry.captureException(err);
       logger.error("Shards Job Error: ", err, id);
     });
-    logger.info("Ran Shards Job");*/
+    logger.info("Ran Shards Job");
   },
   { name: "Shards" },
 );
