@@ -28,7 +28,7 @@ export default defineButton({
         break;
       }
       case "delete": {
-        await helper.client.api.users.editCurrentGuildMember(guild_id!, { nick: null, avatar: null, bio: null });
+        await helper.client.api.users.editCurrentGuildMember(guild_id!, { nick: null, avatar: null, banner: null, bio: null });
         await helper.update({ components: customizeEmbed(t, botMember) });
 
         await helper.followUp({ content: t("commands:BOT.responses.customize.delete.success"), flags: MessageFlags.Ephemeral });
@@ -59,7 +59,7 @@ function customizeModal(t: TranslatorType, nickname: string | null, bio: string 
       {
         type: ComponentType.Label,
         label: "Bio",
-        description: "The bot's nickname in the server",
+        description: "The bot's bio in the server",
         component: {
           type: ComponentType.TextInput,
           value: bio ?? "",

@@ -270,7 +270,7 @@ export async function botManageModal(helper: InteractionHelper) {
 
       const user_language = client.utils.getModalComponent(int, "bot-manage-user-language", ComponentType.StringSelect)
         ?.values[0];
-      if (guild_settings) {
+      if (guild_settings && isAdmin) {
         guild_settings.annoucement_channel = announcement_channel ?? null;
         if (beta === "enable") guild_settings.beta = true;
         else guild_settings.beta = false;

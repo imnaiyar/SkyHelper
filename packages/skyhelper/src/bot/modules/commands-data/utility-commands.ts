@@ -252,7 +252,12 @@ export const BOT_COMMAND_DATA: Omit<Command, "interactionRun" | "messageRun"> = 
       callback: ({ options, helper, t }) => {
         const sub = options.getSubcommand();
         const guild = helper.client.guilds.get(helper.int.guild_id ?? "");
-        if (sub === "customize" && !guild) return { status: false, message: t("errors:NOT_A_SERVER") };
+        if (sub === "customize") {
+          if (!guild) return { status: false, message: t("errors:NOT_A_SERVER") };
+          if (!helper.client.permUtils(helper.int.member!.permissions as `${number}`).has("ManageGuild")) {
+            return { status: false, message: t("errors:NO_PERMS_USER", { PERMISSIONS: "Manage Server" }) };
+          }
+        }
         return { status: true };
       },
     },
