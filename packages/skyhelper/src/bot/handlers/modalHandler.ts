@@ -9,7 +9,6 @@ import {
   type APIContainerComponent,
   type APIEmbed,
   type APIGuildForumChannel,
-  type APIGuildMember,
   type APIModalSubmitInteraction,
   type APINewsChannel,
   type APITextChannel,
@@ -22,7 +21,7 @@ import { nanoid } from "nanoid";
 import { setLoadingState } from "@/utils/loading";
 import { supportedLang } from "@skyhelperbot/constants";
 import { DiscordAPIError } from "@discordjs/rest";
-import { customizeEmbed } from "@/modules/inputCommands/utility/sub/bot";
+import { customizeEmbed, type GuildMemberWithBio } from "@/modules/inputCommands/utility/sub/bot";
 
 export async function handleShardsCalendarModal(helper: InteractionHelper) {
   const int = helper.int as APIModalSubmitInteraction;
@@ -311,18 +310,25 @@ export async function botManageModal(helper: InteractionHelper) {
 
       const avatarAtt = int.data.resolved?.attachments?.[avatar ?? ""];
       const bannerAtt = int.data.resolved?.attachments?.[banner ?? ""];
-      const avatarBase =
-        avatarAtt && (await fetch(avatarAtt.url).then((b) => b.arrayBuffer().then((c) => Buffer.from(c).toString("base64"))));
+      const promises: Array<Promise<string>> = [];
 
-      const bannerBase =
-        bannerAtt && (await fetch(bannerAtt.url).then((b) => b.arrayBuffer().then((c) => Buffer.from(c).toString("base64"))));
+      if (avatarAtt) {
+        promises.push(fetch(avatarAtt.url).then((b) => b.arrayBuffer().then((c) => Buffer.from(c).toString("base64"))));
+      }
+
+      if (bannerAtt) {
+        promises.push(fetch(bannerAtt.url).then((b) => b.arrayBuffer().then((c) => Buffer.from(c).toString("base64"))));
+      }
+
+      const [avatarBase, bannerBase] = await Promise.all(promises);
+
       /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
       const response = await helper.client.api.users
         .editCurrentGuildMember(int.guild_id!, {
           nick: nick || null,
           bio: bio || null,
-          avatar: avatarBase ? `data:${avatarAtt.content_type ?? "image/png"};base64,${avatarBase}` : null,
-          banner: bannerBase ? `data:${bannerAtt.content_type ?? "image/png"};base64,${bannerBase}` : null,
+          avatar: avatarBase ? `data:${avatarAtt!.content_type ?? "image/png"};base64,${avatarBase}` : null,
+          banner: bannerBase ? `data:${bannerAtt!.content_type ?? "image/png"};base64,${bannerBase}` : null,
         })
         .catch((c: DiscordAPIError) => c);
       /* eslint-enable @typescript-eslint/prefer-nullish-coalescing */
@@ -344,7 +350,7 @@ export async function botManageModal(helper: InteractionHelper) {
       await helper.editReply({ content: helper.t("commands:BOT.responses.customize.success") }, followUpMsg.id);
 
       // update the original embed with changes
-      await helper.editReply({ components: customizeEmbed(helper.t, response as APIGuildMember & { bio: string }) });
+      await helper.editReply({ components: customizeEmbed(helper.t, response as GuildMemberWithBio) });
     }
   }
 }

@@ -103,7 +103,9 @@ export async function botManage(helper: InteractionHelper) {
   await helper.launchModal(modal);
 }
 
-export function customizeEmbed(t: TranslatorType, botMember: APIGuildMember & { bio: string }) {
+export type GuildMemberWithBio = APIGuildMember & { bio: string };
+
+export function customizeEmbed(t: TranslatorType, botMember: GuildMemberWithBio) {
   const { nick, bio, avatar, banner } = botMember;
   const hasChanges = Boolean(nick ?? banner ?? avatar ?? bio);
 

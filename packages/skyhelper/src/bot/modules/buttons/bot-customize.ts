@@ -8,7 +8,7 @@ import {
   type APIGuildMember,
   type APIModalInteractionResponseCallbackData,
 } from "discord-api-types/v10";
-import { customizeEmbed } from "../inputCommands/utility/sub/bot.js";
+import { customizeEmbed, type GuildMemberWithBio } from "../inputCommands/utility/sub/bot.js";
 
 export default defineButton({
   data: { name: "customize" },
@@ -28,8 +28,13 @@ export default defineButton({
         break;
       }
       case "delete": {
-        await helper.client.api.users.editCurrentGuildMember(guild_id!, { nick: null, avatar: null, banner: null, bio: null });
-        await helper.update({ components: customizeEmbed(t, botMember) });
+        const member = await helper.client.api.users.editCurrentGuildMember(guild_id!, {
+          nick: null,
+          avatar: null,
+          banner: null,
+          bio: null,
+        });
+        await helper.update({ components: customizeEmbed(t, member as GuildMemberWithBio) });
 
         await helper.followUp({ content: t("commands:BOT.responses.customize.delete.success"), flags: MessageFlags.Ephemeral });
         break;
