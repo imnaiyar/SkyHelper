@@ -272,8 +272,7 @@ export async function botManageModal(helper: InteractionHelper) {
         ?.values[0];
       if (guild_settings && isAdmin) {
         guild_settings.annoucement_channel = announcement_channel ?? null;
-        if (beta === "enable") guild_settings.beta = true;
-        else guild_settings.beta = false;
+        guild_settings.beta = beta === "enable";
         guild_settings.language = supportedLang.find((l) => l.value === guild_language);
       }
       user_settings.language = supportedLang.find((l) => l.value === user_language);
