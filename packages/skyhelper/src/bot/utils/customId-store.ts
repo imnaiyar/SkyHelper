@@ -38,6 +38,7 @@ export enum CustomId {
   PlannerActions,
   SeasonCalculator,
   RELEASE_SELECT,
+  BotCustomize,
 }
 
 export const store = new SchemaStore()
@@ -105,4 +106,5 @@ export const store = new SchemaStore()
       .nullable("user", t.string),
   )
   .add(new Schema(CustomId.SeasonCalculator).string("action").string("key").nullable("tree", t.string).nullable("user", t.string))
-  .add(new Schema(CustomId.RELEASE_SELECT).nullable("user", t.string));
+  .add(new Schema(CustomId.RELEASE_SELECT).nullable("user", t.string))
+  .add(new Schema(CustomId.BotCustomize).string("action").nullable("user", t.string));

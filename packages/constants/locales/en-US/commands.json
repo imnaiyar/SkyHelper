@@ -404,10 +404,21 @@
         "name": "manage",
         "description": "Manage the bot settings for the server"
       },
-      "PERSONALIZE": {
-        "name": "personalize",
-        "description": "Personalize the bot for this server"
+      "CUSTOMIZE": {
+        "name": "customize",
+        "description": "Customize the bot for this server"
       }
+    },
+    "responses": {
+      "customize.description": "The elder's decided to bring the magic of transformation to **SkyHelper**.\n\nYou can change the bot's avatar, banner and bio to suit your nest's (server) needs.",
+      "customize.btn": "Customize",
+      "customize.delete": "Reset Changes",
+      "customize.delete.warn": "The reset action will remove all overrides (nickname, banner and avatar). If you want to modify something specific, use \"Customize\".",
+      "customize.delete.success": "Successfully removed all overrides",
+      "customize.wait": "The elder needs time to perform the transformation. Please wait...",
+      "customize.success": "The elder has succeeded in customizing the bot for this nest.",
+      "customize.ratelimit": "Woah! You are flying too fast! The elder is tired and needs rest for a while. `Avatar` and `Banner` can only be changed twice within 10 minutes (due to Discord's rate limit).",
+      "customize.disclaimer": "Please ensure all customizations comply with Discord's [community guidelines](https://discord.com/guidelines). Servers may be blacklisted if they use content that violates Discord's rules."
     }
   },
   "PLANNER": {

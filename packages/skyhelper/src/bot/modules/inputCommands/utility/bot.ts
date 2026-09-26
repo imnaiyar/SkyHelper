@@ -6,7 +6,7 @@ import { container, separator, textDisplay } from "@skyhelperbot/utils";
 import { emojis } from "@skyhelperbot/constants";
 import os from "node:os";
 import { readFile } from "node:fs/promises";
-import { botManage } from "./sub/bot.js";
+import { botManage, customizeEmbed, type GuildMemberWithBio } from "./sub/bot.js";
 const pkg = await readFile("package.json", "utf-8").then((res) => JSON.parse(res) as Record<string, any>);
 
 export default {
@@ -19,6 +19,14 @@ export default {
       }
       case "manage": {
         await botManage(helper);
+        break;
+      }
+      case "customize": {
+        const botMember = await helper.client.api.users.editCurrentGuildMember(helper.int.guild_id!, {});
+        await helper.reply({
+          components: customizeEmbed(helper.t, botMember as GuildMemberWithBio),
+          flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+        });
         break;
       }
       default:
