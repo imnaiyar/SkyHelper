@@ -52,6 +52,28 @@
     "VAULT": "Bóveda del conocimiento",
     "EDEN": "Ojo de Edén"
   },
+  "AREAS": {
+    "prairie.butterfly": "Campos de mariposa",
+    "prairie.village": "Aldea de Prairie",
+    "prairie.cave": "Cueva de Prairie",
+    "prairie.bird": "Nido del pájaro",
+    "prairie.island": "Isla del Santuario",
+    "forest.brook": "Gorro del Bosque",
+    "forest.boneyard": "Carretera",
+    "forest.end": "Fin del bosque",
+    "forest.tree": "Casa del árbol",
+    "forest.sunny": "Sunny Forest",
+    "valley.rink": "Rosa de hielo",
+    "valley.dreams": "Aldea de sueños",
+    "valley.hermit": "Valle de Ermita",
+    "wasteland.temple": "Templo Yermo",
+    "wasteland.battlefield": "Campo de batalla",
+    "wasteland.graveyard": "Astillero",
+    "wasteland.crab": "Campos de captura",
+    "wasteland.ark": "Arca olvidada",
+    "vault.starlight": "Desierto Cósmico",
+    "vault.jelly": "Caleta de Medusa"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "Temporada",
     "UNKNOWN": "Espíritu desconocido",
@@ -91,7 +113,8 @@
     "IMPORT_SUCCESS": "✨ ***¡Tus recuerdos han sido capturados con luz de estrella!*** 🌟\n\n*Los Espíritus han preservado cuidadosamente tu viaje a través de los reinos. ¡Mantén este desplazamiento seguro, querido Sky Kid!* 🕯️📜",
     "DELETE_SUCCESS": "🌌 ***Tus recuerdos han sido liberados a las estrellas...*** 🌌",
     "DELETE_BACKUP": "📜 ***Un regalo de despedida de los espíritus...***",
-    "IMPORT_NOTE": "\n-# NOTA: Si estás importando datos de [sky-planner.com](https://sky-planner.com), algunas cosas no son guardadas por el bot, principalmente cosas relacionadas con preferencias específicas del sitio web. Estos incluyen, pero no se limitan a: Temas, Filtros, Marcadores de Mapa, Configuración de Closet, etc."
+    "IMPORT_NOTE": "\n-# NOTA: Si estás importando datos de [sky-planner.com](https://sky-planner.com), algunas cosas no son guardadas por el bot, principalmente cosas relacionadas con preferencias específicas del sitio web. Estos incluyen, pero no se limitan a: Temas, Filtros, Marcadores de Mapa, Configuración de Closet, etc.",
+    "SHARD_CLEARED_ACTION_ERROR": "Esta acción está anticuada y se activa para una fecha anterior del fragmento. ¡La acción de limpieza por partes sólo funciona para el día actual!"
   },
   "linked-role": {
     "INTRO": "Linked role is a special kind of roles that can be used to connect a user account with an application (in this case, the SkyHelper bot).\nThis allows the bot to update user's role connection data to display specific information on a user's profile in a server (see the attached pic). In this case, we can use this to display basic sky profile (Preferred name, preferences, etc.).",
