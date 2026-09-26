@@ -1,13 +1,7 @@
 import type { TranslatorType } from "@/i18n";
 import { defineButton } from "@/structures";
 import { CustomId } from "@/utils/customId-store";
-import {
-  ComponentType,
-  MessageFlags,
-  TextInputStyle,
-  type APIGuildMember,
-  type APIModalInteractionResponseCallbackData,
-} from "discord-api-types/v10";
+import { ComponentType, MessageFlags, TextInputStyle, type APIModalInteractionResponseCallbackData } from "discord-api-types/v10";
 import { customizeEmbed, type GuildMemberWithBio } from "../inputCommands/utility/sub/bot.js";
 
 export default defineButton({
@@ -15,9 +9,7 @@ export default defineButton({
   id: CustomId.BotCustomize,
   async execute(interaction, t, helper, { action }) {
     // only way to get bot's bio for server, if any
-    const botMember = (await helper.api.users.editCurrentGuildMember(interaction.guild_id!, {})) as APIGuildMember & {
-      bio: string;
-    };
+    const botMember = (await helper.api.users.editCurrentGuildMember(interaction.guild_id!, {})) as GuildMemberWithBio;
 
     const { bio, nick } = botMember;
     const { guild_id } = interaction;
