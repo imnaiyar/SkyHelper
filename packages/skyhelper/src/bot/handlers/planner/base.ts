@@ -77,12 +77,12 @@ export abstract class BasePlannerHandler {
   paginationBtns({ page, total, ...rest }: NavigationState & { page: number; total: number }) {
     return row(
       button({
-        label: "« First",
+        label: "«",
         custom_id: this.createCustomId({ ...rest, p: 1, i: "x" }),
         disabled: page === 1,
       }),
       button({
-        label: "‹ Previous",
+        label: "‹",
         custom_id: this.createCustomId({ ...rest, p: Math.max(1, page - 1) }),
         disabled: page === 1,
       }),
@@ -92,12 +92,12 @@ export abstract class BasePlannerHandler {
         disabled: true,
       }),
       button({
-        label: "Next ›",
+        label: "›",
         custom_id: this.createCustomId({ ...rest, p: Math.min(total, page + 1) }),
         disabled: page === total,
       }),
       button({
-        label: "Last »",
+        label: "»",
         custom_id: this.createCustomId({ ...rest, p: total, i: "y" }),
         disabled: page === total,
       }),
