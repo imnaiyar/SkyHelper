@@ -404,10 +404,21 @@
         "name": "manage",
         "description": "Manage the bot settings for the server"
       },
-      "PERSONALIZE": {
-        "name": "personalize",
-        "description": "Personalize the bot for this server"
+      "CUSTOMIZE": {
+        "name": "カスタマイズ",
+        "description": "このサーバーのボットをカスタマイズします"
       }
+    },
+    "responses": {
+      "customize.description": "長老は**スカイヘルパー**に変換の魔法を持ってくることにしました。\n\n巣(サーバー)のニーズに合わせてボットのアバター、バナー、バイオを変更できます。",
+      "customize.btn": "カスタマイズ",
+      "customize.delete": "変更をリセット",
+      "customize.delete.warn": "リセットアクションはすべてのオーバーライド（ニックネーム、バナー、アバター）を削除します。特定のものを変更したい場合は、「カスタマイズ」を使用してください。",
+      "customize.delete.success": "すべてのオーバーライドを削除しました",
+      "customize.wait": "The older need time to perform the transformation. Please wait...",
+      "customize.success": "長老はこの巣のボットをカスタマイズすることに成功しました。",
+      "customize.ratelimit": "うわー!あなたはあまりにも速く飛んでいます!長老は疲れているし、しばらくの間休息が必要です。 `Avatar`と`Banner`は10分以内に2回のみ変更できます（Discordの料金制限のため）。",
+      "customize.disclaimer": "Please ensure all customizations comply with Discord's [community guidelines](https://discord.com/guidelines). Servers may be blacklisted if they use content that violates Discord's rules."
     }
   },
   "PLANNER": {
