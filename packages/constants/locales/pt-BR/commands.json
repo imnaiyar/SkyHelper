@@ -404,10 +404,21 @@
         "name": "gerenciar",
         "description": "Gerencie as configurações do bot para o servidor"
       },
-      "PERSONALIZE": {
+      "CUSTOMIZE": {
         "name": "personalizar",
-        "description": "Personalize o bot para este servidor"
+        "description": "Personalizar o bot para esse servidor"
       }
+    },
+    "responses": {
+      "customize.description": "Os anciões decidiram trazer a magia da transformação para o **SkyHelper**!\n\nVocê pode mudar o avatar do bot, banner e até a bio pra atender às necessidades do seu ninho (ou server).",
+      "customize.btn": "Personalizar",
+      "customize.delete": "Redefinir alterações",
+      "customize.delete.warn": "Cuidado! O reset vai limpar todas as suas personalizações (apelido, banner e avatar). Quer mudar só uma coisinha? Use \"Personalizar\".",
+      "customize.delete.success": "Todas as substituições foram removidas com sucesso",
+      "customize.wait": "O ancião precisa de tempo para executar a transformação. Por favor aguarde...",
+      "customize.success": "O ancião conseguiu customizar o bot para esse ninho.",
+      "customize.ratelimit": "Eita, esquadrão da moda! Voando rápido demais! O Ancião tá exausto. Avatar e Banner só mudam 2x a cada 10 min (culpa do Discord).",
+      "customize.disclaimer": "Todas as personalizações devem seguir as [diretrizes da comunidade do Discord](https://discord.com/guidelines). Servidores que usarem conteúdo que viole as regras podem ser banidos."
     }
   },
   "PLANNER": {

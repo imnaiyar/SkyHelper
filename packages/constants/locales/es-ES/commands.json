@@ -404,10 +404,21 @@
         "name": "manage",
         "description": "Manage the bot settings for the server"
       },
-      "PERSONALIZE": {
-        "name": "personalize",
-        "description": "Personalize the bot for this server"
+      "CUSTOMIZE": {
+        "name": "personalizar",
+        "description": "Personalizar el bot para este servidor"
       }
+    },
+    "responses": {
+      "customize.description": "The elder's decided to bring the magic of transformation to **SkyHelper**.\n\nYou can change the bot's avatar, banner and bio to suit your nest's (server) needs.",
+      "customize.btn": "Personalizar",
+      "customize.delete": "Restablecer Cambios",
+      "customize.delete.warn": "La acción de restablecimiento eliminará todas las anulaciones (apodo, banner y avatar). Si desea modificar algo específico, utilice \"Personalizar\".",
+      "customize.delete.success": "Eliminado con éxito todas las anulaciones",
+      "customize.wait": "El anciano necesita tiempo para realizar la transformación. Por favor espere...",
+      "customize.success": "El anciano ha logrado personalizar el bot para este nido.",
+      "customize.ratelimit": "¡Oya! ¡Estás volando demasiado rápido! El anciano está cansado y necesita descanso durante un tiempo. `Avatar` y `Banner` sólo pueden cambiarse dos veces en 10 minutos (debido al límite de tasa de Discord).",
+      "customize.disclaimer": "Por favor, asegúrate de que todas las personalizaciones cumplen con las [directrices de la comunidad] de Discord(https://discord.com/guidelines). Los servidores pueden estar en lista negra si utilizan contenido que viola las reglas de Discord."
     }
   },
   "PLANNER": {
