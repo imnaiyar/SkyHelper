@@ -52,6 +52,28 @@
     "VAULT": "Relicário do Conhecimento",
     "EDEN": "Olho do Éden"
   },
+  "AREAS": {
+    "prairie.butterfly": "Campo de Borboletas",
+    "prairie.village": "Aldeia da Campina",
+    "prairie.cave": "Caverna da Campina",
+    "prairie.bird": "Ninho do Pássaro",
+    "prairie.island": "Ilhas do Santuário",
+    "forest.brook": "Riacho da Floresta",
+    "forest.boneyard": "Cemitério",
+    "forest.end": "Lagoa Sagrada",
+    "forest.tree": "Casa da Árvore",
+    "forest.sunny": "Clareira Elevada",
+    "valley.rink": "Lago Congelado",
+    "valley.dreams": "Aldeia dos Sonhos",
+    "valley.hermit": "Desfiladeiro do Iéti",
+    "wasteland.temple": "Templo do Sertão",
+    "wasteland.battlefield": "O Campo de Batalha",
+    "wasteland.graveyard": "Cemitério",
+    "wasteland.crab": "Campos de Caranguejo",
+    "wasteland.ark": "Arca Esquecida",
+    "vault.starlight": "Deserto da Luz Estelar",
+    "vault.jelly": "Recanto das Águas-Vivas"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "Temporada",
     "UNKNOWN": "Espírito Desconhecido",
@@ -91,7 +113,8 @@
     "IMPORT_SUCCESS": "✨ ***Suas memórias foram capturadas à luz das estrelas!*** 🌟\n\n*Os Espíritos preservaram cuidadosamente sua jornada pelo reino. Mantenha esse scroll seguro, caro Sky Kid!* 🕯️📜",
     "DELETE_SUCCESS": "🌌 ***Suas memórias foram liberadas para as estrelas...*** 🌌",
     "DELETE_BACKUP": "📜 ***Um presente de separação dos Espinhos...***",
-    "IMPORT_NOTE": "\n-# NOTA: Se você estiver importando dados de [sky-planner.com](https://sky-planner.com), algumas coisas não são salvas pelo bot, principalmente coisas relacionadas com preferências específicas do site. Isso inclui, mas não se limita a: Temas, Filtros, Marcadores de Mapas, Configurações de Closets, etc."
+    "IMPORT_NOTE": "\n-# NOTA: Se você estiver importando dados de [sky-planner.com](https://sky-planner.com), algumas coisas não são salvas pelo bot, principalmente coisas relacionadas com preferências específicas do site. Isso inclui, mas não se limita a: Temas, Filtros, Marcadores de Mapas, Configurações de Closets, etc.",
+    "SHARD_CLEARED_ACTION_ERROR": "Essa ação está desatualizada e foi acionada para um Fragmento de um dia anterior. A ação de limpar Fragmento só funciona para o dia de hoje!"
   },
   "linked-role": {
     "INTRO": "Um cargo vinculado é um tipo especial de cargo que pode ser usado para conectar uma conta de usuário a um aplicativo (neste caso, o bot SkyHelper).\nIsso permite que o bot atualize os dados vinculados ao cargo do usuário para exibir informações específicas no perfil dele em um servidor (veja a imagem anexada). Neste caso, podemos usar isso para exibir um perfil básico do Sky (nome preferido, estatísticas e interesses de jogo, entre outras informações).",
@@ -132,7 +155,7 @@
     "AC_RESULT": "### Quantos dias são necessários para alcançar a quantidade desejada de Velas Ascendidas?\n**Se você fizer:**\n- Apenas o Éden semanal: levará `{{daysWithWeeklyOnly}}` dias.\n  -# - Serão `{{edenCount}}` resets do Éden, rendendo {{edenTotal}}.\n- Éden + todos os Fragmentos Vermelhos: levará `{{daysCombined}}` dias.\n  -# - Serão `{{shardCountCombined}}` Fragmentos Vermelhos, rendendo {{shardCountCombinedAc}}, além de {{edenCountCombined}} resets do Éden, rendendo {{edenCombinedTotal}}.\n  -# - Total: {{combinedTotal}}.\n- Apenas Fragmentos Vermelhos: levará `{{daysWithShardOnly}}` dias.\n  -# - Considerando que você complete todos os eventos de Fragmentos Vermelhos, será necessário concluir `{{shardCountOnly}}` no total.",
     "SHARD_DISCLAIMER": "Aviso: As recompensas dos Fragmentos são calculadas com base no cronograma normal. Esse cronograma pode mudar devido a eventos em andamento, fazendo com que as recompensas variem. Confira as informações no jogo para confirmar.",
     "SEASON_NO_ACTIVE": "Sem temporada por enquanto.",
-    "SEASON_STATE_EXPIRED": "Parece que essa temporada acabou... digo, a sessão da calculadora. Execute-a novamente.",
+    "SEASON_STATE_EXPIRED": "Essa sessão da calculadora já era! Expirou. Execute ela de novo pra continuar.",
     "SEASON_TREE_MISSING": "Não foi possível encontrar essa árvore da temporada.",
     "SEASON_SELECTOR_HEADER": "Velas atuais: {{current}}\nTotal dos itens selecionados: {{selected}}\nA temporada termina {{end}}",
     "SEASON_NO_ITEMS_SELECTED": "Nenhum item selecionado",

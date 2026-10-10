@@ -52,6 +52,28 @@
     "VAULT": "知識の書庫",
     "EDEN": "エデンの目"
   },
+  "AREAS": {
+    "prairie.butterfly": "バタフライフィールド",
+    "prairie.village": "プレーリー村",
+    "prairie.cave": "プレーリーケーブ",
+    "prairie.bird": "鳥の巣format@@0",
+    "prairie.island": "サンクチュアリ島",
+    "forest.brook": "フォレストブルック",
+    "forest.boneyard": "ボネヤール",
+    "forest.end": "森の終わり",
+    "forest.tree": "ツリーハウス",
+    "forest.sunny": "Sunny Forest",
+    "valley.rink": "アイスリンク",
+    "valley.dreams": "夢の村",
+    "valley.hermit": "エルミットの谷",
+    "wasteland.temple": "Wastland Temple",
+    "wasteland.battlefield": "バトルフィールド",
+    "wasteland.graveyard": "墓",
+    "wasteland.crab": "カニのフィールド",
+    "wasteland.ark": "忘れられたアークです",
+    "vault.starlight": "Starlight Deserto",
+    "vault.jelly": "ジェリーフィッシュ・コーブ"
+  },
   "SPIRITS": {
     "SEASON_TITLE": "シーズン",
     "UNKNOWN": "不明な精霊",
@@ -91,7 +113,8 @@
     "IMPORT_SUCCESS": "✨ ***あなたの記憶は星明かりの中でとらえられました!*** 🌟\n\n*霊は世界中のあなたの旅を慎重に保存しております。 このスクロールを安全に保ちましょう!* 🕯️📜",
     "DELETE_SUCCESS": "🌌 ***あなたの記憶は星に解放されました...*** 🌌",
     "DELETE_BACKUP": "📜 ***霊からの別れのギフト...***",
-    "IMPORT_NOTE": "\n-# 注意: [sky-planner.com](https://sky-planner.com) からデータをインポートしている場合。 ボットによって保存されていないものもあります。主にウェブサイト特有の設定に関連するものです。 これらには、テーマ、フィルター、マップマーカー、クローゼット設定などが含まれますが、これらに限定されません。"
+    "IMPORT_NOTE": "\n-# 注意: [sky-planner.com](https://sky-planner.com) からデータをインポートしている場合。 ボットによって保存されていないものもあります。主にウェブサイト特有の設定に関連するものです。 これらには、テーマ、フィルター、マップマーカー、クローゼット設定などが含まれますが、これらに限定されません。",
+    "SHARD_CLEARED_ACTION_ERROR": "このアクションは古いシャードの日付に古くトリガーされています。シャードをクリアしたアクションは現在の日にのみ有効です。"
   },
   "linked-role": {
     "INTRO": "Linked role は、ユーザーアカウントとアプリケーションを接続するために使用できる特別な種類のロールです(この場合は、ユーザーアカウントをアプリケーションと接続するために使用できます)。 SkyHelper ボット)。\nこれにより、ボットはユーザーのロール接続データを更新して、サーバー内のユーザーのプロファイルに特定の情報を表示することができます(添付の写真を参照)。 この場合、基本的なスカイプロファイル(好みの名前、好みなど)を表示するために使用できます。",
